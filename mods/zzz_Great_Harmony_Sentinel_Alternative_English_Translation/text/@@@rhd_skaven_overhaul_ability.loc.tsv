@@ -1,8 +1,8 @@
 key	text	tooltip
 #Loc;1;text/@@@rhd_skaven_overhaul_ability.loc		
 special_ability_phases_onscreen_name_rhd_unit_contact_melt	[[col:red]][[img:ui/skins/default/modifier_icon_overhead_morale.png]][[/img]]Melt![[/col]]	false
-special_ability_phases_onscreen_name_rhd_unit_contact_snake_fang	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_snake_fang.png]][[/img]]毒蛇之牙！[[/col]]	false
-special_ability_phases_onscreen_name_rhd_unit_contact_warpstone_fire	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_warpstone_fire.png]][[/img]]次元焚化！[[/col]]	false
+special_ability_phases_onscreen_name_rhd_unit_contact_snake_fang	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_snake_fang.png]][[/img]]Venomous Fang![[/col]]	false
+special_ability_phases_onscreen_name_rhd_unit_contact_warpstone_fire	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_warpstone_fire.png]][[/img]]Warpstone Incineration![[/col]]	false
 unit_abilities_onscreen_name_rhd_ability_skv_death_explosion_slave_ror	Mutual Destruction	false
 unit_abilities_tooltip_text_rhd_ability_skv_death_explosion_slave_ror	It's... it's going to blow up!!!	false
 unit_abilities_onscreen_name_rhd_ability_skv_death_explosion_globe	Corrosive Miasma	false

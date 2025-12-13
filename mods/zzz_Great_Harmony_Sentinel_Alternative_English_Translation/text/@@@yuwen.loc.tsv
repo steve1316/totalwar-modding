@@ -1,0 +1,79 @@
+key	text	tooltip
+#Loc;1;text/@@@yuwen.loc		
+land_units_onscreen_name_ghs_main_cth_cha_xiaoxiao	"Candleflame General" Xiao Xiao	false
+land_units_onscreen_name_ghs_main_cth_cha_xiaoxiao_flooddragon	"Candleflame General" Xiao Xiao	false
+land_units_onscreen_name_ghs_main_cth_cha_xiaoxiao_1	"Candleflame General" Xiao Xiao	false
+land_units_onscreen_name_ghs_main_cth_cha_xiaoxiao_flooddragon_1	"Candleflame General" Xiao Xiao	false
+unit_description_short_texts_text_cth_xiaoxiao	Candleflame General Xiao Xiao stands foremost among the Dragon-Blooded—peerless in valour, unmatched in martial might.	false
+unit_description_historical_texts_text_cth_xiaoxiao	Xiao Xiao stands foremost among the Dragon-Blooded and holds the rank of Vast Heaven General. As a descendant and favoured disciple of the Lord of Shangyang, he tempered his body from childhood through the "Cinnabar Furnace Body-Refinement Method", forging sinews and veins until vast magical power flowed within him—of the same blazing origin as the Vermilion Bird’s sacred flames. His martial prowess stands unrivalled across the armies of the west, and generals of the Western Defence praise him as “invincible in valour, before whom treachery and corruption retreat.” Among his peers, only Xuan Lie’s raw ferocity ever forced him onto the back foot. Upon Zhao Ming’s command to serve under Miao Ying as campaign overseer, Xiao Xiao came to deeply admire the Storm Dragon’s wisdom and vision, and under her leadership he helped repel Chaos incursions time and again beyond the Great Bastion.	false
+agent_subtypes_onscreen_name_override_ghs_main_cth_cha_xiaoxiao	Legendary Lord	false
+names_name_2025010201	Candleflame General	false
+names_name_2025010202	Xiao Xiao	false
+unit_abilities_onscreen_name_cth_xiaoxiao_flooddragon	Phoenix Dance Art	false
+unit_abilities_onscreen_name_cth_xiaoxiao_flooddragon_1	Phoenix Dance Art	false
+unit_abilities_tooltip_text_cth_xiaoxiao_flooddragon	As the winds rise, flames surge skyward; when the feathers fall, ironwood is crushed beneath them.	false
+unit_abilities_tooltip_text_cth_xiaoxiao_flooddragon_1	As the winds rise, flames surge skyward; when the feathers fall, ironwood is crushed beneath them.	false
+ancillaries_onscreen_name_cth_xiaoxiao_weapon	Phoenix-Wing Gilded Halberd	false
+ancillaries_onscreen_name_cth_xiaoxiao_horse	Crimson Cinder Fire-Dragon Steed	false
+ancillaries_colour_text_cth_xiaoxiao_weapon	The Phoenix-Wing Gilded Halberd weighs over four hundred jin. Its blade houses the soul of the Vermilion Bird; each swing stirs scorching winds, cleaving steel and shattering jade.	false
+ancillaries_colour_text_cth_xiaoxiao_horse	A dragon-blooded steed with crimson mane, breathing smoke and flame. Its neigh rolls like thunder, its charge like wildfire across the plains.	false
+character_skills_localised_name_cth_xiaoxiao_weapon	Phoenix-Wing Gilded Halberd	false
+character_skills_localised_name_cth_xiaoxiao_horse	Crimson Cinder Fire-Dragon Steed	false
+character_skills_localised_description_cth_xiaoxiao_weapon	The Phoenix-Wing Gilded Halberd weighs over four hundred jin. Its blade houses the soul of the Vermilion Bird; each swing stirs scorching winds, cleaving steel and shattering jade.	false
+character_skills_localised_description_cth_xiaoxiao_horse	A dragon-blooded steed with crimson mane, breathing smoke and flame. Its neigh rolls like thunder, its charge like wildfire across the plains.	false
+character_skills_localised_name_cth_zhaowang_innate	"Prince of the Western Defence, Zhao Wang"	true
+character_skills_localised_name_cth_zhaowang_steel	Guardian of Mighty Virtue	true
+character_skills_localised_description_cth_zhaowang_steel	It is not over yet!	true
+character_skills_localised_name_cth_zhaowang_unique_0	Tempered Armour, Drilled Ranks	true
+character_skills_localised_description_cth_zhaowang_unique_0	Replenish mounts and men, sharpen blades and steady formations—this is the path to victory.	true
+character_skills_localised_name_cth_zhaowang_unique_1	Self-Discipline, Iron Law	true
+character_skills_localised_description_cth_zhaowang_unique_1	Be strict with oneself and measured in conduct. We, subjects of the Celestial Empire, bathed in the moon’s grace and the Dragon Emperor’s majesty, must never lose virtue nor propriety.	true
+character_skills_localised_name_cth_zhaowang_unique_2	Blood-Forged Eternity	true
+character_skills_localised_description_cth_zhaowang_unique_2	"Let crimson resolve shine upon steel alone—leave no empty lament upon the pages of history."	true
+character_skills_localised_name_cth_zhaowang_unique_3	Wound of Chaos	true
+character_skills_localised_description_cth_zhaowang_unique_3	"Evil fiends, flee if you dare—who among you can take even half a hammer blow from me?"	true
+character_skills_localised_name_cth_zhaowang_unique_4	Might of the Flood Dragon	true
+character_skills_localised_description_cth_zhaowang_unique_4	"Before the Four Symbols he does not yield; iron is ground to dust... truly a general beyond mortal measure."	true
+character_skills_localised_name_cth_zhaowang_unique_5	Binlong’s Oath	true
+character_skills_localised_description_cth_zhaowang_unique_5	Golden helm and armour, purple-gold robes; violet eyes, white brows, azure mane. He stands like a jade pillar bearing the capital’s weight, strength enough to shoulder three mountains. His mount is of dragon stock—how could demons and vermin escape? War-drums thunder, banners flash like lightning, shaking land and sky. When triumph returns him home, I shall help the general unfasten his armour.	true
+character_skills_localised_name_cth_zhaowang_horse	Ten-Thousand-Li Cloudlight	true
+character_skills_localised_description_cth_zhaowang_horse	A dragon-blooded steed, coal-black from head to hoof. It runs ten thousand li by day and eight thousand by night; its charge rolls forth like dark clouds sweeping the earth—thus it is named Cloudlight.	true
+unit_abilities_onscreen_name_cth_zhaowang_steel	Might of the Flood Dragon	true
+unit_abilities_tooltip_text_cth_zhaowang_steel	"Before the Four Symbols he does not yield; iron is ground to dust... truly a general beyond mortal measure."	true
+unit_abilities_onscreen_name_cth_zhaowang_flooddragon	Flood Dragon Art	true
+unit_abilities_tooltip_text_cth_zhaowang_flooddragon	When winds rise and clouds overturn the sky, it is the moment the flood dragon calls forth the rain.	true
+unit_abilities_onscreen_name_cth_zhaowang_flooddragon_1	Flood Dragon Art	true
+unit_abilities_tooltip_text_cth_zhaowang_flooddragon_1	When winds rise and clouds overturn the sky, it is the moment the flood dragon calls forth the rain.	true
+unit_abilities_onscreen_name_zhaowang_thunder_skill	Dragon-Thunder Annihilation	true
+unit_abilities_tooltip_text_zhaowang_thunder_skill	"The souls of our Celestial Empire’s brave are claimed by Heaven alone—how dare treacherous fiends lay hands upon them?"	true
+unit_abilities_onscreen_name_cth_zhaowang_battle_master	Thunder-Forged Celestial Host	true
+unit_abilities_tooltip_text_cth_zhaowang_battle_master	We are all beneficiaries of the Dragon Emperor’s grace—let us unleash the might of the Celestial Empire with thunderous force.	true
+effects_description_weapon_strength_vs_chaos	Weapon strength when fighting Beastmen, Daemons of Chaos, Norsca, and Warriors of Chaos: +%n%	true
+effects_description_zhaowang_thunder_skill	Unlocks ability: "Dragon-Thunder Annihilation"	true
+effects_description_battle_zhaowang_master	Cathay melee infantry in the army gain the ability: Thunder-Forged Celestial Host	true
+effects_description_battle_master_celestial_ma	Celestial Dragon Guard in the army: Melee attack +%n	true
+effects_description_battle_master_celestial_md	Celestial Dragon Guard in the army: Melee defense +%n	true
+effects_description_guild_support	Peasant Levies, Jade Warriors, and Celestial Dragon Guard recruitment and upkeep: %n%	true
+effects_description_guild_support_speed	Celestial Dragon Guard speed: +%n%	true
+effects_description_fight_sky_doom	Melee attack and defense when fighting Beastmen, Skaven, Greenskins, High Elves, Dark Elves, Daemons of Chaos, Warriors of Chaos, and Norsca: +%n	true
+character_skills_localised_name_cth_xiaoxiao_innate	Candleflame General	false
+character_skills_localised_name_cth_xiaoxiao_unique_0	Tiger’s Stride Along the Bastion	false
+character_skills_localised_name_cth_xiaoxiao_unique_1	Valour Crowned Above All	false
+character_skills_localised_name_cth_xiaoxiao_unique_2	Self-Discipline, Iron Law	false
+character_skills_localised_name_cth_xiaoxiao_unique_3	Roaring Scorchwind	false
+character_skills_localised_name_cth_xiaoxiao_unique_4	Secret Art of the Cinnabar Crucible	false
+character_skills_localised_name_cth_xiaoxiao_unique_5	Praise of the Soaring Dragon	false
+character_skills_localised_description_cth_xiaoxiao_innate	Candleflame General Xiao Xiao stands foremost among the Dragon-Blooded—peerless in valour, unmatched in martial might.	false
+character_skills_localised_description_cth_xiaoxiao_unique_0	"From Viper’s Gate he advances, scourging the northern barbarians; with tiger’s stride along the Great Bastion, none can withstand him."	false
+character_skills_localised_description_cth_xiaoxiao_unique_1	Supreme martial skill and unmatched courage.	false
+character_skills_localised_description_cth_xiaoxiao_unique_2	Be strict with oneself and measured in conduct. We, subjects of the Celestial Empire, bathed in the moon’s grace and the Dragon Emperor’s majesty, must never lose virtue nor propriety.	false
+character_skills_localised_description_cth_xiaoxiao_unique_3	A master of alchemical arts; with a single breath he can stir searing flame-winds, keeping all malign forces at bay.	false
+character_skills_localised_description_cth_xiaoxiao_unique_4		false
+character_skills_localised_description_cth_xiaoxiao_unique_5	A loyal heart upholding the realm, iron blood sweeping away corruption. The invincible general, a heaven-blessed champion.	false
+effects_description_ghs_enable_wh3_dlc23_unit_passive_blazing_body	Passive ability: "Blazing Body"	false
+unit_abilities_onscreen_name_xiaoxiao_fire_skill	Candleflame Heartfire	false
+character_skills_localised_name_ghs_main_skill_all_magic_metal_02_plague_of_rust_lord_dragon	Plague of Rust	false
+character_skills_localised_name_ghs_main_skill_cth_magic_yang_01_dragons_breath_lord	Dragon’s Breath Art	false
+character_skills_localised_name_ghs_main_skill_cth_magic_yang_03_wall_of_wind_and_fire_lord_dragon	Wind and Fire Art	false
+character_skills_localised_name_ghs_main_skill_all_magic_metal_04_glittering_robe_lord_dragon	Glittering Robe	false
+character_skills_localised_name_ghs_main_skill_cth_magic_yang_08_constellation_of_the_dragon_lord_dragon	Dragon Constellation Art	false

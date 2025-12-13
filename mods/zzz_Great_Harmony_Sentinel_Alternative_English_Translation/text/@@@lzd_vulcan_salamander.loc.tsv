@@ -1,0 +1,6 @@
+key	text	tooltip
+#Loc;1;text/@@@lzd_vulcan_salamander.loc		
+land_units_onscreen_name_ghs_main_lzd_vulcan_salamander	Vulcan Salamander	false
+unit_description_short_texts_text_ghs_main_lzd_vulcan_salamander	A colossal spined salamander that dwells within molten lava; only those chosen by the Old Ones are said to be capable of taming such a ferocious beast.	false
+unit_abilities_onscreen_name_ghs_main_lzd_vulcan_salamander_fear_fire	Boiling Magma	false
+unit_abilities_tooltip_text_ghs_main_lzd_vulcan_salamander_fear_fire	The Vulcan Salamander’s body heat is enough to ignite even the dampest jungle. When it fully releases this searing energy, everything around it is set ablaze in an instant.	false
