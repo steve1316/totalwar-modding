@@ -17,6 +17,7 @@ local caps = {
     {"ghs_main_chd_mon_kdaai_destroyer_beasts", "rare", 3},
     {"ghs_main_chd_mon_kdaai_destroyer_wings", "rare", 3},
     {"ghs_main_chd_mon_kdaai_firestirke", "special", 2},
+    {"ghs_main_chd_mon_siege_armour_giant", "rare", 2},
     -- Dwarfs
     {"ghs_comb_dwf_art_mortar", "special", 2},
     {"ghs_comb_dwf_dwf_inf_dwarf_warrior_spear", "core", 1},
@@ -56,6 +57,9 @@ local caps = {
     {"ghs_main_dwf_gun_chariot", "special", 3},
     {"ghs_main_dwf_cannon_chariot", "special", 2},
     {"ghs_main_dwf_veh_flame_cannon_chariot", "special", 3},
+    {"ghs_dwf_melee_mecha", "special", 2},
+    {"ghs_dwf_melee_mecha_fist", "special", 2},
+    {"ghs_dwf_missile_dwfling_mecha", "special", 2},
     -- Khorne
     {"ghs_main_kho_inf_armour_bloodletter_champions", "special", 2},
     {"ghs_main_kho_inf_warrior_shooter", "special", 2},
@@ -91,6 +95,8 @@ local caps = {
     {"ghs_main_lzd_veh_pyramid_tepok", "rare", 3},
     {"ghs_main_lzd_veh_pyramid_tzunki", "rare", 3},
     {"ghs_main_lzd_veh_temple_quetzl_god", "rare", 3},
+    {"ghs_main_mon_lzd_war_kroxigors_ms", "special", 2},
+    {"ghs_main_lzd_vulcan_salamander", "rare", 2},
     -- High Elves
     {"ghs_main_hef_cav_ellyrian_reavers_pegasus_rider", "special", 2},
     {"ghs_main_hef_cav_fire_dragon_prince", "special", 3},
@@ -135,6 +141,9 @@ local caps = {
     {"rhd_land_skv_art_plagueclaw_catapult_ror", "rare", 1},
     {"rhd_land_skv_inf_poison_wind_globadiers_ror", "special", 1},
     {"rhd_land_skv_inf_plague_monks_ror", "special", 1},
+    {"ghs_skv_mon_hellpit_warpdrill", "rare", 3},
+    {"ghs_skv_mon_hellpit_ratling", "rare", 3},
+    {"ghs_skv_mon_hellpit_warpflame", "rare", 3},
     -- Dark Elves
     {"ghs_main_def_inf_khaine_avatar", "rare", 1},
     {"ghs_main_def_inf_khaine_sister", "rare", 2},
@@ -161,6 +170,7 @@ local caps = {
     {"ghs_main_tmb_cav_ostrich_rider", "core", 1},
     {"ghs_main_tmb_cav_scarab_flying_01", "special", 2},
     {"ghs_main_tmb_mon_ushabti_eagle_cannon", "special", 2},
+    {"ghs_main_tmb_mon_sandstalker", "special", 2},
     -- Grand Cathay
     {"ghs_main_cth_cav_armour_giant_ox", "rare", 1},
     {"ghs_main_cth_cav_armour_giant_ox_ror", "rare", 1},
@@ -194,6 +204,8 @@ local caps = {
     {"ghs_main_cth_veh_flying_commpass", "rare", 2},
     {"ghs_main_cth_veh_warchariot", "special", 1},
     {"ghs_main_cth_veh_warchariot_missle", "special", 1},
+    {"ghs_main_cth_cav_fire_dragon_glaive_rider", "special", 2},
+    {"ghs_main_cth_veh_flying_compass", "rare", 1},
     -- Empire
     {"ghs_main_emp_imperial_guard_mounted", "special", 3},
     {"ghs_main_emp_imperial_guard", "special", 2},

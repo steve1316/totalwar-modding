@@ -1,7 +1,0 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_@ghs_dwf_dwfling_mecha
-dwf_missile_dwfling_mecha	false	dwf_missile_dwfling_mecha	repeater_gun_LH	false
-dwf_missile_mecha_dwfling	false	dwf_missile_mecha_dwfling	repeater_gun_LH	false
-skv_hellpit_globe_rider	false	skv_hellpit_globe_rider		false
-skv_mon_hellpit_ratling	false	skv_mon_hellpit_ratling	wh2_dlc12_ratling_gun	false
-skv_mon_hellpit_warpflame	false	skv_mon_hellpit_warpflame	warpfiregun	false

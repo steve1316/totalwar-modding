@@ -8,6 +8,9 @@ cth_secret_follower_blade	humanoid01e
 cth_terracotta_glaive_and_bow	humanoid01
 cth_terracotta_great_axe	humanoid01e
 dr04_flood_dragon	dragon04
+dwf_dwfling_mecha	humanoid18b
+dwf_melee_mecha	humanoid18b
+dwf_melee_mecha_fist	humanoid18b
 dwf_runeguard_catling	humanoid13
 ghs_cav_wef_wild_hunter_knight	humanoid01d
 ghs_cav_wef_zoat_rider_thorn_sister	humanoid01b
@@ -59,6 +62,9 @@ lzd_pyramid_tzunki_01	gyrobomber01
 ogr_crossbow	humanoid03
 ogr_fireman	humanoid03
 ogr_lioneater	humanoid13
+skv_hellpit_ratling_01	hybridcreature05
+skv_hellpit_warpdrill_01	hybridcreature05
+skv_hellpit_warpflame_01	hybridcreature05
 tmb_heavy_ostrich_rider_spear_and_shield_ghs	humanoid01
 tmb_ostrich_rider_spear_and_shield_ghs	humanoid01
 tmb_secret_sandstalker	snake02b

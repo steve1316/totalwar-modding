@@ -167,7 +167,6 @@ local supported_mods = {
     "@Deer24diguochuanqi",
     "@Deer24HEF",
     "@DEERKSL",
-    "@ghs_dwf_dwfling_mecha",
     "@LOW_Dragon_Princes_Legion",
     "@whc_cth_unit_wuh_7",
     "@xou_high_elves",
@@ -271,6 +270,7 @@ local supported_mods = {
     "CF-Chaos_Dragon",
     "singe_units_wh_all",
     "!!!!calm_kislev_erengrad",
+    "!!!pwner1_wh3_ete_unit_pack",
 }
 
 local faction_mapping = {

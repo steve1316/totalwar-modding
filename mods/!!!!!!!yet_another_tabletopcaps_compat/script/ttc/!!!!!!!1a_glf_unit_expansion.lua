@@ -2,6 +2,7 @@
 local caps = {
     -- Bretonnia
     {"glf_brt_royal_knights_of_the_realm", "special", 2},
+    {"glf_brt_the_crown_guard", "special", 2},
     -- Skaven
     {"glf_skv_stormfiend_warpfire", "special", 2},
     {"glf_skv_stormfiend_rattling_gun", "special", 2},

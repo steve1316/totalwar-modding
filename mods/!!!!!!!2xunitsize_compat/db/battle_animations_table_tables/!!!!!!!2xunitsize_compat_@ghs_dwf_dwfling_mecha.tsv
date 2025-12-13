@@ -1,9 +1,0 @@
-key	skeleton
-#battle_animations_table_tables;0;db/battle_animations_table_tables/!!!!!!!2xunitsize_compat_@ghs_dwf_dwfling_mecha
-dwf_dwfling_mecha	humanoid18b
-dwf_melee_mecha	humanoid18b
-dwf_melee_mecha_fist	humanoid18b
-dwf_missile_mecha	humanoid18b
-skv_hellpit_ratling_01	hybridcreature05
-skv_hellpit_warpdrill_01	hybridcreature05
-skv_hellpit_warpflame_01	hybridcreature05

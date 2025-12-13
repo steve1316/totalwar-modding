@@ -20,6 +20,6 @@ wh_main_emp_halberd_reiksguard	26	0	15	22	1.0000	spear	halberd		1	1.0000	1.0000	
 wh_main_emp_hussar_lance	0	4	21	9	1.4000	lance	spear		1	1.0000	1.0000	0.0000	false		0	10	2.55		false
 wh_main_emp_sword_hero_helborg	0	0	170	300	3.0000	sword	sword	medium	3	1.0000	1.0000	0.0000	false		0	10	1.5		false
 wh_main_emp_sword_hero_schwarzhelm	0	0	270	132	3.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	false		0	10	2.0		false
-wh_main_emp_sword_reiksguard	0	15	20	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	1.95		false
+wh_main_emp_sword_reiksguard	0	10	29	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	1.95		false
 wh_valten_blacksmith_hammers	0	50	200	150	3.0000	axe	hammer	medium	8	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.1		false
 xou_thyrus	0	0	245	105	3.0000	sword	sword	medium	5	1.0000	1.0000	1.0000	true	wh_main_unit_contact_morale	0	10	2.0		false
