@@ -1295,27 +1295,6 @@ SUPPORTED_MODS = [
         "pattern_overrides": {},
     },
     {
-        "name": "Preytons",
-        "package_name": "!cr_beastman_unit_dumping_ground.pack",
-        "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/2876531798/!cr_beastman_unit_dumping_ground.pack",
-        "modified_attributes": ["melee"],
-        "pattern_overrides": {},
-    },
-    {
-        "name": "Pleasureseekers of Slaanesh and Tzeentch Great Winged Terrors",
-        "package_name": "!cr_daemon_unit_dumping_ground.pack",
-        "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/2795725577/!cr_daemon_unit_dumping_ground.pack",
-        "modified_attributes": ["melee", "ranged_arc", "velocity"],
-        "pattern_overrides": {},
-    },
-    {
-        "name": "Merwyrms, Sea Dragons, and Lothern Skycutters",
-        "package_name": "!cr_elf_unit_dumping_ground.pack",
-        "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/2870172362/!cr_elf_unit_dumping_ground.pack",
-        "modified_attributes": ["melee", "ranged_arc", "velocity"],
-        "pattern_overrides": {},
-    },
-    {
         "name": "Celestial Hurricanum",
         "package_name": "!cr_empire_unit_dumping_ground.pack",
         "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/2906452595/!cr_empire_unit_dumping_ground.pack",
@@ -1854,13 +1833,6 @@ SUPPORTED_MODS = [
         "pattern_overrides": {"*": "cst"},
     },
     {
-        "name": "vampire coast artillery",
-        "package_name": "doggo.pack",
-        "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/3281925347/doggo.pack",
-        "modified_attributes": ["ranged_arc", "velocity"],
-        "pattern_overrides": {"*": "cst"},
-    },
-    {
         "name": "Greater Chaos Spawn of Khorne",
         "package_name": "drg_gr_khorne_spawn.pack",
         "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/3072440695/drg_gr_khorne_spawn.pack",
@@ -2328,13 +2300,6 @@ SUPPORTED_MODS = [
         "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/2826919821/ror_all.pack",
         "modified_attributes": ["melee", "ranged_arc", "velocity"],
         "ignore_generation": True,
-    },
-    {
-        "name": "Beasts Most Foul Complete",
-        "package_name": "scm_beasts_most_foul.pack",
-        "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/3166858548/scm_beasts_most_foul.pack",
-        "modified_attributes": ["melee", "ranged_arc", "velocity"],
-        "pattern_overrides": {"*": "bst"},
     },
     {
         "name": "Skaven Clans - Blood for the Blood God!",
