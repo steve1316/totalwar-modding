@@ -447,9 +447,9 @@ def process_unit_by_category(unit_data: Dict[str, Any], main_units_mapping: Dict
             "nanu_dynamic_ror_basic_single_entity_2",
             "nanu_dynamic_ror_basic_single_entity_3",
             "nanu_dynamic_ror_ability_single_entity_slime_trail",
-            "nanu_dynamic_ror_ability_nurgle_single_entity_slime_trail",
-            "nanu_dynamic_ror_ability_nurgle_single_entity_spurting_acid_blood",
-            "nanu_dynamic_ror_ability_nurgle_single_entity_spurting_bile_blood",
+            "nanu_dynamic_ror_nurgle_ability_single_entity_slime_trail",
+            "nanu_dynamic_ror_nurgle_ability_single_entity_spurting_acid_blood",
+            "nanu_dynamic_ror_nurgle_ability_single_entity_spurting_bile_blood",
         ]:
             try:
                 unit_effects.remove(single_entity_effect)
