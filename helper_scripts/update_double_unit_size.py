@@ -885,21 +885,22 @@ if __name__ == "__main__":
         merge_move(f"./{MODDED_TABLE_NAME}", f"../warhammer3_mods")
 
     if args.reset:
-        # Reset the contents of the packfile.
-        subprocess.run(
-            [
-                "./rpfm_cli.exe",
-                "--game",
-                "warhammer_3",
-                "pack",
-                "delete",
-                "--pack-path",
-                f"F:\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3621939685\\{MODDED_TABLE_NAME}.pack",
-                "--folder-path",
-                "",
-            ],
-            capture_output=True,
-        )
+        # Reset the contents of the packfile. Delete db and variantmeshes folders explicitly because pack delete with empty --folder-path does not reliably clear the pack.
+        for folder in ["db", "variantmeshes"]:
+            subprocess.run(
+                [
+                    "./rpfm_cli.exe",
+                    "--game",
+                    "warhammer_3",
+                    "pack",
+                    "delete",
+                    "--pack-path",
+                    f"F:\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3621939685\\{MODDED_TABLE_NAME}.pack",
+                    "--folder-path",
+                    folder,
+                ],
+                capture_output=True,
+            )
 
     # Now merge the new files into the packfile.
     subprocess.run(
