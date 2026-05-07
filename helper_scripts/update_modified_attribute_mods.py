@@ -125,7 +125,7 @@ if __name__ == "__main__":
         logging.info("Will reset folders in the packfile before writing.")
         for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
             try:
-                shutil.rmtree(f"../mods/{mod_name}/db")
+                shutil.rmtree(f"../warhammer3_mods/{mod_name}/db")
             except FileNotFoundError:
                 pass
 
@@ -283,8 +283,8 @@ if __name__ == "__main__":
     # After processing all mods, move the final folders to their destinations.
     for folder_name in [PREPEND_MELEE_TABLE_FILE_NAME, PREPEND_RANGED_ARC_TABLE_FILE_NAME, PREPEND_VELOCITY_TABLE_FILE_NAME]:
         if os.path.exists(f"./{folder_name}"):
-            logging.info(f"Moving {folder_name} to ../mods/.")
-            merge_move(f"./{folder_name}", "../mods/")
+            logging.info(f"Moving {folder_name} to ../warhammer3_mods/.")
+            merge_move(f"./{folder_name}", "../warhammer3_mods/")
 
     for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
         if args.reset:
@@ -317,7 +317,7 @@ if __name__ == "__main__":
                 "--tsv-to-binary",
                 "./schemas/schema_wh3.ron",
                 "--folder-path",
-                f"../mods/{mod_name}/db;",
+                f"../warhammer3_mods/{mod_name}/db;",
             ],
             capture_output=True,
         )

@@ -270,8 +270,8 @@ if __name__ == "__main__":
     if args.reset:
         logging.info("Will reset folders in the packfile before writing.")
         try:
-            shutil.rmtree(f"../mods/{MODDED_TABLE_NAME}/db")
-            shutil.rmtree(f"../mods/{MODDED_TABLE_NAME}/variantmeshes")
+            shutil.rmtree(f"../warhammer3_mods/{MODDED_TABLE_NAME}/db")
+            shutil.rmtree(f"../warhammer3_mods/{MODDED_TABLE_NAME}/variantmeshes")
         except FileNotFoundError:
             pass
 
@@ -879,10 +879,10 @@ if __name__ == "__main__":
                 ]
             )
 
-    # Move the modded folder to the ../mods folder.
+    # Move the modded folder to the ../warhammer3_mods folder.
     if os.path.exists(f"./{MODDED_TABLE_NAME}"):
-        logging.info(f"Moving {MODDED_TABLE_NAME} to ../mods/.")
-        merge_move(f"./{MODDED_TABLE_NAME}", f"../mods")
+        logging.info(f"Moving {MODDED_TABLE_NAME} to ../warhammer3_mods/.")
+        merge_move(f"./{MODDED_TABLE_NAME}", f"../warhammer3_mods")
 
     if args.reset:
         # Reset the contents of the packfile.
@@ -914,7 +914,7 @@ if __name__ == "__main__":
             "--tsv-to-binary",
             "./schemas/schema_wh3.ron",
             "--folder-path",
-            f"../mods/{MODDED_TABLE_NAME};",
+            f"../warhammer3_mods/{MODDED_TABLE_NAME};",
         ],
         capture_output=True,
     )
