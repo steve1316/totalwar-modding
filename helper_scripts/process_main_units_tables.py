@@ -513,7 +513,7 @@ if __name__ == "__main__":
 
     # After processing all mods, move the final factions_data.lua to the destination folder.
     if os.path.exists("factions_data.lua"):
-        destination_filepath = "../mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua"
+        destination_filepath = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua"
         if os.path.exists(destination_filepath):
             os.remove(destination_filepath)
         shutil.move("factions_data.lua", destination_filepath)
@@ -548,7 +548,7 @@ if __name__ == "__main__":
             "--tsv-to-binary",
             "./schemas/schema_wh3.ron",
             "--file-path",
-            f"../mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua;script/land_encounters/constants/battles/factions_data.lua",
+            f"../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua;script/land_encounters/constants/battles/factions_data.lua",
         ],
         capture_output=True,
     )

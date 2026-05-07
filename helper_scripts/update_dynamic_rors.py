@@ -522,7 +522,7 @@ if __name__ == "__main__":
         logging.info("Will reset folders in the packfile before writing.")
         for folder in ["db", "variantmeshes"]:
             try:
-                shutil.rmtree(f"../mods/!!!!!!!_nanu_dynamic_rors_compat/{folder}")
+                shutil.rmtree(f"../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/{folder}")
             except FileNotFoundError:
                 pass
 
@@ -668,8 +668,8 @@ if __name__ == "__main__":
 
             # After processing all mods, move the mod folder to the destination folder.
             if os.path.exists("./!!!!!!!_nanu_dynamic_rors_leftover_vanilla"):
-                logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_leftover_vanilla to ../mods/.")
-                merge_move("./!!!!!!!_nanu_dynamic_rors_leftover_vanilla", "../mods/")
+                logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_leftover_vanilla to ../warhammer3_mods/.")
+                merge_move("./!!!!!!!_nanu_dynamic_rors_leftover_vanilla", "../warhammer3_mods/")
 
             if args.reset:
                 # Use the RPFM CLI to delete all files from the required folders.
@@ -700,7 +700,7 @@ if __name__ == "__main__":
                     "--tsv-to-binary",
                     "./schemas/schema_wh3.ron",
                     "--folder-path",
-                    f"../mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables;db/unit_purchasable_effect_sets_tables",
+                    f"../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables;db/unit_purchasable_effect_sets_tables",
                 ],
                 capture_output=True,
             )
@@ -1212,8 +1212,8 @@ if __name__ == "__main__":
 
     # After processing all mods, move the mod folder to the destination folder.
     if os.path.exists("./!!!!!!!_nanu_dynamic_rors_compat"):
-        logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_compat to ../mods/.")
-        merge_move("./!!!!!!!_nanu_dynamic_rors_compat", "../mods/")
+        logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_compat to ../warhammer3_mods/.")
+        merge_move("./!!!!!!!_nanu_dynamic_rors_compat", "../warhammer3_mods/")
 
     # Reset if necessary.
     if args.reset:
@@ -1246,7 +1246,7 @@ if __name__ == "__main__":
             "--tsv-to-binary",
             "./schemas/schema_wh3.ron",
             "--folder-path",
-            f"../mods/!!!!!!!_nanu_dynamic_rors_compat;",
+            f"../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat;",
         ],
         capture_output=True,
     )
