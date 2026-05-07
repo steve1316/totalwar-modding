@@ -1,5 +1,6 @@
 group_name
 #unit_attributes_groups_tables;0;db/unit_attributes_groups_tables/!!!!!!!2xunitsize_compat_ovn_albion
+albion_centaur_hero
 calm_alb_raven
 ovn_attribute_alb_cav_noble
 ovn_attribute_alb_cav_noble_first_ror
@@ -9,6 +10,7 @@ ovn_attribute_albion_bologs_giant_ror
 ovn_attribute_albion_cachtorr_stonethrower
 ovn_attribute_albion_centaur_hunter_ror
 ovn_attribute_albion_centaurs
+ovn_attribute_albion_centaurs_bows
 ovn_attribute_albion_chariot
 ovn_attribute_albion_chief
 ovn_attribute_albion_chief_chariot

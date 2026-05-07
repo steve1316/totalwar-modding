@@ -1,6 +1,6 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_ovn_fimir
-fim_finmor_hero	monstrous_infantry	heroes_agents
 ovn_bog_octopus	ovn_bog_octopus	monster_beasts
 ovn_fenbeasts	fenbeast	monster_beasts
+ovn_fim_balefiend_apprentices	wh3_main_tze_flamer	missile_monster_beasts
 ovn_fim_cavalry_bog_beast	wh2_main_lzd_dinosaur	cavalry_chariots

@@ -1,8 +1,8 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_ovn_fimir
-fim_bog_beast	VariantMeshes\wh_variantmodels\lz1\fim\fim_bog_beast\tech	fim_bog_beast		2.2000	1.0000	0.0000	
+fim_bog_beast	VariantMeshes\wh_variantmodels\lz1\fim\fim_bog_beast\tech	fim_bog_beast		2.0000	1.0000	0.0000	
 fim_bog_beast_draught	VariantMeshes\wh_variantmodels\lz1\fim\fim_bog_beast\tech	fim_bog_beast_draught		1.0000	1.3000	0.0000	
-fim_bog_beast_lord	VariantMeshes\wh_variantmodels\lz1\fim\fim_bog_beast\tech	fim_bog_beast_lord		2.2500	1.0000	0.0000	
+fim_bog_beast_lord	VariantMeshes\wh_variantmodels\lz1\fim\fim_bog_beast\tech	fim_bog_beast_lord		2.0500	1.0000	0.0000	
 fim_meargh_skattach_palanquin	VariantMeshes\wh_variantmodels\th07d\fim\fim_palanquin\tech	fim_meargh_skattach_palanquin		1.0000	1.0000	0.0000	
-fim_moor_hounds		fim_moor_hounds		1.0000	1.0000	0.0500	
+fim_moor_hounds_shaman	VariantMeshes\wh_variantmodels\wf1\grn\grn_giant_wolf\tech	fim_moor_hounds		1.0000	1.1500	0.0500	
 fim_nuckelavee_horse		fim_nuckelavee_horse		1.0000	1.0000	0.0000	

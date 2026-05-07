@@ -1,6 +1,0 @@
-variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
-#variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_!cr_elf_unit_dumping_ground
-cr_cst_undead_amanar	VariantMeshes/wh_variantmodels/rp4/cst/cst_undead_amanar/tech	cst_undead_amanar		2.0000	1.0000	0.0000	
-cr_def_sea_dragon_mount_lokhir	variantmeshes/wh_variantmodels/sn1/def/def_sea_dragon/tech	def_laithikir		2.5000	1.0000	0.0000	
-cr_hef_lothern_skycutter	variantmeshes/wh_variantmodels/bi1sc/hef/hef_lothern_skycutter/tech	hef_lothern_skycutter		0.8000	1.0000	0.0000	
-cr_hef_lothern_skycutter_ror	variantmeshes/wh_variantmodels/bi1sc/hef/hef_lothern_skycutter/tech	hef_lothern_skycutter_ror		0.8000	1.0000	0.0000	

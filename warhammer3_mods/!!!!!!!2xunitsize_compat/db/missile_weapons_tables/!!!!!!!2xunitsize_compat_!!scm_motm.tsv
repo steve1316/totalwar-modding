@@ -8,6 +8,7 @@ motm_gnoblar_scraplauncher	false	motm_gnoblar_scraplauncher_shot		false
 motm_ironblaster	false	motm_ironblaster_shot	iron_blaster	false
 motm_ogr_bosun	false	motm_ogr_bosun	pistol	false
 motm_sandbad_pistol	false	motm_sandbad_pistol	pistol	false
+motm_snarky	false	motm_snarky	iron_blaster	false
 motm_targog_harpoon	false	motm_targog_harpoon		false
 motm_vazgrat_pistol	false	motm_vazgrat_pistol	pistol	false
 nosso_boogies	false	nosso_boogies		false
@@ -18,5 +19,13 @@ um_gnoblar_spider_riders_1	false	wh_grn_goblin_arrow_poison_spider_mounted	bow	f
 um_gnoblar_spider_riders_ror	false	wh2_dlc15_grn_goblin_arrow_fire_lava_spider_mounted	bow	false
 um_ogr_blackpowder	false	um_ogr_blackpowder	gatling_gun	false
 um_ogr_blu	false	um_ogr_blu		false
+um_ogr_corrupt_throwers	false	um_ogr_corrupt_throwers	cannon	false
 um_ogr_diver_02	false	um_ogr_diver_02		false
+um_ogr_gatling	false	um_ogr_gatling	blunderbuss	false
+um_ogr_lead_fire	false	um_ogr_lead_fire	drakegun	false
+um_ogr_lead_snipe	false	um_ogr_lead_snipe	wh3_dlc23_iron_daemon_carronade	false
+um_ogr_pit_champions_spear	false	um_ogr_pit_champions_spear		false
 um_ogr_skullflingers	false	um_ogr_skullflingers		false
+um_snarky_ironblaster	false	um_snarky_ironblaster	iron_blaster	false
+um_snarky_maneater_03	false	um_snarky_maneater_03	pistol_Ogre	false
+um_snarky_scraplauncher	false	um_snarky_scraplauncher		false

@@ -1,6 +1,0 @@
-key	icon	parent_group
-#ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_!cr_elf_unit_dumping_ground
-cr_hef_merwyrm	wh2_main_cold_one	monster_beasts
-def_sea_dragon	dragon	monster_beasts
-lord_sea_dragon	dragon	commander
-missile_flying_chariot	flying_missile_chariot	missile_cavalry_chariots

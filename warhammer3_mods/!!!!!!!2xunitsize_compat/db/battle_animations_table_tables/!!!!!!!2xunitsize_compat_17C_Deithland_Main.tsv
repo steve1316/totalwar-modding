@@ -1,6 +1,16 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!!!!!2xunitsize_compat_17C_Deithland_Main
+emp_pyretitan_autodragon_cannon	humanoid13
+emp_pyretitan_autodragon_shotgun	humanoid13
+emp_pyretitan_halberd_melee	humanoid13
+emp_pyretitan_halberd_ranged	humanoid13
+emp_pyretitan_mortar	humanoid13
+emp_pyretitan_mortar_flame	humanoid13
+emp_pyretitan_zweishot	humanoid13
+emp_pyretitan_zweishot_shield	humanoid13
 engine_emp_gottzorn	gottzornnew01
+hu1_emp_anvilmane_rider_lance	humanoid01
+hu1_emp_anvilmane_rider_rifle	humanoid01
 hu1_emp_arbalest	humanoid01c
 hu1_emp_gonner_multishot	humanoid01
 hu1_emp_hellbore	humanoid01c

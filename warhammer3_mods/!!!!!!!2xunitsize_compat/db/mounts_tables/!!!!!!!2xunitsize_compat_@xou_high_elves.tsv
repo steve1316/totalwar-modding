@@ -1,4 +1,5 @@
 key	animation	entity	audio_armour_type	variant	voiceover
 #mounts_tables;10;db/mounts_tables/!!!!!!!2xunitsize_compat_@xou_high_elves
+hef_mnt_rocriders	bi1_hawk	wh_dlc05_wef_hawk_blood	body	wh2_main_hef_great_eagle_mount	wh_main_vo_culture_Eagle
 mnt_hef_dragon_mage_steed	hr1_warhorse	wh2_main_hef_mnt_barded_steed_dragon_princes	plate	hef_caledor_steed_mount	wh_main_vo_culture_Horse
 mnt_hef_unicorn	hr1_warhorse	wh_main_mnt_unicorn	leather	wh_dlc05_wef_unicorn	wh_main_vo_culture_Horse

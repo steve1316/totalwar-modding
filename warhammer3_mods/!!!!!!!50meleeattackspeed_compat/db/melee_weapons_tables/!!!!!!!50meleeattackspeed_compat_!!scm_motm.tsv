@@ -5,7 +5,9 @@ blaut_maneaters_ror	15	0	38	77	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	
 blautfang_warbeasts	0	0	18	42	2.0000	sword	creatures_claws	medium	2	1.1500	0.7500	0.0000	false		0	10	2.0		false
 fleshrender_hunters	9	0	59	31	3.0000	spear	spear_medium	medium	4	1.0000	0.5000	0.0000	false		0	10	2.0		false
 frb_chaos_ogre_khorne_0_weapon	0	20	40	70	3.0000	axe	axe	medium	4	1.0000	1.5000	1.0000	false		0	10	1.9		false
+frb_chaos_ogre_nurgle_0	0	0	60	40	3.0000	sword	sword_medium	medium	4	1.0000	1.5000	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
 fulg_irongut	0	5	30	70	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	1.9		false
+fulg_irongut_ror	0	5	30	70	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	0	10	1.9		false
 gnoblar_spider_chariot	0	16	20	8	5.0000	axe	creatures_big	very_large	3	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	3	2	2.0		false
 hrothgul_gorgers	0	20	30	70	5.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	1.6		false
 hrothgul_thundertusk_shrine	0	17	135	337	10.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	true	wh_dlc08_unit_contact_frostbite	5	5	1.9		false
@@ -26,17 +28,28 @@ motm_feral_arachnarok_spider_lava	20	0	140	360	10.0000	axe	creatures_claws	large
 motm_feral_arachnarok_spiderboss	28	0	196	504	14.0000	axe	creatures_big	large	5	1.0000	0.7500	1.0000	true	wh_main_unit_contact_poison	0	10	1.4		false
 motm_fernadrang	0	15	155	315	4.0000	sword	sword_huge	large	8	1.0000	0.7500	5.0000	true		0	10	1.9		false
 motm_frostmaw	0	0	135	311	5.0000	axe	sword_claws	large	8	1.0000	1.2500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	2.0		false
+motm_ghuth	0	0	260	300	8.0000	sword	creatures_claws	medium	6	1.3000	0.7500	0.0000	false		0	10	1.9		false
 motm_giant_spider_creepers	0	0	25	12	3.0000	knife	creatures_claws		1	1.0000	0.2500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 motm_giant_spider_lava	0	0	12	25	3.0000	knife	creatures_claws		1	1.0000	0.2500	1.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 motm_giant_spider_snagla	0	10	12	25	3.0000	knife	creatures_claws		1	1.0000	0.2500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 motm_glune	40	0	175	425	4.0000	spear	spear_huge	very_large	8	1.5000	1.5000	0.0000	false		0	10	1.9		false
 motm_greybacks	0	30	140	280	5.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	1.9		false
 motm_gusnag	0	0	200	80	3.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	false		0	10	2.0		false
+motm_gusnag_scorpion	0	25	150	345	7.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	0	10	1.85		false
+motm_hollowbellies_ror	0	0	33	77	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
 motm_jhared	0	20	120	280	5.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	false		0	10	1.6		false
+motm_jhared_boars	0	0	8	22	1.0000	sword	creatures_claws		1	1.0000	1.0000	0.0000	false		0	10	2.25		false
+motm_jhared_demigryph	0	20	20	40	7.0000	axe	creatures_big	small	2	1.2000	0.5000	0.0000	false		0	10	2.35		false
 motm_jhared_feral_mournfang	0	0	36	84	3.0000	sword	creatures_claws	medium	4	1.0000	0.6000	0.0000	false		0	10	1.6		false
 motm_jhared_feral_rhinox	0	0	44	100	3.0000	sword	creatures_claws	medium	4	1.0000	0.7500	0.0000	false		0	10	1.6		false
 motm_jhared_feral_stonehorn	0	20	140	340	10.0000	axe	creatures_claws	large	6	1.0000	1.2500	0.0000	false		5	5	1.9		false
 motm_jhared_feral_thundertusk	0	20	140	340	10.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	true	wh_dlc08_unit_contact_frostbite	5	5	1.9		false
+motm_jhared_gorebeast	0	30	26	44	5.0000	axe	creatures_claws	very_large	3	0.9000	0.7500	0.0000	false		2	2	2.0		false
+motm_jhared_great_stag	0	0	45	20	2.0000	sword	creatures_claws	small	3	1.0000	1.0000	0.0000	true		0	10	2.0		false
+motm_jhared_griffon	30	0	140	365	7.0000	sword	creatures_claws	large	8	1.0000	1.0000	0.0000	false		0	3	2.0		false
+motm_jhared_hippogryph	0	0	150	290	9.0000	axe	creatures_claws	large	4	1.3000	0.7500	0.0000	false		0	3	2.0		false
+motm_jhared_leviathan	0	15	120	360	10.0000	axe	creatures_claws	large	5	1.7500	0.7500	0.0000	false		5	5	1.6		false
+motm_jhared_pegasus	0	0	45	20	2.0000	axe	creatures_claws		2	1.0000	1.0000	0.0000	false		0	10	2.25		false
 motm_katerina	20	0	104	311	3.0000	spear	spear	medium	4	2.0000	0.5000	1.0000	false		0	10	2.0		false
 motm_katerina_sabretusk	0	0	88	212	6.0000	axe	creatures_claws	medium	4	1.5000	1.0000	0.0000	false		0	10	1.45		false
 motm_kineater	0	20	124	352	5.0000	axe	axe	medium	6	1.5000	1.0000	0.0000	false	wh2_dlc12_unit_contact_sundered_armour	0	10	2.0		false
@@ -47,6 +60,12 @@ motm_ogr_pit_fighters_cavalry	27	0	39	87	4.0000	spear	spear_huge	very_large	4	1.
 motm_sandbad	0	0	175	425	4.0000	spear	spear_huge	very_large	8	1.5000	1.5000	0.0000	false		0	10	1.9		false
 motm_sandgrinder	0	0	175	425	4.0000	spear	spear_huge	very_large	8	1.5000	1.5000	0.0000	false		0	10	1.9		false
 motm_sandgrinder_rhinox	0	0	425	336	3.0000	sword	sword_medium	medium	4	1.0000	0.6000	0.0000	false		0	10	1.6		false
+motm_slaver_weapon	0	0	135	315	7.0000	sword	sword	medium	5	1.0000	0.7500	0.0000	false		0	10	2.0		false
+motm_tainted_ogr_mon_ogre_spawns	0	0	220	55	3.0000	sword	creatures_claws	large	5	1.3000	0.7500	0.0000	false		0	10	1.9		false
+motm_tainted_ogr_mon_ogre_spawns_khorne	0	0	220	55	3.0000	sword	creatures_claws	large	5	1.3000	0.7500	1.0000	false		0	10	1.9		false
+motm_tainted_ogr_mon_ogre_spawns_nurgle	0	0	220	55	3.0000	sword	creatures_claws	large	5	1.3000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
+motm_tainted_ogr_mon_ogre_spawns_slaanesh	0	0	220	55	3.0000	sword	creatures_claws	large	5	1.3000	0.7500	0.0000	false	wh3_main_unit_contact_soporific_musk	0	10	1.9		false
+motm_tainted_ogr_mon_ogre_spawns_tzeentch	0	0	220	55	3.0000	sword	creatures_claws	large	5	1.3000	0.7500	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	1.9		false
 motm_targog	25	0	321	135	3.0000	spear	spear	medium	4	1.0000	0.5000	0.0000	false		0	2	2.0		false
 motm_vazgrat	0	0	137	319	3.0000	sword	sword	medium	8	1.0000	1.5000	0.0000	false		0	10	1.9		false
 motm_vazgrat_rhinox	30	0	159	363	3.0000	sword	sword	medium	8	1.0000	1.5000	0.0000	false		0	10	1.6		false
@@ -71,28 +90,43 @@ um_gnoblar_spider_riders_ror	0	0	13	14	0.0000	sword	sword		1	1.0000	0.7500	1.000
 um_kho_bruiser	0	15	120	280	4.0000	sword	sword_claws	medium	5	1.0000	0.7500	1.0000	false		0	10	2.0		false
 um_kho_ogre_0	0	0	59	31	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	2.0		false
 um_kho_ogre_1	0	12	59	31	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	2.0		false
+um_nur_vortex_beast	19	0	140	320	9.0000	axe	creatures_claws	large	5	2.0000	1.2500	0.0000	true	wh_main_unit_contact_poison	0	10	1.8		false
 um_ogr_blaut	0	18	135	322	7.0000	sword	sword	medium	6	1.0000	0.7500	0.0000	false		0	10	2.0		false
 um_ogr_blu	0	0	210	500	6.0000	axe	club_huge	large	7	1.7000	1.2500	0.0000	true		0	10	2.0		false
 um_ogr_captain	0	15	105	310	4.0000	axe	axe	medium	4	1.0000	1.0000	0.0000	true		0	10	2.0		false
+um_ogr_corrupt_throwers	0	0	59	31	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 um_ogr_dirty_shanks	0	15	38	74	5.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	0	10	1.6		false
 um_ogr_diver_01	20	0	145	290	4.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	1.9		false
 um_ogr_diver_02	0	0	55	215	4.0000	sword	sword_medium	medium	3	0.9000	0.7500	0.0000	false		0	10	1.9		false
 um_ogr_diver_03	0	20	120	270	3.0000	axe	axe	medium	5	1.0000	1.0000	0.0000	false	wh2_dlc11_unit_contact_disrupted	0	10	1.9		false
+um_ogr_dwf_labourer	0	0	4	14	1.0000	axe	axe		1	1.0000	3.0000	0.0000	false		0	10	2.15		false
 um_ogr_earth_elemental	0	22	160	225	5.0000	axe	creatures_claws	medium	6	1.0000	1.2500	0.0000	false		0	10	1.5		false
 um_ogr_flamefang_cavalry	0	0	36	89	3.0000	sword	sword_medium	medium	4	1.0000	0.6000	1.0000	false		0	10	1.6		false
 um_ogr_flamegut	0	7	30	75	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	1.0000	false		0	10	1.9		false
-um_ogr_fulg	0	10	120	280	4.0000	sword	sword_claws	medium	4	1.0000	0.7500	0.0000	false		0	10	2.0		false
-um_ogr_fulg_brood	0	15	165	355	3.0000	sword	sword_medium	medium	4	1.0000	0.7500	0.0000	false		0	10	1.6		false
+um_ogr_fulg	0	10	120	280	4.0000	sword	sword_claws	medium	4	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
+um_ogr_fulg_brood	0	15	165	355	3.0000	sword	sword_medium	medium	4	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	1.6		false
 um_ogr_golthog	0	27	165	300	5.0000	axe	axe	medium	5	1.5000	0.6000	0.0000	false		0	10	2.0		false
 um_ogr_gragtar	0	0	155	307	5.0000	axe	axe	medium	4	1.0000	1.0000	1.0000	true		0	10	2.0		false
 um_ogr_halfling	0	0	140	270	3.0000	axe	axe	medium	5	1.8000	1.0000	0.0000	false		0	10	1.9		false
+um_ogr_karaka	0	0	132	340	7.0000	sword	sword	medium	5	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
+um_ogr_karaka_vortex_beast	19	0	140	345	9.0000	axe	creatures_claws	large	5	2.0000	1.2500	0.0000	true	wh_main_unit_contact_poison	0	10	1.8		false
+um_ogr_laborer	7	0	28	65	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	1.95		false
+um_ogr_man_labourer	0	0	18	8	1.0000	axe	hammer		1	0.2000	0.7500	0.0000	false		0	10	2.25		false
 um_ogr_manbiters	15	0	20	35	4.0000	axe	axe	medium	5	1.5000	0.6000	0.0000	true		0	10	2.0		false
 um_ogr_morg	0	0	125	320	5.0000	axe	axe	medium	4	1.0000	1.0000	1.0000	true		0	10	2.0		false
 um_ogr_morg_ironguts_ror	5	0	30	75	4.0000	axe	axe	medium	5	1.5000	0.6000	1.0000	true	wh2_dlc12_unit_contact_flammable	0	10	2.0		false
 um_ogr_old_funder	0	0	155	280	4.0000	axe	sword_claws	medium	4	1.0000	0.7500	0.0000	false		0	10	2.0		false
 um_ogr_old_funders_boys	22	0	51	30	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	2.0		false
+um_ogr_pit_champions	15	0	33	77	4.0000	spear	spear_huge	very_large	3	1.0000	0.7500	0.0000	false		0	10	1.9		false
+um_ogr_pit_champions_mount	17	0	36	84	4.0000	spear	spear_huge	very_large	4	1.0000	0.6000	0.0000	false		0	10	1.6		false
+um_ogr_plague_bruiser_0	0	20	130	295	4.0000	sword	sword_claws	medium	4	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
+um_ogr_plague_guts	0	5	30	70	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
+um_ogr_plague_tyrant_0	0	0	135	315	7.0000	sword	sword	medium	5	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
+um_ogr_plaguebelly_0	0	0	130	300	5.0000	axe	axe	medium	4	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	2.0		false
 um_ogr_rothnogg	0	0	150	300	5.0000	axe	axe	medium	4	1.0000	1.0000	1.0000	true		0	10	2.0		false
+um_ogr_sand_scorpion	0	15	120	300	7.0000	axe	creatures_claws	large	4	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	4	4	1.85		false
 um_ogr_sea_rider	0	0	35	80	1.8500	axe	creatures_claws	medium	5	1.0000	1.2500	0.0000	false		0	10	1.9		false
+um_ogr_statue	0	12	22	57	2.0000	sword	sword_medium	medium	4	1.0000	0.7500	0.0000	false		0	10	1.9		false
 um_ogr_treehammer_bulls_01	0	0	59	31	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	2.0		false
 um_ogr_treehammer_bulls_02	0	12	59	31	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	2.0		false
 um_ogr_treehammer_maneaters_01	0	0	33	77	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false	wh2_dlc09_unit_contact_shieldbreaker	0	10	1.9		false

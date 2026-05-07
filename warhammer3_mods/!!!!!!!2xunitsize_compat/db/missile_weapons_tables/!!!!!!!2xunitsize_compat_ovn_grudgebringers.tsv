@@ -1,6 +1,10 @@
 key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
 #missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_ovn_grudgebringers
+galed_elf_archers	false	galed_elf_archers_arrow	bow	false
+grudgebringers_crossbows	false	grudgebringers_crossbows_bolt	crossbow	false
 grudgebringers_wagon	false	grudgebringers_wagon	crossbow	false
+helmgart_bowmen	false	helmgart_bowmen_arrow	bow	false
+keelers_longbows	false	keelers_longbows_arrow	bow	false
 leitdorf_9th_crossbows	false	leitdorf_9th_crossbows	crossbow	false
 ludwig_uberdorf	false	imperial_steam_tank_ludwig_uberdorf	repeater_rifle	false
 matthias	false	matthias	pistol	false

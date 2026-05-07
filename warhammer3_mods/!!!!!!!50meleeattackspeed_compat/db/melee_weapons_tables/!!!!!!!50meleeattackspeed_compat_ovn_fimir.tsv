@@ -3,19 +3,22 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 fim_bog_beast	0	0	65	45	3.0000	axe	creatures_claws	medium	4	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	1.8		false
 fim_bog_octopus	0	17	145	375	8.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	false		5	5	1.6		false
 fim_bog_octopus_summon	0	17	100	100	4.0000	axe	creatures_claws	large	3	1.0000	1.2500	0.0000	false		0	10	1.6		false
-fim_boglar_spear	0	0	17	4	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
+fim_boglar_spear	9	0	15	4	1.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	2.15		false
 fim_daemon_octopus_kroll	0	20	140	440	9.0000	axe	creatures_claws	large	6	1.0000	1.2500	0.0000	false		5	5	1.6		false
 fim_daemonomaniac	30	0	100	400	6.0000	axe	axe_huge	large	5	1.0000	1.2500	1.0000	true		0	10	2.0		false
 fim_daemonomaniac_ror	30	0	120	420	7.0000	axe	sword_huge	large	5	1.0000	1.2500	1.0000	true		0	10	2.0		false
-fim_death_quest	0	0	25	20	2.0000	axe	hammer		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
-fim_fimirach_noble_bog_beast	0	0	120	340	3.0000	axe	creatures_claws	medium	4	1.5000	0.7500	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	1.8		false
-fim_fimirach_noble_dual_maces	0	0	120	340	3.0000	axe	axe	medium	4	1.5000	1.0000	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	1.9		false
-fim_finmor_mace	0	20	220	180	3.0000	axe	hammer	medium	4	1.0000	1.2500	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
-fim_gharnus_daemon_ror	0	15	25	63	2.0000	axe	axe	medium	4	1.3000	1.0000	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	1.9		false
+fim_death_quest	0	6	30	9	1.0000	axe	club		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
+fim_fianna_axe	0	0	32	68	2.0000	axe	axe	medium	4	1.3000	1.0000	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	1.9		false
+fim_fimirach_noble_bog_beast	20	0	120	380	5.0000	axe	creatures_claws	large	5	1.0000	1.0000	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
+fim_fimm_dual_axes	0	5	29	13	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
+fim_finmor_mace	0	20	110	320	3.0000	axe	axe	medium	5	1.3000	1.0000	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
+fim_flaithmor_dual_axes	8	0	30	13	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	1.95		false
+fim_gharnus_daemon_ror	0	0	32	68	2.0000	axe	axe	medium	4	1.3000	1.0000	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	1.9		false
 fim_moor_hound_fangs	0	0	17	3	1.0000	knife	creatures_claws		1	1.0000	0.7500	0.0000	true		0	10	2.15		false
 fim_moor_hound_ror_fangs	0	0	32	13	1.0000	axe	creatures_claws	medium	1	1.0000	1.0000	0.0000	true		0	10	2.0		false
 fim_nuckelavee_sword	0	0	14	38	1.0000	sword	sword		1	1.0000	0.7500	1.0000	true		0	10	2.15		false
-fim_shearl	0	0	28	8	1.0000	axe	creatures_claws		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
+fim_shearl	0	0	28	8	1.0000	axe	club		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
+fim_shearl_spear	14	0	24	6	1.5000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
 fim_skattach_staff	0	0	90	320	1.0000	spear	staff	medium	4	1.0000	0.5000	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
 fim_swamp_daemons	0	0	42	14	2.0000	axe	creatures_claws		1	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	0	10	2.15		false
 wooden_arms	0	0	30	60	2.0000	sword	creatures_claws	medium	6	1.3000	0.7500	0.0000	false		0	10	1.9		false
