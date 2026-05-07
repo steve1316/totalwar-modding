@@ -14,7 +14,6 @@ from utilities import (
     extract_model_paths_from_variantmeshdefinition,
     extract_modded_tsv_data,
     load_multiple_tsv_data,
-    sort_tsv_data,
     write_updated_tsv_file,
     STEAM_LIBRARY_DRIVE,
 )
