@@ -157,8 +157,8 @@ def load_multiple_tsv_data(folder_path: str, table_name: str = None, schema_path
             if version_info is None:
                 version_info = temp_version_info
 
-    # Convert back to list of dictionaries.
-    merged_data = [dict(row_tuple) for row_tuple in merged_data_set]
+    # Convert back to list of dictionaries. Sort the deduplicated rows so the iteration order is stable across runs (sets have hash-randomized iteration order).
+    merged_data = [dict(row_tuple) for row_tuple in sorted(merged_data_set)]
     if skipped_count > 0:
         logging.info(f"Loaded a total of {len(merged_data)} unique rows for {folder_path} (skipped {skipped_count} outdated file(s)).")
     else:
