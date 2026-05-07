@@ -1,0 +1,74 @@
+[15:51:37][COPAClockwork.cpp 675] [7-5-2026] Starting CW: 12.2.0 mode=2
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  CW::Director::Director loglevel 2
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  CW::Director: loaded platform dll for clockwork_steam.Release.x64.dll
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: [Boot] EOSSDK Version 1.18.1.2-47370208 booting at 2026-05-07T15:51:37.960Z using C
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: [Boot] EOSSDK Platform Configuration win64-dynamic-x86_64
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: [Boot] EOSSDK Platform Properties [OS=Windows/10.0.19041.5915.64bit, ClientId=xyza7891ATyV9KckPl6uGxmuyZhOmA6i, ProductId=d68eaa36eee24fc99a1c4968b628a4a6, SandboxId=dda64c2956b54f1ba3cd97f6aaee775f, DeploymentId=713b042971ce4b05b8cec8cdc1d2e279, ProductName=Ringtail, ProductVersion=46142, IsServer=false, Flags=DisableOverlay]
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSAnalytics: Start Session (User: ...)
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSOverlay: Overlay will not load, because it was explicitly disabled when creating the platform
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSAntiCheat: [AntiCheatClient] Anti-cheat client not available. Verify that the game was started using the anti-cheat bootstrapper if you intend to use it.
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  CW::CW_CrossPlatform::CW_CrossPlatform: constructed
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  CW::AuthPlatform::SetState: PLATFORM_INITIAL
+[15:51:37][COPAClockwork.cpp 243] [CW NOTICE]  CW::AuthPlatform::SetState: PLATFORM_LOGIN
+[15:51:37][COPAClockwork.cpp 681] COPA::start_client_API(): CW_Init succeeded with EOS deployment 713b042971ce4b05b8cec8cdc1d2e279
+[15:51:37][COPAClockwork.cpp 94] Setting default stats, size: 68
+[15:51:37][COPAClockwork.cpp 99] COPA::start_client_API(): CW_COPA_Init done
+[15:51:58][COPAClockwork.cpp 243] [CW NOTICE]  waiting for CW init completion, max 60000 ms
+[15:51:58][COPAClockwork.cpp 243] [CW WARNING] Update starvation: 20954ms since last update completed
+[15:51:58][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: Updating Platform SDK Config, Time: 20.848522
+[15:51:58][COPAClockwork.cpp 243] [CW NOTICE]  Starting Prism: 1142710, 765...056, 1
+[15:51:58][COPAClockwork.cpp 257] DLC: preparing async DLC entitlement checking
+[15:51:58][COPAClockwork.cpp 287] DLC: started async DLC entitlement checking
+[15:51:58][COPAClockwork.cpp 243] [CW NOTICE]  platform auth succeeded
+[15:51:58][COPAClockwork.cpp 243] [CW NOTICE]  CW::AuthPlatform::SetState: PLATFORM_FETCH_TICKET
+[15:51:59][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: SDK Config Platform Update Request Successful, Time: 21.031542
+[15:51:59][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSAnalytics: EOS SDK Analytics disabled for route [1].
+[15:51:59][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: Updating Product SDK Config, Time: 21.043259
+[15:51:59][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSAnalytics: Start Session (User: ...)
+[15:51:59][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: SDK Config Product Update Request Successful, Time: 21.353508
+[15:51:59][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: SDK Config Data - Watermark: 438070848
+[15:51:59][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOS: ScheduleNextSDKConfigDataUpdate - Time: 21.353508, Update Interval: 358.961761
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  Using normal (non-override) settings
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  platform session ticket obtained
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSMessaging: Connect Messaging: Attempting connection to Stomp. LocalUserId=[000...a84] Url=[<Redacted>]
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  cross platform auth succeeded
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  CW::AuthPlatform::SetState: PLATFORM_READY
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  CW::UserIdMapper::GenerateUserIdMap: called for 91 users
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  CW::UserIdMapper::GenerateUserIdMap: returning CW_SUCCESS
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  calling GenerateUserIdMap for 91 friends
+[15:52:00][COPAClockwork.cpp 243] [CW WARNING] CW::AuthCAServices::HandleStackDiscoveryResponseCallback: state=1, response=403, length=111, content=<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>AccessDenied</Code><Message>Access Denied</Message></Error>, curl=ok:0, 
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  GenerateUserIdMap: adding 21 users to map
+[15:52:00][COPAClockwork.cpp 243] [CW NOTICE]  cross-platform user-id map completed with 22 users.
+[15:52:01][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSMessaging: Connect Messaging: Successfully connected to Stomp. LocalUserId=[000...a84]
+[15:52:01][COPAClockwork.cpp 243] [CW NOTICE]  stack discovery returned stack: 'wh3prod', domain: 'whprod.caaws.services'
+[15:52:01][COPAClockwork.cpp 243] [CW NOTICE]  Cloud Store environment: whprod-wh3prod
+[15:52:01][COPAClockwork.cpp 243] [CW NOTICE]  Cloud Store title configuration url: https://live-store.public.caaws.services/title-configuration/wh3/
+[15:52:01][COPAClockwork.cpp 243] [CW NOTICE]  Cloud Store title data url: https://live-store-wh3.public.caaws.services/title-data/
+[15:52:01][COPAClockwork.cpp 243] [CW NOTICE]  Beginning TWAS Login: Using Steam session ticket
+[15:52:03][COPAClockwork.cpp 243] [CW NOTICE]  twas login succeeded
+[15:52:03][COPAClockwork.cpp 243] [CW NOTICE]  Moving to CW_State_Online
+[15:52:03][COPAClockwork.cpp 243] [CW NOTICE]  NetworkManagerWindows: Initialized successfully
+[15:52:03][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSP2P: Requesting new TURN relay credentials for 000...a84.
+[15:52:03][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSP2P: A new connection request listener has been bound. LocalUserId=[000...a84] SocketId=[COPACONNECTION]
+[15:52:03][COPAClockwork.cpp 243] [CW NOTICE]  [EOS SDK] LogEOSP2P: A new connection established listener has been bound. LocalUserId=[000...a84] SocketId=[COPACONNECTION]
+[15:52:03][COPAClockwork.cpp 243] [CW NOTICE]  waited for CW init: 5026 ms
+[15:52:03][COPALogging.cpp 172] Multiplayer logging initialised, Verbose logging set to : false
+[15:52:03][EmpireMultiplayer.cpp 1770] calculating data checksum...
+[15:52:03][EmpireMultiplayer.cpp 2072] ...done. [result: 3724227231]
+[15:52:03][mp_lib.cpp 2258] Initialising MP version with protocol=0x128, build=0xb43e, checksum=0x0, mod=0x3a137b9e, data=0xddfb329f
+[15:52:03][MPTeamMatchmaking.cpp 998] PARTY_SYSTEM initialised with version number: 1485772032
+[15:52:03][file_interface.cpp 348] Steam Cloud initialized
+[15:52:04][SSMatchmakingClient.cpp 125] Running SSMatchmakingClient in stub mode - won't do anything.
+[15:52:04][SSArbitrationClient.cpp 94] Running SSArbitrationClient in stub mode - won't do anything.
+[15:52:04][mp_steam_lan_controller.cpp 205] MP_STEAM_LAN_INTERNAL_CONTROLLER::p_open
+[15:52:04][COPAClockwork.cpp 243] [CW NOTICE]  Steam request stats callback: Successful for user '765...056'
+[15:52:04][COPAThread.cpp 265] Handling LEADERBOARD_FIND_RESULT, RESPONSE
+[15:52:04][COPAThread.cpp 267] Handling USER_STATS_RECEIVED, BROADCAST
+[15:52:04][mp_steam_stats_controller.cpp 812] [SteamStatsCallbacks::OnUserStatsReceived] received player stats [steamid 0]
+[15:52:05][COPAClockwork.cpp 243] [CW WARNING] Update starvation: 1069ms since last update completed
+[15:52:05][MPTeamMatchmaking.cpp 2126] version hash updated: 1485772032 + 3923406767 = 765642666
+[15:52:05][MPTeamMatchmaking.cpp 2126] version hash updated: 765642666 + 1706676373 = 1491798713
+[15:52:08][COPAClockwork.cpp 243] [CW WARNING] Update starvation: 1930ms since last update completed
+[15:52:11][EmpireMultiplayer.cpp 880] Triggered platform launch invite: CW_ERROR_NO_DATA
+[15:52:26][file_interface.cpp 616] Steam cloud file read successfully [filters.eff]
