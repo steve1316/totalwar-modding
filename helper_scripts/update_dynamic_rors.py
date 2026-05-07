@@ -1217,21 +1217,22 @@ if __name__ == "__main__":
 
     # Reset if necessary.
     if args.reset:
-        # Use the RPFM CLI to delete all files from the packfile.
-        subprocess.run(
-            [
-                "./rpfm_cli.exe",
-                "--game",
-                "warhammer_3",
-                "pack",
-                "delete",
-                "--pack-path",
-                f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3513364573\\!!!!!!!_nanu_dynamic_rors_compat.pack",
-                "--folder-path",
-                "",
-            ],
-            capture_output=True,
-        )
+        # Delete db and variantmeshes folders explicitly because pack delete with empty --folder-path does not reliably clear the pack.
+        for folder in ["db", "variantmeshes"]:
+            subprocess.run(
+                [
+                    "./rpfm_cli.exe",
+                    "--game",
+                    "warhammer_3",
+                    "pack",
+                    "delete",
+                    "--pack-path",
+                    f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3513364573\\!!!!!!!_nanu_dynamic_rors_compat.pack",
+                    "--folder-path",
+                    folder,
+                ],
+                capture_output=True,
+            )
 
     # Then merge the updated mod files into the packfile.
     subprocess.run(
