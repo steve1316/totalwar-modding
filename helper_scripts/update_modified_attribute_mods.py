@@ -1,7 +1,6 @@
 """Script to update the modified attribute mods from the Steam Workshop to account for latest changes to the vanilla and modded data tables."""
 
 import logging
-import subprocess
 import time
 import shutil
 import os
@@ -14,9 +13,9 @@ from utilities import (
     load_multiple_tsv_data,
     write_updated_tsv_file,
     merge_move,
-    STEAM_LIBRARY_DRIVE,
 )
 from supported_mods import SUPPORTED_MODS
+from pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
 
 
 MODS_AND_STEAM_WORKSHOP_IDS = [
@@ -287,40 +286,10 @@ if __name__ == "__main__":
             merge_move(f"./{folder_name}", "../warhammer3_mods/")
 
     for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
+        pack_path = workshop_pack_path(steam_workshop_id, f"{mod_name}.pack")
         if args.reset:
-            # Use the RPFM CLI to reset the mod.
-            subprocess.run(
-                [
-                    "./rpfm_cli.exe",
-                    "--game",
-                    "warhammer_3",
-                    "pack",
-                    "delete",
-                    "--pack-path",
-                    f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\{steam_workshop_id}\\{mod_name}.pack",
-                    "--folder-path",
-                    "db",
-                ],
-                capture_output=True,
-            )
-
-        # Now use the RPFM CLI to add the modded files into the packfile.
-        subprocess.run(
-            [
-                "./rpfm_cli.exe",
-                "--game",
-                "warhammer_3",
-                "pack",
-                "add",
-                "--pack-path",
-                f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\{steam_workshop_id}\\{mod_name}.pack",
-                "--tsv-to-binary",
-                "./schemas/schema_wh3.ron",
-                "--folder-path",
-                f"../warhammer3_mods/{mod_name}/db;",
-            ],
-            capture_output=True,
-        )
+            reset_pack_folders(pack_path, ("db",))
+        add_folder_to_pack(pack_path, f"../warhammer3_mods/{mod_name}/db;")
 
     end_time = round(time.time() - start_time, 2)
     logging.info(f"Total time for updating modified attribute mods: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
