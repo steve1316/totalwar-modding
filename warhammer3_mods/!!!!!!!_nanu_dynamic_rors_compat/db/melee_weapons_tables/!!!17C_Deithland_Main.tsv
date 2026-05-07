@@ -3,6 +3,11 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 emp_chemlancers_lance	12	0	26	10	1.0000	lance	spear		1	1.0000	0.5000	0.0000	false		0	10	5.5000		false
 emp_deithguard_axelocks_melee	8	0	10	16	1.0000	spear	halberd		1	1.0000	0.8000	0.0000	false		0	10	6.0000		false
 emp_deithguard_sidearm	0	0	21	7	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	4.3000		false
+emp_deithland_spear_1h	15	0	19	8	1.0000	spear	spear		1	1.0000	0.5000	0.0000	false		0	10	4.4000		false
 emp_fumecorps_bayos_melee	0	0	16	12	1.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	5.8000		false
 emp_pyrehulks_fusilaxe	24	0	14	29	2.0000	spear	axe_huge	medium	3	1.4000	0.7500	0.0000	false		0	10	4.0000		false
 emp_pyrehulks_volley	0	24	32	19	1.0000	sword	sword_huge	medium	2	1.4000	0.7500	0.0000	false		0	10	4.1000		false
+emp_pyretitans_halberd	28	0	36	64	7.0000	axe	hammer_huge	large	5	1.7000	1.7500	0.0000	false		0	10	5.0000		false
+emp_pyretitans_heavygun	0	0	30	44	4.5000	axe	hammer_huge	large	4	1.5000	0.5000	0.0000	false		0	10	4.0000		false
+emp_pyretitans_mortar	0	0	26	40	4.0000	axe	hammer_huge	large	4	1.5000	0.5000	0.0000	false		0	10	4.0000		false
+emp_pyretitans_sword	0	28	36	64	5.0000	axe	axe_huge	large	4	1.5000	1.0000	0.0000	false		0	10	4.5000		false

@@ -1,0 +1,9 @@
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
+#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!scm_motm
+um_ogr_gatling	false	um_ogr_gatling	blunderbuss	false
+um_ogr_lead_fire	false	um_ogr_lead_fire	drakegun	false
+um_ogr_lead_snipe	false	um_ogr_lead_snipe	wh3_dlc23_iron_daemon_carronade	false
+um_ogr_pit_champions_spear	false	um_ogr_pit_champions_spear		false
+um_snarky_ironblaster	false	um_snarky_ironblaster	iron_blaster	false
+um_snarky_maneater_03	false	um_snarky_maneater_03	pistol_Ogre	false
+um_snarky_scraplauncher	false	um_snarky_scraplauncher		false

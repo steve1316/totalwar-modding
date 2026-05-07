@@ -1,3 +1,4 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!dead_cathay_units
+cth_mounted_peasant_archers	humanoid01
 dead_firelancer	humanoid01e

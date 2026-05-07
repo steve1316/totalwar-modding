@@ -1,31 +1,12 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!gra_knightly_orders
-emp_demigryph_griffon_guard		emp_demigryph_griffon_guard	bc2\emp\emp_demigryph\low_poly\emp_demigryph_lowlod	1.0000	1.0000	0.0500	
-emp_demigryph_knights_arrow		emp_demigryph_knights_arrow	bc2\emp\emp_demigryph\low_poly\emp_demigryph_lowlod	1.0000	1.0000	0.0500	
-emp_demigryph_knights_panther_inner		emp_demigryph_knights_panther_inner	bc2\emp\emp_demigryph\low_poly\emp_demigryph_lowlod	1.0000	1.0000	0.0500	
-emp_demigryph_reiksguard_inner		emp_demigryph_reiksguard_inner	bc2\emp\emp_demigryph\low_poly\emp_demigryph_lowlod	1.0000	1.0000	0.0500	
-emp_demigryph_strommer_band		emp_demigryph_strommer_band	bc2\emp\emp_demigryph\low_poly\emp_demigryph_lowlod	1.0000	1.0000	0.0500	
-emp_demigryph_taal_fury		emp_demigryph_taal_fury	bc2\emp\emp_demigryph\low_poly\emp_demigryph_lowlod	1.0000	1.0000	0.0500	
-emp_demigryph_vengeful_sun		emp_demigryph_vengeful_sun	bc2\emp\emp_demigryph\low_poly\emp_demigryph_lowlod	1.0000	1.0000	0.0500	
-mnt_barded_warhorse_black_bear		mnt_barded_warhorse_black_bear	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_black_guard		mnt_barded_warhorse_black_guard	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_black_rose		mnt_barded_warhorse_black_rose	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0500	
-mnt_barded_warhorse_blazing_sun		mnt_barded_warhorse_blazing_sun	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_broken_sword		mnt_barded_warhorse_broken_sword	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_brotherhood_steel		mnt_barded_warhorse_brotherhood_steel	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_drakenhof_templars		mnt_barded_warhorse_drakenhof_templars	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_everlasting_light		mnt_barded_warhorse_everlasting_light	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_fellwolf_brotherhood		mnt_barded_warhorse_fellwolf_brotherhood	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_fiery_heart		mnt_barded_warhorse_fiery_heart	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_gold_lion		mnt_barded_warhorse_gold_lion	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_hammers_sigmar		mnt_barded_warhorse_hammers_sigmar	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_justiciars_verana		mnt_barded_warhorse_justiciars_verana	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_knights_bull		mnt_barded_warhorse_knights_bull	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_knights_encarmine		mnt_barded_warhorse_knights_encarmine	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_knights_griffon		mnt_barded_warhorse_knights_griffon	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_knights_panther		mnt_barded_warhorse_knights_panther	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_knights_raven		mnt_barded_warhorse_knights_raven	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_sacred_scythe		mnt_barded_warhorse_sacred_scythe	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_shroud_comp		mnt_barded_warhorse_shroud_comp	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_sigmars_blood		mnt_barded_warhorse_sigmars_blood	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_white_wolf		mnt_barded_warhorse_white_wolf	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	

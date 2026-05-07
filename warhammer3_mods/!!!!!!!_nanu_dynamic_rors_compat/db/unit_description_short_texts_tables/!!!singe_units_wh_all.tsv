@@ -1,5 +1,16 @@
 key
 #unit_description_short_texts_tables;0;db/unit_description_short_texts_tables/!!!singe_units_wh_all
+brt_brigand
+brt_fire_trebuchet
+brt_foot_knight
+brt_guardians_realm
+brt_hermit_knights
+brt_questing_wardens
+brt_ranger
+brt_siege_trebuchet
+brt_spirits_fay
+brt_truffle_hounds
+great_falcons
 singe_blissbarb_archers
 singe_bm_bestigor_shield
 singe_bm_bestigor_spear
@@ -68,6 +79,7 @@ singe_hef_maidenguard
 singe_hef_swordsmen
 singe_hef_watchsisters
 singe_ice_riders
+singe_kho_blood_throne
 singe_kho_cult_blades
 singe_kho_cult_hunters
 singe_kho_cult_reavers
@@ -96,6 +108,7 @@ singe_plague_riders
 singe_sk_stormvermin_bonebreakers
 singe_skv_plague_staves
 singe_sla_exalted_fiend
+singe_sla_hellseekers
 singe_tmb_nehek_archers
 singe_tmb_nehek_bowhorse
 singe_tmb_nehek_spearhorse

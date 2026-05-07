@@ -1,4 +1,5 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!ovn_fimir
+fim_bog_beast	VariantMeshes\wh_variantmodels\lz1\fim\fim_bog_beast\tech	fim_bog_beast		2.0000	1.0000	0.0000	
 fim_bog_beast_draught	VariantMeshes\wh_variantmodels\lz1\fim\fim_bog_beast\tech	fim_bog_beast_draught		1.0000	1.3000	0.0000	
 fim_nuckelavee_horse		fim_nuckelavee_horse		1.0000	1.0000	0.0000	

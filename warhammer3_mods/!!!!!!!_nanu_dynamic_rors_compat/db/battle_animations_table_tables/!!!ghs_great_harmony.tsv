@@ -34,6 +34,7 @@ ghs_ksl_cav_alces_rider	humanoid01c
 ghs_lzd_vulcan_salamander	lizard02
 ghs_mon_hef_tree_man_archer	humanoid06e
 ghs_mon_hef_tree_man_dual_sword	humanoid06e
+ghs_wm_hef_flying_waystone	humanoid01d
 hu10_eighth_legion_axe_and_whip	humanoid10
 hu13_cth_rocket	humanoid13
 hu13_rune_guard_axe_and_cannon	humanoid13
@@ -65,6 +66,7 @@ ogr_lioneater	humanoid13
 skv_hellpit_ratling_01	hybridcreature05
 skv_hellpit_warpdrill_01	hybridcreature05
 skv_hellpit_warpflame_01	hybridcreature05
+sn1_sea_dragon	snake01
 tmb_heavy_ostrich_rider_spear_and_shield_ghs	humanoid01
 tmb_ostrich_rider_spear_and_shield_ghs	humanoid01
 tmb_secret_sandstalker	snake02b

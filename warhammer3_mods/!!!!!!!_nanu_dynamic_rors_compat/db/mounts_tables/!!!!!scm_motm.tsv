@@ -1,0 +1,6 @@
+key	animation	entity	audio_armour_type	variant	voiceover
+#mounts_tables;10;db/mounts_tables/!!!!!scm_motm
+um_motm_warsphinx_0	bc1_warsphinx	wh2_dlc09_tmb_mon_warsphinx	bone	um_motm_warsphinx_0	vo_culture_None
+um_motm_warsphinx_1	bc1_warsphinx	wh2_dlc09_tmb_mon_warsphinx	bone	um_motm_warsphinx	vo_culture_None
+um_ogr_araby_boar	hq2_wh3_mournfang	wh3_main_ogr_mnt_mournfang_blood	body	um_ogr_araby_boar	wh_dlc03_vo_culture_Boar
+um_ogr_pit_champions_mount	hq2_wh3_mournfang	um_ogr_pit_champions_mount	body	wh3_main_ogr_rhinox	wh3_main_vo_culture_Ogres

@@ -7,15 +7,16 @@ albion_riders_spear_noble	15	0	30	5	1.0000	spear	spear		1	1.0000	0.5000	0.0000	f
 albion_riders_sword	0	0	24	6	1.0000	sword	sword		4	1.0000	0.7500	0.0000	false		0	10	4.5000		false
 albion_riders_sword_noble	0	0	30	12	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	4.6000		false
 albion_swordmaiden_sword	10	0	12	30	2.0000	spear	halberd		1	1.0000	0.7500	0.0000	true		0	10	4.0000		false
-centaur_great_axe	0	0	4	26	2.0000	axe	axe		5	1.0000	1.0000	0.0000	false		0	10	4.3000		false
+centaur_great_axe	0	0	4	26	2.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	4.6000		false
+centaur_hunter_spear	0	0	22	6	2.0000	spear	spear		1	1.0000	0.5000	0.0000	false		0	10	4.4000		false
 fenhulk_claw	0	0	150	320	10.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	false		0	10	3.2000		false
 feral_gryphon	20	0	150	225	4.0000	axe	creatures_claws	large	5	1.0000	0.7500	0.0000	false		0	3	3.6000		false
 giant_melee_boulder	0	0	150	280	5.0000	axe	club_huge	large	5	1.2000	1.2500	0.0000	false		0	10	4.0000		false
-half_giant_club	25	0	90	40	2.0000	axe	club_medium	medium	4	1.0000	1.0000	0.0000	false		0	10	3.8000		false
+half_giant_club	15	0	70	35	2.0000	axe	club_medium	medium	4	1.0000	1.0000	0.0000	false		0	10	3.8000		false
 hearthguard_halberd	22	0	12	24	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	false		0	10	4.3000		false
 hearthguard_sword	0	0	28	8	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	3.8000		false
 highlander_2h_sword	0	10	6	26	1.0000	sword	sword		4	1.0000	0.7500	0.0000	false		0	10	3.8000		false
 ovn_barrow_wight	0	8	26	12	1.0000	sword	sword		1	1.0000	0.7500	0.0000	true		0	10	4.4000		false
-sickle_swords	0	0	38	9	1.0000	sword	sword		1	1.0000	0.7500	0.0000	true		0	10	4.0000		false
+sickle_swords	0	0	38	10	1.0000	sword	sword		1	1.0000	0.7500	0.0000	true		0	10	4.0000		false
 woad_raiders_dual_axes	0	6	32	6	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	4.0000		false
 wooden_arms	0	0	30	60	2.0000	sword	creatures_claws	medium	6	1.3000	0.7500	0.0000	false		0	10	3.8000		false

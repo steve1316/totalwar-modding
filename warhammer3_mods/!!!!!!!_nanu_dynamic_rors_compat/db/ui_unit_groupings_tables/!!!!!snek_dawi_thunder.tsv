@@ -1,6 +1,6 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!snek_dawi_thunder
 construction	wh_main_dwf_master_engineer	constructs
+dwf_gyrocycle	snek_dwf_cycle	cavalry_chariots
 missile_field_engineers	combat_engineer_infantry	missile_infantry
 missile_infantry_grenade	wh2_dlc11_cst_explosives_infantry	missile_infantry
-snek_dwf_cycle	snek_dwf_cycle	cavalry_chariots

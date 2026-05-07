@@ -1,6 +1,6 @@
 key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_type	audio_type	splash_attack_target_size	splash_attack_max_attacks	splash_attack_power_multiplier	building_damage_multiplier	ignition_amount	is_magical	contact_phase	collision_attack_max_targets	collision_attack_max_targets_cooldown	melee_attack_interval	scaling_damage	is_spell
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!snek_dawi_thunder
 snek_dwf_ammo_dump	50	50	0	0	1.0000	axe	unarmed		1	1.0000	1.0000	0.0000	false		0	10	5.7000		false
-snek_dwf_cycle	0	20	24	50	7.0000	axe	unarmed	very_large	10	1.0000	0.7500	1.0000	true		2	2	4.0000		false
+snek_dwf_cycle	0	15	30	45	7.0000	axe	unarmed	very_large	10	1.0000	0.7500	1.0000	true		2	2	4.0000		false
 snek_dwf_plow	60	0	80	100	12.0000	axe	axe	very_large	10	1.0000	1.2500	0.0000	false		8	2	2.0000		false
 wh_main_dwf_steamtank	0	18	60	140	6.0000	axe	unarmed	very_large	4	1.0000	1.2500	0.0000	false		4	4	4.0000		false

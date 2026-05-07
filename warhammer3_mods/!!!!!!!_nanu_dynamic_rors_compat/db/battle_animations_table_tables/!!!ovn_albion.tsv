@@ -1,6 +1,7 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!ovn_albion
 alb_maidenguard_sword1h	humanoid01b
+ce1_centaur_sword_and_bow	centaur01
 hu1b_huntress_sword_and_bow	humanoid01b
 hu1c_alb_chosen_ishernos	humanoid01c
 hu1c_alb_sword_and_sling	humanoid01c

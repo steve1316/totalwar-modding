@@ -1,13 +1,13 @@
 key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_type	audio_type	splash_attack_target_size	splash_attack_max_attacks	splash_attack_power_multiplier	building_damage_multiplier	ignition_amount	is_magical	contact_phase	collision_attack_max_targets	collision_attack_max_targets_cooldown	melee_attack_interval	scaling_damage	is_spell
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!kitties
+2ele_melee	35	0	200	330	9.0000	spear	spear_huge	large	3	1.0000	0.8000	0.0000	false		0	5	3.5000		false
 2hsw_melee	0	0	22	45	1.0000	sword	sword_ogre	medium	3	1.0000	0.5000	0.0000	false		0	10	3.5000		false
+3ele_melee	0	0	150	350	9.0000	axe	axe_huge	large	6	1.3000	1.0000	0.0000	true		0	10	3.8000		false
+4ele_melee	0	0	100	500	9.0000	axe	club_huge	large	6	2.0000	1.4000	0.0000	false		0	10	3.8000		false
 berstiga_melee	0	0	49	40	1.0000	mace	sword_ogre	medium	1	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	3.5000		false
-commandertiga_melee	0	0	200	180	1.0000	sword	sword_ogre	medium	5	2.5000	1.0000	0.0000	false		0	10	3.5000		false
-cthcommander_melee	0	0	160	300	1.0000	sword	sword_ogre	medium	10	3.0000	1.0000	0.0000	false		0	3	3.5000		false
 dagatiga_melee	0	21	26	16	1.0000	sword	sword_ogre	medium	1	1.0000	0.5000	0.0000	false		0	10	3.5000		false
 gorilla1_melee	0	0	50	55	8.0000	sword	creatures_claws	medium	4	1.3000	0.7500	0.0000	false	wh2_dlc17_unit_contact_dazed	0	10	3.8000		false
 halberdtiga_melee	22	0	15	37	1.0000	halberd	halberd_medium	medium	1	1.0000	1.0000	0.0000	false		0	10	3.5000		false
-herojag_melee	0	19	300	110	1.0000	sword	sword_ogre	medium	3	0.5000	0.5000	0.0000	false	wh2_main_unit_contact_weeping_blade	0	10	3.0000		false
 jag_melee	0	19	27	20	1.0000	sword	sword_ogre	medium	1	0.1000	0.5000	0.0000	false	wh2_main_unit_contact_weeping_blade	0	10	3.5000		false
 shieldtiga_melee	0	0	34	20	1.0000	sword	sword_ogre	medium	1	1.0000	1.0000	0.0000	false		0	10	3.5000		false
 speartiga_melee	25	0	32	17	1.0000	spear	halberd_medium	medium	1	1.0000	0.5000	0.0000	false		0	10	3.5000		false

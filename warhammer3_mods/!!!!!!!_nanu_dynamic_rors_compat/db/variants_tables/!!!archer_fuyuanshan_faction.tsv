@@ -3,4 +3,5 @@ variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	sc
 cth_fys_jade_horse_heavy	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_fys_jade_horse_heavy	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0500	0.0500	
 cth_fys_peasant_firelancer_hr_flanker	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_fys_peasant_firelancer_hr_flanker	hu1e/cth/cth_peasant/cth_peasant_01_imposter	1.0000	1.0000	0.0500	
 cth_fys_peasant_horse_light	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_fys_peasant_horse_light	hr1/cth/cth_horse/cth_horse_light_01_imposter	1.0000	1.0000	0.0500	
+cth_fys_rhino	animations/techpack/cth_fys_rhino/tech	cth_fys_rhino		1.2800	1.0000	0.0500	
 f_cth_cav_bastion_mount	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_fys_pagoda_hr_cataphract	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0500	0.0500	

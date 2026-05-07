@@ -1,4 +1,5 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!17C_Deithland_Main
+emp_anvilmanes_horses		emp_anvilmanes_horses_unit		1.0000	1.2500	0.0000	
 emp_chemlancers_horses		emp_chemlancers_horses		1.0000	1.0000	0.0000	hu1\imposter\humanoid_imposter
 emp_chemlancers_horses_mortars		emp_chemlancers_horses_mortars		1.0000	1.0000	0.0000	hu1\imposter\humanoid_imposter
