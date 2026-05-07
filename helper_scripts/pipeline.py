@@ -107,12 +107,29 @@ MODDED_FOLDERS: List[str] = [
 
 
 def workshop_pack_path(steam_id: str, pack_name: str) -> str:
-    """Return the on-disk path for a Steam Workshop pack file."""
+    """Return the on-disk path for a Steam Workshop pack file.
+
+    Args:
+        steam_id (str): The Steam Workshop ID for the mod.
+        pack_name (str): The pack filename including the `.pack` extension.
+
+    Returns:
+        Absolute Windows path to the pack file under the configured Steam library.
+    """
     return f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\{steam_id}\\{pack_name}"
 
 
 def clean_folder_name(package_name: str) -> str:
-    """Convert a `.pack` filename into a folder-safe identifier (RPFM table names cannot end in a digit)."""
+    """Convert a `.pack` filename into a folder-safe identifier.
+
+    RPFM table names cannot end in a digit, so the trailing digit is stripped if present.
+
+    Args:
+        package_name (str): The pack filename, e.g. `mymod.pack`.
+
+    Returns:
+        A sanitized folder name with the `.pack` suffix removed, spaces replaced with underscores, and any trailing digit stripped.
+    """
     folder_name = package_name.replace(".pack", "").replace(" ", "_")
     if folder_name and folder_name[-1].isdigit():
         folder_name = folder_name[:-1]
@@ -123,6 +140,10 @@ def reset_pack_folders(pack_path: str, folders: Tuple[str, ...] = ("db", "varian
     """Delete the named top-level folders inside a pack via the RPFM CLI.
 
     Doing this folder-by-folder is more reliable than passing an empty `--folder-path`, which sometimes leaves stale content behind.
+
+    Args:
+        pack_path (str): Path to the `.pack` file to mutate.
+        folders (Tuple[str, ...]): Top-level folder names inside the pack to clear. Defaults to `("db", "variantmeshes")`.
     """
     for folder in folders:
         subprocess.run(
@@ -132,7 +153,13 @@ def reset_pack_folders(pack_path: str, folders: Tuple[str, ...] = ("db", "varian
 
 
 def add_folder_to_pack(pack_path: str, source_folder: str, schema_path: str = SCHEMA_RON_PATH) -> None:
-    """Add a folder to a pack via the RPFM CLI, converting any TSV files inline."""
+    """Add a folder to a pack via the RPFM CLI, converting any TSV files inline.
+
+    Args:
+        pack_path (str): Path to the destination `.pack` file.
+        source_folder (str): RPFM `--folder-path` argument; usually `<filesystem_path>;<pack_relative_path>` or just `<filesystem_path>;`.
+        schema_path (str): Path to the WH3 schema RON file used to convert TSVs to binary. Defaults to `SCHEMA_RON_PATH`.
+    """
     subprocess.run(
         ["./rpfm_cli.exe", "--game", "warhammer_3", "pack", "add", "--pack-path", pack_path, "--tsv-to-binary", schema_path, "--folder-path", source_folder],
         capture_output=True,
@@ -140,7 +167,12 @@ def add_folder_to_pack(pack_path: str, source_folder: str, schema_path: str = SC
 
 
 def extract_variantmeshes_folder(mod_path: str, dest: str = "./modded_variantmeshes") -> None:
-    """Extract the `variantmeshes` folder from a mod pack to the named destination."""
+    """Extract the `variantmeshes` folder from a mod pack to the named destination.
+
+    Args:
+        mod_path (str): Path to the source `.pack` file.
+        dest (str): Local destination folder. Defaults to `./modded_variantmeshes`.
+    """
     subprocess.run(
         ["./rpfm_cli.exe", "--game", "warhammer_3", "pack", "extract", "--pack-path", mod_path, "--folder-path", f"variantmeshes;{dest}"],
         capture_output=True,
@@ -154,7 +186,15 @@ class DuplicateTracker:
         self._seen: Dict[str, set] = {table_name: set() for table_name in TABLE_KEY_FIELDS}
 
     def should_add(self, table_name: str, entry_data: Dict[str, Any]) -> bool:
-        """Return True if this entry has not yet been seen for the table. Records the entry as seen as a side effect."""
+        """Return True if this entry has not yet been seen for the table. Records the entry as seen as a side effect.
+
+        Args:
+            table_name (str): The table the entry belongs to. Tables not in `TABLE_KEY_FIELDS` are always allowed through.
+            entry_data (Dict[str, Any]): The row data to check, indexed by column name.
+
+        Returns:
+            True if the entry is new (and was just recorded), False if the same primary key was seen earlier for this table.
+        """
         if table_name not in TABLE_KEY_FIELDS:
             return True
         key_field = TABLE_KEY_FIELDS[table_name]
@@ -171,12 +211,16 @@ class DuplicateTracker:
 def extract_and_load_table_data(mod_path: str, table_configs: List[Dict[str, Any]] = TABLE_CONFIGS) -> Optional[Dict[str, Any]]:
     """Extract every table in `table_configs` from `mod_path` and load the rows into per-table dictionaries keyed by the primary key.
 
-    Returns a dictionary with three kinds of entries per table:
-        `<table_name>`: dict of `key -> row dict`.
-        `<table_name>_headers`: list of headers (only set if the table existed).
-        `<table_name>_version_info`: version_info row string (only set if the table existed).
+    Args:
+        mod_path (str): Path to the `.pack` file to extract from.
+        table_configs (List[Dict[str, Any]]): Per-table extraction config. Each entry must have `table_name`, `folder_name`, and `key_field`, and may have `required`. Defaults to `TABLE_CONFIGS`.
 
-    Returns None if a config marked `required=True` produced no extracted folder.
+    Returns:
+        A dictionary with three kinds of entries per table:
+            `<table_name>`: dict of `key -> row dict` (always present, possibly empty).
+            `<table_name>_headers`: list of headers (only present if the table existed in the pack).
+            `<table_name>_version_info`: version_info row string (only present if the table existed in the pack).
+        Returns None if a config marked `required=True` produced no extracted folder.
     """
     mappings: Dict[str, Any] = {}
 
@@ -207,8 +251,11 @@ def make_new_data_buckets(key: str, with_purchasable_effects: bool = False) -> D
     """Build the empty `new_data` dict for one land_unit, with one bucket per optional table.
 
     Args:
-        key: The land_units key for this entry (used for logging only).
-        with_purchasable_effects: If True, include the `unit_purchasable_effect_sets` bucket (only the dynamic_rors script writes to that table).
+        key (str): The land_units key for this entry (used for logging only).
+        with_purchasable_effects (bool): If True, include the `unit_purchasable_effect_sets` bucket (only the dynamic_rors script writes to that table). Defaults to False.
+
+    Returns:
+        Dict with `key`, `land_units`, `main_units`, optional `unit_purchasable_effect_sets`, and one empty list bucket per entry in `OPTIONAL_TABLES`, ready for `walk_land_unit_to_related_tables` to append into.
     """
     buckets: Dict[str, Any] = {"key": key}
     if with_purchasable_effects:
@@ -233,13 +280,13 @@ def walk_land_unit_to_related_tables(
     """Walk the foreign-key chain from a `land_units_tables` row, append related rows into `new_data`, and record any vanilla-mount variantmeshdefinitions to copy into the compat pack.
 
     Args:
-        data: The land_units row.
-        main_unit_data: The main_units row for `data["key"]` (already looked up by the caller).
-        table_data: The mapping returned by `extract_and_load_table_data`.
-        tracker: Deduplication state shared across all mods in the run.
-        new_data: Buckets to append to (built by `make_new_data_buckets`).
-        vanilla_mounts_keys: Set of vanilla mount keys; only mounts present here have their variantmeshdefinitions captured. If None, no variantmesh capture happens.
-        variant_mesh_definitions_to_add: List that is appended to with paths of variantmeshdefinition files to move into the compat pack.
+        data (Dict[str, Any]): The land_units row to walk from.
+        main_unit_data (Dict[str, Any]): The main_units row for `data["key"]` (already looked up by the caller).
+        table_data (Dict[str, Any]): The mapping returned by `extract_and_load_table_data`.
+        tracker (DuplicateTracker): Deduplication state shared across all mods in the run.
+        new_data (Dict[str, List[Any]]): Buckets to append to, built by `make_new_data_buckets`. Mutated in place.
+        vanilla_mounts_keys (Optional[set]): Set of vanilla mount keys; only mounts whose key is in this set have their variantmeshdefinitions captured. If None, no variantmesh capture happens.
+        variant_mesh_definitions_to_add (Optional[List[str]]): List that is appended to with paths of variantmeshdefinition files to move into the compat pack. Mutated in place.
     """
     if tracker.should_add("main_units_tables", main_unit_data):
         new_data["main_units"].append(main_unit_data)
@@ -366,7 +413,15 @@ def walk_land_unit_to_related_tables(
 
 
 def _replace_version_info_filename(version_info: str, new_filename: str) -> str:
-    """Swap the trailing path component in a version_info row's path field with `new_filename`."""
+    """Swap the trailing path component in a version_info row's path field with `new_filename`.
+
+    Args:
+        version_info (str): Full version_info row, with shape `#table_name;version;db/table/<existing_filename>`.
+        new_filename (str): Replacement value for the trailing path component.
+
+    Returns:
+        Updated version_info string with the trailing path component replaced.
+    """
     return version_info.replace(version_info.split("/")[-1], new_filename)
 
 
@@ -377,7 +432,15 @@ def write_optional_tables(
     table_data: Dict[str, Any],
     tables_to_sort: List[str],
 ) -> None:
-    """Write each non-empty optional-table bucket in `new_data` and record the destination paths in `tables_to_sort`."""
+    """Write each non-empty optional-table bucket in `new_data` and record the destination paths in `tables_to_sort`.
+
+    Args:
+        new_data (Dict[str, Any]): Per-unit buckets produced by `walk_land_unit_to_related_tables`.
+        output_root (str): Root output folder (e.g. `./!!!!!!!_nanu_dynamic_rors_compat`); each bucket is written under `<output_root>/db/<table_name>`.
+        file_suffix (str): File suffix used for the TSV filename and the path component of each table's version_info row.
+        table_data (Dict[str, Any]): The mapping returned by `extract_and_load_table_data`. Used to look up per-table `headers` and `version_info`.
+        tables_to_sort (List[str]): Mutated in place; each newly-written table's directory is appended if not already present, so the caller can sort them all afterwards.
+    """
     for bucket_key, table_name in OPTIONAL_TABLES:
         if not new_data[bucket_key]:
             continue
@@ -395,7 +458,14 @@ def write_optional_tables(
 
 
 def move_variantmesh_definitions(variant_mesh_definitions: List[str], output_root: str) -> None:
-    """Move variantmeshdefinitions and their referenced wh_variantmodels into the compat pack folder structure."""
+    """Move variantmeshdefinitions and their referenced wh_variantmodels into the compat pack folder structure.
+
+    Each definition file is moved out of `./modded_variantmeshes/...` into `<output_root>/variantmeshes/variantmeshdefinitions/`, then any model paths referenced inside it are moved out of `./modded_variantmeshes/variantmeshes/wh_variantmodels/` into `<output_root>/variantmeshes/wh_variantmodels/`. Missing source files are skipped silently.
+
+    Args:
+        variant_mesh_definitions (List[str]): Source paths for the variantmeshdefinition files to move. May contain duplicates; missing entries are skipped.
+        output_root (str): Root output folder (e.g. `./!!!!!!!_nanu_dynamic_rors_compat`).
+    """
     if not variant_mesh_definitions:
         return
     for variant_mesh_definition in variant_mesh_definitions:
