@@ -40,7 +40,7 @@ ghs_chd_kdaai_halberd	25	0	65	55	2.0000	spear	halberd	medium	2	1.0000	0.5000	1.0
 ghs_cth_cav_jade_lion_rider	25	0	20	60	3.0000	axe	stone_club_medium	medium	4	1.0000	1.0000	0.0000	true	cth_unit_contact_dragon_roar	5	3	3.0000		false
 ghs_cth_cav_jet_lion_rider	0	0	30	50	3.0000	axe	stone_club_medium	medium	4	1.0000	1.0000	0.0000	true	cth_unit_contact_moon_flame	5	3	3.5000		false
 ghs_cth_inf_secret_follower	0	15	10	25	3.0000	sword	sword	small	1	1.0000	0.7500	0.0000	true	cth_unit_contact_ink	0	10	3.0000		false
-ghs_def_inf_khaine_avatar	0	0	0	250	3.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	true	wh2_main_unit_contact_witch_elf_poison	0	10	3.0000	ghs_def_inf_khaine_avatar	false
+ghs_def_inf_khaine_avatar	0	0	100	350	3.0000	sword	sword	medium	7	1.0000	1.0000	0.0000	true	wh2_main_unit_contact_witch_elf_poison	0	10	3.0000	ghs_def_inf_khaine_avatar	false
 ghs_def_mon_flying_medusa	0	0	130	280	10.0000	spear	halberd	large	6	1.0000	1.2500	0.0000	true	wh2_dlc11_unit_contact_charmed	0	10	4.0000		false
 ghs_def_mon_manticore_rider	0	15	150	200	8.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	0	3	4.0000		false
 ghs_def_mon_sea_dragon	20	0	140	380	8.0000	axe	creatures_claws	large	8	1.0000	1.0000	0.0000	false	ghs_def_sea_dragon_waterlogged	4	10	3.5000		false

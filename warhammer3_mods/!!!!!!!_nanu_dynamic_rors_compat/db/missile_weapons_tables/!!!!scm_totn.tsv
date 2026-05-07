@@ -1,5 +1,6 @@
 key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
 #missile_weapons_tables;11;db/missile_weapons_tables/!!!!scm_totn
 hkrul_birna	false	hkrul_birna	bow_LH	false
+hkrul_norsca_whalers	false	hkrul_norsca_whalers	javelin	false
 hkrul_sarl_hunters	false	hkrul_sarl_hunters	bow	false
 scm_nor_javelin_longship	false	scm_nor_javelin_longship		false

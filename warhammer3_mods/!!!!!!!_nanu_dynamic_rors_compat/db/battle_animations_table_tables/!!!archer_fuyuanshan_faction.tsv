@@ -1,4 +1,6 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!archer_fuyuanshan_faction
 cth_fys_gi_mingwang	humanoid11b
+hu1_hr1_fys_pagoda_mace	humanoid01
+hu1_ox_fys_rhino_rider	humanoid01
 hu1e_hr1_fys_firelance	humanoid01e

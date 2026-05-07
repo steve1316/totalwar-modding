@@ -2,14 +2,17 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!ovn_araby
 arb_elephant_tusks	0	17	20	90	3.0000	axe	creatures_claws	small	6	1.0000	1.2500	0.0000	false		3	2	3.2000		false
 arb_war_elephant_tusks	0	20	130	270	8.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	false		5	5	3.2000		false
+ovn_arb_arabyan_guard_weapon	20	0	11	25	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	false		0	10	4.9000		false
+ovn_arb_cav_sipahis_weapon	0	0	14	34	2.0000	axe	hammer		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
+ovn_arb_dervishers_weapon	0	12	28	12	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	4.3000		false
 ovn_arb_enchanted_rope	0	0	25	55	4.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	true		0	10	4.0000		false
 ovn_arb_flying_carpet	0	0	25	15	2.0000	axe	dlc15_troll_hag_net	small	4	1.0000	0.5000	0.0000	false		0	10	4.0000		false
 ovn_arb_magician_djinn_carriage	0	20	60	140	5.0000	axe	unarmed	very_large	5	1.0000	1.0000	0.0000	false		3	3	4.8000		false
-ovn_arb_mon_giant_vulture_beak	0	0	254	166	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+ovn_arb_mon_giant_vulture_beak	0	0	170	250	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+ovn_arb_southland_warriors_weapon	0	10	13	27	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 ovn_arb_spear_mirage	0	0	0	0	1.0000	spear	spear		1	1.0000	0.5000	0.0000	false		0	10	5.7000		false
-ovn_arb_sword_desert_spirit	0	0	110	380	6.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	true		0	10	4.0000		false
-ovn_arb_sword_fire_efreet	0	25	140	310	6.0000	axe	club_huge	large	5	1.0000	1.2500	10.0000	true		0	10	4.0000		false
+ovn_arb_sword_fire_efreet	0	25	150	330	6.0000	axe	club_huge	large	5	1.0000	1.2500	10.0000	true		0	10	4.0000		false
 ovn_arb_sword_genie	0	0	110	310	6.0000	sword	sword	medium	4	1.1000	1.2500	0.0000	true		0	10	3.8000		false
-ovn_arb_sword_sea_nymph	25	0	135	320	6.0000	sword	sword	large	5	1.0000	1.2500	0.0000	true		0	10	4.0000		false
+ovn_arb_sword_sea_nymph	20	0	140	320	6.0000	sword	sword	large	5	1.0000	1.2500	0.0000	true		0	10	4.0000		false
 ovn_arb_sword_tempest_djinn	0	0	125	295	6.0000	axe	creatures_claws	large	6	1.0000	1.2500	0.0000	true		0	10	4.0000		false
 ovn_arb_waghzen_club	0	18	18	42	3.0000	axe	club_medium	small	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false

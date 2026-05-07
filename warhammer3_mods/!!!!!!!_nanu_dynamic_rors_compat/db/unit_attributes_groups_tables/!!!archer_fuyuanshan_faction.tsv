@@ -1,6 +1,7 @@
 group_name
 #unit_attributes_groups_tables;0;db/unit_attributes_groups_tables/!!!archer_fuyuanshan_faction
 attribute_cth_fys_peasant_firelancer
+cth_fys_cav_rhino_rider
 cth_fys_jade_warrior_lancer
 cth_mon_yaksha_attributes
 f_cth_cav_bastion_attributes

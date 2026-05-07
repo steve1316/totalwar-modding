@@ -23,6 +23,7 @@ traj_kho_cav_war_bear_mount	VariantMeshes/wh_variantmodels/br1/ksl/ksl_bear/tech
 traj_kho_forsaken_rider_hound	VariantMeshes\wh_variantmodels\bc4\dae\dae_rot_beast\tech\	traj_kho_forsaken_rider_hound		0.5700	1.2500	0.0200	
 traj_kho_khornate_guard_rider_mount		krk_horned_one		1.1500	1.0000	0.0000	
 traj_kho_ripperdactyl_mount	VariantMeshes\wh_variantmodels\bi3\lzd\lzd_terradon\tech	kho_ripperdactyl		1.0000	1.0000	0.0000	
+traj_kho_skycutter_bows_mount	VariantMeshes/wh_variantmodels/skc1/hef/hef_skycutter/tech/	kho_skycutter		1.0000	1.0000	0.0000	
 traj_kho_stegadon_cannon	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	traj_kho_stegadon_cannon		1.6000	1.0000	0.0000	
 traj_kho_stegadon_shrine	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	traj_kho_stegadon_shrine		1.6000	1.0000	0.0000	
 traj_kho_terradon_mount	VariantMeshes\wh_variantmodels\bi3\lzd\lzd_terradon\tech	kho_terradon		1.0000	1.0000	0.0000	

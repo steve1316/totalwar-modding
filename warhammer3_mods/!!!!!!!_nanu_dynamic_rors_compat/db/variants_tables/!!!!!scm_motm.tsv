@@ -1,0 +1,5 @@
+variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
+#variants_tables;6;db/variants_tables/!!!!!scm_motm
+um_motm_warsphinx	variantmeshes/wh_variantmodels/bc1/ogr/um_motm_warsphinx/tech	um_motm_warsphinx		1.0000	1.1000	0.0000	
+um_motm_warsphinx_0	variantmeshes/wh_variantmodels/bc1/ogr/um_motm_warsphinx/tech	tmb_khemrian_warsphinx		1.0000	1.0000	0.0000	
+um_ogr_araby_boar		um_ogr_araby_boar		1.0000	1.0000	0.0000	

@@ -1,5 +1,6 @@
 key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
 #missile_weapons_tables;11;db/missile_weapons_tables/!!!singe_units_wh_all
+brt_ranger_bow	false	Ranger_Arrow	bow	false
 singe_ancient_razordon_spike	false	singe_ancient_razordon_spike_launch		false
 singe_blissbarb_bow	false	singe_blissbarb_arrow	bow	false
 singe_burningthunder_gun	false	singe_burningthunder_grenade	grenade_launcher	false
