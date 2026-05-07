@@ -1,0 +1,3 @@
+key	ammo_caisson_entity	ammo_caisson_destruction	ammo_caisson_model	ammo_caisson_destroyed_model	articulated_entity	head_offset	engine_articulation_node_index	draughts_articulation_node_index	is_train
+#land_unit_articulated_vehicles_tables;6;db/land_unit_articulated_vehicles_tables/!!!!!!!2xunitsize_compat_archer_fuyuanshan_faction
+cth_fys_commanderveh_articulation		vmp_black_coach_01			cth_fys_commanderveh_articulation	1.7500	2	0	false

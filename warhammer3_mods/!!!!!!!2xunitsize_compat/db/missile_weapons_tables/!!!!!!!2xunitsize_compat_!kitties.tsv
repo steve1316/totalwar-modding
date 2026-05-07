@@ -4,6 +4,7 @@ bola_tiga	false	bola_tiga	globe	false
 bombp_hyena	false	bombp_hyena	globe	false
 chakram_tiga	false	chakram_tiga	javelin	false
 commandertiga_missile	false	commandertiga_projectile	bow_large	false
+commandertiga_projectile_ele	false	commandertiga_projectile_ele	bow_large	false
 cthcommander_bomb	true	cthcommander_bomb	globe	false
 dagger_hyena	false	dagger_hyena	javelin	false
 gorilla_bomb	false	gorilla_bomb	globe	false
@@ -14,7 +15,10 @@ hyenaskull_bone	true	hyenaskull_bone	javelin	false
 javelin_tiga	false	javelin_tiga	javelin	false
 kitty_missile	false	kitty_projectile	bow_large	false
 leo_arrow	false	leo_arrow	bow_large	false
+nuran_bolt	false	nuran_bolt	wh2_dlc14_medusa_gaze	false
+nuran_bolt_morash	false	nuran_bolt_morash	wh2_dlc14_medusa_gaze	false
 shieldtiga_missile	false	shieldtiga_projectile	bow_large	false
 sling_hyena	false	sling_hyena	javelin	false
 star_jag	false	star_jag	javelin	false
 sumata_bolt	false	sumata_bolt	wh2_dlc14_medusa_gaze	false
+yashran_bomb	true	yashran_bomb	globe	false

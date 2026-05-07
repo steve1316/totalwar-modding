@@ -1,5 +1,0 @@
-variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
-#variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_!cr_daemon_unit_dumping_ground
-cr_sla_slaanesh_serpent	variantmeshes/wh_variantmodels/sn1/sla/sla_slaanesh_serpent/tech	urgat_sla_slaanesh_serpent		1.0000	1.0000	0.0000	
-cr_sla_slaanesh_serpent_lord	variantmeshes/wh_variantmodels/sn1/sla/sla_slaanesh_serpent/tech	urgat_sla_slaanesh_serpent_lord		1.7500	1.0000	0.0000	
-cr_tze_mon_great_winged_terror_0	variantmeshes/wh_variantmodels/wt1/tze/tze_winged_terror/tech	tze_winged_terror		1.5000	1.0000	0.0000	

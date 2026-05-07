@@ -2,6 +2,7 @@ variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	sc
 #variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_bodyguards_allinone_en
 cth_bodyguard_sky_junk_enhanced	warmachines/aircraft/cth_sky_junk/tech/	cth_bodyguard_sky_junk_enhanced		1.0000	1.0000	0.0000	
 grn_night_goblin_colossal_squig	variantmeshes/wh_variantmodels/rp2/grn/grn_squig_herd/tech_for_giant_squig	grn_night_goblin_colossal_squig		1.0000	6.0000	0.0000	
+hef_bodyguard_mount_phoenix_frostheart	VariantMeshes\wh_variantmodels\bi1\hef\hef_great_eagle\tech	hef_phoenix_frostheart		1.0000	1.0000	0.0000	
 ogr_bodyguard_mournfang_armoured		ogr_bodyguard_mournfang_armoured		1.0000	1.0000	0.0500	
 ogr_bodyguard_rhinox_armoured		ogr_bodyguard_rhinox_armoured		1.0000	1.0000	0.0500	
 ogr_bodyguard_rhinox_armoured_ror		ogr_bodyguard_rhinox_armoured_ror		1.0000	1.0000	0.0500	

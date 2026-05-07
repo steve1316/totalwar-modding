@@ -43,7 +43,7 @@ ghs_cav_ksl_golden_knight_bear	30	0	35	85	3.0000	lance	halberd	medium	5	1.0000	0
 ghs_cav_ksl_ice_guard_bear	25	0	30	80	3.0000	lance	halberd	medium	3	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	4.0000		false
 ghs_cav_wef_wild_hunter_knight	0	20	30	80	2.0000	lance	spear	medium	4	1.0000	0.7500	0.0000	true	wh2_pro08_unit_contact_dampen	2	4	3.0000		false
 ghs_cav_wef_zoat_rider_thorn_sister	30	0	20	90	2.0000	axe	axe	medium	4	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	4.0000		false
-ghs_cha_shugengan_demidragon_weapon	15	15	150	350	9.0000	sword	sword_huge	large	8	1.0000	1.0000	0.0000	true		10	10	4.0000		false
+ghs_cha_shugengan_demidragon_weapon	15	0	150	350	9.0000	sword	sword_huge	large	8	1.0000	1.0000	0.0000	true		10	10	4.0000		false
 ghs_chd_kdaai_beasts	25	0	250	450	6.0000	axe	creatures_claws	large	7	2.0000	1.2500	1.0000	true		0	10	4.0000		false
 ghs_chd_kdaai_bull	0	0	150	300	5.0000	axe	axe	medium	5	1.5000	1.0000	1.0000	true		0	10	4.0000		false
 ghs_chd_kdaai_conquer	0	20	140	400	10.0000	axe	creatures_claws	large	7	1.0000	1.2500	1.0000	true	wh2_dlc17_unit_contact_dazed	5	5	4.0000		false
@@ -57,7 +57,7 @@ ghs_cth_cha_jade_blood_taoist	0	0	150	200	4.0000	sword	sword	medium	8	1.0000	0.7
 ghs_cth_inf_royal_guard_crowmen	0	0	200	120	2.0000	sword	creatures_claws	medium	7	1.0000	1.0000	0.0000	true		0	10	4.0000		false
 ghs_cth_inf_royal_guard_crowmen_avatar	0	0	300	200	7.0000	axe	creatures_claws	large	7	1.6000	1.2500	0.0000	true	wh_dlc06_unit_contact_discouraged	0	10	4.0000		false
 ghs_cth_inf_secret_follower	0	15	10	25	3.0000	sword	sword	small	1	1.0000	0.7500	0.0000	true	cth_unit_contact_ink	0	10	3.0000		false
-ghs_def_inf_khaine_avatar	0	0	0	250	3.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	true	wh2_main_unit_contact_witch_elf_poison	0	10	3.0000	ghs_def_inf_khaine_avatar	false
+ghs_def_inf_khaine_avatar	0	0	100	350	3.0000	sword	sword	medium	7	1.0000	1.0000	0.0000	true	wh2_main_unit_contact_witch_elf_poison	0	10	3.0000	ghs_def_inf_khaine_avatar	false
 ghs_def_mon_flying_medusa	0	0	130	280	10.0000	spear	halberd	large	6	1.0000	1.2500	0.0000	true	wh2_dlc11_unit_contact_charmed	0	10	4.0000		false
 ghs_def_mon_manticore_rider	0	15	150	200	8.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	0	3	4.0000		false
 ghs_def_mon_sea_dragon	20	0	140	380	8.0000	axe	creatures_claws	large	8	1.0000	1.0000	0.0000	false	ghs_def_sea_dragon_waterlogged	4	10	3.5000		false

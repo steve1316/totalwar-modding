@@ -3,12 +3,20 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 bastiladon	0	15	90	160	9.0000	axe	creatures_claws	medium	3	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	1.85		false
 dread	0	0	220	530	20.0000	axe	creatures_claws	very_large	12	1.7000	1.2500	0.0000	true	wh_dlc06_unit_contact_discouraged	0	0	0.0	wh2_dlc17_bst_ghorgon_ror	false
 wh2_dlc09_tmb_necropolis_knights_halberd_ete	35	0	120	300	5.0000	lance	halberd	small	3	1.2000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	2.7		false
+wh2_dlc09_tmb_necropolis_knights_lance_ete	0	25	220	230	5.0000	lance	halberd	small	3	1.2000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	2.1		false
 wh2_dlc09_tmb_sword_hero_ete	0	25	240	120	3.0000	sword	sword	small	4	1.0000	0.7500	0.0000	false		0	10	1.9	wh3_main_assassin	false
+wh2_dlc10_def_war_hydra_ror_0_ete	0	20	140	300	9.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	false	wh3_main_unit_contact_frostbite_upgraded	0	10	1.8		false
 wh2_dlc10_hef_handmaiden_spear_ksl	35	0	160	200	2.0000	spear	spear	medium	4	1.0000	0.5000	0.0000	true	wh3_main_unit_contact_frostbite_upgraded	4	4	0.9		false
 wh2_dlc11_cst_claws_mourngul_haunter_ete	0	25	140	280	5.0000	axe	creatures_claws	medium	6	1.0000	1.2500	0.0000	true	wh3_main_unit_contact_frostbite_upgraded	0	10	0.0		false
+wh2_dlc11_cst_halberd_depth_guard_ete	0	0	220	230	3.0000	sword	sword	medium	4	1.3000	0.7500	0.0000	true		0	10	1.9		false
+wh2_dlc11_cst_halberd_depth_guard_ete_ror	0	0	220	230	3.0000	sword	sword	medium	4	1.3000	0.7500	1.0000	true	wh_main_unit_contact_morale	0	10	1.9		false
 wh2_dlc14_brt_cha_henri_le_massif_hippogryph_ete	0	25	110	300	9.0000	sword	creatures_claws	large	4	1.3000	1.0000	0.0000	false		0	10	1.9		false
+wh2_dlc14_def_master_cold_one_ete	0	15	120	280	4.0000	spear	halberd	large	4	1.0000	0.5000	0.0000	false		0	10	2.0		false
+wh2_dlc14_def_master_cold_one_ete_ror	30	0	120	280	4.0000	spear	halberd	large	4	1.0000	0.5000	0.0000	true		0	10	2.0		false
+wh2_dlc14_def_master_halberd_ete	30	0	115	235	4.0000	spear	halberd	large	4	1.0000	0.5000	0.0000	true		0	2	1.9		false
 wh2_dlc14_skv_cha_snikch_ete	0	25	80	250	4.0000	sword	sword	large	6	1.0000	0.5500	0.0000	true	wh_main_unit_contact_poison	0	10	1.9	wh2_dlc14_skv_cha_snikch	false
 wh2_dlc14_skv_master_assassin_claw_blade_ete	0	20	150	230	3.0000	sword	sword	medium	3	1.0000	0.5500	0.0000	false	wh2_main_unit_contact_weeping_blade	0	10	1.9		false
+wh2_dlc15_hef_imrik_lance_ete	25	0	120	250	4.0000	lance	spear	medium	4	1.0000	0.5000	1.0000	true	wh_main_unit_contact_morale	0	10	2.0		false
 wh2_dlc16_tmb_chieftain_halberd_ete	25	0	100	250	3.0000	spear	halberd	large	4	1.0000	0.5000	0.0000	true	wh2_main_unit_contact_weeping_blade	0	10	2.0		false
 wh2_dlc16_wef_stag_knight_spear_ete	25	0	140	260	4.0000	spear	spear	large	4	1.0000	0.8000	0.0000	false		0	2	2.0		false
 wh2_dlc17_bst_wargor_mace_kho	0	25	260	150	3.0000	axe	hammer	large	4	2.5000	0.7500	1.0000	false		0	10	1.9		false
@@ -16,7 +24,10 @@ wh2_dlc17_bst_wargor_mace_nur	0	0	100	300	3.0000	axe	hammer	large	4	2.5000	0.750
 wh2_dlc17_bst_wargor_mace_sla	0	0	220	180	3.0000	axe	hammer	large	4	2.5000	0.7500	0.0000	false	wh2_dlc11_unit_contact_charmed	0	10	1.9		false
 wh2_dlc17_bst_wargor_mace_tze	25	0	120	250	3.0000	axe	hammer	large	4	2.5000	0.7500	0.0000	true		0	10	2.1		false
 wh2_dlc23_chd_bull_centaur_taurruk_great_axe_ete	0	25	140	320	5.0000	axe	axe_medium	medium	5	1.8000	1.0000	0.0000	true	wh_dlc06_unit_contact_discouraged	0	10	2.0		false
-wh2_main_def_khainite_assassin_ete	0	25	230	130	3.0000	sword	sword	medium	3	1.0000	0.5000	0.0000	true	wh_main_unit_contact_poison	0	10	1.9	wh3_main_assassin	false
+wh2_main_def_khainite_assassin_ete	0	15	230	120	3.0000	sword	sword	small	3	1.0000	0.5000	0.0000	true	wh_main_unit_contact_poison	0	10	1.9	wh3_main_assassin	false
+wh2_main_def_khainite_assassin_ete_ror	0	15	230	120	3.0000	sword	sword	small	3	1.0000	0.5000	0.0000	true	wh2_dlc26_unit_contact_red_venom	0	10	1.9	wh2_dlc14_skv_cha_snikch	false
+wh2_main_def_morathi_staff_ete	15	0	100	240	3.0000	sword	staff	medium	4	1.0000	0.7500	0.0000	true		0	10	2.0		false
+wh2_main_def_war_hydra_ete	0	20	140	300	9.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	false		0	10	1.8		false
 wh2_main_hef_loremaster_of_hoeth_ete	0	21	135	265	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	true	wh2_dlc11_unit_contact_disrupted	0	10	2.0		false
 wh2_main_lzd_cha_saurus_scar_veteran_ete	0	25	130	250	3.0000	axe	club	medium	4	1.0000	0.5000	0.0000	false	wh2_dlc17_unit_contact_dazed	0	10	1.9		false
 wh2_main_skv_cha_assassin_ete	0	20	240	120	4.0000	sword	sword	medium	4	1.0000	0.5500	0.0000	true	wh2_main_unit_contact_weeping_blade	0	10	1.9	wh3_main_assassin	false
@@ -30,11 +41,20 @@ wh3_dlc20_chs_daemon_prince_anti_large_kho	25	0	350	150	12.0000	spear	spear_huge
 wh3_dlc20_chs_daemon_prince_mtze_ete	0	0	300	150	9.0000	axe	staff	medium	5	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.0		false
 wh3_dlc23_chd_cha_overseer_ete	0	0	100	300	4.0000	axe	axe	medium	4	1.4000	1.0000	1.0000	true	wh_main_unit_contact_morale	0	10	1.9		false
 wh3_dlc24_chs_cha_exalted_hero_mtze_halberd_ete	20	0	175	245	4.0000	spear	halberd	medium	4	1.4000	0.7500	0.0000	true		0	10	2.1		false
-wh3_dlc24_ksl_druzhina_great_axe_ete	0	30	100	240	1.0000	axe	axe_2h	medium	4	1.4000	1.0000	0.0000	false	wh3_dlc26_unit_contact_disemboweled	0	10	1.6	wh2_dlc14_skv_cha_snikch	false
+wh3_dlc24_cth_mon_jet_lion_ete	0	0	145	275	6.0000	axe	stone_club_medium	large	5	1.5000	1.2500	0.0000	true	wh2_dlc11_unit_contact_disrupted	0	10	1.75		false
+wh3_dlc24_ksl_druzhina_great_axe_ete	0	30	100	240	2.0000	axe	axe_2h	medium	4	1.4000	1.0000	0.0000	false	wh3_dlc26_unit_contact_disemboweled	0	10	1.6	wh2_dlc14_skv_cha_snikch	false
+wh3_dlc24_ksl_druzhina_great_axe_ete_2	0	0	120	240	1.0000	axe	axe_2h	medium	4	1.4000	1.0000	0.0000	false		0	10	2.0		false
 wh3_dlc24_ksl_mother_ostankya_ete	0	30	110	120	5.0000	axe	creatures_claws	very_large	4	1.5000	0.7500	0.0000	true	wh3_dlc24_unit_contact_dark_blood	2	2	0.0	wh2_dlc17_lzd_slow_death	false
 wh3_dlc25_cha_tamurkhan_greataxe_ete	25	0	100	315	3.0000	axe	axe_medium	medium	3	1.0000	1.5000	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
 wh3_dlc25_dwf_garagrim_axe_dual_ete	0	15	300	150	5.0000	axe	axe	large	6	1.0000	1.2500	0.0000	true	wh_main_unit_contact_overhead_morale	0	10	0.0		false
 wh3_dlc25_dwf_garagrim_axe_dual_ete_ror	25	0	150	300	3.0000	axe	axe	large	5	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	0.0		false
+wh3_dlc25_emp_theodore_sword_kho	0	0	300	150	3.0000	sword	sword	medium	5	1.3000	0.7500	1.0000	false		0	10	1.9		false
+wh3_dlc25_emp_theodore_sword_nur	0	0	300	150	3.0000	sword	sword	medium	5	1.3000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
+wh3_dlc25_emp_theodore_sword_nur_ror	0	0	300	150	3.0000	sword	sword	medium	5	1.3000	0.7500	0.0000	false	wh2_main_unit_contact_plague_monk_censer_morale	0	10	0.0		false
+wh3_dlc25_emp_theodore_sword_sla	0	0	300	150	3.0000	sword	sword	medium	5	1.3000	0.7500	0.0000	false		0	10	1.9		false
+wh3_dlc25_emp_theodore_sword_tze	0	0	300	150	3.0000	sword	sword	medium	5	1.3000	0.7500	0.0000	true		0	10	1.9		false
+wh3_dlc26_ogr_blood_vultures_beak_ete	0	0	30	12	1.0000	knife	creatures_claws		1	1.0000	0.2500	0.0000	false	wh_main_unit_contact_overhead_morale	0	10	0.0		false
+wh3_dlc26_ogr_bragg_poleaxe_ete	30	0	125	375	4.0000	axe	axe	large	5	1.5000	0.6000	0.0000	false	wh2_dlc26_unit_contact_red_venom	0	10	1.6	wh2_dlc17_bst_ghorgon_ror	false
 wh3_dlc26_ogr_bruiser_wristblade_ete	0	0	150	285	4.0000	sword	sword_claws	medium	4	1.0000	0.7500	0.0000	true		0	10	2.0		false
 wh3_dlc26_ogr_bruiser_wristblade_ete_ror	12	0	150	285	4.0000	sword	sword_claws	medium	4	1.0000	0.7500	1.0000	true	wh_main_unit_contact_morale	0	10	2.0		false
 wh3_dlc26_ogr_eshin_maneater_ror_swords_ete	0	20	90	310	4.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	true	wh2_main_unit_contact_weeping_blade	0	10	0.9		false
@@ -45,6 +65,7 @@ wh3_dlc27_hef_mon_merwyrm_ete_ror	30	0	275	825	15.0000	axe	creatures_big	very_la
 wh3_dlc27_hef_mon_merwyrm_ete_ror_cst	30	0	275	825	15.0000	axe	creatures_big	very_large	99	3.0000	2.0000	0.0000	false	wh2_main_unit_contact_plague_monk_censer_morale	0	0	0.0	wh2_dlc17_bst_ghorgon_ror	false
 wh3_dlc27_hef_sea_elemental_ete	0	20	175	300	9.0000	knife	creatures_claws	large	6	1.7000	1.0000	0.0000	true	wh_main_unit_contact_overhead_morale	6	6	2.0		false
 wh3_dlc27_nor_cha_fimir_noble_mace_ete	0	15	100	350	5.0000	axe	club_huge	large	5	1.0000	1.0000	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.0		false
+wh3_main_cth_shugengan_lord_ete	0	0	160	200	4.0000	sword	sword	large	4	1.0000	1.0000	1.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
 wh3_main_dae_daemon_prince_flame	0	0	225	225	9.0000	sword	sword_huge	large	5	1.0000	0.7500	1.0000	true	wh_main_unit_contact_morale	0	10	2.0		false
 wh3_main_kho_bloodthirster_axe_ete	8	8	44	244	8.0000	axe	axe_huge	large	8	1.0000	1.0000	1.0000	true	wh_main_unit_contact_morale	0	10	1.4		false
 wh3_main_nur_sword_plagueridden_ete	0	0	110	260	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	true	wh2_main_unit_contact_plague_monk_censer_morale	0	10	1.9		false
@@ -54,6 +75,7 @@ wh3_main_ogr_handblades_dual_skrag_ete	0	20	130	300	4.0000	axe	axe	medium	4	1.00
 wh3_main_ogr_ogre_crusher_great_weapon_ete	30	0	44	100	3.0000	sword	sword_medium	medium	4	1.0000	0.7500	0.0000	false		0	10	1.6		false
 wh3_main_ogr_ogre_mournfang_sword_ete	0	25	180	280	6.0000	sword	sword_medium	medium	4	1.0000	0.6000	0.0000	false	wh_main_unit_contact_overhead_morale	0	10	1.6		false
 wh3_main_sla_cha_herald_of_slaanesh_claw_ete	0	0	100	300	3.0000	sword	creatures_claws	medium	4	1.0000	0.7500	0.0000	true	wh2_dlc11_unit_contact_charmed	0	10	0.0		false
+wh3_main_sla_cha_herald_of_slaanesh_steed_claw_ete	0	0	100	300	3.0000	sword	creatures_claws	medium	4	1.0000	0.7500	0.0000	true	wh2_main_unit_contact_plague_monk_censer_morale	0	10	2.0		false
 wh3_pro11_chs_cha_harald_hammerstorm_ete	0	15	125	325	4.0000	axe	hammer_huge	large	5	1.8000	1.0000	0.0000	false	wh_main_unit_contact_overhead_morale	0	10	1.9		false
 wh3_pro11_chs_cha_harald_hammerstorm_ete_ror	0	15	115	335	4.0000	axe	hammer_huge	large	5	1.8000	1.0000	1.0000	true	wh_main_unit_contact_overhead_morale	0	10	1.9		false
 wh_dlc01_chs_dragon_kho	0	0	140	410	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	10.0000	false	wh_main_unit_contact_morale	0	3	1.9		false
@@ -67,12 +89,15 @@ wh_dlc01_chs_manticore_exalted_hero_tze	0	0	300	160	6.0000	axe	creatures_claws	l
 wh_dlc01_chs_prince_sigvald_ete	0	0	340	180	3.0000	sword	sword	medium	5	1.7000	0.7500	0.0000	false	wh2_dlc11_unit_contact_charmed	0	10	2.0		false
 wh_dlc03_bst_gor_axe_gorebull_ete	0	20	160	300	5.0000	axe	axe	medium	4	1.5000	1.0000	1.0000	false		0	10	2.0		false
 wh_dlc03_bst_gor_axe_gorebull_ete_kho	30	0	140	320	5.0000	axe	axe	medium	4	1.5000	1.0000	1.0000	true		0	10	2.0		false
+wh_dlc05_wef_sword_wizard_ete	0	0	200	85	3.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.0		false
 wh_dlc06_chs_aspiring_champions_sword_slv	0	12	52	28	2.0000	sword	sword	medium	3	1.4000	0.5000	0.0000	false		0	10	1.9		false
+wh_dlc07_brt_caster_fay_ete	0	0	200	85	3.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	true	wh2_dlc11_unit_contact_disrupted	0	10	0.0		false
 wh_dlc07_brt_grail_reliquae_ksl	0	0	60	15	1.0000	sword	unarmed	small	2	1.0000	0.7500	0.0000	true	wh_dlc06_unit_contact_discouraged	0	10	0.0		false
 wh_dlc07_brt_hippogryph_alberic_ete	0	25	150	290	9.0000	axe	creatures_claws	large	5	1.3000	0.7500	0.0000	true		0	3	1.9		false
 wh_dlc07_brt_hippogryph_knight_ete	25	0	140	270	9.0000	axe	creatures_claws	large	5	1.3000	0.7500	0.0000	false		0	3	1.9		false
 wh_dlc08_club_troll_throgg_ete	28	0	123	372	5.0000	axe	club_huge	large	5	1.0000	1.2500	0.0000	true	wh3_main_unit_contact_frostbite_upgraded	0	10	1.9		false
 wh_dlc08_club_troll_throgg_ete_2	0	20	100	350	5.0000	axe	club_huge	large	5	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	1.9		false
+wh_dlc08_club_troll_throgg_ete_3	0	20	125	325	5.0000	axe	club_huge	large	5	1.0000	1.2500	0.0000	false	wh2_main_unit_contact_plague_monk_censer_morale	0	10	1.9		false
 wh_dlc08_nor_axe_champion_ete	0	0	295	125	4.0000	axe	axe	large	5	1.0000	1.0000	0.0000	false		0	10	2.0		false
 wh_dlc08_nor_axe_great_champion_ete	0	0	100	290	4.0000	axe	axe	large	5	1.0000	1.5000	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.0		false
 wh_dlc08_nor_fimir_balefiend_staff_ete	0	0	80	320	1.0000	spear	staff	medium	4	1.0000	0.5000	0.0000	true	wh_main_unit_contact_poison	0	10	2.0		false
@@ -86,6 +111,7 @@ wh_main_chs_sword_lord_ete	0	0	320	170	3.0000	sword	sword	medium	5	1.6000	0.7500
 wh_main_dwf_axe_hero_ete	0	0	260	140	3.0000	axe	axe	medium	4	1.0000	1.0000	1.0000	true	wh_main_unit_contact_morale	0	10	2.0		false
 wh_main_dwf_axe_hero_lord_ete	0	0	50	370	3.0000	axe	axe	medium	4	1.0000	1.0000	0.0000	true	wh2_dlc17_unit_contact_dazed	0	10	2.0		false
 wh_main_dwf_axe_hero_lord_ete_ror	0	0	50	370	3.0000	axe	axe	medium	4	1.0000	1.0000	0.0000	true	wh_main_unit_contact_overhead_morale	0	10	2.0		false
+wh_main_emp_sword_hero_ete	0	15	265	130	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	1.9		false
 wh_main_grn_black_orc_hero_ete	0	15	100	290	4.0000	axe	axe	medium	4	1.0000	1.0000	0.0000	false		0	10	2.0		false
 wh_main_grn_choppa_azhag_ete	12	0	125	295	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.0		false
 wh_main_grn_choppa_hero_ete	12	0	100	290	4.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	2.0		false

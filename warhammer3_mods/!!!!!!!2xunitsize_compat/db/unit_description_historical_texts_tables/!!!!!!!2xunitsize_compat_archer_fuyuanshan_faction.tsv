@@ -1,6 +1,7 @@
 key
 #unit_description_historical_texts_tables;0;db/unit_description_historical_texts_tables/!!!!!!!2xunitsize_compat_archer_fuyuanshan_faction
 cth_fuyuanshan
+cth_fys_cav_rhino_rider
 cth_fys_jade_warrior_lancer
 cth_fys_peasant_firelancer
 cth_mon_yaksha
@@ -13,3 +14,4 @@ jade_banner
 jade_general_0
 jade_general_1
 jade_general_2
+jade_general_3

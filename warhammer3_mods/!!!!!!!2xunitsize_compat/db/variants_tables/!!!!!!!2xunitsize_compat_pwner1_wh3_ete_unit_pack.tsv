@@ -6,13 +6,14 @@ carno_1	VariantMeshes\_VariantModels\raptor03b\lzd\lzd_carnosaur\tech	lzd_carnos
 carno_2	VariantMeshes\_VariantModels\raptor03b\lzd\lzd_carnosaur\tech	lzd_carnosaur_2		1.3000	1.0000	0.0000	
 dread	VariantMeshes/wh_variantmodels/rp4/lzd/lzd_dread_saurian/tech	lzd_dread_saurian_rors		1.0000	1.0000	0.0000	
 flamer_phoenix	VariantMeshes\wh_variantmodels\bi1\hef\hef_great_eagle\tech	flamer_phoenix		1.0000	1.0000	0.0000	
-frost_phoenix	VariantMeshes\wh_variantmodels\bi1\hef\hef_great_eagle\tech	frost_phoenix		1.0000	1.0000	0.0000	
 grn_arachnarok_flinger_ete	VariantMeshes/wh_variantmodels/sp1b/grn/grn_arachnorok_flinger/tech/	grn_arachnarok_flinger_ete		1.0000	4.0000	0.0000	
 trog_ror	VariantMeshes\wh_variantmodels\rp3b\lzd\lzd_troglodon\tech	lzd_troglodon_mounts		1.3000	1.0000	0.0000	
 vmp_rider_5	VariantMeshes\wh_variantmodels\gi2\cst\cst_necrofex_colossus\tech	vmp_rider_6		1.0000	1.0000	0.0000	
 wh2_dlc09_tmb_skeletal_steed_hero_ete		tmb_skeletal_steed_ete		1.0000	1.0000	0.0500	
+wh2_dlc09_tmb_skeletal_steed_hero_ete_ror		tmb_skeletal_steed_ete_ror		1.0000	1.0000	0.0500	
 wh3_dlc23_chd_mon_great_taurus_mount_ete	VariantMeshes/_VariantModels/oxen01/tech/	chd_great_taurus_mount_ete		1.5220	1.1500	0.0000	
 wh3_dlc24_ksl_mnt_the_thing_in_the_woods_draught_ete		ksl_thing_in_the_woods_ror		1.0000	1.0000	0.0500	
+wh3_dlc25_dwf_mnt_veh_thunderbarge_ete	warmachines/aircraft/dwf_thunderbarge/thunderbarge_tech/	dwf_thunderbarge_grungni		1.0000	1.0000	0.0000	
 wh3_dlc25_nur_mon_bubebolos_ete	VariantMeshes\wh_variantmodels\dr5\dae\dae_toad_dragon\tech	dae_toad_dragon_ete		1.0000	1.2000	0.0000	
 wh3_dlc25_nur_mon_bubebolos_ete_ror	VariantMeshes\wh_variantmodels\dr5\dae\dae_toad_dragon\tech	dae_toad_dragon_ete_ror		1.0000	1.2000	0.0000	
 wh3_dlc26_grn_mnt_warboar_gnarla_ete	VariantMeshes\wh_variantmodels\bo1\grn\grn_warboar\tech	grn_warboar_gorbad_ete		1.0000	1.3000	0.0000	
@@ -20,11 +21,13 @@ wh3_dlc26_kho_mnt_flesh_hound_of_khorne_arbaal_ete	VariantMeshes/wh_variantmodel
 wh3_dlc26_kho_mnt_juggernaut_skulltaker_ete	VariantMeshes\wh_variantmodels\hq4\dae\dae_juggernaut\tech	dae_juggernaut_skulltaker_ete		1.1500	1.0000	0.0000	
 wh3_dlc26_ogr_mon_thundertusk_ete	VariantMeshes/wh_variantmodels/hq3b/ogr/ogr_thundertusk/tech/	ogr_thundertusk_ete		1.0000	1.0000	0.0000	
 wh3_dlc27_hef_veh_skycutter_ror	VariantMeshes/wh_variantmodels/skc1/hef/hef_skycutter/tech/	hef_skycutter_ror		1.0000	1.0000	0.0000	
+wh3_dlc27_sla_mnt_steed_of_slaanesh_draught_ete	VariantMeshes/wh_variantmodels/rp1/dae/dae_steed_of_slaanesh/tech	dae_steed_of_slaanesh_draught_ete		1.0000	1.0000	0.0000	
 wh3_main_ksl_horse_medium_ete	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	ksl_horse_medium_ete		1.1500	1.0000	0.0200	
 wh3_main_ksl_mnt_war_bear_heavy_ete	VariantMeshes/wh_variantmodels/br1/ksl/ksl_bear/tech	ksl_bear_medium_white		1.0000	1.0000	0.0000	
 wh3_main_ogr_mournfang_ete		ogr_mournfang_ete		1.0000	1.0000	0.0000	
 wh3_nur_mnt_nurgling_palanquin_ete	VariantMeshes\wh_variantmodels\pl1\dae\dae_palanquin\tech\	dae_palanquin_ror		1.0000	1.0000	0.0000	
 wh3_nur_mnt_palanquin_kugath_ete	warmachines/chariot/dae_palanquin_kugath/tech/	dae_palanquin_kugath_ror		0.8460	1.3000	0.0000	
+wh3_twa07_sla_mnt_steed_of_slaanesh_ror_ete	VariantMeshes/wh_variantmodels/rp1/dae/dae_steed_of_slaanesh/tech	dae_steed_of_slaanesh_ror_ete		1.0000	1.0000	0.0500	
 wh3_twa08_ogr_mon_stonehorn_0_ror_ete	VariantMeshes\wh_variantmodels\hq3b\ogr\ogr_stonehorn\tech\	ogr_stonehorn_ror_ete		0.8500	1.0000	0.0000	
 wh_brt_warhorses_barded_faction_colours_ete	VariantMeshes\wh_variantmodels\hr1\brt\brt_horse\tech	brt_warhorses_barded_ete		1.0000	1.0000	0.0500	
 wh_brt_warhorses_barded_faction_colours_ete_ror	VariantMeshes\wh_variantmodels\hr1\brt\brt_horse\tech	brt_questing_knight_warhorse_ete_ror		1.0000	1.0000	0.0500	

@@ -5,7 +5,7 @@ sartosa_buccaneer_axe_slayer	0	0	22	16	1.0000	axe	axe		1	1.0000	1.0000	0.0000	fa
 sartosa_buccaneer_dual_axes	0	0	28	12	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	1.8		false
 sartosa_depth_guard_jenny_ror	0	5	34	16	1.0000	axe	axe		1	1.0000	1.2500	0.0000	false		0	10	1.9		false
 sartosa_fleet_admiral_halberd_davey	34	0	130	320	3.0000	spear	halberd	large	5	1.0000	150.0000	0.0000	false		0	10	2.0		false
-sartosa_fleet_admiral_jenny_promethean	0	15	120	280	3.0000	axe	claw	medium	5	1.0000	100.0000	0.0000	false	sartosa_contact_effect_flayed_skin	0	10	1.6		false
+sartosa_fleet_admiral_jenny_promethean	0	15	120	280	3.0000	axe	creatures_claws	medium	5	1.0000	100.0000	0.0000	false	sartosa_contact_effect_flayed_skin	0	10	1.6		false
 sartosa_fleet_admiral_jenny_whip	0	25	310	170	3.0000	sword	sword	medium	8	1.0000	150.0000	0.0000	false	sartosa_contact_effect_flayed_skin	0	10	2.0		false
 sartosa_fleet_admiral_sword	0	30	300	150	3.0000	sword	sword	medium	8	1.0000	150.0000	0.0000	false		0	10	1.8		false
 sartosa_fleet_admiral_sword_davey	0	0	320	140	3.0000	sword	sword	medium	8	1.0000	150.0000	0.0000	false		0	10	1.8		false
@@ -13,33 +13,34 @@ sartosa_fleet_admiral_sword_james	0	0	280	220	3.0000	sword	sword	medium	8	1.0000
 sartosa_fleet_admiral_sword_sammy	0	30	270	150	3.0000	sword	sword	medium	8	1.0000	150.0000	0.0000	false	wh_main_unit_contact_poison	0	10	1.5		false
 sartosa_fleet_captain_sword	0	15	275	100	3.0000	sword	sword	medium	6	1.0000	150.0000	0.0000	false		0	10	1.8		false
 sartosa_norscan_captain_axe	0	15	220	200	3.0000	axe	axe	large	8	1.0000	150.0000	0.0000	false		0	10	1.8		false
-sartosa_norscan_captain_axe_harik	0	0	260	290	3.0000	axe	claw	large	10	1.0000	250.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	1.4		false
-sartosa_norscan_captain_chariot	0	15	160	320	14.0000	axe	claw	very_large	10	1.0000	400.0000	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	1.5		false
-sartosa_norscan_captain_ice_wolf	0	15	140	280	1.0000	axe	claw	large	5	1.0000	40.0000	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	1.8		false
+sartosa_norscan_captain_axe_harik	0	0	260	290	3.0000	axe	creatures_claws	large	10	1.0000	250.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	1.4		false
+sartosa_norscan_captain_chariot	0	15	160	320	14.0000	axe	creatures_claws	very_large	10	1.0000	400.0000	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	1.5		false
+sartosa_norscan_captain_ice_wolf	0	15	140	280	1.0000	axe	creatures_claws	large	5	1.0000	40.0000	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	1.8		false
 sartosa_norscan_reaver_axe	0	0	34	8	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	1.7		false
-sartosa_norscan_reaver_great_axe	0	0	8	38	2.0000	axe	axe		1	1.0000	20.0000	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	1.9		false
-sartosa_norscan_reaver_halberd	20	0	10	28	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	1.9		false
-sartosa_norscan_whaler_spear	20	0	27	7	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	2.4		false
+sartosa_norscan_reaver_great_axe	0	0	12	38	2.0000	axe	axe		1	1.0000	20.0000	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	1.9		false
+sartosa_norscan_reaver_halberd	15	0	12	28	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	1.9		false
+sartosa_norscan_whaler_spear	16	0	27	7	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	1.9		false
 sartosa_pirate_halberd	16	0	8	20	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	2.4		false
+sartosa_powder_kegs	0	0	0	0	1.0000	sword	sword		4	1.0000	1.0000	0.0000	false		0	10	12.5		false
 sartosa_priest_of_manann_trident	25	0	250	100	3.0000	spear	halberd	medium	5	1.0000	100.0000	0.0000	true		0	10	2.0		false
 sartosa_priest_of_manann_trident_wolfram	25	0	250	100	3.0000	spear	halberd	large	8	1.0000	100.0000	0.0000	true	wh2_dlc11_lore_passive_kiss_of_the_deep	0	10	1.5		false
-sartosa_priest_of_manann_wolfram_leviathan	0	0	100	280	10.0000	axe	claw	large	8	1.0000	600.0000	0.0000	true	wh2_dlc11_lore_passive_kiss_of_the_deep	0	10	1.6		false
-sartosa_priest_of_manann_wolfram_promethean	25	0	120	280	3.0000	axe	claw	medium	5	1.0000	100.0000	0.0000	true	wh2_dlc11_lore_passive_kiss_of_the_deep	0	10	1.9		false
-sartosa_privateer_captain_axe_benny	0	16	280	200	3.0000	axe	axe	medium	8	1.0000	150.0000	25.0000	false	wh_main_unit_contact_morale	0	10	1.7		false
-sartosa_privateer_captain_dual_swords	0	25	300	150	3.0000	sword	sword	medium	4	1.0000	150.0000	0.0000	false		0	10	1.4		false
+sartosa_priest_of_manann_wolfram_leviathan	0	0	100	280	10.0000	axe	creatures_claws	large	8	1.0000	600.0000	0.0000	true	wh2_dlc11_lore_passive_kiss_of_the_deep	0	10	1.6		false
+sartosa_priest_of_manann_wolfram_promethean	25	0	120	280	3.0000	axe	creatures_claws	medium	5	1.0000	100.0000	0.0000	true	wh2_dlc11_lore_passive_kiss_of_the_deep	0	10	1.9		false
+sartosa_privateer_captain_axe_benny	0	15	250	125	3.0000	axe	axe	medium	8	1.0000	150.0000	25.0000	false	wh_main_unit_contact_morale	0	10	1.7		false
+sartosa_privateer_captain_dual_swords	0	20	280	120	3.0000	sword	sword	medium	4	1.0000	150.0000	0.0000	false		0	10	1.4		false
 sartosa_privateer_captain_halberd	25	0	120	220	3.0000	spear	halberd	large	5	1.0000	150.0000	0.0000	false		0	10	1.8		false
 sartosa_privateer_captain_sword	0	15	225	100	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	1.7		false
-sartosa_privateer_captain_sword_axe_benny	0	16	280	240	3.0000	axe	axe	medium	8	1.0000	150.0000	25.0000	false	wh_main_unit_contact_morale	0	10	1.4		false
-sartosa_privateer_dual_swords	0	12	27	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	1.7		false
-sartosa_privateer_halberd	16	0	10	22	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	2.4		false
+sartosa_privateer_captain_sword_axe_benny	0	20	300	125	3.0000	axe	axe	medium	8	1.0000	150.0000	25.0000	false	wh_main_unit_contact_morale	0	10	1.4		false
+sartosa_privateer_dual_swords	0	12	25	7	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	1.7		false
+sartosa_privateer_halberd	16	0	8	20	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false		0	10	2.4		false
 sartosa_privateer_sword	0	6	21	7	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.1		false
 sartosa_privateer_sword_ror	0	12	21	7	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.1		false
 sartosa_privateers_james_ror_dual_swords	0	16	25	11	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	sartosa_contact_effect_dirty_fighting	0	10	1.4		false
-sartosa_privateers_roth_ror_greatsword	0	16	12	26	1.0000	sword	sword		1	1.0000	1.0000	0.0000	true		0	10	1.6		false
-sartosa_promethean_riders_davey_ror	15	0	22	55	2.0000	axe	claw	medium	5	1.0000	1.2500	0.0000	false		0	10	1.7		false
-sartosa_raider_axe_ror	0	0	21	7	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	1.7		false
+sartosa_privateers_roth_ror_greatsword	0	15	14	26	1.0000	sword	sword		1	1.0000	1.0000	0.0000	true		0	10	1.6		false
+sartosa_promethean_riders_davey_ror	15	0	25	65	2.0000	axe	creatures_claws	medium	5	1.0000	1.2500	0.0000	false		0	10	1.7		false
+sartosa_raider_axe_ror	0	0	34	8	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	1.7		false
 sartosa_reaver_dual_axes	0	8	38	18	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	1.7		false
+sartosa_saboteur_sword_and_dagger	0	14	12	14	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	1.7		false
+sartosa_saboteurs_sammy_ror_dual_swords	0	14	12	24	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	wh2_main_unit_contact_weeping_blade	0	10	1.4		false
 sartosa_sartosa_buccaneer_mortar_ror	0	0	19	5	0.0000	sword	sword		1	1.0000	1.0000	10.0000	false		0	10	2.15		false
-sartosa_smuggler_sword_ror	0	8	21	7	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
-sartosa_smugglers_sammy_ror_dual_swords	0	12	18	36	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	wh2_main_unit_contact_weeping_blade	0	10	1.4		false
-wh2_dlc11_cst_dual_swords_sartosa	0	6	21	7	1.0000	sword	sword		4	1.0000	1.0000	0.0000	false		0	10	2.1		false
+sartosa_smuggler_sword_ror	0	6	21	7	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false

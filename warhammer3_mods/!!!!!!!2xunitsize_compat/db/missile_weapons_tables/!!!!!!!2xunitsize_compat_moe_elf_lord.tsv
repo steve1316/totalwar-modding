@@ -1,3 +1,4 @@
 key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
 #missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_moe_elf_lord
 moe_elf_lord_bow	false	moe_elf_lord_arrow	bow_LH	false
+moe_ranger_ror_bow	false	moe_rangers_ror_arrow	bow_LH	false

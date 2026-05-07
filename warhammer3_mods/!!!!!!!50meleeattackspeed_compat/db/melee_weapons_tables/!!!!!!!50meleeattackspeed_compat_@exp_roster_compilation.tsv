@@ -1,22 +1,26 @@
 key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_type	audio_type	splash_attack_target_size	splash_attack_max_attacks	splash_attack_power_multiplier	building_damage_multiplier	ignition_amount	is_magical	contact_phase	collision_attack_max_targets	collision_attack_max_targets_cooldown	melee_attack_interval	scaling_damage	is_spell
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!!!50meleeattackspeed_compat_@exp_roster_compilation
 colossal_squig	0	35	100	350	5.0000	sword	creatures_claws	large	6	1.0000	1.2500	0.0000	false		8	5	2.0		false
-dec_bestigor_dual_axe	0	8	32	11	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.2		false
+dec_bestigor_dual_axe	0	8	32	12	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.2		false
 dec_big_uns_sword	5	0	26	10	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.0		false
 dec_black_orc_dual	0	8	42	8	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	1.85		false
 dec_black_orc_sword	0	0	28	10	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.0		false
-dec_gor_great_axe	0	0	12	26	2.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
+dec_ember_drake	0	10	220	120	5.0000	axe	creatures_claws	large	8	1.0000	1.2500	1.0000	false		0	3	1.0		false
+dec_giantbreakers	30	0	25	75	3.0000	axe	axe	medium	3	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	1.9		false
+dec_gor_great_axe	0	0	12	28	2.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
 dec_gouge_horns	0	0	68	28	2.0000	axe	axe	medium	3	1.4000	0.7500	0.0000	false		0	10	2.0		false
 dec_hell_knights	0	0	14	34	1.0000	lance	spear	medium	2	1.0000	0.5000	0.0000	false		0	10	2.35		false
 dec_hunters_anath_raema	10	0	6	20	2.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.3		false
-dec_kastellans	0	10	15	30	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.25		false
+dec_kastellans	0	10	15	35	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.25		false
 dec_lahmian	0	8	25	9	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.0		false
-dec_lords_oblivion	0	25	90	255	6.0000	axe	creatures_claws	medium	6	1.0000	1.2500	0.0000	false		0	10	2.0		false
+dec_lords_oblivion	0	25	75	250	6.0000	axe	creatures_claws	medium	6	1.0000	1.2500	0.0000	false		0	10	2.0		false
 dec_magma_dragon	0	0	110	390	1.0000	axe	creatures_claws	large	8	1.5000	1.2500	1.0000	false		0	10	1.9		false
+dec_ogre_bulls_gw	0	0	25	65	3.0000	sword	sword_medium	medium	3	1.0000	0.7500	0.0000	false		0	10	2.0		false
 dec_orc_boyz_spear	12	0	24	6	2.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	2.25		false
 dec_reapers	0	0	10	20	1.0000	axe	halberd		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
-dec_savage_big_uns_club	0	0	15	31	1.0000	axe	hammer		1	1.0000	0.7500	0.0000	false		0	10	1.9		false
-dec_savage_giant_club	0	0	190	485	5.0000	axe	club_huge	large	10	1.8000	1.2500	0.0000	false		0	10	2.0		false
+dec_rhinox_bull	0	20	275	125	10.0000	axe	creatures_big	large	4	1.0000	1.2500	0.0000	false		4	4	1.6		false
+dec_savage_big_uns_club	0	0	12	30	1.0000	axe	hammer		1	1.0000	0.7500	0.0000	false		0	10	1.9		false
+dec_savage_giant_club	0	0	180	470	5.0000	axe	club_huge	large	10	1.8000	1.2500	0.0000	false		0	10	2.0		false
 dec_savage_orc_spear	10	0	25	7	2.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	2.25		false
 dec_spirit_host	0	0	0	28	1.0000	knife	creatures_claws		0	1.0000	0.7500	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	2.0		false
 dec_tower_masters	0	0	24	44	1.0000	sword	sword	medium	1	0.8000	0.7500	0.0000	true		0	10	2.0		false
@@ -35,7 +39,7 @@ deco_dryads_willow	0	0	32	4	2.0000	axe	creatures_tiny		1	1.0000	0.7500	0.0000	tr
 deco_forest_goblin_spears	9	0	18	6	1.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	2.3		false
 deco_glade_knights	15	0	10	35	2.0000	spear	spear		1	1.0000	0.5000	0.0000	true		0	10	2.1		false
 deco_griffon_knights	0	0	80	200	8.0000	sword	creatures_claws	large	3	1.0000	0.7500	0.0000	false		0	3	2.0		false
-deco_hammerers_dual	0	8	36	12	1.0000	axe	hammer_dwarf		1	0.5000	1.0000	0.0000	true		0	10	2.15		false
+deco_hammerers_dual	0	8	40	15	1.0000	axe	hammer_dwarf		1	0.5000	1.0000	0.0000	true		0	10	2.15		false
 deco_handmaidens_torothal	0	0	25	10	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
 deco_high_helms	0	0	10	25	1.0000	lance	spear		1	1.0000	0.5000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.5		false
 deco_knights_lynx	15	0	10	28	1.0000	lance	halberd	small	1	1.5000	0.5000	0.0000	false		0	10	2.4		false

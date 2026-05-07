@@ -296,6 +296,50 @@ grn_skarsnik_bodyguard1	0	0	100	75	3.0000	sword	sword	medium	3	1.0000	1.0000	0.0
 grn_snagla_grobspit_bodyguard1	0	0	120	60	3.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	3.5000		false
 grn_wurrzag_bodyguard1	0	0	115	50	3.0000	sword	sword	medium	3	1.0000	1.0000	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	4.0000		false
 grn_wurrzag_bodyguard2	0	0	115	50	3.0000	sword	sword	medium	3	1.0000	1.0000	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	4.0000		false
+hef_alarielle_the_radiant_bodyguard1	35	0	125	55	2.0000	spear	spear	medium	4	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_alarielle_the_radiant_bodyguard2	35	0	125	55	2.0000	spear	spear	medium	4	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_alastar_bodyguard1	0	0	40	120	3.0000	axe	axe	medium	4	1.0000	1.0000	0.0000	false		0	10	4.0000		false
+hef_alith_anar_bodyguard1	0	15	100	60	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	3.5000		false
+hef_caradryan_bodyguard1	25	0	25	75	2.0000	spear	halberd	medium	2	1.0000	0.5000	10.0000	false		0	10	5.0000		false
+hef_caradryan_bodyguard2	25	0	25	75	2.0000	spear	halberd	medium	2	1.0000	0.5000	10.0000	false		0	10	5.0000		false
+hef_caradryan_bodyguard3	25	0	55	110	7.0000	axe	creatures_claws	medium	5	1.0000	1.2500	10.0000	true	wh3_dlc25_unit_contact_frostfire	0	10	4.0000		false
+hef_eltharion_the_grim_bodyguard1	0	0	115	50	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_eltharion_the_grim_bodyguard2	0	0	115	50	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_handmaiden_bodyguard1	0	0	50	25	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_handmaiden_bodyguard2	15	0	40	20	3.0000	spear	spear	medium	4	0.5000	1.0000	0.0000	false		0	10	4.5000		false
+hef_handmaiden_bodyguard3	15	0	25	50	3.0000	spear	spear	large	4	1.0000	1.0000	0.0000	false		0	10	4.0000		false
+hef_imrik_bodyguard1	30	0	60	120	3.0000	spear	halberd	medium	4	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_imrik_bodyguard2	30	0	60	120	3.0000	lance	spear	medium	4	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_loremaster_of_hoeth_bodyguard1	0	15	25	75	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false		0	10	4.5000		false
+hef_mist_mage_bodyguard1	20	0	60	20	1.0000	spear	spear	medium	2	1.0000	0.5000	0.0000	false		0	10	5.0000		false
+hef_mist_mage_bodyguard2	0	15	50	25	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false		0	10	3.5000		false
+hef_mist_mage_bodyguard3	0	0	50	20	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_noble_bodyguard1	20	0	20	60	2.0000	spear	halberd	medium	2	1.0000	0.5000	0.0000	false		0	10	5.0000		false
+hef_noble_bodyguard2	0	15	20	60	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false		0	10	4.5000		false
+hef_noble_bodyguard3	0	10	50	25	1.0000	sword	sword	medium	2	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_noble_bodyguard4	20	0	20	30	1.0000	lance	spear		0	1.0000	0.5000	0.0000	false		0	10	5.0000		false
+hef_noble_bodyguard5	25	0	25	75	2.0000	spear	halberd	medium	2	1.0000	0.5000	0.0000	false		0	10	5.0000		false
+hef_noble_bodyguard6	0	0	30	90	1.0000	axe	axe	medium	3	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	4.5000		false
+hef_noble_bodyguard7	0	0	70	35	1.0000	lance	spear		0	1.0000	0.5000	10.0000	false		0	10	5.0000		false
+hef_noble_bodyguard8	0	0	75	150	8.0000	sword	creatures_claws	large	3	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_prince_bodyguard1	0	0	100	60	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_prince_bodyguard2	0	0	100	60	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_prince_bodyguard3	0	15	50	25	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false		0	10	3.5000		false
+hef_prince_bodyguard4	20	0	60	20	1.0000	spear	spear	medium	2	1.0000	0.5000	0.0000	false		0	10	5.0000		false
+hef_prince_bodyguard5	0	10	50	25	1.0000	sword	sword	medium	2	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_princess_bodyguard1	0	0	100	60	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_princess_bodyguard2	0	0	100	60	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_princess_bodyguard3	0	0	50	25	1.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_princess_bodyguard4	20	0	60	20	1.0000	spear	spear	medium	2	1.0000	0.5000	0.0000	false		0	10	4.5000		false
+hef_princess_bodyguard5	0	0	50	20	1.0000	sword	sword	medium	0	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_sea_helm_bodyguard1	30	0	90	60	3.0000	spear	spear	medium	3	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_sea_helm_bodyguard2	0	0	80	80	5.0000	axe	creatures_claws	large	4	1.5000	1.0000	0.0000	false		5	2	4.0000		false
+hef_sea_lord_aislinn_bodyguard1	0	15	120	60	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_sea_lord_aislinn_bodyguard2	0	20	80	80	5.0000	axe	creatures_claws	large	4	1.5000	1.0000	0.0000	false		5	2	4.0000		false
+hef_teclis_bodyguard1	0	0	115	50	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_teclis_bodyguard2	0	0	115	50	3.0000	sword	sword	medium	4	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+hef_tyrion_bodyguard1	30	0	60	120	3.0000	spear	halberd	large	3	1.0000	0.5000	0.0000	false		0	10	4.0000		false
+hef_tyrion_bodyguard2	30	0	60	120	3.0000	spear	halberd	large	3	1.0000	0.5000	0.0000	false		0	10	4.0000		false
 ikit_claw_bodyguard7	0	20	50	125	3.0000	axe	creatures_claws	medium	4	1.0000	1.0000	0.0000	true		0	10	4.0000		false
 ikit_claw_bodyguard8	0	25	50	85	5.0000	spear	halberd	very_large	4	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	3	2	4.0000		false
 ksl_boris_bodyguard1	0	0	60	30	1.0000	sword	sword	medium	2	0.2500	1.0000	0.0000	false		0	10	3.5000		false

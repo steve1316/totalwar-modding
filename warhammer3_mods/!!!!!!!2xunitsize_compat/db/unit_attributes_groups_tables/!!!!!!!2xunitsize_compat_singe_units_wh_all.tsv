@@ -1,5 +1,19 @@
 group_name
 #unit_attributes_groups_tables;0;db/unit_attributes_groups_tables/!!!!!!!2xunitsize_compat_singe_units_wh_all
+brt_brigand
+brt_fire_trebuchet
+brt_flaming_trebuchet
+brt_foot_knight
+brt_guardians_realm
+brt_hermit_knights
+brt_questing_wardens
+brt_ranger
+brt_siege_trebuchet
+brt_spirits_fay
+brt_squire_longbow
+brt_squire_polearm
+brt_squire_shield
+brt_truffle_hounds
 singe_blissbarb_archers_attributes
 singe_bm_bestigor_spear_attributes
 singe_bm_razorgor_behemoth_attributes
@@ -64,6 +78,7 @@ singe_hef_maidenguard_attributes
 singe_hef_swordsmen_attributes
 singe_hef_watchsisters_attributes
 singe_ice_riders_attributes
+singe_kho_blood_throne_attributes
 singe_kho_cult_blades_attributes
 singe_kho_cult_hunters_attributes
 singe_kho_cult_reavers_attributes
@@ -98,6 +113,7 @@ singe_skv_plague_hurlers_attributes
 singe_skv_plague_staves_attributes
 singe_skv_screaming_bell_attributes
 singe_sla_exalted_fiend_attributes
+singe_sla_hellseekers_attributes
 singe_tmb_nehek_archers_attributes
 singe_tmb_nehek_bowhorse_attributes
 singe_tmb_nehek_spearhorse_attributes

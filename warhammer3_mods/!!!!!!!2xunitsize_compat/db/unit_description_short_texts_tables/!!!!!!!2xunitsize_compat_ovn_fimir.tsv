@@ -3,7 +3,6 @@ key
 elo_boglar_shaman
 elo_fenbeast
 fim_cha_daemon_octopus_kroll
-fim_cha_fimirach_noble_0
 fim_fimm_warriors_axe_throwers_ror
 fim_mon_bog_beasts
 fim_skattach_short_text
@@ -13,9 +12,11 @@ ovn_daemonomaniac_ror
 ovn_death_quest
 ovn_eye_oculus
 ovn_fianna_fimm
+ovn_fianna_fimm_shields
 ovn_fimir_dirach
 ovn_fimm_guard
 ovn_finmor
+ovn_flaithmor
 ovn_gharnus_demon
 ovn_killing_eye
 ovn_marsh_hornets_ror
@@ -24,6 +25,7 @@ ovn_mistmor
 ovn_moor_hounds_ror
 ovn_nuckelavee
 ovn_shearl
+ovn_shearl_spearmen
 ovn_swamp_daemons
 ovn_unit_short_text_fim_bog_octopus_0
 ovn_unit_short_text_fim_cav_bog_beast_riders

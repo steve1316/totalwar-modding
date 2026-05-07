@@ -1,6 +1,7 @@
 group_name
 #unit_attributes_groups_tables;0;db/unit_attributes_groups_tables/!!!!!!!2xunitsize_compat_archer_fuyuanshan_faction
 attribute_cth_fys_peasant_firelancer
+cth_fys_cav_rhino_rider
 cth_fys_jade_warrior_lancer
 cth_mon_yaksha_attributes
 f_cth_cav_bastion_attributes
@@ -10,7 +11,8 @@ fuyuanshan_xinwu
 fuyuanshan_xiuluo_0_attributes
 jade_banner
 jade_general
-jade_general_longma
-jade_general_unicorn
+jade_general_commanderveh
+jade_general_horse
+jade_general_rhino
 wh3_main_cth_fuyuanshan_0_attributes
 wh3_main_cth_fuyuanshan_1_attributes

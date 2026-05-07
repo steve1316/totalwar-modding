@@ -1,5 +1,7 @@
 group_name
 #unit_attributes_groups_tables;0;db/unit_attributes_groups_tables/!!!!!!!2xunitsize_compat_ovn_araby
+arb_wizard_caliph_0
+arb_wizard_caliph_1
 ovn_arb_cav_flying_carpets_attributes
 ovn_arb_cha_sheikh_3_attributes
 ovn_arb_cha_sultan_jaffar_djinn_attributes
@@ -8,7 +10,9 @@ ovn_arb_cha_wizard_flying_carpets_attributes
 ovn_arb_djinn_infantry
 ovn_arb_djinn_infantry_flying
 ovn_arb_djinn_monster
+ovn_arb_djinn_monster_wind
 ovn_arb_inf_arabyan_spearmen_summoned_attributes
+ovn_arb_inf_southland_warriors
 ovn_arb_mon_elephant
 ovn_arb_mon_war_elephant
 ovn_arb_mon_war_elephant_ror_2
