@@ -1,5 +1,0 @@
-key	close_formation_spacing_horizontal	close_formation_spacing_variation	close_formation_spacing_vertical	dismounted_close_formation_spacing_horizontal	dismounted_close_formation_spacing_variation	dismounted_close_formation_spacing_vertical	dismounted_loose_formation_spacing_horizontal	dismounted_loose_formation_spacing_variation	dismounted_loose_formation_spacing_vertical	loose_formation_spacing_horizontal	loose_formation_spacing_variation	loose_formation_spacing_vertical	routing_space_variation	is_chaotic_formation	testudo_horizontal_spacing	testudo_vertical_spacing	shield_wall_horizontal_spacing	shield_wall_vertical_spacing
-#unit_spacings_tables;7;db/unit_spacings_tables/!!!!!!!2xunitsize_compat_!kitties
-leo_spacing	3.5000	1.4000	3.6000	2.4000	0.4000	2.4000	4.0000	1.0000	24.0000	5.6000	1.6000	10.0000	3.0000	false	3.1000	3.2000	3.1000	3.2000
-leo_spacing_small	2.7000	1.4000	2.8000	2.4000	0.4000	2.4000	4.0000	1.0000	24.0000	5.6000	1.6000	10.0000	3.0000	false	2.6000	2.7000	2.5000	2.6000
-rhino_spacing	10.0000	2.5000	10.0000	4.0000	1.0000	1.0000	1.0000	1.0000	1.0000	10.0000	4.0000	12.0000	3.0000	true	0.8500	1.0000	0.8500	0.8500

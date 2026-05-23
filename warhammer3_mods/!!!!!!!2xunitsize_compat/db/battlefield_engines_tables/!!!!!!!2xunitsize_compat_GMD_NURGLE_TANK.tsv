@@ -1,3 +1,0 @@
-key	destroyed_model	destruction_animation	engine_type	gun_animation_table	missile_weapon	model	battle_entity	asset_folder	variant	draught_attachment_point	tech_folder	rider_attachment_point	destruct_model	destruct_anim	destruct_meta	audio_armour_type	riders_shoot_behaviour	scale
-#battlefield_engines_tables;23;db/battlefield_engines_tables/!!!!!!!2xunitsize_compat_GMD_NURGLE_TANK
-gmd_nur_veh_steam_tank_volley_gun	warmachines/engines/gmd_nur_tank/gmd_nur_tank_destroyed_01.wsmodel	emp_steam_tank_hellblaster_destruct	Generic_No_Crew_Rotate	wm_steam_tank01		gmd_nur_steam_tank_hellblaster	gmd_nur_veh_steam_tank				warmachines\engines\emp_steam_tank\tech					war_machine_metal	all_riders_shooting	0.8500
