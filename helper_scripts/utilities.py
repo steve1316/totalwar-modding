@@ -363,6 +363,28 @@ def extract_model_paths_from_variantmeshdefinition(file_path):
     return model_paths
 
 
+def _ensure_schema_json(schema_path: str):
+    """Auto-generate the schema JSON from the matching RON via rpfm_cli if it does not exist yet.
+
+    Args:
+        schema_path (str): Path to the schema JSON file we expect to read.
+    """
+    if os.path.exists(schema_path):
+        return
+    ron_path = schema_path[: -len(".json")] + ".ron" if schema_path.endswith(".json") else schema_path + ".ron"
+    if not os.path.exists(ron_path):
+        return
+    schemas_dir = os.path.dirname(schema_path) or "."
+    logging.info(f"Schema JSON '{schema_path}' missing. Converting all RON schemas in '{schemas_dir}' via rpfm_cli.")
+    result = subprocess.run(
+        ["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "to-json", "--schemas-path", schemas_dir],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        logging.error(f"rpfm_cli schemas to-json failed (exit {result.returncode}): {result.stderr.strip()}")
+
+
 def _load_schema_table_info(schema_path: str, table_name: str):
     """Load schema JSON and find the latest version for a table.
 
@@ -377,6 +399,8 @@ def _load_schema_table_info(schema_path: str, table_name: str):
     try:
         # Check cache first.
         if schema_path not in _SCHEMA_CACHE:
+            # Auto-convert RON -> JSON if the JSON is missing (one-time per fresh checkout).
+            _ensure_schema_json(schema_path)
             # Load schema from file and cache it.
             with open(schema_path, "r", encoding="utf-8") as f:
                 _SCHEMA_CACHE[schema_path] = json.load(f)["definitions"]
