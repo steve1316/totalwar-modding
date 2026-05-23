@@ -122,7 +122,14 @@ def handle_main_units_tables(
     # In addition, double the value of the bonus_hit_points column for the "lord", "hero" and "monster" caste categories.
     extract_tsv_data("land_units_tables")
     if land_units_tables_df is None:
-        land_units_tables_df: pd.DataFrame = read_and_clean_tsv("vanilla_land_units_tables/db/land_units_tables/data__.tsv", "land_units_tables")
+        # Cast to str so later assignments of stringified ints don't trip the float64 dtype FutureWarning.
+        land_units_tables_df: pd.DataFrame = read_and_clean_tsv("vanilla_land_units_tables/db/land_units_tables/data__.tsv", "land_units_tables").astype(str)
+
+    # Normalize int-like columns to clean integer strings. pd.read_csv infers numeric columns as float64,
+    # which becomes "4280.0" after .astype(str) and breaks the downstream .astype(int) calls.
+    for col in ["bonus_hit_points", "num_mounts", "num_engines", "rank_depth"]:
+        if col in land_units_tables_df.columns:
+            land_units_tables_df[col] = land_units_tables_df[col].astype(float).astype(int).astype(str)
     for _, row in df.iterrows():
         mask = land_units_tables_df["key"] == row["land_unit"]
 
@@ -342,6 +349,12 @@ if __name__ == "__main__":
             # Extract and load all the required and optional tables needed for this mod.
             table_data = extract_and_load_table_data(mod["path"], TABLE_CONFIGS)
             if table_data is None:
+                continue
+
+            # This script doubles unit sizes, so mods without main_units_tables AND land_units_tables have nothing to process.
+            if "main_units_tables_headers" not in table_data or "land_units_tables_headers" not in table_data:
+                logging.info(f"Skipping {mod['package_name']}: no main_units_tables/land_units_tables to double.")
+                cleanup_modded_folders()
                 continue
 
             # Extract the variantmeshes/variantmeshdefinitions folder if it exists.
