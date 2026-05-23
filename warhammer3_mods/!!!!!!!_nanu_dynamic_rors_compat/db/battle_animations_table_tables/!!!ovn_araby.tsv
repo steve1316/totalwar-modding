@@ -1,6 +1,7 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!ovn_araby
 gh1_araby_genie	ghost01
+gh4_araby_desert_spirit	ghost04
 hc1_enchanted_rope	hybridcreature01
 hc7_araby_tempest_djinn	hybridcreature07
 hu1_araby_cm1_camel_spear_and_shield	humanoid01

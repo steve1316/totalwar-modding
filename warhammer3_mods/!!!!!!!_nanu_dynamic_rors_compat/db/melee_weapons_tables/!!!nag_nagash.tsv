@@ -5,6 +5,7 @@ nag_morghasts	0	0	60	120	2.0000	axe	axe	medium	6	1.2000	1.0000	0.0000	false		0	1
 nag_nagashi_guard	0	8	30	14	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.4000		false
 nag_nagashi_guard_halb	8	0	16	28	2.0000	spear	halberd		4	1.0000	1.0000	0.0000	false		0	10	4.9000		false
 nag_nagashi_lance	0	0	12	38	1.0000	lance	spear		1	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	5.1000		false
+nag_sand_crawlies	12	0	28	18	3.0000	axe	creatures_claws	small	2	1.0000	1.0000	0.0000	false		0	10	4.0000	wh2_dlc14_skv_cha_snikch	false
 nag_skeleton_reaper_scythe	0	8	12	16	1.0000	axe	halberd	small	1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 nag_spectre_swarm	0	0	0	28	3.0000	sword	creatures_claws	medium	3	1.0000	1.0000	0.0000	true	nag_contact_slownado	0	10	4.3000		false
 nag_spirit_hosts	0	0	0	16	1.0000	sword	creatures_claws		1	1.0000	1.0000	0.0000	true		0	10	4.3000		false
