@@ -11,11 +11,13 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from utilities import (
     cleanup_folders,
+    ensure_temp_dir,
     extract_model_paths_from_variantmeshdefinition,
     extract_modded_tsv_data,
     load_multiple_tsv_data,
     write_updated_tsv_file,
     STEAM_LIBRARY_DRIVE,
+    TEMP_DIR,
 )
 
 
@@ -77,31 +79,47 @@ OPTIONAL_TABLES: List[Tuple[str, str]] = [
 ]
 
 
-# Scratch folders the scripts populate during a run and need to clean up after.
+def modded_folders_for(scratch_root: str) -> List[str]:
+    """Return the list of `modded_*` scratch folders that live under `scratch_root`.
+
+    Used by parallel callers that need per-mod-namespaced scratch dirs (e.g. `f"{TEMP_DIR}/{mod_pkg}"`) so workers do not clobber each other.
+
+    Args:
+        scratch_root (str): Folder under which each `modded_<folder_name>` extraction directory lives.
+
+    Returns:
+        Full path list, one entry per `TABLE_CONFIGS.folder_name` plus the `modded_variantmeshes` sibling.
+    """
+    folders = [f"{scratch_root}/modded_{cfg['folder_name']}" for cfg in TABLE_CONFIGS]
+    folders.append(f"{scratch_root}/modded_variantmeshes")
+    return folders
+
+
+# Default scratch folders the (sequential) scripts populate during a run and need to clean up after. Every entry lives directly under `TEMP_DIR`. Parallel callers should pass a per-mod `scratch_root` to `modded_folders_for` / `cleanup_modded_folders` / `extract_and_load_table_data` instead.
 MODDED_FOLDERS: List[str] = [
-    "./modded_units_to_groupings_military_permissions_tables",
-    "./modded_land_units_tables",
-    "./modded_main_units_tables",
-    "./modded_unit_description_historical_texts_tables",
-    "./modded_battle_animations_table_tables",
-    "./modded_battle_entities_tables",
-    "./modded_mounts_tables",
-    "./modded_melee_weapons_tables",
-    "./modded_missile_weapons_tables",
-    "./modded_unit_description_short_texts_tables",
-    "./modded_unit_attributes_groups_tables",
-    "./modded_battlefield_engines_tables",
-    "./modded_projectiles_tables",
-    "./modded_battle_vortexs_tables",
-    "./modded_projectiles_scaling_damages_tables",
-    "./modded_projectile_shot_type_displays_tables",
-    "./modded_unit_spacings_tables",
-    "./modded_first_person_engines_tables",
-    "./modded_land_unit_articulated_vehicles_tables",
-    "./modded_ui_unit_groupings_tables",
-    "./modded_ui_unit_group_parents_tables",
-    "./modded_variants_tables",
-    "./modded_variantmeshes",
+    f"{TEMP_DIR}/modded_units_to_groupings_military_permissions_tables",
+    f"{TEMP_DIR}/modded_land_units_tables",
+    f"{TEMP_DIR}/modded_main_units_tables",
+    f"{TEMP_DIR}/modded_unit_description_historical_texts_tables",
+    f"{TEMP_DIR}/modded_battle_animations_table_tables",
+    f"{TEMP_DIR}/modded_battle_entities_tables",
+    f"{TEMP_DIR}/modded_mounts_tables",
+    f"{TEMP_DIR}/modded_melee_weapons_tables",
+    f"{TEMP_DIR}/modded_missile_weapons_tables",
+    f"{TEMP_DIR}/modded_unit_description_short_texts_tables",
+    f"{TEMP_DIR}/modded_unit_attributes_groups_tables",
+    f"{TEMP_DIR}/modded_battlefield_engines_tables",
+    f"{TEMP_DIR}/modded_projectiles_tables",
+    f"{TEMP_DIR}/modded_battle_vortexs_tables",
+    f"{TEMP_DIR}/modded_projectiles_scaling_damages_tables",
+    f"{TEMP_DIR}/modded_projectile_shot_type_displays_tables",
+    f"{TEMP_DIR}/modded_unit_spacings_tables",
+    f"{TEMP_DIR}/modded_first_person_engines_tables",
+    f"{TEMP_DIR}/modded_land_unit_articulated_vehicles_tables",
+    f"{TEMP_DIR}/modded_ui_unit_groupings_tables",
+    f"{TEMP_DIR}/modded_ui_unit_group_parents_tables",
+    f"{TEMP_DIR}/modded_variants_tables",
+    f"{TEMP_DIR}/modded_variantmeshes",
 ]
 
 
@@ -165,13 +183,14 @@ def add_folder_to_pack(pack_path: str, source_folder: str, schema_path: str = SC
     )
 
 
-def extract_variantmeshes_folder(mod_path: str, dest: str = "./modded_variantmeshes") -> None:
+def extract_variantmeshes_folder(mod_path: str, dest: str = f"{TEMP_DIR}/modded_variantmeshes") -> None:
     """Extract the `variantmeshes` folder from a mod pack to the named destination.
 
     Args:
         mod_path (str): Path to the source `.pack` file.
-        dest (str): Local destination folder. Defaults to `./modded_variantmeshes`.
+        dest (str): Local destination folder. Defaults to `{TEMP_DIR}/modded_variantmeshes`.
     """
+    ensure_temp_dir(os.path.dirname(dest) or TEMP_DIR)
     subprocess.run(
         ["./rpfm_cli.exe", "--game", "warhammer_3", "pack", "extract", "--pack-path", mod_path, "--folder-path", f"variantmeshes;{dest}"],
         capture_output=True,
@@ -207,12 +226,17 @@ class DuplicateTracker:
         return True
 
 
-def extract_and_load_table_data(mod_path: str, table_configs: List[Dict[str, Any]] = TABLE_CONFIGS) -> Optional[Dict[str, Any]]:
+def extract_and_load_table_data(
+    mod_path: str,
+    table_configs: List[Dict[str, Any]] = TABLE_CONFIGS,
+    scratch_root: str = TEMP_DIR,
+) -> Optional[Dict[str, Any]]:
     """Extract every table in `table_configs` from `mod_path` and load the rows into per-table dictionaries keyed by the primary key.
 
     Args:
         mod_path (str): Path to the `.pack` file to extract from.
         table_configs (List[Dict[str, Any]]): Per-table extraction config. Each entry must have `table_name`, `folder_name`, and `key_field`, and may have `required`. Defaults to `TABLE_CONFIGS`.
+        scratch_root (str): Folder under which the `modded_<folder_name>` extraction directories are created. Pass `f"{TEMP_DIR}/{mod_pkg}"` for parallel callers so workers do not clobber each other. Defaults to `TEMP_DIR` (sequential callers).
 
     Returns:
         A dictionary with three kinds of entries per table:
@@ -229,11 +253,12 @@ def extract_and_load_table_data(mod_path: str, table_configs: List[Dict[str, Any
         key_field = config.get("key_field", "key")
         required = config.get("required", False)
 
-        extract_modded_tsv_data(table_name, mod_path, f"./modded_{folder_name}")
+        extract_dir = f"{scratch_root}/modded_{folder_name}"
+        extract_modded_tsv_data(table_name, mod_path, extract_dir)
         new_mapping: Dict[str, Any] = {}
 
-        if os.path.exists(f"./modded_{folder_name}"):
-            merged_data, headers, version_info = load_multiple_tsv_data(f"./modded_{folder_name}/db/{table_name}", table_name)
+        if os.path.exists(extract_dir):
+            merged_data, headers, version_info = load_multiple_tsv_data(f"{extract_dir}/db/{table_name}", table_name)
             for row in merged_data:
                 new_mapping[row[key_field]] = row
             mappings[f"{table_name}_headers"] = headers
@@ -275,6 +300,7 @@ def walk_land_unit_to_related_tables(
     new_data: Dict[str, List[Any]],
     vanilla_mounts_keys: Optional[set] = None,
     variant_mesh_definitions_to_add: Optional[List[str]] = None,
+    variantmeshes_root: str = f"{TEMP_DIR}/modded_variantmeshes",
 ) -> None:
     """Walk the foreign-key chain from a `land_units_tables` row, append related rows into `new_data`, and record any vanilla-mount variantmeshdefinitions to copy into the compat pack.
 
@@ -286,6 +312,7 @@ def walk_land_unit_to_related_tables(
         new_data (Dict[str, List[Any]]): Buckets to append to, built by `make_new_data_buckets`. Mutated in place.
         vanilla_mounts_keys (Optional[set]): Set of vanilla mount keys; only mounts whose key is in this set have their variantmeshdefinitions captured. If None, no variantmesh capture happens.
         variant_mesh_definitions_to_add (Optional[List[str]]): List that is appended to with paths of variantmeshdefinition files to move into the compat pack. Mutated in place.
+        variantmeshes_root (str): Folder containing the extracted `variantmeshes/variantmeshdefinitions/` tree to read from. Parallel callers should pass the per-mod folder used in `extract_variantmeshes_folder`. Defaults to `f"{TEMP_DIR}/modded_variantmeshes"`.
     """
     if tracker.should_add("main_units_tables", main_unit_data):
         new_data["main_units"].append(main_unit_data)
@@ -327,10 +354,10 @@ def walk_land_unit_to_related_tables(
                 and variant_mesh_definitions_to_add is not None
                 and mount_data.get("key") in vanilla_mounts_keys
                 and variant_data.get("variant_filename")
-                and os.path.exists(f"./modded_variantmeshes/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition")
+                and os.path.exists(f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition")
             ):
                 variant_mesh_definitions_to_add.append(
-                    f"./modded_variantmeshes/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition"
+                    f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition"
                 )
 
     if data.get("primary_melee_weapon") and data["primary_melee_weapon"] in table_data["melee_weapons_tables"]:
@@ -435,7 +462,7 @@ def write_optional_tables(
 
     Args:
         new_data (Dict[str, Any]): Per-unit buckets produced by `walk_land_unit_to_related_tables`.
-        output_root (str): Root output folder (e.g. `./!!!!!!!_nanu_dynamic_rors_compat`); each bucket is written under `<output_root>/db/<table_name>`.
+        output_root (str): Root output folder (e.g. `./temp/!!!!!!!_nanu_dynamic_rors_compat`); each bucket is written under `<output_root>/db/<table_name>`.
         file_suffix (str): File suffix used for the TSV filename and the path component of each table's version_info row.
         table_data (Dict[str, Any]): The mapping returned by `extract_and_load_table_data`. Used to look up per-table `headers` and `version_info`.
         tables_to_sort (List[str]): Mutated in place; each newly-written table's directory is appended if not already present, so the caller can sort them all afterwards.
@@ -456,14 +483,19 @@ def write_optional_tables(
             tables_to_sort.append(path)
 
 
-def move_variantmesh_definitions(variant_mesh_definitions: List[str], output_root: str) -> None:
+def move_variantmesh_definitions(
+    variant_mesh_definitions: List[str],
+    output_root: str,
+    variantmeshes_root: str = f"{TEMP_DIR}/modded_variantmeshes",
+) -> None:
     """Move variantmeshdefinitions and their referenced wh_variantmodels into the compat pack folder structure.
 
-    Each definition file is moved out of `./modded_variantmeshes/...` into `<output_root>/variantmeshes/variantmeshdefinitions/`, then any model paths referenced inside it are moved out of `./modded_variantmeshes/variantmeshes/wh_variantmodels/` into `<output_root>/variantmeshes/wh_variantmodels/`. Missing source files are skipped silently.
+    Each definition file is moved out of `<variantmeshes_root>/...` into `<output_root>/variantmeshes/variantmeshdefinitions/`, then any model paths referenced inside it are moved out of `<variantmeshes_root>/variantmeshes/wh_variantmodels/` into `<output_root>/variantmeshes/wh_variantmodels/`. Missing source files are skipped silently.
 
     Args:
         variant_mesh_definitions (List[str]): Source paths for the variantmeshdefinition files to move. May contain duplicates; missing entries are skipped.
-        output_root (str): Root output folder (e.g. `./!!!!!!!_nanu_dynamic_rors_compat`).
+        output_root (str): Root output folder (e.g. `./temp/!!!!!!!_nanu_dynamic_rors_compat`).
+        variantmeshes_root (str): Folder containing the source `variantmeshes/wh_variantmodels/` tree. Parallel callers should pass the per-mod folder used in `extract_variantmeshes_folder`. Defaults to `f"{TEMP_DIR}/modded_variantmeshes"`.
     """
     if not variant_mesh_definitions:
         return
@@ -484,13 +516,20 @@ def move_variantmesh_definitions(variant_mesh_definitions: List[str], output_roo
                 if os.path.exists(target):
                     os.remove(target)
                 os.makedirs(f"{output_root}/variantmeshes/wh_variantmodels", exist_ok=True)
-                source = f"./modded_variantmeshes/variantmeshes/wh_variantmodels/{mesh_model_path}"
+                source = f"{variantmeshes_root}/variantmeshes/wh_variantmodels/{mesh_model_path}"
                 if os.path.exists(source):
                     shutil.move(source, target)
         except FileNotFoundError:
             logging.error(f"variantmeshdefinition not found: {variant_mesh_definition}.")
 
 
-def cleanup_modded_folders() -> None:
-    """Wipe every transient `./modded_*` folder a compat-pack run produces."""
-    cleanup_folders(MODDED_FOLDERS)
+def cleanup_modded_folders(scratch_root: Optional[str] = None) -> None:
+    """Wipe every transient `modded_*` folder a compat-pack run produces.
+
+    Args:
+        scratch_root (Optional[str]): When provided, wipe only the per-mod-namespaced folders under `scratch_root` (used by parallel callers, e.g. `f"{TEMP_DIR}/{mod_pkg}"`). When None, wipe the default `MODDED_FOLDERS` that sit directly under `TEMP_DIR` (sequential callers).
+    """
+    if scratch_root is None:
+        cleanup_folders(MODDED_FOLDERS)
+    else:
+        cleanup_folders(modded_folders_for(scratch_root))
