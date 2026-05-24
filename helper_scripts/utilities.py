@@ -10,7 +10,8 @@ import logging
 import json
 import threading
 import time
-from typing import List, Dict
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Any, Callable, Iterable, List, Dict, Optional
 
 
 STEAM_LIBRARY_DRIVE = "F:"
@@ -28,6 +29,42 @@ DATA_START_ROW = 2
 # Schema cache: maps schema_path -> schema["definitions"] dictionary. Guarded by `_SCHEMA_CACHE_LOCK` so concurrent workers do not race on the first-miss load.
 _SCHEMA_CACHE: Dict[str, Dict] = {}
 _SCHEMA_CACHE_LOCK = threading.Lock()
+
+
+def run_parallel(
+    items: Iterable[Any],
+    worker_fn: Callable[[Any], Any],
+    max_workers: int,
+    label_fn: Optional[Callable[[Any], str]] = None,
+) -> List[Any]:
+    """Dispatch `worker_fn` over `items`, sequentially when `max_workers <= 1` and via `ThreadPoolExecutor` otherwise.
+
+    Worker exceptions are logged via `logging.exception` (using `label_fn(item)` as the identifier) and re-raised to abort the run, matching the previous behaviour of the parallelized compat-pack scripts. Result order is input order when sequential and completion order when parallel - callers that need a stable order must sort the returned list themselves.
+
+    Args:
+        items (Iterable[Any]): Items dispatched one per worker invocation.
+        worker_fn (Callable[[Any], Any]): Callable invoked with each item. Its return value is appended to the result list.
+        max_workers (int): Worker thread count. Values `<= 1` force sequential execution.
+        label_fn (Optional[Callable[[Any], str]]): Returns a short label for error logs. Defaults to `repr`.
+
+    Returns:
+        Results of every `worker_fn` call, in input order when sequential and completion order when parallel.
+    """
+    label_fn = label_fn or repr
+    items = list(items)
+    if max_workers <= 1:
+        return [worker_fn(item) for item in items]
+    results: List[Any] = []
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(worker_fn, item): item for item in items}
+        for future in as_completed(futures):
+            item = futures[future]
+            try:
+                results.append(future.result())
+            except Exception:
+                logging.exception(f"Worker failed for {label_fn(item)}.")
+                raise
+    return results
 
 
 def setup_script_logging(log_format: str = "%(asctime)s - %(levelname)s - %(message)s") -> None:
