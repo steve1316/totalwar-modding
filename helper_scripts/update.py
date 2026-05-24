@@ -4,6 +4,7 @@
 3. Update the modified attribute mods.
 """
 
+import argparse
 import logging
 import time
 import subprocess
@@ -33,21 +34,31 @@ if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
     start_time = time.time()
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=None,
+        help="Worker thread count forwarded to each parallel-capable subscript. When omitted, each subscript uses its own default of min(8, cpu_count()).",
+    )
+    args = parser.parse_args()
+    workers_args = ["--workers", str(args.workers)] if args.workers is not None else []
+
     # Update the faction data for the land encounters mod.
     logging.info("Updating the faction data for the land encounters mod...")
-    run_script(["python", "process_main_units_tables.py"])
+    run_script(["python", "process_main_units_tables.py", *workers_args])
 
     # Update the Dynamic RoR mod.
     logging.info("Updating the Dynamic RoR mod...")
-    run_script(["python", "update_dynamic_rors.py", "--reset"])
+    run_script(["python", "update_dynamic_rors.py", "--reset", *workers_args])
 
     # Update the modified attribute mods.
     logging.info("Updating the modified attribute mods...")
-    run_script(["python", "update_modified_attribute_mods.py", "--reset"])
-    
+    run_script(["python", "update_modified_attribute_mods.py", "--reset", *workers_args])
+
     # Update the double unit size mod.
     logging.info("Updating the double unit size mod...")
-    run_script(["python", "update_double_unit_size.py", "--reset"])
+    run_script(["python", "update_double_unit_size.py", "--reset", *workers_args])
 
     end_time = round(time.time() - start_time, 2)
     logging.info(f"Total time for updating all mods: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
