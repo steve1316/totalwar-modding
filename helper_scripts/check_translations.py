@@ -9,7 +9,7 @@ import logging
 import gc
 import shutil
 import time
-from typing import List, Set
+from typing import List, Optional, Set
 from utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE
 
 
@@ -302,6 +302,28 @@ def check_missing_files(messages: List[str], mod_name: str, is_collection: bool 
     return messages
 
 
+def write_regex_patterns(keys: Set[str], header: str, explanation: Optional[str] = None) -> None:
+    """Append a regex-pattern block for `keys` to `translation_check_results.txt`, chunked at 200 keys per line.
+
+    Args:
+        keys (Set[str]): Keys to emit as `\\bkey\\b` alternatives. No-op when empty.
+        header (str): Header line written immediately after the divider.
+        explanation (Optional[str]): Optional extra line written between the header and the patterns.
+    """
+    if not keys:
+        return
+    chunk_size = 200
+    keys_list = list(keys)
+    with open("translation_check_results.txt", "a", encoding="utf-8") as result_file:
+        result_file.write("//////////////////////////////////////////////////\n")
+        result_file.write(f"{header}\n")
+        if explanation:
+            result_file.write(f"{explanation}\n")
+        for i in range(0, len(keys_list), chunk_size):
+            chunk = keys_list[i : i + chunk_size]
+            result_file.write("|".join(f"\\b{key}\\b" for key in chunk) + "\n\n")
+
+
 def check_text_string_amount_diff(messages: List[str], mod_name: str, is_collection: bool = False, subfolder_name: str = ""):
     """Compare original vs translation .loc file counts and per-file content, plus warn on missing files. Prints results.
 
@@ -372,32 +394,12 @@ def check_text_string_amount_diff(messages: List[str], mod_name: str, is_collect
                             for message in messages:
                                 result_file.write(f"{message}\n")
 
-                    # Write the regex pattern for this specific file if there were issues
-                    if collected_keys:
-                        with open("translation_check_results.txt", "a", encoding="utf-8") as result_file:
-                            result_file.write("//////////////////////////////////////////////////\n")
-                            result_file.write(f"REGEX PATTERN FOR {mod_name} - {prepend}{file_path}:\n")
-                            chunk_size = 200
-
-                            collected_keys_list = list(collected_keys)
-                            for i in range(0, len(collected_keys_list), chunk_size):
-                                chunk = collected_keys_list[i : i + chunk_size]
-                                regex_pattern = "|".join(f"\\b{key}\\b" for key in chunk)
-                                result_file.write(f"{regex_pattern}\n\n")
-
-                    # Write the regex pattern for discarded keys separately
-                    if discarded_keys:
-                        with open("translation_check_results.txt", "a", encoding="utf-8") as result_file:
-                            result_file.write("//////////////////////////////////////////////////\n")
-                            result_file.write(f"DISCARDED KEYS REGEX PATTERN FOR {mod_name} - {prepend}{file_path}:\n")
-                            result_file.write("These keys exist in translation but were removed from the original:\n")
-                            chunk_size = 200
-
-                            discarded_keys_list = list(discarded_keys)
-                            for i in range(0, len(discarded_keys_list), chunk_size):
-                                chunk = discarded_keys_list[i : i + chunk_size]
-                                regex_pattern = "|".join(f"\\b{key}\\b" for key in chunk)
-                                result_file.write(f"{regex_pattern}\n\n")
+                    write_regex_patterns(collected_keys, f"REGEX PATTERN FOR {mod_name} - {prepend}{file_path}:")
+                    write_regex_patterns(
+                        discarded_keys,
+                        f"DISCARDED KEYS REGEX PATTERN FOR {mod_name} - {prepend}{file_path}:",
+                        "These keys exist in translation but were removed from the original:",
+                    )
 
                     del messages
                     gc.collect()
