@@ -7,6 +7,7 @@ import shutil
 import re
 import logging
 import json
+import threading
 from typing import List, Dict
 
 
@@ -14,13 +15,30 @@ STEAM_LIBRARY_DRIVE = "F:"
 FILEPATH_TO_VANILLA_DATA_TABLES = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\common\\Total War WARHAMMER III\\data\\db.pack"
 SCHEMA_PATH = "./schemas/schema_wh3.json"
 
+# Root for every transient folder produced by the helper scripts (vanilla/modded extractions, compat-pack build dirs, etc.).
+TEMP_DIR = "./temp"
+
 # TSV file structure constants
 HEADER_ROW_INDEX = 0
 VERSION_ROW_INDEX = 1
 DATA_START_ROW = 2
 
-# Schema cache: maps schema_path -> schema["definitions"] dictionary.
+# Schema cache: maps schema_path -> schema["definitions"] dictionary. Guarded by `_SCHEMA_CACHE_LOCK` so concurrent workers do not race on the first-miss load.
 _SCHEMA_CACHE: Dict[str, Dict] = {}
+_SCHEMA_CACHE_LOCK = threading.Lock()
+
+
+def ensure_temp_dir(temp_root: str = TEMP_DIR) -> str:
+    """Create the temp root if it does not exist and return its path.
+
+    Args:
+        temp_root (str): Temp root to create. Defaults to `TEMP_DIR`.
+
+    Returns:
+        The same `temp_root` path, after ensuring it exists.
+    """
+    os.makedirs(temp_root, exist_ok=True)
+    return temp_root
 
 
 FIELD_TYPE_FIXERS = {
@@ -31,12 +49,18 @@ FIELD_TYPE_FIXERS = {
 }
 
 
-def extract_tsv_data(table_name: str):
-    """Extract the TSV data for a given table name from the vanilla data tables to a folder prepended with \"vanilla_\".
+def extract_tsv_data(table_name: str, temp_root: str = TEMP_DIR) -> str:
+    """Extract the TSV data for a given table name from the vanilla data tables to `{temp_root}/vanilla_{table_name}`.
 
     Args:
         table_name (str): The name of the table to extract.
+        temp_root (str): Temp root under which the `vanilla_{table_name}` folder is written. Defaults to `TEMP_DIR`.
+
+    Returns:
+        Path of the destination folder, e.g. `./temp/vanilla_main_units_tables`.
     """
+    ensure_temp_dir(temp_root)
+    dest = f"{temp_root}/vanilla_{table_name}"
     subprocess.run(
         [
             "./rpfm_cli.exe",
@@ -49,11 +73,12 @@ def extract_tsv_data(table_name: str):
             "--tables-as-tsv",
             "./schemas/schema_wh3.ron",
             "--file-path",
-            f"db/{table_name}/data__;./vanilla_{table_name}",
+            f"db/{table_name}/data__;{dest}",
         ]
     )
 
     logging.info(f'TSV file "{table_name}" successfully extracted.')
+    return dest
 
 
 def extract_modded_tsv_data(table_name: str, packfile_path: str, extract_path: str):
@@ -397,13 +422,14 @@ def _load_schema_table_info(schema_path: str, table_name: str):
         Fields are sorted by ca_order.
     """
     try:
-        # Check cache first.
+        # Check cache first. Use the lock for the miss path so concurrent workers do not race on the one-shot load.
         if schema_path not in _SCHEMA_CACHE:
-            # Auto-convert RON -> JSON if the JSON is missing (one-time per fresh checkout).
-            _ensure_schema_json(schema_path)
-            # Load schema from file and cache it.
-            with open(schema_path, "r", encoding="utf-8") as f:
-                _SCHEMA_CACHE[schema_path] = json.load(f)["definitions"]
+            with _SCHEMA_CACHE_LOCK:
+                if schema_path not in _SCHEMA_CACHE:
+                    # Auto-convert RON -> JSON if the JSON is missing (one-time per fresh checkout).
+                    _ensure_schema_json(schema_path)
+                    with open(schema_path, "r", encoding="utf-8") as f:
+                        _SCHEMA_CACHE[schema_path] = json.load(f)["definitions"]
 
         schema = _SCHEMA_CACHE[schema_path]
 
