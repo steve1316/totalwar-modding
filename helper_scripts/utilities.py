@@ -1,5 +1,6 @@
 """Utility functions for Total War Warhammer 3 modding."""
 
+import argparse
 import pandas as pd
 import subprocess
 import os
@@ -26,6 +27,27 @@ DATA_START_ROW = 2
 # Schema cache: maps schema_path -> schema["definitions"] dictionary. Guarded by `_SCHEMA_CACHE_LOCK` so concurrent workers do not race on the first-miss load.
 _SCHEMA_CACHE: Dict[str, Dict] = {}
 _SCHEMA_CACHE_LOCK = threading.Lock()
+
+
+def make_common_argparser(include_reset: bool = True) -> argparse.ArgumentParser:
+    """Build an ArgumentParser pre-populated with the `--workers` and (optionally) `--reset` flags shared by every compat-pack script.
+
+    Args:
+        include_reset (bool): Add the `--reset` flag for scripts that wipe pack folders before writing. Defaults to True.
+
+    Returns:
+        A configured ArgumentParser. Callers may still add script-specific arguments before calling `parse_args()`.
+    """
+    parser = argparse.ArgumentParser()
+    if include_reset:
+        parser.add_argument("--reset", action="store_true", help="Reset the script.")
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=min(8, (os.cpu_count() or 4)),
+        help="Number of worker threads for parallel mod processing. Use 1 to force sequential (e.g. for debugging or output-equivalence diffs).",
+    )
+    return parser
 
 
 def run_rpfm_cli(args: List[str], capture_output: bool = False, text: bool = False) -> subprocess.CompletedProcess:

@@ -4,7 +4,6 @@ import logging
 import time
 import shutil
 import os
-import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Dict
 from utilities import (
@@ -12,6 +11,7 @@ from utilities import (
     extract_modded_tsv_data,
     load_tsv_data,
     load_multiple_tsv_data,
+    make_common_argparser,
     write_updated_tsv_file,
     merge_move,
     ensure_temp_dir,
@@ -280,16 +280,8 @@ if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
     start_time = time.time()
 
-    # Get arguments from argparse.
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--reset", action="store_true", help="Reset the script.")
-    parser.add_argument(
-        "--workers",
-        type=int,
-        default=min(8, (os.cpu_count() or 4)),
-        help="Number of worker threads for parallel mod processing. Use 1 to force sequential (e.g. for debugging or output-equivalence diffs).",
-    )
-    args = parser.parse_args()
+    # Get arguments from the CLI.
+    args = make_common_argparser().parse_args()
     if args.reset:
         logging.info("Will reset folders in the packfile before writing.")
         for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
