@@ -5,7 +5,7 @@ Processes TSV files to:
 2. Update specific combat attributes from reference data.
 """
 
-from utilities import load_tsv_data
+from utilities import load_tsv_data, ensure_temp_dir, TEMP_DIR
 import logging
 import os
 import time
@@ -69,11 +69,13 @@ if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
     start_time = time.time()
 
+    ensure_temp_dir()
+
     try:
-        # Load TSV data.
+        # Load TSV data. Inputs and outputs all live under TEMP_DIR to keep the helper_scripts root clean.
         # ------------------------------------------------------------------
-        mod_data, _, _ = load_tsv_data("glf.tsv")
-        game_data, game_headers, game_version = load_tsv_data("data__.tsv")
+        mod_data, _, _ = load_tsv_data(f"{TEMP_DIR}/glf.tsv")
+        game_data, game_headers, game_version = load_tsv_data(f"{TEMP_DIR}/data__.tsv")
 
         # Process data merge.
         # ------------------------------------------------------------------
@@ -83,9 +85,10 @@ if __name__ == "__main__":
 
         # Write merged output.
         # ------------------------------------------------------------------
-        os.makedirs(os.path.dirname("new_glf.tsv"), exist_ok=True)
+        output_path = f"{TEMP_DIR}/new_glf.tsv"
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-        with open("new_glf.tsv", "w", encoding="utf-8") as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write("\t".join(game_headers) + "\n")
             f.write(game_version + "\n")
 
@@ -93,7 +96,7 @@ if __name__ == "__main__":
                 ordered_values = [row[header] for header in game_headers]
                 f.write("\t".join(ordered_values) + "\n")
 
-        logging.info("Successfully created new_glf.tsv with merged data.")
+        logging.info(f"Successfully created {output_path} with merged data.")
 
     except FileNotFoundError as e:
         logging.error(f"Missing required file: {e.filename}")
