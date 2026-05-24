@@ -10,7 +10,7 @@ import logging
 import gc
 import shutil
 import time
-from typing import List
+from typing import List, Set
 from utilities import STEAM_LIBRARY_DRIVE
 
 
@@ -105,7 +105,6 @@ def compare_translation_entries(table_name: str, df_original: pd.DataFrame, df_t
         df_original (pd.DataFrame): DataFrame containing original text entries.
         df_translation (pd.DataFrame): DataFrame containing translated text entries.
         mod_name (str): Name of the mod being checked (for error reporting).
-        messages (List[str]): List to accumulate validation messages.
 
     Returns:
         Tuple of (messages, collected_keys, discarded_keys) where messages is the updated list of validation messages,
@@ -158,7 +157,7 @@ def compare_translation_entries(table_name: str, df_original: pd.DataFrame, df_t
 
 
 def process_key_differences(
-    diff_keys: List[str], mod_name: str, table_name: str, messages: List[str], explanation: str, is_missing_in_translation: bool
+    diff_keys: Set[str], mod_name: str, table_name: str, messages: List[str], explanation: str, is_missing_in_translation: bool
 ):
     """Process key differences between original and translation data.
 
@@ -167,7 +166,7 @@ def process_key_differences(
     - Extra keys present in translation but missing in original.
 
     Args:
-        diff_keys (List[str]): List of keys that differ between versions.
+        diff_keys (Set[str]): Set of keys that differ between versions.
         mod_name (str): Name of the mod being checked (for error reporting).
         table_name (str): Name of the table being checked.
         messages (List[str]): List to accumulate validation messages.
