@@ -32,6 +32,11 @@ MOD_FOLDERS_TO_EXTRACT = [
 ]
 
 
+# Per-faction unit bucket structure. Each faction's `units` dict holds one entry per tier, and each tier holds one list per caste category.
+TIER_NAMES = [f"tier_{i}" for i in range(6)]
+UNIT_CATEGORIES = ["melee_infantry", "missile_infantry", "melee_cavalry", "missile_cavalry", "monstrous_infantry", "monstrous_cavalry", "chariot", "warmachine", "war_beast", "monster", "generic", "lord", "hero"]
+
+
 def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
     """Extract a non-vanilla mod's required tables to a per-mod scratch dir and load each one into a DataFrame.
 
@@ -293,24 +298,7 @@ def tsv_to_faction_data(
 
                 # Initialize the faction and tier if they don't exist.
                 if faction_value not in factions_data:
-                    factions_data[faction_value] = {"units": {"tier_0": {}, "tier_1": {}, "tier_2": {}, "tier_3": {}, "tier_4": {}, "tier_5": {}}}
-                    # Initialize categories within each tier
-                    for tier in factions_data[faction_value]["units"]:
-                        factions_data[faction_value]["units"][tier] = {
-                            "melee_infantry": [],
-                            "missile_infantry": [],
-                            "melee_cavalry": [],
-                            "missile_cavalry": [],
-                            "monstrous_infantry": [],
-                            "monstrous_cavalry": [],
-                            "chariot": [],
-                            "warmachine": [],
-                            "war_beast": [],
-                            "monster": [],
-                            "generic": [],
-                            "lord": [],
-                            "hero": [],
-                        }
+                    factions_data[faction_value] = {"units": {tier: {cat: [] for cat in UNIT_CATEGORIES} for tier in TIER_NAMES}}
 
                 # Save the unit data.
                 tier = f"tier_{int(row['tier'])}"
