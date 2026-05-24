@@ -4,7 +4,7 @@ import logging
 import time
 import shutil
 import os
-from typing import List, Dict
+from typing import Callable, List, Dict, Tuple
 from utilities import (
     extract_tsv_data,
     extract_modded_tsv_data,
@@ -117,6 +117,41 @@ def adjust_muzzle_velocities(projectile_data: List[Dict]):
     return modified
 
 
+def _process_attribute_tables(
+    is_vanilla: bool,
+    folder_name: str,
+    prepend_name: str,
+    vanilla_table_name: str,
+    tables: List[Tuple[str, int]],
+    transform_fn: Callable[[List[Dict]], List[Dict]],
+) -> None:
+    """Walk a set of `(table_name, version_number)` pairs, transform each via `transform_fn`, and write the result into the per-attribute compat-pack build dir.
+
+    The vanilla branch fires only when `is_vanilla` is true and the current table matches `vanilla_table_name` (so non-vanilla tables in the list are skipped during a vanilla run). The modded branch fires when the per-mod scratch dir exists and contains TSVs.
+
+    Args:
+        is_vanilla (bool): True when called for the special vanilla entry, False for modded mods.
+        folder_name (str): Per-mod scratch dir name under `TEMP_DIR` for the modded branch (`"vanilla"` for vanilla).
+        prepend_name (str): Per-attribute prepend constant (e.g. `PREPEND_MELEE_TABLE_FILE_NAME`) used to namespace the output.
+        vanilla_table_name (str): Table whose `temp/vanilla_<name>` extraction triggers the vanilla branch.
+        tables (List[Tuple[str, int]]): Tables to process. Each entry is `(table_name, version_number)`.
+        transform_fn (Callable[[List[Dict]], List[Dict]]): Row transformer applied to the loaded TSV data.
+    """
+    for table_name, table_version_number in tables:
+        sort_key = "vortex_key" if table_name == "battle_vortexs_tables" else "key"
+        if is_vanilla and table_name == vanilla_table_name and os.path.exists(f"{TEMP_DIR}/vanilla_{vanilla_table_name}"):
+            data, headers, version_info = load_tsv_data(f"{TEMP_DIR}/vanilla_{vanilla_table_name}/db/{table_name}/data__.tsv")
+            version_info = version_info.replace("data__", f"{prepend_name}_vanilla_and_dlc")
+            updated = sorted(transform_fn(data), key=lambda x: x[sort_key])
+            write_updated_tsv_file(updated, headers, version_info, f"{TEMP_DIR}/{prepend_name}/db/{table_name}", f"{prepend_name}_vanilla_and_dlc")
+        elif os.path.exists(f"{TEMP_DIR}/{folder_name}/db/{table_name}") and any(file.endswith(".tsv") for file in os.listdir(f"{TEMP_DIR}/{folder_name}/db/{table_name}")):
+            logging.info(f"There are TSV files in {folder_name}/db/{table_name}.")
+            data, headers, _ = load_multiple_tsv_data(f"{TEMP_DIR}/{folder_name}/db/{table_name}")
+            version_info = f"#{table_name};{table_version_number};db/{table_name}/{prepend_name}_{folder_name}"
+            updated = sorted(transform_fn(data), key=lambda x: x[sort_key])
+            write_updated_tsv_file(updated, headers, version_info, f"{TEMP_DIR}/{prepend_name}/db/{table_name}", f"{prepend_name}_{folder_name}")
+
+
 def process_mod(mod: Dict) -> None:
     """Process one mod's modified-attribute tables and write its contribution into the compat-pack build dirs.
 
@@ -163,112 +198,41 @@ def process_mod(mod: Dict) -> None:
 
     # Update the melee attack intervals.
     if "melee" in mod["modified_attributes"]:
-        for table_name, table_version_number in [
-            ("melee_weapons_tables", MELEE_WEAPONS_TABLE_VERSION_NUMBER),
-            ("projectiles_scaling_damages_tables", PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER),
-        ]:
-            if is_vanilla and table_name == "melee_weapons_tables" and os.path.exists(f"{TEMP_DIR}/vanilla_melee_weapons_tables"):
-                melee_data, headers, version_info = load_tsv_data(f"{TEMP_DIR}/vanilla_melee_weapons_tables/db/{table_name}/data__.tsv")
-                version_info = version_info.replace("data__", f"{PREPEND_MELEE_TABLE_FILE_NAME}_vanilla_and_dlc")
-                updated_melee_data = update_melee_attack_intervals(melee_data)
-                # Sort the data by the key column ascending.
-                updated_melee_data = sorted(updated_melee_data, key=lambda x: x["key"])
-                write_updated_tsv_file(
-                    updated_melee_data,
-                    headers,
-                    version_info,
-                    f"{TEMP_DIR}/{PREPEND_MELEE_TABLE_FILE_NAME}/db/{table_name}",
-                    f"{PREPEND_MELEE_TABLE_FILE_NAME}_vanilla_and_dlc",
-                )
-            elif os.path.exists(f"{TEMP_DIR}/{folder_name}/db/{table_name}") and any(
-                file.endswith(".tsv") for file in os.listdir(f"{TEMP_DIR}/{folder_name}/db/{table_name}")
-            ):
-                logging.info(f"There are TSV files in {folder_name}/db/{table_name}.")
-                melee_data, headers, _ = load_multiple_tsv_data(f"{TEMP_DIR}/{folder_name}/db/{table_name}")
-                version_info = f"#{table_name};{table_version_number};db/{table_name}/{PREPEND_MELEE_TABLE_FILE_NAME}_{folder_name}"
-                updated_melee_data = update_melee_attack_intervals(melee_data)
-                # Sort the data by the key column ascending.
-                updated_melee_data = sorted(updated_melee_data, key=lambda x: x["key"])
-                write_updated_tsv_file(
-                    updated_melee_data,
-                    headers,
-                    version_info,
-                    f"{TEMP_DIR}/{PREPEND_MELEE_TABLE_FILE_NAME}/db/{table_name}",
-                    f"{PREPEND_MELEE_TABLE_FILE_NAME}_{folder_name}",
-                )
+        _process_attribute_tables(
+            is_vanilla,
+            folder_name,
+            PREPEND_MELEE_TABLE_FILE_NAME,
+            "melee_weapons_tables",
+            [("melee_weapons_tables", MELEE_WEAPONS_TABLE_VERSION_NUMBER), ("projectiles_scaling_damages_tables", PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER)],
+            update_melee_attack_intervals,
+        )
 
     # Update the ranged firing arcs.
     if "ranged_arc" in mod["modified_attributes"]:
-        if is_vanilla and os.path.exists(f"{TEMP_DIR}/vanilla_battle_entities_tables"):
-            battle_entities_data, headers, version_info = load_tsv_data(
-                f"{TEMP_DIR}/vanilla_battle_entities_tables/db/battle_entities_tables/data__.tsv"
-            )
-            version_info = version_info.replace("data__", f"{PREPEND_RANGED_ARC_TABLE_FILE_NAME}_vanilla_and_dlc")
-            updated_battle_entities_data = update_rows_for_120_degree_ranged_attacks(battle_entities_data)
-            # Sort the data by the key column ascending.
-            updated_battle_entities_data = sorted(updated_battle_entities_data, key=lambda x: x["key"])
-            write_updated_tsv_file(
-                updated_battle_entities_data,
-                headers,
-                version_info,
-                f"{TEMP_DIR}/{PREPEND_RANGED_ARC_TABLE_FILE_NAME}/db/battle_entities_tables",
-                f"{PREPEND_RANGED_ARC_TABLE_FILE_NAME}_vanilla_and_dlc",
-            )
-        elif os.path.exists(f"{TEMP_DIR}/{folder_name}/db/battle_entities_tables") and any(
-            file.endswith(".tsv") for file in os.listdir(f"{TEMP_DIR}/{folder_name}/db/battle_entities_tables")
-        ):
-            logging.info(f"There are TSV files in {folder_name}/db/battle_entities_tables.")
-            battle_entities_data, headers, _ = load_multiple_tsv_data(f"{TEMP_DIR}/{folder_name}/db/battle_entities_tables")
-            version_info = f"#battle_entities_tables;{BATTLE_ENTITIES_TABLE_VERSION_NUMBER};db/battle_entities_tables/{PREPEND_RANGED_ARC_TABLE_FILE_NAME}_{folder_name}"
-            updated_battle_entities_data = update_rows_for_120_degree_ranged_attacks(battle_entities_data)
-            # Sort the data by the key column ascending.
-            updated_battle_entities_data = sorted(updated_battle_entities_data, key=lambda x: x["key"])
-            write_updated_tsv_file(
-                updated_battle_entities_data,
-                headers,
-                version_info,
-                f"{TEMP_DIR}/{PREPEND_RANGED_ARC_TABLE_FILE_NAME}/db/battle_entities_tables",
-                f"{PREPEND_RANGED_ARC_TABLE_FILE_NAME}_{folder_name}",
-            )
+        _process_attribute_tables(
+            is_vanilla,
+            folder_name,
+            PREPEND_RANGED_ARC_TABLE_FILE_NAME,
+            "battle_entities_tables",
+            [("battle_entities_tables", BATTLE_ENTITIES_TABLE_VERSION_NUMBER)],
+            update_rows_for_120_degree_ranged_attacks,
+        )
 
     # Update the projectile velocities.
     if "velocity" in mod["modified_attributes"]:
-        for table_name, table_version_number in [
-            ("battle_vortexs_tables", BATTLE_VORTEXS_TABLE_VERSION_NUMBER),
-            ("projectile_shot_type_displays_tables", PROJECTILE_SHOT_TYPE_DISPLAYS_TABLE_VERSION_NUMBER),
-            ("projectiles_scaling_damages_tables", PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER),
-            ("projectiles_tables", PROJECTILES_TABLE_VERSION_NUMBER),
-        ]:
-            if is_vanilla and table_name == "projectiles_tables" and os.path.exists(f"{TEMP_DIR}/vanilla_projectiles_tables"):
-                projectile_data, headers, version_info = load_tsv_data(f"{TEMP_DIR}/vanilla_projectiles_tables/db/{table_name}/data__.tsv")
-                version_info = version_info.replace("data__", f"{PREPEND_VELOCITY_TABLE_FILE_NAME}_vanilla_and_dlc")
-                updated_projectile_data = adjust_muzzle_velocities(projectile_data)
-                # Sort the data by the key column ascending.
-                updated_projectile_data = sorted(updated_projectile_data, key=lambda x: x["key"])
-                write_updated_tsv_file(
-                    updated_projectile_data,
-                    headers,
-                    version_info,
-                    f"{TEMP_DIR}/{PREPEND_VELOCITY_TABLE_FILE_NAME}/db/{table_name}",
-                    f"{PREPEND_VELOCITY_TABLE_FILE_NAME}_vanilla_and_dlc",
-                )
-            elif os.path.exists(f"{TEMP_DIR}/{folder_name}/db/{table_name}") and any(
-                file.endswith(".tsv") for file in os.listdir(f"{TEMP_DIR}/{folder_name}/db/{table_name}")
-            ):
-                logging.info(f"There are TSV files in {folder_name}/db/{table_name}.")
-                projectile_data, headers, _ = load_multiple_tsv_data(f"{TEMP_DIR}/{folder_name}/db/{table_name}")
-                version_info = f"#{table_name};{table_version_number};db/{table_name}/{PREPEND_VELOCITY_TABLE_FILE_NAME}_{folder_name}"
-                updated_projectile_data = adjust_muzzle_velocities(projectile_data)
-                # Sort the data by the key column ascending.
-                key = "key" if table_name != "battle_vortexs_tables" else "vortex_key"
-                updated_projectile_data = sorted(updated_projectile_data, key=lambda x: x[key])
-                write_updated_tsv_file(
-                    updated_projectile_data,
-                    headers,
-                    version_info,
-                    f"{TEMP_DIR}/{PREPEND_VELOCITY_TABLE_FILE_NAME}/db/{table_name}",
-                    f"{PREPEND_VELOCITY_TABLE_FILE_NAME}_{folder_name}",
-                )
+        _process_attribute_tables(
+            is_vanilla,
+            folder_name,
+            PREPEND_VELOCITY_TABLE_FILE_NAME,
+            "projectiles_tables",
+            [
+                ("battle_vortexs_tables", BATTLE_VORTEXS_TABLE_VERSION_NUMBER),
+                ("projectile_shot_type_displays_tables", PROJECTILE_SHOT_TYPE_DISPLAYS_TABLE_VERSION_NUMBER),
+                ("projectiles_scaling_damages_tables", PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER),
+                ("projectiles_tables", PROJECTILES_TABLE_VERSION_NUMBER),
+            ],
+            adjust_muzzle_velocities,
+        )
 
     if is_vanilla:
         shutil.rmtree(f"{TEMP_DIR}/vanilla_melee_weapons_tables", ignore_errors=True)
