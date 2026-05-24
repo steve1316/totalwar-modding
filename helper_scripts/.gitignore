@@ -6,6 +6,5 @@ factions_data.lua
 factions_data.json
 rpfm_cli.exe
 *.txt
-vanilla_*
-modded_*
+temp/
 _diag/
