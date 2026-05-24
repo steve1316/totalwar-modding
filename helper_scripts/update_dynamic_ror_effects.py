@@ -19,7 +19,9 @@ from utilities import (
     extract_modded_tsv_data,
     load_multiple_tsv_data,
     cleanup_folders,
+    ensure_temp_dir,
     STEAM_LIBRARY_DRIVE,
+    TEMP_DIR,
 )
 from dynamic_rors_effects import SUPPORTED_EFFECTS
 
@@ -28,7 +30,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 MOD_PACKFILE_PATH = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3278112051\\!!_nanu_dynamic_rors.pack"
 TABLE_NAME = "unit_purchasable_effects_tables"
-TEMP_EXTRACT_PATH = "./temp_unit_purchasable_effects_tables"
+TEMP_EXTRACT_PATH = f"{TEMP_DIR}/temp_unit_purchasable_effects_tables"
 DYNAMIC_RORS_EFFECTS_FILE = "dynamic_rors_effects.py"
 
 
@@ -364,6 +366,8 @@ def _recategorize_misc_effects(file_content: str) -> str:
 if __name__ == "__main__":
     logging.info("Starting missing effects detection and addition process.")
     start_time = time.time()
+
+    ensure_temp_dir()
 
     extract_modded_tsv_data(TABLE_NAME, MOD_PACKFILE_PATH, TEMP_EXTRACT_PATH)
     tsv_folder_path = os.path.join(TEMP_EXTRACT_PATH, f"db/{TABLE_NAME}")
