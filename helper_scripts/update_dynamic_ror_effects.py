@@ -311,12 +311,7 @@ def insert_effects_into_category(file_content: str, category: str, effects: List
 
 
 def _recategorize_misc_effects(file_content: str) -> str:
-    """Recategorize effects in the misc category.
-
-    Attempts to recategorize effects that were previously placed in the misc category
-    by running them through the categorization logic again. Effects that can be
-    properly categorized are moved to their appropriate categories, while effects
-    that still cannot be categorized remain in misc.
+    """Re-run categorization on effects in the misc bucket and move any that now match a real category.
 
     Args:
         file_content: The file content as a string.
