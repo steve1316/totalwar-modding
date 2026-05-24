@@ -8,3 +8,6 @@ rpfm_cli.exe
 *.txt
 temp/
 _diag/
+.claude/
+.vscode/
+CLAUDE.md

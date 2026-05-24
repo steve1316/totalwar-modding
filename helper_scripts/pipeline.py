@@ -6,7 +6,6 @@ The dynamic_rors and double_unit_size scripts each walk every supported mod, fol
 import logging
 import os
 import shutil
-import subprocess
 from typing import Any, Dict, List, Optional, Tuple
 
 from utilities import (
@@ -15,6 +14,7 @@ from utilities import (
     extract_model_paths_from_variantmeshdefinition,
     extract_modded_tsv_data,
     load_multiple_tsv_data,
+    run_rpfm_cli,
     write_updated_tsv_file,
     STEAM_LIBRARY_DRIVE,
     TEMP_DIR,
@@ -139,10 +139,7 @@ def reset_pack_folders(pack_path: str, folders: Tuple[str, ...] = ("db", "varian
         folders (Tuple[str, ...]): Top-level folder names inside the pack to clear. Defaults to `("db", "variantmeshes")`.
     """
     for folder in folders:
-        subprocess.run(
-            ["./rpfm_cli.exe", "--game", "warhammer_3", "pack", "delete", "--pack-path", pack_path, "--folder-path", folder],
-            capture_output=True,
-        )
+        run_rpfm_cli(["pack", "delete", "--pack-path", pack_path, "--folder-path", folder], capture_output=True)
 
 
 def add_folder_to_pack(pack_path: str, source_folder: str, schema_path: str = SCHEMA_RON_PATH) -> None:
@@ -153,10 +150,7 @@ def add_folder_to_pack(pack_path: str, source_folder: str, schema_path: str = SC
         source_folder (str): RPFM `--folder-path` argument; usually `<filesystem_path>;<pack_relative_path>` or just `<filesystem_path>;`.
         schema_path (str): Path to the WH3 schema RON file used to convert TSVs to binary. Defaults to `SCHEMA_RON_PATH`.
     """
-    subprocess.run(
-        ["./rpfm_cli.exe", "--game", "warhammer_3", "pack", "add", "--pack-path", pack_path, "--tsv-to-binary", schema_path, "--folder-path", source_folder],
-        capture_output=True,
-    )
+    run_rpfm_cli(["pack", "add", "--pack-path", pack_path, "--tsv-to-binary", schema_path, "--folder-path", source_folder], capture_output=True)
 
 
 def extract_variantmeshes_folder(mod_path: str, dest: str = f"{TEMP_DIR}/modded_variantmeshes") -> None:
@@ -167,10 +161,7 @@ def extract_variantmeshes_folder(mod_path: str, dest: str = f"{TEMP_DIR}/modded_
         dest (str): Local destination folder. Defaults to `{TEMP_DIR}/modded_variantmeshes`.
     """
     ensure_temp_dir(os.path.dirname(dest) or TEMP_DIR)
-    subprocess.run(
-        ["./rpfm_cli.exe", "--game", "warhammer_3", "pack", "extract", "--pack-path", mod_path, "--folder-path", f"variantmeshes;{dest}"],
-        capture_output=True,
-    )
+    run_rpfm_cli(["pack", "extract", "--pack-path", mod_path, "--folder-path", f"variantmeshes;{dest}"], capture_output=True)
 
 
 class DuplicateTracker:

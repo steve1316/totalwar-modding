@@ -3,7 +3,6 @@
 Validates text files from original and translated mods, comparing key counts and content.
 """
 
-import subprocess
 import os
 import pandas as pd
 import logging
@@ -11,7 +10,7 @@ import gc
 import shutil
 import time
 from typing import List, Set
-from utilities import STEAM_LIBRARY_DRIVE
+from utilities import run_rpfm_cli, STEAM_LIBRARY_DRIVE
 
 
 mod_paths_to_be_translated = [
@@ -71,10 +70,10 @@ if os.path.exists("./text_translation"):
 # If "./schemas" does not exist, download the schemas.
 if not os.path.exists("./schemas"):
     logging.info("Downloading schemas...")
-    subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "update", "--schema-path", "./schemas"])
+    run_rpfm_cli(["schemas", "update", "--schema-path", "./schemas"])
 
     # Now convert them to JSON.
-    subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "to-json", "--schemas-path", "./schemas"])
+    run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"])
 
 
 def read_text_tsv_with_schema(tsv_file_path: str):
@@ -424,36 +423,8 @@ if __name__ == "__main__":
             # Extract files from mod packages.
             # ------------------------------------------------------------------
             logging.info(f"Extracting text folder from {mod['mod_path']}...")
-            subprocess.run(
-                [
-                    "./rpfm_cli.exe",
-                    "--game",
-                    "warhammer_3",
-                    "pack",
-                    "extract",
-                    "--pack-path",
-                    mod["mod_path"],
-                    "--tables-as-tsv",
-                    "./schemas/schema_wh3.ron",
-                    "--folder-path",
-                    "text;./text_original",
-                ]
-            )
-            subprocess.run(
-                [
-                    "./rpfm_cli.exe",
-                    "--game",
-                    "warhammer_3",
-                    "pack",
-                    "extract",
-                    "--pack-path",
-                    mod["translation_path"],
-                    "--tables-as-tsv",
-                    "./schemas/schema_wh3.ron",
-                    "--folder-path",
-                    "text;./text_translation",
-                ]
-            )
+            run_rpfm_cli(["pack", "extract", "--pack-path", mod["mod_path"], "--tables-as-tsv", "./schemas/schema_wh3.ron", "--folder-path", "text;./text_original"])
+            run_rpfm_cli(["pack", "extract", "--pack-path", mod["translation_path"], "--tables-as-tsv", "./schemas/schema_wh3.ron", "--folder-path", "text;./text_translation"])
 
             # Grab the mod name from the mod path without the .pack extension.
             mod_name = os.path.basename(mod["mod_path"]).replace(".pack", "")
