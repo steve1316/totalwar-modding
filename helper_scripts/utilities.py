@@ -28,6 +28,20 @@ _SCHEMA_CACHE: Dict[str, Dict] = {}
 _SCHEMA_CACHE_LOCK = threading.Lock()
 
 
+def run_rpfm_cli(args: List[str], capture_output: bool = False, text: bool = False) -> subprocess.CompletedProcess:
+    """Run rpfm_cli.exe for Warhammer 3 with the given subcommand arguments.
+
+    Args:
+        args (List[str]): Arguments to pass after the implicit `["./rpfm_cli.exe", "--game", "warhammer_3"]` prefix.
+        capture_output (bool): When True, capture stdout/stderr instead of inheriting the parent's streams.
+        text (bool): When True, decode stdout/stderr as text rather than bytes.
+
+    Returns:
+        The completed subprocess result.
+    """
+    return subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", *args], capture_output=capture_output, text=text)
+
+
 def ensure_temp_dir(temp_root: str = TEMP_DIR) -> str:
     """Create the temp root if it does not exist and return its path.
 
@@ -61,21 +75,7 @@ def extract_tsv_data(table_name: str, temp_root: str = TEMP_DIR) -> str:
     """
     ensure_temp_dir(temp_root)
     dest = f"{temp_root}/vanilla_{table_name}"
-    subprocess.run(
-        [
-            "./rpfm_cli.exe",
-            "--game",
-            "warhammer_3",
-            "pack",
-            "extract",
-            "--pack-path",
-            FILEPATH_TO_VANILLA_DATA_TABLES,
-            "--tables-as-tsv",
-            "./schemas/schema_wh3.ron",
-            "--file-path",
-            f"db/{table_name}/data__;{dest}",
-        ]
-    )
+    run_rpfm_cli(["pack", "extract", "--pack-path", FILEPATH_TO_VANILLA_DATA_TABLES, "--tables-as-tsv", "./schemas/schema_wh3.ron", "--file-path", f"db/{table_name}/data__;{dest}"])
 
     logging.info(f'TSV file "{table_name}" successfully extracted.')
     return dest
@@ -89,21 +89,7 @@ def extract_modded_tsv_data(table_name: str, packfile_path: str, extract_path: s
         packfile_path (str): The path to the packfile to extract from.
         extract_path (str): The path to extract the TSV data to.
     """
-    subprocess.run(
-        [
-            "./rpfm_cli.exe",
-            "--game",
-            "warhammer_3",
-            "pack",
-            "extract",
-            "--pack-path",
-            packfile_path,
-            "--tables-as-tsv",
-            "./schemas/schema_wh3.ron",
-            "--folder-path",
-            f"db/{table_name};{extract_path}",
-        ]
-    )
+    run_rpfm_cli(["pack", "extract", "--pack-path", packfile_path, "--tables-as-tsv", "./schemas/schema_wh3.ron", "--folder-path", f"db/{table_name};{extract_path}"])
 
     if not os.path.exists(extract_path):
         logging.warning(f"No TSV file(s) for \"{table_name}\" found in {extract_path} for the mod \"{packfile_path.split('/')[-1]}\".")
@@ -401,11 +387,7 @@ def _ensure_schema_json(schema_path: str):
         return
     schemas_dir = os.path.dirname(schema_path) or "."
     logging.info(f"Schema JSON '{schema_path}' missing. Converting all RON schemas in '{schemas_dir}' via rpfm_cli.")
-    result = subprocess.run(
-        ["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "to-json", "--schemas-path", schemas_dir],
-        capture_output=True,
-        text=True,
-    )
+    result = run_rpfm_cli(["schemas", "to-json", "--schemas-path", schemas_dir], capture_output=True, text=True)
     if result.returncode != 0:
         logging.error(f"rpfm_cli schemas to-json failed (exit {result.returncode}): {result.stderr.strip()}")
 

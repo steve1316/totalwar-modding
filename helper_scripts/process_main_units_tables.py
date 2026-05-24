@@ -7,7 +7,6 @@ Key functionalities:
 """
 
 import argparse
-import subprocess
 import os
 import pandas as pd
 import json
@@ -16,7 +15,7 @@ import gc
 import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from utilities import extract_tsv_data, read_and_clean_tsv, ensure_temp_dir, STEAM_LIBRARY_DRIVE, TEMP_DIR
+from utilities import extract_tsv_data, read_and_clean_tsv, ensure_temp_dir, run_rpfm_cli, STEAM_LIBRARY_DRIVE, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
 from typing import List, Dict, Optional, Tuple
 
@@ -57,21 +56,7 @@ def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
 
     logging.info(f"Extracting mod data from {mod['package_name']}...")
     for folder in MOD_FOLDERS_TO_EXTRACT:
-        subprocess.run(
-            [
-                "./rpfm_cli.exe",
-                "--game",
-                "warhammer_3",
-                "pack",
-                "extract",
-                "--pack-path",
-                mod["path"],
-                "--tables-as-tsv",
-                "./schemas/schema_wh3.ron",
-                "--folder-path",
-                f"{folder};{scratch_root}/",
-            ]
-        )
+        run_rpfm_cli(["pack", "extract", "--pack-path", mod["path"], "--tables-as-tsv", "./schemas/schema_wh3.ron", "--folder-path", f"{folder};{scratch_root}/"])
 
     dfs = {
         "main_units_tables": process_tsv_files(f"{scratch_root}/db/main_units_tables/", "main_units_tables"),
@@ -98,10 +83,10 @@ def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
 # If "./schemas" does not exist, download the schemas.
 if not os.path.exists("./schemas"):
     logging.info("Downloading schemas...")
-    subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "update", "--schema-path", "./schemas"])
+    run_rpfm_cli(["schemas", "update", "--schema-path", "./schemas"])
 
     # Now convert them to JSON.
-    subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "to-json", "--schemas-path", "./schemas"])
+    run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"])
 
 # =====================================================================================
 # Configuration Constants
@@ -452,7 +437,7 @@ if __name__ == "__main__":
         df_character_skill_nodes_vanilla = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_character_skill_nodes_tables.tsv", "character_skill_nodes_tables")
 
         # Convert the schemas from Ron to JSON.
-        subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "to-json", "--schemas-path", "./schemas"])
+        run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"])
 
         # Load the schema.
         with open("schemas/schema_wh3.json", "r", encoding="utf-8") as schema_file:
@@ -582,36 +567,14 @@ if __name__ == "__main__":
         os.remove("factions_data.json")
 
     # Use the RPFM CLI to delete the existing factions_data.lua file from the mod.
-    subprocess.run(
-        [
-            "./rpfm_cli.exe",
-            "--game",
-            "warhammer_3",
-            "pack",
-            "delete",
-            "--pack-path",
-            f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack",
-            "--file-path",
-            "script/land_encounters/constants/battles/factions_data.lua",
-        ],
+    run_rpfm_cli(
+        ["pack", "delete", "--pack-path", f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack", "--file-path", "script/land_encounters/constants/battles/factions_data.lua"],
         capture_output=True,
     )
 
     # Now use the RPFM CLI to add the new factions_data.lua file into the packfile.
-    subprocess.run(
-        [
-            "./rpfm_cli.exe",
-            "--game",
-            "warhammer_3",
-            "pack",
-            "add",
-            "--pack-path",
-            f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack",
-            "--tsv-to-binary",
-            "./schemas/schema_wh3.ron",
-            "--file-path",
-            f"../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua;script/land_encounters/constants/battles/factions_data.lua",
-        ],
+    run_rpfm_cli(
+        ["pack", "add", "--pack-path", f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack", "--tsv-to-binary", "./schemas/schema_wh3.ron", "--file-path", f"../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua;script/land_encounters/constants/battles/factions_data.lua"],
         capture_output=True,
     )
 
