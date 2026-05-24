@@ -7,6 +7,7 @@ from utilities import (
     extract_modded_tsv_data,
     log_elapsed_time,
     make_common_argparser,
+    run_parallel,
     setup_script_logging,
     write_updated_tsv_file,
     sort_tsv_data,
@@ -35,7 +36,6 @@ from pipeline import (
 import time
 import os
 import logging
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from typing import Dict, Any, List, Optional
 import gc
@@ -727,20 +727,12 @@ if __name__ == "__main__":
             )
 
         logging.info(f"Extracting {len(mods_to_process)} mods with {args.workers} worker thread(s).")
-        extract_results: List[Optional[ModExtractResult]] = []
-        if args.workers <= 1:
-            for idx, mod in mods_to_process:
-                extract_results.append(extract_mod_data(idx, mod))
-        else:
-            with ThreadPoolExecutor(max_workers=args.workers) as executor:
-                futures = {executor.submit(extract_mod_data, idx, mod): (idx, mod) for idx, mod in mods_to_process}
-                for future in as_completed(futures):
-                    idx, mod = futures[future]
-                    try:
-                        extract_results.append(future.result())
-                    except Exception:
-                        logging.exception(f"Extraction worker failed for mod {mod.get('package_name', '<unknown>')}.")
-                        raise
+        extract_results: List[Optional[ModExtractResult]] = run_parallel(
+            mods_to_process,
+            lambda im: extract_mod_data(im[0], im[1]),
+            args.workers,
+            label_fn=lambda im: f"mod {im[1].get('package_name', '<unknown>')}",
+        )
 
         # Re-sort by original SUPPORTED_MODS index so the serial dedup pass is deterministic regardless of worker completion order.
         ordered_results = sorted((r for r in extract_results if r is not None), key=lambda r: r.mod_index)

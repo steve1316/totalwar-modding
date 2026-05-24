@@ -13,8 +13,7 @@ import logging
 import gc
 import shutil
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE, TEMP_DIR
+from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, run_parallel, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
 from typing import List, Dict, Optional, Tuple
 
@@ -456,23 +455,15 @@ if __name__ == "__main__":
         # Parallel extraction: each worker writes only to its own `temp/<folder_name>/` scratch and returns loaded dataframes. The vanilla mod is not extracted; the serial pass uses the pre-loaded vanilla dataframes.
         logging.info(f"Extracting {len(mods_to_extract)} mods with {args.workers} worker thread(s).")
         per_mod_dfs: Dict[int, Dict[str, pd.DataFrame]] = {}
-        if args.workers <= 1:
-            for idx, mod in mods_to_extract:
-                dfs = extract_mod_dataframes(mod)
-                if dfs is not None:
-                    per_mod_dfs[idx] = dfs
-        else:
-            with ThreadPoolExecutor(max_workers=args.workers) as executor:
-                futures = {executor.submit(extract_mod_dataframes, mod): (idx, mod) for idx, mod in mods_to_extract}
-                for future in as_completed(futures):
-                    idx, mod = futures[future]
-                    try:
-                        dfs = future.result()
-                    except Exception:
-                        logging.exception(f"Extraction worker failed for mod {mod.get('package_name', '<unknown>')}.")
-                        raise
-                    if dfs is not None:
-                        per_mod_dfs[idx] = dfs
+        extract_results = run_parallel(
+            mods_to_extract,
+            lambda im: (im[0], extract_mod_dataframes(im[1])),
+            args.workers,
+            label_fn=lambda im: f"mod {im[1].get('package_name', '<unknown>')}",
+        )
+        for idx, dfs in extract_results:
+            if dfs is not None:
+                per_mod_dfs[idx] = dfs
 
         # Serial merge pass in original SUPPORTED_MODS order so `factions_data`, `faction_keys`, and the in-tier list ordering stay deterministic (the lists in `factions_data[faction]["units"][tier][category]` are append-only and order-sensitive).
         for idx, mod in process_order:

@@ -4,7 +4,6 @@ import logging
 import time
 import shutil
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Dict
 from utilities import (
     extract_tsv_data,
@@ -13,6 +12,7 @@ from utilities import (
     load_multiple_tsv_data,
     log_elapsed_time,
     make_common_argparser,
+    run_parallel,
     setup_script_logging,
     write_updated_tsv_file,
     merge_move,
@@ -302,19 +302,7 @@ if __name__ == "__main__":
         process_mod(mod)
 
     logging.info(f"Processing {len(modded_mods)} modded mods with {args.workers} worker thread(s).")
-    if args.workers <= 1:
-        for mod in modded_mods:
-            process_mod(mod)
-    else:
-        with ThreadPoolExecutor(max_workers=args.workers) as executor:
-            futures = {executor.submit(process_mod, mod): mod for mod in modded_mods}
-            for future in as_completed(futures):
-                mod = futures[future]
-                try:
-                    future.result()
-                except Exception:
-                    logging.exception(f"Worker failed for mod {mod.get('package_name', '<unknown>')}.")
-                    raise
+    run_parallel(modded_mods, process_mod, args.workers, label_fn=lambda m: f"mod {m.get('package_name', '<unknown>')}")
 
     # After processing all mods, move the final folders to their destinations.
     for folder_name in [PREPEND_MELEE_TABLE_FILE_NAME, PREPEND_RANGED_ARC_TABLE_FILE_NAME, PREPEND_VELOCITY_TABLE_FILE_NAME]:

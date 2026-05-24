@@ -3,7 +3,6 @@
 import logging
 import time
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, Optional
 import pandas as pd
 from utilities import (
@@ -11,6 +10,7 @@ from utilities import (
     load_tsv_data,
     log_elapsed_time,
     make_common_argparser,
+    run_parallel,
     setup_script_logging,
     write_updated_tsv_file,
     read_and_clean_tsv,
@@ -463,19 +463,7 @@ if __name__ == "__main__":
         cleanup_modded_folders(scratch_root=scratch_root)
 
     logging.info(f"Processing {len(modded_mods)} modded mods with {args.workers} worker thread(s).")
-    if args.workers <= 1:
-        for mod in modded_mods:
-            process_mod(mod)
-    else:
-        with ThreadPoolExecutor(max_workers=args.workers) as executor:
-            futures = {executor.submit(process_mod, mod): mod for mod in modded_mods}
-            for future in as_completed(futures):
-                mod = futures[future]
-                try:
-                    future.result()
-                except Exception:
-                    logging.exception(f"Worker failed for mod {mod.get('package_name', '<unknown>')}.")
-                    raise
+    run_parallel(modded_mods, process_mod, args.workers, label_fn=lambda m: f"mod {m.get('package_name', '<unknown>')}")
 
     # Move the modded folder to the ../warhammer3_mods folder.
     if os.path.exists(f"{TEMP_DIR}/{MODDED_TABLE_NAME}"):
