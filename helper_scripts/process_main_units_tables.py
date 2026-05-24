@@ -451,7 +451,7 @@ if __name__ == "__main__":
         )
         df_character_skill_nodes_vanilla = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_character_skill_nodes_tables.tsv", "character_skill_nodes_tables")
 
-        # Conver the schemas from Ron to JSON.
+        # Convert the schemas from Ron to JSON.
         subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", "schemas", "to-json", "--schemas-path", "./schemas"])
 
         # Load the schema.
