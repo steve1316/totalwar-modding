@@ -243,10 +243,7 @@ def check_placeholder_translations(df_original: pd.DataFrame, df_translation: pd
 
 
 def check_missing_files(messages: List[str], mod_name: str, is_collection: bool = False, subfolder_name: str = ""):
-    """Check for missing .loc files in translation mods compared to original mods.
-
-    Performs comprehensive file comparison to identify files that exist in the original
-    but are missing from the translation mod.
+    """List .loc files present in the original mod but absent from the translation mod, appending warnings to `messages`.
 
     Args:
         messages (List[str]): List to accumulate validation messages.
@@ -307,12 +304,7 @@ def check_missing_files(messages: List[str], mod_name: str, is_collection: bool 
 
 
 def check_text_string_amount_diff(messages: List[str], mod_name: str, is_collection: bool = False, subfolder_name: str = ""):
-    """Validate text file counts and content between original and translation directories and prints the results.
-
-    Performs three main checks:
-    1. Compares file counts between original and translation directories
-    2. Validates content of matching TSV files using multiple path variations
-    3. Checks for missing .loc files in translation mods
+    """Compare original vs translation .loc file counts and per-file content, plus warn on missing files. Prints results.
 
     Args:
         messages (List[str]): List to accumulate validation messages.

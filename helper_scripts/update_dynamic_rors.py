@@ -45,10 +45,7 @@ MISSING_MODS = []
 
 @dataclass
 class ModExtractResult:
-    """Worker-extracted state for one mod, consumed by the serial merge pass.
-
-    Workers only do I/O-heavy extraction (rpfm_cli + TSV parsing) and the cheap per-mod mapping construction. The dedup-gated FK walk and TSV writes happen serially in `SUPPORTED_MODS` order so the global `processed_unit_effects` set and `DuplicateTracker` behave identically to the pre-parallel code.
-    """
+    """Worker-extracted state for one mod, consumed by the serial merge pass."""
 
     mod_index: int
     mod: Dict[str, Any]
