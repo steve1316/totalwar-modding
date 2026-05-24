@@ -5,6 +5,7 @@ from utilities import (
     read_and_clean_tsv,
     load_tsv_data,
     extract_modded_tsv_data,
+    make_common_argparser,
     write_updated_tsv_file,
     sort_tsv_data,
     merge_move,
@@ -37,7 +38,6 @@ from dataclasses import dataclass
 from typing import Dict, Any, List, Optional
 import gc
 import re
-import argparse
 
 
 MISSING_MODS = []
@@ -499,16 +499,9 @@ if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
     start_time = time.time()
 
-    # Get arguments from argparse.
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--reset", action="store_true", help="Reset the script.")
+    # Get arguments from the CLI.
+    parser = make_common_argparser()
     parser.add_argument("--vanilla", action="store_true", help="Process vanilla units only.")
-    parser.add_argument(
-        "--workers",
-        type=int,
-        default=min(8, (os.cpu_count() or 4)),
-        help="Number of worker threads for parallel mod extraction. Use 1 to force sequential (e.g. for debugging or output-equivalence diffs). Does not affect the serial dedup/write pass.",
-    )
     args = parser.parse_args()
     compat_pack_path = workshop_pack_path("3513364573", "!!!!!!!_nanu_dynamic_rors_compat.pack")
     leftover_pack_path = workshop_pack_path("3532864014", "!!!!!!!_nanu_dynamic_rors_leftover_vanilla.pack")

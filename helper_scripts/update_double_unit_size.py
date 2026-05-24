@@ -3,13 +3,13 @@
 import logging
 import time
 import os
-import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, Optional
 import pandas as pd
 from utilities import (
     extract_tsv_data,
     load_tsv_data,
+    make_common_argparser,
     write_updated_tsv_file,
     read_and_clean_tsv,
     validate_and_fix_tsv_types,
@@ -233,16 +233,8 @@ if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
     start_time = time.time()
 
-    # Get arguments from argparse.
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--reset", action="store_true", help="Reset the script.")
-    parser.add_argument(
-        "--workers",
-        type=int,
-        default=min(8, (os.cpu_count() or 4)),
-        help="Number of worker threads for parallel mod processing. Use 1 to force sequential (e.g. for debugging or output-equivalence diffs).",
-    )
-    args = parser.parse_args()
+    # Get arguments from the CLI.
+    args = make_common_argparser().parse_args()
     compat_pack_path = workshop_pack_path("3621939685", f"{MODDED_TABLE_NAME}.pack")
 
     if args.reset:

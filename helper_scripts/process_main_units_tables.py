@@ -6,7 +6,6 @@ Key functionalities:
 3. Generates both JSON and Lua representations of faction data.
 """
 
-import argparse
 import os
 import pandas as pd
 import json
@@ -15,7 +14,7 @@ import gc
 import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from utilities import extract_tsv_data, read_and_clean_tsv, ensure_temp_dir, run_rpfm_cli, STEAM_LIBRARY_DRIVE, TEMP_DIR
+from utilities import extract_tsv_data, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, run_rpfm_cli, STEAM_LIBRARY_DRIVE, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
 from typing import List, Dict, Optional, Tuple
 
@@ -395,14 +394,7 @@ if __name__ == "__main__":
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
     start_time = time.time()
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--workers",
-        type=int,
-        default=min(8, (os.cpu_count() or 4)),
-        help="Number of worker threads for parallel mod extraction. Use 1 to force sequential (e.g. for debugging or output-equivalence diffs). Does not affect the serial dedup/write pass.",
-    )
-    args = parser.parse_args()
+    args = make_common_argparser(include_reset=False).parse_args()
 
     ensure_temp_dir()
 
