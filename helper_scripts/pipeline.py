@@ -99,6 +99,38 @@ def modded_folders_for(scratch_root: str) -> List[str]:
 MODDED_FOLDERS: List[str] = modded_folders_for(TEMP_DIR)
 
 
+def _add_related(
+    field_key: str,
+    source_dict: Dict[str, Any],
+    table_name: str,
+    bucket_name: str,
+    table_data: Dict[str, Any],
+    tracker: "DuplicateTracker",
+    new_data: Dict[str, List[Any]],
+) -> Optional[Dict[str, Any]]:
+    """Look up `source_dict[field_key]` in `table_data[table_name]` and, when present, append the row to `new_data[bucket_name]` (gated by `tracker`).
+
+    Args:
+        field_key (str): Column in `source_dict` whose value is the foreign key.
+        source_dict (Dict[str, Any]): Row that owns the foreign key, e.g. a land_units row or another related row mid-chain.
+        table_name (str): Target table to look the value up in.
+        bucket_name (str): Bucket in `new_data` that receives the matching row.
+        table_data (Dict[str, Any]): Mapping returned by `extract_and_load_table_data`.
+        tracker (DuplicateTracker): Dedup state shared across all mods in the run.
+        new_data (Dict[str, List[Any]]): Buckets to append to. Mutated in place.
+
+    Returns:
+        The looked-up row when present, or None. Returning it lets callers continue the foreign-key chain.
+    """
+    value = source_dict.get(field_key)
+    if not value or value not in table_data[table_name]:
+        return None
+    entry = table_data[table_name][value]
+    if tracker.should_add(table_name, entry):
+        new_data[bucket_name].append(entry)
+    return entry
+
+
 def workshop_pack_path(steam_id: str, pack_name: str) -> str:
     """Return the on-disk path for a Steam Workshop pack file.
 
@@ -286,123 +318,56 @@ def walk_land_unit_to_related_tables(
     if tracker.should_add("land_units_tables", data):
         new_data["land_units"].append(data)
 
-    if data.get("historical_description_text") and data["historical_description_text"] in table_data["unit_description_historical_texts_tables"]:
-        entry = table_data["unit_description_historical_texts_tables"][data["historical_description_text"]]
-        if tracker.should_add("unit_description_historical_texts_tables", entry):
-            new_data["unit_description_historical_texts"].append(entry)
+    _add_related("historical_description_text", data, "unit_description_historical_texts_tables", "unit_description_historical_texts", table_data, tracker, new_data)
+    _add_related("man_animation", data, "battle_animations_table_tables", "battle_animations", table_data, tracker, new_data)
+    _add_related("man_entity", data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
 
-    if data.get("man_animation") and data["man_animation"] in table_data["battle_animations_table_tables"]:
-        entry = table_data["battle_animations_table_tables"][data["man_animation"]]
-        if tracker.should_add("battle_animations_table_tables", entry):
-            new_data["battle_animations"].append(entry)
+    mount_data = _add_related("mount", data, "mounts_tables", "mounts", table_data, tracker, new_data)
+    if mount_data is not None:
+        _add_related("entity", mount_data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
+        variant_data = _add_related("variant", mount_data, "variants_tables", "variants", table_data, tracker, new_data)
+        # Capture variantmeshdefinitions for vanilla mounts so the compat pack remains standalone.
+        if (
+            variant_data is not None
+            and vanilla_mounts_keys is not None
+            and variant_mesh_definitions_to_add is not None
+            and mount_data.get("key") in vanilla_mounts_keys
+            and variant_data.get("variant_filename")
+            and os.path.exists(f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition")
+        ):
+            variant_mesh_definitions_to_add.append(
+                f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition"
+            )
 
-    if data.get("man_entity") and data["man_entity"] in table_data["battle_entities_tables"]:
-        entry = table_data["battle_entities_tables"][data["man_entity"]]
-        if tracker.should_add("battle_entities_tables", entry):
-            new_data["battle_entities"].append(entry)
+    melee_weapon_data = _add_related("primary_melee_weapon", data, "melee_weapons_tables", "melee_weapons", table_data, tracker, new_data)
+    if melee_weapon_data is not None:
+        _add_related("scaling_damage", melee_weapon_data, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
 
-    if data.get("mount") and data["mount"] in table_data["mounts_tables"]:
-        mount_data = table_data["mounts_tables"][data["mount"]]
-        if tracker.should_add("mounts_tables", mount_data):
-            new_data["mounts"].append(mount_data)
-        mount_battle_entity = mount_data.get("entity")
-        if mount_battle_entity and mount_battle_entity in table_data["battle_entities_tables"]:
-            entry = table_data["battle_entities_tables"][mount_battle_entity]
-            if tracker.should_add("battle_entities_tables", entry):
-                new_data["battle_entities"].append(entry)
-        if mount_data.get("variant") and mount_data["variant"] in table_data["variants_tables"]:
-            variant_data = table_data["variants_tables"][mount_data["variant"]]
-            if tracker.should_add("variants_tables", variant_data):
-                new_data["variants"].append(variant_data)
+    missile_weapon_data = _add_related("primary_missile_weapon", data, "missile_weapons_tables", "missile_weapons", table_data, tracker, new_data)
+    if missile_weapon_data is not None:
+        projectile_entry = _add_related("default_projectile", missile_weapon_data, "projectiles_tables", "projectiles", table_data, tracker, new_data)
+        if projectile_entry is not None:
+            _add_related("spawned_vortex", projectile_entry, "battle_vortexs_tables", "battle_vortexs", table_data, tracker, new_data)
+            _add_related("projectile_shot_type_display", projectile_entry, "projectile_shot_type_displays_tables", "projectile_shot_type_displays", table_data, tracker, new_data)
+        _add_related("scaling_damage", missile_weapon_data, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
 
-            # Capture variantmeshdefinitions for vanilla mounts so the compat pack remains standalone.
-            if (
-                vanilla_mounts_keys is not None
-                and variant_mesh_definitions_to_add is not None
-                and mount_data.get("key") in vanilla_mounts_keys
-                and variant_data.get("variant_filename")
-                and os.path.exists(f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition")
-            ):
-                variant_mesh_definitions_to_add.append(
-                    f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition"
-                )
+    _add_related("short_description_text", data, "unit_description_short_texts_tables", "unit_description_short_texts", table_data, tracker, new_data)
+    _add_related("attribute_group", data, "unit_attributes_groups_tables", "unit_attributes_groups", table_data, tracker, new_data)
 
-    if data.get("primary_melee_weapon") and data["primary_melee_weapon"] in table_data["melee_weapons_tables"]:
-        melee_weapon_data = table_data["melee_weapons_tables"][data["primary_melee_weapon"]]
-        if tracker.should_add("melee_weapons_tables", melee_weapon_data):
-            new_data["melee_weapons"].append(melee_weapon_data)
-        if melee_weapon_data.get("scaling_damage") and melee_weapon_data["scaling_damage"] in table_data["projectiles_scaling_damages_tables"]:
-            entry = table_data["projectiles_scaling_damages_tables"][melee_weapon_data["scaling_damage"]]
-            if tracker.should_add("projectiles_scaling_damages_tables", entry):
-                new_data["projectiles_scaling_damages"].append(entry)
+    engine_data = _add_related("engine", data, "battlefield_engines_tables", "battlefield_engines", table_data, tracker, new_data)
+    if engine_data is not None:
+        _add_related("battle_entity", engine_data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
 
-    if data.get("primary_missile_weapon") and data["primary_missile_weapon"] in table_data["missile_weapons_tables"]:
-        missile_weapon_data = table_data["missile_weapons_tables"][data["primary_missile_weapon"]]
-        if tracker.should_add("missile_weapons_tables", missile_weapon_data):
-            new_data["missile_weapons"].append(missile_weapon_data)
-        if missile_weapon_data.get("default_projectile") and missile_weapon_data["default_projectile"] in table_data["projectiles_tables"]:
-            entry = table_data["projectiles_tables"][missile_weapon_data["default_projectile"]]
-            if tracker.should_add("projectiles_tables", entry):
-                new_data["projectiles"].append(entry)
-            if entry.get("spawned_vortex") and entry["spawned_vortex"] in table_data["battle_vortexs_tables"]:
-                vortex_entry = table_data["battle_vortexs_tables"][entry["spawned_vortex"]]
-                if tracker.should_add("battle_vortexs_tables", vortex_entry):
-                    new_data["battle_vortexs"].append(vortex_entry)
-            if entry.get("projectile_shot_type_display") and entry["projectile_shot_type_display"] in table_data["projectile_shot_type_displays_tables"]:
-                display_entry = table_data["projectile_shot_type_displays_tables"][entry["projectile_shot_type_display"]]
-                if tracker.should_add("projectile_shot_type_displays_tables", display_entry):
-                    new_data["projectile_shot_type_displays"].append(display_entry)
-        if missile_weapon_data.get("scaling_damage") and missile_weapon_data["scaling_damage"] in table_data["projectiles_scaling_damages_tables"]:
-            entry = table_data["projectiles_scaling_damages_tables"][missile_weapon_data["scaling_damage"]]
-            if tracker.should_add("projectiles_scaling_damages_tables", entry):
-                new_data["projectiles_scaling_damages"].append(entry)
+    _add_related("spacing", data, "unit_spacings_tables", "unit_spacings", table_data, tracker, new_data)
+    _add_related("first_person", data, "first_person_engines_tables", "first_person_engines", table_data, tracker, new_data)
 
-    if data.get("short_description_text") and data["short_description_text"] in table_data["unit_description_short_texts_tables"]:
-        entry = table_data["unit_description_short_texts_tables"][data["short_description_text"]]
-        if tracker.should_add("unit_description_short_texts_tables", entry):
-            new_data["unit_description_short_texts"].append(entry)
+    articulated_vehicle_data = _add_related("articulated_record", data, "land_unit_articulated_vehicles_tables", "land_unit_articulated_vehicles", table_data, tracker, new_data)
+    if articulated_vehicle_data is not None:
+        _add_related("articulated_entity", articulated_vehicle_data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
 
-    if data.get("attribute_group") and data["attribute_group"] in table_data["unit_attributes_groups_tables"]:
-        entry = table_data["unit_attributes_groups_tables"][data["attribute_group"]]
-        if tracker.should_add("unit_attributes_groups_tables", entry):
-            new_data["unit_attributes_groups"].append(entry)
-
-    if data.get("engine") and data["engine"] in table_data["battlefield_engines_tables"]:
-        engine_data = table_data["battlefield_engines_tables"][data["engine"]]
-        if tracker.should_add("battlefield_engines_tables", engine_data):
-            new_data["battlefield_engines"].append(engine_data)
-        if engine_data.get("battle_entity") and engine_data["battle_entity"] in table_data["battle_entities_tables"]:
-            entry = table_data["battle_entities_tables"][engine_data["battle_entity"]]
-            if tracker.should_add("battle_entities_tables", entry):
-                new_data["battle_entities"].append(entry)
-
-    if data.get("spacing") and data["spacing"] in table_data["unit_spacings_tables"]:
-        entry = table_data["unit_spacings_tables"][data["spacing"]]
-        if tracker.should_add("unit_spacings_tables", entry):
-            new_data["unit_spacings"].append(entry)
-
-    if data.get("first_person") and data["first_person"] in table_data["first_person_engines_tables"]:
-        entry = table_data["first_person_engines_tables"][data["first_person"]]
-        if tracker.should_add("first_person_engines_tables", entry):
-            new_data["first_person_engines"].append(entry)
-
-    if data.get("articulated_record") and data["articulated_record"] in table_data["land_unit_articulated_vehicles_tables"]:
-        articulated_vehicle_data = table_data["land_unit_articulated_vehicles_tables"][data["articulated_record"]]
-        if tracker.should_add("land_unit_articulated_vehicles_tables", articulated_vehicle_data):
-            new_data["land_unit_articulated_vehicles"].append(articulated_vehicle_data)
-        if articulated_vehicle_data.get("articulated_entity") and articulated_vehicle_data["articulated_entity"] in table_data["battle_entities_tables"]:
-            entry = table_data["battle_entities_tables"][articulated_vehicle_data["articulated_entity"]]
-            if tracker.should_add("battle_entities_tables", entry):
-                new_data["battle_entities"].append(entry)
-
-    if main_unit_data.get("ui_unit_group_land") and main_unit_data["ui_unit_group_land"] in table_data["ui_unit_groupings_tables"]:
-        ui_unit_grouping_data = table_data["ui_unit_groupings_tables"][main_unit_data["ui_unit_group_land"]]
-        if tracker.should_add("ui_unit_groupings_tables", ui_unit_grouping_data):
-            new_data["ui_unit_groupings"].append(ui_unit_grouping_data)
-        if ui_unit_grouping_data.get("parent_group") and ui_unit_grouping_data["parent_group"] in table_data["ui_unit_group_parents_tables"]:
-            entry = table_data["ui_unit_group_parents_tables"][ui_unit_grouping_data["parent_group"]]
-            if tracker.should_add("ui_unit_group_parents_tables", entry):
-                new_data["ui_unit_group_parents"].append(entry)
+    ui_unit_grouping_data = _add_related("ui_unit_group_land", main_unit_data, "ui_unit_groupings_tables", "ui_unit_groupings", table_data, tracker, new_data)
+    if ui_unit_grouping_data is not None:
+        _add_related("parent_group", ui_unit_grouping_data, "ui_unit_group_parents_tables", "ui_unit_group_parents", table_data, tracker, new_data)
 
 
 def _replace_version_info_filename(version_info: str, new_filename: str) -> str:
