@@ -4,6 +4,8 @@ import logging
 import time
 import os
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Dict, Optional
 import pandas as pd
 from utilities import (
     extract_tsv_data,
@@ -14,6 +16,8 @@ from utilities import (
     sort_tsv_data,
     cleanup_folders,
     merge_move,
+    ensure_temp_dir,
+    TEMP_DIR,
 )
 from supported_mods import SUPPORTED_MODS
 from pipeline import (
@@ -120,10 +124,13 @@ def handle_main_units_tables(
     # by doubling the num_mounts column value.
     # Also double the value of the rank_depth column.
     # In addition, double the value of the bonus_hit_points column for the "lord", "hero" and "monster" caste categories.
-    extract_tsv_data("land_units_tables")
     if land_units_tables_df is None:
+        # Only extract vanilla when we actually need to read from it. Modded callers (workers) already supply the modded land_units_tables_df, so the re-extraction would be a wasted shared-folder write and a thread-safety hazard.
+        extract_tsv_data("land_units_tables")
         # Cast to str so later assignments of stringified ints don't trip the float64 dtype FutureWarning.
-        land_units_tables_df: pd.DataFrame = read_and_clean_tsv("vanilla_land_units_tables/db/land_units_tables/data__.tsv", "land_units_tables").astype(str)
+        land_units_tables_df: pd.DataFrame = read_and_clean_tsv(
+            f"{TEMP_DIR}/vanilla_land_units_tables/db/land_units_tables/data__.tsv", "land_units_tables"
+        ).astype(str)
 
     # Normalize int-like columns to clean integer strings. pd.read_csv infers numeric columns as float64,
     # which becomes "4280.0" after .astype(str) and breaks the downstream .astype(int) calls.
@@ -233,6 +240,12 @@ if __name__ == "__main__":
     # Get arguments from argparse.
     parser = argparse.ArgumentParser()
     parser.add_argument("--reset", action="store_true", help="Reset the script.")
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=min(8, (os.cpu_count() or 4)),
+        help="Number of worker threads for parallel mod processing. Use 1 to force sequential (e.g. for debugging or output-equivalence diffs).",
+    )
     args = parser.parse_args()
     compat_pack_path = workshop_pack_path("3621939685", f"{MODDED_TABLE_NAME}.pack")
 
@@ -245,215 +258,239 @@ if __name__ == "__main__":
             ]
         )
 
+    ensure_temp_dir()
+
     # Clean up any existing scratch folders.
-    cleanup_folders([f"./{MODDED_TABLE_NAME}"])
+    cleanup_folders([f"{TEMP_DIR}/{MODDED_TABLE_NAME}"])
     cleanup_modded_folders()
 
     # Extract vanilla mounts_tables for variantmesh handling.
     extract_tsv_data("mounts_tables")
-    vanilla_mounts_tables_dataframe = read_and_clean_tsv("vanilla_mounts_tables/db/mounts_tables/data__.tsv", "mounts_tables")
+    vanilla_mounts_tables_dataframe = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_mounts_tables/db/mounts_tables/data__.tsv", "mounts_tables")
     vanilla_mounts_keys = set(vanilla_mounts_tables_dataframe.key.values)
 
-    for mod in SUPPORTED_MODS:
-        is_vanilla = False
-        if mod["package_name"] == "vanilla":
-            package_name = "vanilla"
-            is_vanilla = True
-        elif mod["name"] in ["Hooveric Overhaul (HVO) 2.0c", "Nanu's Dynamic Regiments of Renown (Beta)", "[GLF] Battle Mage 战斗法师"]:
-            logging.info(f"Skipping {mod['package_name']} because it is not supported.")
-            continue
-        else:
-            # Table names cannot end in numbers.
-            package_name = mod["package_name"].replace(".pack", "").replace(" ", "_")
-            if package_name[-1].isdigit():
-                package_name = package_name[:-1]
+    # Vanilla pass writes the base `_vanilla` TSVs into the shared compat-pack build dir and seeds `VANILLA_LAND_UNITS_TABLES_DF`. Run sequentially so the modded workers see a stable read-only reference.
+    logging.info("Processing vanilla...")
+    table_mappings = {
+        "_kv_rules_tables": None,
+        "_kv_unit_ability_scaling_rules_tables": None,
+        "battle_currency_army_special_abilities_cost_values_tables": None,
+        "main_units_tables": None,
+        "land_units_tables": None,
+        "special_ability_phases_tables": None,
+        "unit_size_global_scalings_tables": None,
+        "unit_stat_to_size_scaling_values_tables": None,
+    }
+    for table_name in [
+        "_kv_rules_tables",
+        "_kv_unit_ability_scaling_rules_tables",
+        "battle_currency_army_special_abilities_cost_values_tables",
+        "main_units_tables",
+        "land_units_tables",
+        "special_ability_phases_tables",
+        "unit_size_global_scalings_tables",
+        "unit_stat_to_size_scaling_values_tables",
+    ]:
+        extract_tsv_data(table_name)
+        if table_name != "land_units_tables" and table_name in table_mappings:
+            table_mappings[table_name] = read_and_clean_tsv(
+                f"{TEMP_DIR}/vanilla_{table_name}/db/{table_name}/data__.tsv", table_name, do_not_clean=True
+            )
+            logging.info(f"Number of rows in {table_name} table: {len(table_mappings[table_name])}")
 
         ########################################
-        if is_vanilla:
-            logging.info(f"Processing vanilla...")
+        df: pd.DataFrame = table_mappings[table_name].astype(str)
 
-            # Define the mapping of table names to their dataframes.
-            table_mappings = {
-                "_kv_rules_tables": None,
-                "_kv_unit_ability_scaling_rules_tables": None,
-                "battle_currency_army_special_abilities_cost_values_tables": None,
-                "main_units_tables": None,
-                "land_units_tables": None,
-                "special_ability_phases_tables": None,
-                "unit_size_global_scalings_tables": None,
-                "unit_stat_to_size_scaling_values_tables": None,
-            }
-            for table_name in [
-                "_kv_rules_tables",
-                "_kv_unit_ability_scaling_rules_tables",
-                "battle_currency_army_special_abilities_cost_values_tables",
-                "main_units_tables",
-                "land_units_tables",
-                "special_ability_phases_tables",
-                "unit_size_global_scalings_tables",
-                "unit_stat_to_size_scaling_values_tables",
-            ]:
-                extract_tsv_data(table_name)
-                if table_name != "land_units_tables" and table_name in table_mappings:
-                    table_mappings[table_name] = read_and_clean_tsv(f"vanilla_{table_name}/db/{table_name}/data__.tsv", table_name, do_not_clean=True)
-                    logging.info(f"Number of rows in {table_name} table: {len(table_mappings[table_name])}")
+        if table_name == "_kv_rules_tables":
+            df = handle_kv_rules_tables(df)
+        elif table_name == "_kv_unit_ability_scaling_rules_tables":
+            df = handle_kv_unit_ability_scaling_rules_tables(df)
+        elif table_name == "battle_currency_army_special_abilities_cost_values_tables":
+            df = handle_battle_currency_army_special_abilities_cost_values_tables(df)
+        elif table_name == "main_units_tables":
+            df, land_units_tables_df = handle_main_units_tables(df)
+            table_mappings["land_units_tables"] = land_units_tables_df
+            VANILLA_LAND_UNITS_TABLES_DF = land_units_tables_df.copy(deep=True)
+        elif table_name == "special_ability_phases_tables":
+            df = handle_special_ability_phases_tables(df)
+        elif table_name == "unit_size_global_scalings_tables":
+            df = handle_unit_size_global_scalings_tables(df)
+        elif table_name == "unit_stat_to_size_scaling_values_tables":
+            df = handle_unit_stat_to_size_scaling_values_tables(df)
+        ########################################
 
-                ########################################
-                df: pd.DataFrame = table_mappings[table_name].astype(str)
+        # Save the modified dataframe back to the table_mappings dictionary.
+        table_mappings[table_name] = validate_and_fix_tsv_types(df, table_name)
 
-                if table_name == "_kv_rules_tables":
-                    df = handle_kv_rules_tables(df)
-                elif table_name == "_kv_unit_ability_scaling_rules_tables":
-                    df = handle_kv_unit_ability_scaling_rules_tables(df)
-                elif table_name == "battle_currency_army_special_abilities_cost_values_tables":
-                    df = handle_battle_currency_army_special_abilities_cost_values_tables(df)
-                elif table_name == "main_units_tables":
-                    df, land_units_tables_df = handle_main_units_tables(df)
-                    table_mappings["land_units_tables"] = land_units_tables_df
-                    VANILLA_LAND_UNITS_TABLES_DF = land_units_tables_df.copy(deep=True)
-                elif table_name == "special_ability_phases_tables":
-                    df = handle_special_ability_phases_tables(df)
-                elif table_name == "unit_size_global_scalings_tables":
-                    df = handle_unit_size_global_scalings_tables(df)
-                elif table_name == "unit_stat_to_size_scaling_values_tables":
-                    df = handle_unit_stat_to_size_scaling_values_tables(df)
-                ########################################
+        # Now write this to a new TSV file.
+        # Note that the battle_currency_army_special_abilities_cost_values_tables and unit_stat_to_size_scaling_values_tables tables allow duplicates.
+        _, headers, version_info = load_tsv_data(f"{TEMP_DIR}/vanilla_{table_name}/db/{table_name}/data__.tsv")
+        version_info = version_info.replace(version_info.split("/")[-1], f"{MODDED_TABLE_NAME}_vanilla")
+        write_updated_tsv_file(
+            table_mappings[table_name].to_dict(orient="records"),
+            headers,
+            version_info,
+            f"{TEMP_DIR}/{MODDED_TABLE_NAME}/db/{table_name}",
+            MODDED_TABLE_NAME,
+            (
+                False
+                if (
+                    table_name != "battle_currency_army_special_abilities_cost_values_tables"
+                    and table_name != "unit_stat_to_size_scaling_values_tables"
+                )
+                else True
+            ),
+        )
 
-                # Save the modified dataframe back to the table_mappings dictionary.
-                table_mappings[table_name] = validate_and_fix_tsv_types(df, table_name)
+    # Filter out the vanilla entry and the explicitly-unsupported mods before parallel dispatch.
+    skip_mod_names = {"Hooveric Overhaul (HVO) 2.0c", "Nanu's Dynamic Regiments of Renown (Beta)", "[GLF] Battle Mage 战斗法师"}
+    modded_mods = [m for m in SUPPORTED_MODS if m["package_name"] != "vanilla" and m["name"] not in skip_mod_names]
 
-                # Now write this to a new TSV file.
-                # Note that the battle_currency_army_special_abilities_cost_values_tables and unit_stat_to_size_scaling_values_tables tables allow duplicates.
-                _, headers, version_info = load_tsv_data(f"./vanilla_{table_name}/db/{table_name}/data__.tsv")
-                version_info = version_info.replace(version_info.split("/")[-1], f"{MODDED_TABLE_NAME}_vanilla")
+    def process_mod(mod: Dict) -> None:
+        """Process one mod's main_units / land_units doubling and write its contribution into the shared compat-pack build dir.
+
+        Each worker extracts into a per-mod scratch root (`temp/<package_name>/modded_*`), uses its own `DuplicateTracker`, gets a deep copy of the shared vanilla land_units reference, and writes TSVs whose filenames include `package_name` so workers never collide on output files.
+
+        Args:
+            mod (Dict): Entry from `SUPPORTED_MODS` for a non-vanilla mod. Must have `path` and `package_name`.
+        """
+        # Table names cannot end in numbers.
+        package_name = mod["package_name"].replace(".pack", "").replace(" ", "_")
+        if package_name[-1].isdigit():
+            package_name = package_name[:-1]
+        scratch_root = f"{TEMP_DIR}/{package_name}"
+        variantmeshes_root = f"{scratch_root}/modded_variantmeshes"
+
+        logging.info(f"Processing mod: {mod['package_name']}")
+        tracker = DuplicateTracker()
+
+        # Extract and load all the required and optional tables needed for this mod into the per-mod scratch dir.
+        table_data = extract_and_load_table_data(mod["path"], TABLE_CONFIGS, scratch_root=scratch_root)
+        if table_data is None:
+            cleanup_modded_folders(scratch_root=scratch_root)
+            return
+
+        # This script doubles unit sizes, so mods without main_units_tables AND land_units_tables have nothing to process.
+        if "main_units_tables_headers" not in table_data or "land_units_tables_headers" not in table_data:
+            logging.info(f"Skipping {mod['package_name']}: no main_units_tables/land_units_tables to double.")
+            cleanup_modded_folders(scratch_root=scratch_root)
+            return
+
+        # Extract the variantmeshes/variantmeshdefinitions folder into the per-mod scratch dir.
+        variant_mesh_definitions_to_add = []
+        extract_variantmeshes_folder(mod["path"], dest=variantmeshes_root)
+
+        modded_land_units_headers = table_data["land_units_tables_headers"]
+        modded_land_units_version_info = table_data["land_units_tables_version_info"]
+        modded_main_units_headers = table_data["main_units_tables_headers"]
+        modded_main_units_version_info = table_data["main_units_tables_version_info"]
+
+        # Convert to DataFrames for processing.
+        main_units_tables_df: pd.DataFrame = pd.DataFrame(list(table_data["main_units_tables"].values())).astype(str)
+        land_units_tables_df: pd.DataFrame = pd.DataFrame(list(table_data["land_units_tables"].values())).astype(str)
+
+        ########################################
+        # Mods are only concerned with just these two tables and are tasked with the following:
+        # - Double the num_men and num_mounts from both tables. Double the rank_depth conditionally as well for land_units_tables.
+        # - If the caste is "lord", "hero" or "monster", double the bonus_hit_points column value.
+        # Pass a deep copy of the shared vanilla reference so the fallback branch's in-place mutations stay worker-local.
+        try:
+            main_units_tables_df, land_units_tables_df = handle_main_units_tables(
+                main_units_tables_df, land_units_tables_df, VANILLA_LAND_UNITS_TABLES_DF.copy(deep=True)
+            )
+        except ValueError as e:
+            logging.error(f"Error processing mod: {mod['package_name']}: {e}")
+            cleanup_modded_folders(scratch_root=scratch_root)
+            return
+        ########################################
+
+        # Create mapping from the MODIFIED DataFrames (after doubling) for writing.
+        main_units_mapping = {row["unit"]: row.to_dict() for _, row in main_units_tables_df.iterrows()}
+
+        # Process units and collect related tables.
+        list_of_data_to_add = []
+        for _, row in land_units_tables_df.iterrows():
+            data = row.to_dict()
+            new_data = make_new_data_buckets(data["key"])
+
+            if data["key"] in main_units_mapping:
+                walk_land_unit_to_related_tables(
+                    data=data,
+                    main_unit_data=main_units_mapping[data["key"]],
+                    table_data=table_data,
+                    tracker=tracker,
+                    new_data=new_data,
+                    vanilla_mounts_keys=vanilla_mounts_keys,
+                    variant_mesh_definitions_to_add=variant_mesh_definitions_to_add,
+                    variantmeshes_root=variantmeshes_root,
+                )
+
+            list_of_data_to_add.append(new_data)
+
+        if len(list_of_data_to_add) > 0:
+            # Update the version info to include the new TSV name. This will also make RPFM rename to this filename when moving it into the packfile.
+            land_units_version_info = modded_land_units_version_info.replace(
+                modded_land_units_version_info.split("/")[-1], f"{MODDED_TABLE_NAME}_{package_name}"
+            )
+            main_units_version_info = modded_main_units_version_info.replace(
+                modded_main_units_version_info.split("/")[-1], f"{MODDED_TABLE_NAME}_{package_name}"
+            )
+
+            tables_to_sort = [
+                f"{TEMP_DIR}/{MODDED_TABLE_NAME}/db/land_units_tables",
+                f"{TEMP_DIR}/{MODDED_TABLE_NAME}/db/main_units_tables",
+            ]
+
+            # Write the data to required and optional tables. Filenames include `package_name` so concurrent workers never write the same TSV.
+            for data_to_add in list_of_data_to_add:
                 write_updated_tsv_file(
-                    table_mappings[table_name].to_dict(orient="records"),
-                    headers,
-                    version_info,
-                    f"./{MODDED_TABLE_NAME}/db/{table_name}",
-                    MODDED_TABLE_NAME,
-                    (
-                        False
-                        if (
-                            table_name != "battle_currency_army_special_abilities_cost_values_tables"
-                            and table_name != "unit_stat_to_size_scaling_values_tables"
-                        )
-                        else True
-                    ),
+                    data_to_add["land_units"],
+                    modded_land_units_headers,
+                    land_units_version_info,
+                    f"{TEMP_DIR}/{MODDED_TABLE_NAME}/db/land_units_tables",
+                    f"{MODDED_TABLE_NAME}_{package_name}",
                 )
-        else:
-            logging.info(f"Processing mod: {mod['package_name']}")
-
-            tracker = DuplicateTracker()
-
-            # Extract and load all the required and optional tables needed for this mod.
-            table_data = extract_and_load_table_data(mod["path"], TABLE_CONFIGS)
-            if table_data is None:
-                continue
-
-            # This script doubles unit sizes, so mods without main_units_tables AND land_units_tables have nothing to process.
-            if "main_units_tables_headers" not in table_data or "land_units_tables_headers" not in table_data:
-                logging.info(f"Skipping {mod['package_name']}: no main_units_tables/land_units_tables to double.")
-                cleanup_modded_folders()
-                continue
-
-            # Extract the variantmeshes/variantmeshdefinitions folder if it exists.
-            variant_mesh_definitions_to_add = []
-            extract_variantmeshes_folder(mod["path"])
-
-            # Load required tables into separate mappings.
-            modded_land_units_headers = table_data["land_units_tables_headers"]
-            modded_land_units_version_info = table_data["land_units_tables_version_info"]
-            modded_main_units_headers = table_data["main_units_tables_headers"]
-            modded_main_units_version_info = table_data["main_units_tables_version_info"]
-
-            # Convert to DataFrames for processing.
-            main_units_tables_df: pd.DataFrame = pd.DataFrame(list(table_data["main_units_tables"].values())).astype(str)
-            land_units_tables_df: pd.DataFrame = pd.DataFrame(list(table_data["land_units_tables"].values())).astype(str)
-
-            ########################################
-            # Mods are only concerned with just these two tables and are tasked with the following:
-            # - Double the num_men and num_mounts from both tables. Double the rank_depth conditionally as well for land_units_tables.
-            # - If the caste is "lord", "hero" or "monster", double the bonus_hit_points column value.
-            try:
-                main_units_tables_df, land_units_tables_df = handle_main_units_tables(
-                    main_units_tables_df, land_units_tables_df, VANILLA_LAND_UNITS_TABLES_DF
+                write_updated_tsv_file(
+                    data_to_add["main_units"],
+                    modded_main_units_headers,
+                    main_units_version_info,
+                    f"{TEMP_DIR}/{MODDED_TABLE_NAME}/db/main_units_tables",
+                    f"{MODDED_TABLE_NAME}_{package_name}",
                 )
-            except ValueError as e:
-                logging.error(f"Error processing mod: {mod['package_name']}: {e}")
-                cleanup_modded_folders()
-                continue
-            ########################################
-
-            # Create mapping from the MODIFIED DataFrames (after doubling) for writing.
-            main_units_mapping = {}
-            for _, row in main_units_tables_df.iterrows():
-                main_units_mapping[row["unit"]] = row.to_dict()
-
-            # Process units and collect related tables.
-            list_of_data_to_add = []
-            for _, row in land_units_tables_df.iterrows():
-                data = row.to_dict()
-                new_data = make_new_data_buckets(data["key"])
-
-                if data["key"] in main_units_mapping:
-                    walk_land_unit_to_related_tables(
-                        data=data,
-                        main_unit_data=main_units_mapping[data["key"]],
-                        table_data=table_data,
-                        tracker=tracker,
-                        new_data=new_data,
-                        vanilla_mounts_keys=vanilla_mounts_keys,
-                        variant_mesh_definitions_to_add=variant_mesh_definitions_to_add,
-                    )
-
-                list_of_data_to_add.append(new_data)
-
-            if len(list_of_data_to_add) > 0:
-                # Update the version info to include the new TSV name. This will also make RPFM rename to this filename when moving it into the packfile.
-                land_units_version_info = modded_land_units_version_info.replace(
-                    modded_land_units_version_info.split("/")[-1], f"{MODDED_TABLE_NAME}_{package_name}"
-                )
-                main_units_version_info = modded_main_units_version_info.replace(
-                    modded_main_units_version_info.split("/")[-1], f"{MODDED_TABLE_NAME}_{package_name}"
+                write_optional_tables(
+                    data_to_add, f"{TEMP_DIR}/{MODDED_TABLE_NAME}", f"{MODDED_TABLE_NAME}_{package_name}", table_data, tables_to_sort
                 )
 
-                tables_to_sort = [
-                    f"./{MODDED_TABLE_NAME}/db/land_units_tables",
-                    f"./{MODDED_TABLE_NAME}/db/main_units_tables",
-                ]
+            # Move any captured variantmeshdefinitions (and their wh_variantmodels) out of the per-mod scratch dir into the compat pack.
+            move_variantmesh_definitions(
+                variant_mesh_definitions_to_add, f"{TEMP_DIR}/{MODDED_TABLE_NAME}", variantmeshes_root=variantmeshes_root
+            )
 
-                # Write the data to required and optional tables.
-                for data_to_add in list_of_data_to_add:
-                    write_updated_tsv_file(
-                        data_to_add["land_units"],
-                        modded_land_units_headers,
-                        land_units_version_info,
-                        f"./{MODDED_TABLE_NAME}/db/land_units_tables",
-                        f"{MODDED_TABLE_NAME}_{package_name}",
-                    )
-                    write_updated_tsv_file(
-                        data_to_add["main_units"],
-                        modded_main_units_headers,
-                        main_units_version_info,
-                        f"./{MODDED_TABLE_NAME}/db/main_units_tables",
-                        f"{MODDED_TABLE_NAME}_{package_name}",
-                    )
-                    write_optional_tables(data_to_add, f"./{MODDED_TABLE_NAME}", f"{MODDED_TABLE_NAME}_{package_name}", table_data, tables_to_sort)
+            # After writing is complete, sort the required and optional tables. Each worker only sorts its own per-mod-named TSV file.
+            for table_path in tables_to_sort:
+                sort_tsv_data(table_path, f"{MODDED_TABLE_NAME}_{package_name}")
 
-                # Move any captured variantmeshdefinitions (and their wh_variantmodels) into the compat pack.
-                move_variantmesh_definitions(variant_mesh_definitions_to_add, f"./{MODDED_TABLE_NAME}")
+        cleanup_modded_folders(scratch_root=scratch_root)
 
-                # After writing is complete, sort the required and optional tables.
-                for table_path in tables_to_sort:
-                    sort_tsv_data(table_path, f"{MODDED_TABLE_NAME}_{package_name}")
-
-            cleanup_modded_folders()
+    logging.info(f"Processing {len(modded_mods)} modded mods with {args.workers} worker thread(s).")
+    if args.workers <= 1:
+        for mod in modded_mods:
+            process_mod(mod)
+    else:
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            futures = {executor.submit(process_mod, mod): mod for mod in modded_mods}
+            for future in as_completed(futures):
+                mod = futures[future]
+                try:
+                    future.result()
+                except Exception:
+                    logging.exception(f"Worker failed for mod {mod.get('package_name', '<unknown>')}.")
+                    raise
 
     # Move the modded folder to the ../warhammer3_mods folder.
-    if os.path.exists(f"./{MODDED_TABLE_NAME}"):
+    if os.path.exists(f"{TEMP_DIR}/{MODDED_TABLE_NAME}"):
         logging.info(f"Moving {MODDED_TABLE_NAME} to ../warhammer3_mods/.")
-        merge_move(f"./{MODDED_TABLE_NAME}", f"../warhammer3_mods")
+        merge_move(f"{TEMP_DIR}/{MODDED_TABLE_NAME}", f"../warhammer3_mods")
 
     if args.reset:
         reset_pack_folders(compat_pack_path)
@@ -464,15 +501,15 @@ if __name__ == "__main__":
     # Remove the vanilla temp folders.
     cleanup_folders(
         [
-            "vanilla__kv_rules_tables",
-            "vanilla__kv_unit_ability_scaling_rules_tables",
-            "vanilla_battle_currency_army_special_abilities_cost_values_tables",
-            "vanilla_land_units_tables",
-            "vanilla_main_units_tables",
-            "vanilla_special_ability_phases_tables",
-            "vanilla_unit_size_global_scalings_tables",
-            "vanilla_unit_stat_to_size_scaling_values_tables",
-            "vanilla_mounts_tables",
+            f"{TEMP_DIR}/vanilla__kv_rules_tables",
+            f"{TEMP_DIR}/vanilla__kv_unit_ability_scaling_rules_tables",
+            f"{TEMP_DIR}/vanilla_battle_currency_army_special_abilities_cost_values_tables",
+            f"{TEMP_DIR}/vanilla_land_units_tables",
+            f"{TEMP_DIR}/vanilla_main_units_tables",
+            f"{TEMP_DIR}/vanilla_special_ability_phases_tables",
+            f"{TEMP_DIR}/vanilla_unit_size_global_scalings_tables",
+            f"{TEMP_DIR}/vanilla_unit_stat_to_size_scaling_values_tables",
+            f"{TEMP_DIR}/vanilla_mounts_tables",
         ]
     )
 
