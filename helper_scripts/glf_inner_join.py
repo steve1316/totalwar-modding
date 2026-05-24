@@ -20,7 +20,9 @@ from utilities import (
     extract_modded_tsv_data,
     extract_tsv_data,
     load_tsv_data,
+    log_elapsed_time,
     merge_move,
+    setup_script_logging,
     TEMP_DIR,
 )
 from supported_mods import SUPPORTED_MODS
@@ -104,7 +106,7 @@ def write_merged_tsv(output_path: str, headers: List[str], version_info: str, ro
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     parser = argparse.ArgumentParser()
@@ -183,5 +185,4 @@ if __name__ == "__main__":
     finally:
         cleanup_folders([f"{TEMP_DIR}/vanilla_{TARGET_TABLE}", glf_scratch, output_root])
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for inner join: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("inner join", start_time)

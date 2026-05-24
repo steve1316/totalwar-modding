@@ -5,12 +5,13 @@ import logging
 import time
 from datetime import datetime
 from supported_mods import SUPPORTED_MODS
+from utilities import log_elapsed_time, setup_script_logging
 import os
 import re
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     mods_map = {
@@ -66,5 +67,4 @@ INSERT_LIST_HERE
     logging.info(f"Total mods: {len(SUPPORTED_MODS)}")
     logging.info(f"There are {len(missing_mods)} mods that are missing.")
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for generating updated lists of supported mods: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("generating updated lists of supported mods", start_time)

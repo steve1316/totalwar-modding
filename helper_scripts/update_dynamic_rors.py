@@ -5,7 +5,9 @@ from utilities import (
     read_and_clean_tsv,
     load_tsv_data,
     extract_modded_tsv_data,
+    log_elapsed_time,
     make_common_argparser,
+    setup_script_logging,
     write_updated_tsv_file,
     sort_tsv_data,
     merge_move,
@@ -496,7 +498,7 @@ def process_unit_by_category(unit_data: Dict[str, Any], main_units_mapping: Dict
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     # Get arguments from the CLI.
@@ -898,5 +900,4 @@ if __name__ == "__main__":
     if MISSING_MODS:
         logging.info(f"Missing mods: {MISSING_MODS}")
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("the dynamic_rors update", start_time)

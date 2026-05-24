@@ -6,7 +6,7 @@ Processes modded TSV files to:
 3. Maintain original file structure and version information
 """
 
-from utilities import load_tsv_data
+from utilities import load_tsv_data, log_elapsed_time, setup_script_logging
 import logging
 import time
 import os
@@ -63,7 +63,7 @@ def correct_quotation_marks(mod_data: List[Dict[str, str]], game_data: List[Dict
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     try:
@@ -95,5 +95,4 @@ if __name__ == "__main__":
     except Exception as e:
         logging.exception(e)
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for correcting quotation marks: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("correcting quotation marks", start_time)

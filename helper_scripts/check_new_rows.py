@@ -3,7 +3,7 @@
 Compares two TSV files and identifies rows that exist in the original file but not in the modded file.
 """
 
-from utilities import load_tsv_data
+from utilities import load_tsv_data, log_elapsed_time, setup_script_logging
 import time
 import logging
 from typing import List, Dict
@@ -26,7 +26,7 @@ def find_missing_keys(original_data: List[Dict], modded_data: List[Dict], key_fi
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+    setup_script_logging(log_format="%(levelname)s: %(message)s")
     start_time = time.time()
 
     try:
@@ -51,5 +51,4 @@ if __name__ == "__main__":
     except Exception as e:
         logging.exception(e)
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for checking new rows: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("checking new rows", start_time)

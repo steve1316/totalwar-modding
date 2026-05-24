@@ -9,7 +9,9 @@ import pandas as pd
 from utilities import (
     extract_tsv_data,
     load_tsv_data,
+    log_elapsed_time,
     make_common_argparser,
+    setup_script_logging,
     write_updated_tsv_file,
     read_and_clean_tsv,
     validate_and_fix_tsv_types,
@@ -230,7 +232,7 @@ def handle_unit_stat_to_size_scaling_values_tables(df: pd.DataFrame):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     # Get arguments from the CLI.
@@ -501,5 +503,4 @@ if __name__ == "__main__":
         ]
     )
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for updating modified attribute mods: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("updating the double unit size mod", start_time)

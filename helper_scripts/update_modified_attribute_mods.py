@@ -11,7 +11,9 @@ from utilities import (
     extract_modded_tsv_data,
     load_tsv_data,
     load_multiple_tsv_data,
+    log_elapsed_time,
     make_common_argparser,
+    setup_script_logging,
     write_updated_tsv_file,
     merge_move,
     ensure_temp_dir,
@@ -277,7 +279,7 @@ def process_mod(mod: Dict) -> None:
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     # Get arguments from the CLI.
@@ -326,5 +328,4 @@ if __name__ == "__main__":
             reset_pack_folders(pack_path, ("db",))
         add_folder_to_pack(pack_path, f"../warhammer3_mods/{mod_name}/db;")
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for updating modified attribute mods: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("updating modified attribute mods", start_time)

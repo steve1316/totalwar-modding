@@ -9,6 +9,7 @@ import re
 import logging
 import json
 import threading
+import time
 from typing import List, Dict
 
 
@@ -27,6 +28,26 @@ DATA_START_ROW = 2
 # Schema cache: maps schema_path -> schema["definitions"] dictionary. Guarded by `_SCHEMA_CACHE_LOCK` so concurrent workers do not race on the first-miss load.
 _SCHEMA_CACHE: Dict[str, Dict] = {}
 _SCHEMA_CACHE_LOCK = threading.Lock()
+
+
+def setup_script_logging(log_format: str = "%(asctime)s - %(levelname)s - %(message)s") -> None:
+    """Configure root logging at INFO level with the given format. Default matches the timestamped format used by the compat-pack scripts.
+
+    Args:
+        log_format (str): Format string passed through to `logging.basicConfig`. Defaults to `"%(asctime)s - %(levelname)s - %(message)s"`.
+    """
+    logging.basicConfig(format=log_format, level=logging.INFO)
+
+
+def log_elapsed_time(label: str, start_time: float) -> None:
+    """Log a `Total time for {label}: X seconds or Y minutes.` message based on elapsed wall time since `start_time`.
+
+    Args:
+        label (str): Description used in the message.
+        start_time (float): A `time.time()` value captured at the start of the timed block.
+    """
+    elapsed = round(time.time() - start_time, 2)
+    logging.info(f"Total time for {label}: {elapsed} seconds or {round(elapsed / 60, 2)} minutes.")
 
 
 def make_common_argparser(include_reset: bool = True) -> argparse.ArgumentParser:
