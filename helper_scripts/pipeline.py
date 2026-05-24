@@ -96,31 +96,7 @@ def modded_folders_for(scratch_root: str) -> List[str]:
 
 
 # Default scratch folders the (sequential) scripts populate during a run and need to clean up after. Every entry lives directly under `TEMP_DIR`. Parallel callers should pass a per-mod `scratch_root` to `modded_folders_for` / `cleanup_modded_folders` / `extract_and_load_table_data` instead.
-MODDED_FOLDERS: List[str] = [
-    f"{TEMP_DIR}/modded_units_to_groupings_military_permissions_tables",
-    f"{TEMP_DIR}/modded_land_units_tables",
-    f"{TEMP_DIR}/modded_main_units_tables",
-    f"{TEMP_DIR}/modded_unit_description_historical_texts_tables",
-    f"{TEMP_DIR}/modded_battle_animations_table_tables",
-    f"{TEMP_DIR}/modded_battle_entities_tables",
-    f"{TEMP_DIR}/modded_mounts_tables",
-    f"{TEMP_DIR}/modded_melee_weapons_tables",
-    f"{TEMP_DIR}/modded_missile_weapons_tables",
-    f"{TEMP_DIR}/modded_unit_description_short_texts_tables",
-    f"{TEMP_DIR}/modded_unit_attributes_groups_tables",
-    f"{TEMP_DIR}/modded_battlefield_engines_tables",
-    f"{TEMP_DIR}/modded_projectiles_tables",
-    f"{TEMP_DIR}/modded_battle_vortexs_tables",
-    f"{TEMP_DIR}/modded_projectiles_scaling_damages_tables",
-    f"{TEMP_DIR}/modded_projectile_shot_type_displays_tables",
-    f"{TEMP_DIR}/modded_unit_spacings_tables",
-    f"{TEMP_DIR}/modded_first_person_engines_tables",
-    f"{TEMP_DIR}/modded_land_unit_articulated_vehicles_tables",
-    f"{TEMP_DIR}/modded_ui_unit_groupings_tables",
-    f"{TEMP_DIR}/modded_ui_unit_group_parents_tables",
-    f"{TEMP_DIR}/modded_variants_tables",
-    f"{TEMP_DIR}/modded_variantmeshes",
-]
+MODDED_FOLDERS: List[str] = modded_folders_for(TEMP_DIR)
 
 
 def workshop_pack_path(steam_id: str, pack_name: str) -> str:
