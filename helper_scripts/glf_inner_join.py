@@ -11,6 +11,7 @@ Extraction and pack-writing are fully automated; no manual file placement.
 import argparse
 import logging
 import os
+import shutil
 import time
 from typing import List, Dict, Set
 from utilities import (
@@ -19,14 +20,15 @@ from utilities import (
     extract_modded_tsv_data,
     extract_tsv_data,
     load_tsv_data,
+    merge_move,
     TEMP_DIR,
 )
 from supported_mods import SUPPORTED_MODS
 from pipeline import add_folder_to_pack, clean_folder_name
 
 
-# The GLF mod this script patches. Switch to the other "[GLF] Battle Mage" package_name if a future need arises.
-GLF_TARGET_PACKAGE = "!!!1a_glf_unit_expansion.pack"
+# The GLF mod this script patches. Switch to the other "!!!1a_glf_unit_expansion" package_name if a future need arises.
+GLF_TARGET_PACKAGE = "!!!1a_glf_battle_mage_Dante.pack"
 TARGET_TABLE = "land_units_tables"
 
 
@@ -109,7 +111,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--pack",
         default=GLF_TARGET_PACKAGE,
-        help="Target GLF .pack filename (must match a SUPPORTED_MODS entry by package_name). Defaults to the Unit Expansion pack.",
+        help="Target GLF .pack filename (must match a SUPPORTED_MODS entry by package_name). Defaults to the Battle Mage pack.",
     )
     args = parser.parse_args()
 
@@ -125,8 +127,11 @@ if __name__ == "__main__":
 
     glf_folder = clean_folder_name(args.pack)
     glf_scratch = f"{TEMP_DIR}/{glf_folder}"
-    output_root = f"{TEMP_DIR}/{glf_folder}_merged"
+    # Strip leading `!`s so the warhammer3_mods folder matches the existing un-prefixed convention (e.g. `1a_glf_battle_mage_Dante`).
+    mods_folder_name = glf_folder.lstrip("!")
+    output_root = f"{TEMP_DIR}/{mods_folder_name}"
     output_table_dir = f"{output_root}/db/{TARGET_TABLE}"
+    mods_dest_dir = f"../warhammer3_mods/{mods_folder_name}"
 
     try:
         # Extract the vanilla and GLF copies of land_units_tables.
@@ -163,8 +168,15 @@ if __name__ == "__main__":
             write_merged_tsv(f"{output_table_dir}/{filename}", game_headers, merged_version_info, updated_data)
             logging.info(f"Merged {len(updated_data)} rows from {filename} (of {len(mod_data)} GLF rows / {len(game_data)} vanilla rows).")
 
+        # Mirror the merged TSVs into warhammer3_mods so the on-disk source tracks the pack contents. Clear the target table dir first to drop any stale TSVs from prior runs.
+        mods_table_dir = f"{mods_dest_dir}/db/{TARGET_TABLE}"
+        if os.path.exists(mods_table_dir):
+            shutil.rmtree(mods_table_dir)
+        merge_move(output_root, "../warhammer3_mods")
+        logging.info(f"Mirrored merged tables into {mods_dest_dir}.")
+
         # Push the merged folder back into the GLF pack. `--tsv-to-binary` (set inside `add_folder_to_pack`) converts each TSV to its RPFM binary form at import.
-        add_folder_to_pack(glf_mod["path"], f"{output_root};")
+        add_folder_to_pack(glf_mod["path"], f"{mods_dest_dir};")
         logging.info(f"Wrote merged tables back into {glf_mod['path']}.")
     except Exception:
         logging.exception("glf_inner_join failed.")
