@@ -155,8 +155,6 @@ def handle_main_units_tables(
         # Conditionally double the bonus HP, rank depth and number of engines.
         if row["caste"] in ["lord", "hero", "monster"]:
             src_df.loc[mask, "bonus_hit_points"] = (src_df.loc[mask, "bonus_hit_points"].astype(int) * 2).astype(str)
-        # else:
-        #     src_df.loc[mask, "bonus_hit_points"] = (src_df.loc[mask, "bonus_hit_points"].astype(int) // 2).astype(str)
 
         if row["caste"] in ["warmachine", "chariot"]:
             # Check the original num_engines value from the reference dataframe.
@@ -182,8 +180,6 @@ def handle_main_units_tables(
             src_df.loc[mount_mask, "num_mounts"] = (src_df.loc[mount_mask, "num_mounts"].astype(int) * 2).astype(str)
             src_df.loc[mask, "rank_depth"] = (src_df.loc[mask, "rank_depth"].astype(int) * 2).astype(str)
 
-    # # Now remove all rows from the main_units_tables table that are a "lord" or "hero" caste category.
-    # df = df[~df["caste"].isin(["lord", "hero"])]
     return df, land_units_tables_df
 
 
