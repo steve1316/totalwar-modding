@@ -700,32 +700,11 @@ def update_single_tsv_file_to_latest_version(file_path: str, table_name: str, sc
 
         # Write the updated TSV back to file.
         with open(file_path, "w", encoding="utf-8") as f:
-            # Write headers in correct order.
-            header_line = "\t".join(ordered_headers) + "\n"
-            f.write(header_line)
-
-            # Write updated version info with the same number of tab-separated columns as headers.
+            f.write("\t".join(ordered_headers) + "\n")
             version_info_columns = [updated_version_info] + [""] * (len(ordered_headers) - 1)
-            version_info_line = "\t".join(version_info_columns) + "\n"
-            # Verify the version_info row has the correct number of tab-separated values.
-            version_info_values = version_info_line.rstrip("\n").split("\t")
-            if len(version_info_values) != len(ordered_headers):
-                logging.error(f"Version info row has {len(version_info_values)} columns but expected {len(ordered_headers)}. This should not happen!")
-                # Force correct format.
-                version_info_columns = [updated_version_info] + [""] * (len(ordered_headers) - 1)
-                version_info_line = "\t".join(version_info_columns) + "\n"
-            f.write(version_info_line)
-
-            # Write all data rows.
+            f.write("\t".join(version_info_columns) + "\n")
             for row in updated_data:
-                # Ensure we have exactly the same number of values as headers.
                 ordered_values = [str(row.get(header, "")) for header in ordered_headers]
-                # Verify we have the correct number of columns.
-                if len(ordered_values) != len(ordered_headers):
-                    logging.warning(f"Row has {len(ordered_values)} values but expected {len(ordered_headers)} headers. Padding or truncating.")
-                    while len(ordered_values) < len(ordered_headers):
-                        ordered_values.append("")
-                    ordered_values = ordered_values[: len(ordered_headers)]
                 f.write("\t".join(ordered_values) + "\n")
 
         logging.info(f"Successfully updated {os.path.basename(file_path)}.")
