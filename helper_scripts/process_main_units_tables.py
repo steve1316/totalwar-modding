@@ -14,7 +14,7 @@ import gc
 import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from utilities import extract_tsv_data, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, run_rpfm_cli, STEAM_LIBRARY_DRIVE, TEMP_DIR
+from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
 from typing import List, Dict, Optional, Tuple
 
@@ -391,7 +391,7 @@ def tsv_to_faction_data(
 # =====================================================================================
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     args = make_common_argparser(include_reset=False).parse_args()
@@ -591,5 +591,4 @@ if __name__ == "__main__":
     for package_name in list_of_supported_package_names:
         print(f'\t"{package_name}",')
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for processing all main_units_tables .tsv files: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("processing all main_units_tables .tsv files", start_time)

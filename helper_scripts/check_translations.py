@@ -10,7 +10,7 @@ import gc
 import shutil
 import time
 from typing import List, Set
-from utilities import run_rpfm_cli, STEAM_LIBRARY_DRIVE
+from utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE
 
 
 mod_paths_to_be_translated = [
@@ -406,7 +406,7 @@ def check_text_string_amount_diff(messages: List[str], mod_name: str, is_collect
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     # If the translation_check_results.txt file exists, delete it.
@@ -459,5 +459,4 @@ if __name__ == "__main__":
     if os.path.exists("./text_translation/"):
         shutil.rmtree("./text_translation/")
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for processing all text .tsv files: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("processing all text .tsv files", start_time)

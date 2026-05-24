@@ -10,6 +10,7 @@ import time
 import subprocess
 import signal
 from typing import List
+from utilities import log_elapsed_time, setup_script_logging
 
 
 def run_script(cmd: List[str]):
@@ -31,7 +32,7 @@ def run_script(cmd: List[str]):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO)
+    setup_script_logging()
     start_time = time.time()
 
     parser = argparse.ArgumentParser()
@@ -60,5 +61,4 @@ if __name__ == "__main__":
     logging.info("Updating the double unit size mod...")
     run_script(["python", "update_double_unit_size.py", "--reset", *workers_args])
 
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for updating all mods: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("updating all mods", start_time)
