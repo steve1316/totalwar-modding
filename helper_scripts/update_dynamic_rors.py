@@ -244,10 +244,13 @@ FACTION_SHORTHAND_KEY_MAPPING = {
 
 
 def add_anti_order_generic_effects(faction: str):
-    """Add anti-order generic effects based on faction.
+    """Return generic anti-order effects for `faction`, with sub-faction add-ons for greenskins, skaven, and chaos branches.
 
     Args:
         faction (str): The faction of the unit.
+
+    Returns:
+        List of effect keys to apply.
     """
     unit_effects = []
     if faction in ANTI_ORDER_FACTIONS:
@@ -270,10 +273,13 @@ def add_anti_order_generic_effects(faction: str):
 
 
 def add_anti_destruction_generic_effects(faction: str):
-    """Add anti-destruction generic effects based on faction.
+    """Return generic anti-destruction effects for `faction`, picking the cathay, dwarfs, empire, or lizardmen variant based on which order-side faction is asking.
 
     Args:
         faction (str): The faction of the unit.
+
+    Returns:
+        List of effect keys to apply.
     """
     unit_effects = []
     if faction in ANTI_DESTRUCTION_FACTIONS:
@@ -290,10 +296,13 @@ def add_anti_destruction_generic_effects(faction: str):
 
 
 def add_melee_effects(faction: str):
-    """Add melee effects.
+    """Return melee effects for `faction`: the base melee set plus anti-order or anti-destruction add-ons and any per-faction extras.
 
     Args:
         faction (str): The faction of the unit.
+
+    Returns:
+        List of effect keys to apply.
     """
     unit_effects = []
     unit_effects += SUPPORTED_EFFECTS["melee"]
@@ -336,10 +345,13 @@ def add_melee_effects(faction: str):
 
 
 def add_ranged_effects(faction: str):
-    """Add ranged effects.
+    """Return ranged effects for `faction`: the base ranged set plus anti-order or anti-destruction add-ons (dwarfs/kislev get extras).
 
     Args:
         faction (str): The faction of the unit.
+
+    Returns:
+        List of effect keys to apply.
     """
     unit_effects = []
     unit_effects += SUPPORTED_EFFECTS["ranged"]
@@ -358,10 +370,13 @@ def add_ranged_effects(faction: str):
 
 
 def add_artillery_effects(faction: str):
-    """Add artillery effects.
+    """Return artillery effects for `faction`: the base artillery set plus a bretonnia-only extra.
 
     Args:
         faction (str): The faction of the unit.
+
+    Returns:
+        List of effect keys to apply.
     """
     unit_effects = []
     unit_effects += SUPPORTED_EFFECTS["artillery"]
@@ -373,10 +388,13 @@ def add_artillery_effects(faction: str):
 
 
 def add_cavalry_effects(faction: str):
-    """Add cavalry effects.
+    """Return cavalry effects for `faction`: the base cavalry set plus an empire-only extra.
 
     Args:
         faction (str): The faction of the unit.
+
+    Returns:
+        List of effect keys to apply.
     """
     unit_effects = []
     unit_effects += SUPPORTED_EFFECTS["cavalry"]
@@ -388,10 +406,13 @@ def add_cavalry_effects(faction: str):
 
 
 def add_monster_effects(faction: str):
-    """Add monster effects.
+    """Return monster effects for `faction`: the base monster set plus khorne or nurgle add-ons.
 
     Args:
         faction (str): The faction of the unit.
+
+    Returns:
+        List of effect keys to apply.
     """
     unit_effects = []
     unit_effects += SUPPORTED_EFFECTS["monster"]
