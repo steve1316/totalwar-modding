@@ -45,20 +45,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
     workers_args = ["--workers", str(args.workers)] if args.workers is not None else []
 
-    # Update the faction data for the land encounters mod.
-    logging.info("Updating the faction data for the land encounters mod...")
-    run_script(["python", "process_main_units_tables.py", *workers_args])
-
-    # Update the Dynamic RoR mod.
-    logging.info("Updating the Dynamic RoR mod...")
-    run_script(["python", "update_dynamic_rors.py", "--reset", *workers_args])
-
-    # Update the modified attribute mods.
-    logging.info("Updating the modified attribute mods...")
-    run_script(["python", "update_modified_attribute_mods.py", "--reset", *workers_args])
-
-    # Update the double unit size mod.
-    logging.info("Updating the double unit size mod...")
-    run_script(["python", "update_double_unit_size.py", "--reset", *workers_args])
+    tasks = [
+        ("Updating the faction data for the land encounters mod...", ["process_main_units_tables.py"]),
+        ("Updating the Dynamic RoR mod...", ["update_dynamic_rors.py", "--reset"]),
+        ("Updating the modified attribute mods...", ["update_modified_attribute_mods.py", "--reset"]),
+        ("Updating the double unit size mod...", ["update_double_unit_size.py", "--reset"]),
+    ]
+    for description, script_args in tasks:
+        logging.info(description)
+        run_script(["python", *script_args, *workers_args])
 
     log_elapsed_time("updating all mods", start_time)
