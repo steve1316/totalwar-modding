@@ -103,6 +103,8 @@ local caps = {
     {"wh3_dlc27_sla_mon_champions_of_slaanesh_ror", "special", 2},
     {"wh3_dlc27_sla_mon_champions_of_slaanesh", "special", 2},
     {"wh3_dlc27_sla_mon_preyton_ror", "special", 2},
+    -- Warriors of Chaos
+    {"wh3_dlc27_woc_mon_chimera_ror", "rare", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")
