@@ -19,6 +19,7 @@ local caps = {
     {"wh3_dlc24_bst_inf_tzaangors_ete", "rare", 1},
     {"wh_pro04_bst_inf_gor_herd_ror_0_ete", "rare", 1},
     {"wh_pro04_bst_inf_bestigor_herd_ror_0_ete", "rare", 1},
+    {"wh_pro04_bst_inf_centigors_ror_0_ete", "special", 1},
     -- Bretonnia
     {"wh_dlc07_brt_inf_foot_squires_0_ete", "rare", 1},
     {"wh_dlc07_brt_cav_questing_knights_0_ete", "rare", 2},
@@ -50,6 +51,7 @@ local caps = {
     {"wh3_dlc23_chd_veh_iron_daemon_ror_1dreadquake", "rare", 2},
     {"wh3_dlc23_chd_veh_deathshrieker_rocket_launcher_ete", "rare", 2},
     {"wh3_dlc23_chd_inf_chaos_dwarf_warriors_ete", "rare", 2},
+    {"wh_main_chs_art_hellcannon_ete", "rare", 3},
     -- Daemons of Chaos
     {"1dae", "rare", 3},
     {"2dae", "rare", 2},
@@ -63,6 +65,18 @@ local caps = {
     {"wh2_main_def_inf_harpies_ete", "rare", 1},
     {"def_rider_2", "rare", 2},
     {"wh2_main_def_inf_dreadspears_0_ete", "rare", 2},
+    {"wh2_dlc10_def_mon_kharibdyss_0_ete", "rare", 2},
+    {"wh2_dlc10_def_cav_knights_of_the_ebon_claw_ror_0_ete", "special", 2},
+    {"wh2_dlc14_def_mon_bloodwrack_medusa_0_ete", "rare", 1},
+    {"wh2_dlc14_def_veh_bloodwrack_shrine_0_ete", "rare", 1},
+    {"wh2_main_def_mon_war_hydra_ete", "rare", 2},
+    {"wh2_main_def_inf_shades_1_ete", "rare", 2},
+    {"wh2_dlc10_def_mon_chill_of_sontar_ror_0_ete", "rare", 2},
+    {"wh2_main_def_art_reaper_bolt_thrower_ete", "rare", 2},
+    {"wh2_main_def_inf_bleakswords_0_ete_ror", "rare", 2},
+    {"wh2_main_def_cav_cold_one_knights_1_ete", "special", 2},
+    {"wh2_main_def_inf_black_guard_0_ete_ror", "rare", 2},
+    {"wh2_dlc10_def_inf_the_hellebronai_ror_0_ete", "special", 2},
     -- Dwarfs
     {"wh_main_dwf_art_grudge_thrower_ete", "rare", 2},
     {"wh_main_dwf_inf_ironbreakers_ete", "rare", 2},
@@ -78,6 +92,9 @@ local caps = {
     {"wh_main_dwf_inf_slayers_ete_ror", "rare", 2},
     {"wh_main_dwf_veh_gyrocopter_0_ete", "special", 2},
     {"wh_main_dwf_veh_gyrobomber_ete", "special", 2},
+    {"wh3_dlc25_dwf_veh_thunderbarge_ete_ror", "rare", 3},
+    {"wh_dlc06_dwf_veh_skyhammer_0_ete", "special", 2},
+    {"wh3_dlc25_dwf_veh_thunderbarge_ete", "rare", 3},
     -- Grand Cathay
     {"wh3_main_cth_inf_dragon_guard_0_ete", "rare", 2},
     {"wh3_main_cth_inf_jade_warrior_crossbowmen_0_ete", "rare", 2},
@@ -85,6 +102,14 @@ local caps = {
     {"wh3_main_cth_art_fire_rain_rocket_battery_0_ete", "rare", 2},
     {"wh3_main_cth_mon_terracotta_sentinel_0_ete", "rare", 3},
     {"wh3_twa08_cth_mon_terracotta_sentinel_0_ror_ete", "rare", 3},
+    {"wh3_cp1_cth_inf_tiger_warriors_dual_axe_ete", "special", 1},
+    {"wh3_twa10_cth_inf_peasant_archers_ror_ete", "special", 2},
+    {"wh3_dlc24_cth_mon_jade_lion_ete", "special", 3},
+    {"wh3_main_cth_inf_peasant_spearmen_1_ete", "special", 2},
+    {"wh3_dlc24_cth_inf_onyx_crowmen_ete", "special", 1},
+    {"wh3_dlc24_cth_inf_dragon_guard_crossbowmen_ror_ete", "rare", 1},
+    {"wh3_cp1_cth_inf_iron_claw_guandao_ete", "special", 1},
+    {"wh3_dlc24_cth_inf_onyx_crowmen_ror_ete", "special", 1},
     -- Greenskins
     {"wh_main_grn_inf_black_orcs_ete", "rare", 2},
     {"wh_dlc06_grn_inf_krimson_killerz_0_ror_ete", "rare", 2},
@@ -125,6 +150,8 @@ local caps = {
     {"wh2_main_hef_inf_white_lions_of_chrace_0_ete", "rare", 1},
     {"hef_rider_4", "rare", 2},
     {"wh2_main_hef_inf_spearmen_0_ete", "rare", 2},
+    {"wh2_dlc10_hef_inf_the_scions_of_mathlann_ror_0_ete", "rare", 2},
+    {"wh2_dlc10_hef_inf_the_silverpelts_ror_0_ete", "rare", 1},
     -- Khorne
     {"wh3_dlc26_kho_inf_khorngors_ete", "rare", 2},
     {"3manticore_kho", "rare", 2},
@@ -175,6 +202,7 @@ local caps = {
     {"lzd_rider_3", "rare", 2},
     {"wh2_main_lzd_inf_temple_guards_ete", "rare", 2},
     {"wh2_dlc17_lzd_inf_chameleon_stalkers_0_ete", "rare", 2},
+    {"lzd_rider_6", "rare", 2},
     -- Norsca
     {"wh_pro04_nor_mon_skinwolves_ror_0_ete", "rare", 2},
     {"wh_dlc08_nor_inf_marauder_champions_1_ete", "rare", 2},
@@ -189,6 +217,9 @@ local caps = {
     {"wh_dlc08_nor_mon_norscan_ice_trolls_0_ete", "rare", 2},
     {"1wyrm", "rare", 2},
     {"wh_dlc08_nor_mon_fimir_0_ete", "rare", 2},
+    {"wh2_dlc15_grn_mon_river_trolls_0_ete_throgg", "special", 2},
+    {"wh_dlc08_nor_mon_norscan_giant_0_ete", "rare", 2},
+    {"wh_dlc01_chs_mon_trolls_1_ete_throgg", "special", 2},
     -- Nurgle
     {"wh3_twa08_nur_mon_great_unclean_one_0_ror_ete", "rare", 3},
     {"wh3_dlc25_nur_mon_soul_grinder_0_ror_ete", "rare", 2},
@@ -205,6 +236,7 @@ local caps = {
     {"3manticore_nur", "rare", 2},
     {"3dae", "rare", 2},
     {"wh3_dlc20_chs_inf_chaos_marauders_mnur_ete", "rare", 2},
+    {"wh3_main_nur_inf_forsaken_0_ete", "core", 1},
     -- Ogre Kingdoms
     {"wh3_dlc26_ogr_inf_golgfags_maneaters_ete", "rare", 2},
     {"wh3_dlc26_ogr_mon_thundertusk_ete", "rare", 3},
@@ -224,6 +256,12 @@ local caps = {
     {"wh3_dlc26_ogr_inf_eshin_maneater_ete", "rare", 2},
     {"wh3_twa06_ogr_inf_maneaters_ror_0_ete", "rare", 2},
     {"wh3_main_ogr_mon_stonehorn_0_ete", "rare", 2},
+    {"wh3_dlc26_ogr_inf_eshin_maneater_ete_ror", "rare", 2},
+    {"wh3_main_ogr_mon_giant_0_ete", "rare", 1},
+    {"wh3_dlc26_ogr_mon_blood_vultures_ete", "special", 1},
+    {"wh3_dlc26_ogr_mon_blood_vultures_ete_ror", "special", 1},
+    {"wh3_main_ogr_mon_giant_0_ete_ror", "rare", 1},
+    {"wh3_main_ogr_mon_sabretusk_pack_0_ete", "special", 1},
     -- Skaven
     {"wh2_main_skv_inf_plague_monks_ror_ete", "rare", 2},
     {"wh2_dlc12_skv_veh_doom_flayer_ror_0_ete", "rare", 2},
@@ -239,6 +277,9 @@ local caps = {
     {"wh2_main_skv_mon_rat_ogres_ete", "rare", 2},
     {"wh2_dlc12_skv_veh_doom_flayer_0_ete", "rare", 2},
     {"wh2_main_skv_inf_stormvermin_1_ete", "rare", 2},
+    {"wh2_main_skv_inf_skavenslaves_0_ete", "core", 1},
+    {"wh2_main_skv_inf_plague_monk_censer_bearer_ete", "special", 2},
+    {"wh2_dlc16_skv_mon_rat_ogres_ror_0_ete", "rare", 2},
     -- Slaanesh
     {"wh3_dlc20_chs_inf_chosen_msla_ete", "rare", 2},
     {"3manticore_sla", "rare", 2},
@@ -251,6 +292,11 @@ local caps = {
     {"wh3_twa08_sla_mon_keeper_of_secrets_0_ror_ete", "rare", 3},
     {"wh3_twa06_sla_inf_daemonette_ror_0_ete", "rare", 2},
     {"wh3_dlc27_sla_inf_slaangors_ete", "rare", 2},
+    {"wh3_main_sla_cav_heartseekers_of_slaanesh_0_ete", "rare", 2},
+    {"wh3_main_sla_veh_exalted_seeker_chariot_0_ete_ror", "special", 1},
+    {"wh3_main_sla_veh_exalted_seeker_chariot_0_ete", "special", 1},
+    {"wh3_dlc20_chs_inf_forsaken_msla_ete", "core", 1},
+    {"wh3_twa07_sla_cav_heartseekers_of_slaanesh_ror_0_ete", "rare", 2},
     -- The Empire
     {"wh3_dlc25_emp_veh_steam_tank_volley_gun_ete", "rare", 3},
     {"wh_dlc04_emp_inf_free_company_militia_0_ror_ete", "rare", 2},
@@ -265,6 +311,7 @@ local caps = {
     {"wh_main_emp_art_mortar_ete", "rare", 2},
     {"wh_dlc04_emp_inf_free_company_militia_0_ete", "rare", 2},
     {"wh_dlc04_emp_inf_flagellants_0_ror_ete", "rare", 2},
+    {"wh_main_emp_inf_greatswords_ete", "special", 1},
     -- Tomb Kings
     {"wh2_dlc09_tmb_cav_nehekhara_horsemen_0_ete", "rare", 2},
     {"wh2_dlc09_tmb_mon_ushabti_0_ete", "rare", 2},
@@ -278,6 +325,9 @@ local caps = {
     {"wh2_dlc09_tmb_veh_khemrian_warsphinx_0_ete", "rare", 2},
     {"wh2_dlc09_tmb_mon_necrosphinx_0_ete", "rare", 3},
     {"wh2_dlc09_tmb_inf_nehekhara_warriors_ror_ete", "rare", 2},
+    {"wh2_dlc09_tmb_mon_necrosphinx_ror_ete", "rare", 3},
+    {"wh2_dlc09_tmb_cav_necropolis_knights_ror_ete", "rare", 2},
+    {"wh2_dlc09_tmb_cav_nehekhara_horsemen_ror_ete", "rare", 2},
     -- Tzeentch
     {"wh3_dlc20_chs_inf_chosen_mtze_ete", "rare", 2},
     {"3manticore_tze", "rare", 2},
@@ -290,6 +340,7 @@ local caps = {
     {"wh3_dlc20_chs_inf_chaos_marauders_mtze_ete", "rare", 2},
     {"10tze", "rare", 3},
     {"11tze", "rare", 3},
+    {"wh3_main_tze_inf_forsaken_0_ete", "core", 1},
     -- Vampire Counts
     {"wh2_dlc11_cst_mon_necrofex_colossus_ror_0_ete", "rare", 3},
     {"vmp_rider_4", "rare", 3},
@@ -299,6 +350,10 @@ local caps = {
     {"wh2_dlc11_cst_art_mortar_ete", "rare", 2},
     {"vmp_rider_2", "rare", 3},
     {"wh2_dlc11_cst_inf_depth_guard_1_ete", "rare", 2},
+    {"wh2_dlc11_cst_inf_zombie_deckhands_mob_0_ete", "special", 2},
+    {"wh2_dlc11_cst_inf_depth_guard_ror_0_ete", "rare", 2},
+    {"wh2_dlc11_cst_inf_zombie_deckhands_mob_ror_0_ete", "special", 2},
+    {"wh3_dlc27_hef_mon_merwyrm_ror_ete_cst", "rare", 3},
     -- Vampire Counts
     {"wh3_main_vmp_blood_knights_sword_shield_ete", "rare", 2},
     {"wh_main_vmp_inf_grave_guard_1_ete", "rare", 2},
@@ -307,6 +362,8 @@ local caps = {
     {"vmp_rider_3", "rare", 3},
     {"wh_main_vmp_inf_cairn_wraiths_ete_ror", "rare", 2},
     {"wh_main_vmp_inf_cairn_wraiths_ete", "rare", 2},
+    {"wh_dlc04_vmp_mon_devils_swartzhafen_0_ete", "special", 2},
+    {"wh_main_vmp_mon_vargheists_ete", "special", 2},
     -- Warriors of Chaos
     {"wh_dlc06_chs_inf_aspiring_champions_0_ete_ror", "rare", 3},
     {"wh3_dlc26_kho_inf_wrathmongers_ete", "rare", 2},
@@ -339,6 +396,7 @@ local caps = {
     {"12dae", "rare", 3},
     {"wh3_main_kho_cav_bloodcrushers_0_ete", "rare", 2},
     {"wh3_twa07_kho_cav_bloodcrushers_ror_0_ete", "rare", 2},
+    {"wh3_dlc20_chs_inf_forsaken_mkho_ete", "rare", 2},
     -- Wood Elves
     {"wef_rider_3", "rare", 2},
     {"wh_dlc05_wef_mon_treeman_0_ete_ror", "rare", 3},
@@ -351,6 +409,7 @@ local caps = {
     {"wh2_dlc16_wef_mon_malicious_treeman_0_ete", "rare", 3},
     {"wh_dlc05_wef_inf_waywatchers_0_ete", "rare", 2},
     {"wh_dlc05_wef_inf_eternal_guard_0_ete", "rare", 2},
+    {"wh_pro04_wef_inf_eternal_guard_ror_0_ete", "rare", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

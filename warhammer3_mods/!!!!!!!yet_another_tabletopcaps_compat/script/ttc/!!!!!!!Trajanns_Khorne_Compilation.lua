@@ -83,8 +83,16 @@ local caps = {
     {"kho_skaven_plague_monk", "special", 1},
     {"kho_skaven_globadiers", "special", 2},
     {"traj_kho_skink_stalker", "core", 1},
+    {"traj_kho_merwyrm", "rare", 3},
+    {"traj_kho_skycutter_bows", "special", 2},
+    {"traj_kho_champions_of_slaanesh", "special", 3},
+    {"traj_kho_dread_maw_underground", "rare", 2},
+    {"traj_kho_cursd_ettin_runecaller", "rare", 3},
+    {"traj_kho_preyton", "rare", 3},
     -- Beastmen
     {"traj_khorgoth_minotaur_ror", "special", 2},
+    -- Warriors of Chaos
+    {"traj_kho_chimera", "rare", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

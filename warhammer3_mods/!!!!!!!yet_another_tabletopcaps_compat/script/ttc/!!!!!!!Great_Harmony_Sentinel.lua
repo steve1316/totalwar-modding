@@ -206,6 +206,7 @@ local caps = {
     {"ghs_main_cth_veh_warchariot_missle", "special", 1},
     {"ghs_main_cth_cav_fire_dragon_glaive_rider", "special", 2},
     {"ghs_main_cth_veh_flying_compass", "rare", 1},
+    {"ghs_main_cth_mon_soul_turtle", "special", 1},
     -- Empire
     {"ghs_main_emp_imperial_guard_mounted", "special", 3},
     {"ghs_main_emp_imperial_guard", "special", 2},
