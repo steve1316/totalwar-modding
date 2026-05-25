@@ -1,0 +1,14 @@
+{
+  "settings_text": {
+    "diagnostics_files_to_ignore": "",
+    "import_files_to_ignore": ".vscode\n.git\nland_encounters_and_points_of_interest.sublime-project"
+  },
+  "settings_string": {
+    "compression_format": "None"
+  },
+  "settings_bool": {
+    "disable_autosaves": false,
+    "do_not_generate_existing_locs": false
+  },
+  "settings_number": {}
+}

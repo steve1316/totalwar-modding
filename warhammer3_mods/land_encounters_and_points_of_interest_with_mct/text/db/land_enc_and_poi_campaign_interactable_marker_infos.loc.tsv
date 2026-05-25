@@ -1,0 +1,28 @@
+key	text	tooltip
+#Loc;1;text/db/land_enc_and_poi_campaign_interactable_marker_infos.loc		
+campaign_interactable_marker_infos_tooltip_encounter_marker_33	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_33	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_34	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_34	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_35	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_35	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_36	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_36	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_37	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_37	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_38	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_38	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_39	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_39	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_40	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_40	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_41	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_41	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_42	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_42	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_43	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_43	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_44	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_44	Land encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_smithy	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]]	true
+campaign_interactable_marker_infos_name_encounter_marker_smithy	Smithy	true

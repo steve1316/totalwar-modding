@@ -1,0 +1,336 @@
+========================
+Game Version = v1.2
+Mod Version  = v1
+========================
+
+====================================================================
+====================================================================
+ROC Campaign
+Canvas used: Original full map (not warped) of ROC in the Internet
+====================================================================
+====================================================================
+
+  Canvas    =    Logical Map
+========================
+True Coordinates (Taken by the debug script activator + pressing on top of a character
+(229, 1134) = (129, 177) - Laurelorn itself
+(1046, 916) = (581, 280) - Frozen Landing itself
+(822, 1082) = (456, 203) - Duklys
+(1266,1061) = (698, 210) - Use this Zorn Uzkul 
+(821, 1081) = (540, 251) - Gianthome Mountains
+(466, 1196) = (262, 149) - Erengrad
+
+================================
+X axis formula
+================================
+Reason R => 229/1046 = 129x/581 => (229*581)/(1046*129) = 0.986
+
+> Proof
+229   129 * 0.986
+-   = -             => (129 * 0.986 * 822)/ 229 => 456
+822   x
+It is correct
+
+> Formula (MapY)
+(129 * R * CanvasX). 229 => 0.55543231441 * CanvasX
+
+================================
+Y axis formula
+================================
+Canvas  - Canvas (1504 - CanvasY) -   MapY
+1134    - 1504 - 1134 = 370       -   177   -> Laurelorn
+112     - 1504 -  916 = 588       -   280
+
+Reason R => 370/588 = y*(177/280) => (370*280)/(588*177) = 0.995 = 1
+
+> Proof (Erengrad)
+370              0.995 * 177  
+              =               => (1 * 177 * 308) / 370 = 147.34 ~
+(1504 - 1196)     y
+
+> Formula (MapY Inexact)
+(370/(1504-CanvasY)) = (177/MapY) = 370/177 
+
+MapY = 177*(1504-CanvasY)/370 = 719.481081081 - 0.47837837837 * CanvasY
+
+=================================
+=================================
+Final current formulas:
+MapX = 0.55543231441 * CanvasX (Exact)
+MapY = 719.481081081 - 0.47837837837 * CanvasY (Inexact)
+
+Just paste it in the google calculator and replace the CanvasX, CanvasY
+coordinates and apply each respective formula.
+
+-------------
+kislev
+-------------
+Troll Country
+512,1022
+590,1065
+438,1150
+437,1044
+Northern Oblast
+658,1224
+575,1150
+504,1127
+River Lynsk: Erengrad
+429,1200
+508,1217
+Black Blood Pass
+661,1048
+The Cursed City: Praag
+784,1094
+River Urskoy: Kislev
+790,1222
+Eastern Oblast
+932,1222
+833,1138
+Dukhlys Forest
+880,1090
+926,1132
+1002,1043
+-------------
+darklands
+-------------
+Zorn Uzkul
+1228,1085
+1380,1016
+1321,1152
+The Plain of Zharr
+1296,1202
+1452,1159
+1471,1065
+The Blasted Wastes
+1372,1275
+1398,1331
+1426,1259
+1545,1222
+The Wolf Lands
+1526,1348
+1482,1437
+1586,1428
+The Howling Wastes
+1572,1168
+1559,1049
+1679,1158
+1694,1110
+The Haunted Forest
+1721,1264
+1843,1166
+-------------
+wordlsedgemountains
+-------------
+The High Pass
+1245,1035
+1086,1027
+Worlds Edge Mountains
+1062,1227
+Peak Pass
+1154,1280
+1071,1341
+Black Water
+-------------
+empire
+-------------
+The Witch's Wood
+177,1124
+Wasteland
+154,1240
+108,1211
+125,1302
+167,1343
+Northern Grey Mountains
+Southern Grey Mountains
+142,1435
+Middenland
+246,1252
+290,1302
+326,1273
+Nordland
+282,1124
+301,1190
+385,1231
+Hochland
+386,1386
+463,1409
+516,1372
+Reikland
+238,1394
+290,1419
+408,1438
+Wissenland
+630,1425
+640,1462
+Talabecland
+623,1390
+Ostland
+588,1218
+557,1268
+648,1280
+607,1320
+Ostermark
+787,1278
+772,1331
+850,1344
+924,1286
+Stirland
+686,1427
+767,1464
+782,1390
+Sylvania
+822,1466
+898,1456
+931,1376
+-------------
+norsca
+-------------
+Vanaheim Mountains
+120,548
+81,601
+156,713
+Helspire Mountains
+295,707
+366,809
+477,801
+Ice Tooth Mountains
+232,797
+244,876
+294,810
+Trollheim Mountains
+386,928
+468,978
+Gianthome Mountains
+525,866
+591,904
+698,936
+853,918
+936,954
+The Goromadny
+1048,961
+1112,933
+-------------
+mountainsofmourn
+-------------
+Path to the East
+1320,841
+1383,738
+Gash Kadrak
+1441,868
+1476,798
+Mountains of Mourn
+1580,798
+Mist Gorge
+1701,822
+Wyrm Pass
+1819,815
+1778,916
+Bone Road
+1553,532
+Ivory Road
+Ice Pass
+Ancient Giant Lands
+-------------
+cathay
+-------------
+Imperial Road
+1808,117
+1726,132
+1905,163
+1850,184
+Land of Stone and Steel
+1696,182
+1646,333
+1706,294
+1642,284
+Forests of the Moon
+1876,302
+1864,244
+Gunpowder Road
+1636,426
+1657,477
+1711,415
+Warpstone Desert
+1675,540
+1720,555
+1774,492
+Celestial Riverlands
+1951,293
+1970,523
+Wasteland of Jinshen
+1873,550
+1766,566
+1872,550
+Broken Lands of Tian Li
+1907,633
+-------------
+chaoswastes
+-------------
+The Shard Lands
+189,298
+250,320
+444,287
+440,390
+Northern Wastes
+192,417
+247,506
+339,594
+356,485
+389,428
+The Eternal Lagoon
+536,366
+609,409
+592,519
+Bloodfire Falls
+494,580
+545,585
+608,580
+492,671
+The Cold Mires
+524,727
+536,642
+Plain of Bone
+737,513
+803,549
+884,543
+Plain of Illusions
+795,665
+706,717
+700,800
+785,758
+875,751
+943,770
+The Blood Marshes
+876,647
+995,573
+1017,632
+994,705
+K'datha
+1115,566
+1089,633
+1155,518
+1225,504
+1334,521
+The Cliffs of Death
+1093,835
+1139,849
+Road of Skulls
+1218,844
+1221,796
+1289,752
+1222,687
+1302,671
+1320,602
+Road to Damnation
+1465,625
+1442,538
+1419,479
+1334,521
+Eastern Steppes
+1533,423
+1531,308
+The Red Wastes
+1598,273
+1552,225
+1612,213
+1610,154

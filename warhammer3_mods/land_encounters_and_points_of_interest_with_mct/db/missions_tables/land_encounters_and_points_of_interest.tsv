@@ -1,0 +1,8 @@
+key	mission_type	localised_title	localised_description	ui_image	ui_icon	generate	prioritised	event_category	set_piece_battle	location_x	location_y	quest_mission	quest_mission_final	trigger_radius	quest_character	sticky_by_default	localised_mission_completed_text	can_be_manually_cancelled
+#missions_tables;0;db/missions_tables/land_encounters_and_points_of_interest																		
+land_enc_mission_smithy_kislev_ursire	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Success! You have achieved one of your goals.	true
+land_enc_mission_smithy_kislev_wyrm_hunter	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Success! You have achieved one of your goals.	true
+land_enc_mission_smithy_kislev_dazhs_brazier	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Success! You have achieved one of your goals.	true
+land_enc_mission_smithy_dark_elves_armour_of_living_death	SCRIPTED			def/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Success! You have achieved one of your goals.	true
+land_enc_mission_smithy_dark_elves_armour_armour_of_eternal_servitude	SCRIPTED			def/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Success! You have achieved one of your goals.	true
+land_enc_mission_smithy_dark_elves_anc_weapon_chillblade	SCRIPTED			def/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Success! You have achieved one of your goals.	true

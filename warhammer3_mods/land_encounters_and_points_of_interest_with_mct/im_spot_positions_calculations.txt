@@ -1,0 +1,51 @@
+========================
+Game Version = v2.0
+Mod Version  = v4
+========================
+
+====================================================================
+====================================================================
+IM Campaign
+Canvas used: Original full map (not warped) of IM in the Internet
+====================================================================
+====================================================================
+
+  Canvas    =    Logical Map
+========================
+True Coordinates (Taken by the debug script activator + pressing on top of a character
+(1481, 100) = (583, 938) - Black Rock
+(357, 539)  = (139, 787) - Hag Graef
+(1357, 957) = (527, 648) - Reikland
+(0, 0)      = (0, 0) - Lol
+
+Input the equivalence as a quadratic (X,Y) in 
+For X
+(1481, 583) - Black Rock
+(357, 139) - Hag Graef
+(1357, 527) - Reikland
+
+1481 = 583*R = (1481*139)/(583*357) <= R => 0.98908379818
+357    139
+
+CanvasX = TrueX * R => TrueX = (583 * 0.98908379818)/1481 * CanvasX
+1357      527                = 0.38935574229 * CanvasX
+
+
+For Y (2880)
+(100, 938) - Black Rock
+(539, 787) - Hag Graef
+(957, 648) - Reikland
+
+2880 - 100  = 938 * R => TrueY = ((2880 - 100) * 787) / (938 * (2880-539))
+2880 - 539    787                0.99635768797
+
+2880 - CanvasX = TrueX * R(0.99635768797) => ((2880 - CanvasX) * 787) / (2880 - 539) * (0.99635768797)
+2880 - 539       787                          2266560 - 787 * CanvasX / 2332.47334754
+                                              971.741007198 - 0.33741007194 * CanvasY
+
+
+Formula
+(Adjust so that it is easy for the google interpreter to interpret)
+TrueX = 0.38935574229 * CanvasX
+TrueY = 971.741007198 - 0.33741007194 * CanvasY
+

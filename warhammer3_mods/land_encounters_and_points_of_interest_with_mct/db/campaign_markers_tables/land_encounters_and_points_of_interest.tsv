@@ -1,0 +1,15 @@
+group	marker_type	file
+#campaign_markers_tables;2;db/campaign_markers_tables/land_encounters_and_points_of_interest		
+wh_main_feature_all	island_34	prefabs/campaign/island_01.bmd
+wh_main_feature_all	island_35	prefabs/campaign/island_02.bmd
+wh_main_feature_all	island_36	prefabs/campaign/nor_crow_monolith.bmd
+wh_main_feature_all	island_37	prefabs/campaign/island_06.bmd
+wh_main_feature_all	island_38	prefabs/campaign/island_11.bmd
+wh_main_feature_all	island_39	prefabs/campaign/island_13.bmd
+wh_main_feature_all	island_33	prefabs/campaign/island_24.bmd
+wh_main_feature_all	island_40	prefabs/campaign/island_15.bmd
+wh_main_feature_all	island_41	prefabs/campaign/island_16.bmd
+wh_main_feature_all	island_42	prefabs/campaign/island_18.bmd
+wh_main_feature_all	island_43	prefabs/campaign/island_20.bmd
+wh_main_feature_all	island_44	prefabs/campaign/island_22.bmd
+wh_main_feature_all	smithy	prefabs/campaign/dwarf_major_5.bmd

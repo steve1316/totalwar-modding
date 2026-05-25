@@ -1,0 +1,14 @@
+key	text	tooltip
+#Loc;1;text/db/land_enc_and_poi_missions.loc		
+missions_localised_description_land_enc_mission_smithy_kislev_ursire	PLACEHOLDER	false
+missions_localised_title_land_enc_mission_smithy_kislev_ursire	The Ursire Set	false
+missions_localised_description_land_enc_mission_smithy_kislev_wyrm_killer	PLACEHOLDER	false
+missions_localised_title_land_enc_mission_smithy_kislev_wyrm_killer	Wyrm Killer Set	false
+missions_localised_description_land_enc_mission_smithy_kislev_dazhs_brazier	PLACEHOLDER	false
+missions_localised_title_land_enc_mission_smithy_kislev_dazhs_brazier	The Eternal Brazier	false
+missions_localised_description_land_enc_mission_smithy_dark_elves_armour_of_living_death	The blacksmith has sent some strange armor to our quartermaster. It appears to breathe smoothly and when someone is close it begins to move and smell the person. He told us that to complete it, we will need to bathe him in the blood of many enemies. We should fulfill the blacksmith request during our journey lord, maybe it will end up being useful to us?	false
+missions_localised_title_land_enc_mission_smithy_dark_elves_armour_of_living_death	Giving Life To The Armour	false
+missions_localised_description_land_enc_mission_smithy_dark_elves_armour_armour_of_eternal_servitude	"My lord, the blacksmith sends us some strange armor again." A strange shape that seems to be forged from chains and scraps of troll skin appears before you. "This armor makes anyone who comes near it feel bad." The quartermaster continues "He told us that we must kill enemies with this armor nearby and that it will take their souls. We should take it on our travels to finish it, my lord."	false
+missions_localised_title_land_enc_mission_smithy_dark_elves_armour_armour_of_eternal_servitude	Binding Souls to The Armour	false
+missions_localised_description_land_enc_mission_smithy_dark_elves_anc_weapon_chillblade	"My lord, the blacksmith sends us an unfinished sword this time. He wishes us to kill northern people or chaos demons with it to imbue it with the spirit of cold." Once upon a time it looks more like a piece of solid glass. Just by seeing her an icy tremor hugs your back. The quartermaster continues "He told us that we must kill enemies with this armor nearby and that it will take their souls. We should take it on our travels to finish it, my lord."	false
+missions_localised_title_land_enc_mission_smithy_dark_elves_anc_weapon_chillblade	The Soul Of Frost	false

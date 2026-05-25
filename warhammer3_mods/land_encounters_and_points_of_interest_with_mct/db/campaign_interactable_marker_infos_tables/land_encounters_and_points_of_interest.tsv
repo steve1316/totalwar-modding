@@ -1,0 +1,15 @@
+key	marker_type	actionable	audio_character_vo
+#campaign_interactable_marker_infos_tables;3;db/campaign_interactable_marker_infos_tables/land_encounters_and_points_of_interest			
+encounter_marker_33	island_33	false	
+encounter_marker_35	island_35	false	
+encounter_marker_36	island_36	false	
+encounter_marker_37	island_37	false	
+encounter_marker_38	island_38	false	
+encounter_marker_44	island_44	false	
+encounter_marker_43	island_43	false	
+encounter_marker_42	island_42	false	
+encounter_marker_41	island_41	false	
+encounter_marker_40	island_40	false	
+encounter_marker_39	island_39	false	
+encounter_marker_34	island_34	false	
+encounter_marker_smithy	smithy	false	

@@ -1,0 +1,20 @@
+key	localised_description	localised_title	bundle_target	priority	ui_icon	is_global_effect	show_in_3d_space	owner_only
+#effect_bundles_tables;4;db/effect_bundles_tables/land_encounters_and_points_of_interest								
+land_enc_effect_abandoned_camp			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_hidden_temple			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_legendary_bard			faction	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_whispers_of_the_gods			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_the_explorer			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_won_incursion_hef			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_won_incursion_lzd			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_won_incursion_vco			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_avoided_incursion			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_won_surprise_bst			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_won_surprise_skv			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_avoided_surprise			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_avoided_battlefield			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_won_daemonic_gift_khorne_already_granted			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_avoided_daemonic_gift_khorne			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_won_daemonic_gift_slaanesh_already_granted			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_avoided_daemonic_gift_slaanesh			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_battle_clean_up_event			force	1	icon_effects_fortify.png	false	false	true

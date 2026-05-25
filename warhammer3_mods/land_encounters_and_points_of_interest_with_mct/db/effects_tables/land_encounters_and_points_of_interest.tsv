@@ -1,0 +1,9 @@
+effect	icon	priority	icon_negative	category	is_positive_value_good
+#effects_tables;0;db/effects_tables/land_encounters_and_points_of_interest					
+land_enc_diplomatic_relations_exiles_of_khorne	diplomacy.png	2	diplomacy.png	campaign	true
+land_enc_diplomatic_relations_legions_of_the_gorequeen	diplomacy.png	2	diplomacy.png	campaign	true
+land_enc_diplomatic_relations_shadow_legion	diplomacy.png	2	diplomacy.png	campaign	true
+land_enc_diplomatic_relations_ecstasic_legion	diplomacy.png	2	diplomacy.png	campaign	true
+land_enc_diplomatic_relations_sigvald	diplomacy.png	2	diplomacy.png	campaign	true
+land_enc_diplomatic_relations_seducers_of_slaanesh	diplomacy.png	2	diplomacy.png	campaign	true
+land_enc_diplomatic_relations_cult_of_pleasure	diplomacy.png	2	diplomacy.png	campaign	true
