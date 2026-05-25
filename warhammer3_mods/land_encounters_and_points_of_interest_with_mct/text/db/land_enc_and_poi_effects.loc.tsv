@@ -1,0 +1,9 @@
+key	text	tooltip
+#Loc;1;text/db/land_enc_and_poi_effects.loc		
+effects_description_land_enc_diplomatic_relations_exiles_of_khorne	Diplomatic relations: %+n with Exiles of Khorne	false
+effects_description_land_enc_diplomatic_relations_legions_of_the_gorequeen	Diplomatic relations: %+n with Legions of the Gorequeen	false
+effects_description_land_enc_diplomatic_relations_shadow_legion	Diplomatic relations: %+n with Shadow Legion	false
+effects_description_land_enc_diplomatic_relations_ecstasic_legion	Diplomatic relations: %+n with Ecstasic Legion	false
+effects_description_land_enc_diplomatic_relations_sigvald	Diplomatic relations: %+n with Legions Of Pleasure	false
+effects_description_land_enc_diplomatic_relations_seducers_of_slaanesh	Diplomatic relations: %+n with Seducers of Slaanesh	false
+effects_description_land_enc_diplomatic_relations_cult_of_pleasure	Diplomatic relations: %+n with Cult of Pleasure	false
