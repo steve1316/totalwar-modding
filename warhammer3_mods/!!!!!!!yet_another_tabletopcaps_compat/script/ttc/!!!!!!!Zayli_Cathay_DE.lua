@@ -1,9 +1,7 @@
--- cth_fuyuanshan_faction
+-- Zayli_Cathay_DE
 local caps = {
     -- Grand Cathay
-    {"cth_fys_peasant_firelancer", "core"},
-    {"cth_fys_jade_warrior_lancer", "special", 1},
-    {"cth_fys_cav_rhino_rider", "rare", 2}
+    {"zayli_cth_peasants", "core", 1}
 }
 
 local ttc = core:get_static_object("tabletopcaps")

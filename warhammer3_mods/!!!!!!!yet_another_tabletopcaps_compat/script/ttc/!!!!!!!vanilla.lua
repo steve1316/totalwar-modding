@@ -89,6 +89,9 @@ local caps = {
     {"wh3_dlc27_nor_inf_marauder_bearmen_greatweapons", "core", 1},
     -- Grand Cathay
     {"wh3_main_cth_inf_grenadiers", "core", 1},
+    {"wh3_cp1_cth_inf_iron_claw_guandao", "special", 1},
+    {"wh3_cp1_cth_inf_stalkers_throwing_disc", "core", 1},
+    {"wh3_cp1_cth_inf_tiger_warriors_dual_axe", "core", 1},
     -- Slaanesh
     {"wh3_dlc27_sla_veh_seeker_chariot_ror", "special", 1},
     {"wh3_dlc27_sla_inf_devotees_of_slaanesh", "special", 1},

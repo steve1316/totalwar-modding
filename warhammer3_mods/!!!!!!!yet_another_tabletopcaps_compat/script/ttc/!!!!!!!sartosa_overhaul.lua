@@ -2,6 +2,8 @@
 local caps = {
     -- Vampire Coast
     {"sartosa_pirate_artillery_culverin", "special", 2},
+    {"sartosa_pirate_artillery_deck_cannon", "special", 2},
+    {"sartosa_pirate_artillery_volley_gun", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")
