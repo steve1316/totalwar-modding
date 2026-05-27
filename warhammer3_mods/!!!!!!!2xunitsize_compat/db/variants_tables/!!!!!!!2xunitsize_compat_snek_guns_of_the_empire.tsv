@@ -1,5 +1,5 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_snek_guns_of_the_empire
-snek_emp_gote_art_war_baloon	warmachines/aircraft/cth_sky_junk/tech/	snek_emp_gote_art_war_baloon		1.0000	1.0000	0.0000	
+snek_emp_gote_art_war_baloon	warmachines/aircraft/emp_air_ship/tech	snek_emp_gote_art_war_baloon		1.0000	1.0000	0.0000	
 snek_emp_gote_mounts_munitionswagon		snek_emp_gote_mounts_munitionswagon		1.0000	1.0000	0.0000	
 snek_emp_gote_mounts_thricepistols		snek_emp_gote_mounts_thricepistols		1.0000	1.0000	0.0000	
