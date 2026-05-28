@@ -38,13 +38,13 @@ function LandEncounterManager:restore_from_previous_state(coordinates_by_zone, p
     self:initialize_spots_by_zone(coordinates_by_zone)
     -- Restore the data inside each encounter
     self:reinstate_zone_land_encounters(previous_state)
-    
+
     self:initialize_points_of_interest_by_zone(perpetual_coordinates_with_types)
     -- Reinstates the state of the points of interest
     self:reinstate_zone_points_of_interest(previous_state)
 end
 
--- Initialize the spots from the map coordinates given, through iterating from them. 
+-- Initialize the spots from the map coordinates given, through iterating from them.
 function LandEncounterManager:initialize_spots_by_zone(coordinates_by_zone)
     self.active_spot_percentage = get_mct_settings().spawn_percentage
     self.zones = {}
@@ -80,7 +80,7 @@ function LandEncounterManager:update_land_encounters()
         current_zone:update_occupied_and_prohibited_spot_states()
         -- TODO add POI controller logic
         self:populate_zone(current_zone)
-    end    
+    end
 end
 
 function LandEncounterManager:populate_zone(zone)
@@ -121,7 +121,7 @@ end
 
 --- try_find_spot_info
 --- @desc process the area_key entered in the marker and finds the relevant information to trigger a related event
---- @param marker_id string CA variable contains obtained from area_key()  
+--- @param marker_id string CA variable contains obtained from area_key()
 --- @return table spot_info or empty table that contains the spot index on the zone and the spot type for triggering the event
 function LandEncounterManager:find_spot_info(marker_id)
     local zone_name_and_spot_index = process_marker_id(marker_id)
@@ -134,10 +134,10 @@ function LandEncounterManager:find_spot_info(marker_id)
             else
                 coordinates = self.zones[i].point_of_interest_delegate.points_of_interest[zone_name_and_spot_index[2]].coordinates
             end
-            return { 
-                zone = self.zones[i], 
-                spot_index = zone_name_and_spot_index[2], 
-                spot_type = spot_type, 
+            return {
+                zone = self.zones[i],
+                spot_index = zone_name_and_spot_index[2],
+                spot_type = spot_type,
                 coordinates = coordinates
             }
         end
@@ -174,7 +174,7 @@ function LandEncounterManager:export_state_as_a_table()
             event_spot:flatten_info(land_encounter_state, flattened_spot_key)
 
             --save state of zone delegates
-            -- should the spot be prohibited or active we also record it 
+            -- should the spot be prohibited or active we also record it
             land_encounter_state[flattened_spot_key .. "_active_spot_flag"] = current_zone_spot_delegate.active_spots[event_spot.index]
             land_encounter_state[flattened_spot_key .. "_prohibited_spot_flag"] = current_zone_spot_delegate.prohibited_spots[event_spot.index]
         end
@@ -195,7 +195,7 @@ end
 --- Constructors
 --=======================
 function LandEncounterManager:new()
-    local t = { 
+    local t = {
         zones = {},
         active_spot_percentage = DEFAULT_ACTIVE_SPOT_PERCENTAGE,
     }
