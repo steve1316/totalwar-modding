@@ -1,4 +1,4 @@
-require("script/land_encounters/utils/logger")
+require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 
 -------------------------

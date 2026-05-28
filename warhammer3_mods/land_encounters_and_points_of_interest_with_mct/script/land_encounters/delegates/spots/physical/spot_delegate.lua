@@ -1,4 +1,4 @@
-require("script/land_encounters/utils/logger")
+require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 
 local Spot = require("script/land_encounters/models/spots/abstract_classes/spot")

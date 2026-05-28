@@ -1,4 +1,4 @@
-require("script/land_encounters/utils/logger")
+require("script/land_encounters/utils/common")
 
 local SmithyState = require("script/land_encounters/models/points_of_interest/smithies/smithy_state")
 

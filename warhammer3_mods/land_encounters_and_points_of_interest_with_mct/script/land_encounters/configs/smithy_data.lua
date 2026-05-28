@@ -1,20 +1,24 @@
-require("script/land_encounters/constants/utils/common")
+-- defenders table references ALLIED_REINFORCEMENTS_PERMITTED_TYPE, a global published by common.lua. Keep the require so the global is in _G when this file's table literal is evaluated.
+require("script/land_encounters/utils/common")
+
+local M = {}
+
 -- Defenders by culture and level given the faction that has control of the defensive spot
-local smithy_defenders = {
+M.defenders = {
     --WH1
     --Dwarfs
     ["wh_main_sc_dwf_dwarfs"] = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_dlc06_dwf_cha_runelord"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_dlc06_dwf_cha_runelord"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -88,14 +92,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_main_grn_goblin_great_shaman"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_main_grn_goblin_great_shaman"] = {
                     { name = "wh2_main_skill_innate_all_fleet_footed", level = 1 },
@@ -155,14 +159,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_main_emp_lord"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_main_emp_lord"] = {
                     { name = "wh2_main_skill_innate_all_disciplined", level = 1 },
@@ -233,14 +237,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh2_dlc11_vmp_bloodline_necrarch"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh2_dlc11_vmp_bloodline_necrarch"] = {
                     { name = "wh_main_skill_vmp_lord_battle_aura_of_supremacy", level = 1 },
@@ -321,14 +325,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_main_chs_lord"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_main_chs_lord"] = {
                     { name = "wh_main_skill_chs_lord_battle_dominating_presence", level = 1 },
@@ -405,14 +409,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_dlc03_bst_beastlord"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_dlc03_bst_beastlord"] = {
                     { name = "wh_dlc03_skill_bst_lord_presence_of_morrslieb", level = 1 },
@@ -467,14 +471,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_main_brt_lord"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_main_brt_lord"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -543,14 +547,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_dlc05_wef_glade_lord"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_dlc05_wef_glade_lord"] = {
                     { name = "", level = 1 },
@@ -589,14 +593,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh_main_nor_marauder_chieftain"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh_main_nor_marauder_chieftain"] = {
                     { name = "wh_main_skill_chs_lord_battle_dominating_presence", level = 1 },
@@ -666,14 +670,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh2_main_def_dreadlord_fem"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh2_main_def_dreadlord_fem"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -720,7 +724,7 @@ local smithy_defenders = {
             [2] = {
                 unit_experience_amount = 5,
                 units = {
-                    { "wh2_main_def_inf_black_guard_0", 3, 100, 0, nil },                         
+                    { "wh2_main_def_inf_black_guard_0", 3, 100, 0, nil },
                     { "wh2_main_def_inf_har_ganeth_executioners_0", 3, 100, 0, nil },
                     { "wh2_main_def_inf_shades_1", 6, 100, 0, nil },
                     { "wh2_main_def_art_reaper_bolt_thrower", 3, 100, 0, nil }
@@ -741,14 +745,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh2_main_hef_princess"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh2_main_hef_princess"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -818,14 +822,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh2_main_lzd_saurus_old_blood"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh2_main_lzd_saurus_old_blood"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -885,7 +889,7 @@ local smithy_defenders = {
                     { "wh2_main_lzd_mon_carnosaur_0", 4, 100, 0, nil },
                     { "wh2_dlc12_lzd_mon_ancient_stegadon_1", 4, 0, 100, "wh2_main_lzd_mon_stegadon_1" }, -- DLC check required
                     { "wh2_dlc17_lzd_mon_troglodon_0", 2, 0, 100, "wh2_main_lzd_mon_stegadon_1" }, -- Dlc check required
-                    { "wh2_main_lzd_mon_stegadon_1", 6, 100, 0, nil }, 
+                    { "wh2_main_lzd_mon_stegadon_1", 6, 100, 0, nil },
                     { "wh2_dlc17_lzd_mon_coatl_0", 2, 0, 0, nil },
                     { "wh2_dlc13_lzd_mon_dread_saurian_1", 1, 0, 100, "wh2_main_lzd_mon_stegadon_1" } -- Dlc check required
                 }
@@ -897,14 +901,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh2_dlc12_skv_warlock_master"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh2_dlc12_skv_warlock_master"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -985,14 +989,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh2_dlc09_tmb_tomb_king"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh2_dlc09_tmb_tomb_king"] = {
                     { name = "wh2_dlc09_skill_tmb_lord_army_base", level = 1 },
@@ -1067,14 +1071,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh2_dlc11_cst_admiral_fem_vampires"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh2_dlc11_cst_admiral_fem_vampires"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1164,14 +1168,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_ksl_ataman"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_ksl_ataman"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1201,11 +1205,11 @@ local smithy_defenders = {
             ancillaries = {},
             traits = {}
         },
-        
+
         armies_by_level = {
             [1] = {
                 unit_experience_amount = 2,
-                units = { 
+                units = {
                     { "wh3_main_ksl_inf_armoured_kossars_0", 4, 100, 0, nil },
                     { "wh3_main_ksl_inf_kossars_1", 4, 100, 0, nil },
                     { "wh3_main_ksl_cav_horse_archers_0", 4, 100, 0, nil },
@@ -1213,7 +1217,7 @@ local smithy_defenders = {
             },
             [2] = {
                 unit_experience_amount = 5,
-                units = { 
+                units = {
                     { "wh3_main_ksl_inf_tzar_guard_0", 2, 100, 0, nil },
                     { "wh3_main_ksl_inf_armoured_kossars_0", 2, 100, 0, nil },
                     { "wh3_main_ksl_inf_kossars_1", 2, 100, 0, nil },
@@ -1231,7 +1235,7 @@ local smithy_defenders = {
                     { "wh3_main_ksl_inf_ice_guard_1", 8, 100, 0, nil },
                     { "wh3_main_ksl_veh_little_grom_0", 2, 100, nil }
                 }
-            }            
+            }
         }
 
     },
@@ -1240,14 +1244,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_tze_herald_of_tzeentch_metal"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_tze_herald_of_tzeentch_metal"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1320,14 +1324,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_cth_dragon_blooded_shugengan_yang"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_cth_dragon_blooded_shugengan_yang"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1396,19 +1400,18 @@ local smithy_defenders = {
             }
         }
     },
-    
     ["wh3_main_sc_ogr_ogre_kingdoms"] = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_ogr_tyrant"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_ogr_tyrant"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1464,7 +1467,7 @@ local smithy_defenders = {
                     { "wh3_main_ogr_inf_leadbelchers_0", 3, 100, 0, nil },
                     { "wh3_main_ogr_mon_stonehorn_0", 1, 100, 0, nil },
                     { "wh3_main_ogr_veh_gnoblar_scraplauncher_0", 1, 100, 0, nil }
-                }                
+                }
             },
             [3] = {
                 unit_experience_amount = 7,
@@ -1478,19 +1481,19 @@ local smithy_defenders = {
             }
         }
     },
-    
+
     ["wh3_main_sc_nur_nurgle"] = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_nur_exalted_great_unclean_one_nurgle"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_nur_exalted_great_unclean_one_nurgle"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1530,7 +1533,7 @@ local smithy_defenders = {
             traits = {}
         },
         armies_by_level = {
-            [1] = {                
+            [1] = {
                 unit_experience_amount = 2,
                 units = {
                     { "wh3_main_nur_inf_nurglings_0", 4, 100, 0, nil },
@@ -1547,7 +1550,7 @@ local smithy_defenders = {
                     { "wh3_main_nur_mon_spawn_of_nurgle_0", 3, 100, 0, nil },
                     { "wh3_main_nur_mon_beast_of_nurgle_0", 3, 100, 0, nil },
                     { "wh3_main_nur_mon_soul_grinder_0", 1, 100, 0, nil }
-                }                
+                }
             },
             [3] = {
                 unit_experience_amount = 7,
@@ -1556,7 +1559,7 @@ local smithy_defenders = {
                     { "wh3_main_nur_cav_pox_riders_of_nurgle_0", 2, 100, 0, nil },
                     { "wh3_main_nur_cav_plague_drones_1", 2, 100, 0, nil },
                     { "wh3_main_nur_mon_great_unclean_one_0", 4, 100, 0, nil },
-                    { "wh3_main_nur_mon_soul_grinder_0", 2, 100, 0, nil }                    
+                    { "wh3_main_nur_mon_soul_grinder_0", 2, 100, 0, nil }
                 }
             }
         }
@@ -1566,14 +1569,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_kho_exalted_bloodthirster"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_kho_exalted_bloodthirster"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1647,14 +1650,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_sla_exalted_keeper_of_secrets_shadow"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_sla_exalted_keeper_of_secrets_shadow"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1730,19 +1733,19 @@ local smithy_defenders = {
             }
         }
     },
-    
+
     ["wh3_main_sc_tze_tzeentch"] = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_main_tze_exalted_lord_of_change_tzeentch"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_main_tze_exalted_lord_of_change_tzeentch"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1815,14 +1818,14 @@ local smithy_defenders = {
         identifier = "defender_force",
         invasion_identifier = "defender_invasion",
         intervention_type = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        lord = { 
-            possible_subtypes = { 
+        lord = {
+            possible_subtypes = {
                 "wh3_dlc23_chd_sorcerer_prophet_hashut"
             },
-            level_ranges = { 20, 30 }, 
+            level_ranges = { 20, 30 },
             possible_forenames = { },
-            possible_clan_names = { }, 
-            possible_family_names = { }, 
+            possible_clan_names = { },
+            possible_family_names = { },
             skills = {
                 ["wh3_dlc23_chd_sorcerer_prophet_hashut"] = {
                     { name = "wh_main_skill_all_lord_battle_inspiring_presence", level = 1 },
@@ -1905,4 +1908,128 @@ local smithy_defenders = {
 
 }
 
-return smithy_defenders
+-- PLAYER ONLY. Each mission gives a set or one of the useful racial items given certain conditions are met. Only X (1/2/3) missions can be active given smithy level at a time per faction.
+M.missions_by_subculture = {
+    -- WH1
+    -- Dwarfs
+    ["wh_main_sc_dwf_dwarfs"] = {
+    },
+    -- Greenskins
+    ["wh_main_sc_grn_greenskins"] = {
+    },
+    -- The Empire
+    ["wh_main_sc_emp_empire"] = {
+
+    },
+    -- Vampire Counts
+    ["wh_main_sc_vmp_vampire_counts"] = {
+    },
+    -- Warriors of Chaos
+    ["wh_main_sc_chs_chaos"] = {
+
+    },
+    -- Beastmen
+    ["wh_dlc03_sc_bst_beastmen"] = {
+
+    },
+    -- Bretonnia
+    ["wh_main_sc_brt_bretonnia"] = {
+
+    },
+    -- Wood Elves
+    ["wh_dlc05_sc_wef_wood_elves"] = {
+
+    },
+    -- Norsca
+    ["wh_dlc08_sc_nor_norsca"] = {
+
+    },
+
+    -- WH2
+    -- Dark Elves
+    ["wh2_main_sc_def_dark_elves"] = {
+        [1] = {
+            mission = "land_enc_mission_smithy_dark_elves_armour_of_living_death",
+            ancillaries = { "wh2_main_anc_armour_armour_of_living_death" }
+        },
+
+        [2] = {
+            mission = "land_enc_mission_smithy_dark_elves_armour_armour_of_eternal_servitude",
+            ancillaries = { "wh2_main_anc_armour_armour_of_eternal_servitude" }
+        },
+
+        [3] = {
+            mission = "land_enc_mission_smithy_dark_elves_anc_weapon_chillblade",
+            ancillaries = { "wh2_main_anc_weapon_chillblade" }
+        }
+    },
+    -- High Elves
+    ["wh2_main_sc_hef_high_elves"] = {
+
+    },
+    -- Lizardmen
+    ["wh2_main_sc_lzd_lizardmen"] = {
+    },
+    -- Skaven
+    ["wh2_main_sc_skv_skaven"] = {
+
+    },
+    -- Tomb Kings
+    ["wh2_dlc09_sc_tmb_tomb_kings"] = {
+    },
+    -- Vampire Coast
+    ["wh2_dlc11_sc_cst_vampire_coast"] = {
+    },
+
+    -- WH3
+    -- Kislev
+    ["wh3_main_sc_ksl_kislev"] = {
+        --[1] = {
+        --    mission = "land_enc_mission_smithy_kislev_ursire",
+        --    ancillaries = { "wh3_main_anc_armour_great_bear_pelt", "wh3_main_anc_weapon_ursuns_claws" }
+        --},
+
+        --[2] = {
+        --    mission = "land_enc_mission_smithy_kislev_wyrm_hunter",
+        --    ancillaries = { "wh3_main_anc_armour_wyrm_harness", "wh3_main_anc_weapon_wyrmspike" }
+        --},
+
+        --[3] = {
+        --    mission = "land_enc_mission_smithy_kislev_dazhs_brazier",
+        --   ancillaries = { "wh3_main_anc_weapon_dazhs_brazier" }
+        --},
+    },
+
+    -- Daemons
+    ["wh3_main_sc_dae_daemons"] = {
+    },
+
+    -- Cathay
+    ["wh3_main_sc_cth_cathay"] = {
+    },
+
+    -- Ogre Kingdoms
+    ["wh3_main_sc_ogr_ogre_kingdoms"] = {
+    },
+
+    -- Nurgle
+    ["wh3_main_sc_nur_nurgle"] = {
+    },
+
+    -- Khorne
+    ["wh3_main_sc_kho_khorne"] = {
+    },
+
+    -- Slaanesh
+    ["wh3_main_sc_sla_slaanesh"] = {
+
+    },
+
+    -- Tzeentch
+    ["wh3_main_sc_tze_tzeentch"] = {
+
+    }
+
+}
+
+return M

@@ -1,10 +1,73 @@
--- Sets by subculture that are given to the AI whenever they control a smithy every 20 turns. 
+local M = {}
+
+M.balancing = {
+    "wh_main_anc_magic_standard_lichbone_pennant",
+
+    "wh_main_anc_armour_charmed_shield",
+    "wh_main_anc_armour_enchanted_shield",
+    "wh_main_anc_armour_gamblers_armour",
+    "wh_main_anc_armour_shield_of_ptolos",
+    "wh_main_anc_armour_spellshield",
+    "wh_main_anc_armour_glittering_scales",
+    "wh_main_anc_armour_tricksters_helm",
+    "wh_main_anc_armour_armour_of_fortune",
+    "wh_main_anc_armour_helm_of_discord",
+    "wh_main_anc_armour_armour_of_destiny",
+
+    "wh_main_anc_enchanted_item_ironcurse_icon",
+    "wh_main_anc_enchanted_item_potion_of_strength",
+    "wh_main_anc_enchanted_item_ruby_ring_of_ruin",
+    "wh_main_anc_enchanted_item_the_terrifying_mask_of_eee",
+    "wh_main_anc_enchanted_item_potion_of_toughness",
+    "wh_main_anc_enchanted_item_healing_potion",
+    "wh_main_anc_enchanted_item_the_other_tricksters_shard",
+    "wh2_dlc15_anc_arcane_item_black_dragon_special",
+
+    "wh_main_anc_talisman_dawnstone",
+    "wh_main_anc_talisman_luckstone",
+    "wh_main_anc_talisman_opal_amulet",
+    "wh_main_anc_talisman_pidgeon_plucker_pendant",
+    "wh_main_anc_talisman_talisman_of_protection",
+    "wh_main_anc_talisman_talisman_of_endurance",
+    "wh_main_anc_talisman_talisman_of_preservation",
+
+    "wh_main_anc_weapon_berserker_sword",
+    "wh_main_anc_weapon_biting_blade",
+    "wh_main_anc_weapon_gold_sigil_sword",
+    "wh_main_anc_weapon_relic_sword",
+    "wh_main_anc_weapon_shrieking_blade",
+    "wh_main_anc_weapon_sword_of_might",
+    "wh_main_anc_weapon_tormentor_sword",
+    "wh_main_anc_weapon_fencers_blades",
+    "wh_main_anc_weapon_sword_of_anti-heroes",
+    "wh_main_anc_weapon_sword_of_strife",
+    "wh_main_anc_weapon_sword_of_striking",
+    "wh_main_anc_weapon_warrior_bane",
+    "wh_main_anc_weapon_ogre_blade",
+    "wh_main_anc_weapon_giant_blade",
+    "wh_main_anc_weapon_obsidian_blade",
+
+    "wh_main_anc_arcane_item_channelling_staff",
+    "wh_main_anc_arcane_item_earthing_rod",
+    "wh_main_anc_arcane_item_power_scroll",
+    "wh_main_anc_arcane_item_power_stone",
+    "wh_main_anc_arcane_item_scroll_of_shielding",
+    "wh_main_anc_arcane_item_wand_of_jet",
+    "wh_main_anc_arcane_item_power_stone",
+    "wh_main_anc_arcane_item_sceptre_of_stability",
+    "wh_main_anc_arcane_item_forbidden_rod",
+    "wh_main_anc_arcane_item_book_of_ashur",
+    "wh2_dlc13_anc_arcane_item_amplifier"
+
+}
+
+-- Sets by subculture that are given to the AI whenever they control a smithy every 20 turns.
 -- Can be found on ancillary_set_ancillary_junction_tables
-local item_sets_or_special_items_by_subculture = {
+M.special_by_subculture = {
     -- WH1
     -- Dwarfs
     ["wh_main_sc_dwf_dwarfs"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- ironwarden?
             "wh2_dlc10_dwf_anc_armour_ironwardens_shield",
             "wh2_dlc10_dwf_anc_enchanted_item_ironwardens_tankard",
@@ -16,81 +79,81 @@ local item_sets_or_special_items_by_subculture = {
     },
     -- Greenskins
     ["wh_main_sc_grn_greenskins"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- The Empire
     ["wh_main_sc_emp_empire"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Vampire Counts
     ["wh_main_sc_vmp_vampire_counts"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Warriors of Chaos
     ["wh_main_sc_chs_chaos"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Beastmen
     ["wh_dlc03_sc_bst_beastmen"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Bretonnia
     ["wh_main_sc_brt_bretonnia"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Wood Elves
     ["wh_dlc05_sc_wef_wood_elves"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Norsca
     ["wh_dlc08_sc_nor_norsca"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
 
     -- WH2
     -- Dark Elves
     ["wh2_main_sc_def_dark_elves"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- High Elves
     ["wh2_main_sc_hef_high_elves"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Lizardmen
     ["wh2_main_sc_lzd_lizardmen"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Skaven
     ["wh2_main_sc_skv_skaven"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Tomb Kings
     ["wh2_dlc09_sc_tmb_tomb_kings"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
     -- Vampire Coast
     ["wh2_dlc11_sc_cst_vampire_coast"] = {
-        -- Sets 
+        -- Sets
         -- Special items
     },
 
     -- WH3
     -- Kislev
     ["wh3_main_sc_ksl_kislev"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- wh3_main_ancillary_set_ksl_druzhina_of_ice
             "wh3_main_anc_armour_iron_ice_armour",
             "wh3_main_anc_talisman_blizzard_broach",
@@ -121,7 +184,7 @@ local item_sets_or_special_items_by_subculture = {
 
     -- Daemons
     ["wh3_main_sc_dae_daemons"] = {
-        -- Sets 
+        -- Sets
         -- Special items
         [1] = {
             "wh3_main_anc_armour_weird_plate"
@@ -148,19 +211,19 @@ local item_sets_or_special_items_by_subculture = {
 
     -- Cathay
     ["wh3_main_sc_cth_cathay"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- wh3_main_ancillary_set_cth_shang_yang_elementalist
-            "wh3_main_anc_armour_robes_of_shang_yang", 
-            "wh3_main_anc_magic_standard_standard_of_shang_yang" 
+            "wh3_main_anc_armour_robes_of_shang_yang",
+            "wh3_main_anc_magic_standard_standard_of_shang_yang"
         },
-        [2] = { -- wh3_main_ancillary_set_cth_nan_gau_sentinel 
-            "wh3_main_anc_armour_shield_of_the_nan_gau", 
-            "wh3_main_anc_magic_standard_standard_of_nan_gau" 
+        [2] = { -- wh3_main_ancillary_set_cth_nan_gau_sentinel
+            "wh3_main_anc_armour_shield_of_the_nan_gau",
+            "wh3_main_anc_magic_standard_standard_of_nan_gau"
         },
         [3] = { -- wh3_main_ancillary_set_cth_the_celestial_champion
             "wh3_main_anc_armour_ascendant_celestial_armour",
             "wh3_main_anc_enchanted_item_celestial_silk_robe",
-            "wh3_main_anc_weapon_ascendant_celestial_blade" 
+            "wh3_main_anc_weapon_ascendant_celestial_blade"
         },
         [4] = { -- wh3_main_ancillary_set_cth_tools_of_astromancy
             "wh3_main_anc_arcane_item_scrolls_of_astromancy",
@@ -177,10 +240,10 @@ local item_sets_or_special_items_by_subculture = {
             "wh3_main_anc_talisman_crystal_of_kunlan"
         }
     },
-    
+
     -- Ogre Kingdoms
     ["wh3_main_sc_ogr_ogre_kingdoms"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- wh3_main_ancillary_set_ogr_bull_balls
             "wh3_main_anc_armour_bullgut",
             "wh3_main_anc_magic_standard_bull_standard"
@@ -197,7 +260,7 @@ local item_sets_or_special_items_by_subculture = {
         [4] = { -- wh3_main_ancillary_set_ogr_the_scarred
             "wh3_main_anc_enchanted_item_daemon_killer_scars",
             "wh3_main_anc_weapon_blood_cleaver"
-        },  
+        },
         -- Special items
         [5] = {
             "wh3_main_anc_weapon_siegebreaker"
@@ -206,10 +269,10 @@ local item_sets_or_special_items_by_subculture = {
             "wh3_main_anc_weapon_thundermace"
         }
     },
-    
+
     -- Nurgle
     ["wh3_main_sc_nur_nurgle"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- wh3_main_ancillary_set_nur_impedimenta_of_plague
             "wh3_main_anc_magic_standard_standard_of_seeping_decay",
             "wh3_main_anc_weapon_staff_of_nurgle"
@@ -231,7 +294,7 @@ local item_sets_or_special_items_by_subculture = {
 
     -- Khorne
     ["wh3_main_sc_kho_khorne"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- wh3_main_ancillary_set_kho_trappings_of_blood
             "wh3_main_anc_armour_armour_of_khorne",
             "wh3_main_anc_weapon_axe_of_khorne"
@@ -244,10 +307,10 @@ local item_sets_or_special_items_by_subculture = {
             "wh3_main_anc_enchanted_item_the_chromatic_tome"
         }
     },
-    
+
     -- Slaanesh
     ["wh3_main_sc_sla_slaanesh"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- wh3_main_ancillary_set_sla_accoutrements_of_desire
             "wh3_main_anc_magic_standard_banner_of_ecstacy",
             "wh3_main_anc_weapon_lash_of_despair"
@@ -263,10 +326,10 @@ local item_sets_or_special_items_by_subculture = {
             "wh3_main_anc_talisman_jewel_of_denial"
         }
     },
-    
+
     -- Tzeentch
     ["wh3_main_sc_tze_tzeentch"] = {
-        -- Sets 
+        -- Sets
         [1] = { -- wh3_main_ancillary_set_tze_raiment_of_change
             "wh3_main_anc_magic_standard_icon_of_sorcery",
             "wh3_main_anc_weapon_staff_of_change"
@@ -288,4 +351,4 @@ local item_sets_or_special_items_by_subculture = {
 
 }
 
-return item_sets_or_special_items_by_subculture
+return M

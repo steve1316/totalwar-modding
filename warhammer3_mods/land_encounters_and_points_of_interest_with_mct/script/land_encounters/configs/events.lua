@@ -1,3 +1,9 @@
+local M = {}
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- battle_spot (from constants/events/battle_spot_events.lua)
+
 --[[
 The types of battles one can encounter with this mod. There will always be a variation given an extra _modifier in the name. The Bandits, Incursions, Surprise attacks are common armies. If I can the battlefields will be a multi army battle.
 
@@ -23,16 +29,16 @@ Here goes the description and title of the declared dilemma. In combination with
 dilemmas_localised_description_ + <dilemman_key: land_enc_dilemma_bandits_emp>
 dilemmas_localised_title_ + <land_enc_dilemma_bandits_emp>
 
-TODO: 
+TODO:
 1. Variations of this events, more varied armies
 --]]
-local battle_events = {
+M.battle_spot = {
     [1] = { -- 9 events
         ---------------------------------------------------------------------------
         -- (Easiest) Skirmishes
         ---------------------------------------------------------------------------
         {
-           dilemma = "land_enc_dilemma_skirmish_cth", 
+           dilemma = "land_enc_dilemma_skirmish_cth",
            victory_incident = "land_enc_incident_battle_won_skirmish",
            avoidance_incident = "land_enc_incident_battle_avoided_skirmish",
            is_exclusive_to_zone = true,
@@ -40,36 +46,36 @@ local battle_events = {
            victory_targets = { character = true, force = false, faction = false, region = false },
            avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        { 
-            dilemma = "land_enc_dilemma_skirmish_kis", 
-            victory_incident = "land_enc_incident_battle_won_skirmish", 
+        {
+            dilemma = "land_enc_dilemma_skirmish_kis",
+            victory_incident = "land_enc_incident_battle_won_skirmish",
             avoidance_incident = "land_enc_incident_battle_avoided_skirmish",
             is_exclusive_to_zone = true,
             zone = "kislev",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        { 
-            dilemma = "land_enc_dilemma_skirmish_ogr", 
-            victory_incident = "land_enc_incident_battle_won_skirmish", 
+        {
+            dilemma = "land_enc_dilemma_skirmish_ogr",
+            victory_incident = "land_enc_incident_battle_won_skirmish",
             avoidance_incident = "land_enc_incident_battle_avoided_skirmish",
             is_exclusive_to_zone = true,
             zone = "mountainsofmourn",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        { 
-            dilemma = "land_enc_dilemma_skirmish_nur", 
-            victory_incident = "land_enc_incident_battle_won_skirmish", 
+        {
+            dilemma = "land_enc_dilemma_skirmish_nur",
+            victory_incident = "land_enc_incident_battle_won_skirmish",
             avoidance_incident = "land_enc_incident_battle_avoided_skirmish",
             is_exclusive_to_zone = true,
             zone = "chaoswastes",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        { 
-            dilemma = "land_enc_dilemma_skirmish_tze", 
-            victory_incident = "land_enc_incident_battle_won_skirmish", 
+        {
+            dilemma = "land_enc_dilemma_skirmish_tze",
+            victory_incident = "land_enc_incident_battle_won_skirmish",
             avoidance_incident = "land_enc_incident_battle_avoided_skirmish",
             is_exclusive_to_zone = true,
             zone = "chaoswastes",
@@ -79,36 +85,36 @@ local battle_events = {
         ---------------------------------------------------------------------------
         -- (Easier) Underground Rebellions
         ---------------------------------------------------------------------------
-        { 
-            dilemma = "land_enc_dilemma_underground_cth", 
-            victory_incident = "land_enc_incident_battle_won_underground", 
+        {
+            dilemma = "land_enc_dilemma_underground_cth",
+            victory_incident = "land_enc_incident_battle_won_underground",
             avoidance_incident = "land_enc_incident_battle_avoided_underground",
             is_exclusive_to_zone = true,
             zone = "cathay",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        { 
-            dilemma = "land_enc_dilemma_underground_kis", 
-            victory_incident = "land_enc_incident_battle_won_underground", 
+        {
+            dilemma = "land_enc_dilemma_underground_kis",
+            victory_incident = "land_enc_incident_battle_won_underground",
             avoidance_incident = "land_enc_incident_battle_avoided_underground",
             is_exclusive_to_zone = true,
             zone = "kislev",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        { 
+        {
             dilemma = "land_enc_dilemma_underground_ogr",
-            victory_incident = "land_enc_incident_battle_won_underground", 
+            victory_incident = "land_enc_incident_battle_won_underground",
             avoidance_incident = "land_enc_incident_battle_avoided_underground",
             is_exclusive_to_zone = true,
             zone = "mountainsofmourn",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        { 
+        {
             dilemma = "land_enc_dilemma_underground_tze",
-            victory_incident = "land_enc_incident_battle_won_underground", 
+            victory_incident = "land_enc_incident_battle_won_underground",
             avoidance_incident = "land_enc_incident_battle_avoided_underground",
             is_exclusive_to_zone = true,
             zone = "chaoswastes",
@@ -122,17 +128,17 @@ local battle_events = {
         -- (Easy) Bandits can be Empire, Wood Elves, Norscans, Chaos dwarfs
         ---------------------------------------------------------------------------
         {
-            dilemma = "land_enc_dilemma_bandits_emp", 
-            victory_incident = "land_enc_incident_battle_won_bandits", 
+            dilemma = "land_enc_dilemma_bandits_emp",
+            victory_incident = "land_enc_incident_battle_won_bandits",
             avoidance_incident = "land_enc_incident_battle_avoided_bandits",
             is_exclusive_to_zone = false,
             zone = "_",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
-        },    
+        },
         {
             dilemma = "land_enc_dilemma_bandits_wef",
-            victory_incident = "land_enc_incident_battle_won_bandits", 
+            victory_incident = "land_enc_incident_battle_won_bandits",
             avoidance_incident = "land_enc_incident_battle_avoided_bandits",
             is_exclusive_to_zone = false,
             zone = "_",
@@ -140,8 +146,8 @@ local battle_events = {
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
         {
-            dilemma = "land_enc_dilemma_bandits_nor", 
-            victory_incident = "land_enc_incident_battle_won_bandits", 
+            dilemma = "land_enc_dilemma_bandits_nor",
+            victory_incident = "land_enc_incident_battle_won_bandits",
             avoidance_incident = "land_enc_incident_battle_avoided_bandits",
             is_exclusive_to_zone = false,
             zone = "_",
@@ -149,15 +155,15 @@ local battle_events = {
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
         {
-            dilemma = "land_enc_dilemma_bandits_chads", 
-            victory_incident = "land_enc_incident_battle_won_bandits", 
+            dilemma = "land_enc_dilemma_bandits_chads",
+            victory_incident = "land_enc_incident_battle_won_bandits",
             avoidance_incident = "land_enc_incident_battle_avoided_bandits",
             is_exclusive_to_zone = false,
             zone = "_",
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        ---------------------------------------------------------------------------    
+        ---------------------------------------------------------------------------
         -- (Mid) Incursions can be High Elves, Lizardmen, Vampire Coast
         ---------------------------------------------------------------------------
         {
@@ -177,7 +183,7 @@ local battle_events = {
             zone = "_",
             victory_targets = { character = true, force = true, faction = false, region = false },
             avoidance_targets = { character = false, force = true, faction = false, region = false }
-        },    
+        },
         {
             dilemma = "land_enc_dilemma_incursion_army_vco",
             victory_incident = "land_enc_incident_battle_won_incursion_vco",
@@ -187,7 +193,7 @@ local battle_events = {
             victory_targets = { character = true, force = true, faction = false, region = false },
             avoidance_targets = { character = false, force = true, faction = false, region = false }
         },
-        ---------------------------------------------------------------------------    
+        ---------------------------------------------------------------------------
         -- (Mid) Waystone defenses can be High Elves only. Knife ears will try to defend their places of power
         -- Differences: Makes the region in which the battle was fought tempestous. Chaos corruption + 5 in the area. Gives army buff that grants magic regeneration by +30 to the beater army
         ---------------------------------------------------------------------------
@@ -198,7 +204,7 @@ local battle_events = {
         --    victory_incident = "land_enc_waystone_defense_won_incursion_hef",
         --    avoidance_incident = "land_enc_waystone_defense_avoided_incursion"
         --},
-    
+
         ---------------------------------------------------------------------------
         -- (Mid Upper) Surprise Attacks can be Beastmen, Skaven
         ---------------------------------------------------------------------------
@@ -221,7 +227,7 @@ local battle_events = {
             avoidance_targets = { character = false, force = true, faction = false, region = false }
         }
     },
-    
+
     [3] = { -- 5 events
         ---------------------------------------------------------------------------
         -- (Mid Upper) Daemonic Invasion
@@ -234,7 +240,7 @@ local battle_events = {
         --    losing_incident = "",
         --    avoidance_incident = "land_enc_incident_battle_avoided_surprise"
         --},
-    
+
         ---------------------------------------------------------------------------
         -- (Hard) Battlefields can be Greenskins, Dark Elves, Vampires, Tomb Kings, Warriors of Chaos, Daemons Undivided and Demons of Khorne (for the ancillaries IM ONLY), Demons of Slaneesh (for the ancillaries IM ONLY)
         ---------------------------------------------------------------------------
@@ -283,7 +289,7 @@ local battle_events = {
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = false, force = true, faction = false, region = false }
         },
-    
+
         --{ --TODO
         --    dilemma = "land_enc_dilemma_battlefield_wco",
         --    victory_incident = "land_enc_incident_battle_won_battlefield_wco",
@@ -293,7 +299,7 @@ local battle_events = {
         --    victory_targets = { character = true, force = false, faction = false, region = false },
         --    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --},
-    
+
         --{ --TODO
         --    dilemma = "land_enc_dilemma_battlefield_doc",
         --    victory_incident = "land_enc_incident_battle_won_battlefield_doc",
@@ -303,7 +309,7 @@ local battle_events = {
         --    victory_targets = { character = true, force = false, faction = false, region = false },
         --    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --},
-    
+
         --{ --TODO
         --    dilemma = "land_enc_dilemma_battlefield_kho",
         --    victory_incident = "land_enc_incident_battle_won_battlefield_kho",
@@ -313,7 +319,7 @@ local battle_events = {
         --    victory_targets = { character = true, force = false, faction = false, region = false },
         --    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --},
-    
+
         --{ --TODO
         --    dilemma = "land_enc_dilemma_battlefield_sla",
         --    victory_incident = "land_enc_incident_battle_won_battlefield_sla",
@@ -324,7 +330,7 @@ local battle_events = {
         --    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --}
     },
-    
+
     [4] = { -- 7 events
         ---------------------------------------------------------------------------
         -- (Harder) Daemoic Gifts battlefields
@@ -398,11 +404,280 @@ local battle_events = {
     ---------------------------------------------------------------------------
     -- (Harder) Three way battlefields
     ---------------------------------------------------------------------------
-    
+
     ---------------------------------------------------------------------------
     -- (Extreme) Last stand: Give a trait: The ultimate fighter
     ---------------------------------------------------------------------------
-    
+
 }
 
-return battle_events
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- tavern (from constants/events/tavern_events.lua)
+-- Source file is empty (stub).
+
+M.tavern = {}
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- tower_spot (from constants/events/tower_spot_events.lua)
+-- Source file is empty (stub).
+
+M.tower_spot = {}
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- treasure_type (from constants/events/treasure_type_events.lua)
+
+--[[
+The types of treasures one can encounter with this mod. There are no variations.
+Using incidents because no decision is needed to trigger a battle.
+
+Every incident needs data in:
+=============================
+INCIDENT
+=============================
+=== DB
+[Describes the incident data]
+1. cdir_events_incident_option_junctions_tables (Objective + chance)
+2. cdir_events_incident_payloads_tables (Rewards)
+3. incidents_tables (Declaration of incidents)
+
+=== LOC
+1.incidents
+(join together then incidents_ key + required info + event_key (ex: land_enc_incident_tomb_robbing)
+incidents_ localised_title_
+           localised_description_
+
+=============================
+INCIDENT EFFECT (IF IT GIVES AN EFFECT NOT TREASURES OR ANCILLARIES)
+=============================
+=== DB
+[If you want custom effects you need the following tables]
+1. effect_bundles_tables (_NONE = automatically to all your faction / _)
+2. effect_bundles_to_effects_junctions_tables
+
+=== LOC
+1. effect_bundles
+(join together then incidents_ key + required info + effect_key (ex: land_enc_incident_tomb_robbing)
+effect_bundles_ localised_title_
+                localised_description_
+--]]
+M.treasure_type = {
+    --"land_enc_incident_clean_up_event" SPECIAL: Only used for the abstract class spot to eliminate bugged points
+    {
+        incident = "land_enc_incident_tomb_robbing",
+        targets =  { character = true, force = false, faction = false, region = false },
+        effect = false -- for AI
+    },
+    {
+        incident = "land_enc_incident_abandoned_camp",
+        targets = { character = false, force = true, faction = false, region = false },
+        effect = "land_enc_effect_abandoned_camp"
+    },
+    {
+        incident = "land_enc_incident_buried_relics",
+        targets = { character = false, force = true, faction = false, region = false },
+        effect = false
+    },
+    {
+        incident = "land_enc_incident_hidden_temple",
+        targets = { character = false, force = true, faction = false, region = false },
+        effect = "land_enc_effect_hidden_temple"
+    },
+    {
+        incident = "land_enc_incident_caravan_remnants",
+        targets = { character = true, force = false, faction = false, region = false },
+        effect = false
+    },
+    {
+        incident = "land_enc_incident_whispers_of_the_gods",
+        targets = { character = false, force = true, faction = false, region = false },
+        effect = "land_enc_effect_whispers_of_the_gods"
+    },
+    {
+        incident = "land_enc_incident_the_explorer",
+        targets = { character = false, force = true, faction = false, region = false },
+        effect = "land_enc_effect_the_explorer"
+    }
+}
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- complex_continuity (from constants/events/complex_continuity_events.lua)
+
+local WEAPON_CHAINSWORD = "wh3_main_anc_weapon_chainsword"
+local WEAPON_BANE_SPEAR = "wh3_main_anc_weapon_the_bane_spear"
+local WEAPON_KRAKEN_KILLER = "wh3_main_anc_weapon_skars_kraken_killer"
+local WEAAPON_SOULNETTER = "wh3_main_anc_weapon_gilellions_soulnetter"
+local WEAPON_SLAAANESH_BLADE = "wh3_main_anc_weapon_slaaneshs_blade"
+local WEAPON_SYCOPHANT = "wh3_main_anc_follower_personal_sycophant"
+local WEAPON_PARAMOUR = "wh3_main_anc_follower_the_dark_princes_paramour"
+
+M.complex_continuity = {
+    ["land_enc_incident_battle_won_daemonic_gift_chainsword"] = {
+        [1] = {
+            conditions = {
+                ["does_not_have_ancillary"] = WEAPON_CHAINSWORD
+            },
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_chainsword_granted",
+                targets = { character = true, force = false, faction = false, region = false },
+                balance = { ["give_ancillary"] = { ancillary = WEAPON_CHAINSWORD, faction = "random" } }
+            }
+        },
+        [2] = {
+            conditions = {},
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_chainsword_already_granted",
+                targets = { character = false, force = true, faction = true, region = false },
+                balance = false
+            }
+        }
+    },
+
+    ["land_enc_incident_battle_won_daemonic_gift_the_bane_spear"] = {
+        [1] = {
+            conditions = {
+                ["does_not_have_ancillary"] = WEAPON_BANE_SPEAR
+            },
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_the_bane_spear_granted",
+                targets = { character = true, force = false, faction = false, region = false },
+                balance = { ["give_ancillary"] = { ancillary = WEAPON_BANE_SPEAR, faction = "random" } }
+            }
+        },
+        [2] = {
+            conditions = {},
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_the_bane_spear_already_granted",
+                targets = { character = false, force = true, faction = true, region = false },
+                balance = false
+            }
+        }
+    },
+
+    ["land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer"] = {
+        [1] = {
+            conditions = {
+                ["does_not_have_ancillary"] = WEAPON_KRAKEN_KILLER
+            },
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer_granted",
+                targets = { character = true, force = false, faction = false, region = false },
+                balance = { ["give_ancillary"] = { ancillary = WEAPON_KRAKEN_KILLER, faction = "random" } }
+            }
+        },
+        [2] = {
+            conditions = {},
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer_already_granted",
+                targets = { character = false, force = true, faction = true, region = false },
+                balance = false
+            }
+        }
+    },
+
+    ["land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter"] = {
+        [1] = {
+            conditions = {
+                ["does_not_have_ancillary"] = WEAAPON_SOULNETTER
+            },
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_granted",
+                targets = { character = true, force = false, faction = false, region = false },
+                balance = { ["give_ancillary"] = { ancillary = WEAAPON_SOULNETTER, faction = "random" } }
+            }
+        },
+        [2] = {
+            conditions = {},
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_already_granted",
+                targets = { character = false, force = true, faction = true, region = false },
+                balance = false
+            }
+        }
+    },
+
+    ["land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade"] = {
+        [1] = {
+            conditions = {
+                ["does_not_have_ancillary"] = WEAPON_SLAAANESH_BLADE
+            },
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade_granted",
+                targets = { character = true, force = false, faction = false, region = false },
+                balance = { ["give_ancillary"] = { ancillary = WEAPON_SLAAANESH_BLADE, faction = "random" } }
+            }
+        },
+        [2] = {
+            conditions = {},
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade_already_granted",
+                targets = { character = false, force = true, faction = true, region = false },
+                balance = false
+            }
+        }
+    },
+
+    ["land_enc_incident_battle_won_daemonic_gift_personal_sycophant"] = {
+        [1] = {
+            conditions = {
+                ["does_not_have_ancillary"] = WEAPON_SYCOPHANT
+            },
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_personal_sycophant_granted",
+                targets = { character = true, force = false, faction = false, region = false },
+                balance = { ["give_ancillary"] = { ancillary = WEAPON_SYCOPHANT, faction = "random" } }
+            }
+        },
+        [2] = {
+            conditions = {},
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_personal_sycophant_already_granted",
+                targets = { character = false, force = true, faction = true, region = false },
+                balance = false
+            }
+        }
+    },
+
+    ["land_enc_incident_battle_won_daemonic_gift_dark_princes_paramour"] = {
+        [1] = {
+            conditions = {
+                ["does_not_have_ancillary"] = WEAPON_PARAMOUR
+            },
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_dark_princes_paramour_granted",
+                targets = { character = true, force = false, faction = false, region = false },
+                balance = {
+                    ["give_ancillary"] = {
+                        ancillary = WEAPON_PARAMOUR,
+                        faction = "random"
+                    }
+                }
+            }
+        },
+        [2] = {
+            conditions = {},
+            result = {
+                incident = "land_enc_incident_battle_won_daemonic_gift_dark_princes_paramour_already_granted",
+                targets = { character = false, force = true, faction = true, region = false },
+                balance = false
+            }
+        }
+    }
+}
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- smithy (from constants/events/smithy_events.lua)
+
+M.smithy = {
+    "land_enc_dilemma_smithy_reclamation",
+    "land_enc_dilemma_smithy_defense",
+    "land_enc_dilemma_smithy_visit_level_1",
+    "land_enc_dilemma_smithy_visit_level_2",
+    "land_enc_dilemma_smithy_visit_level_3"
+}
+
+return M

@@ -12,13 +12,13 @@ V1.1 in 2.X
 - Region aware. Region AI owner auto attacks the smithy if owned by the player.
 - Quest given by the smithy itself. Should give legendary items or blue sets if they are completed in time.
 ]]--
-local elligible_items = require("script/land_encounters/constants/items/balancing_items")
+local elligible_items = require("script/land_encounters/configs/items").balancing
 
-require("script/land_encounters/utils/logger")
+require("script/land_encounters/utils/common")
 require("script/land_encounters/controllers/incident_manager")
 
-local smithy_missions_by_subculture = require("script/land_encounters/constants/missions/smithy_missions_by_subculture")
-local special_items_by_subculture = require("script/land_encounters/constants/items/item_sets_or_special_items_by_subculture")
+local smithy_missions_by_subculture = require("script/land_encounters/configs/smithy_data").missions_by_subculture
+local special_items_by_subculture = require("script/land_encounters/configs/items").special_by_subculture
 
 local Army = require("script/land_encounters/models/battle/army")
 
