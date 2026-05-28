@@ -1,3 +1,8 @@
+--- Unit catalog for the randomized force generation pipeline. Keyed by faction shorthand
+--- (skv, emp, dwf, ...) -> units -> tier_0..tier_5 -> unit-category -> array of unit entries.
+--- Each unit entry holds { land_unit = "<key>", origin = "<source mod or vanilla>", recruitment_cost, multiplayer_cost }.
+--- Pure data - no runtime logic.
+
 return {
     ["skv"] = {
         ["units"] = {

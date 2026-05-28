@@ -1,50 +1,47 @@
+--- LandEncounterManager. Sets up spots and POIs at first_tick based on the detected campaign's
+--- coordinate data, and provides marker-trigger lookup, restore-from-save, and export-to-save helpers.
+
 require("script/land_encounters/utils/common")
 require("script/land_encounters/core/mct")
 
 local Zone = require("script/land_encounters/core/spot").Zone
 
--------------------------
---- Constant values of the class [DO NOT CHANGE]
--------------------------
--- Should be 0.75 by default. This means that 75% of all points are active during a campaign. Modify to make it more.
+--- Fraction of all map points that are active in a campaign. 0.75 means 75% active. Overridable via MCT.
 local DEFAULT_ACTIVE_SPOT_PERCENTAGE = 0.75
 
---=======================
---- Properties definition
---=======================
 local LandEncounterManager = {
     zones = {},
-    active_spot_percentage = DEFAULT_ACTIVE_SPOT_PERCENTAGE, -- should be changed through MCT. 1.0 for debugging. 0.75 normally. Should be configurable through MCT
+    active_spot_percentage = DEFAULT_ACTIVE_SPOT_PERCENTAGE,
 }
 
---=======================
---- Class Methods
---=======================
--------------------------
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Class methods
+
+--- Bootstraps fresh land encounters and points of interest for a new campaign.
+--- @param coordinates_by_zone table Region-keyed table of raw encounter coordinates.
+--- @param perpetual_coordinates_with_types table Region-keyed table of POI coordinates with type info.
 function LandEncounterManager:generate_land_encounters(coordinates_by_zone, perpetual_coordinates_with_types)
-    -- Create new land encounters given the map coordinates from whatever map was selected
     self:initialize_spots_by_zone(coordinates_by_zone)
-    -- Show those encounters in the map with their respective events
     self:populate_land_encounters()
-    -- Initialize the points of interest
     self:initialize_points_of_interest_by_zone(perpetual_coordinates_with_types)
-    -- Activate the points of interest
     self:activate_points_of_interest_by_zone()
 end
 
--- Restores the data from a previous saved spot
+--- Restores zones and POIs from a previously saved campaign state instead of generating fresh ones.
+--- @param coordinates_by_zone table Region-keyed table of raw encounter coordinates.
+--- @param perpetual_coordinates_with_types table Region-keyed table of POI coordinates with type info.
+--- @param previous_state table Flattened save state previously produced by export_state_as_a_table.
 function LandEncounterManager:restore_from_previous_state(coordinates_by_zone, perpetual_coordinates_with_types, previous_state)
-    -- Create new land encounters given the map coordinates from whatever map was selected
     self:initialize_spots_by_zone(coordinates_by_zone)
-    -- Restore the data inside each encounter
     self:reinstate_zone_land_encounters(previous_state)
 
     self:initialize_points_of_interest_by_zone(perpetual_coordinates_with_types)
-    -- Reinstates the state of the points of interest
     self:reinstate_zone_points_of_interest(previous_state)
 end
 
--- Initialize the spots from the map coordinates given, through iterating from them.
+--- Initializes one Zone per region from the map coordinate table.
+--- @param coordinates_by_zone table Region-keyed table of raw encounter coordinates.
 function LandEncounterManager:initialize_spots_by_zone(coordinates_by_zone)
     self.active_spot_percentage = get_mct_settings().spawn_percentage
     self.zones = {}
@@ -54,6 +51,8 @@ function LandEncounterManager:initialize_spots_by_zone(coordinates_by_zone)
     end
 end
 
+--- Hands each zone its slice of the perpetual POI coordinate table.
+--- @param perpetual_coordinates_with_types table Region-keyed table of POI coordinates with type info.
 function LandEncounterManager:initialize_points_of_interest_by_zone(perpetual_coordinates_with_types)
     for i = 1, #self.zones do
         local zone = self.zones[i]
@@ -61,68 +60,82 @@ function LandEncounterManager:initialize_points_of_interest_by_zone(perpetual_co
     end
 end
 
--- Given the [spots] are initialized, initialize some of the spots to become land encounters that can give events or battles
+--- Walks each zone and promotes some of its raw spots into active land encounters.
 function LandEncounterManager:populate_land_encounters()
     for i = 1, #self.zones do
         self:populate_zone(self.zones[i])
     end
 end
 
+--- Activates the POI markers in every zone (after they have been initialized).
 function LandEncounterManager:activate_points_of_interest_by_zone()
     for i = 1, #self.zones do
         self.zones[i]:activate_points_of_interest()
     end
 end
 
+--- Updates each zone's spot-state book-keeping, then refills it with new land encounters.
 function LandEncounterManager:update_land_encounters()
     for i = 1, #self.zones do
         local current_zone = self.zones[i]
         current_zone:update_occupied_and_prohibited_spot_states()
-        -- TODO add POI controller logic
+        --- TODO add POI controller logic
         self:populate_zone(current_zone)
     end
 end
 
+--- Promotes spots in the given zone into active land encounters (up to the spawn-percentage cap).
+--- @param zone Zone The zone whose spots should be promoted.
 function LandEncounterManager:populate_zone(zone)
     zone:try_add_land_encounters()
 end
 
----------------------------
--- TRIGGERING RELATED METHODS
----------------------------
--- INCIDENTS
----------------------------
--- Checks wether an event should be triggered for the character entering a marker
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Triggering related methods (incidents)
+
+--- True when the marker is a land-encounter marker and the triggering character is eligible.
+--- @param triggering_character character The character that crossed the marker.
+--- @param marker_id string The marker key that fired the event.
+--- @returns boolean True when both checks pass.
 function LandEncounterManager:check_if_is_triggerable_marker(triggering_character, marker_id)
     return self:check_if_is_land_encounter_marker(marker_id) and self:check_triggering_character(triggering_character)
 end
 
 
--- prevent triggering if it's not a general, or if it's a patrol army from Hertz's patrol mod
+--- Filters out non-generals and Hertz's patrol mod patrol armies.
+--- @param character character The character to validate.
+--- @returns boolean True when the character is a general with a non-patrol army.
 function LandEncounterManager:check_triggering_character(character)
     return cm:char_is_general_with_army(character) and character:military_force():force_type():key() ~= "PATROL_ARMY"
 end
 
 
--- prevent triggering if it's not a land_encounter
+--- True only for markers placed by this mod (prefix "land_enc_marker_").
+--- @param marker_id string The marker key that fired the event.
+--- @returns boolean True when the prefix matches, false otherwise.
 function LandEncounterManager:check_if_is_land_encounter_marker(marker_id)
     return string.find(marker_id, "land_enc_marker_")
 end
 
 
+--- Alias for find_spot_info kept for caller readability at trigger sites.
+--- @param marker_id string The marker key that fired the event.
+--- @returns table The spot_info record from find_spot_info, or an empty table on miss.
 function LandEncounterManager:find_triggering_spot_info(marker_id)
     return self:find_spot_info(marker_id)
 end
 
+--- Deactivates the zone slot referenced by the spot_info record so the spot can be replaced.
+--- @param current_spot_info table A spot_info record with zone and spot_index fields.
 function LandEncounterManager:delete_land_encounter_given_marker_id(current_spot_info)
     current_spot_info.zone:deactivate_spot_in_zone(current_spot_info.spot_index)
 end
 
 
---- try_find_spot_info
---- @desc process the area_key entered in the marker and finds the relevant information to trigger a related event
---- @param marker_id string CA variable contains obtained from area_key()
---- @return table spot_info or empty table that contains the spot index on the zone and the spot type for triggering the event
+--- Resolves a marker id to its zone + spot index + spot type + coordinates. Returns an empty table when no match.
+--- @param marker_id string The marker key to resolve.
+--- @returns table { zone Zone, spot_index number, spot_type number, coordinates table }, or empty table on miss.
 function LandEncounterManager:find_spot_info(marker_id)
     local zone_name_and_spot_index = process_marker_id(marker_id)
     for i=1, #self.zones do
@@ -146,6 +159,8 @@ function LandEncounterManager:find_spot_info(marker_id)
 end
 
 
+--- Restores per-zone land-encounter spot state from a previous save.
+--- @param previous_state table Flattened save state previously produced by export_state_as_a_table.
 function LandEncounterManager:reinstate_zone_land_encounters(previous_state)
     for i = 1, #self.zones do
         self.zones[i]:reinstate_from_previous_state(previous_state)
@@ -153,6 +168,8 @@ function LandEncounterManager:reinstate_zone_land_encounters(previous_state)
 end
 
 
+--- Restores per-zone POI state from a previous save.
+--- @param previous_state table Flattened save state previously produced by export_state_as_a_table.
 function LandEncounterManager:reinstate_zone_points_of_interest(previous_state)
     for i = 1, #self.zones do
         self.zones[i]:reinstate_points_of_interest(previous_state)
@@ -160,26 +177,23 @@ function LandEncounterManager:reinstate_zone_points_of_interest(previous_state)
 end
 
 
--- exports the entirety of the data of the land battles for saving it in a flattened table as expected by the save state manager of
--- creative assembly
+--- Flattens every zone's spot and POI data into a single key/value table for CA's save-state manager.
+--- @returns table A flat key/value table suitable for the save state.
 function LandEncounterManager:export_state_as_a_table()
     local land_encounter_state = {}
     for i=1, #self.zones do
 
         local current_zone_spot_delegate = self.zones[i].spot_delegate
         for j=1, #current_zone_spot_delegate.spots do
-            -- save state of event spots
             local event_spot = current_zone_spot_delegate.spots[j]
             local flattened_spot_key = self.zones[i].name .. "_" .. tostring(event_spot.coordinates[1]) .. "_" .. tostring(event_spot.coordinates[2])
             event_spot:flatten_info(land_encounter_state, flattened_spot_key)
 
-            --save state of zone delegates
-            -- should the spot be prohibited or active we also record it
+            --- Record whether the spot is prohibited or active.
             land_encounter_state[flattened_spot_key .. "_active_spot_flag"] = current_zone_spot_delegate.active_spots[event_spot.index]
             land_encounter_state[flattened_spot_key .. "_prohibited_spot_flag"] = current_zone_spot_delegate.prohibited_spots[event_spot.index]
         end
 
-        --save state of points of interest
         local current_zone_poi_delegate = self.zones[i].point_of_interest_delegate
         for j=1, #current_zone_poi_delegate.points_of_interest do
             local current_spot = current_zone_poi_delegate.points_of_interest[j]
@@ -191,9 +205,12 @@ end
 
 
 
---=======================
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constructors
---=======================
+
+--- Constructs a fresh LandEncounterManager with empty zone state and the default spawn percentage.
+--- @returns LandEncounterManager A new manager instance ready for bootstrap.
 function LandEncounterManager:new()
     local t = {
         zones = {},

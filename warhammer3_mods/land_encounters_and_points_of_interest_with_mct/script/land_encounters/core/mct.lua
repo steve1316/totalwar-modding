@@ -1,12 +1,17 @@
--- common.lua publishes AMBUSH_TYPE, INTERCEPTION_TYPE, ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
--- Ensure they are in _G before the table literal below is evaluated.
+--- Side-effect module that publishes the MCT-related globals (get/set_mct_settings,
+--- get_supported_mods, get_encounter_data, etc.) and holds the in-memory mct_settings table
+--- that the rest of the mod reads from at runtime.
+
+--- common.lua publishes AMBUSH_TYPE, INTERCEPTION_TYPE, ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
+--- Ensure they are in _G before the table literal below is evaluated.
 require("script/land_encounters/utils/common")
 
--- Initialize the settings with default values.
+--- Default settings. The MctInitialized listener overwrites these at first_tick with the user's
+--- finalized MCT option values via set_mct_settings.
 local mct_settings = {
     disable_smithies = false,
     spawn_percentage = 0.75,
-    -- Default to interception only - matches the pre-MCT-toggle behavior the user established.
+    --- Default to interception only - matches the pre-MCT-toggle behavior the user established.
     enabled_intervention_types = { INTERCEPTION_TYPE },
     enabled_encounter_skin_ids = {},
     enabled_mods = {},
@@ -19,31 +24,31 @@ local mct_settings = {
     turn_number_from_medium_to_hard = 20,
     enable_all_factions = true,
     enabled_faction_keys = {},
-    -- faction_overrides = {
-    --     "tmb",
-    --     "cst",
-    --     "def",
-    --     "hef",
-    --     "lzd",
-    --     "skv",
-    --     "chd",
-    --     "kho",
-    --     "ksl",
-    --     "tze",
-    --     "cth",
-    --     "nur",
-    --     "ogr",
-    --     "sla",
-    --     "bst",
-    --     "wef",
-    --     "nor",
-    --     "brt",
-    --     "chs",
-    --     "dwf",
-    --     "emp",
-    --     "grn",
-    --     "vmp",
-    -- },
+    --- faction_overrides = {
+    ---     "tmb",
+    ---     "cst",
+    ---     "def",
+    ---     "hef",
+    ---     "lzd",
+    ---     "skv",
+    ---     "chd",
+    ---     "kho",
+    ---     "ksl",
+    ---     "tze",
+    ---     "cth",
+    ---     "nur",
+    ---     "ogr",
+    ---     "sla",
+    ---     "bst",
+    ---     "wef",
+    ---     "nor",
+    ---     "brt",
+    ---     "chs",
+    ---     "dwf",
+    ---     "emp",
+    ---     "grn",
+    ---     "vmp",
+    --- },
     difficulties = {
         easy = {
             tiers = {1, 2},
@@ -140,7 +145,7 @@ local encounter_data = {
     {id = 44, text = "Shipwreck 7"},
 }
 
--- TODO: This needs to be periodically updated whenever new mods are added/removed.
+--- TODO: This needs to be periodically updated whenever new mods are added/removed.
 local supported_mods = {
     "!cr_immortal_empires_expanded", -- Immortal Empires Expanded
     "vanilla",
@@ -302,51 +307,65 @@ local faction_mapping = {
     { key = "vmp", text = "Vampire Counts" },
     { key = "chs", text = "Warriors of Chaos" },
     { key = "wef", text = "Wood Elves" },
-    -- { key = "teb", text = "Southern Realms (requires mod)" },
-    -- { key = "mar", text = "Marienburg (requires mod)" },
-    -- { key = "dmd", text = "Dynasty of the Damned (requires mod)" },
-    -- { key = "jbv", text = "Jade-Blooded Vampires (requires mod)" },
-    -- { key = "nag", text = "Undead Legions (requires mod)" },
-    -- { key = "alb", text = "Albion (requires mod)" },
-    -- { key = "arb", text = "Araby (requires mod)" },
-    -- { key = "dk", text = "Dread King Legions (requires mod)" },
-    -- { key = "fim", text = "Fimir (requires mod)" },
+    --- { key = "teb", text = "Southern Realms (requires mod)" },
+    --- { key = "mar", text = "Marienburg (requires mod)" },
+    --- { key = "dmd", text = "Dynasty of the Damned (requires mod)" },
+    --- { key = "jbv", text = "Jade-Blooded Vampires (requires mod)" },
+    --- { key = "nag", text = "Undead Legions (requires mod)" },
+    --- { key = "alb", text = "Albion (requires mod)" },
+    --- { key = "arb", text = "Araby (requires mod)" },
+    --- { key = "dk", text = "Dread King Legions (requires mod)" },
+    --- { key = "fim", text = "Fimir (requires mod)" },
 }
 
 local encounter_checkbox_ids = {}
 local faction_checkbox_ids = {}
 
+--- Returns the in-memory MCT settings table read by the rest of the mod at runtime.
+--- @returns table The mod-wide mct_settings table.
 function get_mct_settings()
     return mct_settings
 end
 
+--- Returns the encounter-skin descriptors used by the MCT anchor to build the per-skin checkboxes.
+--- @returns table The encounter_data array.
 function get_encounter_data()
     return encounter_data
 end
 
+--- Returns the (mutable) list of registered encounter checkbox ids. Populated by the MCT anchor as it creates checkboxes.
+--- @returns table The encounter_checkbox_ids array.
 function get_encounter_checkbox_ids()
     return encounter_checkbox_ids
 end
 
+--- Returns the (mutable) list of registered faction checkbox ids. Populated by the MCT anchor as it creates checkboxes.
+--- @returns table The faction_checkbox_ids array.
 function get_faction_checkbox_ids()
     return faction_checkbox_ids
 end
 
+--- Returns the list of pack-names whose units are eligible when "enable compatibility with supported mods" is on.
+--- @returns table An array of mod pack-name strings.
 function get_supported_mods()
     return supported_mods
 end
 
+--- Returns the ordered { key, text } faction list rendered by the MCT anchor's faction-overrides section.
+--- @returns table An ordered array of { key string, text string } pairs.
 function get_faction_mapping()
     return faction_mapping
 end
 
+--- Pulls the user's finalized MCT option values into the in-memory mct_settings table.
+--- @param mct_mod table The MCT mod handle returned by mct:get_mod_by_key.
 function set_mct_settings(mct_mod)
     mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
     mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
 
-    -- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
-    -- at-least-one via set_locked, so this list should never be empty, but the picker in
-    -- core/army.lua has a defensive fallback to INTERCEPTION_TYPE just in case.
+    --- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
+    --- at-least-one via set_locked, so this list should never be empty, but the picker in
+    --- core/army.lua has a defensive fallback to INTERCEPTION_TYPE just in case.
     local enabled_intervention_types = {}
     if mct_mod:get_option_by_key("intervention_ambush"):get_finalized_setting() then
         table.insert(enabled_intervention_types, AMBUSH_TYPE)
@@ -413,7 +432,7 @@ function set_mct_settings(mct_mod)
         "max_lord_level_range_hard",
     }
 
-    -- Add the limit keys for each difficulty to the table.
+    --- Append every per-limit slider key for each difficulty.
     for _, difficulty in ipairs({"easy", "medium", "hard"}) do
         for _, key in ipairs(mct_settings.ordered_slider_keys) do
             table.insert(starting_difficulty_keys, "min_limit_" .. key .. "_" .. difficulty)
@@ -421,12 +440,10 @@ function set_mct_settings(mct_mod)
         end
     end
 
-    -- Start saving all the slider values into the difficulties table.
+    --- Read each slider's finalized value and write it into the matching difficulties table entry.
     for _, limit_key in ipairs(starting_difficulty_keys) do
-        -- Get the difficulty from the key and then get just the key by itself.
         local difficulty = limit_key:match("_(%a+)$")
         local key = limit_key:match("^(.-)_" .. difficulty .. "$")
-        -- Get the value from the option.
         local value = mct_mod:get_option_by_key(limit_key):get_finalized_setting()
         if key == "min_tier" then
             mct_settings.difficulties[difficulty].tiers[1] = value
@@ -454,7 +471,7 @@ function set_mct_settings(mct_mod)
         end
     end
 
-    -- Iterate over each encounter checkbox key.
+    --- Collect every encounter skin id whose checkbox is enabled.
     mct_settings.enabled_encounter_skin_ids = {}
     for _, id in ipairs(encounter_checkbox_ids) do
         local key = "encounter_" .. id
@@ -467,7 +484,7 @@ function set_mct_settings(mct_mod)
     out("DEBUG - mct_settings.enabled_encounter_skin_ids:")
     print_table(mct_settings.enabled_encounter_skin_ids)
 
-    -- Iterate over each faction checkbox key.
+    --- Collect every faction key whose checkbox is enabled.
     mct_settings.enabled_faction_keys = {}
     for _, id in ipairs(faction_checkbox_ids) do
         local key = "faction_" .. id

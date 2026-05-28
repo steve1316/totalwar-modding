@@ -1,18 +1,18 @@
--- Two faction pools (Order and Destruction) and a player-subculture -> pool map. Used by the
--- Allied Reinforcement intervention to pick a random allied faction that spawns alongside the
--- player during a random-encounter battle.
+--- Two faction pools (Order and Destruction) and a player-subculture -> pool map. Used by the
+--- Allied Reinforcement intervention to pick a random allied faction that spawns alongside the
+--- player during a random-encounter battle.
 --
--- Pool entries use the 3-letter SHORTHAND keys from core/managers.lua's
--- faction_shorthand_key_to_full_key (emp, brt, dwf, etc.) - the same shorthand returned by
--- get_random_faction() for enemy forces. start_force_makeup_generation and
--- convert_force_makeup_to_usable_format both consume shorthand keys directly.
+--- Pool entries use the 3-letter SHORTHAND keys from core/managers.lua's
+--- faction_shorthand_key_to_full_key (emp, brt, dwf, etc.) - the same shorthand returned by
+--- get_random_faction() for enemy forces. start_force_makeup_generation and
+--- convert_force_makeup_to_usable_format both consume shorthand keys directly.
 --
--- random_number() is a global published by utils/random; pick_for_subculture is only called from
--- core/army.lua, which requires utils/random at module-load, so the global is in _G by call time.
+--- random_number() is a global published by utils/random; pick_for_subculture is only called from
+--- core/army.lua, which requires utils/random at module-load, so the global is in _G by call time.
 
 local M = {}
 
--- Order pool: factions that ally with "good" subcultures.
+--- Order pool: factions that ally with "good" subcultures.
 M.order_factions = {
     "emp", -- Empire
     "brt", -- Bretonnia
@@ -24,7 +24,7 @@ M.order_factions = {
     "cth", -- Cathay
 }
 
--- Destruction pool: factions that ally with "evil" subcultures.
+--- Destruction pool: factions that ally with "evil" subcultures.
 M.destruction_factions = {
     "grn", -- Greenskins
     "nor", -- Norsca
@@ -43,9 +43,9 @@ M.destruction_factions = {
     "tmb", -- Tomb Kings
 }
 
--- Player subculture -> pool name. Unmapped subcultures fall through to the union pool (any faction).
+--- Player subculture -> pool name. Unmapped subcultures fall through to the union pool (any faction).
 M.subculture_to_pool = {
-    -- Order
+    --- Order
     ["wh_main_sc_emp_empire"]            = "order",
     ["wh_main_sc_brt_bretonnia"]         = "order",
     ["wh_main_sc_dwf_dwarfs"]            = "order",
@@ -54,7 +54,7 @@ M.subculture_to_pool = {
     ["wh_dlc05_sc_wef_wood_elves"]       = "order",
     ["wh3_main_sc_cth_cathay"]           = "order",
     ["wh3_main_sc_ksl_kislev"]           = "order",
-    -- Destruction
+    --- Destruction
     ["wh_main_sc_grn_greenskins"]        = "destruction",
     ["wh_main_sc_nor_norsca"]            = "destruction",
     ["wh_main_sc_chs_chaos"]             = "destruction",
@@ -72,8 +72,10 @@ M.subculture_to_pool = {
     ["wh2_main_sc_tmb_tomb_kings"]       = "destruction",
 }
 
--- Picks a random ally faction shorthand key for the given player subculture.
--- Returns nil only if both pools are empty (defensive guard; should never happen in normal use).
+--- Picks a random ally faction shorthand key for the given player subculture.
+--- Returns nil only if both pools are empty. Defensive guard - should never happen in normal use.
+--- @param player_subculture string The player's subculture key (e.g. "wh_main_sc_emp_empire").
+--- @returns string A 3-letter faction shorthand key, or nil when the pool is empty.
 function M.pick_for_subculture(player_subculture)
     local pool_name = M.subculture_to_pool[player_subculture]
     local pool

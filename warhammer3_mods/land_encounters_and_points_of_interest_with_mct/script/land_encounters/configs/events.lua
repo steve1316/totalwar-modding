@@ -1,42 +1,27 @@
+--- Event tables for the Land Encounters and Points of Interest mod. Defines all dilemma / incident
+--- event keys grouped by category (battle_spot, treasure_type, complex_continuity, smithy) and
+--- targets / effect bindings. Pure data - no runtime logic.
+
 local M = {}
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- battle_spot (from constants/events/battle_spot_events.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- battle_spot (from constants/events/battle_spot_events.lua)
 
 --[[
-The types of battles one can encounter with this mod. There will always be a variation given an extra _modifier in the name. The Bandits, Incursions, Surprise attacks are common armies. If I can the battlefields will be a multi army battle.
+Battle-spot dilemmas. Bandits, Incursions, and Surprise Attacks are common-army variants. Battlefields are intended to
+become multi-army battles. Each top-level array index is a difficulty tier (1..4) holding the dilemmas eligible at that tier.
 
-Every dilemma needs:
-=============================
-DILEMMA
-=============================
-Use this if you want the player to have more agency in their decision making.
+Each entry below pairs a dilemma key with the victory / avoidance incident keys (defined in CA DB), the targets bitmask
+for each outcome, and an is_exclusive_to_zone flag. Adding a new dilemma requires matching DB rows in dilemmas_tables,
+cdir_events_dilemma_choice_details_tables, cdir_events_dilemma_option_junctions_tables, and cdir_events_dilemma_payloads_tables,
+plus .loc entries for both the dilemma title/description and each choice label.
 
-== DB
-1. cdir_events_dilemma_choice_details_tables (Binds the choices of a dilemma to such dilemma. Without this table you cannot declare the .loc and describe the dilemmas that appear on screen).
-2. cdir_events_dilemma_option_junctions_tables (Chance to trigger, conditions, follow up and target)
-3. cdir_events_dilemma_payloads_tables (The X choice keys and their effects)
-4. dilemmas_tables (Declare the dilemma here)
-
-== LOC
-1. cdir_events_dilemma_choice_details.loc (Describe the text that the options will hold)
-- Format
-cdir_events_dilemma_choice_details_localised_choice_label_ (fixed) + land_enc_dilemma_bandits_emp (dilemma id) + FIRST/SECOND/THIRD (number of choice)
-
-2. dilemmas.loc
-Here goes the description and title of the declared dilemma. In combination with the details, this declares all the strings in a dilemmma.
-dilemmas_localised_description_ + <dilemman_key: land_enc_dilemma_bandits_emp>
-dilemmas_localised_title_ + <land_enc_dilemma_bandits_emp>
-
-TODO:
-1. Variations of this events, more varied armies
+TODO: more varied armies for the existing dilemma categories.
 --]]
 M.battle_spot = {
     [1] = { -- 9 events
-        ---------------------------------------------------------------------------
-        -- (Easiest) Skirmishes
-        ---------------------------------------------------------------------------
+        --- (Easiest) Skirmishes
         {
            dilemma = "land_enc_dilemma_skirmish_cth",
            victory_incident = "land_enc_incident_battle_won_skirmish",
@@ -82,9 +67,7 @@ M.battle_spot = {
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        ---------------------------------------------------------------------------
-        -- (Easier) Underground Rebellions
-        ---------------------------------------------------------------------------
+        --- (Easier) Underground Rebellions
         {
             dilemma = "land_enc_dilemma_underground_cth",
             victory_incident = "land_enc_incident_battle_won_underground",
@@ -124,9 +107,7 @@ M.battle_spot = {
     },
 
     [2] = { -- 8 events
-        ---------------------------------------------------------------------------
-        -- (Easy) Bandits can be Empire, Wood Elves, Norscans, Chaos dwarfs
-        ---------------------------------------------------------------------------
+        --- (Easy) Bandits can be Empire, Wood Elves, Norscans, Chaos dwarfs
         {
             dilemma = "land_enc_dilemma_bandits_emp",
             victory_incident = "land_enc_incident_battle_won_bandits",
@@ -163,9 +144,7 @@ M.battle_spot = {
             victory_targets = { character = true, force = false, faction = false, region = false },
             avoidance_targets = { character = true, force = false, faction = false, region = false }
         },
-        ---------------------------------------------------------------------------
-        -- (Mid) Incursions can be High Elves, Lizardmen, Vampire Coast
-        ---------------------------------------------------------------------------
+        --- (Mid) Incursions can be High Elves, Lizardmen, Vampire Coast
         {
             dilemma = "land_enc_dilemma_incursion_army_hef",
             victory_incident = "land_enc_incident_battle_won_incursion_hef",
@@ -193,21 +172,17 @@ M.battle_spot = {
             victory_targets = { character = true, force = true, faction = false, region = false },
             avoidance_targets = { character = false, force = true, faction = false, region = false }
         },
-        ---------------------------------------------------------------------------
-        -- (Mid) Waystone defenses can be High Elves only. Knife ears will try to defend their places of power
-        -- Differences: Makes the region in which the battle was fought tempestous. Chaos corruption + 5 in the area. Gives army buff that grants magic regeneration by +30 to the beater army
-        ---------------------------------------------------------------------------
+        --- (Mid) Waystone defenses can be High Elves only. Knife ears will try to defend their places of power.
+        --- Differences: Makes the region in which the battle was fought tempestous. Chaos corruption + 5 in the area. Gives army buff that grants magic regeneration by +30 to the beater army.
         --{
-        --    difficulty_level = 2,
-        --    dilemma = "land_enc_dilemma_waystone_defense_army_hef",
-        --    is_exclusive_to_zone = false,
-        --    victory_incident = "land_enc_waystone_defense_won_incursion_hef",
-        --    avoidance_incident = "land_enc_waystone_defense_avoided_incursion"
+        ---    difficulty_level = 2,
+        ---    dilemma = "land_enc_dilemma_waystone_defense_army_hef",
+        ---    is_exclusive_to_zone = false,
+        ---    victory_incident = "land_enc_waystone_defense_won_incursion_hef",
+        ---    avoidance_incident = "land_enc_waystone_defense_avoided_incursion"
         --},
 
-        ---------------------------------------------------------------------------
-        -- (Mid Upper) Surprise Attacks can be Beastmen, Skaven
-        ---------------------------------------------------------------------------
+        --- (Mid Upper) Surprise Attacks can be Beastmen, Skaven
         {
             dilemma = "land_enc_dilemma_surprise_attack_bst",
             victory_incident = "land_enc_incident_battle_won_surprise_bst",
@@ -229,21 +204,17 @@ M.battle_spot = {
     },
 
     [3] = { -- 5 events
-        ---------------------------------------------------------------------------
-        -- (Mid Upper) Daemonic Invasion
-        ---------------------------------------------------------------------------
+        --- (Mid Upper) Daemonic Invasion
         --{ TODO
-        --    difficulty_level = 2,
-        --    dilemma = "land_enc_dilemma_surprise_attack_skv",
-        --    is_exclusive_to_zone = false,
-        --    victory_incident = "land_enc_incident_battle_won_surprise_skv",
-        --    losing_incident = "",
-        --    avoidance_incident = "land_enc_incident_battle_avoided_surprise"
+        ---    difficulty_level = 2,
+        ---    dilemma = "land_enc_dilemma_surprise_attack_skv",
+        ---    is_exclusive_to_zone = false,
+        ---    victory_incident = "land_enc_incident_battle_won_surprise_skv",
+        ---    losing_incident = "",
+        ---    avoidance_incident = "land_enc_incident_battle_avoided_surprise"
         --},
 
-        ---------------------------------------------------------------------------
-        -- (Hard) Battlefields can be Greenskins, Dark Elves, Vampires, Tomb Kings, Warriors of Chaos, Daemons Undivided and Demons of Khorne (for the ancillaries IM ONLY), Demons of Slaneesh (for the ancillaries IM ONLY)
-        ---------------------------------------------------------------------------
+        --- (Hard) Battlefields can be Greenskins, Dark Elves, Vampires, Tomb Kings, Warriors of Chaos, Daemons Undivided and Demons of Khorne (for the ancillaries IM ONLY), Demons of Slaneesh (for the ancillaries IM ONLY)
         {
             dilemma = "land_enc_dilemma_battlefield_grn",
             victory_incident = "land_enc_incident_battle_won_battlefield_grn",
@@ -291,50 +262,48 @@ M.battle_spot = {
         },
 
         --{ --TODO
-        --    dilemma = "land_enc_dilemma_battlefield_wco",
-        --    victory_incident = "land_enc_incident_battle_won_battlefield_wco",
-        --    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
-        --    is_exclusive_to_zone = false,
-        --    zone = "_",
-        --    victory_targets = { character = true, force = false, faction = false, region = false },
-        --    avoidance_targets = { character = false, force = true, faction = false, region = false }
+        ---    dilemma = "land_enc_dilemma_battlefield_wco",
+        ---    victory_incident = "land_enc_incident_battle_won_battlefield_wco",
+        ---    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
+        ---    is_exclusive_to_zone = false,
+        ---    zone = "_",
+        ---    victory_targets = { character = true, force = false, faction = false, region = false },
+        ---    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --},
 
         --{ --TODO
-        --    dilemma = "land_enc_dilemma_battlefield_doc",
-        --    victory_incident = "land_enc_incident_battle_won_battlefield_doc",
-        --    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
-        --    is_exclusive_to_zone = false,
-        --    zone = "_",
-        --    victory_targets = { character = true, force = false, faction = false, region = false },
-        --    avoidance_targets = { character = false, force = true, faction = false, region = false }
+        ---    dilemma = "land_enc_dilemma_battlefield_doc",
+        ---    victory_incident = "land_enc_incident_battle_won_battlefield_doc",
+        ---    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
+        ---    is_exclusive_to_zone = false,
+        ---    zone = "_",
+        ---    victory_targets = { character = true, force = false, faction = false, region = false },
+        ---    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --},
 
         --{ --TODO
-        --    dilemma = "land_enc_dilemma_battlefield_kho",
-        --    victory_incident = "land_enc_incident_battle_won_battlefield_kho",
-        --    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
-        --    is_exclusive_to_zone = false,
-        --    zone = "_",
-        --    victory_targets = { character = true, force = false, faction = false, region = false },
-        --    avoidance_targets = { character = false, force = true, faction = false, region = false }
+        ---    dilemma = "land_enc_dilemma_battlefield_kho",
+        ---    victory_incident = "land_enc_incident_battle_won_battlefield_kho",
+        ---    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
+        ---    is_exclusive_to_zone = false,
+        ---    zone = "_",
+        ---    victory_targets = { character = true, force = false, faction = false, region = false },
+        ---    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --},
 
         --{ --TODO
-        --    dilemma = "land_enc_dilemma_battlefield_sla",
-        --    victory_incident = "land_enc_incident_battle_won_battlefield_sla",
-        --    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
-        --    is_exclusive_to_zone = false,
-        --    zone = "_",
-        --    victory_targets = { character = true, force = false, faction = false, region = false },
-        --    avoidance_targets = { character = false, force = true, faction = false, region = false }
+        ---    dilemma = "land_enc_dilemma_battlefield_sla",
+        ---    victory_incident = "land_enc_incident_battle_won_battlefield_sla",
+        ---    avoidance_incident = "land_enc_incident_battle_avoided_battlefield"
+        ---    is_exclusive_to_zone = false,
+        ---    zone = "_",
+        ---    victory_targets = { character = true, force = false, faction = false, region = false },
+        ---    avoidance_targets = { character = false, force = true, faction = false, region = false }
         --}
     },
 
     [4] = { -- 7 events
-        ---------------------------------------------------------------------------
-        -- (Harder) Daemoic Gifts battlefields
-        ---------------------------------------------------------------------------
+        --- (Harder) Daemoic Gifts battlefields
         {
             dilemma = "land_enc_dilemma_daemonic_gift_chainsword",
             victory_incident = "land_enc_incident_battle_won_daemonic_gift_chainsword",
@@ -401,67 +370,36 @@ M.battle_spot = {
             avoidance_targets = { character = false, force = true, faction = false, region = false }
         }
     },
-    ---------------------------------------------------------------------------
-    -- (Harder) Three way battlefields
-    ---------------------------------------------------------------------------
-
-    ---------------------------------------------------------------------------
-    -- (Extreme) Last stand: Give a trait: The ultimate fighter
-    ---------------------------------------------------------------------------
+    --- TODO: Harder three-way battlefields and an Extreme "Last stand" (grants The Ultimate Fighter trait).
 
 }
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- tavern (from constants/events/tavern_events.lua)
--- Source file is empty (stub).
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- tavern (from constants/events/tavern_events.lua)
+--- Source file is empty (stub).
 
 M.tavern = {}
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- tower_spot (from constants/events/tower_spot_events.lua)
--- Source file is empty (stub).
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- tower_spot (from constants/events/tower_spot_events.lua)
+--- Source file is empty (stub).
 
 M.tower_spot = {}
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- treasure_type (from constants/events/treasure_type_events.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- treasure_type (from constants/events/treasure_type_events.lua)
 
 --[[
-The types of treasures one can encounter with this mod. There are no variations.
-Using incidents because no decision is needed to trigger a battle.
+Treasure-type incidents (no dilemma - just fire-and-grant). No variations.
 
-Every incident needs data in:
-=============================
-INCIDENT
-=============================
-=== DB
-[Describes the incident data]
-1. cdir_events_incident_option_junctions_tables (Objective + chance)
-2. cdir_events_incident_payloads_tables (Rewards)
-3. incidents_tables (Declaration of incidents)
-
-=== LOC
-1.incidents
-(join together then incidents_ key + required info + event_key (ex: land_enc_incident_tomb_robbing)
-incidents_ localised_title_
-           localised_description_
-
-=============================
-INCIDENT EFFECT (IF IT GIVES AN EFFECT NOT TREASURES OR ANCILLARIES)
-=============================
-=== DB
-[If you want custom effects you need the following tables]
-1. effect_bundles_tables (_NONE = automatically to all your faction / _)
-2. effect_bundles_to_effects_junctions_tables
-
-=== LOC
-1. effect_bundles
-(join together then incidents_ key + required info + effect_key (ex: land_enc_incident_tomb_robbing)
-effect_bundles_ localised_title_
-                localised_description_
+Each entry below pairs an incident key with the targets bitmask and an optional effect_bundle key.
+Adding a new treasure requires DB rows in incidents_tables, cdir_events_incident_option_junctions_tables,
+and cdir_events_incident_payloads_tables, plus matching .loc entries for the incident title/description.
+Effects (when set) additionally need effect_bundles_tables + effect_bundles_to_effects_junctions_tables rows
+and effect_bundles .loc entries.
 --]]
 M.treasure_type = {
     --"land_enc_incident_clean_up_event" SPECIAL: Only used for the abstract class spot to eliminate bugged points
@@ -502,9 +440,9 @@ M.treasure_type = {
     }
 }
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- complex_continuity (from constants/events/complex_continuity_events.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- complex_continuity (from constants/events/complex_continuity_events.lua)
 
 local WEAPON_CHAINSWORD = "wh3_main_anc_weapon_chainsword"
 local WEAPON_BANE_SPEAR = "wh3_main_anc_weapon_the_bane_spear"
@@ -668,9 +606,9 @@ M.complex_continuity = {
     }
 }
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- smithy (from constants/events/smithy_events.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- smithy (from constants/events/smithy_events.lua)
 
 M.smithy = {
     "land_enc_dilemma_smithy_reclamation",

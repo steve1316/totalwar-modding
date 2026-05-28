@@ -1,8 +1,14 @@
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- logger
--- (from utils/logger.lua)
+--- Side-effect module that publishes shared utility globals: log(), boolean/string helpers,
+--- and the AMBUSH/INTERCEPTION/ALLIED_REINFORCEMENTS_PERMITTED battle-type constants.
 
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- logger
+--- (from utils/logger.lua)
+
+--- Prefixes the message with the LEAPOI mod tag and writes it to the campaign log.
+--- @param text any The value to log. Coerced to a string via tostring().
+--- @param test any Unused legacy parameter kept for backwards compatibility.
 function log(text, test)
     local mod_header_text = "LEAPOI";
     local logText = tostring(text)
@@ -10,42 +16,46 @@ function log(text, test)
     out(logContext .. ":  "..logText .. "\n")
 end
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- boolean helpers
--- (from utils/boolean.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- boolean helpers
+--- (from utils/boolean.lua)
 
 stringtoboolean = { ["true"] = true, ["false"] = false }
 booleantostring = { [true] = "true", [false] = "false" }
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- string helpers
--- (from utils/strings.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- string helpers
+--- (from utils/strings.lua)
 
 local LAND_ENCOUNTER_TYPE = 0
 local SMITHY_TYPE = 1
 
--- The id of the marker would be: "land_enc_marker_" .. zone_name .. "_" .. self.index
--- land_enc_marker_ = 16 chars
+--- Parses a marker id of the form "land_enc_marker_<zone>_<index>" (16-char prefix) and returns {zone, index, type}.
+--- A "_smithy_" infix marks the marker as a smithy POI instead of a land encounter.
+--- @param marker_id string The full marker id to parse.
+--- @returns table A 3-element array { zone_name string, spot_index number, type number } where type is LAND_ENCOUNTER_TYPE or SMITHY_TYPE.
 function process_marker_id(marker_id)
     beginning_index, ending_index = string.find(marker_id, "_smithy_")
     if beginning_index ~= nil then
-        -- means the marker was a place of interest not a land encounter
         local zone_name = string.sub(marker_id, 17, beginning_index - 1)
         local spot_index = string.sub(marker_id, ending_index + 1, #marker_id)
-        return { zone_name, tonumber(spot_index), SMITHY_TYPE } -- smithy_type
+        return { zone_name, tonumber(spot_index), SMITHY_TYPE }
     end
 
-    -- The maximum number of points in a zone would be <99 so we take the last 3 to check where is the last _
+    --- The maximum number of points in a zone is <99, so look at the last 3 chars to find the trailing underscore.
     beginning_index, ending_index = string.find(marker_id, "_", (#marker_id - 3))
     local zone_name = string.sub(marker_id, 17, beginning_index - 1)
     local spot_index = string.sub(marker_id, ending_index + 1, #marker_id)
-    return { zone_name, tonumber(spot_index), LAND_ENCOUNTER_TYPE } -- 0 for land_encounter
+    return { zone_name, tonumber(spot_index), LAND_ENCOUNTER_TYPE }
 end
 
 
--- Used for splitting the optional variables of the flattened state of the land encounters
+--- Splits a string on any of the characters in `separator` (treated as a regex character class).
+--- @param splittable_string string The input string to split.
+--- @param separator string A character class of delimiter chars (e.g. " ,;").
+--- @returns table An array of non-empty substrings between delimiters.
 function split_by_regex(splittable_string, separator)
     local string_parts = {}
     for part in string.gmatch(splittable_string, '([^' .. separator .. ']+)') do
@@ -55,6 +65,10 @@ function split_by_regex(splittable_string, separator)
 end
 
 
+--- Recursively serializes a Lua table to a human-readable string for debugging.
+--- @param t table The table to serialize.
+--- @param indent number Current indent depth (tabs). Defaults to 0 when nil.
+--- @returns string A pretty-printed representation of the table.
 function table_to_string(t, indent)
     if not indent then
         indent = 0
@@ -90,12 +104,12 @@ function table_to_string(t, indent)
     return result
 end
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- common constants/helpers
--- (from constants/utils/common.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- common constants/helpers
+--- (from constants/utils/common.lua)
 
--- Variables for controlling battle types
+--- Battle-type tags used across the spot/army/intervention pipeline.
 AMBUSH_TYPE = 1
 INTERCEPTION_TYPE = 2
 ALLIED_REINFORCEMENTS_PERMITTED_TYPE = 3
