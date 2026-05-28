@@ -20,6 +20,9 @@ local waystones = battle_tables.waystones
 -- smithy defenders
 local smithy_defenders = require("script/land_encounters/configs/smithy_data").defenders
 
+-- Cultural alliance pools for the Allied Reinforcement intervention.
+local alliances = require("script/land_encounters/configs/alliances")
+
 -- Picks a random intervention type from the user's MCT-enabled set. The MCT anchor enforces
 -- at-least-one via set_locked, so the enabled list is never empty in normal operation. The
 -- defensive fallback to INTERCEPTION_TYPE handles any save-load race or MCT bypass.
@@ -30,6 +33,22 @@ local function pick_intervention_type()
         return INTERCEPTION_TYPE
     end
     return enabled[random_number(#enabled)]
+end
+
+-- Returns the player faction's subculture key, or nil if no human faction can be resolved.
+local function get_player_subculture()
+    local human_factions = cm:get_human_factions()
+    if not human_factions or #human_factions == 0 then return nil end
+    local player_faction = cm:get_faction(human_factions[1])
+    if not player_faction then return nil end
+    return player_faction:subculture()
+end
+
+-- Picks a random ally faction key based on the player's subculture. Returns nil if no ally can be sourced.
+local function pick_ally_faction()
+    local player_subculture = get_player_subculture()
+    if player_subculture == nil then return nil end
+    return alliances.pick_for_subculture(player_subculture)
 end
 
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -333,7 +352,27 @@ function Army:new_from_event(battle_event)
         -- local faction = "ogr"
         out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)
         force_data = start_force_makeup_generation(difficulty, faction)
-        force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, "encounter_force", "encounter_invasion", pick_intervention_type())
+
+        -- Pick the intervention type once so we can branch on it below for ally setup.
+        local intervention_type = pick_intervention_type()
+        local ally_force_data = nil
+        if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
+            local ally_faction = pick_ally_faction()
+            if ally_faction == nil then
+                -- Subculture not mapped AND union pool also empty - defensive demote to interception.
+                out("DEBUG - Allied intervention picked but no ally faction available; demoting to INTERCEPTION_TYPE.")
+                intervention_type = INTERCEPTION_TYPE
+            else
+                out("DEBUG - Allied intervention picked; generating ally force from faction: " .. ally_faction)
+                local ally_makeup = start_force_makeup_generation(difficulty, ally_faction)
+                ally_force_data = convert_force_makeup_to_usable_format(difficulty, ally_makeup, ally_faction, "ally_force", "ally_invasion", INTERCEPTION_TYPE)
+            end
+        end
+
+        force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, "encounter_force", "encounter_invasion", intervention_type)
+        if ally_force_data ~= nil then
+            force_data.reinforcing_ally_armies = { ally_force_data }
+        end
         out("DEBUG - force experience amount: " .. force_data.unit_experience_amount)
         out("DEBUG - force_data:")
         print_table(force_data)

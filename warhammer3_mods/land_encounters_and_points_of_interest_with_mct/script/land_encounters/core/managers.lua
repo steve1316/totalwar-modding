@@ -1030,9 +1030,18 @@ function InvasionBattleManager:generate_battle(offensive_army, player_character,
     local force_cqi = player_character:military_force():command_queue_index()
     local player_faction_name = player_character:faction():name()
 
-    -- if event army has reinforcements
+    -- Dispatch based on which reinforcement data the encounter carries.
     if self.event_army:has_offensive_reinforcements() then
+        -- Enemy reinforcement path also chains into ally spawning inside the recursive callback
+        -- (create_enemy_reinforcements_before_attack -> create_allied_reinforcements_before_attack).
         self:create_enemy_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, 1)
+    elseif self.event_army:has_ally_reinforcements() then
+        -- Ally-only path. No enemy reinforcements exist yet, so we pass player_character as the
+        -- ally's objective_character. set_target("CHARACTER", ...) is a movement target, not a
+        -- hostility marker - no war is declared between ally and player. The ally just moves toward
+        -- the player to be in range. The ally-vs-main-enemy war is declared later by
+        -- declare_war_on_ally_reinforcement_if_available inside main_attacker_attacks_player_and_allies.
+        self:create_allied_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, player_character)
     else
         self:main_attacker_attacks_player_and_allies(player_character, player_faction_name, force_cqi, spot_coordinates)
     end
