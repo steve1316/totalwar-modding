@@ -136,11 +136,7 @@ function M.register()
             return false
         end,
         function(dilemma_choice_and_faction_info)
-            if get_mct_settings().enable_randomized_encounter_force_generation then
-                M.point_of_interest_event_manager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, M.current_spot_info)
-            else
-                M.point_of_interest_event_manager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, M.current_spot_info)
-            end
+            M.point_of_interest_event_manager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, M.current_spot_info)
         end,
         IS_PERSISTENT_LISTENER
     )
