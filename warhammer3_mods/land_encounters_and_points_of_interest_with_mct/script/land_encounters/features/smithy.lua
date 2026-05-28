@@ -545,7 +545,7 @@ function SmithyState:get_defensive_army()
     end
 
     if self:is_occupied() then
-        return Army:new_from_faction_and_subculture_and_level(self.controlling_faction_name, self.controlling_faction_subculture, battle_level)
+        return Army:new_from_subculture_and_level(self.controlling_faction_subculture, battle_level)
     else
         return {}
     end

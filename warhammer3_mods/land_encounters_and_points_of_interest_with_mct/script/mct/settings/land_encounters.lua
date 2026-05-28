@@ -175,14 +175,6 @@ randomized_encounter_force_generation_section:set_description("This section cont
 local second_page = mct_mod:create_settings_page("Randomized Encounter Force Configuration (Beta)", 2)
 randomized_encounter_force_generation_section:assign_to_page(second_page)
 
--- Create the checkbox to enable the new randomized encounter force generation system.
-local enable_randomized_encounter_force_generation_checkbox = mct_mod:add_new_option("enable_randomized_encounter_force_generation", "checkbox")
-enable_randomized_encounter_force_generation_checkbox:set_text("Enable Randomized Encounter Force Generation", true)
-enable_randomized_encounter_force_generation_checkbox:set_tooltip_text("When enabled, the new randomized encounter force generation will be enabled.", true)
-enable_randomized_encounter_force_generation_checkbox:set_is_global(true)
-enable_randomized_encounter_force_generation_checkbox:set_default_value(false)
-enable_randomized_encounter_force_generation_checkbox:set_assigned_section("randomized_encounter_force_generation_section")
-
 -- Create the checkbox to enable compatibility with supported mods defined in the shared/mct_settings.lua file.
 local enable_compatibility_with_supported_mods_checkbox = mct_mod:add_new_option("enable_compatibility_with_supported_mods", "checkbox")
 enable_compatibility_with_supported_mods_checkbox:set_text("Enable compatibility with supported mods", true)
