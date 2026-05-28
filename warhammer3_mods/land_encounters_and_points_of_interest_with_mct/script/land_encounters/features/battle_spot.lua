@@ -26,12 +26,12 @@ local BattleEventDelegate = {
 
 local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 local FIRST_OPTION = 0
-local ERROR_BATTLE_CLEAN_UP_EVENT = { 
+local ERROR_BATTLE_CLEAN_UP_EVENT = {
     incident = "land_enc_incident_battle_clean_up_event",
-    targets = { 
-        character = true, 
-        force = false, 
-        faction = false, 
+    targets = {
+        character = true,
+        force = false,
+        faction = false,
         region = false
     }
 }
@@ -44,7 +44,7 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
     self.cached_player_character = area_and_character_info:family_member():character()
     local triggering_faction = self.cached_player_character:faction()
     local triggering_faction_name = triggering_faction:name()
-    
+
     if is_human_and_it_is_its_turn(triggering_faction) and self:character_is_general_and_can_trigger_dilemma(self.cached_player_character) then
         self.cached_event = self.battle_generator:get_randomized_event_given_turn_number(turn_number)
         cm:trigger_dilemma(triggering_faction_name, self.cached_event.dilemma)
@@ -57,13 +57,13 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
         end
         cm:treasury_mod(triggering_faction_name, 500)
         return true
-    else 
+    else
     -- Event can't be triggered by human
         cm:show_message_event_located(triggering_faction_name,
         "event_feed_strings_text_title_event_land_enc_and_poi_encountered",
         "event_feed_strings_text_subtitle_event_land_enc_and_poi_encountered",
         "event_feed_strings_text_description_event_land_enc_and_poi_encountered",
-            spot_info.coordinates[1], 
+            spot_info.coordinates[1],
             spot_info.coordinates[2],
             false,
             EVENT_IMAGE_ID_LOCATION_OF_INTEREST
@@ -109,7 +109,7 @@ function BattleEventDelegate:trigger_battle_avoidance_incident(spot_info)
 end
 
 ---trigger_event_given_battle_result(spot_type, spot_index, player_won_battle)
---- @desc Triggered from the InvasionBattleManager 
+--- @desc Triggered from the InvasionBattleManager
 --- @param player_won_battle boolean if the player won the battle or not
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
     if player_won_battle then
@@ -120,7 +120,7 @@ end
 
 
 function BattleEventDelegate:trigger_victory_incident(spot_info)
-    -- due to the continuity we have to guarantee that the cached player is always previously retrieved 
+    -- due to the continuity we have to guarantee that the cached player is always previously retrieved
     if self.cached_player_character == nil or (type(self.cached_player_character) == "table" and next(self.cached_player_character) == nil) then
         self.cached_player_character = get_player_faction_character_closest_to_spot(spot_info)
     end
@@ -154,7 +154,7 @@ end
 
 function BattleEventDelegate:check_if_incident_has_continuity(incident_key, faction)
     local continuity_incident_logic = complex_continuity_events[incident_key]
-    if continuity_incident_logic ~= nil then 
+    if continuity_incident_logic ~= nil then
         for i=1, #continuity_incident_logic do
             if self:check_if_conditions_of_option_are_fulfilled(faction, continuity_incident_logic[i].conditions) then
                 return continuity_incident_logic[i].result
@@ -194,13 +194,13 @@ function BattleEventDelegate:trigger_incident_for_ai_due_to_balance(balance, pla
                         local met_faction = factions_at_war_with:item_at(i)
                         local relations = met_faction:diplomatic_attitude_towards(player_faction:name())
                         if(relations < -100) then
-                            possible_future_enemy_factions[i] = { met_faction:imperium_level(), met_faction }                             
+                            possible_future_enemy_factions[i] = { met_faction:imperium_level(), met_faction }
                         end
                         table.sort(possible_future_enemy_factions, compare_imperium_levels)
                     end
                     local number_of_blessed_possible_future_enemies = math.min(5 - factions_at_war_with:num_items(), #possible_future_enemy_factions)
                     for i=1, number_of_blessed_possible_future_enemies do
-                        cm:add_ancillary_to_faction(possible_future_enemy_factions[i][2], logical_variable.ancillary, false) 
+                        cm:add_ancillary_to_faction(possible_future_enemy_factions[i][2], logical_variable.ancillary, false)
                     end
                 else
                     self.add_ancillary_to_feuding_factions(factions_at_war_with, 5, logical_variable.ancillary)
@@ -215,12 +215,12 @@ function BattleEventDelegate:add_ancillary_to_feuding_factions(feuding_factions,
     local feuding_factions_by_imperium_level = {}
     for i = 0, feuding_factions:num_items() - 1 do
         local known_enemy_faction = feuding_factions:item_at(i)
-        feuding_factions_by_imperium_level[i] = { known_enemy_faction:imperium_level(), known_enemy_faction } 
+        feuding_factions_by_imperium_level[i] = { known_enemy_faction:imperium_level(), known_enemy_faction }
         table.sort(feuding_factions_by_imperium_level, compare_imperium_levels)
     end
     -- and bless them
     for i=1, number_of_factions do
-        cm:add_ancillary_to_faction(feuding_factions_by_imperium_level[i][2], ancillary, false) 
+        cm:add_ancillary_to_faction(feuding_factions_by_imperium_level[i][2], ancillary, false)
     end
 end
 
@@ -266,9 +266,9 @@ end
 --- Constructors
 -------------------------
 function BattleEventDelegate:new(invasion_battle_manager)
-    local t = { 
-        invasion_battle_manager = invasion_battle_manager, 
-        battle_generator = BattleGenerator:new() 
+    local t = {
+        invasion_battle_manager = invasion_battle_manager,
+        battle_generator = BattleGenerator:new()
     }
     setmetatable(t, self)
     self.__index = self

@@ -28,9 +28,9 @@ end
 
 --- @function trigger_balancing_benefit_for_ai
 --- @desc [INTERNAL] gives buffs and items to the AI as they cannot experience events directly.
---- @param triggering_ai_character table CA variable. The triggering Ai character. 
+--- @param triggering_ai_character table CA variable. The triggering Ai character.
 --- @param triggering_faction table CA variable. A faction that has triggered this event
---- @param random_event table An event that has 
+--- @param random_event table An event that has
 function TreasureEventDelegate:trigger_balancing_benefit_for_ai(triggering_ai_character, triggering_faction, random_event)
     local trigger_event_feed_for_faction = false
     -- Add a random ancillary to an ai faction
