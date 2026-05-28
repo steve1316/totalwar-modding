@@ -20,6 +20,18 @@ local waystones = battle_tables.waystones
 -- smithy defenders
 local smithy_defenders = require("script/land_encounters/configs/smithy_data").defenders
 
+-- Picks a random intervention type from the user's MCT-enabled set. The MCT anchor enforces
+-- at-least-one via set_locked, so the enabled list is never empty in normal operation. The
+-- defensive fallback to INTERCEPTION_TYPE handles any save-load race or MCT bypass.
+local function pick_intervention_type()
+    local settings = get_mct_settings()
+    local enabled = settings and settings.enabled_intervention_types
+    if not enabled or #enabled == 0 then
+        return INTERCEPTION_TYPE
+    end
+    return enabled[random_number(#enabled)]
+end
+
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
 -- ArmyUnit
@@ -321,7 +333,7 @@ function Army:new_from_event(battle_event)
         -- local faction = "ogr"
         out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)
         force_data = start_force_makeup_generation(difficulty, faction)
-        force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, "encounter_force", "encounter_invasion", 2)
+        force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, "encounter_force", "encounter_invasion", pick_intervention_type())
         out("DEBUG - force experience amount: " .. force_data.unit_experience_amount)
         out("DEBUG - force_data:")
         print_table(force_data)
