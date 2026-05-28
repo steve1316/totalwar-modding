@@ -37,6 +37,7 @@ PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER = 0
 BATTLE_ENTITIES_TABLE_VERSION_NUMBER = 38
 BATTLE_VORTEXS_TABLE_VERSION_NUMBER = 19
 PROJECTILE_SHOT_TYPE_DISPLAYS_TABLE_VERSION_NUMBER = 1
+PROJECTILE_DISPLAYS_TABLE_VERSION_NUMBER = 12
 PROJECTILES_TABLE_VERSION_NUMBER = 53
 
 
@@ -191,6 +192,7 @@ def process_mod(mod: Dict) -> None:
         else:
             extract_modded_tsv_data("battle_vortexs_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
             extract_modded_tsv_data("projectile_shot_type_displays_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+            extract_modded_tsv_data("projectile_displays_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
             extract_modded_tsv_data("projectiles_scaling_damages_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
             extract_modded_tsv_data("projectiles_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
 
@@ -228,6 +230,7 @@ def process_mod(mod: Dict) -> None:
             [
                 ("battle_vortexs_tables", BATTLE_VORTEXS_TABLE_VERSION_NUMBER),
                 ("projectile_shot_type_displays_tables", PROJECTILE_SHOT_TYPE_DISPLAYS_TABLE_VERSION_NUMBER),
+                ("projectile_displays_tables", PROJECTILE_DISPLAYS_TABLE_VERSION_NUMBER),
                 ("projectiles_scaling_damages_tables", PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER),
                 ("projectiles_tables", PROJECTILES_TABLE_VERSION_NUMBER),
             ],
