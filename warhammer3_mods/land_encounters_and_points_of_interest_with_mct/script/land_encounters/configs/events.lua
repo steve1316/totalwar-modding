@@ -509,7 +509,7 @@ M.treasure_type = {
 local WEAPON_CHAINSWORD = "wh3_main_anc_weapon_chainsword"
 local WEAPON_BANE_SPEAR = "wh3_main_anc_weapon_the_bane_spear"
 local WEAPON_KRAKEN_KILLER = "wh3_main_anc_weapon_skars_kraken_killer"
-local WEAAPON_SOULNETTER = "wh3_main_anc_weapon_gilellions_soulnetter"
+local WEAPON_SOULNETTER = "wh3_main_anc_weapon_gilellions_soulnetter"
 local WEAPON_SLAAANESH_BLADE = "wh3_main_anc_weapon_slaaneshs_blade"
 local WEAPON_SYCOPHANT = "wh3_main_anc_follower_personal_sycophant"
 local WEAPON_PARAMOUR = "wh3_main_anc_follower_the_dark_princes_paramour"
@@ -581,12 +581,12 @@ M.complex_continuity = {
     ["land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter"] = {
         [1] = {
             conditions = {
-                ["does_not_have_ancillary"] = WEAAPON_SOULNETTER
+                ["does_not_have_ancillary"] = WEAPON_SOULNETTER
             },
             result = {
                 incident = "land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_granted",
                 targets = { character = true, force = false, faction = false, region = false },
-                balance = { ["give_ancillary"] = { ancillary = WEAAPON_SOULNETTER, faction = "random" } }
+                balance = { ["give_ancillary"] = { ancillary = WEAPON_SOULNETTER, faction = "random" } }
             }
         },
         [2] = {

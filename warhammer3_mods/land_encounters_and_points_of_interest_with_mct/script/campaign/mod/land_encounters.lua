@@ -23,8 +23,8 @@ require("script/land_encounters/core/mct")
 --]]
 
 local coordinates = require("script/land_encounters/configs/coordinates")
-local ie_land_encounters = coordinates.inmortal_empires.treasures_and_spots
-local ie_points_of_interest = coordinates.inmortal_empires.points_of_interest
+local ie_land_encounters = coordinates.immortal_empires.treasures_and_spots
+local ie_points_of_interest = coordinates.immortal_empires.points_of_interest
 local roc_encounters = coordinates.realm_of_chaos.treasures_and_spots
 local roc_points_of_interest = coordinates.realm_of_chaos.points_of_interest
 local ieee_land_encounters = coordinates.immortal_empires_expanded.treasures_and_spots
