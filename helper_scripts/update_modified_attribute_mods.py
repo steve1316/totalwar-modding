@@ -4,7 +4,7 @@ import logging
 import time
 import shutil
 import os
-from typing import Callable, List, Dict, Tuple
+from typing import Callable, List, Dict
 from utilities import (
     extract_tsv_data,
     extract_modded_tsv_data,
@@ -32,13 +32,19 @@ PREPEND_MELEE_TABLE_FILE_NAME = MODS_AND_STEAM_WORKSHOP_IDS[0][0]
 PREPEND_RANGED_ARC_TABLE_FILE_NAME = MODS_AND_STEAM_WORKSHOP_IDS[1][0]
 PREPEND_VELOCITY_TABLE_FILE_NAME = MODS_AND_STEAM_WORKSHOP_IDS[2][0]
 
-MELEE_WEAPONS_TABLE_VERSION_NUMBER = 25
-PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER = 0
-BATTLE_ENTITIES_TABLE_VERSION_NUMBER = 38
-BATTLE_VORTEXS_TABLE_VERSION_NUMBER = 19
-PROJECTILE_SHOT_TYPE_DISPLAYS_TABLE_VERSION_NUMBER = 1
-PROJECTILE_DISPLAYS_TABLE_VERSION_NUMBER = 12
-PROJECTILES_TABLE_VERSION_NUMBER = 53
+# Every vanilla table touched by any of the three compat pipelines. Extracted once at startup so we can read the current schema version straight off each TSV header instead of hardcoding it.
+ALL_VANILLA_TABLES = [
+    "melee_weapons_tables",
+    "battle_entities_tables",
+    "battle_vortexs_tables",
+    "projectile_shot_type_displays_tables",
+    "projectile_displays_tables",
+    "projectiles_scaling_damages_tables",
+    "projectiles_tables",
+]
+
+# Populated at startup via `get_vanilla_table_versions`. Maps table name to its current vanilla schema version.
+TABLE_VERSIONS: Dict[str, int] = {}
 
 
 def update_melee_attack_intervals(unit_data: List[Dict]):
@@ -118,27 +124,47 @@ def adjust_muzzle_velocities(projectile_data: List[Dict]):
     return modified
 
 
+def get_vanilla_table_versions(tables: List[str]) -> Dict[str, int]:
+    """Extract each vanilla table once and parse its current schema version from the TSV header.
+
+    The header line looks like `#table_name;39;db/table_name/data__`, where the integer between the first two semicolons is the schema version.
+
+    Args:
+        tables (List[str]): Table names to extract from the vanilla pack.
+
+    Returns:
+        Dict mapping each table name to its parsed schema version number.
+    """
+    versions = {}
+    for table_name in tables:
+        extract_tsv_data(table_name)
+        _, _, version_info = load_tsv_data(f"{TEMP_DIR}/vanilla_{table_name}/db/{table_name}/data__.tsv")
+        versions[table_name] = int(version_info.split(";")[1])
+        logging.info(f"Parsed schema version {versions[table_name]} from vanilla {table_name}.")
+    return versions
+
+
 def _process_attribute_tables(
     is_vanilla: bool,
     folder_name: str,
     prepend_name: str,
     vanilla_table_name: str,
-    tables: List[Tuple[str, int]],
+    tables: List[str],
     transform_fn: Callable[[List[Dict]], List[Dict]],
 ) -> None:
-    """Walk a set of `(table_name, version_number)` pairs, transform each via `transform_fn`, and write the result into the per-attribute compat-pack build dir.
+    """Walk each table, transform it via `transform_fn`, and write the result into the per-attribute compat-pack build dir.
 
-    The vanilla branch fires only when `is_vanilla` is true and the current table matches `vanilla_table_name` (so non-vanilla tables in the list are skipped during a vanilla run). The modded branch fires when the per-mod scratch dir exists and contains TSVs.
+    The vanilla branch fires only when `is_vanilla` is true and the current table matches `vanilla_table_name` (so non-vanilla tables in the list are skipped during a vanilla run). The modded branch fires when the per-mod scratch dir exists and contains TSVs. Each table's schema version is looked up from `TABLE_VERSIONS`, which is populated at startup from the vanilla TSV headers.
 
     Args:
         is_vanilla (bool): True when called for the special vanilla entry, False for modded mods.
         folder_name (str): Per-mod scratch dir name under `TEMP_DIR` for the modded branch (`"vanilla"` for vanilla).
         prepend_name (str): Per-attribute prepend constant (e.g. `PREPEND_MELEE_TABLE_FILE_NAME`) used to namespace the output.
         vanilla_table_name (str): Table whose `temp/vanilla_<name>` extraction triggers the vanilla branch.
-        tables (List[Tuple[str, int]]): Tables to process. Each entry is `(table_name, version_number)`.
+        tables (List[str]): Tables to process.
         transform_fn (Callable[[List[Dict]], List[Dict]]): Row transformer applied to the loaded TSV data.
     """
-    for table_name, table_version_number in tables:
+    for table_name in tables:
         sort_key = "vortex_key" if table_name == "battle_vortexs_tables" else "key"
         if is_vanilla and table_name == vanilla_table_name and os.path.exists(f"{TEMP_DIR}/vanilla_{vanilla_table_name}"):
             data, headers, version_info = load_tsv_data(f"{TEMP_DIR}/vanilla_{vanilla_table_name}/db/{table_name}/data__.tsv")
@@ -148,7 +174,7 @@ def _process_attribute_tables(
         elif os.path.exists(f"{TEMP_DIR}/{folder_name}/db/{table_name}") and any(file.endswith(".tsv") for file in os.listdir(f"{TEMP_DIR}/{folder_name}/db/{table_name}")):
             logging.info(f"There are TSV files in {folder_name}/db/{table_name}.")
             data, headers, _ = load_multiple_tsv_data(f"{TEMP_DIR}/{folder_name}/db/{table_name}")
-            version_info = f"#{table_name};{table_version_number};db/{table_name}/{prepend_name}_{folder_name}"
+            version_info = f"#{table_name};{TABLE_VERSIONS[table_name]};db/{table_name}/{prepend_name}_{folder_name}"
             updated = sorted(transform_fn(data), key=lambda x: x[sort_key])
             write_updated_tsv_file(updated, headers, version_info, f"{TEMP_DIR}/{prepend_name}/db/{table_name}", f"{prepend_name}_{folder_name}")
 
@@ -175,26 +201,18 @@ def process_mod(mod: Dict) -> None:
         return
 
     # For each modified attribute, extract the relevant tables.
-    if "melee" in mod["modified_attributes"]:
-        if is_vanilla:
-            extract_tsv_data("melee_weapons_tables")
-        else:
-            extract_modded_tsv_data("melee_weapons_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
-            extract_modded_tsv_data("projectiles_scaling_damages_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
-    if "ranged_arc" in mod["modified_attributes"]:
-        if is_vanilla:
-            extract_tsv_data("battle_entities_tables")
-        else:
-            extract_modded_tsv_data("battle_entities_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
-    if "velocity" in mod["modified_attributes"]:
-        if is_vanilla:
-            extract_tsv_data("projectiles_tables")
-        else:
-            extract_modded_tsv_data("battle_vortexs_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
-            extract_modded_tsv_data("projectile_shot_type_displays_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
-            extract_modded_tsv_data("projectile_displays_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
-            extract_modded_tsv_data("projectiles_scaling_damages_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
-            extract_modded_tsv_data("projectiles_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+    # Vanilla tables are pre-extracted once at startup (see `get_vanilla_table_versions`), so the vanilla branch skips extraction here.
+    if "melee" in mod["modified_attributes"] and not is_vanilla:
+        extract_modded_tsv_data("melee_weapons_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+        extract_modded_tsv_data("projectiles_scaling_damages_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+    if "ranged_arc" in mod["modified_attributes"] and not is_vanilla:
+        extract_modded_tsv_data("battle_entities_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+    if "velocity" in mod["modified_attributes"] and not is_vanilla:
+        extract_modded_tsv_data("battle_vortexs_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+        extract_modded_tsv_data("projectile_shot_type_displays_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+        extract_modded_tsv_data("projectile_displays_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+        extract_modded_tsv_data("projectiles_scaling_damages_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
+        extract_modded_tsv_data("projectiles_tables", mod["path"], f"{TEMP_DIR}/{folder_name}")
 
     logging.info(f"Extracted all relevant TSV data files for {folder_name}.")
 
@@ -205,7 +223,7 @@ def process_mod(mod: Dict) -> None:
             folder_name,
             PREPEND_MELEE_TABLE_FILE_NAME,
             "melee_weapons_tables",
-            [("melee_weapons_tables", MELEE_WEAPONS_TABLE_VERSION_NUMBER), ("projectiles_scaling_damages_tables", PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER)],
+            ["melee_weapons_tables", "projectiles_scaling_damages_tables"],
             update_melee_attack_intervals,
         )
 
@@ -216,7 +234,7 @@ def process_mod(mod: Dict) -> None:
             folder_name,
             PREPEND_RANGED_ARC_TABLE_FILE_NAME,
             "battle_entities_tables",
-            [("battle_entities_tables", BATTLE_ENTITIES_TABLE_VERSION_NUMBER)],
+            ["battle_entities_tables"],
             update_rows_for_120_degree_ranged_attacks,
         )
 
@@ -228,19 +246,18 @@ def process_mod(mod: Dict) -> None:
             PREPEND_VELOCITY_TABLE_FILE_NAME,
             "projectiles_tables",
             [
-                ("battle_vortexs_tables", BATTLE_VORTEXS_TABLE_VERSION_NUMBER),
-                ("projectile_shot_type_displays_tables", PROJECTILE_SHOT_TYPE_DISPLAYS_TABLE_VERSION_NUMBER),
-                ("projectile_displays_tables", PROJECTILE_DISPLAYS_TABLE_VERSION_NUMBER),
-                ("projectiles_scaling_damages_tables", PROJECTILES_SCALING_DAMAGES_TABLE_VERSION_NUMBER),
-                ("projectiles_tables", PROJECTILES_TABLE_VERSION_NUMBER),
+                "battle_vortexs_tables",
+                "projectile_shot_type_displays_tables",
+                "projectile_displays_tables",
+                "projectiles_scaling_damages_tables",
+                "projectiles_tables",
             ],
             adjust_muzzle_velocities,
         )
 
     if is_vanilla:
-        shutil.rmtree(f"{TEMP_DIR}/vanilla_melee_weapons_tables", ignore_errors=True)
-        shutil.rmtree(f"{TEMP_DIR}/vanilla_battle_entities_tables", ignore_errors=True)
-        shutil.rmtree(f"{TEMP_DIR}/vanilla_projectiles_tables", ignore_errors=True)
+        for vanilla_table_name in ALL_VANILLA_TABLES:
+            shutil.rmtree(f"{TEMP_DIR}/vanilla_{vanilla_table_name}", ignore_errors=True)
     else:
         shutil.rmtree(f"{TEMP_DIR}/{folder_name}", ignore_errors=True)
 
@@ -261,7 +278,10 @@ if __name__ == "__main__":
 
     ensure_temp_dir()
 
-    # The vanilla pass writes the shared `_vanilla_and_dlc` TSVs into the compat-pack build dirs and is the only producer of `temp/vanilla_*` extracts. Run it serially before the pool so workers never race on those paths.
+    # Extract every vanilla table the compat pipelines touch and read each table's current schema version straight off its TSV header. This replaces the previous set of hardcoded version constants and keeps the script self-updating when CA bumps a schema.
+    TABLE_VERSIONS.update(get_vanilla_table_versions(ALL_VANILLA_TABLES))
+
+    # The vanilla pass writes the shared `_vanilla_and_dlc` TSVs into the compat-pack build dirs. Run it serially before the pool so workers never race on the `temp/vanilla_*` extracts produced above.
     vanilla_mods = [m for m in SUPPORTED_MODS if m["package_name"] == "vanilla"]
     modded_mods = [m for m in SUPPORTED_MODS if m["package_name"] != "vanilla"]
 
