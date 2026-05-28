@@ -617,8 +617,6 @@ end
 -------------------------
 local SmithyEventDelegate = {
     smithies_state = {},
-    -- Mission delegate
-    smithy_mission_delegate = {},
     -- CA Managers
     mission_manager = {},
     -- Delegates
