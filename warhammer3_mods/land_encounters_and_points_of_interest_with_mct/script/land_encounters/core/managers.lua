@@ -745,14 +745,13 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         identifier = identifier,
         invasion_identifier = invasion_identifier,
         intervention_type = intervention_type,
+        -- The lord pool is now a flat record. The randomization-only pipeline picks a single
+        -- agent_subtype up front and a level within the difficulty's lord_level_range. Names,
+        -- ancillaries, and traits are not generated for randomized lords - they default to
+        -- empty strings / empty tables in Army:create_from.
         lord = {
-            possible_subtypes = { force_makeup.lord.agent_subtype },
-            level_ranges = {difficulties[difficulty].lord_level_range[1], difficulties[difficulty].lord_level_range[2]},
-            possible_forenames = {},
-            possible_clan_names = {},
-            possible_family_names = {},
-            ancillaries = {},
-            traits = {},
+            agent_subtype = force_makeup.lord.agent_subtype,
+            level_range = { difficulties[difficulty].lord_level_range[1], difficulties[difficulty].lord_level_range[2] },
         },
         heroes = {},
         unit_experience_amount = math.random(difficulties[difficulty].unit_experience_amount[1], difficulties[difficulty].unit_experience_amount[2]),
@@ -790,10 +789,10 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         end
     end
 
-    -- Insert the units into the table in the specified format.
+    -- Insert the units into the table as flat { id, count } records.
     for unit_type, units in pairs(force_makeup.units) do
         for _, unit in ipairs(units) do
-            table.insert(converted_force.units, {unit, 1, 100, 0, nil})
+            table.insert(converted_force.units, { id = unit, count = 1 })
         end
     end
 

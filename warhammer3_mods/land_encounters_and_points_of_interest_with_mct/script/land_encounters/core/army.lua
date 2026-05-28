@@ -42,163 +42,6 @@ end
 
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
--- ArmyUnit
--- (from models/battle/army_unit.lua)
-
--------------------------
---- Properties definition
--------------------------
-local ArmyUnit = {
-    id = "none",
-    quantity = 0,
-    chance = 0,
-    alternative_chance = 0,
-    alternative_id = nil
-}
-
-
--------------------------
---- Class Methods
--------------------------
-function ArmyUnit:generate_winner_unit()
-    if self.chance >= random_number(100) then
-        return { id = self.id, count = self.quantity }
-    elseif self.alternative_chance >= random_number(100) then
-        return { id = self.alternative_id, count = self.quantity }
-    end
-    return nil
-end
-
--------------------------
---- Constructors
--------------------------
-function ArmyUnit:newFrom(unit_data)
-    local t = {
-        id= unit_data[1],
-        quantity= unit_data[2],
-        chance= unit_data[3],
-        alternative_chance= unit_data[4],
-        alternative_id= unit_data[5]
-    }
-    setmetatable(t, self)
-    self.__index = self
-    return t
-end
-
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- LordUnit
--- (from models/battle/lord_unit.lua)
-
--------------------------
---- Properties definition
--------------------------
-local LordUnit = {
-    level_ranges = {},
-    possible_subtypes = {},
-    possible_forenames = {},
-    possible_clan_names = {},
-    possible_family_names = {},
-    possible_other_names = {},
-    possible_skills = {},
-    possible_ancillaries = {},
-    possible_traits = {}
-}
-
-
--------------------------
---- Class Methods
--------------------------
-function LordUnit:generate_random_level()
-    out("DEBUG - random_number(): " .. self.level_ranges[2] .. " - " .. self.level_ranges[1])
-    return random_number(self.level_ranges[2], self.level_ranges[1])
-end
-
-
-function LordUnit:generate_subtype()
-    if #self.possible_subtypes > 0 then
-        local random_subtype = self.possible_subtypes[random_number(#self.possible_subtypes)]
-        return random_subtype
-    end
-    return ""
-end
-
-
-function LordUnit:generate_random_forename()
-    if #self.possible_forenames > 0 then
-        return self.possible_forenames[random_number(#self.possible_forenames)]
-    end
-    return ""
-end
-
-
-function LordUnit:generate_random_clan_name()
-    if #self.possible_clan_names > 0 then
-        return self.possible_clan_names[random_number(#self.possible_clan_names)]
-    end
-    return ""
-end
-
-
-function LordUnit:generate_random_family_name()
-    if #self.possible_family_names > 0 then
-        return self.possible_family_names[random_number(#self.possible_family_names)]
-    end
-    return ""
-end
-
-
-function LordUnit:generate_random_other_name()
-    if #self.possible_other_names > 0 then
-        return self.possible_other_names[random_number(#self.possible_other_names)]
-    end
-    return ""
-end
-
-function LordUnit:generate_ancillaries(selected_lord_subtype)
-    if next(self.possible_ancillaries) ~= nil and next(self.possible_ancillaries[selected_lord_subtype]) ~= nil then
-        local active_ancillaries = {}
-        for i = 1, #self.possible_ancillaries[selected_lord_subtype] do
-            if self.possible_ancillaries[selected_lord_subtype][i][2] >= random_number(100) then
-                table.insert(active_ancillaries, self.possible_ancillaries[selected_lord_subtype][i][1])
-            end
-        end
-        return active_ancillaries
-    else
-        return {}
-    end
-end
-
-function LordUnit:generate_trait(selected_lord_subtype)
-    if next(self.possible_traits) ~= nil then
-        return self.possible_traits[selected_lord_subtype]
-    end
-    return nil
-end
-
--------------------------
---- Constructors
--------------------------
-function LordUnit:newFrom(lord_data)
-    local t = {
-        subtype= nil,
-        level_ranges= lord_data.level_ranges,
-        possible_subtypes = lord_data.possible_subtypes,
-        possible_forenames= lord_data.possible_forenames,
-        possible_clan_names= lord_data.possible_clan_names,
-        possible_family_names= lord_data.possible_family_names,
-        possible_other_names= lord_data.possible_other_names,
-        possible_skills = lord_data.skills,
-        possible_ancillaries = lord_data.ancillaries,
-        possible_traits = lord_data.traits
-    }
-    setmetatable(t, self)
-    self.__index = self
-    return t
-end
-
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
 -- Army
 -- (from models/battle/army.lua)
 
@@ -241,32 +84,28 @@ function Army:randomize_units(random_army_manager)
 end
 
 
+-- Declares every unit from the pool to the random army manager. With the randomization-only
+-- pipeline every unit appears unconditionally, so units_pool is copied straight into units.
 function Army:randomize_army_composition_and_declare(random_army_manager)
     random_army_manager:remove_force(self.force_identifier)
     random_army_manager:new_force(self.force_identifier)
 
-    local randomized_units = {}
-    for i=1, #self.units_pool do
-        local randomized_unit = self.units_pool[i]:generate_winner_unit()
-        if randomized_unit ~= nil then
-            self:declare_army_unit(random_army_manager, randomized_unit.id, randomized_unit.count)
-        end
-        table.insert(randomized_units, randomized_unit)
+    self.units = {}
+    for i = 1, #self.units_pool do
+        local unit_row = self.units_pool[i]
+        self:declare_army_unit(random_army_manager, unit_row.id, unit_row.count)
+        table.insert(self.units, unit_row)
     end
-    self.units = randomized_units
 end
 
 
+-- Picks a concrete lord subtype and level from the pool. Names, ancillaries, and traits are
+-- not generated in the randomization-only pipeline - they keep their empty defaults that
+-- create_from sets on the lord table.
 function Army:randomize_lord()
-    self.lord.subtype = self.lord_pool:generate_subtype()
-    self.lord.level = self.lord_pool:generate_random_level()
+    self.lord.subtype = self.lord_pool.agent_subtype
+    self.lord.level = random_number(self.lord_pool.level_range[2], self.lord_pool.level_range[1])
     out("DEBUG - Lord level: " .. self.lord.level)
-    self.lord.forename = self.lord_pool:generate_random_forename()
-    self.lord.clan_name = self.lord_pool:generate_random_clan_name()
-    self.lord.family_name = self.lord_pool:generate_random_family_name()
-    self.lord.other_name = self.lord_pool:generate_random_other_name()
-    self.lord.ancillaries = self.lord_pool:generate_ancillaries(self.lord.subtype)
-    self.lord.trait = self.lord_pool:generate_trait(self.lord.subtype)
 end
 
 
@@ -379,30 +218,37 @@ function Army:new_from_event(battle_event)
 end
 
 
--- Create the invasion army
+-- Builds an Army instance from a flat force record produced by convert_force_makeup_to_usable_format.
+-- The units pool and lord pool are stored by reference; randomize_units and randomize_lord later
+-- resolve them into the concrete units and lord that the engine spawns.
 function Army:create_from(force)
     local t = {
         faction = force.faction,
         force_identifier = force.identifier,
         invasion_identifier = force.invasion_identifier,
         intervention_type = force.intervention_type,
-        units_pool = {},
+        units_pool = force.units,
         units = {},
         unit_experience_amount = force.unit_experience_amount,
-        lord_pool = {},
-        lord = {},
+        lord_pool = force.lord,
+        -- Lord fields are populated later by randomize_lord (subtype + level). The name and
+        -- equipment fields are kept at empty defaults so downstream consumers can read them
+        -- unconditionally - the engine falls back to its own defaults when these are empty.
+        lord = {
+            subtype = nil,
+            level = nil,
+            forename = "",
+            clan_name = "",
+            family_name = "",
+            other_name = "",
+            ancillaries = {},
+            trait = nil,
+        },
         reinforcing_ally_armies = {},
         reinforcing_enemy_armies = {},
+        heroes = force.heroes or {},
+        skill_overrides = force.skill_overrides or {},
     }
-    t.lord_pool = LordUnit:newFrom(force.lord)
-
-    for i=1, #force.units do
-        local unit = ArmyUnit:newFrom(force.units[i])
-        table.insert(t.units_pool, unit)
-    end
-
-    t.heroes = force.heroes or {}
-    t.skill_overrides = force.skill_overrides or {}
 
     setmetatable(t, self)
     self.__index = self
