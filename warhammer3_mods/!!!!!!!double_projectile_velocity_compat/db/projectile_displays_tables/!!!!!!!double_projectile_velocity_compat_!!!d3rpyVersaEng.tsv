@@ -1,0 +1,4 @@
+key	display_model	impact	launch_fx	trail_fx	stationary_fx	airborne_anim	landing_anim	tip_offset	trail_spin	launch_camera_shake	impact_bounce	impact_penetrate	impact_blood	impact_bounce_blood	impact_penetrate_blood	mirroring_start	mirroring_trail	scale
+#projectile_displays_tables;12;db/projectile_displays_tables/!!!!!!!double_projectile_velocity_compat_!!!d3rpyVersaEng
+dwf_mini_rocket	projectiles/cth_fire_rain_rocket_battery_projectile_02.wsmodel			wh_main_weapon_trail_rocket_medium				0.0000	false		wh_main_impact_very_small	wh_main_entity_impact				wh3_main_yin_missile_mirror_impact_medium	wh3_main_spell_yin_missile_mirror_trail_medium	0.5000
+laf_dwf_crank_gun	projectiles\wh_dwf_rifle_bullet.rigid_model_v2	wh_main_impact_very_small		wh_main_weapon_trail_rifle				0.0000	false		wh_main_impact_very_small	wh_main_impact_very_small				wh3_main_yin_missile_mirror_impact_small	wh3_main_spell_yin_missile_mirror_trail_small	1.0000
