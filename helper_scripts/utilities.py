@@ -135,6 +135,27 @@ def ensure_temp_dir(temp_root: str = TEMP_DIR) -> str:
     return temp_root
 
 
+def clear_temp_root(temp_root: str = TEMP_DIR) -> None:
+    """Remove every file and folder directly under `temp_root` while keeping the temp root itself.
+
+    Intended for use in a `finally` block at the end of each script so leftover scratch artifacts (extracted vanilla folders, per-mod scratch dirs, intermediate TSVs) never persist between runs, even when the script crashes or is interrupted.
+
+    Args:
+        temp_root (str): Temp root whose contents to wipe. Defaults to `TEMP_DIR`.
+    """
+    if not os.path.exists(temp_root):
+        return
+    for entry in os.listdir(temp_root):
+        entry_path = os.path.join(temp_root, entry)
+        if os.path.isdir(entry_path):
+            shutil.rmtree(entry_path, ignore_errors=True)
+        else:
+            try:
+                os.remove(entry_path)
+            except OSError:
+                pass
+
+
 FIELD_TYPE_FIXERS = {
     "I32": int,
     "F32": float,

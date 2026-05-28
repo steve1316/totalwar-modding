@@ -17,6 +17,7 @@ from utilities import (
     write_updated_tsv_file,
     merge_move,
     ensure_temp_dir,
+    clear_temp_root,
     TEMP_DIR,
 )
 from supported_mods import SUPPORTED_MODS
@@ -278,29 +279,32 @@ if __name__ == "__main__":
 
     ensure_temp_dir()
 
-    # Extract every vanilla table the compat pipelines touch and read each table's current schema version straight off its TSV header. This replaces the previous set of hardcoded version constants and keeps the script self-updating when CA bumps a schema.
-    TABLE_VERSIONS.update(get_vanilla_table_versions(ALL_VANILLA_TABLES))
+    try:
+        # Extract every vanilla table the compat pipelines touch and read each table's current schema version straight off its TSV header. This replaces the previous set of hardcoded version constants and keeps the script self-updating when CA bumps a schema.
+        TABLE_VERSIONS.update(get_vanilla_table_versions(ALL_VANILLA_TABLES))
 
-    # The vanilla pass writes the shared `_vanilla_and_dlc` TSVs into the compat-pack build dirs. Run it serially before the pool so workers never race on the `temp/vanilla_*` extracts produced above.
-    vanilla_mods = [m for m in SUPPORTED_MODS if m["package_name"] == "vanilla"]
-    modded_mods = [m for m in SUPPORTED_MODS if m["package_name"] != "vanilla"]
+        # The vanilla pass writes the shared `_vanilla_and_dlc` TSVs into the compat-pack build dirs. Run it serially before the pool so workers never race on the `temp/vanilla_*` extracts produced above.
+        vanilla_mods = [m for m in SUPPORTED_MODS if m["package_name"] == "vanilla"]
+        modded_mods = [m for m in SUPPORTED_MODS if m["package_name"] != "vanilla"]
 
-    for mod in vanilla_mods:
-        process_mod(mod)
+        for mod in vanilla_mods:
+            process_mod(mod)
 
-    logging.info(f"Processing {len(modded_mods)} modded mods with {args.workers} worker thread(s).")
-    run_parallel(modded_mods, process_mod, args.workers, label_fn=lambda m: f"mod {m.get('package_name', '<unknown>')}")
+        logging.info(f"Processing {len(modded_mods)} modded mods with {args.workers} worker thread(s).")
+        run_parallel(modded_mods, process_mod, args.workers, label_fn=lambda m: f"mod {m.get('package_name', '<unknown>')}")
 
-    # After processing all mods, move the final folders to their destinations.
-    for folder_name in [PREPEND_MELEE_TABLE_FILE_NAME, PREPEND_RANGED_ARC_TABLE_FILE_NAME, PREPEND_VELOCITY_TABLE_FILE_NAME]:
-        if os.path.exists(f"{TEMP_DIR}/{folder_name}"):
-            logging.info(f"Moving {folder_name} to ../warhammer3_mods/.")
-            merge_move(f"{TEMP_DIR}/{folder_name}", "../warhammer3_mods/")
+        # After processing all mods, move the final folders to their destinations.
+        for folder_name in [PREPEND_MELEE_TABLE_FILE_NAME, PREPEND_RANGED_ARC_TABLE_FILE_NAME, PREPEND_VELOCITY_TABLE_FILE_NAME]:
+            if os.path.exists(f"{TEMP_DIR}/{folder_name}"):
+                logging.info(f"Moving {folder_name} to ../warhammer3_mods/.")
+                merge_move(f"{TEMP_DIR}/{folder_name}", "../warhammer3_mods/")
 
-    for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
-        pack_path = workshop_pack_path(steam_workshop_id, f"{mod_name}.pack")
-        if args.reset:
-            reset_pack_folders(pack_path, ("db",))
-        add_folder_to_pack(pack_path, f"../warhammer3_mods/{mod_name}/db;")
+        for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
+            pack_path = workshop_pack_path(steam_workshop_id, f"{mod_name}.pack")
+            if args.reset:
+                reset_pack_folders(pack_path, ("db",))
+            add_folder_to_pack(pack_path, f"../warhammer3_mods/{mod_name}/db;")
+    finally:
+        clear_temp_root()
 
     log_elapsed_time("updating modified attribute mods", start_time)

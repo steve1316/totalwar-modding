@@ -18,8 +18,8 @@ from typing import Dict, List, Tuple
 from utilities import (
     extract_modded_tsv_data,
     load_multiple_tsv_data,
-    cleanup_folders,
     ensure_temp_dir,
+    clear_temp_root,
     STEAM_LIBRARY_DRIVE,
     TEMP_DIR,
 )
@@ -364,56 +364,56 @@ if __name__ == "__main__":
 
     ensure_temp_dir()
 
-    extract_modded_tsv_data(TABLE_NAME, MOD_PACKFILE_PATH, TEMP_EXTRACT_PATH)
-    tsv_folder_path = os.path.join(TEMP_EXTRACT_PATH, f"db/{TABLE_NAME}")
+    try:
 
-    if not os.path.exists(tsv_folder_path):
-        logging.error(f"Extracted folder not found: {tsv_folder_path}.")
-        cleanup_folders([TEMP_EXTRACT_PATH])
-        exit()
+        extract_modded_tsv_data(TABLE_NAME, MOD_PACKFILE_PATH, TEMP_EXTRACT_PATH)
+        tsv_folder_path = os.path.join(TEMP_EXTRACT_PATH, f"db/{TABLE_NAME}")
 
-    merged_data, headers, _ = load_multiple_tsv_data(tsv_folder_path)
-    key_column = next((h for h in headers if h.lower() == "key"), None)
+        if not os.path.exists(tsv_folder_path):
+            logging.error(f"Extracted folder not found: {tsv_folder_path}.")
+            exit()
 
-    if not key_column:
-        logging.error(f"Could not find 'Key' column. Available columns: {headers}.")
-        cleanup_folders([TEMP_EXTRACT_PATH])
-        exit()
+        merged_data, headers, _ = load_multiple_tsv_data(tsv_folder_path)
+        key_column = next((h for h in headers if h.lower() == "key"), None)
 
-    mod_effects = {row.get(key_column, "") for row in merged_data if row.get(key_column, "").startswith("nanu_dynamic_ror_")}
-    missing_effects = mod_effects - {effect for effects in SUPPORTED_EFFECTS.values() for effect in effects}
+        if not key_column:
+            logging.error(f"Could not find 'Key' column. Available columns: {headers}.")
+            exit()
 
-    logging.info(f"Found {len(mod_effects)} total nanu_dynamic_ror_* effects in mod.")
-    logging.info(f"Found {len(missing_effects)} missing effects to add.")
+        mod_effects = {row.get(key_column, "") for row in merged_data if row.get(key_column, "").startswith("nanu_dynamic_ror_")}
+        missing_effects = mod_effects - {effect for effects in SUPPORTED_EFFECTS.values() for effect in effects}
 
-    if not missing_effects:
-        logging.info("No missing effects found. Nothing to add.")
-        cleanup_folders([TEMP_EXTRACT_PATH])
-        exit()
+        logging.info(f"Found {len(mod_effects)} total nanu_dynamic_ror_* effects in mod.")
+        logging.info(f"Found {len(missing_effects)} missing effects to add.")
 
-    # Categorize and add missing effects.
-    categorized: Dict[str, List[str]] = {}
-    for effect in missing_effects:
-        categorized.setdefault(categorize_effect(effect), []).append(effect)
+        if not missing_effects:
+            logging.info("No missing effects found. Nothing to add.")
+            exit()
 
-    for category, effects in sorted(categorized.items()):
-        logging.info(f"  {category}: {len(effects)} effects")
+        # Categorize and add missing effects.
+        categorized: Dict[str, List[str]] = {}
+        for effect in missing_effects:
+            categorized.setdefault(categorize_effect(effect), []).append(effect)
 
-    file_content = read_dynamic_rors_effects_file()
-    for category, effects in categorized.items():
-        file_content = insert_effects_into_category(file_content, category, effects)
-        logging.info(f"  Added {len(effects)} effects to {category}.")
+        for category, effects in sorted(categorized.items()):
+            logging.info(f"  {category}: {len(effects)} effects")
 
-    write_dynamic_rors_effects_file(file_content)
-    logging.info("Successfully updated dynamic_rors_effects.py.")
+        file_content = read_dynamic_rors_effects_file()
+        for category, effects in categorized.items():
+            file_content = insert_effects_into_category(file_content, category, effects)
+            logging.info(f"  Added {len(effects)} effects to {category}.")
 
-    # Recategorize misc effects.
-    logging.info("Recategorizing misc effects...")
-    file_content = _recategorize_misc_effects(read_dynamic_rors_effects_file())
-    write_dynamic_rors_effects_file(file_content)
-    logging.info("Successfully recategorized misc effects.")
+        write_dynamic_rors_effects_file(file_content)
+        logging.info("Successfully updated dynamic_rors_effects.py.")
 
-    cleanup_folders([TEMP_EXTRACT_PATH])
+        # Recategorize misc effects.
+        logging.info("Recategorizing misc effects...")
+        file_content = _recategorize_misc_effects(read_dynamic_rors_effects_file())
+        write_dynamic_rors_effects_file(file_content)
+        logging.info("Successfully recategorized misc effects.")
 
+
+    finally:
+        clear_temp_root()
     end_time = round(time.time() - start_time, 2)
     logging.info(f"Total time for updating dynamic_rors_effects.py: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
