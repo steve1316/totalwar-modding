@@ -3,7 +3,7 @@
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 
-require("script/land_encounters/algorithms/random_encounter_force_generation_system")
+require("script/land_encounters/core/managers")
 
 -- battle spots battle types
 local battle_tables = require("script/land_encounters/configs/battle_tables")
