@@ -1,4 +1,4 @@
-require("script/shared/mct_settings")
+require("script/land_encounters/core/mct")
 
 ---------------------------------------------
 --- Initial MCT setup.

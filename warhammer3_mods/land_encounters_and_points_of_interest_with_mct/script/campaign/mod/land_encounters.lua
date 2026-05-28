@@ -14,7 +14,7 @@ _G.mission_manager     = mission_manager
 _G.get_mct             = get_mct
 
 require("script/land_encounters/utils/common")
-require("script/shared/mct_settings")
+require("script/land_encounters/core/mct")
 
 --[[
     This file only contains module wiring - manager instantiation, listener registration,
