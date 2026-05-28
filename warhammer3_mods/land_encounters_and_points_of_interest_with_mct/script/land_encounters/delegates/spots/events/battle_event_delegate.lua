@@ -1,10 +1,10 @@
 require("script/land_encounters/utils/common")
-require("script/land_encounters/controllers/incident_manager")
+require("script/land_encounters/core/managers")
 
 local complex_continuity_events = require("script/land_encounters/configs/events").complex_continuity
 local elligible_items = require("script/land_encounters/configs/items").balancing
 
-local BattleGenerator = require("script/land_encounters/generators/battle_generator")
+local BattleGenerator = require("script/land_encounters/core/managers").BattleGenerator
 
 local Army = require("script/land_encounters/core/army")
 

@@ -1,4 +1,4 @@
-require("script/land_encounters/controllers/incident_manager")
+require("script/land_encounters/core/managers")
 
 
 local treasure_events = require("script/land_encounters/configs/events").treasure_type

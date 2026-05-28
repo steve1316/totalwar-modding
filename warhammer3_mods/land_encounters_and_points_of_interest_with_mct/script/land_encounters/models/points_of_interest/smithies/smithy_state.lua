@@ -15,7 +15,7 @@ V1.1 in 2.X
 local elligible_items = require("script/land_encounters/configs/items").balancing
 
 require("script/land_encounters/utils/common")
-require("script/land_encounters/controllers/incident_manager")
+require("script/land_encounters/core/managers")
 
 local smithy_missions_by_subculture = require("script/land_encounters/configs/smithy_data").missions_by_subculture
 local special_items_by_subculture = require("script/land_encounters/configs/items").special_by_subculture

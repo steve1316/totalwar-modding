@@ -27,10 +27,11 @@ local battle_events = events.battle_spot
 local smithy_events = events.smithy
 
 --[[ Managers --]]
-local InvasionBattleManager = require("script/land_encounters/controllers/invasion_battle_manager")
+local managers = require("script/land_encounters/core/managers")
+local InvasionBattleManager = managers.InvasionBattleManager
 local LandEncounterManager = require("script/land_encounters/controllers/land_encounter_manager")
-local PointOfInterestEventManager = require("script/land_encounters/controllers/point_of_interest_event_manager")
-local SpotEventManager = require("script/land_encounters/controllers/spot_event_manager")
+local PointOfInterestEventManager = managers.PointOfInterestEventManager
+local SpotEventManager = managers.SpotEventManager
 
 --[[ Instance of the Model of the the land encounters functionality --]]
 local invasion_battle_manager = nil
