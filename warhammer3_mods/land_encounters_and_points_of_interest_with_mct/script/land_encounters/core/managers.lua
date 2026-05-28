@@ -1,6 +1,6 @@
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
-require("script/shared/mct_settings")
+require("script/land_encounters/core/mct")
 
 local factions_data = require("script/land_encounters/configs/factions_data")
 local battle_events_by_level = require("script/land_encounters/configs/events").battle_spot

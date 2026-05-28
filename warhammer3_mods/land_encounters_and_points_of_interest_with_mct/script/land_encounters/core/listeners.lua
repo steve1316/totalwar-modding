@@ -1,5 +1,5 @@
 require("script/land_encounters/utils/common")
-require("script/shared/mct_settings")
+require("script/land_encounters/core/mct")
 
 local IS_PERSISTENT_LISTENER = true
 
