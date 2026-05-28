@@ -1,5 +1,4 @@
-require("script/land_encounters/utils/logger")
-require("script/land_encounters/utils/strings")
+require("script/land_encounters/utils/common")
 require("script/shared/mct_settings")
 
 local Zone = require("script/land_encounters/models/zone")

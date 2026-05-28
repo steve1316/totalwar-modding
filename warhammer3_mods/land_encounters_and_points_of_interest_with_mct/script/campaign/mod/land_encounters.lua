@@ -1,4 +1,4 @@
-require("script/land_encounters/utils/logger")
+require("script/land_encounters/utils/common")
 require("script/shared/mct_settings")
 
 ------------------------------------------------
@@ -11,18 +11,20 @@ local IS_PERSISTENT_LISTENER = true
     The mod logic is in scripts/land_encounters for order and maintainability.
 --]]
 --[[ Coordinates of the warhammer 3 maps --]]
-local ie_land_encounters = require("script/land_encounters/constants/coordinates/inmortal_empires/treasures_and_spots")
-local ie_points_of_interest = require("script/land_encounters/constants/coordinates/inmortal_empires/points_of_interest")
+local coordinates = require("script/land_encounters/configs/coordinates")
+local ie_land_encounters = coordinates.inmortal_empires.treasures_and_spots
+local ie_points_of_interest = coordinates.inmortal_empires.points_of_interest
 
-local roc_encounters = require("script/land_encounters/constants/coordinates/realm_of_chaos/treasures_and_spots")
-local roc_points_of_interest = require("script/land_encounters/constants/coordinates/realm_of_chaos/points_of_interest")
+local roc_encounters = coordinates.realm_of_chaos.treasures_and_spots
+local roc_points_of_interest = coordinates.realm_of_chaos.points_of_interest
 
-local ieee_land_encounters = require("script/land_encounters/constants/coordinates/immortal_empires_expanded/treasures_and_spots")
-local ieee_points_of_interest = require("script/land_encounters/constants/coordinates/immortal_empires_expanded/points_of_interest")
+local ieee_land_encounters = coordinates.immortal_empires_expanded.treasures_and_spots
+local ieee_points_of_interest = coordinates.immortal_empires_expanded.points_of_interest
 
 --[[ Dilemma Events created for this script --]]
-local battle_events = require("script/land_encounters/constants/events/battle_spot_events")
-local smithy_events = require("script/land_encounters/constants/events/smithy_events")
+local events = require("script/land_encounters/configs/events")
+local battle_events = events.battle_spot
+local smithy_events = events.smithy
 
 --[[ Managers --]]
 local InvasionBattleManager = require("script/land_encounters/controllers/invasion_battle_manager")

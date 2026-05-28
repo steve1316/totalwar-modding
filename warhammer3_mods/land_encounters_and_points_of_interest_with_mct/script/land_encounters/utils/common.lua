@@ -1,3 +1,28 @@
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- logger
+-- (from utils/logger.lua)
+
+function log(text, test)
+    local mod_header_text = "LEAPOI";
+    local logText = tostring(text)
+    local logContext = tostring(mod_header_text)
+    out(logContext .. ":  "..logText .. "\n")
+end
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- boolean helpers
+-- (from utils/boolean.lua)
+
+stringtoboolean = { ["true"] = true, ["false"] = false }
+booleantostring = { [true] = "true", [false] = "false" }
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- string helpers
+-- (from utils/strings.lua)
+
 local LAND_ENCOUNTER_TYPE = 0
 local SMITHY_TYPE = 1
 
@@ -11,7 +36,7 @@ function process_marker_id(marker_id)
         local spot_index = string.sub(marker_id, ending_index + 1, #marker_id)
         return { zone_name, tonumber(spot_index), SMITHY_TYPE } -- smithy_type
     end
-    
+
     -- The maximum number of points in a zone would be <99 so we take the last 3 to check where is the last _
     beginning_index, ending_index = string.find(marker_id, "_", (#marker_id - 3))
     local zone_name = string.sub(marker_id, 17, beginning_index - 1)
@@ -39,12 +64,12 @@ function table_to_string(t, indent)
         prefix = prefix .. "\t"
     end
     local result = "{" .. "".."\n"
-    local first_result = false 
+    local first_result = false
     for k, v in pairs(t) do
         if not first_result then
             first_result = true
         else
-            result = result .. ",\n" 
+            result = result .. ",\n"
         end
         local layer_indent = "\t"
         if type(k) == "string" then
@@ -55,7 +80,7 @@ function table_to_string(t, indent)
         elseif type(v) == "boolean" or type(v) == "number" then
             v = tostring(v)
         elseif type(v) == "string" then
-            v = string.format("%q", v) 
+            v = string.format("%q", v)
         elseif type(v) == "table" then
             v = table_to_string(v, indent + 1)
         end
@@ -64,3 +89,13 @@ function table_to_string(t, indent)
     result = result .. "\n"..prefix.."}"
     return result
 end
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- common constants/helpers
+-- (from constants/utils/common.lua)
+
+-- Variables for controlling battle types
+AMBUSH_TYPE = 1
+INTERCEPTION_TYPE = 2
+ALLIED_REINFORCEMENTS_PERMITTED_TYPE = 3

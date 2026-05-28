@@ -1,5 +1,4 @@
-require("script/land_encounters/utils/logger")
-require("script/land_encounters/constants/utils/common")
+require("script/land_encounters/utils/common")
 
 -------------------------
 --- Constant values of the class [DO NOT CHANGE]

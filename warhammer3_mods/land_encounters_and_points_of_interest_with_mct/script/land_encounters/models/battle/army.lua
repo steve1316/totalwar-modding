@@ -1,24 +1,25 @@
 -- TODO: Pass a is_player flag in the constructor to double check units and pass alternatives in case they are needed.
 -- Make logic to check dlc ownership given subculture. Should a Unit or Lord type be DLC only, replace those units with its more close main variant or pass it in its constructor.
-require("script/land_encounters/utils/logger")
+require("script/land_encounters/utils/common")
 
 -- Mod libs
 local ArmyUnit = require("script/land_encounters/models/battle/army_unit")
 local LordUnit = require("script/land_encounters/models/battle/lord_unit")
 
 -- smithy defenders
-local smithy_defenders = require("script/land_encounters/constants/battles/smithy/defenders")
+local smithy_defenders = require("script/land_encounters/configs/smithy_data").defenders
 
 -- battle spots battle types
-local bandits = require("script/land_encounters/constants/battles/bandits")
-local battlefields = require("script/land_encounters/constants/battles/battlefields")
-local daemonic_gifts = require("script/land_encounters/constants/battles/daemonic_gifts")
-local incursions = require("script/land_encounters/constants/battles/incursions")
-local relic_defenses = require("script/land_encounters/constants/battles/relic_defenses")
-local rebellions = require("script/land_encounters/constants/battles/nascent_rebellions")
-local skirmishes = require("script/land_encounters/constants/battles/skirmishes")
-local surprise_attacks = require("script/land_encounters/constants/battles/surprise_attacks")
-local waystones = require("script/land_encounters/constants/battles/waystones")
+local battle_tables = require("script/land_encounters/configs/battle_tables")
+local bandits = battle_tables.bandits
+local battlefields = battle_tables.battlefields
+local daemonic_gifts = battle_tables.daemonic_gifts
+local incursions = battle_tables.incursions
+local relic_defenses = battle_tables.relic_defenses
+local rebellions = battle_tables.nascent_rebellions
+local skirmishes = battle_tables.skirmishes
+local surprise_attacks = battle_tables.surprise_attacks
+local waystones = battle_tables.waystones
 
 require("script/land_encounters/algorithms/random_encounter_force_generation_system")
 

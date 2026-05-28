@@ -1,6 +1,6 @@
 require("script.land_encounters.algorithms.spillover_balancer_algorithm")
 
-local battle_events_by_level = require("script/land_encounters/constants/events/battle_spot_events")
+local battle_events_by_level = require("script/land_encounters/configs/events").battle_spot
 
 local event_stack = require("script/land_encounters/models/events/event_stack")
 

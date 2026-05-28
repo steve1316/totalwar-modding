@@ -2,7 +2,7 @@
 
 -- Read the JSON file.
 require("script/land_encounters/utils/random")
-local factions_data = require("script/land_encounters/constants/battles/factions_data")
+local factions_data = require("script/land_encounters/configs/factions_data")
 require("script/shared/mct_settings")
 local difficulties = get_mct_settings().difficulties
 -- print("Reading factions_data.json...")

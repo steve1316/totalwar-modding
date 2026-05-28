@@ -1,9 +1,9 @@
 require("script/land_encounters/controllers/incident_manager")
 
 
-local treasure_events = require("script/land_encounters/constants/events/treasure_type_events")
+local treasure_events = require("script/land_encounters/configs/events").treasure_type
 
-local elligible_items = require("script/land_encounters/constants/items/balancing_items")
+local elligible_items = require("script/land_encounters/configs/items").balancing
 
 -------------------------
 --- Properties definition
