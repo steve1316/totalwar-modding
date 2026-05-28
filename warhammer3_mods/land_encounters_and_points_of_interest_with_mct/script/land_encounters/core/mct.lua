@@ -11,7 +11,6 @@ local mct_settings = {
     enabled_encounter_skin_ids = {},
     enabled_mods = {},
     enable_all_encounter_skins = true,
-    enable_randomized_encounter_force_generation = false,
     use_only_modded_units = false,
     enable_compatibility_with_supported_mods = false,
     randomized_encounter_force_generation_difficulty = "easy",
@@ -360,7 +359,6 @@ function set_mct_settings(mct_mod)
     end
     mct_settings.enabled_intervention_types = enabled_intervention_types
     mct_settings.enable_all_encounter_skins = mct_mod:get_option_by_key("enable_all_encounter_skins"):get_finalized_setting()
-    mct_settings.enable_randomized_encounter_force_generation = mct_mod:get_option_by_key("enable_randomized_encounter_force_generation"):get_finalized_setting()
     mct_settings.use_only_modded_units = mct_mod:get_option_by_key("use_only_modded_units"):get_finalized_setting()
     mct_settings.enable_compatibility_with_supported_mods = mct_mod:get_option_by_key("enable_compatibility_with_supported_mods"):get_finalized_setting()
     mct_settings.randomized_encounter_force_generation_difficulty = mct_mod:get_option_by_key("difficulty_dropdown"):get_finalized_setting()
@@ -374,7 +372,6 @@ function set_mct_settings(mct_mod)
     out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))
     out("DEBUG - mct_settings.enable_all_encounter_skins: " .. tostring(mct_settings.enable_all_encounter_skins))
-    out("DEBUG - mct_settings.enable_randomized_encounter_force_generation: " .. tostring(mct_settings.enable_randomized_encounter_force_generation))
     out("DEBUG - mct_settings.use_only_modded_units: " .. tostring(mct_settings.use_only_modded_units))
     out("DEBUG - mct_settings.enable_compatibility_with_supported_mods: " .. tostring(mct_settings.enable_compatibility_with_supported_mods))
     out("DEBUG - mct_settings.randomized_encounter_force_generation_difficulty: " .. tostring(mct_settings.randomized_encounter_force_generation_difficulty))

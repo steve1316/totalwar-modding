@@ -5,20 +5,9 @@ require("script/land_encounters/utils/random")
 
 require("script/land_encounters/core/managers")
 
--- battle spots battle types
-local battle_tables = require("script/land_encounters/configs/battle_tables")
-local bandits = battle_tables.bandits
-local battlefields = battle_tables.battlefields
-local daemonic_gifts = battle_tables.daemonic_gifts
-local incursions = battle_tables.incursions
-local relic_defenses = battle_tables.relic_defenses
-local rebellions = battle_tables.nascent_rebellions
-local skirmishes = battle_tables.skirmishes
-local surprise_attacks = battle_tables.surprise_attacks
-local waystones = battle_tables.waystones
-
--- smithy defenders
-local smithy_defenders = require("script/land_encounters/configs/smithy_data").defenders
+-- factions_data drives the randomization pipeline. Used here only to validate that a smithy's
+-- subculture-derived shorthand has a faction-data entry before we call into the randomizer.
+local factions_data = require("script/land_encounters/configs/factions_data")
 
 -- Cultural alliance pools for the Allied Reinforcement intervention.
 local alliances = require("script/land_encounters/configs/alliances")
@@ -327,76 +316,42 @@ end
 -------------------------
 function Army:new_from_event(battle_event)
     out("DEBUG - new_from_event battle_event: " .. battle_event)
-    -- out("DEBUG - new_from_event player_force_cqi: " .. player_force_cqi)
-    -- local gold_value = cm:force_gold_value(player_force_cqi)
-    -- out("DEBUG - gold value of player force: " .. gold_value)
-    -- Determine the force
-    local force_data = {}
 
-    if get_mct_settings().enable_randomized_encounter_force_generation then
-        out("DEBUG - enabling randomized encounter force generation.")
-
-        -- Get the difficulty either based on the difficulty dropdown or the basic progressive difficulty using turn numbers.
-        local difficulty = get_mct_settings().randomized_encounter_force_generation_difficulty
-        if get_mct_settings().enable_basic_progressive_difficulty then
-            if cm:turn_number() < get_mct_settings().turn_number_from_easy_to_medium then
-                difficulty = "easy"
-            elseif cm:turn_number() < get_mct_settings().turn_number_from_medium_to_hard then
-                difficulty = "medium"
-            else
-                difficulty = "hard"
-            end
+    -- Difficulty comes from the MCT dropdown unless progressive scaling is enabled, in which
+    -- case it ramps up with the current turn number.
+    local difficulty = get_mct_settings().randomized_encounter_force_generation_difficulty
+    if get_mct_settings().enable_basic_progressive_difficulty then
+        if cm:turn_number() < get_mct_settings().turn_number_from_easy_to_medium then
+            difficulty = "easy"
+        elseif cm:turn_number() < get_mct_settings().turn_number_from_medium_to_hard then
+            difficulty = "medium"
+        else
+            difficulty = "hard"
         end
+    end
 
-        local faction = get_random_faction()
-        -- local faction = "ogr"
-        out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)
-        force_data = start_force_makeup_generation(difficulty, faction)
+    local faction = get_random_faction()
+    out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)
+    local force_data = start_force_makeup_generation(difficulty, faction)
 
-        -- Pick the intervention type once so we can branch on it below for ally setup.
-        local intervention_type = pick_intervention_type()
-        local ally_force_data = nil
-        if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
-            local ally_faction = pick_ally_faction()
-            if ally_faction == nil then
-                -- Subculture not mapped AND union pool also empty - defensive demote to interception.
-                out("DEBUG - Allied intervention picked but no ally faction available; demoting to INTERCEPTION_TYPE.")
-                intervention_type = INTERCEPTION_TYPE
-            else
-                out("DEBUG - Allied intervention picked; generating ally force from faction: " .. ally_faction)
-                local ally_makeup = start_force_makeup_generation(difficulty, ally_faction)
-                ally_force_data = convert_force_makeup_to_usable_format(difficulty, ally_makeup, ally_faction, "ally_force", "ally_invasion", INTERCEPTION_TYPE)
-            end
+    -- Pick the intervention type once so we can branch on it below for ally setup.
+    local intervention_type = pick_intervention_type()
+    local ally_force_data = nil
+    if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
+        local ally_faction = pick_ally_faction()
+        if ally_faction == nil then
+            out("DEBUG - Allied intervention picked but no ally faction available; demoting to INTERCEPTION_TYPE.")
+            intervention_type = INTERCEPTION_TYPE
+        else
+            out("DEBUG - Allied intervention picked; generating ally force from faction: " .. ally_faction)
+            local ally_makeup = start_force_makeup_generation(difficulty, ally_faction)
+            ally_force_data = convert_force_makeup_to_usable_format(difficulty, ally_makeup, ally_faction, "ally_force", "ally_invasion", INTERCEPTION_TYPE)
         end
+    end
 
-        force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, "encounter_force", "encounter_invasion", intervention_type)
-        if ally_force_data ~= nil then
-            force_data.reinforcing_ally_armies = { ally_force_data }
-        end
-        out("DEBUG - force experience amount: " .. force_data.unit_experience_amount)
-        out("DEBUG - force_data:")
-        print_table(force_data)
-        out("DEBUG - force_data done.")
-    else
-        if string.find(battle_event, "bandit") then
-            force_data = bandits[battle_event]
-        elseif string.find(battle_event, "battlefield") then
-            force_data = battlefields[battle_event]
-        elseif string.find(battle_event, "daemonic_gift") then
-            force_data = daemonic_gifts[battle_event]
-        elseif string.find(battle_event, "incursion") then
-            force_data = incursions[battle_event]
-        elseif string.find(battle_event, "stands") then
-            force_data = relic_defenses[battle_event]
-        elseif string.find(battle_event, "underground") then
-            force_data = rebellions[battle_event]
-        elseif string.find(battle_event, "skirmish") then
-            force_data = skirmishes[battle_event]
-        elseif string.find(battle_event, "surprise") then
-            force_data = surprise_attacks[battle_event]
-        elseif string.find(battle_event, "waystone") then
-            force_data = waystones[battle_event]
-        end
+    force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, "encounter_force", "encounter_invasion", intervention_type)
+    if ally_force_data ~= nil then
+        force_data.reinforcing_ally_armies = { ally_force_data }
     end
 
     -- if reinforcement armies are present we declare them here
@@ -457,40 +412,36 @@ end
 
 
 -- If the subculture is not found in the registered defenders table we just return an empty table
-function Army:new_from_faction_and_subculture_and_level(faction_name, subculture, level)
-    local force_data = smithy_defenders[subculture]
+-- Maps the smithy upgrade level (1, 2, 3) to a randomization difficulty key.
+local SMITHY_LEVEL_TO_DIFFICULTY = { [1] = "easy", [2] = "medium", [3] = "hard" }
 
-    if force_data == nil or next(force_data) == nil then
-        return {}
+-- Extracts the 3-letter faction shorthand from a subculture key (e.g. "wh_main_sc_emp_empire" -> "emp").
+-- Returns nil if the subculture does not match the expected pattern.
+local function shorthand_from_subculture(subculture)
+    if subculture == nil then return nil end
+    return subculture:match("sc_(%w+)_")
+end
+
+-- Builds a smithy defender Army by running the same randomization pipeline as random encounters.
+-- The defender faction matches the smithy's controlling-faction subculture when possible, and
+-- falls back to a random faction if the subculture has no shorthand mapping. The smithy upgrade
+-- level drives difficulty. Intervention type is picked via the MCT-toggled picker, so smithy
+-- battles participate in the same Ambush / Interception / Allied Reinforcements selection as
+-- random encounters.
+function Army:new_from_subculture_and_level(subculture, level)
+    local shorthand = shorthand_from_subculture(subculture)
+    if shorthand == nil or factions_data[shorthand] == nil then
+        out("DEBUG - smithy: subculture '" .. tostring(subculture) .. "' has no faction-shorthand mapping; using random faction.")
+        shorthand = get_random_faction()
     end
 
-    local forces_of_level = force_data.armies_by_level[level]
+    local difficulty = SMITHY_LEVEL_TO_DIFFICULTY[level] or "easy"
+    out("DEBUG - smithy: generating defender for shorthand=" .. shorthand .. ", level=" .. tostring(level) .. ", difficulty=" .. difficulty)
 
-    -- Create the defender army
-    local t = {
-        faction = faction_name,
-        force_identifier = force_data.identifier,
-        invasion_identifier = force_data.invasion_identifier,
-        intervention_type = force_data.intervention_type,
-        units_pool = {},
-        units = {},
-        unit_experience_amount = forces_of_level.unit_experience_amount,
-        lord_pool = {},
-        lord = {},
-        reinforcing_ally_armies = {},
-        reinforcing_enemy_armies = {},
-    }
-    t.lord_pool = LordUnit:newFrom(force_data.lord)
+    local force_data = start_force_makeup_generation(difficulty, shorthand)
+    force_data = convert_force_makeup_to_usable_format(difficulty, force_data, shorthand, "smithy_defender_force", "smithy_defender_invasion", pick_intervention_type())
 
-    for i=1, #forces_of_level.units do
-        local unit = ArmyUnit:newFrom(forces_of_level.units[i])
-        table.insert(t.units_pool, unit)
-    end
-
-    setmetatable(t, self)
-    self.__index = self
-
-    return t
+    return Army:create_from(force_data)
 end
 
 
