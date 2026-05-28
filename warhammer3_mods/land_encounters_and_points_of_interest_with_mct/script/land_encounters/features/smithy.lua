@@ -12,13 +12,12 @@ V1.1 in 2.X
 - Region aware. Region AI owner auto attacks the smithy if owned by the player.
 - Quest given by the smithy itself. Should give legendary items or blue sets if they are completed in time.
 ]]--
-local elligible_items = require("script/land_encounters/configs/items").balancing
-
 require("script/land_encounters/utils/common")
 require("script/land_encounters/core/managers")
 
-local smithy_missions_by_subculture = require("script/land_encounters/configs/smithy_data").missions_by_subculture
+local elligible_items = require("script/land_encounters/configs/items").balancing
 local special_items_by_subculture = require("script/land_encounters/configs/items").special_by_subculture
+local smithy_missions_by_subculture = require("script/land_encounters/configs/smithy_data").missions_by_subculture
 
 local Army = require("script/land_encounters/core/army")
 
@@ -31,10 +30,10 @@ local SECOND_OPTION = 1
 local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
 -- Heavily reused events
-local EVENT_RECLAMATION = "land_enc_dilemma_smithy_reclamation" 
-local EVENT_DEFENSE = "land_enc_dilemma_smithy_defense" 
+local EVENT_RECLAMATION = "land_enc_dilemma_smithy_reclamation"
+local EVENT_DEFENSE = "land_enc_dilemma_smithy_defense"
 local EVENT_VISIT_BY_LEVEL = {
-    "land_enc_dilemma_smithy_visit_level_1", 
+    "land_enc_dilemma_smithy_visit_level_1",
     "land_enc_dilemma_smithy_visit_level_2",
     "land_enc_dilemma_smithy_visit_level_3"
 }
@@ -51,13 +50,13 @@ local SmithyState = {
     index_in_zone = "",
     coordinates = {},
     -- smithy defense (from player or AI) variables
-    is_defense_triggered = false,    
+    is_defense_triggered = false,
     is_reclamation_triggered = false,
-        
+
     visiting_enemy_character = false,
-    -- in case the player does not finish the battle in the same game session we save its faction to find him later                
+    -- in case the player does not finish the battle in the same game session we save its faction to find him later
     visiting_enemy_faction_name = false,
-        
+
     level = 1,
     controlling_faction_name = "",
     controlling_faction_subculture = "",
@@ -170,11 +169,11 @@ end
 -------------------------
 
 --- @param area_and_character_info table: interactable marker context
---- @param invasion_battle_manager table: The manager to trigger invasions like offensive and defensive battles 
+--- @param invasion_battle_manager table: The manager to trigger invasions like offensive and defensive battles
 function SmithyState:trigger_event(area_and_character_info, invasion_battle_manager)
     local visiting_character = area_and_character_info:family_member():character()
     local visiting_faction = visiting_character:faction()
-        
+
     -- is human
     if is_human_and_it_is_its_turn(visiting_faction) then
         -- and is occupied by said human
@@ -215,7 +214,7 @@ function SmithyState:trigger_event(area_and_character_info, invasion_battle_mana
                     -- then we can avoid it or battle for it
                     self.visiting_enemy_character = visiting_character
                     self.visiting_enemy_faction_name = visiting_faction:name()
-                    cm:trigger_dilemma(visiting_faction:name(), EVENT_RECLAMATION) 
+                    cm:trigger_dilemma(visiting_faction:name(), EVENT_RECLAMATION)
                 else
                     cm:show_message_event_located(visiting_faction:name(),
                         "event_feed_strings_text_title_event_land_enc_smithy_encountered",
@@ -240,7 +239,7 @@ function SmithyState:trigger_event(area_and_character_info, invasion_battle_mana
                 )
             end
         end
-    elseif not self:is_prohibited_subculture(visiting_faction) and self:is_faction_at_war_with_owner(visiting_faction) then 
+    elseif not self:is_prohibited_subculture(visiting_faction) and self:is_faction_at_war_with_owner(visiting_faction) then
     -- is not an AI faction that has too random armies and is an AI enemy faction so the faction attacks the point
         if self:is_occupied_by_player() then
             -- the smithy is attacked, triger related event
@@ -256,7 +255,7 @@ function SmithyState:trigger_event(area_and_character_info, invasion_battle_mana
                 self:change_owner_through_conquest(visiting_faction:name(), is_player, visiting_character)
             end
         end
-    end    
+    end
 end
 
 function SmithyState:change_owner_through_occupation(faction)
@@ -265,7 +264,7 @@ end
 
 function SmithyState:change_owner_through_conquest(faction, is_player, representative_character)
     self:set_controlling_faction(faction)
-    
+
     if is_player then
         trigger_incident(EVENT_RECLAMATION, EVENT_VISIT_TARGETS, self:get_spot_info(), representative_character)
     end
@@ -274,7 +273,7 @@ end
 function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, invasion_battle_manager)
     local choice = dilemma_choice_and_faction_info:choice()
     local dilemma = dilemma_choice_and_faction_info:dilemma()
-        
+
     if (dilemma == EVENT_VISIT_BY_LEVEL[1] or dilemma == EVENT_VISIT_BY_LEVEL[2]) and choice == FIRST_OPTION then
         self.level = self.level + 1
         self.visit_cooldown = 3
@@ -288,11 +287,11 @@ function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
             false,
             EVENT_IMAGE_ID_LOCATION_OF_INTEREST
         )
-    elseif dilemma == EVENT_VISIT_BY_LEVEL[1] or dilemma == EVENT_VISIT_BY_LEVEL[2] or dilemma == EVENT_VISIT_BY_LEVEL[3] then 
+    elseif dilemma == EVENT_VISIT_BY_LEVEL[1] or dilemma == EVENT_VISIT_BY_LEVEL[2] or dilemma == EVENT_VISIT_BY_LEVEL[3] then
         self.visit_cooldown = 10
     end
 
-    
+
     if dilemma == EVENT_RECLAMATION and choice == FIRST_OPTION then
         -- If the AI controls the point. The point will be heavily defended. Only the player has to level it up correctly as the player benefits more from it
         -- up in the other logic
@@ -306,7 +305,7 @@ function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
         self:trigger_forced_interception_defense(invasion_battle_manager)
     elseif dilemma == EVENT_DEFENSE and choice == SECOND_OPTION then
         self:trigger_unconditional_surrender_incident()
-        
+
         cm:show_message_event_located(self.controlling_faction_name,
             "event_feed_strings_text_title_event_land_enc_smithy_unconditional_surrender",
             "event_feed_strings_text_subtitle_event_land_enc_smithy_unconditional_surrender",
@@ -334,7 +333,7 @@ function SmithyState:trigger_reclamation_battle(invasion_battle_manager)
         self.visiting_enemy_character = cm:get_closest_character_to_position_from_faction(self.visiting_enemy_faction_name, self.coordinates[1], self.coordinates[2], true, false, false)
     end
 
-    if invasion_battle_manager:can_generate_battle(offensive_army, self.coordinates) then    
+    if invasion_battle_manager:can_generate_battle(offensive_army, self.coordinates) then
         invasion_battle_manager:generate_battle(offensive_army, self.visiting_enemy_character, self.coordinates)
         invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
         invasion_battle_manager:reset_state_post_battle(self, "SmithySpot", nil, offensive_army)
@@ -356,7 +355,7 @@ function SmithyState:trigger_forced_interception_defense(invasion_battle_manager
     if not self.visiting_enemy_character then
         self.visiting_enemy_character = cm:get_closest_character_to_position_from_faction(self.visiting_enemy_faction_name, self.coordinates[1], self.coordinates[2], true, false, false)
     end
-    
+
     invasion_battle_manager:generate_defense_battle(defender_army, self.visiting_enemy_character, self.coordinates)
     invasion_battle_manager:mark_battle_forces_for_removal(defender_army)
     invasion_battle_manager:reset_state_post_battle(self, "SmithySpot", nil, defender_army)
@@ -393,7 +392,7 @@ function SmithyState:trigger_successful_reclamation()
         false,
         EVENT_IMAGE_ID_LOCATION_OF_INTEREST
     )
-    
+
     self:change_owner_through_occupation(self.visiting_enemy_faction_name)
 end
 
@@ -456,7 +455,7 @@ function SmithyState:check_if_owner_is_alive_and_return_faction()
         self.controlling_faction_name = ""
         return nil
     end
-    
+
     if not cm:faction_is_alive(controlling_faction) then
         self.controlling_faction_name = ""
         return nil
@@ -498,16 +497,16 @@ function SmithyState:set_controlling_faction(faction)
     if type(faction) == "string" then
         faction = cm:get_faction(faction)
     end
-        
+
     -- The faction has been destroyed and the smithy has been abandoned or the faction cannot occupy
     if not faction or faction == "" then
         self.controlling_faction_name = ""
         self.controlling_faction_subculture = ""
     else
         self.controlling_faction_name = faction:name()
-        self.controlling_faction_subculture = faction:subculture()        
+        self.controlling_faction_subculture = faction:subculture()
     end
-    
+
     self.turns_under_control = 0
 end
 
@@ -515,14 +514,14 @@ function SmithyState:reset_defense_flags()
     self.is_reclamation_triggered = false
     self.is_defense_triggered = false
     self.visiting_enemy_character = false
-    self.visiting_enemy_faction_name = false    
+    self.visiting_enemy_faction_name = false
 end
 
 function SmithyState:get_spot_info()
-    return { 
-        zone = self.zone_name, 
-        spot_index = self.index_in_zone, 
-        spot_type = "SmithySpot", 
+    return {
+        zone = self.zone_name,
+        spot_index = self.index_in_zone,
+        spot_type = "SmithySpot",
         coordinates = self.coordinates
     }
 end
@@ -536,10 +535,10 @@ function SmithyState:character_is_general_and_can_trigger_dilemma(character)
     end
 end
 
---- 
---- 
 ---
-function SmithyState:get_defensive_army() 
+---
+---
+function SmithyState:get_defensive_army()
     local battle_level = 3
     if self:is_occupied_by_player() then
         battle_level = self.level
@@ -548,7 +547,7 @@ function SmithyState:get_defensive_army()
     if self:is_occupied() then
         return Army:new_from_faction_and_subculture_and_level(self.controlling_faction_name, self.controlling_faction_subculture, battle_level)
     else
-        return {} 
+        return {}
     end
 end
 
@@ -561,7 +560,7 @@ function SmithyState:export_state_as_table()
     state_info["index_in_zone"] = self.index_in_zone
     state_info["coordinates"] = self.coordinates
     state_info["is_defense_triggered"] = self.is_defense_triggered
-    state_info["is_reclamation_triggered"] = self.is_reclamation_triggered    
+    state_info["is_reclamation_triggered"] = self.is_reclamation_triggered
     state_info["visiting_enemy_faction_name"] = self.visiting_enemy_faction_name
     state_info["level"] = self.level
     state_info["controlling_faction_name"] = self.controlling_faction_name
@@ -595,12 +594,12 @@ function SmithyState:new(zone_name, index_in_zone, coordinates)
         index_in_zone = index_in_zone,
         coordinates = coordinates,
 
-        is_defense_triggered = false,    
+        is_defense_triggered = false,
         is_reclamation_triggered = false,
-            
+
         visiting_enemy_character = false,
         visiting_enemy_faction_name = false,
-            
+
         level = 1,
         controlling_faction_name = "",
         controlling_faction_subculture = "",
@@ -608,8 +607,111 @@ function SmithyState:new(zone_name, index_in_zone, coordinates)
         visit_cooldown = 0
     }
     setmetatable(t, self)
-    self.__index = self    
+    self.__index = self
     return t
 end
 
-return SmithyState
+
+-------------------------
+--- Properties definition
+-------------------------
+local SmithyEventDelegate = {
+    smithies_state = {},
+    -- Mission delegate
+    smithy_mission_delegate = {},
+    -- CA Managers
+    mission_manager = {},
+    -- Delegates
+    invasion_battle_manager = {}
+}
+
+-------------------------------------
+--- Generation and automatic updates
+-------------------------------------
+
+function SmithyEventDelegate:generate_states(zone_name, smithies_initial_state)
+    local player_faction_name = cm:get_local_faction_name()
+
+    for i = 1, #smithies_initial_state do
+        local smithy_state = SmithyState:new(zone_name, i, smithies_initial_state[i].coordinates)
+
+        if player_faction_name == smithies_initial_state[i].initial_owner then
+            smithy_state:set_controlling_faction(smithies_initial_state[i].owner_if_player)
+        else
+            smithy_state:set_controlling_faction(smithies_initial_state[i].initial_owner)
+        end
+
+        table.insert(self.smithies_state, smithy_state)
+    end
+end
+
+
+function SmithyEventDelegate:update_state_given_turn_passing()
+    for i=1, #self.smithies_state do
+        self.smithies_state[i]:update_state_given_turn_passing(self.mission_manager)
+    end
+end
+
+-------------------------------------
+--- Event Management
+-------------------------------------
+
+function SmithyEventDelegate:trigger_event(area_and_character_info, spot_info)
+    for i=1, #self.smithies_state do
+        if self.smithies_state[i].zone_name == spot_info.zone.name and self.smithies_state[i].index_in_zone == spot_info.spot_index then
+            self.smithies_state[i]:trigger_event(area_and_character_info, self.invasion_battle_manager)
+            break
+        end
+    end
+end
+
+function SmithyEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
+    for i=1, #self.smithies_state do
+        if self.smithies_state[i].zone_name == spot_info.zone.name and self.smithies_state[i].index_in_zone == spot_info.spot_index then
+            self.smithies_state[i]:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, self.invasion_battle_manager)
+            break
+        end
+    end
+end
+
+
+-------------------------
+--- Memory Management
+-------------------------
+
+function SmithyEventDelegate:export_state_as_table()
+    local smithies_data = {}
+    for i = 1, #self.smithies_state do
+        table.insert(smithies_data, self.smithies_state[i]:export_state_as_table())
+    end
+    return smithies_data
+end
+
+function SmithyEventDelegate:reinstate_event_if_able(previous_state)
+    for i = 1, #previous_state do
+        self.smithies_state[i] = SmithyState:new("", 0, {})
+        local active_poi_spot_index = self.smithies_state[i]:reinstate(previous_state[i])
+        if active_poi_spot_index ~= nil then
+            local defensive_army = self.smithies_state[i]:get_defensive_army()
+            self.invasion_battle_manager:set_auxiliary_army_for_reset(defensive_army)
+            self.invasion_battle_manager:mark_battle_forces_for_removal(defensive_army)
+            self.invasion_battle_manager:reset_state_post_battle(self.smithies_state[i], "SmithySpot", nil, defensive_army)
+        end
+    end
+end
+
+
+-------------------------
+--- Constructors
+-------------------------
+function SmithyEventDelegate:new(mission_manager, invasion_battle_manager)
+    local t = {
+        mission_manager = mission_manager,
+        invasion_battle_manager = invasion_battle_manager
+    }
+    setmetatable(t, self)
+    self.__index = self
+    return t
+end
+
+return SmithyEventDelegate

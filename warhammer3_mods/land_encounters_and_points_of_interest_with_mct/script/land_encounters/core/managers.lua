@@ -1554,8 +1554,8 @@ end
 --- Constructors
 -------------------------
 function SpotEventManager:new(invasion_battle_manager)
-    TreasureEventDelegate = TreasureEventDelegate or require("script/land_encounters/delegates/spots/events/treasure_event_delegate")
-    BattleEventDelegate = BattleEventDelegate or require("script/land_encounters/delegates/spots/events/battle_event_delegate")
+    TreasureEventDelegate = TreasureEventDelegate or require("script/land_encounters/features/treasure_spot")
+    BattleEventDelegate = BattleEventDelegate or require("script/land_encounters/features/battle_spot")
     local t = {
         treasure_event_delegate = TreasureEventDelegate:new(),
         battle_event_delegate = BattleEventDelegate:new(invasion_battle_manager)
@@ -1624,7 +1624,7 @@ end
 --- Constructors
 -------------------------
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
-    SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/delegates/points_of_interests/events/smithy_event_delegate")
+    SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
     local t = {
         smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager)
     }
