@@ -1,7 +1,7 @@
 require("script/land_encounters/utils/common")
 require("script/shared/mct_settings")
 
-local Zone = require("script/land_encounters/models/zone")
+local Zone = require("script/land_encounters/core/spot").Zone
 
 -------------------------
 --- Constant values of the class [DO NOT CHANGE]
