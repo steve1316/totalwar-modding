@@ -1,3 +1,8 @@
+--- Central manager module. Bundles: spillover_balancer_algorithm,
+--- random_encounter_force_generation_system, EventStack, IncidentManager (free-function globals),
+--- InvasionBattleManager (spawn + invasion lifecycle), BattleGenerator, SpotEventManager,
+--- and PointOfInterestEventManager.
+
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
@@ -5,35 +10,37 @@ require("script/land_encounters/core/mct")
 local factions_data = require("script/land_encounters/configs/factions_data")
 local battle_events_by_level = require("script/land_encounters/configs/events").battle_spot
 
--- Delegate requires kept at old paths for Phase 6 to update later.
--- Delegate require paths kept at old locations for Phase 6. Lazy-loaded inside the manager constructors below to avoid the circular require that the delegates trigger (they need to require core/managers themselves for incident globals).
+--- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
+--- require (the delegates pull core/managers back in for the incident globals).
 local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- spillover_balancer_algorithm
--- (from algorithms/spillover_balancer_algorithm.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- spillover_balancer_algorithm
+--- (from algorithms/spillover_balancer_algorithm.lua)
 
 local CHANCES_INDEX = 1
 
 local STABILIZING_TURN = 120
 
+--- Builds the per-level chance buckets for a turn. Early turns concentrate chance on the lowest level
+--- and progressively spill probability into higher levels until the STABILIZING_TURN equalizes them.
+--- @param number_of_levels number How many event-difficulty levels exist.
+--- @param turn_number number Current campaign turn (1-based).
+--- @returns table An array of per-level chance values (length number_of_levels).
 local function calculate_filled_buckets_given_turn_number(number_of_levels, turn_number)
     local buckets = {}
     local total_chances_to_distribute = 100
     local equal_chance_of_event_happening = 100/number_of_levels
     local spillover_delta = (100 - equal_chance_of_event_happening) / STABILIZING_TURN
 
-    -- turn_number | total chances | buckets [5]          | number_of_levels | spillover_delta | STABILIZING_TURN
-    -- 1           | 100           | [100][0][0][0][0]    | 5                | 4               | 20
-    -- 2           | 100           | [96][4][0][0][0]     | 5                | 4               | 20
-    -- 3           | 100           | [92][8][0][0][0]     | 5                | 4               | 20
-    -- 4           | 100           | [88][12][0][0][0]    | 5                | 4               | 20
-    -- 5           | 100           | [84][16][0][0][0]    | 5                | 4               | 20
-    -- 6           | 100           | [80][20][0][0][0]    | 5                | 4               | 20
-    -- 7           | 100           | [76][20][4][0][0]    | 5                | 4               | 20
+    --- Sample distribution over the first several turns (5 levels, spillover_delta=4):
+    ---  turn 1: [100][0][0][0][0]
+    ---  turn 2: [96][4][0][0][0]
+    ---  turn 3: [92][8][0][0][0]
+    ---  turn 7: [76][20][4][0][0]
     local guiding_bucket_chances = total_chances_to_distribute - (turn_number - 1) * spillover_delta
     guiding_bucket_chances = math.max(equal_chance_of_event_happening, guiding_bucket_chances)
     buckets[1] = guiding_bucket_chances
@@ -48,18 +55,21 @@ local function calculate_filled_buckets_given_turn_number(number_of_levels, turn
     return buckets
 end
 
+--- Comparator for table.sort that orders chance pairs by descending chance.
+--- @param a table A {chance, level} pair.
+--- @param b table A {chance, level} pair.
+--- @returns boolean True when a's chance is greater than b's chance.
 local function compare_chances_of_event_happening(a,b)
     return a[CHANCES_INDEX] > b[CHANCES_INDEX]
 end
 
 
---- @function randomize_chances_of_event_happening_considering_spillover_given_turn
---- @description using an spillover algorithm, slowly enable more complex events as turns pass
---- @param number_of_levels number the number of levels to consider for balancing the chances of an event happening
---- @param turn_number number the current turn number in the user game
---- @return table RandomizedEvents a list of events randomized
+--- Uses a spillover algorithm to slowly enable more complex events as turns pass. Returns a list
+--- of {chance, level} pairs sorted in descending chance.
+--- @param number_of_levels number How many event-difficulty levels exist.
+--- @param turn_number number Current campaign turn (1-based).
+--- @returns table An array of {chance number, level number} pairs sorted by descending chance.
 function randomize_chances_of_event_happening_considering_spillover_given_turn(number_of_levels, turn_number)
-    --math.randomseed(100)
     local chance_of_event_of_level_happening = calculate_filled_buckets_given_turn_number(number_of_levels, turn_number)
     for i = 1, number_of_levels do
         local random_multiplier = cm:random_number()
@@ -69,70 +79,15 @@ function randomize_chances_of_event_happening_considering_spillover_given_turn(n
     return chance_of_event_of_level_happening
 end
 
---[[
-local x = randomize_chances_of_event_happening_considering_spillover_given_turn(5, 120)
-print("sorted table =" .. tostring(#x))
-for i = 1, #x do
-  print("order[" .. tostring(i) .. "]= " .. tostring(x[i][2]))
-end
-]]--
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- random_encounter_force_generation_system
+--- (from algorithms/random_encounter_force_generation_system.lua)
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- random_encounter_force_generation_system
--- (from algorithms/random_encounter_force_generation_system.lua)
-
--- This script is meant to be tested locally with the factions_data.json file in the same directory.
-
--- Read the JSON file.
+--- Pulls the MCT-configured difficulty definitions into a local for hot-path access.
 local difficulties = get_mct_settings().difficulties
--- print("Reading factions_data.json...")
--- local factions_data = require("factions_data")
--- local enable_compatibility_with_supported_mods = true
--- SUPPORTED_MODS = {
---     "vanilla"
--- }
 
--- Determine the randomized unit force makeup per difficulty. The first section is the guaranteed units while the second section is the random units.
--- If a specific land_unit is selected, there is a 50% chance that it will multiple copies up to the allowed amount and only if the total size has not been reached.
--- Ignore the recruitment_cost for now.
-
----------------------------------------------------------
----------------------------------------------------------
----------------------------------------------------------
--- The following random functions from script/land_encounters/utils/random were provided as is and may or may not work with what this script is going to be doing.
-
--- math.randomseed(os.time()) -- random initialize
--- math.random(); math.random(); math.random() -- warming up
-
--- --- @function randomic_length_shuffle
--- --- @desc Given a length creates an array with the elements of that length and and shuffles them
--- --- @return table random a disordered table
--- function randomic_length_shuffle(length_of_an_array)
---     local arr = {}
---     for i=1, length_of_an_array do
---         table.insert(arr, i)
---     end
---     return randomic_shuffle(arr)
--- end
-
-
--- -- Fisher-Yates shuffle
--- -- Randomly shuffles an array so that its members are disordered
--- -- https://gist.github.com/Uradamus/10323382
--- -- param tbl: Array
--- function randomic_shuffle(tbl)
---     for i = #tbl, 2, -1 do
---         local j = math.random(i)
---         tbl[i], tbl[j] = tbl[j], tbl[i]
---     end
---     return tbl
--- end
-
----------------------------------------------------------
----------------------------------------------------------
----------------------------------------------------------
-
+--- Maps the 3-letter faction shorthand used internally to the qb1 quick-battle faction key the engine expects.
 local faction_shorthand_key_to_full_key = {
     tmb = "wh2_dlc09_tmb_tombking_qb1",
     cst = "wh2_dlc11_cst_vampire_coast_qb1",
@@ -157,151 +112,18 @@ local faction_shorthand_key_to_full_key = {
     emp = "wh_main_emp_empire_qb1",
     grn = "wh_main_grn_greenskins_qb1",
     vmp = "wh_main_vmp_vampire_counts_qb1",
-    -- teb = "wh_main_teb_border_princes_rebels",
-    -- mar = "wh_main_emp_marienburg_rebels",
-    -- dmd = "wh3_dlc21_vmp_jiangshi_rebels",
-    -- jbv = "mixer_vmp_the_curse_of_nongchang_rebels", -- This is custom for Land Encounters.
-    -- nag = "mixer_nag_nagash_rebels", -- This is custom for Land Encounters.
-    -- alb = "ovn_alb_rebel",
-    -- arb = "ovn_arb_araby_rebels",
-    -- dk = "ovn_tmb_dread_king_rebels", -- This is custom for Land Encounters.
-    -- fim = "ovn_fim_fimir_rebel",
+    --- teb = "wh_main_teb_border_princes_rebels",
+    --- mar = "wh_main_emp_marienburg_rebels",
+    --- dmd = "wh3_dlc21_vmp_jiangshi_rebels",
+    --- jbv = "mixer_vmp_the_curse_of_nongchang_rebels", -- This is custom for Land Encounters.
+    --- nag = "mixer_nag_nagash_rebels", -- This is custom for Land Encounters.
+    --- alb = "ovn_alb_rebel",
+    --- arb = "ovn_arb_araby_rebels",
+    --- dk = "ovn_tmb_dread_king_rebels", -- This is custom for Land Encounters.
+    --- fim = "ovn_fim_fimir_rebel",
 }
 
--- This is locally defined here for testing this file by itself.
--- local difficulties = {
---     easy = {
---         tiers = {1, 2},
---         min_units = 10,
---         max_units = 13,
---         unit_experience_amount = {1, 3},
---         lord_level_range = {5, 10},
---         limits = {
---             hero = {0, 0},
---             melee_infantry = {3, 6},
---             missile_infantry = {0, 3},
---             melee_cavalry = {0, 2},
---             missile_cavalry = {0, 2},
---             monstrous_infantry = {0, 2},
---             monstrous_cavalry = {0, 2},
---             war_beast = {0, 2},
---             chariot = {0, 0},
---             warmachine = {0, 0},
---             monster = {0, 0},
---             generic = {0, 0},
---         }
---     },
---     medium = {
---         tiers = {1, 3},
---         min_units = 14,
---         max_units = 16,
---         unit_experience_amount = {3, 5},
---         lord_level_range = {10, 15},
---         limits = {
---             hero = {0, 1},
---             melee_infantry = {3, 5},
---             missile_infantry = {0, 3},
---             melee_cavalry = {0, 2},
---             missile_cavalry = {0, 2},
---             monstrous_infantry = {0, 2},
---             monstrous_cavalry = {0, 2},
---             war_beast = {0, 2},
---             chariot = {0, 1},
---             warmachine = {0, 1},
---             monster = {0, 1},
---             generic = {0, 1},
---         }
---     },
---     hard = {
---         tiers = {1, 5},
---         min_units = 17,
---         max_units = 20,
---         unit_experience_amount = {5, 7},
---         lord_level_range = {15, 20},
---         limits = {
---             hero = {0, 2},
---             melee_infantry = {4, 6},
---             missile_infantry = {2, 4},
---             melee_cavalry = {0, 2},
---             missile_cavalry = {0, 2},
---             monstrous_infantry = {0, 2},
---             monstrous_cavalry = {0, 2},
---             war_beast = {0, 2},
---             chariot = {0, 1},
---             warmachine = {0, 1},
---             monster = {0, 1},
---             generic = {0, 1},
---         }
---     }
--- }
-
--- -- This is locally defined here for testing this file by itself.
--- local difficulties = {
---     easy = {
---         tiers = {1, 2},
---         min_units = 10,
---         max_units = 13,
---         unit_experience_amount = {1, 3},
---         lord_level_range = {5, 10},
---         limits = {
---             hero = {0, 0},
---             melee_infantry = {3, 6},
---             missile_infantry = {0, 3},
---             melee_cavalry = {0, 2},
---             missile_cavalry = {0, 2},
---             monstrous_infantry = {0, 2},
---             monstrous_cavalry = {0, 2},
---             war_beast = {0, 2},
---             chariot = {0, 0},
---             warmachine = {0, 0},
---             monster = {0, 0},
---             generic = {0, 0},
---         }
---     },
---     medium = {
---         tiers = {1, 3},
---         min_units = 14,
---         max_units = 16,
---         unit_experience_amount = {3, 5},
---         lord_level_range = {10, 15},
---         limits = {
---             hero = {0, 1},
---             melee_infantry = {3, 5},
---             missile_infantry = {0, 3},
---             melee_cavalry = {0, 2},
---             missile_cavalry = {0, 2},
---             monstrous_infantry = {0, 2},
---             monstrous_cavalry = {0, 2},
---             war_beast = {0, 2},
---             chariot = {0, 1},
---             warmachine = {0, 1},
---             monster = {0, 1},
---             generic = {0, 1},
---         }
---     },
---     hard = {
---         tiers = {1, 5},
---         min_units = 17,
---         max_units = 20,
---         unit_experience_amount = {5, 7},
---         lord_level_range = {15, 20},
---         limits = {
---             hero = {0, 2},
---             melee_infantry = {4, 6},
---             missile_infantry = {2, 4},
---             melee_cavalry = {0, 2},
---             missile_cavalry = {0, 2},
---             monstrous_infantry = {0, 2},
---             monstrous_cavalry = {0, 2},
---             war_beast = {0, 2},
---             chariot = {0, 1},
---             warmachine = {0, 1},
---             monster = {0, 1},
---             generic = {0, 1},
---         }
---     }
--- }
-
+--- Default per-unit-type weights used when picking which unit category to roll for next.
 local force_makeup_weights = {
     melee_infantry = 0.40,
     missile_infantry = 0.40,
@@ -316,6 +138,7 @@ local force_makeup_weights = {
     generic = 0.10,
 }
 
+--- Per-faction overrides for the default unit-type weights above.
 local unit_type_weight_overrides = {
     ogr = {
         melee_infantry = 0.05,
@@ -324,7 +147,9 @@ local unit_type_weight_overrides = {
     },
 }
 
--- Function to print any table.
+--- Recursively prints any Lua value to `out()` for debugging.
+--- @param tbl any The value to print. Non-tables are stringified directly.
+--- @param indent number Current indent depth. Defaults to 0 when nil.
 function print_table(tbl, indent)
     indent = indent or 0
     local indent_str = string.rep("  ", indent)
@@ -344,9 +169,11 @@ function print_table(tbl, indent)
     end
 end
 
---- Function to check if a unit's origin is enabled.
+--- Returns true if a unit's origin pack is enabled under the user's MCT mod-compatibility settings.
+--- @param origin string The origin tag on a unit ("vanilla" or a mod pack key).
+--- @returns boolean True when the origin is allowed by the current MCT settings.
 local function is_origin_enabled(origin)
-    -- Check if we should only use modded units. If so, exclude vanilla units.
+    --- If "only modded units" is on, vanilla is excluded; otherwise vanilla is always enabled.
     if get_mct_settings().enable_compatibility_with_supported_mods and get_mct_settings().use_only_modded_units then
         if origin == "vanilla" then
             return false
@@ -355,11 +182,9 @@ local function is_origin_enabled(origin)
         return true
     end
 
-    -- Check if the origin is in the list of supported mods that are currently enabled.
+    --- Origin must appear in the enabled-mods list.
     if get_mct_settings().enable_compatibility_with_supported_mods then
-    -- if enable_compatibility_with_supported_mods then
         for _, mod in ipairs(get_mct_settings().enabled_mods) do
-        -- for _, mod in ipairs(SUPPORTED_MODS) do
             if origin == mod then
                 return true
             end
@@ -368,7 +193,8 @@ local function is_origin_enabled(origin)
     return false
 end
 
--- From the available factions, select a random faction.
+--- Picks a random faction shorthand from the MCT-enabled set (falling back to all factions if the set is empty).
+--- @returns string A 3-letter faction shorthand key (e.g. "emp", "grn").
 function get_random_faction()
     local faction_keys = {}
 
@@ -383,7 +209,6 @@ function get_random_faction()
             table.insert(faction_keys, key)
         end
 
-        -- If no factions are enabled, enable all factions.
         if #faction_keys == 0 then
             out("DEBUG - get_random_faction No factions are enabled, enabling all factions.")
             for key, _ in pairs(faction_shorthand_key_to_full_key) do
@@ -395,6 +220,7 @@ function get_random_faction()
     out("DEBUG - get_random_faction Faction keys:")
     print_table(faction_keys)
 
+    --- Modded factions are only eligible if their parent mod is in the enabled-mods list.
     local modded_factions = {
         teb = "!ak_teb3",
         mar = "!scm_marienburg",
@@ -407,7 +233,7 @@ function get_random_faction()
         fim = "ovn_fimir",
     }
 
-    -- Filter faction_keys based on enabled mods
+    --- Drop modded factions whose parent mod is not loaded.
     local enabled_mods = get_mct_settings().enabled_mods
     local filtered_faction_keys = {}
 
@@ -422,29 +248,31 @@ function get_random_faction()
     return random_faction
 end
 
--- Count the total number of units in the force makeup.
+--- Counts the total number of units in a force_makeup (lord + heroes + every unit-type bucket).
+--- @param force_makeup table A force_makeup with a units table (unit_type -> array) and a heroes array.
+--- @returns number Total entries including the lord (1), every unit bucket, and every hero.
 local function count_total_units(force_makeup)
-    -- The lord is counted as well.
     local total = 1
     for _, units in pairs(force_makeup.units) do
         total = total + #units
     end
-    -- Count the heroes if there are any.
     if #force_makeup.heroes > 0 then
         total = total + #force_makeup.heroes
     end
     return total
 end
 
--- Function to select a unit type based on weights.
+--- Picks a unit type randomly weighted by the per-type weights, with optional per-faction overrides.
+--- @param weights table A unit_type -> weight map (the defaults from force_makeup_weights).
+--- @param faction_shorthand_key string A 3-letter faction shorthand used to look up overrides.
+--- @returns string The chosen unit-type key (e.g. "melee_infantry", "warmachine").
 local function select_weighted_random_unit_type(weights, faction_shorthand_key)
-    -- Create a copy of the default unit type weights.
     local faction_weights = {}
     for unit_type, weight in pairs(weights) do
         faction_weights[unit_type] = weight
     end
 
-    -- Override with specific faction unit type weights if available.
+    --- Override with specific faction unit type weights if available.
     if unit_type_weight_overrides[faction_shorthand_key] then
         for unit_type, weight in pairs(unit_type_weight_overrides[faction_shorthand_key]) do
             print("DEBUG - Overriding unit type " .. unit_type .. " with weight " .. weight .. " for faction " .. faction_shorthand_key .. ".")
@@ -468,7 +296,11 @@ local function select_weighted_random_unit_type(weights, faction_shorthand_key)
     end
 end
 
--- Check if a table contains an element.
+--- Returns true if `tbl` contains `element`. If `key_first` is true, checks keys; otherwise checks values.
+--- @param tbl table The table to search. nil is treated as empty.
+--- @param element any The value or key to search for.
+--- @param key_first boolean When true, matches against keys instead of values.
+--- @returns boolean True when the element is found.
 function contains(tbl, element, key_first)
     if tbl == nil then
         return false
@@ -483,7 +315,9 @@ function contains(tbl, element, key_first)
     return false
 end
 
--- Function to count the number of keys.
+--- Returns the number of keys in a table.
+--- @param tbl table The table to count.
+--- @returns number The number of key/value pairs in tbl.
 function Count_keys(tbl)
     local count = 0
     for _ in pairs(tbl) do
@@ -492,7 +326,9 @@ function Count_keys(tbl)
     return count
 end
 
--- Function to randomly select a key.
+--- Picks a uniformly random key from the table.
+--- @param tbl table The table to draw from.
+--- @returns any A randomly chosen key from tbl.
 local function select_random_key(tbl)
     local keys = {}
     for key in pairs(tbl) do
@@ -502,7 +338,9 @@ local function select_random_key(tbl)
     return keys[random_index]
 end
 
--- Function to select a random value from a table.
+--- Picks a uniformly random value from the table.
+--- @param tbl table The table to draw from.
+--- @returns any A randomly chosen value from tbl.
 local function select_random_value(tbl)
     local values = {}
     for _, value in pairs(tbl) do
@@ -512,7 +350,10 @@ local function select_random_value(tbl)
     return values[random_index]
 end
 
--- Function to remove a key from a table
+--- Returns a shallow copy of `tbl` with `key_to_remove` omitted.
+--- @param tbl table The source table.
+--- @param key_to_remove any The key to drop from the copy.
+--- @returns table A new table containing every pair from tbl except the one keyed by key_to_remove.
 local function remove_key(tbl, key_to_remove)
     local new_tbl = {}
     for key, value in pairs(tbl) do
@@ -523,7 +364,13 @@ local function remove_key(tbl, key_to_remove)
     return new_tbl
 end
 
--- Function to get a random unit of the given unit type for the given faction and difficulty.
+--- Adds one or more units of the given `unit_type` to `force_makeup` for the given faction and difficulty.
+--- Walks the configured tier range and falls back to other unit types when no eligible units exist.
+--- @param difficulty_key string The difficulty key (e.g. "easy", "medium", "hard").
+--- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param force_makeup table The accumulating force_makeup table to mutate.
+--- @param unit_type string The unit-type bucket key to fill (e.g. "melee_infantry").
+--- @param empty_unit_types table Set of unit types already exhausted, mutated when this one is exhausted too.
 local function get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types)
     local tiers = difficulties[difficulty_key].tiers
     local unit_limits = difficulties[difficulty_key].limits
@@ -531,7 +378,7 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
 
     print("INFO - Processing original unit_type: " .. unit_type .. " units.")
 
-    -- Function to collect units from the given tiers.
+    --- Function to collect units from the given tiers.
     local function collect_units_from_tiers(tiers, faction_shorthand_key, unit_type)
         local enabled_faction_units = {}
         local min_tier = tiers[1]
@@ -540,12 +387,12 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
         print("DEBUG - Collecting units from tiers " .. min_tier .. " to " .. max_tier .. " for unit type " .. unit_type .. ".")
         print("DEBUG - Faction " .. faction_shorthand_key .. ".")
 
-        -- If the list is empty after collection, decrease the tiers by 1 and try again until the minimum tier hits 1 and/or the maximum tier hits 5.
+        --- If the list is empty after collection, decrease the tiers by 1 and try again until the minimum tier hits 1 and/or the maximum tier hits 5.
         local iteration_limit = 5
         while iteration_limit > 0 and #enabled_faction_units == 0 do
             for tier = min_tier, max_tier do
                 local tier_name = "tier_" .. tier
-                -- print("DEBUG - Collecting units from tier " .. tier_name .. ".")
+                --- print("DEBUG - Collecting units from tier " .. tier_name .. ".")
                 local units = factions_data[faction_shorthand_key].units[tier_name][unit_type]
                 if #units ~= 0 then
                     for _, unit in pairs(units) do
@@ -556,8 +403,8 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
                 end
             end
 
-            -- Tiers should not go more than 1 above or below the given tiers.
-            -- Similarly, tier 2 should stay at tier 2 for the max constraint, otherwise you will cross over to some tough units for tier 3 if easy difficulty was selected.
+            --- Tiers should not go more than 1 above or below the given tiers.
+            --- Similarly, tier 2 should stay at tier 2 for the max constraint, otherwise you will cross over to some tough units for tier 3 if easy difficulty was selected.
             min_tier = math.max(min_tier - 1, tiers[1] - 1 >= 1 and tiers[1] - 1 or 1)
             max_tier = math.min(max_tier + 1, tiers[2] == 2 and 2 or tiers[2] + 1 <= 5 and tiers[2] + 1 or 5)
             iteration_limit = iteration_limit - 1
@@ -566,11 +413,11 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
         return enabled_faction_units, empty_unit_types
     end
 
-    -- Collect all units of enabled origins for the given unit type and for the chosen tiers.
+    --- Collect all units of enabled origins for the given unit type and for the chosen tiers.
     local enabled_faction_units = collect_units_from_tiers(tiers, faction_shorthand_key, unit_type)
     if #enabled_faction_units == 0 then
-        -- If no units are found, fallback and bypass the unit type limit.
-        -- In addition, set the copies to 1 for this fallback to allow for other potential unit types to be filled.
+        --- If no units are found, fallback and bypass the unit type limit.
+        --- In addition, set the copies to 1 for this fallback to allow for other potential unit types to be filled.
         unit_type = select_weighted_random_unit_type(force_makeup_weights, faction_shorthand_key)
         print("WARNING - No units found for the given tiers and unit type. Falling back to " .. unit_type .. " by random selection and setting the copies added to 1.")
         enabled_faction_units = collect_units_from_tiers(tiers, faction_shorthand_key, unit_type)
@@ -585,16 +432,16 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
 
     print("Collected a list of " .. #enabled_faction_units .. " " .. unit_type .. " units.")
 
-    -- Loop until either the minimum or maximum number of units for the unit type is reached.
+    --- Loop until either the minimum or maximum number of units for the unit type is reached.
     if unit_type == "warmachine" or unit_type == "monster" then
-        -- Add only up to 1 of either warmachine or monster unit type.
-        -- Randomize the list of enabled units first before selection.
+        --- Add only up to 1 of either warmachine or monster unit type.
+        --- Randomize the list of enabled units first before selection.
         local randomized_enabled_faction_units = randomic_shuffle(enabled_faction_units)
 
-        -- Select the first unit in the randomized list.
+        --- Select the first unit in the randomized list.
         local selected_land_unit = randomized_enabled_faction_units[1]
 
-        -- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
+        --- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
         if selected_land_unit:find("_ror") then
             if not contains(force_makeup.units[unit_type], selected_land_unit) then
                 table.insert(force_makeup.units[unit_type], selected_land_unit)
@@ -603,27 +450,27 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
             table.insert(force_makeup.units[unit_type], selected_land_unit)
         end
     else
-        -- For every other unit type, begin adding units to the force makeup.
-        -- First, determine if copies should be added and cap it at 3.
+        --- For every other unit type, begin adding units to the force makeup.
+        --- First, determine if copies should be added and cap it at 3.
         local copies = 1
         if not add_single_copy and math.random() < 0.25 then
             copies = math.min(math.random(unit_limits[unit_type][1], unit_limits[unit_type][2]), 3)
         end
 
-        -- Randomize the list of enabled units first before selection.
+        --- Randomize the list of enabled units first before selection.
         local randomized_enabled_faction_units = randomic_shuffle(enabled_faction_units)
 
-        -- Now randomly select the unit to be added.
+        --- Now randomly select the unit to be added.
         local selected_land_unit = randomized_enabled_faction_units[1]
 
-        -- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
+        --- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
         if selected_land_unit:find("_ror") then
             if not contains(force_makeup.units[unit_type], selected_land_unit) then
                 table.insert(force_makeup.units[unit_type], selected_land_unit)
             end
         else
             print("INFO - Selected a " .. unit_type .. " unit: " .. selected_land_unit .. " up to " .. copies .. " copies.")
-            -- Add the selected unit to the force makeup up.
+            --- Add the selected unit to the force makeup up.
             for _ = 1, copies do
                 table.insert(force_makeup.units[unit_type], selected_land_unit)
             end
@@ -633,7 +480,10 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
     return force_makeup, empty_unit_types
 end
 
--- Generate a random force makeup for the given faction and difficulty.
+--- Generates a random force makeup (lord + heroes + units) for the given faction and difficulty.
+--- @param difficulty_key string The difficulty key (e.g. "easy", "medium", "hard").
+--- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @returns table A force_makeup with lord, heroes, and per-type units arrays populated.
 local function generate_random_force_makeup(difficulty_key, faction_shorthand_key)
     local max_units = math.random(difficulties[difficulty_key].min_units, difficulties[difficulty_key].max_units)
     local list_of_allowed_lord_objects = factions_data[faction_shorthand_key].allowed_lords or {}
@@ -641,7 +491,7 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     local force_makeup = {}
     local empty_unit_types = {}
 
-    -- Create the initial structure of the force makeup.
+    --- Create the initial structure of the force makeup.
     force_makeup.units = {
         melee_infantry = {},
         missile_infantry = {},
@@ -658,7 +508,7 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     force_makeup.lord = nil
     force_makeup.heroes = {}
 
-    -- Select a random allowed lord if their origin is enabled. Save the skill overrides for the lord.
+    --- Select a random allowed lord if their origin is enabled. Save the skill overrides for the lord.
     for _, lord in pairs(randomic_shuffle(list_of_allowed_lord_objects)) do
         if is_origin_enabled(lord.origin) then
             force_makeup.lord = lord
@@ -666,13 +516,13 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
         end
     end
 
-    -- If a lord was not able to be selected, then select a random vanilla lord instead.
+    --- If a lord was not able to be selected, then select a random vanilla lord instead.
     if not force_makeup.lord then
         out("DEBUG - A lord was not able to be selected. Selecting a random vanilla lord instead.")
         force_makeup.lord = select_random_value(list_of_allowed_lord_objects)
     end
 
-    -- Select a random amount of heroes if their origin is enabled. Save the skill overrides for the heroes.
+    --- Select a random amount of heroes if their origin is enabled. Save the skill overrides for the heroes.
     local randomly_selected_heroes = {}
     local number_of_heroes_to_select = math.random(difficulties[difficulty_key].limits.hero[1], difficulties[difficulty_key].limits.hero[2])
     for _, hero in pairs(randomic_shuffle(list_of_allowed_hero_objects)) do
@@ -685,12 +535,12 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     end
     force_makeup.heroes = randomly_selected_heroes
 
-    -- Get the override limit for melee_infantry and missile_infantry.
+    --- Get the override limit for melee_infantry and missile_infantry.
     local override_limit_melee_infantry = math.random(difficulties[difficulty_key].limits.melee_infantry[1], difficulties[difficulty_key].limits.melee_infantry[2])
     local override_limit_missile_infantry = math.random(difficulties[difficulty_key].limits.missile_infantry[1], difficulties[difficulty_key].limits.missile_infantry[2])
 
-    -- First, randomly select the melee_infantry and missile_infantry units up to the minimum limits.
-    -- Also check if the unit type has available units to select from. If not, then fallback to the other.
+    --- First, randomly select the melee_infantry and missile_infantry units up to the minimum limits.
+    --- Also check if the unit type has available units to select from. If not, then fallback to the other.
     local initial_count = 0
     while (#force_makeup.units.melee_infantry < override_limit_melee_infantry) do
         initial_count = #force_makeup.units.melee_infantry
@@ -702,7 +552,7 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     while (#force_makeup.units.missile_infantry < override_limit_missile_infantry) do
         initial_count = #force_makeup.units.missile_infantry
         force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "missile_infantry", empty_unit_types)
-        -- Some factions like vanilla Nurgle have no missile_infantry units at the lower tiers.
+        --- Some factions like vanilla Nurgle have no missile_infantry units at the lower tiers.
         if #force_makeup.units.missile_infantry == initial_count then
             print("WARNING - No available units for missile_infantry. Falling back to melee_infantry.")
             force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", empty_unit_types)
@@ -710,9 +560,9 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
         end
     end
 
-    -- Loop until either the minimum or maximum number of units is reached.
+    --- Loop until either the minimum or maximum number of units is reached.
     while count_total_units(force_makeup) < max_units do
-        -- Randomly select a unit type to add from the weights.
+        --- Randomly select a unit type to add from the weights.
         local unit_type = select_weighted_random_unit_type(force_makeup_weights, faction_shorthand_key)
         force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types)
     end
@@ -720,9 +570,11 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     return force_makeup
 end
 
--- Start the force makeup generation process.
+--- Entry point for the force-makeup pipeline. Picks the difficulty branch and returns the generated force makeup.
+--- @param difficulty_key string The difficulty key ("easy", "medium", or "hard").
+--- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @returns table A force_makeup with lord, heroes, and per-type units arrays populated.
 function start_force_makeup_generation(difficulty_key, faction_shorthand_key)
-    -- For the chosen difficulty, construct a random force makeup for the chosen faction based on the enabled origins.
     local force_makeup = {}
     if difficulty_key == "easy" then
         print("Easy difficulty for random force makeup selected.")
@@ -738,17 +590,24 @@ function start_force_makeup_generation(difficulty_key, faction_shorthand_key)
     return force_makeup
 end
 
--- Convert the force makeup to the usable format for the mod.
+--- Converts the raw force makeup into the flat record the InvasionBattleManager + Army constructors expect.
+--- @param difficulty string The difficulty key (used to read level + experience ranges).
+--- @param force_makeup table The output of generate_random_force_makeup.
+--- @param faction_key string A 3-letter faction shorthand.
+--- @param identifier string A unique force identifier (e.g. "encounter_force").
+--- @param invasion_identifier string A unique invasion identifier (e.g. "encounter_invasion").
+--- @param intervention_type number One of AMBUSH_TYPE, INTERCEPTION_TYPE, ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
+--- @returns table A flat converted_force record ready for Army:create_from.
 function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction_key, identifier, invasion_identifier, intervention_type)
     local converted_force = {
         faction = faction_shorthand_key_to_full_key[faction_key],
         identifier = identifier,
         invasion_identifier = invasion_identifier,
         intervention_type = intervention_type,
-        -- The lord pool is now a flat record. The randomization-only pipeline picks a single
-        -- agent_subtype up front and a level within the difficulty's lord_level_range. Names,
-        -- ancillaries, and traits are not generated for randomized lords - they default to
-        -- empty strings / empty tables in Army:create_from.
+        --- The lord pool is now a flat record. The randomization-only pipeline picks a single
+        --- agent_subtype up front and a level within the difficulty's lord_level_range. Names,
+        --- ancillaries, and traits are not generated for randomized lords - they default to
+        --- empty strings / empty tables in Army:create_from.
         lord = {
             agent_subtype = force_makeup.lord.agent_subtype,
             level_range = { difficulties[difficulty].lord_level_range[1], difficulties[difficulty].lord_level_range[2] },
@@ -761,7 +620,7 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         skill_overrides = {},
     }
 
-    -- Save the skill overrides for the lord if available.
+    --- Save the skill overrides for the lord if available.
     if contains(force_makeup.lord, "skill_overrides", true) and #force_makeup.lord.skill_overrides > 0 then
         converted_force.skill_overrides[force_makeup.lord.agent_subtype] = {}
         for _, skill in ipairs(force_makeup.lord.skill_overrides) do
@@ -769,11 +628,11 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         end
     end
 
-    -- Add the heroes if there are any and the skill overrides for them.
+    --- Add the heroes if there are any and the skill overrides for them.
     if #force_makeup.heroes > 0 then
         for _, hero in ipairs(force_makeup.heroes) do
             table.insert(converted_force.heroes, {
-                -- Create a copy of the hero without skill_overrides.
+                --- Create a copy of the hero without skill_overrides.
                 land_unit = hero.land_unit,
                 agent_subtype = hero.agent_subtype,
                 agent_type = hero.agent_type,
@@ -789,7 +648,7 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         end
     end
 
-    -- Insert the units into the table as flat { id, count } records.
+    --- Insert the units into the table as flat { id, count } records.
     for unit_type, units in pairs(force_makeup.units) do
         for _, unit in ipairs(units) do
             table.insert(converted_force.units, { id = unit, count = 1 })
@@ -799,69 +658,35 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
     return converted_force
 end
 
----------------------------------------------------------
----------------------------------------------------------
----------------------------------------------------------
--- Used for debugging the script locally.
-
--- -- local random_faction = get_random_faction()
--- local random_faction = "ogr"
--- print("INFO - Selected faction: " .. random_faction)
-
--- local force_makeup = start_force_makeup_generation("hard", random_faction)
-
--- print_table(force_makeup)
--- print("INFO - Total units: " .. count_total_units(force_makeup))
-
--- local converted_force_makeup = convert_force_makeup_to_usable_format("hard", force_makeup, random_faction)
--- print_table(converted_force_makeup)
-
--- -- Loop until 10 force makeups have been generated.
--- local force_makeup_count = 0
--- while force_makeup_count < 10 do
---     -- local easy_force_makeup = start_force_makeup_generation("easy", random_faction)
---     -- local medium_force_makeup = start_force_makeup_generation("medium", random_faction)
---     local hard_force_makeup = start_force_makeup_generation("hard", random_faction)
---     print_table(hard_force_makeup)
---     -- local converted_force_makeup = convert_force_makeup_to_usable_format("hard", hard_force_makeup, random_faction)
---     -- print("This is the final force makeup:")
---     -- print_table(converted_force_makeup)
---     print("--------------------------------")
---     force_makeup_count = force_makeup_count + 1
--- end
-
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- event_stack
--- (from models/events/event_stack.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- event_stack
+--- (from models/events/event_stack.lua)
 
 local EventStack = {
-    -- the level of the event being hold here
+    --- Event level held by this stack.
     level = 0,
-    -- disordered event identifiers of this level
+    --- Disordered event identifiers of this level.
     randomized_event_identifiers = {}
 }
 
---- @function initialize_by_randomizing_events_of_level
---- @description gives a level and disorder the events given the number of events that this event level has
---- @param event_level number the event level
---- @param number_of_events number the amount of events that this event_level has determines the randomic number order
+--- Sets the stack's level and shuffles 1..number_of_events into the identifiers list.
+--- @param event_level number The event-difficulty level this stack represents.
+--- @param number_of_events number Count of events to populate the stack with.
 function EventStack:set_level_and_randomize_events(event_level, number_of_events)
     self.level = event_level
     self.randomized_event_identifiers = randomic_length_shuffle(number_of_events)
 end
 
---- @function pop_event
---- @description Gets the first event from the event stack removing it from the top
---- @return number event_id an event id or nil if the stack is empty
+--- Pops and returns the first event identifier, or nil if the stack is empty.
+--- @returns number The next event identifier, or nil when the stack is empty.
 function EventStack:pop_event()
     return table.remove(self.randomized_event_identifiers, 1)
 end
 
 
--------------------------
---- Memory management
--------------------------
+--- Flattens the stack's level + identifier list into a plain table for the save/load callbacks.
+--- @returns table A serializable record with level and randomized_event_identifiers fields.
 function EventStack:export_state_as_a_table()
     local event_stack_data = {}
     event_stack_data["level"] = self.level
@@ -869,18 +694,15 @@ function EventStack:export_state_as_a_table()
     return event_stack_data
 end
 
+--- Restores level + identifier list from a previously exported state table.
+--- @param previous_state table A record previously produced by export_state_as_a_table.
 function EventStack:reinstate_if_able(previous_state)
     self.level = previous_state["level"]
     self.randomized_event_identifiers = previous_state["randomized_event_identifiers"]
 end
 
--------------------------
---- Constructors
--------------------------
-
---- @function new
---- @description creates a new empty stack of level 0
---- @return table EventStack an object of type stack
+--- Creates a new empty stack of level 0.
+--- @returns EventStack A new EventStack instance.
 function EventStack:new()
     local t = { level = 0, randomized_event_identifiers = {} }
     setmetatable(t, self)
@@ -888,16 +710,20 @@ function EventStack:new()
     return t
 end
 
--- Alias so battle_generator's lowercased binding still resolves.
+--- Alias so battle_generator's lowercased binding still resolves.
 local event_stack = EventStack
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- IncidentManager
--- (from controllers/incident_manager.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- IncidentManager
+--- (from controllers/incident_manager.lua)
 
 local IGNORE_INCIDENT_PARAMETER_FLAG = 0
 
+--- Fires an incident for the given player character, populating only the CQI slots indicated by `targets`.
+--- @param incident_key string The incident key from the db.
+--- @param targets table A flag map with optional faction, character, force, and region booleans.
+--- @param player_character character The player character to receive the incident.
 function trigger_incident_for_character(incident_key, targets, player_character)
     local faction_cqi = player_character:faction():command_queue_index()
 
@@ -926,10 +752,16 @@ function trigger_incident_for_character(incident_key, targets, player_character)
     cm:trigger_incident_with_targets(faction_cqi, incident_key, target_faction_cqi, secondary_faction_cqi, character_cqi, military_force_cqi, region_cqi, settlement_cqi)
 end
 
+--- True if the faction is human-controlled and the human turn is currently active.
+--- @param faction faction The faction object to check.
+--- @returns boolean True when the faction is human and its turn is active.
 function is_human_and_it_is_its_turn(faction)
     return faction:is_human() and cm:is_human_factions_turn()
 end
 
+--- Returns the player general closest to the given spot's coordinates.
+--- @param spot_info table A spot_info record with a coordinates {x, y} field.
+--- @returns character The closest player general, or nil when none is found.
 function get_player_faction_character_closest_to_spot(spot_info)
     local faction_name = cm:get_local_faction_name()
     local only_general = true
@@ -938,57 +770,58 @@ function get_player_faction_character_closest_to_spot(spot_info)
     return local_character
 end
 
+--- Resolves the player character (falling back to closest-to-spot after a post-battle reload) and fires the incident, but only for humans on their turn.
+--- @param incident_key string The incident key from the db.
+--- @param targets table A flag map with optional faction, character, force, and region booleans.
+--- @param spot_info table A spot_info record used as a fallback location for character lookup.
+--- @param player_character character The triggering player character. May be nil after a reload.
 function trigger_incident(incident_key, targets, spot_info, player_character)
-    -- if the campaign has been reloaded from a battle and we don't have the current player we have to obtain it
-    -- back from the cm as we already know the faction, we get the closest character to the point. It may gives
-    -- an incorrect one but still the player faction should get the rewards so is a half win
+    --- If the campaign was reloaded from a battle, the live player_character may be missing.
+    --- Use the closest player general to the spot as a best-effort substitute. The rewards still
+    --- go to the right faction even if the specific character is wrong.
     if player_character == nil or (type(player_character) == "table" and next(player_character) == nil) then
         player_character = get_player_faction_character_closest_to_spot(spot_info)
     end
 
-    -- Only for the human it should trigger. Otherwise ignore
     if is_human_and_it_is_its_turn(player_character:faction()) then
         trigger_incident_for_character(incident_key, targets, player_character)
     end
 end
 
--- IncidentManager is a free-functions module; expose an empty marker table so the return
--- statement at the end of this merged file can still publish a stable handle.
+--- IncidentManager is a free-functions module. Expose an empty marker table so the return statement
+--- at the end of this merged file can publish a stable handle.
 local IncidentManager = {}
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- InvasionBattleManager
--- (from controllers/invasion_battle_manager.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- InvasionBattleManager
+--- (from controllers/invasion_battle_manager.lua)
 
--------------------------
---- Constant values of the class [DO NOT CHANGE]
--------------------------
 local IS_NOT_PERSISTENT_LISTENER = false
 
--------------------------
---- Properties definition
--------------------------
 local InvasionBattleManager = {
-    -- Core is the main manager for listeners.
+    --- Main listener manager.
     core = false,
-    -- For managing invasions
+    --- Engine managers used to spawn random armies and run invasions.
     random_army_manager = false,
     invasion_manager = false,
-    --  the current army fighting
+    --- The army currently engaging the player.
     event_army = false
 }
 
--------------------------
---- Class Methods
--------------------------
--- Preconditions: is defending army
--- Enemy_character: is at war with the player faction or is the player faction at war with the defending faction.
--- Army: Is a template of the army of the player faction or the controlling faction that is defending the defendable spot.
--- Defender_lat_lng: is the defender army spawning point
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Class methods
+
+--- Generates a defense battle where the defender army holds the spot and the enemy character attacks it.
+--- Preconditions: defender_army is the smithy/POI defender, enemy_character is at war with that faction
+--- (or vice versa), and spot_coordinates is the defender's spawning point.
+--- @param defender_army Army The Army instance that defends the spot.
+--- @param enemy_character character The attacking character.
+--- @param spot_coordinates table A {x, y} table for the defender spawn location.
 function InvasionBattleManager:generate_defense_battle(defender_army, enemy_character, spot_coordinates)
     local x, y = self:find_location_for_character_to_spawn(defender_army.faction, spot_coordinates)
-    -- we try to correct the problem if we cannot find another place to spawn the enemy armies
+    --- we try to correct the problem if we cannot find another place to spawn the enemy armies
     local force_cqi = enemy_character:military_force():command_queue_index()
 
     self.event_army = defender_army
@@ -1007,6 +840,10 @@ function InvasionBattleManager:generate_defense_battle(defender_army, enemy_char
 end
 
 
+--- True if a valid spawn location exists for the offensive army near the spot.
+--- @param offensive_army Army The attacking Army instance.
+--- @param spot_coordinates table A {x, y} table for the spot center.
+--- @returns boolean True when find_location_for_character_to_spawn returns valid coordinates.
 function InvasionBattleManager:can_generate_battle(offensive_army, spot_coordinates)
     if offensive_army then
         out("DEBUG - can_generate_battle checking if we can find a location to spawn the army")
@@ -1020,6 +857,11 @@ function InvasionBattleManager:can_generate_battle(offensive_army, spot_coordina
 end
 
 
+--- Generates an offensive battle. Routes through enemy reinforcement / ally reinforcement / direct attack
+--- paths depending on which reinforcement data the encounter carries.
+--- @param offensive_army Army The attacking Army instance.
+--- @param player_character character The player character being attacked.
+--- @param spot_coordinates table A {x, y} table for the spot center.
 function InvasionBattleManager:generate_battle(offensive_army, player_character, spot_coordinates)
     self.event_army = offensive_army
     out("DEBUG - testing randomize_units")
@@ -1029,17 +871,17 @@ function InvasionBattleManager:generate_battle(offensive_army, player_character,
     local force_cqi = player_character:military_force():command_queue_index()
     local player_faction_name = player_character:faction():name()
 
-    -- Dispatch based on which reinforcement data the encounter carries.
+    --- Dispatch based on which reinforcement data the encounter carries.
     if self.event_army:has_offensive_reinforcements() then
-        -- Enemy reinforcement path also chains into ally spawning inside the recursive callback
-        -- (create_enemy_reinforcements_before_attack -> create_allied_reinforcements_before_attack).
+        --- Enemy reinforcement path also chains into ally spawning inside the recursive callback
+        --- (create_enemy_reinforcements_before_attack -> create_allied_reinforcements_before_attack).
         self:create_enemy_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, 1)
     elseif self.event_army:has_ally_reinforcements() then
-        -- Ally-only path. No enemy reinforcements exist yet, so we pass player_character as the
-        -- ally's objective_character. set_target("CHARACTER", ...) is a movement target, not a
-        -- hostility marker - no war is declared between ally and player. The ally just moves toward
-        -- the player to be in range. The ally-vs-main-enemy war is declared later by
-        -- declare_war_on_ally_reinforcement_if_available inside main_attacker_attacks_player_and_allies.
+        --- Ally-only path. No enemy reinforcements exist yet, so we pass player_character as the
+        --- ally's objective_character. set_target("CHARACTER", ...) is a movement target, not a
+        --- hostility marker - no war is declared between ally and player. The ally just moves toward
+        --- the player to be in range. The ally-vs-main-enemy war is declared later by
+        --- declare_war_on_ally_reinforcement_if_available inside main_attacker_attacks_player_and_allies.
         self:create_allied_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, player_character)
     else
         self:main_attacker_attacks_player_and_allies(player_character, player_faction_name, force_cqi, spot_coordinates)
@@ -1047,7 +889,13 @@ function InvasionBattleManager:generate_battle(offensive_army, player_character,
 end
 
 
--- we generate the enemy reinforcements first and the main force is the one that triggers the battle
+--- Spawns enemy reinforcement armies first. The main attacker is launched after the last
+--- reinforcement is in place (and any ally reinforcements are spawned in between if present).
+--- @param player_character character The player character being attacked.
+--- @param player_faction_name string The player faction key.
+--- @param force_cqi number The player force CQI.
+--- @param spot_coordinates table A {x, y} table for the spot center.
+--- @param army_number number 1-based index of the reinforcement army being spawned.
 function InvasionBattleManager:create_enemy_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, army_number)
     local reinforcing_army = self.event_army.reinforcing_enemy_armies[army_number]
     reinforcing_army:randomize_units(self.random_army_manager)
@@ -1057,24 +905,22 @@ function InvasionBattleManager:create_enemy_reinforcements_before_attack(player_
 
     invasion:start_invasion(
         function(invasion_force)
-            -- we force war with this faction for the player
+            --- Force war with this faction for the player.
             local call_player_allies_to_war = false
             local call_faction_allies_to_war = false
             cm:force_declare_war(reinforcing_army.faction, player_faction_name, call_player_allies_to_war, call_faction_allies_to_war)
-            -- all enemies have been declared
             if army_number == #self.event_army.reinforcing_enemy_armies then
+                --- All enemy reinforcements have been spawned.
                 if self.event_army:has_ally_reinforcements() then
                     local enemy_character = cm:get_closest_character_to_position_from_faction(reinforcing_army.faction, spot_coordinates[1], spot_coordinates[2])
                     self:create_allied_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, enemy_character)
                 else
-                    -- Last: we declare the main attacker and begin the battle
                     self:main_attacker_attacks_player_and_allies(player_character, player_faction_name, force_cqi, spot_coordinates)
                 end
             else
                 local next_army_number = army_number + 1
                 self:create_enemy_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, next_army_number)
             end
-            --
         end,
         false,
         false,
@@ -1083,6 +929,12 @@ function InvasionBattleManager:create_enemy_reinforcements_before_attack(player_
 end
 
 
+--- Spawns the allied reinforcement army (if any) and then launches the main attacker.
+--- @param player_character character The player character being attacked.
+--- @param player_faction_name string The player faction key.
+--- @param force_cqi number The player force CQI.
+--- @param spot_coordinates table A {x, y} table for the spot center.
+--- @param enemy_character character The enemy whose army the ally targets for movement.
 function InvasionBattleManager:create_allied_reinforcements_before_attack(player_character, player_faction_name, force_cqi, spot_coordinates, enemy_character)
     local reinforcing_army = self.event_army.reinforcing_ally_armies[1]
     reinforcing_army:randomize_units(self.random_army_manager)
@@ -1091,9 +943,8 @@ function InvasionBattleManager:create_allied_reinforcements_before_attack(player
     local invasion = self:setup_invasion(reinforcing_army, enemy_character, invader_force, {x, y})
     invasion:start_invasion(
         function(invasion_force)
-            -- we force war with the other reinformcement enemy armies
+            --- Force war with the enemy reinforcement armies.
             self:ally_reinforcement_declares_war_to_enemy_reinforcements_if_available(reinforcing_army.faction)
-            -- we invoke the main attacker
             self:main_attacker_attacks_player_and_allies(player_character, player_faction_name, force_cqi, spot_coordinates)
         end,
         false,
@@ -1103,6 +954,8 @@ function InvasionBattleManager:create_allied_reinforcements_before_attack(player
 end
 
 
+--- Declares war from `allied_faction` against every enemy reinforcement army on the encounter, if any.
+--- @param allied_faction string The faction key of the allied reinforcement army.
 function InvasionBattleManager:ally_reinforcement_declares_war_to_enemy_reinforcements_if_available(allied_faction)
     if self.event_army:has_offensive_reinforcements() then
         local call_player_allies_to_war = false
@@ -1114,6 +967,12 @@ function InvasionBattleManager:ally_reinforcement_declares_war_to_enemy_reinforc
 end
 
 
+--- Spawns the main attacker, embeds heroes + skill overrides, declares war on the player and any
+--- allied reinforcements, then dispatches the engagement (ambush, interception, or allied reinforcements).
+--- @param player_character character The player character being attacked.
+--- @param player_faction_name string The player faction key.
+--- @param player_force_cqi number The player force CQI.
+--- @param spot_coordinates table A {x, y} table for the spot center.
 function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_character, player_faction_name, player_force_cqi, spot_coordinates)
     local x, y = self:find_location_for_character_to_spawn(self.event_army.faction, spot_coordinates)
     local invader_force = self.random_army_manager:generate_force(self.event_army.force_identifier)
@@ -1128,18 +987,15 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                 "FactionLeaderDeclaresWar",
                 true,
                 function(local_context)
-                    -- force declare war on reinforcement allies of player
+                    --- Force-declare war on any reinforcement allies of the player.
                     self:declare_war_on_ally_reinforcement_if_available()
 
-                    ---------------------------------------------------------
-                    ---------------------------------------------------------
-                    ---------------------------------------------------------
-                    -- We need to spawn in the heroes if available then embed them into the invasion army.
+                    --- Spawn any heroes and embed them into the invasion army.
                     local skill_overrides = self.event_army:get_skill_overrides()
                     local heroes = self.event_army:get_heroes()
                     for _, hero_object in ipairs(heroes) do
                         out("DEBUG - spawning invasion hero " .. hero_object.agent_subtype .. ".")
-                        -- Find a valid spawn location for the hero or else the spawn will fail.
+                        --- A valid spawn location is required or the agent creation call fails.
                         local agent_x, agent_y = cm:find_valid_spawn_location_for_character_from_settlement(self.event_army.faction, "wh3_main_combi_region_ubersreik", false, true, 10)
                         out("DEBUG - agent_x: " .. agent_x .. " agent_y: " .. agent_y)
                         out("DEBUG - faction: " .. self.event_army.faction)
@@ -1148,7 +1004,6 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                         local new_invasion_hero_agent = cm:create_agent(self.event_army.faction, hero_object.agent_type, hero_object.agent_subtype, agent_x, agent_y)
 
                         out("DEBUG - new_invasion_hero_agent spawned with cqi: " .. new_invasion_hero_agent:command_queue_index())
-                        -- Also apply any skill overrides to the hero.
                         for temp_hero_agent_subtype, skill_override in pairs(skill_overrides) do
                             if hero_object.agent_subtype == temp_hero_agent_subtype then
                                 out("DEBUG - adding skills to invasion force hero " .. temp_hero_agent_subtype .. " of cqi " .. new_invasion_hero_agent:command_queue_index())
@@ -1158,11 +1013,10 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                             end
                         end
 
-                        -- Embed the hero into the invasion force.
                         cm:embed_agent_in_force(new_invasion_hero_agent, invasion_force:get_general():military_force())
                     end
 
-                    -- Now we apply any skill overrides to the invasion force lord.
+                    --- Apply skill overrides to the invasion force lord.
                     out("DEBUG - invasion force lord cqi: " .. invasion_force:get_general():command_queue_index())
                     for lord_agent_subtype, skill_override in pairs(skill_overrides) do
                         if self.event_army.lord.subtype == lord_agent_subtype then
@@ -1173,10 +1027,6 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                             break
                         end
                     end
-                    ---------------------------------------------------------
-                    ---------------------------------------------------------
-                    ---------------------------------------------------------
-
 
                     local faction_being_declared_war_to = local_context:character():faction():name()
                     if faction_being_declared_war_to == self.event_army.faction then
@@ -1198,16 +1048,15 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                 IS_NOT_PERSISTENT_LISTENER
             )
 
-            -- Add traits to general as one cannot directly give it skills
-            -- Add ancillaries to general and other characters if able.
+            --- Apply lord trait + ancillaries on a short delay so the general object exists.
             cm:callback(
                 function()
                     self:try_add_trait_to_invading_lord(invasion_force:get_general())
                     self:try_add_ancillaries_to_invading_lord(invasion_force:get_general())
                 end,
             0.1)
-            -- Force declare war
 
+            --- Force-declare war between the encounter faction and the player on a slightly longer delay.
             cm:callback(
                 function()
                     local call_player_allies_to_war = false
@@ -1222,6 +1071,8 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
     )
 end
 
+--- Applies the encounter lord's trait (if any) to the invasion general.
+--- @param invasion_general character The newly spawned invasion general.
 function InvasionBattleManager:try_add_trait_to_invading_lord(invasion_general)
     local lord_lookup = cm:char_lookup_str(invasion_general)
     local lord_trait = self.event_army.lord.trait
@@ -1230,13 +1081,15 @@ function InvasionBattleManager:try_add_trait_to_invading_lord(invasion_general)
     end
 end
 
+--- Applies all of the encounter lord's ancillaries to the invasion general.
+--- @param invasion_general character The newly spawned invasion general.
 function InvasionBattleManager:try_add_ancillaries_to_invading_lord(invasion_general)
     for i = 1, #self.event_army.lord.ancillaries do
         cm:force_add_ancillary(invasion_general, self.event_army.lord.ancillaries[i], true, true)
     end
 end
 
--- For now the maximum number of allies that a player has is 1
+--- Force-declares war from the encounter faction onto the first allied reinforcement (player allies max out at 1 for now).
 function InvasionBattleManager:declare_war_on_ally_reinforcement_if_available()
     if self.event_army:has_ally_reinforcements() then
         local call_player_allies_to_war = false
@@ -1246,35 +1099,38 @@ function InvasionBattleManager:declare_war_on_ally_reinforcement_if_available()
 end
 
 
+--- Builds a new invasion for the given army, sets its target, creates the general, and applies
+--- experience + the upkeep-free effect. See invasion_manager docs at
+--- https://chadvandy.github.io/tw_modding_resources/WH3/campaign/invasion_manager.html.
+--- @param army Army The Army instance whose data populates the invasion.
+--- @param objective_character character The character the new invasion targets for movement.
+--- @param force table The random-army-manager force descriptor (output of generate_force).
+--- @param force_lat_lng table A {x, y} table where the invasion spawns.
+--- @returns table The new invasion handle returned by invasion_manager:new_invasion.
 function InvasionBattleManager:setup_invasion(army, objective_character, force, force_lat_lng)
     if self.invasion_manager:get_invasion(army.invasion_identifier) then
         self.invasion_manager:remove_invasion(army.invasion_identifier)
     end
 
-    -- https://chadvandy.github.io/tw_modding_resources/WH3/campaign/invasion_manager.html#function:invasion:start_invasion
-
     local new_invasion = self.invasion_manager:new_invasion(army.invasion_identifier, army.faction, force, force_lat_lng)
 
-    -- Apply the military upkeep free force effect.
     new_invasion:apply_effect("wh_main_bundle_military_upkeep_free_force", -1)
 
-    -- Set the target to the player character.
     new_invasion:set_target("CHARACTER", objective_character:command_queue_index(), objective_character:faction():name())
 
-    -- Create the general for the invasion. Agent subtypes come from the agent_subtypes_tables.
+    --- Agent subtypes come from the agent_subtypes_tables.
     out("DEBUG - creating general for invasion with the following data: " .. army.lord.subtype .. " " .. army.lord.forename .. " " .. army.lord.clan_name .. " " .. army.lord.family_name .. " " .. army.lord.other_name)
     new_invasion:create_general(false, army.lord.subtype, army.lord.forename, army.lord.clan_name, army.lord.family_name, army.lord.other_name)
 
-    -- add an experience level to the invasion forces
     local by_level = true
     new_invasion:add_character_experience(army.lord.level, by_level)
-
-    -- Add experience to the unit
     new_invasion:add_unit_experience(army.unit_experience_amount)
 
     return new_invasion
 end
 
+--- Queues a one-off FactionTurnStart listener that removes the invasion's forces next turn.
+--- @param army Army The Army whose invasion forces should be removed at next turn start.
 function InvasionBattleManager:mark_battle_forces_for_removal(army)
     self.core:add_listener(
         "land_enc_and_poi_encounter_removal",
@@ -1288,11 +1144,18 @@ function InvasionBattleManager:mark_battle_forces_for_removal(army)
 end
 
 
+--- Stashes `army` as the manager's current event_army so a later reset_state_post_battle can clean it up.
+--- @param army Army The Army to remember for cleanup.
 function InvasionBattleManager:set_auxiliary_army_for_reset(army)
     self.event_army = army
 end
 
 
+--- Registers a one-off BattleCompleted listener that cleans up the invasion forces and routes the result to the delegate.
+--- @param delegate table The delegate (BattleSpotEventDelegate or SmithyEventDelegate) that receives the battle outcome.
+--- @param spot_type string Either "BattleSpot" or "SmithySpot" - controls how the result is forwarded.
+--- @param spot_info table A spot_info record for the spot that triggered the battle.
+--- @param army Army The encounter Army whose invasion forces will be cleaned up.
 function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot_info, army)
 	self.core:add_listener(
         "land_enc_and_poi_encounter_post_battle",
@@ -1307,7 +1170,7 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
 
             local player_faction_name = cm:get_local_faction_name()
             local encounter_invasion = self.invasion_manager:get_invasion(army.invasion_identifier)
-            -- Changed because defensive type battles cannot be tracked easily
+            --- Defensive-type battles cannot be tracked easily, so we only branch on player attacker/defender.
             if cm:pending_battle_cache_faction_is_attacker(player_faction_name) then
                 found_encounter_faction = true
                 if attacker_was_victorious then
@@ -1339,6 +1202,8 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
 end
 
 
+--- Kills the main encounter invasion force plus any enemy + ally reinforcement forces.
+--- @param army Army The encounter Army to clean up.
 function InvasionBattleManager:remove_invasion_forces(army)
     self:remove_invasion_force_by_identifier(army.invasion_identifier)
     if army:has_offensive_reinforcements() then
@@ -1355,6 +1220,8 @@ function InvasionBattleManager:remove_invasion_forces(army)
 end
 
 
+--- Kills a single invasion force by id, temporarily suppressing the related event-feed entries.
+--- @param invasion_identifier string The invasion identifier registered with invasion_manager.
 function InvasionBattleManager:remove_invasion_force_by_identifier(invasion_identifier)
     local force = self.invasion_manager:get_invasion(invasion_identifier)
     if force then
@@ -1367,18 +1234,22 @@ function InvasionBattleManager:remove_invasion_force_by_identifier(invasion_iden
 end
 
 
+--- Finds a valid spawn location near `center_coordinates`. Walks outward in 2-meter steps up to 4 iterations,
+--- alternating between same-region and other-region checks. Returns (-1, -1) on failure - the battle will not trigger.
+--- @param faction_name string The faction key that needs a spawn location.
+--- @param center_coordinates table A {x, y} table around which to search.
+--- @returns number, number The found x, y coordinates. Returns (-1, -1) when no valid spot exists.
 function InvasionBattleManager:find_location_for_character_to_spawn(faction_name, center_coordinates)
     local x, y = cm:find_valid_spawn_location_for_character_from_position(faction_name, center_coordinates[1], center_coordinates[2], false)
-    -- we check in the center and then X logical meters around
     for i = 0, 4 do
-        -- we check in the same region
+        --- Same-region check.
         if x == -1 and y == -1 then
             x, y = cm:find_valid_spawn_location_for_character_from_position(faction_name, center_coordinates[1], center_coordinates[2], true, i*2)
         else
             break
         end
 
-        -- we check in another region
+        --- Other-region check.
         if x == -1 and y == -1 then
             x, y = cm:find_valid_spawn_location_for_character_from_position(faction_name, center_coordinates[1], center_coordinates[2], false, i*2)
         else
@@ -1386,14 +1257,19 @@ function InvasionBattleManager:find_location_for_character_to_spawn(faction_name
         end
     end
 
-    -- can be x = -1 and y = -1. The battle will not trigger if so.
     return x, y
 end
 
 
--------------------------
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constructors
--------------------------
+
+--- Constructs a new InvasionBattleManager wired to the given engine managers.
+--- @param core table The CA core listener-manager handle.
+--- @param random_army_manager table The CA random_army_manager handle.
+--- @param invasion_manager table The CA invasion_manager handle.
+--- @returns InvasionBattleManager A new instance with the supplied managers wired in.
 function InvasionBattleManager:newFrom(core, random_army_manager, invasion_manager)
     local t = {
         core = core,
@@ -1405,10 +1281,10 @@ function InvasionBattleManager:newFrom(core, random_army_manager, invasion_manag
     return t
 end
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- BattleGenerator
--- (from generators/battle_generator.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- BattleGenerator
+--- (from generators/battle_generator.lua)
 
 local LEVEL_KEY = 2
 
@@ -1416,9 +1292,9 @@ local BattleGenerator = {
     event_stacks = {}
 }
 
---- @function get_randomized_event_given_turn_number
---- @description always return an event given a turn number
---- @return table BattleGenerator an object of type BattleOrTreasureGenerator
+--- Returns a battle event for the given turn, refilling the per-level stacks if they have been exhausted.
+--- @param turn_number number The current campaign turn.
+--- @returns table The selected battle event entry from battle_events_by_level.
 function BattleGenerator:get_randomized_event_given_turn_number(turn_number)
     local event = self:try_get_randomized_event_given_turn_number(turn_number)
 
@@ -1430,13 +1306,12 @@ function BattleGenerator:get_randomized_event_given_turn_number(turn_number)
     return battle_events_by_level[event.current_level][event.event_of_level]
 end
 
---- @function try_get_randomized_event_given_turn_number
---- @description finds an event following the result of an spillover algorithm, that favors low level events first until a turn where all events have the same chance to happen
---- @param turn_number number the current turn number in the user game
---- @return table Event or empty table if no valid event could be found
+--- Picks an event by querying the spillover algorithm and popping from the highest-chance non-empty stack.
+--- Returns an empty table when every per-level stack is empty.
+--- @param turn_number number The current campaign turn.
+--- @returns table A { current_level number, event_of_level number } record, or {} when stacks are empty.
 function BattleGenerator:try_get_randomized_event_given_turn_number(turn_number)
-    -- Using the spillover_balancer algorithm check the chances of every event happening
-    -- The levels are ordered in chances of happening like: [5, 3, 2, 1]
+    --- Levels are returned sorted by chance of happening (descending).
     local ordered_levels_by_chances_of_happening = randomize_chances_of_event_happening_considering_spillover_given_turn(#battle_events_by_level, turn_number)
 
     for prioritized_order = 1, #ordered_levels_by_chances_of_happening do
@@ -1456,11 +1331,9 @@ function BattleGenerator:try_get_randomized_event_given_turn_number(turn_number)
     return {}
 end
 
---- @function reset_stacks
---- @description reset all stacks randomizing all events of every level again. Should only happen when there are no more events in the stacks
+--- Re-randomizes every per-level event stack. Called when every stack has been exhausted.
+--- Reads battle_events_by_level so newly added events show up automatically on the next refresh.
 function BattleGenerator:reset_stacks()
-    -- As this uses the battle_events_by_level table even if an update happen adding events this
-    -- will refresh the events adding the new ones in withouth errors
     for level = 1, #battle_events_by_level do
         local number_of_events_of_level = #(battle_events_by_level[level])
         if self.event_stacks[level] == nil then
@@ -1470,10 +1343,8 @@ function BattleGenerator:reset_stacks()
     end
 end
 
--------------------------
---- Memory management
--------------------------
-
+--- Exports every event stack's state into a flat array for the save/load callbacks.
+--- @returns table An array of EventStack export records, one per level.
 function BattleGenerator:export_state_as_a_table()
     local battle_generator_data = {}
     for i=1, #self.event_stacks do
@@ -1482,6 +1353,8 @@ function BattleGenerator:export_state_as_a_table()
     return battle_generator_data
 end
 
+--- Restores all event stacks from a previously exported state.
+--- @param previous_state table An array of EventStack export records.
 function BattleGenerator:reinstate_if_able(previous_state)
     for i=1, #previous_state do
         local new_event_stack = event_stack:new()
@@ -1490,13 +1363,8 @@ function BattleGenerator:reinstate_if_able(previous_state)
     end
 end
 
--------------------------
---- Constructors
--------------------------
-
---- @function new
---- @description creates a battle or treasure generator manager
---- @return table BattleGenerator an object of type BattleOrTreasureGenerator
+--- Creates a new BattleGenerator with empty event stacks.
+--- @returns BattleGenerator A new generator with empty event stacks.
 function BattleGenerator:new()
     local t = { event_stacks = {} }
     setmetatable(t, self)
@@ -1504,37 +1372,32 @@ function BattleGenerator:new()
     return t
 end
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- SpotEventManager
--- (from controllers/spot_event_manager.lua)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- SpotEventManager
+--- (from controllers/spot_event_manager.lua)
 
--------------------------
---- Constant values of the class [DO NOT CHANGE]
--------------------------
+--- Out of 100, this many rolls go to the battle delegate (the rest go to the treasure delegate).
 local CHANCES_OF_BATTLE_EVENT = 90
 
--------------------------
---- Properties definition
--------------------------
-
 local SpotEventManager = {
-    -- Delegates
     treasure_event_delegate = {},
     battle_event_delegate = {},
-    -- Physically destroy spot callback
     current_spot_info = {}
 }
 
--------------------------
---- Class Methods
--------------------------
-
+--- Stores the live spot info so subsequent dilemma-choice callbacks know which spot to use.
+--- @param spot_info table A spot_info record for the spot currently being triggered.
 function SpotEventManager:set_current_spot_info(spot_info)
     self.current_spot_info = spot_info
 end
 
 
+--- Rolls battle vs treasure for the current spot and dispatches to the matching delegate.
+--- Returns true when the spot should be removed from the map.
+--- @param area_and_character_info table The AreaEntered context with area_key and family_member.
+--- @param turn_number number The current campaign turn.
+--- @returns boolean True when the spot should be deactivated after dispatch.
 function SpotEventManager:trigger_spot_event(area_and_character_info, turn_number)
     if cm:random_number(100) > CHANCES_OF_BATTLE_EVENT then
         self.treasure_event_delegate:trigger_event(area_and_character_info)
@@ -1545,22 +1408,28 @@ function SpotEventManager:trigger_spot_event(area_and_character_info, turn_numbe
 end
 
 
+--- Forwards a dilemma-choice event to the battle delegate with the stored spot info.
+--- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 function SpotEventManager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
     self.battle_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, self.current_spot_info)
 end
 
 
+--- Exports the battle delegate's in-flight event for save/load.
+--- @returns table A flat record describing the active battle event, suitable for the save state.
 function SpotEventManager:export_state_as_a_table()
     return self.battle_event_delegate:export_state_as_a_table(self.current_spot_info)
 end
 
+--- Restores an in-flight battle delegate event from previously saved state.
+--- @param previou_state table Previously exported battle delegate state.
 function SpotEventManager:reinstate_event_if_able(previou_state)
     self.battle_event_delegate:reinstate_event_if_able(previou_state)
 end
 
--------------------------
---- Constructors
--------------------------
+--- Lazy-loads the battle + treasure delegate modules (avoiding the circular require) and builds the manager.
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
+--- @returns SpotEventManager A new manager with battle + treasure delegates wired in.
 function SpotEventManager:new(invasion_battle_manager)
     TreasureEventDelegate = TreasureEventDelegate or require("script/land_encounters/features/treasure_spot")
     BattleEventDelegate = BattleEventDelegate or require("script/land_encounters/features/battle_spot")
@@ -1573,21 +1442,18 @@ function SpotEventManager:new(invasion_battle_manager)
     return t
 end
 
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- PointOfInterestEventManager
--- (from controllers/point_of_interest_event_manager.lua)
-
--------------------------
---- Properties definition
--------------------------
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- PointOfInterestEventManager
+--- (from controllers/point_of_interest_event_manager.lua)
 
 local PointOfInterestEventManager = {
-    -- Delegates
     smithy_event_delegate = {}
 }
 
 
+--- Asks each POI delegate to bootstrap its per-zone state from the configured coordinates.
+--- @param points_of_interest_by_zone table Region-keyed table of POI coordinate data.
 function PointOfInterestEventManager:generate_points_of_interests_states(points_of_interest_by_zone)
     for zone_name, coordinates in pairs(points_of_interest_by_zone) do
         self.smithy_event_delegate:generate_states(zone_name, coordinates["smithies"])
@@ -1595,27 +1461,36 @@ function PointOfInterestEventManager:generate_points_of_interests_states(points_
 end
 
 
+--- Forwards per-turn state updates to each POI delegate.
 function PointOfInterestEventManager:update_state_given_turn_passing()
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
 
 
--------------------------
---- Event Management
--------------------------
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Event management
+
+--- Dispatches a POI event to the matching delegate.
+--- @param poi_type string The POI type tag (e.g. "SmithySpot").
+--- @param area_and_character_info table The AreaEntered context.
+--- @param spot_info table The spot_info record for the triggered POI.
 function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_character_info, spot_info)
     if poi_type == "SmithySpot" then
         self.smithy_event_delegate:trigger_event(area_and_character_info, spot_info)
-    -- elseif poi_type == ""
     end
 end
 
+--- Forwards a dilemma-choice event to the smithy POI delegate.
+--- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
+--- @param spot_info table The spot_info record for the triggered POI.
 function PointOfInterestEventManager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
     self.smithy_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
 end
 
 
--- STATE SAVING AND REINSTATION
+--- Exports the smithy delegate's per-zone POI state for save/load.
+--- @returns table A table keyed by POI type whose values are delegate-specific save records.
 function PointOfInterestEventManager:export_state_as_table()
     local points_of_interests_data = {}
     points_of_interests_data["smithies"] = self.smithy_event_delegate:export_state_as_table()
@@ -1623,14 +1498,17 @@ function PointOfInterestEventManager:export_state_as_table()
 end
 
 
+--- Restores the smithy delegate's per-zone POI state from previously saved data.
+--- @param previous_state table The keyed save record previously produced by export_state_as_table.
 function PointOfInterestEventManager:reinstate_event_if_able(previous_state)
     self.smithy_event_delegate:reinstate_event_if_able(previous_state["smithies"])
 end
 
 
--------------------------
---- Constructors
--------------------------
+--- Lazy-loads the smithy delegate module (avoiding the circular require) and builds the manager.
+--- @param mission_manager table The CA mission_manager handle.
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
+--- @returns PointOfInterestEventManager A new manager with the smithy delegate wired in.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
     local t = {

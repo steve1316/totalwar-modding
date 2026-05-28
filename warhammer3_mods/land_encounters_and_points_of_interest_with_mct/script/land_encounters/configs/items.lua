@@ -1,3 +1,7 @@
+--- Ancillary item pools used by the Smithy reward system. Each category is a flat list of
+--- ancillary keys (CA DB ancillaries_tables). Smithy events sample from these pools to grant
+--- the player an item. Pure data - no runtime logic.
+
 local M = {}
 
 M.balancing = {
@@ -61,99 +65,99 @@ M.balancing = {
 
 }
 
--- Sets by subculture that are given to the AI whenever they control a smithy every 20 turns.
--- Can be found on ancillary_set_ancillary_junction_tables
+--- Sets by subculture that are given to the AI whenever they control a smithy every 20 turns.
+--- Can be found on ancillary_set_ancillary_junction_tables
 M.special_by_subculture = {
-    -- WH1
-    -- Dwarfs
+    --- WH1
+    --- Dwarfs
     ["wh_main_sc_dwf_dwarfs"] = {
-        -- Sets
+        --- Sets
         [1] = { -- ironwarden?
             "wh2_dlc10_dwf_anc_armour_ironwardens_shield",
             "wh2_dlc10_dwf_anc_enchanted_item_ironwardens_tankard",
             "wh2_dlc10_dwf_anc_talisman_ironwardens_wardstone",
             "wh2_dlc10_dwf_anc_weapon_ironwardens_hammer"
         },
-        -- Special items
+        --- Special items
 
     },
-    -- Greenskins
+    --- Greenskins
     ["wh_main_sc_grn_greenskins"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- The Empire
+    --- The Empire
     ["wh_main_sc_emp_empire"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Vampire Counts
+    --- Vampire Counts
     ["wh_main_sc_vmp_vampire_counts"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Warriors of Chaos
+    --- Warriors of Chaos
     ["wh_main_sc_chs_chaos"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Beastmen
+    --- Beastmen
     ["wh_dlc03_sc_bst_beastmen"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Bretonnia
+    --- Bretonnia
     ["wh_main_sc_brt_bretonnia"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Wood Elves
+    --- Wood Elves
     ["wh_dlc05_sc_wef_wood_elves"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Norsca
+    --- Norsca
     ["wh_dlc08_sc_nor_norsca"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
 
-    -- WH2
-    -- Dark Elves
+    --- WH2
+    --- Dark Elves
     ["wh2_main_sc_def_dark_elves"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- High Elves
+    --- High Elves
     ["wh2_main_sc_hef_high_elves"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Lizardmen
+    --- Lizardmen
     ["wh2_main_sc_lzd_lizardmen"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Skaven
+    --- Skaven
     ["wh2_main_sc_skv_skaven"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Tomb Kings
+    --- Tomb Kings
     ["wh2_dlc09_sc_tmb_tomb_kings"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
-    -- Vampire Coast
+    --- Vampire Coast
     ["wh2_dlc11_sc_cst_vampire_coast"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
     },
 
-    -- WH3
-    -- Kislev
+    --- WH3
+    --- Kislev
     ["wh3_main_sc_ksl_kislev"] = {
-        -- Sets
+        --- Sets
         [1] = { -- wh3_main_ancillary_set_ksl_druzhina_of_ice
             "wh3_main_anc_armour_iron_ice_armour",
             "wh3_main_anc_talisman_blizzard_broach",
@@ -167,7 +171,7 @@ M.special_by_subculture = {
             "wh3_main_anc_armour_wyrm_harness",
             "wh3_main_anc_weapon_wyrmspike"
         },
-        -- Special items
+        --- Special items
         [4] = {
             "wh3_main_anc_arcane_item_mirror_of_the_ice_queen"
         },
@@ -182,10 +186,10 @@ M.special_by_subculture = {
         }
     },
 
-    -- Daemons
+    --- Daemons
     ["wh3_main_sc_dae_daemons"] = {
-        -- Sets
-        -- Special items
+        --- Sets
+        --- Special items
         [1] = {
             "wh3_main_anc_armour_weird_plate"
         },
@@ -209,9 +213,9 @@ M.special_by_subculture = {
         }
     },
 
-    -- Cathay
+    --- Cathay
     ["wh3_main_sc_cth_cathay"] = {
-        -- Sets
+        --- Sets
         [1] = { -- wh3_main_ancillary_set_cth_shang_yang_elementalist
             "wh3_main_anc_armour_robes_of_shang_yang",
             "wh3_main_anc_magic_standard_standard_of_shang_yang"
@@ -229,7 +233,7 @@ M.special_by_subculture = {
             "wh3_main_anc_arcane_item_scrolls_of_astromancy",
             "wh3_main_anc_enchanted_item_astromancers_spyglass"
         },
-        -- Special items
+        --- Special items
         [5] = {
             "wh3_main_anc_enchanted_item_catalytic_kiln"
         },
@@ -241,9 +245,9 @@ M.special_by_subculture = {
         }
     },
 
-    -- Ogre Kingdoms
+    --- Ogre Kingdoms
     ["wh3_main_sc_ogr_ogre_kingdoms"] = {
-        -- Sets
+        --- Sets
         [1] = { -- wh3_main_ancillary_set_ogr_bull_balls
             "wh3_main_anc_armour_bullgut",
             "wh3_main_anc_magic_standard_bull_standard"
@@ -261,7 +265,7 @@ M.special_by_subculture = {
             "wh3_main_anc_enchanted_item_daemon_killer_scars",
             "wh3_main_anc_weapon_blood_cleaver"
         },
-        -- Special items
+        --- Special items
         [5] = {
             "wh3_main_anc_weapon_siegebreaker"
         },
@@ -270,14 +274,14 @@ M.special_by_subculture = {
         }
     },
 
-    -- Nurgle
+    --- Nurgle
     ["wh3_main_sc_nur_nurgle"] = {
-        -- Sets
+        --- Sets
         [1] = { -- wh3_main_ancillary_set_nur_impedimenta_of_plague
             "wh3_main_anc_magic_standard_standard_of_seeping_decay",
             "wh3_main_anc_weapon_staff_of_nurgle"
         },
-        -- Special items
+        --- Special items
         [2] = {
             "wh3_main_anc_armour_weird_plate"
         },
@@ -292,14 +296,14 @@ M.special_by_subculture = {
         }
     },
 
-    -- Khorne
+    --- Khorne
     ["wh3_main_sc_kho_khorne"] = {
-        -- Sets
+        --- Sets
         [1] = { -- wh3_main_ancillary_set_kho_trappings_of_blood
             "wh3_main_anc_armour_armour_of_khorne",
             "wh3_main_anc_weapon_axe_of_khorne"
         },
-        -- Special items
+        --- Special items
         [2] = {
             "wh3_main_anc_armour_weird_plate"
         },
@@ -308,14 +312,14 @@ M.special_by_subculture = {
         }
     },
 
-    -- Slaanesh
+    --- Slaanesh
     ["wh3_main_sc_sla_slaanesh"] = {
-        -- Sets
+        --- Sets
         [1] = { -- wh3_main_ancillary_set_sla_accoutrements_of_desire
             "wh3_main_anc_magic_standard_banner_of_ecstacy",
             "wh3_main_anc_weapon_lash_of_despair"
         },
-        -- Special items
+        --- Special items
         [2] = {
             "wh3_main_anc_armour_weird_plate"
         },
@@ -327,14 +331,14 @@ M.special_by_subculture = {
         }
     },
 
-    -- Tzeentch
+    --- Tzeentch
     ["wh3_main_sc_tze_tzeentch"] = {
-        -- Sets
+        --- Sets
         [1] = { -- wh3_main_ancillary_set_tze_raiment_of_change
             "wh3_main_anc_magic_standard_icon_of_sorcery",
             "wh3_main_anc_weapon_staff_of_change"
         },
-        -- Special items
+        --- Special items
         [2] = {
             "wh3_main_anc_armour_weird_plate"
         },
