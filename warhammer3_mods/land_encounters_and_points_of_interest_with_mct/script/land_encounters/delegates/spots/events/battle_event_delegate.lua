@@ -6,7 +6,7 @@ local elligible_items = require("script/land_encounters/configs/items").balancin
 
 local BattleGenerator = require("script/land_encounters/generators/battle_generator")
 
-local Army = require("script/land_encounters/models/battle/army")
+local Army = require("script/land_encounters/core/army")
 
 -------------------------
 --- Properties definition

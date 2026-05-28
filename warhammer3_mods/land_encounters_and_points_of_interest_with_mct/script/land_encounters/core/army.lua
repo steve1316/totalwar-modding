@@ -1,13 +1,9 @@
 -- TODO: Pass a is_player flag in the constructor to double check units and pass alternatives in case they are needed.
 -- Make logic to check dlc ownership given subculture. Should a Unit or Lord type be DLC only, replace those units with its more close main variant or pass it in its constructor.
 require("script/land_encounters/utils/common")
+require("script/land_encounters/utils/random")
 
--- Mod libs
-local ArmyUnit = require("script/land_encounters/models/battle/army_unit")
-local LordUnit = require("script/land_encounters/models/battle/lord_unit")
-
--- smithy defenders
-local smithy_defenders = require("script/land_encounters/configs/smithy_data").defenders
+require("script/land_encounters/algorithms/random_encounter_force_generation_system")
 
 -- battle spots battle types
 local battle_tables = require("script/land_encounters/configs/battle_tables")
@@ -21,7 +17,170 @@ local skirmishes = battle_tables.skirmishes
 local surprise_attacks = battle_tables.surprise_attacks
 local waystones = battle_tables.waystones
 
-require("script/land_encounters/algorithms/random_encounter_force_generation_system")
+-- smithy defenders
+local smithy_defenders = require("script/land_encounters/configs/smithy_data").defenders
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- ArmyUnit
+-- (from models/battle/army_unit.lua)
+
+-------------------------
+--- Properties definition
+-------------------------
+local ArmyUnit = {
+    id = "none",
+    quantity = 0,
+    chance = 0,
+    alternative_chance = 0,
+    alternative_id = nil
+}
+
+
+-------------------------
+--- Class Methods
+-------------------------
+function ArmyUnit:generate_winner_unit()
+    if self.chance >= random_number(100) then
+        return { id = self.id, count = self.quantity }
+    elseif self.alternative_chance >= random_number(100) then
+        return { id = self.alternative_id, count = self.quantity }
+    end
+    return nil
+end
+
+-------------------------
+--- Constructors
+-------------------------
+function ArmyUnit:newFrom(unit_data)
+    local t = {
+        id= unit_data[1],
+        quantity= unit_data[2],
+        chance= unit_data[3],
+        alternative_chance= unit_data[4],
+        alternative_id= unit_data[5]
+    }
+    setmetatable(t, self)
+    self.__index = self
+    return t
+end
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- LordUnit
+-- (from models/battle/lord_unit.lua)
+
+-------------------------
+--- Properties definition
+-------------------------
+local LordUnit = {
+    level_ranges = {},
+    possible_subtypes = {},
+    possible_forenames = {},
+    possible_clan_names = {},
+    possible_family_names = {},
+    possible_other_names = {},
+    possible_skills = {},
+    possible_ancillaries = {},
+    possible_traits = {}
+}
+
+
+-------------------------
+--- Class Methods
+-------------------------
+function LordUnit:generate_random_level()
+    out("DEBUG - random_number(): " .. self.level_ranges[2] .. " - " .. self.level_ranges[1])
+    return random_number(self.level_ranges[2], self.level_ranges[1])
+end
+
+
+function LordUnit:generate_subtype()
+    if #self.possible_subtypes > 0 then
+        local random_subtype = self.possible_subtypes[random_number(#self.possible_subtypes)]
+        return random_subtype
+    end
+    return ""
+end
+
+
+function LordUnit:generate_random_forename()
+    if #self.possible_forenames > 0 then
+        return self.possible_forenames[random_number(#self.possible_forenames)]
+    end
+    return ""
+end
+
+
+function LordUnit:generate_random_clan_name()
+    if #self.possible_clan_names > 0 then
+        return self.possible_clan_names[random_number(#self.possible_clan_names)]
+    end
+    return ""
+end
+
+
+function LordUnit:generate_random_family_name()
+    if #self.possible_family_names > 0 then
+        return self.possible_family_names[random_number(#self.possible_family_names)]
+    end
+    return ""
+end
+
+
+function LordUnit:generate_random_other_name()
+    if #self.possible_other_names > 0 then
+        return self.possible_other_names[random_number(#self.possible_other_names)]
+    end
+    return ""
+end
+
+function LordUnit:generate_ancillaries(selected_lord_subtype)
+    if next(self.possible_ancillaries) ~= nil and next(self.possible_ancillaries[selected_lord_subtype]) ~= nil then
+        local active_ancillaries = {}
+        for i = 1, #self.possible_ancillaries[selected_lord_subtype] do
+            if self.possible_ancillaries[selected_lord_subtype][i][2] >= random_number(100) then
+                table.insert(active_ancillaries, self.possible_ancillaries[selected_lord_subtype][i][1])
+            end
+        end
+        return active_ancillaries
+    else
+        return {}
+    end
+end
+
+function LordUnit:generate_trait(selected_lord_subtype)
+    if next(self.possible_traits) ~= nil then
+        return self.possible_traits[selected_lord_subtype]
+    end
+    return nil
+end
+
+-------------------------
+--- Constructors
+-------------------------
+function LordUnit:newFrom(lord_data)
+    local t = {
+        subtype= nil,
+        level_ranges= lord_data.level_ranges,
+        possible_subtypes = lord_data.possible_subtypes,
+        possible_forenames= lord_data.possible_forenames,
+        possible_clan_names= lord_data.possible_clan_names,
+        possible_family_names= lord_data.possible_family_names,
+        possible_other_names= lord_data.possible_other_names,
+        possible_skills = lord_data.skills,
+        possible_ancillaries = lord_data.ancillaries,
+        possible_traits = lord_data.traits
+    }
+    setmetatable(t, self)
+    self.__index = self
+    return t
+end
+
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- //////////////////////////////////////////////////////////////////////////////////////////////////
+-- Army
+-- (from models/battle/army.lua)
 
 -------------------------
 --- Properties definition
@@ -52,7 +211,7 @@ function Army:randomize_units(random_army_manager)
     out("DEBUG - randomize_units coming from InvasionBattleManager")
     self:randomize_army_composition_and_declare(random_army_manager)
     self:randomize_lord()
-    
+
     if self:has_offensive_reinforcements() then
         for i=1, #self.reinforcing_enemy_armies do
             self.reinforcing_enemy_armies[i]:randomize_army_composition_and_declare(random_army_manager)
@@ -69,8 +228,8 @@ function Army:randomize_army_composition_and_declare(random_army_manager)
     local randomized_units = {}
     for i=1, #self.units_pool do
         local randomized_unit = self.units_pool[i]:generate_winner_unit()
-        if randomized_unit ~= nil then 
-            self:declare_army_unit(random_army_manager, randomized_unit.id, randomized_unit.count) 
+        if randomized_unit ~= nil then
+            self:declare_army_unit(random_army_manager, randomized_unit.id, randomized_unit.count)
         end
         table.insert(randomized_units, randomized_unit)
     end
@@ -197,19 +356,19 @@ function Army:new_from_event(battle_event)
             table.insert(reinforcing_ally_armies, Army:create_from(force_data.reinforcing_ally_armies[i]))
         end
     end
-    
+
     -- we declare enemy armies
-    local reinforcing_enemy_armies = {} 
+    local reinforcing_enemy_armies = {}
     if force_data.reinforcing_enemy_armies ~= false then
         for i=1, #force_data.reinforcing_enemy_armies do
             table.insert(reinforcing_enemy_armies, Army:create_from(force_data.reinforcing_enemy_armies[i]))
         end
     end
-    
+
     local army = Army:create_from(force_data)
     army.reinforcing_ally_armies = reinforcing_ally_armies
     army.reinforcing_enemy_armies = reinforcing_enemy_armies
-    
+
     return army
 end
 
@@ -221,8 +380,8 @@ function Army:create_from(force)
         force_identifier = force.identifier,
         invasion_identifier = force.invasion_identifier,
         intervention_type = force.intervention_type,
-        units_pool = {}, 
-        units = {}, 
+        units_pool = {},
+        units = {},
         unit_experience_amount = force.unit_experience_amount,
         lord_pool = {},
         lord = {},
@@ -230,12 +389,12 @@ function Army:create_from(force)
         reinforcing_enemy_armies = {},
     }
     t.lord_pool = LordUnit:newFrom(force.lord)
-        
+
     for i=1, #force.units do
         local unit = ArmyUnit:newFrom(force.units[i])
         table.insert(t.units_pool, unit)
     end
-    
+
     setmetatable(t, self)
     self.__index = self
 
@@ -255,7 +414,7 @@ function Army:new_from_faction_and_subculture_and_level(faction_name, subculture
     end
 
     local forces_of_level = force_data.armies_by_level[level]
-    
+
     -- Create the defender army
     local t = {
         faction = faction_name,
@@ -271,12 +430,12 @@ function Army:new_from_faction_and_subculture_and_level(faction_name, subculture
         reinforcing_enemy_armies = {},
     }
     t.lord_pool = LordUnit:newFrom(force_data.lord)
-    
+
     for i=1, #forces_of_level.units do
         local unit = ArmyUnit:newFrom(forces_of_level.units[i])
         table.insert(t.units_pool, unit)
     end
-    
+
     setmetatable(t, self)
     self.__index = self
 
