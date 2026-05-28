@@ -446,11 +446,11 @@ function Army:create_from(force)
         table.insert(t.units_pool, unit)
     end
 
+    t.heroes = force.heroes or {}
+    t.skill_overrides = force.skill_overrides or {}
+
     setmetatable(t, self)
     self.__index = self
-
-    self.heroes = force.heroes or {}
-    self.skill_overrides = force.skill_overrides or {}
 
     return t
 end
