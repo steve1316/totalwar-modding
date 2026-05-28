@@ -15,7 +15,7 @@ import shutil
 import time
 from typing import List, Dict, Set
 from utilities import (
-    cleanup_folders,
+    clear_temp_root,
     ensure_temp_dir,
     extract_modded_tsv_data,
     extract_tsv_data,
@@ -183,6 +183,6 @@ if __name__ == "__main__":
     except Exception:
         logging.exception("glf_inner_join failed.")
     finally:
-        cleanup_folders([f"{TEMP_DIR}/vanilla_{TARGET_TABLE}", glf_scratch, output_root])
+        clear_temp_root()
 
     log_elapsed_time("inner join", start_time)
