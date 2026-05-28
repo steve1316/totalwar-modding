@@ -1,7 +1,13 @@
+-- common.lua publishes AMBUSH_TYPE, INTERCEPTION_TYPE, ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
+-- Ensure they are in _G before the table literal below is evaluated.
+require("script/land_encounters/utils/common")
+
 -- Initialize the settings with default values.
 local mct_settings = {
     disable_smithies = false,
     spawn_percentage = 0.75,
+    -- Default to interception only - matches the pre-MCT-toggle behavior the user established.
+    enabled_intervention_types = { INTERCEPTION_TYPE },
     enabled_encounter_skin_ids = {},
     enabled_mods = {},
     enable_all_encounter_skins = true,
@@ -338,6 +344,21 @@ end
 function set_mct_settings(mct_mod)
     mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
     mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
+
+    -- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
+    -- at-least-one via set_locked, so this list should never be empty, but the picker in
+    -- core/army.lua has a defensive fallback to INTERCEPTION_TYPE just in case.
+    local enabled_intervention_types = {}
+    if mct_mod:get_option_by_key("intervention_ambush"):get_finalized_setting() then
+        table.insert(enabled_intervention_types, AMBUSH_TYPE)
+    end
+    if mct_mod:get_option_by_key("intervention_interception"):get_finalized_setting() then
+        table.insert(enabled_intervention_types, INTERCEPTION_TYPE)
+    end
+    if mct_mod:get_option_by_key("intervention_allied_reinforcements"):get_finalized_setting() then
+        table.insert(enabled_intervention_types, ALLIED_REINFORCEMENTS_PERMITTED_TYPE)
+    end
+    mct_settings.enabled_intervention_types = enabled_intervention_types
     mct_settings.enable_all_encounter_skins = mct_mod:get_option_by_key("enable_all_encounter_skins"):get_finalized_setting()
     mct_settings.enable_randomized_encounter_force_generation = mct_mod:get_option_by_key("enable_randomized_encounter_force_generation"):get_finalized_setting()
     mct_settings.use_only_modded_units = mct_mod:get_option_by_key("use_only_modded_units"):get_finalized_setting()

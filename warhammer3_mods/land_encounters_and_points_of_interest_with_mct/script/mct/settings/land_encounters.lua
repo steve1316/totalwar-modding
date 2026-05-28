@@ -44,6 +44,75 @@ spawn_percentage_slider:slider_set_step_size(0.05, 2)
 spawn_percentage_slider:set_default_value(0.75)
 spawn_percentage_slider:set_assigned_section("configuration_section")
 
+---------------------------------------------
+--- Battle Engagement Behavior.
+---------------------------------------------
+
+local battle_engagement_section = mct_mod:add_new_section("battle_engagement_section")
+battle_engagement_section:set_localised_text("Battle Engagement Behavior", true)
+
+local intervention_ambush_checkbox = mct_mod:add_new_option("intervention_ambush", "checkbox")
+intervention_ambush_checkbox:set_text("Allow Ambush encounters", true)
+intervention_ambush_checkbox:set_tooltip_text("When enabled, some land-encounter battles will be set up as ambushes - enemy composition will be hidden and the battle cannot be retreated from before it starts. Higher difficulty.", true)
+intervention_ambush_checkbox:set_is_global(true)
+intervention_ambush_checkbox:set_default_value(false)
+intervention_ambush_checkbox:set_assigned_section("battle_engagement_section")
+
+local intervention_interception_checkbox = mct_mod:add_new_option("intervention_interception", "checkbox")
+intervention_interception_checkbox:set_text("Allow Interception encounters", true)
+intervention_interception_checkbox:set_tooltip_text("When enabled, land-encounter battles will be set up as interceptions - enemy composition visible, no retreat from the dilemma but standard battle mechanics. This is the default behavior.", true)
+intervention_interception_checkbox:set_is_global(true)
+intervention_interception_checkbox:set_default_value(true)
+intervention_interception_checkbox:set_assigned_section("battle_engagement_section")
+
+local intervention_allied_checkbox = mct_mod:add_new_option("intervention_allied_reinforcements", "checkbox")
+intervention_allied_checkbox:set_text("Allow Allied-Reinforcement encounters", true)
+intervention_allied_checkbox:set_tooltip_text("When enabled, some land-encounter battles will let the player attack the encounter with allied reinforcements available. Easier difficulty.", true)
+intervention_allied_checkbox:set_is_global(true)
+intervention_allied_checkbox:set_default_value(false)
+intervention_allied_checkbox:set_assigned_section("battle_engagement_section")
+
+-- At-least-one enforcement: lock whichever option is the last one currently checked, so the user
+-- cannot reach an all-off state. Recompute after every toggle of any of the three.
+local intervention_option_keys = {
+    "intervention_ambush",
+    "intervention_interception",
+    "intervention_allied_reinforcements",
+}
+
+local function recompute_intervention_locks()
+    local enabled = {}
+    for _, key in ipairs(intervention_option_keys) do
+        if mct_mod:get_option_by_key(key):get_selected_setting() then
+            table.insert(enabled, key)
+        end
+    end
+    local lock_last_only = (#enabled == 1)
+    for _, key in ipairs(intervention_option_keys) do
+        local option = mct_mod:get_option_by_key(key)
+        local is_only_enabled = lock_last_only and option:get_selected_setting()
+        option:set_locked(is_only_enabled)
+    end
+end
+
+recompute_intervention_locks()
+
+core:add_listener(
+    "leapoi_intervention_at_least_one_enforcer",
+    "MctOptionSelectedSettingSet",
+    function(context)
+        local key = context:option():get_key()
+        for _, intervention_key in ipairs(intervention_option_keys) do
+            if key == intervention_key then return true end
+        end
+        return false
+    end,
+    function(_)
+        recompute_intervention_locks()
+    end,
+    true
+)
+
 -- Create new section for encounters.
 local encounters_section = mct_mod:add_new_section("encounter_skins_section")
 encounters_section:set_localised_text("Encounter Skin Configuration", true)
