@@ -1,358 +1,587 @@
---- Ancillary item pools used by the Smithy reward system. Each category is a flat list of
---- ancillary keys (CA DB ancillaries_tables). Smithy events sample from these pools to grant
---- the player an item. Pure data - no runtime logic.
+--- Ancillary item pools used by the encounter reward system. Sourced from the vanilla
+--- ancillaries_tables and bucketed by uniqueness_score:
+---   Common   - 35  <= score <  100
+---   Uncommon - 100 <= score <  130
+---   Rare     - 130 <= score <  200
+---   Unique   - 200 <= score
+--- Only categories weapon, armour, talisman, arcane_item, and enchanted_item are included.
+--- Only rows flagged randomly_dropped or can_be_stolen are included.
+--- Pure data - regenerated via helper_scripts/temp/regenerate_items.py.
 
 local M = {}
 
 M.balancing = {
-    "wh_main_anc_magic_standard_lichbone_pennant",
-
-    "wh_main_anc_armour_charmed_shield",
-    "wh_main_anc_armour_enchanted_shield",
-    "wh_main_anc_armour_gamblers_armour",
-    "wh_main_anc_armour_shield_of_ptolos",
-    "wh_main_anc_armour_spellshield",
-    "wh_main_anc_armour_glittering_scales",
-    "wh_main_anc_armour_tricksters_helm",
-    "wh_main_anc_armour_armour_of_fortune",
-    "wh_main_anc_armour_helm_of_discord",
-    "wh_main_anc_armour_armour_of_destiny",
-
-    "wh_main_anc_enchanted_item_ironcurse_icon",
-    "wh_main_anc_enchanted_item_potion_of_strength",
-    "wh_main_anc_enchanted_item_ruby_ring_of_ruin",
-    "wh_main_anc_enchanted_item_the_terrifying_mask_of_eee",
-    "wh_main_anc_enchanted_item_potion_of_toughness",
-    "wh_main_anc_enchanted_item_healing_potion",
-    "wh_main_anc_enchanted_item_the_other_tricksters_shard",
-    "wh2_dlc15_anc_arcane_item_black_dragon_special",
-
-    "wh_main_anc_talisman_dawnstone",
-    "wh_main_anc_talisman_luckstone",
-    "wh_main_anc_talisman_opal_amulet",
-    "wh_main_anc_talisman_pidgeon_plucker_pendant",
-    "wh_main_anc_talisman_talisman_of_protection",
-    "wh_main_anc_talisman_talisman_of_endurance",
-    "wh_main_anc_talisman_talisman_of_preservation",
-
-    "wh_main_anc_weapon_berserker_sword",
-    "wh_main_anc_weapon_biting_blade",
-    "wh_main_anc_weapon_gold_sigil_sword",
-    "wh_main_anc_weapon_relic_sword",
-    "wh_main_anc_weapon_shrieking_blade",
-    "wh_main_anc_weapon_sword_of_might",
-    "wh_main_anc_weapon_tormentor_sword",
-    "wh_main_anc_weapon_fencers_blades",
-    "wh_main_anc_weapon_sword_of_anti-heroes",
-    "wh_main_anc_weapon_sword_of_strife",
-    "wh_main_anc_weapon_sword_of_striking",
-    "wh_main_anc_weapon_warrior_bane",
-    "wh_main_anc_weapon_ogre_blade",
-    "wh_main_anc_weapon_giant_blade",
-    "wh_main_anc_weapon_obsidian_blade",
-
-    "wh_main_anc_arcane_item_channelling_staff",
-    "wh_main_anc_arcane_item_earthing_rod",
-    "wh_main_anc_arcane_item_power_scroll",
-    "wh_main_anc_arcane_item_power_stone",
-    "wh_main_anc_arcane_item_scroll_of_shielding",
-    "wh_main_anc_arcane_item_wand_of_jet",
-    "wh_main_anc_arcane_item_power_stone",
-    "wh_main_anc_arcane_item_sceptre_of_stability",
-    "wh_main_anc_arcane_item_forbidden_rod",
-    "wh_main_anc_arcane_item_book_of_ashur",
-    "wh2_dlc13_anc_arcane_item_amplifier"
-
-}
-
---- Sets by subculture that are given to the AI whenever they control a smithy every 20 turns.
---- Can be found on ancillary_set_ancillary_junction_tables
-M.special_by_subculture = {
-    --- WH1
-    --- Dwarfs
-    ["wh_main_sc_dwf_dwarfs"] = {
-        --- Sets
-        [1] = { -- ironwarden?
-            "wh2_dlc10_dwf_anc_armour_ironwardens_shield",
-            "wh2_dlc10_dwf_anc_enchanted_item_ironwardens_tankard",
-            "wh2_dlc10_dwf_anc_talisman_ironwardens_wardstone",
-            "wh2_dlc10_dwf_anc_weapon_ironwardens_hammer"
-        },
-        --- Special items
-
+    common = {
+        "wh2_dlc09_anc_arcane_item_blue_khepra",
+        "wh2_dlc09_anc_armour_armour_helmet_of_khsar",
+        "wh2_dlc09_anc_armour_armour_of_the_ages",
+        "wh2_dlc09_anc_armour_armour_skull_cap_of_the_moon",
+        "wh2_dlc09_anc_enchanted_item_brooch_of_the_great_desert",
+        "wh2_dlc09_anc_enchanted_item_death_mask_of_kharnut",
+        "wh2_dlc09_anc_enchanted_item_elixir_of_might",
+        "wh2_dlc09_anc_enchanted_item_golden_deathmask_of_kharnut",
+        "wh2_dlc09_anc_enchanted_item_hieratic_jar",
+        "wh2_dlc09_anc_enchanted_item_icon_of_rulership",
+        "wh2_dlc09_anc_enchanted_item_shroud_of_sokth",
+        "wh2_dlc09_anc_talisman_golden_ankhra",
+        "wh2_dlc09_anc_talisman_golden_eye_of_rah_nutt",
+        "wh2_dlc09_anc_talisman_obsidian_pendant",
+        "wh2_dlc09_anc_talisman_sun_scarab",
+        "wh2_dlc09_anc_weapon_enchanted_lapis_mace",
+        "wh2_dlc09_anc_weapon_fang_of_quaph",
+        "wh2_dlc09_anc_weapon_golden_dagger",
+        "wh2_dlc09_anc_weapon_inscribed_khopesh",
+        "wh2_dlc10_anc_arcane_item_scroll_of_arnizipals_black_horror",
+        "wh2_dlc10_anc_arcane_item_scroll_of_assault_of_stone",
+        "wh2_dlc10_anc_arcane_item_scroll_of_blast",
+        "wh2_dlc10_anc_arcane_item_scroll_of_fear_of_aramar",
+        "wh2_dlc10_anc_arcane_item_scroll_of_speed_of_lykos",
+        "wh2_dlc10_anc_arcane_item_scroll_of_the_amber_trance",
+        "wh2_dlc10_anc_enchanted_item_extinguished_phoenix_pinion",
+        "wh2_dlc10_dwf_anc_armour_ironbeards_armour",
+        "wh2_dlc10_dwf_anc_armour_miners_helm",
+        "wh2_dlc10_dwf_anc_armour_prospectors_mail",
+        "wh2_dlc10_dwf_anc_armour_rangers_cloak",
+        "wh2_dlc10_dwf_anc_armour_slayers_gauntlets",
+        "wh2_dlc10_dwf_anc_armour_troll_slayers_hide",
+        "wh2_dlc10_dwf_anc_armour_veterans_armour",
+        "wh2_dlc10_dwf_anc_enchanted_item_ironbeards_bracers",
+        "wh2_dlc10_dwf_anc_enchanted_item_miners_drinking_horn",
+        "wh2_dlc10_dwf_anc_enchanted_item_old_guards_keg",
+        "wh2_dlc10_dwf_anc_enchanted_item_rangers_brooch",
+        "wh2_dlc10_dwf_anc_enchanted_item_slayers_belt",
+        "wh2_dlc10_dwf_anc_enchanted_item_troll_slayers_gauntlets",
+        "wh2_dlc10_dwf_anc_enchanted_item_veterans_bracers",
+        "wh2_dlc10_dwf_anc_talisman_gate_keepers_rat_catcher",
+        "wh2_dlc10_dwf_anc_talisman_miners_lattern",
+        "wh2_dlc10_dwf_anc_talisman_prospectors_charge",
+        "wh2_dlc10_dwf_anc_talisman_rangers_pouch",
+        "wh2_dlc10_dwf_anc_talisman_slayers_ring",
+        "wh2_dlc10_dwf_anc_talisman_troll_slayers_amulet",
+        "wh2_dlc10_dwf_anc_talisman_veterans_flask",
+        "wh2_dlc10_dwf_anc_weapon_miners_pickaxe",
+        "wh2_dlc10_dwf_anc_weapon_old_guards_hammer",
+        "wh2_dlc10_dwf_anc_weapon_slayers_axe",
+        "wh2_dlc10_dwf_anc_weapon_trollslayer_axe",
+        "wh2_dlc10_dwf_anc_weapon_veterans_hammer",
+        "wh2_dlc11_anc_armour_armour_of_the_depth",
+        "wh2_dlc11_anc_armour_seadragon_buckler",
+        "wh2_dlc11_anc_enchanted_item_moonshine",
+        "wh2_dlc11_anc_talisman_jellyfish_in_a_jar",
+        "wh2_dlc11_anc_talisman_kraken_fang",
+        "wh2_dlc11_anc_weapon_double_barrel",
+        "wh2_dlc11_anc_weapon_lucky_levis_hookhand",
+        "wh2_dlc17_anc_talisman_shardstone_amulet",
+        "wh2_main_anc_arcane_item_cube_of_darkness",
+        "wh2_main_anc_arcane_item_darkstar_cloak",
+        "wh2_main_anc_arcane_item_diadem_of_power",
+        "wh2_main_anc_arcane_item_plaque_of_dominion",
+        "wh2_main_anc_arcane_item_rod_of_the_storm",
+        "wh2_main_anc_arcane_item_scrying_stone",
+        "wh2_main_anc_arcane_item_starwood_staff",
+        "wh2_main_anc_arcane_item_the_seerstaff_of_saphery",
+        "wh2_main_anc_arcane_item_the_tricksters_pendant",
+        "wh2_main_anc_arcane_item_the_vortex_shard",
+        "wh2_main_anc_arcane_item_tome_of_furion",
+        "wh2_main_anc_arcane_item_warp_energy_condenser",
+        "wh2_main_anc_arcane_item_warpstone_tokens",
+        "wh2_main_anc_arcane_item_warpstorm_scroll",
+        "wh2_main_anc_armour_armour_of_the_stars",
+        "wh2_main_anc_armour_cloak_of_hag_graef",
+        "wh2_main_anc_armour_dragonscale_shield",
+        "wh2_main_anc_armour_helm_of_fortune",
+        "wh2_main_anc_armour_hide_of_the_cold_ones",
+        "wh2_main_anc_armour_sacred_stegadon_helm_of_itza",
+        "wh2_main_anc_armour_shadow_armour",
+        "wh2_main_anc_armour_shield_of_distraction",
+        "wh2_main_anc_armour_shield_of_ghrond",
+        "wh2_main_anc_armour_shield_of_the_merwyrm",
+        "wh2_main_anc_armour_shield_of_the_mirrored_pool",
+        "wh2_main_anc_armour_the_bane_shield",
+        "wh2_main_anc_armour_the_maiming_shield",
+        "wh2_main_anc_armour_warpstone_armour",
+        "wh2_main_anc_armour_worlds_edge_armour",
+        "wh2_main_anc_enchanted_item_blood_statuette_of_spite",
+        "wh2_main_anc_enchanted_item_carnosaur_pendant",
+        "wh2_main_anc_enchanted_item_cloak_of_beards",
+        "wh2_main_anc_enchanted_item_curse_charm_of_tepok",
+        "wh2_main_anc_enchanted_item_dragonfly_of_quicksilver",
+        "wh2_main_anc_enchanted_item_dragonhorn",
+        "wh2_main_anc_enchanted_item_khaines_ring_of_fury",
+        "wh2_main_anc_enchanted_item_pipes_of_piebald",
+        "wh2_main_anc_enchanted_item_portents_of_verminous_doom",
+        "wh2_main_anc_enchanted_item_radiant_gem_of_hoeth",
+        "wh2_main_anc_enchanted_item_rubric_of_dark_dimensions",
+        "wh2_main_anc_enchanted_item_skalm",
+        "wh2_main_anc_enchanted_item_skavenbrew",
+        "wh2_main_anc_enchanted_item_talisman_of_loec",
+        "wh2_main_anc_enchanted_item_the_book_of_the_phoenix",
+        "wh2_main_anc_enchanted_item_the_cloak_of_feathers",
+        "wh2_main_anc_enchanted_item_the_guiding_eye",
+        "wh2_main_anc_enchanted_item_the_horn_of_kygor",
+        "wh2_main_anc_enchanted_item_venom_of_the_firefly_frog",
+        "wh2_main_anc_enchanted_item_war_drum_of_xahutec",
+        "wh2_main_anc_enchanted_item_whip_of_agony",
+        "wh2_main_anc_talisman_amulet_of_fire",
+        "wh2_main_anc_talisman_amulet_of_itzl",
+        "wh2_main_anc_talisman_aura_of_quetzl",
+        "wh2_main_anc_talisman_crown_of_black_iron",
+        "wh2_main_anc_talisman_deathmask",
+        "wh2_main_anc_talisman_foul_pendant",
+        "wh2_main_anc_talisman_glyph_necklace",
+        "wh2_main_anc_talisman_loremasters_cloak",
+        "wh2_main_anc_talisman_pearl_of_infinite_blackness",
+        "wh2_main_anc_talisman_ring_of_darkness",
+        "wh2_main_anc_talisman_ring_of_hotek",
+        "wh2_main_anc_talisman_rival_hide_talisman",
+        "wh2_main_anc_talisman_sacred_incense",
+        "wh2_main_anc_talisman_shadow_magnet_trinket",
+        "wh2_main_anc_talisman_talisman_of_saphery",
+        "wh2_main_anc_talisman_the_black_amulet",
+        "wh2_main_anc_weapon_blade_of_corruption",
+        "wh2_main_anc_weapon_blade_of_darting_steel",
+        "wh2_main_anc_weapon_blade_of_nurglitch",
+        "wh2_main_anc_weapon_blade_of_revered_tzunki",
+        "wh2_main_anc_weapon_burning_blade_of_chotec",
+        "wh2_main_anc_weapon_caledors_bane",
+        "wh2_main_anc_weapon_crimson_death",
+        "wh2_main_anc_weapon_dagger_of_hotek",
+        "wh2_main_anc_weapon_dagger_of_sotek",
+        "wh2_main_anc_weapon_deathpiercer",
+        "wh2_main_anc_weapon_foe_bane",
+        "wh2_main_anc_weapon_heartseeker",
+        "wh2_main_anc_weapon_stegadon_war_spear",
+        "wh2_main_anc_weapon_sword_of_the_hornet",
+        "wh2_main_anc_weapon_the_piranha_blade",
+        "wh2_main_anc_weapon_the_white_sword",
+        "wh2_main_anc_weapon_warpforged_blade",
+        "wh2_main_anc_weapon_web_of_shadows",
+        "wh2_main_anc_weapon_weeping_blade",
+        "wh3_dlc20_anc_arcane_item_rod_of_torment",
+        "wh3_dlc20_anc_armour_bronze_armour_of_zhrakk",
+        "wh3_dlc20_anc_enchanted_item_blasphemous_amulet",
+        "wh3_dlc20_anc_enchanted_item_doom_totem",
+        "wh3_dlc20_anc_enchanted_item_the_beguiling_gem",
+        "wh3_dlc20_anc_item_armour_of_damnation",
+        "wh3_dlc20_anc_item_crown_of_everlasting_conquest",
+        "wh3_dlc20_anc_item_the_festering_shroud",
+        "wh3_dlc20_anc_weapon_rapier_of_ecstasy",
+        "wh3_dlc23_anc_arcane_item_dweomer_leach_orb",
+        "wh3_dlc23_anc_arcane_item_spell_wrought_sceptre",
+        "wh3_dlc23_anc_armour_armour_of_the_forge",
+        "wh3_dlc23_anc_armour_blackshard_armour",
+        "wh3_dlc23_anc_enchanted_item_daemon_flask_of_ashak",
+        "wh3_dlc23_anc_enchanted_item_furnace_blast_gem",
+        "wh3_dlc23_anc_enchanted_item_gauntlets_of_bazherak_the_cruel",
+        "wh3_dlc23_anc_enchanted_item_the_mask_of_the_furnace",
+        "wh3_dlc23_anc_enchanted_item_the_vial_of_hashut",
+        "wh3_dlc23_anc_talisman_black_gem_of_gnar",
+        "wh3_dlc23_anc_talisman_malignant_totem",
+        "wh3_dlc23_anc_talisman_possessed_amulet",
+        "wh3_dlc23_anc_talisman_talisman_of_obsidian",
+        "wh3_dlc23_anc_weapon_dark_mace",
+        "wh3_dlc24_anc_enchanted_item_mirror_of_knowledge",
+        "wh3_dlc24_anc_item_divining_rod",
+        "wh3_dlc25_anc_armour_armour_of_tarnus",
+        "wh3_dlc25_anc_enchanted_item_the_gold_standard",
+        "wh3_dlc27_anc_arcane_item_annulian_crystal",
+        "wh3_dlc27_anc_armour_golden_shield",
+        "wh3_dlc27_anc_enchanted_item_skinhidden_plate",
+        "wh3_main_anc_arcane_item_abhorrent_lodestone",
+        "wh3_main_anc_arcane_item_bangstick",
+        "wh3_main_anc_arcane_item_hellheart",
+        "wh3_main_anc_arcane_item_maw_shard",
+        "wh3_main_anc_arcane_item_rod_of_command",
+        "wh3_main_anc_arcane_item_scrolls_of_astromancy",
+        "wh3_main_anc_arcane_item_skullmantle",
+        "wh3_main_anc_arcane_item_snowflake_pendant",
+        "wh3_main_anc_arcane_item_void_pendulum",
+        "wh3_main_anc_arcane_item_wand_of_whimsey",
+        "wh3_main_anc_armour_bullgut",
+        "wh3_main_anc_armour_estalian_pavise",
+        "wh3_main_anc_armour_forest_cloak",
+        "wh3_main_anc_armour_frost_shard_armour",
+        "wh3_main_anc_armour_greatskull",
+        "wh3_main_anc_armour_gut_maw",
+        "wh3_main_anc_armour_iron_ice_armour",
+        "wh3_main_anc_armour_laminate_shield",
+        "wh3_main_anc_armour_longshots_cap",
+        "wh3_main_anc_armour_mastodon_armour",
+        "wh3_main_anc_armour_obsidian_armour",
+        "wh3_main_anc_armour_quicksilver_armour",
+        "wh3_main_anc_armour_robe_of_vast_pockets",
+        "wh3_main_anc_armour_shield_of_sacrifice",
+        "wh3_main_anc_armour_shield_of_the_nan_gau",
+        "wh3_main_anc_armour_wyrm_harness",
+        "wh3_main_anc_enchanted_item_alchemists_elixir_of_iron_skin",
+        "wh3_main_anc_enchanted_item_alchemists_elixir_of_puissance",
+        "wh3_main_anc_enchanted_item_alchemists_elixir_of_venom",
+        "wh3_main_anc_enchanted_item_alchemists_mask",
+        "wh3_main_anc_enchanted_item_balalaika_of_the_arari",
+        "wh3_main_anc_enchanted_item_celestial_silk_robe",
+        "wh3_main_anc_enchanted_item_crackleblaze",
+        "wh3_main_anc_enchanted_item_deaths_head",
+        "wh3_main_anc_enchanted_item_greyback_pelt",
+        "wh3_main_anc_enchanted_item_jade_lion",
+        "wh3_main_anc_enchanted_item_jar_of_all_souls",
+        "wh3_main_anc_enchanted_item_kite_of_the_uttermost_airs",
+        "wh3_main_anc_enchanted_item_potion_of_farsight",
+        "wh3_main_anc_enchanted_item_rock_eye",
+        "wh3_main_anc_enchanted_item_spotters_spyglass",
+        "wh3_main_anc_talisman_blood_of_the_motherland",
+        "wh3_main_anc_talisman_cathayan_jet",
+        "wh3_main_anc_talisman_fractured_clasp",
+        "wh3_main_anc_talisman_gnoblar_thiefstone",
+        "wh3_main_anc_talisman_heartwood_branch",
+        "wh3_main_anc_talisman_jade_blood_pendant",
+        "wh3_main_anc_talisman_jet_amulet",
+        "wh3_main_anc_talisman_lucky_arrow",
+        "wh3_main_anc_talisman_spangleshard",
+        "wh3_main_anc_talisman_spore_censer",
+        "wh3_main_anc_talisman_star_iron_ring",
+        "wh3_main_anc_talisman_warp_mirror",
+        "wh3_main_anc_talisman_wyrdstone_necklace",
+        "wh3_main_anc_weapon_asp_bow",
+        "wh3_main_anc_weapon_blade_of_blood",
+        "wh3_main_anc_weapon_blade_of_xen_wu",
+        "wh3_main_anc_weapon_dragonfire_handgun",
+        "wh3_main_anc_weapon_nuku_chos_crossbow",
+        "wh3_main_anc_weapon_outriders_handgun",
+        "wh3_main_anc_weapon_rangers_axe",
+        "wh3_main_anc_weapon_serpent_fang",
+        "wh3_main_anc_weapon_skull_plucker",
+        "wh3_main_anc_weapon_staff_of_nurgle",
+        "wh3_main_anc_weapon_the_tenderiser",
+        "wh3_main_anc_weapon_torment_blade",
+        "wh3_main_anc_weapon_ursuns_claws",
+        "wh3_main_anc_weapon_vermillion_blade",
+        "wh3_main_anc_weapon_vorpal_shard",
+        "wh3_main_anc_weapon_wyvernbone_bow",
+        "wh3_prologue_anc_enchanted_item_saint_annushkas_finger_bone",
+        "wh3_prologue_anc_talisman_star_iron_ring",
+        "wh_dlc03_anc_arcane_item_hagtree_fetish",
+        "wh_dlc03_anc_arcane_item_jagged_dagger",
+        "wh_dlc03_anc_armour_blackened_plate",
+        "wh_dlc03_anc_armour_pelt_of_the_shadowgave",
+        "wh_dlc03_anc_armour_ramhorn_helm",
+        "wh_dlc03_anc_enchanted_item_shard_of_the_herdstone",
+        "wh_dlc03_anc_talisman_chalice_of_dark_rain",
+        "wh_dlc03_anc_weapon_axes_of_khorgor",
+        "wh_dlc03_anc_weapon_hunting_spear",
+        "wh_dlc03_anc_weapon_primeval_club",
+        "wh_dlc03_anc_weapon_the_brass_cleaver",
+        "wh_dlc03_anc_weapon_the_steel_claws",
+        "wh_dlc05_anc_armour_the_helm_of_the_hunt",
+        "wh_dlc05_anc_enchanted_item_hail_of_doom_arrow",
+        "wh_dlc05_anc_weapon_the_bow_of_loren",
+        "wh_dlc07_anc_arcane_item_sacrament_of_the_lady",
+        "wh_dlc07_anc_armour_armour_of_the_midsummer_sun",
+        "wh_dlc07_anc_armour_cuirass_of_fortune",
+        "wh_dlc07_anc_enchanted_item_holy_icon",
+        "wh_dlc07_anc_talisman_dragons_claw",
+        "wh_dlc07_anc_talisman_siriennes_locket",
+        "wh_dlc07_anc_weapon_sword_of_the_quest",
+        "wh_dlc07_anc_weapon_the_wyrmlance",
+        "wh_dlc08_anc_armour_blood_stained_armour_of_morkar",
+        "wh_dlc08_anc_armour_helm_of_reavers",
+        "wh_dlc08_anc_armour_huskarl_plates",
+        "wh_dlc08_anc_armour_mammoth_hide_cape",
+        "wh_dlc08_anc_talisman_headband_of_berserker",
+        "wh_dlc08_anc_talisman_lootbag_of_marauders",
+        "wh_dlc08_anc_talisman_wolf_teeth_amulet",
+        "wh_dlc08_anc_weapon_troll_fang_dagger",
+        "wh_main_anc_arcane_item_book_of_arkhan",
+        "wh_main_anc_arcane_item_earthing_rod",
+        "wh_main_anc_arcane_item_lucky_shrunken_head",
+        "wh_main_anc_arcane_item_power_scroll",
+        "wh_main_anc_arcane_item_power_stone",
+        "wh_main_anc_arcane_item_sceptre_of_stability",
+        "wh_main_anc_arcane_item_scroll_of_leeching",
+        "wh_main_anc_arcane_item_scroll_of_shielding",
+        "wh_main_anc_arcane_item_skull_of_katam",
+        "wh_main_anc_arcane_item_wand_of_jet",
+        "wh_main_anc_armour_armour_of_fortune",
+        "wh_main_anc_armour_armour_of_gork",
+        "wh_main_anc_armour_armour_of_silvered_steel",
+        "wh_main_anc_armour_charmed_shield",
+        "wh_main_anc_armour_dragonhelm",
+        "wh_main_anc_armour_enchanted_shield",
+        "wh_main_anc_armour_gamblers_armour",
+        "wh_main_anc_armour_glittering_scales",
+        "wh_main_anc_armour_helm_of_discord",
+        "wh_main_anc_armour_helm_of_many_eyes",
+        "wh_main_anc_armour_nightshroud",
+        "wh_main_anc_armour_shield_of_ptolos",
+        "wh_main_anc_armour_spellshield",
+        "wh_main_anc_enchanted_item_chalice_of_chaos",
+        "wh_main_anc_enchanted_item_featherfoe_torc",
+        "wh_main_anc_enchanted_item_fiery_ring_of_thori",
+        "wh_main_anc_enchanted_item_ironcurse_icon",
+        "wh_main_anc_enchanted_item_pendant_of_slaanesh",
+        "wh_main_anc_enchanted_item_potion_of_foolhardiness",
+        "wh_main_anc_enchanted_item_potion_of_speed",
+        "wh_main_anc_enchanted_item_potion_of_strength",
+        "wh_main_anc_enchanted_item_potion_of_toughness",
+        "wh_main_anc_enchanted_item_rod_of_flaming_death",
+        "wh_main_anc_enchanted_item_ruby_ring_of_ruin",
+        "wh_main_anc_enchanted_item_silver_horn_of_vengeance",
+        "wh_main_anc_enchanted_item_the_terrifying_mask_of_eee",
+        "wh_main_anc_enchanted_item_van_horstmanns_speculum",
+        "wh_main_anc_talisman_dawnstone",
+        "wh_main_anc_talisman_dragonbane_gem",
+        "wh_main_anc_talisman_luckstone",
+        "wh_main_anc_talisman_obsidian_amulet",
+        "wh_main_anc_talisman_obsidian_lodestone",
+        "wh_main_anc_talisman_obsidian_trinket",
+        "wh_main_anc_talisman_opal_amulet",
+        "wh_main_anc_talisman_pidgeon_plucker_pendant",
+        "wh_main_anc_talisman_talisman_of_protection",
+        "wh_main_anc_weapon_berserker_sword",
+        "wh_main_anc_weapon_biting_blade",
+        "wh_main_anc_weapon_fencers_blades",
+        "wh_main_anc_weapon_giant_blade",
+        "wh_main_anc_weapon_gold_sigil_sword",
+        "wh_main_anc_weapon_hellfire_sword",
+        "wh_main_anc_weapon_ogre_blade",
+        "wh_main_anc_weapon_relic_sword",
+        "wh_main_anc_weapon_shrieking_blade",
+        "wh_main_anc_weapon_skabscrath",
+        "wh_main_anc_weapon_sword_of_anti-heroes",
+        "wh_main_anc_weapon_sword_of_battle",
+        "wh_main_anc_weapon_sword_of_bloodshed",
+        "wh_main_anc_weapon_sword_of_might",
+        "wh_main_anc_weapon_sword_of_strife",
+        "wh_main_anc_weapon_sword_of_striking",
+        "wh_main_anc_weapon_sword_of_swift_slaying",
+        "wh_main_anc_weapon_the_hammer_of_karak_drazh",
+        "wh_main_anc_weapon_warrior_bane",
     },
-    --- Greenskins
-    ["wh_main_sc_grn_greenskins"] = {
-        --- Sets
-        --- Special items
+    uncommon = {
+        "wh2_dlc09_anc_arcane_item_enkhils_kanopi",
+        "wh2_dlc09_anc_arcane_item_neferras_scrolls_of_mighty_incantations",
+        "wh2_dlc09_anc_armour_armour_mortuary_robes",
+        "wh2_dlc09_anc_armour_armour_shield_of_ptra",
+        "wh2_dlc09_anc_weapon_blade_of_antarhak",
+        "wh2_dlc09_anc_weapon_blade_of_setep",
+        "wh2_dlc09_anc_weapon_double_crescent_of_neru",
+        "wh2_dlc09_anc_weapon_spear_of_pakth",
+        "wh2_dlc10_dwf_anc_armour_old_guards_armour",
+        "wh2_dlc10_dwf_anc_enchanted_item_prospectors_spyglass",
+        "wh2_dlc10_dwf_anc_weapon_ironbeards_axe",
+        "wh2_dlc10_dwf_anc_weapon_prospectors_pickaxe",
+        "wh2_dlc10_dwf_anc_weapon_rangers_hammer",
+        "wh2_dlc11_anc_talisman_blackpearl_eye",
+        "wh2_dlc17_anc_weapon_fell_axe_of_the_drakwald",
+        "wh2_main_anc_arcane_item_black_staff",
+        "wh2_main_anc_arcane_item_cupped_hands_of_the_old_ones",
+        "wh2_main_anc_armour_armour_of_darkness",
+        "wh2_main_anc_enchanted_item_divine_plaque_of_protection",
+        "wh2_main_anc_weapon_blade_of_bel_korhadris",
+        "wh2_main_anc_weapon_blade_of_leaping_gold",
+        "wh2_main_anc_weapon_bow_of_the_seafarer",
+        "wh2_main_anc_weapon_dwarfbane",
+        "wh2_main_anc_weapon_hydra_blade",
+        "wh2_main_anc_weapon_venom_sword",
+        "wh2_main_anc_weapon_warlock_augmented_weapon",
+        "wh3_dlc20_anc_weapon_aether_sword",
+        "wh3_dlc23_anc_armour_armour_of_bazherak_the_cruel",
+        "wh3_dlc24_anc_arcane_item_sentient_stormcloud",
+        "wh3_dlc24_anc_enchanted_item_blessed_helm_of_the_oblast",
+        "wh3_dlc24_anc_talisman_the_golden_eye_of_tzeentch",
+        "wh3_dlc25_anc_item_necrotic_phylactery",
+        "wh3_main_anc_arcane_item_mirror_of_the_ice_queen",
+        "wh3_main_anc_arcane_item_staff_of_wu_xing",
+        "wh3_main_anc_armour_great_bear_pelt",
+        "wh3_main_anc_armour_robes_of_shang_yang",
+        "wh3_main_anc_armour_void_armour",
+        "wh3_main_anc_armour_weird_plate",
+        "wh3_main_anc_enchanted_item_brahmir_statue",
+        "wh3_main_anc_enchanted_item_daemon_killer_scars",
+        "wh3_main_anc_enchanted_item_enthralling_musk",
+        "wh3_main_anc_enchanted_item_fistful_of_laurels",
+        "wh3_main_anc_enchanted_item_icon_of_the_spirit_dragon",
+        "wh3_main_anc_enchanted_item_saint_annushkas_finger_bone",
+        "wh3_main_anc_enchanted_item_steppe_hunters_horn",
+        "wh3_main_anc_talisman_crystal_of_kunlan",
+        "wh3_main_anc_talisman_jewel_of_denial",
+        "wh3_main_anc_talisman_ring_of_sensation",
+        "wh3_main_anc_talisman_tarnished_torque",
+        "wh3_main_anc_talisman_the_bloody_shackle",
+        "wh3_main_anc_weapon_ascendant_celestial_blade",
+        "wh3_main_anc_weapon_axe_of_khorne",
+        "wh3_main_anc_weapon_blood_cleaver",
+        "wh3_main_anc_weapon_etherblade",
+        "wh3_main_anc_weapon_firestorm_blade",
+        "wh3_main_anc_weapon_hunters_talon",
+        "wh3_main_anc_weapon_lash_of_despair",
+        "wh3_main_anc_weapon_plague_flail",
+        "wh3_main_anc_weapon_thundermace",
+        "wh_dlc03_anc_weapon_mangelder",
+        "wh_dlc03_anc_weapon_stonecrusher_mace",
+        "wh_dlc08_anc_talisman_slave_chain",
+        "wh_dlc08_anc_weapon_fimir_hammer",
+        "wh_main_anc_arcane_item_black_periapt",
+        "wh_main_anc_arcane_item_channelling_staff",
+        "wh_main_anc_arcane_item_forbidden_rod",
+        "wh_main_anc_arcane_item_staff_of_damnation",
+        "wh_main_anc_arcane_item_tricksters_shard",
+        "wh_main_anc_enchanted_item_crown_of_command",
+        "wh_main_anc_enchanted_item_healing_potion",
+        "wh_main_anc_talisman_seed_of_rebirth",
+        "wh_main_anc_talisman_talisman_of_endurance",
+        "wh_main_anc_weapon_bashas_axe_of_stunty_smashin",
+        "wh_main_anc_weapon_filth_mace",
+        "wh_main_anc_weapon_the_mace_of_helsturm",
+        "wh_main_anc_weapon_tormentor_sword",
     },
-    --- The Empire
-    ["wh_main_sc_emp_empire"] = {
-        --- Sets
-        --- Special items
+    rare = {
+        "wh2_dlc09_anc_armour_armour_armour_of_dawn",
+        "wh2_dlc09_anc_armour_armour_of_eternity",
+        "wh2_dlc09_anc_enchanted_item_cloak_of_the_dunes",
+        "wh2_dlc09_anc_enchanted_item_ouroboros",
+        "wh2_dlc09_anc_talisman_collar_of_shakkara",
+        "wh2_dlc09_anc_weapon_blade_of_mourning_fire",
+        "wh2_dlc09_anc_weapon_destroyer_of_eternities",
+        "wh2_dlc10_dwf_anc_armour_dragon_slayers_scales",
+        "wh2_dlc10_dwf_anc_armour_gate_keepers_helm",
+        "wh2_dlc10_dwf_anc_armour_ironwardens_shield",
+        "wh2_dlc10_dwf_anc_enchanted_item_dragon_slayers_boots",
+        "wh2_dlc10_dwf_anc_enchanted_item_gate_keepers_belt",
+        "wh2_dlc10_dwf_anc_enchanted_item_ironwardens_tankard",
+        "wh2_dlc10_dwf_anc_talisman_dragon_slayers_fang",
+        "wh2_dlc10_dwf_anc_talisman_ironbeards_ring",
+        "wh2_dlc10_dwf_anc_talisman_ironwardens_wardstone",
+        "wh2_dlc10_dwf_anc_talisman_old_guards_tankard",
+        "wh2_dlc10_dwf_anc_weapon_dragon_slayers_axe",
+        "wh2_dlc10_dwf_anc_weapon_gate_keepers_hammer",
+        "wh2_dlc10_dwf_anc_weapon_ironwardens_hammer",
+        "wh2_dlc11_anc_armour_the_gunnarsson_kron",
+        "wh2_dlc11_anc_enchanted_item_black_buckthorns_treasure_map",
+        "wh2_dlc11_anc_enchanted_item_pyrotechnic_compound",
+        "wh2_dlc11_anc_weapon_masamune",
+        "wh2_dlc17_anc_armour_cloak_of_unreality",
+        "wh2_dlc17_anc_armour_mutated_ghorgon_hide",
+        "wh2_dlc17_anc_enchanted_item_blind_eye_of_seeing",
+        "wh2_main_anc_arcane_item_book_of_hoeth",
+        "wh2_main_anc_arcane_item_itxi_grubs",
+        "wh2_main_anc_arcane_item_the_gem_of_sunfire",
+        "wh2_main_anc_armour_armour_of_caledor",
+        "wh2_main_anc_armour_armour_of_eternal_servitude",
+        "wh2_main_anc_armour_armour_of_living_death",
+        "wh2_main_anc_enchanted_item_black_dragon_egg",
+        "wh2_main_anc_enchanted_item_cloak_of_twilight",
+        "wh2_main_anc_enchanted_item_folariaths_robe",
+        "wh2_main_anc_enchanted_item_moranions_wayshard",
+        "wh2_main_anc_enchanted_item_ring_of_corin",
+        "wh2_main_anc_talisman_golden_crown_of_atrazar",
+        "wh2_main_anc_talisman_vambraces_of_defence",
+        "wh2_main_anc_weapon_blade_of_ruin",
+        "wh2_main_anc_weapon_chillblade",
+        "wh2_main_anc_weapon_executioners_axe",
+        "wh2_main_anc_weapon_scimitar_of_the_sun_resplendent",
+        "wh2_main_anc_weapon_the_blade_of_realities",
+        "wh3_dlc20_anc_weapon_sword_of_change",
+        "wh3_dlc23_anc_arcane_item_chalice_of_blood_and_darkness",
+        "wh3_dlc23_anc_weapon_life_bane_blade",
+        "wh3_dlc24_anc_enchanted_item_book_of_secrets",
+        "wh3_dlc25_anc_weapon_the_father_of_blades",
+        "wh3_dlc27_anc_arcane_item_null_stone",
+        "wh3_dlc27_anc_enchanted_item_temakadors_gauntlets",
+        "wh3_main_anc_arcane_item_cloak_of_po_mei",
+        "wh3_main_anc_arcane_item_gastuvas_egg",
+        "wh3_main_anc_arcane_item_gruts_sickle",
+        "wh3_main_anc_arcane_item_halfling_cookbook",
+        "wh3_main_anc_arcane_item_prismatic_amplifier",
+        "wh3_main_anc_arcane_item_sceptre_of_entropy",
+        "wh3_main_anc_armour_armour_of_khorne",
+        "wh3_main_anc_armour_ascendant_celestial_armour",
+        "wh3_main_anc_armour_fused_armour",
+        "wh3_main_anc_armour_null_plate",
+        "wh3_main_anc_armour_scales_of_the_celestial_court",
+        "wh3_main_anc_enchanted_item_astromancers_spyglass",
+        "wh3_main_anc_enchanted_item_bloodstone",
+        "wh3_main_anc_enchanted_item_catalytic_kiln",
+        "wh3_main_anc_enchanted_item_cleansing_water",
+        "wh3_main_anc_enchanted_item_cloak_of_the_moon_wind",
+        "wh3_main_anc_enchanted_item_ever_full_kovsh",
+        "wh3_main_anc_enchanted_item_fan_of_the_magister",
+        "wh3_main_anc_enchanted_item_neverending_pouch",
+        "wh3_main_anc_enchanted_item_the_chromatic_tome",
+        "wh3_main_anc_enchanted_item_the_portalglyph",
+        "wh3_main_anc_enchanted_item_the_rock_of_inevitability",
+        "wh3_main_anc_talisman_blizzard_broach",
+        "wh3_main_anc_talisman_collar_of_khorne",
+        "wh3_main_anc_talisman_crystal_pendant",
+        "wh3_main_anc_talisman_greedy_fist",
+        "wh3_main_anc_talisman_jade_amulet",
+        "wh3_main_anc_talisman_vile_seed",
+        "wh3_main_anc_weapon_axe_of_tor",
+        "wh3_main_anc_weapon_bale_sword",
+        "wh3_main_anc_weapon_dawn_glaive",
+        "wh3_main_anc_weapon_dazhs_brazier",
+        "wh3_main_anc_weapon_frost_shard_glaive",
+        "wh3_main_anc_weapon_hellblade",
+        "wh3_main_anc_weapon_jade_blade_of_the_great_fleet",
+        "wh3_main_anc_weapon_siegebreaker",
+        "wh3_main_anc_weapon_silver_moon_bow",
+        "wh3_main_anc_weapon_sky_titans_string",
+        "wh3_main_anc_weapon_spirit_qilin_spear",
+        "wh3_main_anc_weapon_staff_of_change",
+        "wh3_main_anc_weapon_the_eternal_blade",
+        "wh3_main_anc_weapon_the_rime_blade",
+        "wh3_main_anc_weapon_wyrmspike",
+        "wh3_prologue_anc_armour_frost_shard_armour",
+        "wh3_prologue_anc_talisman_blizzard_broach",
+        "wh3_prologue_anc_talisman_blood_of_the_motherland",
+        "wh3_prologue_anc_weapon_frost_shard_glaive",
+        "wh_dlc03_anc_arcane_item_skull_of_rarkos",
+        "wh_dlc03_anc_arcane_item_staff_of_darkoth",
+        "wh_dlc03_anc_armour_trollhide",
+        "wh_dlc03_anc_enchanted_item_horn_of_the_first_beast",
+        "wh_dlc03_anc_weapon_axe_of_men",
+        "wh_dlc03_anc_weapon_everbleed",
+        "wh_dlc05_anc_weapon_daiths_reaper",
+        "wh_dlc05_anc_weapon_the_spirit_sword",
+        "wh_dlc07_anc_armour_gilded_cuirass",
+        "wh_dlc07_anc_armour_the_grail_shield",
+        "wh_dlc07_anc_enchanted_item_mane_of_the_purebreed",
+        "wh_dlc07_anc_weapon_sword_of_the_ladys_champion",
+        "wh_dlc07_anc_weapon_the_silver_lance_of_the_blessed",
+        "wh_dlc08_anc_weapon_flaming_axe_of_cormac",
+        "wh_main_anc_arcane_item_book_of_ashur",
+        "wh_main_anc_armour_armour_of_destiny",
+        "wh_main_anc_armour_magnificent_armour_of_borek_beetlebrow",
+        "wh_main_anc_armour_the_armour_of_meteoric_iron",
+        "wh_main_anc_armour_tricksters_helm",
+        "wh_main_anc_enchanted_item_skull_wand_of_kaloth",
+        "wh_main_anc_enchanted_item_the_other_tricksters_shard",
+        "wh_main_anc_talisman_talisman_of_preservation",
+        "wh_main_anc_talisman_the_white_cloak_of_ulric",
+        "wh_main_anc_weapon_battleaxe_of_the_last_waaagh",
+        "wh_main_anc_weapon_obsidian_blade",
+        "wh_main_anc_weapon_red_axe_of_karak_eight_peaks",
+        "wh_main_anc_weapon_runefang",
     },
-    --- Vampire Counts
-    ["wh_main_sc_vmp_vampire_counts"] = {
-        --- Sets
-        --- Special items
+    unique = {
+        "wh2_dlc17_anc_talisman_champions_essence",
+        "wh2_main_anc_weapon_the_fellblade",
+        "wh3_dlc24_anc_arcane_item_ritual_of_the_beast",
+        "wh3_dlc27_anc_enchanted_item_admirals_spyglass",
+        "wh3_main_anc_arcane_item_chalice_of_malfleur",
+        "wh3_main_anc_armour_accursed_armour",
+        "wh3_main_anc_armour_briarsheath",
+        "wh3_main_anc_armour_helm_of_draesca",
+        "wh3_main_anc_armour_pirate_armour",
+        "wh3_main_anc_armour_scintillating_shield",
+        "wh3_main_anc_enchanted_item_aldreds_casket",
+        "wh3_main_anc_enchanted_item_idol_zak_aloooog",
+        "wh3_main_anc_enchanted_item_maads_map",
+        "wh3_main_anc_talisman_pirate_talisman",
+        "wh3_main_anc_weapon_cynatcian",
+        "wh3_main_anc_weapon_elthraician",
+        "wh3_main_anc_weapon_pirate_sword",
+        "wh3_main_anc_weapon_wyrmslayer_sword",
     },
-    --- Warriors of Chaos
-    ["wh_main_sc_chs_chaos"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Beastmen
-    ["wh_dlc03_sc_bst_beastmen"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Bretonnia
-    ["wh_main_sc_brt_bretonnia"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Wood Elves
-    ["wh_dlc05_sc_wef_wood_elves"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Norsca
-    ["wh_dlc08_sc_nor_norsca"] = {
-        --- Sets
-        --- Special items
-    },
-
-    --- WH2
-    --- Dark Elves
-    ["wh2_main_sc_def_dark_elves"] = {
-        --- Sets
-        --- Special items
-    },
-    --- High Elves
-    ["wh2_main_sc_hef_high_elves"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Lizardmen
-    ["wh2_main_sc_lzd_lizardmen"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Skaven
-    ["wh2_main_sc_skv_skaven"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Tomb Kings
-    ["wh2_dlc09_sc_tmb_tomb_kings"] = {
-        --- Sets
-        --- Special items
-    },
-    --- Vampire Coast
-    ["wh2_dlc11_sc_cst_vampire_coast"] = {
-        --- Sets
-        --- Special items
-    },
-
-    --- WH3
-    --- Kislev
-    ["wh3_main_sc_ksl_kislev"] = {
-        --- Sets
-        [1] = { -- wh3_main_ancillary_set_ksl_druzhina_of_ice
-            "wh3_main_anc_armour_iron_ice_armour",
-            "wh3_main_anc_talisman_blizzard_broach",
-            "wh3_main_anc_weapon_frost_shard_glaive"
-        },
-        [2] = { -- wh3_main_ancillary_set_ksl_ursire
-            "wh3_main_anc_armour_great_bear_pelt",
-            "wh3_main_anc_weapon_ursuns_claws"
-        },
-        [3] = { -- wh3_main_ancillary_set_ksl_wyrmhunter
-            "wh3_main_anc_armour_wyrm_harness",
-            "wh3_main_anc_weapon_wyrmspike"
-        },
-        --- Special items
-        [4] = {
-            "wh3_main_anc_arcane_item_mirror_of_the_ice_queen"
-        },
-        [5] = {
-            "wh3_main_anc_enchanted_item_balalaika_of_the_arari"
-        },
-        [6] = {
-            "wh3_main_anc_weapon_dazhs_brazier"
-        },
-        [7] = {
-            "wh_main_anc_talisman_the_white_cloak_of_ulric"
-        }
-    },
-
-    --- Daemons
-    ["wh3_main_sc_dae_daemons"] = {
-        --- Sets
-        --- Special items
-        [1] = {
-            "wh3_main_anc_armour_weird_plate"
-        },
-        [2] = {
-            "wh3_main_anc_enchanted_item_the_chromatic_tome"
-        },
-        [3] = {
-            "wh3_main_anc_talisman_vile_seed"
-        },
-        [4] = {
-            "wh3_main_anc_talisman_spore_censer"
-        },
-        [5] = {
-            "wh3_main_anc_talisman_jewel_of_denial"
-        },
-        [6] = {
-            "wh3_main_anc_talisman_crystal_pendant"
-        },
-        [7] = {
-            "wh3_main_anc_arcane_item_sceptre_of_entropy"
-        }
-    },
-
-    --- Cathay
-    ["wh3_main_sc_cth_cathay"] = {
-        --- Sets
-        [1] = { -- wh3_main_ancillary_set_cth_shang_yang_elementalist
-            "wh3_main_anc_armour_robes_of_shang_yang",
-            "wh3_main_anc_magic_standard_standard_of_shang_yang"
-        },
-        [2] = { -- wh3_main_ancillary_set_cth_nan_gau_sentinel
-            "wh3_main_anc_armour_shield_of_the_nan_gau",
-            "wh3_main_anc_magic_standard_standard_of_nan_gau"
-        },
-        [3] = { -- wh3_main_ancillary_set_cth_the_celestial_champion
-            "wh3_main_anc_armour_ascendant_celestial_armour",
-            "wh3_main_anc_enchanted_item_celestial_silk_robe",
-            "wh3_main_anc_weapon_ascendant_celestial_blade"
-        },
-        [4] = { -- wh3_main_ancillary_set_cth_tools_of_astromancy
-            "wh3_main_anc_arcane_item_scrolls_of_astromancy",
-            "wh3_main_anc_enchanted_item_astromancers_spyglass"
-        },
-        --- Special items
-        [5] = {
-            "wh3_main_anc_enchanted_item_catalytic_kiln"
-        },
-        [6] = {
-            "wh3_main_anc_enchanted_item_cleansing_water"
-        },
-        [7] = {
-            "wh3_main_anc_talisman_crystal_of_kunlan"
-        }
-    },
-
-    --- Ogre Kingdoms
-    ["wh3_main_sc_ogr_ogre_kingdoms"] = {
-        --- Sets
-        [1] = { -- wh3_main_ancillary_set_ogr_bull_balls
-            "wh3_main_anc_armour_bullgut",
-            "wh3_main_anc_magic_standard_bull_standard"
-        },
-        [2] = { -- wh3_main_ancillary_set_ogr_halfling_meat
-            "wh3_main_anc_arcane_item_halfling_cookbook",
-            "wh3_main_anc_weapon_the_tenderiser"
-        },
-        [3] = { -- wh3_main_ancillary_set_ogr_skull_collecta
-            "wh3_main_anc_arcane_item_skullmantle",
-            "wh3_main_anc_armour_greatskull",
-            "wh3_main_anc_weapon_skull_plucker"
-        },
-        [4] = { -- wh3_main_ancillary_set_ogr_the_scarred
-            "wh3_main_anc_enchanted_item_daemon_killer_scars",
-            "wh3_main_anc_weapon_blood_cleaver"
-        },
-        --- Special items
-        [5] = {
-            "wh3_main_anc_weapon_siegebreaker"
-        },
-        [6] = {
-            "wh3_main_anc_weapon_thundermace"
-        }
-    },
-
-    --- Nurgle
-    ["wh3_main_sc_nur_nurgle"] = {
-        --- Sets
-        [1] = { -- wh3_main_ancillary_set_nur_impedimenta_of_plague
-            "wh3_main_anc_magic_standard_standard_of_seeping_decay",
-            "wh3_main_anc_weapon_staff_of_nurgle"
-        },
-        --- Special items
-        [2] = {
-            "wh3_main_anc_armour_weird_plate"
-        },
-        [3] = {
-            "wh3_main_anc_enchanted_item_the_chromatic_tome"
-        },
-        [4] = {
-            "wh3_main_anc_talisman_vile_seed"
-        },
-        [5] = {
-            "wh3_main_anc_talisman_spore_censer"
-        }
-    },
-
-    --- Khorne
-    ["wh3_main_sc_kho_khorne"] = {
-        --- Sets
-        [1] = { -- wh3_main_ancillary_set_kho_trappings_of_blood
-            "wh3_main_anc_armour_armour_of_khorne",
-            "wh3_main_anc_weapon_axe_of_khorne"
-        },
-        --- Special items
-        [2] = {
-            "wh3_main_anc_armour_weird_plate"
-        },
-        [3] = {
-            "wh3_main_anc_enchanted_item_the_chromatic_tome"
-        }
-    },
-
-    --- Slaanesh
-    ["wh3_main_sc_sla_slaanesh"] = {
-        --- Sets
-        [1] = { -- wh3_main_ancillary_set_sla_accoutrements_of_desire
-            "wh3_main_anc_magic_standard_banner_of_ecstacy",
-            "wh3_main_anc_weapon_lash_of_despair"
-        },
-        --- Special items
-        [2] = {
-            "wh3_main_anc_armour_weird_plate"
-        },
-        [3] = {
-            "wh3_main_anc_enchanted_item_the_chromatic_tome"
-        },
-        [4] = {
-            "wh3_main_anc_talisman_jewel_of_denial"
-        }
-    },
-
-    --- Tzeentch
-    ["wh3_main_sc_tze_tzeentch"] = {
-        --- Sets
-        [1] = { -- wh3_main_ancillary_set_tze_raiment_of_change
-            "wh3_main_anc_magic_standard_icon_of_sorcery",
-            "wh3_main_anc_weapon_staff_of_change"
-        },
-        --- Special items
-        [2] = {
-            "wh3_main_anc_armour_weird_plate"
-        },
-        [3] = {
-            "wh3_main_anc_enchanted_item_the_chromatic_tome"
-        },
-        [4] = {
-            "wh3_main_anc_talisman_crystal_pendant"
-        },
-        [5] = {
-            "wh3_main_anc_arcane_item_sceptre_of_entropy"
-        }
-    }
-
 }
 
 return M

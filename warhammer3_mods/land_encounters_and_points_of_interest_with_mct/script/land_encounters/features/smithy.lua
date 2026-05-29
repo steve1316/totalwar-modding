@@ -13,7 +13,6 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/core/managers")
 
 local elligible_items = require("script/land_encounters/configs/items").balancing
-local special_items_by_subculture = require("script/land_encounters/configs/items").special_by_subculture
 local smithy_missions_by_subculture = require("script/land_encounters/configs/smithy_data").missions_by_subculture
 
 local Army = require("script/land_encounters/core/army")
@@ -98,7 +97,10 @@ function SmithyState:reward_owner_faction(controlling_faction)
         if representative_character ~= false then
             trigger_incident(TRIBUTE_INCIDENT_EVENT, EVENT_VISIT_TARGETS, self:get_spot_info(), representative_character)
         else
-            cm:add_ancillary_to_faction(controlling_faction, elligible_items[random_number(#elligible_items)], false)
+            local ancillary = pick_random_smithy_item(elligible_items)
+            if ancillary ~= nil then
+                cm:add_ancillary_to_faction(controlling_faction, ancillary, false)
+            end
         end
     end
 end
@@ -151,14 +153,10 @@ function SmithyState:issue_mission_if_possible(controlling_faction, mission_mana
             mm:trigger()
         end
     elseif not self:is_occupied_by_player() and self:is_occupied() and self.turns_under_control % 12 == 0 then
-        --- give a set or a special subculture item directly to the ai
-        local subculture_items = special_items_by_subculture[self.controlling_faction_subculture]
-        if not (subculture_items == nil) and #subculture_items > 0 then
-            local set_or_special_ancillaries = subculture_items[random_number(#subculture_items)]
-            local trigger_event_feed = false
-            for i=1, #set_or_special_ancillaries do
-                cm:add_ancillary_to_faction(controlling_faction, set_or_special_ancillaries[i], trigger_event_feed)
-            end
+        --- Grant a smithy-biased item (rare or unique) to the AI controller.
+        local ancillary = pick_random_smithy_item(elligible_items)
+        if ancillary ~= nil then
+            cm:add_ancillary_to_faction(controlling_faction, ancillary, false)
         end
     end
 end

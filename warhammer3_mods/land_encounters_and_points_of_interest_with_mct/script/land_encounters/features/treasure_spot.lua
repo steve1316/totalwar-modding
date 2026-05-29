@@ -33,7 +33,10 @@ end
 function TreasureEventDelegate:trigger_balancing_benefit_for_ai(triggering_ai_character, triggering_faction, random_event)
     local trigger_event_feed_for_faction = false
     --- Add a random ancillary to an ai faction
-    cm:add_ancillary_to_faction(triggering_faction, elligible_items[random_number(#elligible_items)], trigger_event_feed_for_faction)
+    local ancillary = pick_random_item_for_current_difficulty(elligible_items)
+    if ancillary ~= nil then
+        cm:add_ancillary_to_faction(triggering_faction, ancillary, trigger_event_feed_for_faction)
+    end
     --- Add an amount to a treasury of an ai faction
     cm:treasury_mod(triggering_faction:name(), 4000)
     --- Apply a random buff to the army if abble
