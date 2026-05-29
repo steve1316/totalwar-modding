@@ -185,18 +185,7 @@ end
 function Army:new_from_event(battle_event)
     out("DEBUG - new_from_event battle_event: " .. battle_event)
 
-    --- Difficulty comes from the MCT dropdown unless progressive scaling is enabled, in which
-    --- case it ramps up with the current turn number.
-    local difficulty = get_mct_settings().randomized_encounter_force_generation_difficulty
-    if get_mct_settings().enable_basic_progressive_difficulty then
-        if cm:turn_number() < get_mct_settings().turn_number_from_easy_to_medium then
-            difficulty = "easy"
-        elseif cm:turn_number() < get_mct_settings().turn_number_from_medium_to_hard then
-            difficulty = "medium"
-        else
-            difficulty = "hard"
-        end
-    end
+    local difficulty = get_current_difficulty()
 
     local faction = get_random_faction()
     out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)

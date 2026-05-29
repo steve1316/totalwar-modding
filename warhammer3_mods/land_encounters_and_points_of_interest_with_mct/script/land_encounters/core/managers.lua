@@ -571,6 +571,24 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
 end
 
 --- Entry point for the force-makeup pipeline. Picks the difficulty branch and returns the generated force makeup.
+--- Returns the current encounter difficulty as one of "easy", "medium", or "hard". Uses the MCT
+--- dropdown unless progressive scaling is enabled, in which case difficulty ramps up by turn.
+--- @returns string The current difficulty key.
+function get_current_difficulty()
+    local mct = get_mct_settings()
+    if not mct.enable_basic_progressive_difficulty then
+        return mct.randomized_encounter_force_generation_difficulty
+    end
+    if cm:turn_number() < mct.turn_number_from_easy_to_medium then
+        return "easy"
+    elseif cm:turn_number() < mct.turn_number_from_medium_to_hard then
+        return "medium"
+    else
+        return "hard"
+    end
+end
+
+
 --- @param difficulty_key string The difficulty key ("easy", "medium", or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @returns table A force_makeup with lord, heroes, and per-type units arrays populated.

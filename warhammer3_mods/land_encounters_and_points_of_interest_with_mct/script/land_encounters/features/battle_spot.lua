@@ -59,7 +59,10 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
         --- AI: silently grants a small loot.
         local trigger_event_feed = false
         if math.random() < 0.10 then
-            cm:add_ancillary_to_faction(triggering_faction, elligible_items[random_number(#elligible_items)], trigger_event_feed)
+            local ancillary = pick_random_item_for_current_difficulty(elligible_items)
+            if ancillary ~= nil then
+                cm:add_ancillary_to_faction(triggering_faction, ancillary, trigger_event_feed)
+            end
         end
         cm:treasury_mod(triggering_faction_name, 500)
         return true
