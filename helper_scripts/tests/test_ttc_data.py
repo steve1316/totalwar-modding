@@ -116,3 +116,21 @@ def test_regiment_of_renown_detection():
     assert ttc_data.is_regiment_of_renown("ror_beast_shadowg", {}, "plain.pack")
     assert ttc_data.is_regiment_of_renown("grn_brutes1", {}, "ror_all.pack")
     assert not ttc_data.is_regiment_of_renown("chs_horror_knights", {}, "horror_pack.pack")
+
+
+def test_unit_names_use_the_land_unit_loc_then_the_unit_loc_then_the_key():
+    stats = {"u1": ttc_data.UnitStats("u1", {"land_unit": "lu1"}, {}, set()), "u2": ttc_data.UnitStats("u2", {"land_unit": "lu2"}, {}, set())}
+    loc = {"land_units_onscreen_name_lu1": "Spearmen", "land_units_onscreen_name_u2": "Own Key Name"}
+    assert ttc_data.unit_names(["u1", "u2", "u3"], stats, loc) == {"u1": "Spearmen", "u2": "Own Key Name", "u3": "u3"}
+
+
+def test_read_loc_names_keeps_only_onscreen_names_and_earlier_sources_win(tmp_path):
+    (tmp_path / "text").mkdir()
+    (tmp_path / "text" / "units.loc.tsv").write_text(
+        "key\ttext\ttooltip\n#Loc;1;text/units.loc\t\t\nland_units_onscreen_name_a\tNew A\tfalse\nland_units_onscreen_name_b\t  Spaced   B \tfalse\n"
+        "land_units_onscreen_name_c\t\tfalse\nsomething_else\tIgnored\tfalse\n",
+        encoding="utf-8",
+    )
+    names = {"land_units_onscreen_name_a": "Translated A"}
+    ttc_data.read_loc_names(str(tmp_path), names)
+    assert names == {"land_units_onscreen_name_a": "Translated A", "land_units_onscreen_name_b": "Spaced B"}

@@ -50,6 +50,24 @@ def write_auto_files(assignments: Dict[str, Dict[str, List[Tuple[str, str, Optio
     return written
 
 
+def collect_entries(file_mods: Dict[str, str]) -> Dict[str, str]:
+    """Map every entry in the compat files to the mod it covers.
+
+    Args:
+        file_mods (Dict[str, str]): Compat file name to mod display name. Files not listed fall back to their name without the `!` prefix.
+
+    Returns:
+        Unit key to mod display name, the first file in name order winning.
+    """
+    entries: Dict[str, str] = {}
+    for path in sorted(glob.glob(os.path.join(ttc_compat_io.HAND_DIR, "*.lua"))):
+        name = os.path.basename(path)
+        mod = file_mods.get(name) or name.lstrip("!").removesuffix(".lua")
+        for entry in ttc_compat_io.parse_ttc_file(path):
+            entries.setdefault(entry.key, mod)
+    return entries
+
+
 def render_report(metrics_line: str, counts: Dict[str, int], review_rows: List[tuple], removed: List[Tuple[str, str]], missing_mods: List[str]) -> str:
     """Render the after-action report.
 
@@ -174,6 +192,12 @@ def main() -> int:
     with open(SUMMARY_PATH, "w", encoding="utf-8") as f:
         json.dump({"auto": len(keys), "review": len(review_rows), "removed": len(removed), "report": REPORT_PATH}, f)
     delta._write_json(OWNER_HISTORY_PATH, history)
+
+    file_mods = {os.path.basename(path): data.mod_names[package] for path, package in file_mod.items() if package in data.mod_names}
+    file_mods.update({os.path.basename(ttc_compat_io.auto_file_path(package)): data.mod_names.get(package, package) for package in assignments})
+    entries = collect_entries(file_mods)
+    names = ttc_data.unit_names(entries, data.stats, ttc_data.load_loc_names())
+    delta._write_json(delta.TTC_ENTRIES_PATH, {key: {"mod": mod, "name": names[key]} for key, mod in entries.items()})
 
     def write_pack() -> None:
         """Replace the pack's `script/` folder with the regenerated compat files."""
