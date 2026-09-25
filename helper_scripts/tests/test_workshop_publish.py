@@ -533,7 +533,7 @@ def test_ttc_note_lists_added_names_per_mod_and_removed_keys_at_the_bottom():
     }
     note = workshop_publish.build_ttc_change_note(published, current)
     assert note == (
-        "[b]Tabletop caps added for 3 units across 2 mods, removed for 1 units[/b]\n"
+        "[u]Tabletop caps added for 3 units across 2 mods, removed for 1 unit[/u]\n"
         "\n"
         "[b]Mod A[/b] (+2): Swordsmen (x2)\n"
         "[b]mod b[/b] (+1): Archers\n"
@@ -574,7 +574,7 @@ def test_pending_ttc_item_uses_the_unit_note_and_publishing_snapshots_the_entrie
     _fake_pack_shas(monkeypatch, {TTC.pack_path: "new"})
 
     [item] = workshop_publish.pending_items([])
-    assert item.change_note == "[b]Tabletop caps added for 1 units across 1 mods[/b]\n\n[b]Mod[/b] (+1): Unit Two"
+    assert item.change_note == "[u]Tabletop caps added for 1 unit across 1 mod[/u]\n\n[b]Mod[/b] (+1): Unit Two"
 
     workshop_publish.mark_published(TTC, item.change_note, "new")
     assert json.loads((state_dir / f"{TTC.steam_id}_entries.json").read_text()) == json.loads(current_path.read_text())
@@ -612,3 +612,44 @@ def test_pending_items_can_be_limited_to_some_workshop_ids(state_dir, monkeypatc
     items = workshop_publish.pending_items([], steam_ids={ARC.steam_id})
 
     assert [item.output.steam_id for item in items] == [ARC.steam_id]
+
+
+def _vanilla(faction, name):
+    """Build one TTC entries record for a vanilla or DLC unit.
+
+    Args:
+        faction (str): Faction display name.
+        name (str): In-game unit name.
+
+    Returns:
+        The record.
+    """
+    return {"mod": "Vanilla + DLC", "name": name, "faction": faction}
+
+
+def test_ttc_note_lists_vanilla_units_by_faction_instead_of_as_a_mod():
+    current = {"emp_a": _vanilla("Empire", "Teutogen Guard"), "skv_a": _vanilla("Skaven", "Pusbags"), "emp_b": _vanilla("Empire", "Wolf-kin")}
+    assert workshop_publish.build_ttc_change_note({}, current) == (
+        "[u]Tabletop caps added for 3 vanilla and DLC units[/u]\n"
+        "\n"
+        "[b]Empire[/b] (+2): Teutogen Guard, Wolf-kin\n"
+        "[b]Skaven[/b] (+1): Pusbags"
+    )
+
+
+def test_ttc_note_with_vanilla_and_mod_units_gives_each_its_own_section():
+    current = {"emp_a": _vanilla("Empire", "Teutogen Guard"), "m1": _entry("Mod A", "Swordsmen")}
+    published = {"gone_vanilla": _vanilla("Skaven", "Old Rat"), "gone_mod": _entry("Mod A", "Old")}
+    assert workshop_publish.build_ttc_change_note(published, current) == (
+        "[u]Tabletop caps added for 1 vanilla and DLC unit and 1 unit across 1 mod, removed for 2 units[/u]\n"
+        "\n"
+        "[b]Vanilla and DLC[/b]\n"
+        "[b]Empire[/b] (+1): Teutogen Guard\n"
+        "\n"
+        "[b]Mods[/b]\n"
+        "[b]Mod A[/b] (+1): Swordsmen\n"
+        "\n"
+        "[b]Removed (no longer in their mods)[/b]\n"
+        "[b]Mod A[/b] (-1): gone_mod\n"
+        "[b]Skaven (vanilla)[/b] (-1): gone_vanilla"
+    )

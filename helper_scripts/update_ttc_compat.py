@@ -200,7 +200,11 @@ def main() -> int:
     file_mods[os.path.basename(ttc_compat_io.auto_file_path(ttc_data.VANILLA_PACKAGE)).replace("_auto.lua", ".lua")] = ttc_data.VANILLA_NAME
     entries = collect_entries(file_mods)
     names = ttc_data.unit_names(entries, data.stats, ttc_data.load_loc_names())
-    delta._write_json(delta.TTC_ENTRIES_PATH, {key: {"mod": mod, "name": names[key]} for key, mod in entries.items()})
+    records = {key: {"mod": mod, "name": names[key]} for key, mod in entries.items()}
+    for key, record in records.items():
+        if record["mod"] == ttc_data.VANILLA_NAME:
+            record["faction"] = ttc_data.faction_of(key)
+    delta._write_json(delta.TTC_ENTRIES_PATH, records)
 
     def write_pack() -> None:
         """Replace the pack's `script/` folder with the regenerated compat files."""
