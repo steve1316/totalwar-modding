@@ -13,14 +13,26 @@ import logging
 import gc
 import shutil
 import time
-from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE, TEMP_DIR
+from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
 from extract_cache import cached_pack_extract
+from delta import publish_pack
+from pipeline import workshop_pack_path
 from typing import List, Dict, Optional, Tuple
 
 
 FAILED_MODS = []
 MISSING_MODS = []
+
+LEAPOI_STEAM_ID = "3397481450"
+LEAPOI_PACK_PATH = workshop_pack_path(LEAPOI_STEAM_ID, "land_encounters_and_points_of_interest_6_0.pack")
+LEAPOI_SOURCE_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct"
+
+# Known locations of `factions_data.lua` inside the LEAPOI mod, newest layout first. The restructure moved it from `constants/battles` to `configs`.
+FACTIONS_DATA_LOCATIONS = [
+    "script/land_encounters/configs/factions_data.lua",
+    "script/land_encounters/constants/battles/factions_data.lua",
+]
 
 
 # Pack-relative folders that every non-vanilla mod gets extracted for. Pre-computed once so workers do not rebuild it.
@@ -36,6 +48,36 @@ MOD_FOLDERS_TO_EXTRACT = [
 # Per-faction unit bucket structure. Each faction's `units` dict holds one entry per tier, and each tier holds one list per caste category.
 TIER_NAMES = [f"tier_{i}" for i in range(6)]
 UNIT_CATEGORIES = ["melee_infantry", "missile_infantry", "melee_cavalry", "missile_cavalry", "monstrous_infantry", "monstrous_cavalry", "chariot", "warmachine", "war_beast", "monster", "generic", "lord", "hero"]
+
+
+def find_source_factions_data_path() -> str:
+    """Pick where `factions_data.lua` belongs in the LEAPOI source folder, based on which layout the source currently uses.
+
+    Returns:
+        Pack-relative path of the first known location whose folder exists in the source, or the newest layout if none do.
+    """
+    for location in FACTIONS_DATA_LOCATIONS:
+        if os.path.isdir(os.path.dirname(f"{LEAPOI_SOURCE_ROOT}/{location}")):
+            return location
+    return FACTIONS_DATA_LOCATIONS[0]
+
+
+def find_pack_factions_data_path(pack_path: str, default: str) -> str:
+    """Pick where `factions_data.lua` belongs inside the Workshop pack, which may still use an older layout than the source.
+
+    Args:
+        pack_path (str): Path to the LEAPOI `.pack` file.
+        default (str): Location to use when the pack has no `factions_data.lua` yet.
+
+    Returns:
+        Pack-relative path of the existing `factions_data.lua`, or `default`.
+    """
+    listing = run_rpfm_cli(["pack", "list", "--pack-path", pack_path], capture_output=True, text=True).stdout or ""
+    files = {line.strip() for line in listing.splitlines()}
+    for location in FACTIONS_DATA_LOCATIONS:
+        if location in files:
+            return location
+    return default
 
 
 def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
@@ -533,24 +575,27 @@ if __name__ == "__main__":
             logging.exception(e)
 
         # After processing all mods, move the final factions_data.lua to the destination folder.
+        source_location = find_source_factions_data_path()
+        destination_filepath = f"{LEAPOI_SOURCE_ROOT}/{source_location}"
         if os.path.exists("factions_data.lua"):
-            destination_filepath = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua"
             if os.path.exists(destination_filepath):
                 os.remove(destination_filepath)
             shutil.move("factions_data.lua", destination_filepath)
             os.remove("factions_data.json")
 
-        # Use the RPFM CLI to delete the existing factions_data.lua file from the mod.
-        run_rpfm_cli(
-            ["pack", "delete", "--pack-path", f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack", "--file-path", "script/land_encounters/constants/battles/factions_data.lua"],
-            capture_output=True,
-        )
+        # The Workshop pack can lag behind the source layout, so write to wherever the pack currently keeps the file.
+        pack_location = find_pack_factions_data_path(LEAPOI_PACK_PATH, source_location)
+        logging.info(f"Writing factions_data.lua to {pack_location} in the LEAPOI pack.")
 
-        # Now use the RPFM CLI to add the new factions_data.lua file into the packfile.
-        run_rpfm_cli(
-            ["pack", "add", "--pack-path", f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack", "--tsv-to-binary", "./schemas/schema_wh3.ron", "--file-path", f"../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua;script/land_encounters/constants/battles/factions_data.lua"],
-            capture_output=True,
-        )
+        def write_leapoi_pack() -> None:
+            """Replace `factions_data.lua` inside the LEAPOI Workshop pack."""
+            run_rpfm_cli(["pack", "delete", "--pack-path", LEAPOI_PACK_PATH, "--file-path", pack_location], capture_output=True)
+            run_rpfm_cli(
+                ["pack", "add", "--pack-path", LEAPOI_PACK_PATH, "--tsv-to-binary", "./schemas/schema_wh3.ron", "--file-path", f"{destination_filepath};{pack_location}"],
+                capture_output=True,
+            )
+
+        publish_pack(LEAPOI_STEAM_ID, LEAPOI_PACK_PATH, destination_filepath, write_leapoi_pack)
 
     finally:
         clear_temp_root()
