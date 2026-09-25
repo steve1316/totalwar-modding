@@ -330,6 +330,8 @@ def add_melee_effects(faction: str):
             unit_effects += SUPPORTED_EFFECTS["slaanesh_melee"]
         elif faction in TZEENTCH_SPECIFIC_FACTIONS:
             unit_effects += SUPPORTED_EFFECTS["tzeentch_melee"]
+        elif faction in DARK_ELF_SPECIFIC_FACTIONS:
+            unit_effects += SUPPORTED_EFFECTS["dark_elf_melee"]
     elif faction in ANTI_DESTRUCTION_FACTIONS:
         unit_effects += SUPPORTED_EFFECTS["anti_destruction_melee"]
 
