@@ -1,0 +1,10 @@
+{
+  "name": "workshop-publisher",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Uploads generated Total War: WARHAMMER III packs to their existing Steam Workshop items through the logged-in Steam client.",
+  "main": "publish.js",
+  "dependencies": {
+    "steamworks.js": "0.4.0"
+  }
+}
