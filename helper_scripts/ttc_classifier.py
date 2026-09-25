@@ -136,11 +136,13 @@ class Model:
         self._scale = matrix.std(axis=0) + 1e-9
         self._labeled_matrix = (matrix - self._mean) / self._scale
 
-    def predict(self, stats_list: List[UnitStats]) -> List[Prediction]:
+    def predict(self, stats_list: List[UnitStats], non_core: Optional[List[bool]] = None) -> List[Prediction]:
         """Classify units.
 
         Args:
             stats_list (List[UnitStats]): Units to classify.
+            non_core (Optional[List[bool]]): Per unit, True when it must not be `core` (Regiments of Renown). Its best `special` or `rare` label
+                is picked instead.
 
         Returns:
             One prediction per unit, in order.
@@ -149,9 +151,11 @@ class Model:
             return []
         probabilities = self.estimator.predict_proba(self.vectorizer.transform([feature_dict(stats) for stats in stats_list]))
         classes = self.estimator.classes_
+        is_core = np.array([str(label).startswith("core") for label in classes])
         predictions = []
-        for row in probabilities:
-            order = np.argsort(row, kind="stable")[::-1]
+        for i, row in enumerate(probabilities):
+            ranking = np.where(is_core, -1.0, row) if non_core and non_core[i] else row
+            order = np.argsort(ranking, kind="stable")[::-1]
             runner_up = classes[order[1]] if len(order) > 1 else classes[order[0]]
             predictions.append(Prediction(str(classes[order[0]]), float(row[order[0]]), str(runner_up), float(row[order[0]]) >= self.threshold))
         return predictions

@@ -100,3 +100,12 @@ def test_nearest_labeled_returns_lookalikes():
     nearest = model.nearest_labeled(_unit(5000, 1800), k=3)
     assert len(nearest) == 3
     assert all(label == "rare,3" for _, label in nearest)
+
+
+def test_non_core_units_never_get_a_core_pick():
+    model, _ = clf.train(_synthetic())
+    cheap = _unit(9999, 250)
+    assert model.predict([cheap])[0].label == "core"
+    forced = model.predict([cheap], non_core=[True])[0]
+    assert forced.label in {"special,2", "rare,3"}
+    assert forced.runner_up != forced.label
