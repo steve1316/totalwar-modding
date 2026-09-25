@@ -21,7 +21,7 @@ import os
 import signal
 import subprocess
 import time
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import delta
 import workshop_publish
@@ -66,7 +66,7 @@ def summarize_reasons(reasons: List[str], limit: int = 5) -> str:
 
 
 def log_summary(
-    checks: List[delta.UnitCheck], statuses: Dict[str, str], failed: List[str], reduce_winds_changed: List[str], ttc_lines: Optional[List[str]], dry_run: bool
+    checks: List[delta.UnitCheck], statuses: Dict[str, str], failed: List[str], reduce_winds_changed: List[str], dry_run: bool
 ) -> None:
     """Log the end-of-run summary, including which packs changed this run and the hand-made mod review flags.
 
@@ -75,7 +75,6 @@ def log_summary(
         statuses (Dict[str, str]): Output statuses reported by `delta.publish_pack` during this run.
         failed (List[str]): Names of units whose script exited with an error.
         reduce_winds_changed (List[str]): Vanilla trait tables that changed since the last run.
-        ttc_lines (Optional[List[str]]): Mods whose unit tables changed, for the TTC compat review. None when the review could not run.
         dry_run (bool): True when nothing was rebuilt.
     """
     logging.info("=" * 100)
@@ -107,13 +106,14 @@ def log_summary(
     if failed:
         logging.info(f"Failed (state not saved, will retry next run): {', '.join(failed)}")
 
-    logging.info("Hand-made mods to review:")
-    if ttc_lines is None:
-        logging.info("  3310629727 yet_another_tabletopcaps_compat - not checked on full rebuilds or the first tracked run")
-    elif ttc_lines:
-        logging.info(f"  3310629727 yet_another_tabletopcaps_compat - unit tables changed in: {', '.join(ttc_lines)}")
+    ttc_summary = delta._read_json(f"{delta.STATE_ROOT}/ttc_summary.json")
+    if ttc_summary:
+        report = ttc_summary["report"].removeprefix("./")
+        logging.info(f"TTC compat (3310629727): {ttc_summary['auto']} auto-assigned, {ttc_summary['review']} need review -> helper_scripts/{report}")
     else:
-        logging.info("  3310629727 yet_another_tabletopcaps_compat - no tracked unit table changes")
+        logging.info("TTC compat (3310629727): not generated yet")
+
+    logging.info("Hand-made mods to review:")
     if reduce_winds_changed:
         logging.info(f"  3012881957 reduce_winds_of_magic_cost - vanilla tables changed: {', '.join(reduce_winds_changed)}")
     else:
@@ -168,9 +168,6 @@ if __name__ == "__main__":
         logging.info(f"{unit.name}: {'REBUILD - ' + summarize_reasons(check.reasons) if check.stale else 'up to date'}")
         checks.append(check)
 
-    # The TTC review needs the recorded dynamic_rors accesses, which only exist after a tracked build and are not replayed on full rebuilds.
-    dynamic_rors_check = next(check for check in checks if check.unit.name == "dynamic_rors")
-    ttc_lines = None if args.full or "no previous tracked build" in dynamic_rors_check.reasons else delta.ttc_review(checks)
     reduce_winds_changed = delta.check_reduce_winds_tables(commit=not args.dry_run)
 
     failed: List[str] = []
@@ -205,6 +202,6 @@ if __name__ == "__main__":
         if removed:
             logging.info(f"Pruned cached extractions for {removed} outdated pack version(s).")
 
-    log_summary(checks, statuses, failed, reduce_winds_changed, ttc_lines, args.dry_run)
+    log_summary(checks, statuses, failed, reduce_winds_changed, args.dry_run)
     log_elapsed_time("updating all mods", start_time)
     workshop_publish.publish_pending(workshop_publish.pending_items(failed), args.dry_run, args.no_publish)

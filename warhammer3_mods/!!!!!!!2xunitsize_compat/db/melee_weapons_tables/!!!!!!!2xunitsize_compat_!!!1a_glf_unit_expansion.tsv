@@ -26,10 +26,7 @@ glf_def_the_krakensides_ror	0	8	25	10	1.0000	sword	sword		4	1.0000	1.0000	0.0000
 glf_def_the_soulskulls_ror	0	6	25	7	1.0000	sword	sword		4	1.0000	1.0000	0.0000	false		0	10	4.4000		false
 glf_def_the_voiceless_ones_ror	14	0	19	6	1.0000	spear	spear		4	1.0000	0.7500	0.0000	true		0	10	4.6000		false
 glf_dwf_raiders	16	0	22	8	1.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	4.3000		false
-glf_emp_knights_of_the_white_wolf	0	0	12	38	1.0000	axe	hammer		1	1.0000	1.2500	0.0000	false		0	10	4.3000		false
-glf_emp_knights_panther	12	0	28	10	1.0000	lance	spear		1	1.0000	0.7500	0.0000	false		0	10	5.1000		false
 glf_emp_reiksguard_walk	0	0	26	10	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
-glf_emp_teutogen_guard	0	0	8	28	1.0000	axe	hammer		1	1.0000	1.2500	0.0000	false		0	10	4.3000		false
 glf_hef_caledor_sentinel	0	0	20	12	1.0000	sword	sword		0	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 glf_hef_silver_helms_greatsword	0	10	10	25	1.0000	sword	sword		4	1.0000	10.0000	0.0000	false		0	10	4.3000		false
 glf_hef_spears_of_dabbarloc_ror	16	0	16	12	1.0000	spear	spear		4	1.0000	0.7500	0.0000	false		0	10	4.2000		false
@@ -40,7 +37,6 @@ glf_ksl_shield_maiden	0	0	22	10	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false
 glf_lzd_serpent_riders	0	0	16	34	4.0000	lance	spear	small	3	0.2500	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	5.4000		false
 glf_skv_handgunners	0	0	18	8	1.0000	sword	sword		5	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 glf_skv_red_guard_ror	17	0	11	27	1.0000	spear	halberd		5	1.0000	0.7500	0.0000	false		0	10	4.6000		false
-glf_skv_stormfiend_rattling_gun	0	0	200	220	6.0000	axe	axe	medium	6	0.9000	1.0000	0.0000	false		0	10	3.8000		false
 glf_sla_daemonette_archers	0	0	20	10	1.0000	axe	creatures_claws		1	1.0000	0.7500	0.0000	true		0	0	4.0000		false
 glf_sla_daemonette_exalted_archers	0	0	30	10	1.0000	axe	creatures_claws		1	1.0000	0.7500	0.0000	true	wh2_dlc11_unit_contact_charmed	0	0	4.0000		false
 glf_sla_seekers_of_slaanesh_archers	0	0	30	10	1.0000	axe	creatures_claws		1	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	0	4.0000		false
@@ -51,7 +47,6 @@ glf_sp_war_elephants	0	28	200	270	10.0000	axe	creatures_claws	large	8	1.0000	1.2
 glf_tmb_lion_head_ushabti_ror	18	0	26	67	2.0000	axe	axe	medium	3	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	3.8000		false
 glf_tmb_nehekhara_killer	0	8	26	7	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.5000		false
 glf_tmb_ushabti_2handed_axe	18	0	26	67	2.0000	axe	axe	medium	3	1.0000	1.0000	0.0000	false		0	10	3.8000		false
-glf_vmp_spirit_host	0	0	0	10	1.0000	knife	creatures_claws		0	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	4.0000		false
 glf_vmp_zombie_knights	0	0	21	7	1.0000	sword	sword		10	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 glf_wef_torgovann_guard	20	0	11	25	2.0000	spear	halberd		4	1.0000	0.7500	0.0000	false		0	10	4.9000		false
 glf_wef_wildwood_sentry	15	0	9	21	1.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	4.5000		false

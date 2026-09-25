@@ -6,6 +6,7 @@ changed, or when its Workshop pack no longer matches what was last built. After 
 generated source files are identical to the previous build, so the summary only lists packs that really need a Workshop upload.
 """
 
+import glob
 import json
 import logging
 import os
@@ -14,7 +15,7 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from extract_cache import ensure_extracted, extraction_content_sha, file_sha256, normalize_path, pack_sha256, toolchain_hash, tree_sha256
+from extract_cache import ensure_extracted, extraction_content_sha, file_sha256, pack_sha256, toolchain_hash, tree_sha256
 from pipeline import workshop_pack_path
 from utilities import FILEPATH_TO_VANILLA_DATA_TABLES
 
@@ -24,7 +25,8 @@ UNITS_STATE_DIR = f"{STATE_ROOT}/units"
 OUTPUTS_STATE_DIR = f"{STATE_ROOT}/outputs"
 PENDING_DIR = f"{STATE_ROOT}/pending"
 WATCHES_STATE_PATH = f"{STATE_ROOT}/watches.json"
-TTC_SCRIPTS_DIR = "../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script/ttc"
+# Unit key to its mod and in-game name for every entry in the TTC compat pack, written by `update_ttc_compat.py` for its change notes.
+TTC_ENTRIES_PATH = f"{STATE_ROOT}/ttc_entries.json"
 
 # Code every unit depends on. Unit-specific scripts are added per unit below.
 SHARED_CODE_FILES = ["utilities.py", "pipeline.py", "supported_mods.py"]
@@ -61,6 +63,8 @@ class Unit:
     outputs: List[Output]
     # Code files whose contents change this unit's output, relative to `helper_scripts/`.
     code_files: List[str] = field(default_factory=list)
+    # Glob patterns of hand-maintained input files whose contents change this unit's output. Matches ending in `_auto.lua` are skipped.
+    input_globs: List[str] = field(default_factory=list)
 
 
 UNITS: List[Unit] = [
@@ -98,6 +102,13 @@ UNITS: List[Unit] = [
         [Output("3621939685", "!!!!!!!2xunitsize_compat.pack")],
         ["update_double_unit_size.py"],
     ),
+    Unit(
+        "ttc_compat",
+        ["update_ttc_compat.py"],
+        [Output("3310629727", "!!!!!!!yet_another_tabletopcaps_compat.pack")],
+        ["update_ttc_compat.py", "ttc_classifier.py", "ttc_data.py", "ttc_compat_io.py"],
+        ["../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script/ttc/!!!!!!!*.lua"],
+    ),
 ]
 
 # Vanilla tables overridden by the hand-made reduce winds of magic mod (3012881957).
@@ -109,9 +120,6 @@ REDUCE_WINDS_WATCHED_TABLES = [
     "trait_info_tables",
     "trait_level_effects_tables",
 ]
-
-# Tables whose changes may mean a mod needs its hand-written TTC compat script (3310629727) updated.
-TTC_WATCHED_SOURCES = {"db/land_units_tables", "db/main_units_tables"}
 
 
 @dataclass
@@ -204,6 +212,10 @@ def code_hash(unit: Unit) -> str:
     for path in sorted(set(SHARED_CODE_FILES + unit.code_files)):
         digest.update(path.encode())
         digest.update(file_sha256(path).encode() if os.path.exists(path) else b"missing")
+    for pattern in unit.input_globs:
+        for path in sorted(p for p in glob.glob(pattern) if not p.endswith("_auto.lua")):
+            digest.update(os.path.basename(path).encode())
+            digest.update(file_sha256(path).encode())
     return digest.hexdigest()
 
 
@@ -423,25 +435,3 @@ def check_reduce_winds_tables(commit: bool) -> List[str]:
     if commit:
         _write_json(WATCHES_STATE_PATH, watches)
     return changed
-
-
-def ttc_review(checks: List[UnitCheck]) -> List[str]:
-    """List mods whose unit tables changed, since their hand-written TTC compat scripts may need updating.
-
-    Args:
-        checks (List[UnitCheck]): Results from `check_unit` for this run.
-
-    Returns:
-        One line per changed mod, noting whether a matching TTC script exists.
-    """
-    ttc_files = {name.lower() for name in os.listdir(TTC_SCRIPTS_DIR)} if os.path.exists(TTC_SCRIPTS_DIR) else set()
-    lines = []
-    packs = sorted({access["pack"] for check in checks for access in check.changed_accesses if access["source"] in TTC_WATCHED_SOURCES})
-    for pack in packs:
-        name = _pack_label(pack)
-        if normalize_path(pack) == normalize_path(FILEPATH_TO_VANILLA_DATA_TABLES):
-            lines.append("vanilla db.pack (vanilla unit caps)")
-            continue
-        script = ("!!!!!!!" + name.lstrip("!").removesuffix(".pack") + ".lua").lower()
-        lines.append(f"{name} ({'has TTC script' if script in ttc_files else 'no matching TTC script'})")
-    return lines

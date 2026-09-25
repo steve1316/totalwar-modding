@@ -97,3 +97,21 @@ def test_missing_state_is_a_general_reason(monkeypatch, tmp_path):
     check = delta.check_unit(unit)
 
     assert check.general is True
+
+
+def test_code_hash_changes_when_an_input_glob_file_changes(tmp_path):
+    hand = tmp_path / "!!!!!!!mod.lua"
+    hand.write_text("a")
+    (tmp_path / "!!!!!!!mod_auto.lua").write_text("x")
+    unit = delta.Unit("t", ["x.py"], [], [], [str(tmp_path / "!!!!!!!*.lua")])
+    before = delta.code_hash(unit)
+    (tmp_path / "!!!!!!!mod_auto.lua").write_text("changed auto files are outputs, not inputs")
+    assert delta.code_hash(unit) == before
+    hand.write_text("b")
+    assert delta.code_hash(unit) != before
+
+
+def test_ttc_compat_unit_is_registered():
+    unit = next(u for u in delta.UNITS if u.name == "ttc_compat")
+    assert [o.steam_id for o in unit.outputs] == ["3310629727"]
+    assert unit.input_globs

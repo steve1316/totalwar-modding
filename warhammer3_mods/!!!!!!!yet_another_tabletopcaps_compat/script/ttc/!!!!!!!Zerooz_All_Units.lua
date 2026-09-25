@@ -24,7 +24,6 @@ local caps = {
     {"def_mon_shadow_lifetaker", "rare", 1},
     -- Grand Cathay
     {"cth_inf_gouxiang", "core"},
-    {"cth_inf_jade_warrior_stick", "core"},
     {"cth_inf_jade_warrior_great_sword", "core"},
     {"cth_inf_jade_warrior_halberd_shield", "core"},
     {"cth_inf_dragon_guard_fighter", "rare", 1},
@@ -50,7 +49,6 @@ local caps = {
     {"cth_cav_celestial_crossbow_rider", "rare", 1},
     {"cth_cav_jade_longma_crassbow_rider", "rare", 2},
     {"cth_veh_war_compass_1", "rare", 1},
-    {"cth_sky_junk_cannon", "special", 3},
     {"cth_veh_sky_boat", "special", 3},
     {"cth_veh_sky_ark", "rare", 2},
     -- High Elves
