@@ -1,8 +1,6 @@
 -- ab_unwashed_masses
 local caps = {
     -- Ogres
-    {"calm_rustbuckets", "special", 1},
-    {"calm_rustbuckets_greatweapons", "special", 1},
     {"gnob_inf_powder_sniffers", "core"},
     {"gnob_cav_sabretusk_riders", "special", 2},
     -- Gnoblar Hordes

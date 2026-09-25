@@ -48,13 +48,9 @@ glf_dwf_machine_gunner
 glf_dwf_raiders
 glf_dwf_sniper
 glf_dwf_the_zhufbar_firebores_ror
-glf_emp_celestial_hurricanum
 glf_emp_halberdiers_shield
 glf_emp_knights_of_the_vengeful_sun_ror
-glf_emp_knights_of_the_white_wolf
-glf_emp_knights_panther
 glf_emp_reiksguard_walk
-glf_emp_teutogen_guard
 glf_hef_avelorn_reavers
 glf_hef_caledor_sentinel
 glf_hef_griffon
@@ -72,8 +68,6 @@ glf_skv_clanrats_crossbow
 glf_skv_handgunners
 glf_skv_poison_wind_blast
 glf_skv_red_guard_ror
-glf_skv_stormfiend_rattling_gun
-glf_skv_stormfiend_warpfire
 glf_sla_daemonette_archers
 glf_sla_daemonette_exalted_archers
 glf_sla_seekers_of_slaanesh_archers
@@ -94,8 +88,6 @@ glf_tmb_nehekhara_killer
 glf_tmb_nehekhara_scout
 glf_tmb_ushabti_2handed_axe
 glf_vmp_skeleton_archers
-glf_vmp_spirit_host
-glf_vmp_zombie_dragon
 glf_vmp_zombie_halberd
 glf_vmp_zombie_handgunners
 glf_vmp_zombie_knights

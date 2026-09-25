@@ -4,6 +4,7 @@ An item is pending when its Workshop pack differs from the one last uploaded. Re
 change note. The upload itself runs through `workshop_publisher/publish.js`, which uses the logged-in Steam client, so no credentials are stored here.
 """
 
+import collections
 import json
 import logging
 import os
@@ -25,6 +26,10 @@ PUBLISHED_STATE_DIR = f"{delta.STATE_ROOT}/published"
 WORKSHOP_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id="
 GENERAL_NOTE = "Rebuilt against the latest game patch and the latest versions of all supported mods."
 MAX_NOTE_MODS = 10
+# Steam's change note limit (`k_cchPublishedDocumentChangeDescriptionMax`).
+CHANGE_NOTE_LIMIT = 8000
+# The TTC compat item gets a per-unit change note built from its entries instead of the list of changed mods.
+TTC_STEAM_ID = "3310629727"
 PUBLISHER_DIR = "./workshop_publisher"
 PUBLISH_TEMP_DIR = f"{TEMP_DIR}/publish"
 
@@ -62,6 +67,15 @@ def _record_path(steam_id: str) -> str:
         Path of the item's JSON record.
     """
     return f"{PUBLISHED_STATE_DIR}/{steam_id}.json"
+
+
+def _ttc_snapshot_path() -> str:
+    """Return the path of the TTC entries saved at the last upload.
+
+    Returns:
+        Path of the JSON snapshot next to the TTC publish record.
+    """
+    return f"{PUBLISHED_STATE_DIR}/{TTC_STEAM_ID}_entries.json"
 
 
 def _read_record(steam_id: str) -> Optional[Dict[str, Any]]:
@@ -150,6 +164,76 @@ def build_change_note(record: Optional[Dict[str, Any]]) -> str:
     return " ".join(parts)
 
 
+def _names_list(names: List[str]) -> str:
+    """Join unit names, collapsing repeats to `Name (x2)`.
+
+    Args:
+        names (List[str]): Unit names, possibly repeated.
+
+    Returns:
+        The names sorted case-insensitively and joined with commas.
+    """
+    counts = collections.Counter(names)
+    return ", ".join(name if count == 1 else f"{name} (x{count})" for name, count in sorted(counts.items(), key=lambda item: item[0].lower()))
+
+
+def build_ttc_change_note(published: Dict[str, Dict[str, str]], current: Dict[str, Dict[str, str]], limit: int = CHANGE_NOTE_LIMIT) -> Optional[str]:
+    """Build the TTC compat change note from the units added and removed since the last upload.
+
+    Added units are listed by in-game name under their mod. Past the limit, only each mod's count is kept. Removed units are always listed by key at
+    the bottom, and the note is cut at the limit as a last resort.
+
+    Args:
+        published (Dict[str, Dict[str, str]]): Unit key to `{mod, name}` for the last uploaded pack.
+        current (Dict[str, Dict[str, str]]): Unit key to `{mod, name}` for the pack about to be uploaded.
+        limit (int): Maximum note length.
+
+    Returns:
+        The change note, or None when no unit was added or removed.
+    """
+    added: Dict[str, List[str]] = collections.defaultdict(list)
+    removed: Dict[str, List[str]] = collections.defaultdict(list)
+    for key, info in current.items():
+        if key not in published:
+            added[info["mod"]].append(info["name"])
+    for key, info in published.items():
+        if key not in current:
+            removed[info["mod"]].append(key)
+    if not added and not removed:
+        return None
+
+    summary = []
+    if added:
+        summary.append(f"added for {sum(map(len, added.values()))} units across {len(added)} mods")
+    if removed:
+        summary.append(f"removed for {sum(map(len, removed.values()))} units")
+    header = ["[b]Tabletop caps " + ", ".join(summary) + "[/b]"]
+    removed_lines = ["", "[b]Removed (no longer in their mods)[/b]"] if removed else []
+    removed_lines += [f"[b]{mod}[/b] (-{len(keys)}): {', '.join(sorted(keys))}" for mod, keys in sorted(removed.items(), key=lambda item: item[0].lower())]
+    mods = sorted(added, key=str.lower)
+    with_names = [f"[b]{mod}[/b] (+{len(added[mod])}): {_names_list(added[mod])}" for mod in mods]
+    counts_only = [f"[b]{mod}[/b] (+{len(added[mod])})" for mod in mods]
+    for added_lines in (with_names, counts_only):
+        note = "\n".join(header + ([""] + added_lines if added_lines else []) + removed_lines)
+        if len(note) <= limit:
+            return note
+    cut = note[: limit - 4]
+    return cut[: cut.rfind("\n") if "\n" in cut else len(cut)] + "\n..."
+
+
+def ttc_change_note() -> Optional[str]:
+    """Build the TTC compat change note from the entries saved by the last generation and by the last upload.
+
+    Returns:
+        The change note, or None when either snapshot is missing or no unit was added or removed.
+    """
+    published = delta._read_json(_ttc_snapshot_path())
+    current = delta._read_json(delta.TTC_ENTRIES_PATH)
+    if published is None or current is None:
+        return None
+    return build_ttc_change_note(published, current)
+
+
 def pending_items(failed_units: List[str]) -> List[PendingItem]:
     """List generated Workshop items whose current pack differs from the last published one.
 
@@ -169,7 +253,8 @@ def pending_items(failed_units: List[str]) -> List[PendingItem]:
                 continue
             record = _read_record(output.steam_id)
             if record is None or record.get("pack_sha") != current_sha:
-                items.append(PendingItem(output, build_change_note(record), current_sha))
+                note = (ttc_change_note() if output.steam_id == TTC_STEAM_ID else None) or build_change_note(record)
+                items.append(PendingItem(output, note, current_sha))
     return items
 
 
@@ -194,6 +279,8 @@ def mark_published(output: delta.Output, change_note: str, pack_sha: str) -> Non
         }
     )
     _write_record(output.steam_id, record)
+    if output.steam_id == TTC_STEAM_ID and os.path.exists(delta.TTC_ENTRIES_PATH):
+        shutil.copyfile(delta.TTC_ENTRIES_PATH, _ttc_snapshot_path())
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
