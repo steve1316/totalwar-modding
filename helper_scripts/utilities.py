@@ -5,6 +5,7 @@ import pandas as pd
 import subprocess
 import os
 import shutil
+import stat
 import re
 import logging
 import json
@@ -22,6 +23,10 @@ SCHEMA_PATH = "./schemas/schema_wh3.json"
 
 # Root for every transient folder produced by the helper scripts (vanilla/modded extractions, compat-pack build dirs, etc.).
 TEMP_DIR = "./temp"
+
+# Retries for deleting a file that is read-only or briefly locked (e.g. by an antivirus scan of a freshly written model file).
+RMTREE_RETRIES = 5
+RMTREE_RETRY_DELAY_SECONDS = 0.5
 
 # TSV file structure constants
 HEADER_ROW_INDEX = 0
@@ -570,15 +575,42 @@ def merge_move(source_path: str, destination_path: str):
     shutil.rmtree(source_path)
 
 
+def _retry_remove(func: Callable[[str], None], path: str, error: BaseException):
+    """`shutil.rmtree` error handler that clears the read-only bit and retries, so a briefly locked file does not fail the delete.
+
+    Args:
+        func (Callable[[str], None]): The removal function that failed, e.g. `os.unlink` or `os.rmdir`.
+        path (str): The path it failed on.
+        error (BaseException): The original error.
+
+    Raises:
+        OSError: The original error, if the path still cannot be removed after every retry.
+    """
+    for attempt in range(RMTREE_RETRIES):
+        try:
+            os.chmod(path, stat.S_IWRITE)
+            func(path)
+            return
+        except FileNotFoundError:
+            return
+        except PermissionError:
+            if attempt < RMTREE_RETRIES - 1:
+                time.sleep(RMTREE_RETRY_DELAY_SECONDS)
+    raise error
+
+
 def cleanup_folders(folders_to_cleanup: List[str]):
-    """Clean up the folders that were created during the extraction process.
+    """Clean up the folders that were created during the extraction process. Read-only and briefly locked files are retried.
 
     Args:
         folders_to_cleanup (List[str]): List of folders to cleanup.
+
+    Raises:
+        OSError: If a file stays locked, so the caller stops instead of building on a half-deleted folder.
     """
     for folder in folders_to_cleanup:
         if os.path.exists(folder):
-            shutil.rmtree(folder)
+            shutil.rmtree(folder, onexc=_retry_remove)
 
 
 def extract_model_paths_from_variantmeshdefinition(file_path):
