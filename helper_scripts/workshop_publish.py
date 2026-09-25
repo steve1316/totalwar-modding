@@ -190,40 +190,40 @@ def _plural(count: int, noun: str) -> str:
     return f"{count} {noun}" if count == 1 else f"{count} {noun}s"
 
 
-def _names_by_mod(units: List[Tuple[str, str]]) -> str:
-    """Join unit names under their mod, e.g. `[i]Mod A[/i]: Archers, Swordsmen; [i]Mod B[/i]: Rat Ogres`.
+def _names_by_faction(units: List[Tuple[str, str]]) -> str:
+    """Join unit names under their faction, e.g. `[i]Empire[/i]: Swordsmen; [i]Skaven[/i]: Clanrats, Rat Ogres`.
 
     Args:
-        units (List[Tuple[str, str]]): `(unit name, mod name)` per added unit.
+        units (List[Tuple[str, str]]): `(unit name, faction name)` per added unit.
 
     Returns:
-        The mods sorted case-insensitively, each with its unit names.
+        The factions sorted case-insensitively, each with its unit names.
     """
-    by_mod: Dict[str, List[str]] = collections.defaultdict(list)
-    for name, mod in units:
-        by_mod[mod].append(name)
-    return "; ".join(f"[i]{mod}[/i]: {_names_list(names)}" for mod, names in sorted(by_mod.items(), key=lambda item: item[0].lower()))
+    by_faction: Dict[str, List[str]] = collections.defaultdict(list)
+    for name, faction in units:
+        by_faction[faction].append(name)
+    return "; ".join(f"[i]{faction}[/i]: {_names_list(names)}" for faction, names in sorted(by_faction.items(), key=lambda item: item[0].lower()))
 
 
-def _mod_counts(mods: List[str]) -> str:
-    """Join mod names with how many units each added, e.g. `Mod A (+2), Mod B (+1)`.
+def _faction_counts(factions: List[str]) -> str:
+    """Join faction names with how many units each got, e.g. `Empire +30, Skaven +20`.
 
     Args:
-        mods (List[str]): One mod name per added unit.
+        factions (List[str]): One faction name per added unit.
 
     Returns:
-        The mods sorted case-insensitively with their counts.
+        The factions from most to fewest units, ties sorted by name.
     """
-    counts = collections.Counter(mods)
-    return ", ".join(f"{mod} (+{count})" for mod, count in sorted(counts.items(), key=lambda item: item[0].lower()))
+    counts = collections.Counter(factions)
+    return ", ".join(f"{faction} +{count}" for faction, count in sorted(counts.items(), key=lambda item: (-item[1], item[0].lower())))
 
 
 def _group_lines(groups: Dict[str, List[Any]], detail: Optional[Callable[[List[Any]], str]]) -> List[str]:
-    """Render one `[b]Faction[/b] (+N): detail` line per faction, sorted case-insensitively.
+    """Render one `[b]Group[/b] (+N): detail` line per group (a faction or a mod), sorted case-insensitively.
 
     Args:
-        groups (Dict[str, List[Any]]): Faction name to its added units.
-        detail (Optional[Callable[[List[Any]], str]]): Describes a faction's units, or None for the count only.
+        groups (Dict[str, List[Any]]): Group name to its added units.
+        detail (Optional[Callable[[List[Any]], str]]): Describes a group's units, or None for the count only.
 
     Returns:
         The lines.
@@ -237,9 +237,9 @@ def _group_lines(groups: Dict[str, List[Any]], detail: Optional[Callable[[List[A
 def build_ttc_change_note(published: Dict[str, Dict[str, Any]], current: Dict[str, Dict[str, Any]], limit: int = CHANGE_NOTE_LIMIT) -> Optional[str]:
     """Build the TTC compat change note from the units added and removed since the last upload.
 
-    Added units are listed by in-game name under their faction, with modded units also naming their mod. Vanilla and modded units get their own
-    sections when both appear. Past the limit, modded units drop to mod counts per faction, then everything drops to faction counts. Removed units are
-    always listed by key at the bottom, and the note is cut at the limit as a last resort.
+    Vanilla and DLC units are listed by in-game name under their faction. Modded units are listed under their mod, split by faction. Each gets its
+    own section when both appear. Past the limit, mods drop to faction counts, then everything drops to counts only. Removed units are always listed
+    by key at the bottom, and the note is cut at the limit as a last resort.
 
     Args:
         published (Dict[str, Dict[str, Any]]): Unit key to `{mod, name, faction, vanilla}` for the last uploaded pack. `vanilla` is only set on
@@ -259,7 +259,7 @@ def build_ttc_change_note(published: Dict[str, Dict[str, Any]], current: Dict[st
         if info.get("vanilla"):
             vanilla[info.get("faction") or "Other"].append(info["name"])
         else:
-            modded[info.get("faction") or "Other"].append((info["name"], info["mod"]))
+            modded[info["mod"]].append((info["name"], info.get("faction") or "Other"))
     for key, info in published.items():
         if key not in current:
             removed[f"{info.get('faction') or 'Other'} (vanilla)" if info.get("vanilla") else info["mod"]].append(key)
@@ -270,8 +270,7 @@ def build_ttc_change_note(published: Dict[str, Dict[str, Any]], current: Dict[st
     if vanilla:
         added_parts.append(_plural(sum(map(len, vanilla.values())), "vanilla and DLC unit"))
     if modded:
-        mod_count = len({mod for units in modded.values() for _, mod in units})
-        added_parts.append(f"{_plural(sum(map(len, modded.values())), 'unit')} across {_plural(mod_count, 'mod')}")
+        added_parts.append(f"{_plural(sum(map(len, modded.values())), 'unit')} across {_plural(len(modded), 'mod')}")
     summary = ["added for " + " and ".join(added_parts)] if added_parts else []
     if removed:
         summary.append(f"removed for {_plural(sum(map(len, removed.values())), 'unit')}")
@@ -279,8 +278,8 @@ def build_ttc_change_note(published: Dict[str, Dict[str, Any]], current: Dict[st
     removed_lines = ["", "[b]Removed (no longer in their mods)[/b]"] if removed else []
     removed_lines += [f"[b]{group}[/b] (-{len(keys)}): {', '.join(sorted(keys))}" for group, keys in sorted(removed.items(), key=lambda item: item[0].lower())]
     both = bool(vanilla) and bool(modded)
-    # Each level trades detail for length: unit names, then mod counts per faction, then faction counts only.
-    modded_details = [_names_by_mod, lambda units: _mod_counts([mod for _, mod in units]), None]
+    # Each level trades detail for length: unit names, then faction counts per mod, then counts only.
+    modded_details = [_names_by_faction, lambda units: _faction_counts([faction for _, faction in units]), None]
     vanilla_details = [_names_list, _names_list, None]
     for vanilla_detail, modded_detail in zip(vanilla_details, modded_details):
         lines = list(header)
