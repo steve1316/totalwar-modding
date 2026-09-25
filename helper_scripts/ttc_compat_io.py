@@ -85,17 +85,17 @@ def auto_file_path(package_name: str) -> str:
 
 
 def _format_entry(key: str, category: str, weight: Optional[int]) -> str:
-    """Format one entry line the way the hand files do.
+    """Format one entry line the way the hand files do. `core` entries never get a weight, since TTC treats a missing weight as 1.
 
     Args:
         key (str): Unit key.
         category (str): `core`, `special` or `rare`.
-        weight (Optional[int]): Point weight, or None for a weightless `core` entry.
+        weight (Optional[int]): Point weight, or None for a weightless entry.
 
     Returns:
         The indented Lua line without a newline.
     """
-    return f'    {{"{key}", "{category}"}},' if weight is None else f'    {{"{key}", "{category}", {weight}}},'
+    return f'    {{"{key}", "{category}"}},' if weight is None or category == "core" else f'    {{"{key}", "{category}", {weight}}},'
 
 
 def render_auto_file(mod_label: str, groups: Dict[str, List[Tuple[str, str, Optional[int]]]]) -> str:
