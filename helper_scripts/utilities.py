@@ -371,6 +371,143 @@ def write_updated_tsv_file(data: List[Dict], headers: List[str], version_info: s
             f.write("\t".join(ordered_values) + "\n")
 
 
+class _PendingTsv:
+    """One file's state inside a `TsvAppendBuffer`."""
+
+    def __init__(self, target_path: str, file_path: str, headers: List[str], version_info: str) -> None:
+        # Folder the file lives in.
+        self.target_path = target_path
+        # Full path of the `.tsv` file.
+        self.file_path = file_path
+        # Whether the file was on disk before the buffer touched it. New files get their header lines on flush.
+        self.existed = os.path.exists(file_path)
+        # Header and version lines to write first when the file is new.
+        self.header_text = "" if self.existed else "\t".join(headers) + "\n" + version_info + "\n"
+        # Data lines waiting to be appended, exactly as `write_updated_tsv_file` would write them.
+        self.lines: List[str] = []
+        # Rows as `load_tsv_data` would parse them back from the file, used for duplicate checks.
+        self.rows: List[Dict[str, str]] = []
+        # Column names of the file, i.e. its first line.
+        self.file_headers: List[str] = list(headers)
+        # False when the existing file cannot be parsed, in which case every duplicate check sees no earlier keys, as in `write_updated_tsv_file`.
+        self.readable = True
+        # Whether any `add` call has run yet. The very first call on a new file skips the file duplicate check.
+        self.touched = False
+        # Lazily built key sets over `rows`, by column name or `None` for the `(unit, purchasable_effect)` composite key.
+        self.key_sets: Dict[Optional[str], set] = {}
+        if self.existed:
+            try:
+                self.rows, self.file_headers, _ = load_tsv_data(file_path)
+            except Exception:
+                self.readable = False
+
+    def keys(self, column: Optional[str]) -> set:
+        """Return the keys already in the file for one column, or for the composite key when `column` is None.
+
+        Args:
+            column (Optional[str]): Column name, or None for `(unit, purchasable_effect)`.
+
+        Returns:
+            The key set. Empty when the file cannot be parsed or lacks the column, matching the swallowed error in `write_updated_tsv_file`.
+        """
+        if not self.readable:
+            return set()
+        needed = ["unit", "purchasable_effect"] if column is None else [column]
+        if any(name not in self.file_headers for name in needed):
+            return set()
+        if column not in self.key_sets:
+            self.key_sets[column] = {self._key(row, column) for row in self.rows}
+        return self.key_sets[column]
+
+    def append(self, line: str) -> None:
+        """Queue one written line and record the rows it parses back into.
+
+        Args:
+            line (str): A data line ending in a newline.
+        """
+        self.lines.append(line)
+        # Text-mode reads turn `\r\n` and `\r` into line breaks, so a value holding one parses back as several rows.
+        for part in line.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
+            if not part.strip():
+                continue
+            values = part.split("\t")
+            values = (values + [""] * len(self.file_headers))[: len(self.file_headers)]
+            row = dict(zip(self.file_headers, values))
+            self.rows.append(row)
+            for column, key_set in self.key_sets.items():
+                key_set.add(self._key(row, column))
+
+    @staticmethod
+    def _key(row: Dict[str, str], column: Optional[str]) -> Any:
+        """Build a row's key for one column, or the composite key when `column` is None.
+
+        Args:
+            row (Dict[str, str]): Parsed row.
+            column (Optional[str]): Column name, or None for `(unit, purchasable_effect)`.
+
+        Returns:
+            The key.
+        """
+        return (row["unit"], row["purchasable_effect"]) if column is None else row[column]
+
+
+class TsvAppendBuffer:
+    """Collect `write_updated_tsv_file` calls in memory and write each file once on `flush`.
+
+    The files end up byte-identical to calling `write_updated_tsv_file` once per `add`, including its duplicate checks, but the growing file is not
+    re-read on every call.
+    """
+
+    def __init__(self) -> None:
+        # File path to its pending state, in the order files were first added.
+        self._files: Dict[str, _PendingTsv] = {}
+
+    def add(self, data: List[Dict], headers: List[str], version_info: str, target_path: str, file_name: str, allow_duplicates: bool = False) -> None:
+        """Queue rows exactly as `write_updated_tsv_file` would write them.
+
+        Args:
+            data (List[Dict]): Rows to write.
+            headers (List[str]): Headers of the table.
+            version_info (str): Version line written when the file is new.
+            target_path (str): Folder of the file.
+            file_name (str): File name without the `.tsv` extension.
+            allow_duplicates (bool): Whether to skip the duplicate checks. Defaults to False.
+        """
+        file_path = f"{target_path}/{file_name}.tsv"
+        pending = self._files.get(file_path)
+        if pending is None:
+            pending = self._files[file_path] = _PendingTsv(target_path, file_path, headers, version_info)
+        composite = "unit" in headers and "purchasable_effect" in headers
+        # The file check only happens once the file exists, i.e. not on the first call for a new file.
+        file_exists = pending.existed or pending.touched
+        pending.touched = True
+        file_keys = pending.keys(None if composite else headers[0]) if not allow_duplicates and file_exists else set()
+        call_keys = set()
+        new_lines = []
+        for row in data:
+            if not allow_duplicates and composite:
+                key = (row["unit"], row["purchasable_effect"])
+                if key in file_keys or key in call_keys:
+                    continue
+                call_keys.add(key)
+            else:
+                key = row[headers[0]]
+                if not allow_duplicates and (key in file_keys or key in call_keys):
+                    continue
+                call_keys.add(key)
+            new_lines.append("\t".join(row[header] if row.get(header) else "" for header in headers) + "\n")
+        for line in new_lines:
+            pending.append(line)
+
+    def flush(self) -> None:
+        """Write every queued file, then forget them."""
+        for pending in self._files.values():
+            os.makedirs(pending.target_path, exist_ok=True)
+            with open(pending.file_path, "a" if pending.existed else "w", encoding="utf-8") as f:
+                f.write(pending.header_text + "".join(pending.lines))
+        self._files.clear()
+
+
 def sort_tsv_data(target_path: str, file_name: str, sort_key: str = None):
     """Sort the data in a TSV file by a specified column.
 

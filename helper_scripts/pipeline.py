@@ -6,7 +6,7 @@ The dynamic_rors and double_unit_size scripts each walk every supported mod, fol
 import logging
 import os
 import shutil
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from extract_cache import cached_pack_extract
 from utilities import (
@@ -390,6 +390,7 @@ def write_optional_tables(
     file_suffix: str,
     table_data: Dict[str, Any],
     tables_to_sort: List[str],
+    writer: Callable[..., None] = write_updated_tsv_file,
 ) -> None:
     """Write each non-empty optional-table bucket in `new_data` and record the destination paths in `tables_to_sort`.
 
@@ -399,12 +400,14 @@ def write_optional_tables(
         file_suffix (str): File suffix used for the TSV filename and the path component of each table's version_info row.
         table_data (Dict[str, Any]): The mapping returned by `extract_and_load_table_data`. Used to look up per-table `headers` and `version_info`.
         tables_to_sort (List[str]): Mutated in place; each newly-written table's directory is appended if not already present, so the caller can sort them all afterwards.
+        writer (Callable[..., None]): Takes the same arguments as `write_updated_tsv_file`. Pass a `TsvAppendBuffer.add` to write each file once.
+            Defaults to `write_updated_tsv_file`.
     """
     for bucket_key, table_name in OPTIONAL_TABLES:
         if not new_data[bucket_key]:
             continue
         version_info = _replace_version_info_filename(table_data[f"{table_name}_version_info"], file_suffix)
-        write_updated_tsv_file(
+        writer(
             new_data[bucket_key],
             table_data[f"{table_name}_headers"],
             version_info,
