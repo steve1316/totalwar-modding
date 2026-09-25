@@ -112,7 +112,8 @@ def main() -> int:
         Process exit code: 0 on success, 1 if confident picks miss the accuracy bar.
     """
     data = ttc_data.load_all()
-    model, metrics = ttc_classifier.train(ttc_classifier.training_set(data), ttc_classifier.training_groups(data))
+    context = ttc_classifier.PeerContext(data.stats, data.labels)
+    model, metrics = ttc_classifier.train(ttc_classifier.training_set(data), ttc_classifier.training_groups(data), context)
     metrics_line = (
         f"held-out exact {metrics.exact:.1%}, category {metrics.category:.1%}, confident {metrics.confident:.1%} "
         f"on {metrics.confident_share:.1%} of entries (threshold {metrics.threshold:.3f}), unseen-mod exact {metrics.unseen_mod_exact:.1%}"

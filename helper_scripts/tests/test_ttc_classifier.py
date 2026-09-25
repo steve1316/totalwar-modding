@@ -109,3 +109,56 @@ def test_non_core_units_never_get_a_core_pick():
     forced = model.predict([cheap], non_core=[True])[0]
     assert forced.label in {"special,2", "rare,3"}
     assert forced.runner_up != forced.label
+
+
+def _armed_unit(key, cost, caste="missile_infantry", tier="3", entity="elf_archer", missile="elf_bow"):
+    """Build a unit with the model and weapon columns counterparts are matched on.
+
+    Args:
+        key (str): Unit key.
+        cost (int): Multiplayer cost.
+        caste (str): Unit caste.
+        tier (str): Unit tier.
+        entity (str): `man_entity` of its land unit.
+        missile (str): `primary_missile_weapon` of its land unit.
+
+    Returns:
+        The unit stats.
+    """
+    main = {"unit": key, "caste": caste, "multiplayer_cost": str(cost), "tier": tier}
+    land = {"man_entity": entity, "primary_melee_weapon": "sword", "primary_missile_weapon": missile, "mount": ""}
+    return UnitStats(key, main, land, {"grp"})
+
+
+def test_counterpart_is_the_labeled_unit_with_the_same_model_and_weapons():
+    stats = {k: _armed_unit(k, c) for k, c in [("vanilla_archers", 450), ("other_archers", 1100), ("new_archers", 900)]}
+    stats["other_archers"].land["man_entity"] = "different"
+    context = clf.PeerContext(stats, {"vanilla_archers": "core,1", "other_archers": "rare,2"})
+    features = context.features(stats["new_archers"])
+    assert features["has_counterpart"] == 1
+    assert features["counterpart=core,1"] == 1
+    assert features["cost_vs_counterpart"] == 2.0
+
+
+def test_a_labeled_unit_is_never_its_own_counterpart_or_peer():
+    stats = {"solo": _armed_unit("solo", 500)}
+    features = clf.PeerContext(stats, {"solo": "special,2"}).features(stats["solo"])
+    assert features["has_counterpart"] == 0
+    assert "peer_mean_rank" not in features
+
+
+def test_peer_cost_percentile_counts_all_units_of_the_same_caste_and_tier():
+    stats = {f"u{i}": _armed_unit(f"u{i}", 100 * (i + 1), entity=f"e{i}") for i in range(4)}
+    stats["other_tier"] = _armed_unit("other_tier", 50, tier="1", entity="x")
+    features = clf.PeerContext(stats, {}).features(stats["u2"])
+    assert features["peer_cost_percentile"] == 0.5
+
+
+def test_training_with_a_peer_context_meets_the_bar_and_is_deterministic():
+    data = _synthetic()
+    context = clf.PeerContext({s.key: s for s, _ in data}, {s.key: label for s, label in data})
+    probe = [_unit(9000 + i, 300 + i * 40) for i in range(10)]
+    first_model, metrics = clf.train(data, context=context)
+    second_model, _ = clf.train(data, context=context)
+    assert metrics.confident >= clf.CONFIDENT_ACCURACY_BAR
+    assert [p.label for p in first_model.predict(probe)] == [p.label for p in second_model.predict(probe)]
