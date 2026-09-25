@@ -54,3 +54,10 @@ def test_unmapped_hand_file_is_never_edited():
 def test_uninstalled_mod_entries_are_kept():
     entries = {"f1": [TtcEntry("gone", "rare", 1, 1)]}
     assert ttc_data.stale_hand_entries(entries, {"f1": "m.pack"}, set(), {}, set()) == {}
+
+
+def test_entry_for_a_unit_defined_by_another_installed_mod_is_kept():
+    entries = {"f1": [TtcEntry("cross_mod_unit", "rare", 1, 1), TtcEntry("truly_gone", "rare", 1, 2)]}
+    units_by_mod = {"m.pack": set(), "other.pack": {"cross_mod_unit"}}
+    stale = ttc_data.stale_hand_entries(entries, {"f1": "m.pack"}, {"m.pack", "other.pack"}, units_by_mod, set())
+    assert stale == {"f1": {"truly_gone"}}
