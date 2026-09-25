@@ -7,12 +7,12 @@ import argparse
 import collections
 import sys
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.feature_extraction import DictVectorizer
-from sklearn.model_selection import StratifiedKFold, cross_val_predict
+from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, cross_val_predict
 
 from ttc_data import UnitStats
 
@@ -111,6 +111,8 @@ class Metrics:
     threshold: float
     # Number of labeled entries evaluated.
     n: int
+    # Exact accuracy when every label source is held out whole, i.e. for units from a mod the model has never seen. None without groups.
+    unseen_mod_exact: Optional[float] = None
 
 
 class Model:
@@ -169,8 +171,29 @@ class Model:
         return [(self.labeled[i][0].key, self.labeled[i][1]) for i in np.argsort(distances, kind="stable")[:k]]
 
 
+def _wilson_lower_bound(successes: int, total: int, z: float = 1.645) -> float:
+    """Return the one-sided 95% Wilson lower bound of an accuracy.
+
+    Args:
+        successes (int): Correct picks.
+        total (int): All picks.
+        z (float): Normal quantile. Defaults to 1.645 (one-sided 95%).
+
+    Returns:
+        The lower bound, or 0 when `total` is 0.
+    """
+    if total == 0:
+        return 0.0
+    p = successes / total
+    centre = p + z * z / (2 * total)
+    margin = z * np.sqrt(p * (1 - p) / total + z * z / (4 * total * total))
+    return float((centre - margin) / (1 + z * z / total))
+
+
 def _pick_threshold(confidences: np.ndarray, correct: np.ndarray) -> float:
-    """Find the lowest confidence cutoff whose confident picks meet the accuracy bar.
+    """Find the lowest confidence cutoff whose confident picks meet the accuracy bar with a margin.
+
+    The threshold is tuned on the same held-out picks it is scored on, so the lower confidence bound (not the raw rate) must clear the bar.
 
     Args:
         confidences (np.ndarray): Held-out confidence of each pick.
@@ -181,16 +204,18 @@ def _pick_threshold(confidences: np.ndarray, correct: np.ndarray) -> float:
     """
     for threshold in np.unique(confidences):
         mask = confidences >= threshold
-        if mask.any() and correct[mask].mean() >= CONFIDENT_ACCURACY_BAR:
+        if mask.any() and _wilson_lower_bound(int(correct[mask].sum()), int(mask.sum())) >= CONFIDENT_ACCURACY_BAR:
             return float(threshold)
     return float("inf")
 
 
-def train(labeled: List[Tuple[UnitStats, str]]) -> Tuple[Model, Metrics]:
+def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = None) -> Tuple[Model, Metrics]:
     """Cross-validate to pick the confidence threshold, then fit the final model on every entry.
 
     Args:
         labeled (List[Tuple[UnitStats, str]]): Units with their existing labels.
+        groups (Optional[List[str]]): Label source per unit. When given, a second cross-validation keeps each source in one fold to report how well
+            units from a mod the model has never seen are predicted. It does not change the threshold.
 
     Returns:
         The trained model and its held-out metrics.
@@ -200,9 +225,13 @@ def train(labeled: List[Tuple[UnitStats, str]]) -> Tuple[Model, Metrics]:
     vectorizer = DictVectorizer(sparse=False)
     matrix = vectorizer.fit_transform([feature_dict(stats) for stats, _ in labeled])
     estimator = HistGradientBoostingClassifier(random_state=0)
-    folds = StratifiedKFold(n_splits=5, shuffle=True, random_state=0)
-    probabilities = cross_val_predict(estimator, matrix, targets, cv=folds, method="predict_proba")
+    probabilities = cross_val_predict(estimator, matrix, targets, cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=0), method="predict_proba")
     classes = np.unique(targets)
+    unseen_mod_exact = None
+    if groups is not None:
+        folds = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=0)
+        grouped = cross_val_predict(estimator, matrix, targets, groups=groups, cv=folds, method="predict_proba")
+        unseen_mod_exact = float((classes[grouped.argmax(axis=1)] == np.array(original)).mean())
     picks = classes[probabilities.argmax(axis=1)]
     confidences = probabilities.max(axis=1)
     truth = np.array(original)
@@ -216,9 +245,22 @@ def train(labeled: List[Tuple[UnitStats, str]]) -> Tuple[Model, Metrics]:
         confident_share=float(mask.mean()),
         threshold=threshold,
         n=len(labeled),
+        unseen_mod_exact=unseen_mod_exact,
     )
     estimator.fit(matrix, targets)
     return Model(vectorizer, estimator, threshold, labeled), metrics
+
+
+def training_groups(data) -> List[str]:
+    """Return the label source of each unit in `training_set(data)`, in the same order.
+
+    Args:
+        data (ttc_data.TtcData): Loaded TTC inputs.
+
+    Returns:
+        One group name per training unit.
+    """
+    return [data.label_sources.get(key, key) for key in sorted(data.labels) if key in data.stats]
 
 
 def training_set(data) -> List[Tuple[UnitStats, str]]:
@@ -239,8 +281,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     import ttc_data
 
-    _, result = train(training_set(ttc_data.load_all()))
+    loaded = ttc_data.load_all()
+    _, result = train(training_set(loaded), training_groups(loaded))
     print(f"entries: {result.n}")
     print(f"held-out exact: {result.exact:.1%} | category: {result.category:.1%}")
     print(f"confident picks: {result.confident:.1%} exact on {result.confident_share:.1%} of entries (threshold {result.threshold:.3f})")
+    print(f"units from a mod the model has never seen: {result.unseen_mod_exact:.1%} exact")
     sys.exit(0 if result.confident >= CONFIDENT_ACCURACY_BAR else 1)

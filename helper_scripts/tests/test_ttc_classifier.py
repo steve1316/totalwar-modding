@@ -57,6 +57,25 @@ def test_features_include_combat_power_and_cost_per_model():
     assert features["ui_group=grp_elite"] == 1
 
 
+def test_threshold_needs_the_lower_bound_to_clear_the_bar():
+    import numpy as np
+
+    small = clf._pick_threshold(np.full(20, 0.9), np.ones(20, dtype=bool))
+    large = clf._pick_threshold(np.full(200, 0.9), np.ones(200, dtype=bool))
+    assert small == float("inf")
+    assert large == 0.9
+
+
+def test_groups_add_an_unseen_mod_accuracy_without_changing_the_gate():
+    data = _synthetic()
+    plain_model, plain = clf.train(data)
+    _, grouped = clf.train(data, groups=[f"g{i % 20}" for i in range(len(data))])
+    assert plain.unseen_mod_exact is None
+    assert 0.0 < grouped.unseen_mod_exact <= 1.0
+    assert grouped.threshold == plain.threshold
+    assert grouped.confident == plain.confident
+
+
 def test_rare_labels_are_merged():
     labels = ["special,2"] * 6 + ["special,5"] * 2 + ["core"] * 6
     assert clf.merge_rare_labels(labels) == ["special,2"] * 8 + ["core"] * 6
