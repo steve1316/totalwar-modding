@@ -17,8 +17,10 @@ def _row(key, caste="melee_infantry"):
     return {"unit": key, "caste": caste}
 
 
-def test_label_of_formats_weightless_core():
-    assert ttc_data.label_of("core", None) == "core"
+def test_label_of_treats_a_missing_weight_as_one():
+    # TTC uses `unit_weight or 1`, so `core` and `core,1` are the same cap in game.
+    assert ttc_data.label_of("core", None) == "core,1"
+    assert ttc_data.label_of("core", 1) == "core,1"
     assert ttc_data.label_of("special", 2) == "special,2"
 
 
@@ -61,3 +63,41 @@ def test_entry_for_a_unit_defined_by_another_installed_mod_is_kept():
     units_by_mod = {"m.pack": set(), "other.pack": {"cross_mod_unit"}}
     stale = ttc_data.stale_hand_entries(entries, {"f1": "m.pack"}, {"m.pack", "other.pack"}, units_by_mod, set())
     assert stale == {"f1": {"truly_gone"}}
+
+
+def test_mod_provided_ttc_entries_are_collected(tmp_path):
+    ttc_dir = tmp_path / "script" / "ttc"
+    ttc_dir.mkdir(parents=True)
+    (ttc_dir / "mod_units.lua").write_text('local u = {\n    {"author_unit", "rare", 2},\n}\n', encoding="utf-8")
+    campaign = tmp_path / "script" / "campaign" / "mod"
+    campaign.mkdir(parents=True)
+    (campaign / "mod_ttc_setup.lua").write_text('{"campaign_unit", "special", 1}', encoding="utf-8")
+    (campaign / "unrelated.lua").write_text('{"not_ttc", "core", 1}', encoding="utf-8")
+    assert ttc_data.mod_ttc_entries(str(tmp_path)) == {"author_unit": "rare,2", "campaign_unit": "special,1"}
+
+
+def test_table_readable_rejects_binary_and_missing_extractions(tmp_path):
+    good = tmp_path / "good" / "db" / "main_units_tables"
+    good.mkdir(parents=True)
+    (good / "mod.tsv").write_text("unit\n#v\nx\n")
+    binary = tmp_path / "binary" / "db" / "main_units_tables"
+    binary.mkdir(parents=True)
+    (binary / "mod.tsv").write_text("unit\n#v\nx\n")
+    (binary / "patched").write_bytes(bytes([0, 1]))
+    assert ttc_data.table_readable(str(tmp_path / "good"))
+    assert not ttc_data.table_readable(str(tmp_path / "binary"))
+    assert not ttc_data.table_readable(str(tmp_path / "missing"))
+
+
+def test_owner_history_keeps_old_owners_and_takes_first_current_owner():
+    history = {"old_unit": "gone.pack", "moved_unit": "old_home.pack"}
+    merged = ttc_data.merge_owner_history(history, {"a.pack": {"moved_unit", "shared"}, "b.pack": {"shared"}})
+    assert merged == {"old_unit": "gone.pack", "moved_unit": "a.pack", "shared": "a.pack"}
+
+
+def test_entry_owned_by_a_currently_uninstalled_mod_is_kept():
+    entries = {"whc.lua": [TtcEntry("cth_samurai_shun", "special", 1, 1), TtcEntry("really_gone", "rare", 1, 2)]}
+    history = {"cth_samurai_shun": "shun.pack", "really_gone": "whc.pack"}
+    stale = ttc_data.stale_hand_entries(entries, {"whc.lua": "whc.pack"}, {"whc.pack"}, {"whc.pack": set()}, set(), history)
+    assert stale == {"whc.lua": {"really_gone"}}
+

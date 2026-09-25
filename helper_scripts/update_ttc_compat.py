@@ -23,6 +23,8 @@ PACK_PATH = workshop_pack_path(STEAM_ID, "!!!!!!!yet_another_tabletopcaps_compat
 SCRIPT_SOURCE = "../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script"
 REPORT_PATH = "./reports/ttc_review.md"
 SUMMARY_PATH = f"{delta.STATE_ROOT}/ttc_summary.json"
+# Unit key to the mod that last defined it, so entries for a temporarily unsubscribed mod are never removed.
+OWNER_HISTORY_PATH = f"{delta.STATE_ROOT}/ttc_unit_owners.json"
 
 
 def write_auto_files(assignments: Dict[str, Dict[str, List[Tuple[str, str, Optional[int]]]]], mod_names: Dict[str, str]) -> List[str]:
@@ -110,10 +112,10 @@ def main() -> int:
         Process exit code: 0 on success, 1 if confident picks miss the accuracy bar.
     """
     data = ttc_data.load_all()
-    model, metrics = ttc_classifier.train(ttc_classifier.training_set(data))
+    model, metrics = ttc_classifier.train(ttc_classifier.training_set(data), ttc_classifier.training_groups(data))
     metrics_line = (
         f"held-out exact {metrics.exact:.1%}, category {metrics.category:.1%}, confident {metrics.confident:.1%} "
-        f"on {metrics.confident_share:.1%} of entries (threshold {metrics.threshold:.3f})"
+        f"on {metrics.confident_share:.1%} of entries (threshold {metrics.threshold:.3f}), unseen-mod exact {metrics.unseen_mod_exact:.1%}"
     )
     logging.info(f"TTC classifier: {metrics_line}")
     if metrics.confident < ttc_classifier.CONFIDENT_ACCURACY_BAR:
@@ -154,7 +156,8 @@ def main() -> int:
 
     package_names = [name for name, _ in data.mod_units] + data.missing_mods
     file_mod = {path: ttc_data.hand_file_mod(path, package_names) for path in data.hand_entries}
-    stale = ttc_data.stale_hand_entries(data.hand_entries, file_mod, data.installed, data.units_by_mod, data.vanilla_keys)
+    history = ttc_data.merge_owner_history(delta._read_json(OWNER_HISTORY_PATH) or {}, data.units_by_mod)
+    stale = ttc_data.stale_hand_entries(data.hand_entries, file_mod, data.installed, data.units_by_mod, data.vanilla_keys, history)
     removed = []
     for path, keys_to_remove in sorted(stale.items()):
         removed += [(os.path.basename(path), line) for line in ttc_compat_io.remove_lines(path, keys_to_remove)]
@@ -163,10 +166,12 @@ def main() -> int:
     counts = {"labeled": metrics.n, "targets": len(keys), "confident": confident_count, "review": len(review_rows), "removed": len(removed)}
     os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
     with open(REPORT_PATH, "w", encoding="utf-8", newline="\n") as f:
-        f.write(render_report(metrics_line, counts, review_rows, removed, data.missing_mods))
+        skipped_mods = data.missing_mods + [f"{name} (main_units_tables unreadable, check the rpfm schema)" for name in data.unreadable_mods]
+        f.write(render_report(metrics_line, counts, review_rows, removed, skipped_mods))
     os.makedirs(os.path.dirname(SUMMARY_PATH), exist_ok=True)
     with open(SUMMARY_PATH, "w", encoding="utf-8") as f:
         json.dump({"auto": len(keys), "review": len(review_rows), "removed": len(removed), "report": REPORT_PATH}, f)
+    delta._write_json(OWNER_HISTORY_PATH, history)
 
     def write_pack() -> None:
         """Replace the pack's `script/` folder with the regenerated compat files."""
