@@ -13,7 +13,7 @@ from pipeline import workshop_pack_path
 from supported_mods import SUPPORTED_MODS
 from utilities import FILEPATH_TO_VANILLA_DATA_TABLES
 
-GENERAL = workshop_publish.GENERAL_NOTE
+GENERAL = f"[u]Compatibility update[/u]\n\n{workshop_publish.GENERAL_NOTE}"
 MELEE, ARC, VELOCITY = delta.UNITS[3].outputs
 
 
@@ -71,22 +71,33 @@ def test_change_note_for_never_published_item_is_general():
     assert workshop_publish.build_change_note(None) == GENERAL
 
 
-def test_change_note_lists_changed_mods():
+def test_change_note_lists_changed_mods_one_per_line():
     record = {"pack_sha": "a", "pending_mods": ["Mod A", "Mod B"], "pending_general": False}
-    assert workshop_publish.build_change_note(record) == "Updated for changes in: Mod A, Mod B."
+    assert workshop_publish.build_change_note(record) == "[u]Compatibility update for 2 updated mods[/u]\n\n• Mod A\n• Mod B"
 
 
 def test_change_note_combines_mods_and_general():
     record = {"pack_sha": "a", "pending_mods": ["Mod A"], "pending_general": True}
-    assert workshop_publish.build_change_note(record) == f"Updated for changes in: Mod A. {GENERAL}"
+    assert workshop_publish.build_change_note(record) == (
+        f"[u]Compatibility update for 1 updated mod[/u]\n\n• Mod A\n\nAlso rebuilt against the latest game patch and the latest versions of all supported mods."
+    )
 
 
-def test_change_note_truncates_after_ten_mods():
-    record = {"pack_sha": "a", "pending_mods": [f"Mod {i:02}" for i in range(13)], "pending_general": False}
+def test_change_note_lists_every_mod_while_it_fits():
+    record = {"pack_sha": "a", "pending_mods": [f"Mod {i:02}" for i in range(40)], "pending_general": False}
     note = workshop_publish.build_change_note(record)
-    assert note.startswith("Updated for changes in: Mod 00, Mod 01,")
-    assert "Mod 09, and 3 more mods." in note
-    assert "Mod 10" not in note
+    assert note.count("\n• ") == 40
+
+
+def test_change_note_ends_with_a_count_of_the_rest_past_the_limit():
+    record = {"pack_sha": "a", "pending_mods": [f"Mod {i:02}" for i in range(13)], "pending_general": True}
+    note = workshop_publish.build_change_note(record, limit=220)
+    assert len(note.encode("utf-8")) <= 220
+    assert note.startswith("[u]Compatibility update for 13 updated mods[/u]\n\n• Mod 00\n")
+    assert "Mod 12" not in note
+    shown = note.count("\n• Mod ")
+    assert f"\n• and {13 - shown} more mods\n" in note
+    assert note.endswith("Also rebuilt against the latest game patch and the latest versions of all supported mods.")
 
 
 def test_change_note_without_recorded_reasons_is_general():
