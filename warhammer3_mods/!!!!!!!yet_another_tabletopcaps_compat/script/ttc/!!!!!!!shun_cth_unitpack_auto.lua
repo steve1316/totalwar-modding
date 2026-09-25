@@ -3,7 +3,7 @@ local caps = {
     -- wh3_cp1_group_cth_bhashiva
     {"shun_azurestone_guardian", "special", 3},
     {"shun_dragon_guard_skirmisher", "special", 2},
-    {"shun_eastern_provinces_shieldmaidens", "rare", 1},
+    {"shun_eastern_provinces_shieldmaidens", "special", 1},
     {"shun_longma_skirmisher_ror", "special", 2},
     {"shun_tribe_huntsmen", "core"},
 }

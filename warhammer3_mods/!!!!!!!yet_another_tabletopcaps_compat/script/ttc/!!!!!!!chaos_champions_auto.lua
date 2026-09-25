@@ -3,7 +3,7 @@ local caps = {
     -- wh3_dlc20_group_chs_azazel
     {"slaanesh_champions", "special", 2},
     -- wh3_dlc20_group_chs_festus
-    {"nurgle_champions", "special", 2},
+    {"nurgle_champions", "rare", 2},
     -- wh3_dlc20_group_chs_valkia
     {"khorne_berzerker_champions", "special", 2},
     -- wh3_dlc20_group_chs_vilitch

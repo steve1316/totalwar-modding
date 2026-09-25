@@ -12,10 +12,10 @@ local caps = {
     {"wh2_main_hef_highborn_archers", "special", 1},
     {"wh2_main_hef_highborn_axes", "special", 1},
     {"wh2_main_hef_highborn_guard", "special", 2},
-    {"wh2_main_hef_highborn_knights", "special", 2},
+    {"wh2_main_hef_highborn_knights", "core"},
     {"wh2_main_hef_highborn_spears", "special", 1},
     {"wh2_main_hef_highborn_swords", "special", 1},
-    {"wh2_main_hef_shadow_warriors", "special", 1},
+    {"wh2_main_hef_shadow_warriors", "core"},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

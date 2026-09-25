@@ -2,13 +2,13 @@
 local caps = {
     -- wh3_dlc20_group_chs_azazel
     {"sla_daemonette_chosen", "special", 3},
-    {"sla_daemonette_chosen_ror", "rare", 3},
+    {"sla_daemonette_chosen_ror", "rare", 1},
     -- wh3_dlc20_group_chs_festus
     {"nrg_plaguebearer_chosen", "rare", 2},
-    {"nrg_plaguebearer_chosen_ror", "rare", 3},
+    {"nrg_plaguebearer_chosen_ror", "rare", 1},
     -- wh3_dlc20_group_chs_vilitch
-    {"tze_horror_chosen", "special", 2},
-    {"tze_horror_chosen_ror", "rare", 3},
+    {"tze_horror_chosen", "rare", 3},
+    {"tze_horror_chosen_ror", "rare", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

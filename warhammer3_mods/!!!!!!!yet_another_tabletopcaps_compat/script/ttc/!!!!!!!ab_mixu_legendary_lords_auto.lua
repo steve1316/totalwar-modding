@@ -9,21 +9,21 @@ local caps = {
     -- mixu_emp_pirates
     {"mixu_emp_art_carronade", "special", 2},
     {"mixu_emp_art_mortar", "special", 2},
-    {"mixu_emp_inf_buccaneers_great_axe", "special", 1},
+    {"mixu_emp_inf_buccaneers_great_axe", "core"},
     {"mixu_emp_inf_buccaneers_sword_and_bombs", "special", 1},
     {"mixu_emp_inf_grog_carriers", "special", 2},
-    {"mixu_emp_inf_gunnery_mob_blunderbuss", "special", 1},
+    {"mixu_emp_inf_gunnery_mob_blunderbuss", "core"},
     {"mixu_emp_inf_gunnery_mob_handguns", "special", 1},
     {"mixu_emp_inf_gunnery_mob_pistols", "core"},
     {"mixu_emp_inf_norscan_reavers", "core"},
-    {"mixu_emp_inf_norscan_reavers_great_weapons", "special", 1},
+    {"mixu_emp_inf_norscan_reavers_great_weapons", "core"},
     {"mixu_emp_inf_pirate_deckhands_polearms", "core"},
     {"mixu_emp_inf_pirate_deckhands_swords", "core"},
     {"mixu_emp_mon_leviathan", "rare", 3},
     {"mixu_emp_mon_prometheans", "special", 2},
     -- wh3_dlc25_group_elspeth
     {"mixu_emp_cav_daughters_of_rhya", "special", 2},
-    {"mixu_emp_inf_celebrants", "special", 1},
+    {"mixu_emp_inf_celebrants", "core"},
     {"mixu_emp_inf_horned_hunters", "core"},
 }
 

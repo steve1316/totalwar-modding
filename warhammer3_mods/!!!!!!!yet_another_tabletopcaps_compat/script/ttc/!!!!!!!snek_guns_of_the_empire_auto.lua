@@ -14,14 +14,14 @@ local caps = {
     {"snek_emp_gote_inf_field_engineers", "special", 1},
     {"snek_emp_gote_inf_hakbutschutzen", "core"},
     {"snek_emp_gote_inf_ironsides", "special", 1},
-    {"snek_emp_gote_inf_jaegerkorps", "core"},
+    {"snek_emp_gote_inf_jaegerkorps", "special", 1},
     {"snek_emp_gote_inf_leadbelchers", "special", 2},
     {"snek_emp_gote_inf_longrifles", "special", 1},
     {"snek_emp_gote_veh_hellblaster_wagon", "rare", 2},
-    {"snek_emp_gote_veh_munitions_wagon", "rare", 2},
+    {"snek_emp_gote_veh_munitions_wagon", "rare", 1},
     -- wh3_dlc25_group_elspeth
     {"snek_emp_gote_art_war_baloon", "rare", 3},
-    {"snek_emp_gote_inf_bergjaeger", "core"},
+    {"snek_emp_gote_inf_bergjaeger", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

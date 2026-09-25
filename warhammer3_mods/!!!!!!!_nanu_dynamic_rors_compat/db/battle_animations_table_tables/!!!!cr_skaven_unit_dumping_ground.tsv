@@ -1,5 +1,7 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!!cr_skaven_unit_dumping_ground
+hu18b_stormfiend_rattling_gun	humanoid18b
+hu18b_stormfiend_warpfire	humanoid18b
 hu18b_stormfiend_windlauncher	humanoid18b
 lz1_burrowing_behemoth	lizard01
 rt1_giant_rat	rat01

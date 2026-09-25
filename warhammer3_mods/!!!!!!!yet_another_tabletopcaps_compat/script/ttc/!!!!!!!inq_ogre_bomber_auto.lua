@@ -3,8 +3,8 @@ local caps = {
     -- wh3_main_ogr
     {"blood_vultures", "core"},
     {"ogr_feral_mammoth", "rare", 2},
-    {"ogr_stonehorn_cannon", "rare", 2},
-    {"ogre_bomber", "core"},
+    {"ogr_stonehorn_cannon", "rare", 3},
+    {"ogre_bomber", "special", 1},
     {"ogre_gatebusters", "special", 2},
 }
 

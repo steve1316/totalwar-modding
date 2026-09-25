@@ -3,7 +3,7 @@ local caps = {
     -- wh3_main_ksl
     {"bohaguanjun", "special", 2},
     {"bohajinjun", "special", 2},
-    {"fuzuijuntuan", "rare", 2},
+    {"fuzuijuntuan", "rare", 1},
     {"jinweijun", "rare", 1},
     {"kaqiusha", "rare", 2},
     {"xianbin", "special", 2},

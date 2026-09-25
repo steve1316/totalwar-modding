@@ -7,12 +7,12 @@ local caps = {
     -- wh3_main_kho
     {"khorne_simaergul", "special", 2},
     -- wh3_main_sla
-    {"shadow_guard", "special", 1},
+    {"shadow_guard", "special", 2},
     -- wh3_main_tze
     {"corrupted_sentinel", "rare", 3},
     -- wh_main_group_empire
     {"zerg_emp_zaskar_black_guard_cav", "special", 2},
-    {"zerg_emp_zaskar_black_guard_inf", "special", 1},
+    {"zerg_emp_zaskar_black_guard_inf", "core"},
     -- wh_main_group_kislev
     {"gargantulzan", "rare", 3},
 }
