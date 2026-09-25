@@ -28,6 +28,12 @@ def test_render_then_parse_round_trips_sorted():
     assert "ttc.add_unit_list(caps, true)" in text
 
 
+def test_render_writes_core_entries_without_a_weight():
+    text = io_.render_auto_file("my_mod", {"grp": [("c_unit", "core", 1), ("s_unit", "special", 1)]})
+    assert '    {"c_unit", "core"},' in text
+    assert '    {"s_unit", "special", 1},' in text
+
+
 def test_remove_lines_keeps_every_other_byte(tmp_path):
     original = '-- mod\r\nlocal caps = {\r\n    -- Kislev\r\n    {"keep_me", "rare", 1},\r\n    {"drop_me", "special", 2},\r\n}\r\n'
     path = tmp_path / "x.lua"
