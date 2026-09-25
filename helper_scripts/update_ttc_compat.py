@@ -203,7 +203,9 @@ def main() -> int:
     records = {key: {"mod": mod, "name": names[key]} for key, mod in entries.items()}
     for key, record in records.items():
         if record["mod"] == ttc_data.VANILLA_NAME:
-            record["faction"] = ttc_data.faction_of(key)
+            record.update({"faction": ttc_data.faction_of(key), "vanilla": True})
+        else:
+            record["faction"] = ttc_data.unit_faction(key, data.permissions.get(key, set()))
     delta._write_json(delta.TTC_ENTRIES_PATH, records)
 
     def write_pack() -> None:

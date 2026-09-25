@@ -510,46 +510,53 @@ def test_run_publisher_without_results_reports_the_exit_code(tmp_path, monkeypat
 TTC = next(output for unit in delta.UNITS for output in unit.outputs if output.steam_id == workshop_publish.TTC_STEAM_ID)
 
 
-def _entry(mod, name):
-    """Build one TTC entries record.
+def _entry(mod, name, faction="Empire"):
+    """Build one TTC entries record for a modded unit.
 
     Args:
         mod (str): Mod display name.
         name (str): In-game unit name.
+        faction (str): Faction display name.
 
     Returns:
         The record.
     """
-    return {"mod": mod, "name": name}
+    return {"mod": mod, "name": name, "faction": faction}
 
 
-def test_ttc_note_lists_added_names_per_mod_and_removed_keys_at_the_bottom():
+def test_ttc_note_lists_added_mod_units_by_faction_and_removed_keys_at_the_bottom():
     published = {"kept": _entry("Mod A", "Kept"), "gone_unit": _entry("Mod B", "Gone")}
     current = {
         "kept": _entry("Mod A", "Kept"),
         "a_new": _entry("Mod A", "Swordsmen"),
         "a_new_summoned": _entry("Mod A", "Swordsmen"),
-        "b_new": _entry("mod b", "Archers"),
+        "b_new": _entry("mod b", "Archers", "Skaven"),
     }
     note = workshop_publish.build_ttc_change_note(published, current)
     assert note == (
         "[u]Tabletop caps added for 3 units across 2 mods, removed for 1 unit[/u]\n"
         "\n"
-        "[b]Mod A[/b] (+2): Swordsmen (x2)\n"
-        "[b]mod b[/b] (+1): Archers\n"
+        "[b]Empire[/b] (+2): [i]Mod A[/i]: Swordsmen (x2)\n"
+        "[b]Skaven[/b] (+1): [i]mod b[/i]: Archers\n"
         "\n"
         "[b]Removed (no longer in their mods)[/b]\n"
         "[b]Mod B[/b] (-1): gone_unit"
     )
 
 
-def test_ttc_note_drops_unit_names_when_too_long_but_keeps_removed_keys():
+def test_ttc_note_drops_unit_names_for_mod_counts_when_too_long_but_keeps_removed_keys():
     current = {f"k{i}": _entry("Big Mod", f"Unit Name {i}") for i in range(50)}
     note = workshop_publish.build_ttc_change_note({"old": _entry("Old Mod", "Old")}, current, limit=300)
-    assert "[b]Big Mod[/b] (+50)\n" in note
+    assert "[b]Empire[/b] (+50): Big Mod (+50)\n" in note
     assert "Unit Name" not in note
     assert note.endswith("[b]Old Mod[/b] (-1): old")
     assert len(note) <= 300
+
+
+def test_ttc_note_drops_to_faction_counts_when_mod_counts_are_still_too_long():
+    current = {f"k{i}": _entry(f"A Rather Long Mod Name Number {i}", "Unit") for i in range(30)}
+    note = workshop_publish.build_ttc_change_note({}, current, limit=300)
+    assert note == "[u]Tabletop caps added for 30 units across 30 mods[/u]\n\n[b]Empire[/b] (+30)"
 
 
 def test_ttc_note_is_cut_to_the_limit_as_a_last_resort():
@@ -574,7 +581,7 @@ def test_pending_ttc_item_uses_the_unit_note_and_publishing_snapshots_the_entrie
     _fake_pack_shas(monkeypatch, {TTC.pack_path: "new"})
 
     [item] = workshop_publish.pending_items([])
-    assert item.change_note == "[u]Tabletop caps added for 1 unit across 1 mod[/u]\n\n[b]Mod[/b] (+1): Unit Two"
+    assert item.change_note == "[u]Tabletop caps added for 1 unit across 1 mod[/u]\n\n[b]Empire[/b] (+1): [i]Mod[/i]: Unit Two"
 
     workshop_publish.mark_published(TTC, item.change_note, "new")
     assert json.loads((state_dir / f"{TTC.steam_id}_entries.json").read_text()) == json.loads(current_path.read_text())
@@ -624,7 +631,7 @@ def _vanilla(faction, name):
     Returns:
         The record.
     """
-    return {"mod": "Vanilla + DLC", "name": name, "faction": faction}
+    return {"mod": "Vanilla + DLC", "name": name, "faction": faction, "vanilla": True}
 
 
 def test_ttc_note_lists_vanilla_units_by_faction_instead_of_as_a_mod():
@@ -647,9 +654,14 @@ def test_ttc_note_with_vanilla_and_mod_units_gives_each_its_own_section():
         "[b]Empire[/b] (+1): Teutogen Guard\n"
         "\n"
         "[b]Mods[/b]\n"
-        "[b]Mod A[/b] (+1): Swordsmen\n"
+        "[b]Empire[/b] (+1): [i]Mod A[/i]: Swordsmen\n"
         "\n"
         "[b]Removed (no longer in their mods)[/b]\n"
         "[b]Mod A[/b] (-1): gone_mod\n"
         "[b]Skaven (vanilla)[/b] (-1): gone_vanilla"
     )
+
+
+def test_ttc_note_names_each_mod_once_within_a_faction():
+    current = {"a1": _entry("Mod B", "Rat Ogres", "Skaven"), "a2": _entry("Mod A", "Clanrats", "Skaven"), "a3": _entry("Mod A", "Gutter Runners", "Skaven")}
+    assert workshop_publish.build_ttc_change_note({}, current).endswith("[b]Skaven[/b] (+3): [i]Mod A[/i]: Clanrats, Gutter Runners; [i]Mod B[/i]: Rat Ogres")
