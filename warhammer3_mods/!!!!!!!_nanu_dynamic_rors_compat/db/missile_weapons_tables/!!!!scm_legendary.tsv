@@ -1,4 +1,4 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!scm_legendary
-hunt_dwf_riggers_bomb	false	hunt_dwf_riggers_bomb		false
-hunt_slayer_pirate_grudge_raker_bullet	false	hunt_slayer_pirate_grudge_raker_bullet	repeater_gun_LH	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!scm_legendary
+hunt_dwf_riggers_bomb	false	hunt_dwf_riggers_bomb		false	false
+hunt_slayer_pirate_grudge_raker_bullet	false	hunt_slayer_pirate_grudge_raker_bullet	repeater_gun_LH	false	false

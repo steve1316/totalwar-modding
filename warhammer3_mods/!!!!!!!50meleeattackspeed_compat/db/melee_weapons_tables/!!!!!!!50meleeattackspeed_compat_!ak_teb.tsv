@@ -23,6 +23,7 @@ teb_half_pikes	18	0	18	7	3.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	
 teb_irrana	8	0	22	8	2.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
 teb_kotrs	16	0	20	10	1.0000	spear	spear		1	1.0000	0.5000	0.0000	false		0	10	2.1		false
 teb_light_scouts	0	0	20	6	2.0000	lance	spear		1	1.0000	0.7500	0.0000	false		0	10	2.5		false
+teb_lucrezzia	0	0	200	85	3.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 teb_lupio	30	0	150	250	3.0000	spear	halberd	medium	4	1.0000	1.0000	0.0000	false		0	2	2.0		false
 teb_lupio_demi	15	0	165	280	6.0000	axe	creatures_claws	large	5	1.0000	1.0000	0.0000	false		0	3	1.8		false
 teb_manflayers	0	14	10	26	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.15		false

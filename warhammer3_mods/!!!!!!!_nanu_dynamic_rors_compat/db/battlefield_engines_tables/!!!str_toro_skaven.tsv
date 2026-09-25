@@ -1,4 +1,4 @@
-key	destroyed_model	destruction_animation	engine_type	gun_animation_table	missile_weapon	model	battle_entity	asset_folder	variant	draught_attachment_point	tech_folder	rider_attachment_point	destruct_model	destruct_anim	destruct_meta	audio_armour_type	riders_shoot_behaviour	scale
-#battlefield_engines_tables;23;db/battlefield_engines_tables/!!!str_toro_skaven
-warp_bombard	warmachines\engines\emp_steam_tank\emp_steam_tank_destroyed_01.rigid_model_v2	emp_steam_tank_destruct	Generic_No_Crew_Rotate	warp_bombard_01	warp_bombard	warp_bombard	warp_bombard										all_riders_shooting	1.0000
-warp_tank	warmachines\engines\emp_steam_tank\emp_steam_tank_destroyed_01.rigid_model_v2	emp_steam_tank_destruct	Generic_No_Crew_Rotate	warp_tank_01	warp_tank	warp_tank	warp_tank										all_riders_shooting	1.0000
+key	engine_type	model	gun_animation_table	missile_weapon	destruction_animation	destroyed_model	battle_entity	asset_folder	variant	draught_attachment_point	tech_folder	rider_attachment_point	destruct_model	destruct_anim	destruct_meta	audio_armour_type	riders_shoot_behaviour	scale	crew_reserve_distance_offset
+#battlefield_engines_tables;24;db/battlefield_engines_tables/!!!str_toro_skaven
+warp_bombard	Generic_No_Crew_Rotate	warp_bombard	warp_bombard_01	warp_bombard	emp_steam_tank_destruct	warmachines\engines\emp_steam_tank\emp_steam_tank_destroyed_01.rigid_model_v2	warp_bombard										all_riders_shooting	1.0000	0
+warp_tank	Generic_No_Crew_Rotate	warp_tank	warp_tank_01	warp_tank	emp_steam_tank_destruct	warmachines\engines\emp_steam_tank\emp_steam_tank_destroyed_01.rigid_model_v2	warp_tank										all_riders_shooting	1.0000	0

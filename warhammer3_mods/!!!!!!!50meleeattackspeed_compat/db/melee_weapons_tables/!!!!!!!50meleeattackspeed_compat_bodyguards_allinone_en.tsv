@@ -94,7 +94,7 @@ cth_astromancer_bodyguard1	20	0	35	15	2.0000	long_spear	spear		1	0.0000	1.0000	0
 cth_astromancer_bodyguard2	0	0	30	10	1.0000	sword	sword		1	0.0000	1.0000	0.0000	false		0	10	2.0		false
 cth_astromancer_bodyguard3	0	5	40	15	1.0000	sword	sword		1	0.0000	1.0000	0.0000	false		0	10	1.75		false
 cth_astromancer_bodyguard4	0	0	50	25	1.0000	sword	sword	medium	2	0.0000	1.0000	0.0000	false		0	10	1.75		false
-cth_astromancer_bodyguard5	25	0	25	50	2.0000	spear	halberd	large	3	1.0000	1.0000	0.0000	true		0	10	2.5		false
+cth_astromancer_bodyguard5	25	0	25	50	2.0000	spear	halberd	large	3	1.0000	1.0000	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	2.5		false
 cth_astromancer_mount1	0	0	100	100	4.0000	axe	unarmed	very_large	4	1.0000	1.2500	0.0000	true		3	2	2.0		false
 cth_astromancer_mount2	0	0	200	100	4.0000	axe	unarmed	very_large	4	1.0000	1.2500	0.0000	true		3	2	2.0		false
 cth_celestial_general_bodyguard1	0	0	15	75	3.0000	spear	halberd	large	3	0.2500	1.2500	0.0000	false		0	10	2.25		false
@@ -137,7 +137,7 @@ cth_shugengan_yang_bodyguard4	0	0	50	25	1.0000	sword	sword	medium	2	0.0000	1.000
 cth_shugengan_yang_bodyguard5	0	0	80	40	4.0000	lance	halberd	large	3	0.5000	1.2500	0.0000	false		0	10	2.25		false
 cth_shugengan_yang_bodyguard6	0	0	160	80	4.0000	lance	spear	large	4	1.0000	1.0000	10.0000	true	wh2_dlc12_unit_contact_flammable	0	10	2.0		false
 cth_shugengan_yin_bodyguard1	25	0	25	50	2.0000	spear	halberd	medium	2	0.2500	1.0000	0.0000	true		0	10	2.0		false
-cth_shugengan_yin_bodyguard2	0	0	40	40	1.0000	sword	sword	medium	2	0.0000	1.0000	0.0000	false		0	10	1.75		false
+cth_shugengan_yin_bodyguard2	0	0	60	30	1.0000	sword	sword	medium	2	0.0000	1.0000	0.0000	true		0	10	1.75		false
 cth_shugengan_yin_bodyguard3	0	0	50	25	1.0000	sword	sword	medium	2	0.0000	1.0000	0.0000	false		0	10	2.0		false
 cth_shugengan_yin_bodyguard4	0	0	50	25	1.0000	sword	sword	medium	2	0.0000	1.0000	0.0000	false		0	10	2.0		false
 cth_shugengan_yin_bodyguard5	20	0	30	60	2.0000	lance	halberd	large	3	0.5000	1.0000	0.0000	true		0	10	2.0		false
@@ -448,8 +448,8 @@ tcg_kho_bodyguard_1_hero	0	20	20	60	2.0000	sword	sword		1	1.0000	1.0000	1.0000	t
 tcg_kho_bodyguard_1_lord	0	20	20	60	2.0000	sword	sword		1	1.0000	1.0000	1.0000	true		0	10	2.0		false
 tcg_kho_bodyguard_2_hero	0	20	25	50	5.0000	sword	sword	medium	4	0.5000	1.0000	1.0000	true		0	10	2.0		false
 tcg_kho_bodyguard_2_lord	0	20	25	50	5.0000	sword	sword	medium	4	0.5000	1.0000	1.0000	true		0	10	2.0		false
-tcg_kho_bodyguard_3_hero	0	25	55	105	10.0000	axe	unarmed	very_large	6	1.0000	1.0000	1.0000	true		4	4	2.25		false
-tcg_kho_bodyguard_3_lord	0	25	55	105	10.0000	axe	unarmed	very_large	6	1.0000	1.0000	1.0000	true		4	4	2.25		false
+tcg_kho_bodyguard_3_hero	0	25	50	100	10.0000	axe	unarmed	very_large	6	1.0000	1.0000	1.0000	true		4	4	2.25		false
+tcg_kho_bodyguard_3_lord	0	25	50	100	10.0000	axe	unarmed	very_large	6	1.0000	1.0000	1.0000	true		4	4	2.25		false
 tcg_nur_bodyguard_1_hero	0	0	60	30	1.0000	sword	sword		1	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	1.75		false
 tcg_nur_bodyguard_1_lord	0	0	60	30	1.0000	sword	sword		1	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	1.75		false
 tcg_nur_bodyguard_2_hero	0	10	40	40	4.0000	sword	creatures_claws	medium	3	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	2.0		false
@@ -466,8 +466,8 @@ tcg_tze_bodyguard_1_hero	0	0	50	25	1.0000	sword	sword		1	1.0000	1.0000	1.0000	tr
 tcg_tze_bodyguard_1_lord	0	0	50	25	1.0000	sword	sword		1	1.0000	1.0000	1.0000	true	wh3_main_unit_contact_warpflame	0	10	1.75		false
 tcg_tze_bodyguard_2_hero	0	0	70	35	3.0000	sword	staff	medium	3	0.5000	1.0000	1.0000	true	wh3_main_unit_contact_warpflame	0	10	2.0		false
 tcg_tze_bodyguard_2_lord	0	0	70	35	3.0000	sword	staff	medium	3	0.5000	1.0000	1.0000	true	wh3_main_unit_contact_warpflame	0	10	2.0		false
-tcg_tze_bodyguard_3_hero	0	0	75	125	7.0000	sword	drakegun	very_large	6	1.0000	1.0000	1.0000	true	wh3_main_unit_contact_warpflame	2	2	2.0		false
-tcg_tze_bodyguard_3_lord	0	0	75	125	7.0000	sword	drakegun	very_large	6	1.0000	1.0000	1.0000	true	wh3_main_unit_contact_warpflame	2	2	2.0		false
+tcg_tze_bodyguard_3_hero	0	20	60	120	7.0000	sword	drakegun	very_large	6	1.0000	1.0000	1.0000	true	wh3_main_unit_contact_warpflame	2	2	2.0		false
+tcg_tze_bodyguard_3_lord	0	20	60	120	7.0000	sword	drakegun	very_large	6	1.0000	1.0000	1.0000	true	wh3_main_unit_contact_warpflame	2	2	2.0		false
 tmb_liche_priest_death_mount1	0	0	230	120	3.0000	axe	creatures_claws	very_large	5	1.0000	1.0000	0.0000	true		4	2	2.0		false
 tmb_liche_priest_death_mount2	0	28	200	150	5.0000	axe	creatures_claws	very_large	4	1.0000	1.0000	0.0000	true		2	2	2.0		false
 tmb_liche_priest_light_mount1	0	0	230	120	3.0000	axe	creatures_claws	very_large	5	1.0000	1.0000	0.0000	true		4	2	2.0		false

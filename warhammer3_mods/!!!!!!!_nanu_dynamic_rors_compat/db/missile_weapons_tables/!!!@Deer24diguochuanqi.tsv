@@ -1,8 +1,8 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!@Deer24diguochuanqi
-gaositianshipistol	false	gaositianshipistol	pistol	false
-wh3_huoqiangshougun	false	wh3_huoqiangshougun	repeater_gun	false
-wh3_judunnushou	false	wh3_judunnushou	crossbow	false
-wh3_sanbinggun	false	wh3_sanbinggun	repeater_gun	false
-wh3_ssgun	false	wh3_ssgun	repeater_gun	false
-wh3_syrbow	false	wh3_syrbow	bow	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!@Deer24diguochuanqi
+gaositianshipistol	false	gaositianshipistol	pistol	false	false
+wh3_huoqiangshougun	false	wh3_huoqiangshougun	repeater_gun	false	false
+wh3_judunnushou	false	wh3_judunnushou	crossbow	false	false
+wh3_sanbinggun	false	wh3_sanbinggun	repeater_gun	false	false
+wh3_ssgun	false	wh3_ssgun	repeater_gun	false	false
+wh3_syrbow	false	wh3_syrbow	bow	false	false

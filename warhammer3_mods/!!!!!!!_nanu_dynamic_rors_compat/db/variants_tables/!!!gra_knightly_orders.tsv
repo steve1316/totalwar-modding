@@ -1,12 +1,11 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!gra_knightly_orders
+mnt_barded_warhorse_black_bear		mnt_barded_warhorse_black_bear	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_black_guard		mnt_barded_warhorse_black_guard	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_everlasting_light		mnt_barded_warhorse_everlasting_light	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_fellwolf_brotherhood		mnt_barded_warhorse_fellwolf_brotherhood	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_fiery_heart		mnt_barded_warhorse_fiery_heart	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
+mnt_barded_warhorse_gold_lion		mnt_barded_warhorse_gold_lion	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_knights_bull		mnt_barded_warhorse_knights_bull	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_knights_griffon		mnt_barded_warhorse_knights_griffon	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_knights_panther		mnt_barded_warhorse_knights_panther	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_knights_raven		mnt_barded_warhorse_knights_raven	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
 mnt_barded_warhorse_sacred_scythe		mnt_barded_warhorse_sacred_scythe	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	
-mnt_barded_warhorse_white_wolf		mnt_barded_warhorse_white_wolf	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0000	

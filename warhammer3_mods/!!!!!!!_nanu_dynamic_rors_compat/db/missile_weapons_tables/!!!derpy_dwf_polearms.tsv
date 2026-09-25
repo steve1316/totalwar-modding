@@ -1,3 +1,3 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!derpy_dwf_polearms
-dwf_warrior_javelin_thrown	false	dwf_warrior_javelin_thrown	javelin	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!derpy_dwf_polearms
+dwf_warrior_javelin_thrown	false	dwf_warrior_javelin_thrown	javelin	false	false

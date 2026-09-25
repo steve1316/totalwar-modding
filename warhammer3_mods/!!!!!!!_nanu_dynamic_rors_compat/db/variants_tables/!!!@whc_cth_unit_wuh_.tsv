@@ -3,17 +3,17 @@ variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	sc
 cth_central_jade_lion	VariantMeshes\wh_variantmodels\bc2\emp\emp_deathclaw\tech	cth_central_jade_lion	bc2\emp\emp_demigryph\low_poly\emp_demigryph_altdorf_lowlod	1.0000	1.1600	0.0000	
 cth_east_jiaolong	animations/techpack/cth_mingqing_jiaolong/tech	cth_east_mingqing_jiaolong	sn1\tmb\tmb_necroserpents\imposter\tmb_necroserpent_imposter	1.3000	1.0000	0.0000	sn1\tmb\tmb_necroserpents\imposter\tmb_necroserpent_imposter
 cth_east_mingqing_base_horse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_east_mingqing_base_horse	hr1/cth/cth_horse/cth_horse_light_01_imposter	1.0000	1.0000	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
-cth_guanning_horse		cth_guanning_horse	hr1\brt\brt_horse\imposter\brt_horse_armoured_imposter	1.0000	1.0000	0.0000	hr1\brt\brt_horse\imposter\brt_horse_armoured_imposter
+cth_guanning_horse		cth_guanning_horse	hr1\brt\brt_horse\imposter\brt_horse_armoured_imposter	1.0000	1.0400	0.0000	hr1\brt\brt_horse\imposter\brt_horse_armoured_imposter
 cth_north_bian	animations/techpack/cth_suitang_bian/tech	cth_north_suitang_bian		1.0500	1.0000	0.0000	
 cth_north_suitang_base_horse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_north_suitang_base_horse	hr1/cth/cth_horse/cth_horse_light_01_imposter	1.0000	1.0000	0.0000	hr1/cth/cth_horse/cth_horse_light_01_imposter
-cth_north_suitang_jade_horse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_north_suitang_jade_horse	hr1/cth/cth_longma/cth_longma_armour_heavy_01_imposter	1.0000	1.0000	0.0000	hr1/cth/cth_longma/cth_longma_armour_heavy_01_imposter
+cth_north_suitang_jade_horse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_north_suitang_jade_horse	hr1/cth/cth_longma/cth_longma_armour_heavy_01_imposter	1.0000	1.0400	0.0000	hr1/cth/cth_longma/cth_longma_armour_heavy_01_imposter
 cth_north_suitang_leiqilin	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_north_suitang_leiqilin	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0500	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
 cth_south_ox	animations/techpack/cth_songyuan_ox/tech	cth_south_songyuan_base_ox		1.0000	1.0000	0.0000	
 cth_south_songyuan_huoqilin	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_south_songyuan_huoqilin	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0500	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
-cth_south_songyuan_jade_horse		cth_south_songyuan_jade_horse	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0000	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
+cth_south_songyuan_jade_horse		cth_south_songyuan_jade_horse	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0200	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
 cth_south_tiger	VariantMeshes\wh_variantmodels\bc4\dae\dae_rot_beast\tech\	cth_south_songyuan_tiger	bc4\hef\hef_war_lion\hef_war_lion_imposter	0.5700	1.2500	0.0500	bc4\hef\hef_war_lion\hef_war_lion_imposter
 cth_west_pagoda		cth_west_weijin_pagoda	hq4/dae/dae_juggernaut/dae_juggernaught_01_imposter	1.1500	1.0000	0.0000	hq4/dae/dae_juggernaut/dae_juggernaught_01_imposter
 cth_west_weijin_base_horse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_west_weijin_base_horse	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0000	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
 cth_west_weijin_moqilin	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_west_weijin_moqilin	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0500	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
-cth_west_weijin_zhajia_horse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_west_weijin_zhajia_horse	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0000	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
+cth_west_weijin_zhajia_horse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	cth_west_weijin_zhajia_horse	hr1/cth/cth_horse/cth_horse_heavy_01_imposter	1.0000	1.0400	0.0000	hr1/cth/cth_horse/cth_horse_heavy_01_imposter
 cth_xueqilin_horse		cth_xueqilin_horse	hr1\brt\brt_horse\imposter\brt_horse_armoured_imposter	1.0000	1.0500	0.0000	hr1\brt\brt_horse\imposter\brt_horse_armoured_imposter

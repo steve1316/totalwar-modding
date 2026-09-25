@@ -48,6 +48,7 @@ ghs_tmb_scarab_flying_mount	animations/techpack/ghs_tmb_fly_scarab/tech	tmb_scar
 ghs_tmb_skeleton_ostrich	VariantMeshes/wh_variantmodels/rp1/dae/dae_steed_of_slaanesh/tech	tmb_skeleton_ostrich		1.0000	1.0000	0.0000	
 ghs_wef_great_stag		ghs_wef_great_stag		1.5000	1.0000	0.0000	
 ghs_wm_def_black_ark	animations/techpack/ghs_def_black_ark/tech	ghs_wm_def_black_ark		4.0000	1.0000	0.0000	
+ghs_wm_hef_dragonship	animations/techpack/ghs_hef_dragonship	ghs_wm_hef_dragonship		6.0000	1.0000	0.0000	
 ghs_wm_hef_flying_waystone	animations/techpack/ghs_hef_flying_stone/tech	ghs_wm_hef_flying_waystone		1.5000	1.0000	0.0000	
 kho_war_mammoth_warshrine	VariantMeshes/wh_variantmodels/hq3/nor/nor_war_mammoth/tech	kho_war_mammoth_warshrine		1.0000	1.0000	0.0000	
 ksl_flying_eagle		ksl_ice_eagle		0.6500	0.6500	0.0000	

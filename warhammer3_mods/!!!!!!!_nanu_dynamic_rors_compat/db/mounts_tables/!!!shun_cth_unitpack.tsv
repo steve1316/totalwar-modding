@@ -1,3 +1,4 @@
 key	animation	entity	audio_armour_type	variant	voiceover
 #mounts_tables;10;db/mounts_tables/!!!shun_cth_unitpack
-cth_horse_medium_cav	hr1_warhorse	cth_inf_onna_bushi_entity_cav	plate	cth_horse_medium	wh_main_vo_culture_Horse
+cth_horse_medium_cav	hr1_warhorse	cth_inf_onna_bushi_entity_cav	plate	shun_horse_medium2	wh_main_vo_culture_Horse
+shun_horse_medium_cav_mashuo	hr1_mashuo_warhorse	cth_inf_onna_bushi_entity_cav	plate	shun_horse_medium	wh_main_vo_culture_Horse

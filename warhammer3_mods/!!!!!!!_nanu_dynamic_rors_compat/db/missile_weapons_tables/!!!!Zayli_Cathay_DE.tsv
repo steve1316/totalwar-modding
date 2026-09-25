@@ -1,3 +1,3 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!Zayli_Cathay_DE
-zayli_cth_nan_gau_bow	false	zayli_cth_nan_gau_archer	bow	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!Zayli_Cathay_DE
+zayli_cth_nan_gau_bow	false	zayli_cth_nan_gau_archer	bow	false	false

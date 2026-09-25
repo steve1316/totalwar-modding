@@ -1,3 +1,4 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!shun_cth_unitpack
-cth_horse_medium	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_horse_medium01		0.9500	1.0000	0.0000	
+shun_horse_medium	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_horse_medium01		1.0000	1.0000	0.0000	
+shun_horse_medium2	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_horse_medium02		1.0000	1.0000	0.0000	

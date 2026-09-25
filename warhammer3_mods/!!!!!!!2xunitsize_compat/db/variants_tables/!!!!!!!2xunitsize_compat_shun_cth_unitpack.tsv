@@ -1,5 +1,7 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_shun_cth_unitpack
-cth_horse_medium	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_horse_medium01		0.9500	1.0000	0.0000	
 cth_sky_junk_moonfire_ror	warmachines/aircraft/cth_sky_junk/tech/	shun_sky_junk_moonfire		1.0000	1.0000	0.0000	
 shun_horse_heavy_ror	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_horse_heavy_ror		1.0000	1.0000	0.0000	
+shun_horse_medium	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_horse_medium01		1.0000	1.0000	0.0000	
+shun_horse_medium2	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_horse_medium02		1.0000	1.0000	0.0000	
+shun_longma_heavy_ror	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	shun_longma_ror_01	hr1/cth/cth_longma/cth_longma_armour_heavy_01_imposter	1.0000	1.0000	0.0000	

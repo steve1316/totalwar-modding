@@ -1,6 +1,7 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!1a_glf_unit_expansion
 glf_def_hunters_javelin	wh2_main_missile_infantry_javelin	infantry
+glf_dual_kataras	glf_dual_kataras	infantry
 glf_hammer_great_cavalry	glf_hammer_great_cavalry	cavalry_chariots
 glf_hef_griffon	glf_hef_griffon	monster_beasts
 glf_hef_lion_axe_cavalry	glf_hef_lion_axe_cavalry	cavalry_chariots

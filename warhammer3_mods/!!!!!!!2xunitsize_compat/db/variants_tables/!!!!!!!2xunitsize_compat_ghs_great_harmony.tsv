@@ -23,7 +23,10 @@ ghs_chd_mnt_conqueror	VariantMeshes\_VariantModels\heavyquadruped03b\tech	ghs_ch
 ghs_cth_cav_armour_giant_ox	animations/techpack/ghs_cth_giant_ox/tech	cth_armour_giant_ox		1.0000	1.0000	0.0000	
 ghs_cth_cav_armour_giant_ox_ror	animations/techpack/ghs_cth_giant_ox/tech	cth_armour_giant_ox_ror		1.0000	1.0000	0.0000	
 ghs_cth_cha_hongying_cage_bird	VariantMeshes\wh_variantmodels\bi1\cth\cth_great_moon_bird\tech	ghs_cth_cha_hongying_cage_bird		1.2000	1.2000	0.0000	
+ghs_cth_cha_wangque_bird	VariantMeshes\wh_variantmodels\bi1\cth\cth_great_moon_bird\tech	ghs_cth_cha_wangque_bird		1.0000	1.1500	0.0000	
+ghs_cth_jade_blood_snake	animations/techpack/ghs_cth_jade_blood_snake/tech	ghs_cth_jade_blood_snake		1.3500	1.1000	0.0000	
 ghs_cth_jade_lion_mount	animations/techpack/ghs_cth_jade_lion_mount/tech	ghs_cth_jade_lion_mount		0.7500	0.7500	0.0000	
+ghs_cth_jade_lion_mount_terracotta	animations/techpack/ghs_cth_jade_lion_mount/tech	ghs_cth_jade_lion_mount		0.5400	1.8500	0.0000	
 ghs_cth_jet_lion_mount	animations/techpack/ghs_cth_lion_mount/tech	ghs_cth_jet_lion_mount		0.7500	0.7500	0.0000	
 ghs_cth_mon_dragon_titan	variantmeshes/wh_variantmodels/gi2/cth/cth_dragon_titan/tech	ghs_main_cth_mon_titan		1.0000	1.0000	0.0000	
 ghs_emp_guard_warhorse_armoured		ghs_emp_guard_warhorse_armoured		1.0000	1.0000	0.0500	
@@ -57,6 +60,7 @@ ghs_tmb_scarab_flying_mount	animations/techpack/ghs_tmb_fly_scarab/tech	tmb_scar
 ghs_tmb_skeleton_ostrich	VariantMeshes/wh_variantmodels/rp1/dae/dae_steed_of_slaanesh/tech	tmb_skeleton_ostrich		1.0000	1.0000	0.0000	
 ghs_wef_great_stag		ghs_wef_great_stag		1.5000	1.0000	0.0000	
 ghs_wm_def_black_ark	animations/techpack/ghs_def_black_ark/tech	ghs_wm_def_black_ark		4.0000	1.0000	0.0000	
+ghs_wm_hef_dragonship	animations/techpack/ghs_hef_dragonship	ghs_wm_hef_dragonship		6.0000	1.0000	0.0000	
 ghs_wm_hef_flying_waystone	animations/techpack/ghs_hef_flying_stone/tech	ghs_wm_hef_flying_waystone		1.5000	1.0000	0.0000	
 hoeth_scholar_champion_phoenix	VariantMeshes\wh_variantmodels\bi1\hef\hef_great_eagle\tech	ghs_hef_frostheart_phoenix_mount		1.0000	1.1500	0.0000	
 hoeth_scholar_champion_steed		ghs_hef_hoeth_scholar_steed		1.0000	1.1500	0.0000	

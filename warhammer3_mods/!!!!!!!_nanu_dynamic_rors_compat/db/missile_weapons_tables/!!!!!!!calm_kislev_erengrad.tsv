@@ -1,11 +1,11 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!calm_kislev_erengrad
-calm_erengrad_cannon	false	calm_erengrad_cannon	great_cannon	false
-calm_erengrad_mortar	false	calm_erengrad_mortar	mortar	false
-calm_kvass_molotov	false	calm_kvass_molotov		false
-calm_sarmatyr_pistol	false	calm_sarmatyr_pistol	pistol	false
-calm_storozhi_rifle	false	calm_storozhi_rifle	repeater_gun	false
-calm_straznik_blunderbuss	false	calm_straznik_blunderbuss	blunderbuss	false
-calm_urugan_cannon	false	calm_urugan_cannon	orgun_gun	false
-kreml_bomb	true	kreml_bomb		false
-mounted_kirasir_pistol	false	calm_kirasir_pistol	pistol	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!!calm_kislev_erengrad
+calm_erengrad_cannon	false	calm_erengrad_cannon	great_cannon	false	false
+calm_erengrad_mortar	false	calm_erengrad_mortar	mortar	false	false
+calm_kvass_molotov	false	calm_kvass_molotov		false	false
+calm_sarmatyr_pistol	false	calm_sarmatyr_pistol	pistol	false	false
+calm_storozhi_rifle	false	calm_storozhi_rifle	repeater_gun	false	false
+calm_straznik_blunderbuss	false	calm_straznik_blunderbuss	blunderbuss	false	false
+calm_urugan_cannon	false	calm_urugan_cannon	orgun_gun	false	false
+kreml_bomb	true	kreml_bomb		false	false
+mounted_kirasir_pistol	false	calm_kirasir_pistol	pistol	false	false

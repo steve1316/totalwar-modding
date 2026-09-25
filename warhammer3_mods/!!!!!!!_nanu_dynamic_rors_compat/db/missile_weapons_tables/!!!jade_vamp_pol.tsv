@@ -1,4 +1,4 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!jade_vamp_pol
-jbv_soul_flame	false	jbv_soul_flame	catapult_screaming_skull	false
-jbv_spirit_skull	false	jbv_spirit_skull	wh2_dlc14_medusa_gaze	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!jade_vamp_pol
+jbv_soul_flame	false	jbv_soul_flame	catapult_screaming_skull	false	false
+jbv_spirit_skull	false	jbv_spirit_skull	wh2_dlc14_medusa_gaze	false	false

@@ -1,3 +1,4 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_@xou_high_elves
 hef_caledor_steed_mount	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	hef_dragon_steed_ror		1.0000	1.0000	0.0000	
+hef_fenastius_pegasus		hef_fenastius_pegasus		1.0000	1.0000	0.0500	

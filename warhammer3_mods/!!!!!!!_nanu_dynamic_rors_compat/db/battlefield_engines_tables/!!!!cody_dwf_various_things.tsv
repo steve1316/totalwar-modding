@@ -1,4 +1,4 @@
-key	destroyed_model	destruction_animation	engine_type	gun_animation_table	missile_weapon	model	battle_entity	asset_folder	variant	draught_attachment_point	tech_folder	rider_attachment_point	destruct_model	destruct_anim	destruct_meta	audio_armour_type	riders_shoot_behaviour	scale
-#battlefield_engines_tables;23;db/battlefield_engines_tables/!!!!cody_dwf_various_things
-cody_dwf_art_mortar	warmachines/engines/emp_mortar/emp_mortar_destroyed.rigid_model_v2	dwf_mortar_destruct	Generic_3_Crew	wm_mortar01	cody_dwf_mortar	dwf_mortar	wh_main_emp_art_mortar										all_riders_shooting	1.0000
-cody_dwf_veh_juggernaut	warmachines/engines/dwf_juggernaut/dwf_juggernaut_01_destroyed.wsmodel	dwf_juggernaut_destruct	Generic_No_Crew_Rotate	wm_juggernaut01		dwf_juggernaut	cody_vehicle_juggernaut				warmachines/engines/dwf_juggernaut/tech						all_riders_shooting	1.0000
+key	engine_type	model	gun_animation_table	missile_weapon	destruction_animation	destroyed_model	battle_entity	asset_folder	variant	draught_attachment_point	tech_folder	rider_attachment_point	destruct_model	destruct_anim	destruct_meta	audio_armour_type	riders_shoot_behaviour	scale	crew_reserve_distance_offset
+#battlefield_engines_tables;24;db/battlefield_engines_tables/!!!!cody_dwf_various_things
+cody_dwf_art_mortar	Generic_3_Crew	dwf_mortar	wm_mortar01	cody_dwf_mortar	dwf_mortar_destruct	warmachines/engines/emp_mortar/emp_mortar_destroyed.rigid_model_v2	wh_main_emp_art_mortar										all_riders_shooting	1.0000	0
+cody_dwf_veh_juggernaut	Generic_No_Crew_Rotate	dwf_juggernaut	wm_juggernaut01		dwf_juggernaut_destruct	warmachines/engines/dwf_juggernaut/dwf_juggernaut_01_destroyed.wsmodel	cody_vehicle_juggernaut				warmachines/engines/dwf_juggernaut/tech						all_riders_shooting	1.0000	0

@@ -1,6 +1,5 @@
 key
 #unit_description_short_texts_tables;0;db/unit_description_short_texts_tables/!!!!!snek_dawi_thunder
-snek_dwf_ammo_dump
 snek_dwf_crank_gunners
 snek_dwf_cycle
 snek_dwf_drop_chopper
@@ -12,7 +11,5 @@ snek_dwf_ironguard
 snek_dwf_mountaineers
 snek_dwf_plow
 snek_dwf_sappers
-snek_dwf_sappers_bolt_thrower
-snek_dwf_sappers_organ_gun
 snek_dwf_tank
 snek_dwf_thunder_cannon

@@ -15,7 +15,7 @@ cth_east_mingqing_peasant_langxian	0	0	19	3	0.0000	spear	spear	small	1	1.0000	0.
 cth_east_mingqing_peasant_sword	0	0	20	2	0.0000	sword	sword	small	1	1.0000	0.7500	0.0000	false		0	10	2.2		false
 cth_huochangmao_jinzhan	0	0	22	16	2.0000	lance	hammer		1	1.0000	10.0000	0.0000	false		0	10	2.0		false
 cth_north_bian_rider_halberd	0	0	160	220	4.0000	sword	creatures_claws	medium	3	1.3000	0.7500	0.0000	true	cth_north_suitang_electric_shock	3	3	2.0	cth_two_handed_axe_scale	false
-cth_north_suitang_cav_jade_lance	10	0	30	14	2.0000	lance	spear	medium	2	1.0000	0.5000	0.0000	false		1	1	2.1		false
+cth_north_suitang_cav_jade_lance	10	0	30	14	2.0000	lance	spear	medium	2	1.0000	0.5000	0.0000	false		1	16	2.1		false
 cth_north_suitang_cav_longma_mace	0	0	38	28	2.0000	axe	axe	small	2	1.0000	0.7500	0.0000	false		1	10	1.9		false
 cth_north_suitang_cav_peasant_spear	10	0	20	10	1.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	1.9		false
 cth_north_suitang_jade_shuwei_halberd	19	0	12	18	2.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	2.25		false
@@ -32,7 +32,7 @@ cth_south_songyuan_cav_jade_axe	0	0	26	12	1.0000	axe	axe		1	1.0000	0.7500	0.0000
 cth_south_songyuan_jade_dual_swords	0	9	23	9	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.0		false
 cth_south_songyuan_jade_greataxe	0	0	12	26	2.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.1		false
 cth_south_songyuan_jade_swords	0	0	22	8	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.1		false
-cth_south_songyuan_longma_axe_2h	0	0	18	46	2.0000	lance	spear	medium	2	1.0000	0.7500	10.0000	false		1	8	2.0	cth_two_handed_axe_scale	false
+cth_south_songyuan_longma_axe_2h	0	0	18	46	2.0000	lance	spear	medium	2	1.0000	0.7500	10.0000	false		1	10	2.0	cth_two_handed_axe_scale	false
 cth_south_songyuan_longwei_pro_shenbi_2	0	0	28	20	1.0000	axe	hammer		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
 cth_south_songyuan_peasant_spear	20	0	19	7	2.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
 cth_south_songyuan_peasant_sword	0	0	19	4	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
@@ -40,7 +40,7 @@ cth_south_tiger_rider_axe	24	0	18	52	4.0000	axe	axe_2h	small	3	1.2000	0.7500	10.
 cth_two_handed_axe	0	0	10	38	1.0000	axe	axe	small	1	1.0000	1.2500	10.0000	false	beiwei_zhanma	0	10	2.0	cth_two_handed_axe_scale	false
 cth_west_daqin_peasant_ruishi_sword	0	5	25	2	0.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.1		false
 cth_west_pagoda_rider_sword_breakers	0	12	30	36	4.0000	axe	axe	small	3	1.2000	0.7500	0.0000	false		0	10	2.0		false
-cth_west_qinhan_cav_jade_lance	14	0	22	10	1.0000	lance	spear		1	1.0000	0.5000	0.0000	false		1	8	1.95		false
+cth_west_qinhan_cav_jade_lance	14	0	22	10	1.0000	lance	spear		1	1.0000	0.5000	0.0000	false		1	16	1.95		false
 cth_west_qinhan_cav_longma_sword	0	10	28	20	1.0000	sword	sword	small	2	1.0000	0.7500	0.0000	false		0	10	1.95		false
 cth_west_qinhan_cav_peasant_sword	0	0	25	6	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	1.95		false
 cth_west_qinhan_jade_wuzu_greatsword	18	0	18	24	1.0000	sword	sword	small	2	1.3000	0.7500	0.0000	false	beiwei_zhanma	0	10	2.15		false

@@ -1,12 +1,12 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!lost_calm_jurassic_normal
-calm_cerapod_bola	false	calm_cerapod_bola		false
-calm_ictlamimus	false	calm_ictlamimus_barbs	steamgun_copter	false
-calm_nuatl	false	calm_nuatl		false
-calm_solar_beam	false	calm_solar_beam	luminark	false
-calm_solar_blast	false	calm_solar_blast		false
-calm_solar_lightning	false	calm_solar_lightning		false
-calm_spitter_proto	false	calm_spitter_proto	wh2_dlc12_ikit_warpfiregun	false
-cherupin_giant_blowpipe	false	cherupin_giant_blowpipe	wh3_dlc23_fireglaive	false
-dilophiraptor_spit	true	dilophiraptor_spit	razordon_spike	false
-manta_jav	false	manta_jav		false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!lost_calm_jurassic_normal
+calm_cerapod_bola	false	calm_cerapod_bola		false	false
+calm_ictlamimus	false	calm_ictlamimus_barbs	steamgun_copter	false	false
+calm_nuatl	false	calm_nuatl		false	false
+calm_solar_beam	false	calm_solar_beam	luminark	false	false
+calm_solar_blast	false	calm_solar_blast		false	false
+calm_solar_lightning	false	calm_solar_lightning		false	false
+calm_spitter_proto	false	calm_spitter_proto	wh2_dlc12_ikit_warpfiregun	false	false
+cherupin_giant_blowpipe	false	cherupin_giant_blowpipe	wh3_dlc23_fireglaive	false	false
+dilophiraptor_spit	true	dilophiraptor_spit	razordon_spike	false	false
+manta_jav	false	manta_jav		false	false

@@ -11,6 +11,8 @@ glf_cth_jade_riders_crossbow	0	0	21	9	1.0000	sword	sword		1	1.0000	0.7500	0.0000
 glf_cth_jade_warriors_guandao	0	14	8	20	1.0000	spear	halberd		1	1.0000	0.7500	0.0000	false		0	10	4.6000		false
 glf_cth_jade_warriors_javelin	16	0	19	6	1.0000	spear	halberd		1	1.0000	0.7500	0.0000	false		0	10	4.6000		false
 glf_cth_terracotta_sentinel_giant_bow	0	0	120	280	5.0000	axe	club_huge	large	6	1.0000	1.2500	0.0000	true		0	10	4.0000		false
+glf_cth_tiger_stalkers_dual_kataras	0	10	15	25	1.0000	sword	sword	small	1	1.0000	0.7500	0.0000	false		0	10	3.8000		false
+glf_cth_tiger_warriors_axe_and_shield	0	0	40	14	1.0000	axe	axe	small	1	1.0000	0.7500	0.0000	false		0	10	3.8000		false
 glf_cth_vermillion_warbirds	0	0	180	250	6.0000	axe	creatures_claws	medium	5	1.0000	0.7500	1.0000	true		0	10	4.0000		false
 glf_cth_western_provinces_blademaster	0	12	40	20	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	3.8000		false
 glf_def_dwarf_slaves	0	0	6	18	1.0000	axe	axe		1	1.0000	2.0000	0.0000	false		0	10	4.3000		false
