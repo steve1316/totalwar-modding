@@ -6,6 +6,7 @@ changed, or when its Workshop pack no longer matches what was last built. After 
 generated source files are identical to the previous build, so the summary only lists packs that really need a Workshop upload.
 """
 
+import glob
 import json
 import logging
 import os
@@ -14,7 +15,7 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from extract_cache import ensure_extracted, extraction_content_sha, file_sha256, normalize_path, pack_sha256, toolchain_hash, tree_sha256
+from extract_cache import ensure_extracted, extraction_content_sha, file_sha256, pack_sha256, toolchain_hash, tree_sha256
 from pipeline import workshop_pack_path
 from utilities import FILEPATH_TO_VANILLA_DATA_TABLES
 
@@ -24,7 +25,8 @@ UNITS_STATE_DIR = f"{STATE_ROOT}/units"
 OUTPUTS_STATE_DIR = f"{STATE_ROOT}/outputs"
 PENDING_DIR = f"{STATE_ROOT}/pending"
 WATCHES_STATE_PATH = f"{STATE_ROOT}/watches.json"
-TTC_SCRIPTS_DIR = "../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script/ttc"
+# Unit key to its mod and in-game name for every entry in the TTC compat pack, written by `update_ttc_compat.py` for its change notes.
+TTC_ENTRIES_PATH = f"{STATE_ROOT}/ttc_entries.json"
 
 # Code every unit depends on. Unit-specific scripts are added per unit below.
 SHARED_CODE_FILES = ["utilities.py", "pipeline.py", "supported_mods.py"]
@@ -61,6 +63,8 @@ class Unit:
     outputs: List[Output]
     # Code files whose contents change this unit's output, relative to `helper_scripts/`.
     code_files: List[str] = field(default_factory=list)
+    # Glob patterns of hand-maintained input files whose contents change this unit's output. Matches ending in `_auto.lua` are skipped.
+    input_globs: List[str] = field(default_factory=list)
 
 
 UNITS: List[Unit] = [
@@ -98,9 +102,17 @@ UNITS: List[Unit] = [
         [Output("3621939685", "!!!!!!!2xunitsize_compat.pack")],
         ["update_double_unit_size.py"],
     ),
+    Unit(
+        "ttc_compat",
+        ["update_ttc_compat.py"],
+        [Output("3310629727", "!!!!!!!yet_another_tabletopcaps_compat.pack")],
+        ["update_ttc_compat.py", "ttc_classifier.py", "ttc_data.py", "ttc_compat_io.py"],
+        ["../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script/ttc/!!!!!!!*.lua"],
+    ),
 ]
 
-# Vanilla tables overridden by the hand-made reduce winds of magic mod (3012881957). A change after a game patch means the mod may need a manual update.
+# Vanilla tables overridden by the hand-made reduce winds of magic mod (3012881957).
+# A change after a game patch means the mod may need a manual update.
 REDUCE_WINDS_WATCHED_TABLES = [
     "character_trait_levels_tables",
     "character_traits_tables",
@@ -108,9 +120,6 @@ REDUCE_WINDS_WATCHED_TABLES = [
     "trait_info_tables",
     "trait_level_effects_tables",
 ]
-
-# Tables whose changes may mean a mod needs its hand-written TTC compat script (3310629727) updated.
-TTC_WATCHED_SOURCES = {"db/land_units_tables", "db/main_units_tables"}
 
 
 @dataclass
@@ -125,6 +134,10 @@ class UnitCheck:
     reasons: List[str] = field(default_factory=list)
     # Access records whose extracted content changed since the last build.
     changed_accesses: List[Dict[str, Any]] = field(default_factory=list)
+    # Normalized paths of packs whose recorded tables changed, or that were installed or removed since the last build.
+    changed_packs: List[str] = field(default_factory=list)
+    # True when a rebuild reason is not tied to a mod pack, e.g. no previous build, a code or schema change, or a Steam re-sync.
+    general: bool = False
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,6 +212,10 @@ def code_hash(unit: Unit) -> str:
     for path in sorted(set(SHARED_CODE_FILES + unit.code_files)):
         digest.update(path.encode())
         digest.update(file_sha256(path).encode() if os.path.exists(path) else b"missing")
+    for pattern in unit.input_globs:
+        for path in sorted(p for p in glob.glob(pattern) if not p.endswith("_auto.lua")):
+            digest.update(os.path.basename(path).encode())
+            digest.update(file_sha256(path).encode())
     return digest.hexdigest()
 
 
@@ -229,8 +246,8 @@ def load_access_log(log_path: str) -> List[Dict[str, Any]]:
 def check_unit(unit: Unit) -> UnitCheck:
     """Decide whether a unit must be rebuilt by replaying the extractions recorded on its last successful run.
 
-    Packs whose hash is unchanged are skipped without extracting. For a changed pack, only the recorded extractions are re-run (through the cache), so a
-    mod update that only touched unrelated tables does not trigger a rebuild.
+    Packs whose hash is unchanged are skipped without extracting. For a changed pack, only the recorded extractions are re-run (through the cache),
+    so a mod update that only touched unrelated tables does not trigger a rebuild.
 
     Args:
         unit (Unit): The unit to check.
@@ -242,19 +259,23 @@ def check_unit(unit: Unit) -> UnitCheck:
     check = UnitCheck(unit, stale=False)
     if state is None:
         check.stale = True
+        check.general = True
         check.reasons.append("no previous tracked build")
         return check
     if state.get("code_hash") != code_hash(unit):
         check.stale = True
+        check.general = True
         check.reasons.append("generator code, `supported_mods.py` or rpfm schema changed")
 
     for output in unit.outputs:
         output_state = _read_json(f"{OUTPUTS_STATE_DIR}/{output.steam_id}.json")
         if output_state is None:
             check.stale = True
+            check.general = True
             check.reasons.append(f"{output.steam_id} has no recorded build")
         elif pack_sha256(output.pack_path) != output_state.get("pack_sha"):
             check.stale = True
+            check.general = True
             check.reasons.append(f"Workshop copy of {output.steam_id} no longer matches the last build (Steam re-sync?)")
 
     for access in state.get("accesses", []):
@@ -264,10 +285,12 @@ def check_unit(unit: Unit) -> UnitCheck:
             if current_sha is not None:
                 check.stale = True
                 check.reasons.append(f"{_pack_label(access['pack'])} is now installed")
+                check.changed_packs.append(access["pack"])
             continue
         if current_sha is None:
             check.stale = True
             check.reasons.append(f"{_pack_label(access['pack'])} is no longer installed")
+            check.changed_packs.append(access["pack"])
             continue
         if current_sha == access["pack_sha"]:
             continue
@@ -276,9 +299,11 @@ def check_unit(unit: Unit) -> UnitCheck:
             check.stale = True
             check.reasons.append(f"{label} changed")
             check.changed_accesses.append(access)
+            check.changed_packs.append(access["pack"])
 
     # Collapse duplicate pack-level reasons, e.g. a newly installed pack recorded for several tables.
     check.reasons = list(dict.fromkeys(check.reasons))
+    check.changed_packs = list(dict.fromkeys(check.changed_packs))
     return check
 
 
@@ -410,25 +435,3 @@ def check_reduce_winds_tables(commit: bool) -> List[str]:
     if commit:
         _write_json(WATCHES_STATE_PATH, watches)
     return changed
-
-
-def ttc_review(checks: List[UnitCheck]) -> List[str]:
-    """List mods whose unit tables changed, since their hand-written TTC compat scripts may need updating.
-
-    Args:
-        checks (List[UnitCheck]): Results from `check_unit` for this run.
-
-    Returns:
-        One line per changed mod, noting whether a matching TTC script exists.
-    """
-    ttc_files = {name.lower() for name in os.listdir(TTC_SCRIPTS_DIR)} if os.path.exists(TTC_SCRIPTS_DIR) else set()
-    lines = []
-    packs = sorted({access["pack"] for check in checks for access in check.changed_accesses if access["source"] in TTC_WATCHED_SOURCES})
-    for pack in packs:
-        name = _pack_label(pack)
-        if normalize_path(pack) == normalize_path(FILEPATH_TO_VANILLA_DATA_TABLES):
-            lines.append("vanilla db.pack (vanilla unit caps)")
-            continue
-        script = ("!!!!!!!" + name.lstrip("!").removesuffix(".pack") + ".lua").lower()
-        lines.append(f"{name} ({'has TTC script' if script in ttc_files else 'no matching TTC script'})")
-    return lines
