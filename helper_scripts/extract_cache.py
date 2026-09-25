@@ -15,6 +15,7 @@ import os
 import shutil
 import subprocess
 import threading
+import time
 import uuid
 from typing import Any, Dict, List, Optional
 
@@ -215,6 +216,58 @@ def _record_access(record: Dict[str, Any]) -> None:
             f.write(json.dumps(record, sort_keys=True) + "\n")
 
 
+def _binary_tables(tree: str, tables_as_tsv: bool) -> List[str]:
+    """Find db tables that rpfm could not convert to TSV and extracted as binary instead, which means the schema does not know their version.
+
+    Args:
+        tree (str): Extracted tree to inspect.
+        tables_as_tsv (bool): Whether TSV conversion was requested. Nothing is reported otherwise.
+
+    Returns:
+        Pack-relative paths of binary-extracted db tables.
+    """
+    if not tables_as_tsv or not os.path.isdir(tree):
+        return []
+    binary = []
+    for root, _, files in os.walk(tree):
+        for name in files:
+            rel_path = os.path.relpath(os.path.join(root, name), tree).replace("\\", "/")
+            if rel_path.startswith("db/") and not name.endswith(".tsv"):
+                binary.append(rel_path)
+    return sorted(binary)
+
+
+def _warn_binary(pack_path: str, binary_tables: List[str]) -> None:
+    """Warn that tables were dropped because the schema could not decode them.
+
+    Args:
+        pack_path (str): Pack the tables came from.
+        binary_tables (List[str]): Pack-relative paths of binary-extracted tables.
+    """
+    if binary_tables:
+        logging.warning(
+            f"{len(binary_tables)} table(s) in {os.path.basename(pack_path)} could not be read as TSV and will be skipped: {', '.join(binary_tables[:5])}. "
+            "The rpfm schema is probably outdated (run `rpfm_cli.exe --game warhammer_3 schemas update --schema-path ./schemas`) or the mod needs updating."
+        )
+
+
+def _move_tree(source: str, destination: str) -> None:
+    """Move a directory, retrying while Windows (e.g. antivirus or the indexer) still holds handles on freshly written files.
+
+    Args:
+        source (str): Directory to move.
+        destination (str): Target path, which must not exist.
+    """
+    for attempt in range(5):
+        try:
+            os.replace(source, destination)
+            return
+        except PermissionError:
+            time.sleep(0.2 * (attempt + 1))
+    shutil.copytree(source, destination)
+    shutil.rmtree(source, ignore_errors=True)
+
+
 def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", tables_as_tsv: bool = True, capture_output: bool = False) -> Optional[Dict[str, Any]]:
     """Make sure an extraction exists in the cache and return its metadata, running rpfm only on a cache miss.
 
@@ -238,12 +291,15 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
     if cache_enabled() and os.path.exists(meta_path):
         with open(meta_path, "r", encoding="utf-8") as f:
             meta = json.load(f)
+        _warn_binary(pack_path, meta.get("binary_tables", []))
         return {"pack_sha": pack_sha, "content_sha": meta["content_sha"], "produced": meta["produced"], "tree": f"{entry}/tree"}
 
     staging = f"{STAGING_ROOT}/{uuid.uuid4().hex}"
     os.makedirs(STAGING_ROOT, exist_ok=True)
     return_code = _run_extract(pack_path, source_kind, source, tables_as_tsv, staging, capture_output)
     produced = os.path.exists(staging)
+    binary_tables = _binary_tables(staging, tables_as_tsv)
+    _warn_binary(pack_path, binary_tables)
     result = {"pack_sha": pack_sha, "content_sha": tree_sha256(staging), "produced": produced, "tree": None, "staging": staging}
 
     if cache_enabled() and return_code == 0:
@@ -254,9 +310,17 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
                 if os.path.exists(tree):
                     shutil.rmtree(tree)
                 if produced:
-                    os.replace(staging, tree)
+                    _move_tree(staging, tree)
+                meta = {
+                    "content_sha": result["content_sha"],
+                    "produced": produced,
+                    "binary_tables": binary_tables,
+                    "toolchain": toolchain_hash(),
+                    "pack": normalize_path(pack_path),
+                    "source": source,
+                }
                 with open(meta_path, "w", encoding="utf-8") as f:
-                    json.dump({"content_sha": result["content_sha"], "produced": produced, "pack": normalize_path(pack_path), "source": source}, f)
+                    json.dump(meta, f)
             else:
                 shutil.rmtree(staging, ignore_errors=True)
         result["tree"] = tree
@@ -297,7 +361,7 @@ def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str
 
 
 def prune_cache(keep_pack_shas: List[str]) -> int:
-    """Delete cached extractions for packs whose hash is no longer referenced.
+    """Delete cached extractions for packs whose hash is no longer referenced, and entries made with an older rpfm schema or exe.
 
     Args:
         keep_pack_shas (List[str]): Full pack SHA-256 digests that are still in use.
@@ -308,10 +372,21 @@ def prune_cache(keep_pack_shas: List[str]) -> int:
     if not os.path.exists(OBJECTS_ROOT):
         return 0
     keep = {sha[:24] for sha in keep_pack_shas}
+    current_toolchain = toolchain_hash()
     removed = 0
     for name in os.listdir(OBJECTS_ROOT):
+        pack_dir = f"{OBJECTS_ROOT}/{name}"
         if name not in keep:
-            shutil.rmtree(f"{OBJECTS_ROOT}/{name}", ignore_errors=True)
+            shutil.rmtree(pack_dir, ignore_errors=True)
             removed += 1
+            continue
+        for entry in os.listdir(pack_dir):
+            try:
+                with open(f"{pack_dir}/{entry}/meta.json", "r", encoding="utf-8") as f:
+                    stale_toolchain = json.load(f).get("toolchain") != current_toolchain
+            except (FileNotFoundError, json.JSONDecodeError):
+                stale_toolchain = True
+            if stale_toolchain:
+                shutil.rmtree(f"{pack_dir}/{entry}", ignore_errors=True)
     shutil.rmtree(STAGING_ROOT, ignore_errors=True)
     return removed
