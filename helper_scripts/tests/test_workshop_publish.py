@@ -501,3 +501,90 @@ def test_run_publisher_without_results_reports_the_exit_code(tmp_path, monkeypat
 
     assert "exited with code 3" in fatal
     assert results == {}
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# TTC change notes
+
+TTC = next(output for unit in delta.UNITS for output in unit.outputs if output.steam_id == workshop_publish.TTC_STEAM_ID)
+
+
+def _entry(mod, name):
+    """Build one TTC entries record.
+
+    Args:
+        mod (str): Mod display name.
+        name (str): In-game unit name.
+
+    Returns:
+        The record.
+    """
+    return {"mod": mod, "name": name}
+
+
+def test_ttc_note_lists_added_names_per_mod_and_removed_keys_at_the_bottom():
+    published = {"kept": _entry("Mod A", "Kept"), "gone_unit": _entry("Mod B", "Gone")}
+    current = {
+        "kept": _entry("Mod A", "Kept"),
+        "a_new": _entry("Mod A", "Swordsmen"),
+        "a_new_summoned": _entry("Mod A", "Swordsmen"),
+        "b_new": _entry("mod b", "Archers"),
+    }
+    note = workshop_publish.build_ttc_change_note(published, current)
+    assert note == (
+        "[b]Tabletop caps added for 3 units across 2 mods, removed for 1 units[/b]\n"
+        "\n"
+        "[b]Mod A[/b] (+2): Swordsmen (x2)\n"
+        "[b]mod b[/b] (+1): Archers\n"
+        "\n"
+        "[b]Removed (no longer in their mods)[/b]\n"
+        "[b]Mod B[/b] (-1): gone_unit"
+    )
+
+
+def test_ttc_note_drops_unit_names_when_too_long_but_keeps_removed_keys():
+    current = {f"k{i}": _entry("Big Mod", f"Unit Name {i}") for i in range(50)}
+    note = workshop_publish.build_ttc_change_note({"old": _entry("Old Mod", "Old")}, current, limit=300)
+    assert "[b]Big Mod[/b] (+50)\n" in note
+    assert "Unit Name" not in note
+    assert note.endswith("[b]Old Mod[/b] (-1): old")
+    assert len(note) <= 300
+
+
+def test_ttc_note_is_cut_to_the_limit_as_a_last_resort():
+    published = {f"gone_{i}": _entry("Mod", "x") for i in range(100)}
+    note = workshop_publish.build_ttc_change_note(published, {}, limit=200)
+    assert len(note) <= 200
+    assert note.endswith("...")
+
+
+def test_ttc_note_is_none_when_no_unit_was_added_or_removed():
+    entries = {"k": _entry("Mod", "Unit")}
+    assert workshop_publish.build_ttc_change_note(entries, dict(entries)) is None
+
+
+def test_pending_ttc_item_uses_the_unit_note_and_publishing_snapshots_the_entries(state_dir, monkeypatch, tmp_path):
+    current_path = tmp_path / "ttc_entries.json"
+    current_path.write_text(json.dumps({"k1": _entry("Mod", "Unit One"), "k2": _entry("Mod", "Unit Two")}))
+    monkeypatch.setattr(delta, "TTC_ENTRIES_PATH", str(current_path))
+    state_dir.mkdir()
+    (state_dir / f"{TTC.steam_id}.json").write_text(json.dumps({"pack_sha": "old", "pending_mods": ["Mod"]}))
+    (state_dir / f"{TTC.steam_id}_entries.json").write_text(json.dumps({"k1": _entry("Mod", "Unit One")}))
+    _fake_pack_shas(monkeypatch, {TTC.pack_path: "new"})
+
+    [item] = workshop_publish.pending_items([])
+    assert item.change_note == "[b]Tabletop caps added for 1 units across 1 mods[/b]\n\n[b]Mod[/b] (+1): Unit Two"
+
+    workshop_publish.mark_published(TTC, item.change_note, "new")
+    assert json.loads((state_dir / f"{TTC.steam_id}_entries.json").read_text()) == json.loads(current_path.read_text())
+
+
+def test_ttc_item_without_a_published_snapshot_keeps_the_general_note(state_dir, monkeypatch, tmp_path):
+    current_path = tmp_path / "ttc_entries.json"
+    current_path.write_text(json.dumps({"k1": _entry("Mod", "Unit One")}))
+    monkeypatch.setattr(delta, "TTC_ENTRIES_PATH", str(current_path))
+    _fake_pack_shas(monkeypatch, {TTC.pack_path: "new"})
+
+    [item] = workshop_publish.pending_items([])
+    assert item.change_note == GENERAL

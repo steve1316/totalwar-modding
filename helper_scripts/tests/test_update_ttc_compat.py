@@ -27,3 +27,14 @@ def test_report_lists_review_rows_and_removals():
     assert "| New Mod | k1 | rare,2 | 0.41 | special,2 | 900 | monster | mon | 1 | x (rare,2), y (rare,3), z (special,2) |" in text
     assert '!!!!!!!hand_mod.lua: `{"gone", "rare", 1},`' in text
     assert "missing.pack" in text
+
+
+def test_collect_entries_maps_every_compat_entry_to_its_mod(tmp_path, monkeypatch):
+    monkeypatch.setattr(ttc_compat_io, "HAND_DIR", str(tmp_path))
+    (tmp_path / "!!!!!!!hand_mod.lua").write_text('{"shared", "rare", 2},\n{"hand_only", "core"},\n')
+    (tmp_path / "!!!!!!!hand_mod_auto.lua").write_text('{"shared", "core"},\n{"auto_only", "special", 1},\n')
+    (tmp_path / "!!!!!!!unnamed.lua").write_text('{"orphan", "core"},\n')
+
+    entries = gen.collect_entries({"!!!!!!!hand_mod.lua": "Hand Mod", "!!!!!!!hand_mod_auto.lua": "Hand Mod"})
+
+    assert entries == {"shared": "Hand Mod", "hand_only": "Hand Mod", "auto_only": "Hand Mod", "orphan": "unnamed"}

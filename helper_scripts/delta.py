@@ -25,6 +25,8 @@ UNITS_STATE_DIR = f"{STATE_ROOT}/units"
 OUTPUTS_STATE_DIR = f"{STATE_ROOT}/outputs"
 PENDING_DIR = f"{STATE_ROOT}/pending"
 WATCHES_STATE_PATH = f"{STATE_ROOT}/watches.json"
+# Unit key to its mod and in-game name for every entry in the TTC compat pack, written by `update_ttc_compat.py` for its change notes.
+TTC_ENTRIES_PATH = f"{STATE_ROOT}/ttc_entries.json"
 
 # Code every unit depends on. Unit-specific scripts are added per unit below.
 SHARED_CODE_FILES = ["utilities.py", "pipeline.py", "supported_mods.py"]

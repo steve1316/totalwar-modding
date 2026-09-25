@@ -5,7 +5,7 @@ import logging
 import os
 import re
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 from extract_cache import cached_pack_extract
 from pipeline import workshop_pack_path
@@ -19,6 +19,11 @@ EXCLUDED_CASTES = {"lord", "hero"}
 # `ror` as its own word in a unit key or mod name marks a Regiment of Renown, without matching words like `horror`.
 RENOWN_PATTERN = re.compile(r"(^|_)ror(_|\d|$)")
 SCRATCH = f"{TEMP_DIR}/ttc"
+LOC_NAME_PREFIX = "land_units_onscreen_name_"
+VANILLA_LOC_PACK = os.path.join(os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES), "local_en.pack")
+# English translation mods kept in this repo. Their unit names win over the text a mod ships itself.
+TRANSLATION_MOD_PATTERN = re.compile(r"english|translation", re.I)
+TRANSLATION_MODS_GLOB = "../warhammer3_mods/*"
 
 
 @dataclass
@@ -98,6 +103,60 @@ def mod_ttc_entries(root: str) -> Dict[str, str]:
         for entry in parse_ttc_file(path):
             labels.setdefault(entry.key, label_of(entry.category, entry.weight))
     return labels
+
+
+def read_loc_names(folder: str, names: Dict[str, str]) -> None:
+    """Add the unit onscreen names from every loc TSV under a folder, keeping names already found.
+
+    Args:
+        folder (str): Folder holding extracted or source `.loc.tsv` files.
+        names (Dict[str, str]): Loc key to text, updated in place.
+    """
+    for path in sorted(glob.glob(f"{folder}/**/*.tsv", recursive=True)):
+        try:
+            rows, _, _ = load_tsv_data(path)
+        except (UnicodeDecodeError, IndexError):
+            continue
+        for row in rows:
+            key, text = row.get("key", ""), " ".join(row.get("text", "").split())
+            if key.startswith(LOC_NAME_PREFIX) and text:
+                names.setdefault(key, text)
+
+
+def load_loc_names() -> Dict[str, str]:
+    """Load unit onscreen names from the repo's English translation mods, then each installed supported mod, then vanilla.
+
+    Returns:
+        Loc key to text, the first source to name a key winning.
+    """
+    names: Dict[str, str] = {}
+    for folder in sorted(glob.glob(TRANSLATION_MODS_GLOB)):
+        if TRANSLATION_MOD_PATTERN.search(os.path.basename(folder)):
+            read_loc_names(folder, names)
+    packs = [(mod["package_name"], mod["path"]) for mod in SUPPORTED_MODS if mod["path"] and os.path.exists(mod["path"])]
+    for tag, pack_path in packs + [("vanilla_local_en", VANILLA_LOC_PACK)]:
+        dest = f"{SCRATCH}/loc/{tag.replace('.pack', '').replace(' ', '_')}"
+        cached_pack_extract(pack_path, "text", dest, capture_output=True)
+        read_loc_names(dest, names)
+    return names
+
+
+def unit_names(keys: Iterable[str], stats: Dict[str, UnitStats], loc: Dict[str, str]) -> Dict[str, str]:
+    """Look up the in-game name of each unit.
+
+    Args:
+        keys (Iterable[str]): Unit keys.
+        stats (Dict[str, UnitStats]): Unit key to stats, for the `land_unit` the name hangs off.
+        loc (Dict[str, str]): Loc key to text.
+
+    Returns:
+        Unit key to name, falling back to the key when no loc text names it.
+    """
+    names = {}
+    for key in keys:
+        land_unit = stats[key].main.get("land_unit", "") if key in stats else ""
+        names[key] = loc.get(LOC_NAME_PREFIX + land_unit) or loc.get(LOC_NAME_PREFIX + key) or key
+    return names
 
 
 def table_readable(folder: str) -> bool:
