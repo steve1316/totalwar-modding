@@ -238,3 +238,140 @@ def test_parse_publisher_output_reports_fatal():
 
     assert fatal == "Steam is not running or not logged in"
     assert results == {}
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Publish flow
+
+
+class FakePublisher:
+    """Stand-in for `run_publisher` that records calls and returns canned results."""
+
+    def __init__(self, check_results=None, upload_results=None, fatal=None):
+        """Set up the canned responses.
+
+        Args:
+            check_results (dict): Workshop ID to preflight result.
+            upload_results (dict): Workshop ID to upload result.
+            fatal (str): Fatal message returned by every call, if set.
+        """
+        self.check_results = check_results or {}
+        self.upload_results = upload_results or {}
+        self.fatal = fatal
+        self.calls = []
+
+    def __call__(self, jobs, check_only):
+        """Record the call and return the canned response.
+
+        Args:
+            jobs (list): Jobs passed by `publish_pending`.
+            check_only (bool): Whether this is the preflight call.
+
+        Returns:
+            A `(fatal, results)` tuple like `run_publisher`.
+        """
+        self.calls.append((check_only, [job["id"] for job in jobs]))
+        return self.fatal, (self.check_results if check_only else self.upload_results)
+
+
+@pytest.fixture
+def flow(monkeypatch, state_dir):
+    """Isolate `publish_pending` from Node, Steam and the real Workshop folder.
+
+    Args:
+        monkeypatch (pytest.MonkeyPatch): Pytest fixture used for patching.
+        state_dir (pathlib.Path): Temporary published state folder.
+
+    Returns:
+        A dict collecting the outputs passed to `mark_published`.
+    """
+    marked = {}
+    monkeypatch.setattr(workshop_publish, "publisher_problem", lambda: None)
+    monkeypatch.setattr(workshop_publish, "stage_content", lambda output, root: f"/staged/{output.steam_id}")
+    monkeypatch.setattr(workshop_publish, "mark_published", lambda output, note: marked.__setitem__(output.steam_id, note))
+    return marked
+
+
+ITEMS = [workshop_publish.PendingItem(MELEE, "note melee"), workshop_publish.PendingItem(VELOCITY, "note velocity")]
+
+
+def test_dry_run_lists_pending_without_contacting_steam(flow, monkeypatch, caplog):
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(fatal="must not be called"))
+    publisher = workshop_publish.run_publisher
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=True, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
+
+    assert publisher.calls == []
+    assert "note melee" in caplog.text
+    assert flow == {}
+
+
+def test_non_interactive_terminal_never_publishes(flow, monkeypatch, caplog):
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher())
+    publisher = workshop_publish.run_publisher
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: False)
+
+    assert publisher.calls == []
+    assert "Not an interactive terminal" in caplog.text
+    assert flow == {}
+
+
+def test_declining_the_prompt_uploads_nothing(flow, monkeypatch, caplog):
+    ok = {MELEE.steam_id: {"ok": True}, VELOCITY.steam_id: {"ok": True}}
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(check_results=ok))
+    publisher = workshop_publish.run_publisher
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "n", is_interactive=lambda: True)
+
+    assert publisher.calls == [(True, [MELEE.steam_id, VELOCITY.steam_id])]
+    assert flow == {}
+    assert f"{workshop_publish.WORKSHOP_URL}{MELEE.steam_id}" in caplog.text
+
+
+def test_confirmed_publish_records_successes_and_lists_every_url(flow, monkeypatch, caplog):
+    checks = {MELEE.steam_id: {"ok": True}, VELOCITY.steam_id: {"ok": True}}
+    uploads = {MELEE.steam_id: {"ok": True, "needsToAcceptAgreement": False}, VELOCITY.steam_id: {"ok": False, "error": "k_EResultTimeout"}}
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(check_results=checks, upload_results=uploads))
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
+
+    assert flow == {MELEE.steam_id: "note melee"}
+    assert f"{workshop_publish.WORKSHOP_URL}{MELEE.steam_id}  published" in caplog.text
+    assert f"{workshop_publish.WORKSHOP_URL}{VELOCITY.steam_id}  FAILED: k_EResultTimeout" in caplog.text
+
+
+def test_preflight_failure_skips_only_that_item(flow, monkeypatch, caplog):
+    checks = {MELEE.steam_id: {"ok": True}, VELOCITY.steam_id: {"ok": False, "error": "not owned by the logged-in account"}}
+    uploads = {MELEE.steam_id: {"ok": True}}
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(check_results=checks, upload_results=uploads))
+    publisher = workshop_publish.run_publisher
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
+
+    assert publisher.calls[1] == (False, [MELEE.steam_id])
+    assert flow == {MELEE.steam_id: "note melee"}
+    assert "not owned by the logged-in account" in caplog.text
+
+
+def test_steam_unreachable_publishes_nothing(flow, monkeypatch, caplog):
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(fatal="Steam is not running or not logged in"))
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
+
+    assert flow == {}
+    assert "Steam is not running or not logged in" in caplog.text
+
+
+def test_nothing_pending_says_so(flow, caplog):
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending([], dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
+
+    assert "Nothing to publish." in caplog.text
