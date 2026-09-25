@@ -1,12 +1,14 @@
 """Delta-update every generated Workshop pack with one command.
 
 Each generator script is only re-run when a table it read on its last run changed, when its code or the rpfm schema changed, or when its Workshop pack
-no longer matches the last build. Rebuilt packs whose generated files are identical to the previous build are left untouched, and the summary lists the
-Workshop IDs that need uploading. Hand-made mods get review flags when the tables they depend on change.
+no longer matches the last build. Rebuilt packs whose generated files are identical to the previous build are left untouched. Hand-made mods get
+review flags when the tables they depend on change. Finally, every generated pack that differs from what was last published is offered for upload to its
+Steam Workshop item, which happens only after an interactive `y`.
 
 Usage:
-    python update.py             Rebuild only what changed.
-    python update.py --dry-run   Show what would be rebuilt and why.
+    python update.py               Rebuild only what changed, then offer to publish.
+    python update.py --dry-run     Show what would be rebuilt and what is waiting to be published.
+    python update.py --no-publish  Rebuild only what changed and list what is waiting to be published, without uploading.
     python update.py --full      Rebuild every pack, still using the extraction cache.
     python update.py --no-cache  Rebuild every pack from a cold rpfm extraction.
 
@@ -22,11 +24,11 @@ import time
 from typing import Dict, List, Optional
 
 import delta
+import workshop_publish
 from extract_cache import prune_cache
 from utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging
 
 
-WORKSHOP_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id="
 RUN_REPORT_PATH = f"{delta.PENDING_DIR}/run_report.jsonl"
 
 
@@ -66,7 +68,7 @@ def summarize_reasons(reasons: List[str], limit: int = 5) -> str:
 def log_summary(
     checks: List[delta.UnitCheck], statuses: Dict[str, str], failed: List[str], reduce_winds_changed: List[str], ttc_lines: Optional[List[str]], dry_run: bool
 ) -> None:
-    """Log the end-of-run summary, including the Workshop upload list and hand-made mod review flags.
+    """Log the end-of-run summary, including which packs changed this run and the hand-made mod review flags.
 
     Args:
         checks (List[delta.UnitCheck]): Staleness results for every unit.
@@ -78,7 +80,7 @@ def log_summary(
     """
     logging.info("=" * 100)
     logging.info("Delta update summary" + (" (dry run, nothing was rebuilt)" if dry_run else ""))
-    needs_upload, unchanged = [], []
+    changed, unchanged = [], []
     for check in checks:
         for output in check.unit.outputs:
             status = statuses.get(output.steam_id)
@@ -86,18 +88,18 @@ def log_summary(
             if check.unit.name in failed:
                 continue
             if dry_run and check.stale:
-                needs_upload.append(f"{line} - would rebuild: {summarize_reasons(check.reasons)}")
+                changed.append(f"{line} - would rebuild: {summarize_reasons(check.reasons)}")
             elif status == "updated":
-                needs_upload.append(f"{line} - {summarize_reasons(check.reasons)}")
+                changed.append(f"{line} - {summarize_reasons(check.reasons)}")
             elif status == "unchanged":
                 unchanged.append(f"{line} (rebuilt, identical output)")
             elif check.stale and not dry_run:
-                needs_upload.append(f"{line} - rebuilt but no pack write was reported, check the log above")
+                changed.append(f"{line} - rebuilt but no pack write was reported, check the log above")
             else:
                 unchanged.append(f"{line} (inputs unchanged, skipped)")
 
-    logging.info("Would rebuild:" if dry_run else "Needs Workshop upload:")
-    for line in needs_upload or ["(none)"]:
+    logging.info("Would rebuild:" if dry_run else "Changed this run:")
+    for line in changed or ["(none)"]:
         logging.info(f"  {line}")
     logging.info("Unchanged:")
     for line in unchanged or ["(none)"]:
@@ -117,13 +119,6 @@ def log_summary(
     else:
         logging.info("  3012881957 reduce_winds_of_magic_cost - no vanilla trait table changes")
     logging.info("  3387635246 !!!1a_glf_battle_mage_Dante - upstream Battle Mage mod is not installed, so it is not tracked")
-
-    if needs_upload and not dry_run:
-        logging.info("Upload links:")
-        for check in checks:
-            for output in check.unit.outputs:
-                if statuses.get(output.steam_id) == "updated":
-                    logging.info(f"  {WORKSHOP_URL}{output.steam_id}")
     logging.info("=" * 100)
 
 
@@ -142,6 +137,7 @@ if __name__ == "__main__":
     parser.add_argument("--no-cache", action="store_true", help="Rebuild every pack from a cold rpfm extraction. Implies --full.")
     parser.add_argument("--dry-run", action="store_true", help="Only report which packs would be rebuilt and why.")
     parser.add_argument("--no-schema-update", action="store_true", help="Skip pulling the latest rpfm schemas before checking for changes.")
+    parser.add_argument("--no-publish", action="store_true", help="Build only. List the packs waiting to be published without uploading them.")
     args = parser.parse_args()
     workers_args = ["--workers", str(args.workers)] if args.workers is not None else []
     if args.no_cache:
@@ -202,9 +198,13 @@ if __name__ == "__main__":
                 failed.append(unit.name)
 
         statuses = delta.read_report(RUN_REPORT_PATH)
+        for check in checks:
+            if check.stale and check.unit.name not in failed:
+                workshop_publish.record_rebuild(check, statuses)
         removed = prune_cache(delta.referenced_pack_shas())
         if removed:
             logging.info(f"Pruned cached extractions for {removed} outdated pack version(s).")
 
     log_summary(checks, statuses, failed, reduce_winds_changed, ttc_lines, args.dry_run)
     log_elapsed_time("updating all mods", start_time)
+    workshop_publish.publish_pending(workshop_publish.pending_items(failed), args.dry_run, args.no_publish)

@@ -5,23 +5,28 @@ note. The upload itself runs through `workshop_publisher/publish.js`, which uses
 """
 
 import json
+import logging
 import os
 import shutil
+import subprocess
+import sys
 import time
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import delta
 from extract_cache import normalize_path, pack_sha256
 from pipeline import workshop_pack_path
 from supported_mods import SUPPORTED_MODS
-from utilities import FILEPATH_TO_VANILLA_DATA_TABLES
+from utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR
 
 
 PUBLISHED_STATE_DIR = f"{delta.STATE_ROOT}/published"
 WORKSHOP_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id="
 GENERAL_NOTE = "Rebuilt against the latest game patch and the latest versions of all supported mods."
 MAX_NOTE_MODS = 10
+PUBLISHER_DIR = "./workshop_publisher"
+PUBLISH_TEMP_DIR = f"{TEMP_DIR}/publish"
 
 # Display names for packs that are not in `SUPPORTED_MODS`.
 SPECIAL_PACK_NAMES = {
@@ -236,3 +241,134 @@ def parse_publisher_output(stdout: str) -> Tuple[Optional[str], Dict[str, Dict[s
         elif "id" in entry:
             results[str(entry["id"])] = entry
     return fatal, results
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Uploader and publish flow
+
+
+def publisher_problem() -> Optional[str]:
+    """Check that the Node uploader can run.
+
+    Returns:
+        A message describing what is missing, or None when the uploader is ready.
+    """
+    if shutil.which("node") is None:
+        return "Node.js is not installed or not on PATH."
+    if not os.path.isdir(f"{PUBLISHER_DIR}/node_modules/steamworks.js"):
+        return "The uploader is not set up. Run `cd helper_scripts/workshop_publisher && npm install` first."
+    return None
+
+
+def run_publisher(jobs: List[Dict[str, str]], check_only: bool) -> Tuple[Optional[str], Dict[str, Dict[str, Any]]]:
+    """Run `publish.js` on a list of jobs and collect its results.
+
+    Args:
+        jobs (List[Dict[str, str]]): Jobs with `id`, `contentPath` and `changeNote`.
+        check_only (bool): Only check that each item exists and is owned by the logged-in account, without uploading.
+
+    Returns:
+        A tuple of the fatal error message (or None) and the per-item results keyed by Workshop ID.
+    """
+    os.makedirs(PUBLISH_TEMP_DIR, exist_ok=True)
+    jobs_path = os.path.abspath(f"{PUBLISH_TEMP_DIR}/jobs.json")
+    with open(jobs_path, "w", encoding="utf-8") as f:
+        json.dump(jobs, f, ensure_ascii=False)
+    command = ["node", "publish.js", *(["--check"] if check_only else []), jobs_path]
+    completed = subprocess.run(command, cwd=PUBLISHER_DIR, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    fatal, results = parse_publisher_output(completed.stdout)
+    if fatal is None and completed.returncode != 0 and not results:
+        fatal = f"uploader exited with code {completed.returncode}: {completed.stderr.strip()[-500:]}"
+    return fatal, results
+
+
+def _log_urls(items: List[PendingItem], statuses: Dict[str, str]) -> None:
+    """Log the Workshop URL and final status of every item this run worked on.
+
+    Args:
+        items (List[PendingItem]): Items that were pending this run.
+        statuses (Dict[str, str]): Status text keyed by Workshop ID.
+    """
+    logging.info("Workshop items worked on:")
+    for item in items:
+        logging.info(f"  {WORKSHOP_URL}{item.output.steam_id}  {statuses.get(item.output.steam_id, 'not published')}")
+
+
+def publish_pending(
+    items: List[PendingItem],
+    dry_run: bool,
+    no_publish: bool,
+    confirm: Callable[[str], str] = input,
+    is_interactive: Optional[Callable[[], bool]] = None,
+) -> None:
+    """Show the pending Workshop uploads, ask for confirmation, upload them and log each item's URL and result.
+
+    Nothing is uploaded on a dry run, with `--no-publish`, outside an interactive terminal, or without an explicit `y`. An item that fails its preflight
+    or upload stays pending for the next run.
+
+    Args:
+        items (List[PendingItem]): Items whose current pack has not been published yet.
+        dry_run (bool): Only list the pending items.
+        no_publish (bool): Only list the pending items, because the user asked to skip publishing.
+        confirm (Callable[[str], str]): Prompt function. Defaults to `input`.
+        is_interactive (Optional[Callable[[], bool]]): Returns whether a person can answer the prompt. Defaults to checking that stdin is a TTY.
+    """
+    if not items:
+        logging.info("Nothing to publish.")
+        return
+    logging.info("Pending Workshop uploads:")
+    for item in items:
+        logging.info(f"  {item.output.steam_id} {item.output.pack_name} - {item.change_note}")
+    if dry_run or no_publish:
+        logging.info("Not publishing (" + ("--dry-run" if dry_run else "--no-publish") + "). The items stay pending.")
+        return
+    if not (is_interactive or sys.stdin.isatty)():
+        logging.info("Not an interactive terminal, skipping publish. The items stay pending.")
+        return
+    problem = publisher_problem()
+    if problem:
+        logging.warning(f"Cannot publish: {problem}")
+        return
+
+    fatal, checks = run_publisher([{"id": item.output.steam_id, "contentPath": "", "changeNote": ""} for item in items], check_only=True)
+    if fatal:
+        logging.warning(f"Cannot publish: {fatal}. Nothing was uploaded.")
+        return
+    statuses: Dict[str, str] = {}
+    ready = []
+    for item in items:
+        check = checks.get(item.output.steam_id, {})
+        if check.get("ok"):
+            ready.append(item)
+        else:
+            statuses[item.output.steam_id] = f"not published (preflight: {check.get('error', 'no result')})"
+    if not ready:
+        _log_urls(items, statuses)
+        return
+
+    answer = confirm(f"Publish {len(ready)} item(s) to the Steam Workshop? [y/N] ")
+    if answer.strip().lower() not in ("y", "yes"):
+        logging.info("Publishing cancelled. The items stay pending.")
+        _log_urls(items, statuses)
+        return
+
+    try:
+        jobs = [
+            {"id": item.output.steam_id, "contentPath": stage_content(item.output, PUBLISH_TEMP_DIR), "changeNote": item.change_note} for item in ready
+        ]
+        logging.info(f"Uploading {len(jobs)} item(s). Large packs can take several minutes...")
+        fatal, results = run_publisher(jobs, check_only=False)
+    finally:
+        shutil.rmtree(PUBLISH_TEMP_DIR, ignore_errors=True)
+    for item in ready:
+        result = results.get(item.output.steam_id)
+        if fatal or not result:
+            statuses[item.output.steam_id] = f"FAILED: {fatal or 'no result from the uploader'}"
+        elif result.get("ok"):
+            mark_published(item.output, item.change_note)
+            agreement = " (accept the Steam Workshop legal agreement on the Steam site before it becomes visible)" if result.get("needsToAcceptAgreement") else ""
+            statuses[item.output.steam_id] = f"published{agreement}"
+        else:
+            statuses[item.output.steam_id] = f"FAILED: {result.get('error', 'unknown error')}"
+    _log_urls(items, statuses)
