@@ -101,3 +101,10 @@ def test_entry_owned_by_a_currently_uninstalled_mod_is_kept():
     stale = ttc_data.stale_hand_entries(entries, {"whc.lua": "whc.pack"}, {"whc.pack"}, {"whc.pack": set()}, set(), history)
     assert stale == {"whc.lua": {"really_gone"}}
 
+
+
+def test_units_the_author_left_out_are_still_covered_until_the_author_lists_them():
+    mod_units = [("author.pack", [_row("author_listed"), _row("author_skipped")])]
+    permissions = {"author_listed": {"grp"}, "author_skipped": {"grp"}}
+    assert ttc_data.select_targets(mod_units, set(), permissions, {"author_listed"}) == {"author_skipped": "author.pack"}
+    assert ttc_data.select_targets(mod_units, set(), permissions, {"author_listed", "author_skipped"}) == {}
