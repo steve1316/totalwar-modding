@@ -1,7 +1,6 @@
 -- Trajanns_Sentinels
 local caps = {
     -- Tomb Kings
-    {"traj_malarok_necroserpent", "special", 2},
     {"traj_gurrash_ushabti", "special", 2},
     {"traj_nyrask_ror", "rare", 1},
     {"traj_malarok_stalkers", "special", 2},
