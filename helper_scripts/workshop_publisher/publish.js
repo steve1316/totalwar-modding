@@ -12,6 +12,12 @@ const fs = require("fs");
 const steamworks = require("steamworks.js");
 
 const APP_ID = 1142710;
+// An upload with no progress for this long is treated as stalled, and the batch stops so the remaining items stay pending.
+const STALL_TIMEOUT_MS = 10 * 60 * 1000;
+const PROGRESS_INTERVAL_MS = 2000;
+// Steam lookups can hang forever if the client is shutting down, so give up on each one after this long.
+const LOOKUP_TIMEOUT_MS = 60 * 1000;
+const STATUS_NAMES = ["starting", "preparing config", "preparing content", "uploading", "uploading preview", "committing"];
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,6 +43,23 @@ function errorText(err) {
 }
 
 /**
+ * Reject a promise that does not settle in time.
+ *
+ * @param {Promise<T>} promise - The promise to wait for.
+ * @param {number} ms - How long to wait in milliseconds.
+ * @param {string} message - Error message used on timeout.
+ * @returns {Promise<T>} The promise's result, or a rejection after `ms`.
+ * @template T
+ */
+function withTimeout(promise, ms, message) {
+    let timer;
+    const timeout = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`${message} within ${ms / 1000} seconds`)), ms);
+    });
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+/**
  * Check that a Workshop item exists and belongs to the logged-in account.
  *
  * @param {Object} client - The initialized Steamworks client.
@@ -45,7 +68,7 @@ function errorText(err) {
  * @returns {Promise<string|null>} An error message, or null when the item can be updated.
  */
 async function ownershipError(client, itemId, ownSteamId) {
-    const item = await client.workshop.getItem(itemId);
+    const item = await withTimeout(client.workshop.getItem(itemId), LOOKUP_TIMEOUT_MS, "Steam did not answer the item lookup");
     if (!item) {
         return "item not found";
     }
@@ -53,6 +76,57 @@ async function ownershipError(client, itemId, ownSteamId) {
         return "not owned by the logged-in account";
     }
     return null;
+}
+
+/**
+ * Upload one item's content folder and change note, printing progress to stderr and failing if the upload stalls.
+ *
+ * @param {Object} client - The initialized Steamworks client.
+ * @param {bigint} itemId - Workshop item ID.
+ * @param {{ id: string, contentPath: string, changeNote: string }} job - The upload job.
+ * @returns {Promise<Object>} The Steamworks `UgcResult`. Rejects with an error whose `stalled` flag is set when no progress is made in time.
+ */
+function uploadItem(client, itemId, job) {
+    return new Promise((resolve, reject) => {
+        let lastProgress = "";
+        let lastChange = Date.now();
+        let lastPrinted = "";
+        const stallTimer = setInterval(() => {
+            if (Date.now() - lastChange > STALL_TIMEOUT_MS) {
+                clearInterval(stallTimer);
+                const err = new Error(`upload stalled with no progress for ${STALL_TIMEOUT_MS / 60000} minutes`);
+                err.stalled = true;
+                reject(err);
+            }
+        }, 5000);
+        client.workshop.updateItemWithCallback(
+            itemId,
+            { contentPath: job.contentPath, changeNote: job.changeNote },
+            APP_ID,
+            (result) => {
+                clearInterval(stallTimer);
+                resolve(result);
+            },
+            (err) => {
+                clearInterval(stallTimer);
+                reject(err);
+            },
+            (progress) => {
+                const key = `${progress.status}:${progress.progress}`;
+                if (key !== lastProgress) {
+                    lastProgress = key;
+                    lastChange = Date.now();
+                }
+                const percent = progress.total > 0n ? Number((progress.progress * 100n) / progress.total) : 0;
+                const line = `  ${job.id}: ${STATUS_NAMES[progress.status] || "working"} ${percent}%`;
+                if (line !== lastPrinted) {
+                    lastPrinted = line;
+                    process.stderr.write(line + "\n");
+                }
+            },
+            PROGRESS_INTERVAL_MS
+        );
+    });
 }
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,10 +165,14 @@ async function main() {
                 emit({ id: job.id, ok: true });
                 continue;
             }
-            const result = await client.workshop.updateItem(itemId, { contentPath: job.contentPath, changeNote: job.changeNote }, APP_ID);
+            const result = await uploadItem(client, itemId, job);
             emit({ id: job.id, ok: true, needsToAcceptAgreement: result.needsToAcceptAgreement });
         } catch (err) {
             emit({ id: job.id, ok: false, error: errorText(err) });
+            // Steam may still be working on a stalled update, so do not start another one on top of it.
+            if (err && err.stalled) {
+                return 3;
+            }
         }
     }
     return 0;
