@@ -2,8 +2,8 @@
 
 Each generator script is only re-run when a table it read on its last run changed, when its code or the rpfm schema changed, or when its Workshop pack
 no longer matches the last build. Rebuilt packs whose generated files are identical to the previous build are left untouched. Hand-made mods get
-review flags when the tables they depend on change. Finally, every generated pack that differs from what was last published is offered for upload to its
-Steam Workshop item, which happens only after an interactive `y`.
+review flags when the tables they depend on change. Finally, every generated pack that differs from what was last published is offered for upload to
+its Steam Workshop item, which happens only after an interactive `y`.
 
 Usage:
     python update.py               Rebuild only what changed, then offer to publish.
