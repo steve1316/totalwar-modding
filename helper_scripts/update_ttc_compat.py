@@ -1,4 +1,4 @@
-"""Generate TTC compat entries for every recruitable modded unit that has no hand-written entry.
+"""Generate TTC compat entries for every recruitable modded, vanilla or DLC unit that has no cap yet.
 
 Hand files are authoritative. Auto entries go to `!!!!!!!<mod>_auto.lua`, low-confidence picks are listed in `reports/ttc_review.md`, and the
 `script/` folder is packed into the TTC compat Workshop pack. Nothing is written if confident picks miss the accuracy bar.
@@ -145,6 +145,7 @@ def main() -> int:
         return 1
 
     targets = ttc_data.select_targets(data.mod_units, data.vanilla_keys, data.permissions, set(data.labels))
+    targets.update(ttc_data.select_vanilla_targets(data.vanilla_units, data.permissions, set(data.labels)))
     keys = sorted(targets)
     non_core = [ttc_data.is_regiment_of_renown(key, data.stats[key].main, targets[key]) for key in keys]
     predictions = model.predict([data.stats[key] for key in keys], non_core)
@@ -195,6 +196,8 @@ def main() -> int:
 
     file_mods = {os.path.basename(path): data.mod_names[package] for path, package in file_mod.items() if package in data.mod_names}
     file_mods.update({os.path.basename(ttc_compat_io.auto_file_path(package)): data.mod_names.get(package, package) for package in assignments})
+    # The hand-written vanilla file is not tied to a mod pack, so name it like its auto file.
+    file_mods[os.path.basename(ttc_compat_io.auto_file_path(ttc_data.VANILLA_PACKAGE)).replace("_auto.lua", ".lua")] = ttc_data.VANILLA_NAME
     entries = collect_entries(file_mods)
     names = ttc_data.unit_names(entries, data.stats, ttc_data.load_loc_names())
     delta._write_json(delta.TTC_ENTRIES_PATH, {key: {"mod": mod, "name": names[key]} for key, mod in entries.items()})
