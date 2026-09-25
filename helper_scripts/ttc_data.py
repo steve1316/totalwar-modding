@@ -135,7 +135,9 @@ def stale_hand_entries(
     units_by_mod: Dict[str, Set[str]],
     vanilla_keys: Set[str],
 ) -> Dict[str, Set[str]]:
-    """Find hand entries whose unit no longer exists, only for files mapped to an installed mod.
+    """Find hand entries whose unit no longer exists anywhere, only for files mapped to an installed mod.
+
+    A hand file may list units from other mods, so an entry is only stale when no installed mod and not vanilla defines the unit.
 
     Args:
         entries_by_file (Dict[str, List[TtcEntry]]): Hand file path to its entries.
@@ -148,11 +150,11 @@ def stale_hand_entries(
         Hand file path to the stale keys to remove. Files with nothing stale are omitted.
     """
     stale: Dict[str, Set[str]] = {}
+    known = set(vanilla_keys).union(*units_by_mod.values())
     for path, entries in entries_by_file.items():
         package_name = file_mod.get(path)
         if package_name is None or package_name not in installed:
             continue
-        known = units_by_mod.get(package_name, set()) | vanilla_keys
         gone = {entry.key for entry in entries if entry.key not in known}
         if gone:
             stale[path] = gone
