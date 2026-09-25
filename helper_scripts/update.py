@@ -151,8 +151,14 @@ if __name__ == "__main__":
     # An outdated schema makes rpfm silently extract patched tables as binary, which drops them from every compat pack.
     if not args.no_schema_update:
         logging.info("Updating rpfm schemas...")
-        if run_rpfm_cli(["schemas", "update", "--schema-path", "./schemas"], capture_output=True).returncode != 0:
+        schema_update = run_rpfm_cli(["schemas", "update", "--schema-path", "./schemas"], capture_output=True, text=True)
+        # rpfm exits with 1 and "No updates available" when the schemas are already current.
+        if "No updates available" in f"{schema_update.stdout}{schema_update.stderr}":
+            logging.info("rpfm schemas are already up to date.")
+        elif schema_update.returncode != 0:
             logging.warning("Schema update failed. Continuing with the current schemas.")
+        else:
+            logging.info("rpfm schemas updated.")
     run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"], capture_output=True)
 
     # Decide which units are stale.
