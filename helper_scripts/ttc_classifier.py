@@ -4,7 +4,9 @@ Confidence cutoffs are tuned by 5-fold cross-validation so held-out confident pi
 """
 
 import argparse
+import bisect
 import collections
+import re
 import sys
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
@@ -19,6 +21,12 @@ from ttc_data import UnitStats
 CONFIDENT_ACCURACY_BAR = 0.95
 NUMERIC_MAIN = ["multiplayer_cost", "upkeep_cost", "tier", "num_men", "melee_cp", "missile_cp", "recruitment_cost", "create_time", "point_allowance_weight", "weight"]
 NUMERIC_LAND = ["bonus_hit_points", "melee_attack", "melee_defence", "morale", "charge_bonus", "accuracy"]
+CATEGORY_RANK = {"core": 0, "special": 1, "rare": 2}
+# Key parts that differ between variants of one unit (faction prefixes, DLC tags, mod prefixes), dropped when matching a unit to its counterpart.
+STEM_NOISE = {"wh", "wh2", "wh3", "main", "dlc", "ror", "twa", "pro", "ie", "glf", "singe", "ovn", "cth", "emp"}
+STEM_NOISE_PATTERN = re.compile(r"dlc\d+|twa\d+|pro\d+")
+# Labeled units within this share of a unit's cost count as its priced peers.
+PEER_COST_WINDOW = 0.1
 
 
 def _number(value: str) -> float:
@@ -36,11 +44,101 @@ def _number(value: str) -> float:
         return 0.0
 
 
-def feature_dict(stats: UnitStats) -> Dict[str, float]:
+def _stem(key: str) -> str:
+    """Reduce a unit key to the words that name the unit itself, so variants from different mods share a stem.
+
+    Args:
+        key (str): Unit key.
+
+    Returns:
+        The last three meaningful words of the key.
+    """
+    parts = [p for p in key.lower().split("_") if p and not p.isdigit() and p not in STEM_NOISE and not STEM_NOISE_PATTERN.fullmatch(p)]
+    return "_".join(parts[-3:])
+
+
+def _signature(stats: UnitStats) -> Tuple[str, str, str, str]:
+    """Identify a unit by its model and weapons, which clones and variants of one unit share.
+
+    Args:
+        stats (UnitStats): The unit.
+
+    Returns:
+        `(man_entity, primary_melee_weapon, primary_missile_weapon, mount)`.
+    """
+    land = stats.land
+    return (land.get("man_entity", ""), land.get("primary_melee_weapon", ""), land.get("primary_missile_weapon", ""), land.get("mount", ""))
+
+
+class PeerContext:
+    """Compares a unit with its closest labeled counterpart and its same-tier peers, the way caps are priced by hand."""
+
+    def __init__(self, stats: Dict[str, UnitStats], labels: Dict[str, str]):
+        """Index every unit for counterpart and peer lookups.
+
+        Args:
+            stats (Dict[str, UnitStats]): Every vanilla and modded unit, labeled or not.
+            labels (Dict[str, str]): Unit key to label for the labeled units.
+        """
+        self.stats = stats
+        self.labels = {key: label for key, label in labels.items() if key in stats}
+        self._by_signature: Dict[Tuple[str, str, str, str], List[str]] = collections.defaultdict(list)
+        self._by_stem: Dict[str, List[str]] = collections.defaultdict(list)
+        self._peer_costs: Dict[Tuple[str, str], List[float]] = collections.defaultdict(list)
+        self._labeled_by_caste: Dict[str, List[Tuple[float, str, str]]] = collections.defaultdict(list)
+        for key in sorted(self.labels):
+            unit = stats[key]
+            if unit.land:
+                self._by_signature[_signature(unit)].append(key)
+            self._by_stem[_stem(key)].append(key)
+            self._labeled_by_caste[unit.main.get("caste", "")].append((_number(unit.main.get("multiplayer_cost", "")), self.labels[key], key))
+        for unit in stats.values():
+            self._peer_costs[(unit.main.get("caste", ""), unit.main.get("tier", ""))].append(_number(unit.main.get("multiplayer_cost", "")))
+        for costs in self._peer_costs.values():
+            costs.sort()
+
+    def features(self, stats: UnitStats) -> Dict[str, float]:
+        """Build the counterpart and peer features for one unit. The unit's own label is never used.
+
+        Args:
+            stats (UnitStats): The unit.
+
+        Returns:
+            Feature name to value.
+        """
+        key = stats.key
+        cost = _number(stats.main.get("multiplayer_cost", ""))
+        candidates = [c for c in self._by_signature.get(_signature(stats), []) if c != key] if stats.land else []
+        candidates += [c for c in self._by_stem.get(_stem(key), []) if c != key and c not in candidates]
+        features: Dict[str, float] = {"has_counterpart": 0.0}
+        if candidates:
+            best = min(candidates, key=lambda c: (abs(_number(self.stats[c].main.get("multiplayer_cost", "")) - cost), c))
+            category, _, weight = self.labels[best].partition(",")
+            features.update(
+                {
+                    "has_counterpart": 1.0,
+                    f"counterpart={self.labels[best]}": 1.0,
+                    "counterpart_rank": float(CATEGORY_RANK.get(category, 0)),
+                    "counterpart_weight": _number(weight),
+                    "cost_vs_counterpart": cost / max(_number(self.stats[best].main.get("multiplayer_cost", "")), 1.0),
+                }
+            )
+        costs = self._peer_costs.get((stats.main.get("caste", ""), stats.main.get("tier", "")), [])
+        features["peer_cost_percentile"] = bisect.bisect_left(costs, cost) / max(len(costs), 1)
+        window = PEER_COST_WINDOW * max(cost, 1.0)
+        peers = [label for peer_cost, label, other in self._labeled_by_caste.get(stats.main.get("caste", ""), []) if other != key and abs(peer_cost - cost) <= window]
+        if peers:
+            features["peer_mean_rank"] = float(np.mean([CATEGORY_RANK.get(label.split(",")[0], 0) for label in peers]))
+            features["peer_mean_weight"] = float(np.mean([_number(label.partition(",")[2]) for label in peers]))
+        return features
+
+
+def feature_dict(stats: UnitStats, context: Optional[PeerContext] = None) -> Dict[str, float]:
     """Turn one unit's table rows into model features.
 
     Args:
         stats (UnitStats): The unit.
+        context (Optional[PeerContext]): Adds counterpart and peer features when given.
 
     Returns:
         Feature name to value. Categorical values become `name=value` indicator features.
@@ -61,6 +159,8 @@ def feature_dict(stats: UnitStats) -> Dict[str, float]:
     features[f"category={land.get('category', '')}"] = 1.0
     for group in stats.groups:
         features[f"group={group}"] = 1.0
+    if context is not None:
+        features.update(context.features(stats))
     return features
 
 
@@ -118,7 +218,14 @@ class Metrics:
 class Model:
     """A trained classifier plus the labeled data used for lookalikes."""
 
-    def __init__(self, vectorizer: DictVectorizer, estimator: HistGradientBoostingClassifier, threshold: float, labeled: List[Tuple[UnitStats, str]]):
+    def __init__(
+        self,
+        vectorizer: DictVectorizer,
+        estimator: HistGradientBoostingClassifier,
+        threshold: float,
+        labeled: List[Tuple[UnitStats, str]],
+        context: Optional[PeerContext] = None,
+    ):
         """Store the fitted parts.
 
         Args:
@@ -126,12 +233,14 @@ class Model:
             estimator (HistGradientBoostingClassifier): Fitted model.
             threshold (float): Confidence cutoff for confident picks.
             labeled (List[Tuple[UnitStats, str]]): Training units and their original labels.
+            context (Optional[PeerContext]): Counterpart and peer lookups used for features, or None.
         """
+        self.context = context
         self.vectorizer = vectorizer
         self.estimator = estimator
         self.threshold = threshold
         self.labeled = labeled
-        matrix = vectorizer.transform([feature_dict(stats) for stats, _ in labeled])
+        matrix = vectorizer.transform([feature_dict(stats, context) for stats, _ in labeled])
         self._mean = matrix.mean(axis=0)
         self._scale = matrix.std(axis=0) + 1e-9
         self._labeled_matrix = (matrix - self._mean) / self._scale
@@ -149,7 +258,7 @@ class Model:
         """
         if not stats_list:
             return []
-        probabilities = self.estimator.predict_proba(self.vectorizer.transform([feature_dict(stats) for stats in stats_list]))
+        probabilities = self.estimator.predict_proba(self.vectorizer.transform([feature_dict(stats, self.context) for stats in stats_list]))
         classes = self.estimator.classes_
         is_core = np.array([str(label).startswith("core") for label in classes])
         predictions = []
@@ -170,7 +279,7 @@ class Model:
         Returns:
             `(unit key, label)` pairs, closest first.
         """
-        vector = (self.vectorizer.transform([feature_dict(stats)]) - self._mean) / self._scale
+        vector = (self.vectorizer.transform([feature_dict(stats, self.context)]) - self._mean) / self._scale
         distances = np.sqrt(((self._labeled_matrix - vector) ** 2).sum(axis=1))
         return [(self.labeled[i][0].key, self.labeled[i][1]) for i in np.argsort(distances, kind="stable")[:k]]
 
@@ -213,13 +322,14 @@ def _pick_threshold(confidences: np.ndarray, correct: np.ndarray) -> float:
     return float("inf")
 
 
-def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = None) -> Tuple[Model, Metrics]:
+def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = None, context: Optional[PeerContext] = None) -> Tuple[Model, Metrics]:
     """Cross-validate to pick the confidence threshold, then fit the final model on every entry.
 
     Args:
         labeled (List[Tuple[UnitStats, str]]): Units with their existing labels.
         groups (Optional[List[str]]): Label source per unit. When given, a second cross-validation keeps each source in one fold to report how well
             units from a mod the model has never seen are predicted. It does not change the threshold.
+        context (Optional[PeerContext]): Adds counterpart and peer features, mirroring how caps are priced by hand.
 
     Returns:
         The trained model and its held-out metrics.
@@ -227,7 +337,7 @@ def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = No
     original = [label for _, label in labeled]
     targets = np.array(merge_rare_labels(original))
     vectorizer = DictVectorizer(sparse=False)
-    matrix = vectorizer.fit_transform([feature_dict(stats) for stats, _ in labeled])
+    matrix = vectorizer.fit_transform([feature_dict(stats, context) for stats, _ in labeled])
     estimator = HistGradientBoostingClassifier(random_state=0)
     probabilities = cross_val_predict(estimator, matrix, targets, cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=0), method="predict_proba")
     classes = np.unique(targets)
@@ -252,7 +362,7 @@ def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = No
         unseen_mod_exact=unseen_mod_exact,
     )
     estimator.fit(matrix, targets)
-    return Model(vectorizer, estimator, threshold, labeled), metrics
+    return Model(vectorizer, estimator, threshold, labeled, context), metrics
 
 
 def training_groups(data) -> List[str]:
@@ -286,7 +396,7 @@ if __name__ == "__main__":
     import ttc_data
 
     loaded = ttc_data.load_all()
-    _, result = train(training_set(loaded), training_groups(loaded))
+    _, result = train(training_set(loaded), training_groups(loaded), PeerContext(loaded.stats, loaded.labels))
     print(f"entries: {result.n}")
     print(f"held-out exact: {result.exact:.1%} | category: {result.category:.1%}")
     print(f"confident picks: {result.confident:.1%} exact on {result.confident_share:.1%} of entries (threshold {result.threshold:.3f})")
