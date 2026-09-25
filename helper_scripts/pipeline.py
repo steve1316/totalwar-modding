@@ -8,6 +8,7 @@ import os
 import shutil
 from typing import Any, Dict, List, Optional, Tuple
 
+from extract_cache import cached_pack_extract
 from utilities import (
     cleanup_folders,
     ensure_temp_dir,
@@ -193,7 +194,7 @@ def extract_variantmeshes_folder(mod_path: str, dest: str = f"{TEMP_DIR}/modded_
         dest (str): Local destination folder. Defaults to `{TEMP_DIR}/modded_variantmeshes`.
     """
     ensure_temp_dir(os.path.dirname(dest) or TEMP_DIR)
-    run_rpfm_cli(["pack", "extract", "--pack-path", mod_path, "--folder-path", f"variantmeshes;{dest}"], capture_output=True)
+    cached_pack_extract(mod_path, "variantmeshes", dest, tables_as_tsv=False, capture_output=True)
 
 
 class DuplicateTracker:

@@ -14,10 +14,12 @@ from utilities import (
     merge_move,
     cleanup_folders,
     ensure_temp_dir,
+    clear_temp_root,
     TEMP_DIR,
 )
 from supported_mods import SUPPORTED_MODS
 from dynamic_rors_effects import SUPPORTED_EFFECTS
+from delta import publish_pack
 from pipeline import (
     DuplicateTracker,
     add_folder_to_pack,
@@ -531,384 +533,385 @@ if __name__ == "__main__":
 
     if args.reset:
         logging.info("Will reset folders in the packfile before writing.")
-        cleanup_folders(
-            [
-                "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/db",
-                "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/variantmeshes",
-            ]
-        )
+        # Only clear the source folder of the pack this mode rebuilds. Vanilla mode must not wipe the modded compat folder.
+        if args.vanilla:
+            cleanup_folders(["../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db"])
+        else:
+            cleanup_folders(
+                [
+                    "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/db",
+                    "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/variantmeshes",
+                ]
+            )
 
     ensure_temp_dir()
 
-    # Ensure all folders are cleaned up before the script starts if they exist.
-    cleanup_folders(
-        [
-            f"{TEMP_DIR}/vanilla_unit_purchasable_effect_sets_tables",
-            f"{TEMP_DIR}/vanilla_mounts_tables",
-            f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla",
-            f"{TEMP_DIR}/vanilla_main_units_tables",
-            f"{TEMP_DIR}/vanilla_land_units_tables",
-            f"{TEMP_DIR}/vanilla_units_to_groupings_military_permissions_tables",
-            f"{TEMP_DIR}/nanu_unit_purchasable_effect_sets_tables",
-        ]
-    )
-    cleanup_modded_folders()
-
     try:
-        # Extract the vanilla unit_purchasable_effect_sets_tables and mounts_tables data.
-        extract_tsv_data("unit_purchasable_effect_sets_tables")
-        _, vanilla_unit_purchasable_effect_sets_tables_headers, vanilla_unit_purchasable_effect_sets_tables_version_info = load_tsv_data(
-            f"{TEMP_DIR}/vanilla_unit_purchasable_effect_sets_tables/db/unit_purchasable_effect_sets_tables/data__.tsv"
-        )
-        extract_tsv_data("mounts_tables")
-        vanilla_mounts_tables_dataframe = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_mounts_tables/db/mounts_tables/data__.tsv", "mounts_tables")
 
-        # Secondary mode: Process vanilla units only.
-        if args.vanilla:
-            # Extract the vanilla main_units_tables, land_units_tables and units_to_groupings_military_permissions_tables data.
-            extract_tsv_data("main_units_tables")
-            vanilla_main_units_tables_dataframe = read_and_clean_tsv(
-                f"{TEMP_DIR}/vanilla_main_units_tables/db/main_units_tables/data__.tsv", "main_units_tables"
-            )
-            extract_tsv_data("land_units_tables")
-            vanilla_land_units_tables_dataframe = read_and_clean_tsv(
-                f"{TEMP_DIR}/vanilla_land_units_tables/db/land_units_tables/data__.tsv", "land_units_tables"
-            )
-            extract_tsv_data("units_to_groupings_military_permissions_tables")
-            vanilla_units_to_groupings_military_permissions_tables_dataframe = read_and_clean_tsv(
-                f"{TEMP_DIR}/vanilla_units_to_groupings_military_permissions_tables/db/units_to_groupings_military_permissions_tables/data__.tsv",
-                "units_to_groupings_military_permissions_tables",
-            )
-
-            # Extract Nanu's unit_purchasable_effect_sets_tables data.
-            extract_modded_tsv_data(
-                "unit_purchasable_effect_sets_tables",
-                workshop_pack_path("3278112051", "!!_nanu_dynamic_rors.pack"),
+        # Ensure all folders are cleaned up before the script starts if they exist.
+        cleanup_folders(
+            [
+                f"{TEMP_DIR}/vanilla_unit_purchasable_effect_sets_tables",
+                f"{TEMP_DIR}/vanilla_mounts_tables",
+                f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla",
+                f"{TEMP_DIR}/vanilla_main_units_tables",
+                f"{TEMP_DIR}/vanilla_land_units_tables",
+                f"{TEMP_DIR}/vanilla_units_to_groupings_military_permissions_tables",
                 f"{TEMP_DIR}/nanu_unit_purchasable_effect_sets_tables",
-            )
-
-            processed_unit_keys = set()
-            for faction in FACTION_SHORTHAND_KEY_MAPPING.keys():
-                list_of_vanilla_data_to_add = []
-                try:
-                    nanu_faction_data, _, _ = load_tsv_data(
-                        f"{TEMP_DIR}/nanu_unit_purchasable_effect_sets_tables/db/unit_purchasable_effect_sets_tables/nanu_dynamic_rors_{faction}.tsv"
-                    )
-                except FileNotFoundError:
-                    nanu_faction_data = []
-                nanu_main_unit_keys = set(data["unit"] for data in nanu_faction_data)
-                units_not_supported_by_nanu = set()
-                for vanilla_main_unit_key in vanilla_units_to_groupings_military_permissions_tables_dataframe["unit"].values:
-                    # Get all military groups for this unit.
-                    military_groups = vanilla_units_to_groupings_military_permissions_tables_dataframe.loc[
-                        vanilla_units_to_groupings_military_permissions_tables_dataframe["unit"] == vanilla_main_unit_key, "military_group"
-                    ].values
-
-                    # Check if any of the military groups match the current faction.
-                    if (
-                        vanilla_main_unit_key not in nanu_main_unit_keys
-                        and FACTION_SHORTHAND_KEY_MAPPING[faction] in military_groups
-                        and vanilla_main_unit_key not in processed_unit_keys
-                    ):
-                        units_not_supported_by_nanu.add(vanilla_main_unit_key)
-                        processed_unit_keys.add(vanilla_main_unit_key)
-
-                logging.info(f"{faction} - {len(units_not_supported_by_nanu)} units not supported by Nanu's Dynamic Regiment of Renown units.")
-
-                for vanilla_main_unit_key in units_not_supported_by_nanu:
-                    try:
-                        vanilla_main_unit = (
-                            vanilla_main_units_tables_dataframe.loc[vanilla_main_units_tables_dataframe["unit"] == vanilla_main_unit_key]
-                            .iloc[0]
-                            .to_dict()
-                        )
-                        vanilla_land_unit = (
-                            vanilla_land_units_tables_dataframe.loc[vanilla_land_units_tables_dataframe["key"] == vanilla_main_unit_key]
-                            .iloc[0]
-                            .to_dict()
-                        )
-                    except IndexError:
-                        logging.info(f"Skipping {vanilla_main_unit_key} because it is not in the main_units_tables or land_units_tables.")
-                        continue
-                    for effect in process_unit_by_category(vanilla_land_unit, vanilla_main_unit, FACTION_SHORTHAND_KEY_MAPPING[faction]):
-                        if effect:
-                            list_of_vanilla_data_to_add.append(
-                                {
-                                    "unit": vanilla_land_unit["key"],
-                                    "purchasable_effect": effect,
-                                    "is_exclusive": "False",
-                                }
-                            )
-
-                if len(list_of_vanilla_data_to_add) > 0:
-                    logging.info(f"There are {len(list_of_vanilla_data_to_add)} effects to add for {faction}.")
-                    unit_purchasable_effect_sets_tables_version_info = vanilla_unit_purchasable_effect_sets_tables_version_info.replace(
-                        "data__", f"!!!nanu_dynamic_rors_{faction}"
-                    )
-                    write_updated_tsv_file(
-                        list_of_vanilla_data_to_add,
-                        vanilla_unit_purchasable_effect_sets_tables_headers,
-                        unit_purchasable_effect_sets_tables_version_info,
-                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables",
-                        f"!!!nanu_dynamic_rors_{faction}",
-                        allow_duplicates=True,
-                    )
-                    nanu_main_unit_keys.clear()
-                    list_of_vanilla_data_to_add.clear()
-                    units_not_supported_by_nanu.clear()
-                    gc.collect()
-
-                    sort_tsv_data(
-                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables",
-                        f"!!!nanu_dynamic_rors_{faction}",
-                    )
-
-            # After processing all mods, move the mod folder to the destination folder.
-            if os.path.exists(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla"):
-                logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_leftover_vanilla to ../warhammer3_mods/.")
-                merge_move(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla", "../warhammer3_mods/")
-
-            if args.reset:
-                reset_pack_folders(leftover_pack_path, ("db",))
-
-            add_folder_to_pack(
-                leftover_pack_path,
-                "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables;db/unit_purchasable_effect_sets_tables",
-            )
-
-            exit(0)
-
-        # Primary mode: Process modded units.
-        # Mark the three required tables since extraction failure for any of them means we skip the mod entirely.
-        primary_table_configs = [
-            {**cfg, "required": True} if cfg["table_name"] in ("units_to_groupings_military_permissions_tables", "main_units_tables", "land_units_tables") else cfg
-            for cfg in TABLE_CONFIGS
-        ]
-        vanilla_mounts_keys = set(vanilla_mounts_tables_dataframe.key.values)
-
-        # Track processed unit+effect combinations across all mods to prevent duplicates.
-        processed_unit_effects = set()
-        tracker = DuplicateTracker()
-
-        # Pre-filter the mod list: missing-on-disk go to MISSING_MODS, "vanilla" and pure-RoR-collection mods are skipped. Whatever remains is what gets extracted in parallel and then merged serially in original-index order.
-        mods_to_process: List[tuple] = []
-        for idx, mod in enumerate(SUPPORTED_MODS):
-            if mod["path"] and not os.path.exists(mod["path"]):
-                MISSING_MODS.append(mod["package_name"])
-                continue
-            if mod["package_name"] in ["vanilla"]:
-                continue
-            if re.search(r"ror_|_ror_|_ror", mod["package_name"]):
-                logging.info(f"Skipping {mod['package_name']} because it is just a collection of Regiment of Renown units.")
-                continue
-            mods_to_process.append((idx, mod))
-
-        def extract_mod_data(idx: int, mod: Dict[str, Any]) -> Optional[ModExtractResult]:
-            """Extract one mod's table data and variantmeshes into a per-mod scratch dir and build the per-mod mappings consumed by the serial merge pass.
-
-            All I/O-heavy work (rpfm_cli subprocess, TSV parsing) happens here. The dedup-gated FK walk and TSV writes are deferred to the serial pass so the global `processed_unit_effects` / `DuplicateTracker` stay deterministic.
-
-            Args:
-                idx (int): Original index of `mod` in `SUPPORTED_MODS`. Preserved on the result so the serial pass can re-sort.
-                mod (Dict[str, Any]): Entry from `SUPPORTED_MODS`.
-
-            Returns:
-                A `ModExtractResult` if extraction yielded the three required tables, otherwise None (mod is silently dropped).
-            """
-            logging.info(f"Extracting the mod: {mod['package_name']}")
-            folder_name = clean_folder_name(mod["package_name"])
-            scratch_root = f"{TEMP_DIR}/{folder_name}"
-            variantmeshes_root = f"{scratch_root}/modded_variantmeshes"
-
-            table_data = extract_and_load_table_data(mod["path"], primary_table_configs, scratch_root=scratch_root)
-            if table_data is None:
-                cleanup_modded_folders(scratch_root=scratch_root)
-                return None
-
-            extract_variantmeshes_folder(mod["path"], dest=variantmeshes_root)
-
-            units_to_factions_mapping = {data["unit"]: data["military_group"] for data in table_data["units_to_groupings_military_permissions_tables"].values()}
-            main_units_mapping = {data["unit"]: data for data in table_data["main_units_tables"].values()}
-            merged_modded_land_units_data = list(table_data["land_units_tables"].values())
-
-            return ModExtractResult(
-                mod_index=idx,
-                mod=mod,
-                folder_name=folder_name,
-                scratch_root=scratch_root,
-                variantmeshes_root=variantmeshes_root,
-                table_data=table_data,
-                modded_land_units_headers=table_data["land_units_tables_headers"],
-                modded_land_units_version_info=table_data["land_units_tables_version_info"],
-                modded_main_units_headers=table_data["main_units_tables_headers"],
-                modded_main_units_version_info=table_data["main_units_tables_version_info"],
-                units_to_factions_mapping=units_to_factions_mapping,
-                main_units_mapping=main_units_mapping,
-                merged_modded_land_units_data=merged_modded_land_units_data,
-            )
-
-        logging.info(f"Extracting {len(mods_to_process)} mods with {args.workers} worker thread(s).")
-        extract_results: List[Optional[ModExtractResult]] = run_parallel(
-            mods_to_process,
-            lambda im: extract_mod_data(im[0], im[1]),
-            args.workers,
-            label_fn=lambda im: f"mod {im[1].get('package_name', '<unknown>')}",
+            ]
         )
+        cleanup_modded_folders()
 
-        # Re-sort by original SUPPORTED_MODS index so the serial dedup pass is deterministic regardless of worker completion order.
-        ordered_results = sorted((r for r in extract_results if r is not None), key=lambda r: r.mod_index)
+        try:
+            # Extract the vanilla unit_purchasable_effect_sets_tables and mounts_tables data.
+            extract_tsv_data("unit_purchasable_effect_sets_tables")
+            _, vanilla_unit_purchasable_effect_sets_tables_headers, vanilla_unit_purchasable_effect_sets_tables_version_info = load_tsv_data(
+                f"{TEMP_DIR}/vanilla_unit_purchasable_effect_sets_tables/db/unit_purchasable_effect_sets_tables/data__.tsv"
+            )
+            extract_tsv_data("mounts_tables")
+            vanilla_mounts_tables_dataframe = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_mounts_tables/db/mounts_tables/data__.tsv", "mounts_tables")
 
-        logging.info(f"Merging {len(ordered_results)} extracted mods serially.")
-        for result in ordered_results:
-            mod = result.mod
-            folder_name = result.folder_name
-            table_data = result.table_data
-            units_to_factions_mapping = result.units_to_factions_mapping
-            main_units_mapping = result.main_units_mapping
+            # Secondary mode: Process vanilla units only.
+            if args.vanilla:
+                # Extract the vanilla main_units_tables, land_units_tables and units_to_groupings_military_permissions_tables data.
+                extract_tsv_data("main_units_tables")
+                vanilla_main_units_tables_dataframe = read_and_clean_tsv(
+                    f"{TEMP_DIR}/vanilla_main_units_tables/db/main_units_tables/data__.tsv", "main_units_tables"
+                )
+                extract_tsv_data("land_units_tables")
+                vanilla_land_units_tables_dataframe = read_and_clean_tsv(
+                    f"{TEMP_DIR}/vanilla_land_units_tables/db/land_units_tables/data__.tsv", "land_units_tables"
+                )
+                extract_tsv_data("units_to_groupings_military_permissions_tables")
+                vanilla_units_to_groupings_military_permissions_tables_dataframe = read_and_clean_tsv(
+                    f"{TEMP_DIR}/vanilla_units_to_groupings_military_permissions_tables/db/units_to_groupings_military_permissions_tables/data__.tsv",
+                    "units_to_groupings_military_permissions_tables",
+                )
 
-            variant_mesh_definitions_to_add: List[str] = []
+                # Extract Nanu's unit_purchasable_effect_sets_tables data.
+                extract_modded_tsv_data(
+                    "unit_purchasable_effect_sets_tables",
+                    workshop_pack_path("3278112051", "!!_nanu_dynamic_rors.pack"),
+                    f"{TEMP_DIR}/nanu_unit_purchasable_effect_sets_tables",
+                )
 
-            list_of_data_to_add = []
-            for data in result.merged_modded_land_units_data:
-                new_data = make_new_data_buckets(data["key"], with_purchasable_effects=True)
+                processed_unit_keys = set()
+                for faction in FACTION_SHORTHAND_KEY_MAPPING.keys():
+                    list_of_vanilla_data_to_add = []
+                    try:
+                        nanu_faction_data, _, _ = load_tsv_data(
+                            f"{TEMP_DIR}/nanu_unit_purchasable_effect_sets_tables/db/unit_purchasable_effect_sets_tables/nanu_dynamic_rors_{faction}.tsv"
+                        )
+                    except FileNotFoundError:
+                        nanu_faction_data = []
+                    nanu_main_unit_keys = set(data["unit"] for data in nanu_faction_data)
+                    units_not_supported_by_nanu = set()
+                    for vanilla_main_unit_key in vanilla_units_to_groupings_military_permissions_tables_dataframe["unit"].values:
+                        # Get all military groups for this unit.
+                        military_groups = vanilla_units_to_groupings_military_permissions_tables_dataframe.loc[
+                            vanilla_units_to_groupings_military_permissions_tables_dataframe["unit"] == vanilla_main_unit_key, "military_group"
+                        ].values
 
-                faction = units_to_factions_mapping.get(data["key"])
-                if not faction:
+                        # Check if any of the military groups match the current faction.
+                        if (
+                            vanilla_main_unit_key not in nanu_main_unit_keys
+                            and FACTION_SHORTHAND_KEY_MAPPING[faction] in military_groups
+                            and vanilla_main_unit_key not in processed_unit_keys
+                        ):
+                            units_not_supported_by_nanu.add(vanilla_main_unit_key)
+                            processed_unit_keys.add(vanilla_main_unit_key)
+
+                    logging.info(f"{faction} - {len(units_not_supported_by_nanu)} units not supported by Nanu's Dynamic Regiment of Renown units.")
+
+                    for vanilla_main_unit_key in units_not_supported_by_nanu:
+                        try:
+                            vanilla_main_unit = (
+                                vanilla_main_units_tables_dataframe.loc[vanilla_main_units_tables_dataframe["unit"] == vanilla_main_unit_key]
+                                .iloc[0]
+                                .to_dict()
+                            )
+                            vanilla_land_unit = (
+                                vanilla_land_units_tables_dataframe.loc[vanilla_land_units_tables_dataframe["key"] == vanilla_main_unit_key]
+                                .iloc[0]
+                                .to_dict()
+                            )
+                        except IndexError:
+                            logging.info(f"Skipping {vanilla_main_unit_key} because it is not in the main_units_tables or land_units_tables.")
+                            continue
+                        for effect in process_unit_by_category(vanilla_land_unit, vanilla_main_unit, FACTION_SHORTHAND_KEY_MAPPING[faction]):
+                            if effect:
+                                list_of_vanilla_data_to_add.append(
+                                    {
+                                        "unit": vanilla_land_unit["key"],
+                                        "purchasable_effect": effect,
+                                        "is_exclusive": "False",
+                                    }
+                                )
+
+                    if len(list_of_vanilla_data_to_add) > 0:
+                        logging.info(f"There are {len(list_of_vanilla_data_to_add)} effects to add for {faction}.")
+                        unit_purchasable_effect_sets_tables_version_info = vanilla_unit_purchasable_effect_sets_tables_version_info.replace(
+                            "data__", f"!!!nanu_dynamic_rors_{faction}"
+                        )
+                        write_updated_tsv_file(
+                            list_of_vanilla_data_to_add,
+                            vanilla_unit_purchasable_effect_sets_tables_headers,
+                            unit_purchasable_effect_sets_tables_version_info,
+                            f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables",
+                            f"!!!nanu_dynamic_rors_{faction}",
+                            allow_duplicates=True,
+                        )
+                        nanu_main_unit_keys.clear()
+                        list_of_vanilla_data_to_add.clear()
+                        units_not_supported_by_nanu.clear()
+                        gc.collect()
+
+                        sort_tsv_data(
+                            f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables",
+                            f"!!!nanu_dynamic_rors_{faction}",
+                        )
+
+                # After processing all mods, move the mod folder to the destination folder.
+                if os.path.exists(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla"):
+                    logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_leftover_vanilla to ../warhammer3_mods/.")
+                    merge_move(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla", "../warhammer3_mods/")
+
+                leftover_source = "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables"
+
+                def write_leftover_pack() -> None:
+                    """Replace the leftover vanilla pack's tables with the regenerated files."""
+                    if args.reset:
+                        reset_pack_folders(leftover_pack_path, ("db",))
+                    add_folder_to_pack(leftover_pack_path, f"{leftover_source};db/unit_purchasable_effect_sets_tables")
+
+                publish_pack("3532864014", leftover_pack_path, leftover_source, write_leftover_pack)
+
+                exit(0)
+
+            # Primary mode: Process modded units.
+            # Mark the three required tables since extraction failure for any of them means we skip the mod entirely.
+            primary_table_configs = [
+                {**cfg, "required": True} if cfg["table_name"] in ("units_to_groupings_military_permissions_tables", "main_units_tables", "land_units_tables") else cfg
+                for cfg in TABLE_CONFIGS
+            ]
+            vanilla_mounts_keys = set(vanilla_mounts_tables_dataframe.key.values)
+
+            # Track processed unit+effect combinations across all mods to prevent duplicates.
+            processed_unit_effects = set()
+            tracker = DuplicateTracker()
+
+            # Pre-filter the mod list: missing-on-disk go to MISSING_MODS, "vanilla" and pure-RoR-collection mods are skipped. Whatever remains is what gets extracted in parallel and then merged serially in original-index order.
+            mods_to_process: List[tuple] = []
+            for idx, mod in enumerate(SUPPORTED_MODS):
+                if mod["path"] and not os.path.exists(mod["path"]):
+                    MISSING_MODS.append(mod["package_name"])
                     continue
-                logging.debug(f"Processing the unit key: {data['key']}.")
+                if mod["package_name"] in ["vanilla"]:
+                    continue
+                if re.search(r"ror_|_ror_|_ror", mod["package_name"]):
+                    logging.info(f"Skipping {mod['package_name']} because it is just a collection of Regiment of Renown units.")
+                    continue
+                mods_to_process.append((idx, mod))
 
-                # Collect all possible effects for the unit, filtered through the global first-wins dedup set.
-                for effect in process_unit_by_category(data, main_units_mapping, faction):
-                    if not effect:
+            def extract_mod_data(idx: int, mod: Dict[str, Any]) -> Optional[ModExtractResult]:
+                """Extract one mod's table data and variantmeshes into a per-mod scratch dir and build the per-mod mappings consumed by the serial merge pass.
+
+                All I/O-heavy work (rpfm_cli subprocess, TSV parsing) happens here. The dedup-gated FK walk and TSV writes are deferred to the serial pass so the global `processed_unit_effects` / `DuplicateTracker` stay deterministic.
+
+                Args:
+                    idx (int): Original index of `mod` in `SUPPORTED_MODS`. Preserved on the result so the serial pass can re-sort.
+                    mod (Dict[str, Any]): Entry from `SUPPORTED_MODS`.
+
+                Returns:
+                    A `ModExtractResult` if extraction yielded the three required tables, otherwise None (mod is silently dropped).
+                """
+                logging.info(f"Extracting the mod: {mod['package_name']}")
+                folder_name = clean_folder_name(mod["package_name"])
+                scratch_root = f"{TEMP_DIR}/{folder_name}"
+                variantmeshes_root = f"{scratch_root}/modded_variantmeshes"
+
+                table_data = extract_and_load_table_data(mod["path"], primary_table_configs, scratch_root=scratch_root)
+                if table_data is None:
+                    cleanup_modded_folders(scratch_root=scratch_root)
+                    return None
+
+                extract_variantmeshes_folder(mod["path"], dest=variantmeshes_root)
+
+                units_to_factions_mapping = {data["unit"]: data["military_group"] for data in table_data["units_to_groupings_military_permissions_tables"].values()}
+                main_units_mapping = {data["unit"]: data for data in table_data["main_units_tables"].values()}
+                merged_modded_land_units_data = list(table_data["land_units_tables"].values())
+
+                return ModExtractResult(
+                    mod_index=idx,
+                    mod=mod,
+                    folder_name=folder_name,
+                    scratch_root=scratch_root,
+                    variantmeshes_root=variantmeshes_root,
+                    table_data=table_data,
+                    modded_land_units_headers=table_data["land_units_tables_headers"],
+                    modded_land_units_version_info=table_data["land_units_tables_version_info"],
+                    modded_main_units_headers=table_data["main_units_tables_headers"],
+                    modded_main_units_version_info=table_data["main_units_tables_version_info"],
+                    units_to_factions_mapping=units_to_factions_mapping,
+                    main_units_mapping=main_units_mapping,
+                    merged_modded_land_units_data=merged_modded_land_units_data,
+                )
+
+            logging.info(f"Extracting {len(mods_to_process)} mods with {args.workers} worker thread(s).")
+            extract_results: List[Optional[ModExtractResult]] = run_parallel(
+                mods_to_process,
+                lambda im: extract_mod_data(im[0], im[1]),
+                args.workers,
+                label_fn=lambda im: f"mod {im[1].get('package_name', '<unknown>')}",
+            )
+
+            # Re-sort by original SUPPORTED_MODS index so the serial dedup pass is deterministic regardless of worker completion order.
+            ordered_results = sorted((r for r in extract_results if r is not None), key=lambda r: r.mod_index)
+
+            logging.info(f"Merging {len(ordered_results)} extracted mods serially.")
+            for result in ordered_results:
+                mod = result.mod
+                folder_name = result.folder_name
+                table_data = result.table_data
+                units_to_factions_mapping = result.units_to_factions_mapping
+                main_units_mapping = result.main_units_mapping
+
+                variant_mesh_definitions_to_add: List[str] = []
+
+                list_of_data_to_add = []
+                for data in result.merged_modded_land_units_data:
+                    new_data = make_new_data_buckets(data["key"], with_purchasable_effects=True)
+
+                    faction = units_to_factions_mapping.get(data["key"])
+                    if not faction:
                         continue
-                    unit_effect_key = (data["key"], effect)
-                    if unit_effect_key in processed_unit_effects:
-                        logging.debug(f"Skipping duplicate effect {effect} for unit {data['key']}.")
+                    logging.debug(f"Processing the unit key: {data['key']}.")
+
+                    # Collect all possible effects for the unit, filtered through the global first-wins dedup set.
+                    for effect in process_unit_by_category(data, main_units_mapping, faction):
+                        if not effect:
+                            continue
+                        unit_effect_key = (data["key"], effect)
+                        if unit_effect_key in processed_unit_effects:
+                            logging.debug(f"Skipping duplicate effect {effect} for unit {data['key']}.")
+                            continue
+                        processed_unit_effects.add(unit_effect_key)
+                        new_data["unit_purchasable_effect_sets"].append(
+                            {"unit": data["key"], "purchasable_effect": effect, "is_exclusive": "False"}
+                        )
+
+                    if not new_data["unit_purchasable_effect_sets"]:
                         continue
-                    processed_unit_effects.add(unit_effect_key)
-                    new_data["unit_purchasable_effect_sets"].append(
-                        {"unit": data["key"], "purchasable_effect": effect, "is_exclusive": "False"}
+
+                    # If the unit key does not exist in main_units_tables, the mod edited a vanilla unit and we skip the FK walk.
+                    if data["key"] in main_units_mapping:
+                        walk_land_unit_to_related_tables(
+                            data=data,
+                            main_unit_data=main_units_mapping[data["key"]],
+                            table_data=table_data,
+                            tracker=tracker,
+                            new_data=new_data,
+                            vanilla_mounts_keys=vanilla_mounts_keys,
+                            variant_mesh_definitions_to_add=variant_mesh_definitions_to_add,
+                            variantmeshes_root=result.variantmeshes_root,
+                        )
+
+                    list_of_data_to_add.append(new_data)
+
+                if len(list_of_data_to_add) > 0:
+                    # Write the updated data tables to the required TSV files.
+                    unit_purchasable_effect_sets_tables_version_info = vanilla_unit_purchasable_effect_sets_tables_version_info.replace(
+                        "data__", f"!!!{folder_name}"
+                    )
+                    land_units_version_info = result.modded_land_units_version_info.replace(
+                        result.modded_land_units_version_info.split("/")[-1], f"!!!{folder_name}"
+                    )
+                    main_units_version_info = result.modded_main_units_version_info.replace(
+                        result.modded_main_units_version_info.split("/")[-1], f"!!!{folder_name}"
                     )
 
-                if not new_data["unit_purchasable_effect_sets"]:
-                    continue
+                    tables_to_sort = [
+                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/land_units_tables",
+                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/main_units_tables",
+                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/unit_purchasable_effect_sets_tables",
+                    ]
 
-                # If the unit key does not exist in main_units_tables, the mod edited a vanilla unit and we skip the FK walk.
-                if data["key"] in main_units_mapping:
-                    walk_land_unit_to_related_tables(
-                        data=data,
-                        main_unit_data=main_units_mapping[data["key"]],
-                        table_data=table_data,
-                        tracker=tracker,
-                        new_data=new_data,
-                        vanilla_mounts_keys=vanilla_mounts_keys,
-                        variant_mesh_definitions_to_add=variant_mesh_definitions_to_add,
+                    # Write the data to required and optional tables.
+                    for data_to_add in list_of_data_to_add:
+                        logging.debug(
+                            f"Writing {len(data_to_add['unit_purchasable_effect_sets'])} unit purchasable effect sets for {data_to_add['key']}."
+                        )
+
+                        # Write to the required tables first.
+                        # Set allow_duplicates=False so write_updated_tsv_file checks for duplicates using composite key (unit + purchasable_effect).
+                        write_updated_tsv_file(
+                            data_to_add["unit_purchasable_effect_sets"],
+                            vanilla_unit_purchasable_effect_sets_tables_headers,
+                            unit_purchasable_effect_sets_tables_version_info,
+                            f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/unit_purchasable_effect_sets_tables",
+                            f"!!!{folder_name}",
+                            allow_duplicates=False,
+                        )
+                        write_updated_tsv_file(
+                            data_to_add["land_units"],
+                            result.modded_land_units_headers,
+                            land_units_version_info,
+                            f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/land_units_tables",
+                            f"!!!{folder_name}",
+                        )
+                        write_updated_tsv_file(
+                            data_to_add["main_units"],
+                            result.modded_main_units_headers,
+                            main_units_version_info,
+                            f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/main_units_tables",
+                            f"!!!{folder_name}",
+                        )
+
+                        # Now write to all of the available optional tables.
+                        write_optional_tables(
+                            data_to_add, f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat", f"!!!{folder_name}", table_data, tables_to_sort
+                        )
+
+                    # Move any captured variantmeshdefinitions (and their wh_variantmodels) into the compat pack. Source dir is this mod's per-worker scratch.
+                    move_variantmesh_definitions(
+                        variant_mesh_definitions_to_add,
+                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat",
                         variantmeshes_root=result.variantmeshes_root,
                     )
 
-                list_of_data_to_add.append(new_data)
+                    # After writing is complete, sort the required and optional tables.
+                    for table_path in tables_to_sort:
+                        sort_tsv_data(table_path, f"!!!{folder_name}")
 
-            if len(list_of_data_to_add) > 0:
-                # Write the updated data tables to the required TSV files.
-                unit_purchasable_effect_sets_tables_version_info = vanilla_unit_purchasable_effect_sets_tables_version_info.replace(
-                    "data__", f"!!!{folder_name}"
-                )
-                land_units_version_info = result.modded_land_units_version_info.replace(
-                    result.modded_land_units_version_info.split("/")[-1], f"!!!{folder_name}"
-                )
-                main_units_version_info = result.modded_main_units_version_info.replace(
-                    result.modded_main_units_version_info.split("/")[-1], f"!!!{folder_name}"
-                )
+                cleanup_modded_folders(scratch_root=result.scratch_root)
 
-                tables_to_sort = [
-                    f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/land_units_tables",
-                    f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/main_units_tables",
-                    f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/unit_purchasable_effect_sets_tables",
-                ]
+                logging.info(f"Processed {len(list_of_data_to_add)} units for {mod['package_name']}.")
 
-                # Write the data to required and optional tables.
-                for data_to_add in list_of_data_to_add:
-                    logging.debug(
-                        f"Writing {len(data_to_add['unit_purchasable_effect_sets'])} unit purchasable effect sets for {data_to_add['key']}."
-                    )
+                # Clear the data list from memory to avoid retaining the per-mod state across the rest of the loop.
+                list_of_data_to_add.clear()
+                main_units_mapping.clear()
+                units_to_factions_mapping.clear()
+                table_data.clear()
 
-                    # Write to the required tables first.
-                    # Set allow_duplicates=False so write_updated_tsv_file checks for duplicates using composite key (unit + purchasable_effect).
-                    write_updated_tsv_file(
-                        data_to_add["unit_purchasable_effect_sets"],
-                        vanilla_unit_purchasable_effect_sets_tables_headers,
-                        unit_purchasable_effect_sets_tables_version_info,
-                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/unit_purchasable_effect_sets_tables",
-                        f"!!!{folder_name}",
-                        allow_duplicates=False,
-                    )
-                    write_updated_tsv_file(
-                        data_to_add["land_units"],
-                        result.modded_land_units_headers,
-                        land_units_version_info,
-                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/land_units_tables",
-                        f"!!!{folder_name}",
-                    )
-                    write_updated_tsv_file(
-                        data_to_add["main_units"],
-                        result.modded_main_units_headers,
-                        main_units_version_info,
-                        f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/main_units_tables",
-                        f"!!!{folder_name}",
-                    )
+                gc.collect()
+        except Exception as e:
+            logging.exception(e)
 
-                    # Now write to all of the available optional tables.
-                    write_optional_tables(
-                        data_to_add, f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat", f"!!!{folder_name}", table_data, tables_to_sort
-                    )
+        # After processing all mods, move the mod folder to the destination folder.
+        if os.path.exists(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat"):
+            logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_compat to ../warhammer3_mods/.")
+            merge_move(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat", "../warhammer3_mods/")
 
-                # Move any captured variantmeshdefinitions (and their wh_variantmodels) into the compat pack. Source dir is this mod's per-worker scratch.
-                move_variantmesh_definitions(
-                    variant_mesh_definitions_to_add,
-                    f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat",
-                    variantmeshes_root=result.variantmeshes_root,
-                )
+        def write_compat_pack() -> None:
+            """Replace the compat pack's contents with the regenerated files."""
+            if args.reset:
+                reset_pack_folders(compat_pack_path)
+            add_folder_to_pack(compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat;")
 
-                # After writing is complete, sort the required and optional tables.
-                for table_path in tables_to_sort:
-                    sort_tsv_data(table_path, f"!!!{folder_name}")
+        publish_pack("3513364573", compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat", write_compat_pack)
 
-            cleanup_modded_folders(scratch_root=result.scratch_root)
-
-            logging.info(f"Processed {len(list_of_data_to_add)} units for {mod['package_name']}.")
-
-            # Clear the data list from memory to avoid retaining the per-mod state across the rest of the loop.
-            list_of_data_to_add.clear()
-            main_units_mapping.clear()
-            units_to_factions_mapping.clear()
-            table_data.clear()
-
-            gc.collect()
-    except Exception as e:
-        logging.exception(e)
-
-    # After processing all mods, move the mod folder to the destination folder.
-    if os.path.exists(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat"):
-        logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_compat to ../warhammer3_mods/.")
-        merge_move(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat", "../warhammer3_mods/")
-
-    if args.reset:
-        reset_pack_folders(compat_pack_path)
-
-    # Then merge the updated mod files into the packfile.
-    add_folder_to_pack(compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat;")
-
-    # Perform final cleanup of vanilla folders.
-    cleanup_folders(
-        [
-            f"{TEMP_DIR}/vanilla_unit_purchasable_effect_sets_tables",
-            f"{TEMP_DIR}/vanilla_mounts_tables",
-            f"{TEMP_DIR}/vanilla_main_units_tables",
-            f"{TEMP_DIR}/vanilla_land_units_tables",
-            f"{TEMP_DIR}/vanilla_units_to_groupings_military_permissions_tables",
-            f"{TEMP_DIR}/nanu_unit_purchasable_effect_sets_tables",
-        ]
-    )
+    finally:
+        clear_temp_root()
 
     if MISSING_MODS:
         logging.info(f"Missing mods: {MISSING_MODS}")

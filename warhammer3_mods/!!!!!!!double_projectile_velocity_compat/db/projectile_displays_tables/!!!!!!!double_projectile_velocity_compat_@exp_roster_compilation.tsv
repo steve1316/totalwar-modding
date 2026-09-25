@@ -1,0 +1,5 @@
+key	display_model	impact	launch_fx	trail_fx	stationary_fx	airborne_anim	landing_anim	tip_offset	trail_spin	launch_camera_shake	impact_bounce	impact_penetrate	impact_blood	impact_bounce_blood	impact_penetrate_blood	mirroring_start	mirroring_trail	scale
+#projectile_displays_tables;12;db/projectile_displays_tables/!!!!!!!double_projectile_velocity_compat_@exp_roster_compilation
+dec_ember_drake_breath		wh2_main_sun_dragon_breath_impact		wh2_main_sun_dragon_breath_trail				0.0000	false									1.0000
+dec_magma_dragon_breath		wh2_main_sun_dragon_breath_impact		wh2_main_sun_dragon_breath_trail				0.0000	false									1.0000
+deco_chd_annihilators_projectile	projectiles\chd_small_rocket_01_proj.wsmodel	wh_main_impact_very_small	wh3_dlc23_malakai_muzzle_flash	wh3_dlc23_deathshrieker_rocket_trail_1				0.0000	true	wh_main_unit_launch_medium	wh_main_bounce_impact	wh_main_entity_impact				wh3_main_yin_missile_mirror_impact_small	wh3_main_spell_yin_missile_mirror_trail_small	0.5000
