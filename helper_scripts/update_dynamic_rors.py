@@ -19,6 +19,7 @@ from utilities import (
 )
 from supported_mods import SUPPORTED_MODS
 from dynamic_rors_effects import SUPPORTED_EFFECTS
+from delta import publish_pack
 from pipeline import (
     DuplicateTracker,
     add_folder_to_pack,
@@ -675,13 +676,15 @@ if __name__ == "__main__":
                     logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_leftover_vanilla to ../warhammer3_mods/.")
                     merge_move(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_leftover_vanilla", "../warhammer3_mods/")
 
-                if args.reset:
-                    reset_pack_folders(leftover_pack_path, ("db",))
+                leftover_source = "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables"
 
-                add_folder_to_pack(
-                    leftover_pack_path,
-                    "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db/unit_purchasable_effect_sets_tables;db/unit_purchasable_effect_sets_tables",
-                )
+                def write_leftover_pack() -> None:
+                    """Replace the leftover vanilla pack's tables with the regenerated files."""
+                    if args.reset:
+                        reset_pack_folders(leftover_pack_path, ("db",))
+                    add_folder_to_pack(leftover_pack_path, f"{leftover_source};db/unit_purchasable_effect_sets_tables")
+
+                publish_pack("3532864014", leftover_pack_path, leftover_source, write_leftover_pack)
 
                 exit(0)
 
@@ -899,11 +902,13 @@ if __name__ == "__main__":
             logging.info(f"Moving !!!!!!!_nanu_dynamic_rors_compat to ../warhammer3_mods/.")
             merge_move(f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat", "../warhammer3_mods/")
 
-        if args.reset:
-            reset_pack_folders(compat_pack_path)
+        def write_compat_pack() -> None:
+            """Replace the compat pack's contents with the regenerated files."""
+            if args.reset:
+                reset_pack_folders(compat_pack_path)
+            add_folder_to_pack(compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat;")
 
-        # Then merge the updated mod files into the packfile.
-        add_folder_to_pack(compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat;")
+        publish_pack("3513364573", compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat", write_compat_pack)
 
     finally:
         clear_temp_root()
