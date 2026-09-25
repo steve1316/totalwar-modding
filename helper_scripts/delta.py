@@ -14,7 +14,7 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from extract_cache import ensure_extracted, file_sha256, normalize_path, pack_sha256, toolchain_hash, tree_sha256
+from extract_cache import ensure_extracted, extraction_content_sha, file_sha256, normalize_path, pack_sha256, toolchain_hash, tree_sha256
 from pipeline import workshop_pack_path
 from utilities import FILEPATH_TO_VANILLA_DATA_TABLES
 
@@ -271,8 +271,8 @@ def check_unit(unit: Unit) -> UnitCheck:
             continue
         if current_sha == access["pack_sha"]:
             continue
-        result = ensure_extracted(access["pack"], access["source"], access["source_kind"], access["tables_as_tsv"], capture_output=True)
-        if result is None or result["content_sha"] != access["content_sha"]:
+        content_sha = extraction_content_sha(access["pack"], access["source"], access["source_kind"], access["tables_as_tsv"])
+        if content_sha is None or content_sha != access["content_sha"]:
             check.stale = True
             check.reasons.append(f"{label} changed")
             check.changed_accesses.append(access)

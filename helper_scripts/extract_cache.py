@@ -1,7 +1,8 @@
 """Content-addressed cache for `rpfm_cli pack extract` results.
 
-Every extraction is keyed by the SHA-256 of the source pack plus the rpfm toolchain (schema + exe) and the extract arguments. An unchanged pack is served
-from `extract_cache/` with a file copy instead of an rpfm subprocess. Pack hashes are remembered in a manifest so a pack is only rehashed when its size or
+Every db table extraction is keyed by the SHA-256 of the source pack plus the rpfm toolchain (schema + exe) and the extract arguments. An unchanged pack is
+served from `extract_cache/` with a file copy instead of an rpfm subprocess. Non-table extractions such as `variantmeshes` are not stored because their model
+files would take tens of GB for little time saved, but they are still hashed and recorded. Pack hashes are remembered in a manifest so a pack is only rehashed when its size or
 mtime changes.
 
 Set the `EXTRACT_CACHE=0` environment variable to bypass reading and writing cache entries. When `DELTA_ACCESS_LOG` is set, every extraction is appended to
@@ -280,15 +281,17 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
 
     Returns:
         A dict with `pack_sha`, `content_sha`, `produced` (whether rpfm created the destination) and `tree` (cached tree path, or None when the result
-        was not cached because caching is disabled or rpfm failed). Returns None if the pack does not exist.
+        was not stored because caching is disabled, it is not a table extraction, or rpfm failed). An unstored result carries its `staging` folder, which
+        the caller must remove. Returns None if the pack does not exist.
     """
     pack_sha = pack_sha256(pack_path)
     if pack_sha is None:
         return None
+    store = cache_enabled() and tables_as_tsv
 
     entry = _entry_dir(pack_sha, source_kind, source, tables_as_tsv)
     meta_path = f"{entry}/meta.json"
-    if cache_enabled() and os.path.exists(meta_path):
+    if store and os.path.exists(meta_path):
         with open(meta_path, "r", encoding="utf-8") as f:
             meta = json.load(f)
         _warn_binary(pack_path, meta.get("binary_tables", []))
@@ -302,7 +305,7 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
     _warn_binary(pack_path, binary_tables)
     result = {"pack_sha": pack_sha, "content_sha": tree_sha256(staging), "produced": produced, "tree": None, "staging": staging}
 
-    if cache_enabled() and return_code == 0:
+    if store and return_code == 0:
         tree = f"{entry}/tree"
         with _LOCK:
             os.makedirs(entry, exist_ok=True)
@@ -328,6 +331,26 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
     elif return_code != 0:
         logging.warning(f"rpfm exited with {return_code} extracting {source} from {os.path.basename(pack_path)}. The result was not cached.")
     return result
+
+
+def extraction_content_sha(pack_path: str, source: str, source_kind: str = "folder", tables_as_tsv: bool = True) -> Optional[str]:
+    """Return the content hash of one extraction without copying it anywhere, extracting through the cache on a miss.
+
+    Args:
+        pack_path (str): Path to the `.pack` file.
+        source (str): Pack-relative path being extracted.
+        source_kind (str): `folder` or `file`. Defaults to `folder`.
+        tables_as_tsv (bool): Whether tables are converted to TSV. Defaults to True.
+
+    Returns:
+        The content hash, or None if the pack does not exist.
+    """
+    result = ensure_extracted(pack_path, source, source_kind, tables_as_tsv, capture_output=True)
+    if result is None:
+        return None
+    if result.get("staging"):
+        _rmtree(result["staging"])
+    return result["content_sha"]
 
 
 def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str = "folder", tables_as_tsv: bool = True, capture_output: bool = False) -> None:
@@ -357,11 +380,23 @@ def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str
         shutil.copytree(result["tree"], dest, dirs_exist_ok=True)
     else:
         shutil.copytree(result["staging"], dest, dirs_exist_ok=True)
-        shutil.rmtree(result["staging"], ignore_errors=True)
+        _rmtree(result["staging"])
+
+
+def _rmtree(path: str) -> None:
+    """Delete a directory tree, using the Windows long-path prefix so deep model paths past 260 characters are removed too.
+
+    Args:
+        path (str): Directory to delete. Missing paths are ignored.
+    """
+    full_path = os.path.abspath(path)
+    if os.name == "nt" and not full_path.startswith("\\\\?\\"):
+        full_path = "\\\\?\\" + full_path
+    shutil.rmtree(full_path, ignore_errors=True)
 
 
 def prune_cache(keep_pack_shas: List[str]) -> int:
-    """Delete cached extractions for packs whose hash is no longer referenced, and entries made with an older rpfm schema or exe.
+    """Delete cached extractions for packs whose hash is no longer referenced, entries made with an older rpfm schema or exe, and non-table entries.
 
     Args:
         keep_pack_shas (List[str]): Full pack SHA-256 digests that are still in use.
@@ -377,16 +412,17 @@ def prune_cache(keep_pack_shas: List[str]) -> int:
     for name in os.listdir(OBJECTS_ROOT):
         pack_dir = f"{OBJECTS_ROOT}/{name}"
         if name not in keep:
-            shutil.rmtree(pack_dir, ignore_errors=True)
+            _rmtree(pack_dir)
             removed += 1
             continue
         for entry in os.listdir(pack_dir):
             try:
                 with open(f"{pack_dir}/{entry}/meta.json", "r", encoding="utf-8") as f:
-                    stale_toolchain = json.load(f).get("toolchain") != current_toolchain
+                    meta = json.load(f)
+                outdated = meta.get("toolchain") != current_toolchain or not meta.get("source", "").startswith("db/")
             except (FileNotFoundError, json.JSONDecodeError):
-                stale_toolchain = True
-            if stale_toolchain:
-                shutil.rmtree(f"{pack_dir}/{entry}", ignore_errors=True)
-    shutil.rmtree(STAGING_ROOT, ignore_errors=True)
+                outdated = True
+            if outdated:
+                _rmtree(f"{pack_dir}/{entry}")
+    _rmtree(STAGING_ROOT)
     return removed
