@@ -1,0 +1,7 @@
+key	display_model	impact	launch_fx	trail_fx	stationary_fx	airborne_anim	landing_anim	tip_offset	trail_spin	launch_camera_shake	impact_bounce	impact_penetrate	impact_blood	impact_bounce_blood	impact_penetrate_blood	mirroring_start	mirroring_trail	scale
+#projectile_displays_tables;12;db/projectile_displays_tables/!!!!!!!double_projectile_velocity_compat_!xou_age_TKExtended
+MC_D_miss	projectiles/dummy_entry_intentional.wsmodel	MC_D_miss_impact		wh2_dlc09_lib_machine_screaming_skull_catapult_large_trail				0.0000	false	wh_main_unit_launch_medium	wh_main_bounce_impact	wh_main_entity_impact						1.0000
+MC_L_miss		MC_L_miss_impact	wh_main_weapon_flamethrower_beam	wh2_main_sun_dragon_breath_trail				0.0000	false	wh_main_unit_launch_medium	wh_main_bounce_impact	wh_main_entity_impact						1.0000
+MC_N_miss	projectiles/dummy_entry_intentional.wsmodel	MC_N_miss_impact		wh2_main_forest_dragon_breath_trail				0.0000	false	wh_main_unit_launch_medium	wh_main_bounce_impact	wh_main_entity_impact						1.0000
+tmb_bone_thrower_bolt	projectiles/tmb_bolt.wsmodel	wh_main_impact_medium	wh2_dlc10_bone_giant_launch	wh2_dlc10_bone_giant_trail				0.0000	false		wh_main_bounce_impact	wh_main_entity_impact						1.0000
+wh2_tmb_ptras_incantation	vfx/models/wh2_tmb_ptras_statue.rigid_model_v2	ghs_tmb_ptras_bomb_impact		ghs_tmb_ptras_bomb_trail				0.0000	false	wh_main_unit_launch_heavy	ghs_tmb_ptras_bomb_impact	ghs_tmb_ptras_bomb_impact				wh3_main_yin_missile_mirror_impact_large	wh3_main_spell_yin_missile_mirror_trail_large	1.0000

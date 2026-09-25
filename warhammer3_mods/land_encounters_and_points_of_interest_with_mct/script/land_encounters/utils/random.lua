@@ -1,9 +1,11 @@
-math.randomseed(os.time()) -- random initialize
-math.random(); math.random(); math.random() -- warming up
+--- Side-effect module that publishes random-number / shuffle utility globals used across the mod.
 
---- @function randomic_length_shuffle
---- @desc Given a length creates an array with the elements of that length and and shuffles them
---- @return table random a disordered table
+math.randomseed(os.time())
+math.random(); math.random(); math.random() -- warm up the RNG after seeding
+
+--- Builds a 1..n array and returns it shuffled.
+--- @param length_of_an_array number Size of the array to build before shuffling.
+--- @returns table A shuffled array containing the integers 1..length_of_an_array.
 function randomic_length_shuffle(length_of_an_array)
     local arr = {}
     for i=1, length_of_an_array do
@@ -13,10 +15,9 @@ function randomic_length_shuffle(length_of_an_array)
 end
 
 
--- Fisher-Yates shuffle
--- Randomly shuffles an array so that its members are disordered
--- https://gist.github.com/Uradamus/10323382
--- param tbl: Array
+--- Fisher-Yates in-place shuffle. Source: https://gist.github.com/Uradamus/10323382.
+--- @param tbl table The array to shuffle in place.
+--- @returns table The same table reference, now shuffled.
 function randomic_shuffle(tbl)
     for i = #tbl, 2, -1 do
         local j = math.random(i)
@@ -26,11 +27,11 @@ function randomic_shuffle(tbl)
 end
 
 
---- @function random_number
---- @desc Have taken it from outside campaign manager for avoiding the weird behaviour of cm. Assembles and returns a random integer between 1 and 100, or other supplied values. The result returned is inclusive of the supplied max/min. This is safe to use in multiplayer scripts.
---- @p [opt=100] integer max, Maximum value of returned random number.
---- @p [opt=1] integer min, Minimum value of returned random number.
---- @return number random number
+--- Returns a random integer in [min_num, max_num] (defaults 1..100). Safe in multiplayer. Used in place of cm:random_number
+--- which has quirky behavior. Returns 0 for invalid inputs.
+--- @param max_num number Upper bound inclusive. Defaults to 100 when nil.
+--- @param min_num number Lower bound inclusive. Defaults to 1 when nil.
+--- @returns number A random integer in the range, or 0 on invalid input.
 function random_number(max_num, min_num)
 	if max_num == nil then
 		max_num = 100

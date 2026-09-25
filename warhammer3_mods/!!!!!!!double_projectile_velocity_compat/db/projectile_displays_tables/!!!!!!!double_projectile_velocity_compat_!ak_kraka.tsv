@@ -1,0 +1,5 @@
+key	display_model	impact	launch_fx	trail_fx	stationary_fx	airborne_anim	landing_anim	tip_offset	trail_spin	launch_camera_shake	impact_bounce	impact_penetrate	impact_blood	impact_bounce_blood	impact_penetrate_blood	mirroring_start	mirroring_trail	scale
+#projectile_displays_tables;12;db/projectile_displays_tables/!!!!!!!double_projectile_velocity_compat_!ak_kraka
+kraka_pathgrinders	projectiles\bst_amber_projectile.wsmodel	wh_main_impact_small						0.0000	false		wh_main_bounce_impact	wh_main_entity_impact						0.0800
+kraka_ror_thunderbows	projectiles\wh_dwf_crossbow_bolt.rigid_model_v2	arrow		wh_dlc05_wef_hagbane_arrow_trail				-0.0200	false		wh_main_bounce_impact	wh_main_entity_impact						1.0000
+kraka_spikegunners	projectiles\def_handbow_bolt_01.wsmodel	wh_main_impact_very_small	wh_main_machine_gyrocopter_steamgun	wh_main_weapon_trail_rifle				0.0000	false			wh_main_impact_very_small						1.0000

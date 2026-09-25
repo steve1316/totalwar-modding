@@ -13,13 +13,26 @@ import logging
 import gc
 import shutil
 import time
-from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, run_parallel, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE, TEMP_DIR
+from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
+from extract_cache import cached_pack_extract
+from delta import publish_pack
+from pipeline import workshop_pack_path
 from typing import List, Dict, Optional, Tuple
 
 
 FAILED_MODS = []
 MISSING_MODS = []
+
+LEAPOI_STEAM_ID = "3397481450"
+LEAPOI_PACK_PATH = workshop_pack_path(LEAPOI_STEAM_ID, "land_encounters_and_points_of_interest_6_0.pack")
+LEAPOI_SOURCE_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct"
+
+# Known locations of `factions_data.lua` inside the LEAPOI mod, newest layout first. The restructure moved it from `constants/battles` to `configs`.
+FACTIONS_DATA_LOCATIONS = [
+    "script/land_encounters/configs/factions_data.lua",
+    "script/land_encounters/constants/battles/factions_data.lua",
+]
 
 
 # Pack-relative folders that every non-vanilla mod gets extracted for. Pre-computed once so workers do not rebuild it.
@@ -35,6 +48,36 @@ MOD_FOLDERS_TO_EXTRACT = [
 # Per-faction unit bucket structure. Each faction's `units` dict holds one entry per tier, and each tier holds one list per caste category.
 TIER_NAMES = [f"tier_{i}" for i in range(6)]
 UNIT_CATEGORIES = ["melee_infantry", "missile_infantry", "melee_cavalry", "missile_cavalry", "monstrous_infantry", "monstrous_cavalry", "chariot", "warmachine", "war_beast", "monster", "generic", "lord", "hero"]
+
+
+def find_source_factions_data_path() -> str:
+    """Pick where `factions_data.lua` belongs in the LEAPOI source folder, based on which layout the source currently uses.
+
+    Returns:
+        Pack-relative path of the first known location whose folder exists in the source, or the newest layout if none do.
+    """
+    for location in FACTIONS_DATA_LOCATIONS:
+        if os.path.isdir(os.path.dirname(f"{LEAPOI_SOURCE_ROOT}/{location}")):
+            return location
+    return FACTIONS_DATA_LOCATIONS[0]
+
+
+def find_pack_factions_data_path(pack_path: str, default: str) -> str:
+    """Pick where `factions_data.lua` belongs inside the Workshop pack, which may still use an older layout than the source.
+
+    Args:
+        pack_path (str): Path to the LEAPOI `.pack` file.
+        default (str): Location to use when the pack has no `factions_data.lua` yet.
+
+    Returns:
+        Pack-relative path of the existing `factions_data.lua`, or `default`.
+    """
+    listing = run_rpfm_cli(["pack", "list", "--pack-path", pack_path], capture_output=True, text=True).stdout or ""
+    files = {line.strip() for line in listing.splitlines()}
+    for location in FACTIONS_DATA_LOCATIONS:
+        if location in files:
+            return location
+    return default
 
 
 def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
@@ -59,7 +102,7 @@ def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
 
     logging.info(f"Extracting mod data from {mod['package_name']}...")
     for folder in MOD_FOLDERS_TO_EXTRACT:
-        run_rpfm_cli(["pack", "extract", "--pack-path", mod["path"], "--tables-as-tsv", "./schemas/schema_wh3.ron", "--folder-path", f"{folder};{scratch_root}/"])
+        cached_pack_extract(mod["path"], folder, f"{scratch_root}/")
 
     dfs = {
         "main_units_tables": process_tsv_files(f"{scratch_root}/db/main_units_tables/", "main_units_tables"),
@@ -385,180 +428,177 @@ if __name__ == "__main__":
 
     ensure_temp_dir()
 
-    # If the required vanilla data files are not present, extract them from the game.
-    for table_name in [
-        "main_units_tables",
-        "faction_agent_permitted_subtypes_tables",
-        "character_skill_node_set_items_tables",
-        "character_skill_node_sets_tables",
-        "character_skill_nodes_tables",
-    ]:
-        if not os.path.exists(f"{TEMP_DIR}/vanilla_{table_name}.tsv"):
-            extract_tsv_data(table_name)
-            # Now move the data__.tsv file to the root and rename it.
-            shutil.move(f"{TEMP_DIR}/vanilla_{table_name}/db/{table_name}/data__.tsv", f"{TEMP_DIR}/vanilla_{table_name}.tsv")
-            shutil.rmtree(f"{TEMP_DIR}/vanilla_{table_name}")
     try:
-        factions_data = {}
 
-        # Load vanilla data foundations.
-        # ------------------------------------------------------------------
-        df_main_units_tables_vanilla = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_main_units_tables.tsv", "main_units_tables")
-        df_faction_agent_permitted_subtypes_vanilla = read_and_clean_tsv(
-            f"{TEMP_DIR}/vanilla_faction_agent_permitted_subtypes_tables.tsv", "faction_agent_permitted_subtypes"
-        )
-        df_character_skill_node_set_items_vanilla = read_and_clean_tsv(
-            f"{TEMP_DIR}/vanilla_character_skill_node_set_items_tables.tsv", "character_skill_node_set_items_tables"
-        )
-        df_character_skill_node_sets_vanilla = read_and_clean_tsv(
-            f"{TEMP_DIR}/vanilla_character_skill_node_sets_tables.tsv", "character_skill_node_sets_tables"
-        )
-        df_character_skill_nodes_vanilla = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_character_skill_nodes_tables.tsv", "character_skill_nodes_tables")
+        # If the required vanilla data files are not present, extract them from the game.
+        for table_name in [
+            "main_units_tables",
+            "faction_agent_permitted_subtypes_tables",
+            "character_skill_node_set_items_tables",
+            "character_skill_node_sets_tables",
+            "character_skill_nodes_tables",
+        ]:
+            if not os.path.exists(f"{TEMP_DIR}/vanilla_{table_name}.tsv"):
+                extract_tsv_data(table_name)
+                # Now move the data__.tsv file to the root and rename it.
+                shutil.move(f"{TEMP_DIR}/vanilla_{table_name}/db/{table_name}/data__.tsv", f"{TEMP_DIR}/vanilla_{table_name}.tsv")
+                shutil.rmtree(f"{TEMP_DIR}/vanilla_{table_name}")
+        try:
+            factions_data = {}
 
-        # Convert the schemas from Ron to JSON.
-        run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"])
+            # Load vanilla data foundations.
+            # ------------------------------------------------------------------
+            df_main_units_tables_vanilla = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_main_units_tables.tsv", "main_units_tables")
+            df_faction_agent_permitted_subtypes_vanilla = read_and_clean_tsv(
+                f"{TEMP_DIR}/vanilla_faction_agent_permitted_subtypes_tables.tsv", "faction_agent_permitted_subtypes"
+            )
+            df_character_skill_node_set_items_vanilla = read_and_clean_tsv(
+                f"{TEMP_DIR}/vanilla_character_skill_node_set_items_tables.tsv", "character_skill_node_set_items_tables"
+            )
+            df_character_skill_node_sets_vanilla = read_and_clean_tsv(
+                f"{TEMP_DIR}/vanilla_character_skill_node_sets_tables.tsv", "character_skill_node_sets_tables"
+            )
+            df_character_skill_nodes_vanilla = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_character_skill_nodes_tables.tsv", "character_skill_nodes_tables")
 
-        # Load the schema.
-        with open("schemas/schema_wh3.json", "r", encoding="utf-8") as schema_file:
-            schema = json.load(schema_file)
+            # Convert the schemas from Ron to JSON.
+            run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"])
 
-        # Process supported mods.
-        # ------------------------------------------------------------------
-        # Pre-filter (single pass, sequential): drop ignore_generation mods, collect supported names, flag missing mods, decide which mods need a parallel extraction. Order is preserved by carrying the original SUPPORTED_MODS index.
-        list_of_supported_package_names: List[str] = []
-        mods_to_extract: List[Tuple[int, Dict]] = []
-        process_order: List[Tuple[int, Dict]] = []
-        for idx, mod in enumerate(SUPPORTED_MODS):
-            if "ignore_generation" in mod and mod["ignore_generation"]:
-                logging.info(f"Skipping {mod['package_name']} because it is marked to be ignored.")
-                continue
-            list_of_supported_package_names.append(mod["package_name"].replace(".pack", ""))
-            if mod["path"] and not os.path.exists(mod["path"]):
-                MISSING_MODS.append(mod["package_name"])
-                continue
-            process_order.append((idx, mod))
-            if mod["package_name"] != "vanilla":
-                mods_to_extract.append((idx, mod))
+            # Load the schema.
+            with open("schemas/schema_wh3.json", "r", encoding="utf-8") as schema_file:
+                schema = json.load(schema_file)
 
-        # Parallel extraction: each worker writes only to its own `temp/<folder_name>/` scratch and returns loaded dataframes. The vanilla mod is not extracted; the serial pass uses the pre-loaded vanilla dataframes.
-        logging.info(f"Extracting {len(mods_to_extract)} mods with {args.workers} worker thread(s).")
-        per_mod_dfs: Dict[int, Dict[str, pd.DataFrame]] = {}
-        extract_results = run_parallel(
-            mods_to_extract,
-            lambda im: (im[0], extract_mod_dataframes(im[1])),
-            args.workers,
-            label_fn=lambda im: f"mod {im[1].get('package_name', '<unknown>')}",
-        )
-        for idx, dfs in extract_results:
-            if dfs is not None:
-                per_mod_dfs[idx] = dfs
+            # Process supported mods.
+            # ------------------------------------------------------------------
+            # Pre-filter (single pass, sequential): drop ignore_generation mods, collect supported names, flag missing mods, decide which mods need a parallel extraction. Order is preserved by carrying the original SUPPORTED_MODS index.
+            list_of_supported_package_names: List[str] = []
+            mods_to_extract: List[Tuple[int, Dict]] = []
+            process_order: List[Tuple[int, Dict]] = []
+            for idx, mod in enumerate(SUPPORTED_MODS):
+                if "ignore_generation" in mod and mod["ignore_generation"]:
+                    logging.info(f"Skipping {mod['package_name']} because it is marked to be ignored.")
+                    continue
+                list_of_supported_package_names.append(mod["package_name"].replace(".pack", ""))
+                if mod["path"] and not os.path.exists(mod["path"]):
+                    MISSING_MODS.append(mod["package_name"])
+                    continue
+                process_order.append((idx, mod))
+                if mod["package_name"] != "vanilla":
+                    mods_to_extract.append((idx, mod))
 
-        # Serial merge pass in original SUPPORTED_MODS order so `factions_data`, `faction_keys`, and the in-tier list ordering stay deterministic (the lists in `factions_data[faction]["units"][tier][category]` are append-only and order-sensitive).
-        for idx, mod in process_order:
-            if mod["package_name"] == "vanilla":
-                logging.info(f"Processing vanilla units...")
+            # Parallel extraction: each worker writes only to its own `temp/<folder_name>/` scratch and returns loaded dataframes. The vanilla mod is not extracted; the serial pass uses the pre-loaded vanilla dataframes.
+            logging.info(f"Extracting {len(mods_to_extract)} mods with {args.workers} worker thread(s).")
+            per_mod_dfs: Dict[int, Dict[str, pd.DataFrame]] = {}
+            extract_results = run_parallel(
+                mods_to_extract,
+                lambda im: (im[0], extract_mod_dataframes(im[1])),
+                args.workers,
+                label_fn=lambda im: f"mod {im[1].get('package_name', '<unknown>')}",
+            )
+            for idx, dfs in extract_results:
+                if dfs is not None:
+                    per_mod_dfs[idx] = dfs
+
+            # Serial merge pass in original SUPPORTED_MODS order so `factions_data`, `faction_keys`, and the in-tier list ordering stay deterministic (the lists in `factions_data[faction]["units"][tier][category]` are append-only and order-sensitive).
+            for idx, mod in process_order:
+                if mod["package_name"] == "vanilla":
+                    logging.info(f"Processing vanilla units...")
+                    factions_data = tsv_to_faction_data(
+                        mod,
+                        factions_data,
+                        faction_keys,
+                        df_main_units_tables_vanilla,
+                        df_faction_agent_permitted_subtypes_vanilla,
+                        df_character_skill_node_set_items_vanilla,
+                        df_character_skill_node_sets_vanilla,
+                        df_character_skill_nodes_vanilla,
+                    )
+                    continue
+
+                dfs = per_mod_dfs.get(idx)
+                if dfs is None:
+                    # Worker skipped (missing path was caught earlier, so this branch only fires if `extract_mod_dataframes` returned None for a mod whose path went missing between pre-filter and extraction).
+                    continue
+
+                logging.info(f"Now processing {mod['package_name']}...")
+
+                default_faction = None
+                do_not_use_underscore_pattern = False
+                pattern_overrides = mod["pattern_overrides"]
+                if "*" in pattern_overrides:
+                    default_faction = pattern_overrides["*"]
+                    logging.info(f"Pattern is the wildcard itself so we will use '{default_faction}' for all units in this mod.")
+                elif any("*" in key for key in pattern_overrides):
+                    logging.info(f"Pattern is a wildcard pattern, so we will not use the underscore pattern.")
+                    do_not_use_underscore_pattern = True
+
+                # If the mod has a factions_override field, add the contents to faction_keys. Mutation of the shared `faction_keys` list persists across mods, matching the pre-parallel behavior.
+                if "faction_overrides" in mod:
+                    for new_faction_key in mod["faction_overrides"]:
+                        faction_keys.append({new_faction_key: new_faction_key})
+                temp_faction_keys = faction_keys.copy()
+
+                if pattern_overrides and "*" not in pattern_overrides:
+                    for temp_faction_key, temp_faction_value in pattern_overrides.items():
+                        temp_faction_keys.append({temp_faction_key.replace("*", ""): temp_faction_value})
+                        if "_" in temp_faction_key:
+                            do_not_use_underscore_pattern = True
+
                 factions_data = tsv_to_faction_data(
                     mod,
                     factions_data,
-                    faction_keys,
-                    df_main_units_tables_vanilla,
-                    df_faction_agent_permitted_subtypes_vanilla,
-                    df_character_skill_node_set_items_vanilla,
-                    df_character_skill_node_sets_vanilla,
-                    df_character_skill_nodes_vanilla,
+                    temp_faction_keys,
+                    dfs["main_units_tables"],
+                    dfs["faction_agent_permitted_subtypes_tables"],
+                    dfs["character_skill_node_set_items_tables"],
+                    dfs["character_skill_node_sets_tables"],
+                    dfs["character_skill_nodes_tables"],
+                    default_faction=default_faction,
+                    do_not_use_underscore_pattern=do_not_use_underscore_pattern,
                 )
-                continue
 
-            dfs = per_mod_dfs.get(idx)
-            if dfs is None:
-                # Worker skipped (missing path was caught earlier, so this branch only fires if `extract_mod_dataframes` returned None for a mod whose path went missing between pre-filter and extraction).
-                continue
+                # Release this mod's dataframes now that they've been merged so the merge pass keeps a flat memory footprint.
+                del per_mod_dfs[idx]
+                gc.collect()
 
-            logging.info(f"Now processing {mod['package_name']}...")
+            # Write output files.
+            # ------------------------------------------------------------------
+            with open("factions_data.json", "w", encoding="utf-8") as json_file:
+                json.dump(factions_data, json_file, indent=4)
 
-            default_faction = None
-            do_not_use_underscore_pattern = False
-            pattern_overrides = mod["pattern_overrides"]
-            if "*" in pattern_overrides:
-                default_faction = pattern_overrides["*"]
-                logging.info(f"Pattern is the wildcard itself so we will use '{default_faction}' for all units in this mod.")
-            elif any("*" in key for key in pattern_overrides):
-                logging.info(f"Pattern is a wildcard pattern, so we will not use the underscore pattern.")
-                do_not_use_underscore_pattern = True
+            # Convert the factions_data to Lua table format.
+            lua_data = "return " + dict_to_lua_table(factions_data)
 
-            # If the mod has a factions_override field, add the contents to faction_keys. Mutation of the shared `faction_keys` list persists across mods, matching the pre-parallel behavior.
-            if "faction_overrides" in mod:
-                for new_faction_key in mod["faction_overrides"]:
-                    faction_keys.append({new_faction_key: new_faction_key})
-            temp_faction_keys = faction_keys.copy()
+            # Save the Lua table to a file.
+            with open("factions_data.lua", "w", encoding="utf-8") as lua_file:
+                lua_file.write(lua_data)
+        except Exception as e:
+            logging.exception(e)
 
-            if pattern_overrides and "*" not in pattern_overrides:
-                for temp_faction_key, temp_faction_value in pattern_overrides.items():
-                    temp_faction_keys.append({temp_faction_key.replace("*", ""): temp_faction_value})
-                    if "_" in temp_faction_key:
-                        do_not_use_underscore_pattern = True
+        # After processing all mods, move the final factions_data.lua to the destination folder.
+        source_location = find_source_factions_data_path()
+        destination_filepath = f"{LEAPOI_SOURCE_ROOT}/{source_location}"
+        if os.path.exists("factions_data.lua"):
+            if os.path.exists(destination_filepath):
+                os.remove(destination_filepath)
+            shutil.move("factions_data.lua", destination_filepath)
+            os.remove("factions_data.json")
 
-            factions_data = tsv_to_faction_data(
-                mod,
-                factions_data,
-                temp_faction_keys,
-                dfs["main_units_tables"],
-                dfs["faction_agent_permitted_subtypes_tables"],
-                dfs["character_skill_node_set_items_tables"],
-                dfs["character_skill_node_sets_tables"],
-                dfs["character_skill_nodes_tables"],
-                default_faction=default_faction,
-                do_not_use_underscore_pattern=do_not_use_underscore_pattern,
+        # The Workshop pack can lag behind the source layout, so write to wherever the pack currently keeps the file.
+        pack_location = find_pack_factions_data_path(LEAPOI_PACK_PATH, source_location)
+        logging.info(f"Writing factions_data.lua to {pack_location} in the LEAPOI pack.")
+
+        def write_leapoi_pack() -> None:
+            """Replace `factions_data.lua` inside the LEAPOI Workshop pack."""
+            run_rpfm_cli(["pack", "delete", "--pack-path", LEAPOI_PACK_PATH, "--file-path", pack_location], capture_output=True)
+            run_rpfm_cli(
+                ["pack", "add", "--pack-path", LEAPOI_PACK_PATH, "--tsv-to-binary", "./schemas/schema_wh3.ron", "--file-path", f"{destination_filepath};{pack_location}"],
+                capture_output=True,
             )
 
-            # Release this mod's dataframes now that they've been merged so the merge pass keeps a flat memory footprint.
-            del per_mod_dfs[idx]
-            gc.collect()
+        publish_pack(LEAPOI_STEAM_ID, LEAPOI_PACK_PATH, destination_filepath, write_leapoi_pack)
 
-        # Write output files.
-        # ------------------------------------------------------------------
-        with open("factions_data.json", "w", encoding="utf-8") as json_file:
-            json.dump(factions_data, json_file, indent=4)
-
-        # Convert the factions_data to Lua table format.
-        lua_data = "return " + dict_to_lua_table(factions_data)
-
-        # Save the Lua table to a file.
-        with open("factions_data.lua", "w", encoding="utf-8") as lua_file:
-            lua_file.write(lua_data)
-    except Exception as e:
-        logging.exception(e)
-
-    # After processing all mods, move the final factions_data.lua to the destination folder.
-    if os.path.exists("factions_data.lua"):
-        destination_filepath = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua"
-        if os.path.exists(destination_filepath):
-            os.remove(destination_filepath)
-        shutil.move("factions_data.lua", destination_filepath)
-        os.remove("factions_data.json")
-
-    # Use the RPFM CLI to delete the existing factions_data.lua file from the mod.
-    run_rpfm_cli(
-        ["pack", "delete", "--pack-path", f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack", "--file-path", "script/land_encounters/constants/battles/factions_data.lua"],
-        capture_output=True,
-    )
-
-    # Now use the RPFM CLI to add the new factions_data.lua file into the packfile.
-    run_rpfm_cli(
-        ["pack", "add", "--pack-path", f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3397481450\\land_encounters_and_points_of_interest_6_0.pack", "--tsv-to-binary", "./schemas/schema_wh3.ron", "--file-path", f"../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/constants/battles/factions_data.lua;script/land_encounters/constants/battles/factions_data.lua"],
-        capture_output=True,
-    )
-
-    # Perform final cleanup.
-    for cleanup_file in [
-        f"{TEMP_DIR}/vanilla_main_units_tables.tsv",
-        f"{TEMP_DIR}/vanilla_faction_agent_permitted_subtypes_tables.tsv",
-        f"{TEMP_DIR}/vanilla_character_skill_node_set_items_tables.tsv",
-        f"{TEMP_DIR}/vanilla_character_skill_node_sets_tables.tsv",
-        f"{TEMP_DIR}/vanilla_character_skill_nodes_tables.tsv",
-    ]:
-        if os.path.exists(cleanup_file):
-            os.remove(cleanup_file)
+    finally:
+        clear_temp_root()
 
     if MISSING_MODS:
         logging.info(f"Missing mods: {MISSING_MODS}")
