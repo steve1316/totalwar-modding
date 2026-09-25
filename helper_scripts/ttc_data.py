@@ -23,6 +23,35 @@ PROLOGUE_GROUP_PATTERN = re.compile(r"_pro_")
 # Package name and display name for auto entries covering vanilla and DLC units the base TTC list misses.
 VANILLA_PACKAGE = "vanilla"
 VANILLA_NAME = "Vanilla + DLC"
+# Race code in a vanilla unit key to its faction name, used to group vanilla units in change notes.
+FACTION_NAMES = {
+    "brt": "Bretonnia",
+    "bst": "Beastmen",
+    "chd": "Chaos Dwarfs",
+    "chs": "Warriors of Chaos",
+    "cst": "Vampire Coast",
+    "cth": "Grand Cathay",
+    "dae": "Daemons of Chaos",
+    "def": "Dark Elves",
+    "dwf": "Dwarfs",
+    "emp": "Empire",
+    "grn": "Greenskins",
+    "hef": "High Elves",
+    "kho": "Khorne",
+    "ksl": "Kislev",
+    "lzd": "Lizardmen",
+    "nor": "Norsca",
+    "nur": "Nurgle",
+    "ogr": "Ogre Kingdoms",
+    "skv": "Skaven",
+    "sla": "Slaanesh",
+    "tmb": "Tomb Kings",
+    "tze": "Tzeentch",
+    "vmp": "Vampire Counts",
+    "wef": "Wood Elves",
+}
+# A loc text that only points at another loc key, e.g. `{{tr:land_units_onscreen_name_wh2_main_skv_inf_clanrats_1}}`.
+LOC_REFERENCE_PATTERN = re.compile(r"\{\{tr:([^}]+)\}\}")
 SCRATCH = f"{TEMP_DIR}/ttc"
 LOC_NAME_PREFIX = "land_units_onscreen_name_"
 VANILLA_LOC_PACK = os.path.join(os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES), "local_en.pack")
@@ -162,8 +191,27 @@ def unit_names(keys: Iterable[str], stats: Dict[str, UnitStats], loc: Dict[str, 
     names = {}
     for key in keys:
         land_unit = stats[key].main.get("land_unit", "") if key in stats else ""
-        names[key] = loc.get(LOC_NAME_PREFIX + land_unit) or loc.get(LOC_NAME_PREFIX + key) or key
+        name = loc.get(LOC_NAME_PREFIX + land_unit) or loc.get(LOC_NAME_PREFIX + key) or key
+        # Follow `{{tr:...}}` references a few levels deep, and fall back to the key when one cannot be resolved.
+        for _ in range(3):
+            name = LOC_REFERENCE_PATTERN.sub(lambda match: loc.get(match.group(1), match.group(0)), name)
+        names[key] = key if LOC_REFERENCE_PATTERN.search(name) else name
     return names
+
+
+def faction_of(key: str) -> str:
+    """Name the faction a vanilla unit belongs to from the race code in its key.
+
+    Args:
+        key (str): Vanilla unit key, e.g. `wh3_dlc29_emp_inf_teutogen_guard`.
+
+    Returns:
+        The faction name, or `Other` when the key has no known race code.
+    """
+    for part in key.lower().split("_"):
+        if part in FACTION_NAMES:
+            return FACTION_NAMES[part]
+    return "Other"
 
 
 def table_readable(folder: str) -> bool:

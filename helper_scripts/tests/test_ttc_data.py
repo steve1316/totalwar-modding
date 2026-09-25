@@ -156,3 +156,20 @@ def test_vanilla_targets_cover_what_the_base_list_misses_and_skip_prologue_units
     }
     targets = ttc_data.select_vanilla_targets(rows, permissions, {"base_listed"})
     assert targets == {"wh3_dlc29_new_unit": ttc_data.VANILLA_PACKAGE, "wh3_main_pro_kho_hounds_simaergul_0": ttc_data.VANILLA_PACKAGE}
+
+
+def test_faction_of_reads_the_race_code_from_the_unit_key():
+    assert ttc_data.faction_of("wh3_dlc29_emp_inf_teutogen_guard") == "Empire"
+    assert ttc_data.faction_of("wh3_main_pro_kho_inf_flesh_hounds_of_khorne_simaergul_0") == "Khorne"
+    assert ttc_data.faction_of("wh2_dlc11_cst_cav_knights_errant_2") == "Vampire Coast"
+    assert ttc_data.faction_of("mystery_unit") == "Other"
+
+
+def test_unit_names_resolve_loc_references_to_other_names():
+    stats = {"v": ttc_data.UnitStats("v", {"land_unit": "v"}, {}, set()), "w": ttc_data.UnitStats("w", {"land_unit": "w"}, {}, set())}
+    loc = {
+        "land_units_onscreen_name_v": "{{tr:land_units_onscreen_name_clanrats}}",
+        "land_units_onscreen_name_clanrats": "Clanrats",
+        "land_units_onscreen_name_w": "{{tr:land_units_onscreen_name_missing}}",
+    }
+    assert ttc_data.unit_names(["v", "w"], stats, loc) == {"v": "Clanrats", "w": "w"}
