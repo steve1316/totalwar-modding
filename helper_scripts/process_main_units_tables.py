@@ -15,6 +15,7 @@ import shutil
 import time
 from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
+from extract_cache import cached_pack_extract
 from typing import List, Dict, Optional, Tuple
 
 
@@ -59,7 +60,7 @@ def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
 
     logging.info(f"Extracting mod data from {mod['package_name']}...")
     for folder in MOD_FOLDERS_TO_EXTRACT:
-        run_rpfm_cli(["pack", "extract", "--pack-path", mod["path"], "--tables-as-tsv", "./schemas/schema_wh3.ron", "--folder-path", f"{folder};{scratch_root}/"])
+        cached_pack_extract(mod["path"], folder, f"{scratch_root}/")
 
     dfs = {
         "main_units_tables": process_tsv_files(f"{scratch_root}/db/main_units_tables/", "main_units_tables"),

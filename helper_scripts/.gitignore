@@ -11,3 +11,5 @@ _diag/
 .claude/
 .vscode/
 CLAUDE.md
+extract_cache/
+delta_state/

@@ -13,6 +13,8 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Iterable, List, Dict, Optional
 
+from extract_cache import cached_pack_extract
+
 
 STEAM_LIBRARY_DRIVE = "F:"
 FILEPATH_TO_VANILLA_DATA_TABLES = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\common\\Total War WARHAMMER III\\data\\db.pack"
@@ -176,7 +178,7 @@ def extract_tsv_data(table_name: str, temp_root: str = TEMP_DIR) -> str:
     """
     ensure_temp_dir(temp_root)
     dest = f"{temp_root}/vanilla_{table_name}"
-    run_rpfm_cli(["pack", "extract", "--pack-path", FILEPATH_TO_VANILLA_DATA_TABLES, "--tables-as-tsv", "./schemas/schema_wh3.ron", "--file-path", f"db/{table_name}/data__;{dest}"])
+    cached_pack_extract(FILEPATH_TO_VANILLA_DATA_TABLES, f"db/{table_name}/data__", dest, source_kind="file")
 
     logging.info(f'TSV file "{table_name}" successfully extracted.')
     return dest
@@ -190,7 +192,7 @@ def extract_modded_tsv_data(table_name: str, packfile_path: str, extract_path: s
         packfile_path (str): The path to the packfile to extract from.
         extract_path (str): The path to extract the TSV data to.
     """
-    run_rpfm_cli(["pack", "extract", "--pack-path", packfile_path, "--tables-as-tsv", "./schemas/schema_wh3.ron", "--folder-path", f"db/{table_name};{extract_path}"])
+    cached_pack_extract(packfile_path, f"db/{table_name}", extract_path)
 
     if not os.path.exists(extract_path):
         logging.warning(f"No TSV file(s) for \"{table_name}\" found in {extract_path} for the mod \"{packfile_path.split('/')[-1]}\".")
