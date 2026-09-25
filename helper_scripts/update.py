@@ -9,6 +9,8 @@ Usage:
     python update.py --dry-run   Show what would be rebuilt and why.
     python update.py --full      Rebuild every pack, still using the extraction cache.
     python update.py --no-cache  Rebuild every pack from a cold rpfm extraction.
+
+The rpfm schemas are updated first so tables changed by a game patch can still be read. Pass `--no-schema-update` to skip that.
 """
 
 import argparse
@@ -21,7 +23,7 @@ from typing import Dict, List, Optional
 
 import delta
 from extract_cache import prune_cache
-from utilities import log_elapsed_time, setup_script_logging
+from utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging
 
 
 WORKSHOP_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id="
@@ -139,11 +141,19 @@ if __name__ == "__main__":
     parser.add_argument("--full", action="store_true", help="Rebuild every pack even if its inputs are unchanged. Still uses the extraction cache.")
     parser.add_argument("--no-cache", action="store_true", help="Rebuild every pack from a cold rpfm extraction. Implies --full.")
     parser.add_argument("--dry-run", action="store_true", help="Only report which packs would be rebuilt and why.")
+    parser.add_argument("--no-schema-update", action="store_true", help="Skip pulling the latest rpfm schemas before checking for changes.")
     args = parser.parse_args()
     workers_args = ["--workers", str(args.workers)] if args.workers is not None else []
     if args.no_cache:
         os.environ["EXTRACT_CACHE"] = "0"
         args.full = True
+
+    # An outdated schema makes rpfm silently extract patched tables as binary, which drops them from every compat pack.
+    if not args.no_schema_update:
+        logging.info("Updating rpfm schemas...")
+        if run_rpfm_cli(["schemas", "update", "--schema-path", "./schemas"], capture_output=True).returncode != 0:
+            logging.warning("Schema update failed. Continuing with the current schemas.")
+    run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"], capture_output=True)
 
     # Decide which units are stale.
     checks: List[delta.UnitCheck] = []
