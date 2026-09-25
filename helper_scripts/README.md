@@ -12,8 +12,15 @@ This repository contains a suite of tools designed to assist me in creating and 
 
 ## Scripts Overview
 
-### `update.py` (orchestrator)
-Runs `process_main_units_tables.py`, then `update_dynamic_rors.py --reset`, `update_modified_attribute_mods.py --reset`, and `update_double_unit_size.py --reset` in sequence. Forwards an optional `--workers N` flag to each subscript.
+### `update.py` (orchestrator, delta updates)
+One command to update every generated Workshop pack: `cd helper_scripts && python update.py`.
+
+It covers five generator runs: `process_main_units_tables.py`, `update_dynamic_rors.py --reset`, `update_dynamic_rors.py --reset --vanilla`, `update_modified_attribute_mods.py --reset`, and `update_double_unit_size.py --reset`. Each one is only re-run when something it depends on changed:
+- **Extraction cache** (`extract_cache.py`): every `rpfm_cli pack extract` result is cached under `extract_cache/`, keyed by the SHA-256 of the source pack plus the rpfm schema/exe. Pack hashes are remembered by size and mtime, so only updated packs are rehashed and re-extracted. The first run hashes all input packs once (~64 GB).
+- **Per-output staleness** (`delta.py`): each run records exactly which pack tables it extracted. Next time, a generator is skipped unless one of those tables changed content, its code / `supported_mods.py` / the schema changed, or its Workshop pack no longer matches the last build (e.g. Steam re-synced it).
+- **Output check**: a rebuilt pack whose generated files are identical to the last build is not rewritten. The summary lists only the Workshop IDs that need uploading, plus review flags for the hand-made mods (TTC compat scripts for mods whose unit tables changed, and reduce winds of magic when the vanilla trait tables change).
+
+Flags: `--dry-run` (show what would rebuild and why), `--full` (rebuild everything with the cache), `--no-cache` (cold rebuild), `--workers N` (forwarded to each subscript). State lives in `delta_state/` and the cache in `extract_cache/`, both gitignored. Delete either folder to start fresh. Uploading to the Workshop is still manual.
 
 ### `update_dynamic_rors.py`
 Builds Nanu's Dynamic RoR Compatibility Megapack (`!!!!!!!_nanu_dynamic_rors_compat.pack`). For each mod in `SUPPORTED_MODS`, walks the foreign-key chain starting from `land_units_tables` across the 22 tables in `pipeline.TABLE_CONFIGS` (mounts, weapons, projectiles, animations, attributes, etc.), assigns Nanu's RoR effects per unit category/faction, and writes a trimmed standalone compat pack. The `--vanilla` mode instead emits the "leftover vanilla" pack (`!!!!!!!_nanu_dynamic_rors_leftover_vanilla.pack`) by reading vanilla `unit_purchasable_effect_sets_tables`, `mounts_tables`, `main_units_tables`, `land_units_tables`, and `units_to_groupings_military_permissions_tables`.
