@@ -665,3 +665,15 @@ def test_ttc_note_with_vanilla_and_mod_units_gives_each_its_own_section():
 def test_ttc_note_names_each_faction_once_within_a_mod():
     current = {"a1": _entry("Mod A", "Rat Ogres", "Skaven"), "a2": _entry("Mod A", "Swordsmen", "Empire"), "a3": _entry("Mod A", "Clanrats", "Skaven")}
     assert workshop_publish.build_ttc_change_note({}, current).endswith("[b]Mod A[/b] (+3): [i]Empire[/i]: Swordsmen; [i]Skaven[/i]: Clanrats, Rat Ogres")
+
+
+def test_ttc_note_names_a_single_faction_without_repeating_its_count():
+    current = {f"k{i}": _entry("Big Mod", f"Unit Name {i}", "Bretonnia") for i in range(30)}
+    assert workshop_publish.build_ttc_change_note({}, current, limit=100).endswith("[b]Big Mod[/b] (+30): Bretonnia")
+
+
+def test_ttc_note_limit_counts_utf8_bytes():
+    current = {"k1": _entry("Mod", "金花兵种拓展" * 10)}
+    note = workshop_publish.build_ttc_change_note({}, current, limit=150)
+    assert len(note.encode("utf-8")) <= 150
+    assert "金花" not in note
