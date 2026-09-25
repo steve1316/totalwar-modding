@@ -25,7 +25,6 @@ from utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR
 PUBLISHED_STATE_DIR = f"{delta.STATE_ROOT}/published"
 WORKSHOP_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id="
 GENERAL_NOTE = "Rebuilt against the latest game patch and the latest versions of all supported mods."
-MAX_NOTE_MODS = 10
 # Steam's change note limit (`k_cchPublishedDocumentChangeDescriptionMax`). Notes are measured in UTF-8 bytes, in case Steam counts bytes.
 CHANGE_NOTE_LIMIT = 8000
 # The TTC compat item gets a per-unit change note built from its entries instead of the list of changed mods.
@@ -143,25 +142,46 @@ def record_rebuild(check: delta.UnitCheck, statuses: Dict[str, str]) -> None:
         _write_record(output.steam_id, record)
 
 
-def build_change_note(record: Optional[Dict[str, Any]]) -> str:
+def _plural(count: int, noun: str) -> str:
+    """Write a count with its noun, adding an `s` unless the count is one.
+
+    Args:
+        count (int): How many.
+        noun (str): Singular noun, e.g. `unit`.
+
+    Returns:
+        e.g. `1 unit` or `3 units`.
+    """
+    return f"{count} {noun}" if count == 1 else f"{count} {noun}s"
+
+
+def build_change_note(record: Optional[Dict[str, Any]], limit: int = CHANGE_NOTE_LIMIT) -> str:
     """Build the Workshop change note from an item's pending rebuild reasons.
+
+    Changed mods are listed one per bullet line under an underlined headline. Plain bullet characters are used because Steam's `[list]` markup
+    breaks the change note's background into separate blocks. Past the limit, the last bullet counts the mods that did not fit.
 
     Args:
         record (Optional[Dict[str, Any]]): The item's publish record, or None if it has never been recorded.
+        limit (int): Maximum note length in UTF-8 bytes.
 
     Returns:
         The change note text.
     """
     mods = (record or {}).get("pending_mods", [])
     general = record is None or not record.get("pack_sha") or bool(record.get("pending_general"))
-    parts = []
-    if mods:
-        listed = ", ".join(mods[:MAX_NOTE_MODS])
-        extra = len(mods) - MAX_NOTE_MODS
-        parts.append(f"Updated for changes in: {listed}" + (f", and {extra} more mods." if extra > 0 else "."))
-    if general or not parts:
-        parts.append(GENERAL_NOTE)
-    return " ".join(parts)
+    if not mods:
+        return f"[u]Compatibility update[/u]\n\n{GENERAL_NOTE}"
+    header = f"[u]Compatibility update for {_plural(len(mods), 'updated mod')}[/u]\n"
+    footer = f"\n\nAlso {GENERAL_NOTE[0].lower()}{GENERAL_NOTE[1:]}" if general else ""
+    for shown in range(len(mods), -1, -1):
+        bullets = [f"• {mod}" for mod in mods[:shown]]
+        if shown < len(mods):
+            bullets.append(f"• and {_plural(len(mods) - shown, 'more mod')}")
+        note = header + "\n" + "\n".join(bullets) + footer
+        if len(note.encode("utf-8")) <= limit:
+            return note
+    return note
 
 
 def _names_list(names: List[str]) -> str:
@@ -175,19 +195,6 @@ def _names_list(names: List[str]) -> str:
     """
     counts = collections.Counter(names)
     return ", ".join(name if count == 1 else f"{name} (x{count})" for name, count in sorted(counts.items(), key=lambda item: item[0].lower()))
-
-
-def _plural(count: int, noun: str) -> str:
-    """Write a count with its noun, adding an `s` unless the count is one.
-
-    Args:
-        count (int): How many.
-        noun (str): Singular noun, e.g. `unit`.
-
-    Returns:
-        e.g. `1 unit` or `3 units`.
-    """
-    return f"{count} {noun}" if count == 1 else f"{count} {noun}s"
 
 
 def _names_by_faction(units: List[Tuple[str, str]]) -> str:
