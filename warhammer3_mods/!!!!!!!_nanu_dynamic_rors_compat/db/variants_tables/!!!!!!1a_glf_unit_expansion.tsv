@@ -2,7 +2,6 @@ variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	sc
 #variants_tables;6;db/variants_tables/!!!!!!1a_glf_unit_expansion
 glf_brt_royal_knights_of_the_realm_mount		glf_brt_royal_knights_of_the_realm_mount	hr1\brt\brt_horse\imposter\brt_horse_armoured_random_colours_imposter	1.0000	1.0000	0.0500	
 glf_def_mnt_armoured_dark_steed		glf_def_mnt_armoured_dark_steed	hr1\def\def_dark_steed\imposter\def_dark_steed_imposter	1.0000	1.0000	0.0500	
-glf_emp_knights_panther_mount		glf_emp_knights_panther_mount		1.0000	1.0000	0.0500	
 glf_hef_white_lion_riders_mnt_lion	variantmeshes/wh_variantmodels/bc4/hef/hef_war_lion/glf_tech	glf_hef_white_lion_riders_mnt_lion	bc4\hef\hef_war_lion\hef_war_lion_imposter	0.5800	1.0000	0.0000	bc4\hef\hef_war_lion\hef_war_lion_imposter
 glf_ksl_monk_riders_mnt_horse		glf_ksl_monk_riders_mnt_horse		1.0000	1.0000	0.0500	
 glf_lzd_serpent_riders_mount	variantmeshes/wh_variantmodels/sn1/lzd/glf_lzd_serpent/tech	glf_lzd_serpent_riders_mount		1.0000	1.1000	0.0000	
