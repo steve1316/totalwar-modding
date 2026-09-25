@@ -1,6 +1,7 @@
 """Load TTC labels and unit tables, pick the units that need auto entries, and find stale hand entries."""
 
 import glob
+import logging
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
@@ -55,19 +56,58 @@ class TtcData:
     hand_entries: Dict[str, List[TtcEntry]] = field(default_factory=dict)
     # Package name to the mod's display name.
     mod_names: Dict[str, str] = field(default_factory=dict)
+    # Unit key to where its label came from (base list faction, hand file name or `mod:<package>`), used to keep lookalikes in one CV fold.
+    label_sources: Dict[str, str] = field(default_factory=dict)
+    # Keys labeled by a supported mod's own TTC scripts. The mod author's caps are never overridden.
+    mod_labeled_keys: Set[str] = field(default_factory=set)
+    # Installed supported mods whose `main_units_tables` could not be read, so they are not trusted for stale-entry removal.
+    unreadable_mods: List[str] = field(default_factory=list)
 
 
 def label_of(category: str, weight: Optional[int]) -> str:
     """Build a classifier label from an entry.
+
+    TTC treats a missing weight as 1 (`unit_weight or 1`), so `core` and `core,1` get the same label.
 
     Args:
         category (str): `core`, `special` or `rare`.
         weight (Optional[int]): Point weight, or None.
 
     Returns:
-        `category` alone when there is no weight, otherwise `category,weight`.
+        `category,weight`, with a missing weight written as 1.
     """
-    return category if weight is None else f"{category},{weight}"
+    return f"{category},{1 if weight is None else weight}"
+
+
+def mod_ttc_entries(root: str) -> Dict[str, str]:
+    """Collect the TTC caps a mod ships itself, from `script/ttc/*.lua` and `script/campaign/mod/*ttc*.lua`.
+
+    Args:
+        root (str): Folder the mod's `script/` folder was extracted into.
+
+    Returns:
+        Unit key to label, first file in sorted path order winning.
+    """
+    paths = glob.glob(os.path.join(root, "script", "ttc", "**", "*.lua"), recursive=True)
+    paths += [p for p in glob.glob(os.path.join(root, "script", "campaign", "mod", "*.lua")) if "ttc" in os.path.basename(p).lower()]
+    labels: Dict[str, str] = {}
+    for path in sorted(paths):
+        for entry in parse_ttc_file(path):
+            labels.setdefault(entry.key, label_of(entry.category, entry.weight))
+    return labels
+
+
+def table_readable(folder: str) -> bool:
+    """Check that an extracted table folder holds only TSV files, so an rpfm schema gap cannot make a mod look empty.
+
+    Args:
+        folder (str): Extraction destination of one table.
+
+    Returns:
+        True when the folder has at least one `.tsv` and no binary fallbacks.
+    """
+    files = [p for p in glob.glob(os.path.join(folder, "**", "*"), recursive=True) if os.path.isfile(p)]
+    return bool(files) and all(p.endswith(".tsv") for p in files)
 
 
 def select_targets(
@@ -134,10 +174,12 @@ def stale_hand_entries(
     installed: Set[str],
     units_by_mod: Dict[str, Set[str]],
     vanilla_keys: Set[str],
+    owner_history: Optional[Dict[str, str]] = None,
 ) -> Dict[str, Set[str]]:
     """Find hand entries whose unit no longer exists anywhere, only for files mapped to an installed mod.
 
-    A hand file may list units from other mods, so an entry is only stale when no installed mod and not vanilla defines the unit.
+    A hand file may list units from other mods, so an entry is only stale when no installed mod and not vanilla defines the unit. A unit last seen in a
+    mod that is not installed right now is kept, since it may come back when that mod is re-subscribed.
 
     Args:
         entries_by_file (Dict[str, List[TtcEntry]]): Hand file path to its entries.
@@ -145,20 +187,39 @@ def stale_hand_entries(
         installed (Set[str]): Installed package names.
         units_by_mod (Dict[str, Set[str]]): Package name to the unit keys it defines.
         vanilla_keys (Set[str]): Keys in vanilla `main_units_tables`.
+        owner_history (Optional[Dict[str, str]]): Unit key to the package that defined it on earlier runs.
 
     Returns:
         Hand file path to the stale keys to remove. Files with nothing stale are omitted.
     """
     stale: Dict[str, Set[str]] = {}
     known = set(vanilla_keys).union(*units_by_mod.values())
+    history = owner_history or {}
     for path, entries in entries_by_file.items():
         package_name = file_mod.get(path)
         if package_name is None or package_name not in installed:
             continue
-        gone = {entry.key for entry in entries if entry.key not in known}
+        gone = {entry.key for entry in entries if entry.key not in known and history.get(entry.key, package_name) in installed}
         if gone:
             stale[path] = gone
     return stale
+
+
+def merge_owner_history(history: Dict[str, str], units_by_mod: Dict[str, Set[str]]) -> Dict[str, str]:
+    """Update which mod last defined each unit, keeping entries for units that are not currently installed.
+
+    Args:
+        history (Dict[str, str]): Unit key to package name from earlier runs.
+        units_by_mod (Dict[str, Set[str]]): Package name to the unit keys it defines now, in `SUPPORTED_MODS` order.
+
+    Returns:
+        The merged history. A unit defined now takes the first mod that defines it.
+    """
+    current: Dict[str, str] = {}
+    for package_name, keys in units_by_mod.items():
+        for key in keys:
+            current.setdefault(key, package_name)
+    return {**history, **current}
 
 
 def _rows(folder: str) -> List[Dict[str, str]]:
@@ -203,7 +264,8 @@ def load_all() -> TtcData:
     """Load every input for a TTC generation run.
 
     Returns:
-        The loaded data. Vanilla labels come first, then hand files in filename order, so the first label for a key wins.
+        The loaded data. Labels come from the base vanilla list, then hand files in filename order, then each mod's own TTC scripts. The first label
+        for a key wins.
     """
     data = TtcData()
     cached_pack_extract(BASE_TTC_PACK, "script/ttc", f"{SCRATCH}/base", tables_as_tsv=False, capture_output=True)
@@ -211,12 +273,16 @@ def load_all() -> TtcData:
     if os.path.exists(base_list):
         with open(base_list, "r", encoding="utf-8", errors="replace") as f:
             for entry in parse_ttc_text(f.read()):
-                data.labels.setdefault(entry.key, label_of(entry.category, entry.weight))
+                if entry.key not in data.labels:
+                    data.labels[entry.key] = label_of(entry.category, entry.weight)
+                    data.label_sources[entry.key] = "vanilla:" + "_".join(entry.key.split("_")[:3])
     for path in hand_files():
         entries = parse_ttc_file(path)
         data.hand_entries[path] = entries
         for entry in entries:
-            data.labels.setdefault(entry.key, label_of(entry.category, entry.weight))
+            if entry.key not in data.labels:
+                data.labels[entry.key] = label_of(entry.category, entry.weight)
+                data.label_sources[entry.key] = os.path.basename(path)
 
     land_rows: Dict[str, Dict[str, str]] = {}
     main_rows: Dict[str, Dict[str, str]] = {}
@@ -247,7 +313,21 @@ def load_all() -> TtcData:
         if not os.path.exists(mod["path"]):
             data.missing_mods.append(mod["package_name"])
             continue
-        tables = _load_tables(mod["path"], mod["package_name"].replace(".pack", "").replace(" ", "_"), vanilla=False)
+        tag = mod["package_name"].replace(".pack", "").replace(" ", "_")
+        tables = _load_tables(mod["path"], tag, vanilla=False)
+        main_units_dir = f"{SCRATCH}/{tag}/main_units_tables"
+        if os.path.exists(main_units_dir) and not table_readable(main_units_dir):
+            logging.warning(f"Could not read main_units_tables from {mod['package_name']}. Its units are skipped and its hand entries are left alone.")
+            data.unreadable_mods.append(mod["package_name"])
+            continue
+        scripts_root = f"{SCRATCH}/{tag}/scripts"
+        for source in ("script/ttc", "script/campaign/mod"):
+            cached_pack_extract(mod["path"], source, scripts_root, tables_as_tsv=False, capture_output=True)
+        for key, label in mod_ttc_entries(scripts_root).items():
+            data.mod_labeled_keys.add(key)
+            if key not in data.labels:
+                data.labels[key] = label
+                data.label_sources[key] = f"mod:{mod['package_name']}"
         data.installed.add(mod["package_name"])
         data.mod_units.append((mod["package_name"], tables["main_units_tables"]))
         data.units_by_mod[mod["package_name"]] = {row["unit"] for row in tables["main_units_tables"] if row.get("unit")}
