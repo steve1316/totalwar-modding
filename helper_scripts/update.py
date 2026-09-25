@@ -165,7 +165,7 @@ if __name__ == "__main__":
     checks: List[delta.UnitCheck] = []
     for unit in delta.UNITS:
         if args.full:
-            check = delta.UnitCheck(unit, stale=True, reasons=["full rebuild requested"])
+            check = delta.UnitCheck(unit, stale=True, reasons=["full rebuild requested"], general=True)
         else:
             logging.info(f"Checking {unit.name} for changed inputs...")
             check = delta.check_unit(unit)
