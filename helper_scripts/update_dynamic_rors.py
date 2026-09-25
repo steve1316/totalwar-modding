@@ -10,6 +10,7 @@ from utilities import (
     run_parallel,
     setup_script_logging,
     write_updated_tsv_file,
+    TsvAppendBuffer,
     sort_tsv_data,
     merge_move,
     cleanup_folders,
@@ -836,15 +837,16 @@ if __name__ == "__main__":
                         f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/unit_purchasable_effect_sets_tables",
                     ]
 
-                    # Write the data to required and optional tables.
+                    # Write the data to required and optional tables. The buffer writes each file once instead of re-reading it for every unit.
+                    tsv_buffer = TsvAppendBuffer()
                     for data_to_add in list_of_data_to_add:
                         logging.debug(
                             f"Writing {len(data_to_add['unit_purchasable_effect_sets'])} unit purchasable effect sets for {data_to_add['key']}."
                         )
 
                         # Write to the required tables first.
-                        # Set allow_duplicates=False so write_updated_tsv_file checks for duplicates using composite key (unit + purchasable_effect).
-                        write_updated_tsv_file(
+                        # Set allow_duplicates=False so the writes check for duplicates using composite key (unit + purchasable_effect).
+                        tsv_buffer.add(
                             data_to_add["unit_purchasable_effect_sets"],
                             vanilla_unit_purchasable_effect_sets_tables_headers,
                             unit_purchasable_effect_sets_tables_version_info,
@@ -852,14 +854,14 @@ if __name__ == "__main__":
                             f"!!!{folder_name}",
                             allow_duplicates=False,
                         )
-                        write_updated_tsv_file(
+                        tsv_buffer.add(
                             data_to_add["land_units"],
                             result.modded_land_units_headers,
                             land_units_version_info,
                             f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat/db/land_units_tables",
                             f"!!!{folder_name}",
                         )
-                        write_updated_tsv_file(
+                        tsv_buffer.add(
                             data_to_add["main_units"],
                             result.modded_main_units_headers,
                             main_units_version_info,
@@ -869,8 +871,9 @@ if __name__ == "__main__":
 
                         # Now write to all of the available optional tables.
                         write_optional_tables(
-                            data_to_add, f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat", f"!!!{folder_name}", table_data, tables_to_sort
+                            data_to_add, f"{TEMP_DIR}/!!!!!!!_nanu_dynamic_rors_compat", f"!!!{folder_name}", table_data, tables_to_sort, writer=tsv_buffer.add
                         )
+                    tsv_buffer.flush()
 
                     # Move any captured variantmeshdefinitions (and their wh_variantmodels) into the compat pack. Source dir is this mod's per-worker scratch.
                     move_variantmesh_definitions(

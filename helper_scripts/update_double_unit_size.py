@@ -13,6 +13,7 @@ from utilities import (
     run_parallel,
     setup_script_logging,
     write_updated_tsv_file,
+    TsvAppendBuffer,
     read_and_clean_tsv,
     validate_and_fix_tsv_types,
     sort_tsv_data,
@@ -436,15 +437,17 @@ if __name__ == "__main__":
                 ]
 
                 # Write the data to required and optional tables. Filenames include `package_name` so concurrent workers never write the same TSV.
+                # The buffer writes each file once instead of re-reading it for every unit.
+                tsv_buffer = TsvAppendBuffer()
                 for data_to_add in list_of_data_to_add:
-                    write_updated_tsv_file(
+                    tsv_buffer.add(
                         data_to_add["land_units"],
                         modded_land_units_headers,
                         land_units_version_info,
                         f"{TEMP_DIR}/{MODDED_TABLE_NAME}/db/land_units_tables",
                         f"{MODDED_TABLE_NAME}_{package_name}",
                     )
-                    write_updated_tsv_file(
+                    tsv_buffer.add(
                         data_to_add["main_units"],
                         modded_main_units_headers,
                         main_units_version_info,
@@ -452,8 +455,9 @@ if __name__ == "__main__":
                         f"{MODDED_TABLE_NAME}_{package_name}",
                     )
                     write_optional_tables(
-                        data_to_add, f"{TEMP_DIR}/{MODDED_TABLE_NAME}", f"{MODDED_TABLE_NAME}_{package_name}", table_data, tables_to_sort
+                        data_to_add, f"{TEMP_DIR}/{MODDED_TABLE_NAME}", f"{MODDED_TABLE_NAME}_{package_name}", table_data, tables_to_sort, writer=tsv_buffer.add
                     )
+                tsv_buffer.flush()
 
                 # Move any captured variantmeshdefinitions (and their wh_variantmodels) out of the per-mod scratch dir into the compat pack.
                 move_variantmesh_definitions(
