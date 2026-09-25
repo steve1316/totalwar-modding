@@ -1,6 +1,8 @@
 """Tests for Workshop publish state, change notes, staging and uploader output parsing."""
 
+import hashlib
 import json
+import os
 
 import pytest
 
@@ -143,6 +145,7 @@ def test_item_without_record_is_pending(state_dir, monkeypatch):
 
     assert [item.output.steam_id for item in items] == [MELEE.steam_id]
     assert items[0].change_note == GENERAL
+    assert items[0].pack_sha == "current"
 
 
 def test_item_matching_last_publish_is_not_pending(state_dir, monkeypatch):
@@ -163,19 +166,18 @@ def test_outputs_of_failed_units_are_not_offered(state_dir, monkeypatch):
     assert [item.output.steam_id for item in items] == [delta.UNITS[4].outputs[0].steam_id]
 
 
-def test_mark_published_records_hash_and_clears_pending(state_dir, monkeypatch):
+def test_mark_published_records_uploaded_hash_not_the_live_pack(state_dir, monkeypatch):
     state_dir.mkdir()
     (state_dir / f"{MELEE.steam_id}.json").write_text(json.dumps({"pending_mods": ["Mod A"], "pending_general": True}))
-    _fake_pack_shas(monkeypatch, {MELEE.pack_path: "uploaded"})
+    _fake_pack_shas(monkeypatch, {MELEE.pack_path: "live-pack-changed-meanwhile"})
 
-    workshop_publish.mark_published(MELEE, "Updated for changes in: Mod A.")
+    workshop_publish.mark_published(MELEE, "Updated for changes in: Mod A.", "uploaded")
 
     record = json.loads((state_dir / f"{MELEE.steam_id}.json").read_text(encoding="utf-8"))
     assert record["pack_sha"] == "uploaded"
     assert record["last_change_note"] == "Updated for changes in: Mod A."
     assert record["pending_mods"] == []
     assert record["pending_general"] is False
-    assert MELEE.steam_id not in [item.output.steam_id for item in workshop_publish.pending_items([])]
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,33 +248,46 @@ def test_parse_publisher_output_reports_fatal():
 
 
 class FakePublisher:
-    """Stand-in for `run_publisher` that records calls and returns canned results."""
+    """Stand-in for `run_publisher` that records calls and streams canned results."""
 
-    def __init__(self, check_results=None, upload_results=None, fatal=None):
+    def __init__(self, check_results=None, upload_results=None, fatal=None, interrupt_after=None):
         """Set up the canned responses.
 
         Args:
             check_results (dict): Workshop ID to preflight result.
             upload_results (dict): Workshop ID to upload result.
             fatal (str): Fatal message returned by every call, if set.
+            interrupt_after (int): Raise `KeyboardInterrupt` after streaming this many upload results, if set.
         """
         self.check_results = check_results or {}
         self.upload_results = upload_results or {}
         self.fatal = fatal
+        self.interrupt_after = interrupt_after
         self.calls = []
 
-    def __call__(self, jobs, check_only):
-        """Record the call and return the canned response.
+    def __call__(self, jobs, check_only, on_result=None):
+        """Record the call, stream each result to `on_result` like the real uploader, and return the canned response.
 
         Args:
             jobs (list): Jobs passed by `publish_pending`.
             check_only (bool): Whether this is the preflight call.
+            on_result (callable): Called with each result as it arrives.
 
         Returns:
             A `(fatal, results)` tuple like `run_publisher`.
         """
         self.calls.append((check_only, [job["id"] for job in jobs]))
-        return self.fatal, (self.check_results if check_only else self.upload_results)
+        canned = self.check_results if check_only else self.upload_results
+        streamed = {}
+        for job in jobs:
+            if job["id"] not in canned:
+                continue
+            if not check_only and self.interrupt_after is not None and len(streamed) == self.interrupt_after:
+                raise KeyboardInterrupt
+            streamed[job["id"]] = {"id": job["id"], **canned[job["id"]]}
+            if on_result:
+                on_result(streamed[job["id"]])
+        return self.fatal, streamed
 
 
 @pytest.fixture
@@ -287,13 +302,56 @@ def flow(monkeypatch, state_dir):
         A dict collecting the outputs passed to `mark_published`.
     """
     marked = {}
+    monkeypatch.setattr(workshop_publish, "PUBLISH_TEMP_DIR", str(state_dir.parent / "publish"))
     monkeypatch.setattr(workshop_publish, "publisher_problem", lambda: None)
-    monkeypatch.setattr(workshop_publish, "stage_content", lambda output, root: f"/staged/{output.steam_id}")
-    monkeypatch.setattr(workshop_publish, "mark_published", lambda output, note: marked.__setitem__(output.steam_id, note))
+    monkeypatch.setattr(workshop_publish, "stage_content", _fake_stage)
+    monkeypatch.setattr(workshop_publish, "mark_published", lambda output, note, pack_sha: marked.__setitem__(output.steam_id, (note, pack_sha)))
     return marked
 
 
-ITEMS = [workshop_publish.PendingItem(MELEE, "note melee"), workshop_publish.PendingItem(VELOCITY, "note velocity")]
+def _staged_bytes(output):
+    """Return the fake pack bytes that `_fake_stage` writes for an output.
+
+    Args:
+        output (delta.Output): The staged item.
+
+    Returns:
+        The fake pack bytes.
+    """
+    return f"pack-{output.steam_id}".encode()
+
+
+def _fake_stage(output, root):
+    """Stage a fake pack file instead of copying the real Workshop pack.
+
+    Args:
+        output (delta.Output): The item to stage.
+        root (str): Staging root folder.
+
+    Returns:
+        The staged content folder.
+    """
+    content = os.path.join(root, output.steam_id)
+    os.makedirs(content, exist_ok=True)
+    with open(os.path.join(content, output.pack_name), "wb") as f:
+        f.write(_staged_bytes(output))
+    return content
+
+
+def _item(output, note):
+    """Build a pending item whose listed hash matches what `_fake_stage` writes.
+
+    Args:
+        output (delta.Output): The item.
+        note (str): Its change note.
+
+    Returns:
+        The pending item.
+    """
+    return workshop_publish.PendingItem(output, note, hashlib.sha256(_staged_bytes(output)).hexdigest())
+
+
+ITEMS = [_item(MELEE, "note melee"), _item(VELOCITY, "note velocity")]
 
 
 def test_dry_run_lists_pending_without_contacting_steam(flow, monkeypatch, caplog):
@@ -341,7 +399,7 @@ def test_confirmed_publish_records_successes_and_lists_every_url(flow, monkeypat
     with caplog.at_level("INFO"):
         workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
 
-    assert flow == {MELEE.steam_id: "note melee"}
+    assert flow == {MELEE.steam_id: ("note melee", ITEMS[0].pack_sha)}
     assert f"{workshop_publish.WORKSHOP_URL}{MELEE.steam_id}  published" in caplog.text
     assert f"{workshop_publish.WORKSHOP_URL}{VELOCITY.steam_id}  FAILED: k_EResultTimeout" in caplog.text
 
@@ -356,7 +414,7 @@ def test_preflight_failure_skips_only_that_item(flow, monkeypatch, caplog):
         workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
 
     assert publisher.calls[1] == (False, [MELEE.steam_id])
-    assert flow == {MELEE.steam_id: "note melee"}
+    assert flow == {MELEE.steam_id: ("note melee", ITEMS[0].pack_sha)}
     assert "not owned by the logged-in account" in caplog.text
 
 
@@ -375,3 +433,71 @@ def test_nothing_pending_says_so(flow, caplog):
         workshop_publish.publish_pending([], dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
 
     assert "Nothing to publish." in caplog.text
+
+
+def test_pack_changed_since_listing_is_not_uploaded(flow, monkeypatch, caplog):
+    checks = {MELEE.steam_id: {"ok": True}, VELOCITY.steam_id: {"ok": True}}
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(check_results=checks, upload_results={VELOCITY.steam_id: {"ok": True}}))
+    publisher = workshop_publish.run_publisher
+    items = [workshop_publish.PendingItem(MELEE, "note melee", "hash-when-listed"), ITEMS[1]]
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(items, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
+
+    assert publisher.calls[1] == (False, [VELOCITY.steam_id])
+    assert MELEE.steam_id not in flow
+    assert f"{workshop_publish.WORKSHOP_URL}{MELEE.steam_id}  FAILED: the pack changed since it was listed" in caplog.text
+
+
+def test_interrupted_upload_keeps_completed_results(flow, monkeypatch, caplog):
+    checks = {MELEE.steam_id: {"ok": True}, VELOCITY.steam_id: {"ok": True}}
+    uploads = {MELEE.steam_id: {"ok": True}, VELOCITY.steam_id: {"ok": True}}
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(check_results=checks, upload_results=uploads, interrupt_after=1))
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=lambda prompt: "y", is_interactive=lambda: True)
+
+    assert flow == {MELEE.steam_id: ("note melee", ITEMS[0].pack_sha)}
+    assert f"{workshop_publish.WORKSHOP_URL}{MELEE.steam_id}  published" in caplog.text
+    assert f"{workshop_publish.WORKSHOP_URL}{VELOCITY.steam_id}  not published (interrupted)" in caplog.text
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Uploader process
+
+
+def _fake_publisher_dir(tmp_path, monkeypatch, script):
+    """Point `run_publisher` at a fake `publish.js` that prints canned output.
+
+    Args:
+        tmp_path (pathlib.Path): Temporary folder provided by pytest.
+        monkeypatch (pytest.MonkeyPatch): Pytest fixture used for patching.
+        script (str): JavaScript source for the fake uploader.
+    """
+    publisher_dir = tmp_path / "publisher"
+    publisher_dir.mkdir()
+    (publisher_dir / "publish.js").write_text(script, encoding="utf-8")
+    monkeypatch.setattr(workshop_publish, "PUBLISHER_DIR", str(publisher_dir))
+    monkeypatch.setattr(workshop_publish, "PUBLISH_TEMP_DIR", str(tmp_path / "publish"))
+
+
+def test_run_publisher_streams_results_before_a_failed_exit(tmp_path, monkeypatch):
+    lines = ["Setting breakpad minidump AppID = 1142710", json.dumps({"id": "1", "ok": True})]
+    _fake_publisher_dir(tmp_path, monkeypatch, "".join(f"console.log({json.dumps(line)});\n" for line in lines) + "process.exit(1);\n")
+    streamed = []
+
+    fatal, results = workshop_publish.run_publisher([{"id": "1", "contentPath": "", "changeNote": ""}], check_only=False, on_result=streamed.append)
+
+    assert fatal is None
+    assert streamed == [{"id": "1", "ok": True}]
+    assert results == {"1": {"id": "1", "ok": True}}
+
+
+def test_run_publisher_without_results_reports_the_exit_code(tmp_path, monkeypatch):
+    _fake_publisher_dir(tmp_path, monkeypatch, "process.exit(3);\n")
+
+    fatal, results = workshop_publish.run_publisher([{"id": "1", "contentPath": "", "changeNote": ""}], check_only=True)
+
+    assert "exited with code 3" in fatal
+    assert results == {}

@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import delta
-from extract_cache import normalize_path, pack_sha256
+from extract_cache import file_sha256, normalize_path, pack_sha256
 from pipeline import workshop_pack_path
 from supported_mods import SUPPORTED_MODS
 from utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR
@@ -43,6 +43,8 @@ class PendingItem:
     output: delta.Output
     # Change note that will be sent with the upload.
     change_note: str
+    # SHA-256 of the pack when it was listed. The staged copy must match it, and it is what gets recorded once the upload succeeds.
+    pack_sha: str
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,21 +169,24 @@ def pending_items(failed_units: List[str]) -> List[PendingItem]:
                 continue
             record = _read_record(output.steam_id)
             if record is None or record.get("pack_sha") != current_sha:
-                items.append(PendingItem(output, build_change_note(record)))
+                items.append(PendingItem(output, build_change_note(record), current_sha))
     return items
 
 
-def mark_published(output: delta.Output, change_note: str) -> None:
+def mark_published(output: delta.Output, change_note: str, pack_sha: str) -> None:
     """Record a successful upload and clear the item's pending reasons.
+
+    The hash of the uploaded bytes is recorded, not the live Workshop folder, because Steam may re-sync that folder while other items are still uploading.
 
     Args:
         output (delta.Output): The item that was uploaded.
         change_note (str): The change note sent with the upload.
+        pack_sha (str): SHA-256 of the pack that was uploaded.
     """
     record = _read_record(output.steam_id) or {}
     record.update(
         {
-            "pack_sha": pack_sha256(output.pack_path),
+            "pack_sha": pack_sha,
             "published_at": time.strftime("%Y-%m-%d %H:%M:%S"),
             "last_change_note": change_note,
             "pending_mods": [],
@@ -229,18 +234,33 @@ def parse_publisher_output(stdout: str) -> Tuple[Optional[str], Dict[str, Dict[s
     fatal = None
     results: Dict[str, Dict[str, Any]] = {}
     for line in stdout.splitlines():
-        line = line.strip()
-        if not line.startswith("{"):
-            continue
-        try:
-            entry = json.loads(line)
-        except json.JSONDecodeError:
+        entry = _parse_publisher_line(line)
+        if entry is None:
             continue
         if "fatal" in entry:
             fatal = entry["fatal"]
-        elif "id" in entry:
+        else:
             results[str(entry["id"])] = entry
     return fatal, results
+
+
+def _parse_publisher_line(line: str) -> Optional[Dict[str, Any]]:
+    """Parse one line printed by `publish.js`.
+
+    Args:
+        line (str): A single stdout line.
+
+    Returns:
+        The result or fatal entry, or None for any other output such as Steamworks log lines.
+    """
+    line = line.strip()
+    if not line.startswith("{"):
+        return None
+    try:
+        entry = json.loads(line)
+    except json.JSONDecodeError:
+        return None
+    return entry if isinstance(entry, dict) and ("fatal" in entry or "id" in entry) else None
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,12 +281,18 @@ def publisher_problem() -> Optional[str]:
     return None
 
 
-def run_publisher(jobs: List[Dict[str, str]], check_only: bool) -> Tuple[Optional[str], Dict[str, Dict[str, Any]]]:
-    """Run `publish.js` on a list of jobs and collect its results.
+def run_publisher(
+    jobs: List[Dict[str, str]], check_only: bool, on_result: Optional[Callable[[Dict[str, Any]], None]] = None
+) -> Tuple[Optional[str], Dict[str, Dict[str, Any]]]:
+    """Run `publish.js` on a list of jobs, handing each result to `on_result` as soon as the uploader prints it.
+
+    Upload progress from the uploader's stderr goes straight to the terminal. On Ctrl+C the uploader is stopped and `KeyboardInterrupt` is re-raised,
+    after every result printed so far has already reached `on_result`.
 
     Args:
         jobs (List[Dict[str, str]]): Jobs with `id`, `contentPath` and `changeNote`.
         check_only (bool): Only check that each item exists and is owned by the logged-in account, without uploading.
+        on_result (Optional[Callable[[Dict[str, Any]], None]]): Called with each item result as it arrives.
 
     Returns:
         A tuple of the fatal error message (or None) and the per-item results keyed by Workshop ID.
@@ -276,10 +302,27 @@ def run_publisher(jobs: List[Dict[str, str]], check_only: bool) -> Tuple[Optiona
     with open(jobs_path, "w", encoding="utf-8") as f:
         json.dump(jobs, f, ensure_ascii=False)
     command = ["node", "publish.js", *(["--check"] if check_only else []), jobs_path]
-    completed = subprocess.run(command, cwd=PUBLISHER_DIR, capture_output=True, text=True, encoding="utf-8", errors="replace")
-    fatal, results = parse_publisher_output(completed.stdout)
-    if fatal is None and completed.returncode != 0 and not results:
-        fatal = f"uploader exited with code {completed.returncode}: {completed.stderr.strip()[-500:]}"
+    fatal = None
+    results: Dict[str, Dict[str, Any]] = {}
+    process = subprocess.Popen(command, cwd=PUBLISHER_DIR, stdout=subprocess.PIPE, text=True, encoding="utf-8", errors="replace")
+    try:
+        for line in process.stdout:
+            entry = _parse_publisher_line(line)
+            if entry is None:
+                continue
+            if "fatal" in entry:
+                fatal = entry["fatal"]
+                continue
+            results[str(entry["id"])] = entry
+            if on_result:
+                on_result(entry)
+        return_code = process.wait()
+    except KeyboardInterrupt:
+        process.terminate()
+        process.wait()
+        raise
+    if fatal is None and return_code != 0 and not results:
+        fatal = f"uploader exited with code {return_code}"
     return fatal, results
 
 
@@ -353,22 +396,50 @@ def publish_pending(
         _log_urls(items, statuses)
         return
 
+    by_id = {item.output.steam_id: item for item in ready}
+
+    def record_result(result: Dict[str, Any]) -> None:
+        """Record one upload result the moment the uploader reports it, so an interruption cannot lose it.
+
+        Args:
+            result (Dict[str, Any]): A result line from `publish.js`.
+        """
+        item = by_id.get(str(result["id"]))
+        if item is None:
+            return
+        if not result.get("ok"):
+            statuses[item.output.steam_id] = f"FAILED: {result.get('error', 'unknown error')}"
+            return
+        try:
+            mark_published(item.output, item.change_note, item.pack_sha)
+        except OSError as err:
+            statuses[item.output.steam_id] = f"published, but recording it failed ({err}), so it will be offered again"
+            return
+        agreement = " (accept the Steam Workshop legal agreement on the Steam site before it becomes visible)" if result.get("needsToAcceptAgreement") else ""
+        statuses[item.output.steam_id] = f"published{agreement}"
+
+    fatal = None
+    interrupted = False
     try:
-        jobs = [
-            {"id": item.output.steam_id, "contentPath": stage_content(item.output, PUBLISH_TEMP_DIR), "changeNote": item.change_note} for item in ready
-        ]
-        logging.info(f"Uploading {len(jobs)} item(s). Large packs can take several minutes...")
-        fatal, results = run_publisher(jobs, check_only=False)
+        jobs = []
+        for item in ready:
+            content = stage_content(item.output, PUBLISH_TEMP_DIR)
+            if file_sha256(os.path.join(content, item.output.pack_name)) != item.pack_sha:
+                statuses[item.output.steam_id] = "FAILED: the pack changed since it was listed. Run update.py again."
+                continue
+            jobs.append({"id": item.output.steam_id, "contentPath": content, "changeNote": item.change_note})
+        if jobs:
+            logging.info(f"Uploading {len(jobs)} item(s). Large packs can take several minutes...")
+            fatal, _ = run_publisher(jobs, check_only=False, on_result=record_result)
+    except KeyboardInterrupt:
+        interrupted = True
+        logging.warning("Upload interrupted. Items that finished uploading are recorded. The rest stay pending.")
     finally:
         shutil.rmtree(PUBLISH_TEMP_DIR, ignore_errors=True)
     for item in ready:
-        result = results.get(item.output.steam_id)
-        if fatal or not result:
-            statuses[item.output.steam_id] = f"FAILED: {fatal or 'no result from the uploader'}"
-        elif result.get("ok"):
-            mark_published(item.output, item.change_note)
-            agreement = " (accept the Steam Workshop legal agreement on the Steam site before it becomes visible)" if result.get("needsToAcceptAgreement") else ""
-            statuses[item.output.steam_id] = f"published{agreement}"
-        else:
-            statuses[item.output.steam_id] = f"FAILED: {result.get('error', 'unknown error')}"
+        if item.output.steam_id not in statuses:
+            if interrupted:
+                statuses[item.output.steam_id] = "not published (interrupted)"
+            else:
+                statuses[item.output.steam_id] = f"FAILED: {fatal or 'no result from the uploader'}"
     _log_urls(items, statuses)
