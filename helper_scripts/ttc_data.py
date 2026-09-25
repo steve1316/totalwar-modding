@@ -1,5 +1,6 @@
 """Load TTC labels and unit tables, pick the units that need auto entries, and find stale hand entries."""
 
+import collections
 import glob
 import logging
 import os
@@ -49,7 +50,39 @@ FACTION_NAMES = {
     "tze": "Tzeentch",
     "vmp": "Vampire Counts",
     "wef": "Wood Elves",
+    "welf": "Wood Elves",
 }
+# Phrases in recruit group keys that name a faction, for modded units whose key has no race code. Longer phrases come first so `chaos_dwarf` wins
+# over `chaos`.
+GROUP_FACTION_PHRASES = [
+    ("chaos_dwarf", "Chaos Dwarfs"),
+    ("vampire_coast", "Vampire Coast"),
+    ("vampire_count", "Vampire Counts"),
+    ("tomb_king", "Tomb Kings"),
+    ("dark_el", "Dark Elves"),
+    ("high_el", "High Elves"),
+    ("wood_el", "Wood Elves"),
+    ("savage_orc", "Greenskins"),
+    ("beastm", "Beastmen"),
+    ("bretonnia", "Bretonnia"),
+    ("cathay", "Grand Cathay"),
+    ("dwarf", "Dwarfs"),
+    ("empire", "Empire"),
+    ("greenskin", "Greenskins"),
+    ("khorne", "Khorne"),
+    ("kislev", "Kislev"),
+    ("lizardm", "Lizardmen"),
+    ("norsca", "Norsca"),
+    ("nurgle", "Nurgle"),
+    ("ogre", "Ogre Kingdoms"),
+    ("skaven", "Skaven"),
+    ("slaanesh", "Slaanesh"),
+    ("tzeentch", "Tzeentch"),
+    ("araby", "Araby"),
+    ("albion", "Albion"),
+    ("chaos", "Warriors of Chaos"),
+    ("vampire", "Vampire Counts"),
+]
 # A loc text that only points at another loc key, e.g. `{{tr:land_units_onscreen_name_wh2_main_skv_inf_clanrats_1}}`.
 LOC_REFERENCE_PATTERN = re.compile(r"\{\{tr:([^}]+)\}\}")
 SCRATCH = f"{TEMP_DIR}/ttc"
@@ -212,6 +245,40 @@ def faction_of(key: str) -> str:
         if part in FACTION_NAMES:
             return FACTION_NAMES[part]
     return "Other"
+
+
+def _group_faction(group: str) -> Optional[str]:
+    """Name the faction a recruit group belongs to, from a race code or a faction phrase in its key.
+
+    Args:
+        group (str): Military group key, e.g. `wh3_dlc23_group_chaos_dwarfs`.
+
+    Returns:
+        The faction name, or None when the key names no faction.
+    """
+    faction = faction_of(group)
+    if faction != "Other":
+        return faction
+    return next((name for phrase, name in GROUP_FACTION_PHRASES if phrase in group.lower()), None)
+
+
+def unit_faction(key: str, groups: Set[str]) -> str:
+    """Name the faction a modded unit belongs to.
+
+    The race code in the unit key wins. Otherwise the faction named by most of its recruit groups is used, ties going to the first name alphabetically.
+
+    Args:
+        key (str): Unit key.
+        groups (Set[str]): Military groups that can recruit the unit.
+
+    Returns:
+        The faction name, or `Other` when neither the key nor a recruit group names one.
+    """
+    faction = faction_of(key)
+    if faction != "Other":
+        return faction
+    votes = collections.Counter(filter(None, (_group_faction(group) for group in groups)))
+    return min(votes.items(), key=lambda item: (-item[1], item[0]))[0] if votes else "Other"
 
 
 def table_readable(folder: str) -> bool:

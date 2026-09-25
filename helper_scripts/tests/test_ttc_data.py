@@ -165,6 +165,15 @@ def test_faction_of_reads_the_race_code_from_the_unit_key():
     assert ttc_data.faction_of("mystery_unit") == "Other"
 
 
+def test_unit_faction_falls_back_to_a_vote_across_recruit_groups():
+    assert ttc_data.unit_faction("glf_skv_rat_ogre", {"wh_main_group_empire"}) == "Skaven"
+    assert ttc_data.unit_faction("rory_welf_bear", set()) == "Wood Elves"
+    assert ttc_data.unit_faction("motm_bear", {"wh3_dlc23_group_chaos_dwarfs"}) == "Chaos Dwarfs"
+    assert ttc_data.unit_faction("jhared_wolf", {"wh_main_group_empire", "wh_main_group_empire_gold", "wh2_main_skv"}) == "Empire"
+    assert ttc_data.unit_faction("jhared_tie", {"wh2_main_skv", "wh_main_group_empire"}) == "Empire"
+    assert ttc_data.unit_faction("custom_unit", {"my_custom_group"}) == "Other"
+
+
 def test_unit_names_resolve_loc_references_to_other_names():
     stats = {"v": ttc_data.UnitStats("v", {"land_unit": "v"}, {}, set()), "w": ttc_data.UnitStats("w", {"land_unit": "w"}, {}, set())}
     loc = {
