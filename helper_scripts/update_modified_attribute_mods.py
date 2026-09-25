@@ -22,6 +22,7 @@ from utilities import (
 )
 from supported_mods import SUPPORTED_MODS
 from pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
+from delta import publish_pack
 
 
 MODS_AND_STEAM_WORKSHOP_IDS = [
@@ -301,9 +302,19 @@ if __name__ == "__main__":
 
         for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
             pack_path = workshop_pack_path(steam_workshop_id, f"{mod_name}.pack")
-            if args.reset:
-                reset_pack_folders(pack_path, ("db",))
-            add_folder_to_pack(pack_path, f"../warhammer3_mods/{mod_name}/db;")
+
+            def write_attribute_pack(pack_path: str = pack_path, mod_name: str = mod_name) -> None:
+                """Replace one attribute compat pack's tables with the regenerated files.
+
+                Args:
+                    pack_path (str): Workshop pack to write.
+                    mod_name (str): Compat folder name under `../warhammer3_mods/`.
+                """
+                if args.reset:
+                    reset_pack_folders(pack_path, ("db",))
+                add_folder_to_pack(pack_path, f"../warhammer3_mods/{mod_name}/db;")
+
+            publish_pack(steam_workshop_id, pack_path, f"../warhammer3_mods/{mod_name}/db", write_attribute_pack)
     finally:
         clear_temp_root()
 

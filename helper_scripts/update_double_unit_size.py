@@ -23,6 +23,7 @@ from utilities import (
     TEMP_DIR,
 )
 from supported_mods import SUPPORTED_MODS
+from delta import publish_pack
 from pipeline import (
     DuplicateTracker,
     add_folder_to_pack,
@@ -473,11 +474,13 @@ if __name__ == "__main__":
             logging.info(f"Moving {MODDED_TABLE_NAME} to ../warhammer3_mods/.")
             merge_move(f"{TEMP_DIR}/{MODDED_TABLE_NAME}", f"../warhammer3_mods")
 
-        if args.reset:
-            reset_pack_folders(compat_pack_path)
+        def write_compat_pack() -> None:
+            """Replace the compat pack's contents with the regenerated files."""
+            if args.reset:
+                reset_pack_folders(compat_pack_path)
+            add_folder_to_pack(compat_pack_path, f"../warhammer3_mods/{MODDED_TABLE_NAME};")
 
-        # Now merge the new files into the packfile.
-        add_folder_to_pack(compat_pack_path, f"../warhammer3_mods/{MODDED_TABLE_NAME};")
+        publish_pack("3621939685", compat_pack_path, f"../warhammer3_mods/{MODDED_TABLE_NAME}", write_compat_pack)
 
     finally:
         clear_temp_root()
