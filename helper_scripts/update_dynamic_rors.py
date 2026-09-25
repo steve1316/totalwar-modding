@@ -532,12 +532,16 @@ if __name__ == "__main__":
 
     if args.reset:
         logging.info("Will reset folders in the packfile before writing.")
-        cleanup_folders(
-            [
-                "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/db",
-                "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/variantmeshes",
-            ]
-        )
+        # Only clear the source folder of the pack this mode rebuilds. Vanilla mode must not wipe the modded compat folder.
+        if args.vanilla:
+            cleanup_folders(["../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_leftover_vanilla/db"])
+        else:
+            cleanup_folders(
+                [
+                    "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/db",
+                    "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat/variantmeshes",
+                ]
+            )
 
     ensure_temp_dir()
 
