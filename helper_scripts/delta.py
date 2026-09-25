@@ -125,6 +125,10 @@ class UnitCheck:
     reasons: List[str] = field(default_factory=list)
     # Access records whose extracted content changed since the last build.
     changed_accesses: List[Dict[str, Any]] = field(default_factory=list)
+    # Normalized paths of packs whose recorded tables changed, or that were installed or removed since the last build.
+    changed_packs: List[str] = field(default_factory=list)
+    # True when a rebuild reason is not tied to a mod pack, e.g. no previous build, a code or schema change, or a Steam re-sync.
+    general: bool = False
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -242,19 +246,23 @@ def check_unit(unit: Unit) -> UnitCheck:
     check = UnitCheck(unit, stale=False)
     if state is None:
         check.stale = True
+        check.general = True
         check.reasons.append("no previous tracked build")
         return check
     if state.get("code_hash") != code_hash(unit):
         check.stale = True
+        check.general = True
         check.reasons.append("generator code, `supported_mods.py` or rpfm schema changed")
 
     for output in unit.outputs:
         output_state = _read_json(f"{OUTPUTS_STATE_DIR}/{output.steam_id}.json")
         if output_state is None:
             check.stale = True
+            check.general = True
             check.reasons.append(f"{output.steam_id} has no recorded build")
         elif pack_sha256(output.pack_path) != output_state.get("pack_sha"):
             check.stale = True
+            check.general = True
             check.reasons.append(f"Workshop copy of {output.steam_id} no longer matches the last build (Steam re-sync?)")
 
     for access in state.get("accesses", []):
@@ -264,10 +272,12 @@ def check_unit(unit: Unit) -> UnitCheck:
             if current_sha is not None:
                 check.stale = True
                 check.reasons.append(f"{_pack_label(access['pack'])} is now installed")
+                check.changed_packs.append(access["pack"])
             continue
         if current_sha is None:
             check.stale = True
             check.reasons.append(f"{_pack_label(access['pack'])} is no longer installed")
+            check.changed_packs.append(access["pack"])
             continue
         if current_sha == access["pack_sha"]:
             continue
@@ -276,9 +286,11 @@ def check_unit(unit: Unit) -> UnitCheck:
             check.stale = True
             check.reasons.append(f"{label} changed")
             check.changed_accesses.append(access)
+            check.changed_packs.append(access["pack"])
 
     # Collapse duplicate pack-level reasons, e.g. a newly installed pack recorded for several tables.
     check.reasons = list(dict.fromkeys(check.reasons))
+    check.changed_packs = list(dict.fromkeys(check.changed_packs))
     return check
 
 
