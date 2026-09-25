@@ -18,6 +18,11 @@ UNIT_TABLES = ["main_units_tables", "land_units_tables", "units_to_groupings_mil
 EXCLUDED_CASTES = {"lord", "hero"}
 # `ror` as its own word in a unit key or mod name marks a Regiment of Renown, without matching words like `horror`.
 RENOWN_PATTERN = re.compile(r"(^|_)ror(_|\d|$)")
+# Prologue campaign recruit groups like `wh3_main_pro_ksl`. Units only these groups recruit never appear outside the prologue.
+PROLOGUE_GROUP_PATTERN = re.compile(r"_pro_")
+# Package name and display name for auto entries covering vanilla and DLC units the base TTC list misses.
+VANILLA_PACKAGE = "vanilla"
+VANILLA_NAME = "Vanilla + DLC"
 SCRATCH = f"{TEMP_DIR}/ttc"
 LOC_NAME_PREFIX = "land_units_onscreen_name_"
 VANILLA_LOC_PACK = os.path.join(os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES), "local_en.pack")
@@ -50,6 +55,8 @@ class TtcData:
     stats: Dict[str, UnitStats] = field(default_factory=dict)
     # Keys present in vanilla `main_units_tables`.
     vanilla_keys: Set[str] = field(default_factory=set)
+    # Vanilla `main_units_tables` rows, for covering units the base TTC list misses.
+    vanilla_units: List[Dict[str, str]] = field(default_factory=list)
     # `(package_name, main_units rows)` per installed supported mod, in `SUPPORTED_MODS` order.
     mod_units: List[Tuple[str, List[Dict[str, str]]]] = field(default_factory=list)
     # Package name to the unit keys that mod defines.
@@ -210,6 +217,31 @@ def select_targets(
             if row.get("caste") in EXCLUDED_CASTES or not permissions.get(key):
                 continue
             targets[key] = package_name
+    return targets
+
+
+def select_vanilla_targets(rows: List[Dict[str, str]], permissions: Dict[str, Set[str]], labeled: Set[str]) -> Dict[str, str]:
+    """Pick the vanilla and DLC units that neither the base TTC list nor a hand file caps.
+
+    Prologue-only and tutorial units are skipped. A unit drops out on the next run once the base TTC list covers it.
+
+    Args:
+        rows (List[Dict[str, str]]): Vanilla `main_units_tables` rows.
+        permissions (Dict[str, Set[str]]): Unit key to the military groups that can recruit it.
+        labeled (Set[str]): Keys that already have a cap.
+
+    Returns:
+        Unit key to `VANILLA_PACKAGE`.
+    """
+    targets: Dict[str, str] = {}
+    for row in rows:
+        key = row.get("unit", "")
+        groups = permissions.get(key, set())
+        if not key or key in labeled or row.get("caste") in EXCLUDED_CASTES or not groups:
+            continue
+        if "tutorial" in key or all(PROLOGUE_GROUP_PATTERN.search(group) for group in groups):
+            continue
+        targets[key] = VANILLA_PACKAGE
     return targets
 
 
@@ -381,7 +413,9 @@ def load_all() -> TtcData:
                 data.permissions.setdefault(row["unit"], set()).add(row.get("military_group", ""))
 
     vanilla = _load_tables(FILEPATH_TO_VANILLA_DATA_TABLES, "vanilla", vanilla=True)
-    data.vanilla_keys = {row["unit"] for row in vanilla["main_units_tables"] if row.get("unit")}
+    data.vanilla_units = vanilla["main_units_tables"]
+    data.vanilla_keys = {row["unit"] for row in data.vanilla_units if row.get("unit")}
+    data.mod_names[VANILLA_PACKAGE] = VANILLA_NAME
     absorb(vanilla)
     for mod in SUPPORTED_MODS:
         if not mod["path"]:

@@ -134,3 +134,25 @@ def test_read_loc_names_keeps_only_onscreen_names_and_earlier_sources_win(tmp_pa
     names = {"land_units_onscreen_name_a": "Translated A"}
     ttc_data.read_loc_names(str(tmp_path), names)
     assert names == {"land_units_onscreen_name_a": "Translated A", "land_units_onscreen_name_b": "Spaced B"}
+
+
+def test_vanilla_targets_cover_what_the_base_list_misses_and_skip_prologue_units():
+    rows = [
+        _row("wh3_dlc29_new_unit"),
+        _row("base_listed"),
+        _row("wh3_dlc29_lord", "lord"),
+        _row("no_permission"),
+        _row("wh3_main_pro_ksl_inf_kossars_0"),
+        _row("wh3_main_pro_kho_hounds_simaergul_0"),
+        _row("wh3_main_ksl_inf_kossars_tutorial_1"),
+    ]
+    permissions = {
+        "wh3_dlc29_new_unit": {"wh_main_group_empire"},
+        "base_listed": {"wh_main_group_empire"},
+        "wh3_dlc29_lord": {"wh_main_group_empire"},
+        "wh3_main_pro_ksl_inf_kossars_0": {"wh3_main_pro_ksl"},
+        "wh3_main_pro_kho_hounds_simaergul_0": {"wh3_main_pro_kho", "wh3_dlc20_group_chs_valkia"},
+        "wh3_main_ksl_inf_kossars_tutorial_1": {"wh3_main_ksl", "wh3_main_pro_ksl"},
+    }
+    targets = ttc_data.select_vanilla_targets(rows, permissions, {"base_listed"})
+    assert targets == {"wh3_dlc29_new_unit": ttc_data.VANILLA_PACKAGE, "wh3_main_pro_kho_hounds_simaergul_0": ttc_data.VANILLA_PACKAGE}
