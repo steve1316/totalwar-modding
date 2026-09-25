@@ -2,6 +2,8 @@
 
 import json
 
+import pytest
+
 import delta
 
 
@@ -115,3 +117,15 @@ def test_ttc_compat_unit_is_registered():
     unit = next(u for u in delta.UNITS if u.name == "ttc_compat")
     assert [o.steam_id for o in unit.outputs] == ["3310629727"]
     assert unit.input_globs
+
+
+def test_units_for_items_picks_the_units_that_build_them():
+    ttc = next(unit for unit in delta.UNITS if unit.name == "ttc_compat")
+    arc = delta.UNITS[3].outputs[1]
+    assert delta.units_for_items({ttc.outputs[0].steam_id}) == [ttc]
+    assert delta.units_for_items({arc.steam_id, ttc.outputs[0].steam_id}) == [delta.UNITS[3], ttc]
+
+
+def test_units_for_items_rejects_unknown_ids():
+    with pytest.raises(ValueError, match="123"):
+        delta.units_for_items({"123"})

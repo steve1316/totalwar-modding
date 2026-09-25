@@ -588,3 +588,27 @@ def test_ttc_item_without_a_published_snapshot_keeps_the_general_note(state_dir,
 
     [item] = workshop_publish.pending_items([])
     assert item.change_note == GENERAL
+
+
+def test_closed_input_at_the_prompt_uploads_nothing(flow, monkeypatch, caplog):
+    ok = {MELEE.steam_id: {"ok": True}, VELOCITY.steam_id: {"ok": True}}
+    monkeypatch.setattr(workshop_publish, "run_publisher", FakePublisher(check_results=ok))
+    publisher = workshop_publish.run_publisher
+
+    def closed(prompt):
+        raise EOFError
+
+    with caplog.at_level("INFO"):
+        workshop_publish.publish_pending(ITEMS, dry_run=False, no_publish=False, confirm=closed, is_interactive=lambda: True)
+
+    assert publisher.calls == [(True, [MELEE.steam_id, VELOCITY.steam_id])]
+    assert flow == {}
+    assert "Publishing cancelled" in caplog.text
+
+
+def test_pending_items_can_be_limited_to_some_workshop_ids(state_dir, monkeypatch):
+    _fake_pack_shas(monkeypatch, {MELEE.pack_path: "a", ARC.pack_path: "b", VELOCITY.pack_path: "c"})
+
+    items = workshop_publish.pending_items([], steam_ids={ARC.steam_id})
+
+    assert [item.output.steam_id for item in items] == [ARC.steam_id]
