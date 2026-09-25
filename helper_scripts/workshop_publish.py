@@ -26,7 +26,7 @@ PUBLISHED_STATE_DIR = f"{delta.STATE_ROOT}/published"
 WORKSHOP_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id="
 GENERAL_NOTE = "Rebuilt against the latest game patch and the latest versions of all supported mods."
 MAX_NOTE_MODS = 10
-# Steam's change note limit (`k_cchPublishedDocumentChangeDescriptionMax`).
+# Steam's change note limit (`k_cchPublishedDocumentChangeDescriptionMax`). Notes are measured in UTF-8 bytes, in case Steam counts bytes.
 CHANGE_NOTE_LIMIT = 8000
 # The TTC compat item gets a per-unit change note built from its entries instead of the list of changed mods.
 TTC_STEAM_ID = "3310629727"
@@ -212,9 +212,11 @@ def _faction_counts(factions: List[str]) -> str:
         factions (List[str]): One faction name per added unit.
 
     Returns:
-        The factions from most to fewest units, ties sorted by name.
+        The factions from most to fewest units, ties sorted by name. A single faction is named without its count, which the line already shows.
     """
     counts = collections.Counter(factions)
+    if len(counts) == 1:
+        return next(iter(counts))
     return ", ".join(f"{faction} +{count}" for faction, count in sorted(counts.items(), key=lambda item: (-item[1], item[0].lower())))
 
 
@@ -288,9 +290,9 @@ def build_ttc_change_note(published: Dict[str, Dict[str, Any]], current: Dict[st
         if modded:
             lines += [""] + (["[b]Mods[/b]"] if both else []) + _group_lines(modded, modded_detail)
         note = "\n".join(lines + removed_lines)
-        if len(note) <= limit:
+        if len(note.encode("utf-8")) <= limit:
             return note
-    cut = note[: limit - 4]
+    cut = note.encode("utf-8")[: limit - 4].decode("utf-8", errors="ignore")
     return cut[: cut.rfind("\n") if "\n" in cut else len(cut)] + "\n..."
 
 
