@@ -1,13 +1,13 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!@exp_roster_compilation
-dec_hunters_anath_raema	false	dec_hunters_anath_raema	bow	false
-deco_chd_annihilators	false	deco_chd_annihilators	troll_hammer	false
-deco_chd_gnoblar_missile	false	deco_chd_gnoblar_missile		false
-deco_chd_naptha_bombs	false	deco_chd_naptha_bombs	globe	false
-deco_irondrakes_missile	false	deco_irondrakes_missile	pistol	false
-deco_ironside_rifle	false	deco_ironside_rifle	repeater_rifle	false
-deco_meadow_chariots	false	deco_meadow_chariots	bow	false
-deco_nor_reavers_throw	false	deco_nor_reavers_throw	none	false
-deco_prospectors_charges	false	deco_prospectors_charges		false
-deco_skywardens_bow	false	deco_skywardens_arrow	bow	false
-dwf_kou_dreadnaught	false	dwf_kou_dreadnaught		false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!@exp_roster_compilation
+dec_hunters_anath_raema	false	dec_hunters_anath_raema	bow	false	false
+deco_chd_annihilators	false	deco_chd_annihilators	troll_hammer	false	false
+deco_chd_gnoblar_missile	false	deco_chd_gnoblar_missile		false	false
+deco_chd_naptha_bombs	false	deco_chd_naptha_bombs	globe	false	false
+deco_irondrakes_missile	false	deco_irondrakes_missile	pistol	false	false
+deco_ironside_rifle	false	deco_ironside_rifle	repeater_rifle	false	false
+deco_meadow_chariots	false	deco_meadow_chariots	bow	false	false
+deco_nor_reavers_throw	false	deco_nor_reavers_throw	none	false	false
+deco_prospectors_charges	false	deco_prospectors_charges		false	false
+deco_skywardens_bow	false	deco_skywardens_arrow	bow	false	false
+dwf_kou_dreadnaught	false	dwf_kou_dreadnaught		false	false

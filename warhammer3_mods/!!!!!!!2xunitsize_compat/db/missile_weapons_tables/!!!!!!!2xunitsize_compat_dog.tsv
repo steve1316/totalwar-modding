@@ -1,7 +1,7 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_dog
-cst_boarding	true	cst_boarding	hand_cannon	false
-cst_corsairs	true	cst_corsairs		false
-cst_ship_rider_crane	false	cst_ship_rider_crane	deck_gunner_cannon	true
-cst_small_mortars	false	cst_small_mortars	mortar	false
-harkonship_test_jericho	false	harkonship_test_jericho		false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_dog
+cst_boarding	true	cst_boarding	hand_cannon	false	false
+cst_corsairs	true	cst_corsairs		false	false
+cst_ship_rider_crane	false	cst_ship_rider_crane	deck_gunner_cannon	true	false
+cst_small_mortars	false	cst_small_mortars	mortar	false	false
+harkonship_test_jericho	false	harkonship_test_jericho		false	false

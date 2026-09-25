@@ -1,13 +1,13 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!ak_teb
-teb_bow_militia	false	teb_bow_militia	bow	false
-teb_bow_rangers	false	teb_bow_rangers	bow	false
-teb_crossbow	false	teb_crossbow	crossbow	false
-teb_crossbow_cav	false	teb_crossbow_cav	crossbow	false
-teb_enforcers	false	teb_enforcers_poison	bow	false
-teb_handgunners	false	teb_handgunners	repeater_gun	false
-teb_irrana	false	teb_irrana	javelin	false
-teb_paymaster_wagon	false	teb_paymaster_wagon	hand_cannon	false
-teb_pistol_swash	false	teb_pistol_swash	pistol	false
-teb_royal_guard	false	teb_royal_guard	repeater_rifle	false
-teb_tank	false	teb_tank	cannon	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!ak_teb
+teb_bow_militia	false	teb_bow_militia	bow	false	false
+teb_bow_rangers	false	teb_bow_rangers	bow	false	false
+teb_crossbow	false	teb_crossbow	crossbow	false	false
+teb_crossbow_cav	false	teb_crossbow_cav	crossbow	false	false
+teb_enforcers	false	teb_enforcers_poison	bow	false	false
+teb_handgunners	false	teb_handgunners	repeater_gun	false	false
+teb_irrana	false	teb_irrana	javelin	false	false
+teb_paymaster_wagon	false	teb_paymaster_wagon	hand_cannon	false	false
+teb_pistol_swash	false	teb_pistol_swash	pistol	false	false
+teb_royal_guard	false	teb_royal_guard	repeater_rifle	false	false
+teb_tank	false	teb_tank	cannon	false	false

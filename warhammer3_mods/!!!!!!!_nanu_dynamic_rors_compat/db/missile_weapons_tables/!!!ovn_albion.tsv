@@ -1,7 +1,7 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!ovn_albion
-alb_centaurs_bow	false	alb_centaurs_bow_arrow	bow	false
-alb_sling	false	alb_sling		false
-albion_hunting_bow	false	albion_hunting_bow	bow	false
-albion_riders_javelins	false	albion_riders_javelins	javelin	false
-giant_boulder	false	giant_boulder		false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!ovn_albion
+alb_centaurs_bow	false	alb_centaurs_bow_arrow	bow	false	false
+alb_sling	false	alb_sling		false	false
+albion_hunting_bow	false	albion_hunting_bow	bow	false	false
+albion_riders_javelins	false	albion_riders_javelins	javelin	false	false
+giant_boulder	false	giant_boulder		false	false

@@ -1,4 +1,4 @@
-key	destroyed_model	destruction_animation	engine_type	gun_animation_table	missile_weapon	model	battle_entity	asset_folder	variant	draught_attachment_point	tech_folder	rider_attachment_point	destruct_model	destruct_anim	destruct_meta	audio_armour_type	riders_shoot_behaviour	scale
-#battlefield_engines_tables;23;db/battlefield_engines_tables/!!!ab_mixu_legendary_lords
-mixu_emp_art_carronade	warmachines/engines/cst_carrionade/cst_carrionade_01_destroyed.wsmodel	cst_carrionade_destruct	Generic_3_Crew	wm_great_cannon01	wh2_dlc11_cst_carronade	cst_carrionade	wh2_dlc11_cst_art_carronade										all_riders_shooting	1.0000
-mixu_emp_art_mortar	warmachines\engines\cst_mortar\cst_mortar_destroyed_01.wsmodel	cst_mortar_destruct	Generic_3_Crew	wm_mortar01	wh2_dlc11_cst_mortar	cst_mortar	wh2_dlc11_cst_art_mortar										all_riders_shooting	1.0000
+key	destroyed_model	destruction_animation	engine_type	gun_animation_table	missile_weapon	model	battle_entity	asset_folder	variant	draught_attachment_point	tech_folder	rider_attachment_point	destruct_model	destruct_anim	destruct_meta	audio_armour_type	riders_shoot_behaviour	scale	crew_reserve_distance_offset
+#battlefield_engines_tables;24;db/battlefield_engines_tables/!!!ab_mixu_legendary_lords
+mixu_emp_art_carronade	warmachines/engines/cst_carrionade/cst_carrionade_01_destroyed.wsmodel	cst_carrionade_destruct	Generic_3_Crew	wm_great_cannon01	wh2_dlc11_cst_carronade	cst_carrionade	wh2_dlc11_cst_art_carronade										all_riders_shooting	1.0000	0.0000
+mixu_emp_art_mortar	warmachines\engines\cst_mortar\cst_mortar_destroyed_01.wsmodel	cst_mortar_destruct	Generic_3_Crew	wm_mortar01	wh2_dlc11_cst_mortar	cst_mortar	wh2_dlc11_cst_art_mortar										all_riders_shooting	1.0000	0.0000

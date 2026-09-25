@@ -1,13 +1,13 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!xou_age_TKExtended
-MC_D_miss	false	MC_D_miss	warpfiregun	false
-MC_L_miss	false	MC_L_miss	warpfiregun	false
-MC_N_miss	false	MC_N_miss	warpfiregun	false
-Serpentguard_ranged	false	Serpentguard_ranged		false
-TMB_Cav_Teir2_Bow_Proj	false	TMB_Cav_Teir2_Bow_Arrow	bow	false
-Tomb_Heavy_Jav	false	Tomb_Heavy_Jav	javelin	false
-Tomb_Light_Jav	false	Tomb_Light_Jav	javelin	false
-agemo_nehekhara_archers_bow	false	agemo_nehekhara_archers_arrow	bow	false
-agemo_tmb_royal_archers_bow	false	agemo_tmb_royal_archers_arrow	bow	false
-agemo_tomb_guard_archers_bow	false	agemo_tomb_guard_archers_arrow	bow	false
-vultureshortbow	false	vultureshortbow_arrow	bow	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!xou_age_TKExtended
+MC_D_miss	false	MC_D_miss	warpfiregun	false	false
+MC_L_miss	false	MC_L_miss	warpfiregun	false	false
+MC_N_miss	false	MC_N_miss	warpfiregun	false	false
+Serpentguard_ranged	false	Serpentguard_ranged		false	false
+TMB_Cav_Teir2_Bow_Proj	false	TMB_Cav_Teir2_Bow_Arrow	bow	false	false
+Tomb_Heavy_Jav	false	Tomb_Heavy_Jav	javelin	false	false
+Tomb_Light_Jav	false	Tomb_Light_Jav	javelin	false	false
+agemo_nehekhara_archers_bow	false	agemo_nehekhara_archers_arrow	bow	false	false
+agemo_tmb_royal_archers_bow	false	agemo_tmb_royal_archers_arrow	bow	false	false
+agemo_tomb_guard_archers_bow	false	agemo_tomb_guard_archers_arrow	bow	false	false
+vultureshortbow	false	vultureshortbow_arrow	bow	false	false

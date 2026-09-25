@@ -1,5 +1,5 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!scm_marienburg
-hkrul_mar_handgun	false	hkrul_mar_bullet	repeater_gun	false
-hkrul_mar_mariner_pistol	false	hkrul_mar_mariner_pistol	pistol	false
-hkrul_mar_pistol	false	hkrul_mar_privateer_bullet	pistol	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!scm_marienburg
+hkrul_mar_handgun	false	hkrul_mar_bullet	repeater_gun	false	false
+hkrul_mar_mariner_pistol	false	hkrul_mar_mariner_pistol	pistol	false	false
+hkrul_mar_pistol	false	hkrul_mar_privateer_bullet	pistol	false	false

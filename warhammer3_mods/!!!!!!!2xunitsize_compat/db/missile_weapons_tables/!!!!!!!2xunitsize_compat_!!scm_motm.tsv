@@ -1,31 +1,31 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_!!scm_motm
-fleshrender_hunters	false	fleshrender_hunters		false
-gnoblar_spider_chariot	false	gnoblar_spider_chariot		false
-grill_throwing	false	grill_throwing		false
-motm_brudd_cannon	false	motm_brudd_cannon	grand_cannon	false
-motm_gnoblar_scraplauncher	false	motm_gnoblar_scraplauncher_shot		false
-motm_ironblaster	false	motm_ironblaster_shot	iron_blaster	false
-motm_ogr_bosun	false	motm_ogr_bosun	pistol	false
-motm_sandbad_pistol	false	motm_sandbad_pistol	pistol	false
-motm_snarky	false	motm_snarky	iron_blaster	false
-motm_targog_harpoon	false	motm_targog_harpoon		false
-motm_vazgrat_pistol	false	motm_vazgrat_pistol	pistol	false
-nosso_boogies	false	nosso_boogies		false
-nosso_boogies_bodyguard	false	nosso_gitz_boogies		false
-ogr_flame_thrower	false	ogr_flame_thrower	magma_cannon	false
-ogr_flameeater_pistol	false	ogr_flameeater_pistol	pistol_Ogre	false
-um_gnoblar_spider_riders_1	false	wh_grn_goblin_arrow_poison_spider_mounted	bow	false
-um_gnoblar_spider_riders_ror	false	wh2_dlc15_grn_goblin_arrow_fire_lava_spider_mounted	bow	false
-um_ogr_blackpowder	false	um_ogr_blackpowder	gatling_gun	false
-um_ogr_blu	false	um_ogr_blu		false
-um_ogr_corrupt_throwers	false	um_ogr_corrupt_throwers	cannon	false
-um_ogr_diver_02	false	um_ogr_diver_02		false
-um_ogr_gatling	false	um_ogr_gatling	blunderbuss	false
-um_ogr_lead_fire	false	um_ogr_lead_fire	drakegun	false
-um_ogr_lead_snipe	false	um_ogr_lead_snipe	wh3_dlc23_iron_daemon_carronade	false
-um_ogr_pit_champions_spear	false	um_ogr_pit_champions_spear		false
-um_ogr_skullflingers	false	um_ogr_skullflingers		false
-um_snarky_ironblaster	false	um_snarky_ironblaster	iron_blaster	false
-um_snarky_maneater_03	false	um_snarky_maneater_03	pistol_Ogre	false
-um_snarky_scraplauncher	false	um_snarky_scraplauncher		false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_!!scm_motm
+fleshrender_hunters	false	fleshrender_hunters		false	false
+gnoblar_spider_chariot	false	gnoblar_spider_chariot		false	false
+grill_throwing	false	grill_throwing		false	false
+motm_brudd_cannon	false	motm_brudd_cannon	grand_cannon	false	false
+motm_gnoblar_scraplauncher	false	motm_gnoblar_scraplauncher_shot		false	false
+motm_ironblaster	false	motm_ironblaster_shot	iron_blaster	false	false
+motm_ogr_bosun	false	motm_ogr_bosun	pistol	false	false
+motm_sandbad_pistol	false	motm_sandbad_pistol	pistol	false	false
+motm_snarky	false	motm_snarky	iron_blaster	false	false
+motm_targog_harpoon	false	motm_targog_harpoon		false	false
+motm_vazgrat_pistol	false	motm_vazgrat_pistol	pistol	false	false
+nosso_boogies	false	nosso_boogies		false	false
+nosso_boogies_bodyguard	false	nosso_gitz_boogies		false	false
+ogr_flame_thrower	false	ogr_flame_thrower	magma_cannon	false	false
+ogr_flameeater_pistol	false	ogr_flameeater_pistol	pistol_Ogre	false	false
+um_gnoblar_spider_riders_1	false	wh_grn_goblin_arrow_poison_spider_mounted	bow	false	false
+um_gnoblar_spider_riders_ror	false	wh2_dlc15_grn_goblin_arrow_fire_lava_spider_mounted	bow	false	false
+um_ogr_blackpowder	false	um_ogr_blackpowder	gatling_gun	false	false
+um_ogr_blu	false	um_ogr_blu		false	false
+um_ogr_corrupt_throwers	false	um_ogr_corrupt_throwers	cannon	false	false
+um_ogr_diver_02	false	um_ogr_diver_02		false	false
+um_ogr_gatling	false	um_ogr_gatling	blunderbuss	false	false
+um_ogr_lead_fire	false	um_ogr_lead_fire	drakegun	false	false
+um_ogr_lead_snipe	false	um_ogr_lead_snipe	wh3_dlc23_iron_daemon_carronade	false	false
+um_ogr_pit_champions_spear	false	um_ogr_pit_champions_spear		false	false
+um_ogr_skullflingers	false	um_ogr_skullflingers		false	false
+um_snarky_ironblaster	false	um_snarky_ironblaster	iron_blaster	false	false
+um_snarky_maneater_03	false	um_snarky_maneater_03	pistol_Ogre	false	false
+um_snarky_scraplauncher	false	um_snarky_scraplauncher		false	false

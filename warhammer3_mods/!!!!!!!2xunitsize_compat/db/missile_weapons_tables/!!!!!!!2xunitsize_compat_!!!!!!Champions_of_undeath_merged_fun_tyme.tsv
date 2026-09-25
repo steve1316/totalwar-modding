@@ -1,16 +1,16 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_!!!!!!Champions_of_undeath_merged_fun_tyme
-captured_hellblaster	false	captured_hellblaster	gatling_gun	false
-chd_clatter_gun	false	chd_copter_rounds	wh2_dlc12_ratling_gun	false
-corrupted_engine	false	corrupted_engine		false
-dg_flame_missile	false	dg_ship_flame_missile	flame_cannon	false
-interceptor_cannon_missile	false	interceptor_cannon	grand_cannon	false
-khaled_bow	false	khaled_arrow	bow_LH	false
-khaled_bow_chariot	false	khaled_arrow_rider	bow	true
-skv_rat_borg	false	skv_rat_borg	flame_cannon	false
-spider_grinder_bombard	false	spider_grinder_bombard	cannon	false
-vmp_teb_blunderbuss_bullet	false	vmp_teb_blunderbuss_bullet	blunderbuss	false
-vmp_teb_javs	false	vmp_teb_javv	javelin	false
-vmp_teb_merc_captain_rifle_primary	false	vmp_teb_captain_bullets	repeater_gun	false
-vmp_teb_merc_rifles	false	vmp_teb_merc	repeater_gun	false
-witch_hunter_sniper_boolet	false	withc_hunter_sniper_boolet	iron_hail_gunner	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_!!!!!!Champions_of_undeath_merged_fun_tyme
+captured_hellblaster	false	captured_hellblaster	gatling_gun	false	false
+chd_clatter_gun	false	chd_copter_rounds	wh2_dlc12_ratling_gun	false	false
+corrupted_engine	false	corrupted_engine		false	false
+dg_flame_missile	false	dg_ship_flame_missile	flame_cannon	false	false
+interceptor_cannon_missile	false	interceptor_cannon	grand_cannon	false	false
+khaled_bow	false	khaled_arrow	bow_LH	false	false
+khaled_bow_chariot	false	khaled_arrow_rider	bow	true	false
+skv_rat_borg	false	skv_rat_borg	flame_cannon	false	false
+spider_grinder_bombard	false	spider_grinder_bombard	cannon	false	false
+vmp_teb_blunderbuss_bullet	false	vmp_teb_blunderbuss_bullet	blunderbuss	false	false
+vmp_teb_javs	false	vmp_teb_javv	javelin	false	false
+vmp_teb_merc_captain_rifle_primary	false	vmp_teb_captain_bullets	repeater_gun	false	false
+vmp_teb_merc_rifles	false	vmp_teb_merc	repeater_gun	false	false
+witch_hunter_sniper_boolet	false	withc_hunter_sniper_boolet	iron_hail_gunner	false	false

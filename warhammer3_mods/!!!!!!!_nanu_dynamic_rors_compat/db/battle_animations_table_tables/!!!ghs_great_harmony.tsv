@@ -27,7 +27,6 @@ ghs_hef_fire_dragon_prince	humanoid01d
 ghs_inf_def_khaine_sister	humanoid06g
 ghs_inf_def_medusa_defender_halberd	snake01
 ghs_inf_sisters_thorn_moonfire_wall_of_thorns	giant01
-ghs_inf_skv_tesla_trooper	humanoid17
 ghs_inf_wef_moonfire_bow	humanoid01b
 ghs_inf_wef_wild_hunter	humanoid01d
 ghs_ksl_cav_alces_rider	humanoid01c
@@ -42,12 +41,12 @@ hu13_rune_guard_axe_and_shield	humanoid13
 hu13_rune_guard_dual_hammer	humanoid13
 hu13_rune_guard_giant	humanoid13
 hu1_jade_blood_dual_swords1	humanoid01b
-hu1_modao	humanoid01
 hu1c_panda_glaive	humanoid01c
 hu1c_wh3_kislev_halberd_and_bomb	humanoid01c
 hu1d_cth_lidao_guandao	humanoid01d
 hu1d_cth_miaodao	humanoid01d
 hu1d_cth_moxue_shield	humanoid01d
+hu1e_modao	humanoid01e
 hu3_dwarf_fly_drakegun	humanoid03
 hu3_dwf_crank_gun	humanoid03
 hu3_goat_axe_and_shield	humanoid03

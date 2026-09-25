@@ -1,5 +1,5 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_!cody_dwf_various_things
-cody_dwf_juggernaut_cannon	false	cody_dwf_juggernaut_cannon_ball	cannon	false
-cody_dwf_juggernaut_mortar	false	cody_dwf_juggernaut_mortar_shell	mortar	false
-cody_dwf_war_bear_crankgun	false	cody_dwf_war_bear_crankgun_bullet	wh2_dlc12_ratling_gun	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_!cody_dwf_various_things
+cody_dwf_juggernaut_cannon	false	cody_dwf_juggernaut_cannon_ball	cannon	false	false
+cody_dwf_juggernaut_mortar	false	cody_dwf_juggernaut_mortar_shell	mortar	false	false
+cody_dwf_war_bear_crankgun	false	cody_dwf_war_bear_crankgun_bullet	wh2_dlc12_ratling_gun	false	false

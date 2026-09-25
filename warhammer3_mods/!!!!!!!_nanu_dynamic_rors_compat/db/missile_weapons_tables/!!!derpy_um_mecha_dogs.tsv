@@ -1,5 +1,5 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!derpy_um_mecha_dogs
-derpy_chd_mech_biped_cannon	false	derpy_chd_mech_biped_cannon	magma_cannon	false
-derpy_chd_mech_cannon	false	derpy_chd_mech_cannon	hand_cannon	false
-derpy_chd_mech_flamer	false	derpy_chd_mech_flamer	hell_cannon	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!derpy_um_mecha_dogs
+derpy_chd_mech_biped_cannon	false	derpy_chd_mech_biped_cannon	magma_cannon	false	false
+derpy_chd_mech_cannon	false	derpy_chd_mech_cannon	hand_cannon	false	false
+derpy_chd_mech_flamer	false	derpy_chd_mech_flamer	hell_cannon	false	false

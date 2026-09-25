@@ -27,14 +27,12 @@ cf_ice_guard_cav_pegasus
 cf_ice_guard_glaive
 cf_ice_guard_missile_cav
 cf_ice_guard_shield
+cf_kislevite_warrior_horse
 cf_ksl_axe_thrower
-cf_kurgan_brute
 cf_kvaskrovka_cavalry
 cf_kvaskrovka_infantry
 cf_light_war_sled_ice_guard
 cf_light_war_sled_melee
-cf_mounted_cossacks
-cf_mounted_huns
 cf_praag_guards
 cf_royal_bokha_palace_guard
 cf_royal_kreml_guard
@@ -46,6 +44,8 @@ cf_tor_mortar
 cf_tor_phoenix
 cf_tors_lighting_strike
 cf_tzar_guard_2
+cf_ungol_brute
+cf_ungol_horse_raiders
 cf_ungol_warrior_drunk
 cf_ursuns_claws
 cf_war_altar_of_ursun

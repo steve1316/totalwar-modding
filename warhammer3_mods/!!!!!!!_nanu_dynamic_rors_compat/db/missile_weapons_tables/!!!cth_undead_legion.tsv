@@ -1,4 +1,4 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!cth_undead_legion
-cth_buddha	false	cth_buddha		false
-cth_worker	false	cth_worker		false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!cth_undead_legion
+cth_buddha	false	cth_buddha		false	false
+cth_worker	false	cth_worker		false	false

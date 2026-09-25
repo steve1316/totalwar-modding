@@ -4,18 +4,16 @@ cth_agate_crowman	0	0	30	10	1.0000	axe	creatures_claws		1	1.0000	0.5000	0.0000	f
 cth_black_snow_crossbow_longma_sword	0	0	45	20	2.0000	sword	sword	medium	2	1.0000	0.7500	0.0000	true	cth_unit_contact_snow	0	10	2.0		false
 cth_black_snow_crossbow_sword	0	5	27	8	2.0000	sword	sword	small	2	1.0000	0.7500	0.0000	true	cth_unit_contact_snow	0	10	2.0		false
 cth_black_snow_guandao	0	15	20	30	4.0000	lance	spear	small	4	0.4000	0.7500	0.0000	true	cth_unit_contact_moon_flame	0	10	1.75		false
-cth_black_snow_guard_modao	25	0	15	30	3.0000	axe	sword_huge	medium	1	1.0000	0.7500	0.0000	true	cth_unit_contact_snow	0	10	2.0		false
 cth_black_snow_miaodao	0	15	15	30	3.0000	sword	sword	small	1	1.0000	0.7500	0.0000	true	cth_unit_contact_ink	0	10	1.5		false
 cth_black_snow_panda_guandao	30	0	30	80	3.0000	axe	halberd	medium	4	1.0000	0.7500	0.0000	true	cth_unit_contact_dragon_roar	10	10	2.0		false
 cth_cav_celestial_crossbow_sword	0	0	24	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
 cth_cav_celestial_mighty_axe_guard	0	0	25	45	2.0000	axe	spear	small	3	1.0000	1.0000	0.0000	true		0	10	2.25		false
-cth_cav_jade_crossbow_sword	0	0	21	3	1.0000	sword	sword		2	1.0000	1.0000	0.0000	false		0	10	2.1		false
-cth_cav_jade_longma_crassbow_sword	0	0	29	14	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
 cth_cav_naogao_fire_lance	0	0	23	20	2.0000	lance	spear	small	2	1.0000	1.2500	1.0000	false		0	10	2.0		false
-cth_dark_warchariot	0	25	25	25	5.0000	axe	creatures_claws	very_large	4	1.5000	1.2500	0.0000	false		3	2	1.5		false
+cth_dark_warchariot	0	25	25	20	5.0000	axe	creatures_claws	very_large	4	1.5000	1.2500	0.0000	false	wh2_dlc12_unit_contact_sundered_armour	3	2	1.5		false
 cth_dragon_boat_melee	0	0	0	400	7.0000	sword	sword_huge	large	20	1.0000	0.7500	0.0000	true	cth_unit_contact_dragon_roar	0	10	1.9		false
 cth_dragon_guard_sword	0	0	26	14	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false	cth_unit_contact_dragon_roar	0	10	2.0		false
 cth_dragon_turtle	0	20	150	350	10.0000	axe	creatures_claws	medium	8	1.5000	1.2500	0.0000	false		5	5	1.75		false
+cth_fire_dragon_glaive	0	15	20	30	4.0000	lance	spear	small	4	0.4000	0.7500	1.0000	true	wh2_dlc12_unit_contact_flammable	0	10	1.75		false
 cth_inf_dragon_guard_fighter	0	0	25	14	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
 cth_inf_dragon_tiger_guard	0	18	12	30	2.0000	spear	halberd	medium	3	1.0000	1.0000	0.0000	true		0	10	2.3		false
 cth_inf_jad_warrior_great_sword	0	0	12	23	1.0000	sword	sword		2	1.0000	1.0000	0.0000	false		0	10	2.15		false
@@ -23,9 +21,9 @@ cth_inf_moon_yinyang_maiden	0	0	12	25	1.0000	sword	sword	small	1	1.0000	1.0000	0
 cth_inf_nangao_firework_trops	0	0	28	15	1.0000	spear	halberd		1	1.0000	0.7500	1.0000	false		0	10	2.3		false
 cth_inf_pioneer_scouts	0	0	23	3	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
 cth_inf_thunderbolt_gunners	0	0	24	10	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
-cth_jade_blood_dual_sword	0	8	20	15	1.0000	sword	sword		1	1.0000	1.0000	0.0000	true	cth_unit_contact_jade_sword	0	10	1.05		false
-cth_jade_warrior_halberd_shield	16	0	8	20	1.0000	spear	halberd		1	1.0000	1.0000	0.0000	true		0	10	2.3		false
-cth_jade_warrior_stick	0	12	20	12	1.0000	sword	hammer		1	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
+cth_iron_dragon_modao	25	0	15	30	3.0000	axe	sword_huge	medium	1	1.5000	0.7500	0.0000	true	cth_unit_contact_snow	0	10	2.0		false
+cth_iron_dragon_modao_ror	35	0	20	35	3.0000	axe	sword_huge	medium	2	1.5000	0.7500	0.0000	true	cth_unit_contact_dragon_roar	0	10	1.75		false
+cth_jade_blood_dual_sword	0	8	20	10	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	cth_unit_contact_jade_sword	0	10	1.75		false
 cth_mon_terracotta_sentinels_small	0	0	40	85	4.0000	spear	sword_huge	large	6	1.0000	1.0000	0.0000	true		0	10	2.0		false
 cth_sky_junk_cannon	0	0	20	6	1.0000	axe	hammer		3	1.0000	1.2500	0.0000	false		0	10	3.0		false
 cth_soul_flood_dragon	0	0	150	350	20.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.25		false
@@ -33,14 +31,15 @@ cth_statue_lion	0	10	15	40	1.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0
 cth_statue_lion_ror	0	10	15	40	1.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	3	1.9		false
 cth_terracotta_archer	15	0	30	40	2.0000	sword	sword_medium	medium	3	1.0000	1.0000	0.0000	false		0	10	1.75		false
 cth_terracotta_giant_axe	0	0	30	80	3.0000	axe	axe	medium	4	1.0000	1.5000	0.0000	false	cth_unit_contact_dragon_roar	0	10	1.5	cth_terracotta_giant_axe	false
-cth_terracotta_jade_glaive	15	0	150	200	5.0000	spear	halberd	medium	5	1.0000	1.0000	0.0000	true		0	10	1.8		false
+cth_terracotta_jade_glaive	15	0	200	250	5.0000	spear	halberd	medium	5	1.0000	1.0000	0.0000	true		0	10	1.8		false
+cth_terracotta_jade_glaive_rider	25	0	150	300	5.0000	spear	halberd	medium	8	1.0000	1.0000	0.0000	true		10	10	1.8		false
 cth_terracotta_keeper	0	0	150	450	6.0000	axe	club_huge	large	10	1.2500	1.2500	0.0000	true	wh2_dlc11_unit_contact_disrupted	5	5	2.0		false
 cth_terracotta_rocket_cannon	0	0	300	100	7.0000	sword	sword_huge	large	12	1.0000	0.7500	0.0000	false		0	10	1.9		false
 cth_thunder_attack_gunners	0	0	22	6	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
-cth_xiaoxiao	0	15	220	200	6.0000	axe	axe	medium	7	2.0000	1.2500	0.0000	false		0	10	0.0		false
-cth_xiaoxiao_flooddragon	0	15	180	300	6.0000	axe	axe	medium	9	3.2000	1.2500	1.0000	true		0	10	0.0		false
-cth_zhaowang	0	15	320	150	6.0000	axe	axe	medium	7	2.0000	1.2500	0.0000	false		0	10	0.0		false
-cth_zhaowang_flooddragon	0	15	170	350	6.0000	axe	axe	medium	12	3.2000	1.2500	0.0000	false		0	10	0.0		false
+cth_xiaoxiao	20	0	250	200	6.0000	axe	axe	medium	7	2.0000	1.2500	0.0000	false		0	10	0.0		false
+cth_xiaoxiao_flooddragon	20	0	200	250	6.0000	axe	axe	medium	9	2.0000	1.2500	1.0000	true		0	10	0.0		false
+cth_zhaowang	0	15	300	200	6.0000	axe	axe	medium	7	2.0000	1.2500	0.0000	false		0	10	0.0		false
+cth_zhaowang_flooddragon	0	15	100	350	6.0000	axe	axe	medium	12	4.0000	1.2500	0.0000	false		0	10	0.0		false
 dwf_bardiche	5	0	15	23	8.0000	axe	halberd	small	3	0.7500	1.2500	0.0000	false		0	10	2.0		false
 dwf_goat_hammer	0	0	10	45	1.0000	axe	hammer_dwarf		1	1.0000	1.2500	0.0000	true		0	10	2.0		false
 dwf_goat_ironbreaker	0	0	15	17	1.0000	axe	axe		1	1.0000	1.2500	0.0000	false		0	10	2.15		false
@@ -83,18 +82,22 @@ ghs_chd_kdaai_bull	0	0	150	300	5.0000	axe	axe	medium	5	1.5000	1.0000	1.0000	true
 ghs_chd_kdaai_conquer	0	20	140	400	10.0000	axe	creatures_claws	large	7	1.0000	1.2500	1.0000	true	wh2_dlc17_unit_contact_dazed	5	5	2.0		false
 ghs_chd_kdaai_halberd	25	0	65	55	2.0000	spear	halberd	medium	2	1.0000	0.5000	1.0000	true		0	10	2.0		false
 ghs_chd_kdaai_wings	0	25	200	500	9.0000	axe	creatures_claws	large	8	1.0000	1.2500	1.0000	true	wh2_dlc12_unit_contact_flammable	7	7	2.0		false
-ghs_cth_cav_armour_giant_ox_rider	0	0	40	90	3.0000	sword	sword_medium	medium	4	1.0000	1.2500	0.0000	false		10	10	1.6		false
-ghs_cth_cav_armour_giant_ox_rider_ror	30	0	40	90	3.0000	sword	sword_medium	medium	4	1.0000	1.2500	10.0000	true	wh2_dlc12_unit_contact_suppressive_fire	10	10	1.6		false
-ghs_cth_cav_jade_lion_rider	25	0	20	60	3.0000	axe	stone_club_medium	medium	4	1.0000	1.0000	0.0000	true	cth_unit_contact_dragon_roar	5	3	1.5		false
-ghs_cth_cav_jet_lion_rider	0	0	30	50	3.0000	axe	stone_club_medium	medium	4	1.0000	1.0000	0.0000	true	cth_unit_contact_moon_flame	5	3	1.75		false
-ghs_cth_cav_unarmour_giant_ox	0	0	30	80	3.0000	sword	sword_medium	medium	4	1.0000	1.2500	0.0000	false		10	10	1.6		false
-ghs_cth_cha_hongying	0	15	150	250	4.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	false		0	10	2.0	ghs_cth_cha_hongying	false
-ghs_cth_cha_hongying_cage_bird	15	0	0	450	7.0000	axe	creatures_claws	large	12	1.6000	1.2500	0.0000	true		0	10	1.5	ghs_cth_cha_hongying	false
-ghs_cth_cha_jade_blood_taoist	0	0	150	200	4.0000	sword	sword	medium	8	1.0000	0.7500	0.0000	true	cth_unit_contact_jade_blood	0	10	1.5		false
+ghs_cth_cav_armour_giant_ox_rider	0	0	40	80	3.0000	sword	sword_medium	medium	5	1.0000	1.2500	0.0000	false		10	10	2.0		false
+ghs_cth_cav_armour_giant_ox_rider_ror	30	0	40	90	3.0000	sword	sword_medium	medium	5	1.0000	1.2500	10.0000	true	wh2_dlc12_unit_contact_flammable	10	10	1.6		false
+ghs_cth_cav_jade_lion_rider	20	0	20	60	3.0000	axe	stone_club_medium	medium	4	1.0000	1.0000	0.0000	true	cth_unit_contact_dragon_roar	5	3	1.5		false
+ghs_cth_cav_jet_lion_rider	0	10	30	50	3.0000	axe	stone_club_medium	medium	4	1.0000	1.0000	0.0000	false	cth_unit_contact_moon_flame	5	3	1.75		false
+ghs_cth_cav_unarmour_giant_ox	0	0	60	40	3.0000	sword	sword_medium	medium	5	1.0000	1.2500	0.0000	false		10	10	2.0		false
+ghs_cth_cha_hongying	0	15	220	250	4.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	false		0	10	2.0	ghs_cth_cha_hongying	false
+ghs_cth_cha_hongying_cage_bird	20	0	0	550	7.0000	axe	creatures_claws	large	10	1.5000	1.2500	0.0000	true		0	10	1.5	ghs_cth_cha_hongying	false
+ghs_cth_cha_jade_blood_taoist	0	0	150	200	4.0000	sword	sword	medium	5	1.0000	0.7500	0.0000	true	cth_unit_contact_jade_blood	0	10	1.5		false
+ghs_cth_cha_jade_blood_taoist_rider	0	15	150	250	4.0000	sword	sword	medium	8	1.0000	0.7500	0.0000	true	cth_unit_contact_jade_blood	0	10	1.5		false
+ghs_cth_cha_wangque	20	0	250	200	4.0000	spear	halberd	large	5	1.0000	1.0000	0.0000	false		0	10	2.0		false
+ghs_cth_cha_wangque_bird	20	0	300	250	7.0000	axe	creatures_claws	large	7	1.0000	1.0000	0.0000	true		0	10	2.0		false
+ghs_cth_cha_yangxing	0	0	150	450	7.0000	spear	sword_huge	large	6	2.0000	0.5000	0.0000	true		10	10	2.0		false
 ghs_cth_inf_royal_guard_crowmen	0	0	200	120	2.0000	sword	creatures_claws	medium	7	1.0000	1.0000	0.0000	true		0	10	2.0		false
 ghs_cth_inf_royal_guard_crowmen_avatar	0	0	300	200	7.0000	axe	creatures_claws	large	7	1.6000	1.2500	0.0000	true	wh_dlc06_unit_contact_discouraged	0	10	2.0		false
-ghs_cth_inf_secret_follower	0	15	10	25	3.0000	sword	sword	small	1	1.0000	0.7500	0.0000	true	cth_unit_contact_ink	0	10	1.5		false
-ghs_def_inf_khaine_avatar	0	0	100	350	3.0000	sword	sword	medium	7	1.0000	1.0000	0.0000	true	wh2_main_unit_contact_witch_elf_poison	0	10	1.5	ghs_def_inf_khaine_avatar	false
+ghs_cth_inf_secret_follower	0	10	20	15	3.0000	sword	sword	small	1	1.0000	0.7500	0.0000	false	cth_unit_contact_ink	0	10	1.5		false
+ghs_def_inf_khaine_avatar	0	0	150	300	3.0000	sword	sword	medium	7	1.0000	1.0000	0.0000	true	wh2_main_unit_contact_witch_elf_poison	0	10	1.5	ghs_def_inf_khaine_avatar	false
 ghs_def_mon_flying_medusa	0	0	130	280	10.0000	spear	halberd	large	6	1.0000	1.2500	0.0000	true	wh2_dlc11_unit_contact_charmed	0	10	2.0		false
 ghs_def_mon_manticore_rider	0	15	150	200	8.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	0	3	2.0		false
 ghs_def_mon_sea_dragon	20	0	140	380	8.0000	axe	creatures_claws	large	8	1.0000	1.0000	0.0000	false	ghs_def_sea_dragon_waterlogged	4	10	1.75		false
@@ -168,7 +171,7 @@ ghs_skv_ll_warlord_avatar	0	0	100	300	9.0000	sword	sword	medium	8	1.5000	1.0000	
 ghs_skv_mon_hellpit_ratling	20	0	140	400	8.0000	axe	creatures_claws	large	10	1.0000	1.2500	0.0000	false	wh2_dlc12_unit_passive_zzzap	5	10	1.5		false
 ghs_skv_mon_hellpit_warpdrill	0	0	140	380	8.0000	axe	creatures_claws	large	8	1.0000	3.5000	0.0000	true		0	10	1.75		false
 ghs_skv_mon_hellpit_warpflame	0	20	160	360	8.0000	axe	creatures_claws	large	7	1.0000	1.2500	1.0000	false	wh_main_unit_contact_poison	0	10	1.75		false
-ghs_tmb_bone_elephant	0	20	200	250	10.0000	axe	creatures_claws	large	10	1.0000	1.2500	0.0000	false		4	5	1.75		false
+ghs_tmb_bone_elephant	0	15	200	250	10.0000	axe	creatures_claws	large	10	1.0000	1.2500	0.0000	false		4	5	1.75		false
 ghs_tmb_flying_necrosphinx_usirian	0	0	0	250	9.0000	sword	sword_huge	medium	6	1.0000	1.0000	0.0000	true		4	10	1.8		false
 ghs_tmb_heavy_ostrich_rider	15	0	15	20	2.0000	spear	halberd		1	1.0000	0.7500	0.0000	true		0	0	1.5		false
 ghs_tmb_landing_necrosphinx_usirian	40	0	0	450	9.0000	sword	sword_huge	medium	12	1.0000	1.0000	0.0000	true		4	10	1.8		false
@@ -176,12 +179,13 @@ ghs_tmb_ostrich_rider	0	0	15	10	2.0000	spear	spear		1	1.0000	0.7500	0.0000	false
 ghs_tmb_scarab_flying_01	0	0	30	50	4.0000	sword	creatures_claws	medium	4	0.9000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 ghs_tmb_scarab_flying_02	0	0	30	50	4.0000	sword	creatures_claws	medium	6	0.9000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 ghs_tmb_scorpion_monster	40	0	100	450	7.0000	axe	sword_huge	large	10	1.0000	1.2500	0.0000	true	wh_main_unit_contact_poison	0	10	1.5	ghs_tmb_scorpion_monster	false
-ghs_tmb_stalker_dual_axe	0	20	35	80	2.0000	axe	axe	medium	5	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	2.0		false
+ghs_tmb_stalker_dual_axe	0	15	35	80	2.0000	axe	axe	medium	5	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	2.0		false
 ghs_tmb_ushabti_dual_weapon	0	15	20	60	2.0000	sword	sword_medium	medium	6	1.0000	1.0000	10.0000	false		0	10	1.5		false
 ghs_tmb_ushabti_eagle_cannon	0	0	20	50	2.0000	sword	sword_medium	medium	5	1.0000	1.0000	0.0000	true		0	10	2.0		false
 ghs_tmb_ushabti_great_weapon	25	0	30	75	3.0000	axe	axe	medium	7	1.0000	1.5000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	1.75		false
 ghs_wh2_dlc16_wef_staff_ariel_lord	0	0	0	300	4.0000	spear	staff	large	10	1.0000	0.7500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.0		false
 ghs_wm_def_black_ark	0	0	300	500	20.0000	axe	creatures_claws	large	15	3.0000	2.0000	0.0000	true	wh2_main_unit_contact_witch_elf_poison	4	8	5.0		false
+ghs_wm_hef_dragonship	0	0	200	600	20.0000	axe	creatures_claws	large	20	3.0000	2.0000	0.0000	true		20	20	4.0		false
 ghs_wm_hef_flying_waystone	0	0	50	300	7.0000	sword	drakegun	very_large	8	1.0000	1.0000	0.0000	true	wh2_pro08_unit_contact_dampen	0	4	2.0		false
 ghs_wm_hef_flying_waystone_sword	0	20	20	30	1.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	2.0		false
 gorrok_dread_saurian	0	0	200	550	20.0000	claw	axe	large	16	1.8000	1.0000	0.0000	false		5	8	1.6		false
@@ -209,14 +213,6 @@ ogr_crossbowman	0	0	35	85	3.0000	sword	sword_medium	medium	4	1.0000	1.5000	0.000
 oxyotl_dread_saurian	0	0	200	550	20.0000	claw	axe	large	16	1.8000	1.0000	0.0000	false		5	8	2.0		false
 phoenix_guard_champion	35	0	120	220	3.0000	spear	halberd	large	4	1.0000	0.7500	0.0000	false		0	10	1.75		false
 phoenix_guard_champion_phoenix	35	0	100	230	7.0000	spear	halberd	large	6	1.0000	0.7500	1.0000	true		0	10	1.75		false
-rhd_land_skv_inf_night_runners_ror_melee_weapon	0	0	20	6	1.0000	sword	sword		5	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.15		false
-rhd_land_skv_inf_pickaxe_melee_weapon	0	0	6	16	1.0000	axe	axe		5	1.0000	1.5000	0.0000	false		0	10	2.15		false
-rhd_land_skv_inf_pickaxe_melee_weapon_slave	0	0	6	10	1.0000	axe	axe		5	1.0000	1.5000	0.0000	false		0	10	2.15		false
-rhd_land_skv_inf_plague_monk_warpstone_0_melee_weapon	0	0	18	46	1.0000	axe	flail	small	5	1.0000	1.2500	0.0000	true	wh2_main_unit_contact_plague_monk_censer_morale	0	10	2.2		false
-rhd_land_skv_inf_tesla_trooper_0_melee_weapon	0	0	20	70	1.0000	spear	halberd	medium	4	1.3000	0.7500	0.0000	true	wh2_dlc12_unit_passive_zzzap	0	10	2.0		false
-rhd_land_skv_inf_warp_grinder_ror_melee_weapon	0	0	18	78	4.0000	spear	halberd	medium	4	1.3000	0.7500	0.0000	true	rhd_unit_contact_melt	0	10	2.85		false
-rhd_land_skv_mon_bonebreaker_0_melee_weapon	0	0	30	80	5.0000	sword	sword	medium	5	1.5000	1.2500	0.0000	false		0	10	1.9		false
-rhd_land_skv_veh_screaming_bell_0_melee_weapon	0	20	30	70	6.0000	axe	unarmed	medium	5	1.0000	1.2500	0.0000	false		4	4	2.6		false
 slayer_guard_great_axe	30	0	30	50	1.0000	axe	axe		1	1.0000	1.2500	0.0000	false		0	10	2.15		false
 summoned_grymloq	40	0	130	350	7.0000	claw	creatures_claws	large	10	1.2000	1.0000	0.0000	false		5	8	1.6		false
 summoned_zlaaq	0	25	150	350	10.0000	claw	axe	large	12	1.5000	1.0000	0.0000	false		5	8	1.8		false

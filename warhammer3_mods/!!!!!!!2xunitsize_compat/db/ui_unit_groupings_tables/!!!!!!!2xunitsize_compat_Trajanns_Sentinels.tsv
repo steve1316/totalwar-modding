@@ -1,9 +1,9 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_Trajanns_Sentinels
-traj_barthuum	giant	heroes_agents
+traj_barthuum	wh3_dlc26_tmb_giant	heroes_agents
 traj_gurrash	monstrous_infantry	heroes_agents
 traj_inathma	wh2_dlc09_tmb_khemrian_warsphinx_missile	heroes_agents
-traj_malarok	monstrous_infantry	heroes_agents
+traj_malarok	wh2_dlc09_tmb_sepulchral_stalkers	heroes_agents
 traj_nyrask	wh2_dlc09_tmb_scorpion	heroes_agents
 traj_rhakaan	wh2_dlc09_tmb_hierotitan_magic_scales	commander
 traj_talimar	wh2_dlc09_tmb_necrosphinx	heroes_agents

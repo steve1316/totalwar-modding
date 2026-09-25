@@ -5,7 +5,6 @@ cf_akshina_javelin_cavalry
 cf_akshina_scout_hawks
 cf_ancient_widow
 cf_armoured_kossars_dual_swords
-cf_boyar_guards
 cf_dazh_phoenix
 cf_erengrad_cannon
 cf_feral_elk
@@ -22,16 +21,13 @@ cf_ice_guard_cav_glaive
 cf_ice_guard_glaive
 cf_ice_guard_missile_cav
 cf_ice_guard_shield
+cf_kislevite_warrior_horse
 cf_ksl_axe_thrower
-cf_kurgan_brute
 cf_kvaskrovka_cavalry
 cf_kvaskrovka_infantry
 cf_light_war_sled_ice_guard
 cf_light_war_sled_melee
-cf_mounted_cossacks
-cf_mounted_huns
 cf_praag_guards
-cf_royal_bokha_palace_guard
 cf_royal_kreml_guard
 cf_sibyrian_hunters
 cf_streltsi_blunderbuss
@@ -39,6 +35,8 @@ cf_streltsi_pistol_bardiche
 cf_throwing_axe_cavalry
 cf_tor_phoenix
 cf_tzar_guard_2
+cf_ungol_brute
+cf_ungol_horse_raiders
 cf_ungol_warrior_drunk
 cf_war_altar_of_ursun
 wh3_main_ksl_veh_little_grom_mortar_0

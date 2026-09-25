@@ -1,6 +1,6 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_laf_hag_mothers
-laf_ksl_hag_mother_beasts	false	laf_ksl_hag_mother_beasts_bolt	none	false
-laf_ksl_hag_mother_death	false	laf_ksl_hag_mother_death_bolt	none	false
-laf_ksl_hag_mother_hags	false	laf_ksl_hag_mother_hag_bolt	none	false
-laf_ksl_hag_mother_shadows	false	laf_ksl_hag_mother_shadows_bolt	none	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_laf_hag_mothers
+laf_ksl_hag_mother_beasts	false	laf_ksl_hag_mother_beasts_bolt	none	false	false
+laf_ksl_hag_mother_death	false	laf_ksl_hag_mother_death_bolt	none	false	false
+laf_ksl_hag_mother_hags	false	laf_ksl_hag_mother_hag_bolt	none	false	false
+laf_ksl_hag_mother_shadows	false	laf_ksl_hag_mother_shadows_bolt	none	false	false

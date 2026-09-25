@@ -17,12 +17,10 @@ cf_gryphon_legion_halberds
 cf_gryphon_legion_horse_archers
 cf_gryphon_legion_knights
 cf_ice_guard_cav_pegasus
+cf_kislevite_warrior_horse
 cf_ksl_axe_thrower
-cf_kurgan_brute
 cf_kvaskrovka_cavalry
 cf_kvaskrovka_infantry
-cf_mounted_cossacks
-cf_mounted_huns
 cf_praag_cannons
 cf_praag_guards
 cf_royal_bokha_palace_guard
@@ -33,6 +31,8 @@ cf_tor_mortar
 cf_tor_phoenix
 cf_tors_lighting_strike
 cf_tzar_guard_cav
+cf_ungol_brute
+cf_ungol_horse_raiders
 cf_ungol_warrior_drunk
 cf_ungol_warrior_shield
 cf_ursuns_claws

@@ -1,7 +1,6 @@
 key
 #unit_description_short_texts_tables;0;db/unit_description_short_texts_tables/!!!DEER24Cathay
 deer_cth_meihouwang
-wh3_deer24_baishe
 wh3_deer24_changyalishi
 wh3_deer24_jinhunqilin
 wh3_deer24_jinwu_huguanshi
@@ -23,9 +22,7 @@ wh3_deer24_short_SHENJI
 wh3_deer24_short_SHUREN
 wh3_deer24_short_TONGYONG
 wh3_deer24_short_XIAOYONG
-wh3_deer24_short_XUANWU
 wh3_deer24_short_YUEGONG
-wh3_deer24_short_baihu
 wh3_deer24_short_bianjun
 wh3_deer24_short_doulishenji
 wh3_deer24_short_fubing
@@ -41,7 +38,6 @@ wh3_deer24_short_seng
 wh3_deer24_short_warchariot
 wh3_deer24_short_wuren
 wh3_deer24_short_yangjiajiang
-wh3_deer24_short_zhuque
 wwd_bixuedaoren
 wwd_jinjun_cennter_chiwei
 wwd_jinjun_east_chaoting

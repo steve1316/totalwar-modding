@@ -1,3 +1,6 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!shun_cth_unitpack
 hu1_shun_cth_bow_and_glaive_01	humanoid01
+hu1_shun_cth_warhorse_sword_bow	humanoid01
+hu1e_hr1_cav_2h_mashuo	humanoid01e
+hu1e_shun_tribesmen_javelin	humanoid01e

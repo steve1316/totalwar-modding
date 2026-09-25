@@ -1,5 +1,5 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!cipher_wef_units
-c_asrai_sunderers_bow	false	c_asrai_sunderers_arrow	bow_large	false
-c_maidens_of_kurnous_bow	false	c_maidens_of_kurnous_arrow	bow	false
-c_oak_guardians_bow	false	c_oak_guardians_arrow	bow	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!cipher_wef_units
+c_asrai_sunderers_bow	false	c_asrai_sunderers_arrow	bow_large	false	false
+c_maidens_of_kurnous_bow	false	c_maidens_of_kurnous_arrow	bow	false	false
+c_oak_guardians_bow	false	c_oak_guardians_arrow	bow	false	false

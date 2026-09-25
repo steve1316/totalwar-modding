@@ -1,3 +1,3 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_laf_ostankya_chicken_hut
-laf_hut_ostankya_cauldron	false	laf_hut_ostankya_cauldron	none	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!!2xunitsize_compat_laf_ostankya_chicken_hut
+laf_hut_ostankya_cauldron	false	laf_hut_ostankya_cauldron	none	false	false

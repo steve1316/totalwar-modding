@@ -1,8 +1,8 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!!!!laf_dwarfs
-laf_dwf_copter_drakefire_gun	false	laf_copter_drakefire_shot	brinstone_gun	false
-laf_dwf_crank_gun	false	laf_crank_gun_bullet	repeater_rifle	false
-laf_dwf_dual_drakefire_pistol	false	laf_drakefire_pistol_bullet	drakegun	false
-laf_dwf_rider_bolt_thrower	false	laf_dwf_mounted_bolt_thrower_bolt	bolt_large	false
-laf_dwf_rider_cannon	false	laf_dwf_mounted_cannon_ball	cannon	false
-laf_dwf_sapper_charges	false	laf_dwf_sapper_charges		false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!!!!laf_dwarfs
+laf_dwf_copter_drakefire_gun	false	laf_copter_drakefire_shot	brinstone_gun	false	false
+laf_dwf_crank_gun	false	laf_crank_gun_bullet	repeater_rifle	false	false
+laf_dwf_dual_drakefire_pistol	false	laf_drakefire_pistol_bullet	drakegun	false	false
+laf_dwf_rider_bolt_thrower	false	laf_dwf_mounted_bolt_thrower_bolt	bolt_large	false	false
+laf_dwf_rider_cannon	false	laf_dwf_mounted_cannon_ball	cannon	false	false
+laf_dwf_sapper_charges	false	laf_dwf_sapper_charges		false	false

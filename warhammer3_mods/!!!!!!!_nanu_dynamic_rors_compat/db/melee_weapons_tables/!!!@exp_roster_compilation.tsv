@@ -41,7 +41,7 @@ deco_nor_huskarls	0	0	33	12	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	3
 deco_nor_hydra	0	0	140	300	9.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	3.6000		false
 deco_nor_maidens	0	0	26	10	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	4.3000		false
 deco_nor_pit	0	8	30	15	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	4.0000		false
-deco_nor_valkyrie	20	0	50	250	3.0000	spear	spear	medium	4	2.0000	1.0000	0.0000	true		0	10	4.0000		false
+deco_nor_valkyrie	20	0	75	275	3.0000	spear	spear	medium	4	2.0000	1.0000	0.0000	true		0	10	4.0000		false
 deco_old_guard	0	0	15	45	2.0000	axe	axe_2h		1	1.0000	0.5000	0.0000	true		0	10	4.3000		false
 deco_prospectors	0	0	10	30	1.0000	axe	axe		1	1.0000	3.0000	0.0000	false		0	10	4.3000		false
 deco_roadwardens	0	0	22	8	2.0000	lance	spear		1	1.0000	0.5000	0.0000	false		0	10	5.0000		false

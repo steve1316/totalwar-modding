@@ -28,6 +28,7 @@ mixu_emp_cha_ogre_bodyguard_cannon	0	0	120	290	7.0000	sword	sword	medium	8	1.000
 mixu_emp_cha_slayer_engineer	0	0	220	100	3.0000	sword	sword	medium	8	1.0000	0.7500	0.0000	false		0	10	2.0		false
 mixu_emp_cha_witch_doctor	0	0	210	90	4.0000	sword	sword	medium	6	1.0000	0.7500	0.0000	true		0	10	2.0		false
 mixu_glaive_gorehoof	22	0	140	260	3.0000	axe	axe	medium	6	1.0000	1.0000	0.0000	false		0	10	2.0		false
+mixu_great_axe_emp_horned_hunters	0	10	10	26	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
 mixu_greataxe_hef_korhil	25	0	160	300	3.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	false		0	10	2.0		false
 mixu_greatsword_def_ossian_guard	0	14	13	29	3.0000	sword	sword		4	1.0000	1.0000	0.0000	false	mixu_LL_unit_contact_maimed	0	10	2.15		false
 mixu_greatsword_def_tullaris	0	30	170	300	3.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	false		0	10	2.0		false
@@ -44,7 +45,8 @@ mixu_mace_brt_bohemond_hippogryph	30	0	170	300	8.0000	axe	hammer	large	4	1.0000	
 mixu_mace_brt_bohemond_pegasus	30	0	170	300	4.0000	axe	hammer	medium	4	1.0000	1.0000	0.0000	false		0	10	2.0		false
 mixu_mace_lzd_chakax	10	0	130	310	3.0000	spear	halberd	medium	6	1.0000	1.0000	0.0000	false		0	10	2.0		false
 mixu_spear_emp_daughters_of_rhya	15	0	19	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
-mixu_spear_emp_priest_of_taal	35	0	250	110	2.0000	spear	spear	medium	4	1.0000	1.0000	0.0000	false		0	10	2.0		false
+mixu_spear_emp_priest_of_taal	35	0	250	110	3.0000	spear	spear	medium	6	1.0000	1.0000	0.0000	false		0	10	2.0		false
+mixu_spear_emp_priest_of_taal_war_bear	35	0	110	250	5.0000	axe	creatures_claws	medium	4	1.0000	0.7500	0.0000	false		0	10	2.0		false
 mixu_spear_gorehoof	22	0	260	140	3.0000	spear	spear	medium	6	1.0000	1.0000	0.0000	false		0	10	2.0		false
 mixu_spear_wef_daith	35	0	120	260	3.0000	spear	spear	medium	4	1.0000	1.0000	0.0000	false		0	10	2.0		false
 mixu_staff_bst_slugtongue	0	0	215	95	3.0000	sword	staff	medium	6	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false

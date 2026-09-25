@@ -2,7 +2,7 @@ key	max_damage_multiplier	max_health_ratio	min_damage_multiplier	min_health_rati
 #projectiles_scaling_damages_tables;0;db/projectiles_scaling_damages_tables/!!!!!!!double_projectile_velocity_compat_ghs_great_harmony
 cth_terracotta_giant_axe	1.0000	1.0000	2.0000	0.0100
 ghs_cth_cha_hongying	1.0000	1.0000	2.0000	0.0100
-ghs_def_inf_khaine_avatar	1.0000	1.0000	3.0000	0.0100
+ghs_def_inf_khaine_avatar	1.0000	1.0000	2.0000	0.0100
 ghs_main_chd_siege_armour_giant	1.0000	1.0000	2.0000	0.0100
 ghs_tmb_scorpion_monster	1.0000	1.0000	2.0000	0.0100
 hierotitan_settra_helberd	1.0000	1.0000	2.0000	0.0100

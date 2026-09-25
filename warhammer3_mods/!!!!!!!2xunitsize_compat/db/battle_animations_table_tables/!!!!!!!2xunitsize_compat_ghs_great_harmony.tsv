@@ -25,7 +25,9 @@ ghs_cth_cav_moxue_crossbow_longma	humanoid01d
 ghs_cth_cha_jade_blood_taoist	humanoid01e
 ghs_cth_inf_eagle_rifle	humanoid01
 ghs_cth_jade_lion_rider	humanoid01c
+ghs_cth_jade_taoist_rider	humanoid01e
 ghs_cth_jet_lion_rider	humanoid01c
+ghs_cth_yangxing	humanoid01c
 ghs_def_flying_medusa	bird04
 ghs_def_inf_khaine_avatar	humanoid01d
 ghs_dwf_chd_veh_goblin_crusher	locomotive01
@@ -36,8 +38,6 @@ ghs_hu1f_dlc16_ariel_staff	humanoid01f
 ghs_inf_def_khaine_sister	humanoid06g
 ghs_inf_def_medusa_defender_halberd	snake01
 ghs_inf_sisters_thorn_moonfire_wall_of_thorns	giant01
-ghs_inf_skv_slave_powder	humanoid17
-ghs_inf_skv_tesla_trooper	humanoid17
 ghs_inf_wef_moonfire_bow	humanoid01b
 ghs_inf_wef_wild_hunter	humanoid01d
 ghs_ksl_cav_alces_rider	humanoid01c
@@ -60,7 +60,6 @@ hu13_rune_guard_axe_and_shield	humanoid13
 hu13_rune_guard_dual_hammer	humanoid13
 hu13_rune_guard_giant	humanoid13
 hu1_jade_blood_dual_swords1	humanoid01b
-hu1_modao	humanoid01
 hu1c_panda_glaive	humanoid01c
 hu1c_wh3_kislev_halberd_and_bomb	humanoid01c
 hu1c_wh3_zhaowang_dragon_axe	humanoid01c
@@ -70,6 +69,8 @@ hu1d_cth_miaodao	humanoid01d
 hu1d_cth_moxue_shield	humanoid01d
 hu1e_dlc24_yuwen_02_jade	humanoid01e
 hu1e_dlc24_yuwen_jade	humanoid01e
+hu1e_modao	humanoid01e
+hu1e_modao_ror	humanoid01e
 hu22_onyx_armored_crowmen	humanoid22
 hu3_dwarf_fly_drakegun	humanoid03
 hu3_dwf_crank_gun	humanoid03
@@ -88,7 +89,6 @@ lzd_temple_quetzl_god	humanoid09
 ogr_crossbow	humanoid03
 ogr_fireman	humanoid03
 ogr_lioneater	humanoid13
-rhd_skv_inf_grinder_ror	skaventeam01
 settra_hierotitan	giant01b
 settra_hierotitan_lion	giant01
 skv_hellpit_ratling_01	hybridcreature05

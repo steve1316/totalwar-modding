@@ -1,30 +1,31 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!dominion
-dom_aeronaught	false	dom_aeronaught	rocket_battery	false
-dom_aerospear	false	dom_aerospear	clattergun	false
-dom_bulwark_0	false	dom_bulwark_0	wh3_dlc23_iron_daemon_carronade	false
-dom_bulwark_01	false	dom_bulwark_01	wh3_dlc23_iron_daemon_flamethrower	false
-dom_carryall_lightrifle	false	dom_carryall_lightrifle	wh3_dlc23_fireglaive_LH	false
-dom_carryall_rifle	false	dom_carryall_rifle	repeater_gun	false
-dom_flame_tank_cannon	false	dom_flame_tank_cannon	wh3_dlc23_iron_daemon_flamethrower	false
-dom_flying_fort_mortar	false	dom_flying_fort_mortar	mortar	false
-dom_heavy_tank_cannons	false	dom_heavy_tank_cannons	hell_cannon_soul_damnation	false
-dom_pillbox	false	dom_pillbox_cannon	great_cannon	false
-dom_snipers	false	dom_snipers	great_cannon	false
-dom_soldat_02	false	dom_soldat_02	repeater_gun	false
-dom_vol_legion_02	false	dom_vol_legion_02	pistol_LH	false
-dom_vol_legion_03	false	dom_vol_legion_03	repeater_gun	false
-dom_vol_legion_04	false	dom_vol_legion_04	grenade_launcher	false
-dom_warblimp_flak	false	dom_warblimp_flak	magma_cannon	false
-ksl_cavernbear_rider	false	ksl_cavernbear_rider	repeater_rifle	false
-ksl_champion	false	ksl_champion	cannon	false
-ksl_charger	false	ksl_charger	blunderbuss	false
-ksl_eclipse	false	ksl_eclipse	warpfiregun	false
-ksl_heavyrifle	false	ksl_heavyrifle	wh3_dlc23_fireglaive_LH	false
-ksl_lightrifle	false	ksl_lightrifle	wh3_dlc23_fireglaive_LH	false
-ksl_runemech	false	ksl_runemech	hell_cannon_soul_damnation	false
-ksl_urbem_eversorem	false	ksl_urbem_eversorem		false
-ksl_vanguard	false	ksl_vanguard	deck_gunner_cannon	false
-ogr_rookcans	false	ogr_rookcans	grand_cannon	false
-ogr_royalrook	false	ogr_royalrook	gatling_gun	false
-ogr_royalrookplas	false	ogr_royalrookplas	hell_cannon_soul_damnation	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!dominion
+dom_aeronaught	false	dom_aeronaught	rocket_battery	false	false
+dom_aerospear	false	dom_aerospear	clattergun	false	false
+dom_bulwark_0	false	dom_bulwark_0	wh3_dlc23_iron_daemon_carronade	false	false
+dom_bulwark_01	false	dom_bulwark_01	wh3_dlc23_iron_daemon_flamethrower	false	false
+dom_carryall_lightrifle	false	dom_carryall_lightrifle	wh3_dlc23_fireglaive_LH	false	false
+dom_carryall_rifle	false	dom_carryall_rifle	repeater_gun	false	false
+dom_flame_tank_cannon	false	dom_flame_tank_cannon	wh3_dlc23_iron_daemon_flamethrower	false	false
+dom_flying_fort_mortar	false	dom_flying_fort_mortar	mortar	false	false
+dom_heavy_tank_cannons	false	dom_heavy_tank_cannons	hell_cannon_soul_damnation	false	false
+dom_pillbox	false	dom_pillbox_cannon	great_cannon	false	false
+dom_shadowfire	false	dom_shadowfire	bow	false	false
+dom_snipers	false	dom_snipers	great_cannon	false	false
+dom_soldat_02	false	dom_soldat_02	repeater_gun	false	false
+dom_vol_legion_02	false	dom_vol_legion_02	pistol_LH	false	false
+dom_vol_legion_03	false	dom_vol_legion_03	repeater_gun	false	false
+dom_vol_legion_04	false	dom_vol_legion_04	grenade_launcher	false	false
+dom_warblimp_flak	false	dom_warblimp_flak	magma_cannon	false	false
+ksl_cavernbear_rider	false	ksl_cavernbear_rider	repeater_rifle	false	false
+ksl_champion	false	ksl_champion	cannon	false	false
+ksl_charger	false	ksl_charger	blunderbuss	false	false
+ksl_eclipse	false	ksl_eclipse	warpfiregun	false	false
+ksl_heavyrifle	false	ksl_heavyrifle	wh3_dlc23_fireglaive_LH	false	false
+ksl_lightrifle	false	ksl_lightrifle	wh3_dlc23_fireglaive_LH	false	false
+ksl_runemech	false	ksl_runemech	hell_cannon_soul_damnation	false	false
+ksl_urbem_eversorem	false	ksl_urbem_eversorem		false	false
+ksl_vanguard	false	ksl_vanguard	deck_gunner_cannon	false	false
+ogr_rookcans	false	ogr_rookcans	grand_cannon	false	false
+ogr_royalrook	false	ogr_royalrook	gatling_gun	false	false
+ogr_royalrookplas	false	ogr_royalrookplas	hell_cannon_soul_damnation	false	false

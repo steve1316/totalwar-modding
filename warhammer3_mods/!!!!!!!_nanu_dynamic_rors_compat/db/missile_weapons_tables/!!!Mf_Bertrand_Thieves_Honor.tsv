@@ -1,4 +1,4 @@
-key	precursor	default_projectile	audio_type	use_secondary_ammo_pool
-#missile_weapons_tables;11;db/missile_weapons_tables/!!!Mf_Bertrand_Thieves_Honor
-brt_aspirant_hoods_arrow	false	brt_aspirant_hoods_arrow	bow_LH	false
-brt_longbow_herrimault	false	brt_longbow_arrow_herrimault	bow	false
+key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
+#missile_weapons_tables;12;db/missile_weapons_tables/!!!Mf_Bertrand_Thieves_Honor
+brt_aspirant_hoods_arrow	false	brt_aspirant_hoods_arrow	bow_LH	false	false
+brt_longbow_herrimault	false	brt_longbow_arrow_herrimault	bow	false	false
