@@ -13,3 +13,4 @@ _diag/
 CLAUDE.md
 extract_cache/
 delta_state/
+node_modules/
