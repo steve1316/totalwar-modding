@@ -100,7 +100,8 @@ UNITS: List[Unit] = [
     ),
 ]
 
-# Vanilla tables overridden by the hand-made reduce winds of magic mod (3012881957). A change after a game patch means the mod may need a manual update.
+# Vanilla tables overridden by the hand-made reduce winds of magic mod (3012881957).
+# A change after a game patch means the mod may need a manual update.
 REDUCE_WINDS_WATCHED_TABLES = [
     "character_trait_levels_tables",
     "character_traits_tables",
@@ -233,8 +234,8 @@ def load_access_log(log_path: str) -> List[Dict[str, Any]]:
 def check_unit(unit: Unit) -> UnitCheck:
     """Decide whether a unit must be rebuilt by replaying the extractions recorded on its last successful run.
 
-    Packs whose hash is unchanged are skipped without extracting. For a changed pack, only the recorded extractions are re-run (through the cache), so a
-    mod update that only touched unrelated tables does not trigger a rebuild.
+    Packs whose hash is unchanged are skipped without extracting. For a changed pack, only the recorded extractions are re-run (through the cache),
+    so a mod update that only touched unrelated tables does not trigger a rebuild.
 
     Args:
         unit (Unit): The unit to check.

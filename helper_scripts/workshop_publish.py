@@ -1,7 +1,7 @@
 """Publish generated packs to the Steam Workshop after `update.py` builds them.
 
-An item is pending when its Workshop pack differs from the one last uploaded. Rebuild reasons pile up per item until the next upload and become its change
-note. The upload itself runs through `workshop_publisher/publish.js`, which uses the logged-in Steam client, so no credentials are stored here.
+An item is pending when its Workshop pack differs from the one last uploaded. Rebuild reasons pile up per item until the next upload and become its
+change note. The upload itself runs through `workshop_publisher/publish.js`, which uses the logged-in Steam client, so no credentials are stored here.
 """
 
 import json
@@ -347,8 +347,8 @@ def publish_pending(
 ) -> None:
     """Show the pending Workshop uploads, ask for confirmation, upload them and log each item's URL and result.
 
-    Nothing is uploaded on a dry run, with `--no-publish`, outside an interactive terminal, or without an explicit `y`. An item that fails its preflight
-    or upload stays pending for the next run.
+    Nothing is uploaded on a dry run, with `--no-publish`, outside an interactive terminal, or without an explicit `y`. An item that fails its
+    preflight or upload stays pending for the next run.
 
     Args:
         items (List[PendingItem]): Items whose current pack has not been published yet.
