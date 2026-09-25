@@ -1,11 +1,11 @@
-"""Script to automatically add missing effects from mod packfile to dynamic_rors_effects.py.
+"""Script to sync dynamic_rors_effects.py with the effects in the mod packfile, adding new ones and removing deleted ones.
 
 This script performs the following steps:
     1. Extracts effect bundles from the mod packfile.
     2. Loads and merges TSV files containing effect data.
     3. Filters for relevant effects and compares with existing effects.
     4. Categorizes missing effects based on naming patterns.
-    5. Adds missing effects to dynamic_rors_effects.py in their appropriate categories.
+    5. Removes effects the mod no longer has and adds missing effects to their appropriate categories.
     6. Recategorizes any effects in the misc category.
     7. Cleans up temporary files.
 """
@@ -14,7 +14,7 @@ import os
 import re
 import logging
 import time
-from typing import Dict, List, Tuple
+from typing import Dict, List, Set, Tuple
 from utilities import (
     extract_modded_tsv_data,
     load_multiple_tsv_data,
@@ -84,6 +84,7 @@ _REGEX_PATTERNS: List[Tuple[str, str]] = [
     (r"special_\w+_enemy_melee_", "melee"),
     (r"special_\w+_enemy_ranged_", "ranged"),
     (r"special_\w+_enemy_powder_", "ranged"),
+    (r"special_\w+_enemy_magic_", "generic"),
     (r"special_\w+_ally_all_", "generic"),
     (r"special_\w+_ally_melee_", "melee"),
     (r"special_\w+_ally_ranged_", "ranged"),
@@ -105,6 +106,9 @@ _FACTION_RULES: Dict[str, List[Tuple[str, str]]] = {
     "nanu_dynamic_ror_chorf_": [
         ("_ability_melee_", "melee"),
         ("_ability_all_", "generic"),
+    ],
+    "nanu_dynamic_ror_dark_elf_": [
+        ("_ability_melee_", "dark_elf_melee"),
     ],
     "nanu_dynamic_ror_dwarf_": [
         ("_ability_melee_", "dwarfs_melee"),
@@ -189,6 +193,18 @@ _LEGACY_FACTION_RULES: Dict[str, List[Tuple[str, str]]] = {
     "ability_slaanesh_": [("_melee_", "slaanesh_melee")],
     "ability_tzeentch_": [("_melee_", "tzeentch_melee"), ("", "tzeentch_generic")],
 }
+
+
+def _effect_line(effect_key: str) -> str:
+    """Format one effect key as a list entry line in dynamic_rors_effects.py.
+
+    Args:
+        effect_key: The effect key.
+
+    Returns:
+        The indented, quoted line without a newline.
+    """
+    return f'        "{effect_key}",'
 
 
 def categorize_effect(effect_key: str) -> str:
@@ -278,7 +294,7 @@ def insert_effects_into_category(file_content: str, category: str, effects: List
         # Add new category.
         last_bracket = file_content.rfind("    ],")
         insert_pos = file_content.find("\n", last_bracket) + 1 if last_bracket != -1 else file_content.rfind("}")
-        indented = [f'        "{e}",' for e in sorted(effects)]
+        indented = [_effect_line(e) for e in sorted(effects)]
         new_category = f'    "{category}": [\n' + "\n".join(indented) + "\n    ],\n"
         return file_content[:insert_pos] + new_category + file_content[insert_pos:]
 
@@ -305,9 +321,23 @@ def insert_effects_into_category(file_content: str, category: str, effects: List
     # Extract existing effects and add new ones, then sort and return the updated content.
     existing = re.findall(r'"([^"]+)"', file_content[list_start:list_end])
     all_effects = sorted(set(existing) | set(effects))
-    indented = [f'        "{e}",' for e in all_effects]
+    indented = [_effect_line(e) for e in all_effects]
 
     return file_content[:list_start] + "\n" + "\n".join(indented) + "\n" + file_content[list_end:]
+
+
+def remove_effects_from_file(file_content: str, effects: Set[str]) -> str:
+    """Remove effect keys from every category, matching whole quoted keys only. Emptied categories are kept so lookups by name still work.
+
+    Args:
+        file_content: The file content as a string.
+        effects: Effect keys to remove.
+
+    Returns:
+        Updated file content.
+    """
+    stale_lines = {_effect_line(e) for e in effects}
+    return "".join(line for line in file_content.splitlines(keepends=True) if line.rstrip("\n") not in stale_lines)
 
 
 def _recategorize_misc_effects(file_content: str) -> str:
@@ -344,7 +374,7 @@ def _recategorize_misc_effects(file_content: str) -> str:
 
     # Update or remove misc category.
     if still_misc:
-        indented = [f'        "{e}",' for e in sorted(still_misc)]
+        indented = [_effect_line(e) for e in sorted(still_misc)]
         new_misc = "\n" + "\n".join(indented) + "\n"
         file_content = file_content[: misc_match.start(1)] + new_misc + file_content[misc_match.end(1) :]
     else:
@@ -381,14 +411,19 @@ if __name__ == "__main__":
             exit()
 
         mod_effects = {row.get(key_column, "") for row in merged_data if row.get(key_column, "").startswith("nanu_dynamic_ror_")}
-        missing_effects = mod_effects - {effect for effects in SUPPORTED_EFFECTS.values() for effect in effects}
+        supported_effects = {effect for effects in SUPPORTED_EFFECTS.values() for effect in effects}
+        missing_effects = mod_effects - supported_effects
+        stale_effects = supported_effects - mod_effects
 
         logging.info(f"Found {len(mod_effects)} total nanu_dynamic_ror_* effects in mod.")
         logging.info(f"Found {len(missing_effects)} missing effects to add.")
+        logging.info(f"Found {len(stale_effects)} stale effects to remove.")
 
-        if not missing_effects:
-            logging.info("No missing effects found. Nothing to add.")
-            exit()
+        # Drop effects that Nanu renamed or removed so the compat packs stop referencing them.
+        original_content = read_dynamic_rors_effects_file()
+        file_content = remove_effects_from_file(original_content, stale_effects)
+        for effect in sorted(stale_effects):
+            logging.info(f"  Removed {effect}.")
 
         # Categorize and add missing effects.
         categorized: Dict[str, List[str]] = {}
@@ -398,20 +433,17 @@ if __name__ == "__main__":
         for category, effects in sorted(categorized.items()):
             logging.info(f"  {category}: {len(effects)} effects")
 
-        file_content = read_dynamic_rors_effects_file()
         for category, effects in categorized.items():
             file_content = insert_effects_into_category(file_content, category, effects)
             logging.info(f"  Added {len(effects)} effects to {category}.")
 
-        write_dynamic_rors_effects_file(file_content)
-        logging.info("Successfully updated dynamic_rors_effects.py.")
-
-        # Recategorize misc effects.
-        logging.info("Recategorizing misc effects...")
-        file_content = _recategorize_misc_effects(read_dynamic_rors_effects_file())
-        write_dynamic_rors_effects_file(file_content)
-        logging.info("Successfully recategorized misc effects.")
-
+        # Recategorize misc effects, then write once.
+        file_content = _recategorize_misc_effects(file_content)
+        if file_content != original_content:
+            write_dynamic_rors_effects_file(file_content)
+            logging.info("Successfully updated dynamic_rors_effects.py.")
+        else:
+            logging.info("dynamic_rors_effects.py already matches the mod. Nothing to write.")
 
     finally:
         clear_temp_root()
