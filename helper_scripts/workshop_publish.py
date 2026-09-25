@@ -13,7 +13,7 @@ import subprocess
 import sys
 import time
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 import delta
 from extract_cache import file_sha256, normalize_path, pack_sha256
@@ -234,11 +234,12 @@ def ttc_change_note() -> Optional[str]:
     return build_ttc_change_note(published, current)
 
 
-def pending_items(failed_units: List[str]) -> List[PendingItem]:
+def pending_items(failed_units: List[str], steam_ids: Optional[Set[str]] = None) -> List[PendingItem]:
     """List generated Workshop items whose current pack differs from the last published one.
 
     Args:
         failed_units (List[str]): Names of units whose generator failed this run. Their outputs are never offered.
+        steam_ids (Optional[Set[str]]): Only consider these Workshop items. Defaults to every generated item.
 
     Returns:
         The pending items, in `delta.UNITS` order.
@@ -248,6 +249,8 @@ def pending_items(failed_units: List[str]) -> List[PendingItem]:
         if unit.name in failed_units:
             continue
         for output in unit.outputs:
+            if steam_ids is not None and output.steam_id not in steam_ids:
+                continue
             current_sha = pack_sha256(output.pack_path)
             if current_sha is None:
                 continue
@@ -477,7 +480,11 @@ def publish_pending(
         _log_urls(items, statuses)
         return
 
-    answer = confirm(f"Publish {len(ready)} item(s) to the Steam Workshop? [y/N] ")
+    try:
+        answer = confirm(f"Publish {len(ready)} item(s) to the Steam Workshop? [y/N] ")
+    except EOFError:
+        # Nobody can answer when input is closed, so treat it as a no.
+        answer = ""
     if answer.strip().lower() not in ("y", "yes"):
         logging.info("Publishing cancelled. The items stay pending.")
         _log_urls(items, statuses)

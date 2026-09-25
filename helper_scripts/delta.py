@@ -13,7 +13,7 @@ import os
 import hashlib
 import time
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 from extract_cache import ensure_extracted, extraction_content_sha, file_sha256, pack_sha256, toolchain_hash, tree_sha256
 from pipeline import workshop_pack_path
@@ -241,6 +241,25 @@ def load_access_log(log_path: str) -> List[Dict[str, Any]]:
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Unit staleness
+
+
+def units_for_items(steam_ids: Set[str]) -> List[Unit]:
+    """Pick the units that build the given Workshop items.
+
+    Args:
+        steam_ids (Set[str]): Workshop IDs of generated items.
+
+    Raises:
+        ValueError: If an ID is not a generated Workshop item.
+
+    Returns:
+        The units in `UNITS` order.
+    """
+    known = {output.steam_id for unit in UNITS for output in unit.outputs}
+    unknown = sorted(steam_ids - known)
+    if unknown:
+        raise ValueError(f"Not a generated Workshop item: {', '.join(unknown)}. Choose from: {', '.join(sorted(known))}")
+    return [unit for unit in UNITS if any(output.steam_id in steam_ids for output in unit.outputs)]
 
 
 def check_unit(unit: Unit) -> UnitCheck:

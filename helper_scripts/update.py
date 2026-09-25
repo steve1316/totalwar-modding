@@ -9,6 +9,7 @@ Usage:
     python update.py               Rebuild only what changed, then offer to publish.
     python update.py --dry-run     Show what would be rebuilt and what is waiting to be published.
     python update.py --no-publish  Rebuild only what changed and list what is waiting to be published, without uploading.
+    python update.py --only 3310629727  Update and publish only these Workshop items. Everything else waits for the next run.
     python update.py --full      Rebuild every pack, still using the extraction cache.
     python update.py --no-cache  Rebuild every pack from a cold rpfm extraction.
 
@@ -138,7 +139,13 @@ if __name__ == "__main__":
     parser.add_argument("--dry-run", action="store_true", help="Only report which packs would be rebuilt and why.")
     parser.add_argument("--no-schema-update", action="store_true", help="Skip pulling the latest rpfm schemas before checking for changes.")
     parser.add_argument("--no-publish", action="store_true", help="Build only. List the packs waiting to be published without uploading them.")
+    parser.add_argument("--only", nargs="+", metavar="WORKSHOP_ID", help="Only rebuild and publish these generated Workshop items. Everything else waits for the next run.")
     args = parser.parse_args()
+    only = set(args.only) if args.only else None
+    try:
+        units = delta.units_for_items(only) if only else delta.UNITS
+    except ValueError as err:
+        parser.error(str(err))
     workers_args = ["--workers", str(args.workers)] if args.workers is not None else []
     if args.no_cache:
         os.environ["EXTRACT_CACHE"] = "0"
@@ -159,7 +166,7 @@ if __name__ == "__main__":
 
     # Decide which units are stale.
     checks: List[delta.UnitCheck] = []
-    for unit in delta.UNITS:
+    for unit in units:
         if args.full:
             check = delta.UnitCheck(unit, stale=True, reasons=["full rebuild requested"], general=True)
         else:
@@ -204,4 +211,4 @@ if __name__ == "__main__":
 
     log_summary(checks, statuses, failed, reduce_winds_changed, args.dry_run)
     log_elapsed_time("updating all mods", start_time)
-    workshop_publish.publish_pending(workshop_publish.pending_items(failed), args.dry_run, args.no_publish)
+    workshop_publish.publish_pending(workshop_publish.pending_items(failed, only), args.dry_run, args.no_publish)
