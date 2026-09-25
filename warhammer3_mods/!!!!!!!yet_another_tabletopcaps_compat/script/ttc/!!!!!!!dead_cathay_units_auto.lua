@@ -3,11 +3,11 @@ local caps = {
     -- wh3_main_cth
     {"bannerman", "special", 1},
     {"battle_turtle", "rare", 2},
-    {"cth_juggernaut_crew", "special", 2},
-    {"cth_tiger", "core", 1},
-    {"cth_war_elephant", "special", 2},
-    {"dead_firelancers", "special", 2},
-    {"nangau_rifles", "special", 1},
+    {"cth_juggernaut_crew", "rare", 2},
+    {"cth_tiger", "special", 1},
+    {"cth_war_elephant", "rare", 3},
+    {"dead_firelancers", "special", 1},
+    {"nangau_rifles", "core"},
     {"peasant_cav_archers", "core"},
     {"rocket_troops", "special", 1},
 }

@@ -4,7 +4,7 @@ local caps = {
     {"jade_archers", "core"},
     {"jade_cataphract", "special", 2},
     {"jade_chariot", "special", 2},
-    {"jade_repeaters", "core"},
+    {"jade_repeaters", "special", 1},
     {"jade_warriors_glaive", "core"},
     {"jade_warriors_spear", "core"},
     {"jade_warriors_spear_shield", "core"},

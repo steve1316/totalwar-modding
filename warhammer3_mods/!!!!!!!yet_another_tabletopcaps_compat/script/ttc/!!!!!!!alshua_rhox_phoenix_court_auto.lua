@@ -2,7 +2,7 @@
 local caps = {
     -- wh2_main_hef
     {"cr_als_hef_mon_merwyrm_0", "rare", 2},
-    {"cr_als_hef_mon_merwyrm_summoned", "rare", 3},
+    {"cr_als_hef_mon_merwyrm_summoned", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

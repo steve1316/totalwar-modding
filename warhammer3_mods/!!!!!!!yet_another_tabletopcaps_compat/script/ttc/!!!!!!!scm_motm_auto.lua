@@ -2,10 +2,10 @@
 local caps = {
     -- wh3_main_ogr
     {"motm_hollowbellies_ror", "special", 2},
-    {"singe_ogk_irongut_dual", "special", 2},
-    {"singe_ogk_irongut_ironfists", "special", 2},
+    {"singe_ogk_irongut_dual", "special", 1},
+    {"singe_ogk_irongut_ironfists", "special", 1},
     {"singe_ogk_mournfang_pack", "special", 2},
-    {"singe_ogk_rhinox_herd", "special", 2},
+    {"singe_ogk_rhinox_herd", "core"},
     {"singe_ogk_rocketspitters", "special", 2},
 }
 

@@ -3,10 +3,10 @@ local caps = {
     -- wh2_dlc11_cst_shanty_dragon_spine_privateers
     {"DEERHEF_AISAANGQISHI", "special", 2},
     {"DEERHEF_BAISHILIECHANG", "special", 3},
-    {"DEERHEF_BAITAJIANSHENG", "special", 3},
+    {"DEERHEF_BAITAJIANSHENG", "rare", 1},
     {"DEERHEF_DIGONGTONGWEI", "special", 3},
-    {"DEERHEF_FENGHUANGSHOUWEI", "special", 2},
-    {"DEERHEF_HAIMEN", "special", 1},
+    {"DEERHEF_FENGHUANGSHOUWEI", "special", 3},
+    {"DEERHEF_HAIMEN", "special", 2},
     {"DEERHEF_LONGZHU", "rare", 3},
     {"DEERHEF_NAJIARUISIHEIWEI", "special", 3},
     {"DEERHEF_NVQISHI", "special", 1},

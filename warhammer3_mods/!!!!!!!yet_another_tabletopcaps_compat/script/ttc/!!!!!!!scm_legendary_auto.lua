@@ -20,15 +20,15 @@ local caps = {
     {"kou_meadow_chariot_ror", "special", 2},
     {"kou_queen_ror_treekin", "special", 2},
     -- wh_main_group_dwarfs
-    {"hunt_dwf_riggers_0", "special", 1},
-    {"hunt_dwf_slayer_pirates_0", "special", 1},
+    {"hunt_dwf_riggers_0", "core"},
+    {"hunt_dwf_slayer_pirates_0", "special", 2},
     -- wh_main_group_empire
     {"str_chronos_knights", "special", 2},
     -- wh_main_group_kislev
-    {"bear_dead_baron", "special", 2},
+    {"bear_dead_baron", "rare", 1},
     {"werebear_werebearus", "special", 2},
     -- wh_main_group_vampire_counts
-    {"camera_skelly_bones", "special", 2},
+    {"camera_skelly_bones", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

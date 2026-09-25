@@ -4,8 +4,6 @@ local caps = {
     {"glf_brt_royal_knights_of_the_realm", "special", 2},
     {"glf_brt_sir_dagobert_ror", "special", 2},
     -- Skaven
-    {"glf_skv_stormfiend_warpfire", "special", 2},
-    {"glf_skv_stormfiend_rattling_gun", "special", 2},
     {"glf_skv_black_arrow_ror", "core", 1},
     {"glf_skv_clanrats_crossbow", "core", 1},
     -- Ogre Kingdoms
@@ -34,7 +32,6 @@ local caps = {
     -- Lizardmen
     {"glf_lzd_teeth_of_stotek_ror", "special", 2},
     -- Empire
-    {"glf_emp_celestial_hurricanum", "rare", 3},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

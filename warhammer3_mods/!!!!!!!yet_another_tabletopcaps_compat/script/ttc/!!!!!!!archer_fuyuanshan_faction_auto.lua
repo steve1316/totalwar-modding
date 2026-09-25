@@ -6,7 +6,7 @@ local caps = {
     {"f_cth_cav_bastion", "special", 2},
     {"f_cth_inf_scout", "special", 1},
     {"f_cth_sky_keeper", "rare", 2},
-    {"jade_banner", "core", 1},
+    {"jade_banner", "core"},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

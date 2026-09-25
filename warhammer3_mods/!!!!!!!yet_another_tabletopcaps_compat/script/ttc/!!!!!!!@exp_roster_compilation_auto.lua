@@ -22,7 +22,7 @@ local caps = {
     {"deco_wildwood_wardens", "special", 2},
     {"deco_wind_riders", "special", 1},
     -- wh2_main_def
-    {"dec_hunters_anath_raema", "core"},
+    {"dec_hunters_anath_raema", "special", 1},
     {"dec_lords_oblivion", "rare", 2},
     {"dec_magma_dragon", "rare", 3},
     {"dec_tower_masters", "special", 2},
@@ -31,34 +31,34 @@ local caps = {
     {"deco_bladelords", "special", 2},
     {"deco_griffon_knights", "rare", 2},
     {"deco_high_helms", "special", 2},
-    {"deco_skywardens", "special", 2},
+    {"deco_skywardens", "core"},
     -- wh2_main_rogue_gerhardts_mercenaries
     {"deco_savage_giant", "rare", 3},
     -- wh3_dlc23_group_chaos_dwarfs
-    {"deco_chd_acolytes", "special", 2},
+    {"deco_chd_acolytes", "special", 1},
     {"deco_chd_annihilators", "special", 2},
-    {"deco_chd_lava_trolls", "special", 1},
+    {"deco_chd_lava_trolls", "special", 2},
     {"deco_chd_naphtha", "special", 1},
     {"deco_chd_ogre_slaves", "special", 1},
     {"deco_chd_quarrellers", "core"},
     {"deco_chd_ravagers", "rare", 1},
-    {"deco_chd_siege_giant", "rare", 3},
+    {"deco_chd_siege_giant", "rare", 2},
     {"deco_chd_zealots", "special", 1},
     -- wh3_dlc25_group_elspeth
     {"deco_doom_prophets", "special", 1},
     {"deco_ironsides", "special", 1},
-    {"deco_knights_lynx", "special", 2},
+    {"deco_knights_lynx", "special", 1},
     {"deco_roadwardens", "core"},
-    {"deco_shielded_halberdiers", "core", 1},
+    {"deco_shielded_halberdiers", "core"},
     -- wh3_main_ogr
-    {"dec_ember_drake", "rare", 1},
+    {"dec_ember_drake", "rare", 2},
     {"dec_giantbreakers", "special", 2},
     {"dec_ice_mammoth", "rare", 2},
-    {"dec_ogre_bulls_gw", "core", 1},
+    {"dec_ogre_bulls_gw", "special", 1},
     {"dec_rhinox_bull", "rare", 2},
     -- wh_dlc03_group_beastmen
     {"dec_bestigor_dual_axe", "special", 1},
-    {"dec_gor_great_axe", "special", 1},
+    {"dec_gor_great_axe", "core"},
     {"dec_gouge_horns", "special", 2},
     -- wh_dlc05_group_wood_elves
     {"deco_dryads_willow", "core"},
@@ -74,16 +74,16 @@ local caps = {
     -- wh_main_group_norsca
     {"deco_nor_bondsmen", "core"},
     {"deco_nor_hydra", "rare", 2},
-    {"deco_nor_pit", "core"},
-    {"deco_nor_reavers", "core"},
+    {"deco_nor_pit", "special", 1},
+    {"deco_nor_reavers", "special", 1},
     {"deco_nor_valkyrie", "special", 2},
     {"deco_nor_wolf", "special", 2},
     -- wh_main_group_vampire_counts
     {"dec_hell_knights", "special", 2},
-    {"dec_kastellans", "special", 2},
+    {"dec_kastellans", "rare", 2},
     {"dec_lahmian", "special", 1},
     {"dec_reapers", "core"},
-    {"dec_spirit_host", "core", 1},
+    {"dec_spirit_host", "core"},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

@@ -7,7 +7,7 @@ local caps = {
     {"snek_dwf_drop_chopper", "special", 2},
     {"snek_dwf_expeditionaries", "special", 2},
     {"snek_dwf_githammers", "special", 2},
-    {"snek_dwf_iron_thunderers", "special", 2},
+    {"snek_dwf_iron_thunderers", "special", 1},
     {"snek_dwf_mountaineers", "special", 2},
     {"snek_dwf_plow", "special", 2},
     {"snek_dwf_sappers", "special", 2},

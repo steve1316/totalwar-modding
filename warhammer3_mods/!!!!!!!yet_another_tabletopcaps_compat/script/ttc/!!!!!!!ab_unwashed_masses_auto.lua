@@ -3,7 +3,7 @@ local caps = {
     -- gnob_gnoblar_hordes
     {"gnob_cav_pigback_riders_javelin", "core"},
     {"gnob_inf_fighters", "core"},
-    {"gnob_inf_flingers", "core", 1},
+    {"gnob_inf_flingers", "core"},
     {"gnob_inf_lucky_gits", "special", 1},
     {"gnob_inf_manbiters", "special", 1},
     {"gnob_inf_ogrebiters", "special", 1},

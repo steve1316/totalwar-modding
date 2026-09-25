@@ -2,12 +2,12 @@
 local caps = {
     -- wh2_dlc11_group_vampire_coast
     {"seggs_cst_art_magic_cannon", "special", 2},
-    {"seggs_dlc11_cst_art_bat_mortar", "special", 1},
+    {"seggs_dlc11_cst_art_bat_mortar", "special", 2},
     {"seggs_dlc11_cst_ghost_helmsmen", "special", 2},
     {"seggs_dlc11_cst_inf_deck_gunners_1", "special", 1},
     {"seggs_dlc11_cst_mon_altar_of_the_abyss", "special", 2},
-    {"seggs_dlc11_cst_mon_bloated_corpse_1", "rare", 1},
-    {"seggs_dlc11_cst_mon_bloated_corpse_2", "rare", 1},
+    {"seggs_dlc11_cst_mon_bloated_corpse_1", "core"},
+    {"seggs_dlc11_cst_mon_bloated_corpse_2", "core"},
     {"seggs_suicide_bats", "core"},
 }
 

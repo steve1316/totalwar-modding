@@ -9,12 +9,12 @@ local caps = {
     -- wh_dlc03_group_beastmen
     {"Chasslo_Blood_seekers", "special", 2},
     -- wh_main_group_chaos
-    {"Chasslo_Pale_Maidens", "special", 2},
+    {"Chasslo_Pale_Maidens", "rare", 1},
     {"Chasslo_dancing_beauties", "special", 2},
     -- wh_main_group_empire
-    {"Chasslo_Fireloques_Ferlangen", "core"},
+    {"Chasslo_Fireloques_Ferlangen", "special", 1},
     -- wh_main_group_greenskins
-    {"Chasslo_Soqotra_Pirates", "core"},
+    {"Chasslo_Soqotra_Pirates", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")
