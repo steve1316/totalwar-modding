@@ -3,6 +3,7 @@
 import glob
 import logging
 import os
+import re
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -15,6 +16,8 @@ from utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR, load_tsv_data
 BASE_TTC_PACK = workshop_pack_path("3386989556", "groovy_ttc.pack")
 UNIT_TABLES = ["main_units_tables", "land_units_tables", "units_to_groupings_military_permissions_tables"]
 EXCLUDED_CASTES = {"lord", "hero"}
+# `ror` as its own word in a unit key or mod name marks a Regiment of Renown, without matching words like `horror`.
+RENOWN_PATTERN = re.compile(r"(^|_)ror(_|\d|$)")
 SCRATCH = f"{TEMP_DIR}/ttc"
 
 
@@ -108,6 +111,21 @@ def table_readable(folder: str) -> bool:
     """
     files = [p for p in glob.glob(os.path.join(folder, "**", "*"), recursive=True) if os.path.isfile(p)]
     return bool(files) and all(p.endswith(".tsv") for p in files)
+
+
+def is_regiment_of_renown(key: str, main_row: Dict[str, str], package_name: str) -> bool:
+    """Decide whether a unit is a Regiment of Renown, which is never capped as `core`.
+
+    Args:
+        key (str): Unit key.
+        main_row (Dict[str, str]): The unit's `main_units_tables` row.
+        package_name (str): Package name of the mod that defines it.
+
+    Returns:
+        True when the game flags it as renown, or `ror` appears as its own word in the key or the mod name.
+    """
+    mod_name = package_name.lower().lstrip("!").removesuffix(".pack")
+    return main_row.get("is_renown") == "true" or bool(RENOWN_PATTERN.search(key.lower())) or bool(RENOWN_PATTERN.search(mod_name))
 
 
 def select_targets(

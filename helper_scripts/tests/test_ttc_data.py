@@ -108,3 +108,11 @@ def test_units_the_author_left_out_are_still_covered_until_the_author_lists_them
     permissions = {"author_listed": {"grp"}, "author_skipped": {"grp"}}
     assert ttc_data.select_targets(mod_units, set(), permissions, {"author_listed"}) == {"author_skipped": "author.pack"}
     assert ttc_data.select_targets(mod_units, set(), permissions, {"author_listed", "author_skipped"}) == {}
+
+
+def test_regiment_of_renown_detection():
+    assert ttc_data.is_regiment_of_renown("any_unit", {"is_renown": "true"}, "plain.pack")
+    assert ttc_data.is_regiment_of_renown("wh_dlc_emp_inf_greatswords_ror_0", {}, "plain.pack")
+    assert ttc_data.is_regiment_of_renown("ror_beast_shadowg", {}, "plain.pack")
+    assert ttc_data.is_regiment_of_renown("grn_brutes1", {}, "ror_all.pack")
+    assert not ttc_data.is_regiment_of_renown("chs_horror_knights", {}, "horror_pack.pack")

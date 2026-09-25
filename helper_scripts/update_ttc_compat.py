@@ -127,7 +127,8 @@ def main() -> int:
 
     targets = ttc_data.select_targets(data.mod_units, data.vanilla_keys, data.permissions, set(data.labels))
     keys = sorted(targets)
-    predictions = model.predict([data.stats[key] for key in keys])
+    non_core = [ttc_data.is_regiment_of_renown(key, data.stats[key].main, targets[key]) for key in keys]
+    predictions = model.predict([data.stats[key] for key in keys], non_core)
     assignments: Dict[str, Dict[str, List[Tuple[str, str, Optional[int]]]]] = {}
     review_rows = []
     for key, prediction in zip(keys, predictions):
