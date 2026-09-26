@@ -1,9 +1,10 @@
 """Delta-update every generated Workshop pack with one command.
 
-Each generator script is only re-run when a table it read on its last run changed, when its code or the rpfm schema changed, or when its Workshop pack
-no longer matches the last build. Rebuilt packs whose generated files are identical to the previous build are left untouched. Hand-made mods get
-review flags when the tables they depend on change. Finally, every generated pack that differs from what was last published is offered for upload to
-its Steam Workshop item, which happens only after an interactive `y`.
+Nanu's Dynamic RoR effect list is synced from his pack first, so renamed or removed effects never reach the compat packs. Each generator script is
+only re-run when a table it read on its last run changed, when its code or the rpfm schema changed, or when its Workshop pack no longer matches the
+last build. Rebuilt packs whose generated files are identical to the previous build are left untouched. Hand-made mods get review flags when the
+tables they depend on change. Finally, every generated pack that differs from what was last published is offered for upload to its Steam Workshop
+item, which happens only after an interactive `y`.
 
 Usage:
     python update.py               Rebuild only what changed, then offer to publish.
@@ -22,15 +23,19 @@ import os
 import signal
 import subprocess
 import time
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import delta
+import update_dynamic_ror_effects
 import workshop_publish
 from extract_cache import prune_cache
+from update_dynamic_ror_effects import EffectSync
 from utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging
 
 
 RUN_REPORT_PATH = f"{delta.PENDING_DIR}/run_report.jsonl"
+# Nanu's effect list, synced from his pack before the staleness check. Units that read it rebuild when the sync changes it.
+EFFECTS_FILE = "dynamic_rors_effects.py"
 
 
 def run_script(cmd: List[str], env: Dict[str, str]) -> int:
@@ -64,6 +69,40 @@ def summarize_reasons(reasons: List[str], limit: int = 5) -> str:
     """
     shown = "; ".join(reasons[:limit])
     return shown + (f"; and {len(reasons) - limit} more" if len(reasons) > limit else "")
+
+
+def sync_dynamic_ror_effects(units: List[delta.Unit], dry_run: bool) -> Optional[EffectSync]:
+    """Sync the Dynamic RoR effect list with Nanu's pack when a Dynamic RoR pack is being updated.
+
+    Args:
+        units (List[delta.Unit]): Units in scope for this run.
+        dry_run (bool): Only report what would change, without writing the file.
+
+    Returns:
+        What changed, or None when no unit in scope reads the effect list.
+    """
+    if not any(EFFECTS_FILE in unit.code_files for unit in units):
+        return None
+    logging.info("Syncing Nanu's Dynamic RoR effects...")
+    return update_dynamic_ror_effects.sync_effects(write=not dry_run)
+
+
+def flag_pending_effect_sync(check: delta.UnitCheck, effect_sync: Optional[EffectSync], dry_run: bool) -> delta.UnitCheck:
+    """Mark a unit stale in a dry run when it reads an effect list the sync would change, since the file itself is left unwritten.
+
+    A real run writes the file, so the unit's code hash already makes it stale.
+
+    Args:
+        check (delta.UnitCheck): The unit's staleness result.
+        effect_sync (Optional[EffectSync]): This run's sync result, or None if no sync ran.
+        dry_run (bool): True for a dry run.
+
+    Returns:
+        A stale check for an affected unit, otherwise `check` unchanged.
+    """
+    if not dry_run or effect_sync is None or not effect_sync.changed or check.stale or EFFECTS_FILE not in check.unit.code_files:
+        return check
+    return delta.UnitCheck(check.unit, stale=True, reasons=["Nanu's effect list changed"], general=True)
 
 
 def log_summary(
@@ -164,6 +203,8 @@ if __name__ == "__main__":
             logging.info("rpfm schemas updated.")
     run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"], capture_output=True)
 
+    effect_sync = sync_dynamic_ror_effects(units, args.dry_run)
+
     # Decide which units are stale.
     checks: List[delta.UnitCheck] = []
     for unit in units:
@@ -171,7 +212,7 @@ if __name__ == "__main__":
             check = delta.UnitCheck(unit, stale=True, reasons=["full rebuild requested"], general=True)
         else:
             logging.info(f"Checking {unit.name} for changed inputs...")
-            check = delta.check_unit(unit)
+            check = flag_pending_effect_sync(delta.check_unit(unit), effect_sync, args.dry_run)
         logging.info(f"{unit.name}: {'REBUILD - ' + summarize_reasons(check.reasons) if check.stale else 'up to date'}")
         checks.append(check)
 

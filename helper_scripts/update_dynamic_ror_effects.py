@@ -1,36 +1,32 @@
-"""Script to sync dynamic_rors_effects.py with the effects in the mod packfile, adding new ones and removing deleted ones.
+"""Sync dynamic_rors_effects.py with the effects in Nanu's pack, adding new ones and removing deleted ones.
 
-This script performs the following steps:
-    1. Extracts effect bundles from the mod packfile.
-    2. Loads and merges TSV files containing effect data.
-    3. Filters for relevant effects and compares with existing effects.
-    4. Categorizes missing effects based on naming patterns.
-    5. Removes effects the mod no longer has and adds missing effects to their appropriate categories.
-    6. Recategorizes any effects in the misc category.
-    7. Cleans up temporary files.
+`update.py` runs this sync before deciding what to rebuild, so a changed effect list rebuilds both Dynamic RoR packs. It can also be run by hand.
+
+The sync performs the following steps:
+    1. Extracts the effect keys from Nanu's `unit_purchasable_effects_tables`.
+    2. Removes effects the mod no longer has.
+    3. Categorizes new effects by naming pattern and adds them to their categories.
+    4. Recategorizes any effects in the misc category and warns about the ones no rule matches.
 """
 
-import os
+import ast
 import re
 import logging
 import time
+from dataclasses import dataclass, field
 from typing import Dict, List, Set, Tuple
+from pipeline import extract_and_load_table_data, workshop_pack_path
 from utilities import (
-    extract_modded_tsv_data,
-    load_multiple_tsv_data,
     ensure_temp_dir,
+    cleanup_folders,
     clear_temp_root,
-    STEAM_LIBRARY_DRIVE,
+    log_elapsed_time,
     TEMP_DIR,
 )
-from dynamic_rors_effects import SUPPORTED_EFFECTS
 
-# Configure logging.
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-
-MOD_PACKFILE_PATH = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\workshop\\content\\1142710\\3278112051\\!!_nanu_dynamic_rors.pack"
+MOD_PACKFILE_PATH = workshop_pack_path("3278112051", "!!_nanu_dynamic_rors.pack")
 TABLE_NAME = "unit_purchasable_effects_tables"
-TEMP_EXTRACT_PATH = f"{TEMP_DIR}/temp_unit_purchasable_effects_tables"
+TEMP_EXTRACT_PATH = f"{TEMP_DIR}/modded_{TABLE_NAME}"
 DYNAMIC_RORS_EFFECTS_FILE = "dynamic_rors_effects.py"
 
 
@@ -193,6 +189,20 @@ _LEGACY_FACTION_RULES: Dict[str, List[Tuple[str, str]]] = {
     "ability_slaanesh_": [("_melee_", "slaanesh_melee")],
     "ability_tzeentch_": [("_melee_", "tzeentch_melee"), ("", "tzeentch_generic")],
 }
+
+
+@dataclass
+class EffectSync:
+    """What a sync changed in dynamic_rors_effects.py."""
+
+    # Effects in the mod that were missing from the file, sorted.
+    added: List[str] = field(default_factory=list)
+    # Effects in the file that the mod no longer has, sorted.
+    removed: List[str] = field(default_factory=list)
+    # Effects left in the misc category after the sync. No unit ever gets these, so they need a categorization rule.
+    uncategorized: List[str] = field(default_factory=list)
+    # True when the file content changed, which marks both Dynamic RoR packs for a rebuild.
+    changed: bool = False
 
 
 def _effect_line(effect_key: str) -> str:
@@ -388,64 +398,104 @@ def _recategorize_misc_effects(file_content: str) -> str:
     return file_content
 
 
-if __name__ == "__main__":
-    logging.info("Starting missing effects detection and addition process.")
-    start_time = time.time()
+def parse_effects(file_content: str) -> Dict[str, List[str]]:
+    """Read the `SUPPORTED_EFFECTS` literal out of dynamic_rors_effects.py content without importing it.
 
+    Args:
+        file_content: The file content as a string.
+
+    Returns:
+        The effect keys by category.
+    """
+    return ast.literal_eval(ast.parse(file_content).body[0].value)
+
+
+def sync_effects_content(file_content: str, mod_effects: Set[str]) -> Tuple[str, EffectSync]:
+    """Bring dynamic_rors_effects.py content in line with the mod's effects, removing deleted ones and categorizing new ones.
+
+    Args:
+        file_content: The current file content.
+        mod_effects: Every `nanu_dynamic_ror_*` effect key in the mod.
+
+    Returns:
+        The updated content and what changed.
+    """
+    supported_effects = {effect for effects in parse_effects(file_content).values() for effect in effects}
+    missing_effects = mod_effects - supported_effects
+    stale_effects = supported_effects - mod_effects
+
+    # Drop effects that Nanu renamed or removed so the compat packs stop referencing them.
+    new_content = remove_effects_from_file(file_content, stale_effects)
+
+    categorized: Dict[str, List[str]] = {}
+    for effect in missing_effects:
+        categorized.setdefault(categorize_effect(effect), []).append(effect)
+    for category, effects in categorized.items():
+        new_content = insert_effects_into_category(new_content, category, effects)
+    new_content = _recategorize_misc_effects(new_content)
+
+    result = EffectSync(
+        added=sorted(missing_effects),
+        removed=sorted(stale_effects),
+        uncategorized=parse_effects(new_content).get("misc", []),
+        changed=new_content != file_content,
+    )
+    return new_content, result
+
+
+def read_mod_effects() -> Set[str]:
+    """Extract every `nanu_dynamic_ror_*` effect key from Nanu's pack.
+
+    Returns:
+        The effect keys.
+
+    Raises:
+        RuntimeError: If the table could not be extracted from the pack.
+    """
     ensure_temp_dir()
-
     try:
+        config = {"table_name": TABLE_NAME, "folder_name": TABLE_NAME, "key_field": "key", "required": True}
+        mappings = extract_and_load_table_data(MOD_PACKFILE_PATH, [config])
+        if mappings is None:
+            raise RuntimeError(f"Could not extract {TABLE_NAME} from {MOD_PACKFILE_PATH}.")
+        return {key for key in mappings[TABLE_NAME] if key.startswith("nanu_dynamic_ror_")}
+    finally:
+        cleanup_folders([TEMP_EXTRACT_PATH])
 
-        extract_modded_tsv_data(TABLE_NAME, MOD_PACKFILE_PATH, TEMP_EXTRACT_PATH)
-        tsv_folder_path = os.path.join(TEMP_EXTRACT_PATH, f"db/{TABLE_NAME}")
 
-        if not os.path.exists(tsv_folder_path):
-            logging.error(f"Extracted folder not found: {tsv_folder_path}.")
-            exit()
+def sync_effects(write: bool = True) -> EffectSync:
+    """Sync dynamic_rors_effects.py with Nanu's pack and log a summary.
 
-        merged_data, headers, _ = load_multiple_tsv_data(tsv_folder_path)
-        key_column = next((h for h in headers if h.lower() == "key"), None)
+    Args:
+        write: Write the updated file. Pass False to only report what would change.
 
-        if not key_column:
-            logging.error(f"Could not find 'Key' column. Available columns: {headers}.")
-            exit()
+    Returns:
+        What changed, or would change when `write` is False.
+    """
+    mod_effects = read_mod_effects()
+    original_content = read_dynamic_rors_effects_file()
+    new_content, result = sync_effects_content(original_content, mod_effects)
 
-        mod_effects = {row.get(key_column, "") for row in merged_data if row.get(key_column, "").startswith("nanu_dynamic_ror_")}
-        supported_effects = {effect for effects in SUPPORTED_EFFECTS.values() for effect in effects}
-        missing_effects = mod_effects - supported_effects
-        stale_effects = supported_effects - mod_effects
+    logging.info(f"Nanu's Dynamic RoR effects: {len(mod_effects)} in the mod, {len(result.added)} to add, {len(result.removed)} to remove.")
+    for effect in result.removed:
+        logging.info(f"  Remove {effect}")
+    for effect in result.added:
+        logging.info(f"  Add {effect}")
+    if result.uncategorized:
+        logging.warning(f"{len(result.uncategorized)} effect(s) match no category rule, so no unit gets them. Add a rule in update_dynamic_ror_effects.py:")
+        for effect in result.uncategorized:
+            logging.warning(f"  {effect}")
+    if result.changed and write:
+        write_dynamic_rors_effects_file(new_content)
+        logging.info("Updated dynamic_rors_effects.py.")
+    return result
 
-        logging.info(f"Found {len(mod_effects)} total nanu_dynamic_ror_* effects in mod.")
-        logging.info(f"Found {len(missing_effects)} missing effects to add.")
-        logging.info(f"Found {len(stale_effects)} stale effects to remove.")
 
-        # Drop effects that Nanu renamed or removed so the compat packs stop referencing them.
-        original_content = read_dynamic_rors_effects_file()
-        file_content = remove_effects_from_file(original_content, stale_effects)
-        for effect in sorted(stale_effects):
-            logging.info(f"  Removed {effect}.")
-
-        # Categorize and add missing effects.
-        categorized: Dict[str, List[str]] = {}
-        for effect in missing_effects:
-            categorized.setdefault(categorize_effect(effect), []).append(effect)
-
-        for category, effects in sorted(categorized.items()):
-            logging.info(f"  {category}: {len(effects)} effects")
-
-        for category, effects in categorized.items():
-            file_content = insert_effects_into_category(file_content, category, effects)
-            logging.info(f"  Added {len(effects)} effects to {category}.")
-
-        # Recategorize misc effects, then write once.
-        file_content = _recategorize_misc_effects(file_content)
-        if file_content != original_content:
-            write_dynamic_rors_effects_file(file_content)
-            logging.info("Successfully updated dynamic_rors_effects.py.")
-        else:
-            logging.info("dynamic_rors_effects.py already matches the mod. Nothing to write.")
-
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    start_time = time.time()
+    try:
+        sync_effects()
     finally:
         clear_temp_root()
-    end_time = round(time.time() - start_time, 2)
-    logging.info(f"Total time for updating dynamic_rors_effects.py: {end_time} seconds or {round(end_time / 60, 2)} minutes.")
+    log_elapsed_time("updating dynamic_rors_effects.py", start_time)
