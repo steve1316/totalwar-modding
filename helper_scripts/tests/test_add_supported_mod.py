@@ -211,3 +211,110 @@ def test_append_entry_refuses_text_that_does_not_parse_back():
     broken = asm.render_entry(entry).replace('"ETE Unit Pack"', '"Other Name"')
     with pytest.raises(ValueError):
         asm.append_entry(_registry_text(), broken, entry)
+
+
+def _asker(*answers):
+    """Build a scripted `ask` that returns the given answers in order.
+
+    Args:
+        *answers (str): Answers to hand back, one per prompt.
+
+    Returns:
+        The `ask` callable. It records every prompt in its `prompts` list.
+    """
+    queue = list(answers)
+
+    def ask(prompt):
+        ask.prompts.append(prompt)
+        return queue.pop(0)
+
+    ask.prompts = []
+    return ask
+
+
+@pytest.mark.parametrize("answer, expected", [
+    ("emp", {"*": "emp"}),
+    (" chd , nur ", {"*": "chd,nur"}),
+    ("{}", {}),
+    ('{"*_tze_*": "tze", "khorne_": "kho"}', {"*_tze_*": "tze", "khorne_": "kho"}),
+])
+def test_parse_pattern_answer_accepts_codes_lists_and_dicts(answer, expected):
+    assert asm.parse_pattern_answer(answer) == expected
+
+
+@pytest.mark.parametrize("answer", ["", "empire", "emp,xyz", "{", '{"a": 1}', '{"a": "xyz"}', "[1]"])
+def test_parse_pattern_answer_rejects_bad_answers(answer):
+    with pytest.raises(ValueError):
+        asm.parse_pattern_answer(answer)
+
+
+def test_choose_pattern_overrides_asks_again_after_a_bad_answer():
+    guess = asm.FactionGuess(None, {"emp": ["gun_a"], "dwf": ["axe_b"]}, ["mystery_c"])
+    ask = _asker("empire", "{bad", "emp,dwf")
+    assert asm.choose_pattern_overrides(guess, ask) == {"*": "emp,dwf"}
+    assert len(ask.prompts) == 3
+
+
+@pytest.mark.parametrize("answer, expected", [("", []), ("none", []), ("all", [0, 1, 2, 3]), ("1,3-4", [0, 2, 3]), (" 2 ", [1])])
+def test_parse_selection_reads_all_none_and_ranges(answer, expected):
+    assert asm.parse_selection(answer, 4) == expected
+
+
+@pytest.mark.parametrize("answer", ["0", "5", "2-9", "a", "3-1"])
+def test_parse_selection_rejects_out_of_range_or_junk(answer):
+    with pytest.raises(ValueError):
+        asm.parse_selection(answer, 4)
+
+
+def test_choose_characters_groups_by_faction_and_keeps_only_picked():
+    candidates = [asm.Candidate("lord", "x_emp_lord_0", "emp_lord"), asm.Candidate("hero", "x_emp_hero_0", "emp_hero"), asm.Candidate("lord", "x_brt_lord_0", "brt_lord")]
+    ask = _asker("9", "1-2", "none")
+    chosen = asm.choose_characters(candidates, {}, ask)
+    assert chosen == {"emp": {"allowed_lords": [{"land_unit": "x_emp_lord_0", "agent_subtype": "emp_lord"}], "allowed_heroes": [{"land_unit": "x_emp_hero_0", "agent_subtype": "emp_hero"}]}}
+
+
+def test_choose_characters_adds_to_every_faction_of_a_multi_faction_mod():
+    candidates = [asm.Candidate("lord", "merc_lord_0", "merc_lord")]
+    chosen = asm.choose_characters(candidates, {"*": "chd,nur"}, _asker("all", "all"))
+    assert set(chosen) == {"chd", "nur"}
+
+
+def test_choose_characters_without_candidates_asks_nothing():
+    ask = _asker()
+    assert asm.choose_characters([], {}, ask) == {}
+    assert ask.prompts == []
+
+
+def test_main_writes_nothing_when_the_user_declines(tmp_path, monkeypatch):
+    registry = tmp_path / "supported_mods.py"
+    registry.write_bytes(_registry_text().encode("utf-8"))
+    monkeypatch.setattr(asm, "REGISTRY_PATH", str(registry))
+    monkeypatch.setattr(asm, "already_supported", lambda workshop_id: False)
+    monkeypatch.setattr(asm, "find_pack", lambda workshop_id, ask: "x.pack")
+    monkeypatch.setattr(asm, "propose_entry", lambda workshop_id, pack_name, name, ask: _entry(name, pack_name))
+    before = registry.read_bytes()
+    assert asm.main(["3565085095", "--no-update"], ask=_asker("n"), fetch=lambda workshop_id: "Some Mod") == 0
+    assert registry.read_bytes() == before
+
+
+def test_main_appends_the_entry_when_the_user_confirms(tmp_path, monkeypatch):
+    registry = tmp_path / "supported_mods.py"
+    registry.write_bytes(_registry_text().encode("utf-8"))
+    monkeypatch.setattr(asm, "REGISTRY_PATH", str(registry))
+    monkeypatch.setattr(asm, "already_supported", lambda workshop_id: False)
+    monkeypatch.setattr(asm, "find_pack", lambda workshop_id, ask: "x.pack")
+    monkeypatch.setattr(asm, "propose_entry", lambda workshop_id, pack_name, name, ask: _entry(name, pack_name))
+    assert asm.main(["3565085095", "--no-update"], ask=_asker("y"), fetch=lambda workshop_id: "Some Mod") == 0
+    namespace = {}
+    exec(compile(registry.read_text(encoding="utf-8"), "supported_mods.py", "exec"), namespace)
+    assert namespace["SUPPORTED_MODS"][-1]["name"] == "Some Mod"
+
+
+def test_main_stops_on_an_already_supported_mod(monkeypatch):
+    monkeypatch.setattr(asm, "already_supported", lambda workshop_id: True)
+    assert asm.main(["3565085095", "--no-update"], ask=_asker(), fetch=lambda workshop_id: "x") == 1
+
+
+def test_already_supported_finds_registry_ids():
+    assert asm.already_supported("3565085095")
+    assert not asm.already_supported("1")
