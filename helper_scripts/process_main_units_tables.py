@@ -13,12 +13,12 @@ import logging
 import gc
 import shutil
 import time
-from utilities import extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, TEMP_DIR
+from utilities import CULTURE_MILITARY_GROUPS, extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, TEMP_DIR
 from supported_mods import SUPPORTED_MODS
 from extract_cache import cached_pack_extract
 from delta import publish_pack
 from pipeline import workshop_pack_path
-from typing import List, Dict, Optional, Tuple
+from typing import Any, List, Dict, Optional, Set, Tuple
 
 
 FAILED_MODS = []
@@ -48,6 +48,54 @@ MOD_FOLDERS_TO_EXTRACT = [
 # Per-faction unit bucket structure. Each faction's `units` dict holds one entry per tier, and each tier holds one list per caste category.
 TIER_NAMES = [f"tier_{i}" for i in range(6)]
 UNIT_CATEGORIES = ["melee_infantry", "missile_infantry", "melee_cavalry", "missile_cavalry", "monstrous_infantry", "monstrous_cavalry", "chariot", "warmachine", "war_beast", "monster", "generic", "lord", "hero"]
+
+def is_renown(row: Dict[str, Any]) -> bool:
+    """Read a main_units row's `is_renown` flag, which loads as a string or a bool and is missing from older table versions.
+
+    Args:
+        row (Dict[str, Any]): The main_units row.
+
+    Returns:
+        True for a Regiment of Renown.
+    """
+    return str(row.get("is_renown", "")).lower() == "true"
+
+
+def is_in_main_roster(unit_key: str, faction: str, renown: bool, recruit_groups: Dict[str, Set[str]]) -> bool:
+    """Decide whether a regular vanilla unit belongs in a culture's random army pool.
+
+    Only units the culture's base group (`CULTURE_MILITARY_GROUPS`) can recruit, and Regiments of Renown, are kept. That leaves boss, quest battle,
+    tutorial and legendary-lord-exclusive units (e.g. Drycha's Harpies) out of generic armies. Boss units that CA flags as renown (e.g. Imrik's
+    dragons and the Forest Dragon boss) are still dropped.
+
+    Args:
+        unit_key (str): The main_units `unit` key, which is what the recruitment permissions reference.
+        faction (str): The culture key, e.g. `wef`.
+        renown (bool): True if the unit is a Regiment of Renown.
+        recruit_groups (Dict[str, Set[str]]): Unit key to the military groups that can recruit it.
+
+    Returns:
+        True if the culture's base group can recruit the unit, it is a Regiment of Renown that is not a boss, or the culture has no known base group.
+    """
+    main_group = CULTURE_MILITARY_GROUPS.get(faction)
+    if main_group is None:
+        return True
+    return (renown and "_boss" not in unit_key) or main_group in recruit_groups.get(unit_key, set())
+
+
+def build_recruit_groups(permission_table: pd.DataFrame) -> Dict[str, Set[str]]:
+    """Turn vanilla's `units_to_groupings_military_permissions_tables` into a unit lookup.
+
+    Args:
+        permission_table (pd.DataFrame): The permission table, with `unit` and `military_group` columns.
+
+    Returns:
+        Unit key to the military groups that can recruit it.
+    """
+    recruit_groups: Dict[str, Set[str]] = {}
+    for unit, group in zip(permission_table["unit"], permission_table["military_group"]):
+        recruit_groups.setdefault(unit, set()).add(group)
+    return recruit_groups
 
 
 def find_source_factions_data_path() -> str:
@@ -282,6 +330,8 @@ def tsv_to_faction_data(
     df_character_skill_nodes: pd.DataFrame,
     default_faction: str = None,
     do_not_use_underscore_pattern: bool = False,
+    recruit_groups: Optional[Dict[str, Set[str]]] = None,
+    dropped_units: Optional[Dict[str, List[str]]] = None,
 ):
     """Transform TSV data into structured faction data dictionary.
 
@@ -298,10 +348,15 @@ def tsv_to_faction_data(
         df_character_skill_nodes (pd.DataFrame): Skill nodes data.
         default_faction (str): Fallback faction if none detected. Can be comma-delimited list.
         do_not_use_underscore_pattern (bool): Disable underscore pattern matching.
+        recruit_groups (Optional[Dict[str, Set[str]]]): Unit key to the military groups that can recruit it. When given, regular vanilla units
+            outside their culture's main roster are left out. See `is_in_main_roster`. Mod units are never filtered.
+        dropped_units (Optional[Dict[str, List[str]]]): Culture key to the units left out by the main roster filter, filled in for the summary log.
 
     Returns:
         Updated factions data with new units and skills.
     """
+    # Only vanilla units are filtered by recruitment group. Mod units are already placed by culture in `SUPPORTED_MODS`.
+    roster_groups = recruit_groups if mod["package_name"] == "vanilla" else None
     try:
         # Iterate over each unit row in the DataFrame
         for _, row in df_main_units_tables.iterrows():
@@ -347,16 +402,19 @@ def tsv_to_faction_data(
                 tier = f"tier_{int(row['tier'])}"
                 caste_category = row["caste"]
                 if caste_category in factions_data[faction_value]["units"][tier]:
-                    # Save lords and heroes into their own lists.
-                    if caste_category != "lord" and caste_category != "hero":
-                        factions_data[faction_value]["units"][tier][caste_category].append(
-                            {
-                                "land_unit": row["land_unit"],
-                                "recruitment_cost": int(row["recruitment_cost"]),
-                                "multiplayer_cost": int(row["multiplayer_cost"]),
-                                "origin": mod["package_name"].replace(".pack", ""),
-                            }
-                        )
+                    # Lords and heroes are saved into their own lists below. Regular vanilla units must be in the culture's main roster.
+                    if caste_category not in ("lord", "hero"):
+                        if roster_groups is None or is_in_main_roster(row["unit"], faction_value, is_renown(row), roster_groups):
+                            factions_data[faction_value]["units"][tier][caste_category].append(
+                                {
+                                    "land_unit": row["land_unit"],
+                                    "recruitment_cost": int(row["recruitment_cost"]),
+                                    "multiplayer_cost": int(row["multiplayer_cost"]),
+                                    "origin": mod["package_name"].replace(".pack", ""),
+                                }
+                            )
+                        elif dropped_units is not None:
+                            dropped_units.setdefault(faction_value, []).append(row["land_unit"])
 
                     # Check if the unit key is in the allowed_lords field.
                     if "character_overrides" in mod and faction_value in mod["character_overrides"]:
@@ -437,6 +495,7 @@ if __name__ == "__main__":
             "character_skill_node_set_items_tables",
             "character_skill_node_sets_tables",
             "character_skill_nodes_tables",
+            "units_to_groupings_military_permissions_tables",
         ]:
             if not os.path.exists(f"{TEMP_DIR}/vanilla_{table_name}.tsv"):
                 extract_tsv_data(table_name)
@@ -459,6 +518,9 @@ if __name__ == "__main__":
                 f"{TEMP_DIR}/vanilla_character_skill_node_sets_tables.tsv", "character_skill_node_sets_tables"
             )
             df_character_skill_nodes_vanilla = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_character_skill_nodes_tables.tsv", "character_skill_nodes_tables")
+            df_recruit_permissions_vanilla = read_and_clean_tsv(
+                f"{TEMP_DIR}/vanilla_units_to_groupings_military_permissions_tables.tsv", "units_to_groupings_military_permissions_tables"
+            )
 
             # Convert the schemas from Ron to JSON.
             run_rpfm_cli(["schemas", "to-json", "--schemas-path", "./schemas"])
@@ -498,6 +560,9 @@ if __name__ == "__main__":
                 if dfs is not None:
                     per_mod_dfs[idx] = dfs
 
+            recruit_groups = build_recruit_groups(df_recruit_permissions_vanilla)
+            dropped_units: Dict[str, List[str]] = {}
+
             # Serial merge pass in original SUPPORTED_MODS order so `factions_data`, `faction_keys`, and the in-tier list ordering stay deterministic (the lists in `factions_data[faction]["units"][tier][category]` are append-only and order-sensitive).
             for idx, mod in process_order:
                 if mod["package_name"] == "vanilla":
@@ -511,6 +576,8 @@ if __name__ == "__main__":
                         df_character_skill_node_set_items_vanilla,
                         df_character_skill_node_sets_vanilla,
                         df_character_skill_nodes_vanilla,
+                        recruit_groups=recruit_groups,
+                        dropped_units=dropped_units,
                     )
                     continue
 
@@ -554,11 +621,19 @@ if __name__ == "__main__":
                     dfs["character_skill_nodes_tables"],
                     default_faction=default_faction,
                     do_not_use_underscore_pattern=do_not_use_underscore_pattern,
+                    recruit_groups=recruit_groups,
+                    dropped_units=dropped_units,
                 )
 
                 # Release this mod's dataframes now that they've been merged so the merge pass keeps a flat memory footprint.
                 del per_mod_dfs[idx]
                 gc.collect()
+
+            # Report what the main roster filter left out, so a mod losing units is visible in the log.
+            for faction in sorted(dropped_units):
+                logging.info(f"Main roster filter left {len(dropped_units[faction])} unit(s) out of {faction}: {', '.join(sorted(dropped_units[faction]))}")
+            for faction in sorted(set(factions_data) - set(CULTURE_MILITARY_GROUPS)):
+                logging.warning(f"{faction} has no base recruitment group in CULTURE_MILITARY_GROUPS, so its vanilla units were not filtered.")
 
             # Write output files.
             # ------------------------------------------------------------------
