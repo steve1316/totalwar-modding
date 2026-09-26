@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-import simulate_leapoi_armies as sim
+from tools import simulate_leapoi_armies as sim
 
 pytestmark = pytest.mark.skipif(sim.find_lua() is None, reason="Lua is not installed, so the spawn simulator cannot run.")
 

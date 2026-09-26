@@ -6,7 +6,7 @@ import threading
 
 import pytest
 
-import utilities
+from core import utilities
 
 
 @pytest.fixture(autouse=True)

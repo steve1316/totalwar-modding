@@ -4,8 +4,8 @@
 import logging
 import time
 from datetime import datetime
-from supported_mods import SUPPORTED_MODS
-from utilities import log_elapsed_time, setup_script_logging
+from core.utilities import log_elapsed_time, setup_script_logging
+from data.supported_mods import SUPPORTED_MODS
 import os
 import re
 

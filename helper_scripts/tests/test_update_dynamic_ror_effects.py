@@ -1,6 +1,6 @@
 """Tests that `remove_effects_from_file` drops exactly the named keys from `dynamic_rors_effects.py` content."""
 
-import update_dynamic_ror_effects
+from tools import update_dynamic_ror_effects
 
 CONTENT = """SUPPORTED_EFFECTS = {
     "melee": [

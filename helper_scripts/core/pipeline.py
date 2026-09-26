@@ -8,8 +8,8 @@ import os
 import shutil
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
-from extract_cache import cached_pack_extract
-from utilities import (
+from core.extract_cache import cached_pack_extract
+from core.utilities import (
     cleanup_folders,
     ensure_temp_dir,
     extract_model_paths_from_variantmeshdefinition,

@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-import process_main_units_tables as pmu
+from generators import process_main_units_tables as pmu
 
 GROUPS = {
     "wh_dlc05_wef_inf_eternal_guard_0": {"wh_dlc05_group_wood_elves", "wh2_dlc16_group_drycha"},

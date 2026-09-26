@@ -8,11 +8,11 @@ import re
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Set, Tuple
 
-from extract_cache import cached_pack_extract
-from pipeline import workshop_pack_path
-from supported_mods import SUPPORTED_MODS
-from ttc_compat_io import TtcEntry, hand_files, parse_ttc_file, parse_ttc_text
-from utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR, load_tsv_data
+from core.extract_cache import cached_pack_extract
+from core.pipeline import workshop_pack_path
+from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR, load_tsv_data
+from data.supported_mods import SUPPORTED_MODS
+from ttc.ttc_compat_io import TtcEntry, hand_files, parse_ttc_file, parse_ttc_text
 
 BASE_TTC_PACK = workshop_pack_path("3386989556", "groovy_ttc.pack")
 UNIT_TABLES = ["main_units_tables", "land_units_tables", "units_to_groupings_military_permissions_tables"]

@@ -14,7 +14,7 @@ import os
 import shutil
 import time
 from typing import List, Dict, Set
-from utilities import (
+from core.utilities import (
     clear_temp_root,
     ensure_temp_dir,
     extract_modded_tsv_data,
@@ -25,8 +25,8 @@ from utilities import (
     setup_script_logging,
     TEMP_DIR,
 )
-from supported_mods import SUPPORTED_MODS
-from pipeline import add_folder_to_pack, clean_folder_name
+from core.pipeline import add_folder_to_pack, clean_folder_name
+from data.supported_mods import SUPPORTED_MODS
 
 
 # The GLF mod this script patches. Switch to the other "!!!1a_glf_unit_expansion" package_name if a future need arises.
