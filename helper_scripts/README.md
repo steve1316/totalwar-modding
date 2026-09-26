@@ -66,6 +66,9 @@ Codegen helper. Extracts `unit_purchasable_effects_tables` from Nanu's parent pa
 ### `tools/update_supported_mods_list.py`
 Codegen helper. Walks `SUPPORTED_MODS` and generates Steam Workshop BBCode-formatted lists, one per pack (melee, ranged_arc, velocity, dynamic_rors, land_encounters). The user pastes the output into each pack's Steam Workshop description. Reads only `SUPPORTED_MODS`; touches no tables. Not part of `update.py`.
 
+### `tools/add_supported_mod.py`
+Adds a downloaded Workshop mod to `SUPPORTED_MODS` from its link: `python -m tools.add_supported_mod <link or ID>`. It fills in the name (from the Workshop title, or `--name`), the pack path, `modified_attributes` (from which tables the pack has), `pattern_overrides` (from race codes in unit keys, or the recruit groups that can recruit each unit) and `ignore_generation` (packs with no `main_units_tables`). It asks only when it cannot place the units in one faction, and lets you pick which generic lords and heroes go into `character_overrides`. It shows the entry and asks before writing, checks the file still parses, then runs `update.py --dry-run` (skip with `--no-update`).
+
 ### `tools/glf_inner_join.py`
 Patches the GLF Unit Expansion mod's `land_units_tables` by inner-joining its rows against vanilla `land_units_tables` (from `data/db.pack`), then overriding `man_animation`, `primary_missile_weapon`, `primary_ammo`, and `ai_usage_group` on each row with the GLF mod's values. Extracts both sides via `rpfm_cli`, merges in-memory, and writes the result back into the GLF `.pack`. Defaults to `!!!1a_glf_unit_expansion.pack`; pass `--pack <package_name>` to target a different mod from `SUPPORTED_MODS`.
 
