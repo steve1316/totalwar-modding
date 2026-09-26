@@ -25,17 +25,17 @@ import subprocess
 import time
 from typing import Dict, List, Optional
 
-import delta
-import update_dynamic_ror_effects
-import workshop_publish
-from extract_cache import prune_cache
-from update_dynamic_ror_effects import EffectSync
-from utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging
+from core import delta
+from core.extract_cache import prune_cache
+from core.utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging
+from tools import update_dynamic_ror_effects
+from tools.update_dynamic_ror_effects import EffectSync
+from publish import workshop_publish
 
 
 RUN_REPORT_PATH = f"{delta.PENDING_DIR}/run_report.jsonl"
 # Nanu's effect list, synced from his pack before the staleness check. Units that read it rebuild when the sync changes it.
-EFFECTS_FILE = "dynamic_rors_effects.py"
+EFFECTS_FILE = update_dynamic_ror_effects.DYNAMIC_RORS_EFFECTS_FILE
 
 
 def run_script(cmd: List[str], env: Dict[str, str]) -> int:

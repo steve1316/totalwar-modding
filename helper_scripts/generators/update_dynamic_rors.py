@@ -1,6 +1,6 @@
 """Script to update the dynamic RORs for Nanu from the Steam Workshop to account for latest changes to modded data tables."""
 
-from utilities import (
+from core.utilities import (
     extract_tsv_data,
     read_and_clean_tsv,
     load_tsv_data,
@@ -19,10 +19,8 @@ from utilities import (
     CULTURE_MILITARY_GROUPS,
     TEMP_DIR,
 )
-from supported_mods import SUPPORTED_MODS
-from dynamic_rors_effects import SUPPORTED_EFFECTS
-from delta import publish_pack
-from pipeline import (
+from core.delta import publish_pack
+from core.pipeline import (
     DuplicateTracker,
     add_folder_to_pack,
     clean_folder_name,
@@ -37,6 +35,8 @@ from pipeline import (
     write_optional_tables,
     TABLE_CONFIGS,
 )
+from data.supported_mods import SUPPORTED_MODS
+from data.dynamic_rors_effects import SUPPORTED_EFFECTS
 import time
 import os
 import logging

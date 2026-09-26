@@ -6,12 +6,12 @@ import os
 
 import pytest
 
-import delta
-import workshop_publish
-from extract_cache import normalize_path
-from pipeline import workshop_pack_path
-from supported_mods import SUPPORTED_MODS
-from utilities import FILEPATH_TO_VANILLA_DATA_TABLES
+from core import delta
+from core.extract_cache import normalize_path
+from core.pipeline import workshop_pack_path
+from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES
+from data.supported_mods import SUPPORTED_MODS
+from publish import workshop_publish
 
 GENERAL = f"[u]Compatibility update[/u]\n\n{workshop_publish.GENERAL_NOTE}"
 MELEE, ARC, VELOCITY = delta.UNITS[3].outputs

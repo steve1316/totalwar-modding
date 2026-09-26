@@ -15,9 +15,9 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
-from extract_cache import ensure_extracted, extraction_content_sha, file_sha256, pack_sha256, toolchain_hash, tree_sha256
-from pipeline import workshop_pack_path
-from utilities import FILEPATH_TO_VANILLA_DATA_TABLES
+from core.extract_cache import ensure_extracted, extraction_content_sha, file_sha256, pack_sha256, toolchain_hash, tree_sha256
+from core.pipeline import workshop_pack_path
+from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES
 
 
 STATE_ROOT = "./delta_state"
@@ -29,7 +29,7 @@ WATCHES_STATE_PATH = f"{STATE_ROOT}/watches.json"
 TTC_ENTRIES_PATH = f"{STATE_ROOT}/ttc_entries.json"
 
 # Code every unit depends on. Unit-specific scripts are added per unit below.
-SHARED_CODE_FILES = ["utilities.py", "pipeline.py", "supported_mods.py"]
+SHARED_CODE_FILES = ["core/utilities.py", "core/pipeline.py", "data/supported_mods.py"]
 
 
 @dataclass
@@ -57,7 +57,7 @@ class Unit:
 
     # Short identifier used for state file names and logs.
     name: str
-    # Script arguments passed to `python`, e.g. `["update_dynamic_rors.py", "--reset"]`.
+    # Arguments passed to `python`, e.g. `["-m", "generators.update_dynamic_rors", "--reset"]`.
     command: List[str]
     # Packs this invocation writes.
     outputs: List[Output]
@@ -70,43 +70,43 @@ class Unit:
 UNITS: List[Unit] = [
     Unit(
         "land_encounters_factions",
-        ["process_main_units_tables.py"],
+        ["-m", "generators.process_main_units_tables"],
         [Output("3397481450", "land_encounters_and_points_of_interest_6_0.pack")],
-        ["process_main_units_tables.py"],
+        ["generators/process_main_units_tables.py"],
     ),
     Unit(
         "dynamic_rors",
-        ["update_dynamic_rors.py", "--reset"],
+        ["-m", "generators.update_dynamic_rors", "--reset"],
         [Output("3513364573", "!!!!!!!_nanu_dynamic_rors_compat.pack")],
-        ["update_dynamic_rors.py", "dynamic_rors_effects.py"],
+        ["generators/update_dynamic_rors.py", "data/dynamic_rors_effects.py"],
     ),
     Unit(
         "dynamic_rors_leftover_vanilla",
-        ["update_dynamic_rors.py", "--reset", "--vanilla"],
+        ["-m", "generators.update_dynamic_rors", "--reset", "--vanilla"],
         [Output("3532864014", "!!!!!!!_nanu_dynamic_rors_leftover_vanilla.pack")],
-        ["update_dynamic_rors.py", "dynamic_rors_effects.py"],
+        ["generators/update_dynamic_rors.py", "data/dynamic_rors_effects.py"],
     ),
     Unit(
         "modified_attributes",
-        ["update_modified_attribute_mods.py", "--reset"],
+        ["-m", "generators.update_modified_attribute_mods", "--reset"],
         [
             Output("3311361199", "!!!!!!!50meleeattackspeed_compat.pack"),
             Output("3311361345", "!!!!!!!firing_arc_120_compat.pack"),
             Output("3311361464", "!!!!!!!double_projectile_velocity_compat.pack"),
         ],
-        ["update_modified_attribute_mods.py"],
+        ["generators/update_modified_attribute_mods.py"],
     ),
     Unit(
         "double_unit_size",
-        ["update_double_unit_size.py", "--reset"],
+        ["-m", "generators.update_double_unit_size", "--reset"],
         [Output("3621939685", "!!!!!!!2xunitsize_compat.pack")],
-        ["update_double_unit_size.py"],
+        ["generators/update_double_unit_size.py"],
     ),
     Unit(
         "ttc_compat",
-        ["update_ttc_compat.py"],
+        ["-m", "generators.update_ttc_compat"],
         [Output("3310629727", "!!!!!!!yet_another_tabletopcaps_compat.pack")],
-        ["update_ttc_compat.py", "ttc_classifier.py", "ttc_data.py", "ttc_compat_io.py"],
+        ["generators/update_ttc_compat.py", "ttc/ttc_classifier.py", "ttc/ttc_data.py", "ttc/ttc_compat_io.py"],
         ["../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script/ttc/!!!!!!!*.lua"],
     ),
 ]
@@ -205,13 +205,18 @@ def code_hash(unit: Unit) -> str:
     Args:
         unit (Unit): The unit to hash.
 
+    Raises:
+        FileNotFoundError: A listed code file does not exist, e.g. a path left stale after a script moved.
+
     Returns:
         The hex digest.
     """
     digest = hashlib.sha256(toolchain_hash().encode())
     for path in sorted(set(SHARED_CODE_FILES + unit.code_files)):
         digest.update(path.encode())
-        digest.update(file_sha256(path).encode() if os.path.exists(path) else b"missing")
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"Code file `{path}` listed for {unit.name} does not exist. Fix its path in `core/delta.py`.")
+        digest.update(file_sha256(path).encode())
     for pattern in unit.input_globs:
         for path in sorted(p for p in glob.glob(pattern) if not p.endswith("_auto.lua")):
             digest.update(os.path.basename(path).encode())

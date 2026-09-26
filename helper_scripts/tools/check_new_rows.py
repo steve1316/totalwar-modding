@@ -3,7 +3,7 @@
 Compares two TSV files and identifies rows that exist in the original file but not in the modded file.
 """
 
-from utilities import load_tsv_data, log_elapsed_time, setup_script_logging
+from core.utilities import load_tsv_data, log_elapsed_time, setup_script_logging
 import time
 import logging
 from typing import List, Dict

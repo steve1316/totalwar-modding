@@ -16,7 +16,7 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, cross_val_predict
 
-from ttc_data import UnitStats
+from ttc.ttc_data import UnitStats
 
 CONFIDENT_ACCURACY_BAR = 0.95
 NUMERIC_MAIN = ["multiplayer_cost", "upkeep_cost", "tier", "num_men", "melee_cp", "missile_cp", "recruitment_cost", "create_time", "point_allowance_weight", "weight"]
@@ -393,7 +393,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate the TTC classifier on the existing entries.")
     parser.add_argument("--evaluate", action="store_true", help="Print held-out accuracy and fail if confident picks miss the bar.")
     args = parser.parse_args()
-    import ttc_data
+    from ttc import ttc_data
 
     loaded = ttc_data.load_all()
     _, result = train(training_set(loaded), training_groups(loaded), PeerContext(loaded.stats, loaded.labels))

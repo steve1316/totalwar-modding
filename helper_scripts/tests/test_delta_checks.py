@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-import delta
+from core import delta
 
 
 def _write_state(tmp_path, unit, accesses):
@@ -129,3 +129,9 @@ def test_units_for_items_picks_the_units_that_build_them():
 def test_units_for_items_rejects_unknown_ids():
     with pytest.raises(ValueError, match="123"):
         delta.units_for_items({"123"})
+
+
+def test_every_unit_code_file_exists():
+    """A moved script with a stale path in `UNITS` fails here instead of silently never triggering a rebuild."""
+    for unit in delta.UNITS:
+        delta.code_hash(unit)
