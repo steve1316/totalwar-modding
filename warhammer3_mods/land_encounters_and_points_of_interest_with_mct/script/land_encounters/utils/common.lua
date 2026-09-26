@@ -65,6 +65,18 @@ function split_by_regex(splittable_string, separator)
 end
 
 
+--- Returns the number of keys in a table.
+--- @param tbl table The table to count.
+--- @returns number The number of key/value pairs in tbl.
+function Count_keys(tbl)
+    local count = 0
+    for _ in pairs(tbl) do
+        count = count + 1
+    end
+    return count
+end
+
+
 --- Recursively serializes a Lua table to a human-readable string for debugging.
 --- @param t table The table to serialize.
 --- @param indent number Current indent depth (tabs). Defaults to 0 when nil.
