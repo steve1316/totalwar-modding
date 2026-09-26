@@ -125,3 +125,89 @@ def test_lord_hero_candidates_filters_generic_subtypes_and_adds_mount_variants()
         asm.Candidate("lord", "bm_lord_1", "bm_lord"),
         asm.Candidate("hero", "champ_0", "champ"),
     ]
+
+
+def _entry(name="ETE Unit Pack", pack="pwner1_wh3_ete_unit_pack.pack", **extra):
+    """Build a registry entry dict for the writer tests.
+
+    Args:
+        name (str): Mod name.
+        pack (str): Pack filename.
+        **extra: Extra fields to add.
+
+    Returns:
+        The entry dict.
+    """
+    entry = {
+        "name": name,
+        "package_name": pack,
+        "path": f"{asm.WORKSHOP_ROOT}/3565085095/{pack}",
+        "modified_attributes": ["melee", "ranged_arc", "velocity"],
+    }
+    entry.update(extra)
+    return entry
+
+
+def _registry_text():
+    """Read the real registry text, line endings kept.
+
+    Returns:
+        The file text.
+    """
+    with open("data/supported_mods.py", encoding="utf-8", newline="") as fh:
+        return fh.read()
+
+
+def test_render_entry_matches_the_registry_style():
+    entry = _entry(
+        pattern_overrides={"*": "emp"},
+        character_overrides={"emp": {"allowed_lords": [{"land_unit": "a_0", "agent_subtype": "a"}], "allowed_heroes": [{"land_unit": "b_0", "agent_subtype": "b"}]}},
+    )
+    assert asm.render_entry(entry) == "\n".join([
+        "    {",
+        '        "name": "ETE Unit Pack",',
+        '        "package_name": "pwner1_wh3_ete_unit_pack.pack",',
+        '        "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/3565085095/pwner1_wh3_ete_unit_pack.pack",',
+        '        "modified_attributes": ["melee", "ranged_arc", "velocity"],',
+        '        "pattern_overrides": {"*": "emp"},',
+        '        "character_overrides": {',
+        '            "emp": {',
+        '                "allowed_lords": [',
+        '                    {"land_unit": "a_0", "agent_subtype": "a"},',
+        "                ],",
+        '                "allowed_heroes": [',
+        '                    {"land_unit": "b_0", "agent_subtype": "b"},',
+        "                ],",
+        "            },",
+        "        },",
+        "    },",
+    ])
+
+
+def test_render_entry_writes_ignore_generation_as_python_true():
+    assert '        "ignore_generation": True,' in asm.render_entry(_entry(ignore_generation=True))
+
+
+@pytest.mark.parametrize("name, pack", [
+    ("ETE Unit Pack", "pwner1_wh3_ete_unit_pack.pack"),
+    ("[Zerooz] 兵种合集", "Zerooz_All_Units.pack"),
+    ('Trajann\'s "Best" Pack \\ v2', "The Gunpowder Road2.0.pack"),
+    ("Spaced Out", "possibly a verminlord.pack"),
+])
+def test_append_entry_round_trips_on_the_real_registry(name, pack):
+    registry = _registry_text()
+    entry = _entry(name, pack, pattern_overrides={"*_tze_*": "tze"})
+    new_text = asm.append_entry(registry, asm.render_entry(entry), entry)
+    assert new_text.startswith(registry[: registry.rindex("]")].rstrip())
+    assert "\r\n" in new_text and "\n" not in new_text.replace("\r\n", "")
+    namespace = {}
+    exec(compile(new_text, "supported_mods.py", "exec"), namespace)
+    assert namespace["SUPPORTED_MODS"][-1] == entry
+    assert len(namespace["SUPPORTED_MODS"]) == len(SUPPORTED_MODS) + 1
+
+
+def test_append_entry_refuses_text_that_does_not_parse_back():
+    entry = _entry()
+    broken = asm.render_entry(entry).replace('"ETE Unit Pack"', '"Other Name"')
+    with pytest.raises(ValueError):
+        asm.append_entry(_registry_text(), broken, entry)
