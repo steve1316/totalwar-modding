@@ -389,9 +389,10 @@ local SpotDelegate = {
 
 
 --- True while the zone has room for more active land encounters under its spawn-percentage cap.
+--- `active_spots` is keyed by spot index with gaps, so it is counted with `Count_keys` rather than the `#` length operator.
 --- @returns boolean True when the active-spot count is below the cap.
 function SpotDelegate:can_add_land_encounters()
-    return self.max_active_spots_count > #self.active_spots
+    return self.max_active_spots_count > Count_keys(self.active_spots)
 end
 
 --- Walks the zone's spots in random order and activates inactive ones until the active cap is hit.

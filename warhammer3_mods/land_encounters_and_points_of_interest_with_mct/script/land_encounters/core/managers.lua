@@ -315,17 +315,6 @@ function contains(tbl, element, key_first)
     return false
 end
 
---- Returns the number of keys in a table.
---- @param tbl table The table to count.
---- @returns number The number of key/value pairs in tbl.
-function Count_keys(tbl)
-    local count = 0
-    for _ in pairs(tbl) do
-        count = count + 1
-    end
-    return count
-end
-
 --- Picks a uniformly random key from the table.
 --- @param tbl table The table to draw from.
 --- @returns any A randomly chosen key from tbl.
