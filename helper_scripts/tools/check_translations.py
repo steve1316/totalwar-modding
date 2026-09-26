@@ -10,7 +10,7 @@ import gc
 import shutil
 import time
 from typing import List, Optional, Set
-from utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE
+from core.utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging, STEAM_LIBRARY_DRIVE
 
 
 mod_paths_to_be_translated = [

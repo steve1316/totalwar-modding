@@ -6,7 +6,7 @@ Processes modded TSV files to:
 3. Maintain original file structure and version information
 """
 
-from utilities import load_tsv_data, log_elapsed_time, setup_script_logging
+from core.utilities import load_tsv_data, log_elapsed_time, setup_script_logging
 import logging
 import time
 import os

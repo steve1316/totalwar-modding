@@ -11,12 +11,10 @@ import os
 import time
 from typing import Dict, List, Optional, Tuple
 
-import delta
-import ttc_classifier
-import ttc_compat_io
-import ttc_data
-from pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
-from utilities import clear_temp_root, setup_script_logging
+from core import delta
+from core.pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
+from core.utilities import clear_temp_root, setup_script_logging
+from ttc import ttc_classifier, ttc_compat_io, ttc_data
 
 STEAM_ID = "3310629727"
 PACK_PATH = workshop_pack_path(STEAM_ID, "!!!!!!!yet_another_tabletopcaps_compat.pack")

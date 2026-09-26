@@ -1,7 +1,7 @@
 """Tests for TTC target selection and the stale hand-entry guard."""
 
-import ttc_data
-from ttc_compat_io import TtcEntry
+from ttc import ttc_data
+from ttc.ttc_compat_io import TtcEntry
 
 
 def _row(key, caste="melee_infantry"):

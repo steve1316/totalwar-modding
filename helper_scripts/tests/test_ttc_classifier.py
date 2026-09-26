@@ -2,8 +2,8 @@
 
 import random
 
-import ttc_classifier as clf
-from ttc_data import UnitStats
+from ttc import ttc_classifier as clf
+from ttc.ttc_data import UnitStats
 
 
 def _unit(i, cost, caste="melee_infantry", land=True):

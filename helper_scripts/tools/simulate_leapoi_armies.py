@@ -4,8 +4,8 @@ The Lua harness in `leapoi_sim/army_sim.lua` loads the mod's `core/managers.lua`
 code the game runs. Needs a standalone Lua 5.4 interpreter.
 
 Usage:
-    python simulate_leapoi_armies.py --faction wef --difficulty hard --count 10
-    python simulate_leapoi_armies.py --count 200 --mods all     Check every faction with every supported mod enabled.
+    python -m tools.simulate_leapoi_armies --faction wef --difficulty hard --count 10
+    python -m tools.simulate_leapoi_armies --count 200 --mods all     Check every faction with every supported mod enabled.
 """
 
 import argparse
@@ -17,10 +17,10 @@ import subprocess
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from process_main_units_tables import LEAPOI_SOURCE_ROOT
+from generators.process_main_units_tables import LEAPOI_SOURCE_ROOT
 
-SIM_SCRIPT = "./leapoi_sim/army_sim.lua"
-SPAWN_SIM_SCRIPT = "./leapoi_sim/spawn_sim.lua"
+SIM_SCRIPT = "./tools/leapoi_sim/army_sim.lua"
+SPAWN_SIM_SCRIPT = "./tools/leapoi_sim/spawn_sim.lua"
 # Campaign maps in LEAPOI's `configs/coordinates.lua`.
 CAMPAIGNS = ["immortal_empires", "realm_of_chaos", "immortal_empires_expanded"]
 # Default install location of the standalone Lua interpreter on Windows, used when `lua` is not on PATH.

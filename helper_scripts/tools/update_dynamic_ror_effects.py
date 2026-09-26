@@ -15,8 +15,8 @@ import logging
 import time
 from dataclasses import dataclass, field
 from typing import Dict, List, Set, Tuple
-from pipeline import extract_and_load_table_data, workshop_pack_path
-from utilities import (
+from core.pipeline import extract_and_load_table_data, workshop_pack_path
+from core.utilities import (
     ensure_temp_dir,
     cleanup_folders,
     clear_temp_root,
@@ -27,7 +27,7 @@ from utilities import (
 MOD_PACKFILE_PATH = workshop_pack_path("3278112051", "!!_nanu_dynamic_rors.pack")
 TABLE_NAME = "unit_purchasable_effects_tables"
 TEMP_EXTRACT_PATH = f"{TEMP_DIR}/modded_{TABLE_NAME}"
-DYNAMIC_RORS_EFFECTS_FILE = "dynamic_rors_effects.py"
+DYNAMIC_RORS_EFFECTS_FILE = "data/dynamic_rors_effects.py"
 
 
 # Pattern matching rules for categorization.

@@ -16,11 +16,11 @@ import time
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
-import delta
-from extract_cache import file_sha256, normalize_path, pack_sha256
-from pipeline import workshop_pack_path
-from supported_mods import SUPPORTED_MODS
-from utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR
+from core import delta
+from core.extract_cache import file_sha256, normalize_path, pack_sha256
+from core.pipeline import workshop_pack_path
+from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR
+from data.supported_mods import SUPPORTED_MODS
 
 
 PUBLISHED_STATE_DIR = f"{delta.STATE_ROOT}/published"
@@ -34,7 +34,7 @@ TTC_STEAM_ID = "3310629727"
 VANILLA_COMPAT_STEAM_ID = "3532864014"
 # The game exe, whose file version is the patch number, e.g. `9.0.0.0` for patch 9.0.
 GAME_EXE_PATH = os.path.join(os.path.dirname(os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES)), "Warhammer3.exe")
-PUBLISHER_DIR = "./workshop_publisher"
+PUBLISHER_DIR = "./publish/workshop_publisher"
 PUBLISH_TEMP_DIR = f"{TEMP_DIR}/publish"
 
 # Display names for packs that are not in `SUPPORTED_MODS`.
@@ -523,7 +523,7 @@ def publisher_problem() -> Optional[str]:
     if shutil.which("node") is None:
         return "Node.js is not installed or not on PATH."
     if not os.path.isdir(f"{PUBLISHER_DIR}/node_modules/steamworks.js"):
-        return "The uploader is not set up. Run `cd helper_scripts/workshop_publisher && npm install` first."
+        return "The uploader is not set up. Run `cd helper_scripts/publish/workshop_publisher && npm install` first."
     return None
 
 

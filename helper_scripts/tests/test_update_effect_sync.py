@@ -1,9 +1,9 @@
 """Tests that `update.py` syncs Nanu's effect list before the staleness check, and flags the Dynamic RoR packs in a dry run."""
 
-import delta
+from core import delta
+from tools import update_dynamic_ror_effects
+from tools.update_dynamic_ror_effects import EffectSync
 import update
-import update_dynamic_ror_effects
-from update_dynamic_ror_effects import EffectSync
 
 DYNAMIC_RORS = next(unit for unit in delta.UNITS if unit.name == "dynamic_rors")
 MODIFIED_ATTRIBUTES = next(unit for unit in delta.UNITS if unit.name == "modified_attributes")

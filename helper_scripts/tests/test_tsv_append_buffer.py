@@ -1,6 +1,6 @@
 """Tests that `TsvAppendBuffer` writes the same bytes as calling `write_updated_tsv_file` once per batch."""
 
-import utilities
+from core import utilities
 
 EFFECT_HEADERS = ["unit", "purchasable_effect", "is_exclusive"]
 LAND_HEADERS = ["key", "category", "num_men"]
