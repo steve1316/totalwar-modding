@@ -11,61 +11,14 @@
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
 -- Setup
 
---- Path to the LEAPOI mod folder that holds `script/`.
-local LEAPOI_ROOT = arg[1]
---- Parsed `key=value` options from the command line.
-local options = { faction = "all", difficulty = "easy,medium,hard", count = "1", seed = tostring(os.time()), mods = "none" }
-for i = 2, #arg do
-    local key, value = arg[i]:match("^(%w+)=(.*)$")
-    if key then options[key] = value end
-end
-
-package.path = LEAPOI_ROOT .. "/?.lua;" .. package.path
-
---- Stand-in for every game global. Any field is a function that returns the stub itself, so chained game calls do nothing.
-local stub
-stub = setmetatable({}, {
-    __index = function() return function() return stub end end,
-    __call = function() return stub end,
+--- Folder of this script, so the shared stubs load no matter where Lua is started from.
+local SCRIPT_DIR = arg[0]:match("^(.*)[/\\]") or "."
+local write_line, options, to_json = dofile(SCRIPT_DIR .. "/game_stubs.lua")(arg, {
+    faction = "all", difficulty = "easy,medium,hard", count = "1", seed = tostring(os.time()), mods = "none",
 })
-cm, core, mct = stub, stub, stub
-out = function() end
-get_mct = function() return nil end
-
---- Real print, kept for output. The generator's own debug prints are silenced.
-local write_line = print
-print = function() end
 
 require("script/land_encounters/core/managers")
 local factions_data = require("script/land_encounters/configs/factions_data")
-
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- //////////////////////////////////////////////////////////////////////////////////////////////////
--- JSON output
-
---- Encodes a Lua value as JSON. Empty tables and tables with a `[1]` entry are arrays, other tables are objects with sorted keys.
---- @param value any The value to encode.
---- @returns string The JSON text.
-local function to_json(value)
-    local kind = type(value)
-    if kind == "string" then
-        return '"' .. value:gsub('[%c"\\]', function(c) return string.format("\\u%04x", c:byte()) end) .. '"'
-    elseif kind == "number" or kind == "boolean" then
-        return tostring(value)
-    elseif kind == "table" then
-        local parts = {}
-        if next(value) == nil or value[1] ~= nil then
-            for _, item in ipairs(value) do parts[#parts + 1] = to_json(item) end
-            return "[" .. table.concat(parts, ",") .. "]"
-        end
-        local keys = {}
-        for key in pairs(value) do keys[#keys + 1] = tostring(key) end
-        table.sort(keys)
-        for _, key in ipairs(keys) do parts[#parts + 1] = to_json(key) .. ":" .. to_json(value[key]) end
-        return "{" .. table.concat(parts, ",") .. "}"
-    end
-    return "null"
-end
 
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
 -- //////////////////////////////////////////////////////////////////////////////////////////////////
