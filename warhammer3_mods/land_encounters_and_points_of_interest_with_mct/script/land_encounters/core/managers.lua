@@ -371,10 +371,17 @@ end
 --- @param force_makeup table The accumulating force_makeup table to mutate.
 --- @param unit_type string The unit-type bucket key to fill (e.g. "melee_infantry").
 --- @param empty_unit_types table Set of unit types already exhausted, mutated when this one is exhausted too.
-local function get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types)
+--- @param max_units number The army's size cap (lord and heroes included). Never adds more units than the room left under it.
+local function get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types, max_units)
     local tiers = difficulties[difficulty_key].tiers
     local unit_limits = difficulties[difficulty_key].limits
     local add_single_copy = false
+
+    --- Stop once the army is full, so a batch of copies can never push it past its size cap.
+    local room_left = max_units - count_total_units(force_makeup)
+    if room_left <= 0 then
+        return force_makeup, empty_unit_types
+    end
 
     print("INFO - Processing original unit_type: " .. unit_type .. " units.")
 
@@ -454,7 +461,7 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
         --- First, determine if copies should be added and cap it at 3.
         local copies = 1
         if not add_single_copy and math.random() < 0.25 then
-            copies = math.min(math.random(unit_limits[unit_type][1], unit_limits[unit_type][2]), 3)
+            copies = math.min(math.random(unit_limits[unit_type][1], unit_limits[unit_type][2]), 3, room_left)
         end
 
         --- Randomize the list of enabled units first before selection.
@@ -544,18 +551,18 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     local initial_count = 0
     while (#force_makeup.units.melee_infantry < override_limit_melee_infantry) do
         initial_count = #force_makeup.units.melee_infantry
-        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", empty_unit_types)
+        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", empty_unit_types, max_units)
         if #force_makeup.units.melee_infantry == initial_count then
             break
         end
     end
     while (#force_makeup.units.missile_infantry < override_limit_missile_infantry) do
         initial_count = #force_makeup.units.missile_infantry
-        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "missile_infantry", empty_unit_types)
+        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "missile_infantry", empty_unit_types, max_units)
         --- Some factions like vanilla Nurgle have no missile_infantry units at the lower tiers.
         if #force_makeup.units.missile_infantry == initial_count then
             print("WARNING - No available units for missile_infantry. Falling back to melee_infantry.")
-            force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", empty_unit_types)
+            force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", empty_unit_types, max_units)
             break
         end
     end
@@ -564,7 +571,7 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     while count_total_units(force_makeup) < max_units do
         --- Randomly select a unit type to add from the weights.
         local unit_type = select_weighted_random_unit_type(force_makeup_weights, faction_shorthand_key)
-        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types)
+        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types, max_units)
     end
 
     return force_makeup
