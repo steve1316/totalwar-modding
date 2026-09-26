@@ -5,6 +5,7 @@ change note. The upload itself runs through `workshop_publisher/publish.js`, whi
 """
 
 import collections
+import ctypes
 import json
 import logging
 import os
@@ -29,6 +30,10 @@ GENERAL_NOTE = "Rebuilt against the latest game patch and the latest versions of
 CHANGE_NOTE_LIMIT = 8000
 # The TTC compat item gets a per-unit change note built from its entries instead of the list of changed mods.
 TTC_STEAM_ID = "3310629727"
+# The leftover vanilla Dynamic RoR item only follows vanilla data, so its change note names the game patch instead.
+VANILLA_COMPAT_STEAM_ID = "3532864014"
+# The game exe, whose file version is the patch number, e.g. `9.0.0.0` for patch 9.0.
+GAME_EXE_PATH = os.path.join(os.path.dirname(os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES)), "Warhammer3.exe")
 PUBLISHER_DIR = "./workshop_publisher"
 PUBLISH_TEMP_DIR = f"{TEMP_DIR}/publish"
 
@@ -316,6 +321,76 @@ def ttc_change_note() -> Optional[str]:
     return build_ttc_change_note(published, current)
 
 
+def format_patch_version(file_version: str) -> str:
+    """Turn an exe file version into a patch number by dropping trailing zero parts, keeping at least major and minor.
+
+    Args:
+        file_version (str): Dotted file version, e.g. `9.0.0.0`.
+
+    Returns:
+        The patch number, e.g. `9.0` or `9.0.1`.
+    """
+    parts = file_version.split(".")
+    while len(parts) > 2 and parts[-1] == "0":
+        parts.pop()
+    return ".".join(parts)
+
+
+def game_patch_version() -> Optional[str]:
+    """Read the installed game's patch number from the exe's file version.
+
+    Returns:
+        The patch number, or None if the exe is missing or has no version info.
+    """
+    if os.name != "nt" or not os.path.exists(GAME_EXE_PATH):
+        return None
+    version_dll = ctypes.windll.version
+    size = version_dll.GetFileVersionInfoSizeW(GAME_EXE_PATH, None)
+    if not size:
+        return None
+    buffer = ctypes.create_string_buffer(size)
+    info_ptr = ctypes.c_void_p()
+    info_len = ctypes.c_uint()
+    if not version_dll.GetFileVersionInfoW(GAME_EXE_PATH, 0, size, buffer):
+        return None
+    if not version_dll.VerQueryValueW(buffer, "\\", ctypes.byref(info_ptr), ctypes.byref(info_len)):
+        return None
+    # `VS_FIXEDFILEINFO` holds the file version as two 32-bit words after its signature and struct version.
+    info = ctypes.cast(info_ptr, ctypes.POINTER(ctypes.c_uint32 * 4)).contents
+    most, least = info[2], info[3]
+    return format_patch_version(f"{most >> 16}.{most & 0xFFFF}.{least >> 16}.{least & 0xFFFF}")
+
+
+def vanilla_change_note() -> Optional[str]:
+    """Build the leftover vanilla item's change note from the installed game patch.
+
+    Returns:
+        The change note, or None if the patch number cannot be read.
+    """
+    version = game_patch_version()
+    if version is None:
+        return None
+    return f"[u]Compatibility update[/u]\n\nUpdated vanilla game data up to patch {version}."
+
+
+def _change_note(steam_id: str, record: Optional[Dict[str, Any]]) -> str:
+    """Pick the change note for an item, using the TTC or vanilla note where they apply and the rebuild-reasons note otherwise.
+
+    Args:
+        steam_id (str): Workshop ID of the item.
+        record (Optional[Dict[str, Any]]): The item's publish record, or None if it has never been recorded.
+
+    Returns:
+        The change note text.
+    """
+    note = None
+    if steam_id == TTC_STEAM_ID:
+        note = ttc_change_note()
+    elif steam_id == VANILLA_COMPAT_STEAM_ID:
+        note = vanilla_change_note()
+    return note or build_change_note(record)
+
+
 def pending_items(failed_units: List[str], steam_ids: Optional[Set[str]] = None) -> List[PendingItem]:
     """List generated Workshop items whose current pack differs from the last published one.
 
@@ -338,8 +413,7 @@ def pending_items(failed_units: List[str], steam_ids: Optional[Set[str]] = None)
                 continue
             record = _read_record(output.steam_id)
             if record is None or record.get("pack_sha") != current_sha:
-                note = (ttc_change_note() if output.steam_id == TTC_STEAM_ID else None) or build_change_note(record)
-                items.append(PendingItem(output, note, current_sha))
+                items.append(PendingItem(output, _change_note(output.steam_id, record), current_sha))
     return items
 
 
