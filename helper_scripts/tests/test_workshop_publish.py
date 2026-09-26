@@ -688,3 +688,37 @@ def test_ttc_note_limit_counts_utf8_bytes():
     note = workshop_publish.build_ttc_change_note({}, current, limit=150)
     assert len(note.encode("utf-8")) <= 150
     assert "金花" not in note
+
+
+def _vanilla_compat_output():
+    """Find the leftover vanilla Dynamic RoR output.
+
+    Returns:
+        The `delta.Output` for the vanilla compat Workshop item.
+    """
+    return next(output for unit in delta.UNITS for output in unit.outputs if output.steam_id == workshop_publish.VANILLA_COMPAT_STEAM_ID)
+
+
+@pytest.mark.parametrize("file_version, patch", [("9.0.0.0", "9.0"), ("9.0.1.0", "9.0.1"), ("10.2.0.0", "10.2"), ("9.1.2.3", "9.1.2.3")])
+def test_patch_version_drops_trailing_zero_parts(file_version, patch):
+    assert workshop_publish.format_patch_version(file_version) == patch
+
+
+def test_vanilla_compat_note_names_the_game_patch(state_dir, monkeypatch):
+    output = _vanilla_compat_output()
+    _fake_pack_shas(monkeypatch, {output.pack_path: "current"})
+    monkeypatch.setattr(workshop_publish, "game_patch_version", lambda: "9.0")
+
+    items = workshop_publish.pending_items([], {output.steam_id})
+
+    assert items[0].change_note == "[u]Compatibility update[/u]\n\nUpdated vanilla game data up to patch 9.0."
+
+
+def test_vanilla_compat_note_is_general_when_patch_is_unknown(state_dir, monkeypatch):
+    output = _vanilla_compat_output()
+    _fake_pack_shas(monkeypatch, {output.pack_path: "current"})
+    monkeypatch.setattr(workshop_publish, "game_patch_version", lambda: None)
+
+    items = workshop_publish.pending_items([], {output.steam_id})
+
+    assert items[0].change_note == GENERAL
