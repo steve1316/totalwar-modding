@@ -1,7 +1,7 @@
 """Tests for the TTC compat generator's file writing and report."""
 
-import ttc_compat_io
-import update_ttc_compat as gen
+from ttc import ttc_compat_io
+from generators import update_ttc_compat as gen
 
 
 def test_obsolete_auto_files_are_deleted(tmp_path, monkeypatch):

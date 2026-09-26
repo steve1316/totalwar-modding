@@ -13,11 +13,11 @@ import logging
 import gc
 import shutil
 import time
-from utilities import CULTURE_MILITARY_GROUPS, extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, TEMP_DIR
-from supported_mods import SUPPORTED_MODS
-from extract_cache import cached_pack_extract
-from delta import publish_pack
-from pipeline import workshop_pack_path
+from core.utilities import CULTURE_MILITARY_GROUPS, extract_tsv_data, log_elapsed_time, make_common_argparser, read_and_clean_tsv, ensure_temp_dir, clear_temp_root, run_parallel, run_rpfm_cli, setup_script_logging, TEMP_DIR
+from core.extract_cache import cached_pack_extract
+from core.delta import publish_pack
+from core.pipeline import workshop_pack_path
+from data.supported_mods import SUPPORTED_MODS
 from typing import Any, List, Dict, Optional, Set, Tuple
 
 

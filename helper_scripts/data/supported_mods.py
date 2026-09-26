@@ -1,4 +1,4 @@
-from utilities import STEAM_LIBRARY_DRIVE
+from core.utilities import STEAM_LIBRARY_DRIVE
 
 # main_units_tables
 SUPPORTED_MODS = [

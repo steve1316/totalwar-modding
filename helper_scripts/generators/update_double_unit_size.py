@@ -5,7 +5,7 @@ import time
 import os
 from typing import Dict, Optional
 import pandas as pd
-from utilities import (
+from core.utilities import (
     extract_tsv_data,
     load_tsv_data,
     log_elapsed_time,
@@ -23,9 +23,8 @@ from utilities import (
     clear_temp_root,
     TEMP_DIR,
 )
-from supported_mods import SUPPORTED_MODS
-from delta import publish_pack
-from pipeline import (
+from core.delta import publish_pack
+from core.pipeline import (
     DuplicateTracker,
     add_folder_to_pack,
     cleanup_modded_folders,
@@ -39,6 +38,7 @@ from pipeline import (
     write_optional_tables,
     TABLE_CONFIGS,
 )
+from data.supported_mods import SUPPORTED_MODS
 
 
 MODDED_TABLE_NAME = "!!!!!!!2xunitsize_compat"

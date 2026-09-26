@@ -14,7 +14,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Iterable, List, Dict, Optional
 
-from extract_cache import cached_pack_extract
+from core.extract_cache import cached_pack_extract
 
 
 STEAM_LIBRARY_DRIVE = "F:"

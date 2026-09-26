@@ -5,7 +5,7 @@ import time
 import shutil
 import os
 from typing import Callable, List, Dict
-from utilities import (
+from core.utilities import (
     extract_tsv_data,
     extract_modded_tsv_data,
     load_tsv_data,
@@ -20,9 +20,9 @@ from utilities import (
     clear_temp_root,
     TEMP_DIR,
 )
-from supported_mods import SUPPORTED_MODS
-from pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
-from delta import publish_pack
+from core.pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
+from core.delta import publish_pack
+from data.supported_mods import SUPPORTED_MODS
 
 
 MODS_AND_STEAM_WORKSHOP_IDS = [

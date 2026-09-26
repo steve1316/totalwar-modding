@@ -3,7 +3,7 @@
 import os
 import re
 
-import ttc_compat_io as io_
+from ttc import ttc_compat_io as io_
 
 ENTRY = re.compile(r'\{\s*"[^"]+"\s*,\s*"(?:core|special|rare)"')
 
