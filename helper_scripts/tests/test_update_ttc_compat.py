@@ -38,3 +38,16 @@ def test_collect_entries_maps_every_compat_entry_to_its_mod(tmp_path, monkeypatc
     entries = gen.collect_entries({"!!!!!!!hand_mod.lua": "Hand Mod", "!!!!!!!hand_mod_auto.lua": "Hand Mod"})
 
     assert entries == {"shared": "Hand Mod", "hand_only": "Hand Mod", "auto_only": "Hand Mod", "orphan": "unnamed"}
+
+
+def test_report_is_not_rewritten_when_only_the_timestamp_changes(tmp_path, monkeypatch):
+    report = tmp_path / "reports" / "ttc_review.md"
+    monkeypatch.setattr(gen, "REPORT_PATH", str(report))
+
+    gen.write_report("# TTC compat review\n\nGenerated 2026-09-25 12:33:12 by `update_ttc_compat.py`.\n\nrow a\n")
+    gen.write_report("# TTC compat review\n\nGenerated 2026-09-25 14:48:49 by `update_ttc_compat.py`.\n\nrow a\n")
+    assert "12:33:12" in report.read_text()
+
+    gen.write_report("# TTC compat review\n\nGenerated 2026-09-25 15:00:00 by `update_ttc_compat.py`.\n\nrow b\n")
+    assert "15:00:00" in report.read_text()
+    assert "row b" in report.read_text()

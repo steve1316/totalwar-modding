@@ -68,6 +68,33 @@ def collect_entries(file_mods: Dict[str, str]) -> Dict[str, str]:
     return entries
 
 
+def _without_timestamp(text: str) -> List[str]:
+    """Drop the report's `Generated ...` line so two reports can be compared by content.
+
+    Args:
+        text (str): Report text.
+
+    Returns:
+        The report lines without the timestamp line.
+    """
+    return [line for line in text.splitlines() if not line.startswith("Generated ")]
+
+
+def write_report(text: str) -> None:
+    """Write the review report, unless only its timestamp would change, so an unchanged review does not show up as a git change.
+
+    Args:
+        text (str): The new report text.
+    """
+    if os.path.exists(REPORT_PATH):
+        with open(REPORT_PATH, encoding="utf-8") as f:
+            if _without_timestamp(f.read()) == _without_timestamp(text):
+                return
+    os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
+    with open(REPORT_PATH, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+
+
 def render_report(metrics_line: str, counts: Dict[str, int], review_rows: List[tuple], removed: List[Tuple[str, str]], missing_mods: List[str]) -> str:
     """Render the after-action report.
 
@@ -139,9 +166,7 @@ def main() -> int:
     logging.info(f"TTC classifier: {metrics_line}")
     if metrics.confident < ttc_classifier.CONFIDENT_ACCURACY_BAR:
         logging.error("Confident picks are below the accuracy bar. No TTC files were written.")
-        os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
-        with open(REPORT_PATH, "w", encoding="utf-8", newline="\n") as f:
-            f.write(f"# TTC compat review\n\nFAILED: {metrics_line}. Confident picks must reach {ttc_classifier.CONFIDENT_ACCURACY_BAR:.0%}.\n")
+        write_report(f"# TTC compat review\n\nFAILED: {metrics_line}. Confident picks must reach {ttc_classifier.CONFIDENT_ACCURACY_BAR:.0%}.\n")
         return 1
 
     targets = ttc_data.select_targets(data.mod_units, data.vanilla_keys, data.permissions, set(data.labels))
@@ -185,10 +210,8 @@ def main() -> int:
 
     confident_count = sum(1 for p in predictions if p.confident)
     counts = {"labeled": metrics.n, "targets": len(keys), "confident": confident_count, "review": len(review_rows), "removed": len(removed)}
-    os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
-    with open(REPORT_PATH, "w", encoding="utf-8", newline="\n") as f:
-        skipped_mods = data.missing_mods + [f"{name} (main_units_tables unreadable, check the rpfm schema)" for name in data.unreadable_mods]
-        f.write(render_report(metrics_line, counts, review_rows, removed, skipped_mods))
+    skipped_mods = data.missing_mods + [f"{name} (main_units_tables unreadable, check the rpfm schema)" for name in data.unreadable_mods]
+    write_report(render_report(metrics_line, counts, review_rows, removed, skipped_mods))
     os.makedirs(os.path.dirname(SUMMARY_PATH), exist_ok=True)
     with open(SUMMARY_PATH, "w", encoding="utf-8") as f:
         json.dump({"auto": len(keys), "review": len(review_rows), "removed": len(removed), "report": REPORT_PATH}, f)
