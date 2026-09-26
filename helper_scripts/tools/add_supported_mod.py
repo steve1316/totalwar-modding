@@ -6,11 +6,14 @@ Usage:
     cd helper_scripts && python -m tools.add_supported_mod https://steamcommunity.com/sharedfiles/filedetails/?id=3565085095
 """
 
+import ast
+import json
 import re
 import urllib.parse
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
+from core.utilities import STEAM_LIBRARY_DRIVE
 from generators.process_main_units_tables import faction_keys
 from ttc.ttc_data import FACTION_NAMES, unit_faction
 
@@ -24,6 +27,10 @@ NAME_TO_CODE = {name: code for code, name in reversed(list(FACTION_NAMES.items()
 VARIANT_SUFFIX = re.compile(r"_\d+$")
 # Castes the LEAPOI generator reads lord and hero overrides for.
 CHARACTER_CASTES = ("lord", "hero")
+# Folder Steam downloads Warhammer 3 Workshop items into, one subfolder per Workshop ID.
+WORKSHOP_ROOT = f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710"
+# Indent of one `SUPPORTED_MODS` element in the registry file.
+ENTRY_INDENT = "    "
 
 
 @dataclass
@@ -176,3 +183,109 @@ def lord_hero_candidates(subtype_rows: List[Dict[str, str]], main_rows: List[Dic
             if variant["caste"] == row["caste"] and VARIANT_SUFFIX.sub("", variant["land_unit"]) == stem and candidate not in candidates:
                 candidates.append(candidate)
     return candidates
+
+
+def _literal(value: Any) -> str:
+    """Write a value as a Python literal in the registry's style, with double quotes and non-ASCII kept as is.
+
+    Args:
+        value (Any): A string, bool, or list or dict of strings.
+
+    Returns:
+        The literal text.
+    """
+    if isinstance(value, bool):
+        return repr(value)
+    return json.dumps(value, ensure_ascii=False)
+
+
+def render_entry(entry: Dict[str, Any]) -> str:
+    """Render a registry entry as the text of one `SUPPORTED_MODS` element.
+
+    Args:
+        entry (Dict[str, Any]): The entry. Its `path` must sit under `WORKSHOP_ROOT`.
+
+    Raises:
+        ValueError: The path is outside `WORKSHOP_ROOT` or contains braces, which the f-string cannot hold.
+
+    Returns:
+        The element text with `\n` line endings and no trailing newline.
+    """
+    path = entry["path"]
+    if not path.startswith(WORKSHOP_ROOT) or "{" in path or "}" in path:
+        raise ValueError(f"Cannot write `{path}` as a registry path.")
+    pad = ENTRY_INDENT * 2
+    lines = [f"{ENTRY_INDENT}{{"]
+    lines.append(f'{pad}"name": {_literal(entry["name"])},')
+    lines.append(f'{pad}"package_name": {_literal(entry["package_name"])},')
+    lines.append(f'{pad}"path": f{_literal("{STEAM_LIBRARY_DRIVE}" + path[len(STEAM_LIBRARY_DRIVE):])},')
+    lines.append(f'{pad}"modified_attributes": {_literal(entry["modified_attributes"])},')
+    if "pattern_overrides" in entry:
+        lines.append(f'{pad}"pattern_overrides": {_literal(entry["pattern_overrides"])},')
+    if "character_overrides" in entry:
+        lines.append(f'{pad}"character_overrides": {{')
+        for code, lists in entry["character_overrides"].items():
+            lines.append(f"{pad}{ENTRY_INDENT}{_literal(code)}: {{")
+            for list_name, characters in lists.items():
+                lines.append(f"{pad}{ENTRY_INDENT * 2}{_literal(list_name)}: [")
+                lines.extend(f"{pad}{ENTRY_INDENT * 3}{_literal(character)}," for character in characters)
+                lines.append(f"{pad}{ENTRY_INDENT * 2}],")
+            lines.append(f"{pad}{ENTRY_INDENT}}},")
+        lines.append(f"{pad}}},")
+    if entry.get("ignore_generation"):
+        lines.append(f'{pad}"ignore_generation": True,')
+    lines.append(f"{ENTRY_INDENT}}},")
+    return "\n".join(lines)
+
+
+def _registry_list(text: str) -> ast.List:
+    """Find the `SUPPORTED_MODS` list literal in registry source.
+
+    Args:
+        text (str): Registry source.
+
+    Raises:
+        ValueError: The text does not parse, or has no `SUPPORTED_MODS = [...]` assignment.
+
+    Returns:
+        The list node.
+    """
+    try:
+        module = ast.parse(text)
+    except SyntaxError as error:
+        raise ValueError(f"The registry text does not parse: {error}") from error
+    for node in module.body:
+        if isinstance(node, ast.Assign) and any(getattr(target, "id", None) == "SUPPORTED_MODS" for target in node.targets) and isinstance(node.value, ast.List):
+            return node.value
+    raise ValueError("Could not find `SUPPORTED_MODS = [...]` in the registry.")
+
+
+def append_entry(registry_text: str, entry_text: str, entry: Dict[str, Any]) -> str:
+    """Append a rendered entry to the end of `SUPPORTED_MODS` and check the result parses back to the entry.
+
+    Args:
+        registry_text (str): The current `data/supported_mods.py` text.
+        entry_text (str): The entry text from `render_entry`.
+        entry (Dict[str, Any]): The entry the text must evaluate to.
+
+    Raises:
+        ValueError: The registry's closing bracket was not found, or the new text does not parse back to one extra entry equal to `entry`.
+
+    Returns:
+        The new registry text, in the original line endings.
+    """
+    eol = "\r\n" if "\r\n" in registry_text else "\n"
+    text = registry_text.replace("\r\n", "\n")
+    close = text.rfind("\n]")
+    if close == -1:
+        raise ValueError("Could not find the end of `SUPPORTED_MODS`.")
+    head = text[:close].rstrip()
+    if not head.endswith(","):
+        head += ","
+    new_text = f"{head}\n{entry_text}{text[close:]}"
+
+    before, after = _registry_list(text), _registry_list(new_text)
+    added = eval(compile(ast.Expression(after.elts[-1]), "<entry>", "eval"), {"STEAM_LIBRARY_DRIVE": STEAM_LIBRARY_DRIVE})
+    if len(after.elts) != len(before.elts) + 1 or added != entry:
+        raise ValueError("The new registry text does not parse back to the intended entry. Nothing was written.")
+    return new_text.replace("\n", eol)
