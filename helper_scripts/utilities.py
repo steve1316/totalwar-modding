@@ -24,6 +24,34 @@ SCHEMA_PATH = "./schemas/schema_wh3.json"
 # Root for every transient folder produced by the helper scripts (vanilla/modded extractions, compat-pack build dirs, etc.).
 TEMP_DIR = "./temp"
 
+# Each culture's base recruitment group in `units_to_groupings_military_permissions_tables`, keyed by culture shorthand (e.g. `wef`).
+CULTURE_MILITARY_GROUPS = {
+    "bst": "wh_dlc03_group_beastmen",
+    "brt": "wh_main_group_bretonnia",
+    "chd": "wh3_dlc23_group_chaos_dwarfs",
+    "chs": "wh_main_group_chaos",
+    "dae": "wh3_main_dae",
+    "def": "wh2_main_def",
+    "dwf": "wh_main_group_dwarfs",
+    "emp": "wh_main_group_empire",
+    "cth": "wh3_main_cth",
+    "grn": "wh_main_group_greenskins",
+    "hef": "wh2_main_hef",
+    "kho": "wh3_main_kho",
+    "ksl": "wh3_main_ksl",
+    "lzd": "wh2_main_lzd",
+    "nor": "wh_main_group_norsca",
+    "nur": "wh3_main_nur",
+    "ogr": "wh3_main_ogr",
+    "skv": "wh2_main_skv",
+    "sla": "wh3_main_sla",
+    "tmb": "wh2_dlc09_tomb_kings",
+    "tze": "wh3_main_tze",
+    "cst": "wh2_dlc11_group_vampire_coast",
+    "vmp": "wh_main_group_vampire_counts",
+    "wef": "wh_dlc05_group_wood_elves",
+}
+
 # Retries for deleting a file that is read-only or briefly locked (e.g. by an antivirus scan of a freshly written model file).
 RMTREE_RETRIES = 5
 RMTREE_RETRY_DELAY_SECONDS = 0.5

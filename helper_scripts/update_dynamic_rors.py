@@ -16,6 +16,7 @@ from utilities import (
     cleanup_folders,
     ensure_temp_dir,
     clear_temp_root,
+    CULTURE_MILITARY_GROUPS,
     TEMP_DIR,
 )
 from supported_mods import SUPPORTED_MODS
@@ -216,34 +217,6 @@ ANTI_DESTRUCTION_FACTIONS = [
     "wh3_main_pro_ksl",
     "wh3_dlc25_group_elspeth",
 ]
-
-FACTION_SHORTHAND_KEY_MAPPING = {
-    "bst": "wh_dlc03_group_beastmen",
-    "brt": "wh_main_group_bretonnia",
-    "chd": "wh3_dlc23_group_chaos_dwarfs",
-    "chs": "wh_main_group_chaos",
-    "dae": "wh3_main_dae",
-    "def": "wh2_main_def",
-    "dwf": "wh_main_group_dwarfs",
-    "emp": "wh_main_group_empire",
-    "cth": "wh3_main_cth",
-    "grn": "wh_main_group_greenskins",
-    "hef": "wh2_main_hef",
-    "kho": "wh3_main_kho",
-    "ksl": "wh3_main_ksl",
-    "lzd": "wh2_main_lzd",
-    "nor": "wh_main_group_norsca",
-    "nur": "wh3_main_nur",
-    "ogr": "wh3_main_ogr",
-    "skv": "wh2_main_skv",
-    "sla": "wh3_main_sla",
-    "tmb": "wh2_dlc09_tomb_kings",
-    "tze": "wh3_main_tze",
-    "cst": "wh2_dlc11_group_vampire_coast",
-    "vmp": "wh_main_group_vampire_counts",
-    "chs": "wh_main_group_chaos",
-    "wef": "wh_dlc05_group_wood_elves",
-}
 
 
 def add_anti_order_generic_effects(faction: str):
@@ -598,7 +571,7 @@ if __name__ == "__main__":
             )
 
             processed_unit_keys = set()
-            for faction in FACTION_SHORTHAND_KEY_MAPPING.keys():
+            for faction in CULTURE_MILITARY_GROUPS.keys():
                 list_of_vanilla_data_to_add = []
                 try:
                     nanu_faction_data, _, _ = load_tsv_data(
@@ -617,7 +590,7 @@ if __name__ == "__main__":
                     # Check if any of the military groups match the current faction.
                     if (
                         vanilla_main_unit_key not in nanu_main_unit_keys
-                        and FACTION_SHORTHAND_KEY_MAPPING[faction] in military_groups
+                        and CULTURE_MILITARY_GROUPS[faction] in military_groups
                         and vanilla_main_unit_key not in processed_unit_keys
                     ):
                         units_not_supported_by_nanu.add(vanilla_main_unit_key)
@@ -640,7 +613,7 @@ if __name__ == "__main__":
                     except IndexError:
                         logging.info(f"Skipping {vanilla_main_unit_key} because it is not in the main_units_tables or land_units_tables.")
                         continue
-                    for effect in process_unit_by_category(vanilla_land_unit, vanilla_main_unit, FACTION_SHORTHAND_KEY_MAPPING[faction]):
+                    for effect in process_unit_by_category(vanilla_land_unit, vanilla_main_unit, CULTURE_MILITARY_GROUPS[faction]):
                         if effect:
                             list_of_vanilla_data_to_add.append(
                                 {
