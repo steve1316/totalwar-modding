@@ -1,5 +1,9 @@
 """Tests for `tools.add_supported_mod`: field guessing, entry writing and the prompts."""
 
+import io
+import os
+import sys
+
 import pytest
 
 from data.supported_mods import SUPPORTED_MODS
@@ -119,7 +123,7 @@ def test_lord_hero_candidates_filters_generic_subtypes_and_adds_mount_variants()
         _subtype("ghost", "missing_unit"),
         _subtype("grunt", "inf_unit"),
     ]
-    candidates = asm.lord_hero_candidates(subtypes, main_rows)
+    candidates = asm.lord_hero_candidates(subtypes, main_rows, {"bm_lord", "champ", "legend", "ghost", "grunt"})
     assert candidates == [
         asm.Candidate("lord", "bm_lord_0", "bm_lord"),
         asm.Candidate("lord", "bm_lord_1", "bm_lord"),
@@ -190,7 +194,7 @@ def test_render_entry_writes_ignore_generation_as_python_true():
 
 @pytest.mark.parametrize("name, pack", [
     ("ETE Unit Pack", "pwner1_wh3_ete_unit_pack.pack"),
-    ("[Zerooz] 兵种合集", "Zerooz_All_Units.pack"),
+    ("[Zerooz] \u5175\u79cd\u5408\u96c6", "Zerooz_All_Units.pack"),
     ('Trajann\'s "Best" Pack \\ v2', "The Gunpowder Road2.0.pack"),
     ("Spaced Out", "possibly a verminlord.pack"),
 ])
@@ -318,3 +322,35 @@ def test_main_stops_on_an_already_supported_mod(monkeypatch):
 def test_already_supported_finds_registry_ids():
     assert asm.already_supported("3565085095")
     assert not asm.already_supported("1")
+
+
+def test_lord_hero_candidates_drops_subtypes_without_a_skill_set_in_the_pack():
+    # The generator reads each allowed character's skill set from the same pack and fails the whole mod when it is missing.
+    main_rows = [_unit("bm_lord_0", "bm_lord_unit", "lord"), _unit("champ_0", "champ_unit", "hero")]
+    subtypes = [_subtype("bm_lord", "bm_lord_unit"), _subtype("champ", "champ_unit")]
+    assert asm.lord_hero_candidates(subtypes, main_rows, {"bm_lord"}) == [asm.Candidate("lord", "bm_lord_0", "bm_lord")]
+
+
+def test_read_table_refuses_a_table_rpfm_could_not_decode(monkeypatch):
+    def fake_extract(pack_path, source, dest, capture_output=False):
+        os.makedirs(dest, exist_ok=True)
+        with open(os.path.join(dest, "data__"), "wb") as fh:
+            fh.write(b"\x00binary")
+
+    monkeypatch.setattr(asm, "cached_pack_extract", fake_extract)
+    with pytest.raises(RuntimeError, match="main_units_tables"):
+        asm.read_table("x.pack", "main_units_tables")
+
+
+def test_read_table_returns_nothing_for_a_table_the_pack_lacks(monkeypatch):
+    monkeypatch.setattr(asm, "cached_pack_extract", lambda pack_path, source, dest, capture_output=False: None)
+    assert asm.read_table("x.pack", "units_to_groupings_military_permissions_tables") == []
+
+
+def test_configure_output_lets_a_cp1252_pipe_print_non_ascii_names(monkeypatch):
+    stream = io.TextIOWrapper(io.BytesIO(), encoding="cp1252")
+    monkeypatch.setattr(sys, "stdout", stream)
+    asm.configure_output()
+    print("[Zerooz] \u5175\u79cd\u5408\u96c6")
+    sys.stdout.flush()
+    assert "\u5175".encode("utf-8") in stream.buffer.getvalue()

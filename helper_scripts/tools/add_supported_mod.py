@@ -24,7 +24,7 @@ from core.extract_cache import cached_pack_extract
 from core.utilities import STEAM_LIBRARY_DRIVE, TEMP_DIR, load_tsv_data, run_rpfm_cli
 from data.supported_mods import SUPPORTED_MODS
 from generators.process_main_units_tables import faction_keys
-from ttc.ttc_data import FACTION_NAMES, unit_faction
+from ttc.ttc_data import FACTION_NAMES, table_readable, unit_faction
 
 # Table whose presence in a pack turns on each modified attribute, in registry order.
 ATTRIBUTE_TABLES = {"melee": "melee_weapons_tables", "ranged_arc": "battle_entities_tables", "velocity": "projectiles_tables"}
@@ -174,14 +174,16 @@ def guess_pattern_overrides(main_rows: List[Dict[str, str]], permissions: Dict[s
     return FactionGuess(None, by_code, unknown)
 
 
-def lord_hero_candidates(subtype_rows: List[Dict[str, str]], main_rows: List[Dict[str, str]]) -> List[Candidate]:
+def lord_hero_candidates(subtype_rows: List[Dict[str, str]], main_rows: List[Dict[str, str]], skill_set_subtypes: Set[str]) -> List[Candidate]:
     """List the generic lords and heroes a mod adds, with their mount variants.
 
-    Only subtypes with `auto_generate` set are used, which leaves out most legendary lords.
+    Only subtypes with `auto_generate` set are used, which leaves out most legendary lords. Subtypes without a skill set in the pack are left out
+    too, since the LEAPOI generator reads each allowed character's skills from the same pack and fails the whole mod when they are missing.
 
     Args:
         subtype_rows (List[Dict[str, str]]): The mod's `agent_subtypes_tables` rows.
         main_rows (List[Dict[str, str]]): The mod's `main_units_tables` rows.
+        skill_set_subtypes (Set[str]): Agent subtypes with a `character_skill_node_sets_tables` row in the pack.
 
     Returns:
         The candidates in table order.
@@ -189,7 +191,7 @@ def lord_hero_candidates(subtype_rows: List[Dict[str, str]], main_rows: List[Dic
     by_unit = {row["unit"]: row for row in main_rows}
     candidates: List[Candidate] = []
     for subtype in subtype_rows:
-        if subtype.get("auto_generate", "").lower() != "true":
+        if subtype.get("auto_generate", "").lower() != "true" or subtype["key"] not in skill_set_subtypes:
             continue
         row = by_unit.get(subtype.get("associated_unit_override", ""))
         if row is None or row["caste"] not in CHARACTER_CASTES:
@@ -516,12 +518,17 @@ def read_table(pack_path: str, table: str) -> List[Dict[str, str]]:
         pack_path (str): Path to the pack.
         table (str): Table name, e.g. `main_units_tables`.
 
+    Raises:
+        RuntimeError: rpfm extracted the table as binary, which happens when its schema is behind the game.
+
     Returns:
         Row dicts keyed by column name. Empty when the pack lacks the table.
     """
     dest = f"{SCRATCH}/{table}"
     shutil.rmtree(dest, ignore_errors=True)
     cached_pack_extract(pack_path, f"db/{table}", dest, capture_output=True)
+    if os.path.isdir(dest) and not table_readable(dest):
+        raise RuntimeError(f"rpfm could not decode {table} in {pack_path}. Update the rpfm schema (`python update.py` does it first) and try again.")
     rows: List[Dict[str, str]] = []
     for path in sorted(glob.glob(f"{dest}/**/*.tsv", recursive=True)):
         rows.extend(load_tsv_data(path)[0])
@@ -559,10 +566,17 @@ def propose_entry(workshop_id: str, pack_name: str, name: str, ask: Callable[[st
     print(f"pattern_overrides: {entry['pattern_overrides']}")
 
     subtypes = read_table(path, "agent_subtypes_tables") if "agent_subtypes_tables" in tables else []
-    characters = choose_characters(lord_hero_candidates(subtypes, main_rows), entry["pattern_overrides"], ask)
+    skill_sets = read_table(path, "character_skill_node_sets_tables") if "character_skill_node_sets_tables" in tables else []
+    skill_set_subtypes = {row.get("agent_subtype_key", "") for row in skill_sets}
+    characters = choose_characters(lord_hero_candidates(subtypes, main_rows, skill_set_subtypes), entry["pattern_overrides"], ask)
     if characters:
         entry["character_overrides"] = characters
     return entry
+
+
+def configure_output() -> None:
+    """Make stdout UTF-8, so non-ASCII mod names print when output is piped rather than shown in a console."""
+    sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
 
 
 def main(argv: Optional[List[str]] = None, ask: Callable[[str], str] = input, fetch: Callable[[str], Optional[str]] = fetch_title) -> int:
@@ -610,6 +624,7 @@ def main(argv: Optional[List[str]] = None, ask: Callable[[str], str] = input, fe
 
 
 if __name__ == "__main__":
+    configure_output()
     try:
         sys.exit(main())
     except KeyboardInterrupt:
