@@ -59,6 +59,18 @@ function random_number(max_num, min_num)
 end
 
 
+--- Returns a random integer in [min_num, max_num], swapping a reversed range. Reads like `math.random(min, max)` but is multiplayer-safe.
+--- @param min_num number One end of the range, inclusive.
+--- @param max_num number The other end of the range, inclusive.
+--- @returns number A random integer between the two ends.
+function random_range(min_num, max_num)
+	if min_num > max_num then
+		min_num, max_num = max_num, min_num
+	end
+	return random_number(max_num, min_num)
+end
+
+
 --- Returns true with the given percent chance. Multiplayer-safe replacement for `math.random() < p`.
 --- @param percent number The chance of returning true, from 0 to 100.
 --- @returns boolean True when the roll lands inside the chance.

@@ -30,7 +30,7 @@ booleantostring = { [true] = "true", [false] = "false" }
 function is_human_faction_name(faction_name)
     if faction_name == nil or faction_name == "" then return false end
     local faction = cm:get_faction(faction_name)
-    return faction ~= false and faction ~= nil and faction:is_human()
+    return faction and faction:is_human() or false
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

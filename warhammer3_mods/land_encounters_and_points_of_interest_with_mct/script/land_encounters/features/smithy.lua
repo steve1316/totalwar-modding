@@ -93,8 +93,8 @@ function SmithyState:reward_owner_faction(controlling_faction)
     end
     if turns_till_reward == 0 then
         --- Incidents only fire for humans, so AI owners (and players without a general) get the ancillary directly.
-        local representative_character = cm:get_highest_ranked_general_for_faction(controlling_faction)
-        if representative_character ~= false and controlling_faction:is_human() then
+        local representative_character = controlling_faction:is_human() and cm:get_highest_ranked_general_for_faction(controlling_faction)
+        if representative_character then
             trigger_incident(TRIBUTE_INCIDENT_EVENT, EVENT_VISIT_TARGETS, self:get_spot_info(), representative_character)
         else
             local ancillary = pick_random_smithy_item(elligible_items)

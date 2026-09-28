@@ -462,12 +462,10 @@ function set_mct_settings(mct_mod)
         elseif key == "max_lord_level_range" then
             mct_settings.difficulties[difficulty].lord_level_range[2] = value
         else
-            --- Lua patterns have no alternation, so match the min/max prefix with a character class.
-            local new_key = key:match("^m[ai][nx]_limit_(.+)$")
-            if key:find("^min_limit_") then
-                mct_settings.difficulties[difficulty].limits[new_key][1] = value
-            elseif key:find("^max_limit_") then
-                mct_settings.difficulties[difficulty].limits[new_key][2] = value
+            --- Lua patterns have no alternation, so capture the min/max bound and the limit name in one match.
+            local bound, new_key = key:match("^(m%a%a)_limit_(.+)$")
+            if bound then
+                mct_settings.difficulties[difficulty].limits[new_key][bound == "min" and 1 or 2] = value
             end
         end
     end
