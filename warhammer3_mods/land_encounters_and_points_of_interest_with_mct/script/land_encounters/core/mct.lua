@@ -462,12 +462,29 @@ function set_mct_settings(mct_mod)
         elseif key == "max_lord_level_range" then
             mct_settings.difficulties[difficulty].lord_level_range[2] = value
         else
-            local new_key = key:gsub("^(min_limit_|max_limit_)", "")
+            --- Lua patterns have no alternation, so match the min/max prefix with a character class.
+            local new_key = key:match("^m[ai][nx]_limit_(.+)$")
             if key:find("^min_limit_") then
                 mct_settings.difficulties[difficulty].limits[new_key][1] = value
             elseif key:find("^max_limit_") then
                 mct_settings.difficulties[difficulty].limits[new_key][2] = value
             end
+        end
+    end
+
+    --- Swap any min/max pair the player set backwards, since a reversed range breaks the random rolls.
+    for _, settings in pairs(mct_settings.difficulties) do
+        local ranges = { settings.tiers, settings.unit_experience_amount, settings.lord_level_range }
+        for _, limit in pairs(settings.limits) do
+            table.insert(ranges, limit)
+        end
+        for _, range in ipairs(ranges) do
+            if range[1] > range[2] then
+                range[1], range[2] = range[2], range[1]
+            end
+        end
+        if settings.min_units > settings.max_units then
+            settings.min_units, settings.max_units = settings.max_units, settings.min_units
         end
     end
 
