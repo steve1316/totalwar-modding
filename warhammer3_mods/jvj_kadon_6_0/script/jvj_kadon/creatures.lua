@@ -49,7 +49,7 @@ M.list = {
     creature("ripperdactyls", "Ripperdactyls", "Original"),
     creature("rogue_idol", "Rogue Idol", "WH2"),
     creature("skinwolves", "Skinwolves", "WH1"),
-    creature("spiders", "Giant Spiders", "Original"),
+    creature("spiders", "Giant Spiders", "WH2"),
     creature("stag", "Great Stags", "Original"),
     creature("star_dragon", "Star Dragon", "WH2", { "kadon_kin_hef_star_dragon" }),
     creature("stegadon", "Stegadon", "WH2"),
