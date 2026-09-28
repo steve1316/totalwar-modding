@@ -35,6 +35,23 @@ h.test("every scroll has randomly_dropped false", function()
     h.eq(total, 91, "scroll count")
 end)
 
+--- Vanilla `ancillary_uniqueness_groupings` ranges. A score outside every range shows no rarity in game ("Scroll Name ()").
+local RARITY_RANGES = {
+    { file = "db/ancillaries_tables/jvj_kadon_binding.tsv", name = "uncommon", min = 80, max = 100 },
+    { file = "db/ancillaries_tables/jvj_kadon_kinship.tsv", name = "rare", min = 130, max = 150 },
+}
+
+h.test("bind scrolls are uncommon and kin scrolls are rare", function()
+    for _, range in ipairs(RARITY_RANGES) do
+        local tsv = h.read_tsv(range.file)
+        local col = column(tsv.header, "uniqueness_score")
+        for _, row in ipairs(tsv.rows) do
+            local score = tonumber(row[col])
+            h.truthy(score and score >= range.min and score <= range.max, row[1] .. " score " .. tostring(row[col]) .. " is " .. range.name)
+        end
+    end
+end)
+
 h.test("every bind land unit has the unbinding passive", function()
     local tsv = h.read_tsv(BIND_JUNCTIONS_TSV)
     local ability_col = column(tsv.header, "ability")
