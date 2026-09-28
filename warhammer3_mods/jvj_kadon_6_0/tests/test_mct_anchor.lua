@@ -14,6 +14,7 @@ local function fake_mct()
         function mod:set_author(text) self.author = text end
         function mod:set_description(text, is_localised) self.description = text end
         function mod:set_workshop_id(id) self.workshop_id = id end
+        function mod:set_main_image(path, width, height) self.main_image = { path = path, w = width, h = height } end
         function mod:get_key() return self.key end
         function mod:add_new_section(section_key)
             local section = { key = section_key }
@@ -92,6 +93,10 @@ h.test("registers the jvj_kadon mod", function()
     h.eq(mod.key, "jvj_kadon", "mod key")
     h.eq(mod.workshop_id, "3398096688", "workshop id")
     h.truthy(mod.title, "title")
+    h.eq(mod.main_image.path, "ui/images/jvj_kadon_mct.png", "main image path")
+    h.eq(mod.main_image.w, 300, "main image width")
+    h.eq(mod.main_image.h, 300, "main image height")
+    h.truthy(io.open(mod.main_image.path, "rb"), "main image file ships in the mod source")
     h.truthy(mod.description:find("Scrolls of Kin", 1, true), "description explains Kin")
     h.truthy(mod.description:find("Scrolls of Binding", 1, true), "description explains Binding")
     h.truthy(mod.description:find("JvJ", 1, true), "description credits JvJ")

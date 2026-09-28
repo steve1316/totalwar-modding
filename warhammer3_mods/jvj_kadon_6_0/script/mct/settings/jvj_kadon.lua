@@ -9,8 +9,7 @@ local SCROLL_TYPE_KEYS = { "allow_kin", "allow_bind" }
 
 --- Mod description shown on the MCT mod page, adapted from the original WH2 Workshop description.
 local MOD_DESCRIPTION = table.concat({
-    "Introduces Kadon's Scrolls of Binding from the tabletop game into Total War: Warhammer.",
-    "Each scroll is a magic item that lets its bearer summon and bind one creature in battle. Over 40 creatures are available, giving factions"
+    "Each scroll is a magic item that lets its bearer summon a creature in battle. Over 40 creatures are available, giving factions"
         .. " access to beasts they could never recruit.",
     "Scrolls of Kin summon a creature that stays on the battlefield until it is killed. Scrolls of Binding summon a creature that suffers from"
         .. " Unbinding and dies after a time limit.",
@@ -154,6 +153,10 @@ mct_mod:set_title("Kadon's Scrolls of Binding", true)
 mct_mod:set_description(MOD_DESCRIPTION, true)
 if type(mct_mod.set_workshop_id) == "function" then
     mct_mod:set_workshop_id("3398096688")
+end
+--- Kadon-specific file name, because every pack shares one virtual file tree and LEAPOI already ships `ui/images/mct_main_image.png`.
+if type(mct_mod.set_main_image) == "function" then
+    mct_mod:set_main_image("ui/images/jvj_kadon_mct.png", 300, 300)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
