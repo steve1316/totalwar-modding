@@ -7,6 +7,9 @@ local settings = require("script/jvj_kadon/settings")
 --- Scroll type option keys. At least one must stay checked.
 local SCROLL_TYPE_KEYS = { "allow_kin", "allow_bind" }
 
+--- Game tags in the order their creature sections and dropdown groups appear.
+local GAMES = { "Original", "WH1", "WH2", "WH3" }
+
 --- Mod description shown on the MCT mod page, adapted from the original WH2 Workshop description.
 local MOD_DESCRIPTION = table.concat({
     "Each scroll is a magic item that lets its bearer summon a creature in battle. Over 40 creatures are available, giving factions"
@@ -77,19 +80,37 @@ local function add_percent_slider(key, text, tooltip)
     return option
 end
 
---- Adds the starting-scroll creature dropdown to the drops section: "(Random)" first, then every creature sorted by display name.
+--- Returns every creature sorted by game (in `GAMES` order), then by display name.
+--- @returns table The sorted creature entries.
+local function creatures_by_game()
+    local rank = {}
+    for i, game in ipairs(GAMES) do rank[game] = i end
+    local sorted = {}
+    for _, creature in ipairs(creatures.list) do
+        table.insert(sorted, creature)
+    end
+    table.sort(sorted, function(a, b)
+        if a.game ~= b.game then return rank[a.game] < rank[b.game] end
+        return a.name < b.name
+    end)
+    return sorted
+end
+
+--- Returns the MCT section key for a game's creatures, e.g. `creatures_wh2_section`.
+--- @param game string Game tag from `GAMES`.
+--- @returns string The section key.
+local function creature_section_key(game)
+    return "creatures_" .. game:lower() .. "_section"
+end
+
+--- Adds the starting-scroll creature dropdown to the drops section: "(Random)" first, then every creature sorted by game and name.
 local function add_starting_creature_dropdown()
     local option = mct_mod:add_new_option("starting_scroll_creature", "dropdown")
     option:set_text("Starting scroll creature", true)
     option:set_tooltip_text("Which creature the faction leader's starting scroll summons. (Random) picks any enabled creature.", true)
     option:set_is_global(true)
     option:add_dropdown_value("random", "(Random)", "", true)
-    local sorted = {}
-    for _, creature in ipairs(creatures.list) do
-        table.insert(sorted, creature)
-    end
-    table.sort(sorted, function(a, b) return a.name < b.name end)
-    for _, creature in ipairs(sorted) do
+    for _, creature in ipairs(creatures_by_game()) do
         option:add_dropdown_value(creature.id, creatures.label(creature), "")
     end
     option:set_assigned_section("drops_section")
@@ -188,12 +209,20 @@ add_spacer("scroll_types_spacer", "scroll_types_section")
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Creatures
 
-add_section("creatures_section", "Creatures", "Disabled creatures never drop. Takes effect on the next drop.")
-add_checkbox("enable_all_creatures", "creatures_section", "Enable all creatures", "When on, every creature can drop and the individual toggles below are locked.")
-for _, creature in ipairs(creatures.list) do
-    add_checkbox(settings.creature_option_key(creature.id), "creatures_section", creatures.label(creature), nil, true)
+local sorted_creatures = creatures_by_game()
+for _, game in ipairs(GAMES) do
+    local section = creature_section_key(game)
+    add_section(section, "Creatures - " .. game, game == "Original" and "Disabled creatures never drop. Takes effect on the next drop." or nil)
+    if game == "Original" then
+        add_checkbox("enable_all_creatures", section, "Enable all creatures", "When on, every creature can drop and the individual toggles below are locked.")
+    end
+    for _, creature in ipairs(sorted_creatures) do
+        if creature.game == game then
+            add_checkbox(settings.creature_option_key(creature.id), section, creatures.label(creature), nil, true)
+        end
+    end
+    add_spacer("creatures_" .. game:lower() .. "_spacer", section)
 end
-add_spacer("creatures_spacer", "creatures_section")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

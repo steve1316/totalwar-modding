@@ -6,10 +6,12 @@ local h = require("tests/helpers")
 local ANCILLARY_TSVS = {
     "db/ancillaries_tables/jvj_kadon_binding.tsv",
     "db/ancillaries_tables/jvj_kadon_kinship.tsv",
+    "db/ancillaries_tables/jvj_kadon_generated_binding.tsv",
+    "db/ancillaries_tables/jvj_kadon_generated_kinship.tsv",
 }
 
---- Binding land-unit-to-ability junctions.
-local BIND_JUNCTIONS_TSV = "db/land_units_to_unit_abilites_junctions_tables/jvj_kadon_binding.tsv"
+--- Binding file stems: the hand-made scrolls and the generated ones.
+local BIND_STEMS = { "jvj_kadon_binding", "jvj_kadon_generated_binding" }
 
 --- Returns the 1-based index of `name` in a TSV header.
 --- @param header table Header cells.
@@ -32,13 +34,15 @@ h.test("every scroll has randomly_dropped false", function()
             total = total + 1
         end
     end
-    h.eq(total, 91, "scroll count")
+    h.eq(total, 309, "scroll count")
 end)
 
 --- Vanilla `ancillary_uniqueness_groupings` ranges. A score outside every range shows no rarity in game ("Scroll Name ()").
 local RARITY_RANGES = {
     { file = "db/ancillaries_tables/jvj_kadon_binding.tsv", name = "uncommon", min = 80, max = 100 },
     { file = "db/ancillaries_tables/jvj_kadon_kinship.tsv", name = "rare", min = 130, max = 150 },
+    { file = "db/ancillaries_tables/jvj_kadon_generated_binding.tsv", name = "uncommon", min = 80, max = 100 },
+    { file = "db/ancillaries_tables/jvj_kadon_generated_kinship.tsv", name = "rare", min = 130, max = 150 },
 }
 
 h.test("bind scrolls are uncommon and kin scrolls are rare", function()
@@ -53,17 +57,19 @@ h.test("bind scrolls are uncommon and kin scrolls are rare", function()
 end)
 
 h.test("every bind land unit has the unbinding passive", function()
-    local tsv = h.read_tsv(BIND_JUNCTIONS_TSV)
-    local ability_col = column(tsv.header, "ability")
-    local unit_col = column(tsv.header, "land_unit")
-    local has_unbinding = {}
-    for _, row in ipairs(tsv.rows) do
-        if row[ability_col] == "kadon_bind_unbinding" then has_unbinding[row[unit_col]] = true end
-        h.truthy(row[ability_col] ~= row[unit_col], row[unit_col] .. " must not carry its own summon ability")
-    end
-    local units = h.read_tsv("db/land_units_tables/jvj_kadon_binding.tsv")
-    for _, row in ipairs(units.rows) do
-        h.truthy(has_unbinding[row[1]], row[1] .. " has kadon_bind_unbinding")
+    for _, stem in ipairs(BIND_STEMS) do
+        local tsv = h.read_tsv("db/land_units_to_unit_abilites_junctions_tables/" .. stem .. ".tsv")
+        local ability_col = column(tsv.header, "ability")
+        local unit_col = column(tsv.header, "land_unit")
+        local has_unbinding = {}
+        for _, row in ipairs(tsv.rows) do
+            if row[ability_col] == "kadon_bind_unbinding" then has_unbinding[row[unit_col]] = true end
+            h.truthy(row[ability_col] ~= row[unit_col], row[unit_col] .. " must not carry its own summon ability")
+        end
+        local units = h.read_tsv("db/land_units_tables/" .. stem .. ".tsv")
+        for _, row in ipairs(units.rows) do
+            h.truthy(has_unbinding[row[1]], row[1] .. " has kadon_bind_unbinding")
+        end
     end
 end)
 

@@ -117,9 +117,10 @@ h.test("option keys and defaults match the settings module", function()
         h.truthy(option, creature.id .. " toggle exists")
         h.eq(option.default, true, creature.id .. " default")
         h.eq(option.text, creatures.label(creature), creature.id .. " text")
+        h.eq(option.section, "creatures_" .. creature.game:lower() .. "_section", creature.id .. " section")
         expected = expected + 1
     end
-    h.eq(#mod.order, expected + 3, "no extra options besides the three spacers")
+    h.eq(#mod.order, expected + 6, "no extra options besides the six spacers")
 end)
 
 h.test("settings are global with tooltips, creature toggles have none", function()
@@ -195,14 +196,42 @@ h.test("starting creature dropdown lists (Random) then creatures by name", funct
     for i = 2, #option.values do
         h.truthy(labels[option.values[i].text], option.values[i].text .. " is a tagged creature label")
     end
+    local by_label = {}
+    for _, creature in ipairs(creatures.list) do by_label[creatures.label(creature)] = creature end
+    local game_order = { Original = 1, WH1 = 2, WH2 = 3, WH3 = 4 }
     for i = 3, #option.values do
-        h.truthy(option.values[i - 1].text < option.values[i].text, option.values[i - 1].text .. " before " .. option.values[i].text)
+        local a, b = by_label[option.values[i - 1].text], by_label[option.values[i].text]
+        local in_order = game_order[a.game] < game_order[b.game] or (a.game == b.game and a.name < b.name)
+        h.truthy(in_order, a.name .. " (" .. a.game .. ") before " .. b.name .. " (" .. b.game .. ")")
     end
     local previous
     for _, key in ipairs(mod.order) do
         if key == "starting_scroll_creature" then h.eq(previous, "starting_scroll", "placed under the starting scroll checkbox") end
         previous = key
     end
+end)
+
+h.test("creatures are divided into one section per game, each sorted by name", function()
+    local mod = load_anchor()
+    local titles = {}
+    for key, section in pairs(mod.sections) do titles[key] = section.text end
+    h.eq(titles.creatures_original_section, "Creatures - Original", "original title")
+    h.eq(titles.creatures_wh1_section, "Creatures - WH1", "wh1 title")
+    h.eq(titles.creatures_wh2_section, "Creatures - WH2", "wh2 title")
+    h.eq(titles.creatures_wh3_section, "Creatures - WH3", "wh3 title")
+    h.eq(titles.creatures_section, nil, "old single section is gone")
+    local first_in_original
+    local previous = {}
+    for _, key in ipairs(mod.order) do
+        local option = mod.options[key]
+        if option.section == "creatures_original_section" and not first_in_original then first_in_original = key end
+        if option.type == "checkbox" and key:find("^creature_") then
+            local prev = previous[option.section]
+            if prev then h.truthy(prev < option.text, prev .. " before " .. option.text) end
+            previous[option.section] = option.text
+        end
+    end
+    h.eq(first_in_original, "enable_all_creatures", "enable all leads the Original section")
 end)
 
 h.test("scroll type lock follows toggles", function()
