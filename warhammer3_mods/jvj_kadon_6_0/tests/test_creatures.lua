@@ -57,4 +57,10 @@ h.test("giant has four kin keys and one bind key", function()
     error("giant not found")
 end)
 
+h.test("find returns a creature by id and nil for unknown ids", function()
+    h.eq(creatures.find("carnosaur").name, "Carnosaur", "carnosaur")
+    h.eq(creatures.find("random"), nil, "random")
+    h.eq(creatures.find(nil), nil, "nil")
+end)
+
 h.run()

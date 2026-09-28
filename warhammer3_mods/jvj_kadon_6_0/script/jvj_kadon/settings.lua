@@ -15,6 +15,7 @@ M.DEFAULTS = {
     ai_can_find_scrolls = true,
     no_duplicate_scrolls = false,
     starting_scroll = false,
+    starting_scroll_creature = "random",
     allow_kin = true,
     allow_bind = true,
     enable_all_creatures = true,

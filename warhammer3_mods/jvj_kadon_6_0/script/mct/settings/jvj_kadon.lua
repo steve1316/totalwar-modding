@@ -80,6 +80,24 @@ local function add_percent_slider(key, text, tooltip)
     return option
 end
 
+--- Adds the starting-scroll creature dropdown to the drops section: "(Random)" first, then every creature sorted by display name.
+local function add_starting_creature_dropdown()
+    local option = mct_mod:add_new_option("starting_scroll_creature", "dropdown")
+    option:set_text("Starting scroll creature", true)
+    option:set_tooltip_text("Which creature the faction leader's starting scroll summons. (Random) picks any enabled creature.", true)
+    option:set_is_global(true)
+    option:add_dropdown_value("random", "(Random)", "", true)
+    local sorted = {}
+    for _, creature in ipairs(creatures.list) do
+        table.insert(sorted, creature)
+    end
+    table.sort(sorted, function(a, b) return a.name < b.name end)
+    for _, creature in ipairs(sorted) do
+        option:add_dropdown_value(creature.id, creature.name, "")
+    end
+    option:set_assigned_section("drops_section")
+end
+
 --- Adds a blank, control-less row to a section. MCT cuts off the bottom of a column's last row, so this pads the row above it.
 --- @param key string Option key.
 --- @param section string Section key.
@@ -145,7 +163,8 @@ add_checkbox("ai_can_find_scrolls", "drops_section", "AI factions can find scrol
 add_checkbox("no_duplicate_scrolls", "drops_section", "No duplicate scrolls per faction", "A faction never receives a scroll it already owns, equipped or in its item pool.")
 --- Not read-only: MCT's `set_read_only` locks the option in the main menu too. The scroll is only granted on a new campaign anyway.
 add_checkbox("starting_scroll", "drops_section", "Starting scroll for faction leader",
-    "On a new campaign, each human faction leader starts with one random allowed scroll. Changing it mid-campaign has no effect.")
+    "On a new campaign, each human faction leader starts with one allowed scroll. Changing it mid-campaign has no effect.")
+add_starting_creature_dropdown()
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

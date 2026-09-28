@@ -35,6 +35,12 @@ local function fake_mct()
             --- Real MCT's `set_read_only` just calls `set_locked`, so it locks the option everywhere, main menu included.
             function option:set_read_only(value, reason) self:set_locked(value) end
             function option:set_locked(value) self.locked = value end
+            --- Mirrors real MCT: the first value, or one flagged `is_default`, becomes the default.
+            function option:add_dropdown_value(value_key, text, tt, is_default)
+                self.values = self.values or {}
+                table.insert(self.values, { key = value_key, text = text })
+                if #self.values == 1 or is_default then self:set_default_value(value_key) end
+            end
             function option:get_selected_setting() return self.selected end
             function option:get_key() return self.key end
             function option:get_mod() return mod end
@@ -147,10 +153,29 @@ h.test("sliders, read-only and tooltip wording", function()
         h.eq(mod.options[key].step, 1, key .. " step")
     end
     h.eq(mod.options.starting_scroll.locked, false, "starting scroll stays editable")
-    h.eq(mod.options.starting_scroll.tooltip, "On a new campaign, each human faction leader starts with one random allowed scroll. Changing it mid-campaign has no effect.", "starting scroll tooltip")
+    h.eq(mod.options.starting_scroll.tooltip, "On a new campaign, each human faction leader starts with one allowed scroll. Changing it mid-campaign has no effect.", "starting scroll tooltip")
     h.eq(mod.options.allow_kin.tooltip, "Kin summons stay on the battlefield until they are killed.", "kin tooltip")
     h.eq(mod.options.allow_bind.tooltip, "Binding summons suffer from Unbinding, a negative status effect that gives them a time limit before they die.", "bind tooltip")
     h.eq(mod.sections.scroll_types_section.description, "Each drop is randomly Kin or Binding. At least one type must stay on.", "types description")
+end)
+
+h.test("starting creature dropdown lists (Random) then creatures by name", function()
+    local mod = load_anchor()
+    local option = mod.options.starting_scroll_creature
+    h.eq(option.type, "dropdown", "type")
+    h.eq(option.section, "drops_section", "section")
+    h.eq(option.default, "random", "default")
+    h.eq(option.values[1].key, "random", "first key")
+    h.eq(option.values[1].text, "(Random)", "first text")
+    h.eq(#option.values, #creatures.list + 1, "value count")
+    for i = 3, #option.values do
+        h.truthy(option.values[i - 1].text < option.values[i].text, option.values[i - 1].text .. " before " .. option.values[i].text)
+    end
+    local previous
+    for _, key in ipairs(mod.order) do
+        if key == "starting_scroll_creature" then h.eq(previous, "starting_scroll", "placed under the starting scroll checkbox") end
+        previous = key
+    end
 end)
 
 h.test("scroll type lock follows toggles", function()
