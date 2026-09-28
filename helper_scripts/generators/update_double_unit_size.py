@@ -18,6 +18,7 @@ from core.utilities import (
     validate_and_fix_tsv_types,
     sort_tsv_data,
     cleanup_folders,
+    drop_duplicate_rows,
     merge_move,
     ensure_temp_dir,
     clear_temp_root,
@@ -477,6 +478,9 @@ if __name__ == "__main__":
         if os.path.exists(f"{TEMP_DIR}/{MODDED_TABLE_NAME}"):
             logging.info(f"Moving {MODDED_TABLE_NAME} to ../warhammer3_mods/.")
             merge_move(f"{TEMP_DIR}/{MODDED_TABLE_NAME}", f"../warhammer3_mods")
+
+        # Mods that share a unit write the same rows into their own files. Keep one copy of each.
+        logging.info(f"Dropped {drop_duplicate_rows(f'../warhammer3_mods/{MODDED_TABLE_NAME}/db')} duplicate rows from {MODDED_TABLE_NAME}.")
 
         def write_compat_pack() -> None:
             """Replace the compat pack's contents with the regenerated files."""
