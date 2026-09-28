@@ -57,7 +57,7 @@ h.test("all creatures and both types by default", function()
     h.install_game_stubs()
     settings.reset()
     local pool = drops.candidates(h.fake_faction())
-    h.eq(#pool, 44, "creatures in pool")
+    h.eq(#pool, #creatures.list, "creatures in pool")
     h.eq(#pool[creature_index("giant")], 2, "giant has kin and bind")
 end)
 
@@ -67,7 +67,7 @@ h.test("disabled creature is never a candidate", function()
     settings.values.enable_all_creatures = false
     settings.values.enabled_creatures.carnosaur = false
     local keys = pool_keys(drops.candidates(h.fake_faction()))
-    h.eq(#drops.candidates(h.fake_faction()), 43, "creatures in pool")
+    h.eq(#drops.candidates(h.fake_faction()), #creatures.list - 1, "creatures in pool")
     h.eq(keys.kadon_kin_carnosaur, nil, "kin carnosaur")
     h.eq(keys.kadon_bind_carnosaur, nil, "bind carnosaur")
 end)
@@ -76,7 +76,7 @@ h.test("enable all creatures overrides individual toggles", function()
     h.install_game_stubs()
     settings.reset()
     settings.values.enabled_creatures.carnosaur = false
-    h.eq(#drops.candidates(h.fake_faction()), 44, "creatures in pool")
+    h.eq(#drops.candidates(h.fake_faction()), #creatures.list, "creatures in pool")
 end)
 
 h.test("kin only and bind only", function()
@@ -99,11 +99,11 @@ h.test("no duplicates skips owned scrolls", function()
     settings.values.no_duplicate_scrolls = true
     local faction = h.fake_faction({ owned = { "kadon_bind_carnosaur" } })
     local pool = drops.candidates(faction)
-    h.eq(#pool, 44, "carnosaur still has kin")
+    h.eq(#pool, #creatures.list, "carnosaur still has kin")
     h.eq(#pool[creature_index("carnosaur")], 1, "carnosaur types")
     h.eq(pool_keys(pool).kadon_bind_carnosaur, nil, "owned bind removed")
     settings.values.allow_kin = false
-    h.eq(#drops.candidates(faction), 43, "carnosaur gone when only bind allowed")
+    h.eq(#drops.candidates(faction), #creatures.list - 1, "carnosaur gone when only bind allowed")
 end)
 
 h.test("owned scrolls stay pickable when no duplicates is off", function()

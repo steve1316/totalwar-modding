@@ -14,7 +14,7 @@ local function creature(id, name, game, kin, bind)
     return { id = id, name = name, game = game, kin = kin or { "kadon_kin_" .. id }, bind = bind or { "kadon_bind_" .. id } }
 end
 
---- Every creature with a scroll, sorted by id.
+--- Every creature with a scroll: the hand-made ones sorted by id, then the generated ones from `creatures_generated.lua`.
 M.list = {
     creature("arcane_phoenix", "Arcane Phoenix", "WH2"),
     creature("bastiladon", "Bastiladon", "WH2"),
@@ -61,6 +61,10 @@ M.list = {
     creature("war_mammoth", "War Mammoth", "WH1"),
     creature("wyvern", "Wyvern", "WH2"),
 }
+
+for _, entry in ipairs(require("script/jvj_kadon/creatures_generated")) do
+    table.insert(M.list, creature(entry.id, entry.name, entry.game))
+end
 
 --- Returns the MCT label of a creature: its display name followed by its game tag, e.g. "Carnosaur (WH2)".
 --- @param entry table Creature entry from `list`.

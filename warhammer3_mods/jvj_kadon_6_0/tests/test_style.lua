@@ -6,6 +6,7 @@ local h = require("tests/helpers")
 local SCRIPT_FILES = {
     "script/campaign/mod/jvj_kadon.lua",
     "script/jvj_kadon/creatures.lua",
+    "script/jvj_kadon/creatures_generated.lua",
     "script/jvj_kadon/settings.lua",
     "script/jvj_kadon/drops.lua",
     "script/mct/settings/jvj_kadon.lua",
