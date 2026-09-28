@@ -1,0 +1,184 @@
+key	text	tooltip
+#Loc;1;text/jvj_kadon_ancillaries.loc		
+ancillaries_onscreen_name_kadon_bind_necrofex_colossus	Kadon Scroll of Binding (Necrofex Colossus)	true
+ancillaries_onscreen_name_kadon_bind_mourngul	Kadon Scroll of Binding (Mourngul)	true
+ancillaries_onscreen_name_kadon_bind_fimir	Kadon Scroll of Binding (Fimir)	true
+ancillaries_onscreen_name_kadon_bind_dread_saurian	Kadon Scroll of Binding (Dread Saurian)	true
+ancillaries_onscreen_name_kadon_bind_arcane_phoenix	Kadon Scroll of Binding (Arcane Phoenix)	true
+ancillaries_onscreen_name_kadon_bind_skinwolves	Kadon Scroll of Binding (Skinwolves)	true
+ancillaries_onscreen_name_kadon_bind_rogue_idol	Kadon Scroll of Binding (Rogue Idol)	true
+ancillaries_onscreen_name_kadon_bind_carnosaur	Kadon Scroll of Binding (Carnosaur)	true
+ancillaries_onscreen_name_kadon_bind_chaos_spawn	Kadon Scroll of Binding (Chaos Spawn)	true
+ancillaries_onscreen_name_kadon_bind_chaos_warhounds	Kadon Scroll of Binding (Chaos Warhounds)	true
+ancillaries_onscreen_name_kadon_bind_war_mammoth	Kadon Scroll of Binding (War Mammoth)	true
+ancillaries_onscreen_name_kadon_bind_cold_ones	Kadon Scroll of Binding (Cold Ones)	true
+ancillaries_onscreen_name_kadon_bind_cygor	Kadon Scroll of Binding (Cygor)	true
+ancillaries_onscreen_name_kadon_bind_dragon_ogre	Kadon Scroll of Binding (Dragon Ogre)	true
+ancillaries_onscreen_name_kadon_bind_black_dragon	Kadon Scroll of Binding (Black Dragon)	true
+ancillaries_onscreen_name_kadon_bind_moon_dragon	Kadon Scroll of Binding (Moon Dragon)	true
+ancillaries_onscreen_name_kadon_bind_star_dragon	Kadon Scroll of Binding (Star Dragon)	true
+ancillaries_onscreen_name_kadon_bind_sun_dragon	Kadon Scroll of Binding (Sun Dragon)	true
+ancillaries_onscreen_name_kadon_bind_forest_dragon	Kadon Scroll of Binding (Forest Dragon)	true
+ancillaries_onscreen_name_kadon_bind_frost_wyrm	Kadon Scroll of Binding (Frost Wyrm)	true
+ancillaries_onscreen_name_kadon_bind_giant	Kadon Scroll of Binding (Giant)	true
+ancillaries_onscreen_name_kadon_bind_great_eagle	Kadon Scroll of Binding (Great Eagle)	true
+ancillaries_onscreen_name_kadon_bind_harpies	Kadon Scroll of Binding (Harpies)	true
+ancillaries_onscreen_name_kadon_bind_hydra	Kadon Scroll of Binding (Hydra)	true
+ancillaries_onscreen_name_kadon_bind_manticore	Kadon Scroll of Binding (Manticore)	true
+ancillaries_onscreen_name_kadon_bind_razorgor	Kadon Scroll of Binding (Razorgors)	true
+ancillaries_onscreen_name_kadon_bind_stegadon	Kadon Scroll of Binding (Stegadon)	true
+ancillaries_onscreen_name_kadon_bind_chs_trolls	Kadon Scroll of Binding (Chaos Trolls)	true
+ancillaries_onscreen_name_kadon_bind_trolls	Kadon Scroll of Binding (Trolls)	true
+ancillaries_onscreen_name_kadon_bind_nor_ice_trolls	Kadon Scroll of Binding (Norscan Ice Trolls)	true
+ancillaries_onscreen_name_kadon_bind_war_lions_of_chrace	Kadon Scroll of Binding (War Lions of Chrace)	true
+ancillaries_onscreen_name_kadon_bind_wyvern	Kadon Scroll of Binding (Wyvern)	true
+ancillaries_onscreen_name_kadon_bind_chaos_dragon	Kadon Scroll of Binding (Chaos Dragon)	true
+ancillaries_onscreen_name_kadon_bind_spiders	Kadon Scroll of Binding (Giant Spiders)	true
+ancillaries_onscreen_name_kadon_bind_griffon	Kadon Scroll of Binding (Griffon)	true
+ancillaries_onscreen_name_kadon_bind_unicorn	Kadon Scroll of Binding (Unicorns)	true
+ancillaries_onscreen_name_kadon_bind_stag	Kadon Scroll of Binding (Great Stags)	true
+ancillaries_onscreen_name_kadon_kin_arcane_phoenix	Kadon Scroll of Kin (Arcane Phoenix)	true
+ancillaries_onscreen_name_kadon_kin_bst_giant	Kadon Scroll of Kin (Beastmen Giant)	true
+ancillaries_onscreen_name_kadon_kin_carnosaur	Kadon Scroll of Kin (Carnosaur)	true
+ancillaries_onscreen_name_kadon_kin_chaos_dragon	Kadon Scroll of Kin (Chaos Dragon)	true
+ancillaries_onscreen_name_kadon_kin_chaos_spawn	Kadon Scroll of Kin (Chaos Spawn)	true
+ancillaries_onscreen_name_kadon_kin_chaos_warhounds	Kadon Scroll of Kin (Chaos Warhounds)	true
+ancillaries_onscreen_name_kadon_kin_chs_giant	Kadon Scroll of Kin (Chaos Giant)	true
+ancillaries_onscreen_name_kadon_kin_chs_trolls	Kadon Scroll of Kin (Chaos Trolls)	true
+ancillaries_onscreen_name_kadon_kin_cold_ones	Kadon Scroll of Kin (Cold Ones)	true
+ancillaries_onscreen_name_kadon_kin_cygor	Kadon Scroll of Kin (Cygor)	true
+ancillaries_onscreen_name_kadon_kin_def_black_dragon	Kadon Scroll of Kin (Black Dragon)	true
+ancillaries_onscreen_name_kadon_kin_dragon_ogre	Kadon Scroll of Kin (Dragon Ogre)	true
+ancillaries_onscreen_name_kadon_kin_dread_saurian	Kadon Scroll of Kin (Dread Saurian)	true
+ancillaries_onscreen_name_kadon_kin_fimir	Kadon Scroll of Kin (Fimir)	true
+ancillaries_onscreen_name_kadon_kin_forest_dragon	Kadon Scroll of Kin (Forest Dragon)	true
+ancillaries_onscreen_name_kadon_kin_frost_wyrm	Kadon Scroll of Kin (Frost Wyrm)	true
+ancillaries_onscreen_name_kadon_kin_giant	Kadon Scroll of Kin (Giant)	true
+ancillaries_onscreen_name_kadon_kin_great_eagle	Kadon Scroll of Kin (Great Eagle)	true
+ancillaries_onscreen_name_kadon_kin_griffon	Kadon Scroll of Kin (Griffon)	true
+ancillaries_onscreen_name_kadon_kin_harpies	Kadon Scroll of Kin (Harpies)	true
+ancillaries_onscreen_name_kadon_kin_hef_moon_dragon	Kadon Scroll of Kin (Moon Dragon)	true
+ancillaries_onscreen_name_kadon_kin_hef_star_dragon	Kadon Scroll of Kin (Star Dragon)	true
+ancillaries_onscreen_name_kadon_kin_hydra	Kadon Scroll of Kin (Hydra)	true
+ancillaries_onscreen_name_kadon_kin_manticore	Kadon Scroll of Kin (Manticore)	true
+ancillaries_onscreen_name_kadon_kin_mourngul	Kadon Scroll of Kin (Mourngul)	true
+ancillaries_onscreen_name_kadon_kin_necrofex_colossus	Kadon Scroll of Kin (Necrofex Colossus)	true
+ancillaries_onscreen_name_kadon_kin_nor_giant	Kadon Scroll of Kin (Norscan Giant)	true
+ancillaries_onscreen_name_kadon_kin_nor_ice_trolls	Kadon Scroll of Kin (Norscan Ice Trolls)	true
+ancillaries_onscreen_name_kadon_kin_razorgor	Kadon Scroll of Kin (Razorgors)	true
+ancillaries_onscreen_name_kadon_kin_rogue_idol	Kadon Scroll of Kin (Rogue Idol)	true
+ancillaries_onscreen_name_kadon_kin_skinwolves	Kadon Scroll of Kin (Skinwolves)	true
+ancillaries_onscreen_name_kadon_kin_spiders	Kadon Scroll of Kin (Giant Spiders)	true
+ancillaries_onscreen_name_kadon_kin_stag	Kadon Scroll of Kin (Great Stags)	true
+ancillaries_onscreen_name_kadon_kin_stegadon	Kadon Scroll of Kin (Stegadon)	true
+ancillaries_onscreen_name_kadon_kin_sun_dragon	Kadon Scroll of Kin (Sun Dragon)	true
+ancillaries_onscreen_name_kadon_kin_trolls	Kadon Scroll of Kin (Trolls)	true
+ancillaries_onscreen_name_kadon_kin_unicorn	Kadon Scroll of Kin (Unicorns)	true
+ancillaries_onscreen_name_kadon_kin_war_lions_of_chrace	Kadon Scroll of Kin (War Lions of Chrace)	true
+ancillaries_onscreen_name_kadon_kin_war_mammoth	Kadon Scroll of Kin (War Mammoth)	true
+ancillaries_onscreen_name_kadon_kin_wyvern	Kadon Scroll of Kin (Wyvern)	true
+ancillaries_onscreen_name_kadon_bind_bastiladon	Kadon Scroll of Binding (Bastiladon)	true
+ancillaries_onscreen_name_kadon_bind_flamespyre_phoenix	Kadon Scroll of Binding (Flamespyre Phoenix)	true
+ancillaries_onscreen_name_kadon_bind_frostheart_phoenix	Kadon Scroll of Binding (Frostheart Phoenix)	true
+ancillaries_onscreen_name_kadon_bind_great_cave_squigs	Kadon Scroll of Binding (Great Cave Squigs)	true
+ancillaries_onscreen_name_kadon_bind_kharibdyss	Kadon Scroll of Binding (Kharibdyss)	true
+ancillaries_onscreen_name_kadon_bind_ripperdactyls	Kadon Scroll of Binding (Ripperdactyls)	true
+ancillaries_onscreen_name_kadon_bind_terradons	Kadon Scroll of Binding (Terradons)	true
+ancillaries_onscreen_name_kadon_kin_bastiladon	Kadon Scroll of Kin (Bastiladon)	true
+ancillaries_onscreen_name_kadon_kin_flamespyre_phoenix	Kadon Scroll of Kin (Flamespyre Phoenix)	true
+ancillaries_onscreen_name_kadon_kin_frostheart_phoenix	Kadon Scroll of Kin (Frostheart Phoenix)	true
+ancillaries_onscreen_name_kadon_kin_great_cave_squigs	Kadon Scroll of Kin (Great Cave Squigs)	true
+ancillaries_onscreen_name_kadon_kin_kharibdyss	Kadon Scroll of Kin (Kharibdyss)	true
+ancillaries_onscreen_name_kadon_kin_ripperdactyls	Kadon Scroll of Kin (Ripperdactyls)	true
+ancillaries_onscreen_name_kadon_kin_terradons	Kadon Scroll of Kin (Terradons)	true
+ancillaries_colour_text_kadon_bind_necrofex_colossus	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_mourngul	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_fimir	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_dread_saurian	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_arcane_phoenix	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_skinwolves	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_rogue_idol	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_carnosaur	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_chaos_spawn	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_chaos_warhounds	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_war_mammoth	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_cold_ones	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_cygor	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_dragon_ogre	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_black_dragon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_moon_dragon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_star_dragon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_sun_dragon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_forest_dragon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_frost_wyrm	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_giant	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_great_eagle	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_harpies	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_hydra	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_manticore	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_razorgor	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_stegadon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_chs_trolls	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_trolls	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_nor_ice_trolls	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_war_lions_of_chrace	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_wyvern	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_chaos_dragon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_spiders	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_griffon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_unicorn	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_stag	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_kin_arcane_phoenix	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_bst_giant	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_carnosaur	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_chaos_dragon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_chaos_spawn	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_chaos_warhounds	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_chs_giant	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_chs_trolls	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_cold_ones	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_cygor	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_def_black_dragon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_dragon_ogre	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_dread_saurian	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_fimir	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_forest_dragon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_frost_wyrm	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_giant	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_great_eagle	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_griffon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_harpies	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_hef_moon_dragon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_hef_star_dragon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_hydra	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_manticore	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_mourngul	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_necrofex_colossus	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_nor_giant	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_nor_ice_trolls	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_razorgor	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_rogue_idol	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_skinwolves	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_spiders	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_stag	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_stegadon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_sun_dragon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_trolls	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_unicorn	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_war_lions_of_chrace	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_war_mammoth	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_wyvern	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_bind_bastiladon	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_flamespyre_phoenix	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_frostheart_phoenix	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_great_cave_squigs	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_kharibdyss	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_ripperdactyls	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_bind_terradons	Kadon Scrolls of Binding are prized throughout the many realms of the world due to their rarity and the ability to control and bind a particular creature to the user's will.	true
+ancillaries_colour_text_kadon_kin_bastiladon	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_flamespyre_phoenix	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_frostheart_phoenix	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_great_cave_squigs	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_kharibdyss	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_ripperdactyls	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true
+ancillaries_colour_text_kadon_kin_terradons	Kadon Scrolls of Kin are prized throughout the many realms of the world due to their rarity and the ability to control a particular creature and offering a lasting bond without the constraints of fleeting magic.	true

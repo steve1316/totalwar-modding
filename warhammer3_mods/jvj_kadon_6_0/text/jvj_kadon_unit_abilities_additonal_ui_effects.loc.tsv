@@ -1,0 +1,47 @@
+key	text	tooltip
+#Loc;1;text/jvj_kadon_unit_abilities_additonal_ui_effects.loc		
+unit_abilities_additional_ui_effects_localised_text_kadon_necrofex_colossus	[[col:green]]Summons a Necrofex Colossus[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_mourngul	[[col:green]]Summons a Mourngul[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_fimir	[[col:green]]Summons a unit of Fimir[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_dread_saurian	[[col:green]]Summons a Dread Saurian[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_arcane_phoenix	[[col:green]]Summons an Arcane Phoenix[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_skinwolves	[[col:green]]Summons a unit of Skin Wolves[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_rogue_idol	[[col:green]]Summons a Rogue Idol[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_carnosaur	[[col:green]]Summons a Carnosaur[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_chaos_spawn	[[col:green]]Summons a unit of Chaos Spawn[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_chaos_warhounds	[[col:green]]Summons a unit of Chaos Warhounds[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_war_mammoth	[[col:green]]Summons a War Mammoth[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_cold_ones	[[col:green]]Summons a unit of Cold Ones[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_cygor	[[col:green]]Summons a Cygor[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_dragon_ogre	[[col:green]]Summons a unit of Dragon Ogres[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_black_dragon	[[col:green]]Summons a Black Dragon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_moon_dragon	[[col:green]]Summons a Moon Dragon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_star_dragon	[[col:green]]Summons a Star Dragon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_sun_dragon	[[col:green]]Summons a Sun Dragon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_forest_dragon	[[col:green]]Summons a Forest Dragon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_frost_wyrm	[[col:green]]Summons a Frost Wyrm[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_giant	[[col:green]]Summons a Giant[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_great_eagle	[[col:green]]Summons a Great Eagle[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_harpies	[[col:green]]Summons a unit of Harpies[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_hydra	[[col:green]]Summons a Hydra[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_manticore	[[col:green]]Summons a Manticore[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_razorgor	[[col:green]]Summons a unit of Razorgors[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_stegadon	[[col:green]]Summons a Stegadon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_chs_trolls	[[col:green]]Summons a unit of Chaos Trolls[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_trolls	[[col:green]]Summons a unit of Trolls[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_nor_ice_trolls	[[col:green]]Summons a unit of Norscan Ice Trolls[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_war_lions_of_chrace	[[col:green]]Summons a unit of War Lions[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_wyvern	[[col:green]]Summons a Wyvern[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_chaos_dragon	[[col:green]]Summons a Chaos Dragon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_spiders	[[col:green]]Summons a unit of Giant Spiders[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_griffon	[[col:green]]Summons a Griffon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_unicorn	[[col:green]]Summons a unit of Unicorns[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_stag	[[col:green]]Summons a unit of Great Stags[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_kinship	[[col:green]]Kinship[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_bastiladon	[[col:green]]Summons a Bastiladon[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_flamespyre_phoenix	[[col:green]]Summons a Flamespyre Phoenix[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_frostheart_phoenix	[[col:green]]Summons a Frostheart Phoenix[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_great_cave_squigs	[[col:green]]Summons a unit of Great Cave Squigs[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_kharibdyss	[[col:green]]Summons a Kharibdyss[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_ripperdactyls	[[col:green]]Summons a unit of Ripperdactyls[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_kadon_terradons	[[col:green]]Summons a unit of Terradons[[/col]]	true

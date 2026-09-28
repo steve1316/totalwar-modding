@@ -1,0 +1,6 @@
+key	text	tooltip
+#Loc;1;text/jvj_kadon_ui_unit_bullet_point_enums.loc		
+ui_unit_bullet_point_enums_tooltip_Kadon_Binding	The creature's bond with the scroll's user is weak, causing it to gradually succumb to unbinding.	true
+ui_unit_bullet_point_enums_onscreen_name_Kadon_Binding	Binding	true
+ui_unit_bullet_point_enums_tooltip_Kadon_Kinship	The creature's kinship with the scroll's user ensures its steadfast presence on the field, enduring until its destruction.	true
+ui_unit_bullet_point_enums_onscreen_name_Kadon_Kinship	Kinship	true

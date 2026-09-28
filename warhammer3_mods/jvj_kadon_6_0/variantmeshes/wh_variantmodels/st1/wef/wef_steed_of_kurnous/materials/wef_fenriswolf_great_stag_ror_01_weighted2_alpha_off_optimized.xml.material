@@ -1,0 +1,11 @@
+<PROPERTY_SET>
+	<PROPERTY name="Shader" type="string" attribute_file_browsedir="t:/branches/warhammer2/shadow/warhammer/working_data/" attribute_filename="" attribute_file_filter="Shaders (*.xml)">shaders/weighted2_character_emissive.xml</PROPERTY>
+	<PROPERTY name="Sort Override" type="int" attribute_uid="sort_override" attribute_max="255" attribute_min="0">255</PROPERTY>
+	<PROPERTY name="blood_map" type="string" attribute_filename="" attribute_file_filter="Textures (*.dds)" attribute_file_browsedir="t:/branches/warhammer2/shadow/warhammer/working_data/" attribute_default="" attribute_uid="{1fab7e35-0192-4b0f-9bd4-fe12c7834e43}" attribute_texture="">commontextures/bloodmap.dds</PROPERTY>
+	<PROPERTY name="blood_map2" type="string" attribute_filename="" attribute_file_filter="Textures (*.dds)" attribute_file_browsedir="t:/branches/warhammer2/shadow/warhammer/working_data/" attribute_default="" attribute_uid="{4da5370b-373c-4626-9973-15f6cac805b2}" attribute_texture="">commontextures/bloodmap.dds</PROPERTY>
+	<PROPERTY name="blood_map3" type="string" attribute_filename="" attribute_file_filter="Textures (*.dds)" attribute_file_browsedir="t:/branches/warhammer2/shadow/warhammer/working_data/" attribute_default="" attribute_uid="{4a34ecd7-3483-4692-b57e-3d56cb7ec869}" attribute_texture="">commontextures/bloodmap.dds</PROPERTY>
+	<PROPERTY name="diffuse" type="string" attribute_filename="" attribute_file_filter="Textures (*.dds)" attribute_file_browsedir="t:/branches/warhammer2/shadow/warhammer/working_data/" attribute_uid="{b0775e55-b081-48ee-92ab-f1c8be719215}" attribute_texture="">VariantMeshes/wh_variantmodels/hu1d/def/def_props/tex/def_black_guard_halberd_2h_01_diffuse.dds</PROPERTY>
+	<PROPERTY name="diffuse_tint_colour" type="vector3" attribute_uid="{d35018f0-de5c-4464-9919-3ce413d696c1}" attribute_default="">0 0 0</PROPERTY>
+	<PROPERTY name="diffuse_tint_mask" type="vector4" attribute_uid="{1c3c116a-a3b2-4e4d-bd90-f739b311e219}" attribute_default="">0 0 0 0</PROPERTY>
+	<PROPERTY name="diffuse_tint_variation" type="float" attribute_uid="{d1c907dd-5461-485c-937e-5b0a9f65e175}" attribute_default="">0</PROPERTY>
+	<PROPERTY name="dither" type="string" attribute_filename="" attribute_file_filter="Textures (*.dds)" attribute_file_browsedir="t:/branches/warhammer2/shadow/warhammer/working_data/" attribute_
