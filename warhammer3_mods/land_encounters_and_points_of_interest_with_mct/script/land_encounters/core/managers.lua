@@ -1488,6 +1488,7 @@ local PointOfInterestEventManager = {
 
 
 --- Asks each POI delegate to bootstrap its per-zone state from the configured coordinates.
+--- State is built even when smithies are disabled, so turning them back on later finds every smithy ready.
 --- @param points_of_interest_by_zone table Region-keyed table of POI coordinate data.
 function PointOfInterestEventManager:generate_points_of_interests_states(points_of_interest_by_zone)
     for zone_name, coordinates in pairs(points_of_interest_by_zone) do
@@ -1496,8 +1497,9 @@ function PointOfInterestEventManager:generate_points_of_interests_states(points_
 end
 
 
---- Forwards per-turn state updates to each POI delegate.
+--- Forwards per-turn state updates to each POI delegate. Hidden smithies must not keep paying tributes or issuing missions.
 function PointOfInterestEventManager:update_state_given_turn_passing()
+    if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
 
