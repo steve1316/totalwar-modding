@@ -16,6 +16,9 @@ local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
 
+--- How many unit picks in a row may add nothing before the army generator stops filling the army.
+local MAX_CONSECUTIVE_FAILED_UNIT_PICKS = 25
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- spillover_balancer_algorithm
@@ -557,10 +560,21 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     end
 
     --- Loop until either the minimum or maximum number of units is reached.
-    while count_total_units(force_makeup) < max_units do
+    --- Give up after a run of failed picks, since an exhausted pool would otherwise loop forever.
+    local failed_picks = 0
+    while count_total_units(force_makeup) < max_units and failed_picks < MAX_CONSECUTIVE_FAILED_UNIT_PICKS do
         --- Randomly select a unit type to add from the weights.
         local unit_type = select_weighted_random_unit_type(force_makeup_weights, faction_shorthand_key)
+        local units_before = count_total_units(force_makeup)
         force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types, max_units)
+        if count_total_units(force_makeup) == units_before then
+            failed_picks = failed_picks + 1
+        else
+            failed_picks = 0
+        end
+    end
+    if failed_picks >= MAX_CONSECUTIVE_FAILED_UNIT_PICKS then
+        out("WARNING - No more units could be added for faction " .. faction_shorthand_key .. ". Stopping at " .. count_total_units(force_makeup) .. " of " .. max_units .. ".")
     end
 
     return force_makeup
