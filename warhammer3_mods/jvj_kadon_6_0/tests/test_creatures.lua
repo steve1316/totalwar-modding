@@ -57,9 +57,9 @@ h.test("giant has four kin keys and one bind key", function()
     error("giant not found")
 end)
 
---- Returns the game tag a model or battle entity key belongs to, from its prefix.
---- @param key string Variant or battle entity key.
---- @returns string|nil "WH1", "WH2", "WH3", or nil for mod-made keys.
+--- Returns the game a vanilla text key belongs to, from its prefix.
+--- @param key string Unit text key, e.g. `wh2_main_unit_long_text_lzd_mon_carnosaur_0`.
+--- @returns string|nil "WH1", "WH2", "WH3", or nil for a mod-made key.
 local function game_from_prefix(key)
     if key:find("^wh3_") then return "WH3" end
     if key:find("^wh2_") then return "WH2" end
@@ -67,31 +67,20 @@ local function game_from_prefix(key)
     return nil
 end
 
-h.test("every game tag matches the DB", function()
-    local custom_units = {}
-    for _, row in ipairs(h.read_tsv("db/units_custom_battle_permissions_tables/jvj_kadon.tsv").rows) do
-        custom_units[row[3]] = true
-    end
-    local variants = {}
-    for _, row in ipairs(h.read_tsv("db/unit_variants_tables/jvj_kadon_binding.tsv").rows) do
-        variants[row[2]] = row[4]
-    end
+h.test("every game tag matches the unit's text key", function()
     local land_units = h.read_tsv("db/land_units_tables/jvj_kadon_binding.tsv")
-    local entity_col
+    local text_col
     for i, name in ipairs(land_units.header) do
-        if name == "man_entity" then entity_col = i end
+        if name == "historical_description_text" then text_col = i end
     end
-    local entities = {}
+    local texts = {}
     for _, row in ipairs(land_units.rows) do
-        entities[row[1]] = row[entity_col]
+        texts[row[1]] = row[text_col]
     end
 
     for _, creature in ipairs(creatures.list) do
-        local expected = "Original"
-        if not custom_units[creature.kin[1]] then
-            local bind_key = creature.bind[1]
-            expected = game_from_prefix(variants[bind_key]) or game_from_prefix(entities[bind_key])
-        end
+        local text = texts[creature.bind[1]]
+        local expected = text:find("^jvj_kadon_") and "Original" or game_from_prefix(text)
         h.eq(creature.game, expected, creature.id .. " game")
     end
 end)
