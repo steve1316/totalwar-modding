@@ -15,6 +15,7 @@ from core.utilities import (
     run_parallel,
     setup_script_logging,
     write_updated_tsv_file,
+    drop_duplicate_rows,
     merge_move,
     ensure_temp_dir,
     clear_temp_root,
@@ -302,6 +303,9 @@ if __name__ == "__main__":
 
         for mod_name, steam_workshop_id in MODS_AND_STEAM_WORKSHOP_IDS:
             pack_path = workshop_pack_path(steam_workshop_id, f"{mod_name}.pack")
+
+            # Mods that share a unit write the same rows into their own files. Keep one copy of each.
+            logging.info(f"Dropped {drop_duplicate_rows(f'../warhammer3_mods/{mod_name}/db')} duplicate rows from {mod_name}.")
 
             def write_attribute_pack(pack_path: str = pack_path, mod_name: str = mod_name) -> None:
                 """Replace one attribute compat pack's tables with the regenerated files.

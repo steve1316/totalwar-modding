@@ -3,4 +3,3 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 dwf_1handed_pickaxe	0	0	0	40	3.0000	axe	axe	small	3	1.0000	1.0000	0.0000	false		0	10	1.9		false
 dwf_tank_large	0	0	200	50	4.0000	axe	unarmed	very_large	4	1.0000	0.7500	0.0000	false		2	2	2.0		false
 dwf_tank_small	0	0	50	60	4.0000	axe	unarmed	very_large	4	1.0000	0.7500	0.0000	false		2	2	2.0		false
-dwf_turret_none	0	0	0	0	0.0000	axe	axe	medium	3	0.8000	1.2500	0.0000	false		3	10	0.05		false

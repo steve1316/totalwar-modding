@@ -789,6 +789,7 @@ if __name__ == "__main__":
                         vanilla_mounts_keys=vanilla_mounts_keys,
                         variant_mesh_definitions_to_add=variant_mesh_definitions_to_add,
                         variantmeshes_root=result.variantmeshes_root,
+                        land_units_by_key=table_data["land_units_tables"],
                     )
 
                 list_of_data_to_add.append(new_data)
