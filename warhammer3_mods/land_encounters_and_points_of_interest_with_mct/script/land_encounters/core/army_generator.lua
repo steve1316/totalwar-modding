@@ -115,19 +115,32 @@ local function build_role_pools(faction_shorthand_key, origins)
     return pools
 end
 
---- Picks a random archetype that is enabled in MCT and that the faction's roster can field. Falls back to the default archetype.
+--- Picks a random archetype that is enabled in MCT and that the faction's roster can field. When `requested_keys` is given, only those
+--- archetypes are considered first. If none of them qualify, any qualifying archetype is used, and then the default archetype.
 --- @param pools table The faction's role pools from `build_role_pools`.
+--- @param requested_keys table An optional array of archetype keys a battle category asks for.
 --- @returns table The chosen archetype record from configs/archetypes.lua.
-local function pick_archetype(pools)
+local function pick_archetype(pools, requested_keys)
     local enabled = {}
     for _, key in ipairs(get_mct_settings().enabled_archetypes) do
         enabled[key] = true
     end
-    local candidates = {}
+    local requested = nil
+    if requested_keys and #requested_keys > 0 then
+        requested = {}
+        for _, key in ipairs(requested_keys) do
+            requested[key] = true
+        end
+    end
+    local candidates, requested_candidates = {}, {}
     for _, archetype in ipairs(archetypes.list) do
         if enabled[archetype.key] and (archetype.requires == nil or #pools[archetype.requires] >= archetype.requires_count) then
             table.insert(candidates, archetype)
+            if requested and requested[archetype.key] then table.insert(requested_candidates, archetype) end
         end
+    end
+    if #requested_candidates > 0 then
+        return requested_candidates[random_number(#requested_candidates)]
     end
     if #candidates == 0 then
         return archetypes.by_key[archetypes.fallback_archetype]
@@ -243,16 +256,19 @@ end
 --- Builds a force makeup for the faction and difficulty by spending a rolled gold budget on a spine and then on the archetype's roles.
 --- @param difficulty_key string The difficulty key ("easy", "medium" or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param options table Optional battle-category overrides: `archetype_keys` (preferred archetypes) and `budget_multiplier` (scales the budget).
 --- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields.
-function M.generate(difficulty_key, faction_shorthand_key)
+function M.generate(difficulty_key, faction_shorthand_key, options)
+    options = options or {}
     local settings = get_mct_settings()
     local budget_range = settings.difficulties[difficulty_key].budget
     local origins = enabled_origins()
     local lord, heroes = pick_lord_and_heroes(difficulty_key, faction_shorthand_key, origins)
     local pools = build_role_pools(faction_shorthand_key, origins)
-    local archetype = pick_archetype(pools)
+    local archetype = pick_archetype(pools, options.archetype_keys)
+    local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1))
 
-    local army = { units = {}, copies = {}, budget_left = random_range(budget_range[1], budget_range[2]), slots_left = ARMY_UNIT_CAP - 1 - #heroes }
+    local army = { units = {}, copies = {}, budget_left = budget_roll, slots_left = ARMY_UNIT_CAP - 1 - #heroes }
     for _, unit_type in ipairs(UNIT_TYPES) do
         army.units[unit_type] = {}
     end
