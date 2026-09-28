@@ -1,83 +1,17 @@
---- Central manager module. Bundles: spillover_balancer_algorithm,
---- random_encounter_force_generation_system, EventStack, IncidentManager (free-function globals),
---- InvasionBattleManager (spawn + invasion lifecycle), BattleGenerator, SpotEventManager,
---- and PointOfInterestEventManager.
+--- Central manager module. Bundles: random_encounter_force_generation_system, IncidentManager (free-function globals),
+--- InvasionBattleManager (spawn + invasion lifecycle), SpotEventManager, and PointOfInterestEventManager.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
 
 local army_generator = require("script/land_encounters/core/army_generator")
-local battle_events_by_level = require("script/land_encounters/configs/events").battle_spot
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
 --- require (the delegates pull core/managers back in for the incident globals).
 local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- spillover_balancer_algorithm
---- (from algorithms/spillover_balancer_algorithm.lua)
-
-local CHANCES_INDEX = 1
-
-local STABILIZING_TURN = 120
-
---- Builds the per-level chance buckets for a turn. Early turns concentrate chance on the lowest level
---- and progressively spill probability into higher levels until the STABILIZING_TURN equalizes them.
---- @param number_of_levels number How many event-difficulty levels exist.
---- @param turn_number number Current campaign turn (1-based).
---- @returns table An array of per-level chance values (length number_of_levels).
-local function calculate_filled_buckets_given_turn_number(number_of_levels, turn_number)
-    local buckets = {}
-    local total_chances_to_distribute = 100
-    local equal_chance_of_event_happening = 100/number_of_levels
-    local spillover_delta = (100 - equal_chance_of_event_happening) / STABILIZING_TURN
-
-    --- Sample distribution over the first several turns (5 levels, spillover_delta=4):
-    ---  turn 1: [100][0][0][0][0]
-    ---  turn 2: [96][4][0][0][0]
-    ---  turn 3: [92][8][0][0][0]
-    ---  turn 7: [76][20][4][0][0]
-    local guiding_bucket_chances = total_chances_to_distribute - (turn_number - 1) * spillover_delta
-    guiding_bucket_chances = math.max(equal_chance_of_event_happening, guiding_bucket_chances)
-    buckets[1] = guiding_bucket_chances
-    total_chances_to_distribute = total_chances_to_distribute - guiding_bucket_chances
-
-    for bucket_index = 2, number_of_levels do
-        local spilled_chances = math.min(equal_chance_of_event_happening, total_chances_to_distribute)
-        buckets[bucket_index] = spilled_chances
-        total_chances_to_distribute = total_chances_to_distribute - spilled_chances
-    end
-
-    return buckets
-end
-
---- Comparator for table.sort that orders chance pairs by descending chance.
---- @param a table A {chance, level} pair.
---- @param b table A {chance, level} pair.
---- @returns boolean True when a's chance is greater than b's chance.
-local function compare_chances_of_event_happening(a,b)
-    return a[CHANCES_INDEX] > b[CHANCES_INDEX]
-end
-
-
---- Uses a spillover algorithm to slowly enable more complex events as turns pass. Returns a list
---- of {chance, level} pairs sorted in descending chance.
---- @param number_of_levels number How many event-difficulty levels exist.
---- @param turn_number number Current campaign turn (1-based).
---- @returns table An array of {chance number, level number} pairs sorted by descending chance.
-function randomize_chances_of_event_happening_considering_spillover_given_turn(number_of_levels, turn_number)
-    local chance_of_event_of_level_happening = calculate_filled_buckets_given_turn_number(number_of_levels, turn_number)
-    for i = 1, number_of_levels do
-        local random_multiplier = cm:random_number()
-        chance_of_event_of_level_happening[i] = { chance_of_event_of_level_happening[i] * random_multiplier, i }
-    end
-    table.sort(chance_of_event_of_level_happening, compare_chances_of_event_happening)
-    return chance_of_event_of_level_happening
-end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,9 +79,10 @@ function print_table(tbl, indent)
     end
 end
 
---- Picks a random faction shorthand from the MCT-enabled set (falling back to all factions if the set is empty).
---- @returns string A 3-letter faction shorthand key (e.g. "emp", "grn").
-function get_random_faction()
+--- Lists the faction shorthands encounters may use: the MCT-enabled set (every faction when none are picked), minus modded factions
+--- whose parent mod is not loaded.
+--- @returns table An array of 3-letter faction shorthand keys.
+function get_enabled_faction_keys()
     local faction_keys = {}
 
     if get_mct_settings().enable_all_factions then
@@ -196,8 +131,14 @@ function get_random_faction()
         end
     end
 
-    local random_faction = filtered_faction_keys[random_number(#filtered_faction_keys)]
-    return random_faction
+    return filtered_faction_keys
+end
+
+--- Picks a random faction shorthand from `get_enabled_faction_keys`.
+--- @returns string A 3-letter faction shorthand key (e.g. "emp", "grn").
+function get_random_faction()
+    local faction_keys = get_enabled_faction_keys()
+    return faction_keys[random_number(#faction_keys)]
 end
 
 --- Returns true if `tbl` contains `element`. If `key_first` is true, checks keys; otherwise checks values.
@@ -239,9 +180,10 @@ end
 --- Entry point for the force-makeup pipeline. Builds the army from the difficulty's gold budget and a rolled archetype.
 --- @param difficulty_key string The difficulty key ("easy", "medium", or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param options table Optional battle-category overrides passed to `army_generator.generate` (`archetype_keys`, `budget_multiplier`).
 --- @returns table A force_makeup with lord, heroes, per-type units arrays, and the archetype key.
-function start_force_makeup_generation(difficulty_key, faction_shorthand_key)
-    return army_generator.generate(difficulty_key, faction_shorthand_key)
+function start_force_makeup_generation(difficulty_key, faction_shorthand_key, options)
+    return army_generator.generate(difficulty_key, faction_shorthand_key, options)
 end
 
 --- Converts the raw force makeup into the flat record the InvasionBattleManager + Army constructors expect.
@@ -312,61 +254,6 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
 
     return converted_force
 end
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- event_stack
---- (from models/events/event_stack.lua)
-
-local EventStack = {
-    --- Event level held by this stack.
-    level = 0,
-    --- Disordered event identifiers of this level.
-    randomized_event_identifiers = {}
-}
-
---- Sets the stack's level and shuffles 1..number_of_events into the identifiers list.
---- @param event_level number The event-difficulty level this stack represents.
---- @param number_of_events number Count of events to populate the stack with.
-function EventStack:set_level_and_randomize_events(event_level, number_of_events)
-    self.level = event_level
-    self.randomized_event_identifiers = randomic_length_shuffle(number_of_events)
-end
-
---- Pops and returns the first event identifier, or nil if the stack is empty.
---- @returns number The next event identifier, or nil when the stack is empty.
-function EventStack:pop_event()
-    return table.remove(self.randomized_event_identifiers, 1)
-end
-
-
---- Flattens the stack's level + identifier list into a plain table for the save/load callbacks.
---- @returns table A serializable record with level and randomized_event_identifiers fields.
-function EventStack:export_state_as_a_table()
-    local event_stack_data = {}
-    event_stack_data["level"] = self.level
-    event_stack_data["randomized_event_identifiers"] = self.randomized_event_identifiers
-    return event_stack_data
-end
-
---- Restores level + identifier list from a previously exported state table.
---- @param previous_state table A record previously produced by export_state_as_a_table.
-function EventStack:reinstate_if_able(previous_state)
-    self.level = previous_state["level"]
-    self.randomized_event_identifiers = previous_state["randomized_event_identifiers"]
-end
-
---- Creates a new empty stack of level 0.
---- @returns EventStack A new EventStack instance.
-function EventStack:new()
-    local t = { level = 0, randomized_event_identifiers = {} }
-    setmetatable(t, self)
-    self.__index = self
-    return t
-end
-
---- Alias so battle_generator's lowercased binding still resolves.
-local event_stack = EventStack
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -951,102 +838,8 @@ end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- BattleGenerator
---- (from generators/battle_generator.lua)
-
-local LEVEL_KEY = 2
-
-local BattleGenerator = {
-    event_stacks = {}
-}
-
---- Returns a battle event for the given turn, refilling the per-level stacks if they have been exhausted.
---- @param turn_number number The current campaign turn.
---- @returns table The selected battle event entry from battle_events_by_level.
-function BattleGenerator:get_randomized_event_given_turn_number(turn_number)
-    local event = self:try_get_randomized_event_given_turn_number(turn_number)
-
-    if next(event) == nil then
-        self:reset_stacks()
-        event = self:try_get_randomized_event_given_turn_number(turn_number)
-    end
-
-    return battle_events_by_level[event.current_level][event.event_of_level]
-end
-
---- Picks an event by querying the spillover algorithm and popping from the highest-chance non-empty stack.
---- Returns an empty table when every per-level stack is empty.
---- @param turn_number number The current campaign turn.
---- @returns table A { current_level number, event_of_level number } record, or {} when stacks are empty.
-function BattleGenerator:try_get_randomized_event_given_turn_number(turn_number)
-    --- Levels are returned sorted by chance of happening (descending).
-    local ordered_levels_by_chances_of_happening = randomize_chances_of_event_happening_considering_spillover_given_turn(#battle_events_by_level, turn_number)
-
-    for prioritized_order = 1, #ordered_levels_by_chances_of_happening do
-        local current_chance = ordered_levels_by_chances_of_happening[prioritized_order][1]
-        local current_level = ordered_levels_by_chances_of_happening[prioritized_order][LEVEL_KEY]
-
-        local event_of_level = nil
-        if current_chance > 0 and next(self.event_stacks) ~= nil then
-            event_of_level = self.event_stacks[current_level]:pop_event()
-        end
-
-        if event_of_level ~= nil then
-            return { current_level = current_level, event_of_level = event_of_level }
-        end
-    end
-
-    return {}
-end
-
---- Re-randomizes every per-level event stack. Called when every stack has been exhausted.
---- Reads battle_events_by_level so newly added events show up automatically on the next refresh.
-function BattleGenerator:reset_stacks()
-    for level = 1, #battle_events_by_level do
-        local number_of_events_of_level = #(battle_events_by_level[level])
-        if self.event_stacks[level] == nil then
-            self.event_stacks[level] = event_stack:new()
-        end
-        self.event_stacks[level]:set_level_and_randomize_events(level, number_of_events_of_level)
-    end
-end
-
---- Exports every event stack's state into a flat array for the save/load callbacks.
---- @returns table An array of EventStack export records, one per level.
-function BattleGenerator:export_state_as_a_table()
-    local battle_generator_data = {}
-    for i=1, #self.event_stacks do
-        table.insert(battle_generator_data, self.event_stacks[i]:export_state_as_a_table())
-    end
-    return battle_generator_data
-end
-
---- Restores all event stacks from a previously exported state.
---- @param previous_state table An array of EventStack export records.
-function BattleGenerator:reinstate_if_able(previous_state)
-    for i=1, #previous_state do
-        local new_event_stack = event_stack:new()
-        new_event_stack:reinstate_if_able(previous_state[i])
-        table.insert(self.event_stacks, new_event_stack)
-    end
-end
-
---- Creates a new BattleGenerator with empty event stacks.
---- @returns BattleGenerator A new generator with empty event stacks.
-function BattleGenerator:new()
-    local t = { event_stacks = {} }
-    setmetatable(t, self)
-    self.__index = self
-    return t
-end
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- SpotEventManager
 --- (from controllers/spot_event_manager.lua)
-
---- Out of 100, this many rolls go to the battle delegate (the rest go to the treasure delegate).
-local CHANCES_OF_BATTLE_EVENT = 90
 
 local SpotEventManager = {
     treasure_event_delegate = {},
@@ -1061,13 +854,13 @@ function SpotEventManager:set_current_spot_info(spot_info)
 end
 
 
---- Rolls battle vs treasure for the current spot and dispatches to the matching delegate.
+--- Rolls battle vs treasure for the current spot using the MCT battle chance and dispatches to the matching delegate.
 --- Returns true when the spot should be removed from the map.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
 --- @param turn_number number The current campaign turn.
 --- @returns boolean True when the spot should be deactivated after dispatch.
 function SpotEventManager:trigger_spot_event(area_and_character_info, turn_number)
-    if cm:random_number(100) > CHANCES_OF_BATTLE_EVENT then
+    if not random_chance(get_mct_settings().battle_chance) then
         self.treasure_event_delegate:trigger_event(area_and_character_info)
         return true
     else
@@ -1192,8 +985,6 @@ end
 return {
     IncidentManager = IncidentManager,
     InvasionBattleManager = InvasionBattleManager,
-    BattleGenerator = BattleGenerator,
     SpotEventManager = SpotEventManager,
     PointOfInterestEventManager = PointOfInterestEventManager,
-    EventStack = EventStack,
 }

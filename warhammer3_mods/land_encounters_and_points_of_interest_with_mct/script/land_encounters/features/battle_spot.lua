@@ -7,14 +7,12 @@ require("script/land_encounters/core/managers")
 local complex_continuity_events = require("script/land_encounters/configs/events").complex_continuity
 local elligible_items = require("script/land_encounters/configs/items").balancing
 
-local BattleGenerator = require("script/land_encounters/core/managers").BattleGenerator
+local battle_picker = require("script/land_encounters/core/battle_picker")
 
 local Army = require("script/land_encounters/core/army")
 
 local BattleEventDelegate = {
     invasion_battle_manager = {},
-
-    battle_generator = {},
 
     --- Variables cached for the duration of an in-flight event.
     cached_player_character = {},
@@ -52,7 +50,7 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
     local triggering_faction_name = triggering_faction:name()
 
     if is_human_and_it_is_its_turn(triggering_faction) and self:character_is_general_and_can_trigger_dilemma(self.cached_player_character) then
-        self.cached_event = self.battle_generator:get_randomized_event_given_turn_number(turn_number)
+        self.cached_event = battle_picker.pick()
         cm:trigger_dilemma(triggering_faction_name, self.cached_event.dilemma)
         return true
     elseif not triggering_faction:is_human() then
@@ -259,24 +257,23 @@ function BattleEventDelegate:add_ancillary_to_feuding_factions(feuding_factions,
     end
 end
 
---- Builds the encounter Army from the current cached dilemma. Allies are picked from the triggering player's subculture when it is known.
---- @returns Army A new Army instance built from the cached dilemma key.
+--- Builds the encounter Army from the cached battle event. Allies are picked from the triggering player's subculture when it is known.
+--- @returns Army A new Army instance built from the cached event.
 function BattleEventDelegate:get_offensive_army()
     out("DEBUG - get_offensive_army Beginning process to generate the encounter force.")
     local player_subculture = nil
     if self.cached_player_character and self.cached_player_character.faction then
         player_subculture = self.cached_player_character:faction():subculture()
     end
-    return Army:new_from_event(self.cached_event.dilemma, player_subculture)
+    return Army:new_from_event(self.cached_event, player_subculture)
 end
 
 
---- Exports the BattleGenerator state plus any in-flight battle (event + spot info) for save/load.
+--- Exports any in-flight battle (event + spot info) for save/load.
 --- @param spot_info table A spot_info record for any in-flight spot.
---- @returns table A record with battle_generator state and (when triggered) cached_event + spot_info.
+--- @returns table A record with cached_event + spot_info when a battle is in flight, else an empty table.
 function BattleEventDelegate:export_state_as_a_table(spot_info)
     local current_battle_delegate_state = {}
-    current_battle_delegate_state["battle_generator"] = self.battle_generator:export_state_as_a_table()
     if self.is_triggered then
         current_battle_delegate_state["battle_event_delegate_is_triggered"] = true
         current_battle_delegate_state["battle_event_delegate_cached_event"] = self.cached_event
@@ -286,10 +283,9 @@ function BattleEventDelegate:export_state_as_a_table(spot_info)
 end
 
 
---- Restores the BattleGenerator and any in-flight battle from a saved campaign state.
+--- Restores any in-flight battle from a saved campaign state. Older saves also hold a "battle_generator" entry, which is ignored.
 --- @param previous_state table A record previously produced by export_state_as_a_table.
 function BattleEventDelegate:reinstate_event_if_able(previous_state)
-    self.battle_generator:reinstate_if_able(previous_state["battle_generator"])
     self.is_triggered = previous_state["battle_event_delegate_is_triggered"]
     if self.is_triggered ~= nil and self.is_triggered == true then
         self.cached_event = previous_state["battle_event_delegate_cached_event"]
@@ -304,11 +300,10 @@ end
 
 --- Constructs a fresh BattleEventDelegate wired to the given InvasionBattleManager.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
---- @returns BattleEventDelegate A new delegate with an empty BattleGenerator.
+--- @returns BattleEventDelegate A new delegate.
 function BattleEventDelegate:new(invasion_battle_manager)
     local t = {
         invasion_battle_manager = invasion_battle_manager,
-        battle_generator = BattleGenerator:new()
     }
     setmetatable(t, self)
     self.__index = self

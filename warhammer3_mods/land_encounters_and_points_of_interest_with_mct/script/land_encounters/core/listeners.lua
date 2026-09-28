@@ -8,7 +8,7 @@ require("script/land_encounters/core/mct")
 local IS_PERSISTENT_LISTENER = true
 
 local events = require("script/land_encounters/configs/events")
-local battle_events = events.battle_spot
+local battle_dilemma_keys = require("script/land_encounters/configs/battle_categories").dilemma_keys
 local smithy_events = events.smithy
 
 local M = {}
@@ -78,14 +78,7 @@ function M.register()
         function(dilemma_choice_and_faction_info)
             local dilemma = dilemma_choice_and_faction_info:dilemma()
             --- Match against any registered battle-spot dilemma.
-            for i=1, #battle_events do
-                for j=1, #battle_events[i] do
-                    if dilemma == battle_events[i][j].dilemma then
-                        return true
-                    end
-                end
-            end
-            return false
+            return battle_dilemma_keys[dilemma] == true
         end,
         function(dilemma_choice_and_faction_info)
             out("DEBUG - DilemmaChoiceMadeEvent dilemma: " .. dilemma_choice_and_faction_info:dilemma())

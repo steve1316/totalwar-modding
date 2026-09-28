@@ -18,19 +18,6 @@ local factions_data = require("script/land_encounters/configs/factions_data")
 --- Cultural alliance pools for the Allied Reinforcement intervention.
 local alliances = require("script/land_encounters/configs/alliances")
 
---- Picks a random intervention type from the user's MCT-enabled set. The MCT anchor enforces
---- at-least-one via set_locked, so the enabled list is never empty in normal operation. The
---- defensive fallback to INTERCEPTION_TYPE handles any save-load race or MCT bypass.
---- @returns number One of AMBUSH_TYPE, INTERCEPTION_TYPE, or ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
-local function pick_intervention_type()
-    local settings = get_mct_settings()
-    local enabled = settings and settings.enabled_intervention_types
-    if not enabled or #enabled == 0 then
-        return INTERCEPTION_TYPE
-    end
-    return enabled[random_number(#enabled)]
-end
-
 --- Returns the player faction's subculture key, or nil if no human faction can be resolved.
 --- @returns string The player's subculture key, or nil when no human faction is available.
 local function get_player_subculture()
@@ -182,22 +169,23 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constructors
 
---- Builds an Army for a random-encounter battle spot. Picks difficulty, faction, intervention type,
---- optional allied reinforcements, and then materializes the encounter + any reinforcement armies.
---- @param battle_event string An identifier label for the spawning event (used for logging only).
+--- Builds an Army for a random-encounter battle spot from a `battle_picker` event record, then materializes the encounter and any
+--- reinforcement armies. Fields missing from an event saved by an older version fall back to the current difficulty, a random faction and
+--- the MCT battle-type pick.
+--- @param event table A `battle_picker` event record (faction, difficulty, archetype_keys, budget_multiplier, intervention, dilemma).
 --- @param player_subculture string The subculture of the player who triggered the encounter, used to pick an ally. May be nil.
 --- @returns Army A new Army instance with units_pool, lord_pool, and reinforcement arrays populated.
-function Army:new_from_event(battle_event, player_subculture)
-    out("DEBUG - new_from_event battle_event: " .. battle_event)
+function Army:new_from_event(event, player_subculture)
+    out("DEBUG - new_from_event dilemma: " .. tostring(event.dilemma))
 
-    local difficulty = get_current_difficulty()
+    local difficulty = event.difficulty or get_current_difficulty()
 
-    local faction = get_random_faction()
+    local faction = event.faction or get_random_faction()
     out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)
-    local force_data = start_force_makeup_generation(difficulty, faction)
+    local force_data = start_force_makeup_generation(difficulty, faction, { archetype_keys = event.archetype_keys, budget_multiplier = event.budget_multiplier })
 
-    --- Pick the intervention type once so we can branch on it below for ally setup.
-    local intervention_type = pick_intervention_type()
+    --- The battle type is decided once so we can branch on it below for ally setup.
+    local intervention_type = event.intervention or pick_intervention_type()
     local ally_force_data = nil
     if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
         local ally_faction = pick_ally_faction(player_subculture, faction)
