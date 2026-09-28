@@ -16,6 +16,9 @@ local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
 
+--- How many unit picks in a row may add nothing before the army generator stops filling the army.
+local MAX_CONSECUTIVE_FAILED_UNIT_PICKS = 25
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- spillover_balancer_algorithm
@@ -244,7 +247,7 @@ function get_random_faction()
         end
     end
 
-    local random_faction = filtered_faction_keys[math.random(1, #filtered_faction_keys)]
+    local random_faction = filtered_faction_keys[random_number(#filtered_faction_keys)]
     return random_faction
 end
 
@@ -285,7 +288,7 @@ local function select_weighted_random_unit_type(weights, faction_shorthand_key)
         total_weight = total_weight + weight
     end
 
-    local random_weight = math.random() * total_weight
+    local random_weight = random_number(10000) / 10000 * total_weight
     local cumulative_weight = 0
 
     for unit_type, weight in pairs(faction_weights) do
@@ -323,20 +326,8 @@ local function select_random_key(tbl)
     for key in pairs(tbl) do
         table.insert(keys, key)
     end
-    local random_index = math.random(1, #keys)
+    local random_index = random_number(#keys)
     return keys[random_index]
-end
-
---- Picks a uniformly random value from the table.
---- @param tbl table The table to draw from.
---- @returns any A randomly chosen value from tbl.
-local function select_random_value(tbl)
-    local values = {}
-    for _, value in pairs(tbl) do
-        table.insert(values, value)
-    end
-    local random_index = math.random(1, #values)
-    return values[random_index]
 end
 
 --- Returns a shallow copy of `tbl` with `key_to_remove` omitted.
@@ -359,9 +350,8 @@ end
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param force_makeup table The accumulating force_makeup table to mutate.
 --- @param unit_type string The unit-type bucket key to fill (e.g. "melee_infantry").
---- @param empty_unit_types table Set of unit types already exhausted, mutated when this one is exhausted too.
 --- @param max_units number The army's size cap (lord and heroes included). Never adds more units than the room left under it.
-local function get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types, max_units)
+local function get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, max_units)
     local tiers = difficulties[difficulty_key].tiers
     local unit_limits = difficulties[difficulty_key].limits
     local add_single_copy = false
@@ -369,7 +359,7 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
     --- Stop once the army is full, so a batch of copies can never push it past its size cap.
     local room_left = max_units - count_total_units(force_makeup)
     if room_left <= 0 then
-        return force_makeup, empty_unit_types
+        return force_makeup
     end
 
     print("INFO - Processing original unit_type: " .. unit_type .. " units.")
@@ -406,7 +396,7 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
             iteration_limit = iteration_limit - 1
         end
         print("DEBUG - Returning " .. #enabled_faction_units .. " units.")
-        return enabled_faction_units, empty_unit_types
+        return enabled_faction_units
     end
 
     --- Collect all units of enabled origins for the given unit type and for the chosen tiers.
@@ -422,8 +412,7 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
 
     if #enabled_faction_units == 0 then
         print("WARNING - No " .. unit_type .. " units found for the given tiers and unit type. Skipping.")
-        table.insert(empty_unit_types, unit_type)
-        return force_makeup, empty_unit_types
+        return force_makeup
     end
 
     print("Collected a list of " .. #enabled_faction_units .. " " .. unit_type .. " units.")
@@ -431,11 +420,7 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
     --- Loop until either the minimum or maximum number of units for the unit type is reached.
     if unit_type == "warmachine" or unit_type == "monster" then
         --- Add only up to 1 of either warmachine or monster unit type.
-        --- Randomize the list of enabled units first before selection.
-        local randomized_enabled_faction_units = randomic_shuffle(enabled_faction_units)
-
-        --- Select the first unit in the randomized list.
-        local selected_land_unit = randomized_enabled_faction_units[1]
+        local selected_land_unit = enabled_faction_units[random_number(#enabled_faction_units)]
 
         --- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
         if selected_land_unit:find("_ror") then
@@ -449,15 +434,12 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
         --- For every other unit type, begin adding units to the force makeup.
         --- First, determine if copies should be added and cap it at 3.
         local copies = 1
-        if not add_single_copy and math.random() < 0.25 then
-            copies = math.min(math.random(unit_limits[unit_type][1], unit_limits[unit_type][2]), 3, room_left)
+        if not add_single_copy and random_chance(25) then
+            copies = math.min(random_range(unit_limits[unit_type][1], unit_limits[unit_type][2]), 3, room_left)
         end
 
-        --- Randomize the list of enabled units first before selection.
-        local randomized_enabled_faction_units = randomic_shuffle(enabled_faction_units)
-
         --- Now randomly select the unit to be added.
-        local selected_land_unit = randomized_enabled_faction_units[1]
+        local selected_land_unit = enabled_faction_units[random_number(#enabled_faction_units)]
 
         --- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
         if selected_land_unit:find("_ror") then
@@ -473,7 +455,7 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
         end
     end
 
-    return force_makeup, empty_unit_types
+    return force_makeup
 end
 
 --- Generates a random force makeup (lord + heroes + units) for the given faction and difficulty.
@@ -481,11 +463,10 @@ end
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @returns table A force_makeup with lord, heroes, and per-type units arrays populated.
 local function generate_random_force_makeup(difficulty_key, faction_shorthand_key)
-    local max_units = math.random(difficulties[difficulty_key].min_units, difficulties[difficulty_key].max_units)
+    local max_units = random_range(difficulties[difficulty_key].min_units, difficulties[difficulty_key].max_units)
     local list_of_allowed_lord_objects = factions_data[faction_shorthand_key].allowed_lords or {}
     local list_of_allowed_hero_objects = factions_data[faction_shorthand_key].allowed_heroes or {}
     local force_makeup = {}
-    local empty_unit_types = {}
 
     --- Create the initial structure of the force makeup.
     force_makeup.units = {
@@ -505,22 +486,26 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     force_makeup.heroes = {}
 
     --- Select a random allowed lord if their origin is enabled. Save the skill overrides for the lord.
-    for _, lord in pairs(randomic_shuffle(list_of_allowed_lord_objects)) do
+    --- Remember the first vanilla lord seen as a fallback, since vanilla is always loaded and its lords are always valid.
+    local fallback_vanilla_lord = nil
+    for _, lord in ipairs(randomic_shuffle(list_of_allowed_lord_objects)) do
         if is_origin_enabled(lord.origin) then
             force_makeup.lord = lord
             break
         end
+        if fallback_vanilla_lord == nil and lord.origin == "vanilla" then
+            fallback_vanilla_lord = lord
+        end
     end
 
-    --- If a lord was not able to be selected, then select a random vanilla lord instead.
     if not force_makeup.lord then
         out("DEBUG - A lord was not able to be selected. Selecting a random vanilla lord instead.")
-        force_makeup.lord = select_random_value(list_of_allowed_lord_objects)
+        force_makeup.lord = fallback_vanilla_lord
     end
 
     --- Select a random amount of heroes if their origin is enabled. Save the skill overrides for the heroes.
     local randomly_selected_heroes = {}
-    local number_of_heroes_to_select = math.random(difficulties[difficulty_key].limits.hero[1], difficulties[difficulty_key].limits.hero[2])
+    local number_of_heroes_to_select = random_range(difficulties[difficulty_key].limits.hero[1], difficulties[difficulty_key].limits.hero[2])
     for _, hero in pairs(randomic_shuffle(list_of_allowed_hero_objects)) do
         if #randomly_selected_heroes >= number_of_heroes_to_select then
             break
@@ -532,35 +517,44 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     force_makeup.heroes = randomly_selected_heroes
 
     --- Get the override limit for melee_infantry and missile_infantry.
-    local override_limit_melee_infantry = math.random(difficulties[difficulty_key].limits.melee_infantry[1], difficulties[difficulty_key].limits.melee_infantry[2])
-    local override_limit_missile_infantry = math.random(difficulties[difficulty_key].limits.missile_infantry[1], difficulties[difficulty_key].limits.missile_infantry[2])
+    local override_limit_melee_infantry = random_range(difficulties[difficulty_key].limits.melee_infantry[1], difficulties[difficulty_key].limits.melee_infantry[2])
+    local override_limit_missile_infantry = random_range(difficulties[difficulty_key].limits.missile_infantry[1], difficulties[difficulty_key].limits.missile_infantry[2])
 
     --- First, randomly select the melee_infantry and missile_infantry units up to the minimum limits.
     --- Also check if the unit type has available units to select from. If not, then fallback to the other.
     local initial_count = 0
     while (#force_makeup.units.melee_infantry < override_limit_melee_infantry) do
         initial_count = #force_makeup.units.melee_infantry
-        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", empty_unit_types, max_units)
+        force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", max_units)
         if #force_makeup.units.melee_infantry == initial_count then
             break
         end
     end
     while (#force_makeup.units.missile_infantry < override_limit_missile_infantry) do
         initial_count = #force_makeup.units.missile_infantry
-        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "missile_infantry", empty_unit_types, max_units)
+        force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "missile_infantry", max_units)
         --- Some factions like vanilla Nurgle have no missile_infantry units at the lower tiers.
         if #force_makeup.units.missile_infantry == initial_count then
             print("WARNING - No available units for missile_infantry. Falling back to melee_infantry.")
-            force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", empty_unit_types, max_units)
+            force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", max_units)
             break
         end
     end
 
     --- Loop until either the minimum or maximum number of units is reached.
-    while count_total_units(force_makeup) < max_units do
+    --- Give up after a run of failed picks, since an exhausted pool would otherwise loop forever.
+    local failed_picks = 0
+    local total_units = count_total_units(force_makeup)
+    while total_units < max_units and failed_picks < MAX_CONSECUTIVE_FAILED_UNIT_PICKS do
         --- Randomly select a unit type to add from the weights.
         local unit_type = select_weighted_random_unit_type(force_makeup_weights, faction_shorthand_key)
-        force_makeup, empty_unit_types = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, empty_unit_types, max_units)
+        force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, max_units)
+        local new_total_units = count_total_units(force_makeup)
+        failed_picks = new_total_units == total_units and failed_picks + 1 or 0
+        total_units = new_total_units
+    end
+    if failed_picks >= MAX_CONSECUTIVE_FAILED_UNIT_PICKS then
+        out("WARNING - No more units could be added for faction " .. faction_shorthand_key .. ". Stopping at " .. total_units .. " of " .. max_units .. ".")
     end
 
     return force_makeup
@@ -627,7 +621,7 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
             level_range = { difficulties[difficulty].lord_level_range[1], difficulties[difficulty].lord_level_range[2] },
         },
         heroes = {},
-        unit_experience_amount = math.random(difficulties[difficulty].unit_experience_amount[1], difficulties[difficulty].unit_experience_amount[2]),
+        unit_experience_amount = random_range(difficulties[difficulty].unit_experience_amount[1], difficulties[difficulty].unit_experience_amount[2]),
         units = {},
         reinforcing_ally_armies = false,
         reinforcing_enemy_armies = false,
@@ -773,15 +767,30 @@ function is_human_and_it_is_its_turn(faction)
     return faction:is_human() and cm:is_human_factions_turn()
 end
 
---- Returns the player general closest to the given spot's coordinates.
+--- Returns the general closest to the given spot's coordinates. Searches the human factions whose turn it is, or every human faction
+--- when none is, so all multiplayer clients agree and the reward goes to the player who triggered it.
 --- @param spot_info table A spot_info record with a coordinates {x, y} field.
 --- @returns character The closest player general, or nil when none is found.
 function get_player_faction_character_closest_to_spot(spot_info)
-    local faction_name = cm:get_local_faction_name()
     local only_general = true
     local is_garrison_commander = false
-    local local_character, distance = cm:get_closest_character_to_position_from_faction(faction_name, spot_info.coordinates[1], spot_info.coordinates[2], only_general, is_garrison_commander)
-    return local_character
+    local candidate_factions = {}
+    for _, faction_name in ipairs(cm:get_human_factions()) do
+        if cm:is_factions_turn_by_key(faction_name) then
+            table.insert(candidate_factions, faction_name)
+        end
+    end
+    if #candidate_factions == 0 then
+        candidate_factions = cm:get_human_factions()
+    end
+    local closest_character, closest_distance = nil, nil
+    for _, faction_name in ipairs(candidate_factions) do
+        local character, distance = cm:get_closest_character_to_position_from_faction(faction_name, spot_info.coordinates[1], spot_info.coordinates[2], only_general, is_garrison_commander)
+        if character and (closest_distance == nil or distance < closest_distance) then
+            closest_character, closest_distance = character, distance
+        end
+    end
+    return closest_character
 end
 
 --- Resolves the player character (falling back to closest-to-spot after a post-battle reload) and fires the incident, but only for humans on their turn.
@@ -1007,10 +1016,11 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     --- Spawn any heroes and embed them into the invasion army.
                     local skill_overrides = self.event_army:get_skill_overrides()
                     local heroes = self.event_army:get_heroes()
+                    local invasion_general = invasion_force:get_general()
                     for _, hero_object in ipairs(heroes) do
                         out("DEBUG - spawning invasion hero " .. hero_object.agent_subtype .. ".")
-                        --- A valid spawn location is required or the agent creation call fails.
-                        local agent_x, agent_y = cm:find_valid_spawn_location_for_character_from_settlement(self.event_army.faction, "wh3_main_combi_region_ubersreik", false, true, 10)
+                        --- A valid spawn location is required or the agent creation call fails. Search beside the invasion army so it works on every campaign map.
+                        local agent_x, agent_y = cm:find_valid_spawn_location_for_character_from_position(self.event_army.faction, invasion_general:logical_position_x(), invasion_general:logical_position_y(), false, 5)
                         out("DEBUG - agent_x: " .. agent_x .. " agent_y: " .. agent_y)
                         out("DEBUG - faction: " .. self.event_army.faction)
                         out("DEBUG - hero_object.agent_subtype: " .. hero_object.agent_subtype)
@@ -1022,21 +1032,21 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                             if hero_object.agent_subtype == temp_hero_agent_subtype then
                                 out("DEBUG - adding skills to invasion force hero " .. temp_hero_agent_subtype .. " of cqi " .. new_invasion_hero_agent:command_queue_index())
                                 for _, skill in ipairs(skill_override) do
-                                    cm:add_skill(new_invasion_hero_agent, skill, true, true)
+                                    cm:add_skill(cm:char_lookup_str(new_invasion_hero_agent), skill, true, true)
                                 end
                             end
                         end
 
-                        cm:embed_agent_in_force(new_invasion_hero_agent, invasion_force:get_general():military_force())
+                        cm:embed_agent_in_force(new_invasion_hero_agent, invasion_general:military_force())
                     end
 
                     --- Apply skill overrides to the invasion force lord.
-                    out("DEBUG - invasion force lord cqi: " .. invasion_force:get_general():command_queue_index())
+                    out("DEBUG - invasion force lord cqi: " .. invasion_general:command_queue_index())
                     for lord_agent_subtype, skill_override in pairs(skill_overrides) do
                         if self.event_army.lord.subtype == lord_agent_subtype then
-                            out("DEBUG - adding skills to invasion force lord of cqi " .. invasion_force:get_general():command_queue_index())
+                            out("DEBUG - adding skills to invasion force lord of cqi " .. invasion_general:command_queue_index())
                             for _, skill in ipairs(skill_override) do
-                                cm:add_skill(invasion_force:get_general(), skill, true, true)
+                                cm:add_skill(cm:char_lookup_str(invasion_general), skill, true, true)
                             end
                             break
                         end
@@ -1182,25 +1192,22 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             local attacker_was_victorious = cm:pending_battle_cache_attacker_victory()
             local defender_was_victorious = cm:pending_battle_cache_defender_victory()
 
-            local player_faction_name = cm:get_local_faction_name()
             local encounter_invasion = self.invasion_manager:get_invasion(army.invasion_identifier)
             --- Defensive-type battles cannot be tracked easily, so we only branch on player attacker/defender.
-            if cm:pending_battle_cache_faction_is_attacker(player_faction_name) then
-                found_encounter_faction = true
-                if attacker_was_victorious then
-                    player_won_battle = true
+            --- Check every human faction rather than the local one, so all multiplayer clients agree on the result.
+            for _, player_faction_name in ipairs(cm:get_human_factions()) do
+                if cm:pending_battle_cache_faction_is_attacker(player_faction_name) then
+                    found_encounter_faction = true
+                    player_won_battle = attacker_was_victorious
+                    break
+                elseif cm:pending_battle_cache_faction_is_defender(player_faction_name) then
+                    found_encounter_faction = true
+                    player_won_battle = defender_was_victorious
+                    break
                 end
-                if encounter_invasion then
-                    self:remove_invasion_forces(army)
-                end
-            elseif cm:pending_battle_cache_faction_is_defender(player_faction_name) then
-                found_encounter_faction = true
-                if defender_was_victorious then
-                    player_won_battle = true
-                end
-                if encounter_invasion then
-                    self:remove_invasion_forces(army)
-                end
+            end
+            if found_encounter_faction and encounter_invasion then
+                self:remove_invasion_forces(army)
             end
 
             if found_encounter_faction == true then
@@ -1467,6 +1474,7 @@ local PointOfInterestEventManager = {
 
 
 --- Asks each POI delegate to bootstrap its per-zone state from the configured coordinates.
+--- State is built even when smithies are disabled, so turning them back on later finds every smithy ready.
 --- @param points_of_interest_by_zone table Region-keyed table of POI coordinate data.
 function PointOfInterestEventManager:generate_points_of_interests_states(points_of_interest_by_zone)
     for zone_name, coordinates in pairs(points_of_interest_by_zone) do
@@ -1475,8 +1483,9 @@ function PointOfInterestEventManager:generate_points_of_interests_states(points_
 end
 
 
---- Forwards per-turn state updates to each POI delegate.
+--- Forwards per-turn state updates to each POI delegate. Hidden smithies must not keep paying tributes or issuing missions.
 function PointOfInterestEventManager:update_state_given_turn_passing()
+    if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
 
