@@ -338,6 +338,11 @@ end
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager, used to build and place the garrison.
 function SmithyState:resolve_defense_choice(choice, invasion_battle_manager)
     if not self.besieging_force_cqi then return end
+    if not force_exists(self.besieging_force_cqi) then
+        --- The besiegers died or were removed after the dilemma opened.
+        self:end_siege()
+        return
+    end
     if choice == FIRST_OPTION then
         self:fight_with_garrison(invasion_battle_manager)
     else
@@ -373,7 +378,7 @@ end
 
 --- Waits for the garrison's battle and resolves the defense from its result. Other battles in the meantime are ignored.
 function SmithyState:listen_for_defense_result()
-    local listener_name = "land_enc_smithy_defense_" .. self.zone_name .. "_" .. tostring(self.index_in_zone)
+    local listener_name = self:defense_listener_name()
     core:add_listener(
         listener_name,
         "BattleCompleted",
@@ -413,6 +418,27 @@ function SmithyState:lose_to_besieger(message)
     self:end_siege()
     self:set_level(self.level - 1)
     self:set_controlling_faction(new_owner)
+end
+
+--- Returns the name of this smithy's defense-battle listener.
+--- @returns string The listener name.
+function SmithyState:defense_listener_name()
+    return "land_enc_smithy_defense_" .. self.zone_name .. "_" .. tostring(self.index_in_zone)
+end
+
+--- Drops any siege or garrison when the smithy changes hands another way (for example its owner died): frees the besiegers, removes a
+--- garrison that is still on the map, and stops waiting for its battle.
+function SmithyState:clear_siege_and_garrison()
+    self:release_besieger()
+    self:end_siege()
+    if self:has_garrison() then
+        if force_exists(self.garrison_force_cqi) then
+            kill_character_quietly(self.garrison_character_cqi)
+        end
+        core:remove_listener(self:defense_listener_name())
+        self.garrison_force_cqi = nil
+        self.garrison_character_cqi = nil
+    end
 end
 
 --- True while a garrison defense battle is in flight.
@@ -592,9 +618,11 @@ function SmithyState:is_faction_at_war_with_owner(visiting_faction)
     return controlling_faction:at_war_with(visiting_faction)
 end
 
---- Sets the new controlling faction and resets turns_under_control. Accepts a faction object or faction key.
+--- Sets the new controlling faction and resets turns_under_control. Any siege or garrison of the previous owner ends. Accepts a faction
+--- object or faction key.
 --- @param faction faction The new owner. May be a faction handle or a faction key string. Empty/nil clears ownership.
 function SmithyState:set_controlling_faction(faction)
+    self:clear_siege_and_garrison()
     if type(faction) == "string" then
         faction = cm:get_faction(faction)
     end
