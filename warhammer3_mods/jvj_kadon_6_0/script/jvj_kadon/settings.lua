@@ -19,6 +19,7 @@ M.DEFAULTS = {
     allow_kin = true,
     allow_bind = true,
     enable_all_creatures = true,
+    enable_all_vanilla_creatures = true,
 }
 
 --- Current settings: every `DEFAULTS` key plus `enabled_creatures`, a map of creature id to boolean. Replaced by `reset()`.
@@ -45,6 +46,14 @@ end
 --- @returns string The option key.
 function M.creature_option_key(id)
     return "creature_" .. id
+end
+
+--- Returns the "Enable all creatures" option key that covers a game's creatures: one for the Original creatures, one for vanilla and DLC.
+--- @param game string Creature game tag: "Original", "WH1", "WH2" or "WH3".
+--- @returns string The option key.
+function M.enable_all_key(game)
+    if game == "Original" then return "enable_all_creatures" end
+    return "enable_all_vanilla_creatures"
 end
 
 --- Copies every finalized MCT option value into `values`. Options MCT does not return keep their current value.

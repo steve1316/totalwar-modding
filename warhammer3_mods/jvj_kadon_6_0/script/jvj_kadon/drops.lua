@@ -31,7 +31,7 @@ function M.candidates(faction)
     local values = settings.values
     local pool = {}
     for _, creature in ipairs(creatures.list) do
-        if values.enable_all_creatures or values.enabled_creatures[creature.id] then
+        if values[settings.enable_all_key(creature.game)] or values.enabled_creatures[creature.id] then
             local types = {}
             if values.allow_kin then
                 local keys = available_keys(faction, creature.kin)
