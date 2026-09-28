@@ -24,6 +24,15 @@ end
 stringtoboolean = { ["true"] = true, ["false"] = false }
 booleantostring = { [true] = "true", [false] = "false" }
 
+--- Returns true when the named faction is played by a human. Multiplayer-safe replacement for comparing against cm:get_local_faction_name.
+--- @param faction_name string The faction key to check. May be nil or empty.
+--- @returns boolean True when the faction exists and is human.
+function is_human_faction_name(faction_name)
+    if faction_name == nil or faction_name == "" then return false end
+    local faction = cm:get_faction(faction_name)
+    return faction and faction:is_human() or false
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- string helpers
