@@ -1027,10 +1027,11 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     --- Spawn any heroes and embed them into the invasion army.
                     local skill_overrides = self.event_army:get_skill_overrides()
                     local heroes = self.event_army:get_heroes()
+                    local invasion_general = invasion_force:get_general()
                     for _, hero_object in ipairs(heroes) do
                         out("DEBUG - spawning invasion hero " .. hero_object.agent_subtype .. ".")
-                        --- A valid spawn location is required or the agent creation call fails.
-                        local agent_x, agent_y = cm:find_valid_spawn_location_for_character_from_settlement(self.event_army.faction, "wh3_main_combi_region_ubersreik", false, true, 10)
+                        --- A valid spawn location is required or the agent creation call fails. Search beside the invasion army so it works on every campaign map.
+                        local agent_x, agent_y = cm:find_valid_spawn_location_for_character_from_position(self.event_army.faction, invasion_general:logical_position_x(), invasion_general:logical_position_y(), false, 5)
                         out("DEBUG - agent_x: " .. agent_x .. " agent_y: " .. agent_y)
                         out("DEBUG - faction: " .. self.event_army.faction)
                         out("DEBUG - hero_object.agent_subtype: " .. hero_object.agent_subtype)
@@ -1042,21 +1043,21 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                             if hero_object.agent_subtype == temp_hero_agent_subtype then
                                 out("DEBUG - adding skills to invasion force hero " .. temp_hero_agent_subtype .. " of cqi " .. new_invasion_hero_agent:command_queue_index())
                                 for _, skill in ipairs(skill_override) do
-                                    cm:add_skill(new_invasion_hero_agent, skill, true, true)
+                                    cm:add_skill(cm:char_lookup_str(new_invasion_hero_agent), skill, true, true)
                                 end
                             end
                         end
 
-                        cm:embed_agent_in_force(new_invasion_hero_agent, invasion_force:get_general():military_force())
+                        cm:embed_agent_in_force(new_invasion_hero_agent, invasion_general:military_force())
                     end
 
                     --- Apply skill overrides to the invasion force lord.
-                    out("DEBUG - invasion force lord cqi: " .. invasion_force:get_general():command_queue_index())
+                    out("DEBUG - invasion force lord cqi: " .. invasion_general:command_queue_index())
                     for lord_agent_subtype, skill_override in pairs(skill_overrides) do
                         if self.event_army.lord.subtype == lord_agent_subtype then
-                            out("DEBUG - adding skills to invasion force lord of cqi " .. invasion_force:get_general():command_queue_index())
+                            out("DEBUG - adding skills to invasion force lord of cqi " .. invasion_general:command_queue_index())
                             for _, skill in ipairs(skill_override) do
-                                cm:add_skill(invasion_force:get_general(), skill, true, true)
+                                cm:add_skill(cm:char_lookup_str(invasion_general), skill, true, true)
                             end
                             break
                         end
