@@ -7,7 +7,7 @@ require("script/land_encounters/core/managers")
 
 local smithy_data = require("script/land_encounters/configs/smithy_data")
 local item_pool = require("script/land_encounters/core/item_pool")
-local army_generator = require("script/land_encounters/core/army_generator")
+local SmithySpot = require("script/land_encounters/core/spot").SmithySpot
 
 local Army = require("script/land_encounters/core/army")
 
@@ -16,7 +16,6 @@ local Army = require("script/land_encounters/core/army")
 --- Constants
 
 local FIRST_OPTION = 0
-local SECOND_OPTION = 1
 
 local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
@@ -52,11 +51,6 @@ local PAYLOAD_TEXT_CANNOT_AFFORD = "dummy_land_enc_smithy_cannot_afford"
 --- Payload text describing the upgrade.
 local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_smithy_upgrade"
 
---- Marker skin per forge level. Level 1 keeps the original key so existing markers stay valid.
-local MARKER_KEY_BY_LEVEL = { "encounter_marker_smithy", "encounter_marker_smithy_level_2", "encounter_marker_smithy_level_3" }
---- Interaction radius of the smithy marker, matching the one placed by `SmithySpot:activate`.
-local MARKER_INTERACTION_RADIUS = 8
-
 --- Turns between Dark Elf smithy missions for a player owner.
 local MISSION_INTERVAL = 30
 
@@ -76,12 +70,10 @@ local SmithyState = {
     coordinates = {},
     --- True while a reclamation battle (player attacking an enemy-owned smithy) is in flight.
     is_reclamation_triggered = false,
-    --- True while a garrison defense battle is in flight.
-    is_defense_triggered = false,
-    --- The character that started a reclamation dilemma (not saved).
-    visiting_enemy_character = false,
-    --- Faction of the player reclaiming the smithy, kept so a reloaded battle can find them.
-    visiting_enemy_faction_name = false,
+    --- The character that started a reclamation dilemma, or nil (not saved).
+    visiting_enemy_character = nil,
+    --- Faction of the player reclaiming the smithy, kept so a reloaded battle can find them, or nil.
+    visiting_enemy_faction_name = nil,
     --- Force cqi of the army besieging a player-owned smithy, or nil when there is no siege.
     besieging_force_cqi = nil,
     --- Character cqi of the besieging army's general, used to hold and release it.
@@ -117,29 +109,35 @@ function SmithyState:update_state_given_turn_passing(mission_manager)
     if controlling_faction ~= nil and self:is_occupied() then
         --- Count this turn first so periodic rewards wait a full interval instead of firing on the turn the smithy is taken.
         self.turns_under_control = self.turns_under_control + 1
-        self:reward_owner_faction(controlling_faction)
-        self:update_visit_cooldown(controlling_faction:name())
-        self:issue_mission_if_possible(controlling_faction, mission_manager)
+        local is_player = controlling_faction:is_human()
+        self:reward_owner_faction(controlling_faction, is_player)
+        if is_player then
+            self:update_visit_cooldown(controlling_faction:name())
+            self:issue_mission_if_possible(controlling_faction, mission_manager)
+        end
     else
         self:try_to_automatically_occupy_smithy_by_region_ownership_when_abandoned()
     end
 end
 
 --- Gives the owner one item from the level's free-pick rarities: every tribute interval for a player, every `ai_item_interval` for the AI.
+--- AI items are offset by the smithy's slot so the AI-owned smithies do not all pay out on the same round.
 --- @param controlling_faction faction The faction currently controlling this smithy.
-function SmithyState:reward_owner_faction(controlling_faction)
-    local interval = self:is_occupied_by_player() and self:level_data().tribute_interval or smithy_data.ai_item_interval
-    if self.turns_under_control % interval ~= 0 then return end
+--- @param is_player boolean True when the owner is a human faction.
+function SmithyState:reward_owner_faction(controlling_faction, is_player)
+    local interval = is_player and self:level_data().tribute_interval or smithy_data.ai_item_interval
+    local offset = is_player and 0 or self.index_in_zone
+    if (self.turns_under_control + offset) % interval ~= 0 then return end
     local ancillary = item_pool.pick_items(controlling_faction:name(), self:level_data().free_pick_rarities, 1)[1]
     if ancillary ~= nil then
         cm:add_ancillary_to_faction(controlling_faction, ancillary, false)
     end
 end
 
---- Decrements the free-pick cooldown each turn and tells the owner when the forge is ready again.
---- @param controlling_faction string The faction key currently controlling this smithy.
+--- Decrements the free-pick cooldown each turn and tells the player owner when the forge is ready again.
+--- @param controlling_faction string The player faction key controlling this smithy.
 function SmithyState:update_visit_cooldown(controlling_faction)
-    if self:is_occupied_by_player() and self.visit_cooldown > 0 then
+    if self.visit_cooldown > 0 then
         self.visit_cooldown = self.visit_cooldown - 1
         if self.visit_cooldown == 0 then
             self:show_message(controlling_faction, "smithy_visit_available")
@@ -147,11 +145,11 @@ function SmithyState:update_visit_cooldown(controlling_faction)
     end
 end
 
---- Issues a Dark Elf smithy mission to a player owner every `MISSION_INTERVAL` turns. Other subcultures have no missions yet.
---- @param controlling_faction faction The faction currently controlling this smithy.
+--- Issues a Dark Elf smithy mission to the player owner every `MISSION_INTERVAL` turns. Other subcultures have no missions yet.
+--- @param controlling_faction faction The player faction controlling this smithy.
 --- @param mission_manager table The CA mission_manager handle used to issue missions.
 function SmithyState:issue_mission_if_possible(controlling_faction, mission_manager)
-    if not self:is_occupied_by_player() or self.turns_under_control % MISSION_INTERVAL ~= 0 then return end
+    if self.turns_under_control % MISSION_INTERVAL ~= 0 then return end
     local subculture_missions = smithy_data.missions_by_subculture[self.controlling_faction_subculture]
     if subculture_missions == nil or #subculture_missions == 0 then return end
     local smithy_mission = subculture_missions[random_number(#subculture_missions)]
@@ -169,9 +167,9 @@ end
 
 --- When the smithy is abandoned, assigns the owning faction of the underlying region as the new controller.
 function SmithyState:try_to_automatically_occupy_smithy_by_region_ownership_when_abandoned()
-    local region_data = cm:get_region_data_at_position(self.coordinates[1], self.coordinates[2])
-    if region_data and not region_data:is_null_interface() and region_data:region() ~= nil then
-        local new_owner_by_region_occupation = region_data:region():owning_faction()
+    local region = self:region()
+    if region then
+        local new_owner_by_region_occupation = region:owning_faction()
         if not new_owner_by_region_occupation:is_null_interface() then
             self:set_controlling_faction(new_owner_by_region_occupation)
         end
@@ -185,9 +183,8 @@ end
 --- Routes a general entering this smithy's marker: the forge for its player owner, occupation or reclamation for other players, and a
 --- siege or takeover for AI armies at war with the owner.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
---- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns boolean True when a smithy dilemma was opened.
-function SmithyState:trigger_event(area_and_character_info, invasion_battle_manager)
+function SmithyState:trigger_event(area_and_character_info)
     local visiting_character = area_and_character_info:family_member():character()
     local visiting_faction = visiting_character:faction()
 
@@ -237,34 +234,39 @@ function SmithyState:open_forge(faction)
     local level = self:level_data()
     local faction_key = faction:name()
     local treasury = faction:treasury()
+    local cooling = self:is_on_cooldown()
+    local can_afford_commission = treasury >= level.commission.price
     local builder = cm:create_dilemma_builder(EVENT_FORGE)
     local payload = cm:create_payload()
     local offer = { free_picks = {}, upgrade = false }
 
-    local picks = self:is_on_cooldown() and {} or item_pool.pick_items(faction_key, level.free_pick_rarities, FREE_PICK_COUNT)
+    --- Hands the payload built so far to the choice at `index` and starts a fresh one.
+    local function add_choice(index)
+        builder:add_choice_payload(FORGE_CHOICE_KEYS[index], payload)
+        payload:clear()
+    end
+
+    local picks = cooling and {} or item_pool.pick_items(faction_key, level.free_pick_rarities, FREE_PICK_COUNT)
     for i = 1, FREE_PICK_COUNT do
         if picks[i] then
             payload:faction_ancillary_gain(faction, picks[i])
             offer.free_picks[i] = true
         else
-            payload:text_display(self:is_on_cooldown() and PAYLOAD_TEXT_COOLING or PAYLOAD_TEXT_LEAVE)
+            payload:text_display(cooling and PAYLOAD_TEXT_COOLING or PAYLOAD_TEXT_LEAVE)
         end
-        builder:add_choice_payload(FORGE_CHOICE_KEYS[i], payload)
-        payload:clear()
+        add_choice(i)
     end
 
-    local commission = level.commission
-    local commission_items = treasury >= commission.price and item_pool.pick_items(faction_key, commission.rarities, commission.count) or {}
+    local commission_items = can_afford_commission and item_pool.pick_items(faction_key, level.commission.rarities, level.commission.count) or {}
     if #commission_items > 0 then
-        payload:treasury_adjustment(-commission.price)
+        payload:treasury_adjustment(-level.commission.price)
         for _, ancillary in ipairs(commission_items) do
             payload:faction_ancillary_gain(faction, ancillary)
         end
     else
-        payload:text_display(treasury >= commission.price and PAYLOAD_TEXT_LEAVE or PAYLOAD_TEXT_CANNOT_AFFORD)
+        payload:text_display(can_afford_commission and PAYLOAD_TEXT_LEAVE or PAYLOAD_TEXT_CANNOT_AFFORD)
     end
-    builder:add_choice_payload(FORGE_CHOICE_KEYS[COMMISSION_CHOICE], payload)
-    payload:clear()
+    add_choice(COMMISSION_CHOICE)
 
     if level.upgrade_price and treasury >= level.upgrade_price then
         payload:treasury_adjustment(-level.upgrade_price)
@@ -273,8 +275,7 @@ function SmithyState:open_forge(faction)
     else
         payload:text_display(level.upgrade_price and PAYLOAD_TEXT_CANNOT_AFFORD or PAYLOAD_TEXT_LEAVE)
     end
-    builder:add_choice_payload(FORGE_CHOICE_KEYS[UPGRADE_CHOICE], payload)
-    payload:clear()
+    add_choice(UPGRADE_CHOICE)
 
     self.pending_forge_offer = offer
     cm:launch_custom_dilemma_from_builder(builder, faction)
@@ -300,9 +301,7 @@ function SmithyState:set_level(level)
     level = math.max(1, math.min(#smithy_data.levels, level))
     if level == self.level then return end
     self.level = level
-    local marker_id = "land_enc_marker_" .. self.zone_name .. "_smithy_" .. self.index_in_zone
-    cm:remove_interactable_campaign_marker(marker_id)
-    cm:add_interactable_campaign_marker(marker_id, MARKER_KEY_BY_LEVEL[level], self.coordinates[1], self.coordinates[2], MARKER_INTERACTION_RADIUS, "", "")
+    SmithySpot.replace_marker(self.zone_name, self.index_in_zone, self.coordinates, level)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -325,8 +324,8 @@ end
 --- @param faction_name string The human faction whose turn is starting.
 --- @returns boolean True when the defense dilemma was opened.
 function SmithyState:check_siege_at_turn_start(faction_name)
-    if not self.besieging_force_cqi or self.is_defense_triggered or not self:is_occupied_by_same_faction(faction_name) then return false end
-    if not self:besieging_force_exists() then
+    if not self.besieging_force_cqi or self:has_garrison() or not self:is_occupied_by_same_faction(faction_name) then return false end
+    if not force_exists(self.besieging_force_cqi) then
         self:end_siege()
         return false
     end
@@ -336,22 +335,25 @@ end
 
 --- Applies the owner's defense choice: fight with a garrison, or surrender the smithy.
 --- @param choice number The 0-based choice index.
-function SmithyState:resolve_defense_choice(choice)
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager, used to build and place the garrison.
+function SmithyState:resolve_defense_choice(choice, invasion_battle_manager)
     if not self.besieging_force_cqi then return end
     if choice == FIRST_OPTION then
-        self:fight_with_garrison()
+        self:fight_with_garrison(invasion_battle_manager)
     else
         self:release_besieger()
         self:lose_to_besieger("smithy_unconditional_surrender")
     end
 end
 
---- Spawns a temporary garrison for the owner beside the smithy and has it attack the besiegers. Owners without army data cannot raise a
---- garrison, so the siege becomes a raid instead: the forge loses a level and the smithy stays with its owner.
-function SmithyState:fight_with_garrison()
+--- Spawns a temporary garrison for the owner beside the smithy, built like a capture army at the forge level, and has it attack the besiegers.
+--- When the owner has no army data or there is no room to spawn, the siege becomes a raid: the forge loses a level and the smithy stays.
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager, used to build and place the garrison.
+function SmithyState:fight_with_garrison(invasion_battle_manager)
     local owner = self.controlling_faction_name
-    local shorthand = Army.faction_shorthand_for_subculture(self.controlling_faction_subculture)
-    if shorthand == nil then
+    local region = self:region()
+    local x, y = invasion_battle_manager:find_location_for_character_to_spawn(owner, self.coordinates)
+    if Army.faction_shorthand_for_subculture(self.controlling_faction_subculture) == nil or not region or x == -1 then
         self:show_message(owner, "smithy_raided")
         self:release_besieger()
         self:set_level(self.level - 1)
@@ -359,14 +361,11 @@ function SmithyState:fight_with_garrison()
         return
     end
 
-    local force_makeup = start_force_makeup_generation(DIFFICULTY_KEYS[self.level], shorthand)
-    local unit_list = table.concat(army_generator.unit_keys(force_makeup), ",")
-    local x, y = cm:find_valid_spawn_location_for_character_from_position(owner, self.coordinates[1], self.coordinates[2], true)
-    local region_key = cm:get_region_data_at_position(self.coordinates[1], self.coordinates[2]):region():name()
-    cm:create_force(owner, unit_list, region_key, x, y, true, function(character_cqi, force_cqi)
+    local garrison = Army:new_from_subculture_and_level(self.controlling_faction_subculture, self.level)
+    local unit_list = invasion_battle_manager:build_unit_list(garrison)
+    cm:create_force(owner, unit_list, region:name(), x, y, true, function(character_cqi, force_cqi)
         self.garrison_character_cqi = character_cqi
         self.garrison_force_cqi = force_cqi
-        self.is_defense_triggered = true
         self:listen_for_defense_result()
         cm:force_attack_of_opportunity(force_cqi, self.besieging_force_cqi, false)
     end)
@@ -380,15 +379,8 @@ function SmithyState:listen_for_defense_result()
         "BattleCompleted",
         true,
         function()
-            local owner = self.controlling_faction_name
-            local player_won
-            if cm:pending_battle_cache_faction_is_attacker(owner) then
-                player_won = cm:pending_battle_cache_attacker_victory()
-            elseif cm:pending_battle_cache_faction_is_defender(owner) then
-                player_won = cm:pending_battle_cache_defender_victory()
-            else
-                return
-            end
+            local fought, player_won = pending_battle_result_for_faction(self.controlling_faction_name)
+            if not fought then return end
             core:remove_listener(listener_name)
             self:resolve_defense_battle(player_won)
         end,
@@ -399,12 +391,11 @@ end
 --- Removes the garrison, frees the besiegers, and keeps or loses the smithy by the battle result.
 --- @param player_won boolean True when the owner's garrison won.
 function SmithyState:resolve_defense_battle(player_won)
-    if self.garrison_force_cqi and cm:get_military_force_by_cqi(self.garrison_force_cqi) then
-        cm:kill_character_and_commanded_unit(cm:char_lookup_str(self.garrison_character_cqi), true)
+    if force_exists(self.garrison_force_cqi) then
+        kill_character_quietly(self.garrison_character_cqi)
     end
     self.garrison_force_cqi = nil
     self.garrison_character_cqi = nil
-    self.is_defense_triggered = false
     self:release_besieger()
     if player_won then
         self:show_message(self.controlling_faction_name, "smithy_successfully_defended")
@@ -424,16 +415,15 @@ function SmithyState:lose_to_besieger(message)
     self:set_controlling_faction(new_owner)
 end
 
---- True while the besieging army still exists.
---- @returns boolean True when the besieging force can be found.
-function SmithyState:besieging_force_exists()
-    local force = cm:get_military_force_by_cqi(self.besieging_force_cqi)
-    return force ~= nil and force ~= false and not force:is_null_interface()
+--- True while a garrison defense battle is in flight.
+--- @returns boolean True when a garrison is on record.
+function SmithyState:has_garrison()
+    return self.garrison_force_cqi ~= nil
 end
 
 --- Lets the besieging army move again, when it still exists.
 function SmithyState:release_besieger()
-    if self.besieging_character_cqi and self:besieging_force_exists() then
+    if self.besieging_character_cqi and force_exists(self.besieging_force_cqi) then
         cm:enable_movement_for_character(cm:char_lookup_str(self.besieging_character_cqi))
     end
 end
@@ -481,8 +471,8 @@ function SmithyState:trigger_event_given_battle_result(player_won_battle)
         end
     end
     self.is_reclamation_triggered = false
-    self.visiting_enemy_character = false
-    self.visiting_enemy_faction_name = false
+    self.visiting_enemy_character = nil
+    self.visiting_enemy_faction_name = nil
 end
 
 --- Builds the army that holds the smithy against a reclaiming player: the owner's subculture at the difficulty of the forge level.
@@ -505,7 +495,7 @@ function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
     if dilemma == EVENT_FORGE then
         self:resolve_forge_choice(choice)
     elseif dilemma == EVENT_DEFENSE then
-        self:resolve_defense_choice(choice)
+        self:resolve_defense_choice(choice, invasion_battle_manager)
     elseif dilemma == EVENT_RECLAMATION then
         self:resolve_reclamation_choice(choice, invasion_battle_manager)
     elseif LEGACY_VISIT_EVENTS[dilemma] then
@@ -535,6 +525,16 @@ function SmithyState:show_message(faction_name, message)
         false,
         EVENT_IMAGE_ID_LOCATION_OF_INTEREST
     )
+end
+
+--- Returns the region under the smithy.
+--- @returns region The region interface, or nil when the position has none.
+function SmithyState:region()
+    local region_data = cm:get_region_data_at_position(self.coordinates[1], self.coordinates[2])
+    if region_data and not region_data:is_null_interface() and region_data:region() ~= nil then
+        return region_data:region()
+    end
+    return nil
 end
 
 --- Resolves the controlling faction or clears ownership if the faction is dead or missing.
@@ -628,9 +628,8 @@ function SmithyState:export_state_as_table()
         zone_name = self.zone_name,
         index_in_zone = self.index_in_zone,
         coordinates = self.coordinates,
-        is_defense_triggered = self.is_defense_triggered,
         is_reclamation_triggered = self.is_reclamation_triggered,
-        visiting_enemy_faction_name = self.visiting_enemy_faction_name,
+        visiting_enemy_faction_name = self.visiting_enemy_faction_name or false,
         besieging_force_cqi = self.besieging_force_cqi or false,
         besieging_character_cqi = self.besieging_character_cqi or false,
         besieging_faction_name = self.besieging_faction_name or false,
@@ -645,8 +644,8 @@ function SmithyState:export_state_as_table()
     }
 end
 
---- Restores the smithy from a saved record. Records from before the forge rework have no siege fields, and their defense flag came from the
---- removed AI-vs-AI defense, so it is only kept when a garrison is on record.
+--- Restores the smithy from a saved record. Records from before the forge rework have no siege or garrison fields, so they load without a
+--- siege or a defense in flight.
 --- @param previous_state table A record previously produced by export_state_as_table.
 function SmithyState:reinstate(previous_state)
     local function value(key) return previous_state[key] or nil end
@@ -654,13 +653,12 @@ function SmithyState:reinstate(previous_state)
     self.index_in_zone = previous_state.index_in_zone
     self.coordinates = previous_state.coordinates
     self.is_reclamation_triggered = previous_state.is_reclamation_triggered == true
-    self.visiting_enemy_faction_name = previous_state.visiting_enemy_faction_name
+    self.visiting_enemy_faction_name = value("visiting_enemy_faction_name")
     self.besieging_force_cqi = value("besieging_force_cqi")
     self.besieging_character_cqi = value("besieging_character_cqi")
     self.besieging_faction_name = value("besieging_faction_name")
     self.garrison_force_cqi = value("garrison_force_cqi")
     self.garrison_character_cqi = value("garrison_character_cqi")
-    self.is_defense_triggered = previous_state.is_defense_triggered == true and self.garrison_force_cqi ~= nil
     self.pending_forge_offer = value("pending_forge_offer")
     self.level = previous_state.level or 1
     self.controlling_faction_name = previous_state.controlling_faction_name
@@ -684,9 +682,6 @@ function SmithyState:new(zone_name, index_in_zone, coordinates)
         index_in_zone = index_in_zone,
         coordinates = coordinates,
         is_reclamation_triggered = false,
-        is_defense_triggered = false,
-        visiting_enemy_character = false,
-        visiting_enemy_faction_name = false,
         level = 1,
         controlling_faction_name = "",
         controlling_faction_subculture = "",
@@ -709,10 +704,8 @@ local SmithyEventDelegate = {
     mission_manager = {},
     --- Shared invasion battle manager for reclamation battles.
     invasion_battle_manager = {},
-    --- Index in `smithies_state` of the smithy whose dilemma is open, or nil.
-    pending_dilemma_index = nil,
-    --- Turn number of the last once-per-round update, so several human factions in one round tick smithies once.
-    last_update_turn = nil
+    --- Faction key -> index in `smithies_state` of the smithy whose dilemma that faction has open.
+    pending_dilemma_by_faction = {}
 }
 
 --- Bootstraps a SmithyState for each smithy in the zone's initial state, mapping initial-owner to owner_if_player when the player matches.
@@ -730,11 +723,8 @@ function SmithyEventDelegate:generate_states(zone_name, smithies_initial_state)
     end
 end
 
---- Ticks every SmithyState once per round. Later human factions in the same round are skipped.
+--- Ticks every SmithyState. The FactionTurnStart listener calls this once per round.
 function SmithyEventDelegate:update_state_given_turn_passing()
-    local turn = cm:turn_number()
-    if self.last_update_turn == turn then return end
-    self.last_update_turn = turn
     for i = 1, #self.smithies_state do
         self.smithies_state[i]:update_state_given_turn_passing(self.mission_manager)
     end
@@ -745,7 +735,7 @@ end
 function SmithyEventDelegate:on_faction_turn_start(faction_name)
     for i = 1, #self.smithies_state do
         if self.smithies_state[i]:check_siege_at_turn_start(faction_name) then
-            self.pending_dilemma_index = i
+            self.pending_dilemma_by_faction[faction_name] = i
             return
         end
     end
@@ -768,30 +758,30 @@ end
 --- @param spot_info table The spot_info record for the triggered smithy.
 function SmithyEventDelegate:trigger_event(area_and_character_info, spot_info)
     local index = self:find_smithy_index(spot_info)
-    if index and self.smithies_state[index]:trigger_event(area_and_character_info, self.invasion_battle_manager) then
-        self.pending_dilemma_index = index
+    if index and self.smithies_state[index]:trigger_event(area_and_character_info) then
+        self.pending_dilemma_by_faction[area_and_character_info:family_member():character():faction():name()] = index
     end
 end
 
---- Dispatches a smithy dilemma choice to the smithy that opened the dilemma, falling back to the spot the player last entered.
+--- Dispatches a smithy dilemma choice to the smithy that opened the choosing faction's dilemma.
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
---- @param spot_info table The spot_info record of the last entered spot.
-function SmithyEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
-    local index = self.pending_dilemma_index or (spot_info and spot_info.zone and self:find_smithy_index(spot_info))
-    self.pending_dilemma_index = nil
+function SmithyEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+    local faction_name = dilemma_choice_and_faction_info:faction():name()
+    local index = self.pending_dilemma_by_faction[faction_name]
+    self.pending_dilemma_by_faction[faction_name] = nil
     if index and self.smithies_state[index] then
         self.smithies_state[index]:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, self.invasion_battle_manager)
     end
 end
 
 --- Exports every SmithyState plus the delegate's own state for the save/load callbacks.
---- @returns table A record with `smithies` (array of state records), `pending_dilemma_index` and `last_update_turn`.
+--- @returns table A record with `smithies` (array of state records) and `pending_dilemma_by_faction`.
 function SmithyEventDelegate:export_state_as_table()
     local smithies_data = {}
     for i = 1, #self.smithies_state do
         table.insert(smithies_data, self.smithies_state[i]:export_state_as_table())
     end
-    return { smithies = smithies_data, pending_dilemma_index = self.pending_dilemma_index or false, last_update_turn = self.last_update_turn or false }
+    return { smithies = smithies_data, pending_dilemma_by_faction = self.pending_dilemma_by_faction }
 end
 
 --- Restores every SmithyState from a saved state and re-arms battles in flight. Saves from before the forge rework hold the smithy array
@@ -803,7 +793,7 @@ function SmithyEventDelegate:reinstate_event_if_able(previous_state)
         local smithy = SmithyState:new("", 0, {})
         smithy:reinstate(records[i])
         self.smithies_state[i] = smithy
-        if smithy.is_defense_triggered then
+        if smithy:has_garrison() then
             smithy:listen_for_defense_result()
         elseif smithy.is_reclamation_triggered then
             local defensive_army = smithy:get_defensive_army()
@@ -812,8 +802,7 @@ function SmithyEventDelegate:reinstate_event_if_able(previous_state)
             self.invasion_battle_manager:reset_state_post_battle(smithy, "SmithySpot", nil, defensive_army)
         end
     end
-    self.pending_dilemma_index = previous_state.pending_dilemma_index or nil
-    self.last_update_turn = previous_state.last_update_turn or nil
+    self.pending_dilemma_by_faction = previous_state.pending_dilemma_by_faction or {}
 end
 
 --- Constructs a fresh SmithyEventDelegate wired to the given CA mission_manager and InvasionBattleManager.
@@ -823,6 +812,7 @@ end
 function SmithyEventDelegate:new(mission_manager, invasion_battle_manager)
     local t = {
         smithies_state = {},
+        pending_dilemma_by_faction = {},
         mission_manager = mission_manager,
         invasion_battle_manager = invasion_battle_manager
     }

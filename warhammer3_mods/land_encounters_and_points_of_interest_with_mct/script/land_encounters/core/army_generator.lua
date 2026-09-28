@@ -250,19 +250,6 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Generation
 
---- Flattens a force makeup's units into one array of unit keys, walked in the fixed unit-type order so every multiplayer client agrees.
---- @param force_makeup table A force makeup from `M.generate`.
---- @returns table An array of main unit keys.
-function M.unit_keys(force_makeup)
-    local keys = {}
-    for _, unit_type in ipairs(UNIT_TYPES) do
-        for _, key in ipairs(force_makeup.units[unit_type] or {}) do
-            table.insert(keys, key)
-        end
-    end
-    return keys
-end
-
 --- Builds a force makeup for the faction and difficulty by spending a rolled gold budget on a spine and then on the archetype's roles.
 --- @param difficulty_key string The difficulty key ("easy", "medium" or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.

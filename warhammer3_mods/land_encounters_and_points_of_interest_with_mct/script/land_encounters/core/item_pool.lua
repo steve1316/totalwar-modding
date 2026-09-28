@@ -37,14 +37,18 @@ function M.pick_items(faction_key, rarities, count)
     local faction = cm:get_faction(faction_key)
     local picked, seen = {}, {}
     for _ = 1, count do
+        local found = false
         for _ = 1, MAX_ATTEMPTS_PER_ITEM do
             local key = get_random_ancillary_key_for_faction(faction_key, nil, rarities[random_number(#rarities)])
             if key and not seen[key] and not (faction and faction:ancillary_exists(key)) then
                 seen[key] = true
                 table.insert(picked, key)
+                found = true
                 break
             end
         end
+        --- A slot that found nothing means the pool is dry for these rarities, so later slots would fail the same way.
+        if not found then break end
     end
     return picked
 end

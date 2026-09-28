@@ -1,7 +1,6 @@
---- Army class. Represents a random-encounter or smithy-defender army built from the
---- randomization pipeline. Holds the unit pool, lord pool, and reinforcement armies, and
---- exposes the constructors new_from_event (for spot battles) and new_from_subculture_and_level
---- (for smithy defenders).
+--- Army class. Represents an encounter or smithy army built from the randomization pipeline. Holds the unit pool, lord pool, and
+--- reinforcement armies, and exposes the constructors new_from_event (for spot battles) and new_from_subculture_and_level (for smithy
+--- capture armies and garrisons).
 
 --- TODO: Pass an is_player flag in the constructor to double check units and pass alternatives in case they are needed.
 --- Make logic to check dlc ownership given subculture. Should a Unit or Lord type be DLC only, replace those units with its

@@ -19,10 +19,14 @@ M.land_manager = nil
 M.point_of_interest_event_manager = nil
 M.spot_event_manager = nil
 M.current_spot_info = {}
+--- Turn number of the last once-per-round update, so several human factions in one round tick encounters and smithies once. Not saved: a
+--- load mid-round in multiplayer can tick that round once more.
+M.last_round_update_turn = nil
 
 --- Registers every persistent listener. Called once at module load by the entry point.
 function M.register()
-    --- Every player turn, expire stale encounters and refill them, and update POI states.
+    --- Once per round (on the first human turn), expire stale encounters, refill them, and update POI states. Every human turn, check that
+    --- faction's smithy sieges.
     core:add_listener(
         "land_enc_and_poi_faction_turn_start_update",
         "FactionTurnStart",
@@ -30,8 +34,12 @@ function M.register()
             return context:faction():is_human()
         end,
         function(context)
-            M.land_manager:update_land_encounters()
-            M.point_of_interest_event_manager:update_state_given_turn_passing()
+            local turn = cm:turn_number()
+            if M.last_round_update_turn ~= turn then
+                M.last_round_update_turn = turn
+                M.land_manager:update_land_encounters()
+                M.point_of_interest_event_manager:update_state_given_turn_passing()
+            end
             M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
         end,
         IS_PERSISTENT_LISTENER
@@ -105,7 +113,7 @@ function M.register()
             return false
         end,
         function(dilemma_choice_and_faction_info)
-            M.point_of_interest_event_manager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, M.current_spot_info)
+            M.point_of_interest_event_manager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
         end,
         IS_PERSISTENT_LISTENER
     )
