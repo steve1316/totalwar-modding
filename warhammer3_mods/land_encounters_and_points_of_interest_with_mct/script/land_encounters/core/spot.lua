@@ -529,14 +529,13 @@ end
 --- @param smithies_data table An array of { coordinates, initial_owner, owner_if_player } records.
 function PointOfInterestDelegate:initialize_smithies(smithies_data)
     self.points_of_interest = {}
-    local player_faction_name = cm:get_local_faction_name()
     if #smithies_data > 0 then
         for i=1, #smithies_data do
             local spot = Spot:new()
             spot:initialize_from_coordinates(i, smithies_data[i].coordinates)
 
             local initial_owner = ""
-            if player_faction_name == smithies_data[i].initial_owner then
+            if is_human_faction_name(smithies_data[i].initial_owner) then
                 initial_owner = smithies_data[i].owner_if_player
             else
                 initial_owner = smithies_data[i].initial_owner
