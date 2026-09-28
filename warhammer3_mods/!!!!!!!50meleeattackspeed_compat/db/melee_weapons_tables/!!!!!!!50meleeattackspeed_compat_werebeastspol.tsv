@@ -2,5 +2,5 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!!!50meleeattackspeed_compat_werebeastspol
 celebrant_knife	0	15	23	5	1.0000	sword	sword		1	1.0000	10.0000	0.0000	false	wh2_dlc11_unit_contact_charmed	0	10	1.7		false
 leshen_atk	0	0	275	190	4.0000	axe	club_huge	very_large	8	0.2000	10.0000	0.0000	true	wh_main_unit_contact_poison	10	3	2.25		false
-werewolf_atk	0	15	40	30	2.0000	axe	claw	medium	2	0.2000	10.0000	0.0000	false		2	3	1.4		false
-woodbeast_atk	0	0	200	140	4.0000	axe	club_huge	very_large	12	0.4000	10.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	10	3	2.0		false
+werewolf_atk	0	15	40	30	2.0000	axe	creatures_claws	medium	2	0.2000	10.0000	0.0000	false		2	3	1.4		false
+woodbeast_atk	0	0	200	140	4.0000	axe	creatures_big	very_large	12	0.4000	10.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	10	3	2.0		false

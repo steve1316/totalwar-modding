@@ -187,4 +187,3 @@ wh2_main_lzd_ancient_stegadon	0	18	140	340	10.0000	axe	creatures_claws	medium	7	
 wh2_main_lzd_bastiladon	0	15	90	160	9.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	false		20	20	3.7000		false
 wh2_main_lzd_cha_carnosaur_lord	35	0	110	330	7.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	false		20	20	3.6000		false
 wh_dlc08_nor_mammoth_tusks	0	34	155	370	10.0000	axe	creatures_claws	large	10	2.0000	1.2500	0.0000	false		8	2	3.5000		false
-wh_main_dwf_axe	0	0	21	7	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
