@@ -36,3 +36,9 @@ event_feed_strings_text_description_event_land_enc_smithy_successfully_defended	
 event_feed_strings_text_title_event_land_enc_smithy_lost	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_lost	Smithy Lost	false
 event_feed_strings_text_description_event_land_enc_smithy_lost	We lost control of the smithy. We were able to save the master blacksmith and part of his disciples, but we were unable to maintain control of the smithy, losing both the tribute and the opportunity to make official visits. As soon as we can recapture it we should do it.	false
+event_feed_strings_text_title_event_land_enc_smithy_besieged	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_besieged	Smithy Under Siege!	false
+event_feed_strings_text_description_event_land_enc_smithy_besieged	An enemy army has surrounded our smithy. At the start of our turn we must decide whether to defend it or give it up.	false
+event_feed_strings_text_title_event_land_enc_smithy_raided	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_raided	Smithy Raided	false
+event_feed_strings_text_description_event_land_enc_smithy_raided	We could not raise a garrison in time. The raiders looted the forge before leaving, and it has lost a level of craft.	false

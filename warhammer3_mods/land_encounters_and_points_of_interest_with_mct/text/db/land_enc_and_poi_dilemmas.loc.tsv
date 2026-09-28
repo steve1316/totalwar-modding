@@ -65,7 +65,7 @@ dilemmas_localised_description_land_enc_dilemma_caravans_cathay	A huge caravan, 
 dilemmas_localised_title_land_enc_dilemma_caravans_chads	A Great Caravan Passes	false
 dilemmas_localised_description_land_enc_dilemma_caravans_chads	In the middle of the night a long caravan of chaos dwarves is spotted by our explorers. It seems that they will bring a strong contingent of weapons and warriors to our enemies. Although the battle would probably be very difficult, we could turn this potential disaster into an opportunity.\\n	false
 dilemmas_localised_description_land_enc_dilemma_smithy_reclamation	This smithy is in the hands of our enemies. We can try to take it for our kingdom, allowing us to receive tributes in the form of equipment for our generals and heroes. Should we take it?	false
-dilemmas_localised_title_land_enc_dilemma_smithy_reclamation	Reclaming The Smithy	false
+dilemmas_localised_title_land_enc_dilemma_smithy_reclamation	Reclaiming The Smithy	false
 dilemmas_localised_description_land_enc_dilemma_smithy_defense	An enemy army approaches the smithy. Blacksmiths arm themselves with the weapons they create. The detachment of soldiers prepares for battle. Protecting the smithy is our duty and must not fall into enemy hands.	false
 dilemmas_localised_title_land_enc_dilemma_smithy_defense	Defending The Smithy	false
 dilemmas_localised_description_land_enc_dilemma_smithy_visit_level_1	The master blacksmith looks at us anxiously. He looks at his works and asks us to choose one of them. The quality is clearly poor but it will still serve us for our army. Or we could give him a budget to expand the smithy so that it pays taxes faster and improve the quality of the equipment created upong visiting.\\n	false
@@ -86,3 +86,5 @@ dilemmas_localised_title_land_enc_dilemma_incursion_army_neutral	Raid!	false
 dilemmas_localised_description_land_enc_dilemma_incursion_army_neutral	Our advance party reports a large foreign force in the distance, looting small towns and carting off everything of value. The survivors say the invaders mean to take this land or strip it bare. What should we do?	false
 dilemmas_localised_title_land_enc_dilemma_battlefield_neutral	An Epic Battle!	false
 dilemmas_localised_description_land_enc_dilemma_battlefield_neutral	A great army waits in battle lines on the far side of the field, banners raised and war drums pounding. Its general has chosen this ground and expects us to answer. Shall we try our luck?	false
+dilemmas_localised_title_land_enc_dilemma_smithy_forge	The Master Blacksmith's Forge	false
+dilemmas_localised_description_land_enc_dilemma_smithy_forge	The master blacksmith shows us what the forge has ready. We may take one piece freely while the forge is ready, commission a masterwork for gold, or pay to improve the forge so its work grows finer.	false

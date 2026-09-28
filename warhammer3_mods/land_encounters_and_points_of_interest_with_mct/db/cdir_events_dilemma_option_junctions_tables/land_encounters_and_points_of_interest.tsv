@@ -129,3 +129,6 @@ id	dilemma_key	option_key	value	target
 7017900671	land_enc_dilemma_battlefield_neutral	GEN_TARGET_NONE		default
 7017900672	land_enc_dilemma_battlefield_neutral	VAR_CHANCE	100	default
 7017900673	land_enc_dilemma_battlefield_neutral	VAR_FOLLOWUP_CHANCE	100	default
+7017900674	land_enc_dilemma_smithy_forge	GEN_TARGET_NONE		default
+7017900675	land_enc_dilemma_smithy_forge	VAR_CHANCE	100	default
+7017900676	land_enc_dilemma_smithy_forge	VAR_FOLLOWUP_CHANCE	100	default

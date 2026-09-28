@@ -24,5 +24,9 @@ campaign_interactable_marker_infos_tooltip_encounter_marker_43	A battle or an un
 campaign_interactable_marker_infos_name_encounter_marker_43	Land encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_44	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
 campaign_interactable_marker_infos_name_encounter_marker_44	Land encounter	true
-campaign_interactable_marker_infos_tooltip_encounter_marker_smithy	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_smithy	Smithy	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_smithy	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 1 of 3.	true
+campaign_interactable_marker_infos_name_encounter_marker_smithy	Smithy (Level 1)	true
+campaign_interactable_marker_infos_name_encounter_marker_smithy_level_2	Smithy (Level 2)	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_2	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 2 of 3.	true
+campaign_interactable_marker_infos_name_encounter_marker_smithy_level_3	Smithy (Level 3)	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_3	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 3 of 3.	true
