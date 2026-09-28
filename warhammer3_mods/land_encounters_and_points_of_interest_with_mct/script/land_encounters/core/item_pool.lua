@@ -18,7 +18,30 @@ local RARITY_WEIGHTS_BY_DIFFICULTY = {
     hard = { { "rare", 100 } },
 }
 
+--- Environment of the LEAPOI mod entry script, set by `M.set_script_environment`. CA's campaign globals such as
+--- `get_random_ancillary_key_for_faction` are visible there but not in the `_G` that required modules use.
+local script_environment = nil
+
 local M = {}
+
+--- Remembers the environment of the mod entry script so CA's item helper can be found there.
+--- @param environment table The entry script's `getfenv(1)`.
+function M.set_script_environment(environment)
+    script_environment = environment
+end
+
+--- Returns CA's `get_random_ancillary_key_for_faction`, looking in this module's globals first and then in the mod entry script's environment.
+--- @returns function The helper, or nil when neither has it.
+local function ca_random_ancillary_helper()
+    if type(get_random_ancillary_key_for_faction) == "function" then
+        return get_random_ancillary_key_for_faction
+    end
+    local helper = script_environment and script_environment.get_random_ancillary_key_for_faction
+    if type(helper) == "function" then
+        return helper
+    end
+    return nil
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +53,8 @@ local M = {}
 --- @param count number How many items to pick.
 --- @returns table An array of ancillary keys. Shorter than `count` (or empty) when CA's pool runs dry or is unavailable.
 function M.pick_items(faction_key, rarities, count)
-    if type(get_random_ancillary_key_for_faction) ~= "function" then
+    local random_ancillary = ca_random_ancillary_helper()
+    if random_ancillary == nil then
         out("DEBUG - item_pool: CA's get_random_ancillary_key_for_faction is not loaded, so no item is given.")
         return {}
     end
@@ -39,7 +63,7 @@ function M.pick_items(faction_key, rarities, count)
     for _ = 1, count do
         local found = false
         for _ = 1, MAX_ATTEMPTS_PER_ITEM do
-            local key = get_random_ancillary_key_for_faction(faction_key, nil, rarities[random_number(#rarities)])
+            local key = random_ancillary(faction_key, nil, rarities[random_number(#rarities)])
             if key and not seen[key] and not (faction and faction:ancillary_exists(key)) then
                 seen[key] = true
                 table.insert(picked, key)
