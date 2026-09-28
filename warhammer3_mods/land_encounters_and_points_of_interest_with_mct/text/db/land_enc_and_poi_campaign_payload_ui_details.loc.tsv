@@ -4,4 +4,4 @@ campaign_payload_ui_details_description_dummy_land_enc_smithy_forge_cooling	The 
 campaign_payload_ui_details_description_dummy_land_enc_smithy_leave	Leave the forge as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford	We cannot afford this. Nothing happens.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_upgrade	The forge improves by one level: finer free pieces, a shorter cooldown and more frequent tribute.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_unconditional_surrender	We will lose control of the smithy to the enemy faction.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_unconditional_surrender	We will lose control of the smithy to the enemy faction, and its forge will drop a level.	false
