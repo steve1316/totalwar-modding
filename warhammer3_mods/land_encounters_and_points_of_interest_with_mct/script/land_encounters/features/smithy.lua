@@ -512,11 +512,10 @@ function SmithyState:is_on_cooldown()
     return self.visit_cooldown > 0
 end
 
---- Returns true when the local player faction currently controls the smithy.
---- @returns boolean True when controlling_faction_name matches the local faction.
+--- Returns true when a human faction currently controls the smithy.
+--- @returns boolean True when controlling_faction_name belongs to a human player.
 function SmithyState:is_occupied_by_player()
-    local player_faction_name = cm:get_local_faction_name()
-    return self.controlling_faction_name == player_faction_name
+    return is_human_faction_name(self.controlling_faction_name)
 end
 
 --- Returns true when the smithy is controlled by the given faction.
@@ -700,12 +699,10 @@ local SmithyEventDelegate = {
 --- @param zone_name string The region key for the zone hosting the smithies.
 --- @param smithies_initial_state table An array of initial-state records (coordinates, initial_owner, owner_if_player).
 function SmithyEventDelegate:generate_states(zone_name, smithies_initial_state)
-    local player_faction_name = cm:get_local_faction_name()
-
     for i = 1, #smithies_initial_state do
         local smithy_state = SmithyState:new(zone_name, i, smithies_initial_state[i].coordinates)
 
-        if player_faction_name == smithies_initial_state[i].initial_owner then
+        if is_human_faction_name(smithies_initial_state[i].initial_owner) then
             smithy_state:set_controlling_faction(smithies_initial_state[i].owner_if_player)
         else
             smithy_state:set_controlling_faction(smithies_initial_state[i].initial_owner)

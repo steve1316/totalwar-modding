@@ -247,7 +247,7 @@ function get_random_faction()
         end
     end
 
-    local random_faction = filtered_faction_keys[math.random(1, #filtered_faction_keys)]
+    local random_faction = filtered_faction_keys[random_number(#filtered_faction_keys)]
     return random_faction
 end
 
@@ -288,7 +288,7 @@ local function select_weighted_random_unit_type(weights, faction_shorthand_key)
         total_weight = total_weight + weight
     end
 
-    local random_weight = math.random() * total_weight
+    local random_weight = random_number(10000) / 10000 * total_weight
     local cumulative_weight = 0
 
     for unit_type, weight in pairs(faction_weights) do
@@ -326,7 +326,7 @@ local function select_random_key(tbl)
     for key in pairs(tbl) do
         table.insert(keys, key)
     end
-    local random_index = math.random(1, #keys)
+    local random_index = random_number(#keys)
     return keys[random_index]
 end
 
@@ -338,7 +338,7 @@ local function select_random_value(tbl)
     for _, value in pairs(tbl) do
         table.insert(values, value)
     end
-    local random_index = math.random(1, #values)
+    local random_index = random_number(#values)
     return values[random_index]
 end
 
@@ -452,8 +452,8 @@ local function get_random_units(difficulty_key, faction_shorthand_key, force_mak
         --- For every other unit type, begin adding units to the force makeup.
         --- First, determine if copies should be added and cap it at 3.
         local copies = 1
-        if not add_single_copy and math.random() < 0.25 then
-            copies = math.min(math.random(unit_limits[unit_type][1], unit_limits[unit_type][2]), 3, room_left)
+        if not add_single_copy and random_chance(25) then
+            copies = math.min(random_number(unit_limits[unit_type][2], unit_limits[unit_type][1]), 3, room_left)
         end
 
         --- Randomize the list of enabled units first before selection.
@@ -484,7 +484,7 @@ end
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @returns table A force_makeup with lord, heroes, and per-type units arrays populated.
 local function generate_random_force_makeup(difficulty_key, faction_shorthand_key)
-    local max_units = math.random(difficulties[difficulty_key].min_units, difficulties[difficulty_key].max_units)
+    local max_units = random_number(difficulties[difficulty_key].max_units, difficulties[difficulty_key].min_units)
     local list_of_allowed_lord_objects = factions_data[faction_shorthand_key].allowed_lords or {}
     local list_of_allowed_hero_objects = factions_data[faction_shorthand_key].allowed_heroes or {}
     local force_makeup = {}
@@ -529,7 +529,7 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
 
     --- Select a random amount of heroes if their origin is enabled. Save the skill overrides for the heroes.
     local randomly_selected_heroes = {}
-    local number_of_heroes_to_select = math.random(difficulties[difficulty_key].limits.hero[1], difficulties[difficulty_key].limits.hero[2])
+    local number_of_heroes_to_select = random_number(difficulties[difficulty_key].limits.hero[2], difficulties[difficulty_key].limits.hero[1])
     for _, hero in pairs(randomic_shuffle(list_of_allowed_hero_objects)) do
         if #randomly_selected_heroes >= number_of_heroes_to_select then
             break
@@ -541,8 +541,8 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
     force_makeup.heroes = randomly_selected_heroes
 
     --- Get the override limit for melee_infantry and missile_infantry.
-    local override_limit_melee_infantry = math.random(difficulties[difficulty_key].limits.melee_infantry[1], difficulties[difficulty_key].limits.melee_infantry[2])
-    local override_limit_missile_infantry = math.random(difficulties[difficulty_key].limits.missile_infantry[1], difficulties[difficulty_key].limits.missile_infantry[2])
+    local override_limit_melee_infantry = random_number(difficulties[difficulty_key].limits.melee_infantry[2], difficulties[difficulty_key].limits.melee_infantry[1])
+    local override_limit_missile_infantry = random_number(difficulties[difficulty_key].limits.missile_infantry[2], difficulties[difficulty_key].limits.missile_infantry[1])
 
     --- First, randomly select the melee_infantry and missile_infantry units up to the minimum limits.
     --- Also check if the unit type has available units to select from. If not, then fallback to the other.
@@ -647,7 +647,7 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
             level_range = { difficulties[difficulty].lord_level_range[1], difficulties[difficulty].lord_level_range[2] },
         },
         heroes = {},
-        unit_experience_amount = math.random(difficulties[difficulty].unit_experience_amount[1], difficulties[difficulty].unit_experience_amount[2]),
+        unit_experience_amount = random_number(difficulties[difficulty].unit_experience_amount[2], difficulties[difficulty].unit_experience_amount[1]),
         units = {},
         reinforcing_ally_armies = false,
         reinforcing_enemy_armies = false,
@@ -793,15 +793,20 @@ function is_human_and_it_is_its_turn(faction)
     return faction:is_human() and cm:is_human_factions_turn()
 end
 
---- Returns the player general closest to the given spot's coordinates.
+--- Returns the general closest to the given spot's coordinates across every human faction, so all multiplayer clients agree.
 --- @param spot_info table A spot_info record with a coordinates {x, y} field.
 --- @returns character The closest player general, or nil when none is found.
 function get_player_faction_character_closest_to_spot(spot_info)
-    local faction_name = cm:get_local_faction_name()
     local only_general = true
     local is_garrison_commander = false
-    local local_character, distance = cm:get_closest_character_to_position_from_faction(faction_name, spot_info.coordinates[1], spot_info.coordinates[2], only_general, is_garrison_commander)
-    return local_character
+    local closest_character, closest_distance = nil, nil
+    for _, faction_name in ipairs(cm:get_human_factions()) do
+        local character, distance = cm:get_closest_character_to_position_from_faction(faction_name, spot_info.coordinates[1], spot_info.coordinates[2], only_general, is_garrison_commander)
+        if character and (closest_distance == nil or distance < closest_distance) then
+            closest_character, closest_distance = character, distance
+        end
+    end
+    return closest_character
 end
 
 --- Resolves the player character (falling back to closest-to-spot after a post-battle reload) and fires the incident, but only for humans on their turn.
@@ -1203,24 +1208,22 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             local attacker_was_victorious = cm:pending_battle_cache_attacker_victory()
             local defender_was_victorious = cm:pending_battle_cache_defender_victory()
 
-            local player_faction_name = cm:get_local_faction_name()
             local encounter_invasion = self.invasion_manager:get_invasion(army.invasion_identifier)
             --- Defensive-type battles cannot be tracked easily, so we only branch on player attacker/defender.
-            if cm:pending_battle_cache_faction_is_attacker(player_faction_name) then
-                found_encounter_faction = true
-                if attacker_was_victorious then
-                    player_won_battle = true
+            --- Check every human faction rather than the local one, so all multiplayer clients agree on the result.
+            for _, player_faction_name in ipairs(cm:get_human_factions()) do
+                if cm:pending_battle_cache_faction_is_attacker(player_faction_name) then
+                    found_encounter_faction = true
+                    player_won_battle = attacker_was_victorious
+                elseif cm:pending_battle_cache_faction_is_defender(player_faction_name) then
+                    found_encounter_faction = true
+                    player_won_battle = defender_was_victorious
                 end
-                if encounter_invasion then
-                    self:remove_invasion_forces(army)
-                end
-            elseif cm:pending_battle_cache_faction_is_defender(player_faction_name) then
-                found_encounter_faction = true
-                if defender_was_victorious then
-                    player_won_battle = true
-                end
-                if encounter_invasion then
-                    self:remove_invasion_forces(army)
+                if found_encounter_faction then
+                    if encounter_invasion then
+                        self:remove_invasion_forces(army)
+                    end
+                    break
                 end
             end
 

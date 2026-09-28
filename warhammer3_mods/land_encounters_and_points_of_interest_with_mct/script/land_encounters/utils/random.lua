@@ -1,7 +1,5 @@
 --- Side-effect module that publishes random-number / shuffle utility globals used across the mod.
-
-math.randomseed(os.time())
-math.random(); math.random(); math.random() -- warm up the RNG after seeding
+--- Every roll goes through cm:random_number so all multiplayer clients draw the same numbers.
 
 --- Builds a 1..n array and returns it shuffled.
 --- @param length_of_an_array number Size of the array to build before shuffling.
@@ -20,15 +18,15 @@ end
 --- @returns table The same table reference, now shuffled.
 function randomic_shuffle(tbl)
     for i = #tbl, 2, -1 do
-        local j = math.random(i)
+        local j = random_number(i)
         tbl[i], tbl[j] = tbl[j], tbl[i]
     end
     return tbl
 end
 
 
---- Returns a random integer in [min_num, max_num] (defaults 1..100). Safe in multiplayer. Used in place of cm:random_number
---- which has quirky behavior. Returns 0 for invalid inputs.
+--- Returns a random integer in [min_num, max_num] (defaults 1..100). Wraps cm:random_number, which is synced across multiplayer
+--- clients, and guards its quirks. Returns 0 for invalid inputs.
 --- @param max_num number Upper bound inclusive. Defaults to 100 when nil.
 --- @param min_num number Lower bound inclusive. Defaults to 1 when nil.
 --- @returns number A random integer in the range, or 0 on invalid input.
@@ -57,5 +55,13 @@ function random_number(max_num, min_num)
 		return 0
 	end
 	
-	return math.random(min_num, max_num)
+	return cm:random_number(max_num, min_num)
+end
+
+
+--- Returns true with the given percent chance. Multiplayer-safe replacement for `math.random() < p`.
+--- @param percent number The chance of returning true, from 0 to 100.
+--- @returns boolean True when the roll lands inside the chance.
+function random_chance(percent)
+	return random_number(100) <= percent
 end
