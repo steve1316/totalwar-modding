@@ -1,3 +1,4 @@
 key	max_damage_multiplier	max_health_ratio	min_damage_multiplier	min_health_ratio
 #projectiles_scaling_damages_tables;0;db/projectiles_scaling_damages_tables/!!!!!!!2xunitsize_compat_!scm_legendary
+str_natty_gun	1.0000	1.0000	1.5000	0.0100
 str_skulltaker	1.0000	1.0000	1.5000	0.0100

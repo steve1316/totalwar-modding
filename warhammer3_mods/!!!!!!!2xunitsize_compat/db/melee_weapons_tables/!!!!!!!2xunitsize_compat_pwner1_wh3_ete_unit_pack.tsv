@@ -64,7 +64,6 @@ wh3_dlc24_cth_mon_jet_lion_ete	0	0	290	550	6.0000	axe	stone_club_medium	large	5	
 wh3_dlc24_ksl_druzhina_great_axe_ete	0	30	100	240	2.0000	axe	axe_2h	medium	4	1.4000	1.0000	0.0000	false	wh3_dlc26_unit_contact_disemboweled	0	10	3.2000	wh2_dlc14_skv_cha_snikch	false
 wh3_dlc24_ksl_druzhina_great_axe_ete_2	0	0	120	240	1.0000	axe	axe_2h	medium	4	1.4000	1.0000	0.0000	false		0	10	4.0000		false
 wh3_dlc24_tze_mon_mutalith_vortex_beast_ror_ete	0	20	140	320	9.0000	axe	creatures_claws	very_large	5	2.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	3.6000		false
-wh3_dlc25_cha_tamurkhan_greataxe_ete	25	0	100	315	3.0000	axe	axe_medium	medium	3	1.0000	1.5000	0.0000	false	wh_main_unit_contact_poison	0	10	3.8000		false
 wh3_dlc25_chs_cha_chaos_lord_mtze_sword	0	0	320	170	3.0000	sword	sword	medium	5	1.6000	0.7500	0.0000	true		0	10	4.0000		false
 wh3_dlc25_dwf_garagrim_axe_dual_ete	0	15	300	150	5.0000	axe	axe	large	6	1.0000	1.2500	0.0000	true	wh_main_unit_contact_overhead_morale	0	10	3.6000		false
 wh3_dlc25_emp_theodore_sword_kho	0	0	300	150	3.0000	sword	sword	medium	5	1.3000	0.7500	1.0000	false		0	10	3.8000		false
@@ -95,6 +94,7 @@ wh3_dlc27_nor_chimera_ete	0	0	480	560	6.0000	axe	creatures_claws	large	5	1.0000	
 wh3_dlc27_nor_kurgan_dual_axe_ete	0	15	270	150	4.0000	axe	axe	large	5	1.0000	1.0000	0.0000	false		0	10	3.2000		false
 wh3_dlc27_nor_kurgan_great_axe_ete	0	0	120	275	4.0000	axe	axe_2h	large	5	1.0000	1.0000	0.0000	false		0	10	4.0000		false
 wh3_dlc27_nor_mon_cursd_ettin_fist_runecaller_ete	0	0	300	250	5.0000	axe	unarmed	medium	7	1.7000	1.0000	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	3.0000		false
+wh3_dlc29_chs_giant_spined_chaos_beast_ror_ete	0	0	150	290	6.0000	axe	creatures_claws	large	5	1.2000	1.2500	0.0000	false	wh3_dlc24_unit_contact_dark_blood	0	10	0.0000		false
 wh3_main_cth_shugengan_lord_ete	0	0	160	200	4.0000	sword	sword	large	4	1.0000	1.0000	1.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	4.0000		false
 wh3_main_dae_daemon_prince_flame_ete	0	0	500	500	9.0000	sword	sword_huge	large	5	1.0000	0.7500	1.0000	true	wh_main_unit_contact_morale	0	10	3.6000		false
 wh3_main_kho_exalted_bloodthirster_axe_ete	8	8	8	280	8.0000	axe	axe_huge	very_large	8	0.8000	0.8800	8.0000	true	wh3_dlc26_contact_phase_inevitable_end	0	8	0.0000	wh2_dlc17_bst_ghorgon_ror	false
@@ -110,7 +110,7 @@ wh3_pro11_chs_cha_harald_hammerstorm_ete	0	0	150	300	3.0000	axe	hammer_huge	medi
 wh3_pro11_chs_cha_harald_hammerstorm_ete_ror	0	0	100	350	4.0000	axe	hammer_huge	large	5	1.8000	1.0000	1.0000	true	wh_main_unit_contact_overhead_morale	0	10	3.8000		false
 wh_dlc01_chs_dragon_ete	0	0	140	410	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	10.0000	true	wh_main_unit_contact_morale	0	3	3.8000		false
 wh_dlc01_chs_dragon_ogre_shaggoth_ete_ror	30	0	160	400	9.0000	axe	axe_medium	large	6	1.5000	1.0000	0.0000	true	wh2_dlc17_unit_contact_dazed	0	10	3.6000		false
-wh_dlc01_chs_manticore_exalted_hero_ete	0	0	600	320	6.0000	axe	creatures_claws	large	5	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	0	3	3.6000		false
+wh_dlc01_chs_manticore_exalted_hero_ete	0	0	300	160	6.0000	axe	creatures_claws	large	5	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	0	3	3.6000		false
 wh_dlc03_bst_bestigor_great_axe_ete	20	0	130	350	4.0000	axe	axe_medium	large	4	2.0000	0.7500	0.0000	false		0	10	3.8000		false
 wh_dlc03_bst_gor_axe_gorebull_ete	0	20	160	300	5.0000	axe	axe	large	4	1.5000	1.0000	0.0000	false		0	10	4.0000		false
 wh_dlc03_bst_staff_hero_malagor_ete	0	0	265	135	3.0000	sword	staff	medium	4	1.0000	0.7500	0.0000	true		0	10	4.0000		false
