@@ -51,29 +51,30 @@ local M = {}
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
 
---- Returns true if a unit's origin pack is enabled under the user's MCT mod-compatibility settings.
---- @param origin string The origin tag on a unit ("vanilla" or a mod pack key).
---- @returns boolean True when the origin is allowed by the current MCT settings.
-local function is_origin_enabled(origin)
+--- Builds the set of unit origins the user's MCT mod-compatibility settings allow. Vanilla is in it unless "only modded units" is on.
+--- @returns table An origin -> true set ("vanilla" or mod pack keys).
+local function enabled_origins()
     local settings = get_mct_settings()
-    --- If "only modded units" is on, vanilla is excluded. Otherwise vanilla is always enabled.
-    if settings.enable_compatibility_with_supported_mods and settings.use_only_modded_units then
-        if origin == "vanilla" then
-            return false
-        end
-    elseif origin == "vanilla" then
-        return true
-    end
-
-    --- Origin must appear in the enabled-mods list.
+    local origins = {}
     if settings.enable_compatibility_with_supported_mods then
         for _, mod in ipairs(settings.enabled_mods) do
-            if origin == mod then
-                return true
-            end
+            origins[mod] = true
         end
     end
-    return false
+    origins.vanilla = not (settings.enable_compatibility_with_supported_mods and settings.use_only_modded_units) or nil
+    return origins
+end
+
+--- Returns the entries of `records` whose origin passes `accept`, in their original order.
+--- @param records table An array of factions_data lord or hero records.
+--- @param accept function A predicate taking an origin string.
+--- @returns table A new array of the matching records.
+local function filter_by_origin(records, accept)
+    local matches = {}
+    for _, record in ipairs(records) do
+        if accept(record.origin) then table.insert(matches, record) end
+    end
+    return matches
 end
 
 --- Returns the gold price used for budgeting a unit. Units with no campaign cost (Tomb Kings, most Beastmen) use their multiplayer cost.
@@ -89,8 +90,9 @@ end
 --- Builds per-role pools of the faction's buyable units across every tier. Each unit appears once, from its first enabled listing.
 --- Tiers and unit types are walked in a fixed order so every multiplayer client builds identical pools.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param origins table The allowed-origin set from `enabled_origins`.
 --- @returns table A role -> array of { land_unit, unit_type, price, is_renown } map, each array sorted by price, with a `median` price field.
-local function build_role_pools(faction_shorthand_key)
+local function build_role_pools(faction_shorthand_key, origins)
     local pools = { frontline = {}, missile = {}, cavalry = {}, monsters = {}, artillery = {} }
     local seen = {}
     local units_by_tier = factions_data[faction_shorthand_key].units
@@ -99,7 +101,7 @@ local function build_role_pools(faction_shorthand_key)
             local role = archetypes.role_by_unit_type[unit_type]
             for _, unit in ipairs(units_by_tier[tier_name] and units_by_tier[tier_name][unit_type] or {}) do
                 local price = unit_price(unit)
-                if price > 0 and not seen[unit.land_unit] and is_origin_enabled(unit.origin) then
+                if price > 0 and not seen[unit.land_unit] and origins[unit.origin] then
                     seen[unit.land_unit] = true
                     table.insert(pools[role], { land_unit = unit.land_unit, unit_type = unit_type, price = price, is_renown = unit.is_renown == true })
                 end
@@ -205,41 +207,31 @@ local function buy_from(army, candidates, spend_limit, max_count, preferred_unit
     return add_unit(army, unit, copies), copies
 end
 
---- Picks the lord and heroes the same way as before the budget rework: an enabled-origin lord (else a vanilla one) and a random hero count.
+--- Picks an enabled-origin lord (else a random vanilla one) and a random number of enabled-origin heroes. Only rolls on filtered
+--- copies, so the shared lord and hero lists in factions_data keep their order.
 --- @param difficulty_key string The difficulty key.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param origins table The allowed-origin set from `enabled_origins`.
 --- @returns table The lord record.
 --- @returns table An array of hero records.
-local function pick_lord_and_heroes(difficulty_key, faction_shorthand_key)
-    local lords = factions_data[faction_shorthand_key].allowed_lords or {}
-    local heroes = factions_data[faction_shorthand_key].allowed_heroes or {}
-
-    --- Remember the first vanilla lord seen as a fallback, since vanilla is always loaded and its lords are always valid.
-    local lord, fallback_vanilla_lord = nil, nil
-    for _, candidate in ipairs(randomic_shuffle(lords)) do
-        if is_origin_enabled(candidate.origin) then
-            lord = candidate
-            break
-        end
-        if fallback_vanilla_lord == nil and candidate.origin == "vanilla" then
-            fallback_vanilla_lord = candidate
-        end
-    end
-    if not lord then
+local function pick_lord_and_heroes(difficulty_key, faction_shorthand_key, origins)
+    local faction = factions_data[faction_shorthand_key]
+    local lords = filter_by_origin(faction.allowed_lords or {}, function(origin) return origins[origin] end)
+    if #lords == 0 then
         out("DEBUG - A lord was not able to be selected. Selecting a random vanilla lord instead.")
-        lord = fallback_vanilla_lord
+        lords = filter_by_origin(faction.allowed_lords or {}, function(origin) return origin == "vanilla" end)
     end
+    local lord = lords[random_number(#lords)]
 
+    --- Partial Fisher-Yates: only the first `number_of_heroes` positions get shuffled into place.
+    local heroes = filter_by_origin(faction.allowed_heroes or {}, function(origin) return origins[origin] end)
     local hero_range = get_mct_settings().difficulties[difficulty_key].limits.hero
-    local number_of_heroes = random_range(hero_range[1], hero_range[2])
+    local number_of_heroes = math.min(random_range(hero_range[1], hero_range[2]), #heroes)
     local selected_heroes = {}
-    for _, hero in ipairs(randomic_shuffle(heroes)) do
-        if #selected_heroes >= number_of_heroes then
-            break
-        end
-        if is_origin_enabled(hero.origin) then
-            table.insert(selected_heroes, hero)
-        end
+    for i = 1, number_of_heroes do
+        local j = random_number(#heroes, i)
+        heroes[i], heroes[j] = heroes[j], heroes[i]
+        table.insert(selected_heroes, heroes[i])
     end
     return lord, selected_heroes
 end
@@ -255,8 +247,9 @@ end
 function M.generate(difficulty_key, faction_shorthand_key)
     local settings = get_mct_settings()
     local budget_range = settings.difficulties[difficulty_key].budget
-    local lord, heroes = pick_lord_and_heroes(difficulty_key, faction_shorthand_key)
-    local pools = build_role_pools(faction_shorthand_key)
+    local origins = enabled_origins()
+    local lord, heroes = pick_lord_and_heroes(difficulty_key, faction_shorthand_key, origins)
+    local pools = build_role_pools(faction_shorthand_key, origins)
     local archetype = pick_archetype(pools)
 
     local army = { units = {}, copies = {}, budget_left = random_range(budget_range[1], budget_range[2]), slots_left = ARMY_UNIT_CAP - 1 - #heroes }
