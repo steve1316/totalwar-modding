@@ -403,10 +403,12 @@ if __name__ == "__main__":
             # Create mapping from the MODIFIED DataFrames (after doubling) for writing.
             main_units_mapping = {row["unit"]: row.to_dict() for _, row in main_units_tables_df.iterrows()}
 
+            land_units_records = land_units_tables_df.to_dict("records")
+            land_units_by_key = {row["key"]: row for row in land_units_records}
+
             # Process units and collect related tables.
             list_of_data_to_add = []
-            for _, row in land_units_tables_df.iterrows():
-                data = row.to_dict()
+            for data in land_units_records:
                 new_data = make_new_data_buckets(data["key"])
 
                 if data["key"] in main_units_mapping:
@@ -419,6 +421,7 @@ if __name__ == "__main__":
                         vanilla_mounts_keys=vanilla_mounts_keys,
                         variant_mesh_definitions_to_add=variant_mesh_definitions_to_add,
                         variantmeshes_root=variantmeshes_root,
+                        land_units_by_key=land_units_by_key,
                     )
 
                 list_of_data_to_add.append(new_data)
