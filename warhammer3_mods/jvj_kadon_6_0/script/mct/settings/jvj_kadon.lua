@@ -10,15 +10,13 @@ local SCROLL_TYPE_KEYS = { "allow_kin", "allow_bind" }
 --- Mod description shown on the MCT mod page, adapted from the original WH2 Workshop description.
 local MOD_DESCRIPTION = table.concat({
     "Introduces Kadon's Scrolls of Binding from the tabletop game into Total War: Warhammer.",
-    "Kadon was perhaps the most powerful Amber Wizard who ever lived. He cast aside his sophisticated nature and embraced his most primal instincts,"
-        .. " breaking his mind down into a bestial form. This let him bind creatures of immense power to his scrolls, a feat unmatched to this day.",
     "Each scroll is a magic item that lets its bearer summon and bind one creature in battle. Over 40 creatures are available, giving factions"
         .. " access to beasts they could never recruit.",
     "Scrolls of Kin summon a creature that stays on the battlefield until it is killed. Scrolls of Binding summon a creature that suffers from"
         .. " Unbinding and dies after a time limit.",
     "Scrolls are found after won battles and completed missions. The settings here control how often they drop, who can find them, and which"
         .. " creatures appear.",
-    "Originally made for Team Beast as part of the Beautiful & the Beastly Mod Jam 2020.",
+    "Original mod by JvJ.",
 }, "\n\n")
 
 --- The registered MCT mod.
@@ -142,6 +140,12 @@ local function sync_creature_locks(enable_all)
     end
 end
 
+--- Locks the starting-scroll creature dropdown while "Starting scroll for faction leader" is unchecked.
+--- @param starting_scroll boolean Live value of the `starting_scroll` checkbox.
+local function sync_starting_creature_lock(starting_scroll)
+    mct_mod:get_option_by_key("starting_scroll_creature"):set_locked(starting_scroll ~= true)
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Mod info
@@ -165,6 +169,7 @@ add_checkbox("no_duplicate_scrolls", "drops_section", "No duplicate scrolls per 
 add_checkbox("starting_scroll", "drops_section", "Starting scroll for faction leader",
     "On a new campaign, each human faction leader starts with one allowed scroll. Changing it mid-campaign has no effect.")
 add_starting_creature_dropdown()
+add_spacer("drops_spacer", "drops_section")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,6 +190,7 @@ add_checkbox("enable_all_creatures", "creatures_section", "Enable all creatures"
 for _, creature in ipairs(creatures.list) do
     add_checkbox(settings.creature_option_key(creature.id), "creatures_section", creature.name, nil, true)
 end
+add_spacer("creatures_spacer", "creatures_section")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -215,7 +221,19 @@ core:add_listener(
     true
 )
 
---- Saved settings can differ from the defaults the page was built with, so resync both lock rules whenever the panel opens.
+core:add_listener(
+    "jvj_kadon_starting_creature_lock",
+    "MctOptionSelectedSettingSet",
+    function(context)
+        return is_own_option(context, { "starting_scroll" })
+    end,
+    function(context)
+        sync_starting_creature_lock(context:setting())
+    end,
+    true
+)
+
+--- Saved settings can differ from the defaults the page was built with, so resync every lock rule whenever the panel opens.
 core:add_listener(
     "jvj_kadon_panel_opened_locks",
     "MctPanelOpened",
@@ -223,9 +241,11 @@ core:add_listener(
     function()
         sync_scroll_type_locks()
         sync_creature_locks(mct_mod:get_option_by_key("enable_all_creatures"):get_selected_setting())
+        sync_starting_creature_lock(mct_mod:get_option_by_key("starting_scroll"):get_selected_setting())
     end,
     true
 )
 
 sync_scroll_type_locks()
 sync_creature_locks(mct_mod:get_option_by_key("enable_all_creatures"):get_selected_setting())
+sync_starting_creature_lock(mct_mod:get_option_by_key("starting_scroll"):get_selected_setting())

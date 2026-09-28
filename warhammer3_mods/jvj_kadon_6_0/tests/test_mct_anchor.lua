@@ -94,7 +94,9 @@ h.test("registers the jvj_kadon mod", function()
     h.truthy(mod.title, "title")
     h.truthy(mod.description:find("Scrolls of Kin", 1, true), "description explains Kin")
     h.truthy(mod.description:find("Scrolls of Binding", 1, true), "description explains Binding")
-    h.truthy(mod.description:find("Beautiful & the Beastly", 1, true), "description credits the mod jam")
+    h.truthy(mod.description:find("JvJ", 1, true), "description credits JvJ")
+    h.eq(mod.description:find("Amber Wizard", 1, true), nil, "no Kadon lore")
+    h.eq(mod.description:find("Team Beast", 1, true), nil, "no Team Beast mention")
 end)
 
 h.test("option keys and defaults match the settings module", function()
@@ -112,7 +114,7 @@ h.test("option keys and defaults match the settings module", function()
         h.eq(option.text, creature.name, creature.id .. " text")
         expected = expected + 1
     end
-    h.eq(#mod.order, expected + 1, "no extra options besides the spacer")
+    h.eq(#mod.order, expected + 3, "no extra options besides the three spacers")
 end)
 
 h.test("settings are global with tooltips, creature toggles have none", function()
@@ -132,16 +134,31 @@ h.test("settings are global with tooltips, creature toggles have none", function
     end
 end)
 
-h.test("scroll types section ends with a blank spacer row", function()
+h.test("every section ends with a blank spacer row", function()
     local mod = load_anchor()
-    local last
-    for _, key in ipairs(mod.order) do
-        if mod.options[key].section == "scroll_types_section" then last = mod.options[key] end
+    for section_key in pairs(mod.sections) do
+        local last
+        for _, key in ipairs(mod.order) do
+            if mod.options[key].section == section_key then last = mod.options[key] end
+        end
+        h.eq(last.type, "dummy", section_key .. " last row type")
+        h.eq(last.text, " ", section_key .. " blank label")
+        h.eq(last.default, nil, section_key .. " no default")
+        h.eq(last.tooltip, nil, section_key .. " no tooltip")
     end
-    h.eq(last.type, "dummy", "last row type")
-    h.eq(last.text, " ", "blank label")
-    h.eq(last.default, nil, "no default")
-    h.eq(last.tooltip, nil, "no tooltip")
+end)
+
+h.test("starting creature dropdown locks while the starting scroll is off", function()
+    local mod, stubs = load_anchor()
+    local dropdown = mod.options.starting_scroll_creature
+    h.eq(dropdown.locked, true, "locked by default")
+    select_setting(stubs, mod.options.starting_scroll, true)
+    h.eq(dropdown.locked, false, "unlocked when on")
+    select_setting(stubs, mod.options.starting_scroll, false)
+    h.eq(dropdown.locked, true, "locked when off")
+    mod.options.starting_scroll.selected = true
+    open_panel(stubs)
+    h.eq(dropdown.locked, false, "unlocked after reopening with it on")
 end)
 
 h.test("sliders, read-only and tooltip wording", function()
