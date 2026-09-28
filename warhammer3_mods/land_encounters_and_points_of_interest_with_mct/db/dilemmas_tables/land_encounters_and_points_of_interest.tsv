@@ -44,3 +44,6 @@ land_enc_dilemma_surprise_attack_neutral	false			faction	false	Event	UI_CAM_EVEN
 land_enc_dilemma_incursion_army_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_battlefield_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_smithy_forge	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_smithy_forge_level_1	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_smithy_forge_level_2	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_smithy_forge_level_3	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false

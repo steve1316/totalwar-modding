@@ -19,8 +19,16 @@ local FIRST_OPTION = 0
 
 local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
---- The forge dilemma opened when the owner visits.
-local EVENT_FORGE = "land_enc_dilemma_smithy_forge"
+--- The forge dilemma opened when the owner visits, one per forge level so the description can state the level.
+local EVENT_FORGE_BY_LEVEL = { "land_enc_dilemma_smithy_forge_level_1", "land_enc_dilemma_smithy_forge_level_2", "land_enc_dilemma_smithy_forge_level_3" }
+
+--- Every forge dilemma key, including the level-less one a dilemma opened by an earlier build of the forge may still use.
+local FORGE_EVENTS = {
+    ["land_enc_dilemma_smithy_forge"] = true,
+    ["land_enc_dilemma_smithy_forge_level_1"] = true,
+    ["land_enc_dilemma_smithy_forge_level_2"] = true,
+    ["land_enc_dilemma_smithy_forge_level_3"] = true,
+}
 --- The dilemma offered to a player entering an enemy-owned smithy.
 local EVENT_RECLAMATION = "land_enc_dilemma_smithy_reclamation"
 --- The fight-or-surrender dilemma offered to a besieged owner.
@@ -46,10 +54,12 @@ local UPGRADE_CHOICE = 5
 local PAYLOAD_TEXT_COOLING = "dummy_land_enc_smithy_forge_cooling"
 --- Payload text for a choice that does nothing.
 local PAYLOAD_TEXT_LEAVE = "dummy_land_enc_smithy_leave"
---- Payload text for a paid choice the faction cannot afford.
-local PAYLOAD_TEXT_CANNOT_AFFORD = "dummy_land_enc_smithy_cannot_afford"
---- Payload text describing the upgrade.
-local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_smithy_upgrade"
+--- Payload text prefix for a commission the faction cannot afford. The forge level is appended, since the text states that level's price.
+local PAYLOAD_TEXT_CANNOT_AFFORD_COMMISSION = "dummy_land_enc_smithy_cannot_afford_commission_"
+--- Payload text prefix for an upgrade the faction cannot afford. The forge level is appended, since the text states that level's price.
+local PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE = "dummy_land_enc_smithy_cannot_afford_upgrade_"
+--- Payload text prefix describing the upgrade from the appended level to the next.
+local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_smithy_upgrade_"
 
 --- Turns between Dark Elf smithy missions for a player owner.
 local MISSION_INTERVAL = 30
@@ -193,7 +203,7 @@ function SmithyState:trigger_event(area_and_character_info)
             self:open_forge(visiting_faction)
             return true
         elseif not self:is_occupied() then
-            self:show_message(visiting_faction:name(), "smithy_default_occupation")
+            self:show_message(visiting_faction:name(), "smithy_default_occupation_level_" .. self.level)
             self:set_controlling_faction(visiting_faction:name())
         elseif self:is_faction_at_war_with_owner(visiting_faction) then
             if self:character_is_general_and_can_trigger_dilemma(visiting_character) then
@@ -236,7 +246,7 @@ function SmithyState:open_forge(faction)
     local treasury = faction:treasury()
     local cooling = self:is_on_cooldown()
     local can_afford_commission = treasury >= level.commission.price
-    local builder = cm:create_dilemma_builder(EVENT_FORGE)
+    local builder = cm:create_dilemma_builder(EVENT_FORGE_BY_LEVEL[self.level])
     local payload = cm:create_payload()
     local offer = { free_picks = {}, upgrade = false }
 
@@ -264,16 +274,16 @@ function SmithyState:open_forge(faction)
             payload:faction_ancillary_gain(faction, ancillary)
         end
     else
-        payload:text_display(can_afford_commission and PAYLOAD_TEXT_LEAVE or PAYLOAD_TEXT_CANNOT_AFFORD)
+        payload:text_display(can_afford_commission and PAYLOAD_TEXT_LEAVE or PAYLOAD_TEXT_CANNOT_AFFORD_COMMISSION .. self.level)
     end
     add_choice(COMMISSION_CHOICE)
 
     if level.upgrade_price and treasury >= level.upgrade_price then
         payload:treasury_adjustment(-level.upgrade_price)
-        payload:text_display(PAYLOAD_TEXT_UPGRADE)
+        payload:text_display(PAYLOAD_TEXT_UPGRADE .. self.level)
         offer.upgrade = true
     else
-        payload:text_display(level.upgrade_price and PAYLOAD_TEXT_CANNOT_AFFORD or PAYLOAD_TEXT_LEAVE)
+        payload:text_display(level.upgrade_price and PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE .. self.level or PAYLOAD_TEXT_LEAVE)
     end
     add_choice(UPGRADE_CHOICE)
 
@@ -290,7 +300,7 @@ function SmithyState:resolve_forge_choice(choice)
         self.visit_cooldown = self:level_data().cooldown
     elseif index == UPGRADE_CHOICE and offer.upgrade then
         self:set_level(self.level + 1)
-        self:show_message(self.controlling_faction_name, "smithy_levelled_up")
+        self:show_message(self.controlling_faction_name, "smithy_levelled_up_level_" .. self.level)
     end
     self.pending_forge_offer = nil
 end
@@ -490,7 +500,7 @@ end
 function SmithyState:trigger_event_given_battle_result(player_won_battle)
     if self.is_reclamation_triggered then
         if player_won_battle then
-            self:show_message(self.visiting_enemy_faction_name, "smithy_successfully_reclaimed")
+            self:show_message(self.visiting_enemy_faction_name, "smithy_successfully_reclaimed_level_" .. self.level)
             self:set_controlling_faction(self.visiting_enemy_faction_name)
         else
             self:show_message(self.visiting_enemy_faction_name, "smithy_reclaimed_repelled")
@@ -518,7 +528,7 @@ end
 function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, invasion_battle_manager)
     local choice = dilemma_choice_and_faction_info:choice()
     local dilemma = dilemma_choice_and_faction_info:dilemma()
-    if dilemma == EVENT_FORGE then
+    if FORGE_EVENTS[dilemma] then
         self:resolve_forge_choice(choice)
     elseif dilemma == EVENT_DEFENSE then
         self:resolve_defense_choice(choice, invasion_battle_manager)

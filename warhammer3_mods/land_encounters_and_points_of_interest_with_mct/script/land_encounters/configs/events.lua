@@ -247,6 +247,9 @@ M.complex_continuity = {
 
 M.smithy = {
     "land_enc_dilemma_smithy_forge",
+    "land_enc_dilemma_smithy_forge_level_1",
+    "land_enc_dilemma_smithy_forge_level_2",
+    "land_enc_dilemma_smithy_forge_level_3",
     "land_enc_dilemma_smithy_reclamation",
     "land_enc_dilemma_smithy_defense",
     "land_enc_dilemma_smithy_visit_level_1",
