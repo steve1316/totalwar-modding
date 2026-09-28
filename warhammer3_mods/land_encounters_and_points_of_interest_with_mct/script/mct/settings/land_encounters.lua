@@ -4,6 +4,8 @@
 
 require("script/land_encounters/core/mct")
 
+local archetypes = require("script/land_encounters/configs/archetypes")
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Initial MCT setup
@@ -16,6 +18,42 @@ end;
 if is_function(mct_mod.set_main_image) then
     mct_mod:set_main_image("ui/images/mct_main_image.png", 300, 300);
 end;
+
+--- Keeps at least one checkbox of a group enabled by locking whichever one is the last checked. Recomputes after any toggle in the group.
+--- @param option_keys table The checkbox option keys in the group.
+--- @param listener_name string A unique name for the MCT listener.
+local function lock_last_enabled_option(option_keys, listener_name)
+    local function recompute_locks()
+        local enabled_count = 0
+        for _, key in ipairs(option_keys) do
+            if mct_mod:get_option_by_key(key):get_selected_setting() then
+                enabled_count = enabled_count + 1
+            end
+        end
+        for _, key in ipairs(option_keys) do
+            local option = mct_mod:get_option_by_key(key)
+            option:set_locked(enabled_count == 1 and option:get_selected_setting())
+        end
+    end
+
+    recompute_locks()
+
+    core:add_listener(
+        listener_name,
+        "MctOptionSelectedSettingSet",
+        function(context)
+            local key = context:option():get_key()
+            for _, option_key in ipairs(option_keys) do
+                if key == option_key then return true end
+            end
+            return false
+        end,
+        function(_)
+            recompute_locks()
+        end,
+        true
+    )
+end
 
 --- Set title, author and description.
 mct_mod:set_title("!!!land_encounters_and_points_of_interest_mct_title", true)
@@ -75,47 +113,8 @@ intervention_allied_checkbox:set_is_global(true)
 intervention_allied_checkbox:set_default_value(false)
 intervention_allied_checkbox:set_assigned_section("battle_engagement_section")
 
---- At-least-one enforcement: lock whichever option is the last one currently checked, so the user
---- cannot reach an all-off state. Recompute after every toggle of any of the three.
-local intervention_option_keys = {
-    "intervention_ambush",
-    "intervention_interception",
-    "intervention_allied_reinforcements",
-}
-
---- Locks whichever intervention option is the last one currently checked so the user cannot reach an all-off state.
-local function recompute_intervention_locks()
-    local enabled = {}
-    for _, key in ipairs(intervention_option_keys) do
-        if mct_mod:get_option_by_key(key):get_selected_setting() then
-            table.insert(enabled, key)
-        end
-    end
-    local lock_last_only = (#enabled == 1)
-    for _, key in ipairs(intervention_option_keys) do
-        local option = mct_mod:get_option_by_key(key)
-        local is_only_enabled = lock_last_only and option:get_selected_setting()
-        option:set_locked(is_only_enabled)
-    end
-end
-
-recompute_intervention_locks()
-
-core:add_listener(
-    "leapoi_intervention_at_least_one_enforcer",
-    "MctOptionSelectedSettingSet",
-    function(context)
-        local key = context:option():get_key()
-        for _, intervention_key in ipairs(intervention_option_keys) do
-            if key == intervention_key then return true end
-        end
-        return false
-    end,
-    function(_)
-        recompute_intervention_locks()
-    end,
-    true
-)
+--- At-least-one enforcement so the user cannot turn every battle type off.
+lock_last_enabled_option({ "intervention_ambush", "intervention_interception", "intervention_allied_reinforcements" }, "leapoi_intervention_at_least_one_enforcer")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -236,198 +235,84 @@ turn_number_from_medium_to_hard_slider:slider_set_step_size(1, 1)
 turn_number_from_medium_to_hard_slider:set_default_value(25)
 turn_number_from_medium_to_hard_slider:set_assigned_section("randomized_encounter_force_generation_section")
 
-local slider_data = {
+--- Slider for how many copies of one unit an encounter force may field.
+local max_unit_copies_slider = mct_mod:add_new_option("max_unit_copies", "slider")
+max_unit_copies_slider:set_text("Max copies of one unit in a force", true)
+max_unit_copies_slider:set_tooltip_text("Caps how many copies of the same unit a generated encounter force can have. Regiments of Renown are always limited to one.", true)
+max_unit_copies_slider:set_is_global(true)
+max_unit_copies_slider:slider_set_min_max(1, 6)
+max_unit_copies_slider:slider_set_precision(0)
+max_unit_copies_slider:slider_set_step_size(1, 0)
+max_unit_copies_slider:set_default_value(get_mct_settings().max_unit_copies)
+max_unit_copies_slider:set_assigned_section("randomized_encounter_force_generation_section")
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Army archetypes
+
+local archetypes_section = mct_mod:add_new_section("army_archetypes_section")
+archetypes_section:set_localised_text("Army Archetypes", true)
+archetypes_section:set_description("Each encounter force rolls one enabled archetype that its faction can field. Every archetype keeps a frontline and a ranged or support unit.\n\nFactions that cannot field any enabled archetype use Battle line.", true)
+archetypes_section:assign_to_page(second_page)
+
+--- Tooltip for each archetype checkbox, keyed by archetype key.
+local archetype_tooltips = {
+    battle_line = "A balanced line of infantry, missile units, cavalry, monsters and artillery.",
+    raiders = "Mostly cavalry and missile cavalry. Needs a faction with at least 3 cavalry-type units.",
+    horde = "Many cheap infantry and missile units, aiming to fill the army.",
+    elite = "Fewer, pricier units drawn from the top half of each role's prices.",
+    monster_hunt = "Mostly monsters behind a small frontline. Needs a faction with at least 3 monster-type units.",
+    siege = "Artillery and missile units behind a frontline. Needs a faction with at least 3 artillery units.",
+}
+
+local archetype_option_keys = {}
+for _, archetype in ipairs(archetypes.list) do
+    local key = "archetype_" .. archetype.key
+    local checkbox = mct_mod:add_new_option(key, "checkbox")
+    checkbox:set_text("Enable " .. archetype.text, true)
+    checkbox:set_tooltip_text(archetype_tooltips[archetype.key], true)
+    checkbox:set_is_global(true)
+    checkbox:set_default_value(true)
+    checkbox:set_assigned_section("army_archetypes_section")
+    table.insert(archetype_option_keys, key)
+end
+archetypes_section:set_option_sort_function("index_sort")
+lock_last_enabled_option(archetype_option_keys, "leapoi_archetype_at_least_one_enforcer")
+
+--- Per-difficulty slider pairs. Each template makes a min and a max slider keyed "min_<field>_<difficulty>" / "max_<field>_<difficulty>".
+--- `field` "limit_hero" keeps the older hero count keys so existing MCT settings carry over.
+local difficulty_slider_templates = {
     {
-        key = "min_tier_easy",
-        title = "Min unit tier",
-        tooltip = "Set the minimum unit tier allowed for the generated encounter force. Note that this can be reduced by 1 to the minimum of 1 by the system if there were no eligible units for that tier.",
-        min = 1,
-        max = 5,
-        default_value = get_mct_settings().difficulties.easy.tiers[1],
+        field = "budget",
+        title = "gold budget",
+        tooltip = "The generated encounter force spends a random amount of gold between the min and max on its units. The lord and heroes are free. A bigger budget buys more and pricier units, up to the 20 unit army cap.",
+        min = 0,
+        max = 40000,
+        step = 500,
     },
     {
-        key = "max_tier_easy",
-        title = "Max unit tier",
-        tooltip = "Set the maximum unit tier allowed for the generated encounter force. Note that this can be increased by 1 to the maximum of 5 by the system if there were no eligible units for that tier.",
-        min = 1,
-        max = 5,
-        default_value = get_mct_settings().difficulties.easy.tiers[2],
-    },
-    {
-        key = "min_units_easy",
-        title = "Min number of units in force",
-        tooltip = "Set the minimum number of units for the generated encounter force.",
-        min = 1,
-        max = 20,
-        default_value = get_mct_settings().difficulties.easy.min_units,
-    },
-    {
-        key = "max_units_easy",
-        title = "Max number of units in force",
-        tooltip = "Set the maximum number of units for the generated encounter force.",
-        min = 1,
-        max = 20,
-        default_value = get_mct_settings().difficulties.easy.max_units,
-    },
-    {
-        key = "min_unit_experience_amount_easy",
-        title = "Min unit rank",
-        tooltip = "Set the minimum rank of each unit in the generated encounter force.",
+        field = "unit_experience_amount",
+        title = "unit rank",
+        tooltip = "Set the rank of each unit in the generated encounter force. The rank is picked randomly between the min and max.",
         min = 1,
         max = 9,
-        default_value = get_mct_settings().difficulties.easy.unit_experience_amount[1],
+        step = 1,
     },
     {
-        key = "max_unit_experience_amount_easy",
-        title = "Max unit rank",
-        tooltip = "Set the maximum rank of each unit in the generated encounter force.",
-        min = 1,
-        max = 9,
-        default_value = get_mct_settings().difficulties.easy.unit_experience_amount[2],
-    },
-    {
-        key = "min_lord_level_range_easy",
-        title = "Min lord level range",
-        tooltip = "Set the minimum level of the lord for the generated encounter force.",
+        field = "lord_level_range",
+        title = "lord level",
+        tooltip = "Set the level of the lord for the generated encounter force. The level is picked randomly between the min and max.",
         min = 1,
         max = 30,
-        default_value = get_mct_settings().difficulties.easy.lord_level_range[1],
+        step = 1,
     },
     {
-        key = "max_lord_level_range_easy",
-        title = "Max lord level range",
-        tooltip = "Set the maximum level of the lord for the generated encounter force.",
-        min = 1,
-        max = 30,
-        default_value = get_mct_settings().difficulties.easy.lord_level_range[2],
-    },
-    {
-        key = "min_tier_medium",
-        title = "Min unit tier",
-        tooltip = "Set the minimum unit tier allowed for the generated encounter force. Note that this can be reduced by 1 to the minimum of 1 by the system if there were no eligible units for that tier.",
-        min = 1,
-        max = 5,
-        default_value = get_mct_settings().difficulties.medium.tiers[1],
-    },
-    {
-        key = "max_tier_medium",
-        title = "Max unit tier",
-        tooltip = "Set the maximum unit tier allowed for the generated encounter force. Note that this can be increased by 1 to the maximum of 5 by the system if there were no eligible units for that tier.",
-        min = 1,
-        max = 5,
-        default_value = get_mct_settings().difficulties.medium.tiers[2],
-    },
-    {
-        key = "min_units_medium",
-        title = "Min number of units in force",
-        tooltip = "Set the minimum number of units for the generated encounter force.",
-        min = 1,
-        max = 20,
-        default_value = get_mct_settings().difficulties.medium.min_units,
-    },
-    {
-        key = "max_units_medium",
-        title = "Max number of units in force",
-        tooltip = "Set the maximum number of units for the generated encounter force.",
-        min = 1,
-        max = 20,
-        default_value = get_mct_settings().difficulties.medium.max_units,
-    },
-    {
-        key = "min_unit_experience_amount_medium",
-        title = "Min unit rank",
-        tooltip = "Set the minimum rank of each unit in the generated encounter force.",
-        min = 1,
-        max = 9,
-        default_value = get_mct_settings().difficulties.medium.unit_experience_amount[1],
-    },
-    {
-        key = "max_unit_experience_amount_medium",
-        title = "Max unit rank",
-        tooltip = "Set the maximum rank of each unit in the generated encounter force.",
-        min = 1,
-        max = 9,
-        default_value = get_mct_settings().difficulties.medium.unit_experience_amount[2],
-    },
-    {
-        key = "min_lord_level_range_medium",
-        title = "Min lord level range",
-        tooltip = "Set the minimum level of the lord for the generated encounter force.",
-        min = 1,
-        max = 30,
-        default_value = get_mct_settings().difficulties.medium.lord_level_range[1],
-    },
-    {
-        key = "max_lord_level_range_medium",
-        title = "Max lord level range",
-        tooltip = "Set the maximum level of the lord for the generated encounter force.",
-        min = 1,
-        max = 30,
-        default_value = get_mct_settings().difficulties.medium.lord_level_range[2],
-    },
-    {
-        key = "min_tier_hard",
-        title = "Min unit tier",
-        tooltip = "Set the minimum unit tier allowed for the generated encounter force. Note that this can be reduced by 1 to the minimum of 1 by the system if there were no eligible units for that tier.",
-        min = 1,
-        max = 5,
-        default_value = get_mct_settings().difficulties.hard.tiers[1],
-    },
-    {
-        key = "max_tier_hard",
-        title = "Max unit tier",
-        tooltip = "Set the maximum unit tier allowed for the generated encounter force. Note that this can be increased by 1 to the maximum of 5 by the system if there were no eligible units for that tier.",
-        min = 1,
-        max = 5,
-        default_value = get_mct_settings().difficulties.hard.tiers[2],
-    },
-    {
-        key = "min_units_hard",
-        title = "Min number of units in force",
-        tooltip = "Set the minimum number of units for the generated encounter force.",
-        min = 1,
-        max = 20,
-        default_value = get_mct_settings().difficulties.hard.min_units,
-    },
-    {
-        key = "max_units_hard",
-        title = "Max number of units in force",
-        tooltip = "Set the maximum number of units for the generated encounter force.",
-        min = 1,
-        max = 20,
-        default_value = get_mct_settings().difficulties.hard.max_units,
-    },
-    {
-        key = "min_unit_experience_amount_hard",
-        title = "Min unit rank",
-        tooltip = "Set the minimum rank of each unit in the generated encounter force.",
-        min = 1,
-        max = 9,
-        default_value = get_mct_settings().difficulties.hard.unit_experience_amount[1],
-    },
-    {
-        key = "max_unit_experience_amount_hard",
-        title = "Max unit rank",
-        tooltip = "Set the maximum rank of each unit in the generated encounter force.",
-        min = 1,
-        max = 9,
-        default_value = get_mct_settings().difficulties.hard.unit_experience_amount[2],
-    },
-    {
-        key = "min_lord_level_range_hard",
-        title = "Min lord level range",
-        tooltip = "Set the minimum level of the lord for the generated encounter force.",
-        min = 1,
-        max = 30,
-        default_value = get_mct_settings().difficulties.hard.lord_level_range[1],
-    },
-    {
-        key = "max_lord_level_range_hard",
-        title = "Max lord level range",
-        tooltip = "Set the maximum level of the lord for the generated encounter force.",
-        min = 1,
-        max = 30,
-        default_value = get_mct_settings().difficulties.hard.lord_level_range[2],
+        field = "limit_hero",
+        title = "number of heroes",
+        tooltip = "Set how many heroes join the generated encounter force. Heroes count toward the 20 unit army cap.",
+        min = 0,
+        max = 10,
+        step = 1,
     },
 }
 
@@ -441,44 +326,20 @@ for _, difficulty in ipairs({"easy", "medium", "hard"}) do
     difficulty_section:assign_to_page(second_page)
 end
 
---- Append per-difficulty min/max limit slider entries to slider_data for each ordered limit key.
+--- Materialize the min and max slider for every template in each difficulty section, in template order.
 for _, difficulty in ipairs({"easy", "medium", "hard"}) do
-    for _, limit_key in ipairs(get_mct_settings().ordered_slider_keys) do
-        table.insert(slider_data, {
-            key = "min_limit_" .. limit_key .. "_" .. difficulty,
-            title = "Min random value for " .. limit_key .. " copies",
-            tooltip = "Set the minimum value of the number generation to determine how many copies of a unit is added to the force per iteration. Note the amount is randomly selected from the range of the min and max.",
-            min = 0,
-            max = 10,
-            default_value = get_mct_settings().difficulties[difficulty].limits[limit_key][1],
-        })
-
-        table.insert(slider_data, {
-            key = "max_limit_" .. limit_key .. "_" .. difficulty,
-            title = "Max random value for " .. limit_key .. " copies",
-            tooltip = "Set the maximum value of the number generation to determine how many copies of a unit is added to the force per iteration. Note the amount is randomly selected from the range of the min and max.",
-            min = 0,
-            max = 10,
-            default_value = get_mct_settings().difficulties[difficulty].limits[limit_key][2],
-        })
-    end
-end
-
---- Materialize the actual slider options from slider_data, scoped per difficulty section.
---- ipairs is required here so the sliders appear in the order they were inserted.
-for _, difficulty in ipairs({"easy", "medium", "hard"}) do
-    out("DEBUG - creating slider options for difficulty: " .. difficulty)
-    for _, data in ipairs(slider_data) do
-        if data.key:find("_" .. difficulty) then
-            out("DEBUG - creating slider option: " .. data.key)
-            local slider = mct_mod:add_new_option(data.key, "slider")
-            slider:set_text(data.title, true)
-            slider:set_tooltip_text(data.tooltip, true)
+    local settings = get_mct_settings().difficulties[difficulty]
+    for _, template in ipairs(difficulty_slider_templates) do
+        local defaults = template.field == "limit_hero" and settings.limits.hero or settings[template.field]
+        for bound_index, bound in ipairs({"min", "max"}) do
+            local slider = mct_mod:add_new_option(bound .. "_" .. template.field .. "_" .. difficulty, "slider")
+            slider:set_text((bound == "min" and "Min " or "Max ") .. template.title, true)
+            slider:set_tooltip_text(template.tooltip, true)
             slider:set_is_global(true)
-            slider:slider_set_min_max(data.min, data.max)
+            slider:slider_set_min_max(template.min, template.max)
             slider:slider_set_precision(0)
-            slider:slider_set_step_size(1, 0)
-            slider:set_default_value(data.default_value)
+            slider:slider_set_step_size(template.step, 0)
+            slider:set_default_value(defaults[bound_index])
             slider:set_assigned_section("difficulty_" .. difficulty .. "_section")
         end
     end
