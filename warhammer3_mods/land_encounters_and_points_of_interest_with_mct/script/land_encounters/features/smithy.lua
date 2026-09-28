@@ -70,10 +70,11 @@ local SmithyState = {
 function SmithyState:update_state_given_turn_passing(mission_manager)
     local controlling_faction = self:check_if_owner_is_alive_and_return_faction()
     if controlling_faction ~= nil and self:is_occupied() then
+        --- Count this turn first so periodic rewards wait a full interval instead of firing on the turn the smithy is taken.
+        self.turns_under_control = self.turns_under_control + 1
         self:reward_owner_faction(controlling_faction)
         self:update_visit_cooldown(controlling_faction:name())
         self:issue_mission_if_possible(controlling_faction, mission_manager)
-        self.turns_under_control = self.turns_under_control + 1
     else
         self:try_to_automatically_occupy_smithy_by_region_ownership_when_abandoned()
     end
@@ -91,10 +92,9 @@ function SmithyState:reward_owner_faction(controlling_faction)
         turns_till_reward = self.turns_under_control % 4
     end
     if turns_till_reward == 0 then
-        --- if its an ai filter the event
+        --- Incidents only fire for humans, so AI owners (and players without a general) get the ancillary directly.
         local representative_character = cm:get_highest_ranked_general_for_faction(controlling_faction)
-        --- Guarantees that an ancillary is given to the faction and no crashing occurss
-        if representative_character ~= false then
+        if representative_character ~= false and controlling_faction:is_human() then
             trigger_incident(TRIBUTE_INCIDENT_EVENT, EVENT_VISIT_TARGETS, self:get_spot_info(), representative_character)
         else
             local ancillary = pick_random_smithy_item(elligible_items)
@@ -772,8 +772,8 @@ end
 function SmithyEventDelegate:reinstate_event_if_able(previous_state)
     for i = 1, #previous_state do
         self.smithies_state[i] = SmithyState:new("", 0, {})
-        local active_poi_spot_index = self.smithies_state[i]:reinstate(previous_state[i])
-        if active_poi_spot_index ~= nil then
+        local has_battle_in_flight = self.smithies_state[i]:reinstate(previous_state[i])
+        if has_battle_in_flight then
             local defensive_army = self.smithies_state[i]:get_defensive_army()
             self.invasion_battle_manager:set_auxiliary_army_for_reset(defensive_army)
             self.invasion_battle_manager:mark_battle_forces_for_removal(defensive_army)
