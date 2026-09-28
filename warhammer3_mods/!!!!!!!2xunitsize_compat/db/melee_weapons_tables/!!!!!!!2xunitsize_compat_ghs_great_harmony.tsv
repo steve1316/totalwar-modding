@@ -181,7 +181,7 @@ tmb_eagle_mage	0	0	250	170	7.0000	axe	creatures_claws	large	7	1.0000	1.2500	0.00
 tmb_elephant_necrotect	0	35	160	350	8.0000	axe	creatures_claws	large	10	1.0000	1.5000	0.0000	false		4	2	3.8000		false
 tmb_prince_lion	25	0	150	250	4.0000	spear	spear_medium	large	5	1.0000	1.0000	0.0000	false		0	10	3.5000		false
 tmb_prince_ushabti	0	20	50	320	4.0000	spear	spear_medium	medium	7	1.0000	1.5000	0.0000	false		0	5	4.0000		false
-wh2_dlc13_lzd_war_kroxigor_xs	0	0	38	90	3.0000	axe	axe	medium	6	3.0000	1.2500	1.0000	false		0	100	2.4000		false
+wh2_dlc13_lzd_war_kroxigor_xs	15	0	40	90	3.0000	axe	axe	medium	6	3.0000	1.2500	1.0000	true		0	10	3.5000		false
 wh2_main_hef_lord_greataxe_lion_rider	25	0	100	350	3.0000	axe	axe	medium	6	1.0000	1.2500	0.0000	false		4	2	4.0000		false
 wh2_main_lzd_ancient_stegadon	0	18	140	340	10.0000	axe	creatures_claws	medium	7	1.5000	1.2500	0.0000	false		35	20	3.5000		false
 wh2_main_lzd_bastiladon	0	15	90	160	9.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	false		20	20	3.7000		false
