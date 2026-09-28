@@ -37,3 +37,9 @@ land_enc_dilemma_smithy_defense	false			faction	false	Event	UI_CAM_EVENT_Dilemma
 land_enc_dilemma_smithy_visit_level_1	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_smithy_visit_level_2	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_smithy_visit_level_3	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_skirmish_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_underground_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_bandits_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_surprise_attack_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_incursion_army_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_battlefield_neutral	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false

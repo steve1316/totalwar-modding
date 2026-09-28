@@ -1,15 +1,15 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_dilemmas.loc		
-dilemmas_localised_description_land_enc_dilemma_skirmish_cth	A cathaian general approaches you in a friendly manner, seeking an audience. He offers a friendly skirmish to mutually train our armies in order to become stronger to battle our enemies. Do we accept the offer?	false
-dilemmas_localised_title_land_enc_dilemma_skirmish_cth	A Friendly Skirmish	false
-dilemmas_localised_description_land_enc_dilemma_skirmish_kis	A kislevian general approaches you in a friendly manner, seeking an audience. He offers a friendly skirmish to mutually train our armies in order to become stronger to battle our enemies. Do we accept the offer?	false
-dilemmas_localised_title_land_enc_dilemma_skirmish_kis	A Friendly Skirmish	false
-dilemmas_localised_description_land_enc_dilemma_skirmish_ogr	An ogre general approaches you in a friendly manner, seeking an audience. He offers a friendly skirmish to mutually train our armies in order to become stronger to battle our enemies. Do we accept the offer?	false
-dilemmas_localised_title_land_enc_dilemma_skirmish_ogr	A Friendly Skirmish	false
-dilemmas_localised_description_land_enc_dilemma_skirmish_nur	A nurgle general approaches you in a friendly manner, seeking an audience. He offers a friendly skirmish to mutually train our armies in order to become stronger to battle our enemies. Do we accept the offer?	false
-dilemmas_localised_title_land_enc_dilemma_skirmish_nur	A Friendly Skirmish	false
-dilemmas_localised_description_land_enc_dilemma_skirmish_tze	A tzeenchian general approaches you in a friendly manner, seeking an audience. He offers a friendly skirmish to mutually train our armies in order to become stronger to battle our enemies. He says he sees many battles in our future and we will need it. Do we accept the offer?	false
-dilemmas_localised_title_land_enc_dilemma_skirmish_tze	A Friendly Skirmish	false
+dilemmas_localised_description_land_enc_dilemma_skirmish_cth	A Cathayan general blocks our path and calls out a challenge: a skirmish to see which army is the stronger. Their soldiers are already forming up. Do we accept?	false
+dilemmas_localised_title_land_enc_dilemma_skirmish_cth	A Test of Arms	false
+dilemmas_localised_description_land_enc_dilemma_skirmish_kis	A Kislevite general blocks our path and calls out a challenge: a skirmish to see which army is the stronger. Their soldiers are already forming up. Do we accept?	false
+dilemmas_localised_title_land_enc_dilemma_skirmish_kis	A Test of Arms	false
+dilemmas_localised_description_land_enc_dilemma_skirmish_ogr	A Ogre general blocks our path and calls out a challenge: a skirmish to see which army is the stronger. Their soldiers are already forming up. Do we accept?	false
+dilemmas_localised_title_land_enc_dilemma_skirmish_ogr	A Test of Arms	false
+dilemmas_localised_description_land_enc_dilemma_skirmish_nur	A Nurglite general blocks our path and calls out a challenge: a skirmish to see which army is the stronger. Their soldiers are already forming up. Do we accept?	false
+dilemmas_localised_title_land_enc_dilemma_skirmish_nur	A Test of Arms	false
+dilemmas_localised_description_land_enc_dilemma_skirmish_tze	A Tzeentchian general blocks our path and calls out a challenge: a skirmish to see which army is the stronger. Their soldiers are already forming up. He says he sees many battles in our future. Do we accept?	false
+dilemmas_localised_title_land_enc_dilemma_skirmish_tze	A Test of Arms	false
 dilemmas_localised_description_land_enc_dilemma_underground_cth	During the trip we come across a battered camp, full of colorful and clearly hostile characters, who do not seem to like our presence. Our general salutes, thanking the dragon for his love. Those gathered hesitantly raise their weapons and seem ready to attack us. What should we do?\\n	false
 dilemmas_localised_title_land_enc_dilemma_underground_cth	Nascent Rebellion	false
 dilemmas_localised_description_land_enc_dilemma_underground_kis	During the trip we come across a battered camp, full of colorful and clearly hostile characters, who do not seem to like our presence. Our general salutes, thanking Ursun for his love. Those gathered hesitantly raise their weapons and seem ready to attack us. What should we do?	false
@@ -74,3 +74,15 @@ dilemmas_localised_description_land_enc_dilemma_smithy_visit_level_2	The master 
 dilemmas_localised_title_land_enc_dilemma_smithy_visit_level_2	The Master Blacksmith's Trust	false
 dilemmas_localised_description_land_enc_dilemma_smithy_visit_level_3	The master blacksmith smiles. He looks at his masterpieces and asks you to choose one of them. The quality is clearly excellent and will serve us well in our military.	false
 dilemmas_localised_title_land_enc_dilemma_smithy_visit_level_3	The Master Blacksmith's Gift	false
+dilemmas_localised_title_land_enc_dilemma_skirmish_neutral	A Test of Arms	false
+dilemmas_localised_description_land_enc_dilemma_skirmish_neutral	A rival general blocks the road with a modest force and calls out a challenge. They want to see whether our army is worth fearing. Do we accept?	false
+dilemmas_localised_title_land_enc_dilemma_underground_neutral	Nascent Rebellion	false
+dilemmas_localised_description_land_enc_dilemma_underground_neutral	We come across a battered camp full of armed malcontents who clearly do not welcome our presence. Their leaders shout for blood, and the mob raises its weapons. What should we do?	false
+dilemmas_localised_title_land_enc_dilemma_bandits_neutral	Bandits!	false
+dilemmas_localised_description_land_enc_dilemma_bandits_neutral	The road ahead is too quiet. Fresh hoofprints cross it in every direction, and the scouts swear riders are shadowing the column from the tree line. Should we continue down this path?	false
+dilemmas_localised_title_land_enc_dilemma_surprise_attack_neutral	Possible ambush?	false
+dilemmas_localised_description_land_enc_dilemma_surprise_attack_neutral	The column stretches thin through broken ground. Too many birds take flight at once, and the rearguard reports shapes moving along the ridges. The soldiers look to their general. What should we do?	false
+dilemmas_localised_title_land_enc_dilemma_incursion_army_neutral	Raid!	false
+dilemmas_localised_description_land_enc_dilemma_incursion_army_neutral	Our advance party reports a large foreign force in the distance, looting small towns and carting off everything of value. The survivors say the invaders mean to take this land or strip it bare. What should we do?	false
+dilemmas_localised_title_land_enc_dilemma_battlefield_neutral	An Epic Battle!	false
+dilemmas_localised_description_land_enc_dilemma_battlefield_neutral	A great army waits in battle lines on the far side of the field, banners raised and war drums pounding. Its general has chosen this ground and expects us to answer. Shall we try our luck?	false

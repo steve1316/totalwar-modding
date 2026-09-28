@@ -13,6 +13,8 @@ local archetypes = require("script/land_encounters/configs/archetypes")
 local mct_settings = {
     disable_smithies = false,
     spawn_percentage = 0.75,
+    --- Percent chance that a battle spot starts a battle instead of giving treasure.
+    battle_chance = 70,
     --- Default to interception only - matches the pre-MCT-toggle behavior the user established.
     enabled_intervention_types = { INTERCEPTION_TYPE },
     enabled_encounter_skin_ids = {},
@@ -317,15 +319,38 @@ function get_faction_mapping()
     return faction_mapping
 end
 
+--- Picks the battle type for an encounter from the user's MCT toggles. A `preferred_type` that is enabled wins, then Interception when it is
+--- enabled, then a random enabled type. An empty list (save-load race or MCT bypass) falls back to Interception.
+--- @param preferred_type number An optional battle-type tag a battle category asks for.
+--- @returns number One of AMBUSH_TYPE, INTERCEPTION_TYPE, or ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
+function pick_intervention_type(preferred_type)
+    local enabled = mct_settings.enabled_intervention_types or {}
+    local function is_enabled(type_tag)
+        for _, enabled_tag in ipairs(enabled) do
+            if enabled_tag == type_tag then return true end
+        end
+        return false
+    end
+    if preferred_type ~= nil then
+        if is_enabled(preferred_type) then return preferred_type end
+        if is_enabled(INTERCEPTION_TYPE) then return INTERCEPTION_TYPE end
+    end
+    if #enabled == 0 then
+        return INTERCEPTION_TYPE
+    end
+    return enabled[random_number(#enabled)]
+end
+
 --- Pulls the user's finalized MCT option values into the in-memory mct_settings table.
 --- @param mct_mod table The MCT mod handle returned by mct:get_mod_by_key.
 function set_mct_settings(mct_mod)
     mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
     mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
+    mct_settings.battle_chance = mct_mod:get_option_by_key("battle_chance"):get_finalized_setting()
 
     --- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
-    --- at-least-one via set_locked, so this list should never be empty, but the picker in
-    --- core/army.lua has a defensive fallback to INTERCEPTION_TYPE just in case.
+    --- at-least-one via set_locked, so this list should never be empty, but `pick_intervention_type`
+    --- has a defensive fallback to INTERCEPTION_TYPE just in case.
     local enabled_intervention_types = {}
     if mct_mod:get_option_by_key("intervention_ambush"):get_finalized_setting() then
         table.insert(enabled_intervention_types, AMBUSH_TYPE)
@@ -350,6 +375,7 @@ function set_mct_settings(mct_mod)
 
     out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))
+    out("DEBUG - mct_settings.battle_chance: " .. tostring(mct_settings.battle_chance))
     out("DEBUG - mct_settings.enable_all_encounter_skins: " .. tostring(mct_settings.enable_all_encounter_skins))
     out("DEBUG - mct_settings.use_only_modded_units: " .. tostring(mct_settings.use_only_modded_units))
     out("DEBUG - mct_settings.enable_compatibility_with_supported_mods: " .. tostring(mct_settings.enable_compatibility_with_supported_mods))
@@ -360,7 +386,7 @@ function set_mct_settings(mct_mod)
     out("DEBUG - mct_settings.enable_all_factions: " .. tostring(mct_settings.enable_all_factions))
 
     --- Read each difficulty's min/max sliders into its ranges. Hero count sliders keep their older min_limit_/max_limit_ keys.
-    for _, difficulty in ipairs({"easy", "medium", "hard"}) do
+    for _, difficulty in ipairs(DIFFICULTY_KEYS) do
         local settings = mct_settings.difficulties[difficulty]
         for _, field in ipairs({"budget", "unit_experience_amount", "lord_level_range"}) do
             settings[field][1] = mct_mod:get_option_by_key("min_" .. field .. "_" .. difficulty):get_finalized_setting()

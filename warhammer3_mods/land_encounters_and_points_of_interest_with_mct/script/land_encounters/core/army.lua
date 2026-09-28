@@ -18,19 +18,6 @@ local factions_data = require("script/land_encounters/configs/factions_data")
 --- Cultural alliance pools for the Allied Reinforcement intervention.
 local alliances = require("script/land_encounters/configs/alliances")
 
---- Picks a random intervention type from the user's MCT-enabled set. The MCT anchor enforces
---- at-least-one via set_locked, so the enabled list is never empty in normal operation. The
---- defensive fallback to INTERCEPTION_TYPE handles any save-load race or MCT bypass.
---- @returns number One of AMBUSH_TYPE, INTERCEPTION_TYPE, or ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
-local function pick_intervention_type()
-    local settings = get_mct_settings()
-    local enabled = settings and settings.enabled_intervention_types
-    if not enabled or #enabled == 0 then
-        return INTERCEPTION_TYPE
-    end
-    return enabled[random_number(#enabled)]
-end
-
 --- Returns the player faction's subculture key, or nil if no human faction can be resolved.
 --- @returns string The player's subculture key, or nil when no human faction is available.
 local function get_player_subculture()
@@ -182,22 +169,21 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constructors
 
---- Builds an Army for a random-encounter battle spot. Picks difficulty, faction, intervention type,
---- optional allied reinforcements, and then materializes the encounter + any reinforcement armies.
---- @param battle_event string An identifier label for the spawning event (used for logging only).
+--- Builds an Army for a random-encounter battle spot from a `battle_picker` event record, then materializes the encounter and any
+--- reinforcement armies.
+--- @param event table A `battle_picker` event record (faction, difficulty, archetype_keys, budget_multiplier, intervention, dilemma).
 --- @param player_subculture string The subculture of the player who triggered the encounter, used to pick an ally. May be nil.
 --- @returns Army A new Army instance with units_pool, lord_pool, and reinforcement arrays populated.
-function Army:new_from_event(battle_event, player_subculture)
-    out("DEBUG - new_from_event battle_event: " .. battle_event)
+function Army:new_from_event(event, player_subculture)
+    out("DEBUG - new_from_event dilemma: " .. tostring(event.dilemma))
 
-    local difficulty = get_current_difficulty()
-
-    local faction = get_random_faction()
+    local difficulty = event.difficulty
+    local faction = event.faction
     out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)
-    local force_data = start_force_makeup_generation(difficulty, faction)
+    local force_data = start_force_makeup_generation(difficulty, faction, event)
 
-    --- Pick the intervention type once so we can branch on it below for ally setup.
-    local intervention_type = pick_intervention_type()
+    --- The battle type was decided by the picker. Allied Reinforcements may still drop to Interception below.
+    local intervention_type = event.intervention
     local ally_force_data = nil
     if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
         local ally_faction = pick_ally_faction(player_subculture, faction)
@@ -281,9 +267,6 @@ function Army:create_from(force)
 end
 
 
---- Maps smithy upgrade level (1, 2, 3) to a randomization difficulty key.
-local SMITHY_LEVEL_TO_DIFFICULTY = { [1] = "easy", [2] = "medium", [3] = "hard" }
-
 --- Extracts the 3-letter faction shorthand from a subculture key (e.g. "wh_main_sc_emp_empire" -> "emp").
 --- Returns nil if the subculture does not match the expected pattern.
 --- @param subculture string The full subculture key, or nil.
@@ -309,7 +292,8 @@ function Army:new_from_subculture_and_level(subculture, level)
         shorthand = get_random_faction()
     end
 
-    local difficulty = SMITHY_LEVEL_TO_DIFFICULTY[level] or "easy"
+    --- Smithy upgrade levels 1-3 map onto the difficulty keys in order.
+    local difficulty = DIFFICULTY_KEYS[level] or "easy"
     out("DEBUG - smithy: generating defender for shorthand=" .. shorthand .. ", level=" .. tostring(level) .. ", difficulty=" .. difficulty)
 
     local force_data = start_force_makeup_generation(difficulty, shorthand)

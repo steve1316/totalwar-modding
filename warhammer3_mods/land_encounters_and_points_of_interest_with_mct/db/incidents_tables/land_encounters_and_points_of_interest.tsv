@@ -58,3 +58,6 @@ land_enc_incident_smithy_defense_victory	false	faction	false	Event		false		0.000
 land_enc_incident_smithy_defense_loss	false	faction	false	Event		false		0.0000	false
 land_enc_incident_smithy_defense_surrender	false	faction	false	Event		false		0.0000	false
 land_enc_incident_smithy_tribute	false	faction	false	Event		false		0.0000	false
+land_enc_incident_battle_won_incursion_neutral	false	faction	false	Event		false		0.0000	false
+land_enc_incident_battle_won_surprise_neutral	false	faction	false	Event		false		0.0000	false
+land_enc_incident_battle_won_battlefield_neutral	false	faction	false	Event		false		0.0000	false

@@ -85,6 +85,17 @@ spawn_percentage_slider:slider_set_step_size(0.05, 2)
 spawn_percentage_slider:set_default_value(0.75)
 spawn_percentage_slider:set_assigned_section("configuration_section")
 
+--- Slider for how often an encounter spot starts a battle instead of giving treasure.
+local battle_chance_slider = mct_mod:add_new_option("battle_chance", "slider")
+battle_chance_slider:set_text("Battle chance %", true)
+battle_chance_slider:set_tooltip_text("Chance that an encounter spot starts a battle. The rest give treasure. Default is 70.", true)
+battle_chance_slider:set_is_global(true)
+battle_chance_slider:slider_set_min_max(0, 100)
+battle_chance_slider:slider_set_precision(0)
+battle_chance_slider:slider_set_step_size(5, 0)
+battle_chance_slider:set_default_value(get_mct_settings().battle_chance)
+battle_chance_slider:set_assigned_section("configuration_section")
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Battle Engagement Behavior
@@ -94,7 +105,7 @@ battle_engagement_section:set_localised_text("Battle Engagement Behavior", true)
 
 local intervention_ambush_checkbox = mct_mod:add_new_option("intervention_ambush", "checkbox")
 intervention_ambush_checkbox:set_text("Allow Ambush encounters", true)
-intervention_ambush_checkbox:set_tooltip_text("When enabled, some land-encounter battles will be set up as ambushes - enemy composition will be hidden and the battle cannot be retreated from before it starts. Higher difficulty.", true)
+intervention_ambush_checkbox:set_tooltip_text("When enabled, some land-encounter battles will be set up as ambushes - enemy composition will be hidden and the battle cannot be retreated from before it starts. Higher difficulty. Nascent Rebellion and Surprise Attack battles always use it when it is enabled.", true)
 intervention_ambush_checkbox:set_is_global(true)
 intervention_ambush_checkbox:set_default_value(false)
 intervention_ambush_checkbox:set_assigned_section("battle_engagement_section")
@@ -108,7 +119,7 @@ intervention_interception_checkbox:set_assigned_section("battle_engagement_secti
 
 local intervention_allied_checkbox = mct_mod:add_new_option("intervention_allied_reinforcements", "checkbox")
 intervention_allied_checkbox:set_text("Allow Allied-Reinforcement encounters", true)
-intervention_allied_checkbox:set_tooltip_text("When enabled, some land-encounter battles will let the player attack the encounter with allied reinforcements available. Easier difficulty.", true)
+intervention_allied_checkbox:set_tooltip_text("When enabled, some land-encounter battles will let the player attack the encounter with allied reinforcements available. Easier difficulty. Battlefield battles always use it when it is enabled.", true)
 intervention_allied_checkbox:set_is_global(true)
 intervention_allied_checkbox:set_default_value(false)
 intervention_allied_checkbox:set_assigned_section("battle_engagement_section")
@@ -317,7 +328,7 @@ local difficulty_slider_templates = {
 }
 
 --- Create one collapsible section per difficulty.
-for _, difficulty in ipairs({"easy", "medium", "hard"}) do
+for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local difficulty_section = mct_mod:add_new_section("difficulty_" .. difficulty .. "_section")
     difficulty_section:set_localised_text("Randomization Difficulty Settings: " .. difficulty, true)
     difficulty_section:set_description("This section contains options for the random generation difficulty.\n\nYou do not need to load the save again for the changes to take effect.", true)
@@ -327,7 +338,7 @@ for _, difficulty in ipairs({"easy", "medium", "hard"}) do
 end
 
 --- Materialize the min and max slider for every template in each difficulty section, in template order.
-for _, difficulty in ipairs({"easy", "medium", "hard"}) do
+for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local settings = get_mct_settings().difficulties[difficulty]
     for _, template in ipairs(difficulty_slider_templates) do
         local defaults = template.field == "limit_hero" and settings.limits.hero or settings[template.field]
@@ -346,7 +357,7 @@ for _, difficulty in ipairs({"easy", "medium", "hard"}) do
 end
 
 --- Tell each difficulty section to sort options by insertion index now that all sliders are created.
-for _, difficulty in ipairs({"easy", "medium", "hard"}) do
+for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local difficulty_section = mct_mod:get_section_by_key("difficulty_" .. difficulty .. "_section")
     difficulty_section:set_option_sort_function("index_sort")
 end
