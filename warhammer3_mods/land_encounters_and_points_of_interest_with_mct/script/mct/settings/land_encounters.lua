@@ -330,7 +330,7 @@ local difficulty_slider_templates = {
 --- Create one collapsible section per difficulty.
 for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local difficulty_section = mct_mod:add_new_section("difficulty_" .. difficulty .. "_section")
-    difficulty_section:set_localised_text("Randomization Difficulty Settings: Easy / Medium / Hard (capitalize the difficulty key before concatenating), true)
+    difficulty_section:set_localised_text("Randomization Difficulty Settings: " .. difficulty:sub(1, 1):upper() .. difficulty:sub(2), true)
     difficulty_section:set_description("This section contains options for the random generation difficulty.\n\nYou do not need to load the save again for the changes to take effect.", true)
     difficulty_section:set_is_collapsible(true)
     difficulty_section:set_visibility(false)
