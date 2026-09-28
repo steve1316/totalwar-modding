@@ -114,7 +114,7 @@ end
 --- create_from sets on the lord table.
 function Army:randomize_lord()
     self.lord.subtype = self.lord_pool.agent_subtype
-    self.lord.level = random_number(self.lord_pool.level_range[2], self.lord_pool.level_range[1])
+    self.lord.level = random_range(self.lord_pool.level_range[1], self.lord_pool.level_range[2])
     out("DEBUG - Lord level: " .. self.lord.level)
 end
 
