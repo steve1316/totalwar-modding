@@ -171,7 +171,8 @@ end
 
 --- Builds an Army for a random-encounter battle spot from a `battle_picker` event record, then materializes the encounter and any
 --- reinforcement armies.
---- @param event table A `battle_picker` event record (faction, difficulty, archetype_keys, budget_multiplier, intervention, dilemma).
+--- @param event table A `battle_picker` event record (faction, difficulty, archetype_keys, budget_multiplier, intervention, dilemma). Optional
+--- `force_identifier` / `invasion_identifier` override the default encounter ids.
 --- @param player_subculture string The subculture of the player who triggered the encounter, used to pick an ally. May be nil.
 --- @returns Army A new Army instance with units_pool, lord_pool, and reinforcement arrays populated.
 function Army:new_from_event(event, player_subculture)
@@ -197,7 +198,7 @@ function Army:new_from_event(event, player_subculture)
         end
     end
 
-    force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, "encounter_force", "encounter_invasion", intervention_type)
+    force_data = convert_force_makeup_to_usable_format(difficulty, force_data, faction, event.force_identifier or "encounter_force", event.invasion_identifier or "encounter_invasion", intervention_type)
     if ally_force_data ~= nil then
         force_data.reinforcing_ally_armies = { ally_force_data }
     end
@@ -267,40 +268,39 @@ function Army:create_from(force)
 end
 
 
---- Extracts the 3-letter faction shorthand from a subculture key (e.g. "wh_main_sc_emp_empire" -> "emp").
---- Returns nil if the subculture does not match the expected pattern.
+--- Returns the 3-letter faction shorthand for a subculture key (e.g. "wh_main_sc_emp_empire" -> "emp") when `factions_data` has army data
+--- for it.
 --- @param subculture string The full subculture key, or nil.
---- @returns string The captured 3-letter shorthand, or nil when no match is found.
-local function shorthand_from_subculture(subculture)
-    if subculture == nil then return nil end
-    return subculture:match("sc_(%w+)_")
+--- @returns string The shorthand, or nil when the subculture has no shorthand or no army data.
+function Army.faction_shorthand_for_subculture(subculture)
+    local shorthand = subculture and subculture:match("sc_(%w+)_")
+    if shorthand == nil or factions_data[shorthand] == nil then return nil end
+    return shorthand
 end
 
---- Builds a smithy defender Army by running the same randomization pipeline as random encounters.
---- The defender faction matches the smithy's controlling-faction subculture when possible, and
---- falls back to a random faction if the subculture has no shorthand mapping. The smithy upgrade
---- level drives difficulty. Intervention type is picked via the MCT-toggled picker, so smithy
---- battles participate in the same Ambush / Interception / Allied Reinforcements selection as
---- random encounters.
+--- Builds a smithy capture-battle Army through the same pipeline as battle spots. The army matches the smithy owner's subculture when it has
+--- army data (else a random faction), the smithy level sets the difficulty, and the battle type is never Allied Reinforcements.
 --- @param subculture string The controlling faction's subculture key (may be nil).
---- @param level number Smithy upgrade level (1, 2, or 3). Drives difficulty selection.
+--- @param level number Smithy level (1, 2, or 3). Drives difficulty selection.
 --- @returns Army A new Army instance ready for randomize_units and randomize_lord.
 function Army:new_from_subculture_and_level(subculture, level)
-    local shorthand = shorthand_from_subculture(subculture)
-    if shorthand == nil or factions_data[shorthand] == nil then
-        out("DEBUG - smithy: subculture '" .. tostring(subculture) .. "' has no faction-shorthand mapping; using random faction.")
+    local shorthand = Army.faction_shorthand_for_subculture(subculture)
+    if shorthand == nil then
+        out("DEBUG - smithy: subculture '" .. tostring(subculture) .. "' has no army data; using random faction.")
         shorthand = get_random_faction()
     end
-
-    --- Smithy upgrade levels 1-3 map onto the difficulty keys in order.
-    local difficulty = DIFFICULTY_KEYS[level] or "easy"
-    out("DEBUG - smithy: generating defender for shorthand=" .. shorthand .. ", level=" .. tostring(level) .. ", difficulty=" .. difficulty)
-
-    local force_data = start_force_makeup_generation(difficulty, shorthand)
-    force_data = convert_force_makeup_to_usable_format(difficulty, force_data, shorthand, "smithy_defender_force", "smithy_defender_invasion", pick_intervention_type())
-
-    return Army:create_from(force_data)
+    local intervention = pick_intervention_type(INTERCEPTION_TYPE)
+    if intervention == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
+        intervention = INTERCEPTION_TYPE
+    end
+    return Army:new_from_event({
+        dilemma = "smithy",
+        faction = shorthand,
+        difficulty = DIFFICULTY_KEYS[level] or "easy",
+        intervention = intervention,
+        force_identifier = "smithy_defender_force",
+        invasion_identifier = "smithy_defender_invasion",
+    }, nil)
 end
-
 
 return Army
