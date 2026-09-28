@@ -246,6 +246,7 @@ M.complex_continuity = {
 --- smithy (from constants/events/smithy_events.lua)
 
 M.smithy = {
+    "land_enc_dilemma_smithy_forge",
     "land_enc_dilemma_smithy_reclamation",
     "land_enc_dilemma_smithy_defense",
     "land_enc_dilemma_smithy_visit_level_1",

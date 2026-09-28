@@ -141,18 +141,7 @@ DIFFICULTY_KEYS = { "easy", "medium", "hard" }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Item reward bucket weights
-
---- Weights for picking a rarity bucket when granting an item reward. Buckets are weighted by
---- current encounter difficulty: harder fights drop rarer items. Each entry is {bucket_name, weight}.
-local DIFFICULTY_BUCKET_WEIGHTS = {
-    easy   = { { "common", 50 }, { "uncommon", 40 }, { "rare", 10 } },
-    medium = { { "uncommon", 60 }, { "rare", 35 }, { "unique", 5 } },
-    hard   = { { "rare", 95 }, { "unique", 5 } },
-}
-
---- Smithy fights ignore current difficulty and always bias toward rare and unique items.
-local SMITHY_BUCKET_WEIGHTS = { { "rare", 95 }, { "unique", 5 } }
+--- Weighted pick
 
 --- Picks one entry from a list of {key, weight} pairs by weighted random.
 --- @param entries table A list of {key, weight} 2-element arrays.
@@ -167,24 +156,4 @@ function pick_weighted(entries)
         if roll <= acc then return entry[1] end
     end
     return entries[#entries][1]
-end
-
---- Picks a random ancillary key from the difficulty-appropriate rarity bucket.
---- @param items table The items pool table with common/uncommon/rare/unique sub-arrays.
---- @returns string|nil An ancillary key, or nil when the chosen bucket is empty.
-function pick_random_item_for_current_difficulty(items)
-    local bucket_name = pick_weighted(DIFFICULTY_BUCKET_WEIGHTS[get_current_difficulty()])
-    local bucket = items[bucket_name]
-    if not bucket or #bucket == 0 then return nil end
-    return bucket[random_number(#bucket)]
-end
-
---- Picks a random ancillary key biased toward rare and unique items. Used by smithy rewards.
---- @param items table The items pool table with common/uncommon/rare/unique sub-arrays.
---- @returns string|nil An ancillary key, or nil when the chosen bucket is empty.
-function pick_random_smithy_item(items)
-    local bucket_name = pick_weighted(SMITHY_BUCKET_WEIGHTS)
-    local bucket = items[bucket_name]
-    if not bucket or #bucket == 0 then return nil end
-    return bucket[random_number(#bucket)]
 end

@@ -32,6 +32,7 @@ function M.register()
         function(context)
             M.land_manager:update_land_encounters()
             M.point_of_interest_event_manager:update_state_given_turn_passing()
+            M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
         end,
         IS_PERSISTENT_LISTENER
     )

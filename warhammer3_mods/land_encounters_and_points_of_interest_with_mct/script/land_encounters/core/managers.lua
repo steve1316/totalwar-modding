@@ -371,33 +371,6 @@ local InvasionBattleManager = {
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Class methods
 
---- Generates a defense battle where the defender army holds the spot and the enemy character attacks it.
---- Preconditions: defender_army is the smithy/POI defender, enemy_character is at war with that faction
---- (or vice versa), and spot_coordinates is the defender's spawning point.
---- @param defender_army Army The Army instance that defends the spot.
---- @param enemy_character character The attacking character.
---- @param spot_coordinates table A {x, y} table for the defender spawn location.
-function InvasionBattleManager:generate_defense_battle(defender_army, enemy_character, spot_coordinates)
-    local x, y = self:find_location_for_character_to_spawn(defender_army.faction, spot_coordinates)
-    --- we try to correct the problem if we cannot find another place to spawn the enemy armies
-    local force_cqi = enemy_character:military_force():command_queue_index()
-
-    self.event_army = defender_army
-    self.event_army:randomize_units(self.random_army_manager)
-
-    local defender_force = self.random_army_manager:generate_force(defender_army.force_identifier)
-    local defence = self:setup_invasion(defender_army, enemy_character, defender_force, {x, y})
-    defence:start_invasion(
-        function(created_defender_force)
-            cm:force_attack_of_opportunity(created_defender_force:get_general():military_force():command_queue_index(), force_cqi, false)
-        end,
-        false,
-        false,
-        false
-    )
-end
-
-
 --- True if a valid spawn location exists for the offensive army near the spot.
 --- @param offensive_army Army The attacking Army instance.
 --- @param spot_coordinates table A {x, y} table for the spot center.
@@ -927,6 +900,13 @@ end
 function PointOfInterestEventManager:update_state_given_turn_passing()
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
+end
+
+--- Runs the per-faction part of a human turn start (smithy sieges). Skipped when smithies are disabled in MCT.
+--- @param faction_name string The human faction whose turn is starting.
+function PointOfInterestEventManager:on_faction_turn_start(faction_name)
+    if get_mct_settings().disable_smithies then return end
+    self.smithy_event_delegate:on_faction_turn_start(faction_name)
 end
 
 

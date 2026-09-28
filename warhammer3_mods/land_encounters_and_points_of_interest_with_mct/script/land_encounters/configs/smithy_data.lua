@@ -1,6 +1,39 @@
---- Smithy missions per player subculture. Drives the smithy upgrade missions; not used by the battle force pipeline (defender forces are now produced by the randomization system in core/managers.lua and core/army.lua).
+--- Smithy data: the forge level table and the smithy missions per player subculture.
 
 local M = {}
+
+--- What each forge level (index 1-3) offers. Rarities are CA's ancillary rarities ("common", "uncommon", "rare").
+--- - free_pick_rarities: the rarities of the free picks and of the tribute and AI items. Each item rolls one of them.
+--- - commission: the paid option - `count` items of `rarities` for `price` gold.
+--- - cooldown: turns after a free pick before the next free pick.
+--- - tribute_interval: turns between tribute items for a player owner.
+--- - upgrade_price: gold to reach the next level, or nil at the top level.
+M.levels = {
+    {
+        free_pick_rarities = { "common", "uncommon" },
+        commission = { rarities = { "rare" }, count = 1, price = 4000 },
+        cooldown = 10,
+        tribute_interval = 15,
+        upgrade_price = 10000,
+    },
+    {
+        free_pick_rarities = { "uncommon", "rare" },
+        commission = { rarities = { "rare" }, count = 1, price = 3000 },
+        cooldown = 7,
+        tribute_interval = 10,
+        upgrade_price = 20000,
+    },
+    {
+        free_pick_rarities = { "rare" },
+        commission = { rarities = { "rare" }, count = 2, price = 6000 },
+        cooldown = 5,
+        tribute_interval = 5,
+        upgrade_price = nil,
+    },
+}
+
+--- Turns between the item an AI owner gets from its smithy.
+M.ai_item_interval = 10
 
 --- PLAYER ONLY. Each mission gives a set or one of the useful racial items given certain conditions are met. Only X (1/2/3) missions can be active given smithy level at a time per faction.
 M.missions_by_subculture = {

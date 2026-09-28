@@ -5,7 +5,7 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/core/managers")
 
 local complex_continuity_events = require("script/land_encounters/configs/events").complex_continuity
-local elligible_items = require("script/land_encounters/configs/items").balancing
+local item_pool = require("script/land_encounters/core/item_pool")
 
 local battle_picker = require("script/land_encounters/core/battle_picker")
 
@@ -56,7 +56,7 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
         --- AI: silently grants a small loot.
         local trigger_event_feed = false
         if random_chance(10) then
-            local ancillary = pick_random_item_for_current_difficulty(elligible_items)
+            local ancillary = item_pool.pick_item_for_difficulty(triggering_faction_name)
             if ancillary ~= nil then
                 cm:add_ancillary_to_faction(triggering_faction, ancillary, trigger_event_feed)
             end
