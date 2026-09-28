@@ -31,13 +31,16 @@ end
 --- @param section string Section key.
 --- @param text string Label.
 --- @param tooltip string Hover text.
---- @param default boolean Default value.
+--- @param default boolean|nil Default value. Falls back to `settings.DEFAULTS[key]` when nil.
 --- @returns table The created option.
 local function add_checkbox(key, section, text, tooltip, default)
     local option = mct_mod:add_new_option(key, "checkbox")
     option:set_text(text, true)
     option:set_tooltip_text(tooltip, true)
     option:set_is_global(true)
+    if default == nil then
+        default = settings.DEFAULTS[key]
+    end
     option:set_default_value(default)
     option:set_assigned_section(section)
     return option
@@ -113,25 +116,27 @@ end
 add_section("drops_section", "Drops")
 add_percent_slider("battle_drop_chance", "Scroll chance after a won battle (%)", "Chance for the winning side's general to find a Kadon scroll. Quest battles never drop scrolls.")
 add_percent_slider("mission_drop_chance", "Scroll chance on completing a mission (%)", "Chance to find a Kadon scroll on top of the mission's normal reward.")
-add_checkbox("ai_can_find_scrolls", "drops_section", "AI factions can find scrolls", "When off, only human players get scrolls from battles and missions.", settings.DEFAULTS.ai_can_find_scrolls)
-add_checkbox("no_duplicate_scrolls", "drops_section", "No duplicate scrolls per faction", "A faction never receives a scroll it already owns, equipped or in its item pool.", settings.DEFAULTS.no_duplicate_scrolls)
+add_checkbox("ai_can_find_scrolls", "drops_section", "AI factions can find scrolls", "When off, only human players get scrolls from battles and missions.")
+add_checkbox("no_duplicate_scrolls", "drops_section", "No duplicate scrolls per faction", "A faction never receives a scroll it already owns, equipped or in its item pool.")
 --- Not read-only: MCT's `set_read_only` locks the option in the main menu too. The scroll is only granted on a new campaign anyway.
-add_checkbox("starting_scroll", "drops_section", "Starting scroll for faction leader", "On a new campaign, each human faction leader starts with one random allowed scroll. Changing it mid-campaign has no effect.", settings.DEFAULTS.starting_scroll)
+add_checkbox("starting_scroll", "drops_section", "Starting scroll for faction leader",
+    "On a new campaign, each human faction leader starts with one random allowed scroll. Changing it mid-campaign has no effect.")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Scroll types
 
 add_section("scroll_types_section", "Scroll Types", "Each drop is randomly Kin or Binding, from the types allowed here. At least one type must stay on.")
-add_checkbox("allow_kin", "scroll_types_section", "Allow Scrolls of Kin", "Kin summons stay on the battlefield until they are killed.", settings.DEFAULTS.allow_kin)
-add_checkbox("allow_bind", "scroll_types_section", "Allow Scrolls of Binding", "Binding summons are identical to Kin, but they fade. After about 90 seconds they start losing health, and they're gone soon after.", settings.DEFAULTS.allow_bind)
+add_checkbox("allow_kin", "scroll_types_section", "Allow Scrolls of Kin", "Kin summons stay on the battlefield until they are killed.")
+add_checkbox("allow_bind", "scroll_types_section", "Allow Scrolls of Binding",
+    "Binding summons are identical to Kin, but they fade. After about 90 seconds they start losing health, and they're gone soon after.")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Creatures
 
 add_section("creatures_section", "Creatures", "Disabled creatures never drop. Takes effect on the next drop.")
-add_checkbox("enable_all_creatures", "creatures_section", "Enable all creatures", "When on, every creature can drop and the individual toggles below are locked.", settings.DEFAULTS.enable_all_creatures)
+add_checkbox("enable_all_creatures", "creatures_section", "Enable all creatures", "When on, every creature can drop and the individual toggles below are locked.")
 for _, creature in ipairs(creatures.list) do
     add_checkbox(settings.creature_option_key(creature.id), "creatures_section", creature.name, "Allow " .. creature.name .. " scrolls to drop.", true)
 end
