@@ -242,6 +242,42 @@ h.test("starting scroll equips each human leader and skips leaderless factions",
     h.eq(stubs.forced[1].force_equip, true, "equipped")
 end)
 
+h.test("starting scroll uses the chosen creature", function()
+    local stubs = h.install_game_stubs({ 2, 1 })
+    settings.reset()
+    settings.values.starting_scroll = true
+    settings.values.starting_scroll_creature = "carnosaur"
+    stubs.human = { "p1" }
+    stubs.factions.p1 = h.fake_faction({ leader = "leader1" })
+    drops.give_starting_scrolls()
+    h.eq(stubs.forced[1].key, "kadon_bind_carnosaur", "key")
+end)
+
+h.test("chosen starting creature ignores creature toggles but keeps type toggles", function()
+    local stubs = h.install_game_stubs({ 1, 3 })
+    settings.reset()
+    settings.values.starting_scroll = true
+    settings.values.starting_scroll_creature = "giant"
+    settings.values.enable_all_creatures = false
+    settings.values.enabled_creatures.giant = false
+    settings.values.allow_bind = false
+    stubs.human = { "p1" }
+    stubs.factions.p1 = h.fake_faction({ leader = "leader1" })
+    drops.give_starting_scrolls()
+    h.eq(stubs.forced[1].key, "kadon_kin_chs_giant", "key")
+end)
+
+h.test("unknown starting creature falls back to a random pick", function()
+    local stubs = h.install_game_stubs({ creature_index("wyvern"), 1, 1 })
+    settings.reset()
+    settings.values.starting_scroll = true
+    settings.values.starting_scroll_creature = "no_such_creature"
+    stubs.human = { "p1" }
+    stubs.factions.p1 = h.fake_faction({ leader = "leader1" })
+    drops.give_starting_scrolls()
+    h.eq(stubs.forced[1].key, "kadon_kin_wyvern", "key")
+end)
+
 h.test("entry point registers every listener", function()
     local stubs = h.install_game_stubs()
     dofile("script/campaign/mod/jvj_kadon.lua")

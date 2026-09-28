@@ -115,7 +115,26 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Hooks
 
---- Gives each human faction leader one random allowed scroll, equipped. Does nothing unless `starting_scroll` is on.
+--- Picks the starting scroll. A creature chosen in `starting_scroll_creature` wins over the creature toggles, but the Kin / Binding toggles
+--- still apply. "random", or an id no creature has, falls back to a normal random pick.
+--- @param faction table Faction interface.
+--- @returns string|nil The scroll key, or nil when nothing is allowed.
+function M.pick_starting_scroll(faction)
+    local chosen = creatures.find(settings.values.starting_scroll_creature)
+    if not chosen then
+        return M.pick_scroll(faction)
+    end
+    local types = {}
+    if settings.values.allow_kin then table.insert(types, chosen.kin) end
+    if settings.values.allow_bind then table.insert(types, chosen.bind) end
+    if #types == 0 then
+        return nil
+    end
+    local keys = types[cm:random_number(#types)]
+    return keys[cm:random_number(#keys)]
+end
+
+--- Gives each human faction leader one allowed scroll, equipped. Does nothing unless `starting_scroll` is on.
 function M.give_starting_scrolls()
     if not settings.values.starting_scroll then
         return
@@ -123,7 +142,7 @@ function M.give_starting_scrolls()
     for _, faction_key in ipairs(cm:get_human_factions()) do
         local faction = cm:get_faction(faction_key)
         if faction and faction:has_faction_leader() then
-            local key = M.pick_scroll(faction)
+            local key = M.pick_starting_scroll(faction)
             if key then
                 cm:force_add_ancillary(faction:faction_leader(), key, true, false)
                 out("jvj_kadon: " .. faction_key .. " leader starts with " .. key)

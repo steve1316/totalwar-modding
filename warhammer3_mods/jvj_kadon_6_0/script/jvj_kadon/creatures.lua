@@ -61,4 +61,14 @@ M.list = {
     creature("wyvern", "Wyvern"),
 }
 
+--- Returns the creature with the given id.
+--- @param id string|nil Creature id.
+--- @returns table|nil The creature entry, or nil when no creature has that id.
+function M.find(id)
+    for _, entry in ipairs(M.list) do
+        if entry.id == id then return entry end
+    end
+    return nil
+end
+
 return M
