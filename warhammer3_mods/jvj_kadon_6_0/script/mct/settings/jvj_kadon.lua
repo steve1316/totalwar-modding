@@ -7,6 +7,20 @@ local settings = require("script/jvj_kadon/settings")
 --- Scroll type option keys. At least one must stay checked.
 local SCROLL_TYPE_KEYS = { "allow_kin", "allow_bind" }
 
+--- Mod description shown on the MCT mod page, adapted from the original WH2 Workshop description.
+local MOD_DESCRIPTION = table.concat({
+    "Introduces Kadon's Scrolls of Binding from the tabletop game into Total War: Warhammer.",
+    "Kadon was perhaps the most powerful Amber Wizard who ever lived. He cast aside his sophisticated nature and embraced his most primal instincts,"
+        .. " breaking his mind down into a bestial form. This let him bind creatures of immense power to his scrolls, a feat unmatched to this day.",
+    "Each scroll is a magic item that lets its bearer summon and bind one creature in battle. Over 40 creatures are available, giving factions"
+        .. " access to beasts they could never recruit.",
+    "Scrolls of Kin summon a creature that stays on the battlefield until it is killed. Scrolls of Binding summon a creature that suffers from"
+        .. " Unbinding and dies after a time limit.",
+    "Scrolls are found after won battles and completed missions. The settings here control how often they drop, who can find them, and which"
+        .. " creatures appear.",
+    "Originally made for Team Beast as part of the Beautiful & the Beastly Mod Jam 2020.",
+}, "\n\n")
+
 --- The registered MCT mod.
 local mct_mod = get_mct():register_mod(settings.MCT_MOD_KEY)
 
@@ -30,13 +44,15 @@ end
 --- @param key string Option key.
 --- @param section string Section key.
 --- @param text string Label.
---- @param tooltip string Hover text.
+--- @param tooltip string|nil Hover text. MCT shows no tooltip icon when nil.
 --- @param default boolean|nil Default value. Falls back to `settings.DEFAULTS[key]` when nil.
 --- @returns table The created option.
 local function add_checkbox(key, section, text, tooltip, default)
     local option = mct_mod:add_new_option(key, "checkbox")
     option:set_text(text, true)
-    option:set_tooltip_text(tooltip, true)
+    if tooltip then
+        option:set_tooltip_text(tooltip, true)
+    end
     option:set_is_global(true)
     if default == nil then
         default = settings.DEFAULTS[key]
@@ -62,6 +78,15 @@ local function add_percent_slider(key, text, tooltip)
     option:set_default_value(settings.DEFAULTS[key])
     option:set_assigned_section("drops_section")
     return option
+end
+
+--- Adds a blank, control-less row to a section. MCT cuts off the bottom of a column's last row, so this pads the row above it.
+--- @param key string Option key.
+--- @param section string Section key.
+local function add_spacer(key, section)
+    local option = mct_mod:add_new_option(key, "dummy")
+    option:set_text(" ", true)
+    option:set_assigned_section(section)
 end
 
 --- Returns true when the context's option belongs to this mod and its key is in `keys`.
@@ -104,7 +129,7 @@ end
 --- Mod info
 
 mct_mod:set_title("Kadon's Scrolls of Binding", true)
-mct_mod:set_description("Kadon's Scrolls summon a bound creature in battle. These settings control how often scrolls drop, who can find them, and which creatures appear.", true)
+mct_mod:set_description(MOD_DESCRIPTION, true)
 if type(mct_mod.set_workshop_id) == "function" then
     mct_mod:set_workshop_id("3398096688")
 end
@@ -126,10 +151,11 @@ add_checkbox("starting_scroll", "drops_section", "Starting scroll for faction le
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Scroll types
 
-add_section("scroll_types_section", "Scroll Types", "Each drop is randomly Kin or Binding, from the types allowed here. At least one type must stay on.")
+add_section("scroll_types_section", "Scroll Types", "Each drop is randomly Kin or Binding. At least one type must stay on.")
 add_checkbox("allow_kin", "scroll_types_section", "Allow Scrolls of Kin", "Kin summons stay on the battlefield until they are killed.")
 add_checkbox("allow_bind", "scroll_types_section", "Allow Scrolls of Binding",
-    "Binding summons are identical to Kin, but they fade. After about 90 seconds they start losing health, and they're gone soon after.")
+    "Binding summons suffer from Unbinding, a negative status effect that gives them a time limit before they die.")
+add_spacer("scroll_types_spacer", "scroll_types_section")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,7 +164,7 @@ add_checkbox("allow_bind", "scroll_types_section", "Allow Scrolls of Binding",
 add_section("creatures_section", "Creatures", "Disabled creatures never drop. Takes effect on the next drop.")
 add_checkbox("enable_all_creatures", "creatures_section", "Enable all creatures", "When on, every creature can drop and the individual toggles below are locked.")
 for _, creature in ipairs(creatures.list) do
-    add_checkbox(settings.creature_option_key(creature.id), "creatures_section", creature.name, "Allow " .. creature.name .. " scrolls to drop.", true)
+    add_checkbox(settings.creature_option_key(creature.id), "creatures_section", creature.name, nil, true)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

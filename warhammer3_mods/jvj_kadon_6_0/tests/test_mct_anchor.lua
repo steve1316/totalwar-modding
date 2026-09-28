@@ -86,6 +86,9 @@ h.test("registers the jvj_kadon mod", function()
     h.eq(mod.key, "jvj_kadon", "mod key")
     h.eq(mod.workshop_id, "3398096688", "workshop id")
     h.truthy(mod.title, "title")
+    h.truthy(mod.description:find("Scrolls of Kin", 1, true), "description explains Kin")
+    h.truthy(mod.description:find("Scrolls of Binding", 1, true), "description explains Binding")
+    h.truthy(mod.description:find("Beautiful & the Beastly", 1, true), "description credits the mod jam")
 end)
 
 h.test("option keys and defaults match the settings module", function()
@@ -103,16 +106,36 @@ h.test("option keys and defaults match the settings module", function()
         h.eq(option.text, creature.name, creature.id .. " text")
         expected = expected + 1
     end
-    h.eq(#mod.order, expected, "no extra options")
+    h.eq(#mod.order, expected + 1, "no extra options besides the spacer")
 end)
 
-h.test("every option is global, has a tooltip, and sits in a real section", function()
+h.test("settings are global with tooltips, creature toggles have none", function()
     local mod = load_anchor()
+    local creature_keys = {}
+    for _, creature in ipairs(creatures.list) do creature_keys[settings.creature_option_key(creature.id)] = true end
     for key, option in pairs(mod.options) do
-        h.eq(option.global, true, key .. " global")
-        h.truthy(option.tooltip and option.tooltip ~= "", key .. " tooltip")
         h.truthy(mod.sections[option.section], key .. " section " .. tostring(option.section))
+        if option.type ~= "dummy" then
+            h.eq(option.global, true, key .. " global")
+            if creature_keys[key] then
+                h.eq(option.tooltip, nil, key .. " has no tooltip")
+            else
+                h.truthy(option.tooltip and option.tooltip ~= "", key .. " tooltip")
+            end
+        end
     end
+end)
+
+h.test("scroll types section ends with a blank spacer row", function()
+    local mod = load_anchor()
+    local last
+    for _, key in ipairs(mod.order) do
+        if mod.options[key].section == "scroll_types_section" then last = mod.options[key] end
+    end
+    h.eq(last.type, "dummy", "last row type")
+    h.eq(last.text, " ", "blank label")
+    h.eq(last.default, nil, "no default")
+    h.eq(last.tooltip, nil, "no tooltip")
 end)
 
 h.test("sliders, read-only and tooltip wording", function()
@@ -126,8 +149,8 @@ h.test("sliders, read-only and tooltip wording", function()
     h.eq(mod.options.starting_scroll.locked, false, "starting scroll stays editable")
     h.eq(mod.options.starting_scroll.tooltip, "On a new campaign, each human faction leader starts with one random allowed scroll. Changing it mid-campaign has no effect.", "starting scroll tooltip")
     h.eq(mod.options.allow_kin.tooltip, "Kin summons stay on the battlefield until they are killed.", "kin tooltip")
-    h.eq(mod.options.allow_bind.tooltip, "Binding summons are identical to Kin, but they fade. After about 90 seconds they start losing health, and they're gone soon after.", "bind tooltip")
-    h.eq(mod.sections.scroll_types_section.description, "Each drop is randomly Kin or Binding, from the types allowed here. At least one type must stay on.", "types description")
+    h.eq(mod.options.allow_bind.tooltip, "Binding summons suffer from Unbinding, a negative status effect that gives them a time limit before they die.", "bind tooltip")
+    h.eq(mod.sections.scroll_types_section.description, "Each drop is randomly Kin or Binding. At least one type must stay on.", "types description")
 end)
 
 h.test("scroll type lock follows toggles", function()
