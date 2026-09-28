@@ -2,6 +2,7 @@
 --- scroll enters a faction's item pool.
 
 local creatures = require("script/jvj_kadon/creatures")
+local scroll_dlc = require("script/jvj_kadon/scroll_dlc")
 local settings = require("script/jvj_kadon/settings")
 
 local M = {}
@@ -10,14 +11,31 @@ local M = {}
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Picking
 
---- Returns the keys from `keys` the faction may receive. Owned keys are skipped when `no_duplicate_scrolls` is on.
+--- Returns true when the faction owns a DLC that unlocks the scroll's unit. Free scrolls always pass, and so do AI factions.
+--- @param faction table Faction interface.
+--- @param key string Scroll key.
+--- @returns boolean Whether the faction may use the scroll.
+local function owns_scroll_dlc(faction, key)
+    local products = scroll_dlc[key]
+    if not products then
+        return true
+    end
+    for _, product in ipairs(products) do
+        if cm:faction_has_dlc_or_is_ai(product, faction:name()) then return true end
+    end
+    return false
+end
+
+--- Returns the keys from `keys` the faction owns the DLC for. Keys the faction already has are also skipped when `no_duplicate_scrolls` is on.
 --- @param faction table Faction interface.
 --- @param keys table Scroll keys of one creature and type.
+--- @param allow_duplicates boolean|nil Keep keys the faction already has, even when `no_duplicate_scrolls` is on.
 --- @returns table The allowed keys, possibly empty.
-local function available_keys(faction, keys)
+local function available_keys(faction, keys, allow_duplicates)
     local result = {}
     for _, key in ipairs(keys) do
-        if not (settings.values.no_duplicate_scrolls and faction:ancillary_exists(key)) then
+        local duplicate = not allow_duplicates and settings.values.no_duplicate_scrolls and faction:ancillary_exists(key)
+        if owns_scroll_dlc(faction, key) and not duplicate then
             table.insert(result, key)
         end
     end
@@ -116,7 +134,7 @@ end
 --- Hooks
 
 --- Picks the starting scroll. A creature chosen in `starting_scroll_creature` wins over the creature toggles, but the Kin / Binding toggles
---- still apply. "random", or an id no creature has, falls back to a normal random pick.
+--- still apply. "random", an id no creature has, or a creature whose DLC the faction does not own falls back to a normal random pick.
 --- @param faction table Faction interface.
 --- @returns string|nil The scroll key, or nil when nothing is allowed.
 function M.pick_starting_scroll(faction)
@@ -125,9 +143,15 @@ function M.pick_starting_scroll(faction)
         return M.pick_scroll(faction)
     end
     local types = {}
-    if settings.values.allow_kin then table.insert(types, chosen.kin) end
-    if settings.values.allow_bind then table.insert(types, chosen.bind) end
+    for _, allowed in ipairs({ { settings.values.allow_kin, chosen.kin }, { settings.values.allow_bind, chosen.bind } }) do
+        local keys = allowed[1] and available_keys(faction, allowed[2], true) or {}
+        if #keys > 0 then table.insert(types, keys) end
+    end
     if #types == 0 then
+        if settings.values.allow_kin or settings.values.allow_bind then
+            out("jvj_kadon: " .. faction:name() .. " does not own the DLC for " .. chosen.id .. ", picking a random scroll")
+            return M.pick_scroll(faction)
+        end
         return nil
     end
     local keys = types[cm:random_number(#types)]

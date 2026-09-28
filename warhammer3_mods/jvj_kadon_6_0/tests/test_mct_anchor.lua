@@ -220,6 +220,10 @@ h.test("creatures are divided into one section per game, each sorted by name", f
     h.eq(titles.creatures_wh2_section, "Creatures - WH2", "wh2 title")
     h.eq(titles.creatures_wh3_section, "Creatures - WH3", "wh3 title")
     h.eq(titles.creatures_section, nil, "old single section is gone")
+    for _, game in ipairs({ "wh1", "wh2", "wh3" }) do
+        local description = mod.sections["creatures_" .. game .. "_section"].description or ""
+        h.truthy(description:find("DLC", 1, true) and description:find("fall back", 1, true), game .. " section explains the DLC fallback")
+    end
     local first_in_original
     local previous = {}
     for _, key in ipairs(mod.order) do

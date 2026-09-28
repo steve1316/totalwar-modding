@@ -93,9 +93,32 @@ h.test("every hand-made creature's game tag matches its unit's text key", functi
     end
 end)
 
-h.test("label adds the game tag", function()
+h.test("label adds the game tag and marks DLC creatures", function()
     h.eq(creatures.label(creatures.find("carnosaur")), "Carnosaur (WH2)", "carnosaur")
     h.eq(creatures.label(creatures.find("unicorn")), "Unicorns (Original)", "unicorn")
+    h.eq(creatures.label(creatures.find("ancient_salamander")), "Ancient Salamander (WH2 DLC)", "ancient salamander")
+    h.eq(creatures.label(creatures.find("giant")), "Giant (WH1)", "giant has free scrolls too")
+end)
+
+h.test("DLC map only covers vanilla scroll keys", function()
+    local scroll_dlc = require("script/jvj_kadon/scroll_dlc")
+    local owner = {}
+    for _, creature in ipairs(creatures.list) do
+        for _, list in ipairs({ creature.kin, creature.bind }) do
+            for _, key in ipairs(list) do owner[key] = creature end
+        end
+    end
+    local count = 0
+    for key, products in pairs(scroll_dlc) do
+        h.truthy(owner[key], key .. " is a creature scroll")
+        h.truthy(owner[key].game ~= "Original", key .. " is not an Original scroll")
+        h.truthy(#products >= 1, key .. " lists a product")
+        count = count + 1
+    end
+    h.eq(count, 176, "DLC scroll count")
+    h.eq(creatures.find("ancient_salamander").dlc, true, "ancient salamander is DLC")
+    h.eq(creatures.find("giant").dlc, false, "giant is not DLC")
+    h.eq(creatures.find("unicorn").dlc, false, "unicorn is not DLC")
 end)
 
 h.test("find returns a creature by id and nil for unknown ids", function()

@@ -84,7 +84,8 @@ end
 
 --- Installs stub `cm`, `core` and `out` globals and returns the table that records what the code under test did.
 --- @param random_values table|nil Queue of numbers `cm:random_number` returns in order. Returns 1 once the queue is empty.
---- @returns table Recorder with `listeners`, `added`, `forced`, `first_tick`, `battle`, `factions`, `human`, `logs`.
+--- @returns table Recorder with `listeners`, `added`, `forced`, `first_tick`, `battle`, `factions`, `human`, `logs`, `owned_dlc`.
+--- `owned_dlc` is nil to own every DLC, or a set of owned product keys for human factions.
 function M.install_game_stubs(random_values)
     local queue = random_values or {}
     local stubs = {
@@ -96,6 +97,7 @@ function M.install_game_stubs(random_values)
         factions = {},
         human = {},
         logs = {},
+        owned_dlc = nil,
     }
     _G.out = function(text)
         table.insert(stubs.logs, text)
@@ -133,6 +135,13 @@ function M.install_game_stubs(random_values)
         end,
         get_human_factions = function()
             return stubs.human
+        end,
+        --- Mirrors CA: AI factions own everything, humans own what `owned_dlc` lists.
+        faction_has_dlc_or_is_ai = function(_, dlc_key, faction_key)
+            if stubs.owned_dlc == nil then return true end
+            local faction = stubs.factions[faction_key]
+            if faction and not faction:is_human() then return true end
+            return stubs.owned_dlc[dlc_key] == true
         end,
     }
     return stubs
