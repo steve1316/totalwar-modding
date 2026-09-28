@@ -36,7 +36,7 @@ kadon_bind_unbinding	kadon_bind_giant	*
 kadon_bind_unbinding	kadon_bind_great_cave_squigs	*
 kadon_bind_unbinding	kadon_bind_great_eagle	*
 wh_main_mount_passive_bloodroar	kadon_bind_griffon	*
-kadon_bind_griffon	kadon_bind_griffon	*
+kadon_bind_unbinding	kadon_bind_griffon	*
 kadon_bind_unbinding	kadon_bind_harpies	*
 wh2_main_unit_abilities_fiery_breath	kadon_bind_hydra	*
 wh2_main_unit_passive_another_takes_its_place	kadon_bind_hydra	*
