@@ -42,9 +42,8 @@ end
 --- silent loot, human-non-general -> show-only event-feed message. Returns whether the spot should be removed.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
 --- @param spot_info table A spot_info record for the spot being entered.
---- @param turn_number number The current campaign turn.
 --- @returns boolean True when the spot should be deactivated after dispatch.
-function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info, spot_info, turn_number)
+function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info, spot_info)
     self.cached_player_character = area_and_character_info:family_member():character()
     local triggering_faction = self.cached_player_character:faction()
     local triggering_faction_name = triggering_faction:name()
@@ -283,12 +282,18 @@ function BattleEventDelegate:export_state_as_a_table(spot_info)
 end
 
 
---- Restores any in-flight battle from a saved campaign state. Older saves also hold a "battle_generator" entry, which is ignored.
+--- Restores any in-flight battle from a saved campaign state. Older saves also hold a "battle_generator" entry, which is ignored, and a
+--- cached event without the picker's fields, which gets the current difficulty, a random faction and the MCT battle-type pick.
 --- @param previous_state table A record previously produced by export_state_as_a_table.
 function BattleEventDelegate:reinstate_event_if_able(previous_state)
     self.is_triggered = previous_state["battle_event_delegate_is_triggered"]
     if self.is_triggered ~= nil and self.is_triggered == true then
         self.cached_event = previous_state["battle_event_delegate_cached_event"]
+        if self.cached_event.category == nil then
+            self.cached_event.difficulty = get_current_difficulty()
+            self.cached_event.faction = get_random_faction()
+            self.cached_event.intervention = pick_intervention_type()
+        end
         local spot_info = previous_state["battle_event_delegate_spot_info"]
 
         local offensive_army = self:get_offensive_army()

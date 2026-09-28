@@ -11,8 +11,11 @@ local battle_categories = require("script/land_encounters/configs/battle_categor
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constants
 
---- Difficulty keys from easiest to hardest, used to raise a battle to its category's minimum difficulty.
-local DIFFICULTY_ORDER = { "easy", "medium", "hard" }
+--- Position of each difficulty key in `DIFFICULTY_KEYS`, used to raise a battle to its category's minimum difficulty.
+local DIFFICULTY_RANK = {}
+for rank, key in ipairs(DIFFICULTY_KEYS) do
+    DIFFICULTY_RANK[key] = rank
+end
 
 --- Maps a category's forced battle type to the battle-type tag from common.lua.
 local INTERVENTION_BY_KEY = {
@@ -27,79 +30,51 @@ local M = {}
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
 
---- Builds the set of faction shorthands encounters may use right now.
---- @returns table A shorthand -> true set from `get_enabled_faction_keys`.
-local function enabled_faction_set()
-    local enabled = {}
-    for _, key in ipairs(get_enabled_faction_keys()) do
-        enabled[key] = true
+--- Reads the faction shorthands encounters may use right now.
+--- @returns table The array from `get_enabled_faction_keys`.
+--- @returns table The same shorthands as a shorthand -> true set.
+local function enabled_factions()
+    local keys = get_enabled_faction_keys()
+    local set = {}
+    for _, key in ipairs(keys) do
+        set[key] = true
     end
-    return enabled
+    return keys, set
 end
 
 --- Lists the category's flavoured dilemmas whose faction is enabled, in config order.
 --- @param category table A category record from configs/battle_categories.lua.
---- @param enabled_factions table A shorthand -> true set from `enabled_faction_set`.
+--- @param faction_set table A shorthand -> true set from `enabled_factions`.
 --- @returns table An array of flavoured entries.
-local function enabled_flavoured_entries(category, enabled_factions)
+local function enabled_flavoured_entries(category, faction_set)
     local entries = {}
     for _, entry in ipairs(category.flavoured) do
-        if enabled_factions[entry.faction] then table.insert(entries, entry) end
+        if faction_set[entry.faction] then table.insert(entries, entry) end
     end
     return entries
 end
 
---- Returns the harder of two difficulty keys.
---- @param difficulty string The current difficulty key.
---- @param minimum string The category's minimum difficulty key, or nil.
---- @returns string The difficulty key to use.
-local function raise_difficulty(difficulty, minimum)
-    if minimum == nil then return difficulty end
-    local rank = {}
-    for index, key in ipairs(DIFFICULTY_ORDER) do rank[key] = index end
-    return rank[minimum] > rank[difficulty] and minimum or difficulty
-end
-
---- Resolves a category's forced battle type against the MCT toggles: the forced type when enabled, else Interception when enabled, else the
---- normal MCT pick. Categories without a forced type use the normal MCT pick.
---- @param forced_key string "ambush", "interception", "allied", or nil.
---- @returns number One of AMBUSH_TYPE, INTERCEPTION_TYPE, or ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
-local function resolve_intervention_type(forced_key)
-    if forced_key == nil then return pick_intervention_type() end
-    local enabled = {}
-    for _, type_tag in ipairs(get_mct_settings().enabled_intervention_types or {}) do enabled[type_tag] = true end
-    if enabled[INTERVENTION_BY_KEY[forced_key]] then return INTERVENTION_BY_KEY[forced_key] end
-    if enabled[INTERCEPTION_TYPE] then return INTERCEPTION_TYPE end
-    return pick_intervention_type()
-end
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Picking
-
---- Builds a battle event for one category: a flavoured dilemma for an enabled faction, or the neutral dilemma for a random enabled faction.
---- The category must have a neutral dilemma or at least one enabled flavoured entry.
+--- Builds the event record for a category. Uses a flavoured entry (and its faction) when the category has no neutral dilemma or the
+--- flavoured roll succeeds, else the neutral dilemma with a random enabled faction.
 --- @param category table A category record from configs/battle_categories.lua.
---- @param difficulty string The current difficulty key. Defaults to `get_current_difficulty()`.
---- @param enabled_factions table An optional shorthand -> true set. Defaults to the current MCT factions.
+--- @param entries table The category's enabled flavoured entries. Must be non-empty when the category has no neutral dilemma.
+--- @param faction_keys table The enabled faction shorthands, for the neutral faction roll.
+--- @param difficulty string The current difficulty key.
 --- @returns table The event record: category, dilemma, incidents and targets, faction, difficulty, archetype_keys, budget_multiplier, intervention.
-function M.pick_event(category, difficulty, enabled_factions)
-    difficulty = difficulty or get_current_difficulty()
-    local entries = enabled_flavoured_entries(category, enabled_factions or enabled_faction_set())
-    local use_flavoured = #entries > 0 and (category.neutral == nil or random_chance(battle_categories.flavoured_chance))
-
+local function build_event(category, entries, faction_keys, difficulty)
+    local minimum = category.min_difficulty
     local event = {
         category = category.key,
         victory_incident = category.victory_incident,
         avoidance_incident = category.avoidance_incident,
         victory_targets = category.victory_targets,
         avoidance_targets = category.avoidance_targets,
-        difficulty = raise_difficulty(difficulty, category.min_difficulty),
+        difficulty = (minimum and DIFFICULTY_RANK[minimum] > DIFFICULTY_RANK[difficulty]) and minimum or difficulty,
         archetype_keys = category.archetypes,
         budget_multiplier = category.budget_multiplier,
-        intervention = resolve_intervention_type(category.intervention),
+        intervention = pick_intervention_type(INTERVENTION_BY_KEY[category.intervention]),
     }
-    if use_flavoured then
+    if #entries > 0 and (category.neutral == nil or random_chance(battle_categories.flavoured_chance)) then
         local entry = entries[random_number(#entries)]
         event.dilemma = entry.dilemma
         event.faction = entry.faction
@@ -107,33 +82,48 @@ function M.pick_event(category, difficulty, enabled_factions)
         event.avoidance_incident = entry.avoidance_incident or event.avoidance_incident
     else
         event.dilemma = category.neutral.dilemma
-        event.faction = get_random_faction()
+        event.faction = faction_keys[random_number(#faction_keys)]
     end
     out("DEBUG - battle_picker picked " .. event.category .. " (" .. event.dilemma .. ") for faction " .. tostring(event.faction) .. " on " .. event.difficulty)
     return event
 end
 
---- Picks a battle event: a tier by the difficulty's tier weights, a category in that tier, then the event. Categories that cannot fire with
---- the enabled factions (Daemonic Gift without Khorne or Slaanesh) are left out.
---- @param difficulty string The current difficulty key. Defaults to `get_current_difficulty()`.
---- @returns table The event record from `pick_event`.
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Picking
+
+--- Builds a battle event for one given category, for the current MCT factions.
+--- @param category table A category record from configs/battle_categories.lua.
+--- @param difficulty string The current difficulty key.
+--- @returns table The event record from `build_event`.
+function M.pick_event(category, difficulty)
+    local faction_keys, faction_set = enabled_factions()
+    return build_event(category, enabled_flavoured_entries(category, faction_set), faction_keys, difficulty)
+end
+
+--- Picks a battle event: a tier by the current difficulty's tier weights, a category in that tier, then the event. Categories that cannot
+--- fire with the enabled factions (Daemonic Gift without Khorne or Slaanesh) are left out.
+--- @param difficulty string The difficulty key. Defaults to `get_current_difficulty()`.
+--- @returns table The event record from `build_event`.
 function M.pick(difficulty)
     difficulty = difficulty or get_current_difficulty()
-    local enabled_factions = enabled_faction_set()
-    local categories_by_tier = {}
+    local faction_keys, faction_set = enabled_factions()
+    local choices_by_tier = {}
     for _, category in ipairs(battle_categories.list) do
-        if category.neutral ~= nil or #enabled_flavoured_entries(category, enabled_factions) > 0 then
-            categories_by_tier[category.tier] = categories_by_tier[category.tier] or {}
-            table.insert(categories_by_tier[category.tier], category)
+        local entries = enabled_flavoured_entries(category, faction_set)
+        if category.neutral ~= nil or #entries > 0 then
+            choices_by_tier[category.tier] = choices_by_tier[category.tier] or {}
+            table.insert(choices_by_tier[category.tier], { category = category, entries = entries })
         end
     end
 
     local tier_entries = {}
     for tier, weight in ipairs(battle_categories.tier_weights[difficulty]) do
-        if categories_by_tier[tier] then table.insert(tier_entries, { tier, weight }) end
+        if choices_by_tier[tier] then table.insert(tier_entries, { tier, weight }) end
     end
-    local tier_categories = categories_by_tier[pick_weighted(tier_entries)]
-    return M.pick_event(tier_categories[random_number(#tier_categories)], difficulty, enabled_factions)
+    local tier_choices = choices_by_tier[pick_weighted(tier_entries)]
+    local choice = tier_choices[random_number(#tier_choices)]
+    return build_event(choice.category, choice.entries, faction_keys, difficulty)
 end
 
 return M

@@ -32,10 +32,9 @@ Fields of each category:
 - min_difficulty: the lowest difficulty the battle uses, or nil.
 - intervention: "ambush", "interception" or "allied" to force a battle type, or nil for the MCT pick. A forced type the user turned off
   falls back to Interception, then to the MCT pick.
-- always_flavoured: true when the category has no neutral dilemma.
 - victory_incident / avoidance_incident: shared incidents. A flavoured entry may override either.
 - victory_targets / avoidance_targets: who each incident targets.
-- neutral: the faction-free dilemma, or nil.
+- neutral: the faction-free dilemma, or nil when the category only has flavoured dilemmas.
 - flavoured: dilemmas written for one faction (3-letter shorthand).
 --]]
 M.list = {
@@ -47,7 +46,6 @@ M.list = {
         budget_multiplier = 0.6,
         min_difficulty = nil,
         intervention = "interception",
-        always_flavoured = false,
         victory_incident = "land_enc_incident_battle_won_skirmish",
         avoidance_incident = "land_enc_incident_battle_avoided_skirmish",
         victory_targets = { character = true, force = false, faction = false, region = false },
@@ -69,7 +67,6 @@ M.list = {
         budget_multiplier = 0.8,
         min_difficulty = nil,
         intervention = "ambush",
-        always_flavoured = false,
         victory_incident = "land_enc_incident_battle_won_underground",
         avoidance_incident = "land_enc_incident_battle_avoided_underground",
         victory_targets = { character = true, force = false, faction = false, region = false },
@@ -90,7 +87,6 @@ M.list = {
         budget_multiplier = 0.8,
         min_difficulty = nil,
         intervention = "interception",
-        always_flavoured = false,
         victory_incident = "land_enc_incident_battle_won_bandits",
         avoidance_incident = "land_enc_incident_battle_avoided_bandits",
         victory_targets = { character = true, force = false, faction = false, region = false },
@@ -111,7 +107,6 @@ M.list = {
         budget_multiplier = 1.0,
         min_difficulty = nil,
         intervention = "ambush",
-        always_flavoured = false,
         victory_incident = "land_enc_incident_battle_won_surprise_neutral",
         avoidance_incident = "land_enc_incident_battle_avoided_surprise",
         victory_targets = { character = true, force = true, faction = false, region = false },
@@ -130,7 +125,6 @@ M.list = {
         budget_multiplier = 1.0,
         min_difficulty = nil,
         intervention = nil,
-        always_flavoured = false,
         victory_incident = "land_enc_incident_battle_won_incursion_neutral",
         avoidance_incident = "land_enc_incident_battle_avoided_incursion",
         victory_targets = { character = true, force = true, faction = false, region = false },
@@ -150,7 +144,6 @@ M.list = {
         budget_multiplier = 1.3,
         min_difficulty = "medium",
         intervention = "allied",
-        always_flavoured = false,
         victory_incident = "land_enc_incident_battle_won_battlefield_neutral",
         avoidance_incident = "land_enc_incident_battle_avoided_battlefield",
         victory_targets = { character = true, force = false, faction = false, region = false },
@@ -172,7 +165,6 @@ M.list = {
         budget_multiplier = 1.3,
         min_difficulty = "hard",
         intervention = nil,
-        always_flavoured = true,
         victory_targets = { character = true, force = false, faction = false, region = false },
         avoidance_targets = { character = false, force = true, faction = false, region = false },
         neutral = nil,
@@ -188,14 +180,10 @@ M.list = {
     },
 }
 
---- Category records keyed by their `key`, built from `list`.
-M.by_key = {}
-
 --- Set of every battle-spot dilemma key (neutral and flavoured), built from `list`. Used to recognise battle dilemma choices.
 M.dilemma_keys = {}
 
 for _, category in ipairs(M.list) do
-    M.by_key[category.key] = category
     if category.neutral then
         M.dilemma_keys[category.neutral.dilemma] = true
     end

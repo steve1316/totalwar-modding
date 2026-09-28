@@ -328,7 +328,7 @@ local difficulty_slider_templates = {
 }
 
 --- Create one collapsible section per difficulty.
-for _, difficulty in ipairs({"easy", "medium", "hard"}) do
+for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local difficulty_section = mct_mod:add_new_section("difficulty_" .. difficulty .. "_section")
     difficulty_section:set_localised_text("Randomization Difficulty Settings: " .. difficulty, true)
     difficulty_section:set_description("This section contains options for the random generation difficulty.\n\nYou do not need to load the save again for the changes to take effect.", true)
@@ -338,7 +338,7 @@ for _, difficulty in ipairs({"easy", "medium", "hard"}) do
 end
 
 --- Materialize the min and max slider for every template in each difficulty section, in template order.
-for _, difficulty in ipairs({"easy", "medium", "hard"}) do
+for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local settings = get_mct_settings().difficulties[difficulty]
     for _, template in ipairs(difficulty_slider_templates) do
         local defaults = template.field == "limit_hero" and settings.limits.hero or settings[template.field]
@@ -357,7 +357,7 @@ for _, difficulty in ipairs({"easy", "medium", "hard"}) do
 end
 
 --- Tell each difficulty section to sort options by insertion index now that all sliders are created.
-for _, difficulty in ipairs({"easy", "medium", "hard"}) do
+for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local difficulty_section = mct_mod:get_section_by_key("difficulty_" .. difficulty .. "_section")
     difficulty_section:set_option_sort_function("index_sort")
 end

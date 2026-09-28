@@ -54,7 +54,7 @@ function M.register()
             if M.current_spot_info.spot_type == 0 then
                 --- Event spot (random encounter).
                 M.spot_event_manager:set_current_spot_info(M.current_spot_info)
-                can_delete_land_encounter = M.spot_event_manager:trigger_spot_event(area_and_character_info, cm:turn_number())
+                can_delete_land_encounter = M.spot_event_manager:trigger_spot_event(area_and_character_info)
             elseif M.current_spot_info.spot_type == 1 then
                 --- Smithy spot.
                 M.point_of_interest_event_manager:trigger_poi_event("SmithySpot", area_and_character_info, M.current_spot_info)

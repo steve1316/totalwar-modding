@@ -180,7 +180,8 @@ end
 --- Entry point for the force-makeup pipeline. Builds the army from the difficulty's gold budget and a rolled archetype.
 --- @param difficulty_key string The difficulty key ("easy", "medium", or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
---- @param options table Optional battle-category overrides passed to `army_generator.generate` (`archetype_keys`, `budget_multiplier`).
+--- @param options table Optional battle-category overrides passed to `army_generator.generate` (`archetype_keys`, `budget_multiplier`). A
+--- `battle_picker` event record works as-is.
 --- @returns table A force_makeup with lord, heroes, per-type units arrays, and the archetype key.
 function start_force_makeup_generation(difficulty_key, faction_shorthand_key, options)
     return army_generator.generate(difficulty_key, faction_shorthand_key, options)
@@ -857,14 +858,13 @@ end
 --- Rolls battle vs treasure for the current spot using the MCT battle chance and dispatches to the matching delegate.
 --- Returns true when the spot should be removed from the map.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
---- @param turn_number number The current campaign turn.
 --- @returns boolean True when the spot should be deactivated after dispatch.
-function SpotEventManager:trigger_spot_event(area_and_character_info, turn_number)
+function SpotEventManager:trigger_spot_event(area_and_character_info)
     if not random_chance(get_mct_settings().battle_chance) then
         self.treasure_event_delegate:trigger_event(area_and_character_info)
         return true
     else
-        return self.battle_event_delegate:trigger_pre_battle_dilemma(area_and_character_info, self.current_spot_info, turn_number)
+        return self.battle_event_delegate:trigger_pre_battle_dilemma(area_and_character_info, self.current_spot_info)
     end
 end
 

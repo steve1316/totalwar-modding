@@ -135,17 +135,9 @@ AMBUSH_TYPE = 1
 INTERCEPTION_TYPE = 2
 ALLIED_REINFORCEMENTS_PERMITTED_TYPE = 3
 
---- Picks a random battle type from the user's MCT-enabled set. The MCT page keeps at least one enabled, and an empty list (save-load race or
---- MCT bypass) falls back to Interception.
---- @returns number One of AMBUSH_TYPE, INTERCEPTION_TYPE, or ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
-function pick_intervention_type()
-    local settings = get_mct_settings()
-    local enabled = settings and settings.enabled_intervention_types
-    if not enabled or #enabled == 0 then
-        return INTERCEPTION_TYPE
-    end
-    return enabled[random_number(#enabled)]
-end
+
+--- Encounter difficulty keys from easiest to hardest.
+DIFFICULTY_KEYS = { "easy", "medium", "hard" }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -125,18 +125,15 @@ local function pick_archetype(pools, requested_keys)
     for _, key in ipairs(get_mct_settings().enabled_archetypes) do
         enabled[key] = true
     end
-    local requested = nil
-    if requested_keys and #requested_keys > 0 then
-        requested = {}
-        for _, key in ipairs(requested_keys) do
-            requested[key] = true
-        end
+    local requested = {}
+    for _, key in ipairs(requested_keys or {}) do
+        requested[key] = true
     end
     local candidates, requested_candidates = {}, {}
     for _, archetype in ipairs(archetypes.list) do
         if enabled[archetype.key] and (archetype.requires == nil or #pools[archetype.requires] >= archetype.requires_count) then
             table.insert(candidates, archetype)
-            if requested and requested[archetype.key] then table.insert(requested_candidates, archetype) end
+            if requested[archetype.key] then table.insert(requested_candidates, archetype) end
         end
     end
     if #requested_candidates > 0 then
