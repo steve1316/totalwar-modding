@@ -13,6 +13,8 @@ local archetypes = require("script/land_encounters/configs/archetypes")
 local mct_settings = {
     disable_smithies = false,
     spawn_percentage = 0.75,
+    --- Percent chance that a battle spot starts a battle instead of giving treasure.
+    battle_chance = 70,
     --- Default to interception only - matches the pre-MCT-toggle behavior the user established.
     enabled_intervention_types = { INTERCEPTION_TYPE },
     enabled_encounter_skin_ids = {},
@@ -322,6 +324,7 @@ end
 function set_mct_settings(mct_mod)
     mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
     mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
+    mct_settings.battle_chance = mct_mod:get_option_by_key("battle_chance"):get_finalized_setting()
 
     --- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
     --- at-least-one via set_locked, so this list should never be empty, but the picker in
@@ -350,6 +353,7 @@ function set_mct_settings(mct_mod)
 
     out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))
+    out("DEBUG - mct_settings.battle_chance: " .. tostring(mct_settings.battle_chance))
     out("DEBUG - mct_settings.enable_all_encounter_skins: " .. tostring(mct_settings.enable_all_encounter_skins))
     out("DEBUG - mct_settings.use_only_modded_units: " .. tostring(mct_settings.use_only_modded_units))
     out("DEBUG - mct_settings.enable_compatibility_with_supported_mods: " .. tostring(mct_settings.enable_compatibility_with_supported_mods))
