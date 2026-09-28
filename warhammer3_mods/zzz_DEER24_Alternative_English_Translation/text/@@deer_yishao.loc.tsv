@@ -1,0 +1,64 @@
+key	text	tooltip
+#Loc;1;text/@@deer_yishao.loc		
+agent_subtypes_description_text_override_yishao	Yi Shao is the Commandant of Long Men Pass, Zhen Dan's northern gate, and also the uncle of [Sky-Defying Sovereign] Yi Qing. Yi Shao holds firm at Chang Yuan, coordinating the garrisons, managing the grain routes, and overseeing the beacon towers, ensuring that Long Men has not fallen in thirty years; Yi Qing, meanwhile, leads light cavalry beyond the frontier, pursuing the fleeing enemy and beheading their commanders, capturing their banners. Uncle and nephew, one defending, one attacking, like Wei Qing and Huo Qubing to the Han dynasty, striking terror into the hearts of the Chaos warbands. Yi Shao takes no pride in personal valor alone—his true terror lies in his ability to weave the pass fortresses, frontier armies, and northern expedition cavalry into a single iron net, so that invaders find themselves surrounded before they even reach the walls.	true
+agent_subtypes_onscreen_name_override_yishao	Legendary Lord	true
+ancillaries_colour_text_deer_cth_yishao_bixie	A loyal servant of Hao Tian rides this fearsome magical creature, pouring forth Hao Tian's will across both the ground and sky of the battlefield.	true
+ancillaries_colour_text_deer_cth_yishao_enchanted_item	Half of the Chang Yuan Tally. Only one who holds both halves may command the Chang Yuan Frontier Army.	true
+ancillaries_colour_text_deer_cth_yishao_horse	A general's warhorse is his most trusted and valiant companion. Just don't name it 'Little Daisy.'	true
+ancillaries_colour_text_deer_cth_yishao_mount	The Jade Dragon Steed is rare and majestic, permitting only those riders who are truly worthy to command it.	true
+ancillaries_colour_text_deer_cth_yishao_talisman_item	This order was inscribed by the recording clerk of Long Men's beacon towers, cataloguing every pass's fire signals, passwords for venturing beyond the frontier, and the beacon roads of the garrison army. Yi Shao uses this order to command the scouts of the Sentries of the Beacon Roads, keeping the movements of Chaos across the thousand-mile wasteland entirely within his grasp—before the northern warbands can even muster, Long Men has already cast its net across the land.	true
+ancillaries_colour_text_deer_cth_yishao_weapon	This hammer was forged by the craftsmen of the Long Men garrison from fine steel tempered a hundred times, heavier than ordinary weapons, hard enough to shatter armor.	true
+ancillaries_onscreen_name_deer_cth_yishao_bixie	Hao Tian Lion	true
+ancillaries_onscreen_name_deer_cth_yishao_enchanted_item	Frontier Army Tally	true
+ancillaries_onscreen_name_deer_cth_yishao_horse	Warhorse	true
+ancillaries_onscreen_name_deer_cth_yishao_mount	Jade Dragon Steed	true
+ancillaries_onscreen_name_deer_cth_yishao_talisman_item	Chang Yuan Beacon Order	true
+ancillaries_onscreen_name_deer_cth_yishao_weapon	Golden Melon Mace	true
+character_skills_localised_description_cth_yishaoARMY_self_0	Yi Shao never lightly abandons a camp. Before every advance, he first raises palisades, digs trenches, and marks beacon signals, ensuring his troops can hold firm while also swiftly turning defense into offense the moment the enemy shows a weakness. The arts of Long Men's defense prove just as deadly on the open battlefield.	true
+character_skills_localised_description_cth_yishaoARMY_self_1	Yi Shao has woven the ways of Long Men's defense into open warfare: the vanguard holds firm, the flanks preserve room for counter-charges, and artillery and cavalry press forward in turns according to the beacon signals. Even amid the chaos of a wasteland storm, his army maintains a clear rhythm, advancing and retreating with the precision of a pass gate opening and closing.	true
+character_skills_localised_description_cth_yishao_skill_1_0	Long Men lies at the center of the Three Passes, blocking the wastelands to the north and shielding the capital to the south. Should it fall, Chang Yuan's spine would be broken. Yi Shao has held this pass for many years, knowing every stretch of wall, every beacon tower, every supply road. Where his orders reach, Long Men becomes an iron chain across the river, impassable even to Chaos's vast armies.	true
+character_skills_localised_description_cth_yishao_skill_1_1	Yi Shao knows well that Chang Yuan cannot be defended by walls alone. Armories, granaries, courier roads, craftsmen, and rotating garrison troops are all the sinew and bone of Long Men. Yi Shao personally oversees the garrison administration, establishing regulations, clarifying rewards and punishments, and maintaining military preparedness, ensuring the frontier army can still resupply arms and repair fortifications even after prolonged battle, and form ranks to fight again.	true
+character_skills_localised_description_cth_yishao_skill_1_2	The scouts under Yi Shao's command roam year-round north of Chang Yuan, watching for enemy campfires, tracking beast migrations, and detecting disturbances in the Winds of Magic. When the beacon fires ignite, Long Men can complete its defenses before the enemy even musters; when the pass gates suddenly open, the northern warbands have often already lost their route of retreat. The thousand-mile wasteland lies entirely within Yi Shao's watchful sight.	true
+character_skills_localised_description_cth_yishao_skill_1_3	Yi Qing dares to venture deep into the wasteland because he knows his uncle will hold the retreat firm behind Long Men; Yi Shao dares to open the gates and strike out because he knows his nephew can tear open a breach in the enemy's heartland. With uncle and nephew united in command, Chang Yuan's military strategy is no longer passive defense, but can actively push the flames of war back into the north.	true
+character_skills_localised_description_cth_yishao_skill_1_4	Beneath Long Men's walls, bones pile up like mountains—the remains of northern warbands past. Yi Shao knows well how Chaos besieges cities, lures out defenders, and uses the Winds of Chaos to break morale, so he trains his troops to hold formation amid corruption and terror, blunting the enemy's spearhead with solid walls and wearing down their numbers with cold arrows, turning every invasion into a war of attrition against the invaders.	true
+character_skills_localised_description_cth_yishao_skill_1_5	'The frontier army is here!'	true
+character_skills_localised_description_deer_cth_yishao_bixie	A loyal servant of Hao Tian rides this fearsome magical creature, pouring forth Hao Tian's will across both the ground and sky of the battlefield.	true
+character_skills_localised_description_deer_cth_yishao_enchanted_item	Half of the Chang Yuan Tally. Only one who holds both halves may command the Chang Yuan Frontier Army.	true
+character_skills_localised_description_deer_cth_yishao_horse	A general's warhorse is his most trusted and valiant companion. Just don't name it 'Little Daisy.'	true
+character_skills_localised_description_deer_cth_yishao_mount	The Jade Dragon Steed is rare and majestic, permitting only those riders who are truly worthy to command it.	true
+character_skills_localised_description_deer_cth_yishao_talisman_item	This order was inscribed by the recording clerk of Long Men's beacon towers, cataloguing every pass's fire signals, passwords for venturing beyond the frontier, and the beacon roads of the garrison army. Yi Shao uses this order to command the scouts of the Sentries of the Beacon Roads, keeping the movements of Chaos across the thousand-mile wasteland entirely within his grasp—before the northern warbands can even muster, Long Men has already cast its net across the land.	true
+character_skills_localised_description_deer_cth_yishao_weapon	This hammer was forged by the craftsmen of the Long Men garrison from fine steel tempered a hundred times, heavier than ordinary weapons, hard enough to shatter armor.	true
+character_skills_localised_description_yishao_jianqi	Yi Shao knows well that Chang Yuan's true eyes lie not upon its walls, but out in the wasteland. His frontier troops, seasoned by the harsh winds of the north, include archers skilled at shooting from favorable terrain and halberdiers accustomed to countering cavalry on foot. Yi Shao has taught the arts of Long Men's defense to every division of his frontier army, allowing them to form ranks against close attacks and rain arrows upon distant foes.	true
+character_skills_localised_description_yishao_longdi	The day the Dragon Court Decree arrives at Long Men, Yi Shao opens the garrison's roster and mobilizes the Dragon Guard forces. Though the Dragon Guard were originally the elite defenders of Wei Jing, under Yi Shao's command they have learned the resilience and discipline of the frontier. Wherever the decree reaches, their armor stands like an iron wall, their ranks like mountains, unshaken even by Chaos's heaviest armored warbands.	true
+character_skills_localised_description_yishao_skill_texing	Long Men is not merely the name of a single fortress—it is the hinge of the Three Passes, the spine of Chang Yuan, the northern gate of Zhen Dan. Yi Shao has held this pass for thirty years: when the beacon fires burn bright, the raider cavalry dare not advance carelessly; when the garrison stores are full, the frontier army can endure prolonged war; while the banner still stands, Chang Yuan still stands. The Chaos warbands have long said: 'To break Chang Yuan, first destroy Long Men; to destroy Long Men, first remove Yi Shao.' Yet thirty years on, Long Men still stands, and Yi Shao still stands.	true
+character_skills_localised_name_cth_yishaoARMY_self_0	Fortified Encampment	true
+character_skills_localised_name_cth_yishaoARMY_self_1	Northern Frontier Strategy	true
+character_skills_localised_name_cth_yishao_skill_1_0	Key to the Three Passes	true
+character_skills_localised_name_cth_yishao_skill_1_1	Garrison of Long Men	true
+character_skills_localised_name_cth_yishao_skill_1_2	Sentries of the Beacon Roads	true
+character_skills_localised_name_cth_yishao_skill_1_3	Uncle and Nephew United in Command	true
+character_skills_localised_name_cth_yishao_skill_1_4	Long Men Repels the Invaders	true
+character_skills_localised_name_cth_yishao_skill_1_5	Bastion of the Celestial Empire	true
+character_skills_localised_name_deer_cth_yishao_bixie	Hao Tian Lion	true
+character_skills_localised_name_deer_cth_yishao_enchanted_item	Frontier Army Tally	true
+character_skills_localised_name_deer_cth_yishao_horse	Warhorse	true
+character_skills_localised_name_deer_cth_yishao_mount	Jade Dragon Steed	true
+character_skills_localised_name_deer_cth_yishao_talisman_item	Chang Yuan Beacon Order	true
+character_skills_localised_name_deer_cth_yishao_weapon	Golden Melon Mace	true
+character_skills_localised_name_yishao_jianqi	Beacon Fires Facing North	true
+character_skills_localised_name_yishao_longdi	Dragon Court Decree	true
+character_skills_localised_name_yishao_skill_texing	[Pillar of Long Men]	true
+character_trait_levels_colour_text_defeated_trait_yishao	The Commandant of Long Men has fallen, and Chang Yuan's command center is no more. Yet his frontier strategies, beacon coordination, and northern campaign tactics have all been absorbed by the generals under your command—should Chaos dare invade again, let them know Zhen Dan still has those who understand the art of war.	true
+character_trait_levels_explanation_text_defeated_trait_yishao	How to obtain: Defeat Yi Shao	true
+character_trait_levels_onscreen_name_defeated_trait_yishao	The Gate Falls	true
+effects_description_deer_cth_yishao_bixie	Mount: Hao Tian Lion	true
+effects_description_deer_yishao_hengxing	Skill: 'Rampant Advance'	true
+land_units_onscreen_name_deer_cth_yishao	[Commandant of Long Men] Yi Shao	true
+land_units_onscreen_name_deer_cth_yishao_bixie	[Commandant of Long Men] Yi Shao	true
+land_units_onscreen_name_deer_cth_yishao_horse	[Commandant of Long Men] Yi Shao	true
+land_units_onscreen_name_deer_cth_yishao_mount	[Commandant of Long Men] Yi Shao	true
+names_name_624400115	[Commandant of Long Men] Yi Shao	true
+unit_description_short_texts_text_deer_cth_yishao	Yi Shao is the Commandant of Long Men Pass, and uncle and most vital military partner to Yi Qing. He holds Zhen Dan's northern gate, overseeing the military affairs of the Three Passes, beacon reconnaissance, and frontier army supply; Yi Qing leads elite light troops beyond the pass to pursue the Chaos warbands. One defends, one attacks, making Long Men not merely a wall against the north, but a forward garrison for Zhen Dan's counterattacks into the wastelands.	true
+units_custom_battle_mounts_mount_name_deer_cth_yishaodeer_cth_yishao_bixie	Hao Tian Lion	true
+units_custom_battle_mounts_mount_name_deer_cth_yishaodeer_cth_yishao_horse	War Horse	true
+units_custom_battle_mounts_mount_name_deer_cth_yishaodeer_cth_yishao_mount	Jade Dragon Horse	true

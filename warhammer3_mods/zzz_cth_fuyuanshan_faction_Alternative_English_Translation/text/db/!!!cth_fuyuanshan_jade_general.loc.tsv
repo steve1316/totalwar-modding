@@ -1,99 +1,125 @@
 key	text	tooltip
 #Loc;1;text/db/!!!cth_fuyuanshan_jade_general.loc		
-agent_subtypes_onscreen_name_override_jade_general	Jade General	true
-agent_subtypes_description_text_override_jade_general	Jade Generals are elite warriors promoted from the ranks of the Jade Warriors, seasoned veterans with exceptional martial skills and military strategies.	true
-land_units_onscreen_name_jade_general_0	Jade General	false
-unit_description_short_texts_text_jade_general_0	Jade Generals are elite warriors promoted from the ranks of the Jade Warriors, seasoned veterans with exceptional martial skills and military strategies.	false
-unit_description_historical_texts_text_jade_general_0	Jade Generals are elite warriors promoted from the ranks of the Jade Warriors, seasoned veterans with exceptional martial skills and military strategies.	false
-land_units_onscreen_name_jade_general_1	Jade General	false
-unit_description_short_texts_text_jade_general_1	Jade Generals are elite warriors promoted from the ranks of the Jade Warriors, seasoned veterans with exceptional martial skills and military strategies.	false
-unit_description_historical_texts_text_jade_general_1	Jade Generals are elite warriors promoted from the ranks of the Jade Warriors, seasoned veterans with exceptional martial skills and military strategies.	false
-land_units_onscreen_name_jade_general_2	Jade General	false
-unit_description_short_texts_text_jade_general_2	Jade Generals are elite warriors promoted from the ranks of the Jade Warriors, seasoned veterans with exceptional martial skills and military strategies.	false
-unit_description_historical_texts_text_jade_general_2	Jade Generals are elite warriors promoted from the ranks of the Jade Warriors, seasoned veterans with exceptional martial skills and military strategies.	false
-agent_recruitment_categories_onscreen_name_jade_general	Jade General	true
-units_custom_battle_mounts_mount_name_jade_general_0jade_general_1	Qilin	true
-units_custom_battle_mounts_mount_name_jade_general_0jade_general_2	Dragon Horse	true
-ancillaries_onscreen_name_jade_general_fight_1	Dragon Horse	true
-ancillaries_colour_text_jade_general_fight_1	Dragon Horses are rare and majestic, moving faster than wind and thunder. However, they are also unruly and difficult to tame. If not handled by a brave warrior, they may cause harm instead.	true
-ancillaries_onscreen_name_jade_general_command_1	Qilin	true
-ancillaries_colour_text_jade_general_command_1	Qilins are mystical creatures inhabiting Grand Cathay, possessing the ability to control lightning. They are proud and swift, and only those with both wisdom and courage can tame them.	true
-unit_abilities_onscreen_name_abilities_bastion	Immovable Bulwark	true
-unit_abilities_tooltip_text_abilities_bastion	The true defenders of Cathay's peace are the guardians upon the Great Bastion. They stand against Chaos with their unwavering will, ensuring the tranquility of Cathay. The Jade Generals are particularly outstanding among them.	true
-effects_description_Attack_jade	Melee Attack: +%n for Jade units	true
-effects_description_Defence_jade	Armor: +%n for Jade units	true
-character_skills_localised_name_jade_general_skills_war_flame	Beacon of the Bastion	true
-character_skills_localised_description_jade_general_skills_war_flame	The flames of war have arrived, the defenders of the Great Bastion must rally!	true
-character_skills_localised_name_jade_general_skills_prisoner	Conscription of Convicts	true
-character_skills_localised_description_jade_general_skills_prisoner	Convicts have always been a valuable addition to the Great Bastion garrison. For a chance at redemption, they are willing to risk their lives and disregard personal gain.	true
-character_skills_localised_name_jade_general_skills_defence	Will to Defend the Nation	true
-character_skills_localised_description_jade_general_skills_defence	Facing invaders who encroach upon their homeland, the soldiers of Grand Cathay unite in their hatred, delivering a powerful counterattack to the aggressors.	true
-character_skills_localised_name_jade_general_skills_equip	Equipment Maintenance	true
-character_skills_localised_description_jade_general_skills_equip	Upon the Jade General's request, equipment from various weapon workshops across Grand Cathay is continuously delivered to the soldiers.	true
-character_skills_localised_name_jade_general_fight_1	Bravest of the Army	true
-character_skills_localised_name_jade_general_fight_2	The Jade General charges into battle, leading the way, inspiring all soldiers in the army	true
-character_skills_localised_name_jade_general_fight_3	Aggression Like Fire	true
-character_skills_localised_name_jade_general_fight_4	The Jade General charges into battle, leading the way, becoming the courage of the army	true
-character_skills_localised_name_jade_general_fight_5	Double-Layered Armor	true
-character_skills_localised_name_jade_general_fight_6	The Jade General, shouting in the heat of battle, orders the soldiers to put on a second layer of armor, ready to fight another round	true
-character_skills_localised_description_jade_general_fight_1	Cessation Incantation	true
-character_skills_localised_description_jade_general_fight_2	Through a special breathing technique, the Jade General quickly recovers his energy, but this method is like drinking poison to quench thirst, and using it again in a short time will endanger his life	true
-character_skills_localised_description_jade_general_fight_3	Fight to the Death	true
-character_skills_localised_description_jade_general_fight_4	The Jade General fights bravely, becoming more courageous with each battle	true
-character_skills_localised_description_jade_general_fight_5	Unstoppable Charge	true
-character_skills_localised_description_jade_general_fight_6	The soldiers, following the Jade General, firmly believe that victory will ultimately belong to them, and launch a frenzied attack	true
-character_skills_localised_name_jade_general_command_1	Strategically Brilliant	true
-character_skills_localised_name_jade_general_command_2	Artillery Support	true
-character_skills_localised_name_jade_general_command_3	Battlefield First Aid	true
+agent_subtypes_onscreen_name_override_jade_general	Frontier Guard Commander	true
+agent_subtypes_description_text_override_jade_general	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by years of battle, unmatched in both martial skill and strategic acumen.	true
+land_units_onscreen_name_jade_general_0	Frontier Guard Commander	false
+unit_description_short_texts_text_jade_general_0	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	false
+unit_description_historical_texts_text_jade_general_0	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	false
+land_units_onscreen_name_jade_general_1	Frontier Guard Commander	false
+unit_description_short_texts_text_jade_general_1	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	false
+unit_description_historical_texts_text_jade_general_1	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	false
+land_units_onscreen_name_jade_general_2	Frontier Guard Commander	false
+unit_description_short_texts_text_jade_general_2	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	false
+unit_description_historical_texts_text_jade_general_2	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	false
+agent_recruitment_categories_onscreen_name_jade_general	Frontier Guard Commander	true
+units_custom_battle_mounts_mount_name_jade_general_0jade_general_1	Barded Warhorse	true
+units_custom_battle_mounts_mount_name_jade_general_0jade_general_2	Barded War Rhino	true
+unit_abilities_onscreen_name_abilities_bastion	Unshakable Bastion	true
+unit_abilities_tooltip_text_abilities_bastion	What truly safeguards the peace of Cathay are the guardians of the Great Bastion, who oppose Chaos with unyielding will and preserve Cathay's tranquility—the Frontier Guard Commander foremost among them.	true
+effects_description_Attack_jade	Melee Attack: Jade Warriors %+n	true
+effects_description_Defence_jade	Armour: Jade Warriors %+n	true
+character_skills_localised_name_jade_general_skills_war_flame	Beacon Fires of the Great Bastion	true
+character_skills_localised_description_jade_general_skills_war_flame	The flames of war have arrived; the guardians of the Great Bastion must rally.	true
+character_skills_localised_name_jade_general_skills_prisoner	Conscripted Convicts	true
+character_skills_localised_description_jade_general_skills_prisoner	Convicts have long served as a valuable reinforcement for the Great Bastion's garrison—for a chance at pardon, they will disregard both life and gain.	true
+character_skills_localised_name_jade_general_skills_defence	Will to Defend the Realm	true
+character_skills_localised_description_jade_general_skills_defence	Facing enemies who dare invade their homeland, the soldiers of Cathay stand united in common cause, delivering a powerful counterblow to the invaders.	true
+character_skills_localised_name_jade_general_skills_equip	Refurbish Arms	true
+character_skills_localised_description_jade_general_skills_equip	Through the requisitions of the Frontier Guard Commander, equipment from Cathay's great weapon workshops flows steadily into the hands of the soldiers.	true
+character_skills_localised_name_jade_general_fight_1	Champion Warrior	true
+character_skills_localised_name_jade_general_fight_2	Swift as Fire	true
+character_skills_localised_name_jade_general_fight_3	Double-Layered Armour	true
+character_skills_localised_name_jade_general_fight_4	Battlefield Instinct	true
+character_skills_localised_name_jade_general_fight_5	Blood-Soaked Struggle	true
+character_skills_localised_name_jade_general_fight_6	Unstoppable Charge	true
+character_skills_localised_description_jade_general_fight_1	The valor of one general can inspire the courage of three armies.	true
+character_skills_localised_description_jade_general_fight_2	Charge into the fray, blade unyielding.	true
+character_skills_localised_description_jade_general_fight_3	"Bring me my double-layered armour—I shall charge them once more!"	true
+character_skills_localised_description_jade_general_fight_4	Battlefield instinct honed in the crucible of bloodshed can find a sliver of hope in even the most desperate of circumstances.	true
+character_skills_localised_description_jade_general_fight_5	The battlefield is the nightmare of cowards, but the reward of the brave.	true
+character_skills_localised_description_jade_general_fight_6	This time, there is only death!	true
+character_skills_localised_name_jade_general_command_1	War Commander	true
+character_skills_localised_name_jade_general_command_2	Thundering Cannons	true
+character_skills_localised_name_jade_general_command_3	Order to Retreat	true
 character_skills_localised_name_jade_general_command_4	Reserve Forces	true
-character_skills_localised_name_jade_general_command_5	Crossbow Workshop	true
-character_skills_localised_name_jade_general_command_6	Follow the Banner	true
-character_skills_localised_description_jade_general_command_1	The Jade General commands the army with strict discipline and well-organized orders. Under his leadership, the soldiers of Grand Cathay form a well-functioning and massive war machine, capable of easily crushing any enemy.	true
-character_skills_localised_description_jade_general_command_2	At the Jade General's signal, several soldiers pick up flags and wave them in a specific rhythm. The Great Bastion guards in the distance, holding observation mirrors, quickly decipher the meaning of the flags: a set of coordinates.\\nNext, the artillery placed on the Great Bastion aims at the location indicated by the coordinates.	true
-character_skills_localised_description_jade_general_command_3	Proper medical care can save lives that would otherwise be lost, but this process involves some risks...	true
-character_skills_localised_description_jade_general_command_4	A good general never throws all his troops into battle at once. After the initial engagement, fresh reinforcements are the only way a general can influence the battlefield.	true
-character_skills_localised_description_jade_general_command_5	New workshops are established, working day and night to supply the front lines. Thanks to the abundant crossbow bolts, new tactics can be implemented.	true
-character_skills_localised_description_jade_general_command_6	The soldiers of Grand Cathay unite under the banner of Wei-Jin, chanting the Dragon Emperor's name in unison, their morale soaring.	true
-effects_description_wh3_main_effect_ability_enable_muse	Activates the ability: "Cessation Incantation"	true
-unit_abilities_onscreen_name_wh3_main_muse	Cessation Incantation	true
-unit_abilities_tooltip_text_wh3_main_muse	The Taoists of Shen Yang Guan have created a special breathing technique that regulates the state of body and mind through specific rhythmic breathing, allowing for rapid energy recovery in a short time.	true
-effects_description_wh3_main_effect_ability_enable_battle_blood	Activates the ability: "Fight to the Death"	true
-unit_abilities_onscreen_name_wh3_main_battle_blood	Fight to the Death	true
-unit_abilities_tooltip_text_wh3_main_battle_blood	The pain of battle awakens the Jade General's full potential, making him feel even stronger than usual	true
-effects_description_wh3_main_effect_ability_enable_army_charge	Activates the ability: "Unstoppable Charge"	true
+character_skills_localised_name_jade_general_command_5	Rolling War Drums	true
+character_skills_localised_name_jade_general_command_6	Where the Banner Points	true
+character_skills_localised_description_jade_general_command_1	The art of command is the art of sacrifice.	true
+character_skills_localised_description_jade_general_command_2	"The moment has come—fire!"	true
+character_skills_localised_description_jade_general_command_3	A momentary retreat, to buy the chance to advance.	true
+character_skills_localised_description_jade_general_command_4	A good general never commits all his forces at once. Once battle is joined, fresh reserves are the only way a general can still shape the course of the fight.	true
+character_skills_localised_description_jade_general_command_5	Carefully chosen champions of the army beat the war drums, making their thunder all the more powerful and inspiring.	true
+character_skills_localised_description_jade_general_command_6	The soldiers of Cathay rally beneath the banners of Wei Jing, chanting the Dragon Emperor's name with overwhelming force.	true
+effects_description_wh3_main_effect_ability_enable_battle_blood	Unlocks ability: Blood-Soaked Struggle	true
+unit_abilities_onscreen_name_wh3_main_battle_blood	Blood-Soaked Struggle	true
+unit_abilities_tooltip_text_wh3_main_battle_blood	The pain of wounds awakens the Frontier Guard Commander's full potential, and he feels far stronger than usual.	true
+effects_description_wh3_main_effect_ability_enable_army_charge	Unlocks ability: Unstoppable Charge	true
 unit_abilities_onscreen_name_wh3_main_army_charge	Unstoppable Charge	true
-unit_abilities_tooltip_text_wh3_main_army_charge	The soldiers, following the Jade General, firmly believe that victory will ultimately belong to them, and launch a frenzied attack.	true
-effects_description_wh3_main_effect_ability_enable_artillery	Activates the ability: "Artillery Support"	true
-unit_abilities_onscreen_name_wh3_main_artillery	Artillery Support	true
-unit_abilities_tooltip_text_wh3_main_artillery	Swift artillery fire from the Great Bastion delivers a devastating blow to the enemy	true
-effects_description_wh3_main_effect_ability_enable_treatment	Activates the ability: "Battlefield First Aid"	true
-unit_abilities_onscreen_name_wh3_main_treatment	Battlefield First Aid	true
-unit_abilities_tooltip_text_wh3_main_treatment	Well-trained soldiers carefully navigate the battlefield, quickly locating the wounded and providing meticulous treatment	true
-effects_description_wh3_main_effect_ability_enable_guard	Activates the ability: "Jade Warrior Reserves"	true
-unit_abilities_onscreen_name_wh3_main_guard	Jade Warrior Reserves	true
-unit_abilities_tooltip_text_wh3_main_guard	A reserve force meticulously arranged by the Jade General, only to be deployed at the most critical moment	true
-effects_description_wh3_main_effect_ability_enable_arrow	Activates the ability: "Volley of Arrows"	true
-unit_abilities_onscreen_name_wh3_main_arrow	Volley of Arrows	true
-unit_abilities_tooltip_text_wh3_main_arrow	Under the command of the Jade General, the Jade Warrior crossbowmen unleash a powerful volley, dealing a heavy blow to the enemy	true
-effects_description_wh3_main_effect_ability_enable_banner	Activates the ability: "Follow the Banner", summoning a banner on the battlefield that grants powerful buffs to nearby soldiers	true
-unit_abilities_onscreen_name_wh3_main_banner	Follow the Banner	true
-unit_abilities_tooltip_text_wh3_main_banner	Where the banner points, we shall go. This mortal flesh shall become the eternal Great Bastion of Cathay	true
-effects_description_wh3_main_effect_ability_enable_longma	Dragon Horse: Dragon Horses are rare and majestic, moving faster than wind and thunder. However, they are also unruly and difficult to tame. If not handled by a brave warrior, they may cause harm instead	true
-effects_description_wh3_main_effect_ability_enable_qilin	Qilin: Qilins are mystical creatures inhabiting Grand Cathay, possessing the ability to control lightning. They are proud and swift, and only those with both wisdom and courage can tame them.	true
-land_units_onscreen_name_jade_banner	Great Bastion Banner	true
-unit_description_short_texts_text_jade_banner	Where the banner points, we shall go. This mortal flesh shall become the eternal Great Bastion of Cathay.	true
-unit_description_historical_texts_text_jade_banner	Where the banner points, we shall go. This mortal flesh shall become the eternal Great Bastion of Cathay.	false
-ui_unit_groupings_onscreen_jade_banner	Army Standard	true
-unit_abilities_onscreen_name_jade_banner_encourage	Banner Stands Tall	true
-unit_abilities_tooltip_text_jade_banner_encourage	The banner stands tall, and all will fight for it	true
-effects_description_wh3_main_faction_xp_increase_generals_cth_jade_general	New Lord Rank: %+n for Jade Generals	true
-character_skills_localised_name_jade_general_innate_hanpeng	Vengeful Spirit	true
-character_skills_localised_description_jade_general_innate_hanpeng	Han Peng vows to eradicate all traces of Tzeentch from the lands of Grand Cathay. Only then can the soldiers who died under Tzeentch's influence rest in peace	true
-character_trait_levels_explanation_text_trait_hanpeng	Han Peng vows to eradicate all traces of Tzeentch from the lands of Grand Cathay. Only then can the soldiers who died under Tzeentch's influence rest in peace	true
+unit_abilities_tooltip_text_wh3_main_army_charge	Following the Frontier Guard Commander, the soldiers, certain that victory is theirs, launch a fervent assault.	true
+effects_description_wh3_main_effect_ability_enable_artillery	Unlocks ability: Thundering Cannons	true
+unit_abilities_onscreen_name_wh3_main_artillery	Thundering Cannons	true
+unit_abilities_tooltip_text_wh3_main_artillery	The thundering cannons roar, sending even ghosts and demons fleeing in terror.	true
+effects_description_wh3_main_effect_ability_enable_treatment	Unlocks ability: Order to Retreat	true
+unit_abilities_onscreen_name_wh3_main_treatment	Order to Retreat	true
+unit_abilities_tooltip_text_wh3_main_treatment	Retreat is also a crucial step toward victory.	true
+effects_description_wh3_main_effect_ability_enable_guard	Unlocks ability: Jade Elite Vanguard	true
+unit_abilities_onscreen_name_wh3_main_guard	Jade Elite Vanguard	true
+unit_abilities_tooltip_text_wh3_main_guard	A surprise force carefully arranged by the Frontier Guard Commander, committed only at the most critical moment.	true
+effects_description_wh3_main_effect_ability_enable_banner	Unlocks ability: Where the Banner Points, summoning a banner on the battlefield that grants powerful buffs to nearby soldiers.	true
+unit_abilities_onscreen_name_wh3_main_banner	Where the Banner Points	true
+unit_abilities_tooltip_text_wh3_main_banner	Wherever the banner points, there we go. This flesh-and-blood body is Cathay's immortal Great Bastion.	true
+effects_description_wh3_main_effect_ability_enable_longma	Unlocks mount: Barded War Rhino	true
+effects_description_wh3_main_effect_ability_enable_qilin	Unlocks mount: Mystic Carriage	true
+land_units_onscreen_name_jade_banner	Great Bastion Command Banner	true
+unit_description_short_texts_text_jade_banner	Wherever the banner points, there we go. This flesh-and-blood body is Cathay's immortal Great Bastion.	true
+unit_description_historical_texts_text_jade_banner	Wherever the banner points, there we go. This flesh-and-blood body is Cathay's immortal Great Bastion.	false
+ui_unit_groupings_onscreen_jade_banner	Banner	true
+unit_abilities_onscreen_name_jade_banner_encourage	Banner Unbroken	true
+unit_abilities_tooltip_text_jade_banner_encourage	As the banner stands unbroken here, countless soldiers pledge their lives to its cause.	true
+effects_description_wh3_main_faction_xp_increase_generals_cth_jade_general	Starting rank of newly recruited Lords: Frontier Guard Commander %+n	true
+character_skills_localised_name_jade_general_innate_hanpeng	Vengeful Wraith-Soul	true
+character_skills_localised_description_jade_general_innate_hanpeng	Han Peng has sworn to erase every trace of Qing Bao Tian Zun from the land of Cathay. Only then can the soldiers who died deceived by Qing Bao Tian Zun rest in peace.	true
+character_trait_levels_explanation_text_trait_hanpeng	Han Peng has sworn to erase every trace of Qing Bao Tian Zun from the land of Cathay. Only then can the soldiers who died deceived by Qing Bao Tian Zun rest in peace.	true
 character_trait_levels_removal_text_trait_hanpeng		true
-character_trait_levels_onscreen_name_trait_hanpeng	Vengeful Spirit	true
-character_skills_localised_name_jade_general_innate_huoyi	Lone Ranger	false
-character_skills_localised_description_jade_general_innate_huoyi	Huo Yi is a recognized scoundrel, indulging in all vices except for his military talent and unwavering loyalty to Grand Cathay, which no one doubts. Therefore, soldiers are willing to fight under his command	false
-character_trait_levels_explanation_text_trait_huoyi	Huo Yi is a recognized scoundrel, indulging in all vices except for his military talent and unwavering loyalty to Grand Cathay, which no one doubts. Therefore, soldiers are willing to fight under his command	false
+character_trait_levels_onscreen_name_trait_hanpeng	Vengeful Wraith-Soul	true
+character_skills_localised_name_jade_general_innate_huoyi	Lone March of a Thousand Li	false
+character_skills_localised_description_jade_general_innate_huoyi	Huo Yi is a widely acknowledged scoundrel—drinking, gambling, whoring, and every vice besides—yet no one doubts his tactical brilliance or his utter devotion to Cathay. For this reason, soldiers under his command are glad to fight for him.	false
+character_trait_levels_explanation_text_trait_huoyi	Huo Yi is a widely acknowledged scoundrel—drinking, gambling, whoring, and every vice besides—yet no one doubts his tactical brilliance or his utter devotion to Cathay. For this reason, soldiers under his command are glad to fight for him.	false
 character_trait_levels_removal_text_trait_huoyi		false
-character_trait_levels_onscreen_name_trait_huoyi	Lone Ranger	false
+character_trait_levels_onscreen_name_trait_huoyi	Lone March of a Thousand Li	false
+ancillaries_colour_text_jade_general_anc_mount_commanderveh	The Mystic Carriage serves as a hub for command, allowing the Frontier Guard Commander stationed atop it to direct the army with a commanding view of the field. At the same time, it is also a war machine of tremendous destructive power, standing ever at the forefront of the battle line—a posture the Frontier Guard Commander consistently embodies.	true
+ancillaries_colour_text_jade_general_anc_mount_rhino	These rhinos remain wild and short-tempered, and only a rider of great strength and skill can tame them and fully unleash the destructive nature coursing through their blood.	true
+ancillaries_colour_text_jade_general_anc_mount_warhorse	Cathay's barded warhorses are not particularly powerful in build, but possess remarkable stamina, sufficient for prolonged campaigns.	true
+ancillaries_onscreen_name_jade_general_anc_mount_commanderveh	Mystic Carriage	true
+ancillaries_onscreen_name_jade_general_anc_mount_rhino	Barded War Rhino	true
+ancillaries_onscreen_name_jade_general_anc_mount_warhorse	Barded Warhorse	true
+character_skills_localised_description_jade_general_beacon	The Frontier Guard Commander is a living symbol of the Great Bastion—their shield represents the Bastion's gates, their armour the indestructible Bastion itself, and the mystic torch they bear is quite literally a part of the Bastion's beacon fires, used to signal enemy movements and guide Cathay's armies. To the soldiers guarding the Bastion, the beacon fires are both a signal of battle and a symbol of hope—for wherever they burn, the Frontier Guard Commander stands with them.	true
+character_skills_localised_description_jade_general_lyh_1	This man believes that one must secure an unassailable position before seeking battle, and so he drills the Jade Warriors extensively in formation, striving for an unshakeable defensive line.	true
+character_skills_localised_description_jade_general_lyh_2	This man believes cavalry charges are the key to victory, and so has focused his training efforts on cavalry, with his Jade Lancers rivaling the finest cavalry of any nation.	true
+character_skills_localised_description_jade_general_lyh_3	This man believes the crossbow to be a formidable tool of defense, and spares no expense to equip his Jade Crossbowmen with additional ammunition.	true
+character_skills_localised_description_jade_general_warhorse_1	Cathay's barded warhorses are not particularly powerful in build, but possess remarkable stamina, sufficient for prolonged campaigns.	true
+character_skills_localised_name_jade_general_beacon	Beacon Fires Never Cease	true
+character_skills_localised_name_jade_general_lyh_1	Focus on Defence	true
+character_skills_localised_name_jade_general_lyh_2	Focus on Charge	true
+character_skills_localised_name_jade_general_lyh_3	Focus on Shooting	true
+character_skills_localised_name_jade_general_warhorse_1	Barded Warhorse	true
+effects_description_cth_effect_force_stat_speed_jade_warrior_lancer	Speed: Jade Lancers (Barded) %+n%	true
+effects_description_wh3_main_effect_ability_enable_abilities_bastion_of_the_great_cities_plus	War drum units gain [Impassioned] Bastion of the Great Cities (replacing Bastion of the Great Cities)	true
+effects_description_wh3_main_effect_ability_enable_abilities_disdain_of_the_dragon_emperor_plus	War drum units gain [Impassioned] Disdain of the Dragon Emperor (replacing Disdain of the Dragon Emperor)	true
+effects_description_wh3_main_effect_ability_enable_fys_jade_inf_formation_1	Unlocks attribute: Formation of Gui for the Jade Warriors	true
+effects_description_wh3_main_effect_ability_enable_fys_jade_inf_formation_2	Unlocks attribute: Formation of Hu for the Jade Warriors (Halberd)	true
+effects_description_wh3_main_effect_attribute_enable_glorious_charge_cth_fys_jade_warrior_lancer	Unlocks attribute: Glorious Charge for the Jade Lancers (Barded)	true
+effects_description_wh3_main_effect_projectile_enable_cth_fys_jade_crossbow_ap	The Jade Crossbowmen (Shielded)'s ammunition type changes to 'Bin Iron Heavy Bolts'	true
+effects_description_wh3_main_effect_projectile_enable_cth_fys_jade_crossbow_fire	The Jade Crossbowmen's ammunition type changes to 'Fierce Oil Fire Rockets'	true
+land_units_onscreen_name_jade_general_3	Frontier Guard Commander	true
+unit_abilities_onscreen_name_abilities_bastion_of_the_great_cities_plus	[Impassioned] Bastion of the Great Cities	true
+unit_abilities_onscreen_name_abilities_disdain_of_the_dragon_emperor_plus	[Impassioned] Disdain of the Dragon Emperor	true
+unit_abilities_onscreen_name_abilities_fys_jade_inf_formation_1	Formation of Gui	true
+unit_abilities_onscreen_name_abilities_fys_jade_inf_formation_2	Formation of Hu	true
+unit_abilities_onscreen_name_wh3_main_unit_passive_eye_of_high_land	Highland Vantage	true
+unit_abilities_tooltip_text_abilities_bastion_of_the_great_cities_plus	The steady beat of the drums echoes the strength of a fortress—an impenetrable barrier that no enemy can breach.	true
+unit_abilities_tooltip_text_abilities_disdain_of_the_dragon_emperor_plus	Roused by the beat of the war drums, the warriors of Cathay fight without fear, unleashing the wrath of dragons upon their foes.	true
+unit_abilities_tooltip_text_wh3_main_unit_passive_eye_of_high_land	From the high ground, the whole battlefield lies in clear view.	true
+unit_description_historical_texts_text_jade_general_3	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	true
+unit_description_short_texts_text_jade_general_3	The Frontier Guard Commander is an elite warrior risen through the ranks of the Great Bastion's garrison, tempered by countless battles, unmatched in both martial skill and strategy.	true
+units_custom_battle_mounts_mount_name_jade_general_0jade_general_3	Mystic Carriage	true

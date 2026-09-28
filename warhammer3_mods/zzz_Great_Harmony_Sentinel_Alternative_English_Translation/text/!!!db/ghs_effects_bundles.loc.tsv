@@ -1,22 +1,20 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_effects_bundles.loc		
-effect_bundles_localised_description_ghs_main_ritual_def_slave_action_4	Lords with greater power enjoy larger estates, more slaves, and a status closer to the Witch King's Black Tower!	false
-effect_bundles_localised_title_ghs_main_ritual_def_slave_action_4	Dark Dealings	false
-effect_bundles_localised_description_durthu_alamo_aspect	Tempered by years of thunderstorms, the Aspen Spirit possesses a silver-forged body and extraordinary vitality, channeling terrifying lightning to pierce through armor and flesh alike.	false
-effect_bundles_localised_description_durthu_birch_aspect	No matter when winter retreats, the steadfast Birch Spirit silently guards Athel Loren, awaiting the rebirth of slumbering life from the ashes.	false
-effect_bundles_localised_description_durthu_oak_aspect	Even the fiercest flames cannot destroy the ancient Oak Spirit, having endured countless seasons. Ancient waystone spirits constantly remind it of its duties.	false
-effect_bundles_localised_description_durthu_willow_aspect	The Willow Spirit heralds spring, embodies life, and serves as the resting place for lost souls. It supports the Wood Elves and Forest Spirits against the harshest of environments.	false
-effect_bundles_localised_description_evil_aspect	The forest's malice spawns these cold-hearted malicious beings. Graceful like perfect dancers, their twisted branches excel at piercing hearts from the shadows.	false
-effect_bundles_localised_title_durthu_alamo_aspect	Aspen Spirit	false
-effect_bundles_localised_title_durthu_birch_aspect	Birch Spirit	false
-effect_bundles_localised_title_durthu_oak_aspect	Oak Spirit	false
-effect_bundles_localised_title_durthu_willow_aspect	Willow Spirit	false
-effect_bundles_localised_title_evil_aspect	Malicious Spirit	false
-effect_bundles_localised_description_cody_payload_malakai_makaisson_join	Many great individuals exist in the world. Having such a figure will be a blessing to you!	false
-effect_bundles_localised_title_cody_payload_malakai_makaisson_join	Exceptional Dwarf	false
-effect_bundles_localised_description_wh_main_bundle_stance_army_raiding_hef	Pillaging local wealth.	false
-effect_bundles_localised_title_wh_main_bundle_stance_army_raiding_hef	Stance: Waylaying Raiders	false
-effect_bundles_localised_description_wh_main_bundle_stance_army_tunnelling_lzd	Traversing the world by passing through normally inaccessible regions.	false
-effect_bundles_localised_title_wh_main_bundle_stance_army_tunnelling_lzd	Stance: Transdimensional Travel	false
-effects_description_wh_main_effect_force_army_campaign_stance_tunnelling_interception_dummy_lzd	Due to the missing chapters of the Portal Stone, nearby enemies may sense the turbulence in the Winds of Magic and intercept this army.	false
-effects_description_wh_main_effect_force_army_campaign_stance_tunnelling_movement_dummy_lzd	Allows movement through normally inaccessible regions.	false
+effect_bundles_localised_description_ghs_main_ritual_def_slave_action_4	Greater power for the Lord means grander estates, more slaves, and a position closer to the Witch King's Black Tower!	false
+effect_bundles_localised_title_ghs_main_ritual_def_slave_action_4	Dark Bargain	false
+effect_bundles_localised_description_durthu_alamo_aspect	Tempered by years of thunderstorms, the poplar's spirit has a silvery form and extraordinary vitality, able to channel terrifying thunder that pierces through all armour and flesh	false
+effect_bundles_localised_description_durthu_birch_aspect	No matter when winter recedes, the unyielding birch spirit silently guards Athel Loren, awaiting the rebirth of dormant life from the ashes	false
+effect_bundles_localised_description_durthu_oak_aspect	Even the fiercest flames cannot destroy the ancient oak spirit, which has weathered every season, its duty ever reminded by the spectral souls within the ancient waystones	false
+effect_bundles_localised_description_durthu_willow_aspect	The willow's spirit is the herald of spring's return, the wellspring of life, and the resting place of departed souls, sustaining the Wood Elves and forest spirits against the direst of circumstances	false
+effect_bundles_localised_description_evil_aspect	The forest's malice gives birth to this vile creature with a heart of ice and stone, as graceful as a perfect dancer, yet its warped branches are most adept at piercing hearts from behind	false
+effect_bundles_localised_title_durthu_alamo_aspect	Spirit of the Thunder Poplar	false
+effect_bundles_localised_title_durthu_birch_aspect	Spirit of the Frost Birch	false
+effect_bundles_localised_title_durthu_oak_aspect	Spirit of the Flame Oak	false
+effect_bundles_localised_title_durthu_willow_aspect	Spirit of the Soul Willow	false
+effect_bundles_localised_title_evil_aspect	Spirit of the Vile Soul	false
+effect_bundles_localised_description_wh_main_bundle_stance_army_raiding_hef	Plunder the wealth of the local area	false
+effect_bundles_localised_title_wh_main_bundle_stance_army_raiding_hef	Stance: Raiding	false
+effect_bundles_localised_description_wh_main_bundle_stance_army_tunnelling_lzd	Teleport across the world, traversing terrain normally impassable	false
+effect_bundles_localised_title_wh_main_bundle_stance_army_tunnelling_lzd	Stance: Higher Dimensional Transit	false
+effects_description_wh_main_effect_force_army_campaign_stance_tunnelling_interception_dummy_lzd	With the loss of the teleportation obelisk's chapter, nearby enemies may sense the stirring of the winds of magic and intercept this army	false
+effects_description_wh_main_effect_force_army_campaign_stance_tunnelling_movement_dummy_lzd	Can traverse terrain normally impassable	false

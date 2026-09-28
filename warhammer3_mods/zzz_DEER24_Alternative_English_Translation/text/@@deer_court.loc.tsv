@@ -1,0 +1,65 @@
+key	text	tooltip
+#Loc;1;text/@@deer_court.loc		
+deer_court_minister_chancellor_desc	The Chancellor oversees the affairs of the household. All buildings in this Lord's province gain 5% increased income, +10 growth, and -5 corruption.	true
+deer_court_minister_chancellor_name	Chancellor of the Princely Household	true
+deer_court_minister_commander_desc	The Commandant leads the troops. All units under this Lord's command gain +5 melee attack, +5 melee defence, +5 weapon strength, and +5 missile damage.	true
+deer_court_minister_equerry_desc	The Equerry oversees the stables and cavalry, refining mounted combat. This Lord gains +25 armour-piercing damage and +10 charge bonus.	true
+deer_court_minister_equerry_name	Equerry Attendant	true
+deer_court_minister_guardian_desc	The Guardian commands the imperial guard. This Lord gains +10 melee attack, +10 melee defence, +10 weapon strength, and +10 missile damage.	true
+deer_court_minister_marshal_desc	The Marshal governs military affairs. Upkeep for all units under this Lord's command is reduced by 5%, casualty replenishment rate is increased by 5%, and newly recruited units gain 3 additional experience.	true
+deer_court_minister_marshal_name	Marshal of the Princely Household	true
+deer_court_minister_protector_desc	The Protector commands the personal guard. All units under this Lord's command gain +5 melee defence and +5 armour.	true
+deer_court_minister_rectifier_desc	The Guardian of the Capital oversees the palace guard and armaments. This Lord gains +10% hit points and +10 armour.	true
+deer_court_minister_rectifier_name	Guardian of the Capital	true
+deer_court_minister_secretary_desc	The Secretary handles correspondence and records. This Lord gains +10% experience earned and +10% post-battle loot.	true
+deer_court_minister_secretary_name	Recording Adjutant	true
+deer_court_minister_steward_desc	The Granary Officer oversees provisions and construction. Building costs in this lord's province are reduced by 10%, and trade tariffs are increased by 5%.	true
+deer_court_minister_strategist_desc	The Strategist advises on military affairs. All armies under this lord's command gain 10% increased campaign movement range and 6% increased replenishment rate.	true
+deer_court_minister_strategist_name	Chief Strategist	true
+effect_bundles_localised_description_deer_court_bundle_chancellor	The Chief Clerk oversees the affairs of the estate. All building income in the province where this character resides is increased by 5%, growth is increased by 10, and corruption is reduced by 5.	true
+effect_bundles_localised_description_deer_court_bundle_commander	The Commandant leads the troops. All units under this lord's command gain 5 melee attack, 5 melee defence, 5 weapon strength, and 5 missile damage.	true
+effect_bundles_localised_description_deer_court_bundle_equerry	The Cavalry Officer oversees the stables and mounted training, honing cavalry skill. This lord's armour-piercing damage is increased by 25, and charge bonus is increased by 10.	true
+effect_bundles_localised_description_deer_court_bundle_guardian	The Palace Guard Commander governs the imperial guards. This lord's melee attack is increased by 10, melee defence by 10, weapon strength by 10, and missile damage by 10.	true
+effect_bundles_localised_description_deer_court_bundle_marshal	The Marshal oversees military administration. All units under this lord's command have upkeep reduced by 5%, replenishment rate increased by 5%, and newly recruited units gain 3 experience.	true
+effect_bundles_localised_description_deer_court_bundle_protector	The Guard Commander leads the personal retinue. All units under this lord's command gain 5 melee defence and 5 armour.	true
+effect_bundles_localised_description_deer_court_bundle_rectifier	The Capital Guard Adjutant manages the palace guard's equipment. This lord's hit points are increased by 10%, and armour is increased by 10.	true
+effect_bundles_localised_description_deer_court_bundle_secretary	The Recording Adjutant handles correspondence and records. This lord's experience gain is increased by 10%, and post-battle loot is increased by 10%.	true
+effect_bundles_localised_description_deer_court_bundle_steward	The Granary Officer oversees provisions and construction. Building costs in this lord's province are reduced by 10%, and trade tariffs are increased by 5%.	true
+effect_bundles_localised_description_deer_court_bundle_strategist	The Strategist advises on military affairs. All armies under this lord's command gain 10% increased campaign movement range and 6% increased replenishment rate.	true
+effect_bundles_localised_description_deer_court_court_buff_civil	The civil officials dominate the court. Research rate is increased by 15%, and trade tariffs are increased by 5%.	true
+effect_bundles_localised_description_deer_court_court_buff_military	The military officials dominate the court. Post-battle loot is increased by 15%, and recruitment capacity is increased by 1.	true
+effect_bundles_localised_description_deer_court_court_buff_royal	The royal kin dominate the court. Faction diplomatic standing is increased by 15, and global growth is increased by 15.	true
+effect_bundles_localised_description_deer_court_famous_1	A renowned general of the season's first achievement. The army under their command gains 8 leadership.	true
+effect_bundles_localised_description_deer_court_famous_2	A renowned general of the season's second achievement. The army under their command gains 6 leadership.	true
+effect_bundles_localised_description_deer_court_famous_3	A renowned general of the season's third achievement. The army under their command gains 4 leadership.	true
+effect_bundles_localised_title_deer_court_bundle_chancellor	Chief Clerk of the Estate	true
+effect_bundles_localised_title_deer_court_bundle_equerry	Cavalry Officer	true
+effect_bundles_localised_title_deer_court_bundle_marshal	Palace Marshal	true
+effect_bundles_localised_title_deer_court_bundle_rectifier	Adjutant of the Capital Guard	true
+effect_bundles_localised_title_deer_court_bundle_secretary	Recording Adjutant	true
+effect_bundles_localised_title_deer_court_bundle_strategist	Chief Strategist	true
+effect_bundles_localised_title_deer_court_court_buff_civil	Civil Officials Assisting Governance	true
+effect_bundles_localised_title_deer_court_court_buff_civil_1	Court Ascendant · Civil Officials I	true
+effect_bundles_localised_title_deer_court_court_buff_civil_2	Court Ascendant · Civil Officials II	true
+effect_bundles_localised_title_deer_court_court_buff_civil_3	Court Ascendant · Civil Officials III	true
+effect_bundles_localised_title_deer_court_court_buff_military	Military Officials in Power	true
+effect_bundles_localised_title_deer_court_court_buff_military_1	Court Ascendant · Military Officials I	true
+effect_bundles_localised_title_deer_court_court_buff_military_2	Court Ascendant · Military Officials II	true
+effect_bundles_localised_title_deer_court_court_buff_military_3	Court Ascendant · Military Officials III	true
+effect_bundles_localised_title_deer_court_court_buff_royal	Royal Kin in Regency	true
+effect_bundles_localised_title_deer_court_court_buff_royal_1	Court Ascendant · Royal Kin I	true
+effect_bundles_localised_title_deer_court_court_buff_royal_2	Court Ascendant · Royal Kin II	true
+effect_bundles_localised_title_deer_court_court_buff_royal_3	Court Ascendant · Royal Kin III	true
+effect_bundles_localised_title_deer_court_court_debuff_civil_1	Court in Decline · Civil Officials I	true
+effect_bundles_localised_title_deer_court_court_debuff_civil_2	Court in Decline · Civil Officials II	true
+effect_bundles_localised_title_deer_court_court_debuff_civil_3	Court in Decline · Civil Officials III	true
+effect_bundles_localised_title_deer_court_court_debuff_military_1	Court in Decline · Military Officials I	true
+effect_bundles_localised_title_deer_court_court_debuff_military_2	Court in Decline · Military Officials II	true
+effect_bundles_localised_title_deer_court_court_debuff_military_3	Court in Decline · Military Officials III	true
+effect_bundles_localised_title_deer_court_court_debuff_royal_1	Court in Decline · Royal Kin I	true
+effect_bundles_localised_title_deer_court_court_debuff_royal_2	Court in Decline · Royal Kin II	true
+effect_bundles_localised_title_deer_court_court_debuff_royal_3	Court in Decline · Royal Kin III	true
+effect_bundles_localised_title_deer_court_famous_1	Radiance of the First Achievement	true
+effect_bundles_localised_title_deer_court_famous_2	Radiance of the Second Achievement	true
+effect_bundles_localised_title_deer_court_famous_3	Radiance of the Third Achievement	true
+ui_text_replacements_localised_text_deer_court_unlock_text_pointer	The Royal Court is now open!\\n\\nYou may appoint characters under your command to office, granting bonuses to their armies and your faction.	true

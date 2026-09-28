@@ -1,0 +1,68 @@
+key	text	tooltip
+#Loc;1;text/@@wwd_cth_upgrades.loc		
+effect_bundles_localised_description_wwd_custodian_VI_celestial	[[/img]][[col:ui_font_yellow]][The Celestial Empire's Sentinels, the Blades of All Dragons][[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_fire	[[/img]][[col:red]][The Celestial Empire's Sentinels, the Blades of All Dragons][[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_iron	[[/img]][[col:link]][The Celestial Empire's Sentinels, the Blades of All Dragons][[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_jade	[[/img]][[col:green]][The Celestial Empire's Sentinels, the Blades of All Dragons][[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_moon	[[/img]][[col:ancillary_rare]]'The Celestial Court's guardians, the blades of all dragons.'[[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_moon_II	[[/img]][[col:ancillary_rare]]'The Celestial Court's guardians, the blades of all dragons.'[[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_sea	[[/img]][[col:rare]]'The Celestial Court's guardians, the blades of all dragons.'[[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_shadow	[[/img]][[col:ancillary_rare]]'The Celestial Court's guardians, the blades of all dragons.'[[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_soul	[[/img]][[col:ancillary_rare]]'The Celestial Court's guardians, the blades of all dragons.'[[/col]]	true
+effect_bundles_localised_description_wwd_custodian_VI_storm	[[/img]][[col:white]]'The Celestial Court's guardians, the blades of all dragons.'[[/col]]	true
+effect_bundles_localised_description_wwd_dragon_I	'At the hour of the Tiger they raid the flanks, by the hour of the Goat they've broken the shafts — wherever the Dragon Banner passes, all becomes the land of Hao.'	true
+effect_bundles_localised_description_wwd_dragon_II	'Amid ten thousand troops he seizes the very stars; alone before the ranks, he cuts down the war banner.'	true
+effect_bundles_localised_description_wwd_dragon_III	'Iron robes gleam like snow, bones become a wall — not a single step of retreat, and thus eternal life.'	true
+effect_bundles_localised_description_wwd_dragon_IV	'Heaven and earth overturn, the banners change hands — the fate of mountains and rivers now rests in one's grasp.'	true
+effect_bundles_localised_description_wwd_dragon_V	'The pinnacle of mechanical arts — crossbows like strings of pearls, cannons like peals of thunder, and in the blink of an eye, corpses lie strewn across the field.'	true
+effect_bundles_localised_description_wwd_dragon_VI	'The bow draws like a full moon, the arrow flies like a shooting star — taking an enemy's head from a thousand miles away is as easy as reaching into one's own pocket.'	true
+effect_bundles_localised_description_wwd_jade_I	'Behold these warriors — they are the living embodiment of Cathayan martial arts.'	true
+effect_bundles_localised_description_wwd_jade_II	'The finest warriors deserve the finest equipment.'	true
+effect_bundles_localised_description_wwd_jade_III	'Behold these warriors — they are the living embodiment of Cathayan martial arts.'	true
+effect_bundles_localised_description_wwd_jade_IV	'The finest warriors deserve the finest equipment.'	true
+effect_bundles_localised_description_wwd_peasant_I	Having received their first commendation, these conscripted farmers are no longer mere commoners; they shall be regarded as true warriors.	true
+effect_bundles_localised_description_wwd_peasant_II	Though these militia can defend against the enemy, they remain but commoners at heart. Better to station them at garrison posts to support military production.	true
+effect_bundles_localised_description_wwd_peasant_III	Having received their first commendation, these conscripted farmers are no longer mere commoners; they shall be regarded as true warriors.	true
+effect_bundles_localised_description_wwd_peasant_IV	Having received their first commendation, these conscripted farmers are no longer mere commoners; they shall be regarded as true warriors.	true
+effect_bundles_localised_description_wwd_sky_junk_I	Equip additional rangefinders and recalibrate our gun barrels — we'll hit whatever we aim at!	true
+effect_bundles_localised_description_wwd_sky_junk_II	This experimental gunpowder was never adopted on a large scale, but the wreckage it leaves behind speaks for itself.	true
+effect_bundles_localised_description_wwd_sky_junk_III	'Load up two more crates of explosives!'	true
+effect_bundles_localised_title_wwd_custodian_VI_celestial	[[img:wwd_celest_buff]][[/img]][[col:ui_font_yellow]]Bestowed by the Dragon Emperor[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_fire	[[img:wwd_south_buff]][[/img]][[col:red]]Bestowed by Zhu Long[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_iron	[[img:wwd_west_buff]][[/img]][[col:link]]Bestowed by Bin Long[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_jade	[[img:wwd_center_buff]][[/img]][[col:green]]Bestowed by the Jade Dragon[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_moon	[[img:wwd_moon_buff]][[/img]][[col:ancillary_rare]]Bestowed by the Moon Empress[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_moon_II	[[img:wwd_moon_buff]][[/img]][[col:ancillary_rare]]Bestowed by the Moon Empress[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_sea	[[img:wwd_east_buff]][[/img]][[col:rare]]Bestowed by Ming Long[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_shadow	[[img:wwd_feats]][[/img]][[col:ancillary_rare]]Astronomical Bureau's Authority[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_soul	[[img:wwd_feats]][[/img]][[col:ancillary_rare]]Sha Xu's Ten Palaces Sealing Mark[[/col]]	true
+effect_bundles_localised_title_wwd_custodian_VI_storm	[[img:wwd_north_buff]][[/img]][[col:white]]Bestowed by the Gale Dragon[[/col]]	true
+effect_bundles_localised_title_wwd_dragon_I	First to Scale the Walls	true
+effect_bundles_localised_title_wwd_dragon_II	Slay the General	true
+effect_bundles_localised_title_wwd_dragon_III	Break the Formation	true
+effect_bundles_localised_title_wwd_dragon_IV	Seize the Banner	true
+effect_bundles_localised_title_wwd_dragon_V	Divine Engineering	true
+effect_bundles_localised_title_wwd_dragon_VI	Divine Arm	true
+effect_bundles_localised_title_wwd_jade_I	Cloud Cavalry Commandant	true
+effect_bundles_localised_title_wwd_jade_II	Flying Cavalry Commandant	true
+effect_bundles_localised_title_wwd_jade_III	Cloud Cavalry Commandant	true
+effect_bundles_localised_title_wwd_jade_IV	Flying Cavalry Commandant	true
+effect_bundles_localised_title_wwd_lord_miaoyin	[[img:wwd_celest_buff]][[/img]][[col:ui_font_yellow]]Dragon Emperor's Inquisitor, Nan Gao Clan Princess[[/col]]	true
+effect_bundles_localised_title_wwd_lord_yuanbo	[[img:wwd_celest_buff]][[/img]][[col:ui_font_yellow]]Governor of the Central Provinces and the Celestial Court, Yun Feng Zi[[/col]]	true
+effect_bundles_localised_title_wwd_lord_yunxiang	[[img:wwd_celest_buff]][[/img]][[col:ui_font_yellow]]Dragon Emperor's Champion and Superintendent of the Heavenly Court, [Heaven's Favored] Yun Xiang[[/col]]	true
+effect_bundles_localised_title_wwd_lord_zhaoming	[[img:wwd_celest_buff]][[/img]][[col:ui_font_yellow]]Attendant Minister under the Dragon Emperor, Eighth-Generation Lord of Shang Yang[[/col]]	true
+effect_bundles_localised_title_wwd_peasant_I	Militia Cavalry	true
+effect_bundles_localised_title_wwd_peasant_II	Garrison Post	true
+effect_bundles_localised_title_wwd_peasant_III	Militia Cavalry	true
+effect_bundles_localised_title_wwd_peasant_IV	Militia Cavalry	true
+effect_bundles_localised_title_wwd_sky_junk_I	Ballistic Calibration	true
+effect_bundles_localised_title_wwd_sky_junk_II	Volatile Gunpowder	true
+effect_bundles_localised_title_wwd_sky_junk_III	Extra Explosives	true
+effects_description_pooled_resource_wwd_feats_battles	Military Merit: +%n	true
+pooled_resources_description_wwd_cth_upgrades_feats	Cathay's soldiers shed their blood upon the battlefield, but only those strong and fortunate enough are remembered by history\\n\\n[[col:yellow]][[img:wwd_resource_buff]][[/img]]Military Merit points are earned by winning battles\\n\\n[[col:yellow]][[img:wwd_celest_buff]][[/img]]Use Military Merit points via the army details screen to promote your units	true
+pooled_resources_display_name_wwd_cth_upgrades_feats	Military Merit	true
+pooled_resources_negative_factors_display_name_wwd_cth_upgrades_feats	Spent Military Merit	true
+pooled_resources_positive_factors_display_name_wwd_cth_upgrades_feats	Gained Military Merit	true
+ui_text_replacements_localised_text_scrap_panel_button_tooltip_wh3_main_sc_cth_cathay	Merit Commendation||Earn Military Merit through battle, and spend it to promote units of honor	true
+ui_text_replacements_localised_text_unit_upgrades_type_wh3_main_sc_cth_cathay	Twelve Ranks of Commendation	true
+ui_text_replacements_localised_text_unit_upgrades_wh3_main_sc_cth_cathay	Twelve Ranks of Commendation	true

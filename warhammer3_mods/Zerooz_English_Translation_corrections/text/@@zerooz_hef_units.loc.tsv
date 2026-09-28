@@ -1,77 +1,77 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_hef_units.loc		
-land_units_onscreen_name_hef_inf_guardian_of_hoeth	Guardians of Hoeth	true
-unit_description_historical_texts_text_hef_inf_guardian_of_hoeth	The sages of the White Tower select elven noble children who are eager for knowledge, teaching them swordsmanship and magic to become the defenders of the White Tower.	true
-unit_description_short_texts_text_hef_inf_guardian_of_hoeth	The sages of the White Tower select elven noble children who are eager for knowledge, teaching them swordsmanship and magic to become the defenders of the White Tower.	true
-land_units_onscreen_name_hef_inf_guard_of_eternal_02	Eternal Guard (Spears)	true
-unit_description_historical_texts_text_hef_inf_guard_of_eternal_02	Some elves choose to return to Avelorn to serve the Everqueen, forming the Eternal Guard who use polearms.	true
-unit_description_short_texts_text_hef_inf_guard_of_eternal_02	Some elves choose to return to Avelorn to serve the Everqueen, forming the Eternal Guard who use polearms.	true
-land_units_onscreen_name_hef_inf_guard_of_eternal_03	Eternal Guard (Dual Swords)	true
-unit_description_historical_texts_text_hef_inf_guard_of_eternal_03	Some elves choose to return to Avelorn to serve the Everqueen, forming the Eternal Guard who use dual swords.	true
-unit_description_short_texts_text_hef_inf_guard_of_eternal_03	The Everqueen’s maidens use dual swords in battle like valkyries.	true
-land_units_onscreen_name_hef_inf_scouts_of_eternal	Eternal Guard (Bows)	true
-unit_description_historical_texts_text_hef_inf_scouts_of_eternal	Some elves choose to return to Avelorn to serve the Everqueen, but only the finest Eternal Maidens can join the Eternal Guards.	true
-unit_description_short_texts_text_hef_inf_scouts_of_eternal	Skilled in the use of bows and spears, the Eternal Maidens.	true
-land_units_onscreen_name_hef_cav_rider_of_eternal	Riders of Avelorn	true
-unit_description_historical_texts_text_hef_cav_rider_of_eternal	Some elves choose to return to Avelorn to serve the Everqueen, but only the finest Eternal Maidens can join the Eternal Guards.	true
-unit_description_short_texts_text_hef_cav_rider_of_eternal	The Everqueen’s mobile guard, effective at long-range but weak in melee.	true
-land_units_onscreen_name_hef_cav_sister_of_eternal	Avelorn Sisters of the Thorn	true
-unit_description_historical_texts_text_hef_cav_sister_of_eternal	Some elves choose to return to Avelorn to serve the Everqueen, but only the finest Eternal Maidens can join the Eternal Guards.	true
-unit_description_short_texts_text_hef_cav_sister_of_eternal	Thorn Sisters who left Athel Loren returned to Avelorn to serve the Everqueen.	true
-land_units_onscreen_name_hef_cav_skyraider_of_eternal	Avelorn Hawk Riders	true
-unit_description_historical_texts_text_hef_cav_skyraider_of_eternal	Some elves choose to return to Avelorn to serve the Everqueen, but only the finest Eternal Maidens can join the Eternal Guards.	true
-unit_description_short_texts_text_hef_cav_skyraider_of_eternal	The Everqueen’s airborne mobile guard, suited for striking from high altitudes and scouting the battlefield.	true
-land_units_onscreen_name_hef_cav_strike_of_eternal	Great Stag Sisters	true
-unit_description_historical_texts_text_hef_cav_strike_of_eternal	Some elves choose to return to Avelorn to serve the Everqueen, but only the finest Eternal Maidens can join the Eternal Guards.	true
-unit_description_short_texts_text_hef_cav_strike_of_eternal	Eternal Maidens use giant elk as mounts to become Avelorn’s elite cavalry.	true
-land_units_onscreen_name_hef_inf_hunter_of_chrace	Hunters of Chrace	false
-unit_description_historical_texts_text_hef_inf_hunter_of_chrace	Hunters of Chrace live in the deep mountains, making their archery and spear skills exceptional.	false
-unit_description_short_texts_text_hef_inf_hunter_of_chrace	Hunters of Chrace live in the deep mountains, making their archery and spear skills exceptional.	false
+land_units_onscreen_name_hef_inf_guardian_of_hoeth	Guardian of Hoeth	true
+unit_description_historical_texts_text_hef_inf_guardian_of_hoeth	The sages of the White Tower of Hoeth select elf noble children hungry for knowledge, teaching them swordsmanship and magic to make them guardians of the White Tower.	true
+unit_description_short_texts_text_hef_inf_guardian_of_hoeth	The sages of the White Tower of Hoeth select elf noble children hungry for knowledge, teaching them swordsmanship and magic to make them guardians of the White Tower.	true
+land_units_onscreen_name_hef_inf_guard_of_eternal_02	Avalon Sword Dancer	true
+unit_description_historical_texts_text_hef_inf_guard_of_eternal_02	Some elves chose to return to Avalon to serve the Everqueen. Those who wield spears form the ranks of the Avalon Sword Dancers.	true
+unit_description_short_texts_text_hef_inf_guard_of_eternal_02	The Everqueen's handmaidens wield double-bladed spears, becoming Avalon's elite spearwomen.	true
+land_units_onscreen_name_hef_inf_guard_of_eternal_03	Avalon Blade Singer	true
+unit_description_historical_texts_text_hef_inf_guard_of_eternal_03	Some elves chose to return to Avalon to serve the Everqueen. Those who wield twin blades form the ranks of the Avalon Sword Dancers.	true
+unit_description_short_texts_text_hef_inf_guard_of_eternal_03	The Everqueen's handmaidens wield twin blades, fighting on the battlefield like valkyries.	true
+land_units_onscreen_name_hef_inf_scouts_of_eternal	Everguard	true
+unit_description_historical_texts_text_hef_inf_scouts_of_eternal	Some elves chose to return to Avalon to serve the Everqueen, but only the finest of the Everqueen's handmaidens may join the Everguard.	true
+unit_description_short_texts_text_hef_inf_scouts_of_eternal	Everqueen's handmaidens skilled in the use of bow and spear.	true
+land_units_onscreen_name_hef_cav_rider_of_eternal	Everguard Bow Riders	true
+unit_description_historical_texts_text_hef_cav_rider_of_eternal	Some elves chose to return to Avalon to serve the Everqueen, but only the finest of the Everqueen's handmaidens may join the Everguard.	true
+unit_description_short_texts_text_hef_cav_rider_of_eternal	The Everqueen's mobile escort, capable of ranged combat on the move, though weak in melee.	true
+land_units_onscreen_name_hef_cav_sister_of_eternal	Eternal Sisters	true
+unit_description_historical_texts_text_hef_cav_sister_of_eternal	Some elves chose to return to Avalon to serve the Everqueen, but only the finest of the Everqueen's handmaidens may join the Everguard.	true
+unit_description_short_texts_text_hef_cav_sister_of_eternal	The Sisters of the Thorn who left Athel Loren have returned to Avalon to pledge their loyalty to the Everqueen.	true
+land_units_onscreen_name_hef_cav_skyraider_of_eternal	Eternal Skywatchers	true
+unit_description_historical_texts_text_hef_cav_skyraider_of_eternal	Some elves chose to return to Avalon to serve the Everqueen, but only the finest of the Everqueen's handmaidens may join the Everguard.	true
+unit_description_short_texts_text_hef_cav_skyraider_of_eternal	The Everqueen's aerial mobile escort, suited for striking enemies from above and scouting the terrain of the battlefield.	true
+land_units_onscreen_name_hef_cav_strike_of_eternal	Eternal Forest Riders	true
+unit_description_historical_texts_text_hef_cav_strike_of_eternal	Some elves chose to return to Avalon to serve the Everqueen, but only the finest of the Everqueen's handmaidens may join the Everguard.	true
+unit_description_short_texts_text_hef_cav_strike_of_eternal	The Everqueen's handmaidens ride great stags, becoming Avalon's elite cavalry.	true
+land_units_onscreen_name_hef_inf_hunter_of_chrace	Chrace Hunters	false
+unit_description_historical_texts_text_hef_inf_hunter_of_chrace	The hunters of Chrace have lived in the deep mountains for generations, refining their skills with bow and spear to an unmatched degree.	false
+unit_description_short_texts_text_hef_inf_hunter_of_chrace	The hunters of Chrace have lived in the deep mountains for generations, refining their skills with bow and spear to an unmatched degree.	false
 land_units_onscreen_name_hef_inf_sword_master_of_phenix	Phoenix Swordmasters	false
-unit_description_historical_texts_text_hef_inf_sword_master_of_phenix	Guardians of the Phoenix Temple, their weapons are blessed with both ice and fire due to the protection of both the Frost Phoenix and the Flame Phoenix.	false
-unit_description_short_texts_text_hef_inf_sword_master_of_phenix	Guardians of the Phoenix Temple, their weapons are blessed with both ice and fire due to the protection of both the Frost Phoenix and the Flame Phoenix.	false
-land_units_onscreen_name_hef_inf_dual_axe_of_chrace	White Lions of Chrace (Dual Axes)	false
-unit_description_historical_texts_text_hef_inf_dual_axe_of_chrace	The warriors of Chrace, due to their character and way of life, choose to wield sharp dual axes as their weapon.	false
-unit_description_short_texts_text_hef_inf_dual_axe_of_chrace	The warriors of Chrace, due to their character and way of life, choose to wield sharp dual axes as their weapon.	false
-land_units_onscreen_name_hef_inf_mage_of_hoeth	Hoeth Mages	false
-unit_description_historical_texts_text_hef_inf_mage_of_hoeth	The Great Mages of Hoeth use their long lifespans to continuously study the mysteries of magic while also learning other skills, such as combat.	false
-unit_description_short_texts_text_hef_inf_mage_of_hoeth	The Great Mages of Hoeth use their long lifespans to continuously study the mysteries of magic while also learning other skills, such as combat.	false
-land_units_onscreen_name_hef_cav_caledor_dragon_knight	Caledor Dragon Knights	false
-unit_description_historical_texts_text_hef_cav_caledor_dragon_knight	As former companions of the Phoenix King of Caledor, they possess combat skills rivaling those of the Phoenix Guard.	false
-unit_description_short_texts_text_hef_cav_caledor_dragon_knight	As former companions of the Phoenix King of Caledor, they possess combat skills rivaling those of the Phoenix Guard.	false
-land_units_onscreen_name_hef_inf_the_light_of_yvresse	Yvressi Champions	false
-unit_description_historical_texts_text_hef_inf_the_light_of_yvresse	They patrol the mists of Yvresse with ruthlessness and resolve, displaying the purest and bravest heroism when evil approaches.	false
-unit_description_short_texts_text_hef_inf_the_light_of_yvresse	They patrol the mists of Yvresse with ruthlessness and resolve, displaying the purest and bravest heroism when evil approaches.	false
+unit_description_historical_texts_text_hef_inf_sword_master_of_phenix	Guardians of the Phoenix Temple, blessed by both the Frost Phoenix and the Flame Phoenix, their weapons bear the blessing of ice and fire alike.	false
+unit_description_short_texts_text_hef_inf_sword_master_of_phenix	Guardians of the Phoenix Temple, blessed by both the Frost Phoenix and the Flame Phoenix, their weapons bear the blessing of ice and fire alike.	false
+land_units_onscreen_name_hef_inf_dual_axe_of_chrace	Chrace Berserkers	false
+unit_description_historical_texts_text_hef_inf_dual_axe_of_chrace	The warriors dwelling in Chrace, shaped by their temperament and way of life, choose to wield sharp twin axes as their weapons.	false
+unit_description_short_texts_text_hef_inf_dual_axe_of_chrace	The warriors dwelling in Chrace, shaped by their temperament and way of life, choose to wield sharp twin axes as their weapons.	false
+land_units_onscreen_name_hef_inf_mage_of_hoeth	Loremaster of Hoeth	false
+unit_description_historical_texts_text_hef_inf_mage_of_hoeth	The Loremasters of Hoeth spend their long lives ceaselessly studying the mysteries of magic, while also mastering other arts such as combat.	false
+unit_description_short_texts_text_hef_inf_mage_of_hoeth	The Loremasters of Hoeth spend their long lives ceaselessly studying the mysteries of magic, while also mastering other arts such as combat.	false
+land_units_onscreen_name_hef_cav_caledor_dragon_knight	Caledor Dragonblood Knights	false
+unit_description_historical_texts_text_hef_cav_caledor_dragon_knight	Once retainers of the Phoenix King of Caledor, they possess combat skills that rival even the Dragon Guard.	false
+unit_description_short_texts_text_hef_cav_caledor_dragon_knight	Once retainers of the Phoenix King of Caledor, they possess combat skills that rival even the Dragon Guard.	false
+land_units_onscreen_name_hef_inf_the_light_of_yvresse	Light of Yvresse	false
+unit_description_historical_texts_text_hef_inf_the_light_of_yvresse	They patrol relentlessly and steadfastly through the mists of Yvresse, and when evil arrives, they blaze forth with the purest and most valiant heroic light.	false
+unit_description_short_texts_text_hef_inf_the_light_of_yvresse	They patrol relentlessly and steadfastly through the mists of Yvresse, and when evil arrives, they blaze forth with the purest and most valiant heroic light.	false
 land_units_onscreen_name_hef_inf_pride_of_the_white_lions	Pride of the White Lions	false
-unit_description_historical_texts_text_hef_inf_pride_of_the_white_lions	An army composed of the elite of the White Lions regiment, each of whom has earned their companion during their trials.	false
-unit_description_short_texts_text_hef_inf_pride_of_the_white_lions	An army composed of the elite of the White Lions regiment, each of whom has earned their companion during their trials.	false
-land_units_onscreen_name_hef_mon_son_of_rahagra	Sons of Rahagra	false
-unit_description_historical_texts_text_hef_mon_son_of_rahagra	Lions that defeat elves in the White Lion hunting grounds are recognized by Rahagra, the Father of Lions, and become the Sons of Rahagra.	false
-unit_description_short_texts_text_hef_mon_son_of_rahagra	Lions that defeat elves in the White Lion hunting grounds are recognized by Rahagra, the Father of Lions, and become the Sons of Rahagra.	false
-land_units_onscreen_name_hef_cav_corsair_mariners	Corsair Mariners	false
-unit_description_historical_texts_text_hef_cav_corsair_mariners	Elves living by the sea are occasionally summoned by the emissaries of Mathlann to become warriors riding flying fish.	false
-unit_description_short_texts_text_hef_cav_corsair_mariners	Elves living by the sea are occasionally summoned by the emissaries of Mathlann to become warriors riding flying fish.	false
+unit_description_historical_texts_text_hef_inf_pride_of_the_white_lions	An army formed of the elite of the White Lion legions, each of whom gained their companion during their trial.	false
+unit_description_short_texts_text_hef_inf_pride_of_the_white_lions	An army formed of the elite of the White Lion legions, each of whom gained their companion during their trial.	false
+land_units_onscreen_name_hef_mon_son_of_rahagra	Son of Rahagra	false
+unit_description_historical_texts_text_hef_mon_son_of_rahagra	A White Lion who triumphs over the elves in the White Lion hunting grounds earns the recognition of Rahagra, Father of the White Lions, and becomes a Son of Rahagra.	false
+unit_description_short_texts_text_hef_mon_son_of_rahagra	A White Lion who triumphs over the elves in the White Lion hunting grounds earns the recognition of Rahagra, Father of the White Lions, and becomes a Son of Rahagra.	false
+land_units_onscreen_name_hef_cav_corsair_mariners	Sea Beast Riders	false
+unit_description_historical_texts_text_hef_cav_corsair_mariners	Elves living by the seashore are occasionally called upon by Mathlann's envoys to become warriors who ride flying fish.	false
+unit_description_short_texts_text_hef_cav_corsair_mariners	Elves living by the seashore are occasionally called upon by Mathlann's envoys to become warriors who ride flying fish.	false
 land_units_onscreen_name_hef_cav_cothique_shore_watchers	Cothique Shore Watchers	false
-unit_description_historical_texts_text_hef_cav_cothique_shore_watchers	In the kingdom of Cothique, elves who worship Mathlann are selected as sea messengers, riding flying fish and using magical bows to attack any enemy approaching Ulthuan.	false
-unit_description_short_texts_text_hef_cav_cothique_shore_watchers	In the kingdom of Cothique, elves who worship Mathlann are selected as sea messengers, riding flying fish and using magical bows to attack any enemy approaching Ulthuan.	false
-land_units_onscreen_name_hef_cav_cothique_deepsea_marauders	Cothique Deep-Sea Marauders	false
-unit_description_historical_texts_text_hef_cav_cothique_deepsea_marauders	Among the emissaries of Mathlann, some elves who live in the deep sea use heavy weapons to attack any target they see.	false
-unit_description_short_texts_text_hef_cav_cothique_deepsea_marauders	Among the emissaries of Mathlann, some elves who live in the deep sea use heavy weapons to attack any target they see.	false
+unit_description_historical_texts_text_hef_cav_cothique_shore_watchers	In the kingdom of Cothique, elves devoted to Mathlann may be chosen as envoys of the sea, riding flying fish and striking with enchanted bows at any enemy approaching Ulthuan's bay.	false
+unit_description_short_texts_text_hef_cav_cothique_shore_watchers	In the kingdom of Cothique, elves devoted to Mathlann may be chosen as envoys of the sea, riding flying fish and striking with enchanted bows at any enemy approaching Ulthuan's bay.	false
+land_units_onscreen_name_hef_cav_cothique_deepsea_marauders	Cothique Deepsea Marauders	false
+unit_description_historical_texts_text_hef_cav_cothique_deepsea_marauders	Among Mathlann's envoys, some elves have long dwelt in the deep sea, wielding heavy weapons to strike down any target in sight.	false
+unit_description_short_texts_text_hef_cav_cothique_deepsea_marauders	Among Mathlann's envoys, some elves have long dwelt in the deep sea, wielding heavy weapons to strike down any target in sight.	false
 land_units_onscreen_name_hef_inf_cothique_abyss_observers	Cothique Abyss Observers	false
-unit_description_historical_texts_text_hef_inf_cothique_abyss_observers	Warriors from Cothique selected by Mathlann, who constantly monitor various evil activities in the abyss.	false
-unit_description_short_texts_text_hef_inf_cothique_abyss_observers	Warriors from Cothique selected by Mathlann, who constantly monitor various evil activities in the abyss.	false
-land_units_onscreen_name_hef_inf_sea_master	Sea Masters	false
-unit_description_historical_texts_text_hef_inf_sea_master	Sea Masters are the most elite troops of Cothique, each of whom must undergo the trials of the deep sea to gain their formidable power.	false
-unit_description_short_texts_text_hef_inf_sea_master	Sea Masters are the most elite troops of Cothique, each of whom must undergo the trials of the deep sea to gain their formidable power.	false
-land_units_onscreen_name_hef_cav_dragon_knight	Dragon Knights	false
-unit_description_historical_texts_text_hef_cav_dragon_knights	Due to the rarity of dragons, dragon princes rarely get the chance to ride them, but a few rare Caledor knights have had the opportunity to ride dragons.	false
-unit_description_short_texts_text_hef_cav_dragon_knight	Due to the rarity of dragons, dragon princes rarely get the chance to ride them, but a few rare Caledor knights have had the opportunity to ride dragons.	false
-land_units_onscreen_name_hef_inf_brave_acher	Brave Archers	false
-unit_description_historical_texts_text_hef_inf_brave_acher	Veterans of numerous Elven battles, these warriors are deeply disappointed by the state of their people. However, they still hone their skills, using their weapons in various trials.	false
-unit_description_short_texts_text_hef_inf_brave_acher	Brave Archers, dispatched by Tyrion to engage in the most difficult of battles, their extraordinary archery skills make them unstoppable on the battlefield.	false
-land_units_onscreen_name_hef_inf_brave_blademen	Brave Blademen	false
-unit_description_historical_texts_text_hef_inf_brave_blademen	Veterans of numerous Elven battles, these warriors are deeply disappointed by the state of their people. However, they still hone their skills, using their weapons in various trials.	false
-unit_description_short_texts_text_hef_inf_brave_blademen	They are the damage-dealers of the Brave Legion, skilled in striking down enemies, whether they wear heavy armor or light armor.	false
-land_units_onscreen_name_hef_inf_brave_guardians	Brave Guardians	false
-unit_description_historical_texts_text_hef_inf_brave_guardians	Veterans of numerous Elven battles, these warriors are deeply disappointed by the state of their people. However, they still hone their skills, using their weapons in various trials.	false
-unit_description_short_texts_text_hef_inf_brave_guardians	Brave Guardians are the protectors of the legion, usually standing in the most dangerous spots on the battlefield. No foe, whether using ranged or close combat, can breach their shield wall.	false
+unit_description_historical_texts_text_hef_inf_cothique_abyss_observers	Chosen by Mathlann, these Cothique warriors keep an eternal watch in the abyss over every stirring of evil.	false
+unit_description_short_texts_text_hef_inf_cothique_abyss_observers	Chosen by Mathlann, these Cothique warriors keep an eternal watch in the abyss over every stirring of evil.	false
+land_units_onscreen_name_hef_inf_sea_master	Master of the Sea	false
+unit_description_historical_texts_text_hef_inf_sea_master	The Master of the Sea is Cothique's most elite force; each Master of the Sea must pass through the trials of the deep sea, and in doing so gains tremendous power.	false
+unit_description_short_texts_text_hef_inf_sea_master	The Master of the Sea is Cothique's most elite force; each Master of the Sea must pass through the trials of the deep sea, and in doing so gains tremendous power.	false
+land_units_onscreen_name_hef_cav_dragon_knight	Dragon Knight	false
+unit_description_historical_texts_text_hef_cav_dragon_knights	Because dragons are so rare, even Dragon Princes seldom have the chance to ride one, yet a scarce few Caledorian knights have been granted that honor.	false
+unit_description_short_texts_text_hef_cav_dragon_knight	Because dragons are so rare, even Dragon Princes seldom have the chance to ride one, yet a scarce few Caledorian knights have been granted that honor.	false
+land_units_onscreen_name_hef_inf_brave_acher	Valiant Archers	false
+unit_description_historical_texts_text_hef_inf_brave_acher	Veterans of countless elven wars, disillusioned with the elves of today, yet they continue to hone their skills with the weapons in their hands through every trial.	false
+unit_description_short_texts_text_hef_inf_brave_acher	Valiant Archers, dispatched by Tyrion to fight in the most desperate of battles, their extraordinary marksmanship makes them unstoppable.	false
+land_units_onscreen_name_hef_inf_brave_blademen	Valiant Swordsmen	false
+unit_description_historical_texts_text_hef_inf_brave_blademen	Veterans of countless elven wars, disillusioned with the elves of today, yet they continue to hone their skills with the weapons in their hands through every trial.	false
+unit_description_short_texts_text_hef_inf_brave_blademen	They are the damage dealers of the Valiant legions, skilled at striking down all manner of enemies, whether heavily or lightly armored.	false
+land_units_onscreen_name_hef_inf_brave_guardians	Valiant Guardians	false
+unit_description_historical_texts_text_hef_inf_brave_guardians	Veterans of countless elven wars, disillusioned with the elves of today, yet they continue to hone their skills with the weapons in their hands through every trial.	false
+unit_description_short_texts_text_hef_inf_brave_guardians	The Valiant Guardians are the protective deities of the legion, standing at the most perilous points of the battlefield, their shield wall impenetrable to both ranged fire and melee assault.	false

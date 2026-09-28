@@ -1,20 +1,20 @@
 key	text	tooltip
 #Loc;1;text/!!!cth_fuyuanshan_building.loc		
-building_short_description_texts_short_description_jade_defence_yang_1	The Great Bastion's defenders gather here, ready to protect their homeland.	true
-building_short_description_texts_short_description_jade_defence_yang_2	The Great Bastion's defenders are well-equipped and high in morale, making it difficult for the enemy to attack.	true
-building_short_description_texts_short_description_jade_defence_yang_3	Countless military orders are issued from here, like the head of the vast war machine of Grand Cathay.	true
-building_culture_variants_name_jade_defence_yang_1wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Garrison Barracks	true
-building_culture_variants_name_jade_defence_yang_2wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Central Army Barracks	true
-building_culture_variants_name_jade_defence_yang_3wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Strategic Command Center	true
+building_short_description_texts_short_description_jade_defence_yang_1	The Frontier Guard musters here, defending their homeland.	true
+building_short_description_texts_short_description_jade_defence_yang_2	The Frontier Guard stands in disciplined ranks, morale high as the heavens, making them impossible for the enemy to assail.	true
+building_short_description_texts_short_description_jade_defence_yang_3	Countless military orders are issued from here, much like the central mind of Cathay's vast war machine.	true
+building_culture_variants_name_jade_defence_yang_1wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Garrison Camp	true
+building_culture_variants_name_jade_defence_yang_2wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Central Army Camp	true
+building_culture_variants_name_jade_defence_yang_3wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Privy Council Hall	true
 building_chains_chain_tooltip_celestial_tower	Celestial Tower Chain	false
-building_short_description_texts_short_description_celestial_tower	A tall tower located in Bloodwind Keep, which has stood strong through countless Chaos incursions. An eternal flame burns atop it, said to be visible even from the Great Bastion. Its very existence is a testament to the wisdom and courage of the people of Grand Cathay.	false
+building_short_description_texts_short_description_celestial_tower	A tall tower at Blood Wind Keep that has stood unyielding through countless tides of Chaos. Its beacon fire burns without cease through all the seasons, said to be visible even from the distant Great Bastion. Its very existence stands as the finest proof of the wisdom and courage of Cathay's people.	false
 building_culture_variants_name_celestial_tower	Celestial Tower	false
-building_culture_variants_name_wh3_main_cth_cavalry_1.5wh3_main_cth_cathay	Condemned Stables	false
-building_short_description_texts_short_description_wh3_main_cth_cavalry_1.5	Both a stable and a prison for convicts who have chosen a living weapon's fate over a swift death. They and their warhorses are the last resort to hold back the enemy before the arrival of Grand Cathay's regular troops. These madmen strapped with explosives not only terrify their enemies but also strike fear into the hearts of other Cathayan soldiers.	false
-building_short_description_texts_short_description_wh3_main_road_cth_1	A road meticulously paved with gravel and lime, making it easier for travelers to journey. Maintaining the safety and stability of these roads is also one of the duties of Cathayan officials.	false
-building_short_description_texts_short_description_wh3_main_road_cth_2	Spacious roads connect the many cities of the Grand Cathayan Empire. Cathayan soldiers regularly patrol these roads to ensure the safety of travelers. For Cathay, these roads are like its blood vessels, providing vitality to the nation.	false
-building_short_description_texts_short_description_wh3_main_road_cth_3	The Imperial Road is the highest standard of road in Grand Cathay, with a width of a hundred paces and a straight route designed for transporting armies. There are even dormant Terracotta Sentinel guards stationed along the sides of the Imperial Road.	false
-building_culture_variants_name_wh3_main_road_cth_1wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Paved Road	false
-building_culture_variants_name_wh3_main_road_cth_2wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Spacious Road	false
-building_culture_variants_name_wh3_main_road_cth_3wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Imperial Road	false
+building_culture_variants_name_wh3_main_cth_cavalry_1.5wh3_main_cth_cathay	Penal Stables	false
+building_short_description_texts_short_description_wh3_main_cth_cavalry_1.5	Both stable and prison for convicts, these men have willingly forsaken a swift and simple death to embrace the fate of living weapons. They and their warhorses are the last resort to hold back the enemy horde before Cathay's regular forces arrive. These lunatics laden with explosives strike fear not only into the enemy, but into their fellow Cathayan soldiers as well.	false
+building_short_description_texts_short_description_wh3_main_road_cth_1	Roads carefully paved with crushed stone and lime, easing the way for travellers. Maintaining the safety and stability of these roads is likewise one of the duties of Cathay's officials.	false
+building_short_description_texts_short_description_wh3_main_road_cth_2	Cathay's many cities are linked together by broad highways, patrolled regularly by Cathayan soldiers to ensure the safety of travellers. To Cathay, these roads are no different from its very veins, granting the empire its vitality.	false
+building_short_description_texts_short_description_wh3_main_road_cth_3	Imperial Highways are roads built to the highest standard in Cathay, with roadbeds a hundred paces wide and routes laid perfectly straight, built for the transport of armies. Along their sides even slumbering Terracotta Guardians stand watch.	false
+building_culture_variants_name_wh3_main_road_cth_1wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Smoothed Roads	false
+building_culture_variants_name_wh3_main_road_cth_2wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Broad Highways	false
+building_culture_variants_name_wh3_main_road_cth_3wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Imperial Highways	false
 building_chains_chain_tooltip_wh3_main_road_cth	Road Chain	false

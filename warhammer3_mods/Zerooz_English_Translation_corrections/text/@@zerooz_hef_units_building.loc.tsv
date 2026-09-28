@@ -1,27 +1,27 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_hef_units_building.loc		
 building_culture_variants_name_hef_handmaidens_garden_alariellewh2_main_hef_avelorn	Handmaidens' Garden	true
-building_short_description_texts_short_description_hef_handmaidens_garden_alarielle	A place where handmaidens train and care for animals, featuring rich plant life and a variety of animals.	true
+building_short_description_texts_short_description_hef_handmaidens_garden_alarielle	A place where handmaidens train and tend animals, rich with flora and a great variety of creatures.	true
 building_culture_variants_name_hef_handmaidens_palace_alariellewh2_main_hef_avelorn	Handmaidens' Palace	true
-building_short_description_texts_short_description_hef_handmaidens_palace_alarielle	The residence of the handmaidens, where they live and have various facilities to more easily protect the Everqueen of Avelorn.	true
-building_culture_variants_name_hef_avalon_sanctuarywh2_main_hef_high_elves	Avelorn Sanctuary	false
-building_short_description_texts_short_description_hef_avalon_sanctuary	Some elves from the Athel Loren forest who long for the life in Ulthuan establish temporary residences near Avelorn through the World Roots.	false
+building_short_description_texts_short_description_hef_handmaidens_palace_alarielle	The residence of the handmaidens, where they live, equipped with all manner of facilities to more easily protect the Queen of Avalon.	true
+building_culture_variants_name_hef_avalon_sanctuarywh2_main_hef_high_elves	Avalon Sanctuary	false
+building_short_description_texts_short_description_hef_avalon_sanctuary	Some elves of the Athel Loren forest, endlessly nostalgic for life in Ulthuan's bay, chose to return near Avalon through the world roots and establish temporary dwellings.	false
 building_culture_variants_name_hef_eternal_forestwh2_main_hef_high_elves	Eternal Forest	true
-building_short_description_texts_short_description_hef_eternal_forest	Elves from Athel Loren, accustomed to living in forests, continue to live in the forests of Avelorn after returning to Ulthuan.	true
-building_culture_variants_name_hef_habitat_of_forestwh2_main_hef_high_elves	Habitat of Forest	true
-building_short_description_texts_short_description_hef_habitat_of_forest	The returning elves have found a fertile valley as their residence, allowing Athel Loren’s animals to adapt better to their new life.	true
-building_chains_chain_tooltip_hef_forest_of_avelorn	Avelorn Forest Chain	true
-building_culture_variants_name_hef_white_lion_forestwh2_main_hef_high_elves	White Lion Forest	false
-building_short_description_texts_short_description_hef_white_lion_forest	The returning elves have found a fertile valley as their residence, allowing Athel Loren’s animals to adapt better to their new life.	false
+building_short_description_texts_short_description_hef_eternal_forest	The elves of Athel Loren, upon returning to Ulthuan's bay, retained their habit of forest dwelling, continuing their life in the forests of Avalon.	true
+building_culture_variants_name_hef_habitat_of_forestwh2_main_hef_high_elves	Forest Habitat	true
+building_short_description_texts_short_description_hef_habitat_of_forest	The returning elves discovered a bountiful valley to make their home, allowing the creatures of Athel Loren to adapt more easily to their new life.	true
+building_chains_chain_tooltip_hef_forest_of_avelorn	Forest of Avalon Chain	true
+building_culture_variants_name_hef_white_lion_forestwh2_main_hef_high_elves	White Lion Grove	false
+building_short_description_texts_short_description_hef_white_lion_forest	Chrace is the province with the greatest number of White Lions in all of Ulthuan's bay, and most of them dwell here.	false
 building_culture_variants_name_hef_white_lion_templewh2_main_hef_high_elves	White Lion Temple	false
-building_short_description_texts_short_description_hef_white_lion_temple	Chrace is the province with the highest number of white lions in Ulthuan, with most residing here.	false
-building_culture_variants_name_hef_rahagra_templewh2_main_hef_high_elves	Rahagra Sanctuary	false
-building_short_description_texts_short_description_hef_rahagra_temple	Only the White Lion Guards recognized by Rahagra, the Father of Lions, may come here to adopt a special white lion.	false
-building_chains_chain_tooltip_hef_white_lions	Chrace White Lion Chain	false
+building_short_description_texts_short_description_hef_white_lion_temple	Legend holds that the White Lion Temple is a sacred ground guarded jointly by retired White Lion guards and elite White Lions, sacred and inviolable.	false
+building_culture_variants_name_hef_rahagra_templewh2_main_hef_high_elves	Rahagra Sanctum	false
+building_short_description_texts_short_description_hef_rahagra_temple	Only White Lion guards who have earned the recognition of Rahagra, Father of the White Lions, may come here to adopt a special White Lion.	false
+building_chains_chain_tooltip_hef_white_lions	White Lions of Chrace Chain	false
 building_culture_variants_name_hef_tidal_havenwh2_main_hef_high_elves	Tidal Haven	false
-building_short_description_texts_short_description_hef_tidal_haven	The elves of Cothique raise marine creatures, living and fighting alongside them.	false
-building_culture_variants_name_hef_deepsea_outpostwh2_main_hef_high_elves	Deepsea Outpost	false
-building_short_description_texts_short_description_hef_deepsea_outpost	To prevent any evil from invading Ulthuan, Cothique has established various deepsea outposts.	false
+building_short_description_texts_short_description_hef_tidal_haven	The elves of Cothique raise sea creatures, living and fighting alongside them.	false
+building_culture_variants_name_hef_deepsea_outpostwh2_main_hef_high_elves	Deep Sea Outpost	false
+building_short_description_texts_short_description_hef_deepsea_outpost	To guard Ulthuan's bay against any incursion of evil, Cothique has established various deep sea outposts.	false
 building_culture_variants_name_hef_mathlann_sanctuarywh2_main_hef_high_elves	Mathlann Sanctuary	false
-building_short_description_texts_short_description_hef_mathlann_sanctuary	For elves who worship Mathlann, the god of the sea, this is their most sacred place.	false
+building_short_description_texts_short_description_hef_mathlann_sanctuary	For elves devoted to Mathlann, God of the Sea, this is their most sacred place.	false
 building_chains_chain_tooltip_hef_cothique_aqua	Cothique Navy Chain	false

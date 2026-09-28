@@ -1,3 +1,3 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_teleportation.loc		
-teleportation_node_templates_description_wh3_main_teleportation_node_template_belakor	A rift that provides a passage for player factions. [[col:magic]]This rift can be entered by a [[img:icon_general]][[/img]] Lord or a [[img:icon_hero]][[/img]] Hero. The toggle can be switched via the button in the top left corner.[[/col]]	false
+teleportation_node_templates_description_wh3_main_teleportation_node_template_belakor	A rift that can provide passage for the player's faction. [[col:magic]]This rift may be entered by a [[img:icon_general]][[/img]] Lord or [[img:icon_hero]][[/img]] Hero, and can be toggled on or off using the button in the top left[[/col]]	false

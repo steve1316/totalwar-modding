@@ -1,10 +1,14 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_names.loc		
-names_name_2024042401	"White Moon's Shadow Crow" Hong Ying	true
-names_name_2024042402		true
-names_name_2022092502	Old-Kan	true
-names_name_2022092503	Old-K’ja	true
-names_name_2023010201	"Prince of Western Wei"	true
-names_name_2023010202	Xuan Lie	true
-names_name_2023022501	"Thorsson"	true
-names_name_2023022502	Hafdan Thorsson	true
+names_name_2024042401	[Dark Raven of the White Moon] Hong Ying	true
+names_name_2022092502	Gu Kahn	true
+names_name_2022092503	Gu Ke Jia	true
+names_name_2023010201	[King of Xi Zhao]	true
+names_name_2023010202	[King of Xi Zhao] Xuan Lie	true
+names_name_2023022501	[Son of Thor]	true
+names_name_2023022502	[Son of Thor] Halfdan Thorsson	true
+names_name_2026072601	Zeng Ping Zhi	true
+names_name_2026072602	Wu Yuan Zhi	true
+names_name_2026072603	[Son of Tor] Halfdan Thorsen	true
+names_name_2026081201	[Moonlight Decree] Liu Wang Que	true
+names_name_2026082901	[Guardian of the Wall] Yang Xing	true

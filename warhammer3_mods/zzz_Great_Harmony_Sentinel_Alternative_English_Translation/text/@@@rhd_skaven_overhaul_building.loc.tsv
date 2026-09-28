@@ -1,48 +1,48 @@
 key	text	tooltip
 #Loc;1;text/@@@rhd_skaven_overhaul_building.loc		
-ui_text_replacements_localised_text_settlement_types_tooltip_skv_nest	Nest Capital||Nest Capitals are the most common Skaven settlements, offering the most comprehensive building and recruitment options.	false
-ui_text_replacements_localised_text_settlement_types_tooltip_skv_mine	Warpstone Mine||Warpstone Mines produce [[img:icon_warpstones]][[/img]] Warpstone and provide unique building and recruitment options. Consuming [[img:icon_warpstones]][[/img]] Warpstone can power certain structures, unlock unique faction technologies, or enhance your units.	false
-uied_component_texts_localised_string_StateTooltip_16545357	Nest Capital||Nest Capitals are the most common Skaven settlements, offering the most comprehensive building and recruitment options.	false
-uied_component_texts_localised_string_StateTooltip_65435482	Warpstone Mine||Warpstone Mines produce [[img:icon_warpstones]][[/img]] Warpstone and provide unique building and recruitment options. Consuming [[img:icon_warpstones]][[/img]] Warpstone can power certain structures, unlock unique faction technologies, or enhance your units.	false
-uied_component_texts_localised_string_ComponentTooltip_45672153	Convert to Warpstone Mine||Warpstone Mines produce [[img:icon_warpstones]][[/img]] Warpstone and provide unique building and recruitment options. Consuming [[img:icon_warpstones]][[/img]] Warpstone can power certain structures, unlock unique faction technologies, or enhance your units.	false
-uied_component_texts_localised_string_ComponentTooltip_78917232	Convert to Nest Capital||Nest Capitals are the most common Skaven settlements, offering the most comprehensive building and recruitment options.	false
-culture_settlement_occupation_options_tooltip_1129	Colonize (Nest Capital)||Establish your soldiers here.	false
-culture_settlement_occupation_options_tooltip_57543453	Colonize (Mine)||Establish your soldiers here.	false
-culture_settlement_occupation_options_tooltip_1137	Sack and Occupy (Nest Capital)||Gain a substantial income through looting, but damage local buildings and sell all captives into slavery. Local [[img:icon_public_order]][[/img]]{{tr:hp_campaign_public_order_term}} will significantly decrease, and relations with the previous rulers will deteriorate greatly.	false
-culture_settlement_occupation_options_tooltip_53737545	Sack and Occupy (Mine)||Gain a substantial income through looting, but damage local buildings and sell all captives into slavery. Local [[img:icon_public_order]][[/img]]{{tr:hp_campaign_public_order_term}} will significantly decrease, and relations with the previous rulers will deteriorate greatly.	false
-building_sets_onscreen_name_rhd_set_skv_settlement_mine	Mine Structures	false
+ui_text_replacements_localised_text_settlement_types_tooltip_skv_nest	Nest-City||Nest-Cities are the most common form of Skaven settlement, offering the most comprehensive building and recruitment options.	false
+ui_text_replacements_localised_text_settlement_types_tooltip_skv_mine	Warpstone Mine||Warpstone Mines produce [[img:icon_warpstones]][[/img]]Warpstone and grant unique building and recruitment options. Warpstone can be consumed to power certain buildings, research unique faction technologies, or empower your troops.	false
+uied_component_texts_localised_string_StateTooltip_16545357	Nest-City||Nest-Cities are the most common form of Skaven settlement, offering the most comprehensive building and recruitment options.	false
+uied_component_texts_localised_string_StateTooltip_65435482	Warpstone Mine||Warpstone Mines produce [[img:icon_warpstones]][[/img]]Warpstone and grant unique building and recruitment options. Warpstone can be consumed to power certain buildings, research unique faction technologies, or empower your troops.	false
+uied_component_texts_localised_string_ComponentTooltip_45672153	Convert to Warpstone Mine||Warpstone Mines produce [[img:icon_warpstones]][[/img]]Warpstone and grant unique building and recruitment options. Warpstone can be consumed to power certain buildings, research unique faction technologies, or empower your troops.	false
+uied_component_texts_localised_string_ComponentTooltip_78917232	Convert to Nest-City||Nest-Cities are the most common form of Skaven settlement, offering the most comprehensive building and recruitment options.	false
+culture_settlement_occupation_options_tooltip_1129	Colonise (Nest-City)||Have your troops settle here.	false
+culture_settlement_occupation_options_tooltip_57543453	Colonise (Mine)||Have your troops settle here.	false
+culture_settlement_occupation_options_tooltip_1137	Sack and Occupy (Nest-City)||Gain a considerable income through sacking, but local buildings will be damaged and all prisoners will be sold into slavery. Local [[img:icon_public_order]][[/img]]{{tr:hp_campaign_public_order_term}} will drop significantly, and your relations with the settlement's previous ruler will suffer greatly.	false
+culture_settlement_occupation_options_tooltip_53737545	Sack and Occupy (Mine)||Gain a considerable income through sacking, but local buildings will be damaged and all prisoners will be sold into slavery. Local [[img:icon_public_order]][[/img]]{{tr:hp_campaign_public_order_term}} will drop significantly, and your relations with the settlement's previous ruler will suffer greatly.	false
+building_sets_onscreen_name_rhd_set_skv_settlement_mine	Mine Buildings	false
 building_sets_onscreen_description_rhd_set_skv_settlement_mine	This is a Skaven Warpstone Mine.	false
 building_chains_chain_tooltip_rhd_skv_settlement_mine	Warpstone Mine Chain	false
-building_chains_chain_tooltip_rhd_skv_mine_settlement_miner_camp	Mining Camp Chain	false
-building_chains_chain_tooltip_rhd_skv_mine_settlement_miner_sentry	Mining Sentry Chain	false
-building_chains_chain_tooltip_rhd_skv_mine_settlement_weaponteams	Weapons Workshop Chain	false
-building_chains_chain_tooltip_rhd_skv_mine_settlement_engineers	Warpstone Engineers Chain	false
-building_chains_chain_tooltip_rhd_skv_mine_settlement_farm	Excavation Chain	false
+building_chains_chain_tooltip_rhd_skv_mine_settlement_miner_camp	Miner Camp Chain	false
+building_chains_chain_tooltip_rhd_skv_mine_settlement_miner_sentry	Miner Sentry Chain	false
+building_chains_chain_tooltip_rhd_skv_mine_settlement_weaponteams	Assembly Workshop Chain	false
+building_chains_chain_tooltip_rhd_skv_mine_settlement_engineers	Warp Factory Chain	false
+building_chains_chain_tooltip_rhd_skv_mine_settlement_farm	Mining Chain	false
 building_chains_chain_tooltip_rhd_skv_mine_settlement_industry	Refinement Chain	false
 building_chains_chain_tooltip_rhd_skv_mine_settlement_order	Control Chain	false
 building_culture_variants_name_rhd_skv_settlement_mine_1	Open-Pit Mine	false
-building_culture_variants_name_rhd_skv_settlement_mine_2	Greenlit Caves	false
-building_culture_variants_name_rhd_skv_settlement_mine_3	Abyssal Shafts	false
-building_culture_variants_name_rhd_skv_settlement_mine_ruin	Warped Wasteland	false
-building_culture_variants_name_rhd_skv_mine_settlement_miner_camp_1	Hidden Shelter	false
-building_culture_variants_name_rhd_skv_mine_settlement_miner_camp_2	Underground Nests	false
-building_culture_variants_name_rhd_skv_mine_settlement_miner_sentry_1	Concealed Sentry	false
-building_culture_variants_name_rhd_skv_mine_settlement_miner_sentry_2	Patrol Campsite	false
-building_culture_variants_name_rhd_skv_mine_settlement_miner_sentry_3	Spy Outpost	false
-building_culture_variants_name_rhd_skv_mine_settlement_weaponteams_1	Weapons Research Post	false
-building_culture_variants_name_rhd_skv_mine_settlement_weaponteams_2	Weapons Assembly Workshop	false
-building_culture_variants_name_rhd_skv_mine_settlement_weaponteams_3	Precision Crafting Chamber	false
-building_culture_variants_name_rhd_skv_mine_settlement_engineers_1	Cannon Foundry	false
-building_culture_variants_name_rhd_skv_mine_settlement_engineers_2	Warpstone War Factory	false
-building_culture_variants_name_rhd_skv_mine_settlement_farm_1	Warpstone Caverns	false
-building_culture_variants_name_rhd_skv_mine_settlement_farm_2	Crusher Tunnels	false
-building_culture_variants_name_rhd_skv_mine_settlement_farm_3	Warpstone Excavators	false
+building_culture_variants_name_rhd_skv_settlement_mine_2	Gloomgreen Mine Shaft	false
+building_culture_variants_name_rhd_skv_settlement_mine_3	Abyssal Mineshaft	false
+building_culture_variants_name_rhd_skv_settlement_mine_ruin	Warpstone Wasteland	false
+building_culture_variants_name_rhd_skv_mine_settlement_miner_camp_1	Hidden Hideout	false
+building_culture_variants_name_rhd_skv_mine_settlement_miner_camp_2	Burrow Den	false
+building_culture_variants_name_rhd_skv_mine_settlement_miner_sentry_1	Concealed Outpost	false
+building_culture_variants_name_rhd_skv_mine_settlement_miner_sentry_2	Watch Camp	false
+building_culture_variants_name_rhd_skv_mine_settlement_miner_sentry_3	Intelligence Outpost	false
+building_culture_variants_name_rhd_skv_mine_settlement_weaponteams_1	Weapons Research Station	false
+building_culture_variants_name_rhd_skv_mine_settlement_weaponteams_2	Weapons Assembly Yard	false
+building_culture_variants_name_rhd_skv_mine_settlement_weaponteams_3	Precision Workshop	false
+building_culture_variants_name_rhd_skv_mine_settlement_engineers_1	Great Gun Production Line	false
+building_culture_variants_name_rhd_skv_mine_settlement_engineers_2	Warp War Factory	false
+building_culture_variants_name_rhd_skv_mine_settlement_farm_1	Warpstone Cavern	false
+building_culture_variants_name_rhd_skv_mine_settlement_farm_2	Grinder Tunnel	false
+building_culture_variants_name_rhd_skv_mine_settlement_farm_3	Warp-Excavator	false
 building_culture_variants_name_rhd_skv_mine_settlement_industry_1	Rat-Powered Centrifuge	false
-building_culture_variants_name_rhd_skv_mine_settlement_industry_2	Warpstone Refinery	false
-building_culture_variants_name_rhd_skv_mine_settlement_industry_3	Purity Laboratory	false
-building_culture_variants_name_rhd_skv_mine_settlement_order_1	Whipping Pits	false
+building_culture_variants_name_rhd_skv_mine_settlement_industry_2	Warpstone Refinement Center	false
+building_culture_variants_name_rhd_skv_mine_settlement_industry_3	High-Purity Laboratory	false
+building_culture_variants_name_rhd_skv_mine_settlement_order_1	Whipping Ground	false
 building_culture_variants_name_rhd_skv_mine_settlement_order_2	Amplification Facility	false
-building_culture_variants_name_rhd_skv_under_empire_discovery_assassins_3wh2_main_skv_skavenwh2_main_sc_skv_skaven	Slaughtering Grounds	false
-building_short_description_texts_short_description_rhd_skv_under_empire_discovery_assassins_3	The surface dwellers are growing suspicious due to the increasing disappearances, but no one dares to investigate further.	false
+building_culture_variants_name_rhd_skv_under_empire_discovery_assassins_3wh2_main_skv_skavenwh2_main_sc_skv_skaven	Slaughter Grounds	false
+building_short_description_texts_short_description_rhd_skv_under_empire_discovery_assassins_3	The surface-dwellers grow suspicious of the ever-mounting missing persons, but none dare look too closely into the matter.	false
 building_culture_variants_name_rhd_skv_under_empire_discovery_deeper_tunnels_2wh2_main_skv_skavenwh2_main_sc_skv_skaven	Crust Engineering	false
-building_short_description_texts_short_description_rhd_skv_under_empire_discovery_deeper_tunnels_2	With advanced Warpstone engineering tools, the Skaven can deploy their facilities directly within the planet's crust.	false
+building_short_description_texts_short_description_rhd_skv_under_empire_discovery_deeper_tunnels_2	With the aid of powerful Warpstone engineering apparatus, the Skaven can situate all manner of facilities directly beneath the earth's crust.	false

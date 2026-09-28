@@ -1,3 +1,3 @@
 key	text	tooltip
 #Loc;1;text/!!!@loc_cn_fix.loc		
-special_ability_invalid_usage_flags_alt_description_cannot_find_allies_in_intercept_range	When allied units are within range, this Ogre unit will:\\nGain [[img:ui/battle ui/ability_icons/charge_defense.png]][[/img]]Expert Charge Defense\\n[[col:red]]Lose [[img:ui/battle ui/ability_icons/ogre_charge.png]][[/img]]Ogre Charge[[/col]]	false
+special_ability_invalid_usage_flags_alt_description_cannot_find_allies_in_intercept_range	When friendly units are present within range, this Ogre unit will:\\nGain [[img:ui/battle ui/ability_icons/charge_defense.png]][[/img]]Expert Charge Defence\\n[[col:red]]Lose [[img:ui/battle ui/ability_icons/ogre_charge.png]][[/img]]Ogre Charge[[/col]]	false

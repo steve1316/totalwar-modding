@@ -1,0 +1,56 @@
+key	text	tooltip
+#Loc;1;text/@@deer_outpost.loc		
+campaign_interactable_marker_infos_name_wwd_marker_outpost	Garrison Post	true
+campaign_interactable_marker_infos_name_wwd_marker_outpost_lv1	Outpost	true
+campaign_interactable_marker_infos_name_wwd_marker_outpost_lv2	Outpost	true
+campaign_interactable_marker_infos_name_wwd_marker_outpost_lv3	Outpost	true
+campaign_interactable_marker_infos_tooltip_wwd_marker_outpost_lv1	Controlling the settlement where the outpost is located and visiting this location will grant a bonus to the corresponding province.\\nWhen an enemy controls the outpost, defeating its garrison will grant rewards.\\n\\n[[col:yellow]]Can be interacted with by [[img:icon_general]][[/img]] Lords and [[img:icon_hero]][[/img]] Heroes[[/col]]	true
+campaign_interactable_marker_infos_tooltip_wwd_marker_outpost_lv2	Controlling the settlement where the outpost is located and visiting this location will grant a bonus to the corresponding province.\\nWhen an enemy controls the outpost, defeating its garrison will grant rewards.\\n\\n[[col:yellow]]Can be interacted with by [[img:icon_general]][[/img]] Lords and [[img:icon_hero]][[/img]] Heroes[[/col]]	true
+campaign_interactable_marker_infos_tooltip_wwd_marker_outpost_lv3	Controlling the settlement where the outpost is located and visiting this location will grant a bonus to the corresponding province.\\nWhen an enemy controls the outpost, defeating its garrison will grant rewards.\\n\\n[[col:yellow]]Can be interacted with by [[img:icon_general]][[/img]] Lords and [[img:icon_hero]][[/img]] Heroes[[/col]]	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_establishFIFTH	Take No Action	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_establishFIRST	Build a Military Fortress	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_establishFOURTH	Establish a Relay Station	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_establishSECOND	Establish a Marketplace	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_establishTHIRD	Set Up an Administrative Hall	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_economyFIRST	Grant the Expansion	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_economySECOND	Delay the Matter	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_logisticsFIRST	Grant the Renovation	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_logisticsSECOND	Delay the Matter	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_militaryFIRST	Grant the Renovation	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_militarySECOND	Delay the Matter	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_politicsFIRST	Grant the Expansion	true
+cdir_events_dilemma_choice_details_localised_choice_label_deer_outpost_dilemma_upgrade_politicsSECOND	Delay the Matter	true
+dilemmas_localised_description_deer_outpost_dilemma_establish	Your troops have marched to a local outpost, and the master strategist has resolved all obstacles: build a military fortress to secure the border, establish a marketplace to enrich the army's coffers, set up an administrative hall to settle the populace, or open a post road to connect all directions. What is your will?	true
+dilemmas_localised_description_deer_outpost_dilemma_upgrade_economy	The outpost market has taken shape. Merchants gather, and requests come to expand the marketplace to broaden revenue. Grant the request, and taxes grow richer; delay it, and things remain unchanged.	true
+dilemmas_localised_description_deer_outpost_dilemma_upgrade_logistics	The outpost's relay station has connected to the post road. The stationmaster requests permission to add more relay horses and improve the roads, so marching troops move faster, scouts range further, and losses shrink. Grant the request, and mobility improves; delay it, and things remain unchanged.	true
+dilemmas_localised_description_deer_outpost_dilemma_upgrade_military	The outpost has become a military garrison. The general in command requests permission to raise funds and grain to further fortify the ramparts, strengthening its military might. Grant the request, and its blades grow sharper; delay it, and things remain unchanged.	true
+dilemmas_localised_description_deer_outpost_dilemma_upgrade_politics	The outpost's administrative hall has taken initial shape. Advisors petition to expand the offices to settle the people's hearts and improve governance. Grant the request, and order grows firmer; delay it, and things remain unchanged.	true
+dilemmas_localised_title_deer_outpost_dilemma_establish	Provincial Outpost	true
+dilemmas_localised_title_deer_outpost_dilemma_upgrade_economy	Market Expansion	true
+dilemmas_localised_title_deer_outpost_dilemma_upgrade_logistics	Relay Station Strengthened	true
+dilemmas_localised_title_deer_outpost_dilemma_upgrade_military	Fortress Renovation	true
+dilemmas_localised_title_deer_outpost_dilemma_upgrade_politics	Hall of Governance Enhanced	true
+effect_bundles_localised_description_deer_outpost_economy_lv1	The outpost has established the beginnings of a marketplace.	true
+effect_bundles_localised_description_deer_outpost_economy_lv2	The outpost market has been expanded.	true
+effect_bundles_localised_description_deer_outpost_economy_lv3	The outpost market has become a flourishing place.	true
+effect_bundles_localised_description_deer_outpost_logistics_lv1	The outpost has established the beginnings of a relay station.	true
+effect_bundles_localised_description_deer_outpost_logistics_lv2	The outpost's relay station has been renovated.	true
+effect_bundles_localised_description_deer_outpost_logistics_lv3	The outpost's relay station has become a hub connected in all directions.	true
+effect_bundles_localised_description_deer_outpost_military_lv1	The outpost has laid the foundation of a military garrison.	true
+effect_bundles_localised_description_deer_outpost_military_lv2	The outpost has been renovated and expanded.	true
+effect_bundles_localised_description_deer_outpost_military_lv3	The outpost has become a mighty garrison.	true
+effect_bundles_localised_description_deer_outpost_politics_lv1	The outpost has established the beginnings of an administrative hall.	true
+effect_bundles_localised_description_deer_outpost_politics_lv2	The outpost's administrative hall has been expanded.	true
+effect_bundles_localised_description_deer_outpost_politics_lv3	The outpost's administrative hall has become a place of order.	true
+effect_bundles_localised_title_deer_outpost_economy_lv1	Marketplace Founded	true
+effect_bundles_localised_title_deer_outpost_economy_lv2	Market Expanded	true
+effect_bundles_localised_title_deer_outpost_economy_lv3	Market Flourishing	true
+effect_bundles_localised_title_deer_outpost_logistics_lv1	Relay Station Founded	true
+effect_bundles_localised_title_deer_outpost_logistics_lv2	Relay Station Renovated	true
+effect_bundles_localised_title_deer_outpost_logistics_lv3	Relay Station Connected in All Directions	true
+effect_bundles_localised_title_deer_outpost_military_lv1	Fortress Founded	true
+effect_bundles_localised_title_deer_outpost_military_lv2	Garrison Fort Reinforced	true
+effect_bundles_localised_title_deer_outpost_military_lv3	Garrison Fort Ascendant	true
+effect_bundles_localised_title_deer_outpost_politics_lv1	Administrative Hall Established	true
+effect_bundles_localised_title_deer_outpost_politics_lv2	Administrative Hall Enriched	true
+effect_bundles_localised_title_deer_outpost_politics_lv3	Administrative Hall Purged	true

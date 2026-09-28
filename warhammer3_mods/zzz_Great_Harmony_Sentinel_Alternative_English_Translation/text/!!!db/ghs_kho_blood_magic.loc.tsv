@@ -1,66 +1,66 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_kho_blood_magic.loc		
-unit_abilities_onscreen_name_kho_blood_magic_passive_anti_missile	Skull Throne Mandate	true
-unit_abilities_tooltip_text_kho_blood_magic_passive_anti_missile	When the seas turn to blood and mountains are obscured by skull piles, our glory shall be revealed.	true
-unit_abilities_onscreen_name_kho_cultist_magic_passive_bloom	Blood God's Glimpse	true
-unit_abilities_tooltip_text_kho_cultist_magic_passive_bloom	Even the most fleeting glance causes enemies to tremble as if their souls were being ripped from their bodies.	true
+unit_abilities_onscreen_name_kho_blood_magic_passive_anti_missile	Skull-Throne Decree	true
+unit_abilities_tooltip_text_kho_blood_magic_passive_anti_missile	When the seas of the world are replaced by blood, and the mountains of the world are shrouded by mounds of the slain, our glory shall be made manifest.	true
+unit_abilities_onscreen_name_kho_cultist_magic_passive_bloom	Glimpse of the Blood God	true
+unit_abilities_tooltip_text_kho_cultist_magic_passive_bloom	Even the most casual glance is enough to shatter the courage of enemies on the field, as if their very souls were torn from their flesh.	true
 unit_abilities_onscreen_name_kho_blood_magic_passive_cooldown	Hymn of Skulls	true
-unit_abilities_tooltip_text_kho_blood_magic_passive_cooldown	This is our hunting ground, filled with prey to be slaughtered. We are the singers of bloody ballads!	true
-unit_abilities_onscreen_name_kho_blood_magic_brass_fortress	Brass Citadel	true
-unit_abilities_tooltip_text_kho_blood_magic_brass_fortress	The endless blood of war opens the gates to Khorne's realm, drawing all beings into the Brass Citadel for his trials!	true
-unit_abilities_onscreen_name_kho_blood_magic_brass_fortress_upgraded	Advanced Brass Citadel	true
-unit_abilities_tooltip_text_kho_blood_magic_brass_fortress_upgraded	The endless blood of war opens the gates to Khorne's realm, drawing all beings into the Brass Citadel for his trials!	true
-unit_abilities_onscreen_name_kho_blood_magic_brass_fortress_bound	Brass Citadel	true
-unit_abilities_tooltip_text_kho_blood_magic_brass_fortress_bound	The endless blood of war opens the gates to Khorne's realm, drawing all beings into the Brass Citadel for his trials!	true
-unit_abilities_onscreen_name_kho_blood_magic_great_tempest	Chainblade Tempest	true
-unit_abilities_tooltip_text_kho_blood_magic_great_tempest	With a single point of Khorne's finger, endless chainblades wrap around cowardly flyers, tearing their wings and faith apart.	true
-unit_abilities_onscreen_name_kho_blood_magic_great_tempest_upgraded	Advanced Chainblade Tempest	true
-unit_abilities_tooltip_text_kho_blood_magic_great_tempest_upgraded	With a single point of Khorne's finger, endless chainblades wrap around cowardly flyers, tearing their wings and faith apart.	true
-unit_abilities_onscreen_name_kho_blood_magic_great_tempest_bound	Chainblade Tempest	true
-unit_abilities_tooltip_text_kho_blood_magic_great_tempest_bound	With a single point of Khorne's finger, endless chainblades wrap around cowardly flyers, tearing their wings and faith apart.	true
-unit_abilities_onscreen_name_kho_blood_magic_khorne_foot	Khorne's Stomp	true
-unit_abilities_tooltip_text_kho_blood_magic_khorne_foot	Our savagery and wrath spare neither friend nor foe. Cowardly maggots are unworthy of fighting for Khorne's glory!	true
-unit_abilities_onscreen_name_kho_blood_magic_khorne_foot_upgraded	Advanced Khorne's Stomp	true
-unit_abilities_tooltip_text_kho_blood_magic_khorne_foot_upgraded	Our savagery and wrath spare neither friend nor foe. Cowardly maggots are unworthy of fighting for Khorne's glory!	true
-unit_abilities_onscreen_name_kho_blood_magic_blade_shard	Bloody Blade Rain	true
-unit_abilities_tooltip_text_kho_blood_magic_blade_shard	Fragments of blades from Khorne's failed champions fall from the heavens, erasing them and their masters forever from forgotten battlefields.	true
-unit_abilities_onscreen_name_kho_blood_magic_blade_shard_upgraded	Advanced Bloody Blade Rain	true
-unit_abilities_tooltip_text_kho_blood_magic_blade_shard_upgraded	Fragments of blades from Khorne's failed champions fall from the heavens, erasing them and their masters forever from forgotten battlefields.	true
-unit_abilities_onscreen_name_kho_blood_magic_khornesword	Decapitating Axe of Fury	true
-unit_abilities_tooltip_text_kho_blood_magic_khornesword	No rampart, flesh heap, or metal wall can withstand the wrath of this blood-soaked manifestation!	true
-unit_abilities_onscreen_name_kho_blood_magic_khornesword_upgraded	Advanced Decapitating Axe of Fury	true
-unit_abilities_tooltip_text_kho_blood_magic_khornesword_upgraded	No rampart, flesh heap, or metal wall can withstand the wrath of this blood-soaked manifestation!	true
-unit_abilities_onscreen_name_kho_blood_magic_sla_breath	Demonic Flame	true
-unit_abilities_tooltip_text_kho_blood_magic_sla_breath	Dark Prince! Witness the fate of your pathetic servants! They now serve as tools for our slaughter!	true
-unit_abilities_onscreen_name_kho_blood_magic_sla_breath_upgraded	Advanced Demonic Flame	true
-unit_abilities_tooltip_text_kho_blood_magic_sla_breath_upgraded	Dark Prince! Witness the fate of your pathetic servants! They now serve as tools for our slaughter!	true
+unit_abilities_tooltip_text_kho_blood_magic_passive_cooldown	This is our hunting ground, countless prey awaiting slaughter, and we are the singers of blood!	true
+unit_abilities_onscreen_name_kho_blood_magic_brass_fortress	Brass Fortress	true
+unit_abilities_tooltip_text_kho_blood_magic_brass_fortress	The endless blood of war has thrown open the gates to the Blood God's realm - all creatures shall be drawn into the Brass Fortress to face the Blood God's trial!	true
+unit_abilities_onscreen_name_kho_blood_magic_brass_fortress_upgraded	Greater Brass Fortress	true
+unit_abilities_tooltip_text_kho_blood_magic_brass_fortress_upgraded	The endless blood of war has thrown open the gates to the Blood God's realm - all creatures shall be drawn into the Brass Fortress to face the Blood God's trial!	true
+unit_abilities_onscreen_name_kho_blood_magic_brass_fortress_bound	Brass Fortress	true
+unit_abilities_tooltip_text_kho_blood_magic_brass_fortress_bound	The endless blood of war has thrown open the gates to the Blood God's realm - all creatures shall be drawn into the Brass Fortress to face the Blood God's trial!	true
+unit_abilities_onscreen_name_kho_blood_magic_great_tempest	Chain-Blade Tempest	true
+unit_abilities_tooltip_text_kho_blood_magic_great_tempest	The Blood God points a finger to the distant skies, and endless chain-blades wrap tightly around those cowards who fly, tearing apart their wings and their convictions.	true
+unit_abilities_onscreen_name_kho_blood_magic_great_tempest_upgraded	Greater Chain-Blade Tempest	true
+unit_abilities_tooltip_text_kho_blood_magic_great_tempest_upgraded	The Blood God points a finger to the distant skies, and endless chain-blades wrap tightly around those cowards who fly, tearing apart their wings and their convictions.	true
+unit_abilities_onscreen_name_kho_blood_magic_great_tempest_bound	Chain-Blade Tempest	true
+unit_abilities_tooltip_text_kho_blood_magic_great_tempest_bound	The Blood God points a finger to the distant skies, and endless chain-blades wrap tightly around those cowards who fly, tearing apart their wings and their convictions.	true
+unit_abilities_onscreen_name_kho_blood_magic_khorne_foot	Blood God's Trample	true
+unit_abilities_tooltip_text_kho_blood_magic_khorne_foot	Our savagery and wrath make no distinction between friend and foe - cowardly maggots are unworthy of fighting for the Blood God's glory!	true
+unit_abilities_onscreen_name_kho_blood_magic_khorne_foot_upgraded	Greater Blood God's Trample	true
+unit_abilities_tooltip_text_kho_blood_magic_khorne_foot_upgraded	Our savagery and wrath make no distinction between friend and foe - cowardly maggots are unworthy of fighting for the Blood God's glory!	true
+unit_abilities_onscreen_name_kho_blood_magic_blade_shard	Khorne's Blade Rain	true
+unit_abilities_tooltip_text_kho_blood_magic_blade_shard	The shattered blades of those the Blood God deems failures rain down from the heavens, vanishing forever alongside their masters on some nameless battlefield.	true
+unit_abilities_onscreen_name_kho_blood_magic_blade_shard_upgraded	Greater Khorne's Blade Rain	true
+unit_abilities_tooltip_text_kho_blood_magic_blade_shard_upgraded	The shattered blades of those the Blood God deems failures rain down from the heavens, vanishing forever alongside their masters on some nameless battlefield.	true
+unit_abilities_onscreen_name_kho_blood_magic_khornesword	Skull-Cleaving Axe of Fury	true
+unit_abilities_tooltip_text_kho_blood_magic_khornesword	Neither low ramparts, rotting flesh, nor walls of metal can withstand the fury made manifest in this blood-soaked hand!	true
+unit_abilities_onscreen_name_kho_blood_magic_khornesword_upgraded	Greater Skull-Cleaving Axe of Fury	true
+unit_abilities_tooltip_text_kho_blood_magic_khornesword_upgraded	Neither low ramparts, rotting flesh, nor walls of metal can withstand the fury made manifest in this blood-soaked hand!	true
+unit_abilities_onscreen_name_kho_blood_magic_sla_breath	Skull-Rune Flame	true
+unit_abilities_tooltip_text_kho_blood_magic_sla_breath	Dark Prince! Behold the fate of your pitiful servants! Now fit only to serve as tools for our great work of slaughter!	true
+unit_abilities_onscreen_name_kho_blood_magic_sla_breath_upgraded	Greater Skull-Rune Flame	true
+unit_abilities_tooltip_text_kho_blood_magic_sla_breath_upgraded	Dark Prince! Behold the fate of your pitiful servants! Now fit only to serve as tools for our great work of slaughter!	true
 unit_abilities_onscreen_name_kho_cultist_magic_storm	Blood Cyclone	true
-unit_abilities_tooltip_text_kho_cultist_magic_storm	Fanatics chant Khorne's great name, summoning cyclones of blood to shred every resisting body in their path.	true
-unit_abilities_onscreen_name_kho_cultist_magic_chain_cage	Chains of Purgatory	true
-unit_abilities_tooltip_text_kho_cultist_magic_chain_cage	Brass chains emerge from purgatory, binding cowards by their ankles and cutting off every piece of the sky from their sight.	true
-unit_abilities_onscreen_name_kho_cultist_magic_chain_cage_upgraded	Advanced Chains of Purgatory	true
-unit_abilities_tooltip_text_kho_cultist_magic_chain_cage_upgraded	Brass chains emerge from purgatory, binding cowards by their ankles and cutting off every piece of the sky from their sight.	true
+unit_abilities_tooltip_text_kho_cultist_magic_storm	The fanatics chant the Blood God's mighty name, and blood gathers into a raging cyclone that grinds every obstructing form to pieces.	true
+unit_abilities_onscreen_name_kho_cultist_magic_chain_cage	Chains of Perdition	true
+unit_abilities_tooltip_text_kho_cultist_magic_chain_cage	Brass chains reach forth from perdition, binding fast the ankles of cowards, sealing away every patch of sky within their sight.	true
+unit_abilities_onscreen_name_kho_cultist_magic_chain_cage_upgraded	Greater Chains of Perdition	true
+unit_abilities_tooltip_text_kho_cultist_magic_chain_cage_upgraded	Brass chains reach forth from perdition, binding fast the ankles of cowards, sealing away every patch of sky within their sight.	true
 unit_abilities_onscreen_name_kho_cultist_magic_fist	Skull-Crushing Blow	true
-unit_abilities_tooltip_text_kho_cultist_magic_fist	A massive blood-drenched hand appears above Khorne's foes, crushing their skulls into fragments with a single punch.	true
-unit_abilities_onscreen_name_kho_cultist_magic_fist_upgraded	Advanced Skull-Crushing Blow	true
-unit_abilities_tooltip_text_kho_cultist_magic_fist_upgraded	A massive blood-drenched hand appears above Khorne's foes, crushing their skulls into fragments with a single punch.	true
-unit_abilities_onscreen_name_kho_cultist_magic_flood_forbid	Weak Blood Sacrifice	true
-unit_abilities_tooltip_text_kho_cultist_magic_flood_forbid	The skull of a faithful servant of the Changer of Ways explodes, showing those arrogant enough to wield the Winds of Magic their grim future!	true
-unit_abilities_onscreen_name_kho_cultist_magic_flood_forbid_upgraded	Advanced Weak Blood Sacrifice	true
-unit_abilities_tooltip_text_kho_cultist_magic_flood_forbid_upgraded	The skull of a faithful servant of the Changer of Ways explodes, showing those arrogant enough to wield the Winds of Magic their grim future!	true
-unit_abilities_onscreen_name_kho_cultist_magic_flood_forbid_bound	Weak Blood Sacrifice	true
-unit_abilities_tooltip_text_kho_cultist_magic_flood_forbid_bound	The skull of a faithful servant of the Changer of Ways explodes, showing those arrogant enough to wield the Winds of Magic their grim future!	true
-unit_abilities_onscreen_name_kho_cultist_magic_mist	Blood-Seal Mist	true
-unit_abilities_tooltip_text_kho_cultist_magic_mist	Fanatics summon Khorne's great seal, granting allies tremendous vitality and spurring them to bring death and despair to their enemies.	true
-unit_abilities_onscreen_name_kho_cultist_magic_mist_upgraded	Advanced Blood-Seal Mist	true
-unit_abilities_tooltip_text_kho_cultist_magic_mist_upgraded	Fanatics summon Khorne's great seal, granting allies tremendous vitality and spurring them to bring death and despair to their enemies.	true
-unit_abilities_onscreen_name_kho_cultist_magic_whip	Blood-Soaked Lash	true
-unit_abilities_tooltip_text_kho_cultist_magic_whip	Killing a servant of Khorne is never a mistake, but if you do, celebrate it as a testament to his glory!	true
-unit_abilities_onscreen_name_kho_cultist_magic_whip_upgraded	Advanced Blood-Soaked Lash	true
-unit_abilities_tooltip_text_kho_cultist_magic_whip_upgraded	Killing a servant of Khorne is never a mistake, but if you do, celebrate it as a testament to his glory!	true
-unit_abilities_onscreen_name_kho_cultist_magic_whip_bound	Blood-Soaked Lash	true
-unit_abilities_tooltip_text_kho_cultist_magic_whip_bound	Killing a servant of Khorne is never a mistake, but if you do, celebrate it as a testament to his glory!	true
-special_ability_groups_name_kho_blood_magic	Khorne's Skull Magic	true
-special_ability_groups_name_kho_cultist_magic	Khorne's Blood Magic	true
-special_ability_phases_onscreen_name_kho_contact_bleeding	[[col:red]][[img:ui/battle ui/ability_icons/kho_contact_bleeding.png]][[/img]]River of Blood[[/col]]	true
-special_ability_phases_onscreen_name_kho_contact_chain_cage	[[col:red]][[img:ui/battle ui/ability_icons/kho_contact_chain_cage.png]][[/img]]Chains of Purgatory[[/col]]	true
+unit_abilities_tooltip_text_kho_cultist_magic_fist	A giant blood-soaked hand appears over the heads of the Blood God's enemies, one blow enough to crush their skulls to fragments.	true
+unit_abilities_onscreen_name_kho_cultist_magic_fist_upgraded	Greater Skull-Crushing Blow	true
+unit_abilities_tooltip_text_kho_cultist_magic_fist_upgraded	A giant blood-soaked hand appears over the heads of the Blood God's enemies, one blow enough to crush their skulls to fragments.	true
+unit_abilities_onscreen_name_kho_cultist_magic_flood_forbid	Weakblood Deluge	true
+unit_abilities_tooltip_text_kho_cultist_magic_flood_forbid	The skull of a servant of the Changer of Ways bursts asunder, letting those fools who think they command the winds of magic taste what awaits them!	true
+unit_abilities_onscreen_name_kho_cultist_magic_flood_forbid_upgraded	Greater Weakblood Deluge	true
+unit_abilities_tooltip_text_kho_cultist_magic_flood_forbid_upgraded	The skull of a servant of the Changer of Ways bursts asunder, letting those fools who think they command the winds of magic taste what awaits them!	true
+unit_abilities_onscreen_name_kho_cultist_magic_flood_forbid_bound	Weakblood Deluge	true
+unit_abilities_tooltip_text_kho_cultist_magic_flood_forbid_bound	The skull of a servant of the Changer of Ways bursts asunder, letting those fools who think they command the winds of magic taste what awaits them!	true
+unit_abilities_onscreen_name_kho_cultist_magic_mist	Bloodmark Mist	true
+unit_abilities_tooltip_text_kho_cultist_magic_mist	The fanatics summon a great mark of the Blood God, granting allies more tenacious vitality and inspiring them to bring death and defeat to their foes.	true
+unit_abilities_onscreen_name_kho_cultist_magic_mist_upgraded	Greater Bloodmark Mist	true
+unit_abilities_tooltip_text_kho_cultist_magic_mist_upgraded	The fanatics summon a great mark of the Blood God, granting allies more tenacious vitality and inspiring them to bring death and defeat to their foes.	true
+unit_abilities_onscreen_name_kho_cultist_magic_whip	Blood-Stained Lash	true
+unit_abilities_tooltip_text_kho_cultist_magic_whip	Slaying a servant of Khorne is never a mistake, but should you do so, be sure to celebrate the glory brought to the Blood God's name.	true
+unit_abilities_onscreen_name_kho_cultist_magic_whip_upgraded	Greater Blood-Stained Lash	true
+unit_abilities_tooltip_text_kho_cultist_magic_whip_upgraded	Slaying a servant of Khorne is never a mistake, but should you do so, be sure to celebrate the glory brought to the Blood God's name.	true
+unit_abilities_onscreen_name_kho_cultist_magic_whip_bound	Blood-Stained Lash	true
+unit_abilities_tooltip_text_kho_cultist_magic_whip_bound	Slaying a servant of Khorne is never a mistake, but should you do so, be sure to celebrate the glory brought to the Blood God's name.	true
+special_ability_groups_name_kho_blood_magic	Khorne Skull Lore	true
+special_ability_groups_name_kho_cultist_magic	Khorne Blood Lore	true
+special_ability_phases_onscreen_name_kho_contact_bleeding	[[col:red]][[img:ui/battle ui/ability_icons/kho_contact_bleeding.png]][[/img]]Rivers of Blood[[/col]] 	true
+special_ability_phases_onscreen_name_kho_contact_chain_cage	[[col:red]][[img:ui/battle ui/ability_icons/kho_contact_chain_cage.png]][[/img]]Chains of Perdition[[/col]] 	true

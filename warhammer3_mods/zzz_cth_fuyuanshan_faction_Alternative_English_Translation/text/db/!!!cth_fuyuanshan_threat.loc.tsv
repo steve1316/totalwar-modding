@@ -1,26 +1,26 @@
 key	text	tooltip
 #Loc;1;text/db/!!!cth_fuyuanshan_threat.loc		
 event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_diplomacy_primary_detail	The Great Bastion Stands	true
-event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_diplomacy_secondary_detail	Yes, you have once again thwarted the threat of a Chaos invasion. Enjoy this moment of victory. Your Cathayan allies will rejoice because of you, while the Chaos enemy will hate you even more!	true
-event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_1_primary_detail	Doomsday Prophecy	false
-event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_1_secondary_detail	The Chaos army outside the Great Bastion is gathering with unprecedented force. An Astronomer Royal, through subtle and secret arts, has glimpsed a fragment of the future - "Heaven and Earth shatter, the throne collapses, the Great Bastion breaks, and all things turn to ash." This person firmly believes in this vision and rushes out of his study, loudly proclaiming the prophecy of doom. Before the Raven Guard could apprehend him, countless Cathayans had already been overwhelmed by the fear of the apocalypse.	false
-event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_2_primary_detail	Crimson Ominous Star	false
-event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_2_secondary_detail	A crimson, ominous star hangs in the sky, its radiance visible even at midday. All who dare to gaze upon this star fall into madness. Finally, the Dragon children had to issue an unprecedented "Forbidden Gaze Decree" to bring the situation under control.	false
-effect_bundles_localised_description_diplomacy_bundle_cathay	Cathay's allies are inspired by your feat of defeating Chaos	false
-effect_bundles_localised_title_diplomacy_bundle_cathay	Allied Rejoicing	false
-effect_bundles_localised_description_diplomacy_bundle_chaos	The warriors of the four Chaos Gods all yearn to win glory by defeating you	false
-effect_bundles_localised_title_diplomacy_bundle_chaos	Chaos Hunts	false
-effect_bundles_localised_description_wh3_fuyuanshan_effect_bundle_threat_event_1	"Heaven and Earth shatter, the throne collapses, the Great Bastion breaks, and all things turn to ash?" You silently ponder these words...	false
-effect_bundles_localised_title_wh3_fuyuanshan_effect_bundle_threat_event_1	Doomsday Prophecy	false
-effect_bundles_localised_description_wh3_fuyuanshan_effect_bundle_threat_event_2	The ominous star spins ceaselessly in your vision, like the blood-red pupil of a gazing god...	false
-effect_bundles_localised_title_wh3_fuyuanshan_effect_bundle_threat_event_2	Crimson Ominous Star	false
-incidents_localised_title_wh3_main_incident_cth_fuyuanshan_bastion_threat_decrease	Chaos Power Weakens	false
-incidents_localised_description_wh3_main_incident_cth_fuyuanshan_bastion_threat_decrease	A Chaos army has been defeated, and the pressure outside the Great Bastion has eased.	false
+event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_diplomacy_secondary_detail	Yes, you have once again thwarted the threat of a Chaos invasion. Savor this brief moment of victory. Your Cathayan allies will rejoice on your account, while your Chaos foes will hate you all the more!	true
+event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_1_primary_detail	Prophecy of Doom	false
+event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_1_secondary_detail	The Chaos hordes beyond the Great Bastion have gathered with unprecedented might. A Celestial Official, through a subtle and arcane rite, caught a fleeting glimpse of the future — 'Heaven and earth shall shatter, the throne shall crumble, the Great Bastion shall be broken, and all things shall turn to ash.' Utterly convinced of this vision, he rushed from his study, proclaiming the coming doom at the top of his voice. Before the Raven Guard could seize him, far too many of Cathay's people had already been crushed by dread of the apocalypse.	false
+event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_2_primary_detail	Crimson Baleful Star	false
+event_feed_strings_text_wh_event_feed_scripted_cth_fuyuanshan_bastion_threat_event_2_secondary_detail	A crimson baleful star hangs in the sky, its glow visible even at high noon. All who dare gaze upon this ominous star fall into madness, and at last the Dragon Princes were forced to issue an unprecedented 'Edict of No Gazing' to bring the matter under control.	false
+effect_bundles_localised_description_diplomacy_bundle_cathay	Cathay's allies are heartened by your feats against Chaos.	false
+effect_bundles_localised_title_diplomacy_bundle_cathay	Allies Rejoice	false
+effect_bundles_localised_description_diplomacy_bundle_chaos	The champions of the Four Gods eagerly seek to earn glory by defeating you.	false
+effect_bundles_localised_title_diplomacy_bundle_chaos	The Chaos Hunt	false
+effect_bundles_localised_description_wh3_fuyuanshan_effect_bundle_threat_event_1	'Heaven and earth shall shatter, the throne shall crumble, the Great Bastion shall be broken, and all things shall turn to ash'? You silently mull over these words...	false
+effect_bundles_localised_title_wh3_fuyuanshan_effect_bundle_threat_event_1	Prophecy of Doom	false
+effect_bundles_localised_description_wh3_fuyuanshan_effect_bundle_threat_event_2	That baleful star spins endlessly before your eyes, as if it were the gaze of a blood-red god...	false
+effect_bundles_localised_title_wh3_fuyuanshan_effect_bundle_threat_event_2	Crimson Baleful Star	false
+incidents_localised_title_wh3_main_incident_cth_fuyuanshan_bastion_threat_decrease	Chaos Power Wanes	false
+incidents_localised_description_wh3_main_incident_cth_fuyuanshan_bastion_threat_decrease	A Chaos army has been defeated, easing the pressure beyond the Great Bastion.	false
 campaign_payload_ui_details_description_dummy_wh3_main_incident_cth_fuyuanshan_bastion_threat_decrease	Great Bastion Threat: -5%	false
-incidents_localised_title_wh3_main_incident_cth_fuyuanshan_bastion_threat_increase	Rise of Chaos	false
-incidents_localised_description_wh3_main_incident_cth_fuyuanshan_bastion_threat_increase	After a brutal and bloody struggle, a powerful leader has once again risen among the Kurgan hordes. Now, his army is gathering, and he yearns to achieve feats surpassing those of Asavar Kul.	false
+incidents_localised_title_wh3_main_incident_cth_fuyuanshan_bastion_threat_increase	Chaos Ascendant	false
+incidents_localised_description_wh3_main_incident_cth_fuyuanshan_bastion_threat_increase	After brutal and bloody strife, a powerful new leader has once again risen from the Kurgan steppes. Now his hordes are massing, and he burns with ambition to surpass the deeds of Azazel Kul.	false
 campaign_payload_ui_details_description_dummy_wh3_main_incident_cth_fuyuanshan_bastion_threat_increase	Great Bastion Threat: +50%	false
-effects_description_wh3_main_cth_fuyuanshan_bastion_threat_mod	Great Bastion Threat: %+%n per region per turn within the province\\nThis effect only applies to the Northern Lands (including: The Sulphur Road, The Warpstone Desert, The Celestial Lake Provinces, The Eastern Steppes, and The Badlands)	false
+effects_description_wh3_main_cth_fuyuanshan_bastion_threat_mod	Great Bastion Threat: %+n% per region per turn in the province\\nThis effect only applies in the Northern Provinces (including Sulphur Road, Rockpeak Plains, Capital Circuit, Eastern Steppes, and the Red Wastes)	false
 effect_bundles_localised_title_wh3_main_cth_fuyuanshan_bastion_threat_ui	Great Bastion Threat	false
-effect_bundles_localised_description_wh3_main_cth_fuyuanshan_bastion_threat_ui	Any attempt to reunite the forces of Grand Cathay will arouse the vigilance of Chaos. Occupying each Cathayan province capital will increase the Great Bastion threat by 2% per turn.\\n\\nWhen the threat level is too high, appropriately using the Compass of the Wu Xing (pointing towards the Great Bastion) and the Dragon General's Edict can effectively reduce the threat.	false
+effect_bundles_localised_description_wh3_main_cth_fuyuanshan_bastion_threat_ui	Any attempt to reunify Cathay's strength draws the wary attention of Chaos. Each Cathayan provincial capital captured increases Great Bastion Threat by +2% per turn.\\n\\nWhen the threat level grows too high, judicious use of the Five Phases Compass (directed at the Great Bastion) and the Dragon General's Decree can effectively reduce the threat.	false
 effects_description_wh3_main_cth_fuyuanshan_bastion_threat_ui	Great Bastion Threat: %+n% per turn	false

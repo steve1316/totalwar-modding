@@ -1,53 +1,53 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_mount_ancillary.loc		
-ancillaries_onscreen_name_ghs_cth_anc_hongying_weapon_weapon_blade_of_moonfire	Purifying Moon Blade	false
-ancillaries_colour_text_ghs_cth_anc_hongying_weapon_weapon_blade_of_moonfire	A powerful weapon brought from the Moon Empress' residence, the blade is as pure as the moonlight, with flowing obsidian flames that can easily dispel magical enchantments on opponents' weapons.	false
-ancillaries_onscreen_name_ghs_cth_anc_hongying_enchanted_item_token_of_empress	Laurel Writ	false
-ancillaries_colour_text_ghs_cth_anc_hongying_enchanted_item_token_of_empress	The Gui Po Division is divided into three guards, with only their leaders holding this writ. Hong Ying's "Shadow Crow Guard" is tasked with intelligence gathering and assassination, representing the direct will of the Moon Empress.	false
-ancillaries_onscreen_name_ghs_cth_anc_hongying_tailsman_mask_of_shadow	Shadow Dragon Mask	false
-ancillaries_colour_text_ghs_cth_anc_hongying_tailsman_mask_of_shadow	Legend claims this mask was sculpted by the Shadow Dragon itself. Its wearer can blend into shadows and move with the wind on the battlefield, striking down generals with deadly precision.	false
-ancillaries_onscreen_name_ghs_cth_anc_hongying_armour_crow_cloak	Moon Crow Feather Robe	false
-ancillaries_colour_text_ghs_cth_anc_hongying_armour_crow_cloak	This feather-light robe symbolizes the leadership of the "Shadow Crow Guard" and is the only authority, aside from the Yuanbo, capable of mobilizing the Onyx Crowmen directly.	false
-ancillaries_onscreen_name_ghs_cth_anc_hongying_arcane_item_flame_of_ink	Obsidian Flowing Flame	false
-ancillaries_colour_text_ghs_cth_anc_hongying_arcane_item_flame_of_ink	Hong Ying possesses unparalleled affinity with the Yin winds of magic. His "staff" is the obsidian flames on his blade, transforming to channel magic or strike down foes as needed.	false
-ancillaries_onscreen_name_ghs_cth_anc_hongying_mount_bird	"Shadow Grace"	false
-ancillaries_colour_text_ghs_cth_anc_hongying_mount_bird	"Shadow Grace" is a Taiyue Luan gifted by the Moon Empress to Hong Ying. It is said to be the Moon Empress' apparition. The Onyx Crowmen respond to its call, channeling the winds of Yin and becoming legendary birds of prey.	false
+ancillaries_onscreen_name_ghs_cth_anc_hongying_weapon_weapon_blade_of_moonfire	Blade of Pure Moon	false
+ancillaries_colour_text_ghs_cth_anc_hongying_weapon_weapon_blade_of_moonfire	A powerful weapon that Shadowdance brought back from the Moon Empress's residence. Its blade is as bright and clear as the moon, with flowing ink-jade like flame upon it that can easily dispel the magic bound to an opponent's weapon.	false
+ancillaries_onscreen_name_ghs_cth_anc_hongying_enchanted_item_token_of_empress	Edict of the Laurel	false
+ancillaries_colour_text_ghs_cth_anc_hongying_enchanted_item_token_of_empress	The Cassia Confidants are divided into three guards, and only the overseer of each guard may hold this token. Hong Ying's "Shadow Crow Guard" bears the duty of gathering intelligence across the realm and carrying out assassinations and arrests—showing this token is as if the Moon Empress herself had arrived.	false
+ancillaries_onscreen_name_ghs_cth_anc_hongying_tailsman_mask_of_shadow	Shadow Dragon Jade	false
+ancillaries_colour_text_ghs_cth_anc_hongying_tailsman_mask_of_shadow	Legend holds that this mask was carved by the Shadow Dragon itself. Its wearer can not only conceal their presence, but move with the wind upon the battlefield, vanishing into shadow to strike down enemy commanders.	false
+ancillaries_onscreen_name_ghs_cth_anc_hongying_armour_crow_cloak	Cloak of Crow Feathers	false
+ancillaries_colour_text_ghs_cth_anc_hongying_armour_crow_cloak	This cloak, light as swan's down, is the symbol of the overseer who commands the "Shadow Crow Guard"—it is also the sole means, besides Yuan Bo himself, of directly commanding the Agate Crowmen.	false
+ancillaries_onscreen_name_ghs_cth_anc_hongying_arcane_item_flame_of_ink	Ink Jade Flame	false
+ancillaries_colour_text_ghs_cth_anc_hongying_arcane_item_flame_of_ink	Hong Ying possesses an uncanny affinity for the Yin winds of magic. His "staff" is the ink-jade flame upon his blade; when he must channel the winds of magic or cut down a target, the ink flame rises and shifts form.	false
+ancillaries_onscreen_name_ghs_cth_anc_hongying_mount_bird	[Shadowdance] Yue Luan	false
+ancillaries_colour_text_ghs_cth_anc_hongying_mount_bird	[Shadowdance] is the Great Moon Luan bestowed upon Hong Ying by the Moon Empress herself. Rumor holds that this bird is the Moon Empress's own phantom; only by hearing its cry can the Black Jade Crow Wardens commune with the Yin wind and transform into the Yue Zhuo.	false
 ancillaries_onscreen_name_ghs_old_blood_giant_ripperdactyl	Ancient Ripperdactyl	false
-ancillaries_colour_text_ghs_old_blood_giant_ripperdactyl	The largest and most bloodthirsty of its kind, its razor-sharp talons decapitate enemies, leaving a trail of viscera and severed limbs in its wake.	false
+ancillaries_colour_text_ghs_old_blood_giant_ripperdactyl	The largest and most bloodthirsty of ripperdactyls, their razor-sharp claws can decapitate enemies, and their furious assaults leave scattered entrails and severed limbs in their wake.	false
 ancillaries_onscreen_name_ghs_scar_veteran_giant_ripperdactyl	Ancient Ripperdactyl	false
-ancillaries_colour_text_ghs_scar_veteran_giant_ripperdactyl	The largest and most bloodthirsty of its kind, its razor-sharp talons decapitate enemies, leaving a trail of viscera and severed limbs in its wake.	false
+ancillaries_colour_text_ghs_scar_veteran_giant_ripperdactyl	The largest and most bloodthirsty of ripperdactyls, their razor-sharp claws can decapitate enemies, and their furious assaults leave scattered entrails and severed limbs in their wake.	false
 ancillaries_onscreen_name_ksl_cha_boris_mount_elemental_bear	Ursun's Winter	false
-ancillaries_colour_text_ksl_cha_boris_mount_elemental_bear	A statue of the Bear God mounted on a colossal frost construct, reigning over cold and death, inseparably linked to Kislev and Ursun's divine favor.	false
+ancillaries_colour_text_ksl_cha_boris_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	false
 ancillaries_onscreen_name_ksl_cha_katarin_mount_elemental_bear	Ursun's Winter	false
-ancillaries_colour_text_ksl_cha_katarin_mount_elemental_bear	A statue of the Bear God mounted on a colossal frost construct, reigning over cold and death, inseparably linked to Kislev and Ursun's divine favor.	false
+ancillaries_colour_text_ksl_cha_katarin_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	false
 ancillaries_onscreen_name_ksl_cha_kostaltyn_mount_elemental_bear	Ursun's Winter	false
-ancillaries_colour_text_ksl_cha_kostaltyn_mount_elemental_bear	A statue of the Bear God mounted on a colossal frost construct, reigning over cold and death, inseparably linked to Kislev and Ursun's divine favor.	false
-ancillaries_onscreen_name_tmb_dragon_king	Tomb Giant Dragon	false
-ancillaries_colour_text_tmb_dragon_king	The pinnacle of craftsmanship, perfected by Tomb Technicians over generations on a massive obsidian slab. It now soars above the pyramids, carrying the Tomb Kings in defiance of the heavens.	false
-ancillaries_onscreen_name_tmb_eagle_mage1	Ulatip Vulture	false
-ancillaries_colour_text_tmb_eagle_mage1	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
-ancillaries_onscreen_name_tmb_eagle_mage2	Ulatip Vulture	false
-ancillaries_colour_text_tmb_eagle_mage2	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
-ancillaries_onscreen_name_tmb_eagle_mage3	Ulatip Vulture	false
-ancillaries_colour_text_tmb_eagle_mage3	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
-ancillaries_onscreen_name_tmb_eagle_mage4	Ulatip Vulture	false
-ancillaries_colour_text_tmb_eagle_mage4	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
+ancillaries_colour_text_ksl_cha_kostaltyn_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	false
+ancillaries_onscreen_name_tmb_dragon_king	Tomb Dragon	false
+ancillaries_colour_text_tmb_dragon_king	Tomb Engineers labored for generations upon a single massive block of obsidian, sculpting the perfect construct that once crowned the peak of the Kings' pyramid. Now it bears the Tomb Kings aloft, looking down upon the clouds.	false
+ancillaries_onscreen_name_tmb_eagle_mage1	Ulatuan Vulture	false
+ancillaries_colour_text_tmb_eagle_mage1	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
+ancillaries_onscreen_name_tmb_eagle_mage2	Ulatuan Vulture	false
+ancillaries_colour_text_tmb_eagle_mage2	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
+ancillaries_onscreen_name_tmb_eagle_mage3	Ulatuan Vulture	false
+ancillaries_colour_text_tmb_eagle_mage3	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
+ancillaries_onscreen_name_tmb_eagle_mage4	Ulatuan Vulture	false
+ancillaries_colour_text_tmb_eagle_mage4	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
 ancillaries_onscreen_name_tmb_elephant_necrotect	Obsidian War Elephant	false
-ancillaries_colour_text_tmb_elephant_necrotect	Awakened Tomb Technicians ride these majestic creations, their solemn banners heralding awe and fear across the battlefield.	false
-ancillaries_onscreen_name_hef_cha_alastar_mount_war_lion	Alastar's War Lion	true
-ancillaries_colour_text_hef_cha_alastar_mount_war_lion	Regardless of the enemy's identity or danger, Alastar charges courageously atop his war lion, earning the pride of the Lion Fathers.	true
+ancillaries_colour_text_tmb_elephant_necrotect	The ancient engineers are roused from their intoxication with carving war elephants, once more mounting their solemn and resplendent palanquin, banners fluttering as armies scatter before them.	false
+ancillaries_onscreen_name_hef_cha_alastar_mount_war_lion	Alastar the War Lion	true
+ancillaries_colour_text_hef_cha_alastar_mount_war_lion	Whatever the identity or danger of the foe, Alastar rides his war lion into a charge that would make the Lion God himself proud.	true
 ancillaries_onscreen_name_cody_anc_mount_dwf_malakai_makaisson_thunderbarge	Spirit of Grungni	false
-ancillaries_colour_text_cody_anc_mount_dwf_malakai_makaisson_thunderbarge	The Spirit of Grungni is a thunder barge crafted by the Slayer Engineer Malakai Makaisson.	false
-ancillaries_onscreen_name_slann_light	Ancient Stegadon (God Engine)	false
-ancillaries_onscreen_name_slann_life	Ancient Stegadon (God Engine)	false
-ancillaries_onscreen_name_slann_high	Ancient Stegadon (God Engine)	false
-ancillaries_onscreen_name_slann_heaven	Ancient Stegadon (God Engine)	false
-ancillaries_onscreen_name_slann_fire	Ancient Stegadon (God Engine)	false
-ancillaries_onscreen_name_slann_campagin	Ancient Stegadon (God Engine)	false
-ancillaries_colour_text_slann_light	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	false
-ancillaries_colour_text_slann_life	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	false
-ancillaries_colour_text_slann_high	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	false
-ancillaries_colour_text_slann_heaven	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	false
-ancillaries_colour_text_slann_fire	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	false
-ancillaries_colour_text_slann_campagin	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	false
-ancillaries_onscreen_name_ghs_chd_mon_kdaai_destroyer_conqueror	K’daai Conqueror	false
+ancillaries_colour_text_cody_anc_mount_dwf_malakai_makaisson_thunderbarge	The Spirit of Grungni is a thunderbarge crafted by the Dwarf Slayer Engineer Ma La Kai Makaisson.	false
+ancillaries_onscreen_name_slann_light	Ancient Stegadon (Engine of the Gods)	false
+ancillaries_onscreen_name_slann_life	Ancient Stegadon (Engine of the Gods)	false
+ancillaries_onscreen_name_slann_high	Ancient Stegadon (Engine of the Gods)	false
+ancillaries_onscreen_name_slann_heaven	Ancient Stegadon (Engine of the Gods)	false
+ancillaries_onscreen_name_slann_fire	Ancient Stegadon (Engine of the Gods)	false
+ancillaries_onscreen_name_slann_campagin	Ancient Stegadon (Engine of the Gods)	false
+ancillaries_colour_text_slann_light	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	false
+ancillaries_colour_text_slann_life	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	false
+ancillaries_colour_text_slann_high	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	false
+ancillaries_colour_text_slann_heaven	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	false
+ancillaries_colour_text_slann_fire	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	false
+ancillaries_colour_text_slann_campagin	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	false
+ancillaries_onscreen_name_ghs_chd_mon_kdaai_destroyer_conqueror	K'daai Conqueror	false

@@ -1,109 +1,113 @@
 key	text	tooltip
 #Loc;1;text/@@@DEER24Cathay/db/wwd_traits.loc		
-character_trait_levels_explanation_text_defeated_trait_yunxiang	Unlock method: Defeat Yun Xiang.	false
-character_trait_levels_colour_text_defeated_trait_yunxiang	His might, his celestial army, ultimately fell to a greater force. The legend of the Dragon God’s champion ends here.	false
-character_trait_levels_onscreen_name_defeated_trait_yunxiang	Fall of the Heavens.	false
-character_trait_levels_explanation_text_defeated_trait_guanzimo	Unlock method: Defeat Guan Zimo.	false
-character_trait_levels_colour_text_defeated_trait_guanzimo	The young dragon might have once parted clouds and stirred waves, but now she can no longer make a splash.	false
-character_trait_levels_onscreen_name_defeated_trait_guanzimo	Calm After the Storm.	false
-character_trait_levels_explanation_text_defeated_trait_yiqing	Unlock method: Defeat Yi Qing.	false
-character_trait_levels_colour_text_defeated_trait_yiqing	Now that the new star of Cathay has fallen, how much longer can the empire behind him endure?	false
-character_trait_levels_onscreen_name_defeated_trait_yiqing	Beyond the Heavens.	false
-character_trait_levels_explanation_text_defeated_trait_duanzhu	Unlock method: Defeat Qiao Xiao.	false
-character_trait_levels_colour_text_defeated_trait_duanzhu	"Look at these glittering divine weapons—they all belong to me now..."	false
-character_trait_levels_onscreen_name_defeated_trait_duanzhu	Blades of Unity.	false
-character_trait_levels_colour_text_defeated_trait_zhaoqi	Trust me, without their leader, these temporarily unified forces will crumble in an instant.	false
-character_trait_levels_onscreen_name_defeated_trait_zhaoqi	Mob of Rabble.	false
-character_trait_levels_explanation_text_defeated_trait_zhaoqi	Unlock method: Defeat Zhao Qi.	false
-character_trait_levels_colour_text_defeated_trait_lvqiling	In the past, she soared in her final moments; today, she falls into the abyss at White Gate.	false
-character_trait_levels_onscreen_name_defeated_trait_lvqiling	Deadlock at White Gate.	false
-character_trait_levels_explanation_text_defeated_trait_lvqiling	Unlock method: Defeat Xin Qi.	false
-character_trait_levels_colour_text_defeated_trait_yuchigong	The guardian of the Southern Frontier can no longer protect his celestial empire.	false
-character_trait_levels_onscreen_name_defeated_trait_yuchigong	Shattered Lands.	false
-character_trait_levels_explanation_text_defeated_trait_yuchigong	Unlock method: Defeat Duan Wei.	false
-character_trait_levels_explanation_text_defeated_trait_hanxin	Unlock method: Defeat Han Cheng.	false
-character_trait_levels_colour_text_defeated_trait_hanxin	Han Cheng? His Celestial Treasure Sage and his rebellion are mere amusements in the eyes of the Dragon God.	false
-character_trait_levels_onscreen_name_defeated_trait_hanxin	The Dragon Remains.	false
-character_trait_levels_colour_text_defeated_trait_nicheng	No tyrant, no matter how cruel, can plunge the world into eternal darkness.	false
-character_trait_levels_onscreen_name_defeated_trait_nicheng	Light the Night.	false
-character_trait_levels_colour_text_defeated_trait_yushihujun	Jade bones are not eternal; how long can they linger in this realm?	false
-character_trait_levels_onscreen_name_defeated_trait_yushihujun	Wheel of Fate.	false
-character_trait_levels_explanation_text_defeated_trait_nicheng	Unlock method: Defeat Ye Sheng.	false
-character_trait_levels_explanation_text_defeated_trait_yushihujun	Unlock method: Defeat Jin Xiao.	false
-character_trait_levels_onscreen_name_defeated_trait_qinqiong	Fate Sealed.	false
-character_trait_levels_explanation_text_defeated_trait_qinqiong	Your fate is not decided by the heavens... but by me.	false
-character_trait_levels_colour_text_wwd_trait_kehan	The kings of the northern deserts bow at His feet, for the destruction of Cathay is His destined path.	false
-character_trait_levels_onscreen_name_wwd_trait_kehan	"Scourge of the Gods"	false
-character_trait_levels_colour_text_wwd_trait_yiyongjun	This commander is one of the leaders of the Hedong Volunteer Army, who rose up alongside the peasant army and continues to fight to this day.	false
-character_trait_levels_onscreen_name_wwd_trait_yiyongjun	Volunteer Army Leader	false
-character_trait_levels_colour_text_wwd_trait_bianjun	To the people of Cathay, the lands north of the Great Bastion represent chaos and death. But for the frontier army stationed beyond, the endless wars have forged chaos and death into a way of life.	false
-character_trait_levels_onscreen_name_wwd_trait_bianjun	Frontier Army of the Great Bastion	false
-character_trait_levels_colour_text_wwd_trait_tianzhou	Vast fleets of Celestial Ships are stationed across the empire. Each fleet is typically divided into three squadrons, with a commander leading each, enabling precise execution of complex battlefield tactics.	false
-character_trait_levels_onscreen_name_wwd_trait_tianzhou	Celestial Ship Commander	false
-character_trait_levels_colour_text_wwd_trait_dafo	When you see the Lord of the Heavenly Palace, why do you not bow?	false
-character_trait_levels_onscreen_name_wwd_trait_dafo	"Great Buddha of the Setting Sun"	false
-character_trait_levels_colour_text_wwd_trait_feijiang	Feng Yaochu served under Zhao Ming the Iron Dragon as a cavalry commander. Renowned for his unmatched bravery, he was later promoted to General of the Middle Army and titled Marquis of Taizi, earning the moniker "Flying General".	false
-character_trait_levels_onscreen_name_wwd_trait_feijiang	Flying General	false
-character_trait_levels_colour_text_wwd_trait_ershibajiangxing	"During the Southern Peace, the rulers of the mountains hosted a grand feast for the army. Twenty-eight star generals were named, their resolve towering like mountains, their followers as countless as the stars. These generals achieved unparalleled feats, becoming the backbone of the empire, whether at court or on the battlefield."	false
-character_trait_levels_onscreen_name_wwd_trait_ershibajiangxing	Twenty-Eight Star Generals	false
-character_trait_levels_colour_text_wwd_trait_yumianshu	The official removed his veil, revealing whiskers and the face of a giant rat. The matron fainted as the great rat seized the bride, summoned a jade wind, and vanished into the night.	false
-character_trait_levels_onscreen_name_wwd_trait_yumianshu	"King of the Jade Wind"	false
-character_trait_levels_explanation_text_defeated_trait_yangjian	Unlock method: Defeat Hou Qian.	false
-character_trait_levels_colour_text_defeated_trait_yangjian	Legend has it that Hou Qian acquired his artifacts from the old sage of Kunlan. Since he no longer needs them, they are mine now.	false
-character_trait_levels_onscreen_name_defeated_trait_yangjian	Relics Reclaimed	false
-character_trait_levels_explanation_text_defeated_trait_huangfengdasheng	Unlock method: Defeat Huangfeng Dasheng.	false
-character_trait_levels_colour_text_defeated_trait_huangfengdasheng	Listen closely—the wind carries the sound of unfulfilled desires.	false
-character_trait_levels_onscreen_name_defeated_trait_huangfengdasheng	Evil Wind Silences Banners	false
-character_trait_levels_colour_text_wwd_trait_panwanggonggu	The generals of the Shen Ce Fu immediately responded, dispatching armies to suppress the rebellion. Three columns advanced, only to be defeated by the King of Nanyang. General Tianxian was surrounded by "Lord Xuanhuan" at Gravefield and pierced by countless arrows; General Mingjing was deceived by "Marquis Jingji" into a banquet where his tendons were severed; General Hupu, unmatched in battle, was blinded by a spear thrust from "Marquis Wuqiu". The strategists of Shen Ce Fu were helpless as the King of Nanyang seemed to anticipate their every move, crushing the generals who once swept the north.	false
-character_trait_levels_onscreen_name_wwd_trait_panwanggonggu	Three Tiger Ministers	false
-character_trait_levels_colour_text_wwd_trait_dongtujieshi	The emissaries appointed by the tribal leaders will remain stationed in the empire, acting as vanguard agents for other Order factions.	false
+character_trait_levels_explanation_text_defeated_trait_yunxiang	How to obtain: Defeat Yun Xiang	false
+character_trait_levels_colour_text_defeated_trait_yunxiang	His might, his heavenly host - in the end, they fell before an even greater power. The legend of the Dragon God's Champion ends here.	false
+character_trait_levels_onscreen_name_defeated_trait_yunxiang	The Fall of the Heavens	false
+character_trait_levels_explanation_text_defeated_trait_guanzimo	How to obtain: Defeat Guan Zi Mo	false
+character_trait_levels_colour_text_defeated_trait_guanzimo	The Little Dragon Scale once parted clouds and stirred waves, but she can raise no more storms now.	false
+character_trait_levels_onscreen_name_defeated_trait_guanzimo	Calming the Waves	false
+character_trait_levels_explanation_text_defeated_trait_yiqing	How to obtain: Defeat Yi Qing	false
+character_trait_levels_colour_text_defeated_trait_yiqing	Now that Zhen Dan's rising star has fallen, how much longer can the empire behind him endure?	false
+character_trait_levels_onscreen_name_defeated_trait_yiqing	Beyond the Sky, More Sky	false
+character_trait_levels_explanation_text_defeated_trait_duanzhu	How to obtain: Defeat Qiao Xiao	false
+character_trait_levels_colour_text_defeated_trait_duanzhu	'Look at all these gleaming divine weapons - they're all mine now...'	false
+character_trait_levels_onscreen_name_defeated_trait_duanzhu	Ten Thousand Blades Return to the Source	false
+character_trait_levels_colour_text_defeated_trait_zhaoqi	Trust me, once the leader falls, this temporarily gathered strength will crumble to pieces in an instant.	false
+character_trait_levels_onscreen_name_defeated_trait_zhaoqi	A Rabble of Ragtag Men	false
+character_trait_levels_explanation_text_defeated_trait_zhaoqi	How to obtain: Defeat Zhao Qi	false
+character_trait_levels_colour_text_defeated_trait_lvqiling	Once she charged toward the blazing sun at death's door; now she falls into the abyss at the White Gate.	false
+character_trait_levels_onscreen_name_defeated_trait_lvqiling	Deadlock at the White Gate	false
+character_trait_levels_explanation_text_defeated_trait_lvqiling	How to obtain: Defeat Xin Qi	false
+character_trait_levels_colour_text_defeated_trait_yuchigong	The Door God of the Southern Frontier can no longer protect his Celestial Court.	false
+character_trait_levels_onscreen_name_defeated_trait_yuchigong	Mountains and Rivers Broken	false
+character_trait_levels_explanation_text_defeated_trait_yuchigong	How to obtain: Defeat Duan Wei	false
+character_trait_levels_explanation_text_defeated_trait_hanxin	How to obtain: Defeat Han Cheng	false
+character_trait_levels_colour_text_defeated_trait_hanxin	Han Cheng? His Sovereign Qing Bao and the rebellion he stirred up were nothing but a sideshow before the Dragon God.	false
+character_trait_levels_onscreen_name_defeated_trait_hanxin	The Dragon Remains Here	false
+character_trait_levels_colour_text_defeated_trait_nicheng	No matter how cruel the tyrant, he could not plunge the world into eternal darkness.	false
+character_trait_levels_onscreen_name_defeated_trait_nicheng	Lighting Up the Night	false
+character_trait_levels_colour_text_defeated_trait_yushihujun	Jade bones are not primal vitality - how could they linger between heaven and earth forever?	false
+character_trait_levels_onscreen_name_defeated_trait_yushihujun	A Fine Reincarnation	false
+character_trait_levels_explanation_text_defeated_trait_nicheng	How to obtain: Defeat Ye Sheng	false
+character_trait_levels_explanation_text_defeated_trait_yushihujun	How to obtain: Defeat Jin Xiao	false
+character_trait_levels_onscreen_name_defeated_trait_qinqiong	Fate Already Sealed	false
+character_trait_levels_explanation_text_defeated_trait_qinqiong	Your fate is not decided by heaven... but by me.	false
+character_trait_levels_colour_text_wwd_trait_kehan	The kings of the northern desert prostrate before him; the destruction of Zhen Dan is his heavenly path.	false
+character_trait_levels_onscreen_name_wwd_trait_kehan	[Scourge of the Gods]	false
+character_trait_levels_colour_text_wwd_trait_yiyongjun	This general is one of the leaders of the righteous armies of He Dong, who rose up alongside the peasant armies and have fought on to this day.	false
+character_trait_levels_onscreen_name_wwd_trait_yiyongjun	Leader of the Righteous Army	false
+character_trait_levels_colour_text_wwd_trait_bianjun	To the people of Zhen Dan, the world beyond Chang Yuan means distant chaos and death. But for the Frontier Army who have long fought beyond the wall, the endless war has forged chaos and death into the very fabric of their lives.	false
+character_trait_levels_onscreen_name_wwd_trait_bianjun	Chang Yuan Frontier Army	false
+character_trait_levels_colour_text_wwd_trait_tianzhou	Massive Sky Junk fleets are stationed throughout the land. Each fleet is generally divided into three squadrons, each commanded by a separate commandant, allowing complex tactics to be executed with agility on the battlefield.	false
+character_trait_levels_onscreen_name_wwd_trait_tianzhou	Commander of the Sky Junks	false
+character_trait_levels_colour_text_wwd_trait_dafo	Having arrived at the Heavenly Palace, why not pay homage?	false
+character_trait_levels_onscreen_name_wwd_trait_dafo	[Great Buddha Honghi]	false
+character_trait_levels_colour_text_wwd_trait_feijiang	Feng Yao first served as a cavalry commandant of the Western Qiang, but his repeated military achievements and unmatched valor - a force no army of ten thousand could withstand - led the eighth-generation lord to hail him as 'the foremost man beyond the pass in this age.' He was promoted to Household Cavalry Commander and enfeoffed as Marquis of Tai Zi, known to all as the Tiger that Shakes the Desert.	false
+character_trait_levels_onscreen_name_wwd_trait_feijiang	Tiger that Shakes the Desert	false
+character_trait_levels_colour_text_wwd_trait_ershibajiangxing	'With the Southern Range at peace, Li Dao held a grand feast for the Three Armies, rewarding the meritorious ministers and establishing the Twenty-Eight Generals' Stars, saying: "The hearts of you all rise like mountains; with the stars following one another, what could stand against us even amid a million troops!" All the generals achieved deeds unmatched in an age, and Zhu Long relied upon them as his right hand - sharing his carriage when going forth, sharing his seat when returning.'	false
+character_trait_levels_onscreen_name_wwd_trait_ershibajiangxing	The Twenty-Eight Generals' Stars	false
+character_trait_levels_colour_text_wwd_trait_yumianshu	The official lifted his veil, revealing a few whiskers, and craned his head forward - it was a rat larger than a man! The bride's mother fainted from shock at the sight, and the great rat, having seized the bride, vanished on a gust of jade wind.	false
+character_trait_levels_onscreen_name_wwd_trait_yumianshu	[Great King of Jade Wind]	false
+character_trait_levels_explanation_text_defeated_trait_yangjian	How to obtain: Defeat Hou Qian	false
+character_trait_levels_colour_text_defeated_trait_yangjian	Legend says Hou Qian obtained a set of treasures from the Old Immortal of Kun Lan. Since he has no more use for them, they're mine now.	false
+character_trait_levels_onscreen_name_defeated_trait_yangjian	Summoning the Treasured Weapon	false
+character_trait_levels_explanation_text_defeated_trait_huangfengdasheng	How to obtain: Defeat Great Sage Yellow Wind	false
+character_trait_levels_colour_text_defeated_trait_huangfengdasheng	Listen - what the wind carries is the sound of desires that can never be fulfilled.	false
+character_trait_levels_onscreen_name_defeated_trait_huangfengdasheng	The Wicked Wind Bows the Banners for a Time	false
+character_trait_levels_colour_text_wwd_trait_panwanggonggu	The generals of the God-Strategy Bureau responded at once, dispatching troops to suppress the rebel legions. Three armies advanced deep into enemy territory, only to be crushed one by one by the Prince of Nan Yang: General Tian Xian was surrounded at the burial plains by the [Duke of Xuan Huan], pierced through the heart by ten thousand arrows; General Ming Jing was lured to a mansion by the [Marquis of Jing Ji] and had his five tendons severed at the banquet table; General Hu Bu, unstoppable amid the ranks, had his eye pierced by a single spear thrust from the [Marquis of Wu Qu]. The strategists of the God-Strategy Bureau were left helpless, as the Prince of Nan Yang seemed to see through all their plans - the very meritorious officer who once swept the northern frontier clean now sought to sweep away the Dragon Emperor's generals one by one.	false
+character_trait_levels_onscreen_name_wwd_trait_panwanggonggu	Minister of the Three Tigers	false
+character_trait_levels_colour_text_wwd_trait_dongtujieshi	Plenipotentiary envoys appointed by the leaders of the various peoples will remain stationed in the Empire, serving as a vanguard to assist the other Order factions.	false
 character_trait_levels_onscreen_name_wwd_trait_dongtujieshi	Faction Representative	false
-character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_k	Khorne’s Gatekeeper	false
-character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_t	Tzeentch’s Gatekeeper	false
-character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_s	Slaanesh’s Gatekeeper	false
-character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_n	Nurgle’s Gatekeeper	false
-character_trait_levels_onscreen_name_wwd_trait_panjun_null	Rebel General	false
-character_trait_levels_colour_text_wwd_trait_protecter	Commanders are responsible for the defense of critical regions, selected from the battle-hardened generals of Cathay.	false
+character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_k	Gatekeeper of Khorne	false
+character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_t	Gatekeeper of Tzeentch	false
+character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_s	Gatekeeper of Slaanesh	false
+character_trait_levels_onscreen_name_wwd_trait_zhongyan_boss_n	Gatekeeper of Nurgle	false
+character_trait_levels_onscreen_name_wwd_trait_panjun_null	Nan Yang Warrior	false
+character_trait_levels_colour_text_wwd_trait_protecter	The commandant is responsible for the defense of a critical region, a post held by a renowned Zhen Dan general who has weathered a hundred battles.	false
 character_trait_levels_onscreen_name_wwd_trait_protecter	Commander	false
-character_trait_levels_colour_text_wwd_trait_order_protecter	Order Alliance, assemble!	false
-character_trait_levels_onscreen_name_wwd_trait_order_protecter	Order Coalition	false
-character_trait_levels_colour_text_wwd_trait_huren	"Right Wise King" Wuda Ruodi greatly unified the southern tribes of the steppes, introduced many technologies and texts from Cathay, advancing the Sinicization of the nomadic regimes. He maintained close ties with the frontier army, and together they launched numerous campaigns against the northern Chaos tribes.	false
-character_trait_levels_onscreen_name_wwd_trait_huren	Right Wise King	false
-character_trait_levels_colour_text_defeated_trait_jinfo	He spent his life battling in the void, but now he can return home.	false
-character_trait_levels_onscreen_name_defeated_trait_jinfo	Return to Homeland	false
-character_trait_levels_explanation_text_defeated_trait_jinfo	Unlock method: Defeat Xue Ding.	false
-character_trait_levels_onscreen_name_wwd_trait_provincial_reinforcements	Provincial Reinforcements	false
-character_trait_levels_colour_text_wwd_trait_provincial_reinforcements	Each province arms its own, marching to war for hearth and home—today is the day!	false
-character_trait_levels_colour_text_defeated_trait_taishi	The Grand Preceptor was right—see, the fish came after all.	false
-character_trait_levels_onscreen_name_defeated_trait_taishi	Bait Taken	false
-character_trait_levels_explanation_text_defeated_trait_taishi	Acquired by: Defeating Jiang Wang	false
-character_trait_levels_onscreen_name_wwd_trait_movement_debuff	Slow Down	false
-character_trait_levels_colour_text_wwd_trait_movement_debuff	It's all for your own good...	false
-character_trait_levels_onscreen_name_wwd_trait_fangwenzi_I	[[col:white]]Unwritten Paths[[/col]]	false
-character_trait_levels_colour_text_wwd_trait_fangwenzi_I	You wish to change the story's course? Very well—if it’s you, perhaps it’s possible...	false
+character_trait_levels_colour_text_wwd_trait_order_protecter	This man has weathered a hundred battles and witnessed countless legends.	false
+character_trait_levels_onscreen_name_wwd_trait_order_protecter	Veteran of Many Battles	false
+character_trait_levels_colour_text_wwd_trait_huren	[Right Worthy Prince] Wu Daruoti brought harmony to the tribes of the southern desert, uniting the hundred peoples as easily as moving his own limbs. He exchanged Zhen Dan's fine silks for the customs of the steppe and spread the Celestial Court's teachings to reform old ways. He further forged an unbreakable pact with the garrison troops of the frontier passes, joining forces on several northern campaigns against the Chaos tribes, razing their strongholds and clearing the northern desert.	false
+character_trait_levels_onscreen_name_wwd_trait_huren	Right Worthy Prince	false
+character_trait_levels_colour_text_defeated_trait_jinfo	He spent his whole life at war beyond the world's edge; now, at last, he returns home.	false
+character_trait_levels_onscreen_name_defeated_trait_jinfo	The Prodigal Returns	false
+character_trait_levels_explanation_text_defeated_trait_jinfo	How to obtain: Defeat Xue Ding	false
+character_trait_levels_onscreen_name_wwd_trait_provincial_reinforcements	Provincial Soldiers	false
+character_trait_levels_colour_text_wwd_trait_provincial_reinforcements	Bringing their own arms and provisions, they rush to the battlefield to defend hearth and home - this very day!	false
+character_trait_levels_colour_text_defeated_trait_taishi	The Grand Tutor was right - look, here comes the fish.	false
+character_trait_levels_onscreen_name_defeated_trait_taishi	Let the Willing Take the Bait	false
+character_trait_levels_explanation_text_defeated_trait_taishi	How to obtain: Defeat Jiang Wang	false
+character_trait_levels_onscreen_name_wwd_trait_movement_debuff	Slow Down There	false
+character_trait_levels_colour_text_wwd_trait_movement_debuff	All of this... was for you.	false
+character_trait_levels_onscreen_name_wwd_trait_fangwenzi_I	[[col:white]]Unforeseen[[/col]]	false
+character_trait_levels_colour_text_wwd_trait_fangwenzi_I	Trying to bend the course of the story? Very well - you've proven that even fate cannot stop you, so long as you will it.	false
 character_trait_levels_onscreen_name_wwd_trait_fangwenzi_II	[[col:white]]The Weight of Miracles[[/col]]	false
-character_trait_levels_colour_text_wwd_trait_fangwenzi_II	"You are not alone... even mortals walk with you."	false
-character_trait_levels_onscreen_name_wwd_trait_longdidaixing	[[col:yellow]]Mandate of the Dragon Emperor[[/col]]	false
-character_trait_levels_colour_text_wwd_trait_longdidaixing	"By this decree, I grant you the Tristar Banner and the Celestial Axe to judge before plea. Command the Five Guards and Two Armies. Govern Fifteen Provinces and Eighty-One Prefectures. Wield Heaven’s Sword and wage war for the Way."	false
-character_trait_levels_onscreen_name_wwd_trait_yuanbo_war	[[col:yellow]]Dogmatic Crusade[[/col]]	false
-character_trait_levels_colour_text_wwd_trait_yuanbo_war	In His name, remove all obstacles.	false
-character_trait_levels_explanation_text_wwd_trait_yuanbo_war	Acquired by: Declaring full war upon first contact with Lizardmen in Yuan Bo’s storyline	false
-character_trait_levels_onscreen_name_wwd_trait_yuanbo_dip	[[col:yellow]]Endgame Strategist[[/col]]	false
-character_trait_levels_colour_text_wwd_trait_yuanbo_dip	For the best possible ending, no cost is too great.	false
-character_trait_levels_explanation_text_wwd_trait_yuanbo_dip	Acquired by: Pursuing diplomacy with the Lizardmen through repeated crises in Yuan Bo’s storyline	false
-character_trait_levels_onscreen_name_wwd_trait_yuanbo_tianting_war	[[col:yellow]]The Burning of Weijing[[/col]]	false
-character_trait_levels_colour_text_wwd_trait_yuanbo_tianting_war	What seems a trifle may break the tune; a string retuned may not resound.	false
-character_trait_levels_explanation_text_wwd_trait_yuanbo_tianting_war	Acquired by: Declaring war on the Celestial Court and seizing Weijing in Yuan Bo’s storyline	false
-character_trait_levels_explanation_text_wwd_trait_fangwenzi_I	Acquisition: Opened a new path for fate	false
-character_trait_levels_explanation_text_wwd_trait_fangwenzi_II	Acquisition: Witness the miracles created by Fang Wenzi and follow the path he forged	false
-character_trait_levels_colour_text_defeated_trait_liguang	So many youthful exploits across the vast desert, heroic and vigorous, yet hard to recall; only regret that old age comes before ambitions are fulfilled, life flows too swiftly	false
-character_trait_levels_onscreen_name_defeated_trait_liguang	Lost Old Steed	false
-character_trait_levels_explanation_text_defeated_trait_liguang	Acquisition: Defeat Li Su	false
-character_trait_levels_colour_text_defeated_trait_longnv	The sound of wings? The wind is too loud, I heard nothing	false
-character_trait_levels_onscreen_name_defeated_trait_longnv	Wind Listener	false
-character_trait_levels_explanation_text_defeated_trait_longnv	Acquisition: Defeat Yun Lan	false
-character_trait_levels_onscreen_name_wwd_chd_buff_trait	Despiser of Others	false
-character_trait_levels_onscreen_name_wwd_trait_mizong	Master of Mizong	false
-character_trait_levels_colour_text_wwd_trait_mizong	The most powerful alchemist, true ruler of the dark side of Shangyang	false
-character_trait_levels_onscreen_name_wwd_trait_anyang	Dark Crow	false
-character_trait_levels_colour_text_wwd_trait_anyang	Leader of Shangyang Hongwu Supervision, seventh seat of the Imperial Secretariat, the supreme expert who ultimately beheaded the leader of the Crow Feather Army	false
+character_trait_levels_colour_text_wwd_trait_fangwenzi_II	'By your side... walks a mortal shell.'	false
+character_trait_levels_onscreen_name_wwd_trait_longdidaixing	[[col:yellow]]Acting in the Dragon Emperor's Stead[[/col]]	false
+character_trait_levels_colour_text_wwd_trait_longdidaixing	'I now grant you the Banner of Three Radiances to patrol the realm in the Emperor's stead, bestow upon you the black and yellow axe to act first and report after, place under your command the Five Guards and Two Armies, and give you authority over fifteen provinces and eighty-one commanderies. Wield the Sword of Vast Heaven, and carry out the campaign in defense of the Way.'	false
+character_trait_levels_onscreen_name_wwd_trait_yuanbo_war	[[col:yellow]]Dogmatism[[/col]]	false
+character_trait_levels_colour_text_wwd_trait_yuanbo_war	'The Dragon Emperor once said...'	false
+character_trait_levels_explanation_text_wwd_trait_yuanbo_war	How to obtain: In Yuan Bo's story arc, declare all-out war upon first contact with the Lizardmen	false
+character_trait_levels_onscreen_name_wwd_trait_yuanbo_dip	[[col:yellow]]Endgame Player[[/col]]	false
+character_trait_levels_colour_text_wwd_trait_yuanbo_dip	For the best possible outcome, at any cost.	false
+character_trait_levels_explanation_text_wwd_trait_yuanbo_dip	How to obtain: In Yuan Bo's story arc, endure numerous diplomatic upheavals with the Lizardmen while steadfastly maintaining the path of cooperation	false
+character_trait_levels_onscreen_name_wwd_trait_yuanbo_tianting_war	[[col:yellow]]The Burning of Wei Jing[[/col]]	false
+character_trait_levels_colour_text_wwd_trait_yuanbo_tianting_war	Though the smallest shift may seem trivial, a single altered string can throw the whole melody out of tune.	false
+character_trait_levels_explanation_text_wwd_trait_yuanbo_tianting_war	How to obtain: In Yuan Bo's story arc, choose to go to war with the Celestial Court and seize Wei Jing from them	false
+character_trait_levels_explanation_text_wwd_trait_fangwenzi_I	How to obtain: Carve out a different path for fate	false
+character_trait_levels_explanation_text_wwd_trait_fangwenzi_II	How to obtain: Witness the miracle wrought by Fang Wen Zi and walk the path he has opened	false
+character_trait_levels_colour_text_defeated_trait_liguang	So many affairs in his youth, riding free across the great desert, heroic and spirited beyond compare, never looking back; only regret now, that his body has grown old and worn, his ambitions unfulfilled, this fleeting life passing by like flowing water, all too swiftly.	false
+character_trait_levels_onscreen_name_defeated_trait_liguang	The Old Steed Lost Its Way	false
+character_trait_levels_explanation_text_defeated_trait_liguang	How to obtain: Defeat Li Su	false
+character_trait_levels_colour_text_defeated_trait_longnv	The sound of beating wings? The wind's too loud - I heard nothing at all.	false
+character_trait_levels_onscreen_name_defeated_trait_longnv	One Who Listens to the Wind	false
+character_trait_levels_explanation_text_defeated_trait_longnv	How to obtain: Defeat Yun Lan	false
+character_trait_levels_onscreen_name_wwd_chd_buff_trait	Contempt	false
+character_trait_levels_onscreen_name_wwd_trait_mizong	Master of the Secret Sect	false
+character_trait_levels_colour_text_wwd_trait_mizong	The most powerful alchemist, the true master of Shang Yang's shadowed side.	false
+character_trait_levels_onscreen_name_wwd_trait_anyang	Dark Mandarin Duck	false
+character_trait_levels_colour_text_wwd_trait_anyang	Leader of the Hong Wu Overseers of Shang Yang, seventh seat of the Inner Palace's council, the peerless master who ultimately took the head of the Raven-Feather Legion.	false
+character_trait_levels_colour_text_wwd_ll_kill_hancheng	Could he have foreseen all of this?	true
+character_trait_levels_colour_text_wwd_trait_yuxueboss	A nightmare born of the purest malice gathered from this cursed land.	true
+character_trait_levels_onscreen_name_wwd_ll_kill_hancheng	Kinslayer	true
+character_trait_levels_onscreen_name_wwd_trait_yuxueboss	Cup of Jade Blood	true

@@ -1,28 +1,28 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_emp_ability.loc		
-unit_abilities_onscreen_name_unit_passive_protect_shield	Guardian Shield	true
-unit_abilities_tooltip_text_unit_passive_protect_shield	Form up to better defend against enemy attacks	true
-unit_abilities_onscreen_name_unit_passive_honour_of_light	Honour of Light	true
-unit_abilities_tooltip_text_unit_passive_honour_of_light	This is the honor of the Sons of the Reik, shining with radiant glory	true
-special_ability_phases_onscreen_name_unit_passive_protect_shield	[[img:stage_one]][[/img]] Phase 1	true
-special_ability_phases_onscreen_name_unit_passive_protect_shield_buff	[[img:stage_two]][[/img]] Phase 2	true
-special_ability_phases_onscreen_name_unit_passive_honour_of_light	[[img:stage_one]][[/img]] Phase 1	true
-special_ability_phases_onscreen_name_unit_passive_honour_of_light_buff	[[img:stage_two]][[/img]] Phase 2	true
-unit_abilities_onscreen_name_unit_ability_summon_eagle	Eyes of Taal	true
-unit_abilities_tooltip_text_unit_ability_summon_eagle	Summon warhawks to assist in battle	true
+unit_abilities_onscreen_name_unit_passive_protect_shield	Shield of Protection	true
+unit_abilities_tooltip_text_unit_passive_protect_shield	Spread out the formation for better defense against enemy attacks.	true
+unit_abilities_onscreen_name_unit_passive_honour_of_light	Light of Honour	true
+unit_abilities_tooltip_text_unit_passive_honour_of_light	This is the honor belonging to the Sons of the Reik, radiating a brilliant light.	true
+special_ability_phases_onscreen_name_unit_passive_protect_shield	[[img:stage_one]][[/img]]Stage 1	true
+special_ability_phases_onscreen_name_unit_passive_protect_shield_buff	[[img:stage_two]][[/img]]Stage 2	true
+special_ability_phases_onscreen_name_unit_passive_honour_of_light	[[img:stage_one]][[/img]]Stage 1	true
+special_ability_phases_onscreen_name_unit_passive_honour_of_light_buff	[[img:stage_two]][[/img]]Stage 2	true
+unit_abilities_onscreen_name_unit_ability_summon_eagle	Eye of Talsyn	true
+unit_abilities_tooltip_text_unit_ability_summon_eagle	Summon a war eagle to join the battle.	true
 unit_abilities_onscreen_name_unit_ability_hunter_mark	Hunter's Mark	true
-unit_abilities_tooltip_text_unit_ability_hunter_mark	Mark the enemy's position, making it easier for punishers to hit	true
+unit_abilities_tooltip_text_unit_ability_hunter_mark	Mark the enemy's position, making it easier for the Chastisers to hit their target.	true
 effects_description_effect_unit_cap_emp_inf_sigmar_guards	Unit Capacity: Sigmar Guards %+n	true
 effects_description_effect_unit_cap_emp_inf_sigmar_attaker	Unit Capacity: Sigmar Attackers %+n	true
 effects_description_effect_unit_cap_emp_inf_sigmar_destroyer	Unit Capacity: Sigmar Destroyers %+n	true
-effects_description_effect_unit_cap_emp_inf_sigmar_marksmen	Unit Capacity: Sigmar Marksmen %+n	false
+effects_description_effect_unit_cap_emp_inf_sigmar_marksmen	Unit Capacity: Sigmar Chastisers %+n	false
 unit_abilities_onscreen_name_unit_ability_ultra_charge	Ultra Charge	true
-unit_abilities_tooltip_text_unit_ability_ultra_charge	The ultimate warrior unleashes their body's potential for a stronger charge and attack	true
+unit_abilities_tooltip_text_unit_ability_ultra_charge	Ultimate Warriors unlock their body's hidden potential, gaining stronger charge and attack power.	true
 unit_abilities_onscreen_name_unit_ability_angel_jugement	Angel's Judgement	true
-unit_abilities_tooltip_text_unit_ability_angel_jugement	The dark judges passes judgment on these sinners, forcing them to repent for their sins	true
-special_ability_phases_onscreen_name_unit_passive_blood_and_honor_buff	[[img:stage_one]][[/img]] Phase 1	true
-special_ability_phases_onscreen_name_unit_passive_blood_and_honor_debuff	[[img:stage_two]][[/img]] Phase 2	true
-unit_abilities_onscreen_name_unit_ability_vengeful_blood	Vengeful Blood	false
-unit_abilities_tooltip_text_unit_ability_vengeful_blood	The blade of vengeance swears an oath in blood to eradicate evil from the world	false
-unit_abilities_onscreen_name_unit_sigemar_punishment	Sigmar's Punishment	false
-unit_abilities_tooltip_text_unit_sigemar_punishment	Warriors of Sigmar unleash soul-flame to strike nearby enemies	false
+unit_abilities_tooltip_text_unit_ability_angel_jugement	The Dark Judgement passes judgement upon sinners, compelling them to repent for their crimes.	true
+special_ability_phases_onscreen_name_unit_passive_blood_and_honor_buff	[[img:stage_one]][[/img]]Stage 1	true
+special_ability_phases_onscreen_name_unit_passive_blood_and_honor_debuff	[[img:stage_two]][[/img]]Stage 2	true
+unit_abilities_onscreen_name_unit_ability_vengeful_blood	Blood Vengeance	false
+unit_abilities_tooltip_text_unit_ability_vengeful_blood	The Vengeful Blades have sworn a blood oath, to slay every evil in the world.	false
+unit_abilities_onscreen_name_unit_sigemar_punishment	Sigmar's Chastisement	false
+unit_abilities_tooltip_text_unit_sigemar_punishment	Warriors devoted to Sigmar unleash a flame of the soul upon the enemies around them.	false

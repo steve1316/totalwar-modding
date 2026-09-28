@@ -1,208 +1,269 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_effects.loc		
-effects_description_ghs_effect_cth_hongying_magic_cost	Magic cost: Winds of Magic – Occam's Mindrazor %+n	false
-effects_description_ghs_effects_hongying_secret_follower_physic_resist	Physical resistance: Moonlight Division and Onyx Crowmen %+n%	false
-effects_description_ghs_effects_hongying_secret_follower_morale	Morale: Moonlight Division and Onyx Crowmen %+n	false
-effects_description_ghs_effects_hongying_secret_follower_speed	Speed: Moonlight Division and Onyx Crowmen %+n%	false
-effects_description_ghs_effects_hongying_secret_follower_melee_expert	Passive ability: Moonlight Division units gain "Adapt and Counter"	false
-effects_description_ghs_effects_hongying_secret_follower_devestating_flanker	Unlock attribute: Grants Moonlight Division units the "Devastating Flanker" ability	false
-effects_description_ghs_effects_hongying_secret_follower_weapon_strength	Weapon strength: Moonlight Division and Onyx Crowmen %+n%	false
-effects_description_ghs_effect_hongying_enable_passive_fire_dance	Passive ability: "Obsidian Flame Dance"	false
-effects_description_ghs_effect_hongying_enable_cth_royal_guard_avatar	Unlocks the "Avatar of Yu Zhuo" for Avatar of the Roc.	false
-effects_description_ghs_effect_hongying_cth_unit_contact_ink	Grants enchantment: "Eternal Inkfire"	false
-effects_description_ghs_cth_royal_guard_crowmen_unique_0	Gains the skill: "Avatar of Yu Zhuo".	false
-effects_description_ghs_cth_replace_construct_instability_i	Passive ability: "Minor Structural Instability"	false
-effects_description_ghs_cth_replace_construct_instability_ii	Removes passive ability: "Collapse"	false
-effects_description_ghs_cth_replace_construct_instability_iii	Removes passive ability: "Ashes to Dust"	false
-effects_description_ghs_skv_ll_ikit_avatar	Unlocks ability: "Disasterlord Avatar: Greed"	false
-effects_description_ghs_skv_ll_queek_avatar	Unlocks ability: "Disasterlord Avatar: Wrath"	false
-effects_description_ghs_skv_ll_skrolk_avatar	Unlocks ability: "Disasterlord Avatar: Plague"	false
-effects_description_ghs_skv_ll_snikch_avatar	Unlocks ability: "Disasterlord Avatar: Pride"	false
-effects_description_ghs_skv_ll_throt_avatar	Unlocks ability: "Disasterlord Avatar: Gluttony"	false
-effects_description_ghs_skv_ll_tretch_avatar	Unlocks ability: "Disasterlord Avatar: Cunning"	false
-effects_description_ghs_skv_ll_warlord_avatar	Unlocks ability: "Disasterlord Avatar"	false
-effects_description_ghs_hef_army_ability_enable_revene_soul	Army ability: "Eltharion's Spirit Guardians"	true
-effects_description_wh2_dlc16_effect_campaign_enable_attrition_army_spy_cth	Causes severe attrition [[img:icon_attrition]][[/img]] to enemies	false
-effects_description_wh2_dlc16_effect_campaign_enable_attrition_army_spy_cth_min	Causes attrition [[img:icon_attrition]][[/img]] to enemies	false
-effects_description_wh2_dlc16_effect_force_enable_attribute_executor_cth	Unlock attribute: Executioner	false
-effects_description_wh2_main_effect_agent_action_enable_spy_cathay_army_assault_units	Unlock [[img:icon_hero]][[/img]] Hero action: [[col:yellow]]{{tr:agent_action_name_assault_units}}[[/col]]	false
-effects_description_wh3_main_effect_agent_action_cost_mod_cth_jade_terra	Hero action cost: Jade Terracotta General %+n	false
-effects_description_wh3_main_effect_agent_action_cost_mod_cth_jade_blood	Hero action cost: Jade-Blooded Taoist %+n	false
-effects_description_wh3_main_effect_agent_action_cost_mod_royal_guard_crowmen	Hero action cost: Onyx Crow Sentinel %+n	false
-effects_description_wh3_main_effect_agent_action_success_chance_cth_jade_terra	Hero action success chance: Jade Terracotta General %+n	false
-effects_description_wh3_main_effect_agent_action_success_chance_cth_jade_blood	Hero action success chance: Jade-Blooded Taoist %+n	false
-effects_description_wh3_main_effect_agent_action_success_chance_royal_guard_crowmen	Hero action success chance: Onyx Crow Sentinel %+n	false
-effects_description_wh3_main_effect_agent_cap_increase_cth_jade_terra	Hero recruitment cap: Jade Terracotta General %+n	false
-effects_description_wh3_main_effect_agent_cap_increase_cth_jade_blood	Hero recruitment cap: Jade-Blooded Taoist %+n	false
-effects_description_wh3_main_effect_agent_cap_increase_royal_guard_crowmen	Hero recruitment cap: Onyx Crow Sentinel %+n	false
-effects_description_wh3_main_effect_agent_enable_recruitment_cth_jade_terra	Allows recruitment of [[img:icon_hero]][[/img]] Hero: Jade Terracotta General	false
-effects_description_wh3_main_effect_agent_enable_recruitment_cth_jade_blood	Allows recruitment of [[img:icon_hero]][[/img]] Hero: Jade-Blooded Taoist	false
-effects_description_wh3_main_effect_agent_enable_recruitment_royal_guard_crowmen	Allows recruitment of [[img:icon_hero]][[/img]] Hero: Onyx Crow Sentinel	false
-effects_description_wh3_main_effect_agent_recruitment_xp_cth_jade_terra	New hero rank: Jade Terracotta General %+n	false
-effects_description_wh3_main_effect_agent_recruitment_xp_cth_jade_blood	New hero rank: Jade-Blooded Taoist %+n	false
-effects_description_wh3_main_effect_agent_recruitment_xp_royal_guard_crowmen	New hero rank: Onyx Crow Sentinel %+n	false
-effects_description_wh_main_effect_agent_enable_recruitment_spy_cathay	Allows recruitment of [[img:icon_hero]][[/img]] Hero: Onyx Crow Sentinel	false
-effects_description_wh_main_effect_agent_recruitment_xp_spy_cathay	New hero rank: Onyx Crow Sentinel %+n	false
+effects_description_ghs_effect_cth_hongying_magic_cost	Wind of Magic cost: Dark Abyss, Occam's Razor of Intent %+n%	false
+effects_description_ghs_effects_hongying_secret_follower_physic_resist	Physical Resistance: Cassia Confidants, Agate Crowmen, Black Jade Crow Warden, Great Moon Luan troops%n%	false
+effects_description_ghs_effects_hongying_secret_follower_morale	Leadership: Cassia Confidants, Agate Crowmen, Black Jade Crow Warden, Great Moon Luan troops%+n	false
+effects_description_ghs_effects_hongying_secret_follower_speed	Speed: Cassia Confidants, Agate Crowmen, Black Jade Crow Warden, Great Moon Luan troops%+n%	false
+effects_description_ghs_effects_hongying_secret_follower_melee_expert	Passive Ability: Cassia Confidants troops gain 'Parry and Counter'	false
+effects_description_ghs_effects_hongying_secret_follower_weapon_strength	Weapon Strength: Cassia Confidants, Agate Crowmen, Black Jade Crow Warden, Great Moon Luan troops%+n%	false
+effects_description_ghs_effect_hongying_enable_passive_fire_dance	Passive Ability: Ink Jade Flowing Flame	false
+effects_description_ghs_effect_hongying_enable_cth_royal_guard_avatar	Black Jade Crow Warden unlocks Avatar Ability: 'Yue Zhuo, the Divine Bird'	false
+effects_description_ghs_effect_hongying_cth_unit_contact_ink	Gains Enchantment: 'Eternal Ink Flame Seal'	false
+effects_description_ghs_cth_royal_guard_crowmen_unique_0	Gain skill: [True Form of the Yue Zhuo]	false
+effects_description_ghs_cth_replace_construct_instability_i	Passive skill: [Not Too Fragile]	false
+effects_description_ghs_cth_replace_construct_instability_ii	Remove passive skill: [Collapse]	false
+effects_description_ghs_cth_replace_construct_instability_iii	Remove passive skill: [Vanish into Ash]	false
+effects_description_ghs_skv_ll_ikit_avatar	Unlocks Ability: Avatar of the Lords of Decay: Greed	false
+effects_description_ghs_skv_ll_queek_avatar	Unlocks Ability: Avatar of the Lords of Decay: Wrath	false
+effects_description_ghs_skv_ll_skrolk_avatar	Unlocks Ability: Avatar of the Lords of Decay: Plague	false
+effects_description_ghs_skv_ll_snikch_avatar	Unlocks Ability: Avatar of the Lords of Decay: Pride	false
+effects_description_ghs_skv_ll_throt_avatar	Unlocks Ability: Avatar of the Lords of Decay: Gluttony	false
+effects_description_ghs_skv_ll_tretch_avatar	Unlocks Ability: Avatar of the Lords of Decay: Deceit	false
+effects_description_ghs_skv_ll_warlord_avatar	Unlocks Ability: Avatar of the Lords of Decay	false
+effects_description_ghs_hef_army_ability_enable_revene_soul	Army Ability: Yvresse Spirit Guard	true
+effects_description_wh2_dlc16_effect_campaign_enable_attrition_army_spy_cth	Inflicts severe raid[[img:icon_attrition]][[/img]] attrition on enemies	false
+effects_description_wh2_dlc16_effect_campaign_enable_attrition_army_spy_cth_min	Inflicts raid[[img:icon_attrition]][[/img]] attrition on enemies	false
+effects_description_wh2_dlc16_effect_force_enable_attribute_executor_cth	Unlocks attribute: Executioner	false
+effects_description_wh2_main_effect_agent_action_enable_spy_cathay_army_assault_units	Unlocks [[img:icon_hero]][[/img]] Hero action: [[col:yellow]]{{tr:agent_action_name_assault_units}}[[/col]]	false
+effects_description_wh3_main_effect_agent_action_cost_mod_cth_jade_terra	Hero action cost: Terracotta Jade Guardian %+n%	false
+effects_description_wh3_main_effect_agent_action_cost_mod_cth_jade_blood	Hero action cost: Jade Blood Taoist %+n%	false
+effects_description_wh3_main_effect_agent_action_cost_mod_royal_guard_crowmen	Hero action cost: Black Jade Crow Warden %+n%	false
+effects_description_wh3_main_effect_agent_action_success_chance_cth_jade_terra	Hero action success chance: Terracotta Jade Guardian %+n%	false
+effects_description_wh3_main_effect_agent_action_success_chance_cth_jade_blood	Hero action success chance: Jade Blood Taoist %+n%	false
+effects_description_wh3_main_effect_agent_action_success_chance_royal_guard_crowmen	Hero action success chance: Black Jade Crow Warden %+n%	false
+effects_description_wh3_main_effect_agent_cap_increase_cth_jade_terra	Hero recruitment capacity: Terracotta Jade Guardian %+n	false
+effects_description_wh3_main_effect_agent_cap_increase_cth_jade_blood	Hero recruitment capacity: Jade Blood Taoist %+n	false
+effects_description_wh3_main_effect_agent_cap_increase_royal_guard_crowmen	Hero recruitment capacity: Black Jade Crow Warden %+n	false
+effects_description_wh3_main_effect_agent_enable_recruitment_cth_jade_terra	Unlocks recruitment for [[img:icon_hero]][[/img]] Hero: Terracotta Jade Guardian	false
+effects_description_wh3_main_effect_agent_enable_recruitment_cth_jade_blood	Unlocks recruitment for [[img:icon_hero]][[/img]] Hero: Jade Blood Taoist	false
+effects_description_wh3_main_effect_agent_enable_recruitment_royal_guard_crowmen	Unlocks recruitment for [[img:icon_hero]][[/img]] Hero: Black Jade Crow Warden	false
+effects_description_wh3_main_effect_agent_recruitment_xp_cth_jade_terra	Recruited Hero rank: Terracotta Jade Guardian %+n	false
+effects_description_wh3_main_effect_agent_recruitment_xp_cth_jade_blood	Recruited Hero rank: Jade Blood Taoist %+n	false
+effects_description_wh3_main_effect_agent_recruitment_xp_royal_guard_crowmen	Recruited Hero rank: Black Jade Crow Warden %+n	false
+effects_description_wh_main_effect_agent_enable_recruitment_spy_cathay	Unlocks recruitment for [[img:icon_hero]][[/img]] Hero: Black Jade Crow Warden	false
+effects_description_wh_main_effect_agent_recruitment_xp_spy_cathay	Recruited Hero rank: Black Jade Crow Warden %+n	false
 effects_description_wh_main_effect_enable_mount_giant_ripperdactyl	Mount: Ancient Ripperdactyl	false
-effects_description_unit_cap_lzd_pyramid_chotec	Recruitment cap: Pyramid of Chotec %+n	true
-effects_description_unit_cap_lzd_pyramid_tepok	Recruitment cap: Temple of Tepok %+n	true
-effects_description_unit_cap_lzd_pyramid_tzunki	Recruitment cap: Pyramid of Tzunki %+n	true
-effects_description_unit_cap_lzd_temple_quetzl_god	Recruitment cap: Temple of Quetzl %+n	true
-effects_description_disable_heriotitan_settra_lion	Replaces skill: "Divine Titan Form: Settra's Divine Avatar"	false
-effects_description_disable_hierotitan_arkhan_scorption	Replaces skill: "Divine Titan Form: Arkhan's Divine Avatar"	false
-effects_description_heriotitan_settra	Unlocks skill: "Blessed by the Gods: Settra's Divine Avatar"	false
-effects_description_heriotitan_settra_lion	Unlocks skill: "Divine Titan Form: Avatar of the Great Nehekharan Emperor"	false
-effects_description_hierotitan_arkhan	Unlocks skill: "Servant of Nagash: Arkhan's Necromantic Avatar"	false
-effects_description_hierotitan_arkhan_scorption	Unlocks skill: "Divine Titan Form: Arkhan's Divine Avatar"	false
-effects_description_hierotitan_khalida	Unlocks skill: "Divine Titan Form: Khalida's Divine Avatar"	false
-effects_description_hierotitan_khatep	Unlocks skill: "Divine Titan Form: Khatep's Divine Avatar"	false
-effects_description_tmb_barrier_health_tmb_structures	Barrier hit points: All Constructs %+n	false
-effects_description_ghs_cth_cha_hongying_cage_bird	Mount: "Shadowlit"	false
+effects_description_unit_cap_lzd_pyramid_chotec	Recruitment capacity: Pyramid of Chotec +%n	true
+effects_description_unit_cap_lzd_pyramid_tepok	Recruitment capacity: Temple of Tepok +%n	true
+effects_description_unit_cap_lzd_pyramid_tzunki	Recruitment capacity: Pyramid of Tzunki +%n	true
+effects_description_unit_cap_lzd_temple_quetzl_god	Recruitment capacity: Temple of Quetzl +%n	true
+effects_description_disable_heriotitan_settra_lion	Replace skill: Avatar of the Hierotitan: Lion of Khemri	false
+effects_description_disable_hierotitan_arkhan_scorption	Replace skill: Avatar of the Hierotitan: Black Guard Scorpion of Arkhan	false
+effects_description_heriotitan_settra	Unlocks Ability: Favoured by the Gods: Great Emperor of Nehekhara	false
+effects_description_heriotitan_settra_lion	Unlocks Ability: Hierotitan Avatar: Lion of Khemri	false
+effects_description_hierotitan_arkhan	Unlocks Ability: Servant of Nagash: Final Reckoning of the Undying	false
+effects_description_hierotitan_arkhan_scorption	Unlocks Ability: Hierotitan Avatar: Black Scorpion of Arkhan	false
+effects_description_hierotitan_khalida	Unlocks Ability: Hierotitan Avatar: Serpent of Lybaras	false
+effects_description_hierotitan_khatep	Unlocks Ability: Hierotitan Avatar: Sky Hawk of the Mortuary Cult	false
+effects_description_tmb_barrier_health_tmb_structures	Ward save health: all Construct units %+n	false
+effects_description_ghs_cth_cha_hongying_cage_bird	Mount: Yue Luan [Shadowdance]	false
 effects_description_tmb_dragon_king	Mount: Tomb Dragon	false
-effects_description_tmb_eagle_mage1	Mount: Ulati Buzzard	false
-effects_description_tmb_eagle_mage2	Mount: Ulati Buzzard	false
-effects_description_tmb_eagle_mage3	Mount: Ulati Buzzard	false
-effects_description_tmb_eagle_mage4	Mount: Ulati Buzzard	false
+effects_description_tmb_eagle_mage1	Mount: Ulatuan Vulture	false
+effects_description_tmb_eagle_mage2	Mount: Ulatuan Vulture	false
+effects_description_tmb_eagle_mage3	Mount: Ulatuan Vulture	false
+effects_description_tmb_eagle_mage4	Mount: Ulatuan Vulture	false
 effects_description_tmb_elephant_necrotect	Mount: Obsidian War Elephant	false
-effects_description_tmb_prince_lion	Unlocks skill: Lion Ushabti	false
-effects_description_tmb_prince_ushabti	Unlocks skill: "Avatar of the Soul: Carved Ushabti"	false
-effects_description_tmb_stat_anti_infantry_tmb_all_chariots	Bonus vs Infantry: Skeleton Chariots and Skeleton Archer Chariots %+n	false
-effects_description_tmb_stat_charge_tmb_all_cavalry	Charge bonus: Bone Ostrich, Sacred Scarabs, Armoured Scarabs, Skeleton Riders, Skeleton Archer Riders, Wraith Walkers, Tomb Knights, and Nehekharan Riders units %+n%	false
-effects_description_tmb_stat_missile_ap_damage_tmb_skeleton_archers	Missile armor-piercing damage: Skeleton Archers %+n%	false
-effects_description_tmb_stat_speed_tmb_all_chariots	Speed: Skeleton Chariots and Skeleton Archer Chariots %+n%	false
-effects_description_tmb_stat_weapon_strength_tmb_all_monster	Armour-piercing weapon damage: All Constructs %+n%	false
-effects_description_ghs_ksl_followers_1	Unlocks army ability: "Motherland's Pain"	false
-effects_description_ghs_ksl_followers_2	Unlocks army ability: "Motherland's Sigh"	false
-effects_description_ghs_ksl_followers_3	Unlocks army ability: "Motherland's Solace"	false
-effects_description_ghs_ksl_followers_4	Unlocks army ability: "Motherland's Hatred"	false
-effects_description_ghs_ksl_followers_5	Unlocks army ability: "Motherland's Wrath"	false
-effects_description_mp_cap_def_black_ark	Unit cap: %+n\\nBlack Ark	false
-effects_description_arkhan_wh2_dlc09_books_of_nagash_reward_9	[[col:orange]]Gain bonuses against Tomb Kings from Nagash's Ninth Book[[/col]]	false
-effects_description_ghs_effect_black_ark	[[col:orange]]Form an alliance with Karond Kar to recruit legendary units: Black Ark[[/col]]	false
-effects_description_ghs_effect_khaine_sister	[[col:orange]]Recruit legendary unit: Shadows of Morathi in the Ancient City of Quintex[[/col]]	false
-effects_description_ghs_effect_pooled_resource_rule_all_sources	Dark power from all sources: %+n%	false
-effects_description_ghs_hellebron_death_night_rule	[[col:orange]]Generate significant dark power from the Death Night bonuses[[/col]]	false
-effects_description_ghs_lokhir_rule_black_ark	Generate additional dark power from the Blessed Reaver fleet and its Black Ark	false
-effects_description_ghs_malekith_mod_revenge	[[col:orange]]Puppet Master[[/col]] Diplomacy: Relations with High Elves and Dwarfs %+n	false
-effects_description_ghs_malus_tzarkan	[[col:orange]]Temporarily separate Tzarkan's soul to assist Malus in battle when possession is low[[/col]]	false
-effects_description_wh2_dlc14_effect_release_tzarkan	Malus can temporarily separate Tzarkan's soul to unleash the Daemon's power	false
-effects_description_ghs_morathi_sla_corruption_rule	Generates dark power if Slaanesh corruption exceeds 50 in a province	false
-effects_description_mp_cap_flying_lion	Unit cap: %+n\\nSky Lion Knights	false
-effects_description_mp_cap_hef_flying_waystone	Unit cap: %+n\\nSaphery Floating Waystones	false
-effects_description_mp_cap_manticore_rider	Unit cap: %+n\\nManticore Black Tower Knights	false
-effects_description_ghs_alith_mislead_recharge	Cooldown rate: "Mislead" and "Shadow Dancer's Call" %+n%	false
-effects_description_ghs_alith_mislead_use_mod	Uses: "Mislead" and "Shadow Dancer's Call" +%n	false
-effects_description_ghs_effect_eltharion_cage	[[col:magic]]Restore the Athel Tamarha Dungeon to gain powerful Isha spirits and upgrade the Warden's Cage[[/col]]	false
-effects_description_ghs_hef_army_ability_active_time_wardens_cage	"Duration: Warden's Cage" %+n%	true
-effects_description_ghs_hef_army_ability_use_revene_soul	Uses: "Eltharion's Spirit Guardians" +%n	true
-effects_description_ghs_hef_army_ability_use_wardens_cage	Uses: "Warden's Cage" +%n	true
-effects_description_ghs_hef_dragon_horn_active_time	Duration: "Dragonhorn" %+n%	false
-effects_description_ghs_hef_dragon_horn_recharge	Cooldown rate: "Dragonhorn" %+n%	false
-effects_description_ghs_hef_dragon_horn_use	Uses: "Dragonhorn" +%n	false
-effects_description_ghs_imrik_dragonhorn	[[col:magic]]The Dragonhorn shines with renewed power after successfully challenging dragons, granting greater strength[[/col]]	false
-effects_description_ghs_drycha_special_unit	[[col:magic]]Unique and potent upgrades available for Forest Spirit units[[/col]]	true
-effects_description_ghs_drycha_treeman_guard	[[col:magic]]Recruit unique Vicious Doomdancers and Malevolent Spirits[[/col]]	true
-effects_description_ghs_durthur_ariel_spell	Unlock attribute: Gain "Vigorous" when Ariel is in [[img:icon_general]][[/img]] the lord's army	true
-effects_description_ghs_durthur_special_unit	[[col:magic]]Unique and powerful upgrades available for Frostbranch Crystal Birch, Flame Root Ancient Oak, Thunderleaf Silver Aspen, and Soulweaver Willow units[[/col]]	true
-effects_description_ghs_orion_special_unit	[[col:magic]]The Wild Hunt buildings can recruit powerful Kurnous' Chosen units, enhancing Orion when fielded[[/col]]	true
-effects_description_ghs_sister_arrow_of_kurnous_recharge	Cooldown rate: Hawk Riders' "Volley of Kurnous" %+n%	true
-effects_description_ghs_sister_arrow_of_kurnous_use	Uses: Hawk Riders' "Volley of Kurnous" +%n	true
-effects_description_ghs_skill_bin	Blank skill point clicked %n times	true
-effects_description_ghs_twilight_ariel_bonus	Queen Ariel, accompanied by the Twilight Sisters' guards, can unleash Isha's true power	true
-effects_description_ghs_twilight_ariel_guard	Unlocks skill: Gain "Rain of Isha" when Ariel is in [[img:icon_general]][[/img]] the lord's army	true
-effects_description_ghs_twilight_daith_forge	[[col:magic]]Daith's Forge enhances perfect artifacts, making them deadlier and granting extra effects[[/col]]	true
-effects_description_wh3_main_effect_attribute_spell_mastery_treemen	Unlock attribute: Grant Winds of Magic Mastery to Ancient Treemen, accompanying Spellweavers, and Drycha's units	true
-effects_description_ghs_ungrim_son_guard	[[col:orange]]"Bloodline Bond": When Gragmir Ironfist is in [[img:icon_general]][[/img]] the Slayer King's army, he gains "Death Whirlwind"[[/col]]	true
-effects_description_ghs_enable_ungrim_son_guard	[[col:orange]]"Bloodline Bond": When Gragmir Ironfist is in [[img:icon_general]][[/img]] the lord's army, he gains "Defender"[[/col]]	true
-effects_description_wh_main_effect_white_dwarf_strength	[[col:orange]]"Ancestor's Wrath": Weapon strength: White Dwarf, Lords, and Thanes gain %+n% for each level gained[[/col]]	true
-effects_description_ghs_effect_monster_hunt	[[col:ancillary_yellow]]When the beasts of the Monster Hunts are defeated, you will control them in the name of the Dark Gods![[/col]]	true
-effects_description_ghs_effect_unit_upgrade	[[col:ancillary_yellow]]Enhance your units through devotion to the Dark Gods. This decision is irreversible![[/col]]	true
-effects_description_ghs_effect_throgg_power	[[col:ancillary_yellow]]"King of Beasts": Weapon strength: Trolls, Skin Wolves, and Swamp Daemons gain %+n% for each level gained[[/col]]	true
-effects_description_wh2_dlc12_faction_trait_ritual_cost_kroq_gar	Ritual Cost: Primal Glory Ritual %+n%	true
-effects_description_cody_effect_unit_cap_dwf_veh_thunderbarge_0	Unit cap: %+n\\nThunder Barge	false
-effects_description_ghs_effect_unit_cap_dwf_veh_dreadquake_mortar	Unit cap: %+n\\nDreadquake Mortar	false
-effects_description_ghs_effect_unit_cap_dwf_veh_iron_train	Unit cap: %+n\\nIron Heart of the Mountains	false
-effects_description_ghs_effect_unit_cap_dwf_veh_iron_train_1dreadquake	Unit cap: %+n\\nIron Heart of the Mountains (Dreadquake Mortar)	false
-effects_description_wh2_dlc11_effect_force_stat_ammunition_dwf_bolt_throwers_gyrocopters_gyrobombers	Ammunition: %+n% for Bolt Throwers, Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh2_dlc11_effect_force_stat_range_dwf_bolt_throwers_gyrocopters_gyrobombers	Range: %+n% for Bolt Throwers, Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh2_dlc11_effect_force_stat_missile_damage_dwf_rangers_quarrellers_thunderers_irondrakes_gyrocopters_rank7	Missile Damage: %+n% for Rangers, Quarrellers, Thunderers, Irondrakes, Bolt Throwers, Gyrocopters, Gyrobombers, and Thunder Barges {{tr:rank7}}	false
-effects_description_wh2_dlc11_effect_force_stat_missile_resistance_dwf_rangers_quarrellers_thunderers_irondrakes_gyrocopters_rank7	Missile resistance: %+n% for Rangers, Quarrellers, Thunderers, Irondrakes, Bolt Throwers, Gyrocopters, Gyrobombers, and Thunder Barges {{tr:rank7}}	false
-effects_description_wh2_dlc11_effect_force_stat_reload_time_reduction_dwf_rangers_quarrellers_thunderers_irondrakes_gyrocopters_rank7	Reload Speed: %+n% for Rangers, Quarrellers, Thunderers, Irondrakes, Bolt Throwers, Gyrocopters, Gyrobombers, and Thunder Barges {{tr:rank7}}	false
-effects_description_cody_effect_enable_mount_dwf_thunderbarge	Mount: "Grungni's Spirit"	false
-effects_description_wh_dlc08_effect_foce_slayers_replenishment_rate	Replenishment rate: %+n% for Agrim, Malakai Makaisson, and Slayer units	false
-effects_description_wh_main_effect_tech_recruitment_cost_reduction_gyrocopter_gyrobomber	Recruitment Cost: %+n% for Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh_main_effect_tech_recruitment_duration_gyrocopter_gyrobomber	Recruitment Duration: %+n for Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh_main_effect_tech_unit_xp_levels_gyrocopter_gyrobomber	Recruitment Level: %+n for Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh_main_effect_force_stat_armour_gyrocopter	Armour: %+n for Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh_main_effect_force_stat_ammunition_gyrocopters_gyrobombers	Ammunition: %+n% for Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh_main_effect_force_stat_speed_gyrocopters	Speed: %+n% for Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_wh_main_effect_force_stat_range_gyrocopters	Range: %+n% for Gyrocopters, Gyrobombers, and Thunder Barges	false
-effects_description_cody_effect_skill_speed_increase_gotrek_felix	Speed: %+n% for Gotrek and Felix	false
-effects_description_cody_effect_skill_missile_resistance_increase_gotrek_felix	Missile resistance: %+n% for Gotrek and Felix	false
-effects_description_cody_effect_skill_missile_damage_increase_dwf_rangers_great_weapons	Missile Damage: %+n% for Rangers (Great Weapons)	false
-effects_description_cody_effect_skill_range_increase_dwf_rangers_great_weapons	Range: %+n% for Rangers (Great Weapons)	false
-effects_description_cody_effect_skill_reload_increase_dwf_thunderers_organ_guns	Reload Speed: %+n% for Thunderers and Organ Gun units	false
-effects_description_cody_effect_skill_armour_increase_at_sea	Armour: %+n in naval battles	false
-effects_description_effect_building_cth_nangao_firework_chain_ammo	Ammunition: %+n% for all Gunpowder units	true
-effects_description_effect_building_cth_nangao_firework_chain_range	Range: %+n% for all Gunpowder units	true
-effects_description_effect_building_cth_nangao_firework_chain_ranged_damage	Missile Damage: %+n% for all Gunpowder units	true
-effects_description_effect_building_cth_nangao_firework_chain_ranged_damage_ap	Missile Armour-Piercing Damage: %+n% for all Gunpowder units	true
-effects_description_effect_celestial_def_skill	Skill: Dragonhorse Cavalry, Half-Dragonhorse Cavalry, and Nan-Gau Yang Flame Cavalry gain "Dragon's Resolve"	false
-effects_description_effect_celestial_fight_skill	Skill: Celestial Imperial Right and Left Guard gain "Dragon's Valor"	false
-effects_description_effect_celestial_guard_skill	Skill: Celestial Dragon Guards and Nan-Gau Zhu Long Guards gain "Dragon's Fortitude"	false
-effects_description_effect_celestial_range_skill	Skill: Thunderbolt Gunners, Jinwu Gunners, and Celestial Mounted Archers gain "Dragon's Keen Sight"	false
-effects_description_effect_rite_cth_warcompass_skill	Skill: The Five Elements War Compass gains "Power of the Five Elements Compass"	true
-effects_description_effect_unit_cap_cth_cav_jade_longma_crassbow_rider	Unit cap: Jade Longma Crossbowmen %+n	true
+effects_description_tmb_prince_lion	Unlocks skill: Soul-Bound Avatar: Lion-Faced Ushabti	false
+effects_description_tmb_prince_ushabti	Unlocks skill: Soul-Bound Avatar: Carved Ushabti	false
+effects_description_tmb_stat_anti_infantry_tmb_all_chariots	Bonus vs. Infantry: Skeleton Chariot and Skeleton Archer Chariot units %+n	false
+effects_description_tmb_stat_charge_tmb_all_cavalry	Charge bonus: Bone Ostrich units, Scarab Swarm and Gold Scarab units, Skeleton Cavalry, Skeleton Archer Cavalry, Wraith Walkers, Grave Knights, Nehekharan Cavalry %+n%	false
+effects_description_tmb_stat_missile_ap_damage_tmb_skeleton_archers	Armour-piercing missile damage: Skeleton Archer units %+n%	false
+effects_description_tmb_stat_speed_tmb_all_chariots	Speed bonus: Skeleton Chariot and Skeleton Archer Chariot units %+n%	false
+effects_description_tmb_stat_weapon_strength_tmb_all_monster	Armour-piercing weapon damage: all Construct units %+n%	false
+effects_description_ghs_ksl_followers_1	Unlocks Army Ability: Motherland's Pain	false
+effects_description_ghs_ksl_followers_2	Unlocks Army Ability: Motherland's Sigh	false
+effects_description_ghs_ksl_followers_3	Unlocks Army Ability: Motherland's Comfort	false
+effects_description_ghs_ksl_followers_4	Unlocks Army Ability: Motherland's Hatred	false
+effects_description_ghs_ksl_followers_5	Unlocks Army Ability: Motherland's Fury	false
+effects_description_mp_cap_def_black_ark	Unit capacity: %+n\\nBlack Ark	false
+effects_description_arkhan_wh2_dlc09_books_of_nagash_reward_9	[[col:orange]]Grants a bonus against Tomb Kings from the ninth volume of the Books of Nagash[[/col]]	false
+effects_description_ghs_effect_black_ark	[[col:orange]]Unlocks recruitment for a powerful Legendary unit at Karond Kar: the Black Ark[[/col]]	false
+effects_description_ghs_effect_khaine_sister	[[col:orange]]Can recruit the Legendary Unit Shadow of Morathi at the Ancient City of Quintex[[/col]]	false
+effects_description_ghs_effect_pooled_resource_rule_all_sources	Dark Puissance from all sources: %+n%	false
+effects_description_ghs_hellebron_death_night_rule	[[col:orange]]Gain substantial Dark Puissance from the bonuses of the Night of Death[[/col]]	false
+effects_description_ghs_lokhir_rule_black_ark	Gain additional Dark Puissance from the Blessed Rogue and the Black Arks under his primary fleet	false
+effects_description_ghs_malekith_mod_revenge	[[col:orange]]'Mastermind Behind the War of the Beard'[[/col]] Diplomatic Stance: Diplomacy with High Elves and Dwarfs%+n	false
+effects_description_ghs_malus_tzarkan	[[col:orange]]At low possession levels, temporarily separate Tzarkan's soul to aid Malus in battle[[/col]]	false
+effects_description_wh2_dlc14_effect_release_tzarkan	Malus can temporarily unbind Tzarkan's soul, unleashing the might of the Greater Daemon of Slaanesh.	false
+effects_description_ghs_morathi_sla_corruption_rule	When Slaanesh corruption in a province exceeds 50, it will generate Dark Puissance	false
+effects_description_mp_cap_flying_lion	Unit capacity: %+n\\nSky Lion Knights	false
+effects_description_ghs_alith_mislead_recharge	Cooldown rate: [Mislead] and [Call of the Shadowdancer] %+n%	false
+effects_description_ghs_alith_mislead_use_mod	Uses: [Mislead] and [Call of the Shadowdancer] +%n	false
+effects_description_ghs_effect_eltharion_cage	[[col:magic]]Repair the dungeon of Tor Yvresse to gain the aid of powerful Yvresse Spirit Guardians and an upgrade to the Warden's Cage[[/col]]	false
+effects_description_ghs_hef_army_ability_active_time_wardens_cage	Active Time: Warden's Cage%+n%	true
+effects_description_ghs_hef_army_ability_use_revene_soul	Uses: Yvresse Spirit Guard +%n	true
+effects_description_ghs_hef_army_ability_use_wardens_cage	Uses: Warden's Cage +%n	true
+effects_description_ghs_hef_dragon_horn_active_time	Active Time: Dragon Horn%+n%	false
+effects_description_ghs_hef_dragon_horn_recharge	Recharge Rate: Dragon Horn%+n%	false
+effects_description_ghs_hef_dragon_horn_use	Uses: Dragon Horn +%n	false
+effects_description_ghs_imrik_dragonhorn	[[col:magic]]When a dragon is successfully challenged, the dragons will bestow greater power upon Imrik, and the Dragon Horn will shine anew[[/col]]	false
+effects_description_ghs_drycha_special_unit	[[col:magic]]Unlocks unique and powerful malevolent upgrades for forest spirit units[[/col]]	true
+effects_description_ghs_drycha_treeman_guard	[[col:magic]]Unlocks recruitment for unique Malevolent Wraith Guardian (Dryads) and Malevolent Wraithdance (Treemen) units[[/col]]	true
+effects_description_ghs_durthur_ariel_spell	Unlocks attribute: Gains 'Perfect Vigour' when Ariel is in a [[img:icon_general]][[/img]] Lord's army	true
+effects_description_ghs_durthur_special_unit	[[col:magic]]Unlocks unique and powerful tree spirit upgrades for Frostbranch Crystalbark, Flameroot Ancient Oak, Thunderleaf Silverpoplar, and Soulheart Weeping Willow units[[/col]]	true
+effects_description_ghs_orion_special_unit	[[col:magic]]Wild Hunt buildings can recruit powerful Chosen of Kurnous troops. Orion is strengthened when he commands Chosen of Kurnous troops[[/col]]	true
+effects_description_ghs_sister_arrow_of_kurnous_recharge	Recharge Rate: Falcon Rider troops' Kurnous's Volley%+n%	true
+effects_description_ghs_sister_arrow_of_kurnous_use	Uses: Falcon Rider troops' Kurnous's Volley +%n	true
+effects_description_ghs_skill_bin	Blank Skill Point 'Clicked %n times'	true
+effects_description_ghs_twilight_ariel_bonus	With the protection of the Sisters of Twilight, Queen Ariel can unleash Isha's true power	true
+effects_description_ghs_twilight_ariel_guard	Gain Ability: Ariel gains 'Isha's Rain' when in a Lord's [[img:icon_general]][[/img]] army	true
+effects_description_ghs_twilight_daith_forge	[[col:magic]]The Daith Forge crafts more deadly upgraded artifacts. Completing an artifact set grants additional powerful effects[[/col]]	true
+effects_description_ghs_ungrim_son_guard	[[col:orange]]'Bloodkin Bond': Ungrim Ironfist gains 'Death Hurricane' when Grumgold Ironfist is in the Slayer King's [[img:icon_general]][[/img]] army[[/col]]	true
+effects_description_ghs_enable_ungrim_son_guard	[[col:orange]]'Bloodkin Bond': Grumgold Ironfist gains 'Defender' when in a Lord's [[img:icon_general]][[/img]] army[[/col]]	true
+effects_description_wh_main_effect_white_dwarf_strength	[[col:orange]][Vengeful Ancestor]: Weapon Strength: White Dwarfs, Lords and Chieftains gain %+n% per experience rank[[/col]]	true
+effects_description_ghs_effect_monster_hunt	[[col:ancillary_yellow]]When powerful beasts from the Bestiary are defeated, you gain control of them to wage war in the name of the Dark Gods![[/col]]	true
+effects_description_ghs_effect_unit_upgrade	[[col:ancillary_yellow]]Strengthen your troops by worshipping the Dark Gods - once devoted, there is no turning back![[/col]]	true
+effects_description_ghs_effect_throgg_power	[[col:ancillary_yellow]]'King of the Beast Realm': Weapon Strength: Sologan, Great Werewolves, and Fen Beast Nobles gain %+n% per experience rank[[/col]]	true
+effects_description_wh2_dlc12_faction_trait_ritual_cost_kroq_gar	Ritual cost: Primal Glory Ritual %+n%	true
+effects_description_ghs_effect_unit_cap_dwf_veh_dreadquake_mortar	Unit Capacity: %+n\\nDawi Dreadquake Mortar	false
+effects_description_ghs_effect_unit_cap_dwf_veh_iron_train	Unit Capacity: %+n\\nDwarf Locomotive	false
+effects_description_ghs_effect_unit_cap_dwf_veh_iron_train_1dreadquake	Unit Capacity: %+n\\nDwarf Train (Dawi Dreadquake Mortar)	false
+effects_description_wh2_dlc11_effect_force_stat_ammunition_dwf_bolt_throwers_gyrocopters_gyrobombers	Ammunition: %+n% Bolt Thrower, Gyrocopter, Gyrobomber and Gyrobattery units	false
+effects_description_wh2_dlc11_effect_force_stat_range_dwf_bolt_throwers_gyrocopters_gyrobombers	Unit range: %+n% Bolt Thrower, Gyrocopter, Gyrobomber and Gyrobattery units	false
+effects_description_wh2_dlc11_effect_force_stat_missile_damage_dwf_rangers_quarrellers_thunderers_irondrakes_gyrocopters_rank7	Missile strength: %+n% Rangers, Thunderers, Quarrellers, Irondrakes, Bolt Thrower, Gyrocopter, Gyrobomber and Gyrobattery units {{tr:rank7}}	false
+effects_description_wh2_dlc11_effect_force_stat_missile_resistance_dwf_rangers_quarrellers_thunderers_irondrakes_gyrocopters_rank7	Missile resistance: %n% Rangers, Thunderers, Quarrellers, Irondrakes, Bolt Thrower, Gyrocopter, Gyrobomber and Gyrobattery units {{tr:rank7}}	false
+effects_description_wh2_dlc11_effect_force_stat_reload_time_reduction_dwf_rangers_quarrellers_thunderers_irondrakes_gyrocopters_rank7	Reload skill: %+n% Rangers, Thunderers, Quarrellers, Irondrakes, Bolt Thrower, Gyrocopter, Gyrobomber and Gyrobattery units {{tr:rank7}}	false
+effects_description_wh_dlc08_effect_foce_slayers_replenishment_rate	Replenishment rate: %+n% Grimm Burloksson, Malakai Makaisson and Slayer units	false
+effects_description_wh_main_effect_tech_recruitment_cost_reduction_gyrocopter_gyrobomber	Recruitment Cost: %+n% Gyrocopters, Gyrobombers and Thunderbarge units	false
+effects_description_wh_main_effect_tech_recruitment_duration_gyrocopter_gyrobomber	Recruitment Duration: %+n Gyrocopters, Gyrobombers and Thunderbarge units	false
+effects_description_wh_main_effect_tech_unit_xp_levels_gyrocopter_gyrobomber	Recruitment Rank: %+n Gyrocopters, Gyrobombers and Thunderbarge units	false
+effects_description_wh_main_effect_force_stat_armour_gyrocopter	Armour: %+n Gyrocopters, Gyrobombers and Thunderbarge units	false
+effects_description_wh_main_effect_force_stat_ammunition_gyrocopters_gyrobombers	Ammunition: %+n% Gyrocopter and Gyrobomber units	false
+effects_description_wh_main_effect_force_stat_speed_gyrocopters	Speed: %+n% Gyrocopters, Gyrobombers and Thunderbarge units	false
+effects_description_wh_main_effect_force_stat_range_gyrocopters	Unit Range: %+n% Gyrocopters, Gyrobombers and Thunderbarge units	false
+effects_description_effect_building_cth_nangao_firework_chain_ammo	Ammunition: All gunpowder units %+n%	true
+effects_description_effect_building_cth_nangao_firework_chain_range	Unit range: All gunpowder units %+n%	true
+effects_description_effect_building_cth_nangao_firework_chain_ranged_damage	Missile Strength: All gunpowder units %+n%	true
+effects_description_effect_building_cth_nangao_firework_chain_ranged_damage_ap	Armour-Piercing Missile Damage: All gunpowder units %+n%	true
+effects_description_effect_rite_cth_warcompass_skill	Gain skill: The Five Elements War Compass gains 'Power of the Five Elements Compass'	true
+effects_description_effect_unit_cap_cth_cav_jade_longma_crassbow_rider	Unit cap: Dragon-Horse Crossbowmen %+n	true
 effects_description_effect_unit_cap_cth_inf_thunderbolt_gunners	Unit cap: Thunderbolt Gunners %+n	true
-effects_description_wh3_main_effect_agent_action_cost_mod_kdaai	Hero Action Cost: K'daai Conqueror %+n%	false
-effects_description_wh3_main_effect_agent_action_success_chance_kdaai	Hero Action Success Chance: K'daai Conqueror %+n%	false
-effects_description_wh3_main_effect_agent_cap_increase_kdaai	Hero Recruitment Cap: K'daai Conqueror %+n	false
-effects_description_wh3_main_effect_agent_enable_recruitment_kdaai	Allows recruitment of [[img:icon_hero]][[/img]] Hero: K'daai Conqueror	false
-effects_description_wh3_main_effect_agent_recruitment_xp_kdaai	New Hero Rank: K'daai Conqueror %+n	false
-effects_description_ghs_effect_chd_kdaai_ward_save	Ward save: K'daai Units %+n%	false
-effects_description_kroxigor_charge	Kroxigor & Sacred Kroxigor units gain attribute: Ogre Charge	true
-effects_description_kroxigor_fatigue_immue	Kroxigor & Sacred Kroxigor units gain attribute: Unbreakable Vigor	true
-effects_description_kroxigor_immune_to_psychology	Kroxigor & Sacred Kroxigor units gain attribute: Immune to Psychology	true
-effects_description_kroxigor_keep	Recruitment and upkeep cost for Kroxigor & Sacred Kroxigor units: %n	true
-effects_description_kroxigor_ma	Melee attack for Kroxigor & Sacred Kroxigor units: +%n	true
-effects_description_kroxigor_md	Melee defense for Kroxigor & Sacred Kroxigor units: +%n	true
-effects_description_kroxigor_weapon_strength	Weapon strength for Kroxigor & Sacred Kroxigor units: +%n%	true
-effects_description_kroxigor_xp	Starting rank for newly recruited Kroxigor & Sacred Kroxigor units: +%n	true
+effects_description_wh3_main_effect_agent_action_cost_mod_kdaai	Hero action cost: K'daai Conqueror %+n%	false
+effects_description_wh3_main_effect_agent_action_success_chance_kdaai	Hero action success chance: K'daai Conqueror %+n%	false
+effects_description_wh3_main_effect_agent_cap_increase_kdaai	Hero recruitment capacity: K'daai Conqueror %+n	false
+effects_description_wh3_main_effect_agent_enable_recruitment_kdaai	Unlocks recruitment for [[img:icon_hero]][[/img]] Hero: K'daai Conqueror	false
+effects_description_wh3_main_effect_agent_recruitment_xp_kdaai	Recruited Hero rank: K'daai Conqueror %+n	false
+effects_description_ghs_effect_chd_kdaai_ward_save	Special protection: K'daai units %+n%	false
+effects_description_kroxigor_charge	Unlocks Attribute: Kroxigor and Spirit-Bound Kroxigor troops unlock Ogre Charge	true
+effects_description_kroxigor_fatigue_immue	Unlocks Attribute: Kroxigor and Spirit-Bound Kroxigor troops unlock Perfect Vigour	true
+effects_description_kroxigor_immune_to_psychology	Unlocks Attribute: Kroxigor and Spirit-Bound Kroxigor troops unlock Immune to Psychology	true
+effects_description_kroxigor_keep	Recruitment and Upkeep Cost: Kroxigor and Spirit-Bound Kroxigor%n	true
+effects_description_kroxigor_ma	Melee Attack: Kroxigor and Spirit-Bound Kroxigor +%n	true
+effects_description_kroxigor_md	Melee Defence: Kroxigor and Spirit-Bound Kroxigor +%n	true
+effects_description_kroxigor_weapon_strength	Weapon Strength: Kroxigor and Spirit-Bound Kroxigor +%n%	true
+effects_description_kroxigor_xp	New Recruit Rank: Kroxigor and Spirit-Bound Kroxigor +%n	true
 effects_description_battle_master_celestial_ma	Melee attack for Celestial Dragon Guard units in army: +%n	true
-effects_description_battle_master_celestial_md	Melee defense for Celestial Dragon Guard units in army: +%n	true
 effects_description_battle_zhaowang_master	Cathedran melee infantry units in army unlock skill: Blood of the Flood Dragon	true
 effects_description_fight_sky_doom	When fighting Beastmen, Skaven, Greenskins, High Elves, Dark Elves, Daemons of Chaos, Chaos Warriors, and Norsca: +%n Melee Attack & Defense	true
 effects_description_guild_support	Peasant Laborers, Jade Warriors, and Celestial Dragon Guard recruitment and upkeep cost: %n%	true
 effects_description_guild_support_speed	Celestial Dragon Guard movement speed: +%n%	true
 effects_description_weapon_strength_vs_chaos	Weapon strength when fighting Beastmen, Daemons of Chaos, Norsca, and Chaos Warriors: +%n%	true
 effects_description_zhaowang_thunder_skill	Unlocks skill: "Thunderous Dragon Annihilation"	true
-effects_description_ghs_ksl_thor_weapon	Unlocks skill: "Thor's Thunderstorm"	true
-effects_description_ghs_ksl_thor_arcane_item	Unlocks skill: "Storm Aura"	true
-effects_description_wh3_main_effect_thor_stat_upkeep_tsar_guard	Upkeep cost for Armored Kossars and Tsar Guard: %n%	true
-effects_description_wh3_main_effect_thor_stat_speed_tsar_guard	Movement speed for Armored Kossars and Tsar Guard: +%n%	true
-effects_description_wh3_main_effect_thor_stat_melee_attack_tsar_guard	Melee attack for Armored Kossars and Tsar Guard: +%n	true
-effects_description_wh3_main_effect_thor_stat_missile_resistance_tsar_guard	Missile resistance for Armored Kossars and Tsar Guard: +%n%	true
-effects_description_wh3_main_effect_thor_stat_melee_ap_tsar_guard	Armor-piercing melee damage for Armored Kossars and Tsar Guard: +%n	true
-effects_description_wh3_main_effect_thor_tsar_guard_xp_bonus	Armor-piercing melee damage for Tsar Guard: +%n	true
-effects_description_wh_dlc08_effect_enable_mount_kho_mammoth	Mount: War Mammoth (Khorne Warshrine)	true
-effects_description_ghs_ksl_unit_cap	Unit capacity: Gilded Warbear Knights and Frosthorn Riders +%n	false
-effects_description_ghs_cth_dragon_guard_melee_weapon	Enables contact effect: "Dragon’s Roar"	false
-effects_description_ghs_dwf_missile_mecha	Repair: Grudge-Settler Mech (Multi-Rune Gun)	true
-effects_description_unit_cap_ghs_main_tmb_cav_ostrich_rider	Unit capacity: Bone Ostrich Riders +%n	false
-effects_description_unit_cap_ghs_main_tmb_cav_heavy_ostrich_rider	Unit capacity: Bone Ostrich Guard +%n	false
-effects_description_unit_cap_ghs_main_tmb_mon_sandstalker	Unit capacity: Sandstalkers +%n	false
-effects_description_unit_cap_ghs_main_tmb_cav_scarab_flying_01	Unit capacity: Scarab Hunting Swarm +%n	false
-effects_description_unit_cap_ghs_main_tmb_cav_scarab_flying_02	Unit capacity: Golden Scarab Riders +%n	false
-effects_description_unit_cap_ghs_main_tmb_mon_necrosphinx_usirian	Unit capacity: Usirian’s Whisper +%n	false
-effects_description_unit_cap_ghs_main_tmb_mon_bone_elephant	Unit capacity: Bone War Elephants +%n	false
+effects_description_ghs_ksl_thor_weapon	Unlocks Ability: Tor's Thunderstorm	true
+effects_description_ghs_ksl_thor_arcane_item	Unlocks Ability: Storm Aura	true
+effects_description_wh3_main_effect_thor_stat_upkeep_tsar_guard	Armoured Kossar, Tsar Guard and Kreml Guard units upkeep: %n%	true
+effects_description_wh3_main_effect_thor_stat_speed_tsar_guard	Armoured Kossar, Tsar Guard and Kreml Guard units speed: +%n%	true
+effects_description_wh3_main_effect_thor_stat_melee_attack_tsar_guard	Armoured Kossar, Tsar Guard and Kreml Guard units melee attack: +%n	true
+effects_description_wh3_main_effect_thor_stat_missile_resistance_tsar_guard	Armoured Kossar, Tsar Guard and Kreml Guard units missile resistance: +%n%	true
+effects_description_wh3_main_effect_thor_stat_melee_ap_tsar_guard	Armoured Kossar, Tsar Guard and Kreml Guard units armour-piercing melee damage: +%n	true
+effects_description_wh3_main_effect_thor_tsar_guard_xp_bonus	For every rank gained, Armoured Kossar, Tsar Guard and Kreml Guard units gain physical resistance, speed and charge bonus: %+n%	true
+effects_description_wh_dlc08_effect_enable_mount_kho_mammoth	Mount: War Mammoth (Shrine of Khorne)	true
+effects_description_ghs_ksl_unit_cap	Unit Capacity: Golden Bear Knights and Frostbound Elk Call +%n	false
+effects_description_ghs_cth_dragon_guard_melee_weapon	Unlocks contact effect: [Dragon's Roar!]	false
+effects_description_ghs_dwf_missile_mecha	Repair: Vengeance Reckoning Mech (Multi-Barrel Rune Gun)	true
+effects_description_unit_cap_ghs_main_tmb_cav_ostrich_rider	Unit capacity: Bone Ostrich Rider +%n	false
+effects_description_unit_cap_ghs_main_tmb_cav_heavy_ostrich_rider	Unit capacity: Bone Ostrich Royal Guard +%n	false
+effects_description_unit_cap_ghs_main_tmb_mon_sandstalker	Unit capacity: Hidden Sentinel of the Sands +%n	false
+effects_description_unit_cap_ghs_main_tmb_cav_scarab_flying_01	Unit capacity: Scarab Swarm +%n	false
+effects_description_unit_cap_ghs_main_tmb_cav_scarab_flying_02	Unit capacity: Gold Scarab Rider +%n	false
+effects_description_unit_cap_ghs_main_tmb_mon_necrosphinx_usirian	Unit capacity: Whisper of Usirian +%n	false
+effects_description_unit_cap_ghs_main_tmb_mon_bone_elephant	Unit capacity: Skeleton War Elephant +%n	false
 effects_description_unit_cap_ghs_main_tmb_mon_ushabti_dual_weapon	Unit capacity: Jackal Ushabti +%n	false
-effects_description_unit_cap_ghs_main_tmb_mon_ushabti_eagle_cannon	Unit capacity: Sky-Eagle Ushabti +%n	false
-effects_description_unit_cap_ghs_main_tmb_mon_ushabti_great_weapon	Unit capacity: Leviathan Ushabti +%n	false
-effects_description_unit_cap_ghs_main_tmb_mon_scorpion_monster	Unit capacity: Nagash Scorpion Titan +%n	false
-effects_description_lzd_kroxigor_bro_01_weapon	Skill: "Fist of Quiji"	false
-effects_description_lzd_kroxigor_bro_02_weapon	Skill: "Edge of Iqi"	false
-effects_description_lzd_kroxigor_bro_02_armour	Skill: "Golden Panoply"	false
-effects_description_ghs_main_wm_def_veh_black_ark_cap	Unit capacity: Black Ark +%n	false
-effects_description_ghs_effect_loongboat_upgrade_ammotype_grapeshot	Upgrade Dragon Cloud-Ship Cannon Ammunition	false
-effects_description_ghs_effect_loongboat_upgrade_ammotype_flaming	Upgrade Dragon Cloud-Ship Flaming Cannon Ammunition	false
-effects_description_ghs_effect_loongboat_upgrade_ammotype_sharpenel	Upgrade Dragon Cloud-Ship Rocket Ammunition	false
+effects_description_unit_cap_ghs_main_tmb_mon_ushabti_eagle_cannon	Unit capacity: Sky Hawk Ushabti +%n	false
+effects_description_unit_cap_ghs_main_tmb_mon_ushabti_great_weapon	Unit capacity: Crocodile Ushabti +%n	false
+effects_description_unit_cap_ghs_main_tmb_mon_scorpion_monster	Unit capacity: Nagash's Venom Scorpion Titan +%n	false
+effects_description_lzd_kroxigor_bro_01_weapon	Unlocks skill: Fist of Quetzl	false
+effects_description_lzd_kroxigor_bro_02_weapon	Unlocks skill: Edge of Itza	false
+effects_description_lzd_kroxigor_bro_02_armour	Unlocks skill: Golden Regalia	false
+effects_description_ghs_effect_loongboat_upgrade_ammotype_grapeshot	Upgrade Dragon God Cloud Vessel's cannon ammunition	false
+effects_description_ghs_effect_loongboat_upgrade_ammotype_flaming	Upgrade Dragon God Cloud Vessel's flame cannon ammunition	false
+effects_description_ghs_effect_loongboat_upgrade_ammotype_sharpenel	Upgrade Dragon God Cloud Vessel's rocket ammunition	false
+effects_description_brt_green_knight_armour	Armour: Green Knight +%n	true
+effects_description_brt_green_knight_flanking_immune	Unlocks attribute: Green Knight unlocks 'Immune to Flanking'	true
+effects_description_brt_green_knight_health	Ward Save Hit Points: Green Knight +%n	true
+effects_description_brt_green_knight_ignore_imbue_contact_effects_enemy	Unlocks attribute: Green Knight unlocks 'Immune to Contact Effects'	true
+effects_description_brt_green_knight_melee_attack	Melee Attack: Green Knight +%n	true
+effects_description_brt_green_knight_melee_defence	Melee Defence: Green Knight +%n	true
+effects_description_brt_green_knight_unyielding_assault	Unlocks attribute: Green Knight unlocks 'Unyielding Assault'	true
+effects_description_brt_green_knight_ward	Special protection: Green Knight +%n	true
+effects_description_brt_green_knight_weapon_strength	Armour-Piercing Weapon Strength: Green Knight +%n	true
+effects_description_cth_xiaoxiao_horse	Mount: [Crimson Charcoal Zhu Long Steed]	true
+effects_description_cth_zhaowang_horse	Mount: [Ten Thousand Miles of Mist and Cloud]	true
+effects_description_ghs_abilities_hongying_tele	Unlocks skill: 'Raven's Shadow Flicker'	true
+effects_description_ghs_ability_cth_jade_blood_rune_spell_delete	Remove skill: [Jade Blood Rune Art]	true
+effects_description_ghs_ability_cth_jade_blood_snake	Learn skill: [Jade Blood Elixir]	true
+effects_description_ghs_ability_cth_rune_spell_magic	Learn skill: [Weng Chang's Spirit Hall]	true
+effects_description_ghs_ability_cth_rune_spell_regeneration	Learn skill: [Withered Wood Reborn]	true
+effects_description_ghs_ability_cth_rune_spell_resistance	Learn skill: [Endless Life]	true
+effects_description_ghs_chs_archaon_background_scaling_weapon	[[col:orange]]'Slayer of Kings': Weapon Strength, Charge Bonus, Hit Points, Speed: +%n% per experience rank[[/col]]	true
+effects_description_ghs_cth_cha_wangque_enchanted_item	'Mirror of the Cassia Soul' skill upgraded to: 'Mirror of the Cassia Soul - Moonlight'	true
+effects_description_ghs_cth_cha_yangxing_enchanted_item	Unlocks skill: 'Dragon God's Contempt'	true
+effects_description_ghs_def_background_scaling_hellebron	[[col:orange]]'Fanatic Devotion to Khaine': Weapon Strength: +%n% per experience rank for Hag Hellebron, Death Hags, and Khainite Assassins[[/col]]	true
+effects_description_ghs_dwf_background_scaling_weapon_belegar	[[col:orange]]'Oath of Kings': Speed, Melee and Missile Weapon Strength: +%n% per experience rank for Belegar and Ancestor Heroes of Clan Angrund[[/col]]	true
+effects_description_ghs_effect_belakor_forge	[[col:orange]]'Soul Forge Thief': Defeated daemonic units have a chance to be reforged at the Soul Forge and return to the mortal realm[[/col]]	true
+effects_description_ghs_effect_cth_yangxing_attribute_fatigue_immune	Unlocks attribute: Construct units unlock 'Perfect Vigour'	true
+effects_description_ghs_effect_cth_yangxing_attribute_flank_immune	Unlocks attribute: Construct units unlock 'Immune to Flanking'	true
+effects_description_ghs_effect_cth_yangxing_attribute_unyielding_assault	Unlocks attribute: Construct units unlock 'Unyielding Assault'	true
+effects_description_ghs_effect_cth_yangxing_stat_barrier	Ward Save Hit Points: Construct units +%n	true
+effects_description_ghs_effect_cth_yangxing_stat_charge	Charge Bonus: Construct units +%n%	true
+effects_description_ghs_effect_cth_yangxing_stat_melee_attack	Melee Attack: Construct troops +%n	true
+effects_description_ghs_effect_cth_yangxing_stat_resistance_missile	Missile Resistance: Construct troops +%n	true
+effects_description_ghs_effect_cth_yangxing_stat_speed	Speed: Construct troops +%n%	true
+effects_description_ghs_effect_cth_yangxing_stat_weapon_strength	Weapon Strength: Construct troops +%n%	true
+effects_description_ghs_effect_force_ability_enable_cannot_die	Unlocks Ability: Unyielding in the Underworld	true
+effects_description_ghs_effect_force_attribute_enable_glorious_charge_cth_cav	Unlocks Attribute: Dragon-Horse Cavalry troops unlock Glorious Charge	true
+effects_description_ghs_effects_hongying_secret_follower_tele	Ability Uses: Cassia Confidants troops' Shadow Leap%+n	true
+effects_description_ghs_effects_hongying_secret_follower_unyielding_assault	Unlocks Attribute: Cassia Confidants troops unlock Unyielding Assault	true
+effects_description_ghs_hef_background_scaling_alith_anar	[[col:orange]]'Arrow of the Shadow King': Missile Weapon Strength: Alith Anar and Shadow Warden's Hand gain %+n% per experience rank[[/col]]	true
+effects_description_ghs_hef_background_scaling_tyrion	[[col:orange]]'Scion of Aenarion': Weapon Strength: Tyrion, Alastar, and Elf Princes gain %+n% per experience rank[[/col]]	true
+effects_description_ghs_lord_background_scaling_missile_weapon	[[col:orange]]'Bow of Endings': Missile Weapon Strength gains %+n% per experience rank[[/col]]	true
+effects_description_ghs_lord_background_scaling_weapon	[[col:orange]]'Eternal Blade': Weapon Strength gains %+n% per experience rank[[/col]]	true
+effects_description_ghs_lzd_background_scaling_nakai	[[col:orange]]'Might of Ancient Blood': Weapon Strength: Nakai and Ancient Kroxigor gain %+n% per experience rank[[/col]]	true
+effects_description_ghs_main_hongying_faction_leader	[[col:orange]]Yuan Bo carries the [Moonlight Edict] Liu Wang Que to Lustria to complete his mission, while [Pale Moon's Dark Crow] Hong Ying oversees Shang Wu, purging the corruption within[[/col]]	true
+effects_description_ghs_main_skill_node_cth_wangque_unique_1	Unlocks Ability: Swift as the Wind	true
+effects_description_ghs_main_skill_node_cth_wangque_unique_2	Unlocks Ability: Gentle as the Forest	true
+effects_description_ghs_main_skill_node_cth_wangque_unique_3	Unlocks Ability: Fierce as Fire	true
+effects_description_ghs_main_skill_node_cth_wangque_unique_4	Unlocks Ability: Immovable as the Mountain	true
+effects_description_ghs_main_skill_node_cth_wangque_unique_5	Unlocks Ability: Inscrutable as the Shadow	true
+effects_description_ghs_main_skill_node_cth_wangque_unique_6	Unlocks Ability: Strikes Like Thunder	true
+effects_description_ghs_main_xiaoxiao_faction_leader	[[col:orange]][Candlelight General] Xiao Xiao sets out from Nan Gao alongside the Soaring Dragon to stop the Long Wall from falling into Tzeentch's hands[[/col]]	true
+effects_description_ghs_main_xiaoxiao_spell_duration	Effect Duration: Spells cast by Xiao Xiao%+n%	true
+effects_description_ghs_main_xiaoxiao_unit_set_south	Wei Nan Provincial troops: Armour-Piercing Weapon Damage, Melee Attack/Defence, Charge Bonus: +%n%	true
+effects_description_ghs_main_xiaoxiao_unit_set_walk	Unlocks Ability: Wei Nan Provincial troops unlock 'Savage Charge'	true
+effects_description_ghs_main_zhaowang_contact_blood	Attacks inflict the 'Internal Injury' effect	true
+effects_description_ghs_main_zhaowang_faction_leader	[[col:orange]][King of Xi Zhao] Xuan Lie remains stationed in Qiang City, ever watchful of the western Ogres and rebel movements[[/col]]	true
+effects_description_ghs_skv_background_scaling_snikch	[[col:orange]]'Creed of the Assassin': Speed, Melee and Missile Weapon Strength: Snikch, Assassin Adepts, and Assassins gain %+n% per experience rank[[/col]]	true
+effects_description_mp_cap_def_mon_manticore_rider	Unit capacity: %+n\\nManticore-Mounted Har Ganeth Blackguard	true
+effects_description_mp_cap_ghs_hef_dragon_prince	Unit capacity: %+n\\nCaledor Flamefire Prince	true
+effects_description_mp_cap_hef_dragonship	Unit capacity: %+n\\nDragonsail Warship	true
+effects_description_wh2_dlc14_lord_passive_fleur_de_lys_banner	Green Knight unlocks skill: Fleur-de-Lys Banner	true
+effects_description_wh3_dlc24_character_abilities_colossal_strike	Green Knight unlocks skill: Colossal Strike	true
+effects_description_wh3_dlc27_effect_ability_enable_chaos_conduit_spellcasters_skv	Passive skill: all Skaven units gain Chaos Conduit	true
+effects_description_wh3_dlc29_effect_anti_large_emp_ulric_chosen	Bonus vs. Large: Chosen of Ulric units %+n	true
+effects_description_wh3_dlc29_effect_barrier_emp_ulric_chosen	Ward save health: Chosen of Ulric units %+n	true
+effects_description_wh3_dlc29_effect_charge_emp_ulric_chosen	Charge bonus: Chosen of Ulric units %+n%	true
+effects_description_wh3_dlc29_effect_dampen_emp_ulric_chosen	Chosen of Ulric units: attacks inflict Dampen effect	true
+effects_description_wh3_dlc29_effect_emp_melee_attack_ulric_chosen	Melee attack: Chosen of Ulric units %+n	true
+effects_description_wh3_dlc29_effect_frenzy_emp_teutogen_guard	Passive skill: Teutogen Guard and Knights of the White Wolf gain Frenzy	true
+effects_description_wh3_dlc29_effect_glorious_charge_emp_ulric_chosen	Unlocks attribute: Chosen of Ulric units unlock Glorious Charge	true
+effects_description_wh3_dlc29_effect_guerrilla_deploy_emp_ulric_chosen	Unlocks attribute: Chosen of Ulric units unlock Vanguard Deployment	true
+effects_description_wh3_dlc29_effect_slayer_emp_ulric_chosen	Unlocks attribute: Chosen of Ulric units unlock Executioner	true
+effects_description_wh3_dlc29_effect_speed_emp_ulric_chosen	Speed: Chosen of Ulric units %+n%	true
+effects_description_wh3_dlc29_effect_unyielding_assault_emp_ulric_chosen	Unlocks attribute: Chosen of Ulric units unlock Unyielding Assault	true
+effects_description_wh3_dlc29_effect_vigour_emp_ulric_chosen	Unlocks attribute: Chosen of Ulric units unlock Strong Vigour	true
+effects_description_wh3_dlc29_effect_ward_missile_emp_ulric_chosen	Missile resistance: Chosen of Ulric units %+n%	true
+effects_description_wh3_dlc29_effect_weapon_strength_emp_ulric_chosen	Armour-piercing weapon strength: Chosen of Ulric units %+n%	true
+effects_description_wh3_main_skill_grn_ironskin_background_scaling	[[col:orange]]Black Steel: Weapon strength: Ironjawz and Black Orc Bosses +%n% per experience rank gained[[/col]]	true
+effects_description_wh_dlc07_lord_passive_mist_of_the_lady	Green Knight unlocks skill: Mist of the Lady	true
+effects_description_wh_main_lord_passive_beloved_son_of_bretonnia	Green Knight unlocks skill: 'Beloved Son of Bretonnia'	true
+effects_description_wh_main_lord_passive_the_ladys_champion	Green Knight unlocks skill: 'The Lady's Champion'	true

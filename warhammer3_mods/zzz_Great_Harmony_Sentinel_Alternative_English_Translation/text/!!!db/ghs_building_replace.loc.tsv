@@ -1,41 +1,41 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_building_replace.loc		
-advice_levels_onscreen_text_996478928	You are the guardian of Cathay's northern border, but Tzeentch's armies have breached the Snake Gate, defiling Cathayan lands. Restore your honor and destroy them!	true
-advice_levels_onscreen_text_1218325707	Indeed, my lord, a rift has appeared at the Great Bastion. Tzeentch's forces have overrun the ruins of the Snake Gate and occupied the Terracotta Graveyard.	true
-start_pos_settlements_onscreen_name_settlement:wh3_main_combi_region_snake_gate1514149480	Snake Gate	true
-regions_onscreen_wh3_main_combi_region_snake_gate	Snake Gate	true
-start_pos_settlements_onscreen_name_settlement:wh3_main_chaos_region_snake_gate1279361551	Snake Gate	true
-regions_onscreen_wh3_main_chaos_region_snake_gate	Snake Gate	true
-regions_battle_name_wh3_main_combi_region_snake_gate	Snake Gate	true
-regions_battle_name_wh3_main_chaos_region_snake_gate	Snake Gate	true
-missions_localised_description_wh3_main_camp_narrative_chaos_miao_ying_capture_snake_gate_01	The Turtle Gate has fallen into the hands of [[sl:campaign_chaos]]Chaos[[/sl]]! Reclaim this mighty bastion swiftly to safeguard the [[sl:campaign_cathay]]Celestial Empire[[/sl]]. It is your duty as a guardian of the Great Bastion!\\n\\n{{tr:hp_campaign_point_1_great_bastion}}\\n\\n{{tr:hp_campaign_great_bastion_learn_more}}	true
-advice_levels_onscreen_text_1590378547	Such efforts are praiseworthy, but what’s next? I’m hungry, and those Cathayans cowering in the Turtle Gate must be delicious…	true
-advice_levels_onscreen_text_1602198971	That is Cathay's Great Bastion. As per your plans, the servants of the Changer of Ways have seized the Snake Gate and infiltrated the Dragon Empire.	true
-incidents_localised_description_wh3_main_incident_cth_bastion_threat_increases_snake	The threat level at the Great Bastion has increased! Chaos is gathering at the [[b]]Snake Gate[[/b]], and an attack is imminent!	true
-incidents_localised_description_wh3_main_incident_cth_bastion_threat_increases_turtle	The threat level at the Great Bastion has increased! Chaos is gathering at the [[b]]Turtle Gate[[/b]], and an attack is imminent!	true
-incidents_localised_description_wh3_main_incident_cth_bastion_threat_increases_dragon	The threat level at the Great Bastion has increased! Chaos is gathering at the [[b]]Dragon Gate[[/b]], and an attack is imminent!	true
-ui_text_replacements_localised_text_hp_campaign_point_1_great_bastion	The Cathayan [[sl:campaign_factions]]factions[[/sl]] must hold the Snake Gate, Dragon Gate, and Turtle Gate to halt Chaos from invading Cathayan lands.	true
-start_pos_settlements_onscreen_name_settlement:wh3_main_chaos_region_turtle_gate705002178	Turtle Gate	true
-regions_battle_name_wh3_main_chaos_region_turtle_gate	Turtle Gate	true
-regions_battle_name_wh3_main_combi_region_turtle_gate	Turtle Gate	true
-start_pos_settlements_onscreen_name_settlement:wh3_main_combi_region_turtle_gate888839380	Turtle Gate	true
-regions_onscreen_wh3_main_combi_region_turtle_gate	Turtle Gate	true
-regions_onscreen_wh3_main_chaos_region_turtle_gate	Turtle Gate	true
-start_pos_settlements_onscreen_name_settlement:wh3_main_chaos_region_dragon_gate1157443971	Dragon Gate	true
-regions_battle_name_wh3_main_combi_region_dragon_gate	Dragon Gate	true
-start_pos_settlements_onscreen_name_settlement:wh3_main_combi_region_dragon_gate1603703403	Dragon Gate	true
-regions_onscreen_wh3_main_combi_region_dragon_gate	Dragon Gate	true
-regions_battle_name_wh3_main_chaos_region_dragon_gate	Dragon Gate	true
-regions_onscreen_wh3_main_chaos_region_dragon_gate	Dragon Gate	true
-battles_localised_name_major_q_cth	Dragon Gate – Cathay	true
-building_culture_variants_name_wh_main_special_settlement_wei_jin_1wh3_main_cth_cathay	Rising Dragon Land	false
-building_culture_variants_name_wh_main_special_settlement_wei_jin_2wh3_main_cth_cathay	Glorious Sunrise	false
-building_culture_variants_name_wh_main_special_settlement_wei_jin_3wh3_main_cth_cathay	Celestial Capital	false
-building_culture_variants_name_wh_main_special_settlement_wei_jin_4wh3_main_cth_cathay	Imperial Capital	false
-building_culture_variants_name_wh_main_special_settlement_wei_jin_5wh3_main_cth_cathay	Majestic Metropolis	false
-building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_1	This tower stands at the heart of Cathay, a beacon of the Dragon Emperor's glory.	false
-building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_2	Thick walls and towering spires form an impenetrable fortress.	false
-building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_3	Grand palaces symbolize wealth and the supreme authority of the Celestial Dragon Emperor.	false
-building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_4	The Heavenly City stands above the capital, a radiant symbol of Cathay’s glory, inspiring reverence among all.	false
-building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_5	'Majestic' falls short of describing this world-renowned city’s splendor—a home of endless wonders and the Dragon Emperor's throne.	false
-building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_ruin	Once the most magnificent city in existence, Wei Jin now lies in ruins, its countless marvels buried beneath rubble and ash.	false
+advice_levels_onscreen_text_996478928	You are the guardian of Cathay's northern border, yet the armies of Tzeentch have breached the Serpent's Mist Gate and defiled Cathayan soil. Restore your honor and destroy them!	true
+advice_levels_onscreen_text_1218325707	Yes, my lady Sun Ji, a breach has indeed appeared in the Great Bastion. The armies of Tzeentch have swept past the ruins of the Serpent's Mist Gate and seized the terracotta tomb grounds.	true
+start_pos_settlements_onscreen_name_settlement:wh3_main_combi_region_snake_gate1514149480	Serpent's Mist Gate	true
+regions_onscreen_wh3_main_combi_region_snake_gate	Serpent's Mist Gate	true
+start_pos_settlements_onscreen_name_settlement:wh3_main_chaos_region_snake_gate1279361551	Serpent's Mist Gate	true
+regions_onscreen_wh3_main_chaos_region_snake_gate	Serpent's Mist Gate	true
+regions_battle_name_wh3_main_combi_region_snake_gate	Serpent's Mist Gate	true
+regions_battle_name_wh3_main_chaos_region_snake_gate	Serpent's Mist Gate	true
+missions_localised_description_wh3_main_camp_narrative_chaos_miao_ying_capture_snake_gate_01	Black Tortoise Pass has fallen into the hands of [[sl:campaign_chaos]]Chaos[[/sl]]! Retake this mighty stronghold with all haste to defend the [[sl:campaign_cathay]]Celestial Empire of Cathay[[/sl]] — this is your duty as a Sentinel of the Great Bastion!\\n\\n{{tr:hp_campaign_point_1_great_bastion}}\\n\\n{{tr:hp_campaign_great_bastion_learn_more}}	true
+advice_levels_onscreen_text_1590378547	Such effort deserves a blessing, but what comes next? I am hungry, and the Cathayans cowering in Black Tortoise Pass must taste delicious…	true
+advice_levels_onscreen_text_1602198971	That is Cathay's Great Bastion. By your scheme, the Lord of Change's servants have seized the Serpent's Mist Gate and infiltrated the Dragon God's Empire.	true
+incidents_localised_description_wh3_main_incident_cth_bastion_threat_increases_snake	The Great Bastion's threat level has risen! Chaos is massing at [[b]]Serpent's Mist Gate[[/b]] — an attack is imminent!	true
+incidents_localised_description_wh3_main_incident_cth_bastion_threat_increases_turtle	The Great Bastion's threat level has risen! Chaos is massing at [[b]]Black Tortoise Pass[[/b]] — an attack is imminent!	true
+incidents_localised_description_wh3_main_incident_cth_bastion_threat_increases_dragon	The Great Bastion's threat level has risen! Chaos is massing at [[b]]Dragon's Roar Sword Pavilion[[/b]] — an attack is imminent!	true
+ui_text_replacements_localised_text_hp_campaign_point_1_great_bastion	The Cathayan [[sl:campaign_factions]]faction[[/sl]] must hold the three [[sl:campaign_settlements]]settlements[[/sl]] of Serpent's Mist Gate, Dragon's Roar Sword Pavilion, and Black Tortoise Pass in order to stop the Chaos invasion of Cathayan soil.	true
+start_pos_settlements_onscreen_name_settlement:wh3_main_chaos_region_turtle_gate705002178	Black Tortoise Pass	true
+regions_battle_name_wh3_main_chaos_region_turtle_gate	Black Tortoise Pass	true
+regions_battle_name_wh3_main_combi_region_turtle_gate	Black Tortoise Pass	true
+start_pos_settlements_onscreen_name_settlement:wh3_main_combi_region_turtle_gate888839380	Black Tortoise Pass	true
+regions_onscreen_wh3_main_combi_region_turtle_gate	Black Tortoise Pass	true
+regions_onscreen_wh3_main_chaos_region_turtle_gate	Black Tortoise Pass	true
+start_pos_settlements_onscreen_name_settlement:wh3_main_chaos_region_dragon_gate1157443971	Dragon's Roar Sword Pavilion	true
+regions_battle_name_wh3_main_combi_region_dragon_gate	Dragon's Roar Sword Pavilion	true
+start_pos_settlements_onscreen_name_settlement:wh3_main_combi_region_dragon_gate1603703403	Dragon's Roar Sword Pavilion	true
+regions_onscreen_wh3_main_combi_region_dragon_gate	Dragon's Roar Sword Pavilion	true
+regions_battle_name_wh3_main_chaos_region_dragon_gate	Dragon's Roar Sword Pavilion	true
+regions_onscreen_wh3_main_chaos_region_dragon_gate	Dragon's Roar Sword Pavilion	true
+battles_localised_name_major_q_cth	Dragon's Roar Sword Pavilion – Cathay	true
+building_culture_variants_name_wh_main_special_settlement_wei_jin_1wh3_main_cth_cathay	Land of Dragon's Ascension	false
+building_culture_variants_name_wh_main_special_settlement_wei_jin_2wh3_main_cth_cathay	Rising Sun of the Radiant East	false
+building_culture_variants_name_wh_main_special_settlement_wei_jin_3wh3_main_cth_cathay	Cathayan Capital	false
+building_culture_variants_name_wh_main_special_settlement_wei_jin_4wh3_main_cth_cathay	Celestial Imperial Capital	false
+building_culture_variants_name_wh_main_special_settlement_wei_jin_5wh3_main_cth_cathay	Towering Capital Region	false
+building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_1	This tower stands at the heart of the Celestial Empire of Cathay, a beacon of the Dragon Emperor's glory.	false
+building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_2	Thick walls and towering spires — the defensive stronghold of the Towering Capital is unmatched.	false
+building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_3	The magnificent palace is a symbol of wealth and splendor, a manifestation of the Celestial Dragon Emperor's authority.	false
+building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_4	The Celestial City rises above the Towering Capital, a radiant symbol of Cathay's glory, before whose shadow all the myriad people bow in awe.	false
+building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_5	The word 'magnificent' scarcely does justice to the splendor of this city known to all under heaven; it is home to endless wonders and the seat of the Dragon Emperor's throne.	false
+building_short_description_texts_short_description_wh_main_special_settlement_wei_jin_ruin	The Towering Capital was once the most magnificent city in the world, now reduced to ruins, its endless wonders buried deep beneath rubble and ash.	false

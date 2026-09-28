@@ -1,9 +1,9 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_cathy_building.loc		
-building_short_description_texts_short_description_nangao_blackpowder_workshop	The pride of Nan-Gau lies in its gunpowder; craftsmen create powerful explosives in the black powder workshop.	true
-building_culture_variants_name_nangao_blackpowder_workshop	Nan-Gau Blackpowder Workshop	true
-building_short_description_texts_short_description_nangao_arsenal	The development of gunpowder led to the army's demand for stronger firearms, prompting the creation of new equipment.	true
-building_culture_variants_name_nangao_arsenal	Nan-Gau Arsenal	true
-building_chains_chain_tooltip_nangao_firework_chain	Nan-Gau Blackpowder Workshop Chain	true
-building_short_description_texts_short_description_nangao_smithy	The skilled gunpowder craftsmen of Nan-Gau gathered together, eventually forming a renowned smithy.	true
-building_culture_variants_name_nangao_smithy	Nan-Gau Smithy	true
+building_short_description_texts_short_description_nangao_blackpowder_workshop	Gunpowder is Nan Gau's great pride—artisans craft potent gunpowder within the Blackpowder Workshop.	true
+building_culture_variants_name_nangao_blackpowder_workshop	Nan Gau Blackpowder Workshop	true
+building_short_description_texts_short_description_nangao_arsenal	The advance of gunpowder has spurred the army's demand for stronger firearms, prompting the development of new equipment.	true
+building_culture_variants_name_nangao_arsenal	Nan Gau Arsenal	true
+building_chains_chain_tooltip_nangao_firework_chain	Nan Gau Gunpowder Workshop chain	true
+building_short_description_texts_short_description_nangao_smithy	Nan Gau artisans skilled in gunpowder crafts gathered together, and over time became renowned as a smithy.	true
+building_culture_variants_name_nangao_smithy	Nan Gau Smithy	true

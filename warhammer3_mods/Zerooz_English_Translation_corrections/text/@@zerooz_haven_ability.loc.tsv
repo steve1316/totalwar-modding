@@ -1,16 +1,16 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_haven_ability.loc		
 unit_abilities_onscreen_name_Resurrect	Resurrect	false
-unit_abilities_tooltip_text_Resurrect	Magic that grants substantial healing and resurrects units during battle.	true
-unit_abilities_onscreen_name_LayHands	Lay on Hands	true
-unit_abilities_tooltip_text_LayHands	Heals allied units for a duration.	true
+unit_abilities_tooltip_text_Resurrect	A magic that grants substantial healing to units in battle and can even resurrect the fallen.	true
+unit_abilities_onscreen_name_LayHands	Lay Hands	true
+unit_abilities_tooltip_text_LayHands	Heals friendly units for a period of time.	true
 unit_abilities_onscreen_name_LargeShield	Large Shield	true
-unit_abilities_tooltip_text_LargeShield	Provides a defensive buff to surrounding units.	true
+unit_abilities_tooltip_text_LargeShield	Grants a defensive boon to nearby troops.	true
 unit_abilities_onscreen_name_PiercingBolt	Piercing Bolt	true
-unit_abilities_tooltip_text_PiercingBolt	Temporarily enhances armor-piercing attacks.	true
+unit_abilities_tooltip_text_PiercingBolt	Enhances armor-piercing shots for a period of time.	true
 unit_abilities_onscreen_name_BlindingCharge	Blinding Charge	true
-unit_abilities_tooltip_text_BlindingCharge	During a charge, the weapon of the Knight of the Sun emits a blinding light, making it difficult for enemies to see.	true
-unit_abilities_onscreen_name_SunSteed	Sun Steed	false
-unit_abilities_tooltip_text_SunSteed	The Knight of the Sun and his steed transform into a spirit form, becoming ethereal.	false
-unit_abilities_onscreen_name_normalSteed	Mortal Form	false
-unit_abilities_tooltip_text_normalSteed	The Knight of the Sun and his steed revert to their mortal physical forms.	false
+unit_abilities_tooltip_text_BlindingCharge	The Sun Knight's weapon flares with radiant light during a charge, blinding enemies.	true
+unit_abilities_onscreen_name_SunSteed	Sun Knight	false
+unit_abilities_tooltip_text_SunSteed	The Sun Knight and their steed transform into a beam of light, becoming a spirit unit.	false
+unit_abilities_onscreen_name_normalSteed	Mortal Flesh	false
+unit_abilities_tooltip_text_normalSteed	The Sun Knight and their steed revert to mortal flesh.	false

@@ -1,38 +1,38 @@
 key	text	tooltip
 #Loc;1;text/@@@DEER24Cathay/!!!wwd_额外将领特性.loc		
 character_skills_localised_name_wwd_innate_battle_3_hale_and_hearty	Hale and Hearty	false
-character_skills_localised_description_wwd_innate_battle_3_elusive	This one moves like lightning, deftly evading enemy blows.	false
-character_skills_localised_name_wwd_innate_battle_7_resilient	Unyielding	false
-character_skills_localised_description_wwd_innate_battle_7_resilient	If you're tough enough, armor becomes mere decoration.	false
-character_skills_localised_description_wwd_innate_battle_7_vigorous	Plenty have tried—killing this one is no easy feat. Trust me.	false
-character_skills_localised_description_wwd_innate_battle_3_trained	Every movement comes effortlessly to this one.	false
-character_skills_localised_description_wwd_innate_battle_7_dangerous	You really don't want to be on the receiving end of their strikes. Really.	false
-character_skills_localised_description_wwd_innate_battle_3_hale_and_hearty	A true model of health and strength—clearly shaped by years of training.	false
+character_skills_localised_description_wwd_innate_battle_3_elusive	This one moves swift as lightning, able to twist away from an opponent's blow.	false
+character_skills_localised_name_wwd_innate_battle_7_resilient	Resilient	false
+character_skills_localised_description_wwd_innate_battle_7_resilient	When one is hardy enough, armor becomes little more than decoration.	false
+character_skills_localised_description_wwd_innate_battle_7_vigorous	Many have tried. Killing this one is no simple task, believe me.	false
+character_skills_localised_description_wwd_innate_battle_3_trained	Everything this one does looks entirely effortless.	false
+character_skills_localised_description_wwd_innate_battle_7_dangerous	You certainly wouldn't want to be the target of this one's attack. Certainly not.	false
+character_skills_localised_description_wwd_innate_battle_3_hale_and_hearty	This is the very model of health and vigor, clearly the product of years of training.	false
 character_skills_localised_name_wwd_innate_battle_3_elusive	Escape Artist	false
-character_skills_localised_name_wwd_innate_battle_7_dangerous	Dangerous Conduct	false
+character_skills_localised_name_wwd_innate_battle_7_dangerous	Dangerous	false
 character_skills_localised_name_wwd_innate_battle_3_trained	Well-Trained	false
-character_skills_localised_name_wwd_innate_battle_7_vigorous	Indomitable	false
-character_skills_localised_name_wwd_innate_campaign_7_avaricious	Greed Incarnate	false
-character_skills_localised_name_wwd_innate_campaign_3_unsentimental	Stoic	false
-character_skills_localised_description_wwd_innate_campaign_3_unsentimental	To this one, personal feelings are never for public display.	false
-character_skills_localised_name_wwd_innate_campaign_3_observant	Eagle-Eyed	false
-character_skills_localised_description_wwd_innate_campaign_7_adept	This one doesn't just know the art of war—they embody it.	false
-character_skills_localised_description_wwd_innate_campaign_7_avaricious	A lust for treasure to rival even the greenskinned!	false
-character_skills_localised_description_wwd_innate_campaign_3_observant	If you want to live, keep your eyes open and your head down.	false
-character_skills_localised_name_wwd_innate_campaign_7_adept	Master of Arms	false
-character_skills_localised_description_wwd_innate_campaign_7_administrator	Precision and order? This one is unmatched—just don’t invite them to a party.	false
+character_skills_localised_name_wwd_innate_battle_7_vigorous	Unbreakable Vigor	false
+character_skills_localised_name_wwd_innate_campaign_7_avaricious	Avaricious	false
+character_skills_localised_name_wwd_innate_campaign_3_unsentimental	Unmoved by Praise or Blame	false
+character_skills_localised_description_wwd_innate_campaign_3_unsentimental	In this one's view, personal feelings should never be shown before others.	false
+character_skills_localised_name_wwd_innate_campaign_3_observant	Watchful Eyes	false
+character_skills_localised_description_wwd_innate_campaign_7_adept	This one hasn't merely mastered the arts of war—they've made them second nature.	false
+character_skills_localised_description_wwd_innate_campaign_7_avaricious	This one adores treasure, rivaling even a Greenskin!	false
+character_skills_localised_description_wwd_innate_campaign_3_observant	To survive, it's best to keep your eyes wide open and your head down.	false
+character_skills_localised_name_wwd_innate_campaign_7_adept	Masterful	false
+character_skills_localised_description_wwd_innate_campaign_7_administrator	If precision and organization are needed, this one is undoubtedly the best choice. But at a party, they're rather dull.	false
 character_skills_localised_name_wwd_innate_campaign_7_administrator	Capable Governor	false
-character_skills_localised_description_wwd_innate_campaign_3_builder	Many of Mingzhu City's towering spires are thanks to this one's tireless efforts.	false
-character_skills_localised_name_wwd_innate_campaign_3_builder	Architect	false
-character_skills_localised_name_wwd_innate_campaign_3_dealer	Shrewd Trader	false
-character_skills_localised_description_wwd_innate_campaign_3_dealer	“Too late, too late.” By the time I’m gone, it’ll be your regret to bear.	false
-character_skills_localised_description_wwd_innate_campaign_3_thinker	Thankfully, there are always those who fret over the fate of the world—or we’d be… wait, never mind.	false
-character_skills_localised_name_wwd_innate_campaign_3_thinker	Tactical Advisor	false
-character_skills_localised_description_wwd_innate_campaign_7_entrepreneur	“There’s always a way, always an angle—you just have to find it.”	false
-character_skills_localised_description_wwd_innate_campaign_10_genius	This one is a paragon of talent—brilliance incarnate and the pride of the nation.	false
-character_skills_localised_name_wwd_innate_campaign_7_entrepreneur	Meticulous Planner	false
-character_skills_localised_name_wwd_innate_campaign_10_genius	Genius Beyond Compare	false
-character_skills_localised_description_wwd_innate_campaign_10_peerless	This one's martial might is unmatched—free to roam the battlefield, unstoppable.	false
-character_skills_localised_name_wwd_innate_campaign_10_peerless	Peerless	false
-character_skills_localised_description_wwd_innate_campaign_10_bloodline	This one descends from the pureblood of the Dragon Children, closest of mortals to the power of the heavens.	false
-character_skills_localised_name_wwd_innate_campaign_10_bloodline	Pureblood	false
+character_skills_localised_description_wwd_innate_campaign_3_builder	Many of the towering structures in the City of the Pearl were raised through this one's arduous labor.	false
+character_skills_localised_name_wwd_innate_campaign_3_builder	Master Builder	false
+character_skills_localised_name_wwd_innate_campaign_3_dealer	Shrewd Merchant	false
+character_skills_localised_description_wwd_innate_campaign_3_dealer	'Too late, too late'—once I've gone, regret will do you no good.	false
+character_skills_localised_description_wwd_innate_campaign_3_thinker	Fortunately, there's always someone in this world who worries over the affairs of the realm, or else we'd... oh, wait...	false
+character_skills_localised_name_wwd_innate_campaign_3_thinker	Master Strategist	false
+character_skills_localised_description_wwd_innate_campaign_7_entrepreneur	"There's always a way out, always an angle to it, you just have to find it."	false
+character_skills_localised_description_wwd_innate_campaign_10_genius	This one's talents are without peer, a true treasure of the nation, the very embodiment of wisdom.	false
+character_skills_localised_name_wwd_innate_campaign_7_entrepreneur	Diligent Manager	false
+character_skills_localised_name_wwd_innate_campaign_10_genius	Supreme Genius	false
+character_skills_localised_description_wwd_innate_campaign_10_peerless	This one's martial prowess surpasses all the armies, moving freely across the battlefield, unstoppable wherever they go.	false
+character_skills_localised_name_wwd_innate_campaign_10_peerless	Unrivaled	false
+character_skills_localised_description_wwd_innate_campaign_10_bloodline	This one is a pureblood descendant of the Dragon-kin, among the chosen closest to the powers of the heavens in the mortal world.	false
+character_skills_localised_name_wwd_innate_campaign_10_bloodline	Pure Blood	false

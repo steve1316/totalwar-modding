@@ -1,106 +1,87 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_skills.loc		
-character_skills_localised_name_ghs_cth_jade_taoist_self_restrain_desire	Keep One's Heart	false
-character_skills_localised_description_ghs_cth_jade_taoist_self_restrain_desire	Although the innate thirst of vampires cannot be completely eradicated, Jade-Blooded Taoists who deeply study the Wind of Life can significantly restrain their restless desires.	false
-character_skills_localised_name_ghs_cth_jade_taoist_self_high_speed	Speed of Jade Blood	false
-character_skills_localised_description_ghs_cth_jade_taoist_self_high_speed	Due to their racial traits, Jade-Blooded Taoists cannot ride living creatures despite their deeper affinity with nature. However, this has granted them supernatural speed.	false
-character_skills_localised_name_ghs_cth_royal_guard_crowmen_unique_0	Avatar of Yu Zhuo	false
-character_skills_localised_description_ghs_cth_royal_guard_crowmen_unique_0	It is said that "Yingchuo" is an illusion of the Moon Empress. Only when hearing its call can the Black Jade Crowmen channel the Wind of Yin and transform into the mythical bird.	false
-character_skills_localised_name_ghs_cth_jade_terracotta_unique_0	Immortal Spirit	false
-character_skills_localised_description_ghs_cth_jade_terracotta_unique_0	The heroic soul forever recorded in history, forged into an eternal legend through bravery and resilience, inspiring the people of Cathay to charge forward with courage.	false
-character_skills_localised_name_ghs_cth_jade_terracotta_unique_1	Jade Nexus	false
-character_skills_localised_description_ghs_cth_jade_terracotta_unique_1	The mysterious jade forms this body, guiding the terracotta to channel the Dragon Emperor’s might, circulating and nourishing the lands of the Celestial Empire.	false
-character_skills_localised_name_ghs_cth_jade_terracotta_unique_2	Legend in Death	false
-character_skills_localised_description_ghs_cth_jade_terracotta_unique_2	To live as a hero, to die as a legend. Standing proudly between heaven and earth, unyielding in name and unbroken in spirit.	false
-character_skills_localised_name_ghs_cth_ll_shugengan_demidragon	Demidragon Form	false
-character_skills_localised_name_ghs_cth_rgcm_innate_01	Celestial Dagger	false
-character_skills_localised_name_ghs_cth_rgcm_innate_02	Throat Cutter	false
-character_skills_localised_name_ghs_cth_rgcm_innate_03	Silent Black Feather	false
-character_skills_localised_name_ghs_cth_rgcm_innate_04	Eyes of Cathay	false
-character_skills_localised_name_ghs_cth_rgcm_innate_05	Unbearable Agitation	false
-character_skills_localised_name_ghs_cth_rgcm_innate_06	Deadly Sparrow	false
-character_skills_localised_name_ghs_cth_rgm_innate_01	Shadow of Nations' Fall	false
-character_skills_localised_name_ghs_cth_rgm_innate_02	Master Assassin	false
-character_skills_localised_name_ghs_cth_rgm_innate_03	Director of Espionage	false
+character_skills_localised_name_ghs_cth_jade_taoist_self_restrain_desire	Mastery of the Inner Heart	false
+character_skills_localised_description_ghs_cth_jade_taoist_self_restrain_desire	Though the innate thirst for blood can never be fully eradicated, this Jade Blood Taoist, deeply versed in the Wind of Life, can greatly restrain her restless urges and impart this discipline to her allies.	false
+character_skills_localised_name_ghs_cth_jade_taoist_self_high_speed	Power of Jade Blood	false
+character_skills_localised_description_ghs_cth_jade_taoist_self_high_speed	The Blood Kiss is both curse and gift—it torments them endlessly, yet grants them supernatural power.	false
+character_skills_localised_name_ghs_cth_royal_guard_crowmen_unique_0	True Form of the Yue Zhuo	false
+character_skills_localised_description_ghs_cth_royal_guard_crowmen_unique_0	[Shadowdance] is the mysterious Great Moon Luan personally bestowed upon Hong Ying by the Moon Empress. Legend holds this bird carries a fragment of the Empress's power. Upon hearing its cry, the [Black Jade Crow Marquis] can commune with the Wind of Yin and transform into the divine bird Yue Zhuo.	false
+character_skills_localised_name_ghs_cth_jade_terracotta_unique_0	Undying Heroic Soul	false
+character_skills_localised_description_ghs_cth_jade_terracotta_unique_0	A heroic spirit forever enshrined in history, forged through valor and resilience into an undying legend, inspiring the people of Cathay to press ever forward.	false
+character_skills_localised_name_ghs_cth_jade_terracotta_unique_1	Spirit Jade Nexus	false
+character_skills_localised_description_ghs_cth_jade_terracotta_unique_1	This form is cast from mysterious spirit jade. The terracotta guardians channel the Dragon Emperor's might, circulating and nourishing the lands of the Celestial Empire.	false
+character_skills_localised_name_ghs_cth_jade_terracotta_unique_2	Heroic Even in Death	false
+character_skills_localised_description_ghs_cth_jade_terracotta_unique_2	In life a hero among men, in death a mighty spirit—standing proud between heaven and earth, its glory unfading, its noble spirit unbroken.	false
+character_skills_localised_name_ghs_cth_ll_shugengan_demidragon	Dragon Blood Avatar	false
+character_skills_localised_name_ghs_cth_rgcm_innate_01	Celestial Black Dagger	false
+character_skills_localised_name_ghs_cth_rgcm_innate_02	Throat-Groper	false
+character_skills_localised_name_ghs_cth_rgcm_innate_03	Silent Black Feathers	false
+character_skills_localised_name_ghs_cth_rgcm_innate_04	Cathayan Sharp Eyes	false
+character_skills_localised_name_ghs_cth_rgcm_innate_05	Insufferable Nuisance	false
+character_skills_localised_name_ghs_cth_rgcm_innate_06	Deadly Sparrow's Cry	false
+character_skills_localised_name_ghs_cth_rgm_innate_01	Shadow Over the Realm	false
+character_skills_localised_name_ghs_cth_rgm_innate_02	Grandmaster Assassin	false
+character_skills_localised_name_ghs_cth_rgm_innate_03	Chief of Espionage	false
 character_skills_localised_name_ghs_cth_rgm_innate_04	Delaying Mist	false
-character_skills_localised_name_ghs_cth_rgm_innate_05	Endless Night	false
-character_skills_localised_name_ghs_cth_rgm_innate_06	Commander of the Flock	false
+character_skills_localised_name_ghs_cth_rgm_innate_05	Unclaimed by the Long Night	false
+character_skills_localised_name_ghs_cth_rgm_innate_06	Master of the Crow Flock	false
 character_skills_localised_name_ghs_cth_tpd_innate_01	Power of Thorns	false
-character_skills_localised_name_ghs_cth_tpd_innate_02	Robust Physique	false
-character_skills_localised_name_ghs_cth_tpd_innate_03	Thorned Shield	false
-character_skills_localised_name_ghs_cth_tpd_innate_04	Heart of Renewal	false
+character_skills_localised_name_ghs_cth_tpd_innate_02	Robust Constitution	false
+character_skills_localised_name_ghs_cth_tpd_innate_03	Thorned Hide	false
+character_skills_localised_name_ghs_cth_tpd_innate_04	Heart of Regrowth	false
 character_skills_localised_name_ghs_cth_tpd_innate_05	Flesh of the Earth	false
 character_skills_localised_name_ghs_cth_tpd_innate_06		false
 character_skills_localised_name_ghs_cth_tpd_innate_07	Soul of the Deep Forest	false
 character_skills_localised_name_ghs_cth_tpd_innate_08	Root Strike	false
-character_skills_localised_name_ghs_cth_tpd_innate_09	Infused Body	false
-character_skills_localised_name_ghs_cth_tpd_innate_10	Rejuvenating Flesh	false
-character_skills_localised_name_ghs_cth_tpd_innate_11	Source of Life	false
-character_skills_localised_name_ghs_skv_ll_ikit_avatar	Avatar of Catastrophe: Greed	false
-character_skills_localised_name_description_ghs_skv_ll_ikit_avatar	One aspect of the Great Horned Rat’s terrifying visage is the Lord of Catastrophe, a living calamity that brings devastation and desolation from the Chaos Realms filled with destruction and slaughter.	false
-character_skills_localised_name_ghs_skv_ll_queek_avatar	Avatar of Catastrophe: Wrath	false
-character_skills_localised_name_description_ghs_skv_ll_queek_avatar	One aspect of the Great Horned Rat’s terrifying visage is the Lord of Catastrophe, a living calamity that brings devastation and desolation from the Chaos Realms filled with destruction and slaughter.	false
-character_skills_localised_name_ghs_skv_ll_skrolk_avatar	Avatar of Catastrophe: Plague	false
-character_skills_localised_name_description_ghs_skv_ll_skrolk_avatar	One aspect of the Great Horned Rat’s terrifying visage is the Lord of Catastrophe, a living calamity that brings devastation and desolation from the Chaos Realms filled with destruction and slaughter.	false
-character_skills_localised_name_ghs_skv_ll_snikch_avatar	Avatar of Catastrophe: Pride	false
-character_skills_localised_name_description_ghs_skv_ll_snikch_avatar	One aspect of the Great Horned Rat’s terrifying visage is the Lord of Catastrophe, a living calamity that brings devastation and desolation from the Chaos Realms filled with destruction and slaughter.	false
-character_skills_localised_name_ghs_skv_ll_throt_avatar	Avatar of Catastrophe: Gluttony	false
-character_skills_localised_name_description_ghs_skv_ll_throt_avatar	One aspect of the Great Horned Rat’s terrifying visage is the Lord of Catastrophe, a living calamity that brings devastation and desolation from the Chaos Realms filled with destruction and slaughter.	false
-character_skills_localised_name_ghs_skv_ll_tretch_avatar	Avatar of Catastrophe: Deceit	false
-character_skills_localised_name_description_ghs_skv_ll_tretch_avatar	One aspect of the Great Horned Rat’s terrifying visage is the Lord of Catastrophe, a living calamity that brings devastation and desolation from the Chaos Realms filled with destruction and slaughter.	false
-character_skills_localised_name_ghs_skv_ll_warlord_avatar	Avatar of Catastrophe	false
-character_skills_localised_name_description_ghs_skv_ll_warlord_avatar	One aspect of the Great Horned Rat’s terrifying visage is the Lord of Catastrophe, a living calamity that brings devastation and desolation from the Chaos Realms filled with destruction and slaughter.	false
-character_skill_node_sets_enc_title_cody_skill_node_set_malakai_makaisson	Malakai Makaisson’s Skills	true
-character_skills_localised_name_cody_skill_innate_dwf_malakai_makaisson	Butcher Engineer	false
-character_skills_localised_description_cody_skill_innate_dwf_malakai_makaisson	After being expelled from the Dwarven Engineer Guild, Malakai felt deeply humiliated and took the Slayer’s Oath, adopting the garb and demeanor of a Slayer.	false
-character_skills_localised_name_cody_skill_malakai_makaisson_mount_thunderbarge	Spirit of Grungni	false
-character_skills_localised_description_cody_skill_malakai_makaisson_mount_thunderbarge	The Spirit of Grungni is a thunderbarge created by the Dwarven Butcher Engineer Malakai Makaisson.	false
-character_skills_localised_name_cody_skill_malakai_makaisson_gotrek_felix_friend	Friend of Gotrek & Felix	false
-character_skills_localised_description_cody_skill_malakai_makaisson_gotrek_felix_friend	Malakai is always willing to lend a helping hand—and a thunderbarge.	false
-character_skills_localised_name_cody_skill_malakai_makaisson_goblin_hewers	Goblin Hewers	false
-character_skills_localised_description_cody_skill_malakai_makaisson_goblin_hewers	Malakai wanted to create a new machine for throwing axes. Hmm? A new machine? That would take too long! It’s easier to train Rangers to throw axes accurately.	false
-character_skills_localised_name_cody_skill_malakai_makaisson_gattling_guns	Dwattling Gun	false
-character_skills_localised_description_cody_skill_malakai_makaisson_gattling_guns	Malakai’s latest invention: a handheld multi-barrel gun, unlike the Hellblaster Volley Gun. For now, it’s just a prototype, but mass production might follow.	false
-character_skills_localised_name_cody_skill_malakai_makaisson_unsinkable	Unsinkable	false
-character_skills_localised_description_cody_skill_malakai_makaisson_unsinkable	The sinking of the Unsinkable Ironclad marked the beginning of Malakai’s end. Much can be learned from that tragedy.	false
-character_skills_localised_name_cody_skill_malakai_makaisson_undestructible	Indestructible	false
-character_skills_localised_description_cody_skill_malakai_makaisson_undestructible	The destruction of the airship Indestructible taught us valuable lessons about time management, communication, and proper material handling.	false
-character_skills_localised_name_cody_skill_dwf_malakai_makaisson_flaming_broadside	Flaming Broadside	false
-character_skills_localised_description_cody_skill_dwf_malakai_makaisson_flaming_broadside	It turns out the Spirit of Grungni's hold can accommodate quite a lot of explosives.	false
-character_skills_localised_name_cody_skill_dwf_malakai_makaisson_explosive_bullets	Explosive Rounds	false
-character_skills_localised_description_cody_skill_dwf_malakai_makaisson_explosive_bullets	Malakai’s firearm can be upgraded to fire full-size rounds. Rough calculations indicate at least a 65% increase per shot.	false
-character_skills_localised_name_ghs_skill_bin	Empty Skill Point	false
-character_skills_localised_description_ghs_skill_bin	This skill is used to manage surplus skill points. It has no effect and can be chosen up to 99 times.	false
-character_skills_localised_name_ghs_skill_cth_hongying_mount_bird	Yingchuo	false
-character_skills_localised_description_ghs_skill_cth_hongying_mount_bird	"Yingchuo" is the Moon Empress' personal gift to Hong Ying, a Taeyue Luan rumored to be the Moon Empress' shadow. Only through hearing its cry can the Onyx Crowmen channel the Wind of Yin and transform into a mythical bird.	false
-character_skills_localised_name_ghs_skill_cth_hongying_weapon_blade_of_moonfire	Blade of Moonfire	false
-character_skills_localised_description_ghs_skill_cth_hongying_weapon_blade_of_moonfire	A mighty weapon brought from the Moon Empress’s abode, its blade is as clear as the moon, with flowing obsidian-like fire capable of easily breaking the magic of opposing weapons.	false
-character_skills_localised_name_ghs_skill_cth_hongying_arcane_item_flame_of_ink	Obsidian Flames	false
-character_skills_localised_description_ghs_skill_cth_hongying_arcane_item_flame_of_ink	Hong Ying possesses an uncanny affinity with the Wind of Shadows. His “staff” is the obsidian flame on his blade, which rises and shifts to channel winds or slay targets when needed.	false
-character_skills_localised_name_ghs_skill_cth_hongying_tailsman_mask_of_shadow	Mask of the Shadow Dragon	false
-character_skills_localised_description_ghs_skill_cth_hongying_tailsman_mask_of_shadow	Legend has it this mask was carved by the Shadow Dragon itself. The wearer can vanish into shadows, move with the wind on the battlefield, and strike generals unseen.	false
-character_skills_localised_name_ghs_skill_cth_hongying_armour_crow_cloak	Crow Cloak	false
-character_skills_localised_description_ghs_skill_cth_hongying_armour_crow_cloak	This feather-light cloak symbolizes the master of the Shadow Crow Guard and is the only means, other than Yuanbo, to directly command the Black Jade Crowmen.	false
-character_skills_localised_name_ghs_skill_cth_hongying_enchanted_item_token_of_empress	Token of Laurel	false
-character_skills_localised_description_ghs_skill_cth_hongying_enchanted_item_token_of_empress	The Laurel Pavilion is divided into three guards, and only their masters may hold this token. Hong Ying’s Shadow Crow Guard is tasked with gathering intelligence and carrying out assassinations, their authority akin to the Moon Empress herself.	false
-character_skills_localised_name_ghs_skill_cth_hongying_innate	Scion of the Shadow Dragon	false
-character_skills_localised_description_ghs_skill_cth_hongying_innate	Since childhood, Hong Ying has been followed by illusions of the divine bird Yu Zhuo. After joining the Laurel Pavilion, Black Jade Crowmen whispered of the vanished power of the Shadow Dragon—a power filled with pain and sacrifice.	false
-character_skills_localised_name_ghs_skill_cth_hongying_unique_01	Shadow Over Nations	false
-character_skills_localised_description_ghs_skill_cth_hongying_unique_01	The eyes of the Celestial Court pierce all realms; the expanse of their wings covers the skies, guarding the Celestial Empire far and wide.	false
-character_skills_localised_name_ghs_skill_cth_hongying_unique_02	Master Assassin	false
-character_skills_localised_description_ghs_skill_cth_hongying_unique_02	Born with an affinity for the Wind of Shadows, Hong Ying mastered assassination techniques personally taught by the Moon Empress, striking as shadows and departing like the wind.	false
-character_skills_localised_name_ghs_skill_cth_hongying_unique_03	Director of Espionage	false
-character_skills_localised_description_ghs_skill_cth_hongying_unique_03	Changqi’s disciples believe their schemes flawless as they revel, unaware someone in the adjacent room is diligently sketching their plans…	false
-character_skills_localised_name_ghs_skill_cth_hongying_unique_04	Lightning Raid	false
-character_skills_localised_description_ghs_skill_cth_hongying_unique_04	Swift as the wind and powerful as thunder, he strides through enemy camps with unparalleled bravery.	false
-character_skills_localised_name_ghs_skill_cth_hongying_unique_05	Unending Night	false
-character_skills_localised_description_ghs_skill_cth_hongying_unique_05	Night is the best concealment for shadows. The deepest shadow moves alone, waiting for the opportune moment to strike before the enemy realizes their fate.	false
-character_skills_localised_name_ghs_skill_cth_hongying_unique_06	Master of Shadow Crows	false
-character_skills_localised_description_ghs_skill_cth_hongying_unique_06	The master of the Shadow Crow Guard commands the flock, appearing alone while a myriad of crows await in the shadows, ready to swarm at their signal.	false
-character_skills_localised_name_ghs_skill_cth_hongying_spy_commander	Laurel Pavilion Overseer	false
-character_skills_localised_description_ghs_skill_cth_hongying_spy_commander	Amid the surging tides of espionage, they navigate with ease, leading their subordinates to unravel complex schemes, exemplifying excellence in covert operations.	false
-character_skills_localised_name_ghs_skill_cth_hongying_cathay_night	Celestial Night	false
-character_skills_localised_description_ghs_skill_cth_hongying_cathay_night	The outlines of the Celestial Court shimmer faintly in the night, while the moonlit sky is dotted with black feathers, resembling endless gems encrusted in the heavens.	false
+character_skills_localised_name_ghs_cth_tpd_innate_09	Spirit-Infused Flesh	false
+character_skills_localised_name_ghs_cth_tpd_innate_10	Body of Rejuvenation	false
+character_skills_localised_name_ghs_cth_tpd_innate_11	Wellspring of Life	false
+character_skills_localised_name_ghs_skv_ll_ikit_avatar	Avatar of the Lords of Decay: Greed	false
+character_skills_localised_name_description_ghs_skv_ll_ikit_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+character_skills_localised_name_ghs_skv_ll_queek_avatar	Avatar of the Lords of Decay: Wrath	false
+character_skills_localised_name_description_ghs_skv_ll_queek_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+character_skills_localised_name_ghs_skv_ll_skrolk_avatar	Avatar of the Lords of Decay: Plague	false
+character_skills_localised_name_description_ghs_skv_ll_skrolk_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+character_skills_localised_name_ghs_skv_ll_snikch_avatar	Avatar of the Lords of Decay: Pride	false
+character_skills_localised_name_description_ghs_skv_ll_snikch_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+character_skills_localised_name_ghs_skv_ll_throt_avatar	Avatar of the Lords of Decay: Gluttony	false
+character_skills_localised_name_description_ghs_skv_ll_throt_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+character_skills_localised_name_ghs_skv_ll_tretch_avatar	Avatar of the Lords of Decay: Deceit	false
+character_skills_localised_name_description_ghs_skv_ll_tretch_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+character_skills_localised_name_ghs_skv_ll_warlord_avatar	Avatar of the Lords of Decay	false
+character_skills_localised_name_description_ghs_skv_ll_warlord_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+character_skills_localised_name_ghs_skill_bin	Blank Skill Point	false
+character_skills_localised_description_ghs_skill_bin	This skill exists to absorb your excess skill points. It has no effect and can be selected up to 99 times.	false
+character_skills_localised_name_ghs_skill_cth_hongying_mount_bird	Shadowdance	false
+character_skills_localised_description_ghs_skill_cth_hongying_mount_bird	[Shadowdance] is the mysterious Great Moon Luan personally bestowed upon Hong Ying by the Moon Empress. Legend holds this bird carries a fragment of the Empress's power. Upon hearing its cry, the [Black Jade Crow Marquis] can commune with the Wind of Yin and transform into the divine bird Yue Zhuo.	false
+character_skills_localised_name_ghs_skill_cth_hongying_weapon_blade_of_moonfire	Blade of Pure Moon	false
+character_skills_localised_description_ghs_skill_cth_hongying_weapon_blade_of_moonfire	A mighty weapon that [Shadowdance] carried forth from the Moon Empress's garden. Its blade gleams bright as moonlight, wreathed in dark flames that can effortlessly unravel magic.	false
+character_skills_localised_name_ghs_skill_cth_hongying_arcane_item_flame_of_ink	Ink Jade Flame	false
+character_skills_localised_description_ghs_skill_cth_hongying_arcane_item_flame_of_ink	Hong Ying possesses an uncanny affinity for the Wind of Yin. His 'staff' is the ink-black flame that dances upon the edge of the Purifying Moon Blade—when channeling magic or cutting down foes, the dark flame rises and reshapes itself with terrifying power.	false
+character_skills_localised_name_ghs_skill_cth_hongying_tailsman_mask_of_shadow	Shadow Dragon Jade	false
+character_skills_localised_description_ghs_skill_cth_hongying_tailsman_mask_of_shadow	Legend says this white jade was carved by the Shadow Dragon itself. Its wearer can not only conceal their form but also move with the wind across the battlefield, striking down enemy commanders while cloaked in shadow.	false
+character_skills_localised_name_ghs_skill_cth_hongying_armour_crow_cloak	Cloak of Crow Feathers	false
+character_skills_localised_description_ghs_skill_cth_hongying_armour_crow_cloak	This robe, light as a feather, was woven from the plumage offered by a hundred [Black Jade Crow Marquis]. It is both a mark of their recognition of Hong Ying and his final safeguard in moments of dire peril.	false
+character_skills_localised_name_ghs_skill_cth_hongying_enchanted_item_token_of_empress	Edict of the Laurel	false
+character_skills_localised_description_ghs_skill_cth_hongying_enchanted_item_token_of_empress	The Cassia Confidants bear the duty of gathering intelligence across the realm and carrying out assassinations and arrests. Only the Overseer may hold this token—to see it is to fear imprisonment.	false
+character_skills_localised_name_ghs_skill_cth_hongying_innate	[Scion of the Shadow Dragon]	false
+character_skills_localised_description_ghs_skill_cth_hongying_innate	The phantom of the divine bird Yue Zhuo often appears in Hong Ying's wake. After he took command of the Cassia Confidants, the [Black Jade Crow Marquis] who witnessed this whispered to him: this is the long-vanished power of the Shadow Dragon, a power steeped in suffering and sacrifice.	false
+character_skills_localised_name_ghs_skill_cth_hongying_unique_01	Shadow Over the Realm	false
+character_skills_localised_description_ghs_skill_cth_hongying_unique_01	The eyes of the Celestial Court reach the ends of the earth; the span of crow wings can shroud heaven and earth alike—the protection of the Celestial Empire extends to every corner.	false
+character_skills_localised_name_ghs_skill_cth_hongying_unique_02	Grandmaster Assassin	false
+character_skills_localised_description_ghs_skill_cth_hongying_unique_02	Hong Ying was born with an affinity for the power of Yin. His arts of assassination were taught to him personally by the Moon Empress—he arrives like a shadow, and departs like the wind.	false
+character_skills_localised_name_ghs_skill_cth_hongying_unique_03	Chief of Espionage	false
+character_skills_localised_description_ghs_skill_cth_hongying_unique_03	The followers of Tzeentch believe their scheme is flawless, and so they drink and revel—while in the next room, someone is quietly sketching their portrait.	false
+character_skills_localised_name_ghs_skill_cth_hongying_unique_04	Strike a Thousand Miles	false
+character_skills_localised_description_ghs_skill_cth_hongying_unique_04	Swift as the wind, sudden as thunder, he moves alone through the enemy camp with peerless courage.	false
+character_skills_localised_name_ghs_skill_cth_hongying_unique_05	Unclaimed by the Long Night	false
+character_skills_localised_description_ghs_skill_cth_hongying_unique_05	The long night is a shadow's finest hiding place. The deepest shadows always move alone, waiting for their moment—by the time the enemy arrives, word of them has already come first.	false
+character_skills_localised_name_ghs_skill_cth_hongying_unique_06	Lord of Shadow Crows	false
+character_skills_localised_description_ghs_skill_cth_hongying_unique_06	The Lord of the Shadow Crows commands the flock—he appears to walk alone, yet in the darkness, crows attend him unseen. Raise a hand, and the whole flock answers the call.	false
+character_skills_localised_name_ghs_skill_cth_hongying_spy_commander	Overseer of the Cassia Confidants	false
+character_skills_localised_description_ghs_skill_cth_hongying_spy_commander	Amid the churning depths of espionage, he always emerges unscathed, guiding his agents through labyrinths of deception—a true master of the spy's trade.	false
+character_skills_localised_name_ghs_skill_cth_hongying_cathay_night	Cathayan Night	false
+character_skills_localised_description_ghs_skill_cth_hongying_cathay_night	The silhouette of the Celestial Court flickers faintly in the night, while black feathers glint beneath the moonlight, like countless jewels set into the sky.	false
 character_skills_localised_description_cth_zhaowang_horse	This draconic steed is jet black from head to hoof, galloping ten thousand li by day and eight thousand by night—thus named “Cloudstrider of Ten Thousand Li.”	true
 character_skills_localised_description_cth_zhaowang_steel	It’s not over yet!	true
 character_skills_localised_description_cth_zhaowang_unique_0	Muster riders, prepare soldiers, feed horses, sharpen blades, and strengthen formations—this is the path to victory.	true
@@ -109,7 +90,7 @@ character_skills_localised_description_cth_zhaowang_unique_2	Let golden steel re
 character_skills_localised_description_cth_zhaowang_unique_3	You beasts and barbarian fiends—halt! Who dares face even half my hammer swing?!	true
 character_skills_localised_description_cth_zhaowang_unique_4	His immense magical power, innate since birth, hammers and tempers Xuan Lie’s body day and night—granting him divine might to shatter mountains and tear down walls.	true
 character_skills_localised_description_cth_zhaowang_unique_5	Golden helm, golden armor, cinnabar robe; purple eyes, crimson brows, azure mane. As drums thunder and banners flash, the earth trembles and the heavens stir. His mount is born of dragon blood—how could petty daemons escape? When we return in triumph, general, we shall lay down our arms together.	true
-character_skills_localised_description_cth_zhaowang_weapon	A golden hammer crowned with a beast’s head, its head infused with the spirit of a temple guardian—its strikes tear through ranks like a dragon's claws.	true
+character_skills_localised_description_cth_zhaowang_weapon	A golden hammer shaped like a beast's head, its striking end housing the spirit of a temple-guarding beast. Its blows fall like the swipe of a dragon's claw, scattering armies before it.	true
 character_skills_localised_name_cth_zhaowang_horse	Cloudstrider of Ten Thousand Li	true
 character_skills_localised_name_cth_zhaowang_innate	"Prince of Western Wei"	true
 character_skills_localised_name_cth_zhaowang_steel	Great Guardian's Vigor	true
@@ -119,72 +100,170 @@ character_skills_localised_name_cth_zhaowang_unique_2	Bloodforged Legacy	true
 character_skills_localised_name_cth_zhaowang_unique_3	Chaos’s End	true
 character_skills_localised_name_cth_zhaowang_unique_4	Might of the Flood Dragon	true
 character_skills_localised_name_cth_zhaowang_unique_5	Ode of the Bronze Dragon	true
-character_skills_localised_name_cth_zhaowang_weapon	War-Drum Golden Hammer	true
-character_skills_localised_description_ghs_ksl_thor_arcane_item	"When Hafdan won the Dwarfen drinking contest, he met Grelid. As they escaped from a Dark Elf Black Ark, a storm swept Grelid away—leaving only his heirloom rune helm behind."	true
-character_skills_localised_description_ghs_ksl_thor_armour	"This armor, forged by a renowned Dwarf master, is etched with lost runes of thunder. It channels Hafdan’s inner lightning and repels surrounding Chaos energies."	true
-character_skills_localised_description_ghs_ksl_thor_enchanted_item	"After defeating the Bonegrinder chieftain in single combat, Hafdan seized a golden rune from the giants’ treasure hoard. With it comes an irresistible charisma that draws warriors to his cause."	true
-character_skills_localised_description_ghs_ksl_thor_innate	"I shall raise Mjolnir high and rally Kislev beneath one banner—let the thunder of the skies wash away our ancient shame!"	true
-character_skills_localised_description_ghs_ksl_thor_talisman	"When the god-hammer struck down with lightning, it left an eternal bolt-shaped scar on Hafdan’s chest. This mark renders Thor’s Chosen invulnerable and tireless in battle."	true
-character_skills_localised_description_ghs_ksl_thor_unique_0	Kislev’s once-clear skies have long been shrouded in darkness. But today, the divine hammer falls, thunder roars, and shame is cast away in radiant vengeance!	true
-character_skills_localised_description_ghs_ksl_thor_unique_1	For too long, Norscan raiders, Skaven, and Daemons have tormented our homeland. Now it’s time they taste the suffering they have inflicted!	true
-character_skills_localised_description_ghs_ksl_thor_unique_2	Countless loyal soldiers have bled across tundra, walls, homesteads, and shrines. Yet their blood and the frost have forged bodies and wills that cannot be broken.	true
-character_skills_localised_description_ghs_ksl_thor_unique_3	Thor’s blessing grants us unmatched speed and strength—let us charge forth like a thunderous tide of ruin!	true
-character_skills_localised_description_ghs_ksl_thor_unique_4	I always arrive where my comrades need me most. I will not fall. I do not stop!	true
-character_skills_localised_description_ghs_ksl_thor_unique_5	Behind us stands the Motherland—Kislev itself! Under Thor’s gaze, we shall stand united!	true
-character_skills_localised_description_ghs_ksl_thor_unique_6	I carry the glory of the Thunder God. In Thor’s name I raise the divine hammer—Chaos shall not breach our homeland!	true
-character_skills_localised_description_ghs_ksl_thor_unique_rubbish	Every scar is a badge of honor. Every battle brings us one step closer to victory!	true
-character_skills_localised_description_ghs_ksl_thor_weapon	"This heaven-sent hammer marked a turning point in Hafdan’s life. When he grips its handle, he hears the divine voice of Thor guiding him through every battle."	true
-character_skills_localised_name_ghs_ksl_thor_arcane_item	Grelid's Winged Helm	true
-character_skills_localised_name_ghs_ksl_thor_armour	Armor of Yarganpei	true
-character_skills_localised_name_ghs_ksl_thor_enchanted_item	Janggripel	true
-character_skills_localised_name_ghs_ksl_thor_innate	"Chosen of Thor"	true
-character_skills_localised_name_ghs_ksl_thor_talisman	Lightning Scar	true
-character_skills_localised_name_ghs_ksl_thor_unique_0	The Hammer Descends	true
-character_skills_localised_name_ghs_ksl_thor_unique_1	Cycle of Vengeance	true
-character_skills_localised_name_ghs_ksl_thor_unique_2	Loyal Soldiers	true
-character_skills_localised_name_ghs_ksl_thor_unique_3	Thunderous Momentum	true
-character_skills_localised_name_ghs_ksl_thor_unique_4	Unyielding	true
-character_skills_localised_name_ghs_ksl_thor_unique_5	"Motherland"	true
-character_skills_localised_name_ghs_ksl_thor_unique_6	"Thorsson"	true
-character_skills_localised_name_ghs_ksl_thor_unique_rubbish	Chosen’s Trial	true
+character_skills_localised_name_cth_zhaowang_weapon	Drum-Beating Golden Urn Hammer	true
+character_skills_localised_description_ghs_ksl_thor_arcane_item	'Halfdan met the Dwarf Gerd when he won a drinking contest, and when the two escaped from the Dark Elves' Black Ark, a storm swept Gerd away, leaving behind only his old friend's heirloom rune-helm.'	true
+character_skills_localised_description_ghs_ksl_thor_armour	'This suit of armor was forged by a renowned Dwarf master and inlaid with a long-lost thunder rune, capable of channeling the thunderous energy within Halfdan while also warding off the surrounding taint of Chaos.'	true
+character_skills_localised_description_ghs_ksl_thor_enchanted_item	'After felling the giant chieftain known as the Bonecrusher in single combat, Halfdan claimed this golden rune from the giant's hoard. Its bearer commands boundless charisma, inspiring others to follow him willingly.'	true
+character_skills_localised_description_ghs_ksl_thor_innate	'I shall raise Mjolnir high, unite the people of Kislev beneath a single banner, and cleanse the shame of old with the thunder of the heavens!'	true
+character_skills_localised_description_ghs_ksl_thor_talisman	'When the divine hammer descended amid crackling lightning, it left an unfading scar of lightning across Halfdan's chest. This scar renders the Chosen of Thor impervious to blade and untiring in battle.'	true
+character_skills_localised_description_ghs_ksl_thor_unique_0	The clear skies of Kislev have long been shrouded in dark clouds. Today, the divine hammer descends, thunder roars—let it sweep away the gloom and wash clean the shame of old!	true
+character_skills_localised_description_ghs_ksl_thor_unique_1	For too long, Norscan raiders, Skaven ratmen, and even Daemons of Chaos have plagued our homeland. It is time they taste the suffering they have inflicted upon us!	true
+character_skills_localised_description_ghs_ksl_thor_unique_2	Countless loyal soldiers have shed their blood upon the wastelands, the city walls, our homes, and even our shrines—but blood and ice have forged our unbreakable bodies and wills.	true
+character_skills_localised_description_ghs_ksl_thor_unique_3	Thor's blessing grants us unmatched speed and strength, letting us surge forward wrapped in the fury of destruction.	true
+character_skills_localised_description_ghs_ksl_thor_unique_4	I always appear where my allies need me most. I will not fall. I—will never stop!	true
+character_skills_localised_description_ghs_ksl_thor_unique_5	Behind us stands the Motherland, stands Kislev itself! Under Thor's watchful gaze, we shall stand as one!	true
+character_skills_localised_description_ghs_ksl_thor_unique_6	I bear the glory of the Thunder God. In Thor's name I raise the divine hammer, and Chaos shall be barred from our homeland!	true
+character_skills_localised_description_ghs_ksl_thor_unique_rubbish	Every scar is a badge of honor; every battle shall bring us victory!	true
+character_skills_localised_description_ghs_ksl_thor_weapon	'It was this warhammer, fallen from the sky, that turned the page to a new chapter in Halfdan's life. When he grips its haft, he hears Thor's divine word, guiding him to triumph over all.'	true
+character_skills_localised_name_ghs_ksl_thor_arcane_item	Gerd's Winged Helm	true
+character_skills_localised_name_ghs_ksl_thor_armour	Yagorn's Peaked Armor	true
+character_skills_localised_name_ghs_ksl_thor_enchanted_item	Yagorn Gripel	true
+character_skills_localised_name_ghs_ksl_thor_innate	[Chosen of Thor]	true
+character_skills_localised_name_ghs_ksl_thor_talisman	Scar of Lightning	true
+character_skills_localised_name_ghs_ksl_thor_unique_0	Descent of the Divine Hammer	true
+character_skills_localised_name_ghs_ksl_thor_unique_1	Cycle of Cause and Effect	true
+character_skills_localised_name_ghs_ksl_thor_unique_2	Loyal Warriors	true
+character_skills_localised_name_ghs_ksl_thor_unique_3	Might of Thunder	true
+character_skills_localised_name_ghs_ksl_thor_unique_4	Unbending, Unyielding	true
+character_skills_localised_name_ghs_ksl_thor_unique_5	[Mother of the Motherland]	true
+character_skills_localised_name_ghs_ksl_thor_unique_6	[Son of Thor]	true
+character_skills_localised_name_ghs_ksl_thor_unique_rubbish	Trial of the Chosen	true
 character_skills_localised_name_ghs_ksl_thor_weapon	Mjolnir	true
-character_skills_localised_name_lzd_kroxigor_bro_01_weapon	Fist of Quiji	true
-character_skills_localised_description_lzd_kroxigor_bro_01_weapon	When indestructibility is wielded as a weapon, nothing is unbreakable. This massive hammer, which requires multiple Kroxigors to carry, moves as fluidly as a limb in Old-Kan’s hands. A casual swing melds warm-bloods and their prized armor into a single, gory mass.	true
-character_skills_localised_name_lzd_kroxigor_bro_01_armour	Golden Warplate	true
-character_skills_localised_description_lzd_kroxigor_bro_01_armour	Though soft metals offer no defense to its hardened scales, they reflect brilliantly—making Old-Kan’s massive frame a gleaming beacon, guiding Lizardmen warriors behind him to follow the bloody path he carves.	true
-character_skills_localised_name_lzd_kroxigor_bro_02_weapon	Edge of Itzi	true
-character_skills_localised_description_lzd_kroxigor_bro_02_weapon	Sharp, heavy, and infused with the wild blessings of the Beast-God Itzi, this great axe, honed by legions of Skink smiths, can decapitate the thickest-necked Carnosaur in a single blow.	true
-character_skills_localised_name_lzd_kroxigor_bro_02_armour	Beastbone Plate	true
-character_skills_localised_description_lzd_kroxigor_bro_02_armour	Assembled from the most prized trophies of Old-K’ja’s conquests, this thick armor endures even the searing heat of Solar Engines—arrows and bullets barely register.	true
-character_skills_localised_name_lzd_kroxigor_bro_01_innate	"Fist of Quiji"	true
-character_skills_localised_name_lzd_kroxigor_bro_02_innate	"Edge of Itzi"	true
-character_skills_localised_name_lzd_kroxigor_bro_01_unique_0	Blood of the Old Ones	true
-character_skills_localised_description_lzd_kroxigor_bro_01_unique_0	"Blood of the Old Ones, blessings of the Beast-God—these make them mightier than their kin."	true
-character_skills_localised_name_lzd_kroxigor_bro_01_unique_1	Rampaging Impact	true
-character_skills_localised_description_lzd_kroxigor_bro_01_unique_1	"Battles involving Old-Kan rarely last long—a blood-slicked titan crashing through ranks is terrifying to any warm-blood."	true
-character_skills_localised_name_lzd_kroxigor_bro_01_unique_2	Relentless Might	true
-character_skills_localised_description_lzd_kroxigor_bro_01_unique_2	"They tire not. They break not. Their might knows no end."	true
-character_skills_localised_name_lzd_kroxigor_bro_01_unique_3	Blazing Majesty	true
-character_skills_localised_description_lzd_kroxigor_bro_01_unique_3	"Their gleaming presence on the battlefield stirs courage among allies."	true
+character_skills_localised_name_lzd_kroxigor_bro_01_weapon	Fist of Quetzl	true
+character_skills_localised_description_lzd_kroxigor_bro_01_weapon	Unbreakable strength applied to a weapon becomes unstoppable force. This warhammer, one that would take several Kroxigor to lift, moves in Gu Kahn's grip as if it were an extension of his own limbs—one swing crushes warm-bloods and their so-called fine armor alike into a single mass of flesh and metal.	true
+character_skills_localised_name_lzd_kroxigor_bro_01_armour	Golden Regalia	true
+character_skills_localised_description_lzd_kroxigor_bro_01_armour	The soft metal cannot protect his tough scaled hide, but it makes his massive form gleam brilliantly—allowing the Saurus warriors behind him to easily follow his shining silhouette and the trail of blood he carves through the enemy ranks.	true
+character_skills_localised_name_lzd_kroxigor_bro_02_weapon	Edge of Itza	true
+character_skills_localised_description_lzd_kroxigor_bro_02_weapon	Sharp, heavy, and imbued with the wild blessing of the beast god Itzl, this great axe—honed by a host of Skink craftsmen—is capable of decapitating even the thickest-necked Carnosaur in a single stroke.	true
+character_skills_localised_name_lzd_kroxigor_bro_02_armour	Beast-Bone Armor	true
+character_skills_localised_description_lzd_kroxigor_bro_02_armour	Assembled from the most prized trophies of Gu Ke Jia's kills, this thick carapace—capable of withstanding the searing heat of the Solar Engine—makes arrows and bolts little more than an itch.	true
+character_skills_localised_name_lzd_kroxigor_bro_01_innate	[Fist of Quetzl]	true
+character_skills_localised_name_lzd_kroxigor_bro_02_innate	[Edge of Itza]	true
+character_skills_localised_name_lzd_kroxigor_bro_01_unique_0	Blessed Bloodline	true
+character_skills_localised_description_lzd_kroxigor_bro_01_unique_0	'The blood of the Old Ones, the blessing of the beast god—these make them mightier than their own kind.'	true
+character_skills_localised_name_lzd_kroxigor_bro_01_unique_1	Rout Charge	true
+character_skills_localised_description_lzd_kroxigor_bro_01_unique_1	'Battles that involve Gu Kahn tend to end swiftly—a Kroxigor drenched in gore and severed limbs, smashing through the enemy line, is a fearsome sight to any warm-blood.'	true
+character_skills_localised_name_lzd_kroxigor_bro_01_unique_2	Inexhaustible Might	true
+character_skills_localised_description_lzd_kroxigor_bro_01_unique_2	'They tire not. They break not. They are unstoppable.'	true
+character_skills_localised_name_lzd_kroxigor_bro_01_unique_3	Dazzling Heroic Bearing	true
+character_skills_localised_description_lzd_kroxigor_bro_01_unique_3	'When that tall, gleaming Kroxigor appears on the battlefield, the army's spirits soar.'	true
 character_skills_localised_name_lzd_kroxigor_bro_01_unique_4	Twin Kroxigors	true
-character_skills_localised_description_lzd_kroxigor_bro_01_unique_4	"From the moment they emerged from the spawning pool, these twin Kroxigors were different—larger, stronger, and even… smarter."	true
-character_skills_localised_name_lzd_kroxigor_bro_02_unique_0	Blood of the Old Ones	true
-character_skills_localised_description_lzd_kroxigor_bro_02_unique_0	"Blood of the Old Ones, blessings of the Beast-God—these make them mightier than their kin."	true
-character_skills_localised_name_lzd_kroxigor_bro_02_unique_1	Strength Begets Strength	true
-character_skills_localised_description_lzd_kroxigor_bro_02_unique_1	"Old-K’ja grows stronger with every clash, driven by obsession for worthy foes and hunger to prove his might."	true
-character_skills_localised_name_lzd_kroxigor_bro_02_unique_2	Brutal Onslaught	true
-character_skills_localised_description_lzd_kroxigor_bro_02_unique_2	"This berserking titan crashes through crowds, leaving carnage in its wake."	true
-character_skills_localised_name_lzd_kroxigor_bro_02_unique_3	No Mercy	true
-character_skills_localised_description_lzd_kroxigor_bro_02_unique_3	"Don't let it fixate on you. It hasn’t quite grasped the concept of 'holding back'..."	true
-character_skills_localised_name_lzd_kroxigor_bro_02_unique_4	Twin Kroxigors	true
-character_skills_localised_description_lzd_kroxigor_bro_02_unique_4	"From the moment they emerged from the spawning pool, these twin Kroxigors were different—larger, stronger, and even… smarter."	true
-character_skill_level_details_localised_name_kho_war_mammoth_warshrine_hero	War Mammoth (Khorne Warshrine)	true
-character_skill_level_details_localised_name_kho_war_mammoth_warshrine_lord	War Mammoth (Khorne Warshrine)	true
-character_skills_localised_description_kho_war_mammoth_warshrine_hero	A towering beast of bone and flame, bearing Khorne’s warshrine upon its back, trudging through blood and mud while leaving behind scorched limbs and charred remains.	true
-character_skills_localised_description_kho_war_mammoth_warshrine_lord	A towering beast of bone and flame, bearing Khorne’s warshrine upon its back, trudging through blood and mud while leaving behind scorched limbs and charred remains.	true
-character_skills_localised_name_kho_war_mammoth_warshrine_hero	War Mammoth (Khorne Warshrine)	true
-character_skills_localised_name_kho_war_mammoth_warshrine_lord	War Mammoth (Khorne Warshrine)	true
-character_skills_localised_description_ghs_cth_ll_shugengan_demidragon	When the dragon soars across the heavens, its majesty terrifies all; when the dragon battles upon the wilds, its blood stains the earth in black and gold.	false
-character_skills_localised_description_ghs_dwf_missile_mecha	The prototypes of these engines date back to the prospecting boom of the Golden Age. When waves of Engineers and Miners were swallowed by the green tide, the machines were buried beneath rubble—until recent excavations brought them back into the light. Now, the survivors of that calamity mount these refurbished, mass-produced engines to settle old scores with the Greenskins and the verminous rat-kind.	true
-character_skills_localised_name_ghs_dwf_missile_mecha	Hate-Reckoner Mecha (Multi-Rune Gun)	true
-character_skills_localised_name_ghs_cth_anc_magistrate_mount_boat	Dragon-Emperor Cloud Barge	false
+character_skills_localised_description_lzd_kroxigor_bro_01_unique_4	'From the moment this pair of Twin Kroxigors crawled from the spawning pools, they were different—massive, powerful, and touched with a rare glimmer of intelligence.'	true
+character_skills_localised_name_lzd_kroxigor_bro_02_unique_0	Blessed Bloodline	true
+character_skills_localised_description_lzd_kroxigor_bro_02_unique_0	'The blood of the Old Ones, the blessing of the beast god—these make them mightier than their own kind.'	true
+character_skills_localised_name_lzd_kroxigor_bro_02_unique_1	The Strong Grow Stronger:	true
+character_skills_localised_description_lzd_kroxigor_bro_02_unique_1	'A hunger for challenging strong foes and a desire to prove himself have made Gu Ke Jia grow stronger with every battle.'	true
+character_skills_localised_name_lzd_kroxigor_bro_02_unique_2	Furious Charge	true
+character_skills_localised_description_lzd_kroxigor_bro_02_unique_2	'This raging beast can carve a bloody path straight through a crowd.'	true
+character_skills_localised_name_lzd_kroxigor_bro_02_unique_3	Fight to the Death:	true
+character_skills_localised_description_lzd_kroxigor_bro_02_unique_3	'Best not draw its attention—its mind isn't quite sharp enough to grasp the concept of holding back...'	true
+character_skills_localised_name_lzd_kroxigor_bro_02_unique_4	Twin Kroxigor	true
+character_skills_localised_description_lzd_kroxigor_bro_02_unique_4	'From the moment this pair of Twin Kroxigors crawled from the spawning pools, they were different—massive, powerful, and touched with a rare glimmer of intelligence.'	true
+character_skill_level_details_localised_name_kho_war_mammoth_warshrine_hero	War Mammoth (Shrine of Khorne)	true
+character_skill_level_details_localised_name_kho_war_mammoth_warshrine_lord	War Mammoth (Shrine of Khorne)	true
+character_skills_localised_description_kho_war_mammoth_warshrine_hero	A colossal beast built from bone and blazing fire, bearing the Blood God's dread pronouncement as it leads the frenzied faithful through fields of bloody mud, leaving scorched bone and severed limbs in its wake.	true
+character_skills_localised_description_kho_war_mammoth_warshrine_lord	A colossal beast built from bone and blazing fire, bearing the Blood God's dread pronouncement as it leads the frenzied faithful through fields of bloody mud, leaving scorched bone and severed limbs in its wake.	true
+character_skills_localised_name_kho_war_mammoth_warshrine_hero	War Mammoth (Shrine of Khorne)	true
+character_skills_localised_name_kho_war_mammoth_warshrine_lord	War Mammoth (Shrine of Khorne)	true
+character_skills_localised_description_ghs_cth_ll_shugengan_demidragon	When the dragon soars through the heavens, its might strikes terror; when the dragon battles in the wilds, its blood runs dark and gold.	false
+character_skills_localised_description_ghs_dwf_missile_mecha	The prototypes of these war machines date back to the prospecting frenzy of the Golden Age, but as swarms of engineers and miners were swallowed by the Greenskin tide, they too were buried beneath rubble—until recent excavations brought them back into the light. Now, survivors of that terrible calamity have mounted these refurbished, mass-produced machines, ready to settle the score with Greenskins and rat-filth alike.	true
+character_skills_localised_name_ghs_dwf_missile_mecha	Vengeance Reckoning Mech (Multi-Barrel Rune Gun)	true
+character_skills_localised_name_ghs_cth_anc_magistrate_mount_boat	Dragon God Cloud Vessel	false
+character_skills_localised_description_ghs_cth_cha_wangque_arcane_item	The Hairpin of Longing for the Palace is carved from thousand-year-old cassia wood and tempered with shadow magic. When Liu Wang Que set out with Yuan Bo for Lustria, Hong Ying solemnly presented this hairpin to her—the shadow power sealed within can amplify spells while concealing the caster's presence.	true
+character_skills_localised_description_ghs_cth_cha_wangque_armour	The Golden Feather Robe is woven from moonlit silk bestowed by the Moon Empress, threaded with fine gold, and draped with a cape of molted feathers from the spirit crows kept by the Cassia Confidants. Woven over the course of a year by the Celestial Court's weaving bureau, it is Liu Wang Que's most distinctive mark of identity.	true
+character_skills_localised_description_ghs_cth_cha_wangque_enchanted_item	Liu Wang Que shrewdly foiled a plot by Tzeentch's followers to destroy the [Mirror of the Cassia Soul], earning great renown. [Shadowdance] brought it to her from the Moon Empress's garden as a gift—legend says the mirror was forged by the Moon Empress herself, containing within it a thread of pure lunar essence. Its frame is adorned with patterns of cassia branches and leaves, and on its back is carved an ancient inscription: 'The moon shines upon a thousand gates; its shadow follows but one soul.'	true
+character_skills_localised_description_ghs_cth_cha_wangque_mount_bird	[Mirror Bloom] and [Shadowdance] are a devoted pair of Great Moon Luan, said to carry a fragment of the Moon Empress's power. Upon hearing the cry of these two birds, the [Black Jade Crow Marquis] can commune with the Wind of Yin and transform into the divine bird Yue Zhuo.	true
+character_skills_localised_description_ghs_cth_cha_wangque_talisman	The Moonlight Edict is the seal of office and token of authority for the Deputy Overseer of the Cassia Confidants, and Liu Wang Que's proof of command over its agents. Within the jade pendant, a single drop of pure shadow essence is sealed through Yin sorcery, resonating with the [Mirror of the Cassia Soul]. On the battlefield, the Moonlight Edict can unleash a barrier of shadow to protect its bearer.	true
+character_skills_localised_description_ghs_cth_cha_wangque_weapon	When Hong Ying first founded the Cassia Confidants, he personally forged this long blade for Liu Wang Que using dark ink flame, as her battlefield weapon. Though the Cassia Confidants' Deputy Overseer is a woman, she is by no means one to be trifled with.	true
+character_skills_localised_description_ghs_cth_cha_yangxing_armour	A great shield forged specifically for the terracotta commander, crafted from the dark stone of Kun Lan. Its surface bears a relief of the Dragon God in glorious majesty, and its body is unbreakable, able to block even the heaviest blows from monstrous foes.	true
+character_skills_localised_description_ghs_cth_cha_yangxing_enchanted_item	Whether arrow, blade, fang, or claw, the divine dragon statue coiled around the beast-devouring motif holds nothing but bone-deep contempt for such crude methods of slaughter.	true
+character_skills_localised_description_ghs_cth_cha_yangxing_talisman	A rare crystal from the peak of Kun Lan is set into Yang Xing's armor, containing within it the might of the Heavens, capable of unleashing lethal magical energy in battle.	true
+character_skills_localised_description_ghs_cth_cha_yangxing_weapon	The sword borne by the Chief of the Terracotta Guard, said to have been forged by the Dragon Emperor's own hand. Its blade is engraved with patterns of the Wind of Yang, and it glows with dazzling starlight whenever Chaos assails the Long Wall.	true
+character_skills_localised_description_ghs_cth_jade_taoist_mount	A mysterious spirit serpent bred by the Jade Blood Taoist Temple, its body a deep jade-green, perpetually steeped in elixirs. None but those of the Jade Blood lineage can master it.	true
+character_skills_localised_description_ghs_cth_jade_taoist_unique_0	Created by the Jade Blood Taoists through the fusion of vampiric sorcery with Xi Zhao alchemy, these elixirs flow like liquid jade, possessing both restorative and corrosively venomous properties.	true
+character_skills_localised_description_ghs_cth_jade_taoist_unique_1	Jade Blood Rune Art is the Jade Blood Taoists' unique development of the Winds of Magic. This Jade Blood Taoist has mastered the art, wielding its runes with effortless skill.	true
+character_skills_localised_description_ghs_cth_jade_taoist_unique_2	For a thousand years, all who join the Jade Blood Taoist Temple swear an oath: 'Though I bear the undying blood curse, I shall never consort with Chaos and corruption.'	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_economy_01	Hidden agents are everywhere, the people live in peace, and no bandit dares to stir.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_economy_02	Wherever her eyes and ears reach, corruption finds no refuge, and all trades flourish.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_economy_03	Intelligence flows freely, and engineering projects proceed in perfect order.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_economy_04	Bandits are hunted down, trade routes secured, and the roads stretch unhindered for ten thousand li.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_economy_05	All things are gathered and known, opportunities seized quietly, without a sound.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_economy_06	Intelligence intercepts enemy resources—never returning empty-handed.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_military_01	Every troop deployment across the realm is known to her—elite forces answer at a moment's notice.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_military_02	Wounded soldiers return to the ranks, ambushes are laid in wait—every victory becomes capital for the next battle.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_military_03	The enemy walks into the net—every ambush has already been foreseen.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_military_04	Hidden agents spread throughout enemy territory, moving like fish through water, spending resources like sand slipping through fingers.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_military_05	Foreseeing weather and terrain alike, the army marches as if over level ground, leaving nothing standing in enemy lands.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_military_06	Intelligence leads the way, striking like thunder—our forces arrive before the enemy can even react.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_unique_1	March like the wind—too swift to catch.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_unique_2	Formation like a dense forest—too dangerous to breach.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_unique_3	Assault like fire—spreading as an unstoppable blaze.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_unique_4	Stand unmoving—too resolute to break.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_unique_5	Dark clouds veil the moon—come and go without a trace.	true
+character_skills_localised_description_ghs_main_skill_node_cth_wangque_unique_6	Thunderous force incarnate—the enemy is ground to dust.	true
+character_skills_localised_description_wh3_main_skill_node_cth_jade_terra_unit_1	My body may perish, but my resolve shall never falter.	true
+character_skills_localised_description_wh3_main_skill_node_cth_jade_terra_unit_2	Sharpen the blade, train the steed—prepare well, and disaster shall find no purchase.	true
+character_skills_localised_description_wh3_main_skill_node_cth_jade_terra_unit_3	Foremost among the three armies, trampling mountains and rivers underfoot.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unique_0	The Terracotta Guard is truly a miracle of ancient times—Shen Yang first cast these guardians a thousand years ago. Now, as heaven and earth are thrown into turmoil, the Celestial Court has once again summoned the spirit of the [Frontier Sentinel].	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unique_1	This colossal construct is the Dragon Emperor's proudest creation—once given an order, it carries it out without hesitation, even if it means being smashed to pieces.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unique_2	Every towering, mighty terracotta guardian is modeled after the image of a great warrior—and Yang Xing's form is said to be based on the controversial figure of Xin Wu from Cathayan mythology.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unique_3	The Emblem of the Vast Dragon blazes brightly upon his form, a reminder to all that this great creation must never be provoked.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unique_4	On the road to the Towering Capital, travelers find comfort standing beneath the shadow of the great terracotta guardian statue—its gaze forever fixed upon the distant Long Wall.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unique_5	Legend holds that Yang Xing was the very first sentinel shaped by the Dragon Emperor, and foremost among the four legendary sentinels. By the Dragon Emperor's command, he has silently guarded the Long Wall and the Towering Capital for a thousand years.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unit_0	The oldest of the chief constructs stands as the very model for the army—he never ceases to steel the resolve of his comrades, whether they are forged of jade, carved from stone, or made of flesh and blood.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unit_1	Terracotta Guards lie scattered throughout Cathay, awaiting the next call to war—and the name of the [Frontier Sentinel] is the surest way to awaken them.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unit_2	The more silent a man, the more he warrants careful attention... this is truly a timeless piece of wisdom!	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unit_3	Near or far, wherever they hide, none escape the Dragon God's scornful gaze.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unit_4	No matter what cunning tricks the enemy uses to infiltrate Cathay, they will meet Yang Xing's great shield head-on.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unit_5	A great blade of death for the enemies of Cathay, and a tremendous inspiration to loyal soldiers.	true
+character_skills_localised_description_wh3_main_skill_node_cth_yangxing_unit_6	Yang Xing leans on his sword and points to the heavens; the Terracotta Imperial Guard Legion stands ready to charge as one, following the sweep of the Radiant Star Divine Sword.	true
+character_skills_localised_name_ghs_cth_cha_wangque_arcane_item	Hairpin of Longing for the Palace	true
+character_skills_localised_name_ghs_cth_cha_wangque_armour	Golden Feather Robe	true
+character_skills_localised_name_ghs_cth_cha_wangque_enchanted_item	Mirror of the Cassia Soul	true
+character_skills_localised_name_ghs_cth_cha_wangque_mount_bird	[Mirror Bloom] Yue Luan	true
+character_skills_localised_name_ghs_cth_cha_wangque_talisman	Moonlight Edict	true
+character_skills_localised_name_ghs_cth_cha_wangque_weapon	Moonshadow Blade	true
+character_skills_localised_name_ghs_cth_cha_yangxing_armour	Dark Peak Heavy Shield	true
+character_skills_localised_name_ghs_cth_cha_yangxing_enchanted_item	Divine Dragon Statue	true
+character_skills_localised_name_ghs_cth_cha_yangxing_innate	[Steadfast Commander]	true
+character_skills_localised_name_ghs_cth_cha_yangxing_talisman	Kun Lan Crystal	true
+character_skills_localised_name_ghs_cth_cha_yangxing_weapon	Radiant Star Divine Sword	true
+character_skills_localised_name_ghs_cth_jade_taoist_mount	Emerald Blood Serpent	true
+character_skills_localised_name_ghs_cth_jade_taoist_unique_0	Path of the Elixir	true
+character_skills_localised_name_ghs_cth_jade_taoist_unique_1	Mastery of Talismans	true
+character_skills_localised_name_ghs_cth_jade_taoist_unique_2	Oath of Enlightenment	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_economy_01	Governance of the Cassia Confidants	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_economy_02	Clarity Through Purity	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_economy_03	Wen Yuan's Good Governance	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_economy_04	Trade Across the Realm	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_economy_05	Keen Perception of the Hidden	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_economy_06	Espionage Sustains War	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_innate	[Envoy of the Moonlit Phoenix]	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_military_01	The Art of Recruitment	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_military_02	Waging War with War	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_military_03	Know Yourself, Know the Enemy	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_military_04	Web of Shadows	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_military_05	Scorched Earth	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_military_06	Speed is Precious in War	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_unique_1	Swift as the Wind	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_unique_2	Stately as the Forest	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_unique_3	Fierce as Fire	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_unique_4	Immovable as the Mountain	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_unique_5	Elusive as the Shadow	true
+character_skills_localised_name_ghs_main_skill_node_cth_wangque_unique_6	Sudden as Thunder	true
+character_skills_localised_name_wh3_main_skill_node_cth_jade_terra_unit_1	Unyielding in the Underworld	true
+character_skills_localised_name_wh3_main_skill_node_cth_jade_terra_unit_2	A Thousand Blows, Ten Thousand Strikes	true
+character_skills_localised_name_wh3_main_skill_node_cth_jade_terra_unit_3	Slaughter That Shakes the Heavens	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unique_0	Ancient Construct	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unique_1	Eternal Watch	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unique_2	Dragon God's Guardian	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unique_3	Emblem of the Vast Dragon	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unique_4	Vigil of the Long Wall	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unique_5	Dragon Emperor's Decree	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unit_0	Primordial Exemplar	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unit_1	Awaken the Comrades	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unit_2	Silent Colossus	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unit_3	Dragon's Contempt	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unit_4	Shield of Protection	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unit_5	Sword of Judgment	true
+character_skills_localised_name_wh3_main_skill_node_cth_yangxing_unit_6	Commander of the Stonebound Legion	true

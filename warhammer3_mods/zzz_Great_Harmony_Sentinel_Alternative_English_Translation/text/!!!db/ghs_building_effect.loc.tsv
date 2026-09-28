@@ -1,16 +1,16 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_building_effect.loc		
-campaign_effect_scopes_localised_text_building_to_forces_own_provincewide	\\n(Provinces' armies)	false
-effects_description_wh3_main_cth_effect_economy_gdp_mod_trade_local	Market sequence GDP: %+n%	false
-effects_description_wh3_main_cth_effect_plague_infectivity_mod_global	Faction-wide plague spread chance: %+n%	false
-effects_description_wh_main_effect_economy_gdp_mod_manufacture_farming	Manufacturing and farming GDP: %+n%	false
-effects_description_wh_main_effect_economy_silk_bouns	This sequence is influenced by both Yin and Yang.	false
-effects_description_wh_main_effect_economy_gdp_mod_everything	Faction-wide GDP: %+n%	false
-effects_description_wh_main_effect_economy_gdp_mod_culture_ming	Resource building GDP: %+n%	false
-effects_description_wh_main_effect_economy_gdp_trade_local_ming	Market sequence GDP: %+n%	false
-effects_description_ancestral_warriors_temple	Army ability uses: "Ancestral Warriors" %+n	false
-effects_description_celestial_intervention	Army ability uses: "Celestial Intervention" %+n	false
-effects_description_ancestral_warriors_temple_cooldown	Cooldown rate: "Ancestral Warriors" %+n%	false
-effects_description_wh3_main_effect_building_construction_time_mod_cth_all_ming_per	Building time: All buildings %+n%	false
-effects_description_wh3_main_effect_building_construction_cost_mod_cth_all_ming_per	Building cost: All buildings %+n%	false
-effects_description_wh3_main_effect_force_upkeep_mod_cth_terracotta_sentinels	Upkeep: Terracotta Sentinel units %+n%	false
+campaign_effect_scopes_localised_text_building_to_forces_own_provincewide	\\n(Provincial Armies)	false
+effects_description_wh3_main_cth_effect_economy_gdp_mod_trade_local	Market Chain Income: %+n%	false
+effects_description_wh3_main_cth_effect_plague_infectivity_mod_global	Faction Plague Spread Chance: %+n%	false
+effects_description_wh_main_effect_economy_gdp_mod_manufacture_farming	Industrial and Agricultural Income: %+n%	false
+effects_description_wh_main_effect_economy_silk_bouns	This chain is affected by both Yin and Yang.	false
+effects_description_wh_main_effect_economy_gdp_mod_everything	Faction Income: %+n%	false
+effects_description_wh_main_effect_economy_gdp_mod_culture_ming	Resource Building Income: %+n%	false
+effects_description_wh_main_effect_economy_gdp_trade_local_ming	Market Chain Income: %+n%	false
+effects_description_ancestral_warriors_temple	Army Ability Uses: 'Ancestral Host' %+n	false
+effects_description_celestial_intervention	Army Ability Uses: 'Celestial Intervention' %+n	false
+effects_description_ancestral_warriors_temple_cooldown	Cooldown Rate: 'Ancestral Host' %+n%	false
+effects_description_wh3_main_effect_building_construction_time_mod_cth_all_ming_per	Construction Time: All Buildings %+n%	false
+effects_description_wh3_main_effect_building_construction_cost_mod_cth_all_ming_per	Construction Cost: All Buildings %+n%	false
+effects_description_wh3_main_effect_force_upkeep_mod_cth_terracotta_sentinels	Upkeep: Terracotta Sentinel Guard Units %+n%	false

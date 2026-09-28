@@ -1,36 +1,39 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_unit_abilities_additional_ui.loc		
-unit_abilities_additional_ui_effects_localised_text_wh2_main_hef_revenge_soul	The spirit guard of Isha will not decay in battle.	false
-unit_abilities_additional_ui_effects_localised_text_summon_ghs_ksl_mon_ursun_winter_elemental_bear	Summons an exceptionally powerful unit: Ursun's Winter (Elemental Bear).	false
-unit_abilities_additional_ui_effects_localised_text_ghs_intensity_reduced_with_wind_up	Effect intensity decreases with increased casting time.	true
-unit_abilities_additional_ui_effects_localised_text_ghs_intensity_compass_unique	Effect intensity resets to zero after all abilities are used.	true
-unit_abilities_additional_ui_effects_localised_text_ghs_tmb_flying_necrosphinx_speed	This form grants the Necrosphinx ethereal state and swift flight.	true
-unit_abilities_additional_ui_effects_localised_text_ghs_tmb_flying_necrosphinx_weapon	In this form, the Necrosphinx cannot use its dual blades, reducing its melee capabilities.	true
-unit_abilities_additional_ui_effects_localised_text_ghs_tmb_heirotitan_summon	Summons a unit of Sacred Titans.	true
-unit_abilities_additional_ui_effects_localised_text_ghs_tmb_landing_necrosphinx_speed	In this form, the Necrosphinx can only remain grounded, reducing movement speed.	true
-unit_abilities_additional_ui_effects_localised_text_ghs_tmb_landing_necrosphinx_weapon	In this form, the Necrosphinx wields dual blades, enhancing melee capabilities.	true
-unit_abilities_additional_ui_effects_localised_text_ghs_tmb_ostrich_rider_summon	Summons a unit of Bone Ostrich Riders.	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan1	[[col:green]][[img:icon_arrow_up]][[/img]] Transformation: Arkhan Black Tower Scorpion Titan[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan2	[[col:green]][[img:icon_arrow_up]][[/img]] Gains Sacred Scorpion Form skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan3	[[col:green]][[img:icon_arrow_up]][[/img]] Transformation: Nagash's Necromantic Avatar[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan4	[[col:green]][[img:icon_arrow_up]][[/img]] Gains End Times Necromantic Avatar skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_khalida1	[[col:green]][[img:icon_arrow_up]][[/img]] Transformation: Lybaras Venomous Titan[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_khalida2	[[col:green]][[img:icon_arrow_up]][[/img]] Gains Sacred Venom Form skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_khatep1	[[col:green]][[img:icon_arrow_up]][[/img]] Transformation: Mortuary Cult Skyhawk Titan[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_khatep2	[[col:green]][[img:icon_arrow_up]][[/img]] Gains Sacred Skyhawk Form skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_settra1	[[col:green]][[img:icon_arrow_up]][[/img]] Transformation: Khemri Lion Titan[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_settra2	[[col:green]][[img:icon_arrow_up]][[/img]] Gains Sacred Lion Form skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_settra3	[[col:green]][[img:icon_arrow_up]][[/img]] Transformation: Nehekhara Emperor Avatar[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_heriotitan_settra4	[[col:green]][[img:icon_arrow_up]][[/img]] Gains King of Kings Avatar skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_tmb_all_unlocks_at_realm_of_souls_tier1	Unlocks at Tier 1 Realm of Souls.	true
-unit_abilities_additional_ui_effects_localised_text_tmb_prince3	[[col:green]][[img:icon_arrow_up]][[/img]] Soul Bind: Carved Ushabti[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_tmb_prince4	[[col:green]][[img:icon_arrow_up]][[/img]] Gains Carved Ushabti skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_tmb_prince_lion1	[[col:green]][[img:icon_arrow_up]][[/img]] Transformation: Lion Ushabti[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_tmb_prince_lion2	[[col:green]][[img:icon_arrow_up]][[/img]] Gains Lion Ushabti skill[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_wh2_main_transform_to_isha_form	Transform into Isha Form.	false
-unit_abilities_additional_ui_effects_localised_text_snek_dwf_ability_grudgesolvers_heavy	Heavy Ammunition.	true
-unit_abilities_additional_ui_effects_localised_text_snek_dwf_ability_grudgesolvers_shot	Scatter Shot.	true
-unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_caltrops	[[col:green]][[img:icon_arrow_up]][[/img]] Deploy Caltrops[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_mines	[[col:green]][[img:icon_arrow_up]][[/img]] Deploy Mines[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_organ_gun	[[col:green]][[img:icon_arrow_up]][[/img]] Deploy Organ Gun[[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_volley_gun	[[col:green]][[img:icon_arrow_up]][[/img]] Deploy Volley Gun[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_wh2_main_hef_revenge_soul	Yvresse Spirit Guard do not degrade in battle	false
+unit_abilities_additional_ui_effects_localised_text_summon_ghs_ksl_mon_ursun_winter_elemental_bear	Summons an extremely powerful unit: Ursun's Winter (Elemental Bear)	false
+unit_abilities_additional_ui_effects_localised_text_ghs_intensity_reduced_with_wind_up	Effect intensity decreases as casting time increases	true
+unit_abilities_additional_ui_effects_localised_text_ghs_intensity_compass_unique	Effect intensity drops to zero after all abilities are cast	true
+unit_abilities_additional_ui_effects_localised_text_ghs_tmb_flying_necrosphinx_speed	This form grants the Necrosphinx an ethereal state and rapid flight capability	true
+unit_abilities_additional_ui_effects_localised_text_ghs_tmb_flying_necrosphinx_weapon	In this form, the Necrosphinx cannot use its twin blades, weakening its melee capability	true
+unit_abilities_additional_ui_effects_localised_text_ghs_tmb_heirotitan_summon	Summons a unit of Hierotitans	true
+unit_abilities_additional_ui_effects_localised_text_ghs_tmb_landing_necrosphinx_speed	In this form, it can only remain grounded, and its movement speed is reduced	true
+unit_abilities_additional_ui_effects_localised_text_ghs_tmb_landing_necrosphinx_weapon	In this form, the Necrosphinx will use its twin blades, enhancing its melee capability	true
+unit_abilities_additional_ui_effects_localised_text_ghs_tmb_ostrich_rider_summon	Summons a unit of Bone Ostrich Riders	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan1	[[col:green]][[img:icon_arrow_up]][[/img]]Transform: Black Guard Scorpion Titan of Arkhan[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan2	[[col:green]][[img:icon_arrow_up]][[/img]]Gains Divine Scorpion Avatar ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan3	[[col:green]][[img:icon_arrow_up]][[/img]]Transform: Avatar of Nagash's Necromancy[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_arkhan4	[[col:green]][[img:icon_arrow_up]][[/img]]Gains Final Reckoning of the Undying ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_khalida1	[[col:green]][[img:icon_arrow_up]][[/img]]Transform: Serpent of Lybaras Titan[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_khalida2	[[col:green]][[img:icon_arrow_up]][[/img]]Gains Divine Serpent Avatar ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_khatep1	[[col:green]][[img:icon_arrow_up]][[/img]]Transform: Sky Hawk Titan of the Mortuary Cult[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_khatep2	[[col:green]][[img:icon_arrow_up]][[/img]]Gains Divine Sky Hawk Avatar ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_settra1	[[col:green]][[img:icon_arrow_up]][[/img]]Transform: Lion of Khemri Titan[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_settra2	[[col:green]][[img:icon_arrow_up]][[/img]]Gains Divine Lion Avatar ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_settra3	[[col:green]][[img:icon_arrow_up]][[/img]]Transform: Avatar of Nehekhara's Great Emperor[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_heriotitan_settra4	[[col:green]][[img:icon_arrow_up]][[/img]]Gains King of Kings Avatar ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_tmb_all_unlocks_at_realm_of_souls_tier1	Unlocked upon reaching Realm of Souls tier 1	true
+unit_abilities_additional_ui_effects_localised_text_tmb_prince3	[[col:green]][[img:icon_arrow_up]][[/img]]Soul-Bound: Carved Ushabti[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_tmb_prince4	[[col:green]][[img:icon_arrow_up]][[/img]]Gains Carved Ushabti ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_tmb_prince_lion1	[[col:green]][[img:icon_arrow_up]][[/img]]Transform: Lion-Faced Ushabti[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_tmb_prince_lion2	[[col:green]][[img:icon_arrow_up]][[/img]]Gains Lion-Faced Ushabti ability[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_wh2_main_transform_to_isha_form	Transforms into Avatar of Isha form	false
+unit_abilities_additional_ui_effects_localised_text_snek_dwf_ability_grudgesolvers_heavy	Heavy Warhead	true
+unit_abilities_additional_ui_effects_localised_text_snek_dwf_ability_grudgesolvers_shot	Buckshot Volley	true
+unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_caltrops	[[col:green]][[img:icon_arrow_up]][[/img]]Deploy Caltrops[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_mines	[[col:green]][[img:icon_arrow_up]][[/img]]Deploy Landmines[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_organ_gun	[[col:green]][[img:icon_arrow_up]][[/img]]Deploy Organ Gun[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_wh_main_unit_dwf_abilities_deploy_volley_gun	[[col:green]][[img:icon_arrow_up]][[/img]]Deploy Volley Gun[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_ghs_abilities_hongying_tele	This ability can cast the spell 'Shadow Over the Realm' at the target location	true
+unit_abilities_additional_ui_effects_localised_text_ghs_cth_inf_secret_follower_tele_1	Teleports to a selected location within range	true
+unit_abilities_additional_ui_effects_localised_text_ghs_cth_inf_secret_follower_tele_2	Disrupts enemy formation upon arrival	true

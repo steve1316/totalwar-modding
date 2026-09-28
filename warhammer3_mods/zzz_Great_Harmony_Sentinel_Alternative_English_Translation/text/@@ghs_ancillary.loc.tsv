@@ -1,0 +1,113 @@
+key	text	tooltip
+#Loc;1;text/@@ghs_ancillary.loc		
+ancillaries_colour_text_cth_xiaoxiao_arcane_item	A flame cultivated by Xiao Xiao from his own pure bloodline, wieldable only by true descendants of the Zhu Long. It specializes in vanquishing the treacherous and wicked, burning away all that is unclean.	true
+ancillaries_colour_text_cth_xiaoxiao_armour	Personally crafted by Bin Long and bestowed upon Xiao Xiao, this armor bears carvings of the Vermillion Bird, its battle robes embroidered with the sigil of Zhu Long. Golden winds and sunlit flames swirl about the wearer, capable of dispersing ordinary stray arrows.	true
+ancillaries_colour_text_cth_xiaoxiao_enchanted_item	One of the Six Great Tiger Tallies of the Long Wall, the Flame Tally represents the mobile reinforcements, embodying the unwavering faith of the countless soldiers who guard the Long Wall. Its bearer holds the authority to summon reinforcements from the defensive line.	true
+ancillaries_colour_text_cth_xiaoxiao_talisman	A token of Zhu Long's own bloodline, containing the Winds of Magic of the Lore of Life from the southern frontier. Bestowed upon Xiao Xiao by Bin Long upon reaching adulthood, this pendant stabilizes the bloodline and wards off the corruption of Chaos.	true
+ancillaries_colour_text_cth_zhaowang_armour	Forged by Bin Long himself, blending refined Kun Lan gold with the dark iron of the western frontier, this armor is rough-hewn yet heavy, its beast-face fierce and menacing—only one who wields the power of the Four Symbols may don it into battle.	true
+ancillaries_colour_text_cth_zhaowang_enchanted_item	Guided by the teachings of a secretive alchemist, Xuan Lie forged this power through the trials of the Western Frontier's wars, channeling the dragon veins of the western lands through his own body to unleash the earth's tectonic force, tearing apart enemy formations.	true
+ancillaries_colour_text_cth_zhaowang_horse	A steed of dragon-blood, its coat pitch black; it travels ten thousand li by day and eight thousand more by night—thus it earned the name Ten Thousand Miles of Mist and Cloud.	true
+ancillaries_colour_text_cth_zhaowang_talisman	A wondrous ancient jade bestowed by the Soaring Dragon. Xuan Lie's pure dragon bloodline readily draws heavenly thunder, and this jade pendant channels and disperses the lightning strikes, tempering his body to make him stronger still.	true
+ancillaries_colour_text_cth_zhaowang_weapon	A divine weapon only those of the Soaring Dragon bloodline can wield, housing within it the spirit of a temple-guarding beast imbued with the power of wind and thunder. Its strikes sweep through enemy ranks like a dragon's lashing tail, scattering thousands.	true
+ancillaries_colour_text_ghs_cth_anc_hongying_arcane_item_flame_of_ink	Hong Ying possesses an uncanny affinity for the Yin winds of magic. His "staff" is the ink-jade flame upon his blade; when he must channel the winds of magic or cut down a target, the ink flame rises and shifts form.	true
+ancillaries_colour_text_ghs_cth_anc_hongying_armour_crow_cloak	This cloak, light as swan's down, is the symbol of the overseer who commands the "Shadow Crow Guard"—it is also the sole means, besides Yuan Bo himself, of directly commanding the Agate Crowmen.	true
+ancillaries_colour_text_ghs_cth_anc_hongying_enchanted_item_token_of_empress	The Cassia Confidants are divided into three guards, and only the overseer of each guard may hold this token. Hong Ying's "Shadow Crow Guard" bears the duty of gathering intelligence across the realm and carrying out assassinations and arrests—showing this token is as if the Moon Empress herself had arrived.	true
+ancillaries_colour_text_ghs_cth_anc_hongying_mount_bird	[Shadowdance] is the Great Moon Luan bestowed upon Hong Ying by the Moon Empress herself. Rumor holds that this bird is the Moon Empress's own phantom; only by hearing its cry can the Black Jade Crow Wardens commune with the Yin wind and transform into the Yue Zhuo.	true
+ancillaries_colour_text_ghs_cth_anc_hongying_tailsman_mask_of_shadow	Legend holds that this mask was carved by the Shadow Dragon itself. Its wearer can not only conceal their presence, but move with the wind upon the battlefield, vanishing into shadow to strike down enemy commanders.	true
+ancillaries_colour_text_ghs_cth_anc_hongying_weapon_weapon_blade_of_moonfire	A powerful weapon that Shadowdance brought back from the Moon Empress's residence. Its blade is as bright and clear as the moon, with flowing ink-jade like flame upon it that can easily dispel the magic bound to an opponent's weapon.	true
+ancillaries_colour_text_ghs_cth_cha_wangque_arcane_item	The Hairpin of Longing for the Palace is carved from thousand-year-old cassia wood and tempered with shadow magic. When Liu Wang Que followed Yuan Bo to Lustria, Hong Ying solemnly entrusted this hairpin to her; the shadow power within amplifies spells while concealing the caster's presence.	true
+ancillaries_colour_text_ghs_cth_cha_wangque_armour	The Golden Feather Robe is woven from moonlit silk gifted by the Moon Empress, reinforced with threads of refined gold, its shawl made from the molted feathers of spirit crows raised by the Cassia Confidants. Woven over the course of a year by the Celestial Weaving Bureau, it is Liu Wang Que's most distinguishing mark of identity.	true
+ancillaries_colour_text_ghs_cth_cha_wangque_enchanted_item	Liu Wang Que's wisdom foiled a plot by followers of Tzeentch to destroy the Cassia soul, earning great renown. [Shadowdance] brought it to her, plucked from the Moon Empress's garden; legend holds that the Mirror of the Cassia Soul was forged by the Moon Empress's own hands, its back etched with the ancient inscription, "Moonlight shines through a thousand gates, its shadow follows but one." Whoever holds this mirror leaves no enemy hidden.	true
+ancillaries_colour_text_ghs_cth_cha_wangque_mount_bird	[Mirror Bloom] and [Shadowdance] are a mated pair of Great Moon Luans, bound to each other for life. Rumor holds them to be part of the Moon Empress's own power; upon hearing the cry of these two birds, the Black Jade Crow Wardens can commune with the Yin Wind and transform into the sacred Yue Zhuo bird.	true
+ancillaries_colour_text_ghs_cth_cha_wangque_talisman	The Moonlight Edict is the token of office of the Cassia Confidants' deputy chief, and Liu Wang Que's proof of authority to command the organization. On the battlefield, the Moonlight Edict can release a magical barrier to protect its bearer, resonating with the Mirror of the Cassia Soul.	true
+ancillaries_colour_text_ghs_cth_cha_wangque_weapon	When Hong Ying first established the Cassia Confidants, he personally forged this long saber for Liu Wang Que with ink flame as her weapon of war. Though the deputy chief of the Cassia Confidants is a woman, she is by no means one to be trifled with.	true
+ancillaries_colour_text_ghs_cth_cha_yangxing_armour	A great shield forged especially for the terracotta commander, its primary material Kun Lan obsidian, its face embossed with the magnificent form of the Dragon God. Utterly indestructible, it can block even the heaviest blows of giant beasts.	true
+ancillaries_colour_text_ghs_cth_cha_yangxing_enchanted_item	Whether arrows, blades, fangs, or claws—the divine dragon statue coiled about the beast-devouring emblem regards all such crude methods of slaughter with utter, bone-deep contempt.	true
+ancillaries_colour_text_ghs_cth_cha_yangxing_talisman	A rare crystal from the peak of Kun Lan, set into Yang Xing's armor, holds within it the power of the Heavenly Way, capable of unleashing deadly magical energy in battle.	true
+ancillaries_colour_text_ghs_cth_cha_yangxing_weapon	The sword of Yang Xing, foremost of the terracotta statues, said to have been forged by the Dragon Emperor's own hand. Its blade is engraved with patterns of the Yang wind, and it shines with dazzling starlight whenever Chaos assails the Long Wall.	true
+ancillaries_colour_text_ghs_dwf_missile_mecha	The prototypes of these war machines trace back to the prospecting boom of the Golden Age, but as engineers and miners were swallowed by the green tide, they too were buried deep beneath the rubble until recent excavations brought them back into the light. Now, survivors of that terrible calamity mount these refurbished, mass-produced machines to settle the score with the greenskins and ratkin scum.	true
+ancillaries_colour_text_ghs_ksl_thor_arcane_item	"Thor met the dwarf Gerd when he won a drinking contest. When they fled the dark elves' Black Ark, a storm swept Gerd away, leaving behind only his friend's heirloom runic helm."	true
+ancillaries_colour_text_ghs_ksl_thor_armour	"This armor was forged by a renowned dwarf master, imbued with a long-lost thunder rune. It not only channels Halfdan's inner thunderous power, but also cleanses the chaos energy surrounding him."	true
+ancillaries_colour_text_ghs_ksl_thor_enchanted_item	"After defeating the bone-crushing giant chieftain in single combat, Halfdan claimed this golden rune from the giant's hoard. Its bearer possesses boundless charisma, compelling others to follow willingly."	true
+ancillaries_colour_text_ghs_ksl_thor_talisman	"When the divine hammer descended wreathed in lightning, it left an ever-lasting lightning scar upon Halfdan's chest. This scar renders Thor's chosen one impervious to blade and arrow alike."	true
+ancillaries_colour_text_ghs_ksl_thor_weapon	"It was this hammer, fallen from the sky, that turned a new page in Halfdan's life. When he grips its haft, he can hear Thor's divine oracle guiding him to overcome all."	true
+ancillaries_colour_text_ghs_old_blood_giant_ripperdactyl	The largest and most bloodthirsty of ripperdactyls, their razor-sharp claws can decapitate enemies, and their furious assaults leave scattered entrails and severed limbs in their wake.	true
+ancillaries_colour_text_ghs_scar_veteran_giant_ripperdactyl	The largest and most bloodthirsty of ripperdactyls, their razor-sharp claws can decapitate enemies, and their furious assaults leave scattered entrails and severed limbs in their wake.	true
+ancillaries_colour_text_hef_cha_alastar_mount_war_lion	Whatever the identity or danger of the foe, Alastar rides his war lion into a charge that would make the Lion God himself proud.	true
+ancillaries_colour_text_ksl_cha_boris_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	true
+ancillaries_colour_text_ksl_cha_katarin_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	true
+ancillaries_colour_text_ksl_cha_kostaltyn_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	true
+ancillaries_colour_text_lzd_kroxigor_bro_01_armour	The soft metal, though unable to protect his hard scaly hide, makes his massive frame shine brilliantly, allowing the Saurus warriors following him into the enemy's depths to more easily track his gleaming silhouette and follow the bloody path he carves.	true
+ancillaries_colour_text_lzd_kroxigor_bro_01_weapon	Indestructibility applied to a weapon becomes unbreakable might. This massive hammer, one that would require several Kroxigors to carry, moves in Gu Kahn's hands as fluidly as an extension of his own limbs. A single casual blow can smash warmbloods and their so-called fine armor into a mangled heap of flesh and metal.	true
+ancillaries_colour_text_lzd_kroxigor_bro_02_armour	Assembled from the most prized trophies of Gu Ke Jia's kills, this thick carapace, capable of withstanding the heat of the Sun Engine, renders shot and arrows as harmless as scratches through a boot.	true
+ancillaries_colour_text_lzd_kroxigor_bro_02_weapon	Sharp, heavy, and imbued with the wild blessing of the beast god Itza, this great axe—polished by a legion of Spirit Skink artisans—is enough to behead a carnosaur with a single blow, no matter how thick its neck.	true
+ancillaries_colour_text_slann_campagin	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+ancillaries_colour_text_slann_fire	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+ancillaries_colour_text_slann_heaven	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+ancillaries_colour_text_slann_high	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+ancillaries_colour_text_slann_life	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+ancillaries_colour_text_slann_light	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+ancillaries_colour_text_tmb_dragon_king	Tomb Engineers labored for generations upon a single massive block of obsidian, sculpting the perfect construct that once crowned the peak of the Kings' pyramid. Now it bears the Tomb Kings aloft, looking down upon the clouds.	true
+ancillaries_colour_text_tmb_eagle_mage1	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	true
+ancillaries_colour_text_tmb_eagle_mage2	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	true
+ancillaries_colour_text_tmb_eagle_mage3	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	true
+ancillaries_colour_text_tmb_eagle_mage4	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	true
+ancillaries_colour_text_tmb_elephant_necrotect	The ancient engineers are roused from their intoxication with carving war elephants, once more mounting their solemn and resplendent palanquin, banners fluttering as armies scatter before them.	true
+ancillaries_colour_text_wh3_dlc20_chs_cha_exalted_hero_mkho_war_mammoth_warshrine	A colossal beast built from bone and flame, bearing the Blood God's oracle as it leads frenzied worshippers wading through mud and blood, leaving scorched bones and severed limbs in its wake.	true
+ancillaries_onscreen_name_cth_xiaoxiao_arcane_item	Radiant Sun Ward Flame	true
+ancillaries_onscreen_name_cth_xiaoxiao_armour	Candleglow Gilded Armor	true
+ancillaries_onscreen_name_cth_xiaoxiao_enchanted_item	Long Wall Tiger Tally: Flame	true
+ancillaries_onscreen_name_cth_xiaoxiao_talisman	Dawnlight Dragon-Pattern Pendant	true
+ancillaries_onscreen_name_cth_zhaowang_armour	Xuan Gang Four Symbols Armor	true
+ancillaries_onscreen_name_cth_zhaowang_enchanted_item	Earth-Shaking Cauldron Rite	true
+ancillaries_onscreen_name_cth_zhaowang_horse	Ten Thousand Miles of Mist and Cloud	true
+ancillaries_onscreen_name_cth_zhaowang_talisman	Thunder-Warding Jade Pendant	true
+ancillaries_onscreen_name_cth_zhaowang_weapon	Drum-Beating Golden Urn Hammer	true
+ancillaries_onscreen_name_ghs_chd_mon_kdaai_destroyer_conqueror	K'daai Conqueror	true
+ancillaries_onscreen_name_ghs_cth_anc_hongying_arcane_item_flame_of_ink	Ink Jade Flame	true
+ancillaries_onscreen_name_ghs_cth_anc_hongying_armour_crow_cloak	Cloak of Crow Feathers	true
+ancillaries_onscreen_name_ghs_cth_anc_hongying_enchanted_item_token_of_empress	Edict of the Laurel	true
+ancillaries_onscreen_name_ghs_cth_anc_hongying_mount_bird	[Shadowdance] Yue Luan	true
+ancillaries_onscreen_name_ghs_cth_anc_hongying_tailsman_mask_of_shadow	Shadow Dragon Jade	true
+ancillaries_onscreen_name_ghs_cth_anc_hongying_weapon_weapon_blade_of_moonfire	Blade of Pure Moon	true
+ancillaries_onscreen_name_ghs_cth_anc_magistrate_mount_boat	Dragon God Cloud Vessel	true
+ancillaries_onscreen_name_ghs_cth_cha_wangque_arcane_item	Hairpin of Longing for the Palace	true
+ancillaries_onscreen_name_ghs_cth_cha_wangque_armour	Golden Feather Robe	true
+ancillaries_onscreen_name_ghs_cth_cha_wangque_enchanted_item	Mirror of the Cassia Soul	true
+ancillaries_onscreen_name_ghs_cth_cha_wangque_mount_bird	Yue Luan [Mirror Bloom]	true
+ancillaries_onscreen_name_ghs_cth_cha_wangque_talisman	Moonlight Edict	true
+ancillaries_onscreen_name_ghs_cth_cha_wangque_weapon	Moonshadow Blade	true
+ancillaries_onscreen_name_ghs_cth_cha_yangxing_armour	Dark Peak Heavy Shield	true
+ancillaries_onscreen_name_ghs_cth_cha_yangxing_enchanted_item	Divine Dragon Statue	true
+ancillaries_onscreen_name_ghs_cth_cha_yangxing_talisman	Kun Lan Crystal	true
+ancillaries_onscreen_name_ghs_cth_cha_yangxing_weapon	Radiant Star Divine Sword	true
+ancillaries_onscreen_name_ghs_dwf_missile_mecha	Vengeance Reckoning Mech (Multi-Barrel Rune Gun)	true
+ancillaries_onscreen_name_ghs_ksl_thor_arcane_item	Gerd's Winged Helm	true
+ancillaries_onscreen_name_ghs_ksl_thor_armour	Yagorn's Peaked Armor	true
+ancillaries_onscreen_name_ghs_ksl_thor_enchanted_item	Yagorn Gripel	true
+ancillaries_onscreen_name_ghs_ksl_thor_talisman	Scar of Lightning	true
+ancillaries_onscreen_name_ghs_ksl_thor_weapon	Mjolnir	true
+ancillaries_onscreen_name_ghs_old_blood_giant_ripperdactyl	Ancient Ripperdactyl	true
+ancillaries_onscreen_name_ghs_scar_veteran_giant_ripperdactyl	Ancient Ripperdactyl	true
+ancillaries_onscreen_name_hef_cha_alastar_mount_war_lion	Alastar the War Lion	true
+ancillaries_onscreen_name_ksl_cha_boris_mount_elemental_bear	Ursun's Winter	true
+ancillaries_onscreen_name_ksl_cha_katarin_mount_elemental_bear	Ursun's Winter	true
+ancillaries_onscreen_name_ksl_cha_kostaltyn_mount_elemental_bear	Ursun's Winter	true
+ancillaries_onscreen_name_lzd_kroxigor_bro_01_armour	Golden Regalia	true
+ancillaries_onscreen_name_lzd_kroxigor_bro_01_weapon	Fist of Quetzl	true
+ancillaries_onscreen_name_lzd_kroxigor_bro_02_armour	Beast-Bone Armor	true
+ancillaries_onscreen_name_lzd_kroxigor_bro_02_weapon	Edge of Itza	true
+ancillaries_onscreen_name_slann_campagin	Ancient Stegadon (Engine of the Gods)	true
+ancillaries_onscreen_name_slann_fire	Ancient Stegadon (Engine of the Gods)	true
+ancillaries_onscreen_name_slann_heaven	Ancient Stegadon (Engine of the Gods)	true
+ancillaries_onscreen_name_slann_high	Ancient Stegadon (Engine of the Gods)	true
+ancillaries_onscreen_name_slann_life	Ancient Stegadon (Engine of the Gods)	true
+ancillaries_onscreen_name_slann_light	Ancient Stegadon (Engine of the Gods)	true
+ancillaries_onscreen_name_tmb_dragon_king	Tomb Dragon	true
+ancillaries_onscreen_name_tmb_eagle_mage1	Ulatuan Vulture	true
+ancillaries_onscreen_name_tmb_eagle_mage2	Ulatuan Vulture	true
+ancillaries_onscreen_name_tmb_eagle_mage3	Ulatuan Vulture	true
+ancillaries_onscreen_name_tmb_eagle_mage4	Ulatuan Vulture	true
+ancillaries_onscreen_name_tmb_elephant_necrotect	Obsidian War Elephant	true
+ancillaries_onscreen_name_wh3_dlc20_chs_cha_chaos_lord_mkho_war_mammoth_warshrine	War Mammoth (Shrine of Khorne)	true
+ancillary_sets_description_ghs_ksl_thor	After completing trial after trial, Halfdan changed his surname to [Son of Thor] and returned to the motherland's soil as a chosen warrior.	true

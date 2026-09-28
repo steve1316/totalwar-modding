@@ -1,12 +1,12 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_nur_units_ability.loc		
-unit_abilities_onscreen_name_nur_unit_abilities_decay_rain	Decay Rain	false
-unit_abilities_tooltip_text_nur_unit_abilities_decay_rain	When Death Guard are in dire battle, the Father will send a corrosive rain to heal his children.	false
+unit_abilities_onscreen_name_nur_unit_abilities_decay_rain	Rain of Decay	false
+unit_abilities_tooltip_text_nur_unit_abilities_decay_rain	When the Death Guard falls into a hard-fought battle, the Plague Father sends down a corrosive acid rain to heal his children.	false
 unit_abilities_onscreen_name_nur_unit_abilities_putrid_gas	Putrid Gas	false
-unit_abilities_tooltip_text_nur_unit_abilities_putrid_gas	The mounts of Death Reapers continuously release gas that corrodes everything around them.	false
+unit_abilities_tooltip_text_nur_unit_abilities_putrid_gas	The mount of the Death Reapers continuously releases a gas that corrodes everything around it.	false
 special_ability_phases_onscreen_name_unit_contact_deadly_corrosion	Deadly Corrosion!	false
-effects_description_effect_province_merc_capacity_nur_inf_plague_cultist	Local Mercenary Recruitment: Plague Cultists Capacity %+n	false
-effects_description_effect_province_merc_capacity_nur_cav_plague_cultist	Local Mercenary Recruitment: Plague Spreaders %+n	false
-effects_description_effect_province_merc_capacity_nur_inf_centigors_throwing_axes	Local Mercenary Recruitment: Centigors of Nurgle (Throwing Axes) Capacity %+n	false
-effects_description_effect_province_merc_capacity_nur_inf_centigors_great_axe	Local Mercenary Recruitment: Centigors of Nurgle (Great Axes) Capacity %+n	false
-effects_description_effect_province_merc_capacity_nur_inf_plague_ogres_cannon	Local Mercenary Recruitment: Plague Ogres (Nurgling Cannon) %+n	false
+effects_description_effect_province_merc_capacity_nur_inf_plague_cultist	Local Warband Recruitment: Nurgle Plague Cultists Capacity %+n	false
+effects_description_effect_province_merc_capacity_nur_cav_plague_cultist	Local Warband Recruitment: Nurgle Plague Spreaders Capacity %+n	false
+effects_description_effect_province_merc_capacity_nur_inf_centigors_throwing_axes	Local Warband Recruitment: Nurgle Centigors Capacity %+n	false
+effects_description_effect_province_merc_capacity_nur_inf_centigors_great_axe	Local Warband Recruitment: Nurgle Centigors (Great Weapons) Capacity %+n	false
+effects_description_effect_province_merc_capacity_nur_inf_plague_ogres_cannon	Local Warband Recruitment: Plague Ogres (Nurgle Soul Cannon) Capacity %+n	false

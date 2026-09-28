@@ -1,19 +1,19 @@
 key	text	tooltip
 #Loc;1;text/@@@rhd_skaven_overhaul_ritual.loc		
-rituals_display_name_rhd_ritual_ikit_workshop_tesla_upgrade_0	Dual Energy Chambers	false
-rituals_description_rhd_ritual_ikit_workshop_tesla_upgrade_0	By adding additional parallel energy chambers, Warlock Engineers can fire the devastating Warp Lightning faster. However, due to incomplete insulation between the chambers, heat conduction issues remain unavoidable.	false
+rituals_display_name_rhd_ritual_ikit_workshop_tesla_upgrade_0	Twin Energy Coils	false
+rituals_description_rhd_ritual_ikit_workshop_tesla_upgrade_0	By adding parallel energy coils, Warp-Lightning Adepts can fire their all-annihilating warp lightning faster, though since the coils are not fully insulated from one another, heat transfer remains unavoidable	false
 rituals_display_name_rhd_ritual_ikit_workshop_tesla_upgrade_1	High-Purity Core	false
-rituals_description_rhd_ritual_ikit_workshop_tesla_upgrade_1	The staff wielded by Warlock Engineers functions as a miniature Warp Lightning Cannon. Increasing the purity of the Warpstone core directly enhances the energy density and firing precision of Warp Lightning.	false
+rituals_description_rhd_ritual_ikit_workshop_tesla_upgrade_1	The staff wielded by a Warp-Lightning Adept is akin to a miniature warp lightning cannon. Increasing the purity of the warpstone within its core most directly enhances the energy density and firing accuracy of its warp lightning	false
 rituals_display_name_rhd_ritual_ikit_workshop_tesla_upgrade_2	Energy Diverter	false
-rituals_description_rhd_ritual_ikit_workshop_tesla_upgrade_2	The Energy Diverter harnesses residual energy from each Warp Lightning discharge, redirecting it to charge the staff's blades and energy shields. This allows Warlock Engineers to face even the mightiest of beasts head-on.	false
-campaign_localised_strings_string_rhd_ritual_ikit_workshop_tesla_upgrade	Warlock Engineer	false
+rituals_description_rhd_ritual_ikit_workshop_tesla_upgrade_2	The energy diverter channels the surplus energy from each warp lightning discharge into the staff's blade and energy armour, allowing the Warp-Lightning Adept to face down even the most powerful of beasts	false
+campaign_localised_strings_string_rhd_ritual_ikit_workshop_tesla_upgrade	Warp-Lightning Adept	false
 ---------------------------------	---------------------------------	false
-effect_bundles_localised_title_rhd_ritual_ikit_workshop_tesla_upgrade_0	Dual Energy Chambers	false
+effect_bundles_localised_title_rhd_ritual_ikit_workshop_tesla_upgrade_0	Twin Energy Coils	false
 effect_bundles_localised_title_rhd_ritual_ikit_workshop_tesla_upgrade_1	High-Purity Core	false
 effect_bundles_localised_title_rhd_ritual_ikit_workshop_tesla_upgrade_2	Energy Diverter	false
-effect_bundles_localised_description_rhd_ritual_ikit_workshop_tesla_upgrade_0	By adding additional parallel energy chambers, Warlock Engineers can fire the devastating Warp Lightning faster. However, due to incomplete insulation between the chambers, heat conduction issues remain unavoidable.	false
-effect_bundles_localised_description_rhd_ritual_ikit_workshop_tesla_upgrade_1	The staff wielded by Warlock Engineers functions as a miniature Warp Lightning Cannon. Increasing the purity of the Warpstone core directly enhances the energy density and firing precision of Warp Lightning.	false
-effect_bundles_localised_description_rhd_ritual_ikit_workshop_tesla_upgrade_2	The Energy Diverter harnesses residual energy from each Warp Lightning discharge, redirecting it to charge the staff's blades and energy shields. This allows Warlock Engineers to face even the mightiest of beasts head-on.	false
-campaign_group_rituals_unlock_text_wh2_main_ritual_skv_skryrerhd_ritual_ikit_workshop_tesla_upgrade_0	[[col:red]]Requires Forbidden Workshop Level 1[[/col]]	false
-campaign_group_rituals_unlock_text_wh2_main_ritual_skv_skryrerhd_ritual_ikit_workshop_tesla_upgrade_1	[[col:red]]Requires Forbidden Workshop Level 2[[/col]]	false
-campaign_group_rituals_unlock_text_wh2_main_ritual_skv_skryrerhd_ritual_ikit_workshop_tesla_upgrade_2	[[col:red]]Requires Forbidden Workshop Level 3[[/col]]	false
+effect_bundles_localised_description_rhd_ritual_ikit_workshop_tesla_upgrade_0	By adding parallel energy coils, Warp-Lightning Adepts can fire their all-annihilating warp lightning faster, though since the coils are not fully insulated from one another, heat transfer remains unavoidable	false
+effect_bundles_localised_description_rhd_ritual_ikit_workshop_tesla_upgrade_1	The staff wielded by a Warp-Lightning Adept is akin to a miniature warp lightning cannon. Increasing the purity of the warpstone within its core most directly enhances the energy density and firing accuracy of its warp lightning	false
+effect_bundles_localised_description_rhd_ritual_ikit_workshop_tesla_upgrade_2	The energy diverter channels the surplus energy from each warp lightning discharge into the staff's blade and energy armour, allowing the Warp-Lightning Adept to face down even the most powerful of beasts	false
+campaign_group_rituals_unlock_text_wh2_main_ritual_skv_skryrerhd_ritual_ikit_workshop_tesla_upgrade_0	[[col:red]]Requires Level 1 Workshop of the Forbidden[[/col]]	false
+campaign_group_rituals_unlock_text_wh2_main_ritual_skv_skryrerhd_ritual_ikit_workshop_tesla_upgrade_1	[[col:red]]Requires Level 2 Workshop of the Forbidden[[/col]]	false
+campaign_group_rituals_unlock_text_wh2_main_ritual_skv_skryrerhd_ritual_ikit_workshop_tesla_upgrade_2	[[col:red]]Requires Level 3 Workshop of the Forbidden[[/col]]	false

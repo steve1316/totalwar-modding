@@ -1,48 +1,48 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_cathy_ability.loc		
-special_ability_phases_onscreen_name_dashenpoxie	[[col:red]]God-Slaying, Evil-Breaking[[/col]]	true
-unit_abilities_onscreen_name_gouxiangtuirang	Hook and Push Formation	true
-unit_abilities_tooltip_text_gouxiangtuirang	The hooks are on both ends, with the push in the middle. Either push the formation or hook and pull, as is appropriate.	true
-unit_abilities_onscreen_name_jiujiuhuanyang	Ninefold Rebirth	true
-unit_abilities_tooltip_text_jiujiuhuanyang	Harness the essence of Heaven and Earth to restore the vitality of Yang.	true
-effects_description_effect_unit_cap_cth_inf_jade_warrior_halberd_shield_0	Unit Capacity: Great Bastion Custodians %+n	true
-effects_description_effect_unit_cap_cth_inf_bian	Unit Capacity: Celestal Dragon Demon Slayers %+n	true
-effects_description_effect_unit_cap_cth_cav_jade_longma_crassbow_rider	Unit Capacity: Jade Longma Crossbowmen %+n	true
+special_ability_phases_onscreen_name_dashenpoxie	[[col:red]]Godslayer, Evilbreaker[[/col]]	true
+unit_abilities_onscreen_name_gouxiangtuirang	Hook-Shield Shove	true
+unit_abilities_tooltip_text_gouxiangtuirang	Hook-shield: the two ends are called hooks, the center is called the plate. Whether shoving or hooking, both serve their purpose.	true
+unit_abilities_onscreen_name_jiujiuhuanyang	Ninefold Revival Technique	true
+unit_abilities_tooltip_text_jiujiuhuanyang	Command the essence of heaven and earth to restore the true yang.	true
+effects_description_effect_unit_cap_cth_inf_jade_warrior_halberd_shield_0	Unit Capacity: Palace Guard Battalion %+n	true
+effects_description_effect_unit_cap_cth_inf_bian	Unit Capacity: Celestial Divine Strategy Army %+n	true
+effects_description_effect_unit_cap_cth_cav_jade_longma_crassbow_rider	Unit Capacity: Dragon-Horse Crossbow Riders %+n	true
 effects_description_effect_unit_cap_cth_inf_thunderbolt_gunners	Unit Capacity: Thunderbolt Gunners %+n	true
-effects_description_effect_unit_cap_cth_inf_god_guard_fighter	Unit Capacity: Celestial Dragon Vanguard %+n	true
-effects_description_effect_unit_cap_cth_inf_dragon_tiger_guard	Unit Capacity: Celestial Jinwu Guard %+n	true
-effects_description_effect_unit_cap_cth_cav_xiaoguojun	Unit Capacity: Xiaoguo Guard %+n	true
-effects_description_effect_unit_cap_cth_inf_moon_yinyang_maiden	Unit Capacity: Moon Empress Maidens %+n	true
-effects_description_effect_unit_cap_cth_mon_terracotta_sentinel_watcher	Unit Capacity: Terracotta Sentry %+n	true
-unit_abilities_onscreen_name_wuxing_compass_cast_up	Power of the Wuxing Compass	true
-unit_abilities_tooltip_text_wuxing_compass_cast_up	Harness the power of Heaven and Earth through the Wuxing Compass for the use of sorcerers.	true
-effects_description_effect_building_cth_nangao_firework_chain_ammo	Ammunition Capacity: %+n% for all gunpowder units.	true
-effects_description_effect_building_cth_nangao_firework_chain_ranged_damage	Ranged Damage: %+n% for all gunpowder units. 	true
-effects_description_effect_building_cth_nangao_firework_chain_ranged_damage_ap	Armor-Piercing Ranged Damage: %+n% for all gunpowder units. 	true
-effects_description_effect_building_cth_nangao_firework_chain_range	Unit Range: %+n% for all gunpowder units. 	true
-effects_description_effect_rite_cth_warcompass_skill	The Wuxing War Compass and Wuxing Siege Compass gain "Power of the Wuxing Compass".	true
-effects_description_effect_celestial_guard_skill	Celestial Jinwu Guard, Celestial Dragon Guard, and Nan-Gau Explosive Crossbowmen units gain "Dragon's Tenacity".	false
-effects_description_effect_celestial_fight_skill	Celestal Dragon Guard (Sword Breakers) and Celestal Dragon Guard (Dual Hammers) units gain "Dragon's Bravery".	false
-effects_description_effect_celestial_def_skill	Jade Longma Crossbowmen, Mounted Jade Crossbowmen, and Nan-Gau Fire Lancers units gain "Dragon's Fierceness".	false
-effects_description_effect_celestial_range_skill	Thunderbolt Gunners, Golden Crow Handgunners, and Mounted Celestial Dragon Crossbowmen units gain "Dragon's Agility".	false
-effects_description_effect_rite_cth_dragon_guard_skill	All Celestial Dragon Guard units gain "Celestial Formation".	false
-unit_abilities_onscreen_name_unit_ability_against_ten_thousand	Enemy of Ten Thousand	false
-unit_abilities_tooltip_text_unit_ability_against_ten_thousand	In the midst of ten thousand troops, they grow stronger, as if in an empty field, with the courage to hold off an army single-handedly.	false
+effects_description_effect_unit_cap_cth_inf_god_guard_fighter	Unit Capacity: Celestial Dragon Guard Army %+n	true
+effects_description_effect_unit_cap_cth_inf_dragon_tiger_guard	Unit Capacity: Celestial Imperial Guard %+n	true
+effects_description_effect_unit_cap_cth_cav_xiaoguojun	Unit Capacity: Valiant Fruit Guards %+n	true
+effects_description_effect_unit_cap_cth_inf_moon_yinyang_maiden	Unit Capacity: Twin Moon Yin-Yang Envoys %+n	true
+effects_description_effect_unit_cap_cth_mon_terracotta_sentinel_watcher	Unit Capacity: Rampart Watcher %+n	true
+unit_abilities_onscreen_name_wuxing_compass_cast_up	Power of the Five Elements Compass	true
+unit_abilities_tooltip_text_wuxing_compass_cast_up	Command the power of heaven and earth into the Five Elements Compass, for sorcerers to wield.	true
+effects_description_effect_building_cth_nangao_firework_chain_ammo	Ammunition: All gunpowder units %+n%	true
+effects_description_effect_building_cth_nangao_firework_chain_ranged_damage	Missile Strength: All gunpowder units %+n%	true
+effects_description_effect_building_cth_nangao_firework_chain_ranged_damage_ap	Armour-Piercing Missile Strength: All gunpowder units %+n%	true
+effects_description_effect_building_cth_nangao_firework_chain_range	Range: All gunpowder units %+n%	true
+effects_description_effect_rite_cth_warcompass_skill	Skill: Five Elements War Compass and Five Elements Bombard Compass gain 'Power of the Five Elements Compass'.	true
+effects_description_effect_celestial_guard_skill	Skill: Celestial Tiger Guard, Celestial Dragon Guard, and Nan Gau Zhu Long Guard gain 'Dragon's Tenacity'.	false
+effects_description_effect_celestial_fight_skill	Skill: Celestial Right Guard and Celestial Left Guard gain 'Dragon's Bravery'.	false
+effects_description_effect_celestial_def_skill	Skill: Dragon-Horse Cavalry, Demi-Dragon-Horse Cavalry, and Nan Gau Blazing Cavalry gain 'Dragon's Fierceness'.	false
+effects_description_effect_celestial_range_skill	Skill: Thunderbolt Gunners, Golden Crow Gunners, and Celestial Mounted Archers gain 'Dragon's Keen Eye'.	false
+effects_description_effect_rite_cth_dragon_guard_skill	Skill: All Celestial Dragon Guard gain 'Celestial Formation'.	false
+unit_abilities_onscreen_name_unit_ability_against_ten_thousand	Match Ten Thousand	false
+unit_abilities_tooltip_text_unit_ability_against_ten_thousand	Fighting ever more fiercely amidst a myriad of foes, as if wading through an empty field—one man holding the pass against ten thousand.	false
 unit_abilities_onscreen_name_unit_ability_three_axe_strokes	Three Axe Strokes	false
-unit_abilities_tooltip_text_unit_ability_three_axe_strokes	The power of the three axe strokes is immense, but once used up, they have no more tricks.	false
+unit_abilities_tooltip_text_unit_ability_three_axe_strokes	Three axe strokes hold boundless power, but once spent, the trick is exhausted.	false
 unit_abilities_onscreen_name_unit_ability_dragons_bravery	Dragon's Bravery	false
-unit_abilities_tooltip_text_unit_ability_dragons_bravery	Fierce and fearless, steadfast and courageous, unafraid in the face of danger.	false
+unit_abilities_tooltip_text_unit_ability_dragons_bravery	Dragon's Bravery: mighty and fearless, resolute and daring, undaunted in the face of peril.	false
 unit_abilities_onscreen_name_unit_ability_dragons_tenacity	Dragon's Tenacity	false
-unit_abilities_tooltip_text_unit_ability_dragons_tenacity	As unshakable as a mountain, unchanging and steadfast, unyielding and unbreakable.	false
+unit_abilities_tooltip_text_unit_ability_dragons_tenacity	Dragon's Tenacity: unshaken as a mountain, eternal and unchanging, resolute and unyielding.	false
 unit_abilities_onscreen_name_unit_ability_dragons_fierceness	Dragon's Fierceness	false
-unit_abilities_tooltip_text_unit_ability_dragons_fierceness	As fierce as blazing fire, with overwhelming momentum, fearing nothing.	false
-unit_abilities_onscreen_name_unit_ability_dragons_agility	Dragon's Agility	false
-unit_abilities_tooltip_text_unit_ability_dragons_agility	Sharp-eyed, radiant, and penetrating all things.	false
+unit_abilities_tooltip_text_unit_ability_dragons_fierceness	Dragon's Fierceness: blazing like fire, soaring in spirit, fearing nothing.	false
+unit_abilities_onscreen_name_unit_ability_dragons_agility	Dragon's Keen Eye	false
+unit_abilities_tooltip_text_unit_ability_dragons_agility	Dragon's Keen Eye: bright and piercing, radiant with light, seeing through all things.	false
 unit_abilities_onscreen_name_unit_ability_celestial_formation	Celestial Formation	false
-unit_abilities_tooltip_text_unit_ability_celestial_formation	A powerful formation taught by Yuan Bo, capable of evading arrows from afar and resisting enemies up close.	false
-unit_abilities_onscreen_name_unit_ability_enable_experimental_crossbow_mechanism	Experimental Crossbow Mechanism	false
-unit_abilities_tooltip_text_unit_ability_enable_experimental_crossbow_mechanism	The experimental crossbow mechanism from Nan-Gau greatly increases firing speed but comes with many problems.	false
-projectile_shot_type_displays_onscreen_name_small_arm_yin	Arrow of Yin	false
-projectile_shot_type_displays_onscreen_name_small_arm_yang	Arrow of Yang	false
+unit_abilities_tooltip_text_unit_ability_celestial_formation	A mighty formation taught by the Yuan Bo, able to deflect arrows at range and repel foes in melee.	false
+unit_abilities_onscreen_name_unit_ability_enable_experimental_crossbow_mechanism	Experimental Repeater Case	false
+unit_abilities_tooltip_text_unit_ability_enable_experimental_crossbow_mechanism	The Nan Gau experimental repeater case greatly increases rate of fire, but is plagued with issues.	false
+projectile_shot_type_displays_onscreen_name_small_arm_yin	Yin Arrow	false
+projectile_shot_type_displays_onscreen_name_small_arm_yang	Yang Arrow	false
 projectile_shot_type_displays_onscreen_name_small_arm_fire	Fire Arrow	false
 projectile_shot_type_displays_onscreen_name_small_arm_poison	Poison Arrow	false

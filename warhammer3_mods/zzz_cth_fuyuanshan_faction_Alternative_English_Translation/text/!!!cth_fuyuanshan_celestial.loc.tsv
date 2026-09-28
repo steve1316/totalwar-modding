@@ -1,32 +1,32 @@
 key	text	tooltip
 #Loc;1;text/!!!cth_fuyuanshan_celestial.loc		
-building_culture_variants_name_celestial_tower_1wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Bloodwind Keep	true
-building_short_description_texts_short_description_celestial_tower_1	Majestic Celestial Emperor, Lord of the Dome, whose radiance shines eternally, without beginning or end.	true
+building_culture_variants_name_celestial_tower_1wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Blood Wind Keep	true
+building_short_description_texts_short_description_celestial_tower_1	Vast and towering is Heaven, Sovereign of the Firmament, ever blazing, ever radiant, without beginning, without end.	true
 building_chains_chain_tooltip_celestial_tower_1	Celestial Tower Chain	false
-building_culture_variants_name_celestial_tower_2wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Plains of Zanbaijin	false
-building_short_description_texts_short_description_celestial_tower_2	Majestic Celestial Emperor, Azure Lord, vast and boundless sky, soaring and gliding.	false
+building_culture_variants_name_celestial_tower_2wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Plains of Zanbazjin	false
+building_short_description_texts_short_description_celestial_tower_2	Vast and towering is Heaven, Lord of the Azure Vault, boundless is the great sky, wherein it soars and wheels.	false
 building_chains_chain_tooltip_celestial_tower_2	Celestial Tower Chain	false
-building_culture_variants_name_celestial_tower_3wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Ockham's Forever Maze	false
-building_short_description_texts_short_description_celestial_tower_3	Majestic Celestial Emperor, Lord of the Vast, roaming the boundless sea, traveling to its limits.	false
+building_culture_variants_name_celestial_tower_3wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Okkam's Endless Labyrinth	false
+building_short_description_texts_short_description_celestial_tower_3	Vast and towering is Heaven, Master of the Boundless Expanse, drifting across the vast blue void, roaming to its farthest limit.	false
 building_chains_chain_tooltip_celestial_tower_3	Celestial Tower Chain	false
-building_culture_variants_name_celestial_tower_4wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Daemon's Gate	false
-building_short_description_texts_short_description_celestial_tower_4	Majestic Celestial Emperor, riding the wind and flames, whose arrival eclipses the sun and moon.	false
+building_culture_variants_name_celestial_tower_4wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Daemon Gate	false
+building_short_description_texts_short_description_celestial_tower_4	Vast and towering is Heaven, treading wind and driving fire; when it descends, its radiance eclipses sun and moon.	false
 building_chains_chain_tooltip_celestial_tower_4	Celestial Tower Chain	false
-building_culture_variants_name_celestial_tower_5wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - The Crystal Spires	false
-building_short_description_texts_short_description_celestial_tower_5	Majestic Celestial Emperor, illuminating the wilderness, both civil and martial, unrivaled and glorious.	false
+building_culture_variants_name_celestial_tower_5wh3_main_cth_cathaywh3_main_sc_cth_cathaywh3_main_cth_imperial_wardens	Celestial Tower - Crystal Spire	false
+building_short_description_texts_short_description_celestial_tower_5	Vast and towering is Heaven, illuminating the great wilderness, accomplished in both letters and arms, its might beyond rival.	false
 building_chains_chain_tooltip_celestial_tower_5	Celestial Tower Chain	false
-effects_description_wh3_main_effect_fuyuanshan_celestial_clean	The province's climate will no longer have a negative effect on the player.	false
-effects_description_wh3_main_effect_fuyuanshan_celestial_enemy	Upon completion of the building, Chaos will simultaneously attack both the building's location and the Great Bastion.	false
-effects_description_wh3_main__fuyuanshan_effect_ability_enable_wayfarer	Passive ability: All cavalry units gain "Strider".	false
-effect_bundles_localised_title_climate_chaotic_celestial_clean	Celestial Protection	false
-effect_bundles_localised_description_climate_chaotic_celestial_clean	The Emperor's will, like a candle's flame, dispels the darkness of evil!	false
-missions_localised_title_fuyuanshan_celestial_mission_1	The Emperor's Will - I	false
-missions_localised_description_fuyuanshan_celestial_mission_1	The Great Bastion lies in ruins. Even if its structure can be repaired with the resources of Grand Cathay, its power to ward off evil has been lost.\\nTo restore peace to Cathay, we must venture into the Chaos Wastes, using the Celestial Towers as conduits to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
-missions_localised_title_fuyuanshan_celestial_mission_2	The Emperor's Will - II	false
-missions_localised_description_fuyuanshan_celestial_mission_2	The Great Bastion lies in ruins. Even if its structure can be repaired with the resources of Grand Cathay, its power to ward off evil has been lost.\\nTo restore peace to Cathay, we must venture into the Chaos Wastes, using the Celestial Towers as conduits to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
-missions_localised_title_fuyuanshan_celestial_mission_3	The Emperor's Will - III	false
-missions_localised_description_fuyuanshan_celestial_mission_3	The Great Bastion lies in ruins. Even if its structure can be repaired with the resources of Grand Cathay, its power to ward off evil has been lost.\\nTo restore peace to Cathay, we must venture into the Chaos Wastes, using the Celestial Towers as conduits to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
-missions_localised_title_fuyuanshan_celestial_mission_4	The Emperor's Will - IV	false
-missions_localised_description_fuyuanshan_celestial_mission_4	The Great Bastion lies in ruins. Even if its structure can be repaired with the resources of Grand Cathay, its power to ward off evil has been lost.\\nTo restore peace to Cathay, we must venture into the Chaos Wastes, using the Celestial Towers as conduits to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
-missions_localised_title_fuyuanshan_celestial_mission_5	The Emperor's Will - V	false
-missions_localised_description_fuyuanshan_celestial_mission_5	The Great Bastion lies in ruins. Even if its structure can be repaired with the resources of Grand Cathay, its power to ward off evil has been lost.\\nTo restore peace to Cathay, we must venture into the Chaos Wastes, using the Celestial Towers as conduits to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
+effects_description_wh3_main_effect_fuyuanshan_celestial_clean	This province's climate will no longer inflict penalties on the player.	false
+effects_description_wh3_main_effect_fuyuanshan_celestial_enemy	Upon completion of the building, Chaos will launch a simultaneous attack against both the building's location and the Great Bastion.	false
+effects_description_wh3_main__fuyuanshan_effect_ability_enable_wayfarer	Passive Ability: All cavalry units gain [[col:yellow]]Strider[[/col]].	false
+effect_bundles_localised_title_climate_chaotic_celestial_clean	Heaven's Shelter	false
+effect_bundles_localised_description_climate_chaotic_celestial_clean	The Emperor's will burns bright as a torch, annihilating all wraiths and demons!	false
+missions_localised_title_fuyuanshan_celestial_mission_1	The Emperor's Torch-Bright Will - I	false
+missions_localised_description_fuyuanshan_celestial_mission_1	The Great Bastion has been destroyed. Though its structure may be restored through the material strength of Cathay, its power to ward off evil and impurity has been lost.\\nTo bring Cathay back to peace, one must journey to the Chaos Wastes at last, using the Celestial Tower as a conduit to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
+missions_localised_title_fuyuanshan_celestial_mission_2	The Emperor's Torch-Bright Will - II	false
+missions_localised_description_fuyuanshan_celestial_mission_2	The Great Bastion has been destroyed. Though its structure may be restored through the material strength of Cathay, its power to ward off evil and impurity has been lost.\\nTo bring Cathay back to peace, one must journey to the Chaos Wastes at last, using the Celestial Tower as a conduit to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
+missions_localised_title_fuyuanshan_celestial_mission_3	The Emperor's Torch-Bright Will - III	false
+missions_localised_description_fuyuanshan_celestial_mission_3	The Great Bastion has been destroyed. Though its structure may be restored through the material strength of Cathay, its power to ward off evil and impurity has been lost.\\nTo bring Cathay back to peace, one must journey to the Chaos Wastes at last, using the Celestial Tower as a conduit to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
+missions_localised_title_fuyuanshan_celestial_mission_4	The Emperor's Torch-Bright Will - IV	false
+missions_localised_description_fuyuanshan_celestial_mission_4	The Great Bastion has been destroyed. Though its structure may be restored through the material strength of Cathay, its power to ward off evil and impurity has been lost.\\nTo bring Cathay back to peace, one must journey to the Chaos Wastes at last, using the Celestial Tower as a conduit to channel the Dragon Emperor's might and rebuild the Great Bastion.	false
+missions_localised_title_fuyuanshan_celestial_mission_5	The Emperor's Torch-Bright Will - V	false
+missions_localised_description_fuyuanshan_celestial_mission_5	The Great Bastion has been destroyed. Though its structure may be restored through the material strength of Cathay, its power to ward off evil and impurity has been lost.\\nTo bring Cathay back to peace, one must journey to the Chaos Wastes at last, using the Celestial Tower as a conduit to channel the Dragon Emperor's might and rebuild the Great Bastion.	false

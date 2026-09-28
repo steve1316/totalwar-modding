@@ -1,54 +1,54 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_mount_skills.loc		
 character_skills_localised_name_ghs_old_blood_giant_ripperdactyl	Ancient Ripperdactyl	false
-character_skills_localised_description_ghs_old_blood_giant_ripperdactyl	The largest and most bloodthirsty Ripperdactyl, with talons sharp as razors capable of decapitating foes, leaving a trail of viscera and limbs in its wake.	false
+character_skills_localised_description_ghs_old_blood_giant_ripperdactyl	The largest and most bloodthirsty of ripperdactyls, their razor-sharp claws can decapitate enemies, and their furious assaults leave scattered entrails and severed limbs in their wake.	false
 character_skills_localised_name_ghs_scar_veteran_giant_ripperdactyl	Ancient Ripperdactyl	false
-character_skills_localised_description_ghs_scar_veteran_giant_ripperdactyl	The largest and most bloodthirsty Ripperdactyl, with talons sharp as razors capable of decapitating foes, leaving a trail of viscera and limbs in its wake.	false
-character_skills_localised_name_heriotitan_settra	God-Touched: Nehekhara's Emperor	false
-character_skills_localised_description_heriotitan_settra	The Immortal Emperor, King of Kings! Bow to none, ruler of all!	false
-character_skills_localised_name_heriotitan_settra_lion	Holy Titan Incarnation: Khemrian Lion	false
-character_skills_localised_description_heriotitan_settra_lion	Ptra's most noble blessing, granting the Immortal Emperor the golden body and supreme power he has long desired.	false
-character_skills_localised_name_hierotitan_arkhan	Holy Titan Incarnation: Arkhan's Black Tower Scorpion	false
-character_skills_localised_description_hierotitan_arkhan	Arkhan drained the immense dark magic of the Black Tower, unleashing the power left by Nagash within him.	false
-character_skills_localised_name_hierotitan_arkhan_scorption	Nagash's Loyal Servant: The Necromantic End	false
-character_skills_localised_description_hierotitan_arkhan_scorption	Nagash's most loyal servant, wielding pure and formidable necromantic power.	false
-character_skills_localised_name_hierotitan_khalida	Holy Titan Incarnation: Labaras' Viper	false
-character_skills_localised_description_hierotitan_khalida	The blessing of Asaph ignited the Warrior Queen's desire for vengeance, transforming into the cold bite of her bowstring.	false
-character_skills_localised_name_hierotitan_khatep	Holy Titan Incarnation: Khemrian Eagle	false
-character_skills_localised_description_hierotitan_khatep	The exiled High Priest of the Tomb Cult earned Tahoth's recognition for his contributions to Nehekhara.	false
-character_skills_localised_name_tmb_dragon_king	Tomb Giant Dragon	false
-character_skills_localised_description_tmb_dragon_king	Perfected by Tomb Technicians over generations on a massive obsidian slab, it now soars above the pyramids, carrying the Tomb Kings in defiance of the heavens.	false
-character_skills_localised_name_tmb_eagle_mage1	Ulatip Vulture	false
-character_skills_localised_description_tmb_eagle_mage1	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
-character_skills_localised_name_tmb_eagle_mage2	Ulatip Vulture	false
-character_skills_localised_description_tmb_eagle_mage2	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
-character_skills_localised_name_tmb_eagle_mage3	Ulatip Vulture	false
-character_skills_localised_description_tmb_eagle_mage3	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
-character_skills_localised_name_tmb_eagle_mage4	Ulatip Vulture	false
-character_skills_localised_description_tmb_eagle_mage4	This giant vulture is adorned with the bones of its god's enemies. The cost to tame this stormy shadow remains unknown.	false
+character_skills_localised_description_ghs_scar_veteran_giant_ripperdactyl	The largest and most bloodthirsty of ripperdactyls, their razor-sharp claws can decapitate enemies, and their furious assaults leave scattered entrails and severed limbs in their wake.	false
+character_skills_localised_name_heriotitan_settra	Favoured by the Gods: Great Emperor of Nehekhara	false
+character_skills_localised_description_heriotitan_settra	The Undying Emperor, King of Kings! Servant to none, master of all!	false
+character_skills_localised_name_heriotitan_settra_lion	Avatar of the Hierotitan: Lion of Khemri	false
+character_skills_localised_description_heriotitan_settra_lion	Ptra's most noble gift bestows upon the Undying Emperor the golden form and supreme power he has long desired.	false
+character_skills_localised_name_hierotitan_arkhan	Avatar of the Hierotitan: Black Guard Scorpion of Arkhan	false
+character_skills_localised_description_hierotitan_arkhan	Arkhan drained the vast dark magic of the Black Tower, unleashing the power Nagash left within him.	false
+character_skills_localised_name_hierotitan_arkhan_scorption	 Servant of Nagash: Final Reckoning of the Undying	false
+character_skills_localised_description_hierotitan_arkhan_scorption	Nagash's most loyal servant, wielding the purest and most potent necromantic power.	false
+character_skills_localised_name_hierotitan_khalida	Avatar of the Hierotitan: Serpent of Lybaras	false
+character_skills_localised_description_hierotitan_khalida	Asaph's blessing kindled the Warrior Queen's desire for vengeance, culminating in a cold bite upon the bowstring.	false
+character_skills_localised_name_hierotitan_khatep	Avatar of the Hierotitan: Sky Hawk of Khemri	false
+character_skills_localised_description_hierotitan_khatep	Though the Tomb High Priest was exiled, the Mortuary Cult's contributions to Nehekhara earned Tahoth's favor.	false
+character_skills_localised_name_tmb_dragon_king	Tomb Dragon	false
+character_skills_localised_description_tmb_dragon_king	Tomb Engineers labored for generations upon a single massive block of obsidian, sculpting the perfect construct that once crowned the peak of the Kings' pyramid. Now it bears the Tomb Kings aloft, looking down upon the clouds.	false
+character_skills_localised_name_tmb_eagle_mage1	Ulatuan Vulture	false
+character_skills_localised_description_tmb_eagle_mage1	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
+character_skills_localised_name_tmb_eagle_mage2	Ulatuan Vulture	false
+character_skills_localised_description_tmb_eagle_mage2	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
+character_skills_localised_name_tmb_eagle_mage3	Ulatuan Vulture	false
+character_skills_localised_description_tmb_eagle_mage3	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
+character_skills_localised_name_tmb_eagle_mage4	Ulatuan Vulture	false
+character_skills_localised_description_tmb_eagle_mage4	This colossal vulture is covered in the bones of the enemies of the Vulture God. No one knows what price must be paid to command this storm of darkness.	false
 character_skills_localised_name_tmb_elephant_necrotect	Obsidian War Elephant	false
-character_skills_localised_description_tmb_elephant_necrotect	Awakened Tomb Technicians ride these majestic creations, their solemn banners heralding awe and fear across the battlefield.	false
-character_skills_localised_name_tmb_prince_lion	Divine Avatar: Ushabti of the Lion	false
-character_skills_localised_description_tmb_prince_lion	Tomb princes rest in the sands; wielding pawns, they become lions.	false
-character_skills_localised_name_tmb_prince_ushabti	Soulbound Avatar: Carved Ushabti	false
-character_skills_localised_description_tmb_prince_ushabti	Bound with obsidian, their fiery wrath is unending.	false
+character_skills_localised_description_tmb_elephant_necrotect	The ancient engineers are roused from their intoxication with carving war elephants, once more mounting their solemn and resplendent palanquin, banners fluttering as armies scatter before them.	false
+character_skills_localised_name_tmb_prince_lion	Descent of the Divine: Lion-Faced Ushabti	false
+character_skills_localised_description_tmb_prince_lion	A Tomb Prince, buried in the sands; grasping a chess piece, transformed into a lion.	false
+character_skills_localised_name_tmb_prince_ushabti	Soul-Bound Avatar: Carved Ushabti	false
+character_skills_localised_description_tmb_prince_ushabti	Soul bound to obsidian, wrathful flames surging to the heavens.	false
 character_skills_localised_name_ksl_cha_boris_mount_elemental_bear	Ursun's Winter (Elemental Bear)	false
-character_skills_localised_description_ksl_cha_boris_mount_elemental_bear	A statue of the Bear God mounted on a colossal frost construct, reigning over cold and death, inseparably linked to Kislev and Ursun's divine favor.	false
+character_skills_localised_description_ksl_cha_boris_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	false
 character_skills_localised_name_ksl_cha_katarin_mount_elemental_bear	Ursun's Winter (Elemental Bear)	false
-character_skills_localised_description_ksl_cha_katarin_mount_elemental_bear	A statue of the Bear God mounted on a colossal frost construct, reigning over cold and death, inseparably linked to Kislev and Ursun's divine favor.	false
+character_skills_localised_description_ksl_cha_katarin_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	false
 character_skills_localised_name_ksl_cha_kostaltyn_mount_elemental_bear	Ursun's Winter (Elemental Bear)	false
-character_skills_localised_description_ksl_cha_kostaltyn_mount_elemental_bear	A statue of the Bear God mounted on a colossal frost construct, reigning over cold and death, inseparably linked to Kislev and Ursun's divine favor.	false
-character_skills_localised_name_hef_cha_alastar_mount_war_lion	Alastar's War Lion	true
-character_skills_localised_name_slann_light	Ancient Stegadon (God Engine)	true
-character_skills_localised_name_slann_life	Ancient Stegadon (God Engine)	true
-character_skills_localised_name_slann_high	Ancient Stegadon (God Engine)	true
-character_skills_localised_name_slann_heaven	Ancient Stegadon (God Engine)	true
-character_skills_localised_name_slann_fire	Ancient Stegadon (God Engine)	true
-character_skills_localised_name_slann_campagin	Ancient Stegadon (God Engine)	true
-character_skills_localised_description_slann_light	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	true
-character_skills_localised_description_slann_life	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	true
-character_skills_localised_description_slann_high	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	true
-character_skills_localised_description_slann_heaven	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	true
-character_skills_localised_description_slann_fire	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	true
-character_skills_localised_description_slann_campagin	The fiercest and largest of their kind, only the eldest beings possess the presence to operate the God Engine.	true
-character_skills_localised_name_ghs_chd_mon_kdaai_destroyer_conqueror	K’daai Conqueror	false
+character_skills_localised_description_ksl_cha_kostaltyn_mount_elemental_bear	A statue of the Bear God stands atop a massive construct of ice and frost, master of the cold and death; Kislev's fate is bound to the favour of Ursun.	false
+character_skills_localised_name_hef_cha_alastar_mount_war_lion	Alastar the War Lion	true
+character_skills_localised_name_slann_light	Ancient Stegadon (Engine of the Gods)	true
+character_skills_localised_name_slann_life	Ancient Stegadon (Engine of the Gods)	true
+character_skills_localised_name_slann_high	Ancient Stegadon (Engine of the Gods)	true
+character_skills_localised_name_slann_heaven	Ancient Stegadon (Engine of the Gods)	true
+character_skills_localised_name_slann_fire	Ancient Stegadon (Engine of the Gods)	true
+character_skills_localised_name_slann_campagin	Ancient Stegadon (Engine of the Gods)	true
+character_skills_localised_description_slann_light	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+character_skills_localised_description_slann_life	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+character_skills_localised_description_slann_high	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+character_skills_localised_description_slann_heaven	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+character_skills_localised_description_slann_fire	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+character_skills_localised_description_slann_campagin	The largest and most ferocious of their kind, only the most ancient beings possess the majesty to operate the Engine of the Gods.	true
+character_skills_localised_name_ghs_chd_mon_kdaai_destroyer_conqueror	K'daai Conqueror	false

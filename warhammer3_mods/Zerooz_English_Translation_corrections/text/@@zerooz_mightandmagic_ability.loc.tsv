@@ -1,12 +1,12 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_mightandmagic_ability.loc		
-unit_abilities_onscreen_name_haste	Haste	true
-unit_abilities_tooltip_text_haste	Increases the speed of the unit.	true
-unit_abilities_onscreen_name_divineStrength	Divine Strength	true
+unit_abilities_onscreen_name_haste	Swift Action	true
+unit_abilities_tooltip_text_haste	Increases the unit's movement speed.	true
+unit_abilities_onscreen_name_divineStrength	Extraordinary Divine Might	true
 unit_abilities_tooltip_text_divineStrength	Blesses the target unit, increasing its attack power.	true
-unit_abilities_onscreen_name_endurance	Endurance	true
-unit_abilities_tooltip_text_endurance	Enhances the defense of units within the area.	true
-unit_abilities_onscreen_name_blindness	Blindness	true
-unit_abilities_tooltip_text_blindness	Causes units within the area to be unable to move.	true
+unit_abilities_onscreen_name_endurance	Unyielding Fortitude	true
+unit_abilities_tooltip_text_endurance	Strengthens units within range, increasing their defence.	true
+unit_abilities_onscreen_name_blindness	Curse of Blindness	true
+unit_abilities_tooltip_text_blindness	Prevents units within range from moving.	true
 unit_abilities_onscreen_name_righteousMight	Righteous Might	true
-unit_abilities_tooltip_text_righteousMight	Blesses the target unit within the area, increasing its attack power.	true
+unit_abilities_tooltip_text_righteousMight	Blesses target units within range, increasing their attack power.	true

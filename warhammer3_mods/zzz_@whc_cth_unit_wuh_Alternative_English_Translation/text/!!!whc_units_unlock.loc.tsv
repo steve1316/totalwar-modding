@@ -1,64 +1,64 @@
 key	text	tooltip
 #Loc;1;text/!!!whc_units_unlock.loc		
-building_culture_variants_name_north_station_1wh3_main_cth_cathay	Northern Encampment	true
-building_short_description_texts_short_description_north_station_1	Countless soldiers' families are housed here.	true
-building_culture_variants_name_north_station_2wh3_main_cth_cathay	Military Household Quarters	true
-building_short_description_texts_short_description_north_station_2	Young men of good families stationed in these towns hone their resolve.	true
-building_culture_variants_name_north_station_3wh3_main_cth_cathay	Thunder Cart Hall	true
-building_short_description_texts_short_description_north_station_3	The Iron Guard patrolling the Great Bastion are dispatched from here.	true
-building_culture_variants_name_north_station_4wh3_main_cth_cathay	Blacksteel Keep	true
-building_short_description_texts_short_description_north_station_4	The legendary Dragon Spine Sentinels are said to be stationed here.	true
-building_culture_variants_name_north_station_5wh3_main_cth_cathay	Black Tortoise Tower	true
-building_short_description_texts_short_description_north_station_5	The gate is strictly guarded by the Watch Wardens.	true
-building_sets_onscreen_name_north_station	Northern Garrison Command Series	true
-building_sets_onscreen_description_north_station	Constructing this series progressively unlocks unique units native to the Northern Provinces.	true
-effects_description_whc_enable_north_units_tier_1	Unlocks recruitment of Garrison Spear Archers, Garrison Blade Crossbowmen, Garrison Spear Cavalry, and Jade Bastion Guards (Mace).	true
-effects_description_whc_enable_north_units_tier_2	Unlocks recruitment of Jade Bastion Guards (Spear).	true
-effects_description_whc_enable_north_units_tier_3	Unlocks recruitment of Jade Bastion Guards (Modao), Jade Bastion Guards (Halberd), and Jade Bastion Sky Riders.	true
-effects_description_whc_enable_north_units_tier_4	Unlocks recruitment of Sentinels of the Great Bastion and Thunder Lancers.	true
-effects_description_whc_enable_north_units_tier_5	Unlocks recruitment of Gatekeeper Vanguard and Dragon Gate Drakes.	true
-building_culture_variants_name_west_station_1wh3_main_cth_cathay	Western Encampment	true
-building_short_description_texts_short_description_west_station_1	Guards of the Ivory Road set out from here.	true
-building_culture_variants_name_west_station_2wh3_main_cth_cathay	Recruit Quarters	true
-building_short_description_texts_short_description_west_station_2	All recruits must serve several years before becoming frontier garrison troops.	true
+building_culture_variants_name_north_station_1wh3_main_cth_cathay	Northern Guard Camp	true
+building_short_description_texts_short_description_north_station_1	Countless family members who follow the army are settled here.	true
+building_culture_variants_name_north_station_2wh3_main_cth_cathay	Garrison Household Post	true
+building_short_description_texts_short_description_north_station_2	Sons of good families garrisoning the frontier posts temper their resolve here.	true
+building_culture_variants_name_north_station_3wh3_main_cth_cathay	Thunder Chariot Hall	true
+building_short_description_texts_short_description_north_station_3	The ironclad guards who patrol the Great Bastion are deployed from here.	true
+building_culture_variants_name_north_station_4wh3_main_cth_cathay	Dark Iron Bureau	true
+building_short_description_texts_short_description_north_station_4	The legendary Dragon Spine Guardians are stationed here.	true
+building_culture_variants_name_north_station_5wh3_main_cth_cathay	Black Tortoise Terrace	true
+building_short_description_texts_short_description_north_station_5	The entrance here is strictly guarded by the Gate Overseers.	true
+building_sets_onscreen_name_north_station	Northern Guard Camp Chain	true
+building_sets_onscreen_description_north_station	Constructing this chain unlocks Northern Guard native units in stages.	true
+effects_description_whc_enable_north_units_tier_1	Unlocks recruitment for Garrison Spearmen, Garrison Crossbowmen, Garrison Cavalry Spearmen, and Bastion Ironguard (Hammer).	true
+effects_description_whc_enable_north_units_tier_2	Unlocks recruitment for Bastion Ironguard (Spear).	true
+effects_description_whc_enable_north_units_tier_3	Unlocks recruitment for Bastion Ironguard (Mo Dao), Bastion Ironguard (Halberd), and Bastion Skyriders.	true
+effects_description_whc_enable_north_units_tier_4	Unlocks recruitment for Dragon Spine Guardians and Thunderscale Cavaliers.	true
+effects_description_whc_enable_north_units_tier_5	Unlocks recruitment for Gate Overseers and Dragongate Chi Riders.	true
+building_culture_variants_name_west_station_1wh3_main_cth_cathay	Western Guard Camp	true
+building_short_description_texts_short_description_west_station_1	The escorts of the Fang Road all set out from here.	true
+building_culture_variants_name_west_station_2wh3_main_cth_cathay	Soldiers' Post	true
+building_short_description_texts_short_description_west_station_2	Every Levy Soldier must serve for several years before becoming a frontier guard.	true
 building_culture_variants_name_west_station_3wh3_main_cth_cathay	Furnace Hall	true
-building_short_description_texts_short_description_west_station_3	The plan to equip garrison troops with enchanted armor originated here.	true
-building_culture_variants_name_west_station_4wh3_main_cth_cathay	Gilded Keep	true
-building_short_description_texts_short_description_west_station_4	The grand forge roars endlessly, channeling the winds of magic.	true
-building_culture_variants_name_west_station_5wh3_main_cth_cathay	White Tiger Tower	true
-building_short_description_texts_short_description_west_station_5	"The stone lion at the entrance... it just glared at me!"	true
-building_sets_onscreen_name_west_station	Western Commandery Series	true
-building_sets_onscreen_description_west_station	Constructing this series progressively unlocks unique units native to the Western Provinces.	true
-effects_description_whc_enable_west_units_tier_1	Unlocks recruitment of Peasant Swordsmen, Regular Crossbowmen, Regular Crossbow Riders, and Western Garrison Guards (Spears).	true
-effects_description_whc_enable_west_units_tier_2	Unlocks recruitment of Western Garrison Guards (Flaming Crossbows) and Armored Regular Cavalry.	true
-effects_description_whc_enable_west_units_tier_3	Unlocks recruitment of Western Garrison Guards (Zhanmadao) and Western Garrison Guards (Heavy Crossbows).	true
-effects_description_whc_enable_west_units_tier_4	Unlocks recruitment of Western Spear Tigers and Onyx Lin Cavalry.	true
-effects_description_whc_enable_west_units_tier_5	Unlocks recruitment of Golden Pagoda Infantry and Gilded Pagoda Sentinels.	true
-building_culture_variants_name_east_station_1wh3_main_cth_cathay	Eastern Encampment	true
-building_short_description_texts_short_description_east_station_1	Young farmhands from nearby fishing villages train here.	true
+building_short_description_texts_short_description_west_station_3	The plan to mass-equip frontier guards with enchanted armor originated here.	true
+building_culture_variants_name_west_station_4wh3_main_cth_cathay	Gilded Bureau	true
+building_short_description_texts_short_description_west_station_4	Within the hall, an eternal furnace burns, channeling the roaring Winds of Magic.	true
+building_culture_variants_name_west_station_5wh3_main_cth_cathay	White Tiger Terrace	true
+building_short_description_texts_short_description_west_station_5	"I swear that stone lion by the entrance just glared at me..."	true
+building_sets_onscreen_name_west_station	Western Guard Prefecture Chain	true
+building_sets_onscreen_description_west_station	Constructing this chain unlocks Western Guard native units in stages.	true
+effects_description_whc_enable_west_units_tier_1	Unlocks recruitment for Levy Swordsmen, Levy Repeater Crossbowmen, Levy Crossbow Riders, and Frontier Guards (Ge Halberd).	true
+effects_description_whc_enable_west_units_tier_2	Unlocks recruitment for Frontier Guards (Fire Repeater) and Frontier Cataphracts.	true
+effects_description_whc_enable_west_units_tier_3	Unlocks recruitment for Frontier Guards (Zhan Ma Sword) and Frontier Guards (Heavy Repeater).	true
+effects_description_whc_enable_west_units_tier_4	Unlocks recruitment for Long Pike Tigerguard and Inkscale Ironriders.	true
+effects_description_whc_enable_west_units_tier_5	Unlocks recruitment for Iron Pagoda Infantry and Gilded Pagoda Riders.	true
+building_culture_variants_name_east_station_1wh3_main_cth_cathay	Eastern Guard Camp	true
+building_short_description_texts_short_description_east_station_1	Young conscripts from the surrounding fishing villages train here.	true
 building_culture_variants_name_east_station_2wh3_main_cth_cathay	Azure Wave Hall	true
-building_short_description_texts_short_description_east_station_2	The sailors of the "Grand Dragon Fleet" are selected from these coastal garrisons.	true
-building_culture_variants_name_east_station_3wh3_main_cth_cathay	Sky Blue Keep	true
-building_short_description_texts_short_description_east_station_3	Strong resolve and cutting-edge firearms both require sufficient supplies and wages.	true
-building_sets_onscreen_name_east_station	Eastern Encampment Series	true
-building_sets_onscreen_description_east_station	Constructing this series progressively unlocks unique units native to the Eastern Provinces.	true
-effects_description_whc_enable_east_units_tier_1	Unlocks recruitment of Frontier Wolf-Fork Spearmen, Frontier Firecracker Archers, Frontier Firelance Cavalry, and Coastal Defense Corps (Triple-Barrel Arquebuses).	true
-effects_description_whc_enable_east_units_tier_2	Unlocks recruitment of Coastal Defense Corps (Divine Arrow Rockets) and Fire Thunder Grenadiers.	true
-effects_description_whc_enable_east_units_tier_3	Unlocks recruitment of Coastal Defense Corps (Halberd Arquebuses), Coastal Defense Corps (Tiger-Crouch Cannons), Thunderclap Arquebusiers, Armored Vanguard, Dragon Ship Sentinels, Guanning Firelancers, Bayara Vanguard Cavalry, and Tidebreaker Dragon Riders.	true
-building_culture_variants_name_south_station_1wh3_main_cth_cathay	Southern Encampment	true
-building_short_description_texts_short_description_south_station_1	Hunters line up here to claim their rewards.	true
-building_culture_variants_name_south_station_2wh3_main_cth_cathay	Penal Quarters	true
-building_short_description_texts_short_description_south_station_2	New conscripts must choose between battlefield service and hard labor.	true
-building_culture_variants_name_south_station_3wh3_main_cth_cathay	Blazing Wind Hall	true
-building_short_description_texts_short_description_south_station_3	After the canal was completed, former convicts became its primary defenders.	true
-building_culture_variants_name_south_station_4wh3_main_cth_cathay	Cinnabar Keep	true
-building_short_description_texts_short_description_south_station_4	The bodyguards stationed here alongside the commander are the paragons of the army.	true
-building_culture_variants_name_south_station_5wh3_main_cth_cathay	Vermilion Bird Tower	true
-building_short_description_texts_short_description_south_station_5	Home to Cathay's largest Vermilion Bird altar, its eternal flames illuminate the peaks.	true
-building_sets_onscreen_name_south_station	Southern Command Series	true
-building_sets_onscreen_description_south_station	Constructing this series progressively unlocks unique units native to the Southern Provinces.	true
-effects_description_whc_enable_south_units_tier_1	Unlocks recruitment of Hunter Spearmen, Hunter Slingers, Oxen Woodcutters, and Southern Penal Corps (Dual Swords).	true
-effects_description_whc_enable_south_units_tier_2	Unlocks recruitment of Southern Penal Corps (Hand Crossbows) and Forest Hunting Hounds.	true
-effects_description_whc_enable_south_units_tier_3	Unlocks recruitment of Southern Penal Corps (Pudao) and Southern Penal Corps (Wolfbane Bows).	true
-effects_description_whc_enable_south_units_tier_4	Unlocks recruitment of Beichai Heavy Guard and Blazing Lin Cavalry.	true
-effects_description_whc_enable_south_units_tier_5	Unlocks recruitment of Divine Arm Crossbowmen and Burning Wind Tiger Riders.	true
+building_short_description_texts_short_description_east_station_2	The sailors of the 'Azure Sea Fleet' are all selected from these coastal patrol naval camps.	true
+building_culture_variants_name_east_station_3wh3_main_cth_cathay	Sky Blue Bureau	true
+building_short_description_texts_short_description_east_station_3	Unyielding resolve matters just as much as cutting-edge firearms, but both require ample supplies first.	true
+building_sets_onscreen_name_east_station	Eastern Guard Post Chain	true
+building_sets_onscreen_description_east_station	Constructing this chain unlocks Eastern Guard native units in stages.	true
+effects_description_whc_enable_east_units_tier_1	Unlocks recruitment for Garrison Wolfbrush Spearmen, Garrison Firecracker Gunners, Garrison Fire Lancers, and Coastal Patrol Guard (Triple-Barrel Gun).	true
+effects_description_whc_enable_east_units_tier_2	Unlocks recruitment for Coastal Patrol Guard (Divine Engine Arrows) and Fire Bomb Throwers.	true
+effects_description_whc_enable_east_units_tier_3	Unlocks recruitment for Coastal Patrol Guard (Halberd-Gun), Coastal Patrol Guard (Tiger Crouch Cannon), Thunderclap Gun Battalion, Armored Vanguard, Dragonship Marines, Beacon Fire Gunlancers, Chosen Vanguard Riders, and Wavebreaker Dragon Riders.	true
+building_culture_variants_name_south_station_1wh3_main_cth_cathay	Southern Expedition Camp	true
+building_short_description_texts_short_description_south_station_1	A steady stream of hunters come here to claim their rewards.	true
+building_culture_variants_name_south_station_2wh3_main_cth_cathay	Bondservant Post	true
+building_short_description_texts_short_description_south_station_2	Newly arrived convicts must choose between the battlefield and hard labor.	true
+building_culture_variants_name_south_station_3wh3_main_cth_cathay	Burning Wind Hall	true
+building_short_description_texts_short_description_south_station_3	After the canal's completion, these former criminals became the primary force defending it.	true
+building_culture_variants_name_south_station_4wh3_main_cth_cathay	Cinnabar Bureau	true
+building_short_description_texts_short_description_south_station_4	The personal guards stationed here alongside their commander are a model for the entire army.	true
+building_culture_variants_name_south_station_5wh3_main_cth_cathay	Vermilion Bird Terrace	true
+building_short_description_texts_short_description_south_station_5	Cathay's largest Vermilion Bird altar stands here, its flames eternal, illuminating ten thousand peaks.	true
+building_sets_onscreen_name_south_station	Southern Guard Bureau Chain	true
+building_sets_onscreen_description_south_station	Constructing this chain unlocks Southern Guard native units in stages.	true
+effects_description_whc_enable_south_units_tier_1	Unlocks recruitment for Hunter Spearmen, Hunter Slingers, Woodcutter Herders, and Southern Expedition Convicts (Dual Blades).	true
+effects_description_whc_enable_south_units_tier_2	Unlocks recruitment for Southern Expedition Convicts (Handbow) and Forest Patrol Hounds.	true
+effects_description_whc_enable_south_units_tier_3	Unlocks recruitment for Southern Expedition Convicts (Broadsword) and Southern Expedition Convicts (Poison Bow).	true
+effects_description_whc_enable_south_units_tier_4	Unlocks recruitment for Ceremonial Bei Wei Guard and Blazescale Warriors.	true
+effects_description_whc_enable_south_units_tier_5	Unlocks recruitment for Divine Arm Crossbow Guard and Scorching Wind Hunters.	true

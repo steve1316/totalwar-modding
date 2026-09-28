@@ -1,48 +1,48 @@
 key	text	tooltip
 #Loc;1;text/!!!cth_fuyuanshan_dilemma.loc		
-dilemmas_localised_title_fys_dilemma_gatemaster	Jade Warrior Hero	false
-dilemmas_localised_description_fys_dilemma_gatemaster	A Jade Warrior soldier has earned the recognition of his comrades and superiors for his bravery in battle. Praise for this individual has reached your ears.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_gatemasterFIRST	Reward this person	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_gatemasterFIRST	You personally pour a drink for this person and present him with the treasured sword you have carried for many years.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_gatemasterSECOND	Promote this person	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_gatemasterSECOND	Such a warrior should be promoted to better serve Grand Cathay.	false
-campaign_payload_ui_details_description_fys_gatemaster_1	The soldiers are in high spirits, all eager to fight bravely.	false
-campaign_payload_ui_details_description_fys_gatemaster_2	The soldier will join your army as a Gatekeeper.	false
-dilemmas_localised_title_fys_dilemma_hebang_miaoying	The Supreme Matriarch of Nan-Gau	false
-dilemmas_localised_description_fys_dilemma_hebang_miaoying	The Great Bastion is complete, and the war is about to enter its next phase. The Supreme Matriarch of Nan-Gau, Miao Ying, arrives with her guards, weary from her journey. You keenly sense her gaze upon you, assessing you as one would a fine weapon. You have become the sharp blade she desires, pointed towards the north of the Great Bastion.\\nA military council is convened without any prior preparation. Cold, firm, and efficient - this is Miao Ying's usual style. And now, she wants to hear your proposal first.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_hebang_miaoyingFIRST	Pincer Strategy	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_hebang_miaoyingFIRST	You believe that the Great Bastion garrison and Miao Ying's personal guards should be stationed separately, creating a pincer attack to disrupt the enemy's advance and retreat. At the same time, to fulfill this responsibility, the Great Bastion garrison needs more support.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_hebang_miaoyingSECOND	Unite the Forces	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_hebang_miaoyingSECOND	The time is ripe. The northern armies should unite and launch a lightning attack, returning the pain inflicted by the Chaos enemy a hundredfold.	false
-campaign_payload_ui_details_description_fys_dilemma_hebang_miaoying_1	The Imperial Wardens faction remains independent, but you will receive continuous aid from Nan-Gau and form a military alliance with the Northern Provinces faction.	false
+dilemmas_localised_title_fys_dilemma_gatemaster	Jade Hero	false
+dilemmas_localised_description_fys_dilemma_gatemaster	A Jade Guard soldier, having distinguished himself in battle, has earned the recognition of his comrades and superiors alike. Word of his acclaim has reached your ears.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_gatemasterFIRST	Reward this man	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_gatemasterFIRST	You personally pour him wine, and present him with the sword you have carried at your side for many years.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_gatemasterSECOND	Promote this man	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_gatemasterSECOND	Such a warrior deserves promotion, that he may serve Cathay all the better.	false
+campaign_payload_ui_details_description_fys_gatemaster_1	The troops' spirits are lifted, and all long to fight the enemy with renewed vigour.	false
+campaign_payload_ui_details_description_fys_gatemaster_2	A subordinate general with a unique trait joins your army.	false
+dilemmas_localised_title_fys_dilemma_hebang_miaoying	Lady of Nan Gau	false
+dilemmas_localised_description_fys_dilemma_hebang_miaoying	The stronghold of the Great Bastion has been completed, and the war is about to enter its next phase. Travel-worn, the Lady of Nan Gau arrives with her honour guard, and you sense keenly that her gaze falls upon you - the look one gives when appraising a finely-crafted weapon. You have become the very blade of the gods she hoped for, one to be aimed at the north beyond the Great Bastion.\\nA council of war convenes without warning. Cold, uncompromising, and efficient - this is ever the way of the Raging Gale. And now, she wishes to hear your proposal first.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_hebang_miaoyingFIRST	Pincer Formation	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_hebang_miaoyingFIRST	You believe the Great Bastion garrison and Miao Ying's honour guard should be stationed separately, forming a pincer to leave the enemy with nowhere to turn. To fulfil this role, however, the Great Bastion garrison will require further reinforcement.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_hebang_miaoyingSECOND	Unite the Armies	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_hebang_miaoyingSECOND	The time has come; the northern armies should unite as one and strike with the force of thunder, repaying the suffering brought by the great enemy of Chaos a hundredfold.	false
+campaign_payload_ui_details_description_fys_dilemma_hebang_miaoying_1	The Frontier Guard faction remains independent, but you will receive a steady stream of aid from Nan Gau, and form a military alliance with the Northern Provinces faction.	false
 campaign_payload_ui_details_description_fys_dilemma_hebang_miaoying_2	Confederate with the Northern Provinces faction.	false
-dilemmas_localised_title_fys_dilemma_assist_nangau	Aid from Nan-Gau	false
-dilemmas_localised_description_fys_dilemma_assist_nangau	A startled warhorse gallops through the camp, kicking over countless weapon racks and tents, sending soldiers scrambling in panic, forgetting all discipline. The Gatekeeper is furious and wants to restore order, but when he turns his head, he too is shocked. Outside the camp, a vast convoy of transport vehicles forms a human Great Bastion, the markings on the vehicles indicating they are from Nan-Gau.\\nThis event will trigger again after 15 turns.	false
+dilemmas_localised_title_fys_dilemma_assist_nangau	Aid from Nan Gau	false
+dilemmas_localised_description_fys_dilemma_assist_nangau	A startled warhorse gallops shrieking through the camp, kicking over countless weapon racks and tents along the way. Soldiers scatter in alarm, forgetting all discipline for the moment. The subordinate general, furious, moves to restore order - but turning around, he too is startled. Beyond the camp, a vast convoy of transport wagons stretches out like a wall of men and beasts. The banners on the wagons reveal that they hail from Nan Gau.\\nThis event will trigger again after 15 turns.	false
 cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_assist_nangauFIRST	Imperial Reinforcements	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauFIRST	An elite reinforcement will play a crucial role in the battle.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_assist_nangauSECOND	Nan-Gau Armaments	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauSECOND	Excellent equipment is a soldier's second life.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_assist_nangauTHIRD	The Dragon Empress's Army	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauTHIRD	Miao Ying's army will become a sharp blade piercing the enemy's heart.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_assist_nangauFOURTH	United as One	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauFOURTH	The Great Bastion and the Northern Provinces become one again, but the supreme glory of defeating the Chaos enemy will belong to the Protector General of the Northern Provinces.	false
-campaign_payload_ui_details_description_fys_dilemma_assist_nangau_1	An elite army will gather in Po Mu.	false
-campaign_payload_ui_details_description_fys_dilemma_assist_nangau_2	Obtain the Nan-Gau War Banner and Nan-Gau Shield.	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauFIRST	A force of elite reinforcements will prove decisive in this campaign.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_assist_nangauSECOND	Arms of Nan Gau	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauSECOND	Fine equipment is a soldier's second life.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_assist_nangauTHIRD	Army of the Dragon God	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauTHIRD	Miao Ying's army shall become the blade driven into the enemy's very heart.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_assist_nangauFOURTH	One United Body	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_assist_nangauFOURTH	The Great Bastion and the Northern Provinces become one once more, but the highest glory of defeating the great enemy of Chaos shall belong to the Governor of the Northern Provinces.	false
+campaign_payload_ui_details_description_fys_dilemma_assist_nangau_1	An elite army will muster at Po Mei.	false
+campaign_payload_ui_details_description_fys_dilemma_assist_nangau_2	Gain the Banner of Nan Gau and the Shield of Nan Gau.	false
 campaign_payload_ui_details_description_fys_dilemma_assist_nangau_3	Miao Ying's army appears near the faction leader.	false
 campaign_payload_ui_details_description_fys_dilemma_assist_nangau_4	Confederate with the Northern Provinces faction.	false
-dilemmas_localised_title_fys_dilemma_xinwu	The Return of the Defier of Fate	false
-dilemmas_localised_description_fys_dilemma_xinwu	Xin Wu has drawn enough power from his slumber. He has now returned and is willing to fight for Grand Cathay.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_xinwuFIRST	Join Forces Against the Enemy	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_xinwuFIRST	The current Grand Cathay needs to seize every opportunity to restore peace. Even though Xin Wu's return may cause panic, you still hope he will become your ally.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_xinwuSECOND	Sword of Chaos	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_xinwuSECOND	You have an excellent plan for Xin Wu: send him deep into the Chaos Wastes to disrupt the Chaos invasion army's assembly as much as possible with his killing. This also aligns with Xin Wu's own wishes.	false
-campaign_payload_ui_details_description_fys_dilemma_xinwu_1	For a period of time, Xin Wu will become your ally.	false
+dilemmas_localised_title_fys_dilemma_xinwu	Return of the Defier of Fate	false
+dilemmas_localised_description_fys_dilemma_xinwu	Xin Wu has drawn sufficient strength from his slumber. He has now returned, willing to fight for Cathay.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_xinwuFIRST	Unite Against the Enemy	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_xinwuFIRST	Cathay, as it stands, must seize every ounce of strength available if it hopes to return to peace. Though Xin Wu's arrival may stir up much fear, you still wish for him to become your ally.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_xinwuSECOND	Blade of Chaos	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_xinwuSECOND	You have found the perfect use for Xin Wu - to send him deep into the Chaos Wastes, disrupting the invading Chaos army's mustering rhythm as much as possible through his slaughter. This, too, aligns with Xin Wu's own desire.	false
+campaign_payload_ui_details_description_fys_dilemma_xinwu_1	For a time, Xin Wu will become your ally.	false
 campaign_payload_ui_details_description_fys_dilemma_xinwu_2	Great Bastion Threat: -20%	false
 effect_bundles_localised_title_wh3_main_dilemma_xinwu_summon_buff	Defier of Fate	false
-effect_bundles_localised_description_wh3_main_dilemma_xinwu_summon_buff	Army Ability: "Defier of Fate"\\n(Cathay-controlled regions)	false
-dilemmas_localised_title_fys_dilemma_fys	Quell the Uprisings or Resist the Foreign Threat	false
-dilemmas_localised_description_fys_dilemma_fys	While the Great Bastion remains calm, Grand Cathay is not at peace. You ponder whether to temporarily relieve Fu Yuanshan of his duties at the Great Bastion and entrust it to someone else, so he can help you quell the internal unrest within Cathay.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_fysFIRST	Prioritize Internal Stability	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_fysFIRST	You intend for him to help you pacify Cathay first, then resist the foreign enemies later.	false
-cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_fysSECOND	Resisting the Foreign Threat is Paramount	false
-cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_fysSECOND	The great enemy of Chaos cannot be taken lightly for even a day. The minor unrest within Cathay can be easily quelled.	false
+effect_bundles_localised_description_wh3_main_dilemma_xinwu_summon_buff	Army Ability: '[Defier of Fate]'\\n(In regions controlled by Cathay)	false
+dilemmas_localised_title_fys_dilemma_fys	Quell Within, Repel Without	false
+dilemmas_localised_description_fys_dilemma_fys	The Great Bastion remains at peace for now, yet Cathay itself is not so tranquil. You ponder whether to have Fu Yuanshan temporarily set aside his duties defending the Great Bastion, entrusting them to another, so that he may aid you in quelling the unrest within Cathay.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_fysFIRST	Order Within First	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_fysFIRST	You intend for this man to first help you pacify Cathay, then turn to repel the enemy without.	false
+cdir_events_dilemma_choice_details_localised_choice_label_fys_dilemma_fysSECOND	Repel the Enemy First	false
+cdir_events_dilemma_choice_details_localised_choice_title_fys_dilemma_fysSECOND	The great enemy of Chaos cannot be taken lightly for even a single day; the petty unrest within Cathay's borders can be settled in but a moment.	false

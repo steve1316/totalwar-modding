@@ -1,12 +1,13 @@
 key	text	tooltip
 #Loc;1;text/@@@DEERKSL/!!!deer24_kslmod.loc		
-unit_description_short_texts_text_wh3_main_unit_short_text_elun	The port of Erengrad serves as the second-largest trade hub in the Old World. Its bustling docks are filled with exotic treasures from across the globe, including weapons powerful enough to crush any foe.	true
-unit_description_short_texts_text_wh3_main_unit_short_text_pulage	Praag is a city of contradictions, blending the taint of Chaos with noble faith. Despite its struggles, Praag remains part of Kislev, and these ascetic warriors, imbued with Ursun's blood, will cleanse the city's sins with fire and blood.	true
-unit_description_short_texts_text_wh3_main_unit_short_text_boha	The Sons of Ursun are Kislev's champion warriors, often seen serving as the elite guard of the Bokha Palace. They are symbols of Ursun's might and the embodiment of Kislev's indomitable strength.	true
-land_units_onscreen_name_bohajinjun	Roaring Fangs	true
-land_units_onscreen_name_bohaguanjun	Champions of the Red Tzar	true
-ui_unit_groupings_onscreen_KSLbohaunits	Sons of Ursun	true
+unit_description_short_texts_text_wh3_main_unit_short_text_elun	Erengrad is Kislev's gateway to the sea. As the second-largest and most important trading hub in the Old World, Erengrad's harbor district draws in curiosities from every corner of the globe, including all manner of weapons potent enough to crush any foe.	true
+unit_description_short_texts_text_wh3_main_unit_short_text_pulage	Praag is a city of contradictions, steeped in both Chaos corruption and noble faith. Whatever else it may be, Praag remains part of Kislev, and these ascetics who carry the blood of the Bear God in their veins will cleanse the sins that blanket the city with blood and fire.	true
+unit_description_short_texts_text_wh3_main_unit_short_text_boha	The Ursun's Teeth are Kislev's champion warriors, most often seen serving as the Boyar's palace guard. To the outside world, they are seen as a symbol of Ursun's power and the finest expression of Kislev's might.	true
+land_units_onscreen_name_bohajinjun	Roaring Fang	true
+land_units_onscreen_name_bohaguanjun	Red Sands Champion	true
+ui_unit_groupings_onscreen_KSLbohaunits	Ursun's Teeth	true
 land_units_onscreen_name_fuzuijuntuan	Apostles of Praag	true
-land_units_onscreen_name_jinweijun	Erengrad Guards	true
-land_units_onscreen_name_xianbin	Praag Disciplinary Troops	true
-land_units_onscreen_name_kaqiusha	Dazh Firestorm	true
+land_units_onscreen_name_jinweijun	Erengrad Guard	true
+land_units_onscreen_name_xianbin	Praag Penitents	true
+land_units_onscreen_name_kaqiusha	Datzr Sunhail	true
+land_units_onscreen_name_update	9	true

@@ -2,16 +2,16 @@ key	text	tooltip
 #Loc;1;text/@@zerooz_def_units.loc		
 land_units_onscreen_name_def_inf_daughters_of_khaine	Daughters of Khaine	true
 unit_description_short_texts_text_def_inf_daughters_of_khaine	They attack enemies with venomous daggers and excellent armor.	true
-unit_description_historical_texts_text_def_inf_daughters_of_khaine	Witches blessed by Khaine gain greater power, allowing them to heal their wounds with each attack.	true
+unit_description_historical_texts_text_def_inf_daughters_of_khaine	These witch-elves, favored by Khaine, have gained even greater power—each strike restores their own wounds.	true
 land_units_onscreen_name_def_inf_blood_sisters	Blood Sisters	true
-unit_description_short_texts_text_def_inf_blood_sisters	They are Daughters of Khaine who revel in blood.	true
-unit_description_historical_texts_text_def_inf_blood_sisters	Blood Sisters are skilled in sneaking behind enemies, using their daggers to slowly torment their prey.	true
+unit_description_short_texts_text_def_inf_blood_sisters	They are Daughters of Khaine who revel in bloodshed.	true
+unit_description_historical_texts_text_def_inf_blood_sisters	Blood Sisters are accustomed to stalking behind the enemy, slowly tormenting their prey with daggers.	true
 land_units_onscreen_name_def_mon_shadow_lifetaker	Shadow Lifetaker	true
-unit_description_short_texts_text_def_mon_shadow_lifetaker	Murderous creatures lurking in the shadows created by Morathi.	true
-unit_description_historical_texts_text_def_mon_shadow_lifetaker	The handmaidens created by Morathi using dark magic, skilled in long-range magic attacks and close combat with spears.	true
-land_units_onscreen_name_def_cav_shadow_maiden	Shadow Maidens	true
-unit_description_short_texts_text_def_cav_shadow_maiden	Shadow Guards who ride pegasi.	true
-unit_description_historical_texts_text_def_cav_shadow_maiden	Servants of the Shadow Maiden, chosen by the Cult of Pleasure and trained by the Shadow Maiden.	true
-land_units_onscreen_name_def_inf_khaine_tracker	Khaine Trackers	false
-unit_description_short_texts_text_def_inf_khaine_tracker	Executioners of Khaine, specialized in assassination missions, who can not only throw massive chakrams but also excel in close combat.	false
-unit_description_historical_texts_text_def_inf_khaine_tracker	Executioners of Khaine, specialized in assassination missions, who can not only throw massive chakrams but also excel in close combat.	false
+unit_description_short_texts_text_def_mon_shadow_lifetaker	A murderous fiend created by Morathi, lurking within the shadows.	true
+unit_description_historical_texts_text_def_mon_shadow_lifetaker	A handmaiden created by Morathi through dark magic, skilled in ranged attacks with magic and melee combat with a spear.	true
+land_units_onscreen_name_def_cav_shadow_maiden	Shadow Maiden	true
+unit_description_short_texts_text_def_cav_shadow_maiden	A shadowy guard mounted upon winged steeds.	true
+unit_description_historical_texts_text_def_cav_shadow_maiden	Servants of the Shadow's daughter, chosen by the Cult of Pleasure and trained by the Shadow's daughter herself.	true
+land_units_onscreen_name_def_inf_khaine_tracker	Khaine Tracker	false
+unit_description_short_texts_text_def_inf_khaine_tracker	Khaine's executioners, dedicated to carrying out assassinations—they can hurl massive throwing discs as well as fight with masterful melee finesse.	false
+unit_description_historical_texts_text_def_inf_khaine_tracker	Khaine's executioners, dedicated to carrying out assassinations—they can hurl massive throwing discs as well as fight with masterful melee finesse.	false
