@@ -7,7 +7,7 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
 
-local factions_data = require("script/land_encounters/configs/factions_data")
+local army_generator = require("script/land_encounters/core/army_generator")
 local battle_events_by_level = require("script/land_encounters/configs/events").battle_spot
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
@@ -15,9 +15,6 @@ local battle_events_by_level = require("script/land_encounters/configs/events").
 local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
-
---- How many unit picks in a row may add nothing before the army generator stops filling the army.
-local MAX_CONSECUTIVE_FAILED_UNIT_PICKS = 25
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,30 +123,6 @@ local faction_shorthand_key_to_full_key = {
     --- fim = "ovn_fim_fimir_rebel",
 }
 
---- Default per-unit-type weights used when picking which unit category to roll for next.
-local force_makeup_weights = {
-    melee_infantry = 0.40,
-    missile_infantry = 0.40,
-    melee_cavalry = 0.15,
-    missile_cavalry = 0.15,
-    monstrous_infantry = 0.40,
-    monstrous_cavalry = 0.20,
-    war_beast = 0.40,
-    chariot = 0.20,
-    warmachine = 0.20,
-    monster = 0.20,
-    generic = 0.10,
-}
-
---- Per-faction overrides for the default unit-type weights above.
-local unit_type_weight_overrides = {
-    ogr = {
-        melee_infantry = 0.05,
-        missile_infantry = 0.05,
-        monstrous_infantry = 0.80,
-    },
-}
-
 --- Recursively prints any Lua value to `out()` for debugging.
 --- @param tbl any The value to print. Non-tables are stringified directly.
 --- @param indent number Current indent depth. Defaults to 0 when nil.
@@ -170,30 +143,6 @@ function print_table(tbl, indent)
             out(indent_str .. tostring(key) .. ": " .. tostring(value))
         end
     end
-end
-
---- Returns true if a unit's origin pack is enabled under the user's MCT mod-compatibility settings.
---- @param origin string The origin tag on a unit ("vanilla" or a mod pack key).
---- @returns boolean True when the origin is allowed by the current MCT settings.
-local function is_origin_enabled(origin)
-    --- If "only modded units" is on, vanilla is excluded; otherwise vanilla is always enabled.
-    if get_mct_settings().enable_compatibility_with_supported_mods and get_mct_settings().use_only_modded_units then
-        if origin == "vanilla" then
-            return false
-        end
-    elseif origin == "vanilla" then
-        return true
-    end
-
-    --- Origin must appear in the enabled-mods list.
-    if get_mct_settings().enable_compatibility_with_supported_mods then
-        for _, mod in ipairs(get_mct_settings().enabled_mods) do
-            if origin == mod then
-                return true
-            end
-        end
-    end
-    return false
 end
 
 --- Picks a random faction shorthand from the MCT-enabled set (falling back to all factions if the set is empty).
@@ -251,54 +200,6 @@ function get_random_faction()
     return random_faction
 end
 
---- Counts the total number of units in a force_makeup (lord + heroes + every unit-type bucket).
---- @param force_makeup table A force_makeup with a units table (unit_type -> array) and a heroes array.
---- @returns number Total entries including the lord (1), every unit bucket, and every hero.
-local function count_total_units(force_makeup)
-    local total = 1
-    for _, units in pairs(force_makeup.units) do
-        total = total + #units
-    end
-    if #force_makeup.heroes > 0 then
-        total = total + #force_makeup.heroes
-    end
-    return total
-end
-
---- Picks a unit type randomly weighted by the per-type weights, with optional per-faction overrides.
---- @param weights table A unit_type -> weight map (the defaults from force_makeup_weights).
---- @param faction_shorthand_key string A 3-letter faction shorthand used to look up overrides.
---- @returns string The chosen unit-type key (e.g. "melee_infantry", "warmachine").
-local function select_weighted_random_unit_type(weights, faction_shorthand_key)
-    local faction_weights = {}
-    for unit_type, weight in pairs(weights) do
-        faction_weights[unit_type] = weight
-    end
-
-    --- Override with specific faction unit type weights if available.
-    if unit_type_weight_overrides[faction_shorthand_key] then
-        for unit_type, weight in pairs(unit_type_weight_overrides[faction_shorthand_key]) do
-            print("DEBUG - Overriding unit type " .. unit_type .. " with weight " .. weight .. " for faction " .. faction_shorthand_key .. ".")
-            faction_weights[unit_type] = weight
-        end
-    end
-
-    local total_weight = 0
-    for _, weight in pairs(faction_weights) do
-        total_weight = total_weight + weight
-    end
-
-    local random_weight = random_number(10000) / 10000 * total_weight
-    local cumulative_weight = 0
-
-    for unit_type, weight in pairs(faction_weights) do
-        cumulative_weight = cumulative_weight + weight
-        if random_weight <= cumulative_weight then
-            return unit_type
-        end
-    end
-end
-
 --- Returns true if `tbl` contains `element`. If `key_first` is true, checks keys; otherwise checks values.
 --- @param tbl table The table to search. nil is treated as empty.
 --- @param element any The value or key to search for.
@@ -318,249 +219,6 @@ function contains(tbl, element, key_first)
     return false
 end
 
---- Picks a uniformly random key from the table.
---- @param tbl table The table to draw from.
---- @returns any A randomly chosen key from tbl.
-local function select_random_key(tbl)
-    local keys = {}
-    for key in pairs(tbl) do
-        table.insert(keys, key)
-    end
-    local random_index = random_number(#keys)
-    return keys[random_index]
-end
-
---- Returns a shallow copy of `tbl` with `key_to_remove` omitted.
---- @param tbl table The source table.
---- @param key_to_remove any The key to drop from the copy.
---- @returns table A new table containing every pair from tbl except the one keyed by key_to_remove.
-local function remove_key(tbl, key_to_remove)
-    local new_tbl = {}
-    for key, value in pairs(tbl) do
-        if key ~= key_to_remove then
-            new_tbl[key] = value
-        end
-    end
-    return new_tbl
-end
-
---- Adds one or more units of the given `unit_type` to `force_makeup` for the given faction and difficulty.
---- Walks the configured tier range and falls back to other unit types when no eligible units exist.
---- @param difficulty_key string The difficulty key (e.g. "easy", "medium", "hard").
---- @param faction_shorthand_key string A 3-letter faction shorthand.
---- @param force_makeup table The accumulating force_makeup table to mutate.
---- @param unit_type string The unit-type bucket key to fill (e.g. "melee_infantry").
---- @param max_units number The army's size cap (lord and heroes included). Never adds more units than the room left under it.
-local function get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, max_units)
-    local tiers = difficulties[difficulty_key].tiers
-    local unit_limits = difficulties[difficulty_key].limits
-    local add_single_copy = false
-
-    --- Stop once the army is full, so a batch of copies can never push it past its size cap.
-    local room_left = max_units - count_total_units(force_makeup)
-    if room_left <= 0 then
-        return force_makeup
-    end
-
-    print("INFO - Processing original unit_type: " .. unit_type .. " units.")
-
-    --- Function to collect units from the given tiers.
-    local function collect_units_from_tiers(tiers, faction_shorthand_key, unit_type)
-        local enabled_faction_units = {}
-        local min_tier = tiers[1]
-        local max_tier = tiers[2]
-
-        print("DEBUG - Collecting units from tiers " .. min_tier .. " to " .. max_tier .. " for unit type " .. unit_type .. ".")
-        print("DEBUG - Faction " .. faction_shorthand_key .. ".")
-
-        --- If the list is empty after collection, decrease the tiers by 1 and try again until the minimum tier hits 1 and/or the maximum tier hits 5.
-        local iteration_limit = 5
-        while iteration_limit > 0 and #enabled_faction_units == 0 do
-            for tier = min_tier, max_tier do
-                local tier_name = "tier_" .. tier
-                --- print("DEBUG - Collecting units from tier " .. tier_name .. ".")
-                local units = factions_data[faction_shorthand_key].units[tier_name][unit_type]
-                if #units ~= 0 then
-                    for _, unit in pairs(units) do
-                        if is_origin_enabled(unit.origin) and not contains(enabled_faction_units, unit.land_unit) then
-                            table.insert(enabled_faction_units, unit.land_unit)
-                        end
-                    end
-                end
-            end
-
-            --- Tiers should not go more than 1 above or below the given tiers.
-            --- Similarly, tier 2 should stay at tier 2 for the max constraint, otherwise you will cross over to some tough units for tier 3 if easy difficulty was selected.
-            min_tier = math.max(min_tier - 1, tiers[1] - 1 >= 1 and tiers[1] - 1 or 1)
-            max_tier = math.min(max_tier + 1, tiers[2] == 2 and 2 or tiers[2] + 1 <= 5 and tiers[2] + 1 or 5)
-            iteration_limit = iteration_limit - 1
-        end
-        print("DEBUG - Returning " .. #enabled_faction_units .. " units.")
-        return enabled_faction_units
-    end
-
-    --- Collect all units of enabled origins for the given unit type and for the chosen tiers.
-    local enabled_faction_units = collect_units_from_tiers(tiers, faction_shorthand_key, unit_type)
-    if #enabled_faction_units == 0 then
-        --- If no units are found, fallback and bypass the unit type limit.
-        --- In addition, set the copies to 1 for this fallback to allow for other potential unit types to be filled.
-        unit_type = select_weighted_random_unit_type(force_makeup_weights, faction_shorthand_key)
-        print("WARNING - No units found for the given tiers and unit type. Falling back to " .. unit_type .. " by random selection and setting the copies added to 1.")
-        enabled_faction_units = collect_units_from_tiers(tiers, faction_shorthand_key, unit_type)
-        add_single_copy = true
-    end
-
-    if #enabled_faction_units == 0 then
-        print("WARNING - No " .. unit_type .. " units found for the given tiers and unit type. Skipping.")
-        return force_makeup
-    end
-
-    print("Collected a list of " .. #enabled_faction_units .. " " .. unit_type .. " units.")
-
-    --- Loop until either the minimum or maximum number of units for the unit type is reached.
-    if unit_type == "warmachine" or unit_type == "monster" then
-        --- Add only up to 1 of either warmachine or monster unit type.
-        local selected_land_unit = enabled_faction_units[random_number(#enabled_faction_units)]
-
-        --- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
-        if selected_land_unit:find("_ror") then
-            if not contains(force_makeup.units[unit_type], selected_land_unit) then
-                table.insert(force_makeup.units[unit_type], selected_land_unit)
-            end
-        else
-            table.insert(force_makeup.units[unit_type], selected_land_unit)
-        end
-    else
-        --- For every other unit type, begin adding units to the force makeup.
-        --- First, determine if copies should be added and cap it at 3.
-        local copies = 1
-        if not add_single_copy and random_chance(25) then
-            copies = math.min(random_range(unit_limits[unit_type][1], unit_limits[unit_type][2]), 3, room_left)
-        end
-
-        --- Now randomly select the unit to be added.
-        local selected_land_unit = enabled_faction_units[random_number(#enabled_faction_units)]
-
-        --- If the selected unit is a Regiment of Renown unit, add it to the force makeup only if it is not already in the force makeup.
-        if selected_land_unit:find("_ror") then
-            if not contains(force_makeup.units[unit_type], selected_land_unit) then
-                table.insert(force_makeup.units[unit_type], selected_land_unit)
-            end
-        else
-            print("INFO - Selected a " .. unit_type .. " unit: " .. selected_land_unit .. " up to " .. copies .. " copies.")
-            --- Add the selected unit to the force makeup up.
-            for _ = 1, copies do
-                table.insert(force_makeup.units[unit_type], selected_land_unit)
-            end
-        end
-    end
-
-    return force_makeup
-end
-
---- Generates a random force makeup (lord + heroes + units) for the given faction and difficulty.
---- @param difficulty_key string The difficulty key (e.g. "easy", "medium", "hard").
---- @param faction_shorthand_key string A 3-letter faction shorthand.
---- @returns table A force_makeup with lord, heroes, and per-type units arrays populated.
-local function generate_random_force_makeup(difficulty_key, faction_shorthand_key)
-    local max_units = random_range(difficulties[difficulty_key].min_units, difficulties[difficulty_key].max_units)
-    local list_of_allowed_lord_objects = factions_data[faction_shorthand_key].allowed_lords or {}
-    local list_of_allowed_hero_objects = factions_data[faction_shorthand_key].allowed_heroes or {}
-    local force_makeup = {}
-
-    --- Create the initial structure of the force makeup.
-    force_makeup.units = {
-        melee_infantry = {},
-        missile_infantry = {},
-        melee_cavalry = {},
-        missile_cavalry = {},
-        monstrous_infantry = {},
-        monstrous_cavalry = {},
-        war_beast = {},
-        chariot = {},
-        warmachine = {},
-        monster = {},
-        generic = {},
-    }
-    force_makeup.lord = nil
-    force_makeup.heroes = {}
-
-    --- Select a random allowed lord if their origin is enabled. Save the skill overrides for the lord.
-    --- Remember the first vanilla lord seen as a fallback, since vanilla is always loaded and its lords are always valid.
-    local fallback_vanilla_lord = nil
-    for _, lord in ipairs(randomic_shuffle(list_of_allowed_lord_objects)) do
-        if is_origin_enabled(lord.origin) then
-            force_makeup.lord = lord
-            break
-        end
-        if fallback_vanilla_lord == nil and lord.origin == "vanilla" then
-            fallback_vanilla_lord = lord
-        end
-    end
-
-    if not force_makeup.lord then
-        out("DEBUG - A lord was not able to be selected. Selecting a random vanilla lord instead.")
-        force_makeup.lord = fallback_vanilla_lord
-    end
-
-    --- Select a random amount of heroes if their origin is enabled. Save the skill overrides for the heroes.
-    local randomly_selected_heroes = {}
-    local number_of_heroes_to_select = random_range(difficulties[difficulty_key].limits.hero[1], difficulties[difficulty_key].limits.hero[2])
-    for _, hero in pairs(randomic_shuffle(list_of_allowed_hero_objects)) do
-        if #randomly_selected_heroes >= number_of_heroes_to_select then
-            break
-        end
-        if is_origin_enabled(hero.origin) then
-            table.insert(randomly_selected_heroes, hero)
-        end
-    end
-    force_makeup.heroes = randomly_selected_heroes
-
-    --- Get the override limit for melee_infantry and missile_infantry.
-    local override_limit_melee_infantry = random_range(difficulties[difficulty_key].limits.melee_infantry[1], difficulties[difficulty_key].limits.melee_infantry[2])
-    local override_limit_missile_infantry = random_range(difficulties[difficulty_key].limits.missile_infantry[1], difficulties[difficulty_key].limits.missile_infantry[2])
-
-    --- First, randomly select the melee_infantry and missile_infantry units up to the minimum limits.
-    --- Also check if the unit type has available units to select from. If not, then fallback to the other.
-    local initial_count = 0
-    while (#force_makeup.units.melee_infantry < override_limit_melee_infantry) do
-        initial_count = #force_makeup.units.melee_infantry
-        force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", max_units)
-        if #force_makeup.units.melee_infantry == initial_count then
-            break
-        end
-    end
-    while (#force_makeup.units.missile_infantry < override_limit_missile_infantry) do
-        initial_count = #force_makeup.units.missile_infantry
-        force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "missile_infantry", max_units)
-        --- Some factions like vanilla Nurgle have no missile_infantry units at the lower tiers.
-        if #force_makeup.units.missile_infantry == initial_count then
-            print("WARNING - No available units for missile_infantry. Falling back to melee_infantry.")
-            force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, "melee_infantry", max_units)
-            break
-        end
-    end
-
-    --- Loop until either the minimum or maximum number of units is reached.
-    --- Give up after a run of failed picks, since an exhausted pool would otherwise loop forever.
-    local failed_picks = 0
-    local total_units = count_total_units(force_makeup)
-    while total_units < max_units and failed_picks < MAX_CONSECUTIVE_FAILED_UNIT_PICKS do
-        --- Randomly select a unit type to add from the weights.
-        local unit_type = select_weighted_random_unit_type(force_makeup_weights, faction_shorthand_key)
-        force_makeup = get_random_units(difficulty_key, faction_shorthand_key, force_makeup, unit_type, max_units)
-        local new_total_units = count_total_units(force_makeup)
-        failed_picks = new_total_units == total_units and failed_picks + 1 or 0
-        total_units = new_total_units
-    end
-    if failed_picks >= MAX_CONSECUTIVE_FAILED_UNIT_PICKS then
-        out("WARNING - No more units could be added for faction " .. faction_shorthand_key .. ". Stopping at " .. total_units .. " of " .. max_units .. ".")
-    end
-
-    return force_makeup
-end
-
---- Entry point for the force-makeup pipeline. Picks the difficulty branch and returns the generated force makeup.
 --- Returns the current encounter difficulty as one of "easy", "medium", or "hard". Uses the MCT
 --- dropdown unless progressive scaling is enabled, in which case difficulty ramps up by turn.
 --- @returns string The current difficulty key.
@@ -578,29 +236,17 @@ function get_current_difficulty()
     end
 end
 
-
+--- Entry point for the force-makeup pipeline. Builds the army from the difficulty's gold budget and a rolled archetype.
 --- @param difficulty_key string The difficulty key ("easy", "medium", or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
---- @returns table A force_makeup with lord, heroes, and per-type units arrays populated.
+--- @returns table A force_makeup with lord, heroes, per-type units arrays, and the archetype key.
 function start_force_makeup_generation(difficulty_key, faction_shorthand_key)
-    local force_makeup = {}
-    if difficulty_key == "easy" then
-        print("Easy difficulty for random force makeup selected.")
-        force_makeup = generate_random_force_makeup(difficulty_key, faction_shorthand_key)
-    elseif difficulty_key == "medium" then
-        print("Medium difficulty for random force makeup selected.")
-        force_makeup = generate_random_force_makeup(difficulty_key, faction_shorthand_key)
-    else
-        print("Hard difficulty for random force makeup selected.")
-        force_makeup = generate_random_force_makeup(difficulty_key, faction_shorthand_key)
-    end
-
-    return force_makeup
+    return army_generator.generate(difficulty_key, faction_shorthand_key)
 end
 
 --- Converts the raw force makeup into the flat record the InvasionBattleManager + Army constructors expect.
 --- @param difficulty string The difficulty key (used to read level + experience ranges).
---- @param force_makeup table The output of generate_random_force_makeup.
+--- @param force_makeup table The output of start_force_makeup_generation.
 --- @param faction_key string A 3-letter faction shorthand.
 --- @param identifier string A unique force identifier (e.g. "encounter_force").
 --- @param invasion_identifier string A unique invasion identifier (e.g. "encounter_invasion").
@@ -612,6 +258,7 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         identifier = identifier,
         invasion_identifier = invasion_identifier,
         intervention_type = intervention_type,
+        archetype = force_makeup.archetype,
         --- The lord pool is now a flat record. The randomization-only pipeline picks a single
         --- agent_subtype up front and a level within the difficulty's lord_level_range. Names,
         --- ancillaries, and traits are not generated for randomized lords - they default to

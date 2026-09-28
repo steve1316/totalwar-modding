@@ -284,6 +284,8 @@ def dict_to_lua_table(data_dict: Dict, indent: int = 0):
                                     lua_str += f', recruitment_cost={item["recruitment_cost"]}'
                                 if "multiplayer_cost" in item:
                                     lua_str += f', multiplayer_cost={item["multiplayer_cost"]}'
+                                if item.get("is_renown"):
+                                    lua_str += ", is_renown=true"
                                 if "skill_overrides" in item:
                                     lua_str += ", skill_overrides={ " + ", ".join(f'"{skill}"' for skill in item["skill_overrides"]) + " }"
                             else:
@@ -404,13 +406,15 @@ def tsv_to_faction_data(
                 if caste_category in factions_data[faction_value]["units"][tier]:
                     # Lords and heroes are saved into their own lists below. Regular vanilla units must be in the culture's main roster.
                     if caste_category not in ("lord", "hero"):
-                        if roster_groups is None or is_in_main_roster(row["unit"], faction_value, is_renown(row), roster_groups):
+                        renown = is_renown(row)
+                        if roster_groups is None or is_in_main_roster(row["unit"], faction_value, renown, roster_groups):
                             factions_data[faction_value]["units"][tier][caste_category].append(
                                 {
                                     "land_unit": row["land_unit"],
                                     "recruitment_cost": int(row["recruitment_cost"]),
                                     "multiplayer_cost": int(row["multiplayer_cost"]),
                                     "origin": mod["package_name"].replace(".pack", ""),
+                                    "is_renown": renown,
                                 }
                             )
                         elif dropped_units is not None:
