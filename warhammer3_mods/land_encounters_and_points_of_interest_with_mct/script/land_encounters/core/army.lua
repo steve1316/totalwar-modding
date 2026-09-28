@@ -57,6 +57,8 @@ end
 
 local Army = {
     faction = "",
+    --- The army archetype key the generator rolled (e.g. "raiders"), used by battle categories and logging.
+    archetype = "",
     force_identifier = "",
     invasion_identifier = "",
     --- Unit pool / resolved units
@@ -248,6 +250,7 @@ function Army:create_from(force)
         force_identifier = force.identifier,
         invasion_identifier = force.invasion_identifier,
         intervention_type = force.intervention_type,
+        archetype = force.archetype,
         units_pool = force.units,
         units = {},
         unit_experience_amount = force.unit_experience_amount,

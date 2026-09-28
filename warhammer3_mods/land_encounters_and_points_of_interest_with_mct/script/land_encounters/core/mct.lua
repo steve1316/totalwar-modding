@@ -6,6 +6,8 @@
 --- Ensure they are in _G before the table literal below is evaluated.
 require("script/land_encounters/utils/common")
 
+local archetypes = require("script/land_encounters/configs/archetypes")
+
 --- Default settings. The MctInitialized listener overwrites these at first_tick with the user's
 --- finalized MCT option values via set_mct_settings.
 local mct_settings = {
@@ -49,86 +51,44 @@ local mct_settings = {
     ---     "grn",
     ---     "vmp",
     --- },
+    --- Army archetype keys the generator may roll. Filled with every archetype below the table.
+    enabled_archetypes = {},
+    max_unit_copies = 3,
     difficulties = {
         easy = {
-            tiers = {1, 2},
-            min_units = 10,
-            max_units = 13,
+            budget = {6000, 10000},
             unit_experience_amount = {1, 3},
             lord_level_range = {5, 10},
             limits = {
                 hero = {0, 0},
-                melee_infantry = {3, 6},
-                missile_infantry = {0, 3},
-                melee_cavalry = {0, 2},
-                missile_cavalry = {0, 2},
-                monstrous_infantry = {0, 2},
-                monstrous_cavalry = {0, 2},
-                war_beast = {0, 2},
-                chariot = {0, 0},
-                warmachine = {0, 0},
-                monster = {0, 0},
-                generic = {0, 0},
             }
         },
         medium = {
-            tiers = {1, 3},
-            min_units = 14,
-            max_units = 16,
+            budget = {13000, 18000},
             unit_experience_amount = {3, 5},
             lord_level_range = {10, 15},
             limits = {
                 hero = {0, 1},
-                melee_infantry = {3, 5},
-                missile_infantry = {0, 3},
-                melee_cavalry = {0, 2},
-                missile_cavalry = {0, 2},
-                monstrous_infantry = {0, 2},
-                monstrous_cavalry = {0, 2},
-                war_beast = {0, 2},
-                chariot = {0, 1},
-                warmachine = {0, 1},
-                monster = {0, 1},
-                generic = {0, 1},
             }
         },
         hard = {
-            tiers = {1, 5},
-            min_units = 17,
-            max_units = 20,
+            budget = {20000, 30000},
             unit_experience_amount = {5, 7},
             lord_level_range = {15, 20},
             limits = {
                 hero = {0, 2},
-                melee_infantry = {4, 6},
-                missile_infantry = {2, 4},
-                melee_cavalry = {0, 2},
-                missile_cavalry = {0, 2},
-                monstrous_infantry = {0, 2},
-                monstrous_cavalry = {0, 2},
-                war_beast = {0, 2},
-                chariot = {0, 1},
-                warmachine = {0, 1},
-                monster = {0, 1},
-                generic = {0, 1},
             }
         }
     },
     ordered_slider_keys = {
         "hero",
-        "melee_infantry",
-        "missile_infantry",
-        "melee_cavalry",
-        "missile_cavalry",
-        "monstrous_infantry",
-        "monstrous_cavalry",
-        "war_beast",
-        "chariot",
-        "warmachine",
-        "monster",
-        "generic",
     }
 }
+
+--- Enable every army archetype by default.
+for _, archetype in ipairs(archetypes.list) do
+    table.insert(mct_settings.enabled_archetypes, archetype.key)
+end
 
 local encounter_data = {
     {id = 33, text = "Skeleton with treasure on a cliffside 1"},
@@ -399,80 +359,22 @@ function set_mct_settings(mct_mod)
     out("DEBUG - mct_settings.turn_number_from_medium_to_hard: " .. tostring(mct_settings.turn_number_from_medium_to_hard))
     out("DEBUG - mct_settings.enable_all_factions: " .. tostring(mct_settings.enable_all_factions))
 
-    local starting_difficulty_keys = {
-        "min_tier_easy",
-        "max_tier_easy",
-        "min_units_easy",
-        "max_units_easy",
-        "min_limit_hero_easy",
-        "max_limit_hero_easy",
-        "min_unit_experience_amount_easy",
-        "max_unit_experience_amount_easy",
-        "min_lord_level_range_easy",
-        "max_lord_level_range_easy",
-        "min_tier_medium",
-        "max_tier_medium",
-        "min_units_medium",
-        "max_units_medium",
-        "min_limit_hero_medium",
-        "max_limit_hero_medium",
-        "min_unit_experience_amount_medium",
-        "max_unit_experience_amount_medium",
-        "min_lord_level_range_medium",
-        "max_lord_level_range_medium",
-        "min_tier_hard",
-        "max_tier_hard",
-        "min_units_hard",
-        "max_units_hard",
-        "min_limit_hero_hard",
-        "max_limit_hero_hard",
-        "min_unit_experience_amount_hard",
-        "max_unit_experience_amount_hard",
-        "min_lord_level_range_hard",
-        "max_lord_level_range_hard",
-    }
-
-    --- Append every per-limit slider key for each difficulty.
+    --- Read each difficulty's min/max sliders into its ranges. Hero count sliders keep their older min_limit_/max_limit_ keys.
     for _, difficulty in ipairs({"easy", "medium", "hard"}) do
-        for _, key in ipairs(mct_settings.ordered_slider_keys) do
-            table.insert(starting_difficulty_keys, "min_limit_" .. key .. "_" .. difficulty)
-            table.insert(starting_difficulty_keys, "max_limit_" .. key .. "_" .. difficulty)
+        local settings = mct_settings.difficulties[difficulty]
+        for _, field in ipairs({"budget", "unit_experience_amount", "lord_level_range"}) do
+            settings[field][1] = mct_mod:get_option_by_key("min_" .. field .. "_" .. difficulty):get_finalized_setting()
+            settings[field][2] = mct_mod:get_option_by_key("max_" .. field .. "_" .. difficulty):get_finalized_setting()
         end
-    end
-
-    --- Read each slider's finalized value and write it into the matching difficulties table entry.
-    for _, limit_key in ipairs(starting_difficulty_keys) do
-        local difficulty = limit_key:match("_(%a+)$")
-        local key = limit_key:match("^(.-)_" .. difficulty .. "$")
-        local value = mct_mod:get_option_by_key(limit_key):get_finalized_setting()
-        if key == "min_tier" then
-            mct_settings.difficulties[difficulty].tiers[1] = value
-        elseif key == "max_tier" then
-            mct_settings.difficulties[difficulty].tiers[2] = value
-        elseif key == "min_units" then
-            mct_settings.difficulties[difficulty].min_units = value
-        elseif key == "max_units" then
-            mct_settings.difficulties[difficulty].max_units = value
-        elseif key == "min_unit_experience_amount" then
-            mct_settings.difficulties[difficulty].unit_experience_amount[1] = value
-        elseif key == "max_unit_experience_amount" then
-            mct_settings.difficulties[difficulty].unit_experience_amount[2] = value
-        elseif key == "min_lord_level_range" then
-            mct_settings.difficulties[difficulty].lord_level_range[1] = value
-        elseif key == "max_lord_level_range" then
-            mct_settings.difficulties[difficulty].lord_level_range[2] = value
-        else
-            --- Lua patterns have no alternation, so capture the min/max bound and the limit name in one match.
-            local bound, new_key = key:match("^(m%a%a)_limit_(.+)$")
-            if bound then
-                mct_settings.difficulties[difficulty].limits[new_key][bound == "min" and 1 or 2] = value
-            end
+        for _, limit_key in ipairs(mct_settings.ordered_slider_keys) do
+            settings.limits[limit_key][1] = mct_mod:get_option_by_key("min_limit_" .. limit_key .. "_" .. difficulty):get_finalized_setting()
+            settings.limits[limit_key][2] = mct_mod:get_option_by_key("max_limit_" .. limit_key .. "_" .. difficulty):get_finalized_setting()
         end
     end
 
     --- Swap any min/max pair the player set backwards, since a reversed range breaks the random rolls.
     for _, settings in pairs(mct_settings.difficulties) do
-        local ranges = { settings.tiers, settings.unit_experience_amount, settings.lord_level_range }
+        local ranges = { settings.budget, settings.unit_experience_amount, settings.lord_level_range }
         for _, limit in pairs(settings.limits) do
             table.insert(ranges, limit)
         end
@@ -481,10 +383,16 @@ function set_mct_settings(mct_mod)
                 range[1], range[2] = range[2], range[1]
             end
         end
-        if settings.min_units > settings.max_units then
-            settings.min_units, settings.max_units = settings.max_units, settings.min_units
+    end
+
+    --- Collect every enabled army archetype. The generator falls back to Battle line if none are enabled.
+    mct_settings.enabled_archetypes = {}
+    for _, archetype in ipairs(archetypes.list) do
+        if mct_mod:get_option_by_key("archetype_" .. archetype.key):get_finalized_setting() then
+            table.insert(mct_settings.enabled_archetypes, archetype.key)
         end
     end
+    mct_settings.max_unit_copies = mct_mod:get_option_by_key("max_unit_copies"):get_finalized_setting()
 
     --- Collect every encounter skin id whose checkbox is enabled.
     mct_settings.enabled_encounter_skin_ids = {}
