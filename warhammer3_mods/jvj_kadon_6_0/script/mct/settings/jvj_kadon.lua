@@ -90,7 +90,7 @@ local function add_starting_creature_dropdown()
     end
     table.sort(sorted, function(a, b) return a.name < b.name end)
     for _, creature in ipairs(sorted) do
-        option:add_dropdown_value(creature.id, creature.name, "")
+        option:add_dropdown_value(creature.id, creatures.label(creature), "")
     end
     option:set_assigned_section("drops_section")
 end
@@ -191,7 +191,7 @@ add_spacer("scroll_types_spacer", "scroll_types_section")
 add_section("creatures_section", "Creatures", "Disabled creatures never drop. Takes effect on the next drop.")
 add_checkbox("enable_all_creatures", "creatures_section", "Enable all creatures", "When on, every creature can drop and the individual toggles below are locked.")
 for _, creature in ipairs(creatures.list) do
-    add_checkbox(settings.creature_option_key(creature.id), "creatures_section", creature.name, nil, true)
+    add_checkbox(settings.creature_option_key(creature.id), "creatures_section", creatures.label(creature), nil, true)
 end
 add_spacer("creatures_spacer", "creatures_section")
 

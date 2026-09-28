@@ -116,7 +116,7 @@ h.test("option keys and defaults match the settings module", function()
         local option = mod.options[settings.creature_option_key(creature.id)]
         h.truthy(option, creature.id .. " toggle exists")
         h.eq(option.default, true, creature.id .. " default")
-        h.eq(option.text, creature.name, creature.id .. " text")
+        h.eq(option.text, creatures.label(creature), creature.id .. " text")
         expected = expected + 1
     end
     h.eq(#mod.order, expected + 3, "no extra options besides the three spacers")
@@ -190,6 +190,11 @@ h.test("starting creature dropdown lists (Random) then creatures by name", funct
     h.eq(option.values[1].key, "random", "first key")
     h.eq(option.values[1].text, "(Random)", "first text")
     h.eq(#option.values, #creatures.list + 1, "value count")
+    local labels = {}
+    for _, creature in ipairs(creatures.list) do labels[creatures.label(creature)] = true end
+    for i = 2, #option.values do
+        h.truthy(labels[option.values[i].text], option.values[i].text .. " is a tagged creature label")
+    end
     for i = 3, #option.values do
         h.truthy(option.values[i - 1].text < option.values[i].text, option.values[i - 1].text .. " before " .. option.values[i].text)
     end
