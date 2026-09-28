@@ -5,13 +5,13 @@ event_feed_strings_text_subtitle_event_land_enc_and_poi_encountered	Opportunity 
 event_feed_strings_text_description_event_land_enc_and_poi_encountered	Your army has spotted something in the surrounding area that may have been of interest to you, but you were marching too fast to have time to see what it was. Switch to default stance before returning to the location to take a closer look.	false
 event_feed_strings_text_title_event_land_enc_smithy_encountered	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_encountered	Smithy Missed	false
-event_feed_strings_text_description_event_land_enc_smithy_encountered	We have passed by a smithy while fast travelling. Perharps we should see what it holds?	false
+event_feed_strings_text_description_event_land_enc_smithy_encountered	We passed a smithy without stopping. Perhaps a lord should come back to see what it holds.	false
 event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown	The Master Blacksmith Is Preparing...	false
 event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown	The master blacksmith cannot receive us right now. He is preparing the next set of equipments for the benefit of our kingdoms. He will warn us when he is finished.	false
 event_feed_strings_text_title_event_land_enc_smithy_visit_available	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_available	The Master Blacksmith Is Ready To Receive You	false
-event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends his regards. He says to send a lord so he can choose from a set of masterpieces for our lord when possible. It would be ideal to attend to your suggestion.	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends word that the forge is ready again. Send a lord to the smithy to choose from his new work.	false
 event_feed_strings_text_title_event_land_enc_smithy_default_occupation	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_default_occupation	Smithy Occupied	false
 event_feed_strings_text_description_event_land_enc_smithy_default_occupation	We have occupied this abandoned blacksmith shop that has ample capacity, tools and structures that allow creations of excellent quality. A new master smith of our kingdom has been assigned to produce with the artisans under his command and defend the smithy with the detachment that we have assigned to him. May it produce the best for the kingdom.	false
@@ -29,10 +29,10 @@ event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_reclaimed	Sm
 event_feed_strings_text_description_event_land_enc_smithy_successfully_reclaimed	The enemy army routed, their master blacksmith killed with most of his disciples. We occupy the well equipped smithy with our own master blacksmith and assign a detachment of soldiers to protect him and his disciples. They will start sending tributes whenever they can. We can also visit them for special gifts from time to time. Everything for the good of the kingdom!	false
 event_feed_strings_text_title_event_land_enc_smithy_reclaimed_repelled	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_reclaimed_repelled	Enemy Defended Smithy	false
-event_feed_strings_text_description_event_land_enc_smithy_reclaimed_repelled	Surprisingly the hammers have been stronger than our army weapons.  We really should take  the smithy after having been routed by it. It is a testament of its importance for our kingdom.	false
+event_feed_strings_text_description_event_land_enc_smithy_reclaimed_repelled	Our army has been driven back from the smithy. Its defenders held the forge this time, but a smithy guarded so fiercely is worth taking. We should return with a stronger force.	false
 event_feed_strings_text_title_event_land_enc_smithy_successfully_defended	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_defended	Smithy Defended	false
-event_feed_strings_text_description_event_land_enc_smithy_successfully_defended	Blacksmith hammers along with more conventional weapons are filled with blood on the plain. The enemy is scared of both tools and weapons. They run without looking towards the smithy, that stands tall like a lord's castle overlooking it's domain. We have won to create another day!	false
+event_feed_strings_text_description_event_land_enc_smithy_successfully_defended	Hammers and blades alike lie red on the field. The enemy broke and fled, and the smithy still stands over its lands like a lord's keep. The forge will work another day.	false
 event_feed_strings_text_title_event_land_enc_smithy_lost	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_lost	Smithy Lost	false
 event_feed_strings_text_description_event_land_enc_smithy_lost	We lost control of the smithy. We were able to save the master blacksmith and part of his disciples, but we were unable to maintain control of the smithy, losing both the tribute and the opportunity to make official visits. As soon as we can recapture it we should do it.	false
