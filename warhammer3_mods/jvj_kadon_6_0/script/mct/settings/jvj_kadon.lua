@@ -152,10 +152,10 @@ local function sync_scroll_type_locks()
     end
 end
 
---- Locks every creature checkbox while "Enable all creatures" is checked.
---- @param enable_all boolean Live value of the `enable_all_creatures` checkbox.
-local function sync_creature_locks(enable_all)
+--- Locks each creature checkbox while the "Enable all creatures" checkbox covering its game is checked.
+local function sync_creature_locks()
     for _, creature in ipairs(creatures.list) do
+        local enable_all = mct_mod:get_option_by_key(settings.enable_all_key(creature.game)):get_selected_setting()
         mct_mod:get_option_by_key(settings.creature_option_key(creature.id)):set_locked(enable_all == true)
     end
 end
@@ -214,7 +214,11 @@ for _, game in ipairs(GAMES) do
     local section = creature_section_key(game)
     add_section(section, "Creatures - " .. game, game == "Original" and "Disabled creatures never drop. Takes effect on the next drop." or nil)
     if game == "Original" then
-        add_checkbox("enable_all_creatures", section, "Enable all creatures", "When on, every creature can drop and the individual toggles below are locked.")
+        add_checkbox("enable_all_creatures", section, "Enable all creatures (Original)",
+            "When on, every Original creature can drop and their individual toggles are locked.")
+    elseif game == "WH1" then
+        add_checkbox("enable_all_vanilla_creatures", section, "Enable all creatures (Vanilla + DLC)",
+            "When on, every WH1, WH2 and WH3 creature can drop and their individual toggles are locked.")
     end
     for _, creature in ipairs(sorted_creatures) do
         if creature.game == game then
@@ -240,15 +244,15 @@ core:add_listener(
     true
 )
 
---- Reads the live UI value via `context:setting()`, because `get_finalized_setting()` is not updated until the panel closes.
+--- Reads live UI values via `get_selected_setting()`, because `get_finalized_setting()` is not updated until the panel closes.
 core:add_listener(
     "jvj_kadon_creature_locks",
     "MctOptionSelectedSettingSet",
     function(context)
-        return is_own_option(context, { "enable_all_creatures" })
+        return is_own_option(context, { "enable_all_creatures", "enable_all_vanilla_creatures" })
     end,
-    function(context)
-        sync_creature_locks(context:setting())
+    function()
+        sync_creature_locks()
     end,
     true
 )
@@ -272,12 +276,12 @@ core:add_listener(
     true,
     function()
         sync_scroll_type_locks()
-        sync_creature_locks(mct_mod:get_option_by_key("enable_all_creatures"):get_selected_setting())
+        sync_creature_locks()
         sync_starting_creature_lock(mct_mod:get_option_by_key("starting_scroll"):get_selected_setting())
     end,
     true
 )
 
 sync_scroll_type_locks()
-sync_creature_locks(mct_mod:get_option_by_key("enable_all_creatures"):get_selected_setting())
+sync_creature_locks()
 sync_starting_creature_lock(mct_mod:get_option_by_key("starting_scroll"):get_selected_setting())

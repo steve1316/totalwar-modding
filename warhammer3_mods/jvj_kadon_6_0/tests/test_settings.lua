@@ -28,7 +28,8 @@ h.test("defaults after reset", function()
     h.eq(settings.values.starting_scroll_creature, "random", "starting scroll creature")
     h.eq(settings.values.allow_kin, true, "allow kin")
     h.eq(settings.values.allow_bind, true, "allow bind")
-    h.eq(settings.values.enable_all_creatures, true, "enable all")
+    h.eq(settings.values.enable_all_creatures, true, "enable all original")
+    h.eq(settings.values.enable_all_vanilla_creatures, true, "enable all vanilla")
     for _, creature in ipairs(creatures.list) do
         h.eq(settings.values.enabled_creatures[creature.id], true, creature.id)
     end
@@ -38,11 +39,19 @@ h.test("creature option key", function()
     h.eq(settings.creature_option_key("giant"), "creature_giant", "key")
 end)
 
+h.test("enable all key splits Original from vanilla and DLC", function()
+    h.eq(settings.enable_all_key("Original"), "enable_all_creatures", "original")
+    for _, game in ipairs({ "WH1", "WH2", "WH3" }) do
+        h.eq(settings.enable_all_key(game), "enable_all_vanilla_creatures", game)
+    end
+end)
+
 h.test("load_from_mct copies finalized values", function()
     settings.reset()
     local values = {
         battle_drop_chance = 25, mission_drop_chance = 0, ai_can_find_scrolls = false, no_duplicate_scrolls = true,
         starting_scroll = true, allow_kin = false, allow_bind = true, enable_all_creatures = false,
+        enable_all_vanilla_creatures = false,
     }
     for _, creature in ipairs(creatures.list) do
         values[settings.creature_option_key(creature.id)] = creature.id ~= "giant"
@@ -52,7 +61,8 @@ h.test("load_from_mct copies finalized values", function()
     h.eq(settings.values.mission_drop_chance, 0, "mission chance")
     h.eq(settings.values.ai_can_find_scrolls, false, "ai")
     h.eq(settings.values.allow_kin, false, "allow kin")
-    h.eq(settings.values.enable_all_creatures, false, "enable all")
+    h.eq(settings.values.enable_all_creatures, false, "enable all original")
+    h.eq(settings.values.enable_all_vanilla_creatures, false, "enable all vanilla")
     h.eq(settings.values.enabled_creatures.giant, false, "giant")
     h.eq(settings.values.enabled_creatures.carnosaur, true, "carnosaur")
 end)

@@ -64,7 +64,7 @@ end)
 h.test("disabled creature is never a candidate", function()
     h.install_game_stubs()
     settings.reset()
-    settings.values.enable_all_creatures = false
+    settings.values.enable_all_vanilla_creatures = false
     settings.values.enabled_creatures.carnosaur = false
     local keys = pool_keys(drops.candidates(h.fake_faction()))
     h.eq(#drops.candidates(h.fake_faction()), #creatures.list - 1, "creatures in pool")
@@ -76,7 +76,23 @@ h.test("enable all creatures overrides individual toggles", function()
     h.install_game_stubs()
     settings.reset()
     settings.values.enabled_creatures.carnosaur = false
+    settings.values.enabled_creatures.unicorn = false
     h.eq(#drops.candidates(h.fake_faction()), #creatures.list, "creatures in pool")
+end)
+
+h.test("each enable all toggle only covers its own creatures", function()
+    h.install_game_stubs()
+    local originals = 0
+    for _, creature in ipairs(creatures.list) do
+        if creature.game == "Original" then originals = originals + 1 end
+    end
+    settings.reset()
+    for id in pairs(settings.values.enabled_creatures) do settings.values.enabled_creatures[id] = false end
+    settings.values.enable_all_creatures = false
+    h.eq(#drops.candidates(h.fake_faction()), #creatures.list - originals, "only vanilla and DLC with the Original toggle off")
+    settings.values.enable_all_creatures = true
+    settings.values.enable_all_vanilla_creatures = false
+    h.eq(#drops.candidates(h.fake_faction()), originals, "only Original with the vanilla toggle off")
 end)
 
 h.test("kin only and bind only", function()
@@ -134,6 +150,7 @@ h.test("award skips cleanly when nothing is allowed", function()
     local stubs = h.install_game_stubs()
     settings.reset()
     settings.values.enable_all_creatures = false
+    settings.values.enable_all_vanilla_creatures = false
     for id in pairs(settings.values.enabled_creatures) do settings.values.enabled_creatures[id] = false end
     h.eq(drops.award_scroll(h.fake_faction(), "battle"), nil, "nothing picked")
     h.eq(#stubs.added, 0, "nothing added")
@@ -258,7 +275,7 @@ h.test("chosen starting creature ignores creature toggles but keeps type toggles
     settings.reset()
     settings.values.starting_scroll = true
     settings.values.starting_scroll_creature = "giant"
-    settings.values.enable_all_creatures = false
+    settings.values.enable_all_vanilla_creatures = false
     settings.values.enabled_creatures.giant = false
     settings.values.allow_bind = false
     stubs.human = { "p1" }

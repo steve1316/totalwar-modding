@@ -232,6 +232,13 @@ h.test("creatures are divided into one section per game, each sorted by name", f
         end
     end
     h.eq(first_in_original, "enable_all_creatures", "enable all leads the Original section")
+    local first_in_wh1
+    for _, key in ipairs(mod.order) do
+        if mod.options[key].section == "creatures_wh1_section" then first_in_wh1 = key; break end
+    end
+    h.eq(first_in_wh1, "enable_all_vanilla_creatures", "vanilla enable all leads the WH1 section")
+    h.eq(mod.options.enable_all_creatures.text, "Enable all creatures (Original)", "original label")
+    h.eq(mod.options.enable_all_vanilla_creatures.text, "Enable all creatures (Vanilla + DLC)", "vanilla label")
 end)
 
 h.test("scroll type lock follows toggles", function()
@@ -245,22 +252,30 @@ h.test("scroll type lock follows toggles", function()
     h.eq(mod.options.allow_bind.locked, false, "bind unlocked again")
 end)
 
-h.test("creature toggles lock while enable all is on", function()
+h.test("each enable all toggle only locks its own creatures", function()
     local mod, stubs = load_anchor()
     local giant = mod.options[settings.creature_option_key("giant")]
-    h.eq(giant.locked, true, "locked by default")
+    local unicorn = mod.options[settings.creature_option_key("unicorn")]
+    h.eq(giant.locked, true, "giant locked by default")
+    h.eq(unicorn.locked, true, "unicorn locked by default")
+    select_setting(stubs, mod.options.enable_all_vanilla_creatures, false)
+    h.eq(giant.locked, false, "giant unlocked when vanilla master off")
+    h.eq(unicorn.locked, true, "unicorn stays locked")
     select_setting(stubs, mod.options.enable_all_creatures, false)
-    h.eq(giant.locked, false, "unlocked when master off")
-    select_setting(stubs, mod.options.enable_all_creatures, true)
-    h.eq(giant.locked, true, "locked again")
+    h.eq(unicorn.locked, false, "unicorn unlocked when original master off")
+    select_setting(stubs, mod.options.enable_all_vanilla_creatures, true)
+    h.eq(giant.locked, true, "giant locked again")
+    h.eq(unicorn.locked, false, "unicorn stays unlocked")
 end)
 
 h.test("panel open resyncs creature locks", function()
     local mod, stubs = load_anchor()
     local giant = mod.options[settings.creature_option_key("giant")]
-    mod.options.enable_all_creatures.selected = false
+    local unicorn = mod.options[settings.creature_option_key("unicorn")]
+    mod.options.enable_all_vanilla_creatures.selected = false
     open_panel(stubs)
-    h.eq(giant.locked, false, "unlocked after reopening with master off")
+    h.eq(giant.locked, false, "giant unlocked after reopening with vanilla master off")
+    h.eq(unicorn.locked, true, "unicorn still locked")
     mod.options.allow_bind.selected = false
     open_panel(stubs)
     h.eq(mod.options.allow_kin.locked, true, "kin locked after reopening with bind off")
