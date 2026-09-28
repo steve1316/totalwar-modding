@@ -3,7 +3,7 @@ local caps = {
     -- wh2_main_lzd
     {"lzd_pachy_0", "special", 1},
     {"lzd_raptor_0", "core"},
-    {"lzd_styracosaur", "rare", 2},
+    {"lzd_styracosaur", "special", 2},
     -- wh3_main_cth
     {"cth_golden_heron", "rare", 3},
     {"cth_golden_heron_upgraded", "rare", 3},
@@ -12,14 +12,14 @@ local caps = {
     {"cth_marines_ror", "special", 1},
     {"cth_ronin", "special", 1},
     {"cth_sam", "special", 1},
-    {"cth_whalers", "rare", 1},
+    {"cth_whalers", "special", 2},
     {"cth_wokou", "core"},
-    {"cth_wokou_cannon", "rare", 1},
+    {"cth_wokou_cannon", "special", 2},
     {"cth_wokou_ds", "core"},
     {"cth_wokou_guns", "core"},
     {"cth_wokou_spears", "core"},
     {"cth_yicha_fghter", "special", 1},
-    {"npn_ansatsu", "special", 1},
+    {"npn_ansatsu", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

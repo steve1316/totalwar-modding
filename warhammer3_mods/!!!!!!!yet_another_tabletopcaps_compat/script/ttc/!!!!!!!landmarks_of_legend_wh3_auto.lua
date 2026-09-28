@@ -2,7 +2,7 @@
 local caps = {
     -- AK_kraka
     {"gutbusters_gutbusters", "rare", 2},
-    {"twelve_arms_assassins", "special", 1},
+    {"twelve_arms_assassins", "core"},
     -- borders
     {"HUM_miners_0", "core"},
     {"HUM_miners_1", "core"},
@@ -10,18 +10,18 @@ local caps = {
     {"colonial_militia", "core"},
     {"dalmark_gunners", "special", 1},
     {"dalmark_militia", "core"},
-    {"freebooters", "rare", 1},
+    {"freebooters", "special", 1},
     {"garrison_cth_peasant_spearmen_1", "core"},
     {"seafarers", "special", 1},
     -- hol_vmp_group_koros
-    {"cuileux_knights", "special", 1},
+    {"cuileux_knights", "rare", 1},
     {"damned_grail_knights", "special", 2},
     {"dec_inq_lahmian", "special", 1},
-    {"ethereal_tsar_guard", "special", 1},
+    {"ethereal_tsar_guard", "rare", 1},
     {"ghost_swordsmen", "core"},
     {"lahmian_ror", "special", 1},
-    {"red_abbey_monks", "core"},
-    {"undead_ogre", "special", 2},
+    {"red_abbey_monks", "special", 1},
+    {"undead_ogre", "special", 1},
     {"undead_streltsi", "core"},
     {"undead_tzar_guard", "special", 1},
     {"vmp_bearded_skull_miners", "core"},
@@ -30,7 +30,7 @@ local caps = {
     {"vmp_jade_warriors_0", "core"},
     {"vmp_jade_warriors_1", "core"},
     -- mixu_mousillon
-    {"vmp_depth_guard_0", "special", 2},
+    {"vmp_depth_guard_0", "special", 1},
     {"vmp_depth_guard_1", "special", 2},
     {"vmp_swordsmen", "core"},
     -- mixu_skaeling
@@ -56,12 +56,12 @@ local caps = {
     {"def_shadow_walkers", "special", 2},
     {"def_wardancers_0", "special", 1},
     {"def_wardancers_1", "special", 1},
-    {"imperial_dragon", "rare", 2},
+    {"imperial_dragon", "rare", 3},
     {"raema_beast", "rare", 3},
     -- wh2_main_hef
     {"hef_eonir_stags", "special", 1},
     {"hef_free_company", "core"},
-    {"hef_honour_guard", "rare", 1},
+    {"hef_honour_guard", "special", 2},
     {"hef_laurelorn_spears", "core"},
     {"mother_flame", "rare", 2},
     {"phoenix_riders", "special", 2},
@@ -86,15 +86,15 @@ local caps = {
     {"mortar_salvaged", "rare", 2},
     {"treecherik_clanrats", "core"},
     {"volley_gun_salvaged", "rare", 2},
-    -- wh3_dlc20_group_chs_festus
-    {"children_of_doom", "special", 1},
+    -- wh3_dlc20_group_chs_festus_glottkin
+    {"children_of_doom", "special", 2},
     {"nur_nurgle_devotees", "core"},
     {"ruin_trolls", "special", 2},
     -- wh3_dlc25_group_elspeth
     {"emp_ancient_stegadon", "rare", 3},
     {"emp_carnosaur_0", "rare", 2},
     {"emp_chameleon_skinks_0", "special", 1},
-    {"emp_chameleon_stalkers_0", "rare", 1},
+    {"emp_chameleon_stalkers_0", "special", 1},
     {"emp_cold_ones_1", "special", 1},
     {"emp_gryphon_legion", "special", 2},
     {"emp_ice_guard_1", "rare", 1},
@@ -109,6 +109,9 @@ local caps = {
     {"wlc_guard", "special", 2},
     -- wh3_dlc25_nur_tamurkhan
     {"nur_lepers", "special", 1},
+    -- wh3_dlc29_nag_group_undead_legions
+    {"vmp_greastswords", "special", 1},
+    {"vmp_reiksguard", "special", 2},
     -- wh3_main_cth
     {"cathay_ogres", "core"},
     -- wh3_main_dae
@@ -124,13 +127,13 @@ local caps = {
     {"def_minotaurs", "special", 2},
     -- wh3_main_group_belakor
     {"bst_giant_spider", "special", 1},
-    {"shadowgor", "core"},
+    {"shadowgor", "special", 1},
     {"shadowgor_bestigor", "special", 1},
     -- wh3_main_ksl
     {"brother_bears", "special", 2},
     {"brotherhood_ranger_templars", "special", 1},
     {"dolgan_warriors", "rare", 1},
-    {"ksl_acolytes", "core"},
+    {"ksl_acolytes", "special", 1},
     {"ksl_dryads", "core"},
     {"ksl_glade_riders", "core"},
     {"ksl_great_cannon", "special", 2},
@@ -149,23 +152,20 @@ local caps = {
     {"lakemen_great_weapons", "rare", 1},
     {"ymir", "special", 2},
     -- wh_dlc05_group_wood_elves
-    {"dragonling_pack", "rare", 1},
+    {"dragonling_pack", "special", 1},
     {"wef_flamespyre", "rare", 1},
     {"wef_hydra", "rare", 2},
     {"worldroot_serpent", "rare", 3},
     -- wh_main_group_bretonnia
     {"sir_baldrin_reliquae", "rare", 1},
     -- wh_main_group_dwarfs
-    {"azul_guard", "core"},
+    {"azul_guard", "special", 1},
     {"bearded_skull_miners", "special", 1},
     {"sons_of_gunnisson", "special", 1},
     -- wh_main_group_greenskins
     {"blorgar", "rare", 3},
     {"blue_orc", "core"},
     {"feral_arachnarok", "rare", 2},
-    -- wh_main_group_vampire_counts
-    {"vmp_greastswords", "special", 1},
-    {"vmp_reiksguard", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

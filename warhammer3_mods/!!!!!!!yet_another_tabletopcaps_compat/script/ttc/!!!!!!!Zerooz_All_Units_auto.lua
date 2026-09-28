@@ -2,6 +2,9 @@
 local caps = {
     -- wh3_dlc25_group_elspeth
     {"emp_inf_deaths_heads", "core"},
+    -- wh_dlc03_group_beastmen
+    {"bst_cav_doom_tzaangors", "special", 2},
+    {"bst_cav_doom_tzaangors_archer", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

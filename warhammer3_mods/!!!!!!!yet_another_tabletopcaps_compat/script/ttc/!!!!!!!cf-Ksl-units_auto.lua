@@ -2,7 +2,7 @@
 local caps = {
     -- wh3_main_ksl
     {"cf_kislevite_warrior_horse", "core"},
-    {"cf_ungol_brute", "special", 2},
+    {"cf_ungol_brute", "rare", 1},
     {"cf_ungol_horse_raiders", "core"},
 }
 

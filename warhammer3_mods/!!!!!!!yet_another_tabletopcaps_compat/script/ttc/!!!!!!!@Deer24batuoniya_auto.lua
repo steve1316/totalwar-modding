@@ -3,8 +3,8 @@ local caps = {
     -- wh_main_group_bretonnia
     {"BJQS", "special", 2},
     {"BJQS_RIDER", "special", 2},
-    {"BT", "core"},
-    {"BT1", "special", 1},
+    {"BT", "special", 1},
+    {"BT1", "core"},
     {"BTCGS", "special", 1},
     {"CBWD", "special", 1},
     {"CBWD1", "special", 1},

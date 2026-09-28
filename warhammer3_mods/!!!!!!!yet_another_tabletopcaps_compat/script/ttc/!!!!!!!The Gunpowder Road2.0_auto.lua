@@ -9,7 +9,7 @@ local caps = {
     {"wh3_main_cth_inf_niaochong_gunners_0", "core"},
     {"wh3_main_cth_inf_peasant_huochong_0", "core"},
     {"wh3_main_cth_inf_sanjieshenji_gunners_0", "special", 1},
-    {"wh3_main_cth_inf_xunleichong_0", "special", 2},
+    {"wh3_main_cth_inf_xunleichong_0", "rare", 1},
     {"wh3_main_cth_juma", "core"},
     {"wh3_main_cth_juma_dunpai", "core"},
     {"wh3_main_cth_juma_mu", "core"},

@@ -2,9 +2,9 @@
 local caps = {
     -- wh2_main_lzd
     {"roy_lzd_cav_skink_cold_one_riders", "rare", 1},
-    {"roy_lzd_cav_skink_horned_one_riders", "special", 1},
-    {"roy_lzd_cav_skink_horned_one_riders_nakai", "special", 1},
-    {"roy_lzd_cav_terradons_wing_of_sotek", "rare", 1},
+    {"roy_lzd_cav_skink_horned_one_riders", "special", 2},
+    {"roy_lzd_cav_skink_horned_one_riders_nakai", "special", 2},
+    {"roy_lzd_cav_terradons_wing_of_sotek", "special", 1},
     {"roy_lzd_inf_saurus_of_sotek", "special", 1},
     {"roy_lzd_inf_saurus_of_sotek_nakai", "special", 1},
     {"roy_lzd_inf_skink_red_crests", "core"},
@@ -16,8 +16,8 @@ local caps = {
     {"roy_lzd_inf_skink_red_crests_elite_nakai", "core"},
     {"roy_lzd_inf_skink_red_crests_skirmishers", "core"},
     {"roy_lzd_inf_skink_red_crests_spears", "core"},
-    {"roy_lzd_inf_skink_sotek_cultists", "special", 1},
-    {"roy_lzd_inf_skink_sotek_cultists_nakai", "special", 1},
+    {"roy_lzd_inf_skink_sotek_cultists", "core"},
+    {"roy_lzd_inf_skink_sotek_cultists_nakai", "core"},
     {"roy_lzd_inf_skink_temple_guard_of_sotek", "special", 1},
     {"roy_lzd_inf_skink_temple_guard_of_sotek_nakai", "special", 1},
     {"roy_lzd_inf_skink_verminbane_cohort", "special", 1},

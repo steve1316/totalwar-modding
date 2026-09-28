@@ -5,7 +5,7 @@ local caps = {
     {"ogr_feral_mammoth", "rare", 2},
     {"ogr_stonehorn_cannon", "rare", 3},
     {"ogre_bomber", "special", 1},
-    {"ogre_gatebusters", "special", 2},
+    {"ogre_gatebusters", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

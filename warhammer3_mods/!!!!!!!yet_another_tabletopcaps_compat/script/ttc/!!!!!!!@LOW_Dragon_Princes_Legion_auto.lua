@@ -10,7 +10,7 @@ local caps = {
     {"low_hef_inf_dragon_legion_archers_0", "special", 1},
     {"low_hef_inf_dragon_legion_archers_shielded_0", "special", 1},
     {"low_hef_inf_dragon_legion_corsairs_arbalests_01", "special", 1},
-    {"low_hef_inf_dragon_legion_corsairs_crossbow_shield_01", "special", 2},
+    {"low_hef_inf_dragon_legion_corsairs_crossbow_shield_01", "special", 1},
     {"low_hef_inf_dragon_legion_corsairs_dual_swords_01", "special", 1},
     {"low_hef_inf_dragon_legion_corsairs_handbows_01", "special", 1},
     {"low_hef_inf_dragon_legion_dragon_guard_0", "special", 2},

@@ -6,7 +6,7 @@ local caps = {
     {"YL_hytj", "special", 2},
     {"YL_lycs", "special", 1},
     {"YL_lysw", "rare", 1},
-    {"YL_pjcw", "rare", 2},
+    {"YL_pjcw", "special", 2},
     {"YL_sxdw", "special", 2},
     {"YL_xtw", "special", 1},
     {"YL_yhcf", "rare", 3},
