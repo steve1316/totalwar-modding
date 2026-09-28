@@ -1,4 +1,4 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_missions.loc		
-missions_localised_description_land_enc_mission_smithy_kislev_wyrm_killer	(placeholder - duplicates the key in land_enc_and_poi_missions.loc; delete this file or row)	true
+missions_localised_description_land_enc_mission_smithy_kislev_wyrm_killer	Bla bla bla	true
 missions_localised_title_land_enc_mission_smithy_kislev_wyrm_killer	Wyrm Killer Set	true

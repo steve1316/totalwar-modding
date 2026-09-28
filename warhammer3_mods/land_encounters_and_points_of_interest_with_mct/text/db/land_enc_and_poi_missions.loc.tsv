@@ -1,10 +1,10 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_missions.loc		
-missions_localised_description_land_enc_mission_smithy_kislev_ursire	(placeholder - Kislev missions disabled; write text or remove row)	false
+missions_localised_description_land_enc_mission_smithy_kislev_ursire	PLACEHOLDER	false
 missions_localised_title_land_enc_mission_smithy_kislev_ursire	The Ursire Set	false
-missions_localised_description_land_enc_mission_smithy_kislev_wyrm_killer	(placeholder - Kislev disabled; the mission key is land_enc_mission_smithy_kislev_wyrm_hunter, so the wyrm_killer loc rows are orphaned)	false
+missions_localised_description_land_enc_mission_smithy_kislev_wyrm_killer	PLACEHOLDER	false
 missions_localised_title_land_enc_mission_smithy_kislev_wyrm_killer	Wyrm Killer Set	false
-missions_localised_description_land_enc_mission_smithy_kislev_dazhs_brazier	(placeholder - Kislev missions disabled; write text or remove row)	false
+missions_localised_description_land_enc_mission_smithy_kislev_dazhs_brazier	PLACEHOLDER	false
 missions_localised_title_land_enc_mission_smithy_kislev_dazhs_brazier	The Eternal Brazier	false
 missions_localised_description_land_enc_mission_smithy_dark_elves_armour_of_living_death	The blacksmith has sent some strange armour to our quartermaster. It seems to breathe softly, and when someone comes close it stirs and sniffs at them. The blacksmith says that to complete it, we must bathe it in the blood of many enemies. We should fulfil his request on our journey, my lord. Perhaps it will prove useful to us.	false
 missions_localised_title_land_enc_mission_smithy_dark_elves_armour_of_living_death	Giving Life To The Armour	false
