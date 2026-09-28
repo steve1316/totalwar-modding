@@ -2,16 +2,16 @@
 local caps = {
     -- wh2_main_skv
     {"cr_skv_mon_aberrations_0", "special", 1},
-    {"cr_skv_mon_armoured_rat_ogre_0", "special", 2},
-    {"cr_skv_mon_burrowing_behemoth_0", "special", 2},
+    {"cr_skv_mon_armoured_rat_ogre_0", "special", 1},
+    {"cr_skv_mon_burrowing_behemoth_0", "rare", 2},
     {"cr_skv_mon_chimaerat_0", "rare", 3},
     {"cr_skv_mon_giant_rats_0", "core"},
     {"cr_skv_mon_stormfiend_0", "rare", 2},
-    {"cr_skv_mon_stormfiend_1", "rare", 1},
+    {"cr_skv_mon_stormfiend_1", "special", 2},
     {"cr_skv_mon_stormfiend_2", "rare", 2},
     {"cr_skv_mon_stormfiend_3", "rare", 2},
     {"cr_skv_mon_stormfiend_4", "rare", 2},
-    {"cr_skv_mon_stormfiend_5", "rare", 2},
+    {"cr_skv_mon_stormfiend_5", "special", 2},
     {"cr_skv_mon_stormfiend_6", "rare", 2},
     -- wh2_main_skv_ikit
     {"cr_skv_mon_stormfiend_ror_tech_lab_0", "rare", 2},

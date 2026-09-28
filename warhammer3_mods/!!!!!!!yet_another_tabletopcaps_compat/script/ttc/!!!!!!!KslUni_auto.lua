@@ -6,13 +6,13 @@ local caps = {
     {"ksl_frost_pegasus_knight_ly", "rare", 1},
     {"ksl_giant_ly", "rare", 2},
     {"ksl_gryphon_knight_ly", "special", 2},
-    {"ksl_salyak_healer_ly", "special", 1},
+    {"ksl_salyak_healer_ly", "core"},
     {"ksl_tsarina_guard_ly", "special", 2},
     {"ksl_ungols_executioner_ly", "special", 2},
     {"ksl_ungols_heavy_ly", "special", 2},
     {"ksl_ungols_light_ly", "core"},
     {"ksl_war_bear_01_ly", "special", 1},
-    {"ksl_war_bear_02_ly", "core"},
+    {"ksl_war_bear_02_ly", "special", 2},
     {"ksl_war_bear_03_ly", "special", 2},
     {"wh3_main_ksl_cav_ice_lancer_ly", "special", 2},
     {"wh3_main_ksl_inf_armoured_norsca_ly", "special", 2},
@@ -21,7 +21,7 @@ local caps = {
     {"wh3_main_ksl_inf_drunker_ly", "core"},
     {"wh3_main_ksl_inf_faith_defender_ly", "special", 2},
     {"wh3_main_ksl_inf_kraken_hunters_ly", "special", 1},
-    {"wh3_main_ksl_inf_marine_ly", "special", 2},
+    {"wh3_main_ksl_inf_marine_ly", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

@@ -3,8 +3,8 @@ local caps = {
     -- wh2_dlc09_tomb_kings
     {"wh2_dlc09_tmb_mon_tomb_scorpion_0_ete", "rare", 1},
     -- wh2_main_hef
-    {"wh3_dlc27_hef_inf_ships_company_ete", "special", 2},
-    {"wh3_dlc27_hef_inf_ships_company_ror_ete", "rare", 1},
+    {"wh3_dlc27_hef_inf_ships_company_ete", "rare", 2},
+    {"wh3_dlc27_hef_inf_ships_company_ror_ete", "rare", 2},
     {"wh3_dlc27_hef_mon_merwyrm_ror_ete_2", "rare", 3},
     {"wh3_dlc27_hef_mon_sea_elemental_ete_ror", "rare", 3},
     -- wh2_main_lzd
@@ -12,7 +12,7 @@ local caps = {
     -- wh2_main_skv
     {"wh2_dlc16_skv_mon_hell_pit_abomination_ror_0_ete", "rare", 3},
     -- wh3_cp1_group_cth_bhashiva
-    {"wh3_cp1_cth_inf_stalkers_throwing_disc_ete", "special", 2},
+    {"wh3_cp1_cth_inf_stalkers_throwing_disc_ete", "rare", 2},
     {"wh3_dlc24_cth_mon_great_moon_bird_ete", "rare", 2},
     -- wh3_dlc20_group_chs_azazel
     {"wh3_dlc20_chs_inf_chaos_marauders_msla_ete_ror", "rare", 2},
@@ -44,7 +44,7 @@ local caps = {
     {"wh_dlc03_bst_inf_bestigor_herd_0_ete", "rare", 1},
     -- wh_main_group_dwarfs
     {"wh3_dlc25_dwf_art_goblin_hewer_ete", "special", 2},
-    {"wh3_dlc25_dwf_art_goblin_hewer_ete_ror", "special", 1},
+    {"wh3_dlc25_dwf_art_goblin_hewer_ete_ror", "rare", 2},
     {"wh3_dlc25_dwf_inf_slayer_pirates_ete", "special", 2},
     {"wh3_dlc25_dwf_inf_slayer_pirates_ror_ete", "rare", 2},
     {"wh_dlc06_dwf_art_gob_lobber_0_ete", "rare", 2},
@@ -53,8 +53,8 @@ local caps = {
     {"wh_main_dwf_veh_gyrocopter_0_ete_ror", "special", 2},
     -- wh_main_group_greenskins
     {"wh2_dlc15_grn_mon_river_trolls_ror_0_ete", "rare", 2},
-    {"wh3_dlc26_grn_cav_mangler_squig_ete", "rare", 1},
-    {"wh3_dlc26_grn_mon_colossal_squig_ete", "rare", 2},
+    {"wh3_dlc26_grn_cav_mangler_squig_ete", "rare", 2},
+    {"wh3_dlc26_grn_mon_colossal_squig_ete", "rare", 1},
     {"wh3_dlc26_grn_mon_colossal_squig_ror_ete", "rare", 2},
     -- wh_main_group_norsca
     {"1wyrm_ror", "rare", 2},

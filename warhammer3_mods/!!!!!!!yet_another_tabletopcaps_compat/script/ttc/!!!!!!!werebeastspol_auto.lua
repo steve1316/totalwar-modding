@@ -3,11 +3,11 @@ local caps = {
     -- wh2_dlc16_group_drycha
     {"forest_wolves01", "special", 1},
     {"leshen_wef01", "rare", 3},
-    {"werewolf_wef01", "special", 1},
-    {"woodbeast_wef01", "rare", 2},
+    {"werewolf_wef01", "special", 2},
+    {"woodbeast_wef01", "rare", 3},
     -- wh_dlc03_group_beastmen
     {"werewolf_bst01", "special", 2},
-    {"woodbeast_bst01", "rare", 2},
+    {"woodbeast_bst01", "rare", 3},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

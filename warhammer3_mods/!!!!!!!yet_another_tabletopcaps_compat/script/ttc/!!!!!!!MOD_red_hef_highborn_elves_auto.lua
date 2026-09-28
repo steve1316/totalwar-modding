@@ -6,15 +6,15 @@ local caps = {
     {"wh2_main_hbe_inf_white_lions_spear_company", "core"},
     {"wh2_main_hbe_inf_white_lions_sword_company", "special", 1},
     {"wh2_main_hef_elven_paladins", "special", 2},
-    {"wh2_main_hef_elven_paladins_dismounted", "special", 2},
+    {"wh2_main_hef_elven_paladins_dismounted", "special", 1},
     {"wh2_main_hef_gol_spear", "special", 1},
     {"wh2_main_hef_gol_swords", "special", 2},
     {"wh2_main_hef_highborn_archers", "special", 1},
     {"wh2_main_hef_highborn_axes", "special", 1},
-    {"wh2_main_hef_highborn_guard", "special", 2},
+    {"wh2_main_hef_highborn_guard", "rare", 1},
     {"wh2_main_hef_highborn_knights", "core"},
     {"wh2_main_hef_highborn_spears", "special", 1},
-    {"wh2_main_hef_highborn_swords", "special", 1},
+    {"wh2_main_hef_highborn_swords", "core"},
     {"wh2_main_hef_shadow_warriors", "core"},
 }
 

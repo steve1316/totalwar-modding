@@ -12,7 +12,7 @@ local caps = {
     {"loupi_ellyrian_lancers", "core"},
     {"loupi_ellyrian_lancers_ror", "special", 2},
     {"loupi_knights_of_anlec", "special", 2},
-    {"loupi_knights_of_anlec_ror", "special", 2},
+    {"loupi_knights_of_anlec_ror", "rare", 1},
     {"loupi_mistwalkers", "special", 2},
     {"loupi_saphery_pegasus", "rare", 2},
     {"loupi_sea_ranger", "special", 1},

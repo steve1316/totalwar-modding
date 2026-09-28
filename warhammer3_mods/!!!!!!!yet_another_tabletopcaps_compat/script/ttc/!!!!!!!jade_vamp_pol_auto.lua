@@ -7,7 +7,7 @@ local caps = {
     {"jbv_ghost_host_summoned", "core"},
     {"jbv_ghost_host_summoned_2", "core"},
     {"jbv_mogwai", "special", 2},
-    {"jbv_newbloods_summoned", "special", 2},
+    {"jbv_newbloods_summoned", "special", 1},
     {"jbv_warriors_1", "special", 2},
     {"jbv_xiang_men_summoned", "core"},
 }

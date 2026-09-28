@@ -18,8 +18,8 @@ local caps = {
     {"mixu_msl_inf_men_at_arms_sword", "core"},
     {"mixu_msl_inf_mounted_brigands", "special", 1},
     {"mixu_msl_mon_dracoleech", "rare", 1},
-    {"mixu_msl_mon_giant_snail", "special", 2},
-    {"mixu_msl_mon_the_grey_men", "special", 2},
+    {"mixu_msl_mon_giant_snail", "special", 1},
+    {"mixu_msl_mon_the_grey_men", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

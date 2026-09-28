@@ -23,8 +23,8 @@ local caps = {
     {"mixu_emp_mon_prometheans", "special", 2},
     -- wh3_dlc25_group_elspeth
     {"mixu_emp_cav_daughters_of_rhya", "special", 2},
-    {"mixu_emp_inf_celebrants", "core"},
-    {"mixu_emp_inf_horned_hunters", "core"},
+    {"mixu_emp_inf_celebrants", "special", 1},
+    {"mixu_emp_inf_horned_hunters", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

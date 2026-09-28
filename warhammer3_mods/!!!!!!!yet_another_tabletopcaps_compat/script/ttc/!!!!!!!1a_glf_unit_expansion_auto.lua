@@ -12,7 +12,7 @@ local caps = {
     -- wh2_dlc11_cst_rogue_bleak_coast_buccaneers
     {"glf_dwf_the_zhufbar_firebores_ror", "special", 1},
     -- wh2_main_def
-    {"glf_def_black_knights", "special", 2},
+    {"glf_def_black_knights", "special", 1},
     {"glf_def_cold_one_fear_knights_lance", "special", 2},
     {"glf_def_dread_knights_ror", "special", 2},
     {"glf_def_dwarf_slaves", "core"},
@@ -22,7 +22,7 @@ local caps = {
     {"glf_def_rimeshards_ror", "special", 1},
     {"glf_def_shades_handbow", "special", 1},
     {"glf_def_the_krakensides_ror", "special", 1},
-    {"glf_def_the_ravenspears_ror", "special", 1},
+    {"glf_def_the_ravenspears_ror", "rare", 1},
     {"glf_def_the_soulskulls_ror", "special", 1},
     {"glf_def_the_voiceless_ones_ror", "special", 1},
     -- wh2_main_hef
@@ -46,7 +46,7 @@ local caps = {
     {"glf_brt_herrimault", "core"},
     {"glf_brt_hippogryph_subspecies_knights_ror", "rare", 2},
     {"glf_brt_knights_of_the_realm_sword", "special", 1},
-    {"glf_brt_knights_of_the_realm_walk", "special", 1},
+    {"glf_brt_knights_of_the_realm_walk", "core"},
     {"glf_brt_knights_of_the_realm_walk_great_weapon", "special", 1},
     {"glf_brt_longbowmen", "core"},
     {"glf_sp_knights_of_the_raging_bull", "special", 2},
@@ -76,7 +76,7 @@ local caps = {
     {"glf_chd_infernal_guard_flamethrower", "special", 2},
     {"glf_chd_infernal_guard_machinegun", "special", 2},
     -- wh3_dlc23_rogue_karaz_a_karak_expedition
-    {"glf_dwf_machine_gunner", "rare", 2},
+    {"glf_dwf_machine_gunner", "core"},
     {"glf_dwf_raiders", "core"},
     {"glf_dwf_sniper", "rare", 2},
     -- wh3_dlc25_group_elspeth
@@ -87,7 +87,7 @@ local caps = {
     {"glf_def_the_iceblades_ror", "special", 1},
     -- wh3_main_ksl
     {"glf_ksl_monk_riders", "special", 1},
-    {"glf_ksl_shield_maiden", "special", 1},
+    {"glf_ksl_shield_maiden", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

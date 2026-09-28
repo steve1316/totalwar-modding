@@ -2,7 +2,7 @@
 local caps = {
     -- wh3_main_cth
     {"cth_buddha", "rare", 2},
-    {"cth_legion", "rare", 1},
+    {"cth_legion", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

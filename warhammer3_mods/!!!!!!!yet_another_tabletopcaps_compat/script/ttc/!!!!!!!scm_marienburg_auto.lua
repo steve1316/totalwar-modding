@@ -9,7 +9,7 @@ local caps = {
     {"hkrul_mar_cav_rijders", "core"},
     {"hkrul_mar_cav_rijders_crossbow", "core"},
     {"hkrul_mar_culverin", "special", 2},
-    {"hkrul_mar_handguns", "special", 1},
+    {"hkrul_mar_handguns", "core"},
     {"hkrul_mar_hellblaster", "rare", 2},
     {"hkrul_mar_hellstorm", "rare", 2},
     {"hkrul_mar_knights_griffon", "rare", 2},
@@ -39,7 +39,7 @@ local caps = {
     {"hkrul_mar_inf_swords", "core"},
     -- wh3_dlc25_group_elspeth
     {"hkrul_carriers", "special", 2},
-    {"hkrul_carriers_ror", "special", 2},
+    {"hkrul_carriers_ror", "special", 1},
     {"hkrul_klumpf", "special", 1},
     {"hkrul_mar_cleansing_flame", "special", 2},
     {"hkrul_mar_defenders", "special", 1},
@@ -48,7 +48,7 @@ local caps = {
     {"hkrul_mar_knights_mariner_fmc", "special", 1},
     {"hkrul_pion", "special", 1},
     -- wh_main_group_empire
-    {"hkrul_manann_flagellant", "core"},
+    {"hkrul_manann_flagellant", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

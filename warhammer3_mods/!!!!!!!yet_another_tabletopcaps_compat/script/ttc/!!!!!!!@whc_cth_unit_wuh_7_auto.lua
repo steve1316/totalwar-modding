@@ -2,7 +2,7 @@
 local caps = {
     -- wh3_cp1_group_cth_bhashiva
     {"cth_cav_bayara", "special", 2},
-    {"cth_cav_guanning_firelancer", "special", 2},
+    {"cth_cav_guanning_firelancer", "special", 1},
     {"cth_east_mingqing_gunner_grenadier", "core"},
     {"cth_east_mingqing_jade_qijun_1", "special", 1},
     {"cth_east_mingqing_jade_qijun_2", "special", 1},
@@ -19,7 +19,7 @@ local caps = {
     {"cth_north_suitang_peasant_shuzu_1", "core"},
     {"cth_north_suitang_peasant_shuzu_2", "core"},
     {"cth_south_songyuan_beast_huban_dog", "special", 1},
-    {"cth_south_songyuan_cav_longma", "special", 3},
+    {"cth_south_songyuan_cav_longma", "special", 2},
     {"cth_south_songyuan_jade_xiangbing_1", "special", 1},
     {"cth_south_songyuan_jade_xiangbing_2", "special", 1},
     {"cth_south_songyuan_jade_xiangbing_4", "special", 1},

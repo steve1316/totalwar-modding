@@ -14,7 +14,7 @@ local caps = {
     -- wh_main_group_empire
     {"Chasslo_Fireloques_Ferlangen", "special", 1},
     -- wh_main_group_greenskins
-    {"Chasslo_Soqotra_Pirates", "special", 1},
+    {"Chasslo_Soqotra_Pirates", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

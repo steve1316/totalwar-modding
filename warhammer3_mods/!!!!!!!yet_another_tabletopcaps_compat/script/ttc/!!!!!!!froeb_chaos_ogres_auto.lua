@@ -7,7 +7,7 @@ local caps = {
     {"frb_chaos_ogre_fighters_1_chd", "special", 2},
     {"frb_chaos_ogre_fighters_2_chd", "special", 2},
     {"frb_chaos_ogre_warmongers_0_chd", "special", 2},
-    {"frb_chaos_ogre_warmongers_1_chd", "special", 2},
+    {"frb_chaos_ogre_warmongers_1_chd", "special", 3},
 }
 
 local ttc = core:get_static_object("tabletopcaps")
