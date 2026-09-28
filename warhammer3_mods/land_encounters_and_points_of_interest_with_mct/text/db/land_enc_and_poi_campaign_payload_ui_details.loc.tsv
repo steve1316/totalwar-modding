@@ -1,6 +1,5 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_campaign_payload_ui_details.loc		
-campaign_payload_ui_details_description_dummy_land_enc_smithy_forge_cooling	The forge is still cooling. Nothing is taken.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_leave	Leave the forge as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_unconditional_surrender	We will lose control of the smithy to the enemy faction, and its forge will drop a level.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_1	A masterwork costs [[col:yellow]]4,000[[/col]] gold. We cannot afford it yet.	false

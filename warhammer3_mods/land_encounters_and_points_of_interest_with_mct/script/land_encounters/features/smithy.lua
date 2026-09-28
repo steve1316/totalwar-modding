@@ -50,9 +50,7 @@ local COMMISSION_CHOICE = 4
 --- 1-based position of the upgrade choice.
 local UPGRADE_CHOICE = 5
 
---- Payload text (campaign_payload_ui_details key) for a free pick while the forge cools down.
-local PAYLOAD_TEXT_COOLING = "dummy_land_enc_smithy_forge_cooling"
---- Payload text for a choice that does nothing.
+--- Payload text (campaign_payload_ui_details key) for a choice that does nothing.
 local PAYLOAD_TEXT_LEAVE = "dummy_land_enc_smithy_leave"
 --- Payload text prefix for a commission the faction cannot afford. The forge level is appended, since the text states that level's price.
 local PAYLOAD_TEXT_CANNOT_AFFORD_COMMISSION = "dummy_land_enc_smithy_cannot_afford_commission_"
@@ -200,6 +198,11 @@ function SmithyState:trigger_event(area_and_character_info)
 
     if is_human_and_it_is_its_turn(visiting_faction) then
         if self:is_occupied_by_same_faction(visiting_faction:name()) then
+            --- While the forge cools there is nothing to take, so a message replaces the dilemma.
+            if self:is_on_cooldown() then
+                self:show_message(visiting_faction:name(), "smithy_visit_on_cooldown")
+                return false
+            end
             self:open_forge(visiting_faction)
             return true
         elseif not self:is_occupied() then
@@ -237,14 +240,13 @@ function SmithyState:level_data()
     return smithy_data.levels[self.level]
 end
 
---- Builds and opens the forge dilemma for the owner: three free picks (or "cooling"), a paid commission and a paid upgrade. Choices the
---- faction cannot afford show a text line and cost nothing.
+--- Builds and opens the forge dilemma for the owner: three free picks, a paid commission and a paid upgrade. Only called while the forge is
+--- ready. Choices the faction cannot afford show a text line with the price and cost nothing.
 --- @param faction faction The owning player faction.
 function SmithyState:open_forge(faction)
     local level = self:level_data()
     local faction_key = faction:name()
     local treasury = faction:treasury()
-    local cooling = self:is_on_cooldown()
     local can_afford_commission = treasury >= level.commission.price
     local builder = cm:create_dilemma_builder(EVENT_FORGE_BY_LEVEL[self.level])
     local payload = cm:create_payload()
@@ -256,13 +258,13 @@ function SmithyState:open_forge(faction)
         payload:clear()
     end
 
-    local picks = cooling and {} or item_pool.pick_items(faction_key, level.free_pick_rarities, FREE_PICK_COUNT)
+    local picks = item_pool.pick_items(faction_key, level.free_pick_rarities, FREE_PICK_COUNT)
     for i = 1, FREE_PICK_COUNT do
         if picks[i] then
             payload:faction_ancillary_gain(faction, picks[i])
             offer.free_picks[i] = true
         else
-            payload:text_display(cooling and PAYLOAD_TEXT_COOLING or PAYLOAD_TEXT_LEAVE)
+            payload:text_display(PAYLOAD_TEXT_LEAVE)
         end
         add_choice(i)
     end

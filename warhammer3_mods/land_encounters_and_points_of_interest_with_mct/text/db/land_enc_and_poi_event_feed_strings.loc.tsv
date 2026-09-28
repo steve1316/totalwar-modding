@@ -7,8 +7,8 @@ event_feed_strings_text_title_event_land_enc_smithy_encountered	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_encountered	Smithy Missed	false
 event_feed_strings_text_description_event_land_enc_smithy_encountered	We passed a smithy without stopping. Perhaps a lord should come back to see what it holds.	false
 event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown	The Master Blacksmith Is Preparing...	false
-event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown	(unused - smithy_visit_on_cooldown is no longer shown; no rewrite. Note "equipments" if revived)	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown	The forge is still cooling after our last piece, so there is nothing to take yet. The master blacksmith will send word when it is ready again.	false
 event_feed_strings_text_title_event_land_enc_smithy_visit_available	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_available	The Master Blacksmith Is Ready To Receive You	false
 event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends word that the forge is ready again. Send a lord to the smithy to choose from his new work.	false
