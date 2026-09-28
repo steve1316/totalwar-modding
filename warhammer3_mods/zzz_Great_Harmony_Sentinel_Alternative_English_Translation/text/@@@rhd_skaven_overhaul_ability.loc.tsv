@@ -1,35 +1,35 @@
 key	text	tooltip
 #Loc;1;text/@@@rhd_skaven_overhaul_ability.loc		
-special_ability_phases_onscreen_name_rhd_unit_contact_melt	[[col:red]][[img:ui/skins/default/modifier_icon_overhead_morale.png]][[/img]]Melt![[/col]]	false
-special_ability_phases_onscreen_name_rhd_unit_contact_snake_fang	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_snake_fang.png]][[/img]]Venomous Fang![[/col]]	false
+special_ability_phases_onscreen_name_rhd_unit_contact_melt	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_melt.png]][[/img]]Molten Melt![[/col]]	false
+special_ability_phases_onscreen_name_rhd_unit_contact_snake_fang	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_snake_fang.png]][[/img]]Serpent's Fang![[/col]]	false
 special_ability_phases_onscreen_name_rhd_unit_contact_warpstone_fire	[[col:red]][[img:ui/battle ui/ability_icons/rhd_unit_contact_warpstone_fire.png]][[/img]]Warpstone Incineration![[/col]]	false
 unit_abilities_onscreen_name_rhd_ability_skv_death_explosion_slave_ror	Mutual Destruction	false
-unit_abilities_tooltip_text_rhd_ability_skv_death_explosion_slave_ror	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_death_explosion_globe	Corrosive Miasma	false
-unit_abilities_tooltip_text_rhd_ability_skv_death_explosion_globe	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_ratling_warpbomb	E.M. Pulse	false
-unit_abilities_tooltip_text_rhd_ability_skv_ratling_warpbomb	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_warpfire_thrower_missile_0	Incendiary Torrent	false
-unit_abilities_tooltip_text_rhd_ability_skv_warpfire_thrower_missile_0	It's... it's going to blow up!!!	false
+unit_abilities_tooltip_text_rhd_ability_skv_death_explosion_slave_ror	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_death_explosion_globe	Corrosive Haze Cloud	false
+unit_abilities_tooltip_text_rhd_ability_skv_death_explosion_globe	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_ratling_warpbomb	Electromagnetic Pulse	false
+unit_abilities_tooltip_text_rhd_ability_skv_ratling_warpbomb	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_warpfire_thrower_missile_0	Deflagrating Meltstream	false
+unit_abilities_tooltip_text_rhd_ability_skv_warpfire_thrower_missile_0	It's... it's gonna blow!!!	false
 unit_abilities_onscreen_name_rhd_ability_skv_warpfire_thrower_missile_1_air	Hurricane Airstrike	false
-unit_abilities_tooltip_text_rhd_ability_skv_warpfire_thrower_missile_1_air	It's... it's going to blow up!!!	false
+unit_abilities_tooltip_text_rhd_ability_skv_warpfire_thrower_missile_1_air	It's... it's gonna blow!!!	false
 unit_abilities_onscreen_name_rhd_ability_skv_warpfire_thrower_missile_1_ground	Hurricane Bombardment	false
-unit_abilities_tooltip_text_rhd_ability_skv_warpfire_thrower_missile_1_ground	It's... it's going to blow up!!!	false
+unit_abilities_tooltip_text_rhd_ability_skv_warpfire_thrower_missile_1_ground	It's... it's gonna blow!!!	false
 unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_ranged_seismic_snare	Phased Seismic Snare	false
-unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_ranged_seismic_snare	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_ranged_warp_quake	Phased Warpquake	false
-unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_ranged_warp_quake	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_large_seismic_snare	Large Seismic Snare	false
-unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_large_seismic_snare	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_large_warp_quake	Large Warpquake	false
-unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_large_warp_quake	It's... it's going to blow up!!!	false
+unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_ranged_seismic_snare	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_ranged_warp_quake	Phased Warp Quake	false
+unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_ranged_warp_quake	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_large_seismic_snare	Great Seismic Snare	false
+unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_large_seismic_snare	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_large_warp_quake	Great Warp Quake	false
+unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_large_warp_quake	It's... it's gonna blow!!!	false
 unit_abilities_onscreen_name_rhd_ability_skv_warp_grinder_replace_disintegration_field	Disintegration Field	false
-unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_replace_disintegration_field	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_death_explosion_doomflayer	Dimensional Nova	false
-unit_abilities_tooltip_text_rhd_ability_skv_death_explosion_doomflayer	It's... it's going to blow up!!!	false
+unit_abilities_tooltip_text_rhd_ability_skv_warp_grinder_replace_disintegration_field	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_death_explosion_doomflayer	Warp Nova	false
+unit_abilities_tooltip_text_rhd_ability_skv_death_explosion_doomflayer	It's... it's gonna blow!!!	false
 unit_abilities_onscreen_name_rhd_ability_skv_tesla_trooper_protective_field	Protective Field	false
-unit_abilities_tooltip_text_rhd_ability_skv_tesla_trooper_protective_field	It's... it's going to blow up!!!	false
+unit_abilities_tooltip_text_rhd_ability_skv_tesla_trooper_protective_field	It's... it's gonna blow!!!	false
 unit_abilities_onscreen_name_rhd_ability_skv_doomflayer_unstable_structure	Unstable Structure	false
-unit_abilities_tooltip_text_rhd_ability_skv_doomflayer_unstable_structure	It's... it's going to blow up!!!	false
-unit_abilities_onscreen_name_rhd_ability_skv_doomwheel_disintegration	Bio-Disassembly	false
-unit_abilities_tooltip_text_rhd_ability_skv_doomwheel_disintegration	It's... it's going to blow up!!!	false
+unit_abilities_tooltip_text_rhd_ability_skv_doomflayer_unstable_structure	It's... it's gonna blow!!!	false
+unit_abilities_onscreen_name_rhd_ability_skv_doomwheel_disintegration	Biotic Disintegration	false
+unit_abilities_tooltip_text_rhd_ability_skv_doomwheel_disintegration	It's... it's gonna blow!!!	false

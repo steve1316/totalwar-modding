@@ -1,7 +1,7 @@
 key	text	tooltip
 #Loc;1;text/@@@rhd_skaven_overhaul_resource.loc		
-ui_text_replacements_localised_text_warpstones_tooltip	[[img:icon_warpstones]][[/img]]Warpstone is a shimmering, emerald-green crystalline substance, a physical manifestation of pure magic in the material world\\n\\nSkaven can harvest [[img:icon_warpstones]][[/img]] Warpstone by constructing Warpstone Mines. Consuming [[img:icon_warpstones]][[/img]] Warpstone can power certain buildings, research unique faction technologies, or enhance your units.	false
-pooled_resources_description_rhd_resource_warpstone	[[img:icon_warpstones]][[/img]]Warpstone is a shimmering, emerald-green crystalline substance, a physical manifestation of pure magic in the material world\\n\\nSkaven can harvest [[img:icon_warpstones]][[/img]] Warpstone by constructing Warpstone Mines. Consuming [[img:icon_warpstones]][[/img]] Warpstone can power certain buildings, research unique faction technologies, or enhance your units.	false
+ui_text_replacements_localised_text_warpstones_tooltip	[[img:icon_warpstones]][[/img]]Warpstone is a shimmering, emerald-green crystalline substance, the physical manifestation of pure magic in the real world\\n\\nSkaven can gather [[img:icon_warpstones]][[/img]]Warpstone by constructing Warpstone Mines. Consuming [[img:icon_warpstones]][[/img]]Warpstone can power certain buildings, research unique faction technologies, or empower your units	false
+pooled_resources_description_rhd_resource_warpstone	[[img:icon_warpstones]][[/img]]Warpstone is a shimmering, emerald-green crystalline substance, the physical manifestation of pure magic in the real world\\n\\nSkaven can gather [[img:icon_warpstones]][[/img]]Warpstone by constructing Warpstone Mines. Consuming [[img:icon_warpstones]][[/img]]Warpstone can power certain buildings, research unique faction technologies, or empower your units	false
 pooled_resources_display_name_rhd_resource_warpstone	Warpstone	false
-pooled_resources_positive_factors_display_name_rhd_resource_warpstone	Collection	false
-pooled_resources_negative_factors_display_name_rhd_resource_warpstone	Consumption	false
+pooled_resources_positive_factors_display_name_rhd_resource_warpstone	Gained	false
+pooled_resources_negative_factors_display_name_rhd_resource_warpstone	Used	false

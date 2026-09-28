@@ -1,48 +1,48 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_emp_units.loc		
 land_units_onscreen_name_emp_inf_nuln_ironsides_heavy_armor	Nuln Ironsides (Heavy Armor)	true
-unit_description_short_texts_text_emp_inf_nuln_ironsides_heavy_armor	The Nuln Ironsides are selected from the guards and apprentices of the renowned Imperial Gunnery School. They are among the most respected and well-equipped musketeer regiments in the Empire.	true
+unit_description_short_texts_text_emp_inf_nuln_ironsides_heavy_armor	Nuln Ironsides are selected from the guards and apprentices of the famous Imperial Gunnery School, and are among the most respected and best-equipped regiments of handgunners in the Empire.	true
 land_units_onscreen_name_emp_inf_bronzeballs	Bronzeballs	true
-unit_description_short_texts_text_emp_inf_bronzeballs	The musketeers patrolling the walls of the volcano are known as Bronzeballs, named after the metal used to craft their bullets—though they don't usually use them.	true
+unit_description_short_texts_text_emp_inf_bronzeballs	The handgunners who patrol the crater walls are called Bronzeballs, named after the metal used to forge their shot—though they don't typically do so themselves.	true
 land_units_onscreen_name_emp_inf_sterntower_marksmen	Sterntower Marksmen	true
-unit_description_short_texts_text_emp_inf_sterntower_marksmen	The Sterntower Marksmen are a newly formed regiment from Stangart. They are part of the garrison that watches over the signal towers and outposts in the shadow of the mighty Black Mountains in Eastern Wissenland.	true
+unit_description_short_texts_text_emp_inf_sterntower_marksmen	The Sterntower Marksmen are a newly formed regiment of Stirgart. In the shadow of the mighty Black Mountains, they form part of the watchposts and signal towers guarding the low hills of eastern Wissenland.	true
 land_units_onscreen_name_emp_inf_nordland_seahawks	Nordland Seahawks	true
-unit_description_short_texts_text_emp_inf_nordland_seahawks	The Seahawks are one of the most famous regiments of Nordland, composed of over twenty companies. They are often the first regiment sent to support other provinces, receiving better equipment and higher pay than other units.	true
+unit_description_short_texts_text_emp_inf_nordland_seahawks	The Seahawks are one of Nordland's most renowned regiments, made up of more than 20 companies. The Seahawks are usually the first regiment dispatched to support other provinces, so they receive better arms and equipment, as well as higher pay, than most other units.	true
 land_units_onscreen_name_emp_inf_sons_of_the_reik	Sons of the Reik	true
-unit_description_short_texts_text_emp_inf_sons_of_the_reik	The Honorary Company of Altdorf, also known as the Sons of the Reik, is a Reikland regiment that is well-trained and well-equipped, dedicated to serving the Emperor and Altdorf.	true
+unit_description_short_texts_text_emp_inf_sons_of_the_reik	The Altdorf Honour Company, also known as the Sons of the Reik, is a Reikland regiment renowned for its discipline and fine equipment, dedicated to serving the Emperor and Altdorf.	true
 land_units_onscreen_name_emp_inf_vengeful_blades	Vengeful Blades	true
-unit_description_short_texts_text_emp_inf_vengeful_blades	Originally known as the "Swords of the Sun", these swordsmen are refugees from the fall of Talabecland. They, along with other similar companies, are dedicated to avenging those who took their homes, families, and hope.	true
+unit_description_short_texts_text_emp_inf_vengeful_blades	Once known as the Blades of the Sun, these swordsmen are refugees from the fall of Talabheim. Like other companies formed from survivors, they are devoted to exacting vengeance on the enemies who took their homes, families, and hope.	true
 land_units_onscreen_name_emp_inf_deaths_heads	Death's Heads	true
-unit_description_short_texts_text_emp_inf_deaths_heads	The halberdiers known as "Death's Heads" were formed during the Vampire Wars. They originated from the small town of Essen in Ostermark during Vlad von Carstein's reign.	true
-land_units_onscreen_name_emp_cav_gryph_knights	Griffon Knights	true
-unit_description_short_texts_text_emp_cav_gryph_knights	The true griffon knights, only the best of the best demigryph knights can ride on the true griffon.	true
-land_units_onscreen_name_emp_inf_sigmar_guards	Sigmar's Guards	true
-unit_description_short_texts_text_emp_inf_sigmar_guards	Priests guarding the Grand Cathedral of Sigmar, using the lightning to protect the Sigmarite church.	true
-land_units_onscreen_name_emp_inf_sigmar_attaker	Sigmar's Attackers	true
-unit_description_short_texts_text_emp_inf_sigmar_attaker	Priests guarding the Grand Cathedral of Sigmar, using spears enchanted with lightning to pierce their enemies.	true
-land_units_onscreen_name_emp_inf_sigmar_destroyer	Sigmar's Destroyers	true
-unit_description_short_texts_text_emp_inf_sigmar_destroyer	The inner sanctum guards of the Grand Cathedral of Sigmar, capable of wielding the Thunder Hammer to destroy all evil.	true
-land_units_onscreen_name_emp_inf_sigmar_marksmen	Sigmar's Marksmen	true
-unit_description_short_texts_text_emp_inf_sigmar_marksmen	Using specialized crossbows to shoot thunderous bolts, summoning a natural hawk to assist when necessary.	true
-land_units_onscreen_name_emp_mon_eagles_summoned	Taal's Eagles	true
-unit_description_short_texts_text_emp_mon_eagles_summoned	Followers of Taal summon magical warhawks to assist in battle.	true
-land_units_onscreen_name_emp_cav_dual_pistols_demigryph_knights	Demigryph Knights (Pistols)	true
-unit_description_short_texts_text_emp_cav_dual_pistols_demigryph_knights	Demigryph knights on patrol wielding dual pistols, capable of attacking enemies from a distance.	true
-land_units_onscreen_name_emp_cav_long_sword_demigryph_knights	Demigryph Knights (Greatswords)	true
-unit_description_short_texts_text_emp_cav_long_sword_demigryph_knights	Wielding massive longswords, they cut down all enemies around them.	true
+unit_description_short_texts_text_emp_inf_deaths_heads	The halberdiers known as the Death's Heads were founded during the Vampire Wars. They began in the Ostermark town of Essen, during the reign of Vlad von Carstein.	true
+land_units_onscreen_name_emp_cav_gryph_knights	Gryph Knights	true
+unit_description_short_texts_text_emp_cav_gryph_knights	The Empire's true Gryph Knights, not chickens!!!!	true
+land_units_onscreen_name_emp_inf_sigmar_guards	Sigmar Guards	true
+unit_description_short_texts_text_emp_inf_sigmar_guards	Priests who guard the Cathedral of Sigmar, defending it with the power of thunder.	true
+land_units_onscreen_name_emp_inf_sigmar_attaker	Sigmar Attackers	true
+unit_description_short_texts_text_emp_inf_sigmar_attaker	Priests who guard the Cathedral of Sigmar, enchanting their spears with thunder to pierce through their foes.	true
+land_units_onscreen_name_emp_inf_sigmar_destroyer	Sigmar Destroyers	true
+unit_description_short_texts_text_emp_inf_sigmar_destroyer	Elite guardians of the innermost sanctum of the Cathedral of Sigmar, who wield thunderous hammers to annihilate all evil.	true
+land_units_onscreen_name_emp_inf_sigmar_marksmen	Sigmar Chastisers	true
+unit_description_short_texts_text_emp_inf_sigmar_marksmen	They fire thunderous bolts from specialized heavy crossbows, and when necessary, summon natural falcons to aid their marksmanship.	true
+land_units_onscreen_name_emp_mon_eagles_summoned	Talon Falcons	true
+unit_description_short_texts_text_emp_mon_eagles_summoned	Followers of Taal summon magical war eagles to aid them in battle.	true
+land_units_onscreen_name_emp_cav_dual_pistols_demigryph_knights	Demigryph Knight Patrol	true
+unit_description_short_texts_text_emp_cav_dual_pistols_demigryph_knights	Demigryph Knights who patrol with dual pistols, striking enemies from a distance.	true
+land_units_onscreen_name_emp_cav_long_sword_demigryph_knights	Demigryph Knight Slayers	true
+unit_description_short_texts_text_emp_cav_long_sword_demigryph_knights	Wielding massive greatswords, cutting down every enemy in their path.	true
 land_units_onscreen_name_emp_inf_nordland_ultimate_warrior	Nordland Ultimate Warriors	true
-unit_description_short_texts_text_emp_inf_nordland_ultimate_warrior	Warriors from Nordland whose abilities surpass those of most ordinary men.	true
-land_units_onscreen_name_emp_inf_dark_angel	Dark Judges	true
-unit_description_short_texts_text_emp_inf_dark_angel	Dark Judges keep no secrets and only appear on battlefields against Chaos and heretics.	true
-land_units_onscreen_name_emp_inf_reiksguard	Reiksguard (Foot)	true
-unit_description_short_texts_text_emp_inf_reiksguard	The Reiksguard, clad in heavy armor, charge into the fray and fight fiercely amidst the chaos of battle.	true
-land_units_onscreen_name_emp_cav_knight_of_white_wolf	Knights of the White Wolf	true
-unit_description_short_texts_text_emp_cav_knight_of_white_wolf	Part of the Knights of the White Wolf, a knightly order devoted to Ulric, wielding dual hammers.	true
-land_units_onscreen_name_emp_cav_knight_of_the_raven	Knights of the Raven	true
-unit_description_short_texts_text_emp_cav_knight_of_the_raven	A splinter group of the Knights of Morr, formed due to ideological differences with the main order.	true
+unit_description_short_texts_text_emp_inf_nordland_ultimate_warrior	Warriors of Nordland, whose abilities surpass those of most common men.	true
+land_units_onscreen_name_emp_inf_dark_angel	Dark Judgement	true
+unit_description_short_texts_text_emp_inf_dark_angel	The Dark Judgement holds no secrets—they appear only on battlefields where Chaos and heresy clash.	true
+land_units_onscreen_name_emp_inf_reiksguard	Reiksguard Foot	true
+unit_description_short_texts_text_emp_inf_reiksguard	Clad in heavy armor, the Reiksguard charge headlong into battle, fighting fiercely amidst the chaos of war.	true
+land_units_onscreen_name_emp_cav_knight_of_white_wolf	Middenheim Wolves	true
+unit_description_short_texts_text_emp_cav_knight_of_white_wolf	Part of the Knights Order of the White Wolf, devout followers of Ulric, wielding twin hammers.	true
+land_units_onscreen_name_emp_cav_knight_of_the_raven	Order of the Black Raven	true
+unit_description_short_texts_text_emp_cav_knight_of_the_raven	A splinter faction of the Knights of Morr, separated due to ideological conflict with the Order of Morr.	true
 land_units_onscreen_name_emp_inf_free_hunting_corps	Free Hunting Corps	true
-unit_description_short_texts_text_emp_inf_free_hunting_corps	A regiment of witch hunters within the Empire, specialized in hunting heretics. They are scattered across the Empire and only gather when needed.	true
+unit_description_short_texts_text_emp_inf_free_hunting_corps	A regiment formed by witch hunters within the Empire, specializing in hunting down heretics. They are normally scattered throughout the Empire, gathering together only when needed.	true
 land_units_onscreen_name_emp_inf_ostland_salamanders	Ostland Salamanders	true
-unit_description_short_texts_text_emp_inf_ostland_salamanders	Among the stubborn people of Ostland, they follow a warrior named Volgan and use flame weapons to ruthlessly destroy approaching enemies.	true
+unit_description_short_texts_text_emp_inf_ostland_salamanders	Among the stubborn folk of Ostland, these warriors follow the one called Volkmar, mercilessly destroying approaching enemies with weapons of fire.	true
 land_units_onscreen_name_emp_inf_nuln_ironsides_repeaters	Nuln Ironsides (Repeaters)	true
 land_units_onscreen_name_emp_inf_nuln_ironsides_morr_repeaters	Amethyst Ironsides (Repeaters)	true

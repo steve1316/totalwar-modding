@@ -1,58 +1,58 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_cathy_army.loc		
-land_units_onscreen_name_cth_inf_dragon_guard_fighter	Celestial Dragon Guard (Swords)	true
-unit_description_short_texts_text_cth_inf_dragon_guard_fighter	One of the main forces of the Celestial Army, these soldiers are the blade of the Dragon Emperor's elite.	true
-land_units_onscreen_name_cth_inf_god_guard_fighter	Celestial Dragon Vanguard	true
-unit_description_short_texts_text_cth_inf_god_guard_fighter	The Celestial Dragon Vanguard is invincible in battle, but they require the cover of crossbows and shields.	true
+land_units_onscreen_name_cth_inf_dragon_guard_fighter	Celestial Tiger Guard	true
+unit_description_short_texts_text_cth_inf_dragon_guard_fighter	One of the Celestial mainstay forces, the blade of the Celestial army and the elite of the Dragon Emperor.	true
+land_units_onscreen_name_cth_inf_god_guard_fighter	Celestial Dragon Guard	true
+unit_description_short_texts_text_cth_inf_god_guard_fighter	The Dragon Guard win every battle they fight and take every stronghold they attack, but need the cover of crossbow-and-shield formations.	true
 land_units_onscreen_name_cth_inf_thunderbolt_gunners	Thunderbolt Gunners	true
-unit_description_short_texts_text_cth_inf_thunderbolt_gunners	The Thunderbolt Gunners are skilled in using firearms and relies on infantry in front to defend against enemies.	true
-land_units_onscreen_name_cth_inf_pioneer_scouts	Peasant Scouts	true
-unit_description_short_texts_text_cth_inf_pioneer_scouts	Peasant Scouts excel at ambushes, striking first and making it impossible for the enemy to find them.	true
-land_units_onscreen_name_cth_mon_terracotta_sentinels_small	Terracotta Guardians	true
-unit_description_short_texts_text_cth_mon_terracotta_sentinels_small	When grouped together, these Terracotta soldiers are unstoppable, capable of overwhelming any enemy with their sheer power.	true
-land_units_onscreen_name_cth_thunder_attack_gunners	Golden Crow Handgunners	true
-unit_description_short_texts_text_cth_thunder_attack_gunners	Forged by the blacksmiths of Nan-Gau, these firearms can destroy enemies from a thousand miles away. The elite troops of Changyuan are unmatched in their accuracy.	true
-land_units_onscreen_name_cth_cav_celestial_mighty_axe_guard	Celestial Dragon Axes	true
-unit_description_short_texts_text_cth_cav_celestial_mighty_axe_guard	The Celestial Dragon Axes carries out the Dragon Emperor's mission with iron resolve, swearing to defend Cathay to the death, though their skills are still developing, relying on a limited number of powerful strikes.	true
-land_units_onscreen_name_cth_inf_jade_warrior_halberd_shield	Great Bastion Custodians	true
-unit_description_short_texts_text_cth_inf_jade_warrior_halberd_shield	 The soul of Changyuan in Cathay, these troops form impenetrable shield walls and spear formations that no enemy dares to break through.	true
-land_units_onscreen_name_cth_cav_jade_crossbow_rider	Mounted Jade Crossbowmen	true
-unit_description_short_texts_text_cth_cav_jade_crossbow_rider	Swift as the wind, calm as the forest, fierce as fire, and unmovable as a mountain.	true
-land_units_onscreen_name_cth_cav_celestial_crossbow_rider	Mounted Celestial Dragon Crossbowmen	true
-unit_description_short_texts_text_cth_cav_celestial_crossbow_rider	The elite troops of the Dragon Emperor, veterans of countless battles, and the best of the cavalry.	true
-land_units_onscreen_name_cth_inf_dragon_tiger_guard	Celestial Jinwu Guard	true
-unit_description_short_texts_text_cth_inf_dragon_tiger_guard	The Dragon Emperor's elite guard, skilled at combating infantry, but struggle against large beasts.	true
-land_units_onscreen_name_cth_cav_jade_longma_crassbow_rider	Jade Longma Crossbowmen	true
-unit_description_short_texts_text_cth_cav_jade_longma_crassbow_rider	Equipped with the divine weapons of Nan-Gau, they can rain arrows upon their enemies.	true
-land_units_onscreen_name_cth_inf_jade_warrior_great_sword	Jade Warriors (Greatswords)	true
-unit_description_short_texts_text_cth_inf_jade_warrior_great_sword	The use of the great sword is the opposite of spear and shield. It reveals its full potential when positioned at the back of the formation.	true
-land_units_onscreen_name_cth_inf_dual_jian	Celestal Dragon Guard (Sword Breakers)	true
-unit_description_short_texts_text_cth_inf_dual_jian	The Celestal Dragon Guard wields dual maces and excels at breaking through heavy armor.	true
-land_units_onscreen_name_cth_inf_bian	Celestal Dragon Demon Slayers	true
-unit_description_short_texts_text_cth_inf_bian	Those who wield the iron whip can strike down demons and break through evil forces, unmatched by any.	true
-land_units_onscreen_name_cth_inf_dual_hammer	Celestal Dragon Guard (Dual Hammers)	true
-unit_description_short_texts_text_cth_inf_dual_hammer	Those who wield dual hammers are as strong as gods, possessing immense power. With the strength of four elephants, they can crush iron as if it were mud, surpassing even the strength of the legendary Xiang Yu.	true
-land_units_onscreen_name_cth_inf_gouxiang	Hook Shield Guard	true
-unit_description_short_texts_text_cth_inf_gouxiang	Wielding hook-claws in battle, they can defend against slashing attacks, but without armor, they must avoid enemy arrows.	true
-land_units_onscreen_name_cth_cav_xiaoguojun	Xiaoguo Guard	true
-unit_description_short_texts_text_cth_cav_xiaoguojun	The Xiaoguo Guard is the imperial guard of Weijing, skilled in wielding the lance and fighting on horseback, capable of taking on ten enemies at once.	true
-land_units_onscreen_name_cth_cav_nangao_fire_lance	Nan-Gau Fire Lancers	true
-unit_description_short_texts_text_cth_cav_nangao_fire_lance	The craftsmen of Nan-Gau have created the divine weapons of this era. Demons flee at their sight.	true
-land_units_onscreen_name_cth_inf_fire_explosion_crossbow	Nan-Gau Explosive Crossbowmen	true
-unit_description_short_texts_text_cth_inf_fire_explosion_crossbow	The Nan-Gau crafted these decisive weapons, capable of overwhelming enemies with immense force.	true
-land_units_onscreen_name_cth_inf_moon_yinyang_maiden	Moon Empress Maidens	true
-unit_description_short_texts_text_cth_inf_moon_yinyang_maiden	Skilled in dual swordsmanship, they can imbue their arrows with the power of Yin and Yang, killing enemies before they even see them.	true
-land_units_onscreen_name_cth_inf_nangao_firework_trops	Celestial Fire Lances	true
-unit_description_short_texts_text_cth_inf_nangao_firework_trops	Capable of both ranged and melee attacks, these elite troops of Nan-Gau have fought alongside Miao Ying  in multiple battles against Chaos.	true
-land_units_onscreen_name_cth_veh_war_compass_1	Wu Xing Siege Compass	true
-unit_description_short_texts_text_cth_veh_war_compass_1	The Five Elements War Compass unleashes firepower comparable to a cannon.	true
-land_units_onscreen_name_cth_inf_onyx_armored_crowmen	Armored Onyx Crowmen	true
-unit_description_short_texts_text_cth_inf_onyx_armored_crowmen	Some Onyx Crowmen are like spies lurking in the dark, delivering deadly strikes when the enemy least expects it.	true
-land_units_onscreen_name_cth_mon_terracotta_sentinel_watcher	Terracotta Sentry	true
-unit_description_short_texts_text_cth_mon_terracotta_sentinel_watcher	Positioned along the Great Bastion, they scout enemies from miles away, with watchtowers spread every ten miles, forming an extensive network.	true
-land_units_onscreen_name_cth_veh_sky_ark	Sky Ark	false
-unit_description_short_texts_text_cth_veh_sky_ark	Driven by the power of the Celestial Minister, this ship is the most powerful vessel in all of Cathay, though its sighting is rare due to the scarcity of Celestial Ministers.	false
-land_units_onscreen_name_cth_veh_sky_boat	Sky Boats	false
-unit_description_short_texts_text_cth_veh_sky_boat	Powered by the force of the Taiyue Luan, the Sky Boats are often used for patrolling the area around the Great Bastion, allowing for extensive surveillance.	false
+unit_description_short_texts_text_cth_inf_thunderbolt_gunners	Thunderbolt Gunners excel with firearms, deploying armored infantry ahead to shield them from harm.	true
+land_units_onscreen_name_cth_inf_pioneer_scouts	Pioneer Scouts	true
+unit_description_short_texts_text_cth_inf_pioneer_scouts	Pioneer Scouts excel at surprise attacks, striking first and leaving the enemy nowhere to hide.	true
+land_units_onscreen_name_cth_mon_terracotta_sentinels_small	Rampart Terracotta Sentinels	true
+unit_description_short_texts_text_cth_mon_terracotta_sentinels_small	Massed together, the terracotta warriors become unstoppable, overturning mountains and seas, overpowering all rivals.	true
+land_units_onscreen_name_cth_thunder_attack_gunners	Golden Crow Gunners	true
+unit_description_short_texts_text_cth_thunder_attack_gunners	Firearms forged by Nan Gau smiths that can destroy the enemy from a thousand miles away. Wielded by the elite of the Great Bastion, every shot finds its mark.	true
+land_units_onscreen_name_cth_cav_celestial_mighty_axe_guard	Celestial Mighty Axe Guard	true
+unit_description_short_texts_text_cth_cav_celestial_mighty_axe_guard	The Celestial Mighty Axe Guard bear the Dragon Emperor's mandate, with iron resolve sworn to defend Cathay's lands to the death—though not fully trained, they know but three axe strokes.	true
+land_units_onscreen_name_cth_inf_jade_warrior_halberd_shield	Palace Guard Battalion	true
+unit_description_short_texts_text_cth_inf_jade_warrior_halberd_shield	The soul of Cathay's Great Bastion, a wall of shields and a forest of spears through which no foe dares pass.	true
+land_units_onscreen_name_cth_cav_jade_crossbow_rider	Jade Crossbow Riders	true
+unit_description_short_texts_text_cth_cav_jade_crossbow_rider	Swift as the wind, measured as the forest, ravaging as fire, immovable as the mountain.	true
+land_units_onscreen_name_cth_cav_celestial_crossbow_rider	Celestial Mounted Archers	true
+unit_description_short_texts_text_cth_cav_celestial_crossbow_rider	The elite of the Dragon Emperor, veterans of a thousand battles great and small, foremost among cavalry.	true
+land_units_onscreen_name_cth_inf_dragon_tiger_guard	Celestial Imperial Guard	true
+unit_description_short_texts_text_cth_inf_dragon_tiger_guard	The Dragon Emperor's personal guard, excelling at fighting infantry, though somewhat strained against massive beasts.	true
+land_units_onscreen_name_cth_cav_jade_longma_crassbow_rider	Dragon-Horse Crossbow Riders	true
+unit_description_short_texts_text_cth_cav_jade_longma_crassbow_rider	Wielding Nan Gau's divine engines, they rain arrows like a storm.	true
+land_units_onscreen_name_cth_inf_jade_warrior_great_sword	Jade Warriors (Greatsword)	true
+unit_description_short_texts_text_cth_inf_jade_warrior_great_sword	The greatsword is used opposite to spear and shield—only when placed at the rear of a formation does its might truly show.	true
+land_units_onscreen_name_cth_inf_dual_jian	Celestial Left Guard	true
+unit_description_short_texts_text_cth_inf_dual_jian	The Left Guard fights with paired maces, excelling at breaking heavy armor.	true
+land_units_onscreen_name_cth_inf_bian	Celestial Divine Strategy Army	true
+unit_description_short_texts_text_cth_inf_bian	Those who wield the iron whip strike down ghosts and spirits, breaking every evil—none can rival them in exorcising the wicked.	true
+land_units_onscreen_name_cth_inf_dual_hammer	Celestial Right Guard	true
+unit_description_short_texts_text_cth_inf_dual_hammer	Those who wield twin hammers are as gods, possessed of boundless strength. Their arms hold a valor beyond measure, crushing iron like clay, surpassing even Xiang Yu of the Han era.	true
+land_units_onscreen_name_cth_inf_gouxiang	Hook-Shield Guard	true
+unit_description_short_texts_text_cth_inf_gouxiang	Those who wield the hook-shield can guard against slashing blows, but being unarmored, must avoid stray arrows.	true
+land_units_onscreen_name_cth_cav_xiaoguojun	Valiant Fruit Guards	true
+unit_description_short_texts_text_cth_cav_xiaoguojun	The Valiant Fruit Guards are the imperial guard of the Grand Capital, skilled with the mace-spear and mounted combat, each worth ten men.	true
+land_units_onscreen_name_cth_cav_nangao_fire_lance	Nan Gau Blazing Cavalry	true
+unit_description_short_texts_text_cth_cav_nangao_fire_lance	A divine weapon of this age, forged by Nan Gau artisans. Demons flee at the mere sight of it.	true
+land_units_onscreen_name_cth_inf_fire_explosion_crossbow	Nan Gau Divine Engine Army	true
+unit_description_short_texts_text_cth_inf_fire_explosion_crossbow	A decisive weapon of war forged in Nan Gau, capable of crushing the enemy with overwhelming force.	true
+land_units_onscreen_name_cth_inf_moon_yinyang_maiden	Twin Moon Yin-Yang Envoys	true
+unit_description_short_texts_text_cth_inf_moon_yinyang_maiden	Skilled with twin blades, they channel yin and yang power into their arrows—the enemy falls dead before they even see a shadow.	true
+land_units_onscreen_name_cth_inf_nangao_firework_trops	Nan Gau Zhu Long Guard	true
+unit_description_short_texts_text_cth_inf_nangao_firework_trops	Deadly at range, deadly in melee. The elite of Nan Gau, who marched with Miao Ying time and again to strike at Chaos along the Great Bastion.	true
+land_units_onscreen_name_cth_veh_war_compass_1	Five Elements Bombard Compass	true
+unit_description_short_texts_text_cth_veh_war_compass_1	Harnesses the power of the Five Elements Compass to unleash firepower rivaling a cannon.	true
+land_units_onscreen_name_cth_inf_onyx_armored_crowmen	Onyx-Armored Crow Guard	true
+unit_description_short_texts_text_cth_inf_onyx_armored_crowmen	Some of the onyx-armored crow-men act like agents lurking in the dark, delivering a fatal blow when the enemy least expects it.	true
+land_units_onscreen_name_cth_mon_terracotta_sentinel_watcher	Rampart Watcher	true
+unit_description_short_texts_text_cth_mon_terracotta_sentinel_watcher	Atop the Great Bastion, they watch for enemies a thousand miles distant, one watchpost every ten miles, stretching on in vast, unbroken numbers.	true
+land_units_onscreen_name_cth_veh_sky_ark	Sky Ark Fortress	false
+unit_description_short_texts_text_cth_veh_sky_ark	Driven by the star-gazing power of the Si Tian Cheng, this vessel is the greatest ship in all of Cathay, though the rarity of the Si Tian Cheng means few ever witness it.	false
+land_units_onscreen_name_cth_veh_sky_boat	Sky Patrol Vessel	false
+unit_description_short_texts_text_cth_veh_sky_boat	Driven by the power of the Moon-Phoenix, this sky vessel is often used to patrol the surroundings of the Great Bastion, granting keen awareness of its environs.	false
 land_units_onscreen_name_cth_mon_celestial_lion_rider	Celestial Lion Riders	false
-unit_description_short_texts_text_cth_mon_celestial_lion_rider	In the forest of Haoyue, there are those skilled in taming the Celestial Lions.	false
+unit_description_short_texts_text_cth_mon_celestial_lion_rider	Within the Bright Moon Forest dwell those skilled in taming the celestial lions.	false

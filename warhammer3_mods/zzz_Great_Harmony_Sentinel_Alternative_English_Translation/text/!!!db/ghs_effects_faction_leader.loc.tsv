@@ -1,20 +1,26 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_effects_faction_leader.loc		
 effects_description_wh2_settra_force_stat_chariot_mass_percentage_mod	Army Mass: %+n%	true
-effects_description_wh2_settra_force_stat_chariot_charge_bonus	Chariot Charge bonus: %+n%	true
-effects_description_wh2_arkhan_force_stat_armour_vampire	Armour for Vampire Counts units: %+n	true
-effects_description_wh2_arkhan_force_stat_upkeep_vampire	Vampire Counts units Fatigue Rate: %+n%	true
-effects_description_wh2_khalida_force_stat_missile_ap_skeleton_archer	Armour-Piercing Missile Damage for Skeleton Archers: %+n%	true
-effects_description_wh2_khatep_effect_attribute_spell_mastery_mage_heirotitan	Unlock Attribute for Liche Priests and Hierotitan units: Mastery of the Winds	true
-effects_description_wh3_skrag_enable_bloodgreed	Unlock Ability for Gorgers: Blood Greed	true
-effects_description_wh3_greasus_enable_ironguts_guardian	Unlock Ability for Ironguts and Maneaters units: Guardian	true
-effects_description_wh3_greasus_stat_ironguts_xp_bonus	For Ironguts and Maneaters units, Speed and Armour-Piercing Melee Damage increase by %+n% per level	true
-effects_description_wh3_miaoying_enable_hawk_eye	Unlock Ability for Archers and Crossbowmen units: Hawk-Eye Precision	true
-effects_description_wh2_tiktaqto_terradon_ripperdactyl_coatl	Unlock Ability for Terradons, Ripperdactyls, and Coatl units: Swift as the Wind	true
-effects_description_wh2_mazdamundi_slann_barrier_health_add	Mazdamundi and Slann Mage-Priests' Barrier Health: %+n	true
-effects_description_wh2_mazdamundi_slann_barrier_replenish_delay_mod	Mazdamundi and Slann Mage-Priests' Barrier Replenishment Delay: %+n%	true
-effects_description_wh2_mazdamundi_slann_barrier_replenish_rate_mod	Mazdamundi and Slann Mage-Priests' Barrier Replenishment Rate: %+n%	true
-effects_description_wh3_katarin_effect_stat_missile_ap_damage_ksl_ice_guard	Armour-Piercing Missile Damage for Ice Guard, Frostbear Sisterhood, and Snow Eagle Riders: %+n%	true
-effects_description_wh3_katarin_ice_witch_barrier_health_add	Barrier Health for Tzarina Katarin and Ice Witches: %+n	true
-effects_description_wh3_katarin_effect_attribute_spell_mastery_mage_elemental_bear	Unlock Attribute for Frost Maidens and Elemental Bear units: Mastery of the Winds	true
-effects_description_wh3_boris_stat_tzar_guard_xp_bonus	For War Bear Riders, Kreml Guards, and Tzar Guard units, Speed and Charge Bonus increase by %+n% per level	true
+effects_description_wh2_settra_force_stat_chariot_charge_bonus	Chariot Charge Bonus: %+n%	true
+effects_description_wh2_arkhan_force_stat_armour_vampire	Vampire Counts unit Armour: %+n	true
+effects_description_wh2_arkhan_force_stat_upkeep_vampire	Vampire Counts unit Fatigue Rate: %+n%	true
+effects_description_wh2_khalida_force_stat_missile_ap_skeleton_archer	Skeleton Archer Armour-Piercing Missile Damage: %+n%	true
+effects_description_wh2_khatep_effect_attribute_spell_mastery_mage_heirotitan	Unlocks attribute for accompanying Liche Priests and Hierotitan units: Mastery of Elemental Winds	true
+effects_description_wh3_skrag_enable_bloodgreed	Predator units unlock skill: 'Bloodgreed'	true
+effects_description_wh3_greasus_enable_ironguts_guardian	Ironguts and Maneaters units unlock skill: 'Guardian'	true
+effects_description_wh3_greasus_stat_ironguts_xp_bonus	For every rank gained, Ironguts and Maneaters units gain %+n% Speed and Melee Armour-Piercing Weapon Damage	true
+effects_description_wh2_tiktaqto_terradon_ripperdactyl_coatl	Terradon, Ripperdactyl and Coatl units unlock skill: 'Swift as the Wind'	true
+effects_description_wh2_mazdamundi_slann_barrier_health_add	Mazdamundi and accompanying Slann Mage-Priests' Ward Barrier Hit Points: %+n	true
+effects_description_wh2_mazdamundi_slann_barrier_replenish_delay_mod	Mazdamundi and accompanying Slann Mage-Priests' Ward Barrier Replenish Delay: %+n%	true
+effects_description_wh2_mazdamundi_slann_barrier_replenish_rate_mod	Mazdamundi and accompanying Slann Mage-Priests' Ward Barrier Replenish Rate: %+n%	true
+effects_description_wh3_katarin_effect_stat_missile_ap_damage_ksl_ice_guard	Ice Guard, Sisterhood of the Frost Bear, Snow Eagle Knights Missile Armour-Piercing Damage: %+n%	true
+effects_description_wh3_katarin_ice_witch_barrier_health_add	Tzarina Katarin, Ice Witches and Frost Maidens' Ward Barrier Hit Points: %+n	true
+effects_description_wh3_katarin_effect_attribute_spell_mastery_mage_elemental_bear	Unlocks attribute for Tzarina Katarin, Ice Witches, Frost Maidens and Elemental Bear units: Mastery of Elemental Winds	true
+effects_description_wh3_boris_stat_tzar_guard_xp_bonus	For every rank gained, War Bear Riders, Tzar Guard and Kreml Guard units gain %+n% Weapon Strength, Speed and Charge Bonus	true
+effects_description_wh3_fay_effect_attribute_spell_mastery_prophetess	Unlocks attribute for the Fay Enchantress, Prophetess and Damsel: Mastery of Elemental Winds	true
+effects_description_wh3_fay_prophetess_barrier_health_add	Fay Enchantress, Prophetess and Damsel Ward Barrier Hit Points: %+n	true
+effects_description_wh3_golgfag_stat_maneater_xp_bonus	[[col:orange]]'Mightiest of Mercenaries': For every rank gained, Golgfag's Maneater units gain %+n% Leadership, Melee Attack and Defence, Armour, Speed and Armour-Piercing Melee Damage[[/col]]	true
+effects_description_wh3_imrik_stat_dragon_prince_xp_bonus	[[col:orange]]'Glory of Caledor': For every rank gained, Imrik's Dragon Prince and Dragon units gain %+n% Physical Resistance, Speed and Weapon Armour-Piercing Damage[[/col]]	true
+effects_description_wh3_miaoying_enable_dig_in	Cathayan ranged units unlock skill: 'Dig In'	true
+effects_description_wh3_repanse_enable_dig_in	Trebuchet units unlock skill: 'Dig In'	true
+effects_description_wh3_repanse_stat_peasant_xp_bonus	For every rank gained, Peasant Mob, Men-at-Arms, Spearmen, Grail Reliquae, Battle Pilgrims and Squires on Foot units gain %+n% Physical Resistance, Weapon Strength, Melee Attack and Defence, Charge Bonus	true

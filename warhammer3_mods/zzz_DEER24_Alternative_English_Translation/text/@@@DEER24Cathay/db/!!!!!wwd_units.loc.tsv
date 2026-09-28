@@ -1,248 +1,248 @@
 key	text	tooltip
 #Loc;1;text/@@@DEER24Cathay/db/!!!!!wwd_units.loc		
-effects_description_wwd_celestial_general_level	New Lord Level: Celestial General %+n	false
-effects_description_wwd_magistrate_level	New Lord Level: Magistrate %+n	false
-effects_description_wwd_fubing_leg	Allows recruitment of massive Fubing Legions	false
-effects_description_wwd_nicheng_shuren	Starts with Skaven allies	false
-effects_description_wwd_bianjun_able	Allows recruitment of the Great Bastion Border Army	false
-effects_description_wwd_fubing_shangxian	Unit Capacity: %+n \\n Fubing	false
-effects_description_wwd_yushijun_cp	Unit Capacity: %+n \\n Jade Shields	false
-effects_description_wwd_longma_speed	Speed: Longma Units %+n%	true
-land_units_onscreen_name_wh3_deer24_BINGYONG	Eternal Bastion Champions	false
-land_units_onscreen_name_wh3_deer24_HUREN	Barbarian Vanguard	false
-land_units_onscreen_name_wh3_deer24_HUREN1	Mountain Elders	false
-land_units_onscreen_name_wh3_deer24_HUXIA	Palace Tiger Guards	false
-land_units_onscreen_name_wh3_deer24_JINGUO	Peach Blossom Maidens	false
-land_units_onscreen_name_wh3_deer24_JINYIWEI	Crimson Watch	false
-land_units_onscreen_name_wh3_deer24_NU	Nomadic Warriors	false
-land_units_onscreen_name_wh3_deer24_buxingqiexuenu	Terror Guard (Foot Unit)	false
-land_units_onscreen_name_wh3_deer24_NUQI	Nomadic Horse Archers	true
-land_units_onscreen_name_wh3_deer24_QIMA	Anchored Riders	false
-land_units_onscreen_name_wh3_deer24_SHE	Dragonfire Arquebusiers	false
-land_units_onscreen_name_wh3_deer24_SHENJI	Quad-Eyed Arquebusiers	false
-land_units_onscreen_name_wh3_deer24_XIAOYONG	Breakthrough Battlers	false
-land_units_onscreen_name_wh3_deer24_XUANWU	Black Tortoise	true
-land_units_onscreen_name_wh3_deer24_baihu	White Tiger	true
-land_units_onscreen_name_wh3_deer24_doulishenji	Fishscale Arquebusiers	false
-land_units_onscreen_name_wh3_deer24_douseng	Dragon Monks of the Deeps	false
-land_units_onscreen_name_wh3_deer24_fo	Golden Phoenix Guards	false
-land_units_onscreen_name_wh3_deer24_fubing	Fubing	false
-land_units_onscreen_name_wh3_deer24_fubing_sword	Nine Provinces Flagbearers	false
-land_units_onscreen_name_wh3_deer24_jiaNU	Nomadic Heavy Infantry	false
-land_units_onscreen_name_wh3_deer24_jiaNUQI	Nomadic Terror Cavalry	true
-land_units_onscreen_name_wh3_deer24_jinwu	Thousand Bulls Honor Guards	true
-land_units_onscreen_name_wh3_deer24_jinwu_horse	Guan Ning Armored Riders	true
-land_units_onscreen_name_wh3_deer24_junshou	Mythical Lions	true
-land_units_onscreen_name_wh3_deer24_leizhenzi	Thunderbolt Generals	false
-land_units_onscreen_name_wh3_deer24_mulansheshou	Mulberry Bowmen	false
-land_units_onscreen_name_wh3_deer24_penhuobing	Dragon Staff Troopers	false
-land_units_onscreen_name_wh3_deer24_qintongpao	Bronze Cannons	false
-land_units_onscreen_name_wh3_deer24_sanshenji	Trio Blossom Artillery	false
-land_units_onscreen_name_wh3_deer24_tianwang	Sovereign Kings	false
-land_units_onscreen_name_wh3_deer24_tianwang1	Subjugator Kings	false
-land_units_onscreen_name_wh3_deer24_warchariot	Changwu War Chariots	true
-land_units_onscreen_name_wh3_deer24_wuren	Cathayan Warriors	false
-land_units_onscreen_name_wh3_deer24_wuseng	Five Paths Monks	false
-land_units_onscreen_name_wh3_deer24_xia	Celestial Guards	false
-land_units_onscreen_name_wh3_deer24_xianzhen	Mystic Phalanx	false
-land_units_onscreen_name_wh3_deer24_xiongmaoren	Forest Walkers	false
-land_units_onscreen_name_wh3_deer24_yangjiajiang	桂阴 Generals	false
-land_units_onscreen_name_wh3_deer24_yushijun	Jade Shields	false
-land_units_onscreen_name_wh3_deer24_zhuque	Vermillion Bird	true
-special_ability_phases_onscreen_name_MISSILE_YUEGONG	Moonlit Draw	false
-special_ability_phases_onscreen_name_wh3_deer24_abilities_BAIHONG	White Rainbow Strike	true
+effects_description_wwd_celestial_general_level	New Lord recruit rank: Celestial General %+n	false
+effects_description_wwd_magistrate_level	New Lord Rank: Magistrate %+n%	false
+effects_description_wwd_fubing_leg	Unlocks recruitment for the vast Militia Legions	false
+effects_description_wwd_nicheng_shuren	Start the campaign with a Skaven ally	false
+effects_description_wwd_bianjun_able	Unlocks recruitment for Chang Yuan Frontier Army	false
+effects_description_wwd_fubing_shangxian	Unit Capacity: %+n%\\nGuard Corps Soldiers, Banner Troops	false
+effects_description_wwd_yushijun_cp	Unit Capacity: %+n%\\nShu Shu Jade Attendants	false
+effects_description_wwd_longma_speed	Speed: Coiling Dragon Steed units %+n%	true
+land_units_onscreen_name_wh3_deer24_BINGYONG	Genwuan Yuan Ying	false
+land_units_onscreen_name_wh3_deer24_HUREN	Zang Suan	false
+land_units_onscreen_name_wh3_deer24_HUREN1	Old Man of the Mountain	false
+land_units_onscreen_name_wh3_deer24_HUXIA	Kun Hall Tiger Warriors	false
+land_units_onscreen_name_wh3_deer24_JINGUO	Xing Lin Maidens	false
+land_units_onscreen_name_wh3_deer24_JINYIWEI	Hong Wu Overseers	false
+land_units_onscreen_name_wh3_deer24_NU	Hu Tribesmen Warriors	false
+land_units_onscreen_name_wh3_deer24_buxingqiexuenu	Kheshig (Foot Guard)	false
+land_units_onscreen_name_wh3_deer24_NUQI	Hu Tribesmen Horse Archers	true
+land_units_onscreen_name_wh3_deer24_QIMA	An Guan Cavalry	false
+land_units_onscreen_name_wh3_deer24_SHE	Dragon Gun Divine Engine Corps	false
+land_units_onscreen_name_wh3_deer24_SHENJI	Four-Eyed Divine Engine Corps	false
+land_units_onscreen_name_wh3_deer24_XIAOYONG	Battle-Breaker	false
+land_units_onscreen_name_wh3_deer24_XUANWU	Xuan Wu	true
+land_units_onscreen_name_wh3_deer24_baihu	Bai Hu	true
+land_units_onscreen_name_wh3_deer24_doulishenji	Riverside Gunmen	false
+land_units_onscreen_name_wh3_deer24_douseng	Demon-Taming Dragon Monks	false
+land_units_onscreen_name_wh3_deer24_fo	Jin Wu Yi Wei	false
+land_units_onscreen_name_wh3_deer24_fubing	Guard Corps Soldiers	false
+land_units_onscreen_name_wh3_deer24_fubing_sword	Nine Prefectures Banner Troops	false
+land_units_onscreen_name_wh3_deer24_jiaNU	Hu Tribesmen Armored Warriors	false
+land_units_onscreen_name_wh3_deer24_jiaNUQI	Kheshig	true
+land_units_onscreen_name_wh3_deer24_jinwu	Qian Niu Honor Guards	true
+land_units_onscreen_name_wh3_deer24_jinwu_horse	Guan Ning Crossbow Cavalry	true
+land_units_onscreen_name_wh3_deer24_junshou	Suan Ni	true
+land_units_onscreen_name_wh3_deer24_leizhenzi	Thunder Lord	false
+land_units_onscreen_name_wh3_deer24_mulansheshou	Hou Qing Guards	false
+land_units_onscreen_name_wh3_deer24_penhuobing	Dragon Staff Corps	false
+land_units_onscreen_name_wh3_deer24_qintongpao	Bronze Cannon	false
+land_units_onscreen_name_wh3_deer24_sanshenji	Iron Blossom Whisperers	false
+land_units_onscreen_name_wh3_deer24_tianwang	Heavenly King Shi Peng	false
+land_units_onscreen_name_wh3_deer24_tianwang1	Heavenly King Zhu Fu	false
+land_units_onscreen_name_wh3_deer24_warchariot	Chang Wu War Chariot	true
+land_units_onscreen_name_wh3_deer24_wuren	Zhen Dan Warriors	false
+land_units_onscreen_name_wh3_deer24_wuseng	Five Elements Warrior Monks	false
+land_units_onscreen_name_wh3_deer24_xia	Liang Yi Palace Guards	false
+land_units_onscreen_name_wh3_deer24_xianzhen	Dark Spirit Army	false
+land_units_onscreen_name_wh3_deer24_xiongmaoren	Forest Wanderer	false
+land_units_onscreen_name_wh3_deer24_yangjiajiang	Gui Yin General	false
+land_units_onscreen_name_wh3_deer24_yushijun	Shu Shu Jade Attendants	false
+land_units_onscreen_name_wh3_deer24_zhuque	Zhu Que	true
+special_ability_phases_onscreen_name_MISSILE_YUEGONG	Moonlit Night Draw	false
+special_ability_phases_onscreen_name_wh3_deer24_abilities_BAIHONG	Disdainful White Rainbow	true
 special_ability_phases_onscreen_name_wh3_deer24_abilities_FENGHUA	Dance of Elegance	false
-special_ability_phases_onscreen_name_wh3_deer24_abilities_HU	Sweeping Army	false
-special_ability_phases_onscreen_name_wh3_deer24_abilities_LONGWEI	Might of the Dragon	true
-special_ability_phases_onscreen_name_wh3_deer24_abilities_POXIE	Anti-Magic Feather	true
-special_ability_phases_onscreen_name_wh3_deer24_abilities_QISHA	Seamless Harmony	false
-special_ability_phases_onscreen_name_wh3_deer24_abilities_zhuquecifu	Vermillion Touch	false
-special_ability_phases_onscreen_name_wh3_deer24_abilities_zhuquezhanshi	Thunderbolt Vanguard	false
-ui_unit_bullet_point_enums_onscreen_name_BINGMAYONG	Terracotta Warriors	false
-ui_unit_bullet_point_enums_onscreen_name_HUREN	Nomadic Tribesmen	false
-ui_unit_bullet_point_enums_onscreen_name_JINJUN	Imperial Army	false
-ui_unit_bullet_point_enums_onscreen_name_ZHENSHOU	Mythic Beasts	false
-ui_unit_bullet_point_enums_tooltip_BINGMAYONG	Terracotta warriors forged by Cathayan artisans. They are slow-moving but boast higher [[img:ui/skins/default/icon_stat_armour.png]][[/img]] armor and durability than standard units, with strong resistance to magic and fire. They are unaffected by [[img:icon_morale]][[/img]] morale and [[img:ui/battle ui/ability_icons/fatigue_immune.png]][[/img]] fatigue. Master artisans of Cathay can repair and enhance them during battle.	false
-ui_unit_bullet_point_enums_tooltip_HUREN	This unit hails from Cathay’s northern nomadic tribes, with morale effects that only influence other nomadic units.	false
-ui_unit_bullet_point_enums_tooltip_JINJUN	This elite unit represents one of Cathay’s Imperial Armies, boasting high [[img:icon_melee_attack]][[/img]] melee attack and [[img:icon_melee_defence]][[/img]] melee defense, often augmented with unique attack effects.	false
-ui_unit_bullet_point_enums_tooltip_ZHENSHOU	This mythical beast from Cathay’s legends possesses high [[img:icon_melee_attack]][[/img]] melee attack and [[img:icon_melee_defence]][[/img]] melee defense, terrifies enemies with [[img:ui/battle ui/ability_icons/causes_terror.png]][[/img]] and wields powerful special abilities.	false
+special_ability_phases_onscreen_name_wh3_deer24_abilities_HU	Sweeping the Legions	false
+special_ability_phases_onscreen_name_wh3_deer24_abilities_LONGWEI	Majesty of the Vast Dragon	true
+special_ability_phases_onscreen_name_wh3_deer24_abilities_POXIE	Demon-Breaking Feather Edge	true
+special_ability_phases_onscreen_name_wh3_deer24_abilities_QISHA	Seamless Heavenly Robe	false
+special_ability_phases_onscreen_name_wh3_deer24_abilities_zhuquecifu	Touch of Vermilion	false
+special_ability_phases_onscreen_name_wh3_deer24_abilities_zhuquezhanshi	Thunderclap of Annihilation	false
+ui_unit_bullet_point_enums_onscreen_name_BINGMAYONG	Terracotta Warrior	false
+ui_unit_bullet_point_enums_onscreen_name_HUREN	Hu Tribesmen	false
+ui_unit_bullet_point_enums_onscreen_name_JINJUN	Imperial Guard	false
+ui_unit_bullet_point_enums_onscreen_name_ZHENSHOU	Beasts of Mountains and Seas	false
+ui_unit_bullet_point_enums_tooltip_BINGMAYONG	This unit consists of statue-warriors forged by Zhen Dan craftsmen. They typically move slowly, but possess higher [[img:ui/skins/default/icon_stat_armour.png]][[/img]]Armour and Mass than regular units, along with substantial resistance to magic and fire, and are unaffected by [[img:icon_morale]][[/img]]Morale or [[img:ui/battle ui/ability_icons/fatigue_immune.png]][[/img]]Fatigue in battle. Zhen Dan's master artisans can repair and further reinforce these units during combat.	false
+ui_unit_bullet_point_enums_tooltip_HUREN	This unit hails from the nomadic tribes of northern Zhen Dan. Its morale-affecting effects only apply to other Hu Tribesmen units	false
+ui_unit_bullet_point_enums_tooltip_JINJUN	This unit is one of the many Imperial Guard forces stationed across Zhen Dan, possessing extremely high [[img:icon_melee_attack]][[/img]]Melee Attack and [[img:icon_melee_defence]][[/img]]Melee Defence, and typically bears a unique weapon enchantment effect	false
+ui_unit_bullet_point_enums_tooltip_ZHENSHOU	This unit is one of the legendary great beasts of Zhen Dan. These semi-divine creatures possess extremely high [[img:icon_melee_attack]][[/img]]Melee Attack and [[img:icon_melee_defence]][[/img]]Melee Defence, can inflict [[img:ui/battle ui/ability_icons/causes_terror.png]][[/img]]Terror upon enemies, and wield exceptionally powerful special abilities	false
 ui_unit_groupings_onscreen_wh3_deer24_BINGYONG	Infantry	false
 ui_unit_groupings_onscreen_wh3_deer24_BINGYONG2	Monstrous Infantry	false
-ui_unit_groupings_onscreen_wh3_deer24_DANEI	Inner Court Vanguard	false
-ui_unit_groupings_onscreen_wh3_deer24_DANEISHE	Inner Court Vanguard	false
-ui_unit_groupings_onscreen_wh3_deer24_JINJUN	[[col:yellow]] Imperial Army [[/col]]	false
-ui_unit_groupings_onscreen_wh3_deer24_JINJUNQI	[[col:yellow]] Imperial Cavalry [[/col]]	false
-ui_unit_groupings_onscreen_wh3_deer24_JINJUNQI2	[[col:yellow]] Imperial Cavalry [[/col]]	false
-ui_unit_groupings_onscreen_wh3_deer24_JINJUNSHE	[[col:yellow]] Imperial Gunners [[/col]]	false
-ui_unit_groupings_onscreen_wh3_deer24_shenshou	[[col:red]] Mythical Beasts [[/col]]	true
-unit_abilities_additional_ui_effects_localised_text_wh3_deer24_abilities_hailongjiajun	The Tideguard shifts formations to adapt to battlefield scenarios.	false
+ui_unit_groupings_onscreen_wh3_deer24_DANEI	Inner Palace Council	false
+ui_unit_groupings_onscreen_wh3_deer24_DANEISHE	Inner Palace Council	false
+ui_unit_groupings_onscreen_wh3_deer24_JINJUN	[[col:yellow]]Imperial Guard[[/col]]	false
+ui_unit_groupings_onscreen_wh3_deer24_JINJUNQI	[[col:yellow]]Imperial Guard[[/col]]	false
+ui_unit_groupings_onscreen_wh3_deer24_JINJUNQI2	[[col:yellow]]Imperial Guard[[/col]]	false
+ui_unit_groupings_onscreen_wh3_deer24_JINJUNSHE	[[col:yellow]]Imperial Guard[[/col]]	false
+ui_unit_groupings_onscreen_wh3_deer24_shenshou	[[col:red]]Guardian Beast[[/col]]	true
+unit_abilities_additional_ui_effects_localised_text_wh3_deer24_abilities_hailongjiajun	The unit can switch formations to adapt to different situations	false
 unit_abilities_onscreen_name_wh3_deer24_abilities_HUREN1	Tiger Leap	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_baihu	White Tiger Ward	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_changhuan	Eternal Curse	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_douseng	Iron Bell Guard	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_liugenqingjing	Serenity of Six Roots	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_douseng1	Iron Body	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_hailongjiajun	Union Formation: Heaven	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinjun	Heavenly Battle Array	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu	Rumbling Jade	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_horse02	Overrun	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinyiwei	Blood-Drenched Blades	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_jixie	Steel-Clad Titans	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_junshou	Vanquish Evil	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_leigong	Thunderous Might	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_liejiufengbao	Fragrant Flow	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_longjia	Heavenly Dragon Armor	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_yufo	Divine Forging	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_longnv	Celestial Walk	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_mao	Azure Hide	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_nanlishuangbian	Protector of the Nation	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_shixin	Scalding Stoneheart	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_sishi	Heroic Resolve	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang	Wrathful Celestial	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_tianwangshou	Scaled Savior	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_tuimo	Demonic Banisher	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_xuanwu	Black Tortoise Ward	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_baihu	White Tiger Trigram	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_changhuan	Endless Spirit Puppets, the Calamity Ceases	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_douseng	Golden Bell Shield	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_liugenqingjing	Purity of the Six Roots	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_douseng1	Iron Shirt	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_hailongjiajun	Mandarin Duck Formation: Qian	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinjun	Array of Celestial Soldiers	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu	Soul-Shaking Kun Gang	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_horse02	Trampling Across Mountains and Rivers	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinyiwei	Blood-Dripping Blade	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_jixie	Forged Steel Divine Weapon	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_junshou	All Evils Retreat	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_leigong	Furred-Face Thunder Lord	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_liejiufengbao	Overflowing Fragrant Wine	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_longjia	Heavenly Court Dragon Armor	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_yufo	Mortal-Forged Lord	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_longnv	Moonlit Passage	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_mao	Azure Moon Beast Hide	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_nanlishuangbian	Guardian War God of the Nation	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_shixin	Blazing Stone Heart	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_sishi	Valiant and Heroic	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang	Wrathful-Eyed Sovereign	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_tianwangshou	Scaled Guardian of the World	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_tuimo	Demon-Repelling Feathered Wings	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_xuanwu	Xuan Wu Trigram	true
 unit_abilities_onscreen_name_wh3_deer24_abilities_yang	Essence of Martial Arts	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_yin	Moonlit Ceremony	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_yingling	Mortal Shells Shall Fade	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_yueliang	Proxy of the Moon Queen	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_zhengqihuayi	Golden Mandate	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_zhuque	Vermillion Bird Ward	true
-unit_abilities_onscreen_name_wh3_deer24_fashu_leigong	Thunder Forge	false
-unit_abilities_onscreen_name_wh3_deer24_fashu_liejiufengbao	Fiery Tempest	false
-unit_abilities_onscreen_name_wh3_deer24_fashu_zhuque	Avian Convergence	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_HUREN1	These reclusive beastmen warriors have honed their blade skills to perfection, sweeping through enemy lines like an autumn wind.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_baihu	The White Tiger’s ferocity intimidates enemies and emboldens allies.	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_changhuan	Guardians of Cathay’s ancient bastions, these warriors keep all manner of evil at bay.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_douseng	The martial spirit resonates through the temple’s bells, for all martial arts stem from Shaolin.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_liugenqingjing	To achieve the foundation of wisdom, one must cleanse the six roots and empty the five aggregates.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_douseng1	The ancient temple’s bells echo, warding off evil and upholding peace.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_hailongjiajun	The Tideguard, chosen by the Leviathan Dragon over years of coastal warfare, have forged unique tactics to repel relentless invasions.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinjun	To commoners, the Imperial Guards are akin to divine beings.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu	"Righteous anger erupts beneath stormy skies.\\n\\nWith unyielding resolve, we roar toward the heavens."	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinyiwei	Members of the Crimson Watch use specialized weapons to ensnare and strike distant targets with precision.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_jixie	Nangao, the heart of Cathayan forging, produces unparalleled weapons, including those wielded by the Ironwall Sentinels.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_junshou	The Suanni, a guardian beast, stands against all forms of treachery and evil.	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_leigong	Resembling a bird, this creature wields thunder and lightning, inspiring dread wherever it appears.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_liejiufengbao	The Forest Walker’s intoxicating aura alone can inebriate nearby foes.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_yufo	The statues guarding the temple embody vast reserves of spiritual energy within their jade-forged forms.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_longjia	The gilded armor of the Dragon Emperor’s Guard reflects Cathay’s superior craftsmanship and the Emperor’s strength.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_longnv	Women play a vital role in Cathayan forces, but only a select few, chosen by the Moon Queen, receive her blessings and serve in her name.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_mao	The White Lancers don hides of northern beasts blessed by the Moon Queen, granting them remarkable resilience.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_nanlishuangbian	The Southern Phoenix Guards are devout followers of the Vermillion Bird, embodying its fiery fervor and lighting up the southern lands.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_shixin	Jade Shields harbor the essence of celestial winds, their proud roars striking terror into invaders.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_sishi	"You entrusted me with the phoenix wood; I repay you with valor.\\n\\nIn death, I fulfill my loyalty."	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang	Heavenly King’s wrath extinguishes all malevolence.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_tianwangshou	The Heavenly King embodies compassion, bridging the realms of north and south.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_tuimo	The Ravenwing Corps’ armor is imbued with anti-demonic feathers, aiding them in purging heretical threats.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_xuanwu	The Black Tortoise embodies eternal life, preserving its vitality through millennia.	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_yang	"A single sword defended three thousand miles; one warrior turned back a million troops."	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_yin	The Moon Queen’s powers include healing, and her followers strive to embody her compassion.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_yingling	Though their second life fades, these spirits fight relentlessly for their homeland.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_yueliang	The Moonlit Archers, attendants of the Moon Queen, can extinguish the sun with their blessed arrows.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_zhengqihuayi	The Emerald Court’s unity and coordination surpass all other Imperial forces.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_zhuque	The Vermillion Bird draws celestial energy, leading the armies to glory.	true
-unit_abilities_tooltip_text_wh3_deer24_fashu_leigong	Thunder strikes forged into bolts of immense power, echoing across the land.	false
-unit_abilities_tooltip_text_wh3_deer24_fashu_liejiufengbao	Breathing fire and flame, the tempest scorches all deceit.	false
-unit_abilities_tooltip_text_wh3_deer24_fashu_zhuque	The Vermillion Bird’s cry commands all avian life to bow.	false
-unit_description_historical_texts_text_wh3_deer24_long_BINGYONG	Cathay’s terracotta warriors embody the will of its past heroes, serving as eternal guardians of the realm.	false
-unit_description_historical_texts_text_wh3_deer24_long_JINWEIJUN	The Imperial Guards are comprised of elite warriors from Cathay’s various courts, tasked with safeguarding the empire.	false
-unit_description_historical_texts_text_wh3_deer24_long_JINYIWEI	"Rest easy upon the battlefield; few return from the sands of war."	false
-unit_description_short_texts_text_wh3_deer24_short_BAIHONG	White blades strike swift as lightning, commanding the battlefield.	true
-unit_description_short_texts_text_wh3_deer24_short_BINGYONG	Mortal shells fade; eternal guardians endure.	false
-unit_description_short_texts_text_wh3_deer24_short_HUREN	These southern beastmen are said to be descended from the Dragon Emperor, serving as his talons against imperial foes.	false
-unit_description_short_texts_text_wh3_deer24_short_HUXIA	Tiger Guards excel in breaking enemy lines with their fierce combat skills.	false
-unit_description_short_texts_text_wh3_deer24_short_JINGUO	Dancing with blades, they illuminate the battlefield.	false
-unit_description_short_texts_text_wh3_deer24_short_JINYIWEI	The Crimson Watch shatters deceit and punishes betrayal.	false
-unit_description_short_texts_text_wh3_deer24_short_JIXIE	Steel defends the frontier, safeguarding Cathay.	true
-unit_description_short_texts_text_wh3_deer24_short_LONGNV	Clad in celestial armor, these women embody martial grace.	true
-unit_description_short_texts_text_wh3_deer24_short_LONGWEI	Divine might secures Cathay’s glory.	true
-unit_description_short_texts_text_wh3_deer24_short_NU	Nomadic warriors are fierce mercenaries, loyal to Cathay’s borderlands.	false
-unit_description_short_texts_text_wh3_deer24_qintongpao	Bronze cannons of ancient make return to the battlefield.	false
-unit_description_short_texts_text_wh3_deer24_short_POMO	Blades of anti-magic, swift and lethal.	true
-unit_description_short_texts_text_wh3_deer24_short_QIMA	Armored cavalry charge to secure victory.	false
-unit_description_short_texts_text_wh3_deer24_short_SHE	Iron rain shields the skies as thunder roars.	false
-unit_description_short_texts_text_wh3_deer24_short_SHENJI	Iron rain shields the skies as thunder roars.	false
-unit_description_short_texts_text_wh3_deer24_short_TIANDI	Feathers fall like blossoms, blood dyes the earth.	false
-unit_description_short_texts_text_wh3_deer24_short_TONGYONG	"One blade turned back a million."	false
-unit_description_short_texts_text_wh3_deer24_short_XIAOYONG	Armored riders charge with unstoppable force.	false
-unit_description_short_texts_text_wh3_deer24_short_XUANWU	[[img:icon_yang]][[col:white]]Unlock: Complete unit quest[[/col]]\\n\\nThe Black Tortoise stands as the northern sentinel, eternal and steadfast.	true
-unit_description_short_texts_text_wh3_deer24_short_YUEGONG	Arrows drawn under the moon, aimed to strike meteors.	false
-unit_description_short_texts_text_wh3_deer24_short_baihu	[[img:icon_yang]][[col:white]]Unlock: Complete unit quest[[/col]]\\n\\nThe White Tiger, born of metal’s essence, secures the west.	true
-unit_description_short_texts_text_wh3_deer24_short_doulishenji	Valor echoes in the mountain passes.	false
-unit_description_short_texts_text_wh3_deer24_short_fubing	Regional elites of Cathay, balancing loyalty and power.	false
-unit_description_short_texts_text_wh3_deer24_short_jinwu_horse	Cavalry rides with unwavering resolve.	true
-unit_description_short_texts_text_wh3_deer24_short_jinwu	Defenders of the empire with unmatched devotion.	true
-unit_description_short_texts_text_wh3_deer24_short_junshou	The Suanni roars, its guardians sing of its valor.	true
-unit_description_short_texts_text_wh3_deer24_short_mulansheshou	Warriors of unparalleled grace and precision.	false
-unit_description_short_texts_text_wh3_deer24_short_penhuobing	Fury burns bright, dedicated to the Emperor.	false
-unit_description_short_texts_text_wh3_deer24_short_sanshenji	Artillery protected by skilled warriors.	false
-unit_description_short_texts_text_wh3_deer24_short_seng	Cathay’s monks master harmony, aiding both people and empire.	false
-unit_description_short_texts_text_wh3_deer24_short_warchariot	War chariots carve paths to victory.	true
-unit_description_short_texts_text_wh3_deer24_short_wuren	Heroes of Cathay, swept by the winds of valor.	false
-unit_description_short_texts_text_wh3_deer24_short_xiang	[[img:icon_yang]][[col:white]]Unlock: Complete unit quest[[/col]]\\n\\nAllied tribes defend Cathay’s harmony.	false
-unit_description_short_texts_text_wh3_deer24_short_yangjiajiang	Warriors bound by duty and valor.	false
-unit_description_short_texts_text_wh3_deer24_short_zhuque	[[img:icon_yang]][[col:white]]Unlock: Complete unit quest[[/col]]\\n\\nThe Vermillion Bird rises, leading Cathay’s armies.	true
-land_units_onscreen_name_wh3_deer24_bixueshixiang	Jade-Blood Guardians	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinyiweieye	All-Seeing Eye	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinyiweiyang	Balance of Harmony	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinyiweieye	The Crimson Watch serve as the Emperor’s eyes and ears, missing no detail.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinyiweiyang	The cosmic balance sustains all, ever-turning.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_horse	Cathayan cavalry charges forward; the battle begins.	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_horse02	Elite riders of the Bastion, serving only the Warden.	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_horse	Thunderous Charge	true
-unit_abilities_onscreen_name_junshou_lengque	All-Encompassing Protection	true
-unit_abilities_tooltip_text_junshou_lengque	The Suanni channels celestial energies to bolster defenses.	true
-land_units_onscreen_name_wh3_deer24_giant	Mountain Colossus	false
-unit_description_short_texts_text_wh3_deer24_giant	The Mountain Colossus is as ancient as Cathay itself, a steadfast ally of the Dragon Emperor.	true
-unit_abilities_tooltip_text_wh3_deer24_giant_ab	With immense strength, it crushes all in its path.	true
-unit_abilities_onscreen_name_wh3_deer24_giant_ab	"Colossus"	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_yin	Rite of Lunar Radiance	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_yingling	The Mortal Shell Must Wither	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_yueliang	Acting for the Moon Empress	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_zhengqihuayi	Golden Jade Edict	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_zhuque	Trigram of the Vermilion Bird	true
+unit_abilities_onscreen_name_wh3_deer24_fashu_leigong	Forge Lightning	false
+unit_abilities_onscreen_name_wh3_deer24_fashu_liejiufengbao	Storm of Fiery Spirits	false
+unit_abilities_onscreen_name_wh3_deer24_fashu_zhuque	Hundred Birds Homage to the Phoenix	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_HUREN1	These orc warriors, who dwell in secluded mountains and forests, have honed their swordsmanship to perfection. They sweep through enemy ranks like an autumn gale.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_baihu	The White Tiger's ferocity cows the enemy and rallies the three armies.	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_changhuan	The Genwuan Yuan Ying are the guardians of the people of Zhen Dan, barring every manner of demon and specter from their door.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_douseng	Even the Buddha's chant carries a hero's spirit; all martial arts under heaven trace their roots to Shao Lin.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_liugenqingjing	Only when the six roots are purified can the foundation of sagehood be laid; only when the five aggregates are emptied can one speak of the way of benevolence and righteousness.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_douseng1	The bell of the ancient temple's purple bamboo tolls; they walk the martial world to subdue demons and vanquish evil.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_hailongjiajun	The Tide-Washing Court is the mightiest force along the Celestial Empire's vast coastline. They are champions selected by Ming Long through years of endless war, and have forged a battle style all their own in the ceaseless struggle against coastal incursions.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinjun	To mortal eyes, the Palace Guard soldiers appear as gods incarnate.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu	"Wrath bristles my hair against my cap, as I lean on the rail; the fierce rain has just ceased.\\n\\nI raise my eyes to gaze afar, and let loose a long howl to the sky, my heart ablaze with fervent resolve."	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinyiwei	Members of the Ceremonial Guard Office strike distant targets with specialized weapons, binding them and rending their flesh with concealed mechanisms.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_jixie	Nan Gau is the forging heart of all Zhen Dan, where tens of thousands of craftsmen toil day and night to supply the empire with divine weapons. As the final line of defense guarding the Ninth Wall, the Rampart Iron Guard's armor and arms are the very finest that Zhen Dan can produce.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_junshou	Suan Ni is a guardian beast of the sacred order; no evil, however cunning, dares to contend with it.	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_leigong	Bird-like in form, it wields the power to summon thunder and unleash lightning. Wherever it appears, thunderclaps crash in its wake, and all who witness it are struck with dread.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_liejiufengbao	The Forest Wanderer never parts with his wine; the mere scent of liquor about him is enough to leave onlookers reeling drunk.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_yufo	The Jade Blood Sovereigns are statues of heavenly kings that guard Daoist temples, their jade-carved bodies storing vast reserves of the Winds of Magic.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_longjia	The golden armor of the Dragon Emperor's Guard is the crystallization of Zhen Dan's supreme forging craft and the power of the Dragon Emperor. These magnificent suits of armor are as unbreakable as Zhen Dan itself.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_longnv	Women form a vital part of Zhen Dan's armies. Though countless heroines have been immortalized in history, only a rare few are chosen by the Moon Empress. Those selected are summoned to her courtyard, where they receive her blessing before setting out across Zhen Dan to save the common people in her name.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_mao	The White-Plumes wear cloaks shed from the flawless hide of the guardian beast of the northern frontier, and blessed further by the Moon Empress, they possess incredible resistance to weapon strikes.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_nanlishuangbian	The Vermilion Bird is the most active of the three guardian beasts, and its worship flourishes throughout the southern provinces. The Beacon-Keepers are Li Dao's most loyal inner guards and the Vermilion Bird's most fervent devotees. Amidst the sharp-eyed vigilance of the southern frontier, their twin flaming whips shine brighter than all but the flames of the guardian itself.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_shixin	The Jade Attendants stand watch over the boundless fertile plains of Zhen Dan, the power of the Winds of Magic surging within their chests. Their proud roar alone is enough to send invading scoundrels quaking with terror.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_sishi	"You gave me the wutong tree; I give you loyalty and valor in return.\\n\\nI shall not fail this body, nor fail you, my lord — I repay my confidant with death in battle."	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang	The heavenly king's wrath thunders forth; his war-axe brings swift judgment and death.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_tianwangshou	The heavenly king's benevolence spans north and south alike; the righteous path returns once more in majesty.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_tuimo	The armor of the Raven-Feather Legion is layered with demon-repelling feathers refined by alchemists, aiding them in hunting down the practitioners of heretical arts hidden deep within the Zhen Dan Empire.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_xuanwu	The tortoise's breath knows no decay; eternal life everlasting.	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_yang	One body has fought across three thousand li; one blade has once held back a million-strong host.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_yin	One of the Moon Empress's powers is healing, and her followers are meant to carry out her will, doing everything in their power to save the common people.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_yingling	Their second life is soon to fade, but even as their bronze forms crumble to ruin, the heroic spirits within will fight to their last strength to defend home and country.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_yueliang	The Moon God Court is the most unique of the Celestial Court's guard units, usually serving as the Moon Empress's handmaidens, practicing archery alongside her. When summoned to battle, the arrows of these blessed maidens are sharp enough to extinguish the sun itself in the Moon Empress's name.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_zhengqihuayi	As the pillar that coordinates all four quarters, the soldiers of the Jade Court excel in coordinated warfare; the Decree Guard's unspoken understanding with one another leaves even other palace guards struggling to keep pace.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_zhuque	The divine bird draws in the primal essence of the heavens to achieve true enlightenment, leading the three armies as their vanguard.	true
+unit_abilities_tooltip_text_wh3_deer24_fashu_leigong	Hammer strikes ring out, forging lightning and embedding shock; the echo carries a thousand miles, shaking heaven and earth.	false
+unit_abilities_tooltip_text_wh3_deer24_fashu_liejiufengbao	With every breath, wine transforms into flame, burning away all wickedness.	false
+unit_abilities_tooltip_text_wh3_deer24_fashu_zhuque	The crimson phoenix cries out long and clear, and all birds bow before it in submission.	false
+unit_description_historical_texts_text_wh3_deer24_long_BINGYONG	Throughout Zhen Dan's history, countless heroes have risen. Craftsmen have poured the wills of these fallen spirits into statues that guard the land.	false
+unit_description_historical_texts_text_wh3_deer24_long_JINWEIJUN	Several palace guard formations of differing organization exist throughout the Zhen Dan Empire. Such units typically serve as the imperial guard of various courts, such as the White-Plumes who defend the Bin Tie Court. Members of the palace guard are all exceptional talents of Zhen Dan, and their eternal and singular mission is to protect the safety of the Empire.	false
+unit_description_historical_texts_text_wh3_deer24_long_JINYIWEI	Drunk, we lie upon the battlefield—laugh not, my friend; since ancient times, how many who marched to war have returned?	false
+unit_description_short_texts_text_wh3_deer24_short_BAIHONG	The blade's edge becomes a white shadow; its rainbow glow guards the three armies.	true
+unit_description_short_texts_text_wh3_deer24_short_BINGYONG	The mortal shell must wither, its earthly bonds spent; the endless spirit puppets—the calamity ceases.	false
+unit_description_short_texts_text_wh3_deer24_short_HUREN	These orc warriors from the south are rumored to be transformed followers of the Dragon Emperor's direct line. They serve as the Empire's claws, using their consummate skill in arms to crush the Empire's enemies.	false
+unit_description_short_texts_text_wh3_deer24_short_HUXIA	With the Zhan Ma sword breaking the enemy lines and claiming first blood, none but the Tiger Warriors could be so bold and fierce.	false
+unit_description_short_texts_text_wh3_deer24_short_JINGUO	In green robes and flowing silk, sleeves and swords dance; a spear of blossoms, fireflies scattering, cuts down treachery.	false
+unit_description_short_texts_text_wh3_deer24_short_JINYIWEI	In brocade robes and black cloaks, they crush the fiends; with Hong Wu's blue steel, they slay the disloyal.	false
+unit_description_short_texts_text_wh3_deer24_short_JIXIE	Iron and fire drive out treachery; beacon smoke stands watch over the nine borders.	true
+unit_description_short_texts_text_wh3_deer24_short_LONGNV	Clad in my armor of war, a heroine's bearing shines to all four corners.	true
+unit_description_short_texts_text_wh3_deer24_short_LONGWEI	Divine might, vivid and unyielding, guards the mortal world; flowing embers, towering high, return to the summit's capital.	true
+unit_description_short_texts_text_wh3_deer24_short_NU	The lands north of Chang Yuan lie shrouded beneath the shadow of malevolent spirits. Across this vast wasteland roam countless tribes—though most known khans worship dark powers, many herders merely follow their leaders blindly. South of the wasteland, some gentler tribes maintain close ties with the Celestial Court, and Zhen Dan's frontier armies can often hire these fierce warriors cheaply to serve the Empire. But maintaining a legion beyond the Empire's authority for the long term will surely demand a far steeper price.	false
+unit_description_short_texts_text_wh3_deer24_qintongpao	The Bronze Cannons have endured through nearly as many ages as Chang Yuan itself. These great guns were cast in the era when the Dragon Emperor still walked among mortals, forged to contend with unspeakable colossal beings that could rival gods. Restored by the artisans of Nan Gao, they march to war once more to bathe Zhen Dan's great enemies in blood.	false
+unit_description_short_texts_text_wh3_deer24_short_POMO	A blade like a feather, its gleaming edge steals life.	true
+unit_description_short_texts_text_wh3_deer24_short_QIMA	Golden armor and silver trappings wield the halberd beneath the sun; no phantom or specter can escape the iron hooves.	false
+unit_description_short_texts_text_wh3_deer24_short_SHE	Azure light beneath the sun brings forth thunder; iron rain like pear blossoms blankets the towering sky.	false
+unit_description_short_texts_text_wh3_deer24_short_SHENJI	Azure light beneath the sun brings forth thunder; iron rain like pear blossoms blankets the towering sky.	false
+unit_description_short_texts_text_wh3_deer24_short_TIANDI	Beyond the broken bridge, raven feathers appear; fallen blossoms drip blood upon the ruins.	false
+unit_description_short_texts_text_wh3_deer24_short_TONGYONG	One body has fought across three thousand miles; one sword once held back a million-strong army.	false
+unit_description_short_texts_text_wh3_deer24_short_XIAOYONG	Golden armor and silver trappings wield the halberd beneath the sun; no phantom or specter can escape the iron hooves.	false
+unit_description_short_texts_text_wh3_deer24_short_XUANWU	[[img:icon_yang]][[col:white]]Unlock method: Complete the unit's quest[[/col]]\\n\\nIn the northern reaches of heaven, seven mansions bear the mark of Yin. Xuan Wu, turtle and serpent entwined as one, was commanded by the Dragon Emperor to guard the North.	true
+unit_description_short_texts_text_wh3_deer24_short_YUEGONG	Bow drawn beside the moon, the arrow points to a shooting star.	false
+unit_description_short_texts_text_wh3_deer24_short_baihu	[[img:icon_yang]][[col:white]]Unlock method: Complete the unit's quest[[/col]]\\n\\nIn the western reaches, metal's essence of Xin transforms the Five Elements, giving rise to the White Tiger, forever standing between Heaven and Earth, commanded by the Dragon Emperor to pacify the West.	true
+unit_description_short_texts_text_wh3_deer24_short_doulishenji	Amid the vast wilds and mountains, the valiant hold to righteousness; though far from the Heavenly Palace, the Dragon-kin's devotion never fades.	false
+unit_description_short_texts_text_wh3_deer24_short_fubing	Guard Corps Soldiers are the elite of Zhen Dan's various courts. Unlike national armies such as the Jade Bravos or the Celestial Court's Dragon Guard, the Guard Corps is raised by local authorities, closer in nature to a general's private retainers. Under generals loyal to the Celestial Court, they are the most reliable bulwark protecting the realm and its people; but under warlords who carve out their own domains, they become the force most feared by the imperial armies.	false
+unit_description_short_texts_text_wh3_deer24_short_jinwu_horse	Beyond the frontier, they wish only to return wrapped in their own shrouds; why should the Pacifier of Distant Lands ever return alive through the pass?	true
+unit_description_short_texts_text_wh3_deer24_short_jinwu	A thousand years of history may forget their names in shame, yet their loyal hearts repay the Dragon Emperor all the same.	true
+unit_description_short_texts_text_wh3_deer24_short_junshou	Upon the Suan Ni's throne, the lion speaks its words; beneath the dust of the Celestial Court, the mortal world sings its praise.	true
+unit_description_short_texts_text_wh3_deer24_short_mulansheshou	In crimson robes they draw the bow, long sleeves dancing; amid the forest of spears, a cold gleam surges forth.	false
+unit_description_short_texts_text_wh3_deer24_short_penhuobing	One hears the tongues of fire but sees not their bearer; in iron robes like fireflies, they offer up their loyal hearts.	false
+unit_description_short_texts_text_wh3_deer24_short_sanshenji	A frown, a word, half-veiled behind a fan; a paper parasol, an iron rain, sheltering the fair one.	false
+unit_description_short_texts_text_wh3_deer24_short_seng	The monks of Zhen Dan deeply understand the harmony of Yin and Yang. Through ascetic practice, they temper body and mind, aiding the common people through righteousness, and stepping forward whenever the nation calls.	false
+unit_description_short_texts_text_wh3_deer24_short_warchariot	The war chariot is yoked, charging forth to seize the first advantage.	true
+unit_description_short_texts_text_wh3_deer24_short_wuren	Drunk on the boundless spirit of heroes, they devour the exhilarating winds of all Nine Provinces.	false
+unit_description_short_texts_text_wh3_deer24_short_xiang	[[img:icon_yang]][[col:white]]Unlock method: Complete the unit's quest[[/col]]\\n\\nCountless tribes of demihumans, vastly different from those of the Old World, are scattered around the Zhen Dan Empire. Those tribes near Zhen Dan have, for the most part, gratefully submitted to the Dragon Emperor's banner—though their kind differs, they stand as close as brothers, guarding eternal peace together.	false
+unit_description_short_texts_text_wh3_deer24_short_yangjiajiang	A heroine rides a hundred miles without pause; a single glance, a single word, bound to the fate of all under heaven.	false
+unit_description_short_texts_text_wh3_deer24_short_zhuque	[[img:icon_yang]][[col:white]]Unlock method: Complete the unit's quest[[/col]]\\n\\nIn the southern reaches, Yang stirs, and the parasol tree grows; the vermillion phoenix cries long, and all birds bow before it, commanded by the Dragon Emperor to govern the South.	true
+land_units_onscreen_name_wh3_deer24_bixueshixiang	Jade Blood Sovereign	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinyiweieye	All-Seeing Eyes	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinyiweiyang	Cycle of Yin and Yang	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinyiweieye	The Hong Wu Overseers command the imperial escort, patrols, and arrests, serving as the Dragon Emperor's eyes and ears — no clue, however faint, escapes their discerning gaze.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinyiweiyang	The Supreme Ultimate gives birth to Yin and Yang; Yin and Yang give birth to the Four Symbols; the Four Symbols give birth to the Eight Trigrams. Such is the natural order, cycling on without end.	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_horse	The Crossbow Cavalry are charging — soldiers of Zhen Dan, the battle has begun!	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_horse02	Founded during the first northern campaign, the Guan Ning Crossbow Cavalry are Chang Yuan's most elite cavalry force. Independent of all other garrisons, they answer only to the commander of Chang Yuan, trampling the northern wastelands beneath their hooves.	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_horse	Fierce Roaring Cry	true
+unit_abilities_onscreen_name_junshou_lengque	Shielded by All Laws	true
+unit_abilities_tooltip_text_junshou_lengque	Suan Ni is a guardian beast that gathers the spiritual energies of heaven and earth, aiding in the concentration of Daoist power.	true
+land_units_onscreen_name_wh3_deer24_giant	Cloud Cauldron Strongman	false
+unit_description_short_texts_text_wh3_deer24_giant	The Cloud Cauldron Strongman hails from the western mountains, the last echo of an ancient age—his people have long since become withered bones in the Valley of Titans. Even the surviving Dragon-kin cannot say for certain just how long this mountain-like giant has spent in Zhen Dan. But they know this: as the Dragon Emperor's ancient ally, the Cloud Cauldron Strongman will fight for Zhen Dan just as he always has.	true
+unit_abilities_tooltip_text_wh3_deer24_giant_ab	The strongman stands mighty and unyielding, overturning mountains and seas; a single warrior holds the pass, and ten thousand armies cannot pass.	true
+unit_abilities_onscreen_name_wh3_deer24_giant_ab	[Towering Might]	true
 projectile_shot_type_displays_onscreen_name_wh3_deer24_qintongpao	Direct Fire	false
-projectile_shot_type_enum_tooltip_text_wh3_deer24_qintongpao	Bronze cannons unleash devastating direct shots.	false
-projectile_shot_type_displays_onscreen_name_wh3_deer24_qintongpao_2	Arcing Fire	false
-projectile_shot_type_enum_tooltip_text_wh3_deer24_qintongpao_2	The ingenious design of the Bronze Cannon allows for multiple projectiles to be loaded and fired in an arcing manner, delivering widespread damage.	false
-land_units_onscreen_name_wwd_bixuedaoren	Jade-Blood Taoist	false
-unit_description_short_texts_text_wwd_bixuedaoren	As masters of Cathay’s Life Wind essence, Jade-Blood Taoists primarily reside in the spiritual sanctuaries of Wengchang, refining their arts. As the Jade-Blood creatures grow rampant, these Taoists are often called upon to banish such calamities. However, some believe that the Taoists themselves are the source of these disasters.	false
-unit_abilities_tooltip_text_wwd_spell_raise_deadr	Jade-Blood Taoists manipulate arcane rituals to animate foreign corpses.	true
-unit_abilities_onscreen_name_wwd_spell_raise_deadr	Corpse Manipulation	true
-ui_unit_groupings_onscreen_wwd_daoren	Spellcaster	false
-special_ability_phases_onscreen_name_wh3_deer24_abilities_bixuedaoren	Jade-Blood Arts	false
+projectile_shot_type_enum_tooltip_text_wh3_deer24_qintongpao	The tremendous power of the bronze cannon fires shells directly at the enemy, at a speed so great that even the great beasts that once ravaged ancient Zhen Dan could scarcely react in time	false
+projectile_shot_type_displays_onscreen_name_wh3_deer24_qintongpao_2	Lobbed Fire	false
+projectile_shot_type_enum_tooltip_text_wh3_deer24_qintongpao_2	The bronze cannon's ingenious design allows its crew to load multiple shells at once, delivering blanket bombardment through lobbed fire	false
+land_units_onscreen_name_wwd_bixuedaoren	Jade Blood Daoist	false
+unit_description_short_texts_text_wwd_bixuedaoren	As the group with the highest mastery of the life-aspected Winds of Magic in Zhen Dan, the Jade Blood Daoists mostly gather at the Weng Chang spirit sanctum to cultivate their arts in seclusion. As the Jade Blood Clan grows ever more rampant, the common people and officials of Zhen Dan increasingly turn to them, entreating them to leave their retreat and purge the calamitous spirits and monstrous forces plaguing the land. Yet in the eyes of some, the Jade Blood Clan itself is the very calamity the Jade Blood Daoists once summoned.	false
+unit_abilities_tooltip_text_wwd_spell_raise_deadr	The Jade Blood Daoist wields uncanny secret arts, compelling the corpses of those who died far from home to rise and walk again.	true
+unit_abilities_onscreen_name_wwd_spell_raise_deadr	Corpse-Driving Sorcery	true
+ui_unit_groupings_onscreen_wwd_daoren	Spellcasters	false
+special_ability_phases_onscreen_name_wh3_deer24_abilities_bixuedaoren	Jade Blood Daoist Arts	false
 land_units_onscreen_name_wh3_deer24_xingtian	Xingtian	false
-unit_description_short_texts_text_wh3_deer24_xingtian	[[img:icon_yang]][[col:white]]Unlock: Complete unit quest[[/col]]\\n\\nXingtian clashed with the Dragon Emperor, who severed his head and buried him in Kunlan. Over eons, shielded by dragon magic, he absorbed the celestial winds, resurrecting with eyes on his chest and a mouth on his navel, wielding axe and shield in an eternal dance.	true
-unit_abilities_onscreen_name_wh3_deer24_xingtian	Eternal Resolve	true
-unit_abilities_tooltip_text_wh3_deer24_xingtian	Xingtian wields axe and shield, driven by unyielding determination.	true
-land_units_onscreen_name_wwd_shengbing_iron	Iron Vanguard	false
-land_units_onscreen_name_wwd_shengbing_jade	Jade Guardians	false
-land_units_onscreen_name_wwd_shengbing_storm	Storm Border Army	false
+unit_description_short_texts_text_wh3_deer24_xingtian	[[img:icon_yang]][[col:white]]Unlock method: Complete the unit's quest[[/col]]\\n\\nXingtian once contended with the Dragon Emperor for supremacy. The Emperor severed his head and buried it at Kun Lan. Across ten thousand years, protected by the Dragon's arts and drawing in the essence of heaven and earth, he was reborn—his nipples became his eyes, his navel his mouth, and he dances still, wielding shield and axe.	true
+unit_abilities_onscreen_name_wh3_deer24_xingtian	Fierce Will Endures	true
+unit_abilities_tooltip_text_wh3_deer24_xingtian	Xingtian dances with shield and axe; his fierce will endures unbroken.	true
+land_units_onscreen_name_wwd_shengbing_iron	Bin Xi New Army	false
+land_units_onscreen_name_wwd_shengbing_jade	Jade Stone Guard	false
+land_units_onscreen_name_wwd_shengbing_storm	Gale Frontier Army	false
 ui_unit_groupings_onscreen_xingshengbubingbow	Ranged Infantry	false
 ui_unit_groupings_onscreen_xingshengbubingsword	Sword Infantry	false
 ui_unit_groupings_onscreen_xingshengbubinghalberd	Halberd Infantry	false
-unit_description_short_texts_text_wwd_shengbing_iron	Zhao Ming’s fascination with mortal innovations is well-known. Despite his belief in superior techniques, his failed imitation of Imperial steam tanks sparked interest in Western technology, leading to this experimental force clad in Imperial-style armor.	false
-unit_description_short_texts_text_wwd_shengbing_jade	Steeped in the harmony of jade and stone, Jade Guardians are steadfast protectors of the Jade Court. Enchanted jade armor grants formidable resistance to even the most devastating magic.	false
-unit_description_short_texts_text_wwd_shengbing_storm	To Cathayans, the lands beyond the Great Bastion symbolize chaos and death. For the Storm Border Army, however, endless wars have forged a way of life amidst these perils.	false
-unit_abilities_additional_ui_effects_localised_text_wh3_deer24_abilities_zhengqihuayi	While in formation, the unit can only advance slowly.	true
-unit_abilities_additional_ui_effects_localised_text_wh3_deer24_abilities_zhengqihuayi2	Attacking enemies disrupts formation, but you can move toward targets while maintaining formation.	true
-unit_abilities_onscreen_name_wwd_yujia	Jade-Enchanted Armor	false
-unit_abilities_tooltip_text_wwd_yujia	The armor of Jade Guardians, crafted from enchanted jade, absorbs the power of celestial winds, periodically deflecting blade attacks.	false
-land_units_onscreen_name_wh3_deer24_baishe	Houxi	false
-unit_description_short_texts_text_wh3_deer24_baishe	[[img:icon_yang]][[col:white]]Unlock: Complete unit quest[[/col]]\\n\\nHouxi, one of Cathay’s ancient beasts, once clashed with the Dragon Emperor. Following her defeat, she swore a blood oath to protect Cathay, securing the Emperor’s forgiveness.	true
-unit_abilities_onscreen_name_wh3_deer24_baishe	Jade River Matron	true
-unit_abilities_tooltip_text_wh3_deer24_baishe	Houxi, who once opposed the Dragon Emperor, unleashed the waters of the Jade River, reshaping the land and taming its chaos.	true
-unit_abilities_onscreen_name_wh3_deer24_baishe2	Serpent Form	true
-unit_abilities_tooltip_text_wh3_deer24_baishe2	The abundance of celestial winds has transformed creatures like Houxi into formidable beings. She summons endless serpent swarms to protect allies and ravage foes.	true
-land_units_onscreen_name_wh3_deer24_zhuque_human	Luminous Sovereign	false
-land_units_onscreen_name_wh3_deer24_jinwu_zhechong	Dragon-Blessed Retinue	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_zhechong	Radiant Standards	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_zhechong	Clad in resplendent armor, this retinue inspires allies, signaling the presence of Cathay’s most esteemed figures on the battlefield.	true
-unit_description_short_texts_text_wh3_deer24_short_jinwu_zhechong	With imperial wrath, the armies surge to glory.	true
-land_units_onscreen_name_wh3_deer24_jinhunqilin	Spirit-Bound Qilin	true
-unit_description_short_texts_text_wh3_deer24_jinhunqilin	The Spirit-Bound Qilin retains a longing for its ancestral lands, even in battle. Rituals of the Sacred Sun are said to attune them to their rider’s will.	true
-land_units_onscreen_name_wh3_deer24_jinwu_huguanshi	Jungle Sentinels	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_huguanshi	Forest Hunters	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_huguanshi	Hailing from southeastern Shengjiang, the Jungle Sentinels are masters of forest warfare, deadlier than the tigers they rival.	true
-unit_description_short_texts_text_wh3_deer24_jinwu_huguanshi	The tiger’s roar intimidates all, yet these warriors exceed even that fearsome majesty.	true
-effects_description_wh3_main_effect_attribute_spell_mastery_yuenv	Unlock Attribute: Mastery of Celestial Winds	true
-effects_description_wh3_main_effect_attribute_spell_mastery_huangfengdasheng	Unlock Attribute: Mastery of Celestial Winds	true
+unit_description_short_texts_text_wwd_shengbing_iron	Zhao Ming's keen fascination with the novelties of mortal men is well known throughout Zhen Dan. Though he firmly believes his own mastery of craft far surpasses that of the common folk of the Old World, his failed attempt to replicate the Empire's steam tanks only deepened his curiosity toward the western realms. Establishing a new army clad in Imperial-style armor was but another such experiment.	false
+unit_description_short_texts_text_wwd_shengbing_jade	Deeply versed in the harmonious laws of metal and stone, the Jade Stone Guards are the Jade Court's most trustworthy protectors. Yuan Bo's enchantments imbue their jade armor with formidable magic resistance—even confronted with terrifying spells capable of rending the earth asunder, the wearers of jade armor remain unshaken.	false
+unit_description_short_texts_text_wwd_shengbing_storm	The world north of Chang Yuan means only formless chaos and death to the common folk of Zhen Dan. But for the Gale Frontier Army, who have fought beyond Chang Yuan for so long, endless war has forged chaos and death into the very substance of their lives.	false
+unit_abilities_additional_ui_effects_localised_text_wh3_deer24_abilities_zhengqihuayi	The unit can only advance slowly	true
+unit_abilities_additional_ui_effects_localised_text_wh3_deer24_abilities_zhengqihuayi2	Actively attacking the enemy will break formation, but you can still initiate an attack by moving toward the target	true
+unit_abilities_onscreen_name_wwd_yujia	Golden Rule, Jade Armor	false
+unit_abilities_tooltip_text_wwd_yujia	The armor of the Jade Stone Guard is forged from enchanted jade. This peculiar armor not only resists magical attacks but also absorbs the power of the Winds of Magic, periodically deflecting blade damage.	false
+land_units_onscreen_name_wh3_deer24_baishe	Hou Xi	false
+unit_description_short_texts_text_wh3_deer24_baishe	[[img:icon_yang]][[col:white]]Unlock method: Complete the unit's quest[[/col]]\\n\\nHou Xi was once among the many great beasts of Zhen Dan who struggled against the Heavenly Dragon Emperor. Like the other surviving beasts, she was subdued by the Dragon Emperor after the great war, and earned his forgiveness through a blood oath to protect Zhen Dan forever.	true
+unit_abilities_onscreen_name_wh3_deer24_baishe	White Mother of the Jade River	true
+unit_abilities_tooltip_text_wh3_deer24_baishe	Hou Xi contended with Hao Tian for supremacy, and in her fury unleashed the waters of the Jade River, snapping the pillar of heaven and severing the cords of earth. Thus the Jade River winds through nine bends and a hundred turns, and all the rivers of the world flow back into her.	true
+unit_abilities_onscreen_name_wh3_deer24_baishe2	White Serpent's Passage	true
+unit_abilities_tooltip_text_wh3_deer24_baishe2	The abundant Winds of Magic in Zhen Dan have allowed certain creatures to transcend the limits of their birth and become something far greater — it is believed that Hou Xi and Zhen Dan's other great beasts belong to this rare breed. Hou Xi can summon an endless tide of serpents, protecting her comrades and tearing into her foes.	true
+land_units_onscreen_name_wh3_deer24_zhuque_human	Radiant Tomb Lord	false
+land_units_onscreen_name_wh3_deer24_jinwu_zhechong	Zhe Chong Palace Guards	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_zhechong	Radiant Banner Flags	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_zhechong	The Zhe Chong Palace Guards wear magnificent armor and often appear before the common people as the honor guard of the Dragon-kin. Every Zhen Dan soldier who spots the Zhe Chong Palace Guards on the battlefield feels their spirits lift and rushes to prove their valor, for they know it means one of Zhen Dan's most illustrious figures has come to the front lines in person.	true
+unit_description_short_texts_text_wh3_deer24_short_jinwu_zhechong	By the Dragon's wrath alone, a myriad armies would gladly march to their deaths toward the towering heavens.	true
+land_units_onscreen_name_wh3_deer24_jinhunqilin	Royal Qilin Archer-Attendants	true
+unit_description_short_texts_text_wh3_deer24_jinhunqilin	The Spirit Qi Lin longs for its homeland at Tian Shan, unable to forget its attachment even amid the ranks of battle and the throes of slaughter. Only through the Sacred Yang Rite can it be made to obey its rider's will.	true
+land_units_onscreen_name_wh3_deer24_jinwu_huguanshi	Tiger-Crowned Honor Guards	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_jinwu_huguanshi	Woodland Hunter	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_jinwu_huguanshi	Hailing from the southeast of Sheng Jiang, the Tiger-Crowned Honor Guards are masters of jungle warfare, hunters more lethal than the tigers themselves.	true
+unit_description_short_texts_text_wh3_deer24_jinwu_huguanshi	The tiger's roar strikes fear into all who hear it, yet even more fearsome than any beast is this martial officer.	true
+effects_description_wh3_main_effect_attribute_spell_mastery_yuenv	Unlocks attribute: Mastery of Elemental Winds	true
+effects_description_wh3_main_effect_attribute_spell_mastery_huangfengdasheng	Unlocks attribute: Mastery of Elemental Winds	true
 agent_subtypes_onscreen_name_override_LX001	Legendary Lord	false
 agent_subtypes_onscreen_name_override_guanshan001	Legendary Lord	false
 agent_subtypes_onscreen_name_override_yuenv001	Legendary Lord	false
@@ -252,406 +252,459 @@ agent_subtypes_onscreen_name_override_nicheng	Legendary Lord	false
 agent_subtypes_onscreen_name_override_yuchigong	Legendary Lord	false
 agent_subtypes_onscreen_name_override_yushihujun	Legendary Lord	false
 agent_subtypes_onscreen_name_override_qinqiong	Legendary Lord	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang_attack	Sun and moon hang high, their light exposing all evil.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang_attack	"Demon Subjugation Tower"	true
-land_units_onscreen_name_wh3_deer24_changyalishi	Tusk-Path Enforcers	false
-unit_description_short_texts_text_wh3_deer24_changyalishi	These ogres from the Tusk Path are highly valued by Zhao Ming. In times of peace, they represent Cathay’s courts in tournaments, overwhelming opponents with unmatched strength.	false
-unit_attributes_removed_effect_text_charge_reflection	Removes Charge Reflection	false
-unit_abilities_tooltip_text_bixuedaoren_jin	Cathayan Taoists seal the power of celestial winds into talismans for future use.	true
-unit_abilities_onscreen_name_bixuedaoren_jin	Metal Seal	true
-unit_abilities_tooltip_text_bixuedaoren_huo	Cathayan Taoists seal the power of celestial winds into talismans for future use.	true
-unit_abilities_onscreen_name_bixuedaoren_huo	Fire Seal	true
-unit_abilities_tooltip_text_bixuedaoren_mu	Cathayan Taoists seal the power of celestial winds into talismans for future use.	true
-unit_abilities_onscreen_name_bixuedaoren_mu	Wood Seal	true
-unit_abilities_tooltip_text_bixuedaoren_shui	Cathayan Taoists seal the power of celestial winds into talismans for future use.	true
-unit_abilities_onscreen_name_bixuedaoren_shui	Water Seal	true
-unit_abilities_onscreen_name_bixuedaoren_tu	Earth Seal	true
-unit_abilities_tooltip_text_bixuedaoren_tu	Cathayan Taoists seal the power of celestial winds into talismans for future use.	true
-unit_abilities_tooltip_text_wwd_summon_soul_dragon	The Celestial Masters sacrifice their life force to temporarily summon a fragment of the Soul Dragon's essence to the battlefield.	true
-unit_abilities_onscreen_name_wwd_summon_soul_dragon	Soul of Shiyánmo	true
-land_units_onscreen_name_wwd_summon_soul_dragon	Soul of Shiyánmo	true
-unit_description_short_texts_text_wwd_summon_soul_dragon	The Soul Dragon is the daughter of the Celestial Dragon Emperor, eternally slumbering beneath the waters, where the departed are drawn to their final rest through her dreams.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_soul_dragon	Thousand Autumns	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_soul_dragon	Grieving the sacrifices of warriors, the Soul Dragon's wail shakes heaven and earth, while even the winds hesitate to carry away her kin.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_longdijinjun_undead	Immortal Imperial Guard	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_longdijinjun_undead	Legends tell of the Dragon Emperor personally bestowing his guards with unparalleled power centuries ago. As the Emperor departed, no new blood could replenish their ranks. These final guards remain as his last legacy, and their fall would reduce their name to mere myth.	true
-unit_ability_source_types_tooltip_wwd_legend	Only a rare few units possess eternal legendary abilities.	false
-unit_ability_source_types_name_wwd_legend	Legendary Abilities	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_yueshenyuan_ammon	Weaver of Shadows	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_yueshenyuan_ammon	The Moon Court's arrows are woven from the shadows cast by the Moon Empress. As long as the Veilwind blows, their arrows are infinite.	true
-unit_attributes_removed_effect_text_fatigue_immune	Removes Fatigue Immunity	false
-land_units_onscreen_name_wh3_deer24_burenjia	Silent Bastion	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang_attack	Sun and moon forever hang above the loyal and valiant heart; wind and dust are cast aside from the eyes that see through wickedness.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang_attack	[Demon-Suppressing Pagoda]	true
+land_units_onscreen_name_wh3_deer24_changyalishi	Long-Tusked Strongman	false
+unit_description_short_texts_text_wh3_deer24_changyalishi	These ogres from the Long-Tusk Road are held in high favor by Zhao Ming, and the mightiest among them are summoned into his hall. In times of peace, these powerful strongmen compete in Shang Yang's arenas as champions of the Bin Tie Court, crushing any foe bold enough to stand against them with overwhelming might.	false
+unit_attributes_removed_effect_text_charge_reflection	Charge Reflection removed	false
+unit_abilities_tooltip_text_bixuedaoren_jin	The Daoists of Zhen Dan seal the power of the Winds of Magic into talismans, to be used in times of need	true
+unit_abilities_onscreen_name_bixuedaoren_jin	Golden Qian Talisman	true
+unit_abilities_tooltip_text_bixuedaoren_huo	The Daoists of Zhen Dan seal the power of the Winds of Magic into talismans, to be used in times of need	true
+unit_abilities_onscreen_name_bixuedaoren_huo	Fire Li Talisman	true
+unit_abilities_tooltip_text_bixuedaoren_mu	The Daoists of Zhen Dan seal the power of the Winds of Magic into talismans, to be used in times of need	true
+unit_abilities_onscreen_name_bixuedaoren_mu	Wood Xun Talisman	true
+unit_abilities_tooltip_text_bixuedaoren_shui	The Daoists of Zhen Dan seal the power of the Winds of Magic within talisman papers, keeping them ready for times of need.	true
+unit_abilities_onscreen_name_bixuedaoren_shui	Water Kan Talisman	true
+unit_abilities_onscreen_name_bixuedaoren_tu	Earth Kun Talisman	true
+unit_abilities_tooltip_text_bixuedaoren_tu	The Daoists of Zhen Dan seal the power of the Winds of Magic within talisman papers, keeping them ready for times of need.	true
+unit_abilities_tooltip_text_wwd_summon_soul_dragon	The Celestial Masters open their ritual, offering their own life force as the price to briefly summon back a fragment of the Soul Dragon's spirit to the battlefield.	true
+unit_abilities_onscreen_name_wwd_summon_soul_dragon	Soul of Poet Yan Mo	true
+land_units_onscreen_name_wwd_summon_soul_dragon	Soul of Poet Yan Mo	true
+unit_description_short_texts_text_wwd_summon_soul_dragon	The Soul Dragon is the daughter of the Heavenly Dragon Emperor, forever asleep beneath the waters. Lost souls follow her dreams to their final resting place.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_soul_dragon	A Thousand Autumns	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_soul_dragon	The Soul Dragon's spirit wails at the sight of fallen warriors, and heaven and earth tremble in response; even the winds of Sha Xu cannot bear to carry away her people this day.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_longdijinjun_undead	Undying Palace Guard	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_longdijinjun_undead	Legend holds that the extraordinary power of the Dragon Emperor's Guard was personally bestowed by the Vast Dragon centuries ago, making them unmatched in strength. But with the Dragon Emperor's passing, the Celestial Court's guard can no longer draw fresh blood into its ranks. These last hundred-odd guardsmen are the final legacy of that ancient blessing — should even they fall in battle, the name of the Dragon Emperor's Guard will fade into nothing more than another half-forgotten legend of Zhen Dan.	true
+unit_ability_source_types_tooltip_wwd_legend	Only a scarce few units can use abilities of this kind.	false
+unit_ability_source_types_name_wwd_legend	Legendary Action	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_yueshenyuan_ammon	Daughter Who Weaves Sorcery	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_yueshenyuan_ammon	The arrows of the Moon God Court are woven from the shadows cast by the Moon Empress herself; so long as the veiled magical winds continue to blow, the arrows of these spell-weaving maidens shall never run dry.	true
+unit_attributes_removed_effect_text_fatigue_immune	Perfect Vigour removed	false
+land_units_onscreen_name_wh3_deer24_burenjia	Jing Sai Army	false
 land_units_onscreen_name_wh3_deer24_xiangwang	White Elephant King	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_changbi	Draconic Trunk	false
-unit_abilities_onscreen_name_wh3_deer24_fashu_changbi	Devastating Surge	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_changbi	The White Elephant King's trunk is as flexible and unstoppable as a dragon. If it targets you, close your eyes and pray.	false
-unit_abilities_tooltip_text_wh3_deer24_fashu_changbi	Charged with unmatched strength, the White Elephant King's trunk crushes enemies to death.	false
-unit_abilities_onscreen_name_wh3_deer24_leigong_fashu02	Thunderclap	false
-unit_abilities_tooltip_text_wh3_deer24_leigong_fashu02	Striking like a hammer, thunder echoes for miles, shaking heaven and earth.	false
-unit_abilities_onscreen_name_wh3_deer24_fashu_changbi2	Tremor Quake	false
-unit_abilities_tooltip_text_wh3_deer24_fashu_changbi2	The ground trembles beneath the White Elephant King’s steps, rendering smaller beings unable to stand, let alone fight.	false
-unit_abilities_onscreen_name_wh3_deer24_fashu_xiongmaoren	Unstoppable Flask	false
-unit_abilities_tooltip_text_wh3_deer24_fashu_xiongmaoren	[[col:green]]"Roar!"[[/col]]\\nA Cathayan linguist concluded after years of study that this cry means "More wine, please!"	false
-land_units_onscreen_name_wh3_deer24_baije	Marshal of the Canopy	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_baije	Heavenly Canopy	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_baije	The Marshal of the Canopy draws his strength from the Five-Element Compass of Weijing, granting him boundless vitality.	false
-land_units_onscreen_name_wh3_deer24_baije1	Ephemera	false
-special_ability_phases_onscreen_name_wwd_fumo_zuijiu	Intoxicated!	false
-unit_abilities_additional_ui_effects_localised_text_wwd_vortexx3	The ability deals damage three times consecutively.	false
-land_units_onscreen_name_wh3_deer24_lingguan	Heavenly Overseer	false
-unit_description_short_texts_text_wh3_deer24_lingguan	[[img:icon_yang]][[col:white]]Unlock: Complete unit quest[[/col]]\\n\\nBorn from celestial winds and created by the Dragon Emperor, the Overseer enforces his will across heaven and earth. Legends recount how it once executed a rebellious dragon prince, taking his claw as punishment. Mortally wounded, the Overseer was revived with the dragon’s claw replacing its neck, continuing its duty under the Emperor's orders. Now, it is believed to watch over Cathay, ever vigilant for any crisis to rise again.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_lingguan1	Flame Tongue	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_lingguan1	With wheels of fire beneath its feet, it dances across the battlefield, leaving fiery trails in its wake.	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_changbi	Nose Like a Serpent-Dragon	false
+unit_abilities_onscreen_name_wh3_deer24_fashu_changbi	Sweep the Eight Wildernesses	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_changbi	The White Elephant King's trunk is as agile and unstoppable as a flood dragon. When you see its trunk sweeping toward you on the battlefield, close your eyes tight and start praying.	false
+unit_abilities_tooltip_text_wh3_deer24_fashu_changbi	The White Elephant King's trunk gathers unmatched power, coiling around its foes to twist and crush them to death.	false
+unit_abilities_onscreen_name_wh3_deer24_leigong_fashu02	Embedded Shock	false
+unit_abilities_tooltip_text_wh3_deer24_leigong_fashu02	Hammer strikes ring out, forging lightning and embedding shock; the echo carries a thousand miles, shaking heaven and earth.	false
+unit_abilities_onscreen_name_wh3_deer24_fashu_changbi2	Earth-Shaking Tremor	false
+unit_abilities_tooltip_text_wh3_deer24_fashu_changbi2	The earth trembles with every step of the White Elephant King; lesser creatures cannot even find their footing before it, let alone stand and fight.	false
+unit_abilities_onscreen_name_wh3_deer24_fashu_xiongmaoren	Drink Without Rest	false
+unit_abilities_tooltip_text_wh3_deer24_fashu_xiongmaoren	"Roar!"\\nAfter years of research, a Zhen Dan linguist has concluded that this cry means, "Good wine, more please!"	false
+land_units_onscreen_name_wh3_deer24_baije	Marshal Tian Peng	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_baije	Tian Peng	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_baije	The power of Marshal Tian Peng comes from the Five Elements Compass of Wei Jing; so long as the compass's power continues to turn, Marshal Tian Peng draws upon an endless font of vitality.	false
+land_units_onscreen_name_wh3_deer24_baije1	Mayfly	false
+special_ability_phases_onscreen_name_wwd_fumo_zuijiu	Drunk!	false
+unit_abilities_additional_ui_effects_localised_text_wwd_vortexx3	Daemonic units will take additional damage	false
+land_units_onscreen_name_wh3_deer24_lingguan	Overseer of the Heavens	false
+unit_description_short_texts_text_wh3_deer24_lingguan	[[img:icon_yang]][[col:white]]Unlock method: Complete the unit's quest[[/col]]\\n\\nThe Overseer of the Heavens was born of the Winds of Magic, a divine general created personally by the Dragon Emperor to oversee both heaven and the mortal realm. Legend holds that, at the Dragon Emperor's command, he once beheaded a rebellious Dragon-kin and took its claw as a trophy—only to slit his own throat under the crushing weight of his guilt for slaying one of his own kind. The Dragon Emperor then grafted the rebel's claw onto the Overseer's bleeding neck, and as the Winds of Magic surged into him, he was reborn. No one knows whether any trace of the Overseer's own will still lingers beneath that dragon claw; all that people see is the Overseer forever carrying out the Dragon Emperor's will, purchasing Zhen Dan's lasting peace with blood. Before departing, the Dragon Emperor sent the Overseer to Tian Shan. Some say he went to watch over the demons south of the mountain; others say he was set to guard, for a thousand years, over the punished Monkey-Head. But since then, no one has ever seen the Overseer of the Heavens again. People still believe that though he has no eyes, his spiritual power watches over every corner of Zhen Dan—and should the realm ever face true crisis again, he shall return to fly once more among mortals.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_lingguan1	Tongue of Flame	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_lingguan1	With Wind Fire Wheels beneath his feet, he moves freely across the battlefield, tongues of flame dancing in his wake.	false
 unit_abilities_onscreen_name_wh3_deer24_abilities_lingguan2	Blazing Inferno	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_lingguan2	Celestial winds erupt, forming a fiery storm that is nearly impenetrable. Face true power.	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_lingguan3	Flame Verdict	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_lingguan3	A single incantation summons fire to strike down enemies.	false
-land_units_onscreen_name_wh3_deer24_tianwang2	Sword of Purity	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang_duanwang	With a blade of righteousness, it severs the roots of chaos.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang_duanwang	"Sword of Virtue"	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang_duanwang2	The Sword of Purity releases celestial winds from its gourd to bless allies.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang_duanwang2	"Virtue Gourd"	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_tianwangshou2	Scattered Shots	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_tianwangshou2	With a pluck of its pipa, celestial energies erupt as weapons to strike enemies.	false
-land_units_onscreen_name_wh3_deer24_tianwang3	Storm King	false
-unit_abilities_onscreen_name_wh3_deer24_tianwang3	"Umbrella Tempest"	false
-unit_abilities_tooltip_text_wh3_deer24_tianwang3	Under the Storm King’s magical umbrella lies wind and rain, ready to be unleashed with a single motion.	false
-ui_unit_bullet_point_enums_onscreen_name_TIANWANG	Celestial Kings	false
-ui_unit_bullet_point_enums_tooltip_TIANWANG	These guardians of Cathay possess high [[img:icon_melee_attack]][[/img]] melee attack and [[img:icon_melee_defence]][[/img]] melee defense, wielding powerful abilities to influence the battlefield.	false
-effects_description_wwd_effect_force_stat_resistance_all_defending	Special Protection: %+n when defending	false
-land_units_onscreen_name_wh3_deer24_huangfengling_dualshushu	Master Blasters	false
-land_units_onscreen_name_wh3_deer24_huangfengling_shushu	Shield Rats	false
-unit_description_short_texts_text_wh3_deer24_short_SHUREN	Eight hundred li of Yellow Wind Ridge once thrived but is now a wasteland plagued by rats, devoid of human life.	false
-ui_unit_groupings_onscreen_huangfengling_unit	Yellow Wind Beasts	false
-unit_abilities_onscreen_name_wh3_deer24_huangfengling_dualshushu	Coal Bomb	false
-unit_abilities_tooltip_text_wh3_deer24_huangfengling_dualshushu	A series of small explosives detonate in rapid succession, unleashing devastating flames.	false
-unit_abilities_onscreen_name_wh3_deer24_huangfengling_shushu	Sand Shield	false
-unit_abilities_tooltip_text_wh3_deer24_huangfengling_shushu	The rats’ shields are imbued with the Yellow Wind Saint’s magic, forming an unyielding barrier that dissipates after one use.	false
-unit_abilities_onscreen_name_wh3_deer24_huangfengling_dualshushu2	Disposable	false
-unit_abilities_tooltip_text_wh3_deer24_huangfengling_dualshushu2	Loyal to the Yellow Wind Saint, these rats detonate their explosives upon death.	false
-land_units_onscreen_name_wh3_deer24_tongrenseng	Celestial Arhat	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_lingguan2	The Winds of Magic surge forth, forming an impassable firestorm around him — face true power, if you dare.	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_lingguan3	Flame Punishment	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_lingguan3	With a single mystic gesture, he commands flame to strike down his enemies.	false
+land_units_onscreen_name_wh3_deer24_tianwang2	Heavenly King Duan Wang	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang_duanwang	With sword planted against the earth, good fortune grows and the roots of calamity are severed.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang_duanwang	[Wisdom Sword Formula]	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_tianwang_duanwang2	Heavenly King Duan Wang releases the vital energy stored within his gourd, granting a boon to his allies.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_tianwang_duanwang2	[Gourd of Good Roots]	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_tianwangshou2	Scattershot	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_tianwangshou2	As the heavenly king plucks his pipa, countless spiritual energies surge forth from its strings, coalescing into weapons that strike down his enemies.	false
+land_units_onscreen_name_wh3_deer24_tianwang3	Heavenly King Wen Chen	false
+unit_abilities_onscreen_name_wh3_deer24_tianwang3	[Startled Beneath the Umbrella]	false
+unit_abilities_tooltip_text_wh3_deer24_tianwang3	Wind and rain gather beneath Heavenly King Wen Chen's treasured umbrella, awaiting only the moment he unfurls it to summon storm and downpour.	false
+ui_unit_bullet_point_enums_onscreen_name_TIANWANG	Heavenly King Statue	false
+ui_unit_bullet_point_enums_tooltip_TIANWANG	This unit is one of the Four Heavenly King Statues of Zhen Dan, guardian deities of the common people of Zhen Dan. They possess extremely high [[img:icon_melee_attack]][[/img]]Melee Attack and [[img:icon_melee_defence]][[/img]]Melee Defence, and can use exceptionally powerful special abilities to shape the battlefield	false
+effects_description_wwd_effect_force_stat_resistance_all_defending	Special protection: %+n while defending	false
+land_units_onscreen_name_wh3_deer24_huangfengling_dualshushu	Rat Overseer	false
+land_units_onscreen_name_wh3_deer24_huangfengling_shushu	Rat Soldiers	false
+unit_description_short_texts_text_wh3_deer24_short_SHUREN	Yellow Wind Ridge, eight hundred miles wide, once a fertile land beyond the pass—until a plague of rats rose from nothing, choking it in murky smoke, erasing all trace of human life.	false
+ui_unit_groupings_onscreen_huangfengling_unit	Demons of Yellow Wind Ridge	false
+unit_abilities_onscreen_name_wh3_deer24_huangfengling_dualshushu	Coal-Ash Bomb	false
+unit_abilities_tooltip_text_wh3_deer24_huangfengling_dualshushu	[[img:icon_yang]][[col:white]]Unlock condition: Recruit Great Sage of the Yellow Wind into your ranks[[/col]]\\n\\nA volley of small explosives detonates in rapid succession, unleashing a devastating inferno.	false
+unit_abilities_onscreen_name_wh3_deer24_huangfengling_shushu	Yellow Sand Shield	false
+unit_abilities_tooltip_text_wh3_deer24_huangfengling_shushu	The shields of the Rat Soldiers are imbued with the Great Sage of the Yellow Wind's magic; with a single gesture, they harden as solid as mountains, impervious to harm. But this spell only works once — once the magic fades, even the shield of gathered yellow sand crumbles away.	false
+unit_abilities_onscreen_name_wh3_deer24_huangfengling_dualshushu2	Death Means Nothing	false
+unit_abilities_tooltip_text_wh3_deer24_huangfengling_dualshushu2	[[img:icon_yang]][[col:white]]Unlock condition: Recruit Great Sage of the Yellow Wind into your ranks[[/col]]\\n\\nThe Rat Overseers are the Great Sage of the Yellow Wind's most devoted followers; when facing death, they detonate the explosives strapped to their bodies.	false
+land_units_onscreen_name_wh3_deer24_tongrenseng	Hao Tian Arhat	false
 unit_abilities_onscreen_name_wh3_deer24_abilities_douseng72	Seventy-Two Arts	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_douseng72	The Celestial Arhat embodies the thirty-six external and thirty-six internal arts of Cathay’s temples.	false
-special_ability_phases_onscreen_name_wh3_deer24_fumo_luohanquan	Arhat Strike	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_hailongjiajun1	Union Formation: Earth	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_hailongjiajun1	The Tideguard are the most formidable force along Cathay’s coastline, forged through relentless battles against invasions.	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_hailongjiajun2	Union Formation: Fog	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_hailongjiajun2	The Tideguard are the most formidable force along Cathay’s coastline, forged through relentless battles against invasions.	false
-land_units_onscreen_name_wh3_deer24_baihu_boss	"Golden Tiger Guardian" Baihu	false
-land_units_onscreen_name_wh3_deer24_zhuque_boss	"Flame Phoenix Guardian" Zhuque	false
-land_units_onscreen_name_wh3_deer24_xuanwu_boss	"Water Tortoise Guardian" Xuanwu	false
-land_units_onscreen_name_wwd_chs_inf_chosen_2_manymany	Chosen of the Apocalypse (Elite Warriors)	false
-land_units_onscreen_name_wwd_chs_inf_chosen_0_manymany	Chosen of the Apocalypse (Veterans)	false
-land_units_onscreen_name_wwd_chs_inf_chosen_0_manymany_summon	Sacrificial Chosen	false
-land_units_onscreen_name_wwd_chs_inf_chaos_warriors_mtze_manymany	Tzeentchian Chosen	false
-land_units_onscreen_name_wwd_tze_mon_screamers_0_manymany	Howling Shark Swarm	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_douseng72	The temples of Zhen Dan each master thirty-six external and thirty-six internal arts, but the Hao Tian Arhat has united every unrivaled skill into one being.	false
+special_ability_phases_onscreen_name_wh3_deer24_fumo_luohanquan	Arhat Fist	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_hailongjiajun1	Mandarin Duck Formation: Kun	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_hailongjiajun1	The Tide-Washing Court is the mightiest force along the Celestial Empire's vast coastline. They are champions selected by Ming Long through years of endless war, and have forged a battle style all their own in the ceaseless struggle against coastal incursions.	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_hailongjiajun2	Mandarin Duck Formation: Meng	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_hailongjiajun2	The Tide-Washing Court is the mightiest force along the Celestial Empire's vast coastline. They are champions selected by Ming Long through years of endless war, and have forged a battle style all their own in the ceaseless struggle against coastal incursions.	false
+land_units_onscreen_name_wh3_deer24_baihu_boss	[Guardian Beast of Metal] Bai Hu	false
+land_units_onscreen_name_wh3_deer24_zhuque_boss	[Beast-Warder of Blazing Fire] Zhu Que	false
+land_units_onscreen_name_wh3_deer24_xuanwu_boss	[Guardian Beast of Water] Xuan Wu	false
+land_units_onscreen_name_wwd_chs_inf_chosen_2_manymany	Apocalypse Warband Chosen	false
+land_units_onscreen_name_wwd_chs_inf_chosen_0_manymany	Apocalypse Warband Chosen	false
+land_units_onscreen_name_wwd_chs_inf_chosen_0_manymany_summon	Godsworn Chosen	false
+land_units_onscreen_name_wwd_tze_mon_screamers_0_manymany	Shrieking Screamer Swarm	false
 land_units_onscreen_name_wwd_cth_veh_sky_junk_0	Sky Junk Fleet	false
 land_units_onscreen_name_wwd_dlc23_chd_inf_infernal_guard_fireglaives	Infernal Guard (Fireglaives)	false
 land_units_onscreen_name_wwd_dlc23_chd_inf_infernal_guard_great_weapons	Infernal Guard (Great Weapons)	false
-land_units_onscreen_name_wwd_dlc01_chs_inf_chaos_warriors_2	Chaos Warriors (Great Weapons)	false
-land_units_onscreen_name_wwd_dlc01_chs_inf_forsaken_0	The Forsaken	false
-land_units_onscreen_name_wwd_chs_inf_archaon_champions_0	Chaos Blades (Infantry)	false
-land_units_onscreen_name_wwd_main_dae_inf_chaos_furies_0	Endless Chaos Furies	false
-land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_mtze_halberds	Tzeentchian Chosen (Halberds)	false
+land_units_onscreen_name_wwd_dlc01_chs_inf_chaos_warriors_2	Chaos Warriors	false
+land_units_onscreen_name_wwd_dlc01_chs_inf_forsaken_0	Forsaken	false
+land_units_onscreen_name_wwd_chs_inf_archaon_champions_0	Swords of Chaos (Foot Guard)	false
+land_units_onscreen_name_wwd_main_dae_inf_chaos_furies_0	Furies of the End Times	false
+land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_mtze_halberds	Chosen of Tzeentch (Halberds)	false
 land_units_onscreen_name_wwd_dlc24_tze_inf_tzaangors	Tzaangors	false
-land_units_onscreen_name_wwd_twa06_sla_inf_daemonette_ror_0	Endless Allurefiends	false
-land_units_onscreen_name_wwd_twa06_kho_inf_bloodletters_ror_0	Endless Forge Legion	false
-land_units_onscreen_name_wwd_twa06_nur_inf_plaguebearers_ror_0	Endless Rot Hosts	false
-land_units_onscreen_name_wwd_twa06_tze_inf_pink_horrors_ror_0	Endless Flaming Betrayers	false
-land_units_onscreen_name_wwd_dlc23_chd_inf_infernal_ironsworn	Immortal Legion (Infernal Ironsworn)	false
+land_units_onscreen_name_wwd_twa06_sla_inf_daemonette_ror_0	Daemonettes of the End Times	false
+land_units_onscreen_name_wwd_twa06_kho_inf_bloodletters_ror_0	Bloodletters of the End Times	false
+land_units_onscreen_name_wwd_twa06_nur_inf_plaguebearers_ror_0	Plaguebearers of the End Times	false
+land_units_onscreen_name_wwd_twa06_tze_inf_pink_horrors_ror_0	Pink Horrors of the End Times	false
+land_units_onscreen_name_wwd_dlc23_chd_inf_infernal_ironsworn	Deathless (Infernal Ironsworn)	false
 land_units_onscreen_name_wwd_dlc23_chd_inf_infernal_ironsworn_ror	Infernal Ironsworn	false
-land_units_onscreen_name_wwd_final_boss_archaon	"Everchosen" Archaon	false
-land_units_onscreen_name_wwd_main_tze_inf_pink_horrors_0	Divine Tzeentchian Pink Horrors	false
-unit_abilities_tooltip_text_wwd_final_battle_summon_kho	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_kho	Khorne Daemons	true
-unit_abilities_tooltip_text_wwd_final_battle_summon_nur	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_nur	Nurgle Daemons	true
-unit_abilities_tooltip_text_wwd_final_battle_summon_sla	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_sla	Slaanesh Daemons	true
-unit_abilities_tooltip_text_wwd_final_battle_summon_tze	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_tze	Tzeentch Daemons	true
-land_units_onscreen_name_wwd_final_boss_LX1	"Heaven’s Chosen" Yun Xiang	false
-unit_abilities_tooltip_text_wwd_final_battle_summon_kho2	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_kho2	Khorne Daemons	true
-unit_abilities_tooltip_text_wwd_final_battle_summon_nur2	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_nur2	Nurgle Daemons	true
-unit_abilities_tooltip_text_wwd_final_battle_summon_sla2	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_sla2	Slaanesh Daemons	true
-unit_abilities_tooltip_text_wwd_final_battle_summon_tze2	The winds of magic tremble as the fabric of reality is shaken. Demonic armies are invading the mortal world!	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_tze2	Tzeentch Daemons	true
+land_units_onscreen_name_wwd_final_boss_archaon	[[col:red]][Lord of the End Times] Archaon[[/col]]	false
+land_units_onscreen_name_wwd_main_tze_inf_pink_horrors_0	Pink Horrors of the Great Sorcerer	false
+unit_abilities_tooltip_text_wwd_final_battle_summon_kho	The Winds of Magic are surging, the foundations of the world tremble — the daemon hosts are invading the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_kho	Daemon of Khorne	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_nur	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_nur	Daemon of Nurgle	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_sla	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_sla	Daemon of Slaanesh	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_tze	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_tze	Daemon of Tzeentch	true
+land_units_onscreen_name_wwd_final_boss_LX1	[Heaven's Favored] Yun Xiang	false
+unit_abilities_tooltip_text_wwd_final_battle_summon_kho2	The Winds of Magic are surging, the foundations of the world tremble — the daemon hosts are invading the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_kho2	Greater Daemon of Khorne	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_nur2	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_nur2	Greater Daemon of Nurgle	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_sla2	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_sla2	Greater Daemon of Slaanesh	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_tze2	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_tze2	Greater Daemon of Tzeentch	true
 land_units_onscreen_name_wwd_dlc20_chs_mon_warshrine	Chaos War Shrine	false
-unit_abilities_tooltip_text_wwd_final_battle_summon_chs	Chaos power is gathering, and the world stands on the brink of annihilation...	true
-unit_abilities_onscreen_name_wwd_final_battle_summon_chs	Path of Ruin	true
-unit_abilities_tooltip_text_wwd_chs_inf_chosen_0_manymany_summon	Mortals become sacrifices, paving the way for their annihilation.	false
-unit_abilities_onscreen_name_wwd_chs_inf_chosen_0_manymany_summon	Sacrificial Offering	false
-land_units_onscreen_name_wwd_main_chs_art_hellcannon	Hellcannon	false
+unit_abilities_tooltip_text_wwd_final_battle_summon_chs	The power of Chaos is gathering; the entire world faces an inescapable doom...	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_chs	Path to Destruction	true
+unit_abilities_tooltip_text_wwd_chs_inf_chosen_0_manymany_summon	Mortals shall become sacrifices, laid as stepping stones toward his annihilation of the world.	false
+unit_abilities_onscreen_name_wwd_chs_inf_chosen_0_manymany_summon	Sacrifice unto Annihilation	false
+land_units_onscreen_name_wwd_main_chs_art_hellcannon	Hellcannon Battery	false
 land_units_onscreen_name_wwd_main_skv_inf_clanrat_spearmen_0	Clanrat Spearmen	false
-land_units_onscreen_name_wwd_main_skv_inf_stormvermin_0	Stormvermin (Sword and Shield)	false
-land_units_onscreen_name_wwd_main_skv_inf_stormvermin_1	Stormvermin (Halberd)	false
+land_units_onscreen_name_wwd_main_skv_inf_stormvermin_0	Stormvermin (Halberds)	false
+land_units_onscreen_name_wwd_main_skv_inf_stormvermin_1	Stormvermin (Sword and Shield)	false
 land_units_onscreen_name_wwd_dlc23_chd_veh_iron_daemon	Iron Daemon	false
-land_units_onscreen_name_wwd_dlc20_chs_mon_warshrine_mtze	Tzeentchian Chaos War Shrine	false
-land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_msla_hellscourges	Slaaneshi Chosen (Hellscourges)	false
-land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_mnur_greatweapons	Nurgle Chosen (Great Weapons)	false
-land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_mkho_dualweapons	Khorne Chosen (Dual Weapons)	false
+land_units_onscreen_name_wwd_dlc20_chs_mon_warshrine_mtze	Chaos War Shrine of Tzeentch	false
+land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_msla_hellscourges	Chosen of Slaanesh (Hellscourges)	false
+land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_mnur_greatweapons	Chosen of Nurgle (Great Weapons)	false
+land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_mkho_dualweapons	Chosen of Khorne (Dual Weapons)	false
 unit_abilities_onscreen_name_wh3_deer24_abilities_yang_better	Song of the Great Wind	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_yang_better	Even in death, leave heroic bones and earn eternal fame.	false
-effects_description_wh3_main_effect_ability_disable_wuzhijinsui	Replaces Skill: "Essence of Martial Arts"	true
-effects_description_wh3_main_effect_ability_enable_wuzhijinsui2	Unlock Skill: "Song of the Great Wind"	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_fubing_banner	Battle Standards	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_fubing_banner	Carrying banners adorned with provincial emblems, these vanguard warriors guide the advance of their comrades with their standards.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_shengbing_iron	New Forge Equipment	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_shengbing_iron	The workshops of Shang-Yang are filled with Zhao Ming’s gathered artisans: alchemists from the desert, inventors from the Empire, and dreamers with bold designs. Supported by his court, they produce weapons and armor that even Kunlan’s smiths marvel at, crafting an iron army for Cathay.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_fubing_halberd	Forest of Blades	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_fubing_halberd	Forming tight formations, the halberdiers ensure rivers of blood flow beyond their blades.	true
-unit_abilities_onscreen_name_wh3_deer24_abilities_xianzheng_shield	Immovable as Mountains	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_xianzheng_shield	Where the Xuanpo Legion stands, the Great Bastion stands as well.	true
-land_units_onscreen_name_wh3_deer24_bianjun_1	Earthshaker Army	false
-unit_description_short_texts_text_wh3_deer24_short_bianjun	[[img:icon_yang]][[col:white]]Unlock: Provide maximum aid to the Border Army at least once[[/col]]\\n\\nThe Border Army forms the backbone of the Great Bastion’s defense, composed of conscripts from various provinces and supplemented by the elite of noble houses seeking redemption. Forged in brutal wars, these soldiers stand as vigilant sentinels, guarding their weary yet magnificent homeland.	false
-land_units_onscreen_name_wh3_deer24_bianjun_2	Border Army of the Great Bastion	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_bianjun1	Mountain Shaker	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_bianjun1	"It’s easier to shake mountains than the Border Army."	true
-effects_description_wwd_possibilities_trait	[[col:yellow]]Equipper has a very low chance of gaining a unique trait[[/col]]	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_yanjiaotaijian	Unity Blade	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_yanjiaotaijian	The blade moves like a comet, swift as lightning.	false
-effects_description_wh3_deer24_abilities_yanjiaotaijian	Skill: "Unity Blade"	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_rumengling	Rumengling	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_rumengling	The rains thin, the winds rise; a lingering dream dissolves the remnants of wine.	false
-effects_description_wh3_deer24_abilities_rumengling	Skill: "Rumengling"	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_qingrong	Cleansing Fusion	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_qingrong	Where the sword’s light and shadow pass, iron melts into water, and armor crumbles into mud.	false
-effects_description_wh3_deer24_abilities_qingrong	Skill: "Cleansing Fusion"	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_fengbian	Illuminating the Night	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_fengbian	"Southern Border will never fall!"	false
-effects_description_wh3_deer24_abilities_fengbian	Skill: "Illuminating the Night"	false
-effects_description_wwd_base_military_building_time	Construction Time: Cathayan Military Buildings %+n	false
-effects_description_wwd_glorious_charge	Unlock Attribute: Glorious Charge	false
-effects_description_wwd_jinwu_ability	Unlock Skill: Grants "Palace Guard" to the Thousand-Year Jinwu Duo	true
-unit_abilities_tooltip_text_wwd_jinwu_ability	The Jinwu Duo stand as the vanguard of Cathay’s Nine Provinces, composed of peerless warriors.	true
-unit_abilities_onscreen_name_wwd_jinwu_ability	Palace Guard	false
-effects_description_wwd_daoshi_ability	Unlock Skill: Grants "Exorcism and Demon-Banishing" to Jadeblood Daoists and Longjiang Celestial Masters	true
-unit_abilities_tooltip_text_wwd_daoshi_ability	Cathay is vast, with spirits and evils lurking in its wilds. Thankfully, Daoists and Celestial Masters roam the land, eradicating demons and protecting the people.	true
-unit_abilities_onscreen_name_wwd_daoshi_ability	Exorcism and Demon-Banishing	false
-unit_abilities_tooltip_text_wwd_deathline_ability	"I am the Dragon God’s blade, living to fight and fighting to death."	true
-unit_abilities_onscreen_name_wwd_deathline_ability	Glory to My Lord	false
-unit_abilities_additional_ui_effects_localised_text_wwd_deathline_ability	If the skill is not canceled in time, the Celestial Vanguard will enter a berserk state in Phase Two, leading to rapid collapse.	true
-unit_abilities_tooltip_text_wwd_wuren_ability	Drinking the grand winds of heroism; devouring the joyous spirit of nine lands.	true
-unit_abilities_onscreen_name_wwd_wuren_ability	The Way of Chivalry	false
-unit_abilities_onscreen_name_wwd_cstg_ability	Loyalty and Righteousness!	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_yang_better	Better to die and leave behind heroic bones than live in shame for the rest of one's life.	false
+effects_description_wh3_main_effect_ability_disable_wuzhijinsui	Replaces skill: 'Essence of Martial Arts'	true
+effects_description_wh3_main_effect_ability_enable_wuzhijinsui2	Unlocks skill: 'Song of the Great Wind'	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_fubing_banner	Feathered Banner Bearer	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_fubing_banner	The Banner Troops carry flags emblazoned with the emblems of their respective garrisons upon their backs. As the vanguard of the assault, their banners will guide their comrades in the rear toward the point of attack.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_shengbing_iron	Newly Forged Gear	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_shengbing_iron	Nan Gau's workshops teem with retainers summoned by Zhao Ming from every corner of the land — alchemists exiled to the desert, inventive craftsmen from the western empires; even the most outlandish designs have found patronage under the Bin Xi court. Zhao Ming's boldness has proven fruitful — the workshops have produced weapons and armor so fine that even the artisans of Kun Lan would gape in astonishment, and with them he shall forge an iron army for Zhen Dan.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_fubing_halberd	Forest of Blades and Spears	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_fubing_halberd	The Guard Corps Soldiers form tight, disciplined ranks; beyond the tips of their blades, rivers of blood are sure to flow.	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_xianzheng_shield	Unshaken as a Mountain	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_xianzheng_shield	Wherever the Dark Spirit Army makes its stand, there Chang Yuan shall hold firm.	true
+land_units_onscreen_name_wh3_deer24_bianjun_1	Divine Shock Army	false
+unit_description_short_texts_text_wh3_deer24_short_bianjun	[[img:icon_yang]][[col:white]]Unlock method: Provide the frontier army with maximum aid at least once[[/col]]\\n\\nThe frontier armies form the primary defensive force of Chang Yuan, their ranks drawn from all corners of the land, reinforced with elite troops seconded from various courts. Some among them are the sons of noble houses, sent to Chang Yuan to serve in the ranks in hopes of redeeming past disgrace. Hardened by brutal war, these frontier soldiers bear a heavy burden, standing watch over the great yet weary nation behind them.	false
+land_units_onscreen_name_wh3_deer24_bianjun_2	Chang Yuan Frontier Army	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_bianjun1	Moving Mountains with Ease	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_bianjun1	"Let the frontier army shake, if it dares."	true
+effects_description_wwd_possibilities_trait	[[col:yellow]]The wearer has a very small chance of gaining a unique trait[[/col]]	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_yanjiaotaijian	Sword of Yin-Yang Harmony	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_yanjiaotaijian	The sword flashes like a shooting star, swift as lightning.	false
+effects_description_wh3_deer24_abilities_yanjiaotaijian	Skill: 'Sword of Yin-Yang Harmony'	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_rumengling	As in a Dream	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_rumengling	Sparse rain, sudden wind — even deep sleep cannot dispel the lingering wine.	false
+effects_description_wh3_deer24_abilities_rumengling	Skill: 'As in a Dream'	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_qingrong	Clarity and Ease	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_qingrong	Wherever the sword's clear light falls, iron melts to water and armor crumbles to dust.	false
+effects_description_wh3_deer24_abilities_qingrong	Skill: 'Clarity and Ease'	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_fengbian	Lighting Up the Night	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_fengbian	"The southern frontier shall never fall!"	false
+effects_description_wh3_deer24_abilities_fengbian	Skill: 'Lighting Up the Night'	false
+effects_description_wwd_base_military_building_time	Construction time: Zhen Dan military buildings %+n	false
+effects_description_wwd_glorious_charge	Unlocks Attribute: Glorious Charge	false
+effects_description_wwd_jinwu_ability	Unlocks Skill: Unlocks 'The Two Guards Before the Throne' for the Jin Wu Yi Wei of a thousand years	true
+unit_abilities_tooltip_text_wwd_jinwu_ability	The Qian Niu and Jin Wu guards together oversee the Nine Prefectures of Zhen Dan from afar—every soldier among them a paragon among men.	true
+unit_abilities_onscreen_name_wwd_jinwu_ability	The Two Guards Before the Throne	false
+effects_description_wwd_daoshi_ability	Unlocks skill: Unlocks 'Subdue Demons, Banish Evil' for Bi Xue Daoist Temple and Long Jiang Celestial Master	true
+unit_abilities_tooltip_text_wwd_daoshi_ability	Zhen Dan's lands stretch vast and wide, and among its mountains, wilds, and marshes, demons and specters stir up calamity and ruin. Thankfully, wandering Daoist masters walk alone, rooting out these monstrosities and protecting the common people.	true
+unit_abilities_onscreen_name_wwd_daoshi_ability	Subdue Demons, Banish Evil	false
+unit_abilities_tooltip_text_wwd_deathline_ability	"I am the dragon god's blade — born for this, and fighting until death."	true
+unit_abilities_onscreen_name_wwd_deathline_ability	Glory to Our Master	false
+unit_abilities_additional_ui_effects_localised_text_wwd_deathline_ability	If the ability is not terminated in time, the unit will fall into a frenzy and rapidly disintegrate during the second stage	true
+unit_abilities_tooltip_text_wwd_wuren_ability	Drunk on the boundless spirit of heroes, they devour the exhilarating winds of all Nine Provinces.	true
+unit_abilities_onscreen_name_wwd_wuren_ability	The Wanderer's Code	false
+unit_abilities_onscreen_name_wwd_cstg_ability	Loyalty and Honor!	false
 effects_description_deer_bingmayong_arm	Armour: Terracotta Warrior units %+n	true
-effects_description_deer_bingmayong_res_mag	Spell resistance: Terracotta Warrior units %+n%	true
-effects_description_deer_jinjun_cap	Unit capacity: %+n\\nJade Imperials (excluding Dragon Emperor’s Guard)	true
-effects_description_deer_jinyiwei_cp	Unit capacity: %+n\\nJinyiwei	true
-effects_description_deer_jinjun_attack	Melee attack: Jade Imperials %+n	true
-effects_description_deer_jinjun_defence	Melee defense: Jade Imperials %+n	true
-effects_description_deer_jinjun_xp	Recruit rank: Jade Imperials %+n	true
-effects_description_deer_jinyiwei_xp	Recruit rank: Jinyiwei %+n	true
-effects_description_deer_jinyiwei_charge	Charge bonus: Jinyiwei %+n	true
-effects_description_deer_jinyiwei_devestating_flanker	Unlock attribute: Grants "Devastating Flanker" to Jinyiwei	true
-effects_description_deer_shouren_attack	Melee attack: Assimilated Orc units %+n%	true
-effects_description_deer_zhuque_keep	Upkeep: Vermilion Bird units %+n%	true
-effects_description_deer_fubing_attack	Melee attack: Wei-Fu Guard and Banner Soldiers %+n%	true
-effects_description_deer_yushijun_wuli	Physical resistance: Jade Defenders %+n%	true
-effects_description_deer_yushijun_defence	Melee defense: Jade Defenders %+n%	true
-effects_description_deer_fubing_defence	Melee defense: Wei-Fu Guard and Banner Soldiers %+n%	true
-effects_description_deer_fubing_keep	Upkeep: Wei-Fu Guard and Banner Soldiers %+n%	true
-effects_description_deer_longdi_jinjun_damage	[[col:yellow]]Weapon strength: Dragon Emperor’s Guard %+n%[[/col]]	true
-effects_description_deer_qibing_wukang	Physical resistance: Cathayan and Steppe Cavalry %+n%	true
-effects_description_wwd_jade_units_save	Ward save: Jade units %+n%	true
-effects_description_wwd_peasant_units_save	Ward save: Peasant units %+n%	true
-effects_description_deer_hurenninghe_yang_ture	Unlock skill and attribute: Grants "Yangninghe" to Steppe melee units	true
-effects_description_deer_hurenninghe_yin_ture	Unlock skill and attribute: Grants "Yinninghe" to Steppe missile units	true
-effects_description_deer_dragon_guard_immune_to_psychology	Unlock attribute: Immune to psychology	true
-effects_description_deer_nu_xp	Recruit rank: Steppe units %+n	true
-effects_description_deer_nu_cap	Unit capacity: %+n\\nBasic Steppe units	true
-effects_description_deer_nu_cap2	Unit capacity: %+n\\nElite Steppe units	true
-effects_description_deer_nu_keep	Upkeep: Steppe units %+n%	true
-effects_description_deer_peasant_moral	Leadership: Peasant units %+n	true
-effects_description_deer_peasant_charge	Charge bonus: Peasant Horsemen %+n%	true
-effects_description_deer_peasant_recruit_time	Global Recruitment duration: Peasant units %+n turns	true
-effects_description_deer_peasant_range	Range: Peasant Archers %+n%	true
-effects_description_deer_peasant_rank3	When Peasant units reach rank 3, melee attack, melee defense, and armour-piercing damage are further increased by %+n	true
-effects_description_deer_peasant_rank6	When Peasant units reach rank 6, melee attack, melee defense, and armour-piercing damage are further increased by %+n	true
-effects_description_deer_peasant_rank9	When Peasant units reach rank 9, melee attack, melee defense, and armour-piercing damage are further increased by %+n	true
-effects_description_deer_zhushou_jinjun_damage	Weapon strength: Zhushou of Nanli %+n%	true
-effects_description_deer_shenshou_damage	Weapon strength: Guardian Beast units %+n%	true
-effects_description_deer_shenshou_infantry	Bonus vs Infantry: Guardian Beast units %+n	true
-effects_description_deer_yawei_jinjun_damage	Bonus vs Infantry: Ravenfeather Legion %+n	true
-effects_description_deer_zhushou_jinjun_xp	Recruit rank: Zhushou of Nanli %+n	true
-effects_description_deer_yawei_jinjun_xp	Recruit rank: Ravenfeather Legion %+n	true
-unit_abilities_additional_ui_effects_localised_text_deer_nu_paohui	Removes the "Cannon Fodder" attribute from this unit	true
-unit_abilities_additional_ui_effects_localised_text_deer_give_yin	Grants nearby units [[img:icon_yin]][[/img]]Yinninghe	true
-effects_description_deer_nu_paohui	Unlock skill: Grants "United Resolve" to Steppe units	true
-effects_description_deer_tianbingzhenglie	Skill: Celestial Dragon Guard units gain "Essence of Martial Prowess"	true
-effects_description_deer_tianbingzhenglie_peasant	Skill: Peasant units gain "Essence of Martial Prowess"	true
-effects_description_deer_dragon_guard_huwei	Skill: Celestial Dragon Guard units gain "Defender"	true
-effects_description_deer_fubing_huwei	Skill: Wei-Fu Guard and Banner Soldiers gain "Defender"	true
-effects_description_deer_jinyiwei_huwei	Skill: Jinyiwei units gain "Defender"	true
-effects_description_deer_shouren_yuanshengbenneng	Skill: Assimilated Orc units gain "Primal Instinct"	true
-land_units_onscreen_name_wwd_jinjun_longdijinjun	Dragon Emperor’s Guard	false
-land_units_onscreen_name_wwd_jinjun_huben	Huben Guard (Dragon Emperor’s Guard)	false
-land_units_onscreen_name_wwd_jinjun_west_baier	White Plumes of the Northern Frontier	false
-land_units_onscreen_name_wwd_jinjun_celest_yayu	Ravenfeather Legion	false
-land_units_onscreen_name_wwd_jinjun_north_tiewei	Iron Sentinels of the High Wall	false
-land_units_onscreen_name_wwd_jinjun_yueshenyuan	Temple of the Moon Goddess	false
-land_units_onscreen_name_wwd_jinjun_east_chaoting	Tidecourt of the Eastern Sea	false
-land_units_onscreen_name_wwd_jinjun_fengyunlan	Orchid of Wind and Cloud	false
-land_units_onscreen_name_wwd_jinjun_south_zhushou	Zhushou of Nanli	false
-land_units_onscreen_name_wwd_jinjun_cennter_chiwei	Chiwei of the Jade Court	false
-ui_unit_bullet_point_enums_onscreen_name_deer24_GUIMIAN	Heavenly King Helm	false
-ui_unit_bullet_point_enums_onscreen_name_deer24_JINYIWEI	Jinyiwei	true
-ui_unit_bullet_point_enums_onscreen_name_deer24_LONGDIJINJUN	Dragon Emperor’s Guard	false
-ui_unit_bullet_point_enums_onscreen_name_deer24_QINMOKE	Ministry of Rites	true
+effects_description_deer_bingmayong_res_mag	Spell Resistance: Terracotta Warrior units %+n%	true
+effects_description_deer_jinjun_cap	Unit capacity: %+n\\nZhen Dan Imperial Guard units, excluding Dragon Emperor's Guard	true
+effects_description_deer_jinyiwei_cp	Unit capacity: %+n\\nBastion of Shang Yang	true
+effects_description_deer_jinjun_attack	Melee Attack: Zhen Dan Imperial Guard units %+n	true
+effects_description_deer_jinjun_defence	Melee Defence: Zhen Dan Imperial Guard units %+n	true
+effects_description_deer_jinjun_xp	New recruit rank: Zhen Dan Imperial Guard units %+n	true
+effects_description_deer_jinyiwei_xp	New recruit rank: Bastion of Shang Yang %+n	true
+effects_description_deer_jinyiwei_charge	Charge Bonus: Bastion of Shang Yang %+n	true
+effects_description_deer_jinyiwei_devestating_flanker	Unlocks attribute: Unlocks Devastating Flanker for Bastion of Shang Yang	true
+effects_description_deer_shouren_attack	Melee Attack: Reformed Greenskin units %+n%	true
+effects_description_deer_zhuque_keep	Upkeep: Zhu Que units %+n%	true
+effects_description_deer_fubing_attack	Melee Attack: Guard Corps Soldiers and Banner Troops units %+n%	true
+effects_description_deer_yushijun_wuli	Physical Resistance: Shu Shu Jade Attendants units %+n%	true
+effects_description_deer_yushijun_defence	Melee Defence: Shu Shu Jade Attendants units %+n%	true
+effects_description_deer_fubing_defence	Melee Defence: Guard Corps Soldiers and Banner Troops units %+n%	true
+effects_description_deer_fubing_keep	Upkeep: Guard Corps Soldiers and Banner Troops units %+n%	true
+effects_description_deer_longdi_jinjun_damage	[[col:yellow]]Weapon Strength: Dragon Emperor's Guard %+n%[[/col]]	true
+effects_description_deer_qibing_wukang	Physical Resistance: Zhen Dan Cavalry units %+n%	true
+effects_description_wwd_jade_units_save	Ward Save: Jade units %+n%	true
+effects_description_wwd_peasant_units_save	Ward Save: Peasant units %+n%	true
+effects_description_deer_hurenninghe_yang_ture	Unlocks skill and attribute: Unlocks Yang Peace and Harmony for Hu tribesmen melee units	true
+effects_description_deer_hurenninghe_yin_ture	Unlocks skill and attribute: Unlocks Yin Peace and Harmony for Hu tribesmen ranged units	true
+effects_description_deer_dragon_guard_immune_to_psychology	Unlocks Attribute: Immune to Psychology	true
+effects_description_deer_nu_xp	New recruit rank: Hu tribesmen units %+n	true
+effects_description_deer_nu_cap	Unit capacity: %+n\\nHu tribesmen basic units	true
+effects_description_deer_nu_cap2	Unit capacity: %+n\\nHu tribesmen elite units	true
+effects_description_deer_nu_keep	Upkeep: Hu tribesmen units %+n%	true
+effects_description_deer_peasant_moral	Leadership: Peasant Levy units %+n	true
+effects_description_deer_peasant_charge	Charge Bonus: Peasant Levy cavalry %+n%	true
+effects_description_deer_peasant_recruit_time	Global recruitment duration: Peasant Levy units %+n turns	true
+effects_description_deer_peasant_range	Range: Peasant Levy archers %+n%	true
+effects_description_deer_peasant_rank3	When Peasant Levy units reach rank 3, gain an additional %+n bonus to Melee Attack, Melee Defence and Armour-Piercing Damage	true
+effects_description_deer_peasant_rank6	When Peasant Levy units reach rank 6, gain an additional %+n bonus to Melee Attack, Melee Defence and Armour-Piercing Damage	true
+effects_description_deer_peasant_rank9	When Peasant Levy units reach rank 9, gain an additional %+n bonus to Melee Attack, Melee Defence and Armour-Piercing Damage	true
+effects_description_deer_zhushou_jinjun_damage	Weapon Strength: Southern Beacon-Keepers %+n%	true
+effects_description_deer_shenshou_damage	Weapon Strength: Guardian Beast units %+n%	true
+effects_description_deer_shenshou_infantry	Bonus vs. Infantry: Guardian Beast units %+n	true
+effects_description_deer_yawei_jinjun_damage	Bonus vs. Infantry: Raven-Feather Legion %+n	true
+effects_description_deer_zhushou_jinjun_xp	New recruit rank: Southern Beacon-Keepers %+n	true
+effects_description_deer_yawei_jinjun_xp	New recruit rank: Raven-Feather Legion %+n	true
+unit_abilities_additional_ui_effects_localised_text_deer_nu_paohui	Removes the Expendable attribute from this unit	true
+unit_abilities_additional_ui_effects_localised_text_deer_give_yin	Grants nearby units [[img:icon_yin]][[/img]]Yin Harmony	true
+effects_description_deer_nu_paohui	Unlocks skill: Unlocks 'United in Effort' for Hu tribesmen units	true
+effects_description_deer_tianbingzhenglie	Skill: Celestial Court Dragon Guard units gain 'Essence of Martial Arts'	true
+effects_description_deer_tianbingzhenglie_peasant	Skill: Peasant Levy units gain 'Essence of Martial Arts'	true
+effects_description_deer_dragon_guard_huwei	Ability: Heavenly Court Dragon Guard units gain 'Protector'	true
+effects_description_deer_fubing_huwei	Ability: Guard Corps Soldiers and Banner Troops units gain 'Protector'	true
+effects_description_deer_jinyiwei_huwei	Skill: Bastion of Shang Yang units gain 'Protector'	true
+effects_description_deer_shouren_yuanshengbenneng	Skill: Reformed Greenskin units gain 'Primal Instinct'	true
+land_units_onscreen_name_wwd_jinjun_longdijinjun	Dragon Emperor's Guard	false
+land_units_onscreen_name_wwd_jinjun_huben	Elite Tiger Guard (Dragon Emperor's Guard)	false
+land_units_onscreen_name_wwd_jinjun_west_baier	Shuo Fang White-Plumes	false
+land_units_onscreen_name_wwd_jinjun_celest_yayu	Raven-Feather Legion	false
+land_units_onscreen_name_wwd_jinjun_north_tiewei	Rampart Iron Guard	false
+land_units_onscreen_name_wwd_jinjun_yueshenyuan	Moon God Court	false
+land_units_onscreen_name_wwd_jinjun_east_chaoting	Tide-Washing Court	false
+land_units_onscreen_name_wwd_jinjun_fengyunlan	Wind and Cloud Orchid	false
+land_units_onscreen_name_wwd_jinjun_south_zhushou	Southern Beacon-Keepers	false
+land_units_onscreen_name_wwd_jinjun_cennter_chiwei	Jade Court Decree Guard	false
+ui_unit_bullet_point_enums_onscreen_name_deer24_GUIMIAN	Heavenly King Mask Armor	false
+ui_unit_bullet_point_enums_onscreen_name_deer24_JINYIWEI	Bastion of Shang Yang	true
+ui_unit_bullet_point_enums_onscreen_name_deer24_LONGDIJINJUN	Dragon Emperor's Guard	false
+ui_unit_bullet_point_enums_onscreen_name_deer24_QINMOKE	Ceremonial Guard Office	true
 ui_unit_bullet_point_enums_onscreen_name_CHUANTOU	Penetrating Shot	false
-ui_unit_bullet_point_enums_onscreen_name_LIANGYI	Moonlight Blessing	false
-ui_unit_bullet_point_enums_tooltip_deer24_GUIMIAN	Cathayan warriors wear visors carved in the visage of the Heavenly King, capable of [[img:ui/battle ui/ability_icons/causes_fear.png]][[/img]] instilling fear in enemies	false
-ui_unit_bullet_point_enums_tooltip_deer24_JINYIWEI	The Hongwu Inspectors are enforcers of the Divine Stratagem Bureau, watching every province. No secret escapes them; all intelligence flows back to the Bureau	true
-ui_unit_bullet_point_enums_tooltip_deer24_LONGDIJINJUN	The guards who protect the Dragon Emperor’s palace are truly chosen by the gods, surpassing even other palace elites in Cathay	false
-ui_unit_bullet_point_enums_tooltip_deer24_QINMOKE	Lady Xinlinnge oversees spirits and medicines, heals the sick, and grants blessings through moonlight. This unit can restore nearby allies	true
-ui_unit_bullet_point_enums_tooltip_CHUANTOU	This unit’s ranged attacks strike through multiple targets in a line, dealing immense damage	false
-ui_unit_bullet_point_enums_tooltip_LIANGYI	This unit has received [[img:icon_yin]][[/img]] blessings and teachings from the Moon Empress, allowing it to heal itself or nearby allies	false
+ui_unit_bullet_point_enums_onscreen_name_LIANGYI	Moonlight	false
+ui_unit_bullet_point_enums_tooltip_deer24_GUIMIAN	Zhen Dan warriors wear face armor carved in the likeness of a Heavenly King, which can [[img:ui/battle ui/ability_icons/causes_fear.png]][[/img]]Cause Fear in enemies	false
+ui_unit_bullet_point_enums_tooltip_deer24_JINYIWEI	The Hong Wu Overseers are inspectors placed by the God-Strategy Bureau in every province. No trace escapes their scrutiny, and all the intelligence they gather is relayed back to the God-Strategy Bureau	true
+ui_unit_bullet_point_enums_tooltip_deer24_LONGDIJINJUN	The Imperial Guard defending the Dragon Emperor's palace are truly chosen ones, their might so great that it puts the guards of other Zhen Dan courts to shame	false
+ui_unit_bullet_point_enums_tooltip_deer24_QINMOKE	The Xing Lin Maidens oversee the imperial wine and medicine, practicing healing arts and saving lives. They stay ever by the Moon Empress's side, bestowing the blessing of moonlight to heal the wounded and relieve the suffering of the people. This unit can provide healing effects to nearby allied units	true
+ui_unit_bullet_point_enums_tooltip_CHUANTOU	This unit's ranged attacks strike through several units in a line, dealing incredible damage	false
+ui_unit_bullet_point_enums_tooltip_LIANGYI	This unit has received the blessing and teachings of the [[img:icon_yin]][[/img]]Moon Empress, and can provide healing effects to itself or nearby units	false
 unit_abilities_additional_ui_effects_localised_text_wwd_summon_powerful	Summons an extremely powerful unit	false
-unit_abilities_tooltip_text_deer_nu_paohui	With the Houxian King ennobled as Duke of Yan, the Steppe peoples were officially integrated into the Celestial Empire; together, the Kheshig and Dragon Guard march against Chaos	true
-unit_abilities_onscreen_name_deer_nu_paohui	United Resolve	false
-unit_description_short_texts_text_wwd_jinjun_east_chaoting	A thousand years the sea lies cold; ten years ride to quell the bold	false
-unit_description_short_texts_text_wwd_jinjun_south_zhushou	Seventy years of border watch, the fire of Li guards their rest	false
-unit_description_short_texts_text_wwd_jinjun_cennter_chiwei	Immortals drift over azure peaks, court pillars anchor the tides	false
-unit_abilities_additional_ui_effects_localised_text_deer_give_yang	Grants nearby units [[img:icon_yang]][[/img]]Yangninghe	true
-ui_unit_bullet_point_enums_onscreen_name_deer_ZHANSHOU	Decapitator Squad	false
-ui_unit_bullet_point_enums_onscreen_name_deer_SISHA	Bloodragers	false
-ui_unit_bullet_point_enums_tooltip_deer_SISHA	The bloodier the battle, the more this unit thrives—becoming ever deadlier against large enemy numbers	false
-ui_unit_bullet_point_enums_tooltip_deer_ZHANSHOU	This unit can eliminate individual enemy units with astonishing speed, but may falter if surrounded	false
+unit_abilities_tooltip_text_deer_nu_paohui	With the Right Worthy Prince granted the title of Duke of Yan, the Hu tribesmen have formally become part of the Celestial Empire. The Kheshig and the Dragon Guard shall stand together against the armies of Chaos.	true
+unit_abilities_onscreen_name_deer_nu_paohui	United in Effort	false
+unit_description_short_texts_text_wwd_jinjun_east_chaoting	A thousand years of the sea's cold hue; ten years of galloping to quell the marauders' courage.	false
+unit_description_short_texts_text_wwd_jinjun_south_zhushou	Seventy years guarding the frontier; the departing fire lights their eternal rest.	false
+unit_description_short_texts_text_wwd_jinjun_cennter_chiwei	The Jade Immortal floats above the clear peaks; the courtyard pillars steady the calm seas.	false
+unit_abilities_additional_ui_effects_localised_text_deer_give_yang	Grants nearby units [[img:icon_yang]][[/img]]Yang Harmony	true
+ui_unit_bullet_point_enums_onscreen_name_deer_ZHANSHOU	Beheading Squad	false
+ui_unit_bullet_point_enums_onscreen_name_deer_SISHA	Slaughterer	false
+ui_unit_bullet_point_enums_tooltip_deer_SISHA	The bloodier and more brutal the battle, the more this unit thrives, growing ever stronger when facing large numbers of enemies	false
+ui_unit_bullet_point_enums_tooltip_deer_ZHANSHOU	This unit can eliminate a single enemy unit with incredible speed, but can easily find itself in trouble if surrounded by multiple units	false
 effects_description_deer_bingmayong_speed	Speed: Terracotta Warrior units %+n	true
 effects_description_deer_bingmayong_keep	Upkeep: Terracotta Warrior units %+n%	true
-unit_abilities_onscreen_name_zhuque_human_form	Mortal Form	true
-unit_abilities_onscreen_name_zhuque_bird_form	Return to Origin	true
-unit_abilities_tooltip_text_zhuque_human_form	Among the Guardian Beasts, Zhuque is closest to mankind. While others faded into history, Zhuque has long served as the protector of Fuhong and Cathay	true
-unit_abilities_tooltip_text_zhuque_bird_form	Among the Guardian Beasts, Zhuque is closest to mankind. While others faded into history, Zhuque has long served as the protector of Fuhong and Cathay	true
-unit_abilities_additional_ui_effects_localised_text_wwd_form_change	Change Form	true
-land_units_onscreen_name_wwd_jinjun_tianshi	Longjiang Celestial Exorcist	false
-unit_description_short_texts_text_wwd_jinjun_tianshi	Spirits gaze homeward, soulbound to the river	false
-unit_abilities_tooltip_text_wwd_jinjun_tianshi_abilities_celestial_intervention	Fury surges from the depths of the Longjiang	false
-unit_abilities_onscreen_name_wwd_jinjun_tianshi_abilities_celestial_intervention	Grip of the Soul-Dragon	false
-effects_description_deer_shouren_damage	Weapon strength: Assimilated Orc units %+n%	true
-effects_description_deer_shouren_xp	Recruit rank: Assimilated Orc units %+n	true
-effects_description_deer_shouren_keep	Upkeep: Assimilated Orc units %+n%	true
-effects_description_deer_hanweizhe_peasant	Skill: Peasant units gain "Defender"	true
-ui_unit_bullet_point_enums_onscreen_name_deer_ZHENGDI	Entrenched Warfare	false
-ui_unit_bullet_point_enums_tooltip_deer_ZHENGDI	Fast-moving enemies may evade their strikes, but this unit devastates foes already engaged in melee	false
+unit_abilities_onscreen_name_zhuque_human_form	Shapeshift	true
+unit_abilities_onscreen_name_zhuque_bird_form	Return to True Form	true
+unit_abilities_tooltip_text_zhuque_human_form	Of all the guardian beasts, Zhu Que holds the closest bond with humanity. While the other great beasts hid from the pages of history, Zhu Que has stood watch over Zhen Dan for years as the guardian of Fu Hong.	true
+unit_abilities_tooltip_text_zhuque_bird_form	Of all the guardian beasts, Zhu Que holds the closest bond with humanity. While the other great beasts hid from the pages of history, Zhu Que has stood watch over Zhen Dan for years as the guardian of Fu Hong.	true
+unit_abilities_additional_ui_effects_localised_text_wwd_form_change	Switch Form	true
+land_units_onscreen_name_wwd_jinjun_tianshi	Long Jiang Celestial Master	false
+unit_description_short_texts_text_wwd_jinjun_tianshi	All souls long for home; guide their spirits back to the river.	false
+unit_abilities_tooltip_text_wwd_jinjun_tianshi_abilities_celestial_intervention	Wrath surges upward from the depths of the Dragon River.	false
+unit_abilities_onscreen_name_wwd_jinjun_tianshi_abilities_celestial_intervention	Grasp of the Soul Dragon	false
+effects_description_deer_shouren_damage	Weapon Strength: Reformed Greenskin units %+n%	true
+effects_description_deer_shouren_xp	New recruit rank: Reformed Greenskin units %+n	true
+effects_description_deer_shouren_keep	Upkeep: Reformed Greenskin units %+n%	true
+effects_description_deer_hanweizhe_peasant	Skill: Peasant Levy units gain 'Protector'	true
+ui_unit_bullet_point_enums_onscreen_name_deer_ZHENGDI	Positional Warfare	false
+ui_unit_bullet_point_enums_tooltip_deer_ZHENGDI	Enemies on the move can easily evade its attacks, but in exchange, this unit can deal devastating blows to enemies already locked in combat	false
 agent_subtypes_onscreen_name_override_deerduanzhu001	Legendary Lord	false
 agent_subtypes_onscreen_name_override_deershizi001	Legendary Lord	false
-effects_description_deer_yaren_qianxin	Unlock attribute: Grants "Stalk" to Onyx Crowmen	true
-effects_description_deer_yaren_jinghai	Unlock attribute: Grants "Terror" to Onyx Crowmen	true
-effects_description_deer_yaren_level	Recruit rank: Onyx Crowmen %+n	true
-effects_description_deer_gunner_keep	Upkeep: Gunpowder Infantry %+n%	true
-effects_description_deer_gunner_ammo	Ammunition: Gunpowder Infantry %+n%	true
-effects_description_deer_gunner_reload	Reload time reduction: Gunpowder Infantry %+n%	true
-effects_description_deer_gunner_piercing	Missile armor-piercing damage: Gunpowder Infantry %+n%	true
-effects_description_deer_gunner_dig	Unlock skill: Gunpowder Infantry gain "Entrenchment"	true
-effects_description_wwd_cannon_damage	Missile strength: Artillery units %+n%	true
-effects_description_wwd_cannon_explosion_radius	Explosion radius: Artillery units %+n%	true
+effects_description_deer_yaren_qianxin	Unlocks attribute: Unlocks Stalk for Onyx Ravenfolk	true
+effects_description_deer_yaren_jinghai	Unlocks attribute: Unlocks Causes Terror for Onyx Ravenfolk	true
+effects_description_deer_yaren_level	New recruit rank: Onyx Ravenfolk units %+n	true
+effects_description_deer_gunner_keep	Upkeep: Gunpowder Infantry units %+n%	true
+effects_description_deer_gunner_ammo	Ammunition: Gunpowder Infantry units %+n%	true
+effects_description_deer_gunner_reload	Reload Time Reduction: Gunpowder Infantry units %+n%	true
+effects_description_deer_gunner_piercing	Armour-Piercing Missile Damage: Gunpowder Infantry units %+n%	true
+effects_description_deer_gunner_dig	Unlocks Skill: Gunpowder Infantry units gain 'Entrench'	true
+effects_description_wwd_cannon_damage	Missile Strength: Artillery units %+n%	true
+effects_description_wwd_cannon_explosion_radius	Ranged explosion radius: Artillery units %+n%	true
 effects_description_wwd_cannon_keep	Upkeep: Artillery units %+n%	true
-effects_description_wwd_cannon_extra_powder_leadbelchers	Passive Ability: Artillery units gain "Black Powder Overflow"	true
+effects_description_wwd_cannon_extra_powder_leadbelchers	Passive skill: Artillery units gain 'Overflowing Black Powder'	true
 effects_description_wwd_cannon_reload	Reload time reduction: Artillery units %+n%	true
 effects_description_wwd_archers_range	Range: Archer units %+n%	true
 effects_description_wwd_archers_keep	Upkeep: Archer units %+n%	true
-effects_description_wwd_archers_hawkish_precision	Passive Ability: Archer units gain "Hawk-Eyed Precision"	true
+effects_description_wwd_archers_hawkish_precision	Passive skill: Archer units gain 'Hawk-Eyed Precision'	true
 effects_description_wwd_archers_ammo	Ammunition: Archer units %+n%	true
 effects_description_wwd_archers_speed	Speed: Archer units %+n%	true
-effects_description_wwd_balloons_damage	Missile armor-piercing damage: Sky Junks and Sky Lanterns %+n%	true
-effects_description_deer_buren_cap	Unit capacity: %+n\\nElite Border Troops	true
-effects_description_deer_zigongwei_charge	Unlock attribute: Grants Charge Defense to Houqing Guard	true
-effects_description_deer_zigongwei_damage	Missile strength: Houqing Guard %+n%	true
+effects_description_wwd_balloons_damage	Armour-Piercing Missile Damage: Sky Junk and Sky Lantern units %+n%	true
+effects_description_deer_buren_cap	Unit Capacity: %+n\\nElite Frontier Army units	true
+effects_description_deer_zigongwei_charge	Unlocks attribute: Unlocks Expert Charge Defence for Hou Qing Guards	true
+effects_description_deer_zigongwei_damage	Missile Strength: Hou Qing Guards %+n%	true
 unit_abilities_onscreen_name_baije_bug_form	Thirty-Six Transformations	false
-unit_abilities_tooltip_text_baije_bug_form	Before pledging fealty to the Celestial Empire, Marshal Tianpeng served the Monkey King as a loyal lieutenant. Though not as versatile as the Monkey King’s seventy-two transformations, he could still shapeshift to escape danger	false
-unit_abilities_onscreen_name_baije_bug_form1	Transfiguration	false
-unit_abilities_tooltip_text_baije_bug_form1	Before pledging fealty to the Celestial Empire, Marshal Tianpeng served the Monkey King as a loyal lieutenant. Though not as versatile as the Monkey King’s seventy-two transformations, he could still shapeshift to escape danger	false
-unit_abilities_tooltip_text_wh3_deer24_abilities_baije02	With a toll of the Imperial Bell, myriad saints descend; one swing of the axe scatters demons. Divine radiance shines forth, protecting all beings. With a noble soul, it vows to uphold the righteous path forever	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_baije02	Essence of the Heavenly River	false
-unit_abilities_additional_ui_effects_localised_text_baije_bug_form	This form grants exceptional mobility and stealth	false
-unit_abilities_tooltip_text_deer_julingsheng	The mighty Yun Ding Giant strides across rivers and valleys, venerated by the people of Cathay as the god Ju Ling	true
-unit_abilities_onscreen_name_deer_julingsheng	"Ju Ling Shen"	true
-unit_abilities_additional_ui_effects_localised_text_deer_julingsheng	This unit stores damage taken and unleashes it in a counterattack after a set period	true
-effects_description_deer_wuseng_xp	Recruit rank: Cathayan Warrior Monks %+n	true
-effects_description_deer_wuseng_wuli	Physical resistance: Cathayan Warrior Monks %+n%	true
-effects_description_deer_wuseng_fire	Fire resistance: Cathayan Warrior Monks %+n%	true
-effects_description_deer_wuseng_damage	Weapon strength: Cathayan Warrior Monks %+n%	true
-effects_description_deer_tianzhou_block	Missile block chance: Sky Junks and Sky Lanterns %+n%	true
-effects_description_deer_tianzhou_keep	Missile block chance: Sky Junks and Sky Lanterns %+n%	true
-effects_description_deer_tianzhou_restock	Unlock skill: Sky Junks and Sky Lanterns gain "Reload!"	true
-effects_description_deer_tianzhou_enable_360_missile_block	Unlock attribute: Grants 360° missile defense to Sky Junks and Sky Lanterns	true
-land_units_onscreen_name_deer_cth_meihouwang_boss	Mei Hou Wang	false
-land_units_onscreen_name_wwd_jinjun_longdijinjun_terminator	Tianxuwei (Dragon Emperor’s Guard)	false
-unit_description_short_texts_text_wwd_jinjun_longdijinjun_terminator	[[img:icon_yang]][[col:white]]Unlock Requirement: Hold the last Cathayan defense line against the tide of annihilation[[/col]]\\n\\nTianxuwei were the earliest among the Dragon Emperor’s Guard. Even the remaining Dragon Scions cannot recall the length of their service. These ancient warriors fought beside the Emperor during the unification of Cathay, imbued with a more primal and savage essence of his breath. In the days when the Dragon Emperor still walked the mortal realm, the Tianxuwei were deployed deep within enemy lines to tear them apart in a frenzy. But after his departure, the Guard’s numbers dwindled through centuries of wars that determined Cathay’s fate. Now, the Guard retreats to the Emperor’s palace, their once-immortal bodies crumbling as they kneel before the silent gates, awaiting the return of the High Heaven	false
-effects_description_deer_wuren_cap	Unit capacity: %+n\\nCathayan Warriors	true
-effects_description_deer_yingxi_ror_cap	Unit capacity: %+n\\nHouqing Guard and Guiyin General	true
-effects_description_deer_wuren_keep	Upkeep: Cathayan Warriors %+n%	true
-effects_description_deer_wuren_infantry	Bonus vs Infantry: Cathayan Warriors %+n	true
-effects_description_deer_wuren_vanguard_deployment	Unlock attribute: Grants Vanguard Deployment to Cathayan Warriors	true
-effects_description_deer_xuanpo_cap	Unit capacity: %+n\\nXuanpo Army	true
-effects_description_deer_wuren_disable	Replaces Skill: "Essence of Martial Prowess"	true
-effects_description_deer_wuren_able	Skill: Warrior units gain "Song of the Great Wind"	true
-ui_unit_bullet_point_enums_onscreen_name_deer_ZHANMADAO	Zhanmadao	false
-ui_unit_bullet_point_enums_tooltip_deer_ZHANMADAO	This unit wields Cathayan zhanmadao blades—long sabers suited for countering enemy charges with brutal efficiency	false
-effects_description_deer_shengbing_cap	Unit capacity: %+n\\nProvincial Troops	true
-effects_description_deer_bianjun_cap	Unit capacity: %+n\\nBasic Border Troops	true
-ancillaries_onscreen_name_guanshan_deer_arcane_item	Jiaotai Sword	true
-ancillaries_colour_text_guanshan_deer_arcane_item	One of the Six Swords of Kunlan, it shines like a meteor and strikes with lightning speed. Its power to twist magical winds can only be harnessed by those of exceptional talent	true
-ancillaries_onscreen_name_deer_cth_zhouyu_weapon	Rumengling	true
-ancillaries_colour_text_deer_cth_zhouyu_weapon	Rumengling is the final creation among the Six Swords of Kunlan. While all six are legendary weapons, the Forge intentionally placed flaws in each. Though not the sharpest or lightest, Rumengling is inscribed with sigils to counter the other swords. Should the swords ever clash, its wielder is fated to intervene and end the conflict	true
-ancillaries_onscreen_name_deer_cth_sgsl_weapon	Taiyuan Flameblade	true
-ancillaries_colour_text_deer_cth_sgsl_weapon	One of two mighty divine weapons of Cathay, forged alongside its counterpart—the Yinjia Bronze-sculpted Spear—in ancient times	true
-ancillaries_onscreen_name_deer_cth_cstg_weapon	Yinjia Bronze-sculpted Spear	true
-ancillaries_colour_text_deer_cth_cstg_weapon	One of two mighty divine weapons of Cathay, forged alongside its rival, the Taiyuan Flameblade, in ancient times	true
-effects_description_deer_cth_sgsl_weapon	Unlock skill: "Taiyuan Flameblade"	true
-effects_description_deer_cth_cstg_weapon	Unlock skill: "Yinjia Bronze-sculpted Spear"	true
-unit_abilities_onscreen_name_deer_cth_sgsl_weapon	Taiyuan Flameblade	true
-unit_abilities_tooltip_text_deer_cth_sgsl_weapon	"None may bar my path—gods or buddhas. I blaze through the Eight Directions, unstoppable in my wrath."	true
-unit_abilities_onscreen_name_deer_cth_cstg_weapon	Yinjia Bronze-sculpted Spear	true
-unit_abilities_tooltip_text_deer_cth_cstg_weapon	"Defying the chaos of the world, the spear gleams with clarity. Defender of home and realm—peerless in loyalty."	true
-character_trait_levels_onscreen_name_wwd_trait_fengyunjue	Wind and Cloud Duel	false
-character_trait_levels_colour_text_wwd_trait_fengyunjue	The western winds rip the banners, clouds scatter\\nBlades flash cold from north to south\\nThe Yinjia Spear stirs the snowy peaks\\nWine flows bold as eight treasures soar\\nSwords of Shu cleave crimson tails\\nFlames of Taiyuan engulf the mountains\\nSteel roars with storm and thunder\\nTigers howl, apes wail—hearts quake\\nAt midnight clash, cosmos overturns\\nBroken blades fall, embers fade\\nYet the spear’s cold gleam still catches moonlight	false
-character_trait_levels_explanation_text_wwd_trait_fengyunjue	[[col:white]]How to obtain: Taiyuan Flameblade and Yinjia Spear must appear in the same province[[/col]]	false
-effects_description_wh3_main_effect_wwd_trait_fengyunjue_dummy	[[col:yellow]]When both Taiyuan Flameblade and Yinjia Spear are present in the same region, the wielder has a chance to gain a unique trait[[/col]]	false
-land_units_onscreen_name_wwd_final_boss_vilitch	"Vilitch the Cursed Soul"	false
-land_units_onscreen_name_wwd_final_boss_zhatan	"Zhatan the Black-hearted"	false
+unit_abilities_tooltip_text_baije_bug_form	Before pledging allegiance to the Celestial Court, Marshal Tian Peng was once the Monkey King's capable lieutenant. Though he cannot match the Monkey King's Seventy-Two Transformations, he can still use his magic to slip free with ease	false
+unit_abilities_onscreen_name_baije_bug_form1	Incarnation	false
+unit_abilities_tooltip_text_baije_bug_form1	Before pledging allegiance to the Celestial Court, Marshal Tian Peng was once the Monkey King's capable lieutenant. Though he cannot match the Monkey King's Seventy-Two Transformations, he can still use his magic to slip free with ease	false
+unit_abilities_tooltip_text_wh3_deer24_abilities_baije02	As the imperial bell tolls, all the sacred host gathers as one; a light swing of the axe shatters demons into dust. His divine radiance forever shields the living; his true nature, ever steadfast, is sworn eternally to the righteous path.	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_baije02	Waters of the Celestial River	false
+unit_abilities_additional_ui_effects_localised_text_baije_bug_form	This form grants extremely high mobility and stealth	false
+unit_abilities_tooltip_text_deer_julingsheng	The Cloud Cauldron Strongman stands tall with mighty strides, turning the course of rivers, and is revered by the people of Zhen Dan as the Giant Spirit God.	true
+unit_abilities_onscreen_name_deer_julingsheng	[Giant Spirit God]	true
+unit_abilities_additional_ui_effects_localised_text_deer_julingsheng	The unit accumulates the damage it sustains, then unleashes a counterattack against nearby enemies once the cycle ends	true
+effects_description_deer_wuseng_xp	New recruit rank: Zhen Dan Warrior Monks %+n	true
+effects_description_deer_wuseng_wuli	Physical Resistance: Zhen Dan Warrior Monks %+n%	true
+effects_description_deer_wuseng_fire	Flame Resistance: Zhen Dan Warrior Monks %+n%	true
+effects_description_deer_wuseng_damage	Weapon Strength: Zhen Dan Warrior Monks %+n%	true
+effects_description_deer_tianzhou_block	Missile Block Chance: Sky Junk and Sky Lantern units %+n%	true
+effects_description_deer_tianzhou_restock	Unlocks skill: Sky Junk and Sky Lantern units gain 'Reload!'	true
+effects_description_deer_tianzhou_enable_360_missile_block	Unlocks attribute: Unlocks 360 Missile Block skill for Sky Junk and Sky Lantern units	true
+land_units_onscreen_name_deer_cth_meihouwang_boss	Monkey King	false
+land_units_onscreen_name_wwd_jinjun_longdijinjun_terminator	Sky Sentinel Guard (Dragon Emperor's Guard)	false
+unit_description_short_texts_text_wwd_jinjun_longdijinjun_terminator	[[img:icon_yang]][[col:white]]Unlock method: Hold Zhen Dan's final line of defense against the tide of destruction[[/col]]\\n\\nThe Sky Sentinel Guards are the earliest of the Dragon Emperor's Guard—even the Dragon-kin who yet remain cannot say with certainty how long these warriors have fought. These ancient soldiers stood as the Dragon Emperor's personal retinue during his journey to unite Zhen Dan, and the Winds of Magic imbued in them by the Dragon Emperor were more primal and untamed than any that followed. In the age when the Dragon Emperor still walked among mortals, the Sky Sentinel Guards would be inserted alone into enemy formations, these frenzied warriors tearing mercilessly through the foe's defenses. Yet with the Dragon Emperor's departure, the ranks of his guard dwindled swiftly over the centuries, as countless wars that decided the fate of Zhen Dan bled this mythic legion nearly dry. The Dragon Emperor's Guard then withdrew into his palace, and the once-immortal bodies of the Sky Sentinel Guard began slowly to crumble. Now they kneel before that long-silent gate, awaiting the return of the Heavenly Dragon.	false
+effects_description_deer_wuren_cap	Unit capacity: %+n\\nZhen Dan Warrior units	true
+effects_description_deer_yingxi_ror_cap	Unit capacity: %+n\\nHou Qing Guards and Gui Yin General	true
+effects_description_deer_wuren_keep	Upkeep: Zhen Dan Warrior units %+n%	true
+effects_description_deer_wuren_infantry	Bonus vs. Infantry: Zhen Dan Warriors %+n	true
+effects_description_deer_wuren_vanguard_deployment	Unlocks attribute: Unlocks Vanguard Deployment for Zhen Dan Warriors	true
+effects_description_deer_xuanpo_cap	Unit capacity: %+n\\nDark Spirit Army	true
+effects_description_deer_wuren_disable	Replaces skill: 'Essence of Martial Arts'	true
+effects_description_deer_wuren_able	Skill: Warrior units gain 'Song of the Great Wind'	true
+ui_unit_bullet_point_enums_onscreen_name_deer_ZHANMADAO	Zhan Ma Sword	false
+ui_unit_bullet_point_enums_tooltip_deer_ZHANMADAO	This unit is equipped with the Zhen Dan Zhan Ma Sword, a long blade that allows its wielder to efficiently defend against enemy charges	false
+effects_description_deer_shengbing_cap	Unit capacity: %+n\\nProvincial Soldiers	true
+effects_description_deer_bianjun_cap	Unit Capacity: %+n\\nBasic Frontier Army units	true
+ancillaries_onscreen_name_guanshan_deer_arcane_item	Sword of Yin-Yang Harmony	true
+ancillaries_colour_text_guanshan_deer_arcane_item	One of the Six Swords of Kun Lan, swift as a shooting star and quick as lightning, imbued with tremendous power to bend the Winds of Magic. Only a talent of the highest order can unleash its true might.	true
+ancillaries_onscreen_name_deer_cth_zhouyu_weapon	As in a Dream	true
+ancillaries_colour_text_deer_cth_zhouyu_weapon	As in a Dream is the final work among the Six Swords of Kun Lan. Though all six blades are peerless divine weapons, the Sword-Forging Hall deliberately left a flaw in each as a safeguard. As in a Dream, while neither the sharpest nor the lightest of the six, was inscribed with a sealing rune to counter the others - should the day come when the six swords turn against one another, the bearer of As in a Dream must step forth to end the conflict.	true
+ancillaries_onscreen_name_deer_cth_sgsl_weapon	Tai Yuan Flame Yama Blade	true
+ancillaries_colour_text_deer_cth_sgsl_weapon	One of two mighty divine weapons of Zhen Dan, forged in ancient times alongside its rival, the Eight Treasures Bright Silver Spear.	true
+ancillaries_onscreen_name_deer_cth_cstg_weapon	Eight Treasures Bright Silver Spear	true
+ancillaries_colour_text_deer_cth_cstg_weapon	One of two mighty divine weapons of Zhen Dan, forged in ancient times alongside its rival, the Tai Yuan Flame Yama Blade.	true
+effects_description_deer_cth_sgsl_weapon	Unlocks Skill: 'Tai Yuan Flame Yama Blade'	true
+effects_description_deer_cth_cstg_weapon	Unlocks Skill: 'Eight Treasures Bright Silver Spear'	true
+unit_abilities_onscreen_name_deer_cth_sgsl_weapon	Tai Yuan Flame Yama Blade	true
+unit_abilities_tooltip_text_deer_cth_sgsl_weapon	"Gods bar my path, I slay gods; Buddhas bar my path, I slay Buddhas — I rampage across the eight wildernesses, fierce and unmatched."	true
+unit_abilities_onscreen_name_deer_cth_cstg_weapon	Eight Treasures Bright Silver Spear	true
+unit_abilities_tooltip_text_deer_cth_cstg_weapon	"Disdainful of this chaotic age, my spear gleams with clear light; defending home and country, loyal and righteous beyond compare."	true
+character_trait_levels_onscreen_name_wwd_trait_fengyunjue	Wind and Cloud Decree	false
+character_trait_levels_colour_text_wwd_trait_fengyunjue	The west wind rends the banners, clouds crumble and scatter, blades gleam cold from south to north\\nThe Bright Silver Spear stirs a thousand mountains of snow, the Eight Treasures pierce the sky, wine still warm\\nThe Shu Pavilion Blade cleaves the crimson tail, the Tai Yuan flame surges, burning through the ranges\\nBlades sweep with wind and thunder thirty leagues, tigers roar and gibbons cry, crushing heart and liver\\nThe two weapons clash at midnight and shatter, the river of stars overturns as heaven and earth reverse\\nThe broken blade falls, its embers fade, yet the spear's tip still teaches the moonlight to grow cold	false
+character_trait_levels_explanation_text_wwd_trait_fengyunjue	[[col:white]]How to obtain: The Tai Yuan Flame Yama Blade and the Eight Treasures Bright Silver Spear appear in the same province[[/col]]	false
+effects_description_wh3_main_effect_wwd_trait_fengyunjue_dummy	[[col:yellow]]When the Tai Yuan Flame Yama Blade and Eight Treasures Bright Silver Spear appear in the same region, the bearer has a chance to gain a unique trait[[/col]]	false
+land_units_onscreen_name_wwd_final_boss_vilitch	[Cursed Soul] Vilitch	false
+land_units_onscreen_name_wwd_final_boss_zhatan	[Blackheart] Zha Tan	false
 land_units_onscreen_name_wwd_final_boss_changeling	The Changeling	false
-effects_description_deer_jinyiwei_keep	Upkeep: Jinyiwei %+n%	true
-effects_description_wh_main_effect_force_army_campaign_enable_replenishment_in_foreign_territory_encamp_stance	Enables replenishment and global recruitment in any territory	false
-unit_abilities_additional_ui_effects_localised_text_wh3_main_effect_ability_enable_yibing_yin	Summons a unit of Cathayan Warriors into battle	true
-unit_abilities_additional_ui_effects_localised_text_yuenv_fox_form	Zhao Qi is a leader who brings relief to all, a healer of the dying, and a tactician calm in crisis	false
-unit_abilities_additional_ui_effects_localised_text_lvqiling_qun_ability	This ability requires a wind-up time—predict enemy movement carefully	false
-unit_abilities_additional_ui_effects_localised_text_deer_yuchigong_yushijufen	Grants the unit immense attack power and ward save, but inflicts heavy self-damage	false
-unit_abilities_additional_ui_effects_localised_text_wwd_combat_form	This form grants powerful combat capabilities	false
-unit_abilities_additional_ui_effects_localised_text_deer_wusheng_zhiyuanzhongchen	Allows execution of enemy units with [[b]][[col:white]]less than 10% HP[[/col]][[/b]][[img:icon_hp]][[/img]] during battle	false
-land_units_onscreen_name_wwd_cstg_yin	Yin the Mighty	false
-unit_description_short_texts_text_wwd_cstg_yin	"When will you be Tianjin’s number one?"\\n"Today!"	false
-unit_abilities_onscreen_name_wwd_ability_executioner	Swift Execution	false
-unit_abilities_tooltip_text_wwd_ability_executioner	"Come, atone for your sins"	false
-land_units_onscreen_name_wh3_deer24_gau_ogr	Yanlin Blacksmith	false
-ui_unit_bullet_point_enums_onscreen_name_deer_CEXIANKAIHUO	Broadsides	false
-ui_unit_bullet_point_enums_tooltip_deer_CEXIANKAIHUO	This unit’s broadsides are equipped with various cannons capable of devastating flanking enemies	false
-land_units_onscreen_name_wwd_jinjun_longdijinjun_campaign	Dragon Emperor’s Guard—Last Stand	false
-unit_description_short_texts_text_wwd_jinjun_longdijinjun_campaign	This is the true might of the Guard...	true
-effects_description_wwd_qishe_hawkish_precision	Passive Skill: Mounted Archers gain "Hawkeye Precision"	true
-effects_description_wwd_qishe_damage	Ranged Armor-Piercing Damage: Mounted Archers %+n%	true
-effects_description_wwd_qishe_ammo	Ammunition: Mounted Archers %+n%	true
-effects_description_wwd_qishe_reload	Reload Time Reduction: Mounted Archers %+n%	true
-land_units_onscreen_name_wh3_deer24_fubing_guard	Nanyang Elite Guard	false
-unit_abilities_onscreen_name_wh3_deer24_abilities_fubing_rebel	Defy Heaven	true
-unit_abilities_tooltip_text_wh3_deer24_abilities_fubing_rebel	"When the eighth day of the ninth month arrives, after my flowers bloom, all others shall perish..."	true
-unit_description_short_texts_text_wh3_deer24_short_fubing_guard	[[img:icon_yang]][[col:white]]Unlock: Start the game with the Nanyang Rebel faction or recruit the King of Nanyang[[/col]]\\n\\nThe most elite bodyguards under Han Cheng, comrades who have fought alongside him for over a decade, trusted brothers-in-arms, blades raised together against the Celestial Mandate	false
-effects_description_wwd_longma_level	Newly Recruited Unit Level: Dragon Cavalry %+n	true
-effects_description_wwd_longma_piercing_mult	Weapon Armor-Piercing Damage: Dragon Cavalry %+n%	true
-effects_description_wwd_longma_piercing_add	Weapon Armor-Piercing Damage: Dragon Cavalry %+n	true
-effects_description_wwd_longma_recruit_time	Local Recruitment Duration: Dragon Cavalry %+n turns (minimum 1 turn)	true
-effects_description_wwd_longma_barrier_health_add	Magical Shield Health: Dragon Cavalry %+n	true
-effects_description_wwd_longma_devastating_flanker	Unlock Attribute: Unlock "Deadly Flanker" for Dragon Cavalry	true
-effects_description_wwd_longma_vanguard_deployment	Unlock Attribute: Unlock "Vanguard Deployment" for Dragon Cavalry	true
-effects_description_wwd_longma_glorious_charge	Unlock Attribute: Unlock "Glorious Charge" for Dragon Cavalry	true
-effects_description_deer_hailong_attack	Melee Attack: Wash Sea Court %+n	true
-effects_description_deer_hailong_defence	Melee Defense: Wash Sea Court %+n	true
-effects_description_deer_hailong_cap	Unit Capacity: %+n\\nWash Sea Court	true
-effects_description_deer_bianjun_level	Newly Recruited Unit Level: Border Army %+n	true
-effects_description_deer_bianjun_attack	Melee Attack: Border Army %+n%	true
-effects_description_deer_bianjun_defence	Melee Defense: Border Army %+n%	true
-special_ability_phases_onscreen_name_wh3_deer24_abilities_POZHEN	Break Formation	false
+effects_description_deer_jinyiwei_keep	Upkeep: Bastion of Shang Yang %+n%	true
+effects_description_wh_main_effect_force_army_campaign_enable_replenishment_in_foreign_territory_encamp_stance	Allows replenishment and global recruitment in any region	false
+unit_abilities_additional_ui_effects_localised_text_wh3_main_effect_ability_enable_yibing_yin	Summons a squad of Zhen Dan Warriors to join the battle	true
+unit_abilities_additional_ui_effects_localised_text_yuenv_fox_form	Zhao Qi is a leader who relieves the suffering of the people, a healer who saves the wounded, and a wise commander who remains calm in the face of danger	false
+unit_abilities_additional_ui_effects_localised_text_lvqiling_qun_ability	Casting this ability involves a charge-up process, requiring you to predict the enemy's movement	false
+unit_abilities_additional_ui_effects_localised_text_deer_yuchigong_yushijufen	The unit gains a massive bonus to attack power and Ward Save, but will also suffer severe damage as a result	false
+unit_abilities_additional_ui_effects_localised_text_wwd_combat_form	This form grants formidable combat capability	false
+unit_abilities_additional_ui_effects_localised_text_deer_wusheng_zhiyuanzhongchen	Can [[b]][[col:white]]execute[[/col]][[/b]] units with [[img:icon_hp]][[/img]]Hit Points below 10% in battle	false
+land_units_onscreen_name_wwd_cstg_yin	Yin Damong	false
+unit_description_short_texts_text_wwd_cstg_yin	'So when exactly will you be the foremost of Jin Men?'\\n'Today!'	false
+unit_abilities_onscreen_name_wwd_ability_executioner	Sentenced to Death	false
+unit_abilities_tooltip_text_wwd_ability_executioner	"Come, then — answer for your sins."	false
+land_units_onscreen_name_wh3_deer24_gau_ogr	Yan Lin Fang Ogre	false
+ui_unit_bullet_point_enums_onscreen_name_deer_CEXIANKAIHUO	Broadside Fire	false
+ui_unit_bullet_point_enums_tooltip_deer_CEXIANKAIHUO	This unit's broadside is fitted with an array of cannons, capable of dealing devastating blows to enemies to its flank	false
+land_units_onscreen_name_wwd_jinjun_longdijinjun_campaign	Dragon Emperor's Guard (Rearguard)	false
+unit_description_short_texts_text_wwd_jinjun_longdijinjun_campaign	This is the true power of the palace guard...	true
+effects_description_wwd_qishe_hawkish_precision	Passive Ability: Horse Archer units gain 'Hawkish Precision'	true
+effects_description_wwd_qishe_damage	Armour-Piercing Missile Damage: Horse Archer units %+n%	true
+effects_description_wwd_qishe_ammo	Ammunition: Horse Archer units %+n%	true
+effects_description_wwd_qishe_reload	Reload Time Reduction: Horse Archer units %+n%	true
+land_units_onscreen_name_wh3_deer24_fubing_guard	Nan Yang Elite Soldiers	false
+unit_abilities_onscreen_name_wh3_deer24_abilities_fubing_rebel	Defiant of Heaven	true
+unit_abilities_tooltip_text_wh3_deer24_abilities_fubing_rebel	When autumn comes on the ninth day of the ninth month, my flowers shall bloom and all others shall wither...	true
+unit_description_short_texts_text_wh3_deer24_short_fubing_guard	[[img:icon_yang]][[col:white]]Unlock method: Start the game as the Nan Yang rebel faction, or recruit the Prince of Nan Yang into your ranks[[/col]]\\n\\nHan Cheng's most elite personal retinue, brothers-in-arms who have fought alongside him for over a decade—comrades entrusted with his very life, blades that rose together against the wrath of heaven.	false
+effects_description_wwd_longma_level	New Recruit Rank: Coiling Dragon Steed units %+n%	true
+effects_description_wwd_longma_piercing_mult	Armour-Piercing Weapon Damage: Coiling Dragon Steed units %+n%	true
+effects_description_wwd_longma_piercing_add	Armour-Piercing Weapon Damage: Coiling Dragon Steed units %+n	true
+effects_description_wwd_longma_recruit_time	Local Recruitment Time: Coiling Dragon Steed units %+n% turns (minimum 1 turn)	true
+effects_description_wwd_longma_barrier_health_add	Ward Barrier Health: Coiling Dragon Steed units %+n	true
+effects_description_wwd_longma_devastating_flanker	Unlocks Attribute: Unlocks Devastating Flanker for Coiling Dragon Steed units	true
+effects_description_wwd_longma_vanguard_deployment	Unlocks Attribute: Unlocks Vanguard Deployment for Coiling Dragon Steed units	true
+effects_description_wwd_longma_glorious_charge	Unlocks Attribute: Unlocks Glorious Charge for Coiling Dragon Steed units	true
+effects_description_deer_hailong_attack	Melee Attack: Tide-Washing Court %+n	true
+effects_description_deer_hailong_defence	Melee Defence: Tide-Washing Court %+n	true
+effects_description_deer_hailong_cap	Unit Capacity: %+n\\nTide-Washing Court	true
+effects_description_deer_bianjun_level	Newly Recruited Unit Level: Frontier Army units %+n	true
+effects_description_deer_bianjun_attack	Melee Attack: Frontier Army units %+n%	true
+effects_description_deer_bianjun_defence	Melee Defence: Frontier Army units %+n%	true
+special_ability_phases_onscreen_name_wh3_deer24_abilities_POZHEN	Formation Breaker	false
+effects_description_deer_bianjun_fatigue_resistance	Fatigue Rate Reduction: Frontier Army units %+n%	true
+effects_description_deer_bianjun_keep	Upkeep: Frontier Army units %+n%	true
+effects_description_deer_bianjun_mass	Mass: Frontier Army units %+n%	true
+effects_description_deer_bianjun_resistance_missile	Missile Resistance: Frontier Army units %+n%	true
+effects_description_deer_jade_warriors_recruit_time	Global recruitment duration: Jade Valor units %+n	true
+effects_description_wh3_deer24_abilities_lx	Skill: '[[col:ui_font_yellow]]Dragon Emperor's Champion and Superintendent of the Heavenly Court, [Heaven's Favored] Yun Xiang[[/col]]'	true
+effects_description_wh3_deer24_abilities_miaoyin	Skill: '[[col:ui_font_yellow]]Dragon Emperor's Inquisitor, Nan Gao Clan Princess[[/col]]'	true
+effects_description_wh3_deer24_abilities_yuanbo	Skill: '[[col:ui_font_yellow]]Governor of the Central Provinces and the Celestial Court, Yun Feng Zi[[/col]]'	true
+effects_description_wh3_deer24_abilities_zhaoming	Skill: '[[col:ui_font_yellow]]Attendant Minister under the Dragon Emperor, Eighth-Generation Lord of Shang Yang[[/col]]'	true
+effects_description_wh3_deer24_longdijinjun_upgrade	Skill: 'Blades of All Dragons'	true
+effects_description_wwd_cavalry_fatigue_resistance	Fatigue rate reduction: Zhen Dan Cavalry units %+n%	true
+effects_description_wwd_cavalry_mass	Mass: Zhen Dan Cavalry units %+n%	true
+effects_description_wwd_cavalry_speed	Speed: Zhen Dan Cavalry units %+n%	true
+effects_description_wwd_jade_units_res_mag	Spell Resistance: Jade units %+n%	true
+effects_description_wwd_qishe_fatigue_resistance	Fatigue Rate Reduction: Horse Archer units %+n%	true
+effects_description_wwd_qishe_range	Range: Horse Archer units %+n%	true
+effects_description_wwd_qishe_speed	Speed: Horse Archer units %+n%	true
+land_units_onscreen_name_wh3_deer24_HUREN2	Blade of Contention	true
+land_units_onscreen_name_wh3_deer24_HUREN3	Gupta King's Calamity Hunter	true
+land_units_onscreen_name_wh3_deer24_baishe_boss	[White Mother of the Jade River] Hou Xi	true
+land_units_onscreen_name_wh3_deer24_leizhenzi_boss	[Thunder Child] Thunder Lord	true
+land_units_onscreen_name_wh3_deer24_lingguan_boss	[Overseer of the Heavens] King	true
+land_units_onscreen_name_wh3_deer24_xingtian_boss	[Warrior of Shield and Axe] Xingtian	true
+land_units_onscreen_name_wwd_chs_inf_chosen_2_countless	Apocalypse Warband Chosen	true
+land_units_onscreen_name_wwd_dlc20_chs_inf_chosen_mtze_manymany	Chosen of Tzeentch	true
+ui_unit_groupings_onscreen_wh3_deer24_boss	[[col:red]]Beasts of Mountains and Seas[[/col]]	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_lx	[[col:ui_font_yellow]]Dragon Emperor's Champion and Superintendent of the Heavenly Court, [Heaven's Favored] Yun Xiang[[/col]]	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_miaoyin	[[col:ui_font_yellow]]Dragon Emperor's Inquisitor, Nan Gao Clan Princess[[/col]]	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_yuanbo	[[col:ui_font_yellow]]Governor of the Central Provinces and the Celestial Court, Yun Feng Zi[[/col]]	true
+unit_abilities_onscreen_name_wh3_deer24_abilities_zhaoming	[[col:ui_font_yellow]]Attendant Minister under the Dragon Emperor, Eighth-Generation Lord of Shang Yang[[/col]]	true
+unit_abilities_onscreen_name_wh3_deer24_ability_weiling	Soul Siphon	true
+unit_abilities_onscreen_name_wh3_deer24_baihu_boss	Master of the Hunting Grounds	true
+unit_abilities_onscreen_name_wh3_deer24_baishe_boss	Eye of Rejuvenation	true
+unit_abilities_onscreen_name_wh3_deer24_fashu_weiling	Dispel Calamity	true
+unit_abilities_onscreen_name_wh3_deer24_fashu_weiling2	Resolve Hardship	true
+unit_abilities_onscreen_name_wh3_deer24_leizhenzi_boss	Summon the Thunder	true
+unit_abilities_onscreen_name_wh3_deer24_lingguan_boss	Lingering Grudge of the Regent	true
+unit_abilities_onscreen_name_wh3_deer24_longdijinjun_upgrade	Blades of All Dragons	true
+unit_abilities_onscreen_name_wh3_deer24_xingtian_boss	No Escape from a Resolute Death	true
+unit_abilities_onscreen_name_wh3_deer24_xuanwu_boss	This Shall Shield You	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_kho3	Daemon of Khorne	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_nur3	Daemon of Nurgle	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_sla3	Daemon of Slaanesh	true
+unit_abilities_onscreen_name_wwd_final_battle_summon_tze3	Daemon of Tzeentch	true
+unit_abilities_tooltip_text_wh3_deer24_baihu_boss	Who is the hunter? Who is the prey? It stands beyond the hunt itself — it defines the rules.	true
+unit_abilities_tooltip_text_wh3_deer24_baishe_boss	This long river, this land — she never demands, she silently accepts the sacrifice.	true
+unit_abilities_tooltip_text_wh3_deer24_leizhenzi_boss	All things upon the earth, beneath this lightning's glare, are no more than mayflies.	true
+unit_abilities_tooltip_text_wh3_deer24_lingguan_boss	"This should not have fallen to me! This ultimate punishment should not be mine to bear!"	true
+unit_abilities_tooltip_text_wh3_deer24_longdijinjun_upgrade	Face the Dragon Emperor's mightiest warriors, and pay the price for your folly.	true
+unit_abilities_tooltip_text_wh3_deer24_xingtian_boss	Faced with a challenge beyond measure, there is only death in battle or flight — on this hopeless, blood-soaked field, fight to the death alongside him with shield and axe.	true
+unit_abilities_tooltip_text_wh3_deer24_xuanwu_boss	Never wavers.	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_kho3	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_nur3	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_sla3	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true
+unit_abilities_tooltip_text_wwd_final_battle_summon_tze3	The Winds of Magic are surging—the very foundations of the world are shaken! An army of daemons invades the mortal realm!	true

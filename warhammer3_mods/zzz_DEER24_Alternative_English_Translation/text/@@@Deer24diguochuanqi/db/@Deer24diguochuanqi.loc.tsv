@@ -1,49 +1,49 @@
 key	text	tooltip
 #Loc;1;text/@@@Deer24diguochuanqi/db/@Deer24diguochuanqi.loc		
 land_units_onscreen_name_dihuangqishi	Imperial Champion Swordsmen	true
-land_units_onscreen_name_yulintiewei	Emperor’s Vanguard	true
-land_units_onscreen_name_jiaozongqishi	Dusk Knights	true
-unit_description_short_texts_text_dihuangqishi	The Champion Swordsmen are handpicked from regiments across the Imperial provinces. Their blades carve through the Empire’s foes, forging a path to victory.	true
-unit_description_short_texts_text_yulintiewei	As the Emperor’s personal guard, the Vanguard operates independently of all authority but his. This elite group of eight combines unparalleled swordsmanship with mastery of literature, politics, and the arts to provide the Emperor with unrivaled service.	true
-unit_description_short_texts_text	The Holy Knights, sworn to the Church of Sigmar, forsake their worldly ties to fight for the Empire’s faith and protect its sanctity.	true
-unit_description_short_texts_text_jiaozongqishi	The Dusk Knights pledge their lives to the Colleges of Magic, offering their swords in defense of the academies in exchange for glimpses into the mysteries of the Eight Winds.	true
-land_units_onscreen_name_diguolong	"Scythe of Fire" Imperial Dragon	true
-unit_description_short_texts_text_diguolong	The Imperial Dragon, the only dragon within the Empire, is an ancient being of unimaginable age. Once a ruler of the world, it now slumbers deep within Altdorf’s zoo. Should it awaken, all deemed enemies will be reduced to ashes beneath its inferno.	true
-land_units_onscreen_name_gaositianshi	Grim Angels	true
-land_units_onscreen_name_agesiqishi	Legion of the Faithful	true
-land_units_onscreen_name_shenxue	Silent Heavens	true
+land_units_onscreen_name_yulintiewei	Throne Guard	true
+land_units_onscreen_name_jiaozongqishi	Twilight Knights	true
+unit_description_short_texts_text_dihuangqishi	Champion Swordsmen are chosen from among the Empire's provincial legions. They cut down the Empire's enemies with keen blades, carving a path for the Empire's advance.	true
+unit_description_short_texts_text_yulintiewei	Serving as the Emperor's personal guard, this special order—numbering only eight at any given time—answers to no one but the Emperor himself. Its chosen members are not only among the greatest living swordsmen, but also polymaths ceaselessly refining their skill in literature, politics, and even the arts, ensuring they can offer the Emperor the greatest possible service.	true
+unit_description_short_texts_text	Warrior Priests bound by holy oath to the Cult of Sigmar, they cast aside their mortal identities, vowing to fight for the Cult of Sigmar and guard the Empire's faith together.	true
+unit_description_short_texts_text_jiaozongqishi	Knights bound by oath to the Colleges of Magic, they must guard the colleges with their very lives in exchange for the chance to glimpse the secrets of the magic of the Eight Winds.	true
+land_units_onscreen_name_diguolong	[Sickle of Burning Flame] Imperial Dragon	true
+unit_description_short_texts_text_diguolong	The Imperial Dragon is the only true dragon within the Empire's borders, its age beyond imagining. It once ruled this world, and now slumbers deep within the Altdorf Zoo. Should it ever awaken, all it deems enemy shall be consumed in flame.	true
+land_units_onscreen_name_gaositianshi	Order of the Deathly Omen	true
+land_units_onscreen_name_agesiqishi	Legion of a Thousand Men	true
+land_units_onscreen_name_shenxue	Silent Heaven	true
 land_units_onscreen_name_zhandouxiunv	Ebon Maidens	true
-land_units_onscreen_name_zhenqiqishi	Steam Reliquaries	true
-unit_description_short_texts_text_gaositianshi	The Grim Angels are experts in combating heresy, drawn from witch-hunting guilds across the provinces. Each member’s exploits rival the most captivating tales of minstrels.	true
-unit_description_short_texts_text_agesiqishi	The Legion of the Faithful embodies his divine will in the mortal realm. Typically stationed within Altdorf’s palace as an inner guard, they march forth only when Sigmar calls upon them for his crusades.	true
-unit_description_short_texts_text_shenxue	The Silent Heavens consist of devout and gifted anti-magic warriors. By adhering to the Seven Sacred Vows, including the Oath of Silence, they become Sigmar’s mortal angels, silent enemies of evil sorcery and ruthless executioners.	true
-unit_description_short_texts_text_zhandouxiunv	The Ebon Maidens, armed enforcers of the Sigmarite Church, possess unparalleled combat prowess and fervent prayers. They wield their faith to shield the Empire’s people and smite its foes.	true
-unit_description_short_texts_text_zhenqiqishi	Forged in Nuln, the Steam Reliquaries are marvels of Imperial engineering. Legends claim each machine houses the soul of a great Imperial hero, its mechanical form driven by steam and gears to obliterate the unfaithful.	true
-land_units_onscreen_name_huangjinzituan	Golden Sons Regiment	true
-land_units_onscreen_name_mishenheiwei	Myrmidia's Black Wardens	true
-unit_description_short_texts_text_huangjinzituan	The Golden Sons are formed by Altdorf’s noble youth, eager to become true heroes of the Empire. These romantic warriors possess a dazzling combination of skill and honor.	true
-unit_description_short_texts_text_mishenheiwei	The Black Wardens are Myrmidia's most loyal followers. Clad in black armor, they serve as guardians of her temples and spread her faith across the Old World.	true
-land_units_onscreen_name_neihuanqishi	Inner Circle Grandmasters	true
-unit_description_short_texts_text_neihuanqishi	The Inner Circle Knights are the elite of every knightly order. Chosen as leaders, Grandmasters embody knightly virtues and guide their brethren as some of the most formidable warriors in the Old World.	true
+land_units_onscreen_name_zhenqiqishi	Steam Sarcophagus Knights	true
+unit_description_short_texts_text_gaositianshi	The Order of the Deathly Omen are experts at rooting out heresy, most of its members drawn from the witch hunter fraternities of every province. Each member's own history is enough to leave even the most seasoned bard speechless.	true
+unit_description_short_texts_text_agesiqishi	The Legion of a Thousand Men are the mortal incarnation of Sigmar's divine power. They are typically stationed as the inner guard of the palace at Altdorf, but when the Empire has need, Sigmar himself shall guide them upon their own crusade.	true
+unit_description_short_texts_text_shenxue	The members of the Silent Heaven are chosen from the most devout and gifted witch hunters, upholding the Seven Precepts to ensure they remain fit to pursue Sigmar's pilgrimage until their final hour. The most well-known of these is the Vow of Silence. They are Sigmar's angels sent down to the mortal world, the natural enemy of wicked sorcery, and silent, merciless executioners.	true
+unit_description_short_texts_text_zhandouxiunv	The Ebon Maidens are the armed force under the Cult of Sigmar. These battle nuns, armed to the teeth, possess unmatched combat skill on the battlefield, while also being devout and practiced in prayer. They defeat their enemies through the power of faith and shelter the people of the Empire.	true
+unit_description_short_texts_text_zhenqiqishi	The steam sarcophagi, forged in Nuln, are the crowning achievement of Imperial engineering. Legend holds that within each of these holy war machines rests the soul of a great Imperial hero. Gears and steam drive their mechanical forms, thundering across the battlefield to destroy the unfaithful.	true
+land_units_onscreen_name_huangjinzituan	Order of the Golden Firstborn	true
+land_units_onscreen_name_mishenheiwei	Arbiter Black Guard	true
+unit_description_short_texts_text_huangjinzituan	The Order of the Golden Firstborn is composed of honor-driven young nobles of Altdorf. These romantic warriors possess skill as dazzling as their appearance, and a heartfelt sense of glory. They cast aside their noble titles, seeking only to become true heroes of the Empire.	true
+unit_description_short_texts_text_mishenheiwei	The Arbiter Black Guard are the most devoted followers of Myrmidia, Goddess of War. These secret protectors clad in black armor serve as guardians of her temples, carrying her faith across the length and breadth of the Old World.	true
+land_units_onscreen_name_neihuanqishi	Inner Circle Grand Masters	true
+unit_description_short_texts_text_neihuanqishi	The Inner Circle Knights are the most elite warriors among all the Empire's knightly orders. The Grand Master is the core and commander of a knightly order, chosen from among the Inner Circle for their venerable renown. Grand Masters are seasoned commanders, exemplars of knightly virtue, and among the mightiest warriors in the Old World.	true
 land_units_onscreen_name_buxingqishi	Foot Imperial Knights	true
-land_units_onscreen_name_buxingqishi1	Foot Imperial Knights (Halberds)	true
+land_units_onscreen_name_buxingqishi1	Foot Imperial Knights (Halberd)	true
 land_units_onscreen_name_ruikeqishi	Foot Reiksguard	true
-unit_description_short_texts_text_buxingqishi	Encased in heavy armor, these foot knights form the backbone of the Empire's military, holding the line with unmatched resolve.	true
+unit_description_short_texts_text_buxingqishi	These heavily armored foot knights form the backbone of the Empire's forces, forging the Empire's battle lines with keen steel.	true
 land_units_onscreen_name_rongyaoqishi	Laurel Knights	true
-unit_description_short_texts_text_rongyaoqishi	Laurel Knights, drawn from the Reiksguard's Inner Circle, charge into battle atop loyal demi-gryphs, their pride and ferocity unmatched.	true
-land_units_onscreen_name_sheshou	Blood Oath Brotherhood	true
+unit_description_short_texts_text_rongyaoqishi	The Laurel Knights are drawn from the Inner Circle of the Reiksguard. These proud warriors are unmatched in the charge alongside their loyal demigryphs.	true
+land_units_onscreen_name_sheshou	Brotherhood of the Blood Oath	true
 land_units_onscreen_name_liebing	Imperial Huntsmen	true
-land_units_onscreen_name_diguohuoqiangshou	Handgunner Regiment	true
-unit_description_short_texts_text_sheshou	Before forming the Blood Oath Brotherhood, its members endured countless battles against Khorne. Haunted by guilt and rage, they swore an unbreakable bond to fight Chaos for eternity.	true
-unit_description_short_texts_text_liebing	Imperial Huntsmen are the most agile marksmen in the Empire. They harass enemy lines or use their keen eyes to scout and secure the battlefield.	true
-unit_description_short_texts_text_diguohuoqiangshou	Clad in fine uniforms, these handgunners hail from across the Empire. Their disciplined volleys annihilate enemies at range, while their swordsmanship ensures victory in close combat.	true
-land_units_onscreen_name_syr	Night Ravens	true
-land_units_onscreen_name_judunnubing	Tirith Shieldbearers	true
-unit_description_short_texts_text_syr	The Night  Ravens prowl the darkness, hunting undead monstrosities and illuminating the Empire's path with their unyielding fire.	true
-unit_description_short_texts_text_judunnubing	The Tirith Shieldbearers, hailing from the City-States, are deadly mercenaries. Their heavy crossbows and towering shields make them a formidable presence in the Imperial ranks.	true
-land_units_onscreen_name_youlikezhanshi	Ulric’s Wolves	true
-land_units_onscreen_name_bailang	Claw of Ulric	true
-land_units_onscreen_name_xigemachui	War Priests	true
-unit_description_short_texts_text_youlikezhanshi	Ulric's Wolves channel the Winter God's wrath into the mortal realm, their fiery zeal burning away Chaos's chill.	true
-unit_description_short_texts_text_bailang	The “Claw of Ulric”, named for a legendary wolf, represents the White Wolf God's fury. Revered as the War God's mortal incarnation, it is said to protect the faithful in dire times.	true
-unit_description_short_texts_text_xigemachui	The War Priests are elite warriors of Sigmar’s Church, candidates for War Priesthood who fearlessly defend the faith on the battlefield.	true
+land_units_onscreen_name_diguohuoqiangshou	Handgunner Company	true
+unit_description_short_texts_text_sheshou	Before the founding of the Brotherhood of the Blood Oath, its members had already fought Khorne's forces countless times. Fewer and fewer survivors emerged from the blood and flame, and those who remained were consumed by both the guilt of losing their comrades and the growing madness wrought by Khorne's influence. They swore an oath in blood, dedicating themselves to the endless war against Chaos.	true
+unit_description_short_texts_text_liebing	Huntsmen are the most agile gunmen on the battlefield, typically deployed at the front to harass enemy positions, or relied upon for their keen observation skills to serve as scouts and sentries.	true
+unit_description_short_texts_text_diguohuoqiangshou	These finely dressed handgunners are drawn from every province of the Empire. Their well-ordered Handgunner Companies can effortlessly wipe out even the most fearsome enemies within their web of fire, and should any foe manage to reach them, these elite soldiers can just as easily cut them down with expert swordplay.	true
+land_units_onscreen_name_syr	Ravenwatch	true
+land_units_onscreen_name_judunnubing	Tilean Pavise Crossbowmen	true
+unit_description_short_texts_text_syr	The Ravenwatch lurk through the long night, destroying the undead abominations that hail from the realms of the once-living, lighting the Empire's path with fire.	true
+unit_description_short_texts_text_judunnubing	Mercenaries from every corner gather within the Empire's borders, among them the deadly pavise crossbowmen from the city-states of Tilea, who can be found almost everywhere and have integrated seamlessly into the Empire's armies.	true
+land_units_onscreen_name_youlikezhanshi	Wolves of Ulric	true
+land_units_onscreen_name_bailang	Claws of Ulric	true
+land_units_onscreen_name_xigemachui	Warrior Priests of Sigmar	true
+unit_description_short_texts_text_youlikezhanshi	The Wolves of Ulric are the mortal agents of the Wolf God's power. Their fighting spirit shall burn away the winter of Chaos.	true
+unit_description_short_texts_text_bailang	'Claws of Ulric' is the name bestowed by Ulric's faithful upon this legendary old wolf. This brave and ferocious beast has spent countless years alongside the cult, believed to be chosen by the White Wolf God himself—the mortal incarnation of the War God, come to save the cult in its hour of need.	true
+unit_description_short_texts_text_xigemachui	The Order of Battle is the elite armed force of the Cult of Sigmar. As candidates for the rank of high Warrior Priest, these devout brothers shall throw themselves into battle without hesitation to defend the faith.	true

@@ -2,5 +2,5 @@ key	text	tooltip
 #Loc;1;text/@@zerooz_nur_units_bst_effect.loc		
 effects_description_bst_ritual_unit_cap_centigors_nurgle	[HIDDEN] - increases cost of this ritual	false
 effects_description_bst_ritual_unit_cap_centigors_nurgle_unlock	Unlock unit cap ritual	false
-rituals_display_name_bst_ritual_unit_cap_centigors_nurgle	Centigors Nurgle Capacity	false
+rituals_display_name_bst_ritual_unit_cap_centigors_nurgle	Nurgle Centigors Capacity	false
 rituals_description_bst_ritual_unit_cap_centigors_nurgle	Increase the capacity of this unit.	false

@@ -1,30 +1,30 @@
 key	text	tooltip
 #Loc;1;text/!!!whc_units_ability_name.loc		
-unit_abilities_onscreen_name_guanning_firelancer_fire_charge	Beacon Relay	false
-unit_abilities_tooltip_text_guanning_firelancer_fire_charge	As thunder roars, so the charge advances like the wind.	false
-unit_abilities_onscreen_name_bayara_outflank	Flanking Maneuver	false
-unit_abilities_tooltip_text_bayara_outflank	Temporarily retreat to conserve strength and bide your time.	false
-special_ability_phases_onscreen_name_cth_zhentianlei_jiansu	[[col:red]][[img:ui/battle ui/ability_icons/cth_zhentianlei_jiansu.png]][[/img]]Nan-Gau Thunderstrike![[/col]]	false
+unit_abilities_onscreen_name_guanning_firelancer_fire_charge	Beacon Fires Connect	false
+unit_abilities_tooltip_text_guanning_firelancer_fire_charge	Awesome as thunder, swift as rising wind.	false
+unit_abilities_onscreen_name_bayara_outflank	Circling Maneuver	false
+unit_abilities_tooltip_text_bayara_outflank	Withdraw briefly from the enemy's edge, husband your strength and await the moment.	false
+special_ability_phases_onscreen_name_cth_zhentianlei_jiansu	[[col:red]][[img:ui/battle ui/ability_icons/cth_zhentianlei_jiansu.png]][[/img]]Nangau Sky-Shaking Thunder [[/col]] 	false
 unit_abilities_onscreen_name_defensive_stance_pro	Defensive Stance	false
-unit_abilities_tooltip_text_defensive_stance_pro	Easier to move mountains than to break this army's resolve.	false
-unit_abilities_onscreen_name_suwei_true_bastion	Flesh-and-Blood Bastion: Iron Wall	false
-unit_abilities_tooltip_text_suwei_true_bastion	[[col:red]]Cannot fire while the formation is active.[[/col]]  \\n\\nWhere the shield wall stands, there is no retreat.	false
-unit_abilities_onscreen_name_suwei_indomitable	Flesh-and-Blood Bastion: Indomitable	false
-unit_abilities_tooltip_text_suwei_indomitable	[[col:red]]Formation cannot be maintained when unit size is too low.[[/col]]  \\n\\nA well-ordered shield wall, as mighty as the Great Bastion, supports the backbone of the Cathayan empire.	false
-unit_abilities_onscreen_name_beiwei_dianfan	Galvanizing Courage	false
-unit_abilities_tooltip_text_beiwei_dianfan	The sight of the Beiwei Army charging into battle inspires the entire force to fight with unparalleled bravery.	false
-special_ability_phases_onscreen_name_beiwei_zhanma	[[col:red]][[img:ui/battle ui/ability_icons/beiwei_zhanma.png]][[/img]]Horse-Cleaving Strike![[/col]]	true
-unit_abilities_onscreen_name_golden_pagoda_rock_solid	Rock Solid	false
-unit_abilities_tooltip_text_golden_pagoda_rock_solid	Like a rolling boulder smashing through the enemy or an immovable mountain holding the line, their duty is unyielding.	false
-unit_abilities_onscreen_name_golden_pagoda_exorcism	Demonic Exorcism	false
-unit_abilities_tooltip_text_golden_pagoda_exorcism	These enchanted roars from the guardian stone lions will destabilize the corporeal form of Chaos Daemons, [[col:red]][[img:ui/battle ui/ability_icons/daemonic.png]][[/img]]removing their Daemonic attribute[[/col]].	false
-unit_abilities_onscreen_name_palace_guard_jade_offering	Jade Offering	false
-unit_abilities_tooltip_text_palace_guard_jade_offering	When the battle turns in their favor, the Jade Lion riders channel the winds of magic across the battlefield.	false
-unit_abilities_onscreen_name_palace_guard_jade_charge	Jade-Piercing Charge	false
-unit_abilities_tooltip_text_palace_guard_jade_charge	Warriors charging alongside the Jade Lions feel an overwhelming surge of magical empowerment.	false
-ui_unit_bullet_point_enums_onscreen_name_cth_cata_cav	Ironclad Cavalry	false
-ui_unit_bullet_point_enums_tooltip_cth_cata_cav	This heavy cavalry unit possesses collision attack capabilities.	false
-ui_unit_bullet_point_enums_onscreen_name_cth_barbarian_naturalized	Naturalized Barbarians	false
-ui_unit_bullet_point_enums_tooltip_cth_barbarian_naturalized	This unit is deeply influenced by Cathayan military strategy, embracing martial harmony while growing distant from their original specialties.	false
-ui_unit_bullet_point_enums_onscreen_name_cth_ogre_artofwar	Art of War (Ogre)	false
-ui_unit_bullet_point_enums_tooltip_cth_ogre_artofwar	These burly ogres at least know to climb the walls and wreak havoc, rather than ramming their clubs straight into stone.	false
+unit_abilities_tooltip_text_defensive_stance_pro	Easier to move a mountain than to move this army.	false
+unit_abilities_onscreen_name_suwei_true_bastion	Rampart of Flesh and Blood · Iron Wall	false
+unit_abilities_tooltip_text_suwei_true_bastion	[[col:red]]Cannot shoot while formation is engaged[[/col]]  \\nWhere the shield wall stands, there is no word of retreat.	false
+unit_abilities_onscreen_name_suwei_indomitable	Rampart of Flesh and Blood · Mighty Pass	false
+unit_abilities_tooltip_text_suwei_indomitable	[[col:red]]Cannot maintain this formation when unit strength is too low[[/col]]  \\nA tight shield formation, like the mighty passes of the Great Bastion, upholds the very backbone of the Celestial Empire.	false
+unit_abilities_onscreen_name_beiwei_dianfan	Fervent Ardor	false
+unit_abilities_tooltip_text_beiwei_dianfan	Witnessing the Beiwei army's valor as they break the enemy line, the soldiers of the Three Armies fight all the more fiercely.	false
+special_ability_phases_onscreen_name_beiwei_zhanma	[[col:red]][[img:ui/battle ui/ability_icons/beiwei_zhanma.png]][[/img]]Horse-Cleaving[[/col]] 	true
+unit_abilities_onscreen_name_golden_pagoda_rock_solid	Firm as Rock	false
+unit_abilities_tooltip_text_golden_pagoda_rock_solid	Like a rolling stone breaking the enemy ranks, like solid rock repelling the foe—both are duties without hesitation.	false
+unit_abilities_onscreen_name_golden_pagoda_exorcism	Ward Against Evil Beasts	false
+unit_abilities_tooltip_text_golden_pagoda_exorcism	The enchanted roar of these guardian stone lions shakes the very substance of Chaos Daemons, so much that [[col:red]][[img:icon_daemonic]][[/img]]Daemonic is removed[[/col]].	false
+unit_abilities_onscreen_name_palace_guard_jade_offering	Spirits Offered in Reverence	false
+unit_abilities_tooltip_text_palace_guard_jade_offering	When the battle goes well, the Jade Lion riders devote some of their strength to gathering the Winds of Magic upon the field.	false
+unit_abilities_onscreen_name_palace_guard_jade_charge	Jade Edge Breaks the Line	false
+unit_abilities_tooltip_text_palace_guard_jade_charge	Warriors who charge alongside the Jade Lion feel themselves imbued with abundant magical power.	false
+ui_unit_bullet_point_enums_onscreen_name_cth_cata_cav	Armored Cataphract	false
+ui_unit_bullet_point_enums_tooltip_cth_cata_cav	This heavy cavalry unit possesses a collision attack ability.	false
+ui_unit_bullet_point_enums_onscreen_name_cth_barbarian_naturalized	Naturalized Barbarian	false
+ui_unit_bullet_point_enums_tooltip_cth_barbarian_naturalized	This unit has been deeply influenced by Cathayan tactics, integrating into the harmony of martial discipline while drifting from its original specialties.	false
+ui_unit_bullet_point_enums_onscreen_name_cth_ogre_artofwar	The Art of War (Ogre)	false
+ui_unit_bullet_point_enums_tooltip_cth_ogre_artofwar	These hulking brutes know enough to scale the walls and wreak havoc atop the battlements, rather than trading blows against the ramparts with their clubs alone.	false

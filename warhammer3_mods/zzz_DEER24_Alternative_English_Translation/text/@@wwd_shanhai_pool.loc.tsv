@@ -1,0 +1,11 @@
+key	text	tooltip
+#Loc;1;text/@@wwd_shanhai_pool.loc		
+ui_mercenary_recruitment_infos_hire_button_title_deer_shanhai	Beasts of Mountains and Seas	true
+ui_mercenary_recruitment_infos_hire_button_tooltip_deer_shanhai	Beasts of Mountains and Seas||The beasts will be summoned and join your army at once	true
+ui_mercenary_recruitment_infos_hire_state_deer_shanhai	Beasts of Mountains and Seas	true
+ui_mercenary_recruitment_infos_initial_tooltip_deer_shanhai	Beasts of Mountains and Seas||Between the ranks of myth and our own	true
+ui_mercenary_recruitment_infos_tooltip_default_avaliable_deer_shanhai	Beasts of Mountains and Seas||The beasts will be summoned and join your army at once	true
+ui_mercenary_recruitment_infos_tooltip_default_inactive_deer_shanhai	Beasts of Mountains and Seas||There are currently no Beasts of Mountains and Seas available to summon	true
+ui_mercenary_recruitment_infos_tooltip_inactive_not_players_turn_deer_shanhai	Beasts of Mountains and Seas||You may only recruit troops during your own turn	true
+ui_mercenary_recruitment_infos_tooltip_inactive_on_sea_deer_shanhai	Beasts of Mountains and Seas||The current army cannot recruit Beasts of Mountains and Seas	true
+ui_mercenary_recruitment_infos_tooltip_inactive_unavailable_deer_shanhai	Beasts of Mountains and Seas||There are currently no Beasts of Mountains and Seas available to summon. Wait for them to recover, or complete missions to gather more mythical units!	true

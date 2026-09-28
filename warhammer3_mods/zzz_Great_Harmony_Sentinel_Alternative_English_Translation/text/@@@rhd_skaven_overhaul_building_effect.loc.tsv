@@ -1,11 +1,11 @@
 key	text	tooltip
 #Loc;1;text/@@@rhd_skaven_overhaul_building_effect.loc		
-building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan50	At the start of the turn, if the total [[img:icon_warpstones]][[/img]] Warpstone exceeds 50:	false
-building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan100	At the start of the turn, if the total [[img:icon_warpstones]][[/img]] Warpstone exceeds 100:	false
-building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan150	At the start of the turn, if the total [[img:icon_warpstones]][[/img]] Warpstone exceeds 150:	false
-building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan200	At the start of the turn, if the total [[img:icon_warpstones]][[/img]] Warpstone exceeds 200:	false
-building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan250	At the start of the turn, if the total [[img:icon_warpstones]][[/img]] Warpstone exceeds 250:	false
-building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan300	At the start of the turn, if the total [[img:icon_warpstones]][[/img]] Warpstone exceeds 300:	false
-effects_description_rhd_effect_building_pooled_resource_warpstone	Warpstone Yield: %n	false
-effects_description_rhd_effect_building_pooled_resource_warpstone_mod	Warpstone Yield: %+n%	false
+building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan50	At the start of the turn, if total [[img:icon_warpstones]][[/img]]Warpstone exceeds 50:	false
+building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan100	At the start of the turn, if total [[img:icon_warpstones]][[/img]]Warpstone exceeds 100:	false
+building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan150	At the start of the turn, if total [[img:icon_warpstones]][[/img]]Warpstone exceeds 150:	false
+building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan200	At the start of the turn, if total [[img:icon_warpstones]][[/img]]Warpstone exceeds 200:	false
+building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan250	At the start of the turn, if total [[img:icon_warpstones]][[/img]]Warpstone exceeds 250:	false
+building_effect_context_expressions_display_text_RHDSKVwarpstonesGreaterThan300	At the start of the turn, if total [[img:icon_warpstones]][[/img]]Warpstone exceeds 300:	false
+effects_description_rhd_effect_building_pooled_resource_warpstone	Warpstone Production: %n	false
+effects_description_rhd_effect_building_pooled_resource_warpstone_mod	Warpstone Production: %+n%	false
 effects_description_rhd_effect_building_pooled_resource_warpstone_cost	Warpstone Consumption: %n	false

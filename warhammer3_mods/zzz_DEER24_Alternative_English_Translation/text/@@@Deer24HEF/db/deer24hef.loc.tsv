@@ -1,13 +1,13 @@
 key	text	tooltip
 #Loc;1;text/@@@Deer24HEF/db/deer24hef.loc		
-land_units_onscreen_name_DEERHEF_NVQISHI	Queen's Knights of Avelorn (Foot)	true
-land_units_onscreen_name_DEERHEF_NVQISHI1	Queen's Knights of Avelorn	true
-land_units_onscreen_name_DEERHEF_BAITAJIANSHENG	Swordmasters of the White Tower	true
-land_units_onscreen_name_DEERHEF_FENGHUANGSHOUWEI	Phoenix Sentinels of Asuryan	true
-land_units_onscreen_name_DEERHEF_SHOUWANGZHE	Skyward Watchers	true
-land_units_onscreen_name_DEERHEF_AISAANGQISHI	Ellyrion Radiants	true
-land_units_onscreen_name_DEERHEF_DIGONGTONGWEI	Cothique Tidemancers	true
-land_units_onscreen_name_DEERHEF_NAJIARUISIHEIWEI	Anlec Throne Guard	true
-land_units_onscreen_name_DEERHEF_BAISHILIECHANG	Lion Heralds of Arhain	true
-land_units_onscreen_name_DEERHEF_LONGZHU	Dragonlords of Caledor	true
-land_units_onscreen_name_DEERHEF_HAIMEN	Sea Gate Windcallers	true
+land_units_onscreen_name_DEERHEF_NVQISHI	Handmaidens of the Queen of Avalon (Foot)	true
+land_units_onscreen_name_DEERHEF_NVQISHI1	Handmaidens of the Queen of Avalon	true
+land_units_onscreen_name_DEERHEF_BAITAJIANSHENG	Scions of the White Tower	true
+land_units_onscreen_name_DEERHEF_FENGHUANGSHOUWEI	Sworn Guard of Asuryan	true
+land_units_onscreen_name_DEERHEF_SHOUWANGZHE	Watchers of the Azure Sky	true
+land_units_onscreen_name_DEERHEF_AISAANGQISHI	Radiants of Ellyrion	true
+land_units_onscreen_name_DEERHEF_DIGONGTONGWEI	Waterdancers of Cothique	true
+land_units_onscreen_name_DEERHEF_NAJIARUISIHEIWEI	Throne Guard of Naggarith	true
+land_units_onscreen_name_DEERHEF_BAISHILIECHANG	Lion-Speakers of Chrace	true
+land_units_onscreen_name_DEERHEF_LONGZHU	Dragon Lords of Caledor	true
+land_units_onscreen_name_DEERHEF_HAIMEN	Windcallers of Hai Men	true

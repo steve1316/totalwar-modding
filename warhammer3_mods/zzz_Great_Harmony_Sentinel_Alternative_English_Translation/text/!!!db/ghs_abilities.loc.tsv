@@ -1,306 +1,306 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_abilities.loc		
-unit_abilities_onscreen_name_ghs_cth_hongying_passive_fire_dance	Ink Jade Blaze	false
-unit_abilities_tooltip_text_ghs_cth_hongying_passive_fire_dance	Hong Ying exhibits incredible affinity with the Yin Wind of Magic. His "staff" manifests as a blade wreathed in ink jade flames, transforming to channel magic or strike down foes when needed.	false
-unit_abilities_onscreen_name_ghs_ability_cth_jade_blood_rune_spell	Jade-Blooded Rune Magic	false
-unit_abilities_tooltip_text_ghs_ability_cth_jade_blood_rune_spell	Jade-Blooded Rune Magic is a unique development of the Qi wind by Jade-Blooded Taoists. It stores magic winds in talismans, providing a potent aid even when effects cannot be fully controlled.	false
-unit_abilities_onscreen_name_ghs_ability_cth_royal_guard_avatar	Avatar of Yu Zhuo	false
-unit_abilities_tooltip_text_ghs_ability_cth_royal_guard_avatar	Legend has it that "Shadow Gleam" is an illusion of the Moon Empress. The Onyx Crowmen can only commune with the Yin Wind and transform into the Yuanzhuo upon hearing its call.	false
-unit_abilities_onscreen_name_ghs_ability_cth_jet_lion_magic_eater	Power of the Jet Lion	false
-unit_abilities_tooltip_text_ghs_ability_cth_jet_lion_magic_eater	The best way to counter spellcasters is to sever their connection to the Winds of Magic.	false
-unit_abilities_onscreen_name_ghs_ability_cth_jade_lion_magic_guider	Jade Fury Lion	false
-unit_abilities_tooltip_text_ghs_ability_cth_jade_lion_magic_guider	A raging jade lion harnesses the Winds of Magic, channeling their destructive charge into an unparalleled force.	false
-unit_abilities_onscreen_name_ghs_lzd_annihilation_thunder	Izzchi Thunder Spear	true
-unit_abilities_tooltip_text_ghs_lzd_annihilation_thunder	A colossal bolt of lightning shoots from the engine, and the spear of the Skink God cleaves through enemy ranks, leaving ravines filled with shredded flesh.	true
-unit_abilities_onscreen_name_ghs_lzd_thunder_engine	Izzchi Engine	true
-unit_abilities_tooltip_text_ghs_lzd_thunder_engine	Izzchi, the ancient god of cold-blooded beasts, commands the engine to unleash arcane powers and tame wild natures.	true
-unit_abilities_onscreen_name_ghs_cth_ll_shugengan_demidragon	Dragon-Blood Transformation	false
-unit_abilities_onscreen_name_ghs_skv_ll_ikit_avatar	Lord of Ruin: Greed	false
-unit_abilities_tooltip_text_ghs_skv_ll_ikit_avatar	The Horned Rat manifests in one of its terrifying aspects: the Lords of Ruin, living catastrophes heralding destruction and desolation from the Chaos Wastes.	false
-unit_abilities_onscreen_name_ghs_skv_ll_queek_avatar	Lord of Ruin: Wrath	false
-unit_abilities_tooltip_text_ghs_skv_ll_queek_avatar	The Horned Rat manifests in one of its terrifying aspects: the Lords of Ruin, living catastrophes heralding destruction and desolation from the Chaos Wastes.	false
-unit_abilities_onscreen_name_ghs_skv_ll_skrolk_avatar	Lord of Ruin: Pestilence	false
-unit_abilities_tooltip_text_ghs_skv_ll_skrolk_avatar	The Horned Rat manifests in one of its terrifying aspects: the Lords of Ruin, living catastrophes heralding destruction and desolation from the Chaos Wastes.	false
-unit_abilities_onscreen_name_ghs_skv_ll_snikch_avatar	Lord of Ruin: Arrogance	false
-unit_abilities_tooltip_text_ghs_skv_ll_snikch_avatar	The Horned Rat manifests in one of its terrifying aspects: the Lords of Ruin, living catastrophes heralding destruction and desolation from the Chaos Wastes.	false
-unit_abilities_onscreen_name_ghs_skv_ll_throt_avatar	Lord of Ruin: Gluttony	false
-unit_abilities_tooltip_text_ghs_skv_ll_throt_avatar	The Horned Rat manifests in one of its terrifying aspects: the Lords of Ruin, living catastrophes heralding destruction and desolation from the Chaos Wastes.	false
-unit_abilities_onscreen_name_ghs_skv_ll_tretch_avatar	Lord of Ruin: Cunning	false
-unit_abilities_tooltip_text_ghs_skv_ll_tretch_avatar	The Horned Rat manifests in one of its terrifying aspects: the Lords of Ruin, living catastrophes heralding destruction and desolation from the Chaos Wastes.	false
-unit_abilities_onscreen_name_ghs_skv_ll_warlord_avatar	Lord of Ruin	false
-unit_abilities_tooltip_text_ghs_skv_ll_warlord_avatar	The Horned Rat manifests in one of its terrifying aspects: the Lords of Ruin, living catastrophes heralding destruction and desolation from the Chaos Wastes.	false
-unit_abilities_onscreen_name_ghs_ability_dwf_beer_valaya	Valaya's Chalice	true
-unit_abilities_tooltip_text_ghs_ability_dwf_beer_valaya	"Raise a toast, fortify the hold, and drown in merry laughter!"	true
+unit_abilities_onscreen_name_ghs_cth_hongying_passive_fire_dance	Ink Jade Flowing Flame	false
+unit_abilities_tooltip_text_ghs_cth_hongying_passive_fire_dance	Hong Ying holds an uncanny affinity for the Wind of Yin, and the ink-jade flames upon his blade are its finest conduit — rising and reshaping whenever he must channel the winds of magic or strike down a foe.	false
+unit_abilities_onscreen_name_ghs_ability_cth_jade_blood_rune_spell	Jade Blood Rune Art	false
+unit_abilities_tooltip_text_ghs_ability_cth_jade_blood_rune_spell	Jade Blood Rune Art is a unique technique developed by the Jade Blood Taoists to harness the Winds of Magic, storing daily-gathered magic within talisman paper. Though its release cannot be freely controlled, it remains a formidable boon.	false
+unit_abilities_onscreen_name_ghs_ability_cth_royal_guard_avatar	True Form of the Yue Zhuo	false
+unit_abilities_tooltip_text_ghs_ability_cth_royal_guard_avatar	Legend holds that 'Shadowdance' is a fragment of the Moon Empress's power. When the Black Jade Crow Warden heeds its call, he can commune with the Wind of Yin and transform into the divine Yue Zhuo bird.	false
+unit_abilities_onscreen_name_ghs_ability_cth_jet_lion_magic_eater	Ink Jade Power	false
+unit_abilities_tooltip_text_ghs_ability_cth_jet_lion_magic_eater	The best way to counter a spellcaster is to sever the link between the Chaos sorcerer and the Winds of Magic.	false
+unit_abilities_onscreen_name_ghs_ability_cth_jade_lion_magic_guider	Jade Wrath Lion	false
+unit_abilities_tooltip_text_ghs_ability_cth_jade_lion_magic_guider	As the enraged Jade Wrath Lion communes with the Winds of Magic, its devastating charge gains unmatched, overwhelming force.	false
+unit_abilities_onscreen_name_ghs_lzd_annihilation_thunder	Itza Thunder Spear	true
+unit_abilities_tooltip_text_ghs_lzd_annihilation_thunder	Colossal bolts of lightning fire from the engine, and the hunting spear of the triceratops god descends from the heavens, carving furrows filled with shredded flesh.	true
+unit_abilities_onscreen_name_ghs_lzd_thunder_engine	Itza Engine	true
+unit_abilities_tooltip_text_ghs_lzd_thunder_engine	Itza is the ancient sacred god of cold-blooded beasts; by operating the engine and casting arcane rites, even the wildest can be tamed.	true
+unit_abilities_onscreen_name_ghs_cth_ll_shugengan_demidragon	Dragon Blood Avatar	false
+unit_abilities_onscreen_name_ghs_skv_ll_ikit_avatar	Avatar of the Council Lord: Greed	false
+unit_abilities_tooltip_text_ghs_skv_ll_ikit_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+unit_abilities_onscreen_name_ghs_skv_ll_queek_avatar	Avatar of the Council Lord: Rage	false
+unit_abilities_tooltip_text_ghs_skv_ll_queek_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+unit_abilities_onscreen_name_ghs_skv_ll_skrolk_avatar	Avatar of the Council Lord: Plague	false
+unit_abilities_tooltip_text_ghs_skv_ll_skrolk_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+unit_abilities_onscreen_name_ghs_skv_ll_snikch_avatar	Avatar of the Council Lord: Pride	false
+unit_abilities_tooltip_text_ghs_skv_ll_snikch_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+unit_abilities_onscreen_name_ghs_skv_ll_throt_avatar	Avatar of the Council Lord: Gluttony	false
+unit_abilities_tooltip_text_ghs_skv_ll_throt_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+unit_abilities_onscreen_name_ghs_skv_ll_tretch_avatar	Avatar of the Council Lord: Cunning	false
+unit_abilities_tooltip_text_ghs_skv_ll_tretch_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+unit_abilities_onscreen_name_ghs_skv_ll_warlord_avatar	Avatar of the Council Lord	false
+unit_abilities_tooltip_text_ghs_skv_ll_warlord_avatar	Among the most fearsome forms the great horned rat can take is the Lord of Ruin, living catastrophes bringing destruction and desolation, born of the Realm of Chaos where devastation and slaughter reign.	false
+unit_abilities_onscreen_name_ghs_ability_dwf_beer_valaya	Valaya's Goblet	true
+unit_abilities_tooltip_text_ghs_ability_dwf_beer_valaya	"Found the stronghold, guard the home, and drink deep with joyous laughter!"	true
 unit_abilities_onscreen_name_ghs_ability_dwf_construct_destrut_i	Oath of the Longbeards	true
-unit_abilities_tooltip_text_ghs_ability_dwf_construct_destrut_i	"You'll not pass, foul creature! By my beard, I swear it!"	true
-unit_abilities_onscreen_name_ghs_ability_dwf_construct_destrut_ii	Indomitable Valor	true
-unit_abilities_tooltip_text_ghs_ability_dwf_construct_destrut_ii	"For the mountains and the ancestors' glory!"	true
+unit_abilities_tooltip_text_ghs_ability_dwf_construct_destrut_i	You'll never reach the other side, foul creature! This I swear upon my long beard!	true
+unit_abilities_onscreen_name_ghs_ability_dwf_construct_destrut_ii	Valiant and Unyielding	true
+unit_abilities_tooltip_text_ghs_ability_dwf_construct_destrut_ii	For the glory of the mountains and our ancestors!	true
 unit_abilities_onscreen_name_ghs_ability_dwf_forge_grungni	Grungni's Forge	true
-unit_abilities_tooltip_text_ghs_ability_dwf_forge_grungni	"The forge blazes, the hammers ring, and masterworks are born!"	true
-unit_abilities_onscreen_name_ghs_ability_dwf_god_thunder_passive	Rune of Thunder	true
-unit_abilities_tooltip_text_ghs_ability_dwf_god_thunder_passive	The Rune of Thunder flashes brilliantly, summoning an overwhelming storm as if Grungni himself swung his anvil.	true
+unit_abilities_tooltip_text_ghs_ability_dwf_forge_grungni	"The forge burns bright, the hammer rings true, a peerless weapon now forged anew!"	true
+unit_abilities_onscreen_name_ghs_ability_dwf_god_thunder_passive	Rune Thunder	true
+unit_abilities_tooltip_text_ghs_ability_dwf_god_thunder_passive	The thunder rune blazes with light, and in an instant thunder answers the call across the heavens, as if Grungni himself had brought down his anvil-hammer.	true
 unit_abilities_onscreen_name_ghs_ability_dwf_powder_morgrim	Morgrim's Powder	true
-unit_abilities_tooltip_text_ghs_ability_dwf_powder_morgrim	"The cannons roar, the smoke clears, the mountains tremble in triumphant song!"	true
-unit_abilities_onscreen_name_ghs_ability_dwf_rage_grimnir	Grimnir's Wrathful Axe	true
-unit_abilities_tooltip_text_ghs_ability_dwf_rage_grimnir	"Slay dragons, scour the wastes, and annihilate the Chaos hordes!"	true
-unit_abilities_onscreen_name_ghs_ability_ogr_hunter_of_champions	Hunter's Cunning	true
-unit_abilities_tooltip_text_ghs_ability_ogr_hunter_of_champions	Most ogre prey is quite dim, but careless hunters may find the roles reversed!	true
-unit_abilities_onscreen_name_lzd_god_of_quetzl	"Quetzl's Guard"	true
-unit_abilities_tooltip_text_lzd_god_of_quetzl	A great flood once swept the world, devouring all. Heroes arise so that no more heroes are needed.	true
-unit_abilities_onscreen_name_lzd_god_punish	"Punishment for Blasphemy"	true
-unit_abilities_tooltip_text_lzd_god_punish	What awaits the smug destroyers of the Old Ones' great works?	true
-unit_abilities_onscreen_name_lzd_pyramid_chotec	"Chotec's Solar Glory"	true
-unit_abilities_tooltip_text_lzd_pyramid_chotec	Chotec's temple radiates the warmth of the Sun God, inspiring vigor and vitality among his warriors.	true
-unit_abilities_onscreen_name_lzd_pyramid_tepok	"Dirge of the Lost"	true
-unit_abilities_tooltip_text_lzd_pyramid_tepok	The mummified First Slaan sits serenely as wild winds of magic rage around him, chanting cryptic words: annihilation.	true
-unit_abilities_onscreen_name_lzd_pyramid_tepok_arcane_conduit	"Arcane Conduit"	true
-unit_abilities_tooltip_text_lzd_pyramid_tepok_arcane_conduit	The arcane secrets of the Winds of Magic, etched by Tepok himself in the patterns of the microcosmic heavens, enlighten all magic masters.	true
-unit_abilities_onscreen_name_lzd_pyramid_tzunki	"Emerald Crystal"	true
-unit_abilities_tooltip_text_lzd_pyramid_tzunki	The Tzunki crystal, steeped for millennia in the Emerald Pool, can reclaim brave warriors' souls from the Chaos Wastes.	true
-unit_abilities_onscreen_name_lzd_skink_carnosaur_comet	Heavenly Strike	true
-unit_abilities_tooltip_text_lzd_skink_carnosaur_comet	Under the direction of the Great Stargazer, celestial bodies themselves are summoned to crush the enemy tide.	true
-unit_abilities_onscreen_name_lzd_temple_destrut_i	Creation Marred	true
-unit_abilities_tooltip_text_lzd_temple_destrut_i	Even the greatest works can gather dust. Rally yourself!	true
-unit_abilities_onscreen_name_lzd_temple_destrut_ii	Creation's Demise	true
-unit_abilities_tooltip_text_lzd_temple_destrut_ii	While there is still breath, do not relent.	true
-unit_abilities_onscreen_name_ghs_ability_cth_summon_soul_flood_dragon	Spirit Dragon Ascension	true
-unit_abilities_onscreen_name_ghs_ability_cth_soul_focus	Power of Spirits	true
-unit_abilities_tooltip_text_ghs_ability_cth_soul_focus	Tiny streams of effort merge into a vast tide, culminating in an unparalleled storm of magic.	true
-unit_abilities_onscreen_name_ghs_ability_cth_soul_flood_dragon_break	Dissipation	true
-unit_abilities_tooltip_text_ghs_ability_cth_soul_flood_dragon_break	The summoned spirits gracefully vanish from the warriors' sight, as if fading into the mists.	true
-unit_abilities_onscreen_name_ghs_ability_cth_iron_eater	Iron Devourer Beast	true
-unit_abilities_tooltip_text_ghs_ability_cth_iron_eater	In Cathay, there is a beast, resembling a water buffalo, black as lacquer, that chews iron and swallows copper.	true
-unit_abilities_tooltip_text_ghs_ability_cth_harmony_yin_melee	All things must balance, like dark and light, moon and sun, male and female.	true
+unit_abilities_tooltip_text_ghs_ability_dwf_powder_morgrim	"The great cannon roars, the smoke clears, and the mountains tremble to its song!"	true
+unit_abilities_onscreen_name_ghs_ability_dwf_rage_grimnir	Grimnir's Axe	true
+unit_abilities_tooltip_text_ghs_ability_dwf_rage_grimnir	"Slay the evil dragon, march into the wastes, and put every Chaos beast to the sword!"	true
+unit_abilities_onscreen_name_ghs_ability_ogr_hunter_of_champions	Keen Hunt	true
+unit_abilities_tooltip_text_ghs_ability_ogr_hunter_of_champions	It has to be said, most of the Ogres' prey are quite dim-witted, but careless hunters often end up swapping roles with their quarry.	true
+unit_abilities_onscreen_name_lzd_god_of_quetzl	[Guardian of Lustria]	true
+unit_abilities_tooltip_text_lzd_god_of_quetzl	The tide of the great cataclysm once swept across the world, devouring all in its path; heroes arose so that heroes need never rise again.	true
+unit_abilities_onscreen_name_lzd_god_punish	[Blasphemer's Judgement]	true
+unit_abilities_tooltip_text_lzd_god_punish	The masterwork of the Old Ones stands on the brink of ruin, but what awaits the complacent foe?	true
+unit_abilities_onscreen_name_lzd_pyramid_chotec	[Blazing Sun of Xhotec]	true
+unit_abilities_tooltip_text_lzd_pyramid_chotec	Xhotec is the throne favoured by the sun god; the heat of the blazing sun stirs the fighting spirit of the warriors beneath it, restoring their vigor anew.	true
+unit_abilities_onscreen_name_lzd_pyramid_tepok	[Chant of the Lost]	true
+unit_abilities_tooltip_text_lzd_pyramid_tepok	The mummy of the first Slann sits serenely, yet a violent gale of magic swirls around it, as the Lost speak in an obscure incantation two words: Utter Ruin.	true
+unit_abilities_onscreen_name_lzd_pyramid_tepok_arcane_conduit	[Higher Dimensional Conduit]	true
+unit_abilities_tooltip_text_lzd_pyramid_tepok_arcane_conduit	The mysteries of the Winds of Magic, inscribed by Tepok himself along the paths of the miniature heavens, are enough to enlighten every master of magic.	true
+unit_abilities_onscreen_name_lzd_pyramid_tzunki	[Emerald Crystal]	true
+unit_abilities_tooltip_text_lzd_pyramid_tzunki	The Tzunki crystal, steeped for millennia in a pool of emerald, can wrest the souls of valiant warriors back from the grasp of Chaos into the mortal realm.	true
+unit_abilities_onscreen_name_lzd_skink_carnosaur_comet	Astral Convergence	true
+unit_abilities_tooltip_text_lzd_skink_carnosaur_comet	At the will of the Great Star-Gazer, even celestial bodies may be guided, plummeting down upon the tide of foes.	true
+unit_abilities_onscreen_name_lzd_temple_destrut_i	Construct Damaged	true
+unit_abilities_tooltip_text_lzd_temple_destrut_i	Even a great work knows moments of neglect—rouse yourself!	true
+unit_abilities_onscreen_name_lzd_temple_destrut_ii	Construct Falling	true
+unit_abilities_tooltip_text_lzd_temple_destrut_ii	While breath remains, no mercy is shown.	true
+unit_abilities_onscreen_name_ghs_ability_cth_summon_soul_flood_dragon	Soul Dragon's Tears	true
+unit_abilities_onscreen_name_ghs_ability_cth_soul_focus	Might of Heroic Spirits	true
+unit_abilities_tooltip_text_ghs_ability_cth_soul_focus	If mortal lives are but trickling streams, then we shall converge into an overwhelming, boundless flood.	true
+unit_abilities_onscreen_name_ghs_ability_cth_soul_flood_dragon_break	Dissipate into Mist	true
+unit_abilities_tooltip_text_ghs_ability_cth_soul_flood_dragon_break	The summoned ancestral spirits will, in the end, vanish gracefully from the warriors' sight...	true
+unit_abilities_onscreen_name_ghs_ability_cth_iron_eater	Iron-Devouring Beast	true
+unit_abilities_tooltip_text_ghs_ability_cth_iron_eater	In the Celestial Empire there lives a beast, shaped like a water buffalo, its fur black as lacquer, that chews iron and swallows bronze.	true
+unit_abilities_tooltip_text_ghs_ability_cth_harmony_yin_melee	All things must find balance, just as darkness and light, moon and sun, male and female each find their counterpart.	true
 unit_abilities_onscreen_name_ghs_ability_cth_dragon_art3	Heaven's Collapse	true
-unit_abilities_tooltip_text_ghs_ability_cth_dragon_art3	The winds of Heaven abandon these forms, returning to the grasp of the Dragon Emperor—it's too late...	true
-unit_abilities_onscreen_name_ghs_ability_cth_dragon_art2	Kingdom's Ruin	true
-unit_abilities_tooltip_text_ghs_ability_cth_dragon_art2	The construct suffers catastrophic damage, with severed limbs and wreckage scattered everywhere. Its connection to the winds of Heaven is on the brink—there must still be a way...	true
-unit_abilities_onscreen_name_ghs_ability_cth_dragon_art	Kingdom's Fracture	true
-unit_abilities_tooltip_text_ghs_ability_cth_dragon_art	The construct has sustained damage, destabilizing its link to the winds of Heaven. Act swiftly to restore balance!	true
-unit_abilities_onscreen_name_ghs_ability_cth_compass_power_3	Essence Overcharge	true
-unit_abilities_tooltip_text_ghs_ability_cth_compass_power_3	Divine spirits manifest their will; judge and act accordingly.	true
-unit_abilities_onscreen_name_ghs_ability_cth_compass_power_2	Essence Corruption	true
-unit_abilities_tooltip_text_ghs_ability_cth_compass_power_2	Even Chaos laments Heaven's perceived indifference.	true
-unit_abilities_onscreen_name_ghs_ability_cth_compass_power_1	Essence Nourishment	true
-unit_abilities_tooltip_text_ghs_ability_cth_compass_power_1	Heaven creates all things to nurture life.	true
-unit_abilities_onscreen_name_ghs_ability_cth_celestial_thunderstorm	Celestial Thunderstorm	true
-unit_abilities_tooltip_text_ghs_ability_cth_celestial_thunderstorm	The heavens roar with thunderous anger, sparing none in their righteous fury.	true
-unit_abilities_onscreen_name_ghs_ability_kho_blooddragon_breath	Khorne's Bloodfire	true
-unit_abilities_tooltip_text_ghs_ability_kho_blooddragon_breath	The soul of the Bloodfire Dragon is bound to the eternal will of the Blood God, capable of unleashing searing flames from the depths of the Brass Citadel.	true
-unit_abilities_onscreen_name_ghs_ability_kho_replenish_skull	Improvised Materials	true
-unit_abilities_tooltip_text_ghs_ability_kho_replenish_skull	On the battlefield, there's never a shortage of skulls and souls. Need one? Just chop it off an enemy's neck. What? A spirit, you say?	true
-unit_abilities_onscreen_name_ghs_ability_kho_slaughterall	Slaughterous Roar	true
-unit_abilities_tooltip_text_ghs_ability_kho_slaughterall	When this beast wreaks havoc, everyone can clearly hear its blood-curdling roar echoing across the battlefield.	true
-unit_abilities_onscreen_name_ghs_ability_kho_slaughterblade	Carnage Hymn	true
-unit_abilities_tooltip_text_ghs_ability_kho_slaughterblade	A river of blood, a field of corpses—a grotesque paradise for a weapon forged in Khorne's name.	true
-unit_abilities_onscreen_name_ghs_ability_kho_unstoppable	Flesh Fuel	true
-unit_abilities_tooltip_text_ghs_ability_kho_unstoppable	Run, cowards! Your flesh and blood are the perfect fuel for the rampaging iron bull!	true
-unit_abilities_onscreen_name_bloodthirster_bonus_khorne_fire	Infernal Bloodfire	true
-unit_abilities_tooltip_text_bloodthirster_bonus_khorne_fire	Rise, Eighth Legion! Let your failures ignite the fury of the Blood Realm! Freedom is near, but only with the Bloodfather's blessing!	true
-unit_abilities_onscreen_name_kho_army_bronze_body	Bronze Flesh	true
-unit_abilities_tooltip_text_kho_army_bronze_body	Molten bronze perpetually flows to seal wounds, a blessing reserved for the most devout servants of Khorne. As for that mad bull? A flawed creation.	true
-unit_abilities_onscreen_name_arkhan_abilities_death_storm	Scorpion Deathstorm	false
-unit_abilities_tooltip_text_arkhan_abilities_death_storm	The Liche King conjures dark magic amidst a desert storm, leaving torn limbs and dying foes in its wake.	false
-unit_abilities_onscreen_name_ghs_tmb_landing_necrosphinx	Soul Harvest	false
-unit_abilities_tooltip_text_ghs_tmb_landing_necrosphinx	Listen closely to the whispers from the underworld; the god of the afterlife craves the souls of the living.	false
-unit_abilities_onscreen_name_heriotitan_settra	Blessed by the Gods: Settra's Divine Avatar	false
-unit_abilities_tooltip_text_heriotitan_settra	Petra's most exalted blessing is the golden body and supreme power of the undying emperor.	false
-unit_abilities_onscreen_name_heriotitan_settra_lion	Divine Titan Form: Settra's Divine Avatar	false
-unit_abilities_tooltip_text_heriotitan_settra_lion	Petra's most exalted blessing is the golden body and supreme power of the undying emperor.	false
-unit_abilities_onscreen_name_hierotitan_arkhan	Servant of Nagash: Arkhan's Necromantic Avatar	false
-unit_abilities_tooltip_text_hierotitan_arkhan	Arkhan drains the vast dark magic of the Black Tower, unleashing the power Nagash left within him.	false
-unit_abilities_onscreen_name_hierotitan_arkhan_scorption	Divine Titan Form: Arkhan's Divine Avatar	false
-unit_abilities_tooltip_text_hierotitan_arkhan_scorption	Arkhan drains the vast dark magic of the Black Tower, unleashing the power Nagash left within him.	false
-unit_abilities_onscreen_name_hierotitan_khalida	Divine Titan Form: Khalida's Divine Avatar	false
-unit_abilities_tooltip_text_hierotitan_khalida	Asaph's blessing fuels the warrior queen's thirst for vengeance, turning her bowstring into a cold, venomous bite.	false
-unit_abilities_onscreen_name_hierotitan_khatep	Divine Titan Form: Khatep's Divine Avatar	false
-unit_abilities_tooltip_text_hierotitan_khatep	Though exiled, the contributions of the Mortuary Cult to Nehekhara earned the great priest Tahoth's favor.	false
-unit_abilities_onscreen_name_khalida_abilities_barrage_of_the_legion	Venomous Arrow Barrage	false
-unit_abilities_tooltip_text_khalida_abilities_barrage_of_the_legion	The wrath of the Goddess of Vengeance guides the arrows of the Supreme Queen's legion, their venomous tips capable of saturating the earth.	false
-unit_abilities_onscreen_name_khatep_item_bound_arnizipals_black_horror	Shadow of the Hawk	false
-unit_abilities_tooltip_text_khatep_item_bound_arnizipals_black_horror	Through exile's solitude and torment, the Grand Priest came to understand the dark side of even the gods' curses.	false
-unit_abilities_onscreen_name_tmb_army_abilities_realm_of_souls_heirotitan	Realm of Souls: Holy Titan	false
-unit_abilities_tooltip_text_tmb_army_abilities_realm_of_souls_heirotitan	Holy Titans guide the souls of fallen kings, dispersing the evil spirits lurking in darkness and banishing the demons that prey on wandering souls.	false
-unit_abilities_onscreen_name_tmb_army_abilities_realm_of_souls_ostrich	Realm of Souls: Bone Ostrich Riders	false
-unit_abilities_tooltip_text_tmb_army_abilities_realm_of_souls_ostrich	Brave warriors revived from the Realm of Souls ride massive skeletal ostriches, striking with deadly speed and precision.	false
-unit_abilities_onscreen_name_tmb_dragon_breath	Soulfire Breath	false
-unit_abilities_tooltip_text_tmb_dragon_breath	Intruders daring to disturb the rest of the Tomb Kings shall face the wrath of ancient tyrants' souls.	false
-unit_abilities_onscreen_name_tmb_prince_lion	Divine Form: Lion-Headed Ushabti	false
-unit_abilities_tooltip_text_tmb_prince_lion	The Tomb Prince, buried in sand, wields his chess piece and transforms into a lion.	false
+unit_abilities_tooltip_text_ghs_ability_cth_dragon_art3	The Heavenly Wind has abandoned these bodies and returned to the Dragon Emperor's palm — all is already too late...	true
+unit_abilities_onscreen_name_ghs_ability_cth_dragon_art2	Heaven's Ruin	true
+unit_abilities_tooltip_text_ghs_ability_cth_dragon_art2	The construct is severely damaged, broken limbs and wreckage scattered everywhere, and its bond with the Wind of Aethyr grows perilously unstable! But there must still be a way...	true
+unit_abilities_onscreen_name_ghs_ability_cth_dragon_art	Heaven's Wound	true
+unit_abilities_tooltip_text_ghs_ability_cth_dragon_art	The construct has taken some damage, and its bond with the Wind of Aethyr begins to falter — turn the tide quickly!	true
+unit_abilities_onscreen_name_ghs_ability_cth_compass_power_3	Elemental Empowerment	true
+unit_abilities_tooltip_text_ghs_ability_cth_compass_power_3	The spirits see clearly, and weigh their own judgment.	true
+unit_abilities_onscreen_name_ghs_ability_cth_compass_power_2	Elemental Corrosion	true
+unit_abilities_tooltip_text_ghs_ability_cth_compass_power_2	Even amidst chaos, one resents that heaven shows no mercy.	true
+unit_abilities_onscreen_name_ghs_ability_cth_compass_power_1	Elemental Nourishment	true
+unit_abilities_tooltip_text_ghs_ability_cth_compass_power_1	Heaven gives birth to all things, nourishing every living being.	true
+unit_abilities_onscreen_name_ghs_ability_cth_celestial_thunderstorm	Heavenly Thunderstorm	true
+unit_abilities_tooltip_text_ghs_ability_cth_celestial_thunderstorm	Heaven's timing rages with divine wrath, its merciless slaughter sweeping across the wilderness.	true
+unit_abilities_onscreen_name_ghs_ability_kho_blooddragon_breath	Khorne's Blood Flame	true
+unit_abilities_tooltip_text_ghs_ability_kho_blooddragon_breath	The soul of the Dragon of Khorne is bound to the eternal will of the Blood God, allowing it to breathe forth blood-flame drawn from the brazen abyss.	true
+unit_abilities_onscreen_name_ghs_ability_kho_replenish_skull	Scavenged Supplies	true
+unit_abilities_tooltip_text_ghs_ability_kho_replenish_skull	The one thing never in short supply on a battlefield is skulls and souls — when you need them, just hack them straight off the enemy's neck. What's that, you say spirit? 	true
+unit_abilities_onscreen_name_ghs_ability_kho_slaughterall	Bloody Slaughter Roar	true
+unit_abilities_tooltip_text_ghs_ability_kho_slaughterall	When this monster tears through its foes, all can clearly hear the bone-chilling, blood-curdling roar erupting from its throat.	true
+unit_abilities_onscreen_name_ghs_ability_kho_slaughterblade	Slaughter's Merry Song	true
+unit_abilities_tooltip_text_ghs_ability_kho_slaughterblade	Rivers of blood and mountains of corpses — to this instrument of slaughter in service of the Blood God, such is the finest sight the mortal world has to offer.	true
+unit_abilities_onscreen_name_ghs_ability_kho_unstoppable	Flesh and Blood Fuel	true
+unit_abilities_tooltip_text_ghs_ability_kho_unstoppable	Scatter and flee, you cowards! Your flesh and blood are the finest fuel for this steel bull's rampage!	true
+unit_abilities_onscreen_name_bloodthirster_bonus_khorne_fire	Infernal Blood Flame	true
+unit_abilities_tooltip_text_bloodthirster_bonus_khorne_fire	Eighth Legion! Turn your accumulated failures into the fury of the Blood Realm! Your freedom will come — but only once the Father God grants it!	true
+unit_abilities_onscreen_name_kho_army_bronze_body	Brazen Body	true
+unit_abilities_tooltip_text_kho_army_bronze_body	Molten brass ceaselessly flows to seal the wounds upon the body; only warriors who serve Khorne with utter devotion may receive this blessing. As for that mad bull? Nothing but a reject.	true
+unit_abilities_onscreen_name_arkhan_abilities_death_storm	Giant Scorpion Death Wind	false
+unit_abilities_tooltip_text_arkhan_abilities_death_storm	The Liche King invokes dark magic amid the desert storm, and moments later, torn limbs and the dying whirl within its fury.	false
+unit_abilities_onscreen_name_ghs_tmb_landing_necrosphinx	Soul Reaping	false
+unit_abilities_tooltip_text_ghs_tmb_landing_necrosphinx	Heed this whisper from the underworld, for this god of the netherworld calls out its hunger for the souls above.	false
+unit_abilities_onscreen_name_heriotitan_settra	Favour of the Gods: Great Emperor of Nehekhara	false
+unit_abilities_tooltip_text_heriotitan_settra	The most noble gift of Ptra is the golden body and supreme might the undying Emperor has long coveted.	false
+unit_abilities_onscreen_name_heriotitan_settra_lion	Hierotitan Avatar: Lion of Khemri	false
+unit_abilities_tooltip_text_heriotitan_settra_lion	The most noble gift of Ptra is the golden body and supreme might the undying Emperor has long coveted.	false
+unit_abilities_onscreen_name_hierotitan_arkhan	Servant of Nagash: Undying Necromancy	false
+unit_abilities_tooltip_text_hierotitan_arkhan	Arkhan has drained the vast dark magic within the Black Tower, unleashing the power left behind by Nagash.	false
+unit_abilities_onscreen_name_hierotitan_arkhan_scorption	Hierotitan Avatar: Black Scorpion of Arkhan	false
+unit_abilities_tooltip_text_hierotitan_arkhan_scorption	Arkhan has drained the vast dark magic within the Black Tower, unleashing the power left behind by Nagash.	false
+unit_abilities_onscreen_name_hierotitan_khalida	Hierotitan Avatar: Serpent of Lybaras	false
+unit_abilities_tooltip_text_hierotitan_khalida	Asaph's blessing kindled the warrior queen's desire for vengeance, culminating in the cold bite carried upon her bowstring.	false
+unit_abilities_onscreen_name_hierotitan_khatep	Hierotitan Avatar: Sky Hawk of the Mortuary Cult	false
+unit_abilities_tooltip_text_hierotitan_khatep	Though the tomb high priest was cast into exile, the Mortuary Cult's contributions to Nehekhara earned him the favour of Tahoth.	false
+unit_abilities_onscreen_name_khalida_abilities_barrage_of_the_legion	Venomous Arrow Storm	false
+unit_abilities_tooltip_text_khalida_abilities_barrage_of_the_legion	The wrath of the goddess of vengeance guides the arrows of the Supreme Queen's legions; the serpent venom dripping from their heads is enough to soak the entire land.	false
+unit_abilities_onscreen_name_khatep_item_bound_arnizipals_black_horror	Shadow of the Sky Hawk	false
+unit_abilities_tooltip_text_khatep_item_bound_arnizipals_black_horror	The solitude and torment of exile taught the high priest that even the incantations of the gods carry their own dark side.	false
+unit_abilities_onscreen_name_tmb_army_abilities_realm_of_souls_heirotitan	Realm of Souls Hierotitan	false
+unit_abilities_tooltip_text_tmb_army_abilities_realm_of_souls_heirotitan	The Hierotitan becomes the guide of fallen kings' souls, dispelling the wicked spirits lurking in darkness and repelling the demons that would devour the wandering ghosts of the void.	false
+unit_abilities_onscreen_name_tmb_army_abilities_realm_of_souls_ostrich	Realm of Souls Bone Ostrich Rider	false
+unit_abilities_tooltip_text_tmb_army_abilities_realm_of_souls_ostrich	Valiant warriors awakened from the Realm of Souls ride upon massive ostrich skeletons, seeking the enemy's fatal weakness and delivering a deadly blow with wind-swift speed.	false
+unit_abilities_onscreen_name_tmb_dragon_breath	Soul Dragon's Breath	false
+unit_abilities_tooltip_text_tmb_dragon_breath	Those who dare disturb the slumber of kings shall face the wrath of ancient tyrant souls.	false
+unit_abilities_onscreen_name_tmb_prince_lion	Divine Descent: Lion-Faced Ushabti	false
+unit_abilities_tooltip_text_tmb_prince_lion	A tomb prince, buried in sand; grasping his game piece, transformed into a lion.	false
 unit_abilities_onscreen_name_tmb_prince_lion_roar	Lion's Roar	false
-unit_abilities_tooltip_text_tmb_prince_lion_roar	(Ancient Nehekhara) Soldiers, awaken! All intruders must die!	false
-unit_abilities_onscreen_name_tmb_prince_ushabti	Soulbound Form: Carved Ushabti	false
-unit_abilities_tooltip_text_tmb_prince_ushabti	Soulbound obsidian ignites into a blaze of fury.	false
-unit_abilities_onscreen_name_tmb_prince_ushabti_fear	Soulquake	false
-unit_abilities_tooltip_text_tmb_prince_ushabti_fear	(Ancient Nehekhara) Disturb my rest and refuse to kneel, and you shall perish here!	false
-unit_abilities_onscreen_name_tmb_settra_spell_bound_net_of_amyntok	Overwhelming Dominance	false
-unit_abilities_tooltip_text_tmb_settra_spell_bound_net_of_amyntok	The holy avatar of the Emperor of Nehekhara stands tall, paralyzing all who dare gaze upon its majestic form.	false
-unit_abilities_onscreen_name_tmb_settra_spell_bound_sunlight	Solar Torrent	false
-unit_abilities_tooltip_text_tmb_settra_spell_bound_sunlight	The Lord of Golden Bones points to the sky, summoning searing beams of sunlight to incinerate foes into ashes.	false
-unit_abilities_onscreen_name_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation	Ulatip's Carrion Curse	false
-unit_abilities_tooltip_text_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation	In the name of the Vulture God, summon an endless storm at sea and a flock of black vultures to drench and terrify your enemies.	false
-unit_abilities_onscreen_name_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded	Ulatip's Carrion Curse	false
-unit_abilities_tooltip_text_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded	In the name of the Vulture God, summon an endless storm at sea and a flock of black vultures to drench and terrify your enemies.	false
+unit_abilities_tooltip_text_tmb_prince_lion_roar	(Ancient Nehekharan) Soldiers, awaken! Slay all who trespass!	false
+unit_abilities_onscreen_name_tmb_prince_ushabti	Soul-Bound Avatar: Carved Ushabti	false
+unit_abilities_tooltip_text_tmb_prince_ushabti	Soul bound to obsidian, wrathful flames surging skyward.	false
+unit_abilities_onscreen_name_tmb_prince_ushabti_fear	Soul Tremor	false
+unit_abilities_tooltip_text_tmb_prince_ushabti_fear	(Ancient Nehekharan) All who disturb my rest and refuse to kneel shall be buried here!	false
+unit_abilities_onscreen_name_tmb_settra_spell_bound_net_of_amyntok	Disdain of Legions	false
+unit_abilities_tooltip_text_tmb_settra_spell_bound_net_of_amyntok	The divine avatar of Nehekhara's Great Emperor stands in disdainful majesty; none who dare gaze upon his imposing form can escape terror, frozen in place.	false
+unit_abilities_onscreen_name_tmb_settra_spell_bound_sunlight	Torrent of Sunlight	false
+unit_abilities_tooltip_text_tmb_settra_spell_bound_sunlight	The lord of golden bones points to the sky, and the sun god's scorching beam answers, cleansing the enemy into a heap of ash.	false
+unit_abilities_onscreen_name_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation	Ulatuan's Curse of Decay	false
+unit_abilities_tooltip_text_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation	In the name of the vulture god, an endless maritime storm and black vultures are summoned, subjecting the enemy to a baptism of raging winds, torrential rain, and terror.	false
+unit_abilities_onscreen_name_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded	Ulatuan's Curse of Decay	false
+unit_abilities_tooltip_text_wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded	In the name of the vulture god, an endless maritime storm and black vultures are summoned, subjecting the enemy to a baptism of raging winds, torrential rain, and terror.	false
 unit_abilities_onscreen_name_ghs_ksl_dazh_autumn_elemental_bear_breath	Autumn's Lament	false
-unit_abilities_tooltip_text_ghs_ksl_dazh_autumn_elemental_bear_breath	Its fiery body embodies the pride and fury of a vast and troubled homeland.	false
-unit_abilities_onscreen_name_ghs_ksl_dazh_autumn_elemental_bear_flame	Dazh's Benevolence	false
-unit_abilities_tooltip_text_ghs_ksl_dazh_autumn_elemental_bear_flame	In the world's infancy, surrounded by darkness and ice, He, like a generous king, pierced the sky with fire, illuminating all creation.	false
-unit_abilities_onscreen_name_ghs_ksl_followers_1	Motherland's Grief	false
-unit_abilities_tooltip_text_ghs_ksl_followers_1	"Death, like marrow-piercing frost; barred doors cannot resist. Though summer returns to bloom, we cannot escape winter's doom."	false
+unit_abilities_tooltip_text_ghs_ksl_dazh_autumn_elemental_bear_breath	Its scorching body carries all the pride and fury borne by the vast, long-suffering Motherland.	false
+unit_abilities_onscreen_name_ghs_ksl_dazh_autumn_elemental_bear_flame	Dazh's Mercy	false
+unit_abilities_tooltip_text_ghs_ksl_dazh_autumn_elemental_bear_flame	When the world was first forged, all things were surrounded by darkness and ice; like a generous and noble king, He shot flame through the sky to light the entire world.	false
+unit_abilities_onscreen_name_ghs_ksl_followers_1	Motherland's Pain	false
+unit_abilities_tooltip_text_ghs_ksl_followers_1	'Death, like frost that pierces to the marrow; though the door be shut tight, it cannot be barred out. Even in the height of summer's bloom, we cannot escape the sorrow of ice and snow.'	false
 unit_abilities_onscreen_name_ghs_ksl_followers_2	Motherland's Sigh	false
-unit_abilities_tooltip_text_ghs_ksl_followers_2	"Death, like marrow-piercing frost; barred doors cannot resist. Though summer returns to bloom, we cannot escape winter's doom."	false
-unit_abilities_onscreen_name_ghs_ksl_followers_3	Motherland's Solace	false
-unit_abilities_tooltip_text_ghs_ksl_followers_3	"Death, like marrow-piercing frost; barred doors cannot resist. Though summer returns to bloom, we cannot escape winter's doom."	false
-unit_abilities_onscreen_name_ghs_ksl_followers_4	Motherland's Wrath	false
-unit_abilities_tooltip_text_ghs_ksl_followers_4	"Death, like marrow-piercing frost; barred doors cannot resist. Though summer returns to bloom, you too cannot escape winter's doom!"	false
+unit_abilities_tooltip_text_ghs_ksl_followers_2	'Death, like frost that pierces to the marrow; though the door be shut tight, it cannot be barred out. Even in the height of summer's bloom, we cannot escape the sorrow of ice and snow.'	false
+unit_abilities_onscreen_name_ghs_ksl_followers_3	Motherland's Comfort	false
+unit_abilities_tooltip_text_ghs_ksl_followers_3	'Death, like frost that pierces to the marrow; though the door be shut tight, it cannot be barred out. Even in the height of summer's bloom, we cannot escape the sorrow of ice and snow.'	false
+unit_abilities_onscreen_name_ghs_ksl_followers_4	Motherland's Hatred	false
+unit_abilities_tooltip_text_ghs_ksl_followers_4	'Death comes like frost seeping into the marrow; bar the door as you may, it cannot be kept out. Though midsummer's bloom return once more, none shall escape the ruin of ice and snow!'	false
 unit_abilities_onscreen_name_ghs_ksl_followers_5	Motherland's Fury	false
-unit_abilities_tooltip_text_ghs_ksl_followers_5	"Death, like marrow-piercing frost; barred doors cannot resist. Though summer returns to bloom, you too cannot escape winter's doom!"	false
-unit_abilities_onscreen_name_ghs_ksl_salyak_spring_elemental_bear_breath	Spring's Whisper	false
-unit_abilities_tooltip_text_ghs_ksl_salyak_spring_elemental_bear_breath	Its tranquil body embodies the pride and fury of a vast and troubled homeland.	false
+unit_abilities_tooltip_text_ghs_ksl_followers_5	'Death comes like frost seeping into the marrow; bar the door as you may, it cannot be kept out. Though midsummer's bloom return once more, none shall escape the ruin of ice and snow!'	false
+unit_abilities_onscreen_name_ghs_ksl_salyak_spring_elemental_bear_breath	Breath of Early Spring	false
+unit_abilities_tooltip_text_ghs_ksl_salyak_spring_elemental_bear_breath	Within its tranquil body lies all the pride and fury borne by the vast, long-suffering Motherland.	false
 unit_abilities_onscreen_name_ghs_ksl_salyak_spring_elemental_bear_salyaks_lullaby	Salyak's Lullaby	false
-unit_abilities_tooltip_text_ghs_ksl_salyak_spring_elemental_bear_salyaks_lullaby	"The noble swan ascends to heaven, leaving its fears and woes behind..."	false
-unit_abilities_onscreen_name_ghs_ksl_salyak_spring_elemental_bear_statue	Salyak's Sanctuary	false
-unit_abilities_tooltip_text_ghs_ksl_salyak_spring_elemental_bear_statue	Salyak is vital to this land. Prayers often come from the warriors' mothers, but She does not save those whose time has come.	false
-unit_abilities_onscreen_name_ghs_ksl_tor_summer_elemental_bear_breath	Summer's Roar	false
-unit_abilities_tooltip_text_ghs_ksl_tor_summer_elemental_bear_breath	Its tempestuous body embodies the pride and fury of a vast and troubled homeland.	false
+unit_abilities_tooltip_text_ghs_ksl_salyak_spring_elemental_bear_salyaks_lullaby	'The white bird gleams in solemn glory, casting off fear and care to soar to the heavens...'	false
+unit_abilities_onscreen_name_ghs_ksl_salyak_spring_elemental_bear_statue	Salyak's Shelter	false
+unit_abilities_tooltip_text_ghs_ksl_salyak_spring_elemental_bear_statue	Salyak is vital to this land; prayers to her come mostly from the mothers of warriors, but she will not save those whose time has already come.	false
+unit_abilities_onscreen_name_ghs_ksl_tor_summer_elemental_bear_breath	Roar of Midsummer	false
+unit_abilities_tooltip_text_ghs_ksl_tor_summer_elemental_bear_breath	Within its restless body lies all the pride and fury borne by the vast, long-suffering Motherland.	false
 unit_abilities_onscreen_name_ghs_ksl_tor_summer_elemental_bear_thunder	Tor's Wrath	false
-unit_abilities_tooltip_text_ghs_ksl_tor_summer_elemental_bear_thunder	As storms gather, Tor's fury is unleashed through thunder, lightning, and rain, striking with divine retribution.	false
+unit_abilities_tooltip_text_ghs_ksl_tor_summer_elemental_bear_thunder	Tor's temple stands upon the mountain peak; when the storm comes, Tor unleashes his wrathful judgment amid thunder, lightning, and torrential rain.	false
 unit_abilities_onscreen_name_ghs_ksl_tor_summer_elemental_bear_tors_battle_hymn	Tor's Battle Hymn	false
-unit_abilities_tooltip_text_ghs_ksl_tor_summer_elemental_bear_tors_battle_hymn	"Lightning shatters the sky; Tor's thunder rends the soul!"	false
-unit_abilities_onscreen_name_ghs_ksl_ursun_winter_elemental_bear_breath	Winter's Howl	false
-unit_abilities_tooltip_text_ghs_ksl_ursun_winter_elemental_bear_breath	Its icy body embodies the pride and fury of a vast and troubled homeland.	false
+unit_abilities_tooltip_text_ghs_ksl_tor_summer_elemental_bear_tors_battle_hymn	'Thunder rends the vast sky as death descends, Tor's roaring bolt strikes the soul asunder!'	false
+unit_abilities_onscreen_name_ghs_ksl_ursun_winter_elemental_bear_breath	Howl of Deep Winter	false
+unit_abilities_tooltip_text_ghs_ksl_ursun_winter_elemental_bear_breath	Within its frigid body lies all the pride and fury borne by the vast, long-suffering Motherland.	false
 unit_abilities_onscreen_name_ghs_ksl_ursun_winter_elemental_bear_ursuns_roar	Ursun's Roar	false
-unit_abilities_tooltip_text_ghs_ksl_ursun_winter_elemental_bear_ursuns_roar	The Father's chilling roar rallies Kislev's warriors beneath his banner. Their fate is intertwined, and the nation's destiny lies with its standard.	false
+unit_abilities_tooltip_text_ghs_ksl_ursun_winter_elemental_bear_ursuns_roar	The Bear Father's bone-chilling roar rallies Kislev's warriors beneath his banner; their fates are forever intertwined, and the fate of the Motherland hangs upon that banner.	false
 unit_abilities_onscreen_name_ghs_black_ark_abilities_dark_conduit	Dark Conduit	false
-unit_abilities_onscreen_name_ghs_black_ark_abilities_net	Beast Calamity	false
-unit_abilities_onscreen_name_ghs_black_ark_abilities_sky_cauldron	Skyborne Bloodpool	false
-unit_abilities_onscreen_name_ghs_black_ark_abilities_soul_rain	Soulfall Deluge	false
-unit_abilities_onscreen_name_ghs_def_armour_hydra_breath	Hexfire Arrows	false
-unit_abilities_onscreen_name_ghs_def_armour_hydra_eye	Hydra's Gaze	false
+unit_abilities_onscreen_name_ghs_black_ark_abilities_net	Bane of Beasts	false
+unit_abilities_onscreen_name_ghs_black_ark_abilities_sky_cauldron	Rain of Blood from the Sky	false
+unit_abilities_onscreen_name_ghs_black_ark_abilities_soul_rain	Cascade of Souls	false
+unit_abilities_onscreen_name_ghs_def_armour_hydra_breath	Bound Fire Arrows	false
+unit_abilities_onscreen_name_ghs_def_armour_hydra_eye	Gaze of the Warped Head	false
 unit_abilities_onscreen_name_ghs_def_armour_hydra_head	Twisted Remains	false
 unit_abilities_onscreen_name_ghs_def_khaine_blood	Khaine's Bloodlust	true
-unit_abilities_onscreen_name_ghs_def_khaine_hand	Manifestation of the Blood Hand	true
-unit_abilities_onscreen_name_ghs_def_malus_release_tzarkan	Whisper's Respite	true
-unit_abilities_onscreen_name_ghs_def_medusa_contact	Wails of Agony	true
-unit_abilities_onscreen_name_ghs_def_medusa_curse	Thousand-Eyed Touch	true
-unit_abilities_onscreen_name_ghs_def_sea_dragon_ocean_breath	Abyssal Chill	true
-unit_abilities_onscreen_name_ghs_def_unit_abilities_beastslaver	Tower's Lash	true
+unit_abilities_onscreen_name_ghs_def_khaine_hand	Manifestation of the Bloody Hand	true
+unit_abilities_onscreen_name_ghs_def_malus_release_tzarkan	Whisper Silenced	true
+unit_abilities_onscreen_name_ghs_def_medusa_contact	Wail of Agony	true
+unit_abilities_onscreen_name_ghs_def_medusa_curse	Touch of a Thousand Eyes	true
+unit_abilities_onscreen_name_ghs_def_sea_dragon_ocean_breath	Abyssal Cold Breath	true
+unit_abilities_onscreen_name_ghs_def_unit_abilities_beastslaver	Har Ganeth Whip	true
 unit_abilities_onscreen_name_ghs_wm_def_black_ark	Surging Tides	true
 unit_abilities_onscreen_name_ghs_wm_def_black_ark_debuff	Vast Flagship	true
-unit_abilities_tooltip_text_ghs_black_ark_abilities_dark_conduit	The violent flow of dark magic causes an explosion, injuring everyone nearby. However, the caster themselves will find it difficult to channel the Winds of Magic afterward.	false
-unit_abilities_tooltip_text_ghs_black_ark_abilities_net	Black Ark pirates are natural foes of sea beasts. They use spikes, giant nets, grappling hooks, and barbed chains to capture, bind, or take down fleeing beasts, eventually dismembering them.	false
-unit_abilities_tooltip_text_ghs_black_ark_abilities_sky_cauldron	Witches summon a blood pool filled with tainted blood using dark magic, lowering it from the deck of the Black Ark. The impact is highly destructive, as the blood is both filthy and corrosive.	false
-unit_abilities_tooltip_text_ghs_black_ark_abilities_soul_rain	The souls of countless slaves aboard the Black Ark are "extracted" and launched into the sky through spells, crashing down like a deadly deluge.	false
-unit_abilities_tooltip_text_ghs_def_armour_hydra_breath	The hydra's heads channel all their magic to incinerate everything hated by the sorceress goddess.	false
-unit_abilities_tooltip_text_ghs_def_armour_hydra_eye	You might feel exhilarated for severing one of its heads! But should you dare gaze upon this twisted creation, you'll soon succumb to nightmares of madness and illusion.	false
-unit_abilities_tooltip_text_ghs_def_armour_hydra_head	The cursed hydra's mutilated body releases immense dark energy as it regenerates, only to devour everything once restored.	false
-unit_abilities_tooltip_text_ghs_def_khaine_blood	The statue of Khaine yearns to be bathed in blood, tormenting the souls trapped within. It never tolerates cowardice or weakness.	true
-unit_abilities_tooltip_text_ghs_def_khaine_hand	In these dark and challenging times, Khaine's wrathful rage serves as our guiding light.	true
-unit_abilities_tooltip_text_ghs_def_malus_release_tzarkan	The dark soul of Malus Darkblade momentarily separates from the treacherous demon Tz'arkan, but it won't last for long.	true
-unit_abilities_tooltip_text_ghs_def_medusa_contact	If these maddened witches fight alongside you, no matter how infused your weapon is with arcane energy, it will all be silenced amidst the wails of agony.	true
-unit_abilities_tooltip_text_ghs_def_medusa_curse	A slight touch might leave you numb and weak, but if misfortune strikes, the victim will watch their heart being pierced!	true
-unit_abilities_tooltip_text_ghs_def_sea_dragon_ocean_breath	One of the many adaptations of deep-sea drakes is using the agony of the abyss as a weapon against prey.	true
-unit_abilities_tooltip_text_ghs_def_unit_abilities_beastslaver	The Knights of the Black Tower share their minions' ferocious combat instincts. Their cracking whips easily rile beasts into a battle frenzy.	true
-unit_abilities_tooltip_text_ghs_wm_def_black_ark	The surging waves can easily extinguish nearby flames, obscure your figure, and hinder enemy movement.	true
-unit_abilities_tooltip_text_ghs_wm_def_black_ark_debuff	The turbulent waters surrounding the flagship not only extinguish nearby flames but also hinder enemy movement, while its towering lookout ensures no foe escapes unseen.	true
+unit_abilities_tooltip_text_ghs_black_ark_abilities_dark_conduit	The violent surge of dark magic triggers an explosion, wounding everyone nearby — though the caster too will find it difficult to command the Winds of Magic afterward.	false
+unit_abilities_tooltip_text_ghs_black_ark_abilities_net	Black Ark corsairs are natural predators of the sea's great beasts, using spikes, massive nets, grappling hooks, and barbed chains to capture, bind, or corner fleeing monsters before hacking them to pieces.	false
+unit_abilities_tooltip_text_ghs_black_ark_abilities_sky_cauldron	The witch summons a blood-filled pool through dark magic, dropping it down from the deck of the Black Ark. Its impact proves devastating, for the blood within is foul and corrosive.	false
+unit_abilities_tooltip_text_ghs_black_ark_abilities_soul_rain	The souls of countless slaves aboard the Black Ark are 'extracted' and hurled skyward by sorcery, crashing back down to earth like a lethal waterfall.	false
+unit_abilities_tooltip_text_ghs_def_armour_hydra_breath	The serpent's heads gather all their magic and reduce to ash everything the Goddess of Magic despises.	false
+unit_abilities_tooltip_text_ghs_def_armour_hydra_eye	You'll surely feel elated at having severed one of its heads! But dare you gaze upon this twisted creation, you will swiftly fall into nightmares of madness and delusion.	false
+unit_abilities_tooltip_text_ghs_def_armour_hydra_head	As the ravaged body of the Bound Hydra regenerates, it unleashes tremendous dark energy, and once restored, continues to devour all in its path.	false
+unit_abilities_tooltip_text_ghs_def_khaine_blood	The statue of Khaine thirsts to be bathed in blood, tormenting the souls trapped within it, and it will never tolerate cowardice or weakness.	true
+unit_abilities_tooltip_text_ghs_def_khaine_hand	We live in dark and trying times, and so the war-fury of Khaine shall be our guiding light.	true
+unit_abilities_tooltip_text_ghs_def_malus_release_tzarkan	The pitch-black soul of Malus Darkblade has been temporarily separated from that of the treacherous daemon Tzarkan — but this will not last long.	true
+unit_abilities_tooltip_text_ghs_def_medusa_contact	Should these mad witches clash with you in battle, no matter what arcane power fills your weapon, it will fall silent amid their shrieking wails.	true
+unit_abilities_tooltip_text_ghs_def_medusa_curse	A light touch may leave you numb all over, or utterly weakened — and if your luck is worse still, the victim can only watch as their heart is pierced through!	true
+unit_abilities_tooltip_text_ghs_def_sea_dragon_ocean_breath	One of the many adaptations of the Deep Sea Dragon is its use of agony drawn from the abyss as a weapon against its prey.	true
+unit_abilities_tooltip_text_ghs_def_unit_abilities_beastslaver	The Blackguard Knights share their masters' bloodthirsty nature, their whips cracking with dreadful force, easily whipping the beasts into a furious, battle-ready frenzy.	true
+unit_abilities_tooltip_text_ghs_wm_def_black_ark	The surging waves not only extinguish fires with ease but also conceal your form, and render the enemy unable to advance a single step.	true
+unit_abilities_tooltip_text_ghs_wm_def_black_ark_debuff	The surging waves around the flagship not only extinguish nearby fires with ease but also render the enemy unable to advance a single step, while the towering watchtowers strip away any place for the enemy to hide.	true
 unit_abilities_onscreen_name_ghs_hef_caledor_noble_heart	Heart of Caledor	false
-unit_abilities_onscreen_name_ghs_hef_fish_breath	Water Jet	false
-unit_abilities_onscreen_name_ghs_hef_skycutter_emulation_of_kalagan	Winged Bolt Quiver	false
-unit_abilities_onscreen_name_ghs_mon_hef_tree_man_archer	Eden Valley Treewarden (Greatbow)	false
-unit_abilities_onscreen_name_ghs_hef_army_ability_revene_soul	Yvresse Ethereal Wardens	false
-unit_abilities_tooltip_text_ghs_hef_army_ability_revene_soul	The lost spirits of Yvresse can return to the mortal world through the guidance of the Waystone, clad in enchanted golden armor, illuminating the eternal mists with their resolve and power.	false
-unit_abilities_tooltip_text_ghs_hef_caledor_noble_heart	The Age of Dragons may be over, but the pride of the Caledorians never wanes. The flames that once raged upon the peaks now blaze within every Caledor elf.	false
-unit_abilities_tooltip_text_ghs_hef_fish_breath	Flying fish employ a near-miraculous hunting technique, adjusting the jet of stored icy water based on the target's size and distance, suffocating prey from the deep sea.	false
-unit_abilities_tooltip_text_ghs_hef_skycutter_emulation_of_kalagan	Once the Skycutters secure air dominance, they use bolt throwers to scatter enemy forces, quickly delivering ammunition to allies in greatest need.	false
-unit_abilities_tooltip_text_ghs_mon_hef_tree_man_archer	Eden Valley Treewarden (Greatbow)	false
+unit_abilities_onscreen_name_ghs_hef_fish_breath	Water Spout Blast	false
+unit_abilities_onscreen_name_ghs_hef_skycutter_emulation_of_kalagan	Winged Quiver	false
+unit_abilities_onscreen_name_ghs_mon_hef_tree_man_archer	Eataine Treeguard (Great Bow)	false
+unit_abilities_onscreen_name_ghs_hef_army_ability_revene_soul	Yvresse Spirit Guard	false
+unit_abilities_tooltip_text_ghs_hef_army_ability_revene_soul	The fallen heroes of Yvresse can return to the mortal world through the power of the waystone, clad in golden enchanted armor, their will and strength lighting the eternal mists.	false
+unit_abilities_tooltip_text_ghs_hef_caledor_noble_heart	The age of dragons has long passed, but the pride of the Caledorians has never dimmed. The flames that once raged upon the peaks now rage within every Caledorian elf.	false
+unit_abilities_tooltip_text_ghs_hef_fish_breath	The Flying Fish employs an almost miraculous hunting method, adjusting the burst of stored icy water according to the size and distance of its target, letting its prey drown in the depths of the sea.	false
+unit_abilities_tooltip_text_ghs_hef_skycutter_emulation_of_kalagan	Once the Sky Cutters have seized aerial supremacy, they can use their bolt throwers to scatter the enemy, then swiftly deliver ammunition to the allies who need it most.	false
+unit_abilities_tooltip_text_ghs_mon_hef_tree_man_archer	Eataine Treeguard (Great Bow)	false
 unit_abilities_onscreen_name_ghs_chosen_of_kurnous	Hand of Kurnous	true
 unit_abilities_onscreen_name_ghs_inf_sisters_thorn_javelin	Gift of Morai-Heg	true
-unit_abilities_onscreen_name_ghs_inf_sisters_thorn_moonfire_bow	Evil Moonfire Bow	true
+unit_abilities_onscreen_name_ghs_inf_sisters_thorn_moonfire_bow	Vile Moonfire Bow	true
 unit_abilities_onscreen_name_ghs_inf_sisters_thorn_moonfire_wall_of_thorns	Wall of Thorns	true
-unit_abilities_onscreen_name_ghs_knight_of_kurnous	Speed of Kurnous	true
-unit_abilities_onscreen_name_ghs_mon_wef_treeman_guard_evil_dance	Malevolent Dance	true
-unit_abilities_onscreen_name_ghs_mon_wef_treeman_guard_winter_will	Winter Sentinel	true
-unit_abilities_onscreen_name_ghs_spear_of_kurnous	Orion's Volley	true
-unit_abilities_onscreen_name_ghs_twilight_ariel_bonus	"Embodiment of Aisha"	false
-unit_abilities_onscreen_name_ghs_wef_treeman_guard_autumn_summon_dryads	Fiery Branches	true
-unit_abilities_onscreen_name_ghs_wef_treeman_guard_spring_life_ring	Ring of Life	true
-unit_abilities_onscreen_name_ghs_wef_treeman_guard_summer_lightning_ammo	Thunder Boughs	true
-unit_abilities_onscreen_name_wh2_dlc16_spell_bound_life_the_dwellers_below	Awakening of the Earth	true
-unit_abilities_tooltip_text_ghs_chosen_of_kurnous	The power of Kurnous flows through their veins as they charge forth in service of the Wild King.	true
-unit_abilities_tooltip_text_ghs_inf_sisters_thorn_javelin	Sacrificing oneself to Morai-Heg is a dark and grueling ritual, but in the face of apocalypse, there are always those who will take on the burden.	true
-unit_abilities_tooltip_text_ghs_inf_sisters_thorn_moonfire_bow	These eerie blue magical bows absorb malice collected by the user, returning it as more fearsome arrows, though they cannot harm allies.	true
-unit_abilities_tooltip_text_ghs_inf_sisters_thorn_moonfire_wall_of_thorns	You've seen that high wall in your dreams, haven't you? It's a green hell filled with poison and thorns. You'll never want to approach it.	true
-unit_abilities_tooltip_text_ghs_knight_of_kurnous	Transcendent and stoic, they strike down enemies in the name of the Forest and the Beast Lord.	true
-unit_abilities_tooltip_text_ghs_mon_wef_treeman_guard_evil_dance	With the agility of a perfect dancer, their unpredictable movements suddenly turn lethal as warped branches pierce hearts from behind.	true
-unit_abilities_tooltip_text_ghs_mon_wef_treeman_guard_winter_will	The unyielding spirit of the white birch awaits the rebirth of slumbering life from the ashes, heralding the Wild Hunt's clarion call.	true
-unit_abilities_tooltip_text_ghs_spear_of_kurnous	Nature answers Orion's call, raining a torrent of arrows upon invaders of Athel Loren.	true
-unit_abilities_tooltip_text_ghs_twilight_ariel_bonus	As the natural world continues to decline, Ariel grows increasingly combative, sustaining her perilous moth-like form.	false
-unit_abilities_tooltip_text_ghs_wef_treeman_guard_autumn_summon_dryads	Ancient oak branches fall to the ground, rebirthing dryads in flames. Their souls brim with unwavering devotion to Athel Loren, leaving enemies no choice but death.	true
-unit_abilities_tooltip_text_ghs_wef_treeman_guard_spring_life_ring	Spring has arrived in Athel Loren, reviving ancient spirits to nurture the living. The Asrai lines stand firm as roots of mighty oaks.	true
-unit_abilities_tooltip_text_ghs_wef_treeman_guard_summer_lightning_ammo	Resilient aspen spirits break their charred branches, twisting them with lightning to craft new arrows. Their pain finds solace only in the remains of their foes.	true
-unit_abilities_tooltip_text_wh2_dlc16_spell_bound_life_the_dwellers_below	This spell summons gnarled, twisted roots from the ground, entrapping and suffocating enemies.	true
-unit_abilities_onscreen_name_snek_dwf_ability_grudgesolvers_heavy	Heavy Rounds	true
-unit_abilities_onscreen_name_snek_dwf_ability_grudgesolvers_shot	Scatter Shot	true
+unit_abilities_onscreen_name_ghs_knight_of_kurnous	Kurnous's Swiftness	true
+unit_abilities_onscreen_name_ghs_mon_wef_treeman_guard_evil_dance	Malevolent Wraithdance	true
+unit_abilities_onscreen_name_ghs_mon_wef_treeman_guard_winter_will	Holly Vigil	true
+unit_abilities_onscreen_name_ghs_spear_of_kurnous	Orion's Arrow Storm	true
+unit_abilities_onscreen_name_ghs_twilight_ariel_bonus	[Avatar of Isha]	false
+unit_abilities_onscreen_name_ghs_wef_treeman_guard_autumn_summon_dryads	Blazing Bough	true
+unit_abilities_onscreen_name_ghs_wef_treeman_guard_spring_life_ring	Ward of the Tree Spirit	true
+unit_abilities_onscreen_name_ghs_wef_treeman_guard_summer_lightning_ammo	Thunder Branches	true
+unit_abilities_onscreen_name_wh2_dlc16_spell_bound_life_the_dwellers_below	Awakening of the Earth Spirits	true
+unit_abilities_tooltip_text_ghs_chosen_of_kurnous	The power of Kurnous flows through their veins, and they serve directly under the Lord of All Forests, riding forth upon the Wild Hunt.	true
+unit_abilities_tooltip_text_ghs_inf_sisters_thorn_javelin	To sacrifice oneself to Morai-Heg is a dark path requiring immense suffering to endure, but when the end draws near, exceptions must be made — someone must bear this burden.	true
+unit_abilities_tooltip_text_ghs_inf_sisters_thorn_moonfire_bow	These pale blue magical longbows absorb the malice gathered by their wielders, empowering them in turn and giving rise to arrows of even greater dread — though they have no effect on allies.	true
+unit_abilities_tooltip_text_ghs_inf_sisters_thorn_moonfire_wall_of_thorns	Surely you have seen a towering wall in your dreams — a green hell coated in venom and thorns, one you would never wish to approach.	true
+unit_abilities_tooltip_text_ghs_knight_of_kurnous	Transcendent and stern of countenance, they strike down the enemy in the name of the Lord of Forests and Beasts.	true
+unit_abilities_tooltip_text_ghs_mon_wef_treeman_guard_evil_dance	Graceful as a flawless dancer, its movements defy prediction—suddenly, a twisted branch pierces through your heart from behind.	true
+unit_abilities_tooltip_text_ghs_mon_wef_treeman_guard_winter_will	The unyielding spirit of the white birch waits for all dormant things to be reborn from the ashes, when the demigod shall awaken from the Oak of Ages and sound the horn of the Wild Hunt.	true
+unit_abilities_tooltip_text_ghs_spear_of_kurnous	Nature answers Orion's call, raining down a torrent of arrows upon any foe who dares defile Athel Loren.	true
+unit_abilities_tooltip_text_ghs_twilight_ariel_bonus	As the natural world continues to wither, Ariel grows ever more warlike, allowing her perilous moth form to endure.	false
+unit_abilities_tooltip_text_ghs_wef_treeman_guard_autumn_summon_dryads	The branches of the ancient oak fall to the ground, and dryads are reborn from the flames, their souls holding unwavering devotion to Athel Loren; there is no room for negotiation with the enemy, only death.	true
+unit_abilities_tooltip_text_ghs_wef_treeman_guard_spring_life_ring	Spring has come to Athel Loren; the reawakened ancient spirits nourish the living, and the lines of Asrai shall stand as firm as the roots of an ancient tree.	true
+unit_abilities_tooltip_text_ghs_wef_treeman_guard_summer_lightning_ammo	The unyielding spirit of the poplar snaps its own charred branches, wrapping them with lightning to forge new war arrows—this pain must be healed with the bones of the enemy.	true
+unit_abilities_tooltip_text_wh2_dlc16_spell_bound_life_the_dwellers_below	This spell summons twisted, gnarled branches from the ground, tightly ensnaring the enemy and choking the life from them.	true
+unit_abilities_onscreen_name_snek_dwf_ability_grudgesolvers_heavy	Heavy Warhead	true
+unit_abilities_onscreen_name_snek_dwf_ability_grudgesolvers_shot	Buckshot Volley	true
 unit_abilities_onscreen_name_wh_main_unit_dwf_abilities_deploy_caltrops	Deploy Caltrops	true
-unit_abilities_onscreen_name_wh_main_unit_dwf_abilities_deploy_mines	Deploy Mines	true
+unit_abilities_onscreen_name_wh_main_unit_dwf_abilities_deploy_mines	Deploy Landmines	true
 unit_abilities_onscreen_name_wh_main_unit_dwf_abilities_deploy_organ_gun	Deploy Organ Gun	true
 unit_abilities_onscreen_name_wh_main_unit_dwf_abilities_deploy_volley_gun	Deploy Volley Gun	true
-unit_abilities_tooltip_text_snek_dwf_ability_grudgesolvers_heavy	Heavy Rounds	true
-unit_abilities_tooltip_text_snek_dwf_ability_grudgesolvers_shot	Scatter Shot	true
-unit_abilities_tooltip_text_wh_main_unit_dwf_abilities_deploy_caltrops	Sharp metal spikes twisted into shapes to ensure the point is always facing up.	true
-unit_abilities_tooltip_text_wh_main_unit_dwf_abilities_deploy_mines	A simple explosive device disguised as a Dwarf shield.	true
-unit_abilities_tooltip_text_wh_main_unit_dwf_abilities_deploy_organ_gun	Deploy Organ Gun	true
+unit_abilities_tooltip_text_snek_dwf_ability_grudgesolvers_heavy	Heavy Warhead	true
+unit_abilities_tooltip_text_snek_dwf_ability_grudgesolvers_shot	Buckshot Volley	true
+unit_abilities_tooltip_text_wh_main_unit_dwf_abilities_deploy_caltrops	Sharp metal spikes twisted into shape to ensure a point always faces upward.	true
+unit_abilities_tooltip_text_wh_main_unit_dwf_abilities_deploy_mines	A simple explosive device disguised as a dwarf shield.	true
+unit_abilities_tooltip_text_wh_main_unit_dwf_abilities_deploy_organ_gun	Sharp metal spikes twisted into shape to ensure a point always faces upward.	true
 unit_abilities_tooltip_text_wh_main_unit_dwf_abilities_deploy_volley_gun	Deploy Volley Gun	true
-unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_bomb	Thunderbarge Bomb	false
-unit_abilities_tooltip_text_cody_unit_abilities_thunderbarge_bomb	The Thunderbarge's bombs are significantly larger than those of the Bombers. Multiple bombs hitting the target can result in explosive devastation!	false
+unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_bomb	Airship Bomb	false
+unit_abilities_tooltip_text_cody_unit_abilities_thunderbarge_bomb	The bombs equipped on the "Thunderbarge" are even larger than those on the "Bomber." If multiple bombs strike their intended target, the result will be truly explosive!	false
 unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_broadside_right	Right Broadside	false
 unit_abilities_tooltip_text_cody_unit_abilities_thunderbarge_broadside_right		false
 unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_broadside_left	Left Broadside	false
 unit_abilities_tooltip_text_cody_unit_abilities_thunderbarge_broadside_left		false
-unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_flaming_broadside_right	Right Flaming Broadside	false
+unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_flaming_broadside_right	Right Broadside Fire	false
 unit_abilities_tooltip_text_cody_unit_abilities_thunderbarge_flaming_broadside_right		false
-unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_flaming_broadside_left	Left Flaming Broadside	false
+unit_abilities_onscreen_name_cody_unit_abilities_thunderbarge_flaming_broadside_left	Left Broadside Fire	false
 unit_abilities_tooltip_text_cody_unit_abilities_thunderbarge_flaming_broadside_left		false
 special_ability_phases_onscreen_name_snek_dwf_refill_ammo	Refill Ammunition	false
 special_ability_phases_onscreen_name_snek_dwf_steam_tank_construct	Mechanical Construct	false
-special_ability_phases_onscreen_name_snek_unit_contact_hobbled	Hobbled Movement	false
+special_ability_phases_onscreen_name_snek_unit_contact_hobbled	Hobbled	false
 unit_abilities_additional_ui_effects_localised_text_wh_main_all_summon_stakes	Deploy Stakes	false
-unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_iron_thunderers	Deploy Iron Thunderers	false
-unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_iron_thunderers	Deploy Iron Thunderers	false
+unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_iron_thunderers	Deploy Thunderers	false
+unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_iron_thunderers	Deploy Thunderers	false
 unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_crank_gunners	Deploy Crank Gunners	false
 unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_crank_gunners	Deploy Crank Gunners	false
 unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_iron_breakers	Deploy Ironbreakers	false
 unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_iron_breakers	Deploy Ironbreakers	false
 unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_organ_gun	Deploy Organ Gun	false
 unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_organ_gun	Deploy Organ Gun	false
-unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_expeditionaries	Expeditionary Deployment	false
-unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_expeditionaries	Expeditionary Deployment	false
-unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes	Reload Iron Drakes	false
-unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes	Reload Iron Drakes	false
-unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes_trollhammers	Redeploy Iron Drakes (Trollhammer Torpedoes)	false
-unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes_trollhammers	Redeploy Iron Drakes (Trollhammer Torpedoes)	false
+unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_expeditionaries	Deploy Vanguard	false
+unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_expeditionaries	Deploy Vanguard	false
+unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes	Redeploy Irondrakes	false
+unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes	Redeploy Irondrakes	false
+unit_abilities_tooltip_text_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes_trollhammers	Redeploy Irondrakes (Trollhammer Torpedoes)	false
+unit_abilities_onscreen_name_wh_main_unit_dwf_carrier_abilities_deploy_irondrakes_trollhammers	Redeploy Irondrakes (Trollhammer Torpedoes)	false
 unit_abilities_tooltip_text_snek_dwf_steam_tank_construct	Mechanical Construct	false
 unit_abilities_onscreen_name_snek_dwf_steam_tank_construct	Mechanical Construct	false
-unit_abilities_tooltip_text_snek_dwf_refill_ammo	Refill Ammunition	false
-unit_abilities_onscreen_name_snek_dwf_refill_ammo	Refill Ammunition	false
+unit_abilities_tooltip_text_snek_dwf_refill_ammo	Replenish Ammunition	false
+unit_abilities_onscreen_name_snek_dwf_refill_ammo	Replenish Ammunition	false
 special_ability_phases_onscreen_name_snek_dwf_sappers_repair_tank	Repair Mechanical Construct	false
 unit_abilities_tooltip_text_snek_dwf_sappers_repair_tank	Repair Mechanical Construct	false
 unit_abilities_onscreen_name_snek_dwf_sappers_repair_tank	Repair Mechanical Construct	false
-unit_abilities_onscreen_name_unit_ability_against_ten_thousand	Unstoppable Warrior	false
-unit_abilities_onscreen_name_unit_ability_dragons_agility	Dragon's Insight	false
+unit_abilities_onscreen_name_unit_ability_against_ten_thousand	Match Ten Thousand	false
+unit_abilities_onscreen_name_unit_ability_dragons_agility	Dragon's Keen Eye	false
 unit_abilities_onscreen_name_unit_ability_dragons_bravery	Dragon's Valor	false
 unit_abilities_onscreen_name_unit_ability_dragons_fierceness	Dragon's Ferocity	false
-unit_abilities_onscreen_name_unit_ability_dragons_tenacity	Dragon's Resolve	false
-unit_abilities_onscreen_name_unit_ability_enable_volley_of_fire_lance	Volley of Fire Lances	false
-unit_abilities_onscreen_name_unit_ability_three_axe_strokes	Three Axe Blows	false
+unit_abilities_onscreen_name_unit_ability_dragons_tenacity	Dragon's Tenacity	false
+unit_abilities_onscreen_name_unit_ability_enable_volley_of_fire_lance	Fire Lance Volley	false
+unit_abilities_onscreen_name_unit_ability_three_axe_strokes	Three Axe Strokes	false
 unit_abilities_onscreen_name_wuxing_compass_cast_up	Power of the Five Elements Compass	true
-unit_abilities_tooltip_text_unit_ability_dragons_agility	Dragon's Insight illuminates all, penetrating and understanding everything.	false
-unit_abilities_tooltip_text_unit_ability_dragons_bravery	Dragon's Valor stands fearless and firm, unyielding in the face of adversity.	false
-unit_abilities_tooltip_text_unit_ability_dragons_fierceness	Dragon's Ferocity burns like a blazing flame, exuding an indomitable aura.	false
-unit_abilities_tooltip_text_unit_ability_dragons_tenacity	Dragon's Resolve is like an unshakable mountain, eternal and steadfast.	false
-unit_abilities_tooltip_text_unit_ability_enable_volley_of_fire_lance	The deafening roar of fire lances fills the air, laying waste to everything.	false
-unit_abilities_tooltip_text_unit_ability_three_axe_strokes	Three mighty axe blows of tremendous power, yet exhausting their use leaves the wielder defenseless.	false
-unit_abilities_tooltip_text_wuxing_compass_cast_up	Harness the power of the Five Elements Compass for the mage's use.	true
+unit_abilities_tooltip_text_unit_ability_dragons_agility	The Dragon's Keen Eye, sharp and bright, blazing with radiance, sees through all things.	false
+unit_abilities_tooltip_text_unit_ability_dragons_bravery	The Dragon's Valor, mighty and fearless, resolute and unyielding, undaunted in the face of peril.	false
+unit_abilities_tooltip_text_unit_ability_dragons_fierceness	The Dragon's Ferocity, blazing like roaring flame, soaring in spirit, fearing nothing.	false
+unit_abilities_tooltip_text_unit_ability_dragons_tenacity	The Dragon's Tenacity, immovable as a mountain, eternal and unchanging, steadfast and unbending.	false
+unit_abilities_tooltip_text_unit_ability_enable_volley_of_fire_lance	A deafening volley of fire lances, shattering heaven and earth alike.	false
+unit_abilities_tooltip_text_unit_ability_three_axe_strokes	The three axe strokes carry boundless power, yet once spent, there is nothing left to give.	false
+unit_abilities_tooltip_text_wuxing_compass_cast_up	Harness the power of heaven and earth within the Five Elements Compass, for the mage's use.	true
 unit_abilities_onscreen_name_cth_zhaowang_flooddragon	Flood Dragon Technique	true
 unit_abilities_onscreen_name_cth_zhaowang_flooddragon_1	Flood Dragon Technique	true
 unit_abilities_onscreen_name_cth_zhaowang_steel	Might of the Flood Dragon	true
@@ -312,35 +312,100 @@ unit_abilities_tooltip_text_cth_zhaowang_steel	Golden helm, golden armor, cinnab
 unit_abilities_tooltip_text_zhaowang_thunder_skill	"The souls of our Celestial warriors shall be claimed by Heaven itself—how could we allow the foul Daemons of Tzeentch to defile them?"	true
 unit_abilities_onscreen_name_ghs_ksl_thor_arcane_item	Storm Aura	true
 unit_abilities_onscreen_name_ghs_ksl_thor_talisman	Oracle of War	true
-unit_abilities_onscreen_name_ghs_ksl_thor_weapon	Thor's Thunderstorm	true
-unit_abilities_tooltip_text_ghs_ksl_thor_arcane_item	The storm took my dearest friend. The lightning pulled me back from death. From pain I rose again—becoming the thunder that tears through the dark!	true
-unit_abilities_tooltip_text_ghs_ksl_thor_talisman	Arcs of lightning leap from the scar upon Hafdan's chest, bursting forth with dazzling brilliance as he smashes enemy skulls—healing Thor's Chosen and driving him ever forward.	true
-unit_abilities_tooltip_text_ghs_ksl_thor_weapon	Blood-drenched Son of Thor raises his warhammer high—lightning howls from the heavens, cleansing the foul beasts that dare violate the motherland’s borders.	true
-unit_abilities_onscreen_name_chakax_silence_sculpture	Sculpture of Silence	true
-unit_abilities_onscreen_name_lzd_kroxigor_bro_01_weapon	Fist of Quiji	true
-unit_abilities_tooltip_text_lzd_kroxigor_bro_01_weapon	In the hands of Old-Kan, this great hammer moves like an extension of his limbs—each casual blow fuses warm-bloods and their so-called fine armor into a single mass of gore.	true
-unit_abilities_onscreen_name_lzd_kroxigor_bro_02_weapon	Edge of Itzi	true
-unit_abilities_tooltip_text_lzd_kroxigor_bro_02_weapon	Sharp and heavy, blessed with the wild fury of the Beast God Itzi. Forged and honed by a legion of Skink craftsmen, this mighty axe can decapitate even the thick-necked Carnosaur in one fell swoop.	true
-unit_abilities_onscreen_name_lzd_kroxigor_bro_02_armour	Beastbone Armor	true
-unit_abilities_tooltip_text_lzd_kroxigor_bro_02_armour	Assembled from the proudest trophies felled by Old-K’ja, this thick armor endures the searing heat of a Solar Engine—arrows and bullets feel like mere scratches on its hide.	true
-unit_abilities_onscreen_name_skv_mon_hellpit_lightling	Dimensional Lightning	true
-unit_abilities_onscreen_name_wh2_main_unit_passive_the_warpflame_explosion	Surge of Warpflame	true
-unit_abilities_tooltip_text_skv_mon_hellpit_lightling	Within the twisted flesh brews devastating dimensional lightning, potent enough to pierce the toughest armor.	true
-unit_abilities_tooltip_text_wh2_main_unit_passive_the_warpflame_explosion	When the warpstone runs dry, the fire dies down... but these hairless wretches will feel the *real* explosion, yes-yes!	true
-unit_abilities_onscreen_name_ghs_ability_ghs_ogr_gbnoblar_food	Smoky Meat Broth	true
-unit_abilities_tooltip_text_ghs_ability_ghs_ogr_gbnoblar_food	Ugh… however they made this stuff, the Gnoblars really do perk up after drinking it!	true
-unit_abilities_onscreen_name_ghs_ability_ghs_ogr_gbnoblar_iron	Stabby Spikes	true
-unit_abilities_tooltip_text_ghs_ability_ghs_ogr_gbnoblar_iron	Hey boss, be careful when pickin’ up these little bits—last time I got myself poked!	false
-unit_abilities_onscreen_name_ghs_ability_ghs_ogr_ice_mammoth_breath	Feast of Fresh Meat	true
-unit_abilities_tooltip_text_ghs_ability_ghs_ogr_ice_mammoth_breath	The Butcher tosses chilled fresh meat into a boiling cauldron. As the rich broth goes down their gullets, nearby Ogres gain extraordinary regeneration.	true
-unit_abilities_onscreen_name_ghs_ability_ghs_ogr_lioneater_ammo	Iron-Break	true
-unit_abilities_tooltip_text_ghs_ability_ghs_ogr_lioneater_ammo	If we’re out of proper iron lumps, then just snap the scrap metal off your armor and shove it into the barrel!	true
-unit_abilities_tooltip_text_ghs_ability_cth_summon_soul_flood_dragon	Depart to the Dragon River with the guiding souls; the banners stir as tens of thousands cross to the Far Shore.	true
-unit_abilities_onscreen_name_ghs_tmb_flying_necrosphinx1	Wings of the Reaper	false
-unit_abilities_tooltip_text_ghs_tmb_flying_necrosphinx1	Unfurl colossal wings woven from tormented souls, spreading the Reaper’s benediction from the sky!	false
-unit_abilities_onscreen_name_ghs_tmb_sandstalker_storm	Sandstorm	false
-unit_abilities_tooltip_text_ghs_tmb_sandstalker_storm	The domain of Goddess Asaph shall not be defied—the sandstorm is her punishment for those who trespass!	false
-unit_abilities_onscreen_name_ghs_cth_soul_turtle	Shell of the Black Tortoise	false
-unit_abilities_tooltip_text_ghs_cth_soul_turtle	The Soul-River Great Turtle guards the resting place of Cathay’s heroic spirits; when its mystic shell braces, it becomes utterly unbreakable	true
-unit_abilities_onscreen_name_ghs_cth_terracotta_guardian_axe	Heavenwatch Guardians	false
-unit_abilities_tooltip_text_ghs_cth_terracotta_guardian_axe	For a thousand years they have stood guard over the Dragon Gods; the mighty Gates of Heaven shall not open	true
+unit_abilities_onscreen_name_ghs_ksl_thor_weapon	Tor's Thunderstorm	true
+unit_abilities_tooltip_text_ghs_ksl_thor_arcane_item	The storm took my dearest friend from me; the lightning roused me from death. I clawed my way out of agony, becoming the thunder that sweeps across the night!	true
+unit_abilities_tooltip_text_ghs_ksl_thor_talisman	Arcs of electricity occasionally crackle from the scars on Halfdan's chest, bursting into dazzling sparks whenever he cracks open an enemy's skull, healing Tor's chosen one's wounds and staving off exhaustion.	true
+unit_abilities_tooltip_text_ghs_ksl_thor_weapon	The blood-soaked Son of Tor raises his war hammer high, and the sky's furious lightning howls down from above, cleansing the wicked creatures that dare defile the Motherland's borders.	true
+unit_abilities_onscreen_name_chakax_silence_sculpture	Silent Sculpture	true
+unit_abilities_onscreen_name_lzd_kroxigor_bro_01_weapon	Fist of Quetzl	true
+unit_abilities_tooltip_text_lzd_kroxigor_bro_01_weapon	This great hammer moves as freely in Gu Kahn's hands as an extension of his own limbs; a single casual blow can crush warm-bloods and their so-called fine armor together with their flesh into a single mangled mass.	true
+unit_abilities_onscreen_name_lzd_kroxigor_bro_02_weapon	Edge of Itza	true
+unit_abilities_tooltip_text_lzd_kroxigor_bro_02_weapon	Sharp, heavy, and imbued with the wild blessing of the beast god Itza, this great axe—honed by countless spirit-lizard craftsmen—can behead even the thickest-necked carnosaur in a single blow.	true
+unit_abilities_onscreen_name_lzd_kroxigor_bro_02_armour	Beast-Bone Armor	true
+unit_abilities_tooltip_text_lzd_kroxigor_bro_02_armour	Assembled from the proudest trophies of Gu Ke Jia's kills, this thick carapace, able to withstand the heat of the Solar Engine, renders bullets and arrows nothing more than an itch.	true
+unit_abilities_onscreen_name_skv_mon_hellpit_lightling	Warp Lightning	true
+unit_abilities_onscreen_name_wh2_main_unit_passive_the_warpflame_explosion	Warpflame Eruption	true
+unit_abilities_tooltip_text_skv_mon_hellpit_lightling	Devastating warp lightning brews within the twisted flesh, capable of piercing even the sturdiest armor.	true
+unit_abilities_tooltip_text_wh2_main_unit_passive_the_warpflame_explosion	The depletion of warpstone energy means the flames are about to die out, but these furless things will feel a real explosion, oh yes! Oh yes!	true
+unit_abilities_onscreen_name_ghs_ability_ghs_ogr_gbnoblar_food	Reeking Stew	true
+unit_abilities_tooltip_text_ghs_ability_ghs_ogr_gbnoblar_food	Ugh, however they made this stuff, the Gnoblars sure perk right up after drinking it!	true
+unit_abilities_onscreen_name_ghs_ability_ghs_ogr_gbnoblar_iron	Jabbing Spikes	true
+unit_abilities_tooltip_text_ghs_ability_ghs_ogr_gbnoblar_iron	Careful when you're picking up this little snack, boss — I got pricked by it last time.	false
+unit_abilities_onscreen_name_ghs_ability_ghs_ogr_ice_mammoth_breath	Feast of Raw Meat	true
+unit_abilities_tooltip_text_ghs_ability_ghs_ogr_ice_mammoth_breath	The butcher tosses chilled cuts of meat into the boiling cauldron, and as the savory broth is downed one after another, the surrounding Ogres gain extraordinary regenerative power.	true
+unit_abilities_onscreen_name_ghs_ability_ghs_ogr_lioneater_ammo	Iron Snap	true
+unit_abilities_tooltip_text_ghs_ability_ghs_ogr_lioneater_ammo	If we ain't got proper shot, just smash up whatever scrap metal we got and stuff it down the barrel!	true
+unit_abilities_tooltip_text_ghs_ability_cth_summon_soul_flood_dragon	Onward to the River of Souls, to serve the ancestral spirits; ten thousand banners stir as they cross to the other shore.	true
+unit_abilities_onscreen_name_ghs_tmb_flying_necrosphinx1	Wings of Death	false
+unit_abilities_tooltip_text_ghs_tmb_flying_necrosphinx1	Unfurl the great wings woven from tormented souls, and scatter Death's blessing from the sky!	false
+unit_abilities_onscreen_name_ghs_tmb_sandstalker_storm	Yellow Sand Storm	false
+unit_abilities_tooltip_text_ghs_tmb_sandstalker_storm	The domain of the goddess Asaph brooks no trespass; the sandstorm is her punishment for those who offend her!	false
+unit_abilities_onscreen_name_ghs_cth_soul_turtle	Dark Shell Guard	false
+unit_abilities_tooltip_text_ghs_cth_soul_turtle	The great Soul River Dark Turtle guards the resting place of Cathay's fallen heroes; while its dark shell holds firm, it remains unbreakable and impregnable.	true
+unit_abilities_onscreen_name_ghs_cth_terracotta_guardian_axe	Heaven's Gate Royal Guard	false
+unit_abilities_tooltip_text_ghs_cth_terracotta_guardian_axe	Its body has guarded the Dragon God for a thousand years, and the vast gates of heaven itself shall not be breached.	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_lidao	Mark of Candlelight	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_longdi	Mark of Heaven's Mandate	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_miaoying	Mark of the Raging Gale	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_shiyanmo	Mark of the Soul Abyss	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_yinyin	Mark of the Dark Abyss	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_yuanbo	Mark of Jade Heaven	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_yuehou	Mark of Moonlight	true
+unit_abilities_onscreen_name_ghs_abilities_cth_mark_zhaoming	Mark of the Bin Iron Armour	true
+unit_abilities_onscreen_name_ghs_abilities_hongying_tele	Raven's Shadow Flicker	true
+unit_abilities_onscreen_name_ghs_ability_cth_enable_cannot_die	Unfallen into the Void	true
+unit_abilities_onscreen_name_ghs_ability_cth_jade_blood_lotus	Jade Blood Vitality	true
+unit_abilities_onscreen_name_ghs_ability_cth_jade_blood_snake	Jade Blood Elixir	true
+unit_abilities_onscreen_name_ghs_ability_cth_rune_spell_magic	Hall of Flourishing Spirits	true
+unit_abilities_onscreen_name_ghs_ability_cth_rune_spell_regeneration	Withered Wood Reborn	true
+unit_abilities_onscreen_name_ghs_ability_cth_rune_spell_resistance	Endless Life	true
+unit_abilities_onscreen_name_ghs_ability_cth_vine_armour	Unyielding Vine Armour	true
+unit_abilities_onscreen_name_ghs_ability_hef_dragonblade	Piercing Dragonblade	true
+unit_abilities_onscreen_name_ghs_ability_hef_dragonsail	Billowing Dragon Sail	true
+unit_abilities_onscreen_name_ghs_ability_hef_dragonship_summon_merwyrm	Deploy Troops: Merwyrm	true
+unit_abilities_onscreen_name_ghs_ability_hef_dragonship_summon_oceanids	Deploy Troops: Pure Water Spirits	true
+unit_abilities_onscreen_name_ghs_ability_hef_dragonship_summon_ships_company	Deploy Troops: Ship's Company	true
+unit_abilities_onscreen_name_ghs_cth_cha_wangque_enchanted_item	Mirror of the Cassia Soul	true
+unit_abilities_onscreen_name_ghs_cth_cha_wangque_enchanted_item_upgrade	Mirror of the Cassia Soul - Moonlight	true
+unit_abilities_onscreen_name_ghs_cth_cha_yangxing_enchanted_item	Dragon God's Contempt	true
+unit_abilities_onscreen_name_ghs_effects_hongying_secret_follower_tele	Shadow Leap	true
+unit_abilities_onscreen_name_ghs_main_lzd_vulcan_salamander_fear_fire	Seething Magma	true
+unit_abilities_onscreen_name_ghs_main_skill_node_cth_wangque_unique_1	Swift as the Wind	true
+unit_abilities_onscreen_name_ghs_main_skill_node_cth_wangque_unique_2	Gentle as the Forest	true
+unit_abilities_onscreen_name_ghs_main_skill_node_cth_wangque_unique_3	Fierce as Fire	true
+unit_abilities_onscreen_name_ghs_main_skill_node_cth_wangque_unique_4	Immovable as the Mountain	true
+unit_abilities_onscreen_name_ghs_main_skill_node_cth_wangque_unique_5	Inscrutable as the Shadow	true
+unit_abilities_onscreen_name_ghs_main_skill_node_cth_wangque_unique_6	Strikes Like Thunder	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_lidao	Candlelight burns the heavens, flames scorching the southern lands; the wrath of the fire dragon is unstoppable.	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_longdi	The Dragon Emperor's majesty overawes the eight wildernesses; myriad armies bow in reverence, and all evils lie hidden in fear.	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_miaoying	The Raging Gale shakes the wilds, arrows falling like rain; the Long Wall stands ever vigilant, shafts loosed swift as wind.	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_shiyanmo	The Soul Abyss hides its form, leaving no trace; ghostly spirits guard the body, untouched by ten thousand arrows.	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_yinyin	The Dark Abyss rides the wind, treading upon the waves; crossing forests and fording waters as if walking level ground.	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_yuanbo	Jade Heaven holds to balance, offense and defense as one; upholding the law with equity, favoring neither side.	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_yuehou	Moonlight condenses the soul, its magic boundless; the Yin arts shield the body, and no evil can intrude.	true
+unit_abilities_tooltip_text_ghs_abilities_cth_mark_zhaoming	The Bin Iron Armor, forged a hundred times over, is unbreakable; western arts of casting shape a body of gold.	true
+unit_abilities_tooltip_text_ghs_abilities_hongying_tele	Hong Ying weaves a bridge of shadow, allowing him to move freely across the battlefield and summon a terrifying dark abyss at his destination.	true
+unit_abilities_tooltip_text_ghs_ability_cth_enable_cannot_die	My body may perish, but my resolve shall never fade.	true
+unit_abilities_tooltip_text_ghs_ability_cth_jade_blood_lotus	None command the Wind of Ji Lun as masterfully as the Jade Blood Taoists, who teach their swordsman disciples to carry this power onto the battlefield.	true
+unit_abilities_tooltip_text_ghs_ability_cth_jade_blood_snake	Created by Jade Blood Taoists fusing vampiric sorcery with Xi Zhao alchemy, this elixir flows like liquid jade, bearing both the power to restore life and to corrode with insidious poison.	true
+unit_abilities_tooltip_text_ghs_ability_cth_rune_spell_magic	The green wind is stored in the mystic vault, its spirit eternal and ever-flourishing.	true
+unit_abilities_tooltip_text_ghs_ability_cth_rune_spell_regeneration	Withered bones drink the jade dew, and dead wood sprouts anew.	true
+unit_abilities_tooltip_text_ghs_ability_cth_rune_spell_resistance	Vitality hides within the smallest space, its cycle never exhausted.	true
+unit_abilities_tooltip_text_ghs_ability_cth_vine_armour	Special vines native to the southern frontier are repeatedly soaked and sun-dried before being woven into light yet sturdy armor — though the material carries the fatal flaw of being highly flammable.	true
+unit_abilities_tooltip_text_ghs_ability_hef_dragonblade	Born of myth and tempered by the sea, the Dragonblade turns the might of the dragonship into a keen edge, its brilliance striking more fear into enemies than true steel.	true
+unit_abilities_tooltip_text_ghs_ability_hef_dragonsail	The dragonship's sails gleam like dawn reflected on the sea; the enchanted canvas grants the fleet extraordinary speed and vision as they patrol the world's oceans.	true
+unit_abilities_tooltip_text_ghs_ability_hef_dragonship_summon_merwyrm	Scaled jaws snap fiercely at the High Elves' enemies, dragging the shrieking prey down into the abyss where the barnacled serpent lurks.	true
+unit_abilities_tooltip_text_ghs_ability_hef_dragonship_summon_oceanids	Though miniature versions of sea elementals, Pure Water Spirits are no less terrifying, unleashing horrifying power once their wrath is stirred.	true
+unit_abilities_tooltip_text_ghs_ability_hef_dragonship_summon_ships_company	The crew of the High Elf fleet are experienced sailors, often standing alongside the Sea Guard on land when manpower runs short.	true
+unit_abilities_tooltip_text_ghs_cth_cha_wangque_enchanted_item	The mirror's light shines forth, and nothing can escape its gaze!	true
+unit_abilities_tooltip_text_ghs_cth_cha_wangque_enchanted_item_upgrade	The mirror's light shines forth, and as the moonlight rises higher, nothing can escape its gaze!	true
+unit_abilities_tooltip_text_ghs_cth_cha_yangxing_enchanted_item	Whether arrows, blades, fangs, or claws, the divine dragon statue coiled about the beast holds nothing but bone-deep contempt for such crude methods of slaughter.	true
+unit_abilities_tooltip_text_ghs_cth_ll_shugengan_demidragon	The dragon soars through the heavens, its might striking terror; the dragon battles upon the wilds, its blood staining the earth black and gold.	true
+unit_abilities_tooltip_text_ghs_effects_hongying_secret_follower_tele	We walk within the shadows, vanishing before the light of dawn.	true
+unit_abilities_tooltip_text_ghs_main_lzd_vulcan_salamander_fear_fire	The body heat of the Volcanic Spinebeast is enough to ignite even the dampest rainforest. When it unleashes its heat fully, everything nearby can be set ablaze in an instant.	true
+unit_abilities_tooltip_text_ghs_main_skill_node_cth_wangque_unique_1	March like the wind, swift beyond reach.	true
+unit_abilities_tooltip_text_ghs_main_skill_node_cth_wangque_unique_2	Form ranks like a dense forest, impervious to the enemy.	true
+unit_abilities_tooltip_text_ghs_main_skill_node_cth_wangque_unique_3	Attack like fire, spreading like a wildfire unchecked.	true
+unit_abilities_tooltip_text_ghs_main_skill_node_cth_wangque_unique_4	Stand immovable, unbreakable by any force.	true
+unit_abilities_tooltip_text_ghs_main_skill_node_cth_wangque_unique_5	Dark clouds veil the moon, coming and going without a trace.	true
+unit_abilities_tooltip_text_ghs_main_skill_node_cth_wangque_unique_6	Strike like thunder's mighty crash, shattering the enemy to dust.	true

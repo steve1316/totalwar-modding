@@ -1,0 +1,32 @@
+key	text	tooltip
+#Loc;1;text/!!!cth_fuyuanshan_xiuluo.loc		
+character_trait_levels_explanation_text_trait_blood_stare	You have successfully pleased the Blood God...	true
+character_trait_levels_onscreen_name_trait_blood_stare	Gaze of the Blood God	true
+effects_description_fuyuanshan_xiuluo_enabler_hidden	HIDDEN	true
+event_feed_strings_text_wh_event_feed_string_scripted_event_cth_fuyuanshan_xiuluo_defeated_primary_detail	Gaze of the Blood God	true
+event_feed_strings_text_wh_event_feed_string_scripted_event_cth_fuyuanshan_xiuluo_defeated_secondary_detail	Successfully defeating the Vengeful Bloodshade has won this army's commander the favor of the Blood God. The Blood God cares only for blood, not its source...	true
+event_feed_strings_text_wh_event_feed_string_scripted_event_cth_fuyuanshan_xiuluo_return_primary_detail	The Bloodshade Returns	true
+event_feed_strings_text_wh_event_feed_string_scripted_event_cth_fuyuanshan_xiuluo_return_secondary_detail	After an interval of time attuned to Khorne's sacred number, the Vengeful Bloodshade has returned once more, continuing to offer up blood to its master.	true
+incidents_button_text_fuyuanshan_incidents_xiuluo_summon	Continue	true
+incidents_localised_description_fuyuanshan_incidents_xiuluo_summon	Scouts bring word of a terrifying blood-red figure roaming north of the Great Bastion, drawing ever closer.\\nThis may well be yet another scheme of Cathay's great foe, Kairos the Fate-Weaver, but the Great Bastion shall still stand unbroken.	true
+incidents_localised_title_fuyuanshan_incidents_xiuluo_summon	Vengeful Bloodshade	true
+land_units_onscreen_name_fuyuanshan_xiuluo_summoned	Vengeful Bloodshade	true
+ui_unit_bullet_point_enums_onscreen_name_xiuluo	Vengeful Bloodshade	true
+ui_unit_bullet_point_enums_tooltip_xiuluo	A vessel driven by an ominous blade, drawing strength from the act of killing.	true
+ui_unit_groupings_onscreen_fuyuanshan_xiuluo_hero	Vengeful Bloodshade	true
+unit_abilities_onscreen_name_fuyuanshan_xiuluo_bless_bloodgod	Blessing of the Blood God	true
+unit_abilities_onscreen_name_fuyuanshan_xiuluo_blood_aura	Dread of the Blood Sea	true
+unit_abilities_onscreen_name_fuyuanshan_xiuluo_blood_rage	Crimson Fury	true
+unit_abilities_onscreen_name_fuyuanshan_xiuluo_blood_thirsty	Bloodthirsty Chant	true
+unit_abilities_onscreen_name_fuyuanshan_xiuluo_body_xiuluo	Will of Vengeance	true
+unit_abilities_onscreen_name_fuyuanshan_xiuluo_skull_bloodfire	Skull of Blood Fire	true
+unit_abilities_onscreen_name_fuyuanshan_xiuluo_summoning_for_ai	HIDDEN	true
+unit_abilities_tooltip_text_fuyuanshan_xiuluo_bless_bloodgod	'Blood Blade Death by Slicing' has received the Blood God's blessing; the eerie crimson glow along its blade can plunge onlookers into a bloodlust-fueled trance.	true
+unit_abilities_tooltip_text_fuyuanshan_xiuluo_blood_aura	The thick miasma of blood that emanates from the Vengeful Bloodshade makes even Cathay's own soldiers tremble.	true
+unit_abilities_tooltip_text_fuyuanshan_xiuluo_blood_rage	Blood spilled across the battlefield plunges the Vengeful Bloodshade into a gory hallucination of its family's slaughter, and every enemy before it appears as the very murderer of its kin.	true
+unit_abilities_tooltip_text_fuyuanshan_xiuluo_blood_thirsty	The maddened will of the blade's forger lingers upon the Blood Blade's edge, its witch-like whispers greatly inflaming the host's bloodlust while numbing it to the pain of battle.	true
+unit_abilities_tooltip_text_fuyuanshan_xiuluo_body_xiuluo	What forms the body of the host of 'Blood Blade Death by Slicing' is not flesh and blood, but a will seeking vengeance. The more it kills, the fiercer that vengeful will burns.	true
+unit_abilities_tooltip_text_fuyuanshan_xiuluo_skull_bloodfire	A skull wreathed in bloodfire, still bearing the twisted hatred of its final moment before death, cursing all the living...	true
+unit_abilities_tooltip_text_fuyuanshan_xiuluo_summoning_for_ai	HIDDEN	true
+unit_description_historical_texts_text_fuyuanshan_xiuluo_long_description	'Blood Blade Death by Slicing' is an ominous blade forged by a famed Cathayan smith. It is said its maker had endured great national and familial tragedy, and sought to forge a divine weapon capable of extinguishing the beacon fires along the Great Bastion forever. Yet no matter how he tried, he could not perfect his craft, and in the end, consumed by obsession, he sacrificed his own blood — at last earning the Blood God's favor and completing this unrivaled weapon.\\nBut from the day of its forging, due to its inauspicious nature, it was watched over for generations by the noble Fu clan of Cathay. Later, a surviving descendant of the Fu clan, whose entire family had been slaughtered by the Chaos foe, made a pact with the blade out of vengeance — trading killing for power to exact his revenge. Yet from that moment, his body was bound to 'Blood Blade Death by Slicing,' and he was transformed into the Vengeful Bloodshade.	true
+unit_description_short_texts_text_fuyuanshan_xiuluo_short_description	Kairos glimpsed another possible thread of fate within the Well of Eternity, and from it summoned Fu Yuanshan, already consumed entirely by the will for vengeance.\\nNothing remains within the depths of his heart save the impulse to destroy all things.	true

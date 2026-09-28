@@ -1,36 +1,36 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_org_units.loc		
-land_units_onscreen_name_ogr_inf_ironguts_cth_0	Cathayan Ogres (Great Weapons)	true
-unit_description_short_texts_text_ogr_inf_ironguts_cth_0	Ogres enjoy training in Cathay, and the greatswords from Cathay enhance their cutting power, making them very popular among Ogres.	true
-unit_description_historical_texts_text_ogr_inf_ironguts_cth_0	Ogres enjoy training in Cathay, and the greatswords from Cathay enhance their cutting power, making them very popular among Ogres.	true
-land_units_onscreen_name_ogr_inf_ironguts_cth_1	Cathayan Ogres (Dual Weapons)	true
-unit_description_short_texts_text_ogr_inf_ironguts_cth_1	Ogres enjoy training in Cathay, and the dual blades from Cathay allow them to slash freely in battle, being far sharper than the weapons Ogres forge themselves.	true
-unit_description_historical_texts_text_ogr_inf_ironguts_cth_1	Ogres enjoy training in Cathay, and the dual blades from Cathay allow them to slash freely in battle, being far sharper than the weapons Ogres forge themselves.	true
-land_units_onscreen_name_ogr_leadbelchers_longrange	Leadbelchers (Witch Hammers)	true
-unit_description_short_texts_text_ogr_leadbelchers_longrange	The Leadbelchers operate powerful cannons captured from the Empire.	true
-unit_description_historical_texts_text_ogr_leadbelchers_longrange	The Leadbelchers operate powerful cannons captured from the Empire.	true
-land_units_onscreen_name_ogr_leadbelchers_flame	Leadbelchers (Flamers)	true
-unit_description_short_texts_text_ogr_leadbelchers_flame	The Leadbelchers operate powerful cannons captured from the Dwarfs.	true
-unit_description_historical_texts_text_ogr_leadbelchers_flame	The Leadbelchers operate powerful cannons captured from the Dwarfs.	true
-land_units_onscreen_name_ogr_veh_rhinox_draft	Wild Rhinoxes	true
-unit_description_short_texts_text_ogr_veh_rhinox_draft	The terrifying strength of this beast comes from its muscular, robust body; a charge from a Rhinox is devastating.	true
-unit_description_historical_texts_text_ogr_veh_rhinox_draft	Huge, hairy, and temperamental, the Rhinox is a large and dangerous long-horned beast that will lower its horns and charge at anything in its way, even the largest creatures.	true
-land_units_onscreen_name_ogr_mon_stonehorn_wild	Wild Stonehorns	true
-unit_description_short_texts_text_ogr_mon_stonehorn_wild	The Stonehorns are exceptionally aggressive; their first reaction to any creature in its sight is to charge at it.	true
-unit_description_historical_texts_text_ogr_mon_stonehorn_wild	These mammoth-like creatures embodies everything Ogres admire: size, brutality, strength, and toughness, making Ogres hold the Stonehorn in great reverence.	true
-land_units_onscreen_name_ogr_gnoblar_dual_sword	Gnoblar Stalkers	true
-unit_description_short_texts_text_ogr_gnoblar_dual_sword	The Gnoblar Stalkers attack enemies with poisoned daggers.	true
-unit_description_historical_texts_text_ogr_gnoblar_dual_sword	The Gnoblar Stalkers attack enemies with poisoned daggers.	true
+land_units_onscreen_name_ogr_inf_ironguts_cth_0	Cathayan Returners (Great Blade)	true
+unit_description_short_texts_text_ogr_inf_ironguts_cth_0	Ogres love to hone their skills in Cathay, where the great Cathayan blades grant them stronger cleaving power - a weapon highly prized among Ogres.	true
+unit_description_historical_texts_text_ogr_inf_ironguts_cth_0	Ogres love to hone their skills in Cathay, where the great Cathayan blades grant them stronger cleaving power - a weapon highly prized among Ogres.	true
+land_units_onscreen_name_ogr_inf_ironguts_cth_1	Cathayan Returners (Dual Blades)	true
+unit_description_short_texts_text_ogr_inf_ironguts_cth_1	Ogres love to hone their skills in Cathay, where the Cathayan dual blades let them cleave freely in battle - far sharper than any weapon they could craft themselves.	true
+unit_description_historical_texts_text_ogr_inf_ironguts_cth_1	Ogres love to hone their skills in Cathay, where the Cathayan dual blades let them cleave freely in battle - far sharper than any weapon they could craft themselves.	true
+land_units_onscreen_name_ogr_leadbelchers_longrange	Leadbelchers (Witch's Hammer)	true
+unit_description_short_texts_text_ogr_leadbelchers_longrange	Fine cannons seized from the Empire, now operated by the Ogre Leadbelchers.	true
+unit_description_historical_texts_text_ogr_leadbelchers_longrange	Fine cannons seized from the Empire, now operated by the Ogre Leadbelchers.	true
+land_units_onscreen_name_ogr_leadbelchers_flame	Leadbelchers (Flame Cannon)	true
+unit_description_short_texts_text_ogr_leadbelchers_flame	Fine cannons seized from the Dwarfs, now operated by the Ogre Leadbelchers.	true
+unit_description_historical_texts_text_ogr_leadbelchers_flame	Fine cannons seized from the Dwarfs, now operated by the Ogre Leadbelchers.	true
+land_units_onscreen_name_ogr_veh_rhinox_draft	Wild Rhinox	true
+unit_description_short_texts_text_ogr_veh_rhinox_draft	A beast's terrifying strength comes from its powerfully muscled haunches - the charge of a Rhinox is utterly devastating.	true
+unit_description_historical_texts_text_ogr_veh_rhinox_draft	Massive, shaggy, and foul-tempered, the Rhinox is an enormous and dangerous horned beast that lowers its horns and charges at anything blocking its path, no matter how massive the creature in its way.	true
+land_units_onscreen_name_ogr_mon_stonehorn_wild	Wild Stonehorn	true
+unit_description_short_texts_text_ogr_mon_stonehorn_wild	The Stonehorn is exceptionally volatile - its first instinct upon spotting any creature is simply to charge.	true
+unit_description_historical_texts_text_ogr_mon_stonehorn_wild	This mammoth-like creature possesses every quality an Ogre could desire: size, brutality, strength, and toughness - naturally earning it great reverence among the Ogres.	true
+land_units_onscreen_name_ogr_gnoblar_dual_sword	Gnoblar Prowlers	true
+unit_description_short_texts_text_ogr_gnoblar_dual_sword	Gnoblar Prowlers strike at their foes with venom-coated daggers.	true
+unit_description_historical_texts_text_ogr_gnoblar_dual_sword	Gnoblar Prowlers strike at their foes with venom-coated daggers.	true
 land_units_onscreen_name_ogr_goblin_archers	Gnoblar Archers	true
-unit_description_short_texts_text_ogr_goblin_archers	The Gnoblar Archers attack enemies with bows, but they have almost no combat ability, making them true cannon fodder.	true
-unit_description_historical_texts_text_ogr_goblin_archers	The Gnoblar Archers attack enemies with bows, but they have almost no combat ability, making them true cannon fodder.	true
+unit_description_short_texts_text_ogr_goblin_archers	Gnoblars attack with bows, though they possess virtually no combat skill - true cannon fodder in every sense.	true
+unit_description_historical_texts_text_ogr_goblin_archers	Gnoblars attack with bows, though they possess virtually no combat skill - true cannon fodder in every sense.	true
 land_units_onscreen_name_ogr_cav_goblin_wolf_riders_archers	Gnoblar Wolf Rider Archers	true
-unit_description_short_texts_text_ogr_cav_goblin_wolf_riders_archers	The Gnoblars have tamed a small number of wolves, using their mobility to help these cannon fodders survive longer.	true
-unit_description_historical_texts_text_ogr_cav_goblin_wolf_riders_archers	The Gnoblars have tamed a small number of wolves, using their mobility to help these cannon fodders survive longer.	true
+unit_description_short_texts_text_ogr_cav_goblin_wolf_riders_archers	Gnoblars have tamed a small number of wolves, using their mobility to help these expendable troops survive a little longer.	true
+unit_description_historical_texts_text_ogr_cav_goblin_wolf_riders_archers	Gnoblars have tamed a small number of wolves, using their mobility to help these expendable troops survive a little longer.	true
 land_units_onscreen_name_ogr_goblin_wolf_rider_spear	Gnoblar Wolf Riders	true
-unit_description_short_texts_text_ogr_goblin_wolf_rider_spear	The Gnoblars use wolves as mounts in battle, but their fragile morale makes these wolf riders more prone to scattering and fleeing.	true
-unit_description_historical_texts_text_ogr_goblin_wolf_rider_spear	The Gnoblars use wolves as mounts in battle, but their fragile morale makes these wolf riders more prone to scattering and fleeing.	true
+unit_description_short_texts_text_ogr_goblin_wolf_rider_spear	Gnoblars ride wolves into battle, though their fragile morale makes these wolf riders all too quick to scatter and flee.	true
+unit_description_historical_texts_text_ogr_goblin_wolf_rider_spear	Gnoblars ride wolves into battle, though their fragile morale makes these wolf riders all too quick to scatter and flee.	true
 land_units_onscreen_name_ogr_inf_eshin_maneater	Eshin Maneaters	false
 land_units_onscreen_name_ogr_inf_orger_hunter	Ogre Hunters	false
-unit_description_short_texts_text_ogr_inf_orger_hunter	Hunters skilled in capturing and hunting a variety of massive monsters, using ranged weapons to strike at their enemies.	false
-unit_description_historical_texts_text_ogr_inf_orger_hunter	Hunters adept at tracking and hunting large monstrous beasts, utilizing ranged weapons to take down their prey.	false
+unit_description_short_texts_text_ogr_inf_orger_hunter	Ogres skilled in hunting all manner of monstrous beasts, using ranged weapons to strike down their foes.	false
+unit_description_historical_texts_text_ogr_inf_orger_hunter	Ogres skilled in hunting all manner of monstrous beasts, using ranged weapons to strike down their foes.	false

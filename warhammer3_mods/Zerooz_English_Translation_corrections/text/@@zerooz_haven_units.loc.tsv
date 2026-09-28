@@ -1,26 +1,26 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_haven_units.loc		
-unit_description_short_texts_text_haven_crossbowman	Experienced crossbowmen who have guarded the walls of the capital for generations.	true
-land_units_onscreen_name_haven_crossbowman	Castle Crossbowmen	true
-unit_description_short_texts_text_haven_praetorian	Also known as the Golden Cloaks, these officers have earned their honorable status through courageous deeds and fearless hearts.	true
-land_units_onscreen_name_haven_praetorian	Praetorians	true
-unit_description_short_texts_text_haven_squire	Elite infantry who can effectively withstand enemy charges, creating opportunities for other units to defeat the enemy.	true
-land_units_onscreen_name_haven_squire	Royal Guards	true
-unit_description_short_texts_text_haven_royal_hippogryph	Trained and powerful beasts that aid the Bretonnians in battle.	true
-land_units_onscreen_name_haven_royal_hippogryph	Royal Hippogryphs	true
-unit_description_short_texts_text_haven_sunrider	Cavalry who have accepted a sacred mission as the elite Sun Knights.	true
-land_units_onscreen_name_haven_sunrider	Knights of the Radiant Order	true
-unit_description_short_texts_text_haven_sunrider_sun	Cavalry who have accepted a sacred mission as the elite Sun Knights.	false
-land_units_onscreen_name_haven_sunrider_sun	Knights of the Radiant Order	false
-unit_description_short_texts_text_haven_paladin	The Paladins are the elite troops and ultimate defenders of Bretonnia.	true
-land_units_onscreen_name_haven_paladin	Paladins	true
-unit_description_short_texts_text_haven_inquisitor	The Inquisitors are faithful upholders of the doctrines of the Dragon of Light, Elrath.	true
-land_units_onscreen_name_haven_inquisitor	Inquisitors	true
-unit_description_short_texts_text_haven_zealot	Guided by higher powers, Zealots use their staff weapons to whip those heretics.	true
-land_units_onscreen_name_haven_zealot	Zealots	true
-unit_description_short_texts_text_haven_angel	Angels are the humanoid manifestations of the Dragon of Light, Elrath, and the ultimate embodiment of its power.	false
-land_units_onscreen_name_haven_angel	Angels	false
-unit_description_short_texts_text_haven_arcangel	Among the holy ranks of the Dragon of Light's servants, Archangels are the highest beings.	false
-land_units_onscreen_name_haven_arcangel	Archangels	false
-unit_description_short_texts_text_haven_judge	They roam throughout Bretonnia in the name of the Lake of the Lake, monitoring and judging various injustices.	false
-land_units_onscreen_name_haven_judge	Magistrates	false
+unit_description_short_texts_text_haven_crossbowman	Marksmen are seasoned crossbowmen who have guarded the walls of Falkenreich's capital for generations.	true
+land_units_onscreen_name_haven_crossbowman	Marksman	true
+unit_description_short_texts_text_haven_praetorian	Praetorians, popularly known as the Golden Cloaks, earn their honored status through valorous deeds and fearless hearts.	true
+land_units_onscreen_name_haven_praetorian	Praetorian	true
+unit_description_short_texts_text_haven_squire	Squires are elite infantry. They can effectively withstand enemy charges, buying time for other units to strike a decisive blow.	true
+land_units_onscreen_name_haven_squire	Squire	true
+unit_description_short_texts_text_haven_royal_hippogryph	The Royal Hippogryph is a mighty trained war beast that aids the Bretonnians in battle.	true
+land_units_onscreen_name_haven_royal_hippogryph	Royal Hippogryph	true
+unit_description_short_texts_text_haven_sunrider	Sun Knights are the Blazing Sun Cavalry who have accepted a sacred calling.	true
+land_units_onscreen_name_haven_sunrider	Sun Knight	true
+unit_description_short_texts_text_haven_sunrider_sun	Sun Knights are the Blazing Sun Cavalry who have accepted a sacred calling.	false
+land_units_onscreen_name_haven_sunrider_sun	Sun Knight	false
+unit_description_short_texts_text_haven_paladin	Paladins are the elite forces and ultimate defenders of the Gryphon Empire.	true
+land_units_onscreen_name_haven_paladin	Paladin	true
+unit_description_short_texts_text_haven_inquisitor	Inquisitors are devout upholders of the teachings of the Dragon of Light, Aelath.	true
+land_units_onscreen_name_haven_inquisitor	Inquisitor	true
+unit_description_short_texts_text_haven_zealot	Guided by a higher power, Zealots lash their staff weapons against heretics.	true
+land_units_onscreen_name_haven_zealot	Zealot	true
+unit_description_short_texts_text_haven_angel	Angels are the humanoid incarnations of the Dragon of Light, Aelath, and the ultimate embodiment of his power.	false
+land_units_onscreen_name_haven_angel	Angel	false
+unit_description_short_texts_text_haven_arcangel	Among the divine hierarchy of the Dragon of Light's servants, Archangels stand as the highest order of beings.	false
+land_units_onscreen_name_haven_arcangel	Archangel	false
+unit_description_short_texts_text_haven_judge	In the name of the Lady of the Lake, they travel across Bretonnia, watching over and passing judgement upon all manner of injustice.	false
+land_units_onscreen_name_haven_judge	Lake God Judge	false

@@ -4,101 +4,101 @@ effect_bundles_localised_title_ghs_def_black_tower_chd_toz_tier_1_reward	Black T
 effect_bundles_localised_title_ghs_def_black_tower_chd_toz_tier_2_reward	Black Tower Authority Level: II	false
 effect_bundles_localised_title_ghs_def_black_tower_chd_toz_tier_3_reward	Black Tower Authority Level: III	false
 effect_bundles_localised_title_ghs_def_black_tower_chd_toz_tier_4_reward	Black Tower Authority Level: IV	false
-effects_description_ghs_def_black_tower_effect_chd_toz_tier_unlock_dummy	Black Tower Authority Level %+n: Region Unlocked	false
-effects_description_ghs_def_black_tower_usurped_wh2_main_def_hag_graef	Diplomatic Relations: %+n with [[img:ui/flags/wh2_main_def_hag_graef/mon_24.png]][[/img]]Hag Graef	false
-effects_description_ghs_def_black_tower_usurped_wh2_main_def_naggarond	Diplomatic Relations: %+n with [[img:ui/flags/wh2_main_def_naggarond/mon_24.png]][[/img]]Naggarond	false
-effects_description_ghs_def_black_tower_usurped_wh2_main_def_cult_of_pleasure	Diplomatic Relations: %+n with [[img:ui/flags/wh2_main_def_cult_of_pleasure/mon_24.png]][[/img]]Cult of Pleasure	false
-effects_description_ghs_def_black_tower_usurped_wh2_twa03_def_rakarth	Diplomatic Relations: %+n with [[img:ui/flags/wh2_twa03_def_rakarth/mon_24.png]][[/img]]Thousand Maw	false
-effects_description_ghs_def_black_tower_usurped_wh2_dlc11_def_the_blessed_dread	Diplomatic Relations: %+n with [[img:ui/flags/wh2_dlc11_def_the_blessed_dread/mon_24.png]][[/img]]The Blessed Dread	false
-effects_description_ghs_def_black_tower_usurped_wh2_main_def_har_ganeth	Diplomatic Relations: %+n with [[img:ui/flags/wh2_main_def_har_ganeth/mon_24.png]][[/img]]Har Ganeth	false
-effects_description_ghs_def_black_tower_industry_ancilliary_dummy	[[col:yellow]]Grants a random follower or banner every %n turns.	false
-effects_description_ghs_def_black_tower_t3_industry_dummy	Construction Cost: %+n% for each [[col:yellow]]Industry[[/col]] seat seized in the Black Tower of the Witch King.	false
-effects_description_ghs_def_black_tower_t3_sorcery_dummy	Magic Winds Reserve: %+n for each [[col:yellow]]Sorcery[[/col]] seat occupied in the Black Tower of the Witch King.	false
-effects_description_ghs_def_black_tower_t3_military_dummy	Upkeep: %+n% for each [[col:yellow]]Military[[/col]] seat seized in the Black Tower of the Witch King.	false
-effects_description_ghs_def_black_tower_effect_rule_gain	Dark Power Gained: %+n per turn	false
-effects_description_ghs_def_black_tower_rule_gained_characters	Dark Power from Characters: %+n per turn	false
-effects_description_ghs_def_black_tower_rule_gained_buildings	Dark Power from Buildings: %+n per turn	false
-effects_description_ghs_def_black_tower_rule_gained_faction	Dark Power from Faction: %+n per turn	false
-effects_description_ghs_def_black_tower_rule_gained_bonus	Dark Power from Witch King Rewards: %+n per turn	false
-effects_description_ghs_def_black_tower_rule_gained_confederation	Dark Power from Confederation: %+n per turn	false
-pooled_resources_display_name_ghs_def_black_tower_rule	Dark Power	false
-pooled_resources_description_ghs_def_black_tower_rule	Dark Power represents your capital for seizing power in the Black Tower of Naggarond.\\n\\n[[col:yellow]][[img:icon_ghs_def_black_tower_rule]][[/img]]Dark Power can be gained from constructing buildings, faction mechanics, characters, and confederations. It can also be converted into slave resources via Slave Orders.\\n\\n[[col:yellow]][[img:icon_ghs_def_black_tower_rule]][[/img]]In the Black Tower at the heart of Naggarond, Dark Power can be spent to gain powerful rewards.[[/col]]	false
-pooled_resources_positive_factors_display_name_ghs_def_black_tower_rule_factor	Gain from Characters	false
+effects_description_ghs_def_black_tower_effect_chd_toz_tier_unlock_dummy	Black Tower Authority Level %+n Zone Unlocked	false
+effects_description_ghs_def_black_tower_usurped_wh2_main_def_hag_graef	Diplomatic Stance: %+n with [[img:ui/flags/wh2_main_def_hag_graef/mon_24.png]][[/img]] Hag Graef	false
+effects_description_ghs_def_black_tower_usurped_wh2_main_def_naggarond	Diplomatic Stance: %+n with [[img:ui/flags/wh2_main_def_naggarond/mon_24.png]][[/img]] Naggarond	false
+effects_description_ghs_def_black_tower_usurped_wh2_main_def_cult_of_pleasure	Diplomatic Stance: %+n with [[img:ui/flags/wh2_main_def_cult_of_pleasure/mon_24.png]][[/img]] Cult of Pleasure	false
+effects_description_ghs_def_black_tower_usurped_wh2_twa03_def_rakarth	Diplomatic Stance: %+n with [[img:ui/flags/wh2_twa03_def_rakarth/mon_24.png]][[/img]] Rakarth	false
+effects_description_ghs_def_black_tower_usurped_wh2_dlc11_def_the_blessed_dread	Diplomatic Stance: %+n with [[img:ui/flags/wh2_dlc11_def_the_blessed_dread/mon_24.png]][[/img]] The Blessed Dread	false
+effects_description_ghs_def_black_tower_usurped_wh2_main_def_har_ganeth	Diplomatic Stance: %+n with [[img:ui/flags/wh2_main_def_har_ganeth/mon_24.png]][[/img]] Har Ganeth	false
+effects_description_ghs_def_black_tower_industry_ancilliary_dummy	[[col:yellow]]Grants a random Ancillary or Battle Standard-type follower every %n turn(s)	false
+effects_description_ghs_def_black_tower_t3_industry_dummy	Building Cost: %+n% for every [[col:yellow]]Industry[[/col]] seat seized in the Witch King's Black Tower	false
+effects_description_ghs_def_black_tower_t3_sorcery_dummy	Winds of Magic Reserves: %+n for every [[col:yellow]]Sorcery[[/col]] seat held in the Witch King's Black Tower	false
+effects_description_ghs_def_black_tower_t3_military_dummy	Upkeep: %+n% for every [[col:yellow]]Military[[/col]] seat seized in the Witch King's Black Tower	false
+effects_description_ghs_def_black_tower_effect_rule_gain	Dark Puissance Gained: %+n per turn	false
+effects_description_ghs_def_black_tower_rule_gained_characters	Witch King's Dark Puissance: %+n per turn	false
+effects_description_ghs_def_black_tower_rule_gained_buildings	Dark Puissance Gained: %+n per turn	false
+effects_description_ghs_def_black_tower_rule_gained_faction	Dark Puissance Gained from Faction: %+n per turn	false
+effects_description_ghs_def_black_tower_rule_gained_bonus	Dark Puissance from Witch King's Reward: %+n per turn	false
+effects_description_ghs_def_black_tower_rule_gained_confederation	Dark Puissance Gained from Confederation: %+n per turn	false
+pooled_resources_display_name_ghs_def_black_tower_rule	Dark Puissance	false
+pooled_resources_description_ghs_def_black_tower_rule	Dark Puissance represents your capital for seizing power within the Witch King's Black Tower of Naggarond\\n\\n[[col:yellow]][[img:icon_ghs_def_black_tower_rule]][[/img]]Dark Puissance can be earned through constructing buildings, faction mechanics, characters, and confederations, and can be converted into Slave resources via Slave Orders\\n\\n[[col:yellow]][[img:icon_ghs_def_black_tower_rule]][[/img]]In the Black Tower at the very heart of Naggarond, you can spend Dark Puissance to gain powerful rewards[[/col]]	false
+pooled_resources_positive_factors_display_name_ghs_def_black_tower_rule_factor	Gained from Characters	false
 pooled_resources_negative_factors_display_name_ghs_def_black_tower_rule_factor	Consumption	false
 pooled_resource_factors_display_name_negative_ghs_def_black_tower_base_factor	Loss	false
 pooled_resource_factors_display_name_positive_ghs_def_black_tower_base_factor	Gain	false
-cdir_events_dilemma_choice_details_localised_choice_label_ghs_def_black_tower_exchange_dilemmaFIRST	Gain Power	false
-cdir_events_dilemma_choice_details_localised_choice_title_ghs_def_black_tower_exchange_dilemmaFIRST	We need Dark Power! Crush those insolent fools in the Black Tower of the Witch King!	false
+cdir_events_dilemma_choice_details_localised_choice_label_ghs_def_black_tower_exchange_dilemmaFIRST	Seize Puissance	false
+cdir_events_dilemma_choice_details_localised_choice_title_ghs_def_black_tower_exchange_dilemmaFIRST	We need Dark Puissance—defeat those ungrateful fools in the Witch King's Black Tower!	false
 cdir_events_dilemma_choice_details_localised_choice_label_ghs_def_black_tower_exchange_dilemmaSECOND	Retain Slaves	false
-cdir_events_dilemma_choice_details_localised_choice_title_ghs_def_black_tower_exchange_dilemmaSECOND	We must maintain control over the slaves. Slow the pace of conquest in the Black Tower for now.	false
-dilemmas_localised_title_ghs_def_black_tower_exchange_dilemma	The Black Tower of the Witch King	false
-dilemmas_localised_description_ghs_def_black_tower_exchange_dilemma	The Black Tower of the Witch King rises at the center of Naggarond, a labyrinth of palaces, walls, and spires that brings wealth and prestige to its owner. The Witch King is an unpredictable ruler, generous when fortune smiles, but unrelenting and brutal when plans falter.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_1	Veil of Deceit	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_1	Some indolent Dreadlords die wondering which audacious rebels dared to strike them down!	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_2	Prisoner Camps	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_2	Defeated foes, regardless of rank, are stripped bare and sent to mines, often revealing unexpected treasures.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_3	Black Tower Envoys	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_3	Thinking what I am thinking? The slave pens are almost empty! For the joy of all Druchii, let the blood flow today!	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_4	Slave Traders	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_4	There is no such thing as too many slaves. Mines eternally demand laborers, and the Witch King’s grand plans consume vast resources.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_1	Thirst for Bloodshed	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_1	The feeling of slicing through defenses, slitting throats, and stabbing hearts is so delightful!	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_2	Warmongers	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_2	Swift and decisive strikes are key to conquest, and only this seat holds the resources necessary to sustain the army's advance.	false
+cdir_events_dilemma_choice_details_localised_choice_title_ghs_def_black_tower_exchange_dilemmaSECOND	We need to keep control over the lives of our slaves; let us slow our encroachment on the Black Tower	false
+dilemmas_localised_title_ghs_def_black_tower_exchange_dilemma	Witch King's Black Tower	false
+dilemmas_localised_description_ghs_def_black_tower_exchange_dilemma	The Witch King's Black Tower stands at the heart of Naggarond, a labyrinth of palaces, ramparts, and towers that brings wealth and prestigious honor. The Witch King has always been a capricious ruler—when fortune favors him, he can be exceedingly generous, but should things not go as he plans, he becomes immovably ruthless and cruel.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_1	Veil of Deception	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_1	Some complacent Dread Lord dies never understanding just what reckless rebel dared to strike him down!	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_2	Prisoner Camp	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_2	The defeated, high and low alike, are stripped of everything before being marched to the mines. We always find something novel among them.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_3	Envoy of Har Ganeth	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_3	Are you thinking what I'm thinking? The slave pens are nearly empty! For the pleasure of all Druchii, let the blood flow today!	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_4	Slave Trader	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_industry_4	There are never enough slaves. The mines' hunger for labor knows no end, and the Witch King's newest schemes will demand a fortune.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_1	Bloodthirst	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_1	What pleasure there is in slicing through an enemy's defenses, gently opening a throat, and driving straight for the heart!	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_2	Warmonger	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_2	Momentum is the key to conquest, and only this seat can muster the resources needed to keep the armies marching.	false
 rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_3	Trusted Quartermaster	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_3	The one holding the armory’s keys is the most trusted by the Dreadlord, though that trust invites constant scrutiny.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_4	Black Tower Horn	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_4	In response to the Black Tower Lord's call, warriors gather from all directions.	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_3	Whoever holds the armory keys is trusted most by the Dread Lord, but that does not mean no one is watching his every move.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_4	Horn of Har Ganeth	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_military_4	At the Black Tower Lord's summons, warriors gather from every corner.	false
 rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_1	Chaos Sorcery	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_1	On the Tower of Prophecy in Ghrond, sorceresses of the Dark Convent study vile Chaos magic. This power is potent enough to disrupt the Great Vortex.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_2	Warlocks	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_2	Those who can manipulate the Winds of Magic to serve the Witch King's interests achieve elevated positions—though under increased scrutiny.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_3	Medusa Prophets	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_3	For the Druchii, the scent of agony is like the finest perfume, and nothing sounds more despairing than the twisted prophecies of Medusa Prophets.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_4	Forbidden Sorceress	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_4	Spells forged with Dhar, or raw dark magic, are among the most destructive. These are drawn from unrefined Winds of Magic but exact a terrible price on their users.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_1	Master Architect	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_1	Slave master, whip wielder, and the direct source of Black Tower lords' taxation revenues.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_2	Slave Holds	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_2	The massive holds of the Black Arks carry slaves, destined for Naggarond or to serve their cruel masters aboard.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_3	Endless Raids	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_3	Once again, the Druchii sail to distant shores for plunder and pillage. The mines of Naggaroth always hunger for fresh flesh!	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_1	Slaughter Frenzy	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_1	They require no aid, and danger is but a fleeting thought. Their only cure is the exhilaration of unrestrained carnage.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_2	Replenish Troops	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_2	Warriors devoid of mercy struggle for survival in the twisted streets of Naggaroth’s cities, most of whom are conscripted.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_3	Shadowy Speed	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_3	The Shadows glide ghostlike through petrified forests and jagged rocks. Even by Druchii standards, their existence is a living hell.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_1	Bloody Power	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_1	Competition for positions in the Dark Convent is both bloody and fierce. Only those who survive their ambition learn the most potent magic in the world.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_2	Malevolent Curses	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_2	The so-called masters of the Winds of Magic in the White Tower could never imagine that their every word is heard with perfect clarity in the shadows.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_3	Archives of Ghrond	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_3	The ancient records of Ghrond contain secrets that could save—or end—lives.	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_1	Atop the Prophecy Tower of Ghrond, the sorceresses of the Dark Convent study the wicked sorceries of Chaos. Such energies can disturb the Great Vortex.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_2	Spellcaster	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_2	Those who can bend the Winds of Magic to the Witch King's will earn lofty station—and closer scrutiny.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_3	Medusa Oracle	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_3	To the Druchii, the scent of pain is the finest perfume, and no sound brings such despair as the twisted prophecies of a Medusa Oracle.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_4	Forbidden Witch	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t1_sorcery_4	Spell-items forged from Druhir, or Black Magic, are among the most destructive. Their power is drawn from unrefined Winds of Magic, but the price the wielder pays is steep.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_1	Master Builder	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_1	Master of slaves, whipmaster of shirkers, and the direct source of taxes for the Black Tower Lord.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_2	Slave Hold	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_2	The vast holds of the Black Ark carry slaves, bound either for Naggarond or for service to their cruel masters aboard ship.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_3	Endless Raiding	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_industry_3	Once again it is time for the Dark Elves to sail to distant shores for pillage and plunder! The mines of Naggaroth forever hunger for fresh flesh!	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_1	Killing Tide	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_1	They need no one's aid, and danger means nothing to them—the only cure is to rejoice in slaughter to their heart's content.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_2	Fresh Reinforcements	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_2	Warriors who know nothing of mercy fight desperately for survival in the twisted streets of Naggaroth's cities; most of them are eventually conscripted.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_3	Speed of the Shadows	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_military_3	Shadows can move like phantoms through petrified forests and jagged stone thickets—even by the Dark Elves' brutal standards, such a life is hell.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_1	Blood Mana	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_1	Competition for rank within the Dark Convent is bloody and fierce; only those who survive their own ambition are fortunate enough to learn the world's most powerful magic.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_2	Vile Incantation	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_2	The White Tower elves who fancy themselves masters of the Winds of Magic never suspect that every incantation they utter is heard clearly by ears in the dark.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_3	Tome of Ghrond	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t2_sorcery_3	The ancient archives of Ghrond hold many secrets that can save a life... or take one.	false
 rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_industry_1	Midnight Revelry	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_industry_1	Midnight demands offerings of vicious and vile sacrifices. Perhaps appeasing the gods will ensure our survival.	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_industry_1	The corrupt and malevolent Midnight of Death demands sacrifice. If we offer up... an offering, perhaps the gods can be appeased?	false
 rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_industry_2	Endless Toil	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_industry_2	Beaten, starved, and endlessly worked, the slaves are exploited to the very limit of their endurance.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_1	Blades of Hatred	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_1	The High Elves exiled the Druchii, dividing them irreparably. Brother wars cannot mend the rift, and hatred festers eternally.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_2	Venomous Resolve	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_2	Malekith’s life is sustained by dark powers. The Witch King vows to witness the final Phoenix King’s downfall, even if it takes an eternity.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_1	Death's Pull	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_1	Death follows all who wield the Winds of Magic, but those attuned to Shyish are particularly adept at mastering the art of slaughter.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_2	Dark Yearning	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_2	Most sorceresses dwell in absolute darkness, crafting cruel illusions to ensnare their prey and claim the souls they crave.	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_malus	Quell the Whispers!	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_malus	[[col:green]]You will confederate with Hag Graef.[[/col]]	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_industry_2	Beaten, starved, and kept at their posts without rest, slaves are wrung of every last drop of labor.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_1	Blade of Hatred	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_1	The High Elves cast the Dark Elves out; the two peoples are now utterly distinct, brother turned against brother, a rift beyond mending, each harboring hatred for the other.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_2	Malicious Intent	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_military_2	Malekith's life is sustained by dark power alone; the Witch King has sworn to witness with his own eyes the last Phoenix King's end—and even should heaven and earth crumble, he will wait!	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_1	Invocation of Death	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_1	Death walks with all who master the Winds of Magic, and those who command the power of the Wind of Shyish are, without question, more skilled than most in the art of killing.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_2	Dark Longing	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t3_sorcery_2	Most sorceresses lurk in utter darkness, using illusions to conjure cruel visions to deceive their prey, seizing the souls they crave.	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_malus	Silence the Whispers!	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_malus	[[col:green]]You will confederate with the Hag Graef faction[[/col]]	false
 rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_malekith	Hail the Witch King!	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_malekith	[[col:green]]You will confederate with Naggarond.[[/col]]	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_malekith	[[col:green]]You will confederate with the Naggarond faction[[/col]]	false
 rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_morathi	Pleasure No More!	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_morathi	[[col:green]]You will confederate with the Cult of Pleasure.[[/col]]	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_morathi	[[col:green]]You will confederate with the Cult of Pleasure faction[[/col]]	false
 rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_rakarth	Whip the Beasts!	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_rakarth	[[col:green]]You will confederate with the Thousand Maw.[[/col]]	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_lokhir	Lord of the Deeps!	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_lokhir	[[col:green]]You will confederate with the Blessed Dread.[[/col]]	false
-rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_hellebron	Dedication to Khaine!	false
-rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_hellebron	[[col:green]]You will confederate with Har Ganeth.[[/col]]	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_rakarth	[[col:green]]You will confederate with the Rakarth faction[[/col]]	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_lokhir	Lord of the Deep!	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_lokhir	[[col:green]]You will confederate with the Blessed Dread faction[[/col]]	false
+rituals_display_name_ghs_def_black_tower_ritual_chd_toz_slot_t4_hellebron	Devotion to Khaine!	false
+rituals_description_ghs_def_black_tower_ritual_chd_toz_slot_t4_hellebron	[[col:green]]You will confederate with the Har Ganeth faction[[/col]]	false
 ritual_categories_display_name_GHS_DEF_BLACK_TOWER_T4	Confederation	false
 ritual_categories_display_name_GHS_DEF_BLACK_TOWER_INDUSTRY_T1	Economy	false
 ritual_categories_display_name_GHS_DEF_BLACK_TOWER_INDUSTRY_T2	Economy	false
@@ -109,57 +109,57 @@ ritual_categories_display_name_GHS_DEF_BLACK_TOWER_MILITARY_T3	Military	false
 ritual_categories_display_name_GHS_DEF_BLACK_TOWER_SORCERY_T1	Sorcery	false
 ritual_categories_display_name_GHS_DEF_BLACK_TOWER_SORCERY_T2	Sorcery	false
 ritual_categories_display_name_GHS_DEF_BLACK_TOWER_SORCERY_T3	Sorcery	false
-ritual_category_groups_display_name_ghs_def_black_tower_1	Black Tower Authority Level: I	false
-ritual_category_groups_display_name_ghs_def_black_tower_2	Black Tower Authority Level: II	false
-ritual_category_groups_display_name_ghs_def_black_tower_3	Black Tower Authority Level: III	false
-ritual_category_groups_display_name_ghs_def_black_tower_4	Black Tower Authority Level: IV	false
-uied_component_texts_localised_string_StateText_ghs_def_black_tower_title	Tower of the Witch King	false
-campaign_localised_strings_ghs_def_black_tower_tooltip	Tower of the Witch King||Seize seats within the Tower of the Witch King to dominate various aspects of Druchii society, ultimately subjugating other factions to your rule.	false
-incidents_localised_title_ghs_def_black_tower_ancilliary_banners_followers	Tower of the Witch King	false
-incidents_localised_description_ghs_def_black_tower_ancilliary_banners_followers	You have occupied the [[col:yellow]]Prisoner Camp[[/col]] seat within the Tower of the Witch King, granting a [[col:yellow]]Follower[[/col]] this turn.	false
-incidents_localised_title_ghs_def_black_tower_ancilliary_talismans_items	Tower of the Witch King	false
-incidents_localised_description_ghs_def_black_tower_ancilliary_talismans_items	You have occupied the [[col:yellow]]Forbidden Sorceress[[/col]] seat within the Tower of the Witch King, granting a [[col:yellow]]Magic Item[[/col]] this turn.	false
-incidents_localised_title_ghs_def_black_tower_ancilliary_weapons_armour	Tower of the Witch King	false
-incidents_localised_description_ghs_def_black_tower_ancilliary_weapons_armour	You have occupied the [[col:yellow]]Quartermaster[[/col]] seat within the Tower of the Witch King, granting a [[col:yellow]]Magic Item[[/col]] this turn.	false
-incidents_localised_title_ghs_def_black_tower_new_tier_unlocked_2	Tower of the Witch King\\nBlack Tower Authority Level II Unlocked	false
-incidents_localised_description_ghs_def_black_tower_new_tier_unlocked_2	[[col:yellow]]Tower of the Witch King[[/col]] has unlocked a new tier of seats for contention.	false
-incidents_localised_title_ghs_def_black_tower_new_tier_unlocked_3	Tower of the Witch King\\nBlack Tower Authority Level III Unlocked	false
-incidents_localised_description_ghs_def_black_tower_new_tier_unlocked_3	[[col:yellow]]Tower of the Witch King[[/col]] has unlocked a new tier of seats for contention.	false
-incidents_localised_title_ghs_def_black_tower_new_tier_unlocked_4	Tower of the Witch King\\nBlack Tower Authority Level IV Unlocked	false
-incidents_localised_description_ghs_def_black_tower_new_tier_unlocked_4	[[col:yellow]]Tower of the Witch King[[/col]] has unlocked a new tier of seats for contention.	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_hag_graef	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_naggarond	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_cult_of_pleasure	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_twa03_def_rakarth	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_dlc11_def_the_blessed_dread	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_har_ganeth	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_hag_graef	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_naggarond	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_cult_of_pleasure	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_twa03_def_rakarth	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_dlc11_def_the_blessed_dread	Tower of the Witch King	false
-incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_har_ganeth	Tower of the Witch King	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_hag_graef	You have usurped a [[col:yellow]]Tower of the Witch King[[/col]] seat from [[img:ui/flags/wh2_main_def_hag_graef/mon_24.png]][[/img]][[col:yellow]]Hag Graef[[/col]].\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomatic relations with Hag Graef: -10, lasting [[img:icon_turns]][[/img]]5 turns[[/col]]	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_naggarond	You have usurped a [[col:yellow]]Tower of the Witch King[[/col]] seat from [[img:ui/flags/wh2_main_def_naggarond/mon_24.png]][[/img]][[col:yellow]]Naggarond[[/col]].\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomatic relations with Naggarond: -10, lasting [[img:icon_turns]][[/img]]5 turns[[/col]]	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_cult_of_pleasure	You have usurped a [[col:yellow]]Tower of the Witch King[[/col]] seat from [[img:ui/flags/wh2_main_def_cult_of_pleasure/mon_24.png]][[/img]][[col:yellow]]Cult of Pleasure[[/col]].\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomatic relations with Cult of Pleasure: -10, lasting [[img:icon_turns]][[/img]]5 turns[[/col]]	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_twa03_def_rakarth	You have usurped a [[col:yellow]]Tower of the Witch King[[/col]] seat from [[img:ui/flags/wh2_twa03_def_rakarth/mon_24.png]][[/img]][[col:yellow]]Rakarth[[/col]].\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomatic relations with Rakarth: -10, lasting [[img:icon_turns]][[/img]]5 turns[[/col]]	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_dlc11_def_the_blessed_dread	You have usurped a [[col:yellow]]Tower of the Witch King[[/col]] seat from [[img:ui/flags/wh2_dlc11_def_the_blessed_dread/mon_24.png]][[/img]][[col:yellow]]The Blessed Dread[[/col]].\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomatic relations with The Blessed Dread: -10, lasting [[img:icon_turns]][[/img]]5 turns[[/col]]	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_har_ganeth	You have usurped a [[col:yellow]]Tower of the Witch King[[/col]] seat from [[img:ui/flags/wh2_main_def_har_ganeth/mon_24.png]][[/img]][[col:yellow]]Har Ganeth[[/col]].\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomatic relations with Har Ganeth: -10, lasting [[img:icon_turns]][[/img]]5 turns[[/col]]	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_hag_graef	Your [[col:yellow]]Tower of the Witch King[[/col]] seat has been usurped by [[img:ui/flags/wh2_main_def_hag_graef/mon_24.png]][[/img]][[col:yellow]]Hag Graef[[/col]]! Such treachery demands retribution!	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_naggarond	Your [[col:yellow]]Tower of the Witch King[[/col]] seat has been usurped by [[img:ui/flags/wh2_main_def_naggarond/mon_24.png]][[/img]][[col:yellow]]Naggarond[[/col]]! Such treachery demands retribution!	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_cult_of_pleasure	Your [[col:yellow]]Tower of the Witch King[[/col]] seat has been usurped by [[img:ui/flags/wh2_main_def_cult_of_pleasure/mon_24.png]][[/img]][[col:yellow]]Cult of Pleasure[[/col]]! Such treachery demands retribution!	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_twa03_def_rakarth	Your [[col:yellow]]Tower of the Witch King[[/col]] seat has been usurped by [[img:ui/flags/wh2_twa03_def_rakarth/mon_24.png]][[/img]][[col:yellow]]Rakarth[[/col]]! Such treachery demands retribution!	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_dlc11_def_the_blessed_dread	Your [[col:yellow]]Tower of the Witch King[[/col]] seat has been usurped by [[img:ui/flags/wh2_dlc11_def_the_blessed_dread/mon_24.png]][[/img]][[col:yellow]]The Blessed Dread[[/col]]! Such treachery demands retribution!	false
-incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_har_ganeth	Your [[col:yellow]]Tower of the Witch King[[/col]] seat has been usurped by [[img:ui/flags/wh2_main_def_har_ganeth/mon_24.png]][[/img]][[col:yellow]]Har Ganeth[[/col]]! Such treachery demands retribution!	false
-effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_hag_graef	Black Tower Power: Usurped	false
+ritual_category_groups_display_name_ghs_def_black_tower_1	Black Tower Authority Tier: I	false
+ritual_category_groups_display_name_ghs_def_black_tower_2	Black Tower Authority Tier: II	false
+ritual_category_groups_display_name_ghs_def_black_tower_3	Black Tower Authority Tier: III	false
+ritual_category_groups_display_name_ghs_def_black_tower_4	Black Tower Authority Tier: IV	false
+uied_component_texts_localised_string_StateText_ghs_def_black_tower_title	Witch King's Black Tower	false
+campaign_localised_strings_ghs_def_black_tower_tooltip	Witch King's Black Tower||Usurp seats within the Witch King's Black Tower to seize power over every facet of Druchii society, ultimately bringing other factions to heel before you	false
+incidents_localised_title_ghs_def_black_tower_ancilliary_banners_followers	Witch King's Black Tower	false
+incidents_localised_description_ghs_def_black_tower_ancilliary_banners_followers	You have seized the [[col:yellow]]Prisoner Camp[[/col]] seat in the Witch King's Black Tower, granting you a [[col:yellow]]follower[[/col]] this turn	false
+incidents_localised_title_ghs_def_black_tower_ancilliary_talismans_items	Witch King's Black Tower	false
+incidents_localised_description_ghs_def_black_tower_ancilliary_talismans_items	You have seized the [[col:yellow]]Forbidden Witch[[/col]] seat in the Witch King's Black Tower, granting you a [[col:yellow]]magic item[[/col]] this turn	false
+incidents_localised_title_ghs_def_black_tower_ancilliary_weapons_armour	Witch King's Black Tower	false
+incidents_localised_description_ghs_def_black_tower_ancilliary_weapons_armour	You have seized the [[col:yellow]]Trusted Quartermaster[[/col]] seat in the Witch King's Black Tower, granting you a [[col:yellow]]magic item[[/col]] this turn	false
+incidents_localised_title_ghs_def_black_tower_new_tier_unlocked_2	Witch King's Black Tower\\nBlack Tower Authority Tier II Unlocked	false
+incidents_localised_description_ghs_def_black_tower_new_tier_unlocked_2	The [[col:yellow]]Witch King's Black Tower[[/col]] has opened a new tier of seats to contend for	false
+incidents_localised_title_ghs_def_black_tower_new_tier_unlocked_3	Witch King's Black Tower\\nBlack Tower Authority Tier III Unlocked	false
+incidents_localised_description_ghs_def_black_tower_new_tier_unlocked_3	The [[col:yellow]]Witch King's Black Tower[[/col]] has opened a new tier of seats to contend for	false
+incidents_localised_title_ghs_def_black_tower_new_tier_unlocked_4	Witch King's Black Tower\\nBlack Tower Authority Tier IV Unlocked	false
+incidents_localised_description_ghs_def_black_tower_new_tier_unlocked_4	The [[col:yellow]]Witch King's Black Tower[[/col]] has opened a new tier of seats to contend for	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_hag_graef	The [[col:yellow]]Witch King's Black Tower[[/col]] has opened a new tier of seats to contend for	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_naggarond	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_cult_of_pleasure	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_twa03_def_rakarth	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_dlc11_def_the_blessed_dread	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_har_ganeth	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_hag_graef	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_naggarond	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_cult_of_pleasure	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_twa03_def_rakarth	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_dlc11_def_the_blessed_dread	Witch King's Black Tower	false
+incidents_localised_title_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_har_ganeth	Witch King's Black Tower	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_hag_graef	You have usurped a seat in the [[col:yellow]]Witch King's Black Tower[[/col]] from [[img:ui/flags/wh2_main_def_hag_graef/mon_24.png]][[/img]][[col:yellow]]Hag Graef[[/col]]\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomacy: -10 with Hag Graef for [[img:icon_turns]][[/img]]5 turns[[/col]]	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_naggarond	You have usurped a seat in the [[col:yellow]]Witch King's Black Tower[[/col]] from [[img:ui/flags/wh2_main_def_naggarond/mon_24.png]][[/img]][[col:yellow]]Naggarond[[/col]]\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomacy: -10 with Naggarond for [[img:icon_turns]][[/img]]5 turns[[/col]]	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_cult_of_pleasure	You have usurped a seat in the [[col:yellow]]Witch King's Black Tower[[/col]] from [[img:ui/flags/wh2_main_def_cult_of_pleasure/mon_24.png]][[/img]][[col:yellow]]Cult of Pleasure[[/col]]\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomacy: -10 with Cult of Pleasure for [[img:icon_turns]][[/img]]5 turns[[/col]]	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_twa03_def_rakarth	You have usurped a seat in the [[col:yellow]]Witch King's Black Tower[[/col]] from [[img:ui/flags/wh2_twa03_def_rakarth/mon_24.png]][[/img]][[col:yellow]]Rakarth[[/col]]\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomacy: -10 with Rakarth for [[img:icon_turns]][[/img]]5 turns[[/col]]	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_dlc11_def_the_blessed_dread	You have usurped a seat in the [[col:yellow]]Witch King's Black Tower[[/col]] from [[img:ui/flags/wh2_dlc11_def_the_blessed_dread/mon_24.png]][[/img]][[col:yellow]]Blessed Dread[[/col]]\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomacy: -10 with Blessed Dread for [[img:icon_turns]][[/img]]5 turns[[/col]]	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurping_wh2_main_def_har_ganeth	You have usurped a seat in the [[col:yellow]]Witch King's Black Tower[[/col]] from [[img:ui/flags/wh2_main_def_har_ganeth/mon_24.png]][[/img]][[col:yellow]]Har Ganeth[[/col]]\\n\\n[[img:icon_diplomacy]][[/img]][[col:red]]Diplomacy: -10 with Har Ganeth for [[img:icon_turns]][[/img]]5 turns[[/col]]	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_hag_graef	One of your seats in the [[col:yellow]]Witch King's Black Tower[[/col]] has been usurped by [[img:ui/flags/wh2_main_def_hag_graef/mon_24.png]][[/img]][[col:yellow]]Hag Graef[[/col]]! Such an act of insolence demands retribution!	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_naggarond	One of your seats in the [[col:yellow]]Witch King's Black Tower[[/col]] has been usurped by [[img:ui/flags/wh2_main_def_naggarond/mon_24.png]][[/img]][[col:yellow]]Naggarond[[/col]]! Such an act of insolence demands retribution!	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_cult_of_pleasure	One of your seats in the [[col:yellow]]Witch King's Black Tower[[/col]] has been usurped by [[img:ui/flags/wh2_main_def_cult_of_pleasure/mon_24.png]][[/img]][[col:yellow]]Cult of Pleasure[[/col]]! Such an act of insolence demands retribution!	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_twa03_def_rakarth	One of your seats in the [[col:yellow]]Witch King's Black Tower[[/col]] has been usurped by [[img:ui/flags/wh2_twa03_def_rakarth/mon_24.png]][[/img]][[col:yellow]]Rakarth[[/col]]! Such an act of insolence demands retribution!	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_dlc11_def_the_blessed_dread	One of your seats in the [[col:yellow]]Witch King's Black Tower[[/col]] has been usurped by [[img:ui/flags/wh2_dlc11_def_the_blessed_dread/mon_24.png]][[/img]][[col:yellow]]Blessed Dread[[/col]]! Such an act of insolence demands retribution!	false
+incidents_localised_description_ghs_def_black_tower_diplomacy_usurped_by_wh2_main_def_har_ganeth	One of your seats in the [[col:yellow]]Witch King's Black Tower[[/col]] has been usurped by [[img:ui/flags/wh2_main_def_har_ganeth/mon_24.png]][[/img]][[col:yellow]]Har Ganeth[[/col]]! Such an act of insolence demands retribution!	false
+effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_hag_graef	Black Tower's Power: Usurped	false
 effect_bundles_localised_description_ghs_def_black_tower_usurped_wh2_main_def_hag_graef	You have usurped a [[col:yellow]]Black Tower[[/col]] seat from [[img:ui/flags/wh2_main_def_hag_graef/mon_24.png]][[/img]][[col:yellow]]Hag Graef[[/col]].	false
-effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_naggarond	Black Tower Power: Usurped	false
+effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_naggarond	Black Tower's Power: Usurped	false
 effect_bundles_localised_description_ghs_def_black_tower_usurped_wh2_main_def_naggarond	You have usurped a [[col:yellow]]Black Tower[[/col]] seat from [[img:ui/flags/wh2_main_def_naggarond/mon_24.png]][[/img]][[col:yellow]]Naggarond[[/col]].	false
-effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_cult_of_pleasure	Black Tower Power: Usurped	false
+effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_cult_of_pleasure	Black Tower's Power: Usurped	false
 effect_bundles_localised_description_ghs_def_black_tower_usurped_wh2_main_def_cult_of_pleasure	You have usurped a [[col:yellow]]Black Tower[[/col]] seat from [[img:ui/flags/wh2_main_def_cult_of_pleasure/mon_24.png]][[/img]][[col:yellow]]Cult of Pleasure[[/col]].	false
-effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_twa03_def_rakarth	Black Tower Power: Usurped	false
+effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_twa03_def_rakarth	Black Tower's Power: Usurped	false
 effect_bundles_localised_description_ghs_def_black_tower_usurped_wh2_twa03_def_rakarth	You have usurped a [[col:yellow]]Black Tower[[/col]] seat from [[img:ui/flags/wh2_twa03_def_rakarth/mon_24.png]][[/img]][[col:yellow]]Rakarth[[/col]].	false
-effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_dlc11_def_the_blessed_dread	Black Tower Power: Usurped	false
+effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_dlc11_def_the_blessed_dread	Black Tower's Power: Usurped	false
 effect_bundles_localised_description_ghs_def_black_tower_usurped_wh2_dlc11_def_the_blessed_dread	You have usurped a [[col:yellow]]Black Tower[[/col]] seat from [[img:ui/flags/wh2_dlc11_def_the_blessed_dread/mon_24.png]][[/img]][[col:yellow]]The Blessed Dread[[/col]].	false
-effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_har_ganeth	Black Tower Power: Usurped	false
+effect_bundles_localised_title_ghs_def_black_tower_usurped_wh2_main_def_har_ganeth	Black Tower's Power: Usurped	false
 effect_bundles_localised_description_ghs_def_black_tower_usurped_wh2_main_def_har_ganeth	You have usurped a [[col:yellow]]Black Tower[[/col]] seat from [[img:ui/flags/wh2_main_def_har_ganeth/mon_24.png]][[/img]][[col:yellow]]Har Ganeth[[/col]].	false

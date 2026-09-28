@@ -1,0 +1,11 @@
+key	text	tooltip
+#Loc;1;text/!!!cth_fuyuanshan_upgrades.loc		
+campaign_localised_strings_string_tooltip_upgrade_ok	Promote	true
+campaign_localised_strings_string_tooltip_upgrade_ok_loyalty_warning	Promote||{{tr:upgrade_tooltip_loyalty_explanation}}	true
+pooled_resources_description_cth_fuyuanshan_upgrades_feats	As the tides of magic surge, it is time for heroes to rise and fight\\n\\n[[col:yellow]][[img:cth_fuyuanshan_resource_buff]][[/img]]Gain Valorous Might points by winning battles while at a disadvantage\\n\\n[[col:yellow]][[img:cth_fuyuanshan_celest_buff]][[/img]]Certain units may consume Valorous Might to be promoted to a higher-tier unit when conditions are met	true
+pooled_resources_display_name_cth_fuyuanshan_upgrades_feats	Valorous Might	true
+pooled_resources_negative_factors_display_name_cth_fuyuanshan_upgrades_feats	Lose Valorous Might	true
+pooled_resources_positive_factors_display_name_cth_fuyuanshan_upgrades_feats	Gain Valorous Might	true
+random_localisation_strings_string_tooltip_upgrade_unit	{{tr:upgrade_tooltip}}	true
+ui_text_replacements_localised_text_upgrade_tooltip	Promote	true
+uied_component_texts_localised_string_button_upgrade_Tooltip_260412	Promote	true

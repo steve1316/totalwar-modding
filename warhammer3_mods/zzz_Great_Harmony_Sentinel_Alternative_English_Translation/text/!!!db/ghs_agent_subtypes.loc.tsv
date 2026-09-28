@@ -1,15 +1,19 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_agent_subtypes.loc		
-agent_subtypes_onscreen_name_override_ghs_cth_cha_terracotta_jade	Jade Court Sentinel	false
-agent_subtypes_description_text_override_phoenix_guard_champion	Jade Court Sentinel, a figure of solemn dignity imbued with the heroic spirits of Cathay’s bravest generals. Even in death, they stand as ghostly champions, defying all who challenge their might.	false
-agent_subtypes_onscreen_name_override_ghs_cth_cha_jade_blood_taoist	Jade-Blooded Taoist	false
-agent_subtypes_description_text_override_ghs_cth_cha_jade_blood_taoist	Clad in robes of jade with a faint emerald glow, these enigmatic figures specialize in harnessing the life winds of Qi, striving to suppress the unspeakable desires of their lineage.	false
-agent_subtypes_onscreen_name_override_ghs_cth_inf_royal_guard_crowmen	Onyx Crowman	false
+agent_subtypes_onscreen_name_override_ghs_cth_cha_terracotta_jade	Terracotta Jade Guardian	false
+agent_subtypes_onscreen_name_override_ghs_cth_cha_jade_blood_taoist	Jade Blood Taoist	false
+agent_subtypes_description_text_override_ghs_cth_cha_jade_blood_taoist	Clad in jade robes with a faint emerald glow, mysterious and unfathomable, she devotes her studies to the Lore of Life's Winds of Magic, striving to master the unspeakable desires of her kind.	false
+agent_subtypes_onscreen_name_override_ghs_cth_inf_royal_guard_crowmen	Black Jade Crow Warden	false
 agent_subtypes_onscreen_name_override_ghs_cth_cha_hongying	Legendary Lord	false
-agent_subtypes_onscreen_name_override_ghs_chd_mon_kdaai_destroyer_doombull	K’daai Conqueror	false
-agent_subtypes_description_text_override_lzd_kroxigor_bro_01	"Old-Kan"	true
-agent_subtypes_description_text_override_lzd_kroxigor_bro_02	"Old-K’ja"	true
+agent_subtypes_onscreen_name_override_ghs_chd_mon_kdaai_destroyer_doombull	Kdaai Conqueror	false
+agent_subtypes_description_text_override_lzd_kroxigor_bro_01	[Gu Kahn]	true
+agent_subtypes_description_text_override_lzd_kroxigor_bro_02	[Gu Ke Jia]	true
 agent_subtypes_onscreen_name_override_cth_zhaowang	Legendary Lord	false
 agent_subtypes_onscreen_name_override_lzd_kroxigor_bro_01	Legendary Hero	false
 agent_subtypes_onscreen_name_override_lzd_kroxigor_bro_02	Legendary Hero	false
 agent_subtypes_onscreen_name_override_ghs_ksl_thor	Lord of Thunder	true
+agent_subtypes_description_text_override_ghs_cth_cha_terracotta_jade	The Dragon Court Terracotta General, majestic and solemn, is imbued with the valiant spirit of a warrior of the Celestial Empire—even in death, they become heroic ghosts, standing proud between heaven and earth.	true
+agent_subtypes_description_text_override_ghs_cth_cha_wangque	[Moonlight Edict] Liu Wang Que	true
+agent_subtypes_onscreen_name_override_ghs_cth_cha_wangque	Legendary Hero	true
+agent_subtypes_onscreen_name_override_ghs_cth_cha_yangxing	Legendary Hero	true
+agent_subtypes_onscreen_name_override_ghs_main_cth_cha_xiaoxiao	Legendary Lord	true

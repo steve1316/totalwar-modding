@@ -1,29 +1,29 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_wef_units.loc		
 ui_unit_groupings_onscreen_monstrous_shock_cavalry_stags_arrow	Monstrous Ranged Cavalry	false
-ui_unit_groupings_onscreen_infantry_war_druid_human	Melee Mage Infantry	false
+ui_unit_groupings_onscreen_infantry_war_druid_human	Melee Caster Infantry	false
 land_units_onscreen_name_wef_cav_spears_of_orion	Spears of Orion	false
-unit_description_historical_texts_text_wef_cav_spears_of_orion	Among the many hunter families loyal to the Forest King, the Spears of Orion is one of the largest. For millennia, they have been the vanguard of Orion's Wild Hunt and the last line of defense for the sacred Oak of Ages each winter.	false
-unit_description_short_texts_text_wef_cav_spears_of_orion	If Orion calls upon them, these warriors will not hesitate to face sharp blades and magic in defense of their king.	false
+unit_description_historical_texts_text_wef_cav_spears_of_orion	Among the many hunter families sworn to the Lord of the Woods, the Spears of Orion are one of the largest. For thousands of years, they have been the vanguard of Orion's Wild Hunt, and the last line of defence guarding the Oak of Ages each winter.	false
+unit_description_short_texts_text_wef_cav_spears_of_orion	If Orion has need of them, these warriors will answer without hesitation, whatever blades or sorcery await.	false
 land_units_onscreen_name_wef_inf_talsyn_hawks	Talsyn Hawks	false
-unit_description_historical_texts_text_inf_cav_talsyn_hawks	As the Glade Lord of Talsyn, Araloth wholeheartedly supported Ariel's rise to become the Queen of Athel Loren. Unlike other Elves in the Eternal Queen’s army, they remained steadfast in their faith, unshaken even by fighting their kin, for their loyalty to Ariel was as strong as their faith in their lord.	false
-unit_description_short_texts_text_wef_inf_talsyn_hawks	The blades of this unit have tasted the blood of the long-standing enemies, the Beastmen.	false
+unit_description_historical_texts_text_inf_cav_talsyn_hawks	As Lord of Talsyn, Alarielle's earliest and most steadfast supporter, Arloth backed her ascension to the throne of Ulthuan from the very beginning. Unlike other elves within the Everqueen's army, they never wavered at the thought of fighting fellow elves, for their faith in Alarielle was as unshakeable as their loyalty to their own liege.	false
+unit_description_short_texts_text_wef_inf_talsyn_hawks	This unit's blades have long tasted the blood of the Beastmen, their ancient foes.	false
 land_units_onscreen_name_wef_mon_durthus_wargrove	Durthu's Wargrove	false
-unit_description_historical_texts_text_wef_mon_durthus_wargrove	Durthu awakened other ancient Treemen who once fought beside him in ancient times. They now join the army of Treekin as lieutenants. Such a grand force has not been seen for centuries.	false
-unit_description_short_texts_text_wef_mon_durthus_wargrove	Warriors who once fought alongside Durthu now return to the forests of Athel Loren.	false
+unit_description_historical_texts_text_wef_mon_durthus_wargrove	Durthu has awakened other great Treemen who once fought alongside him in ages past, and they now join the sylvan host as his lieutenants. Such an army has not been seen for centuries.	false
+unit_description_short_texts_text_wef_mon_durthus_wargrove	Old comrades who once fought beside Durthu have risen again within the forests of Ulthuan.	false
 land_units_onscreen_name_wef_mon_durthus_wargrove_treekin	Durthu's Wargrove (Treekin)	false
-land_units_onscreen_name_wef_cav_great_stag_rangers	Great Stag Rangers	false
-unit_description_short_texts_text_wef_cav_great_stag_rangers	A group of female Great Stag Riders, skilled at using their archery to harass and disrupt surrounding enemies.	false
+land_units_onscreen_name_wef_cav_great_stag_rangers	Great Stag Knights (Bows)	false
+unit_description_short_texts_text_wef_cav_great_stag_rangers	A cavalry unit of Great Stags ridden by women, skilled at harrying and disrupting enemies with hit-and-run attacks.	false
 land_units_onscreen_name_wef_inf_twilight_guard	Twilight Guard	false
-unit_description_historical_texts_text_wef_inf_twilight_guard	The Twilight Guard is a personal bodyguard of the Twilight Sisters, chosen from among the archers who serve the Twilight Sisters in the forests of Athel Loren. Some of the maidens have been blessed with animal affinities through Naestra's training, while others, trained by Arahan, have become cold and ruthless.	false
-unit_description_short_texts_text_wef_inf_twilight_guard	A force of gentle yet ruthless maidens, they continually carry out the commands of the Twilight Sisters throughout Athel Loren.	false
+unit_description_historical_texts_text_wef_inf_twilight_guard	The Twilight Guard are handmaiden archers chosen by the Sisters of Twilight within the forests of Ulthuan to serve as their personal escort. Some of these handmaidens gained an affinity for beasts under Naestra's tutelage, while others were honed into cold, merciless killers under Arahan's training.	false
+unit_description_short_texts_text_wef_inf_twilight_guard	A unit of women both gentle and ruthless, forever carrying out the Sisters of Twilight's will throughout the forests of Ulthuan.	false
 land_units_onscreen_name_wef_inf_war_druid_human	War Druids	false
-unit_description_historical_texts_text_wef_inf_war_druid_human	It is rumored that some warriors in the Athel Loren forests can transform into animals. They are often seen in the form of various beasts, and they know all that occurs in the woods.	false
-unit_description_short_texts_text_wef_inf_war_druid_human	Druids can cast spells in their human form when necessary, and in their animal form, they tear through enemy lines.	false
-land_units_onscreen_name_wef_mon_war_druid_beast	War Druids (Beast)	false
-land_units_onscreen_name_wef_mon_treemen_acher	Treeman Hunters	false
-unit_description_historical_texts_text_wef_mon_treemen_acher	In the forest, Treemen are not only a resilient line of defense but also ruthless hunters. They silently wait for prey in the woods, using bows made from branches and arrows blessed by the Everqueen.	false
-unit_description_short_texts_text_wef_mon_treemen_acher	Some Treemen in the forest have learned how to use offensive techniques, and their magic-infused arrows can pierce even the toughest armor.	false
-land_units_onscreen_name_wef_mon_treemen_acher_evil	Malevolent Treeman Hunters	false
-unit_description_historical_texts_text_wef_mon_treemen_acher_evil	Treemen corrupted by Drycha have a deep hatred for all things. They fear no enemy, using specially enchanted arrows to pierce through the bodies of their foes time and again.	false
-unit_description_short_texts_text_wef_mon_treemen_acher_evil	Treemen driven by hatred and bitterness, their arrows can ignite with flames while weakening the armor of enemies.	false
+unit_description_historical_texts_text_wef_inf_war_druid_human	Rumour holds that certain warriors within the forests of Ulthuan can transform into beasts. They usually walk the woods in animal guise, and there is little in the forest that escapes their knowledge.	false
+unit_description_short_texts_text_wef_inf_war_druid_human	Druids can cast spells in human form when needed, then tear through enemy lines in beast form.	false
+land_units_onscreen_name_wef_mon_war_druid_beast	War Druids (Beastform)	false
+land_units_onscreen_name_wef_mon_treemen_acher	Forest Spirit Stalkers	false
+unit_description_historical_texts_text_wef_mon_treemen_acher	The Treemen of the forest are not only a steadfast bulwark but also merciless hunters, waiting silently for prey to draw near, wielding bows fashioned from branches and arrows blessed by the Everqueen.	false
+unit_description_short_texts_text_wef_mon_treemen_acher	Some Treemen of the forest have learned to use ranged attacks, firing magical arrows crafted from branches that can pierce even the sturdiest armour.	false
+land_units_onscreen_name_wef_mon_treemen_acher_evil	Malevolent Forest Spirit Stalkers	false
+unit_description_historical_texts_text_wef_mon_treemen_acher_evil	Treemen touched by Drycha are beings consumed entirely by hatred, fearing no foe in this world, piercing the bodies of their enemies again and again with specially enchanted arrows.	false
+unit_description_short_texts_text_wef_mon_treemen_acher_evil	Treemen born of hatred and resentment, whose arrows burst into flame upon impact, searing away the enemy's armour.	false

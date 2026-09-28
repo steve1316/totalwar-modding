@@ -1,20 +1,20 @@
 key	text	tooltip
 #Loc;1;text/@@@Deer24batuoniya/db/!!!deer24btny.loc		
-land_units_onscreen_name_BT	Professional Infantry	true
-land_units_onscreen_name_BT1	Professional Infantry (Spear)	true
+land_units_onscreen_name_BT	State Troops	true
+land_units_onscreen_name_BT1	State Troops (Spear)	true
 land_units_onscreen_name_YZQS	Knights of the Round Table	true
-land_units_onscreen_name_QJ2	Renegade Knights (Halberd)	true
-land_units_onscreen_name_QJ1	Renegade Knights	true
+land_units_onscreen_name_QJ2	Errantry Knights (Poleaxe)	true
+land_units_onscreen_name_QJ1	Errantry Knights	true
 land_units_onscreen_name_CGS	Longbowmen	true
-land_units_onscreen_name_BTCGS	Royal Archers	true
-land_units_onscreen_name_BJQS	Dismounted Knights of the North	true
-land_units_onscreen_name_SZQS	Dismounted Knights of the Lion	true
-land_units_onscreen_name_YEZHUQS	Dismounted Knights of the Boar	true
-land_units_onscreen_name_FMQS	Dismounted Radiant Pegasus Knights	true
-land_units_onscreen_name_BJQS_RIDER	Knights of the North	true
-land_units_onscreen_name_SZQS_RIDER	Knights of the Lion	true
-land_units_onscreen_name_YEZHUQS_RIDER	Knights of the Boar	true
-land_units_onscreen_name_FMQS_RIDER	Radiant Pegasus Knights	true
-land_units_onscreen_name_CBWD	Castellans	true
-land_units_onscreen_name_CBWD1	Castellans (Halberd)	true
-land_units_onscreen_name_SMSW	Gravekeepers	true
+land_units_onscreen_name_BTCGS	Kingdom Archers	true
+land_units_onscreen_name_BJQS	Foot Knights of the Order of the Northern Marches	true
+land_units_onscreen_name_SZQS	Foot Knights of the Order of the Lion	true
+land_units_onscreen_name_YEZHUQS	Foot Knights of the Order of the Boar	true
+land_units_onscreen_name_FMQS	Foot Knights of the Order of the Pegasus	true
+land_units_onscreen_name_BJQS_RIDER	Knights of the Order of the Northern Marches	true
+land_units_onscreen_name_SZQS_RIDER	Knights of the Order of the Lion	true
+land_units_onscreen_name_YEZHUQS_RIDER	Knights of the Order of the Boar	true
+land_units_onscreen_name_FMQS_RIDER	Knights of the Order of the Pegasus	true
+land_units_onscreen_name_CBWD	Bastion Sergeants	true
+land_units_onscreen_name_CBWD1	Bastion Sergeants (Halberd)	true
+land_units_onscreen_name_SMSW	Guardians of the Holy Tomb	true

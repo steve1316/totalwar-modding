@@ -1,59 +1,63 @@
 key	text	tooltip
 #Loc;1;text/!!!cth_shenjiying_ability_name.loc		
-unit_abilities_onscreen_name_cth_north_main_iron_mark	Iron Mark	false
-unit_abilities_tooltip_text_cth_north_main_iron_mark	[[col:green]]【Forged from the remelted fragments of iron bricks from the Great Bastion】[[/col]]\\n\\nThis unit belongs to the Northern Provinces. They are elite troops capable of both melee and ranged combat, possessing superior combat qualities and requiring higher upkeep costs.	false
-unit_abilities_onscreen_name_cth_west_main_gilding_mark	Gilding Mark	false
-unit_abilities_tooltip_text_cth_west_main_gilding_mark	[[col:green]]【Recast from the gilded flakes fallen from the Tower of Ashshair】[[/col]]\\n\\nThis unit belongs to the Western Provinces. Clad in alchemical armor, they excel in maintaining slow and heavy formations to accelerate the flow of the Winds of Magic.	false
-unit_abilities_onscreen_name_cth_east_main_azure_mark	Azure Mark	false
-unit_abilities_tooltip_text_cth_east_main_azure_mark	[[col:green]]【Reshaped from the remnants of the hull of the Jade Sea treasure ships】[[/col]]\\n\\nThis unit belongs to the Eastern River Lords. They are equipped with an array of vintage firearms, focusing on firepower to overwhelm enemies before they close in.	false
-unit_abilities_onscreen_name_cth_south_main_cinnabar_mark	Cinnabar Mark	false
-unit_abilities_tooltip_text_cth_south_main_cinnabar_mark	[[col:green]]【Reforged from the embers of the candelabras of the Phoenix Temple】[[/col]]\\n\\nThis unit belongs to the Burning Wind Nomads. They value mobility and guerrilla tactics, adapting effectively to the harsh southern environments.	false
-unit_abilities_onscreen_name_mingqing_shenji_shoot_stance	Establish Firing Position	false
-unit_abilities_tooltip_text_mingqing_shenji_shoot_stance	Setting up a firing position takes considerable time, but the boost to range and accuracy is well worth the effort.	false
+unit_abilities_onscreen_name_cth_north_main_iron_mark	Mark of Dark Iron	false
+unit_abilities_tooltip_text_cth_north_main_iron_mark	[[col:green]]【Reforged from fragments of the Great Bastion's iron bricks】[[/col]]\\nThis unit belongs to the Northern Guard, an elite force wielding both melee and ranged capabilities, with superior combat quality and higher upkeep requirements	false
+unit_abilities_onscreen_name_cth_west_main_gilding_mark	Mark of Gilding	false
+unit_abilities_tooltip_text_cth_west_main_gilding_mark	[[col:green]]【Recast from gold leaf shed from the Tower of Ashaya】[[/col]]\\nThis unit belongs to the Western Guard, clad in alchemical armor, skilled at maintaining heavy, slow-moving formations that accelerate the flow of the Winds of Magic	false
+unit_abilities_onscreen_name_cth_east_main_azure_mark	Mark of Azure Sky	false
+unit_abilities_tooltip_text_cth_east_main_azure_mark	[[col:green]]【Reshaped from leftover materials of Azure Sea treasure ship hulls】[[/col]]\\nThis unit belongs to the Eastern Guard, widely equipped with older firearms and favoring overwhelming firepower to end battles before the enemy closes in	false
+unit_abilities_onscreen_name_cth_south_main_cinnabar_mark	Mark of Cinnabar	false
+unit_abilities_tooltip_text_cth_south_main_cinnabar_mark	[[col:green]]【Reforged from embers burned through at Fuhong Temple's candle stands】[[/col]]\\nThis unit belongs to the Southern Guard, favoring mobility and guerrilla tactics, better adapted to the harsh conditions of the south	false
+unit_abilities_onscreen_name_mingqing_shenji_shoot_stance	Set Up Fire Tablets	false
+unit_abilities_tooltip_text_mingqing_shenji_shoot_stance	Building a firing position takes considerable time, but the improved range and accuracy it grants are well worth the effort	false
 unit_abilities_onscreen_name_mingqing_shenji_overload	Thunderous Volley	false
-unit_abilities_tooltip_text_mingqing_shenji_overload	Increased powder load allows for triple-barrel volleys, rapidly enhancing firepower at the cost of barrel durability. However, such overloading cannot be sustained for long, requiring gunners to make timely decisions.	false
-unit_abilities_onscreen_name_cth_west_qinhan_formation_1	Brothers in Arms: Hold the Line	false
-unit_abilities_tooltip_text_cth_west_qinhan_formation_1	【The dragon rises to war, honing axe and shield. United against our foes.】	false
-unit_abilities_onscreen_name_cth_west_qinhan_formation_2	Brothers in Arms: Advance	false
-unit_abilities_tooltip_text_cth_west_qinhan_formation_2	[[col:red]]Unable to fire while in formation[[/col]]\\n\\n【The dragon rises to war, honing armor and weapons. Marching as one.】	false
-unit_abilities_onscreen_name_cth_west_qinhan_formation_3	Brothers in Arms: Assault	false
-unit_abilities_tooltip_text_cth_west_qinhan_formation_3	【The dragon rises to war, honing spears and blades. Charging together.】	false
-unit_abilities_onscreen_name_cth_west_qinhan_formation_4	Brothers in Arms: Crane Wing	false
-unit_abilities_tooltip_text_cth_west_qinhan_formation_4	【The dragon rises to war, honing saddles and reins. Riding side by side.】	false
+unit_abilities_tooltip_text_mingqing_shenji_overload	Overcharge the powder and fire all three barrels at once, rapidly boosting firepower at the cost of the barrels' lifespan. Naturally, such an overload cannot last long, and the gunner must choose the perfect moment to unleash it	false
+unit_abilities_onscreen_name_cth_west_qinhan_formation_1	Brothers in Arms · Hold the Line	false
+unit_abilities_tooltip_text_cth_west_qinhan_formation_1	"The dragon rises to war; we mend our shields and halberds. With you, my comrade, I share this foe."	false
+unit_abilities_onscreen_name_cth_west_qinhan_formation_2	Brothers in Arms · Advance	false
+unit_abilities_tooltip_text_cth_west_qinhan_formation_2	[[col:red]]Cannot shoot while formation is active[[/col]]  \\n"The dragon rises to war; we mend our armor and blades. With you, my comrade, I march as one."	false
+unit_abilities_onscreen_name_cth_west_qinhan_formation_3	Brothers in Arms · Assault	false
+unit_abilities_tooltip_text_cth_west_qinhan_formation_3	"The dragon rises to war; we mend our long swords. With you, my comrade, I advance together."	false
+unit_abilities_onscreen_name_cth_west_qinhan_formation_4	Brothers in Arms · Wild Geese Formation	false
+unit_abilities_tooltip_text_cth_west_qinhan_formation_4	"The dragon rises to war; we mend our saddles and blankets. With you, my comrade, I ride abreast."	false
 unit_abilities_onscreen_name_cth_south_songyuan_liequan	Hound Ambush	false
-unit_abilities_tooltip_text_cth_south_songyuan_liequan	These loyal hounds are the most reliable companions in battle.	false
-special_ability_phases_onscreen_name_cth_south_songyuan_peasant_bow_ar_poison	[[col:red]][[img:ui/battle ui/ability_icons/cth_south_songyuan_peasant_bow_ar_poison.png]][[/img]]Throat-Sealing Venom![[/col]] 	false
-unit_abilities_onscreen_name_cth_south_songyuan_distance	Fury Charge	false
-unit_abilities_tooltip_text_cth_south_songyuan_distance	The warriors of the Fire Dragon recklessly charge toward their target, abandoning [[col:red]][[img:ui/battle ui/ability_icons/formed_attack.png]][[/img]]Formation Attack[[/col]] during this time.	false
-unit_abilities_onscreen_name_cth_east_mingqing_manxiang	Unstoppable Morale	false
-unit_abilities_tooltip_text_cth_east_mingqing_manxiang	Sufficient provisions and pay are the key to maintaining morale and unlocking greater combat potential.	false
-unit_abilities_onscreen_name_cth_east_mingqing_langxian	Wolf Fang Formation	false
-unit_abilities_tooltip_text_cth_east_mingqing_langxian	The dense array of blades disrupts enemy charges while boosting the spearmen's courage.	false
-special_ability_phases_onscreen_name_cth_east_mingqing_langxian_yanhu	[[col:red]][[img:ui/battle ui/ability_icons/cth_east_mingqing_langxian_yanhu.png]][[/img]]Disruption![[/col]] 	false
+unit_abilities_tooltip_text_cth_south_songyuan_liequan	These loyal hounds are the most reliable companions in battle	false
+special_ability_phases_onscreen_name_cth_south_songyuan_peasant_bow_ar_poison	[[col:red]][[img:ui/battle ui/ability_icons/cth_south_songyuan_peasant_bow_ar_poison.png]][[/img]]Throat-Sealing Venom[[/col]] 	false
+unit_abilities_onscreen_name_cth_south_songyuan_distance	Bristling Fury	false
+unit_abilities_tooltip_text_cth_south_songyuan_distance	The Zhu Long warriors charge recklessly toward their target, abandoning [[col:red]][[img:ui/battle ui/ability_icons/formed_attack.png]][[/img]]Formation Attack[[/col]] in the process	false
+unit_abilities_onscreen_name_cth_east_mingqing_manxiang	Full Rations, Unstoppable	false
+unit_abilities_tooltip_text_cth_east_mingqing_manxiang	Ample rations and supplies are key to maintaining morale, and can also inspire even greater combat prowess	false
+unit_abilities_onscreen_name_cth_east_mingqing_langxian	Wolf-Tooth Formation	false
+unit_abilities_tooltip_text_cth_east_mingqing_langxian	A dense wall of blades not only disrupts enemy charges but also bolsters the courage of the spearmen	false
+special_ability_phases_onscreen_name_cth_east_mingqing_langxian_yanhu	[[col:red]][[img:ui/battle ui/ability_icons/cth_east_mingqing_langxian_yanhu.png]][[/img]]Hindered[[/col]] 	false
 unit_abilities_onscreen_name_cth_east_mingqing_xiandeng	Fearless Vanguard	false
-unit_abilities_tooltip_text_cth_east_mingqing_xiandeng	Scaling walls under a hail of arrows and boarding ships amidst chaos has become second nature to these warriors, as if treading on flat ground.	false
-unit_abilities_onscreen_name_cth_north_suitang_wrbastion_1	Bastion of the North: Resolve	false
-unit_abilities_tooltip_text_cth_north_suitang_wrbastion_1	These warriors strive to shield their comrades' flanks and will not retreat easily.	false
-unit_abilities_onscreen_name_cth_north_suitang_wrbastion_2	Bastion of the North: Unyielding	false
-unit_abilities_tooltip_text_cth_north_suitang_wrbastion_2	These warriors know that behind them lies the Great Bastion, and beyond that, everything they hold dear.	false
-unit_abilities_onscreen_name_cth_north_suitang_thunder	Thundering Chariots	false
-unit_abilities_tooltip_text_cth_north_suitang_thunder	Racing with lightning and splitting the earth asunder.	false
-unit_abilities_onscreen_name_cth_north_suitang_dark_cloud	"Dark Clouds Over the City"	false
-unit_abilities_tooltip_text_cth_north_suitang_dark_cloud	The heavy drumbeats strike fear into the hearts of invading enemies, scattering their spirits.	false
-unit_abilities_onscreen_name_cth_north_suitang_bright_armour	"Armor Gleaming in the Sun"	false
-unit_abilities_tooltip_text_cth_north_suitang_bright_armour	The stirring drumbeats inspire every soldier, filling them with indomitable resolve.	false
-unit_abilities_onscreen_name_cth_east_mingqing_longyin	Dragon's Song of the Sea	false
-unit_abilities_tooltip_text_cth_east_mingqing_longyin	The deep reverberations from the ancient sea can command the hearts of the weak.	false
-unit_abilities_onscreen_name_cth_east_mingqing_abyss	Dragon Hidden in the Depths	false
-unit_abilities_tooltip_text_cth_east_mingqing_abyss	These sea dragons call upon surrounding waters to engulf the battlefield and shield themselves from incoming arrows.	false
-unit_abilities_onscreen_name_cth_south_songyuan_flammable	Blazing Inferno	false
-unit_abilities_tooltip_text_cth_south_songyuan_flammable	Torches burn bright, leaving devastation in their wake.	false
-unit_abilities_onscreen_name_cth_south_songyuan_roar	Mighty Roar	false
-unit_abilities_tooltip_text_cth_south_songyuan_roar	The tiger's roar shakes the rivers and mountains, sweeping away all evils.	false
-special_ability_phases_onscreen_name_cth_north_suitang_electric_shock	[[col:red]][[img:ui/battle ui/ability_icons/cth_north_suitang_electric_shock.png]][[/img]]Electric Shock![[/col]] 	false
-special_ability_phases_onscreen_name_cth_east_mingqing_smoke	[[col:red]][[img:ui/battle ui/ability_icons/cth_east_mingqing_smoke.png]][[/img]]Thick Smoke![[/col]] 	false
-special_ability_phases_onscreen_name_cth_south_songyuan_jade_bow_ar_poison	[[col:red]][[img:ui/battle ui/ability_icons/cth_south_songyuan_jade_bow_ar_poison.png]][[/img]]Gut-Wrenching Venom![[/col]] 	false
-unit_abilities_onscreen_name_cth_central_tianting_ogre_naturalized	Martial Discipline	false
-unit_abilities_tooltip_text_cth_central_tianting_ogre_naturalized	"Well what can I do? Those little ones insisted I stay put right here."	false
-unit_abilities_onscreen_name_cth_central_tianting_ogre_trainer	Break Through Mountains	false
-unit_abilities_tooltip_text_cth_central_tianting_ogre_trainer	These Swordmaster Brutes are battle-hardened veterans, especially skilled at demonstrating how to swing a weapon with full force.	false
+unit_abilities_tooltip_text_cth_east_mingqing_xiandeng	For these warriors, braving a hail of arrows to scale walls and board ships is as routine as walking on level ground	false
+unit_abilities_onscreen_name_cth_north_suitang_wrbastion_1	This Body, A Rampart · Unwavering	false
+unit_abilities_tooltip_text_cth_north_suitang_wrbastion_1	These warriors will do everything they can to shield their allies' flanks, and will not easily give ground	false
+unit_abilities_onscreen_name_cth_north_suitang_wrbastion_2	This Body, A Rampart · Unyielding	false
+unit_abilities_tooltip_text_cth_north_suitang_wrbastion_2	These warriors know all too well: behind them stands the Great Bastion, and behind the Great Bastion lies everything they hold dear	false
+unit_abilities_onscreen_name_cth_north_suitang_thunder	Thunder Chariot Shakes the Earth	false
+unit_abilities_tooltip_text_cth_north_suitang_thunder	Thunder driven, lightning unleashed, splitting the earth as it comes	false
+unit_abilities_onscreen_name_cth_north_suitang_dark_cloud	『Black Clouds Press Upon the City』	false
+unit_abilities_tooltip_text_cth_north_suitang_dark_cloud	Strike the heavy drumbeat, and the invading foe's souls scatter in terror at its sound	false
+unit_abilities_onscreen_name_cth_north_suitang_bright_armour	『Armor Gleaming Toward the Sun』	false
+unit_abilities_tooltip_text_cth_north_suitang_bright_armour	Strike the stirring drumbeat, and the assembled troops' fighting spirit soars at its sound	false
+unit_abilities_onscreen_name_cth_east_mingqing_longyin	Dragon's Roar Over the Vast Sea	false
+unit_abilities_tooltip_text_cth_east_mingqing_longyin	A deep intonation from the ancient sea, enough to command the hearts of the weak	false
+unit_abilities_onscreen_name_cth_east_mingqing_abyss	Hidden Dragon in the Deep	false
+unit_abilities_tooltip_text_cth_east_mingqing_abyss	These Jiao Long summon the surrounding seawater to blanket the battlefield, swallowing incoming arrows	false
+unit_abilities_onscreen_name_cth_south_songyuan_flammable	Raging Wildfire	false
+unit_abilities_tooltip_text_cth_south_songyuan_flammable	Where the torch's blaze touches, death and ruin follow	false
+unit_abilities_onscreen_name_cth_south_songyuan_roar	Skyward Roar	false
+unit_abilities_tooltip_text_cth_south_songyuan_roar	The tiger's roar shakes rivers and mountains, cleansing all evil	false
+special_ability_phases_onscreen_name_cth_north_suitang_electric_shock	[[col:red]][[img:ui/battle ui/ability_icons/cth_north_suitang_electric_shock.png]][[/img]]Electrocuted[[/col]] 	false
+special_ability_phases_onscreen_name_cth_east_mingqing_smoke	[[col:red]][[img:ui/battle ui/ability_icons/cth_east_mingqing_smoke.png]][[/img]]Thick Smoke[[/col]] 	false
+special_ability_phases_onscreen_name_cth_south_songyuan_jade_bow_ar_poison	[[col:red]][[img:ui/battle ui/ability_icons/cth_south_songyuan_jade_bow_ar_poison.png]][[/img]]Gut-Wrenching Venom[[/col]] 	false
+unit_abilities_onscreen_name_cth_central_tianting_ogre_naturalized	Discipline Bound	false
+unit_abilities_tooltip_text_cth_central_tianting_ogre_naturalized	"Whaddya want, huh? Them lil' fellas just told ol' me to stand right here an' not move a muscle."	false
+unit_abilities_onscreen_name_cth_central_tianting_ogre_trainer	Path Through the Mountains	false
+unit_abilities_tooltip_text_cth_central_tianting_ogre_trainer	These Ogre swordmasters are battle-hardened veterans, especially skilled at personally demonstrating how to swing their weapon with the greatest possible force	false
+unit_abilities_additional_ui_effects_localised_text_cth_central_tianting_crowguard_tele_1	Shadow-Chasing Crow Officers will teleport to a selected location within range	true
+unit_abilities_additional_ui_effects_localised_text_cth_central_tianting_crowguard_tele_2	Shadow-Chasing Crow Officers will disrupt enemy formation upon arrival	true
+unit_abilities_onscreen_name_cth_central_tianting_crowguard_tele	Shifting Shadow	true
+unit_abilities_tooltip_text_cth_central_tianting_crowguard_tele	Vanish into the night wind, then descend silently upon the enemy's rear	true

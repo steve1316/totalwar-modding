@@ -1,21 +1,21 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_tze_units.loc		
 ui_unit_groupings_onscreen_cavalry_disc_mis	Flying Cavalry	false
-land_units_onscreen_name_tza_inf_tzaangors_archer	Tzaangors (Earthfire Archers)	false
-unit_description_historical_texts_text_tza_inf_tzaangors_archer	Blessed by Tzeentch, Earthfire Archers can foresee the near future. Unlike Doomfire Archers, they are not forbidden to speak of their visions and often inform their enemies of their grim fates, increasing their fear.	false
-unit_description_short_texts_text_tza_inf_tzaangors_archer	Earthfire Archers can imbue their attacks with magic, targeting heavily armored enemies.	false
-land_units_onscreen_name_tza_cav_doom_tzaangors_archer	Tzaangors (Doomfire Archers)	false
-unit_description_historical_texts_text_tza_cav_doom_tzaangors_archer	These higher-ranking Tzaangors, blessed by Tzeentch, can foresee distant and unseen futures but are forbidden from revealing their visions, leading to a notably quiet presence on the battlefield.	false
-unit_description_short_texts_text_tza_cav_doom_tzaangors_archer	Doomfire Archers are typically silent, with the only sound being the drawing of their bowstrings.	false
-land_units_onscreen_name_tza_cav_doom_tzaangors	Tzaangors (Enlightened)	false
-unit_description_historical_texts_text_tza_cav_doom_tzaangors	These higher-ranking Tzaangors, blessed by Tzeentch, can uncover the enemy's secrets and spread them incessantly, instilling fear among their foes.	false
-unit_description_short_texts_text_tza_cav_doom_tzaangors	The Enlightened are mere troublemakers, able to disrupt the enemy's mind while splitting their heads with weapons.	false
-land_units_onscreen_name_tza_veh_doom_chariot	Exalted Disk Chariot of Tzeentch	false
-unit_description_historical_texts_text_tza_veh_doom_chariot	This flying chariot, manned by Tzeentch's followers and Tzaangors, can cast spells from a distance, while the Tzaangors fire arrows at nearby enemies.	false
-unit_description_short_texts_text_tza_veh_doom_chariot	Tzeentch's followers lead the Tzaangors on this chariot, constantly disrupting enemy lines.	false
-land_units_onscreen_name_tza_inf_change_of_thousand_sons	Change of Thousand Sons	false
-unit_description_historical_texts_text_tza_inf_change_of_thousand_sons	It is said that Tzeentch selected one thousand of the most knowledge-seeking humans from the Chaos legions to form this group of warriors, who pursue knowledge of all kinds.	false
-unit_description_short_texts_text_tza_inf_change_of_thousand_sons	The Change of Thousand Sons is Tzeentch's most powerful force in reality, always maintaining a number of one thousand.	false
-land_units_onscreen_name_tze_inf_centigors_great_sword	Centigors of Tzeentch (Great Swords)	false
-unit_description_historical_texts_text_tze_inf_centigors_great_sword	Beastmen are creatures of pure Chaos, and thus they serve the four Chaos gods equally. However, sometimes a mother beast will give birth to offspring clearly chosen by the Lord of Change, with markings of Tzeentch on its fur, or horns twisted into symbols of Tzeentch's malevolence. These Centigors are as fierce and vicious as their non-Tzeentch counterparts but harbor a stronger hatred for their own clumsy, stupid nature, leading to deep jealousy towards those with better-matched minds and bodies. This jealousy fuels their rage, making them even more dangerous: given their touch by Tzeentch, this may not be a coincidence.	false
-unit_description_short_texts_text_tze_inf_centigors_great_sword	Betrayal, pain, violence, madness… you will experience it all before being torn apart by a savage beast…	false
+land_units_onscreen_name_tza_inf_tzaangors_archer	Earthfire Archers	false
+unit_description_historical_texts_text_tza_inf_tzaangors_archer	Blessed by Tzeentch, the Earthfire Archers can glimpse the near future. Because the future they perceive is close at hand, they are not bound to silence like the Skyfire Archers, unable to speak of what they foresee. They often inform their enemies of the grim fates awaiting them, sowing terror in their hearts before the battle even begins.	false
+unit_description_short_texts_text_tza_inf_tzaangors_archer	Earthfire Archers can imbue their attacks with magic, striking down even the most heavily armoured foes.	false
+land_units_onscreen_name_tza_cav_doom_tzaangors_archer	Skyfire Archers	false
+unit_description_historical_texts_text_tza_cav_doom_tzaangors_archer	The Tzaangors are an elite breed blessed by Tzeentch, able to peer into futures too deep to fathom. Yet they feel compelled not to speak of what they foresee, leaving their ranks eerily silent.	false
+unit_description_short_texts_text_tza_cav_doom_tzaangors_archer	Skyfire Archers rarely utter a word; all one hears from them is the twang of drawn bowstrings.	false
+land_units_onscreen_name_tza_cav_doom_tzaangors	Enlightened Ones	false
+unit_description_historical_texts_text_tza_cav_doom_tzaangors	The Tzaangors are an elite breed blessed by Tzeentch, able to uncover the secrets hidden within their enemies and chatter them abroad, spreading dread among all who hear.	false
+unit_description_short_texts_text_tza_cav_doom_tzaangors	The Enlightened Ones are simple creatures of mischief, unsettling their enemies' minds even as they cleave their skulls with their weapons.	false
+land_units_onscreen_name_tza_veh_doom_chariot	Tzeentch's Disc Chariot	false
+unit_description_historical_texts_text_tza_veh_doom_chariot	A flying chariot crewed by devotees of Tzeentch and Tzaangors, striking foes from afar with sorcery while the Tzaangors loose arrows at close range to finish off any who draw near.	false
+unit_description_short_texts_text_tza_veh_doom_chariot	Devotees of Tzeentch lead the Tzaangors in ceaseless efforts to disrupt the enemy's battle lines.	false
+land_units_onscreen_name_tza_inf_change_of_thousand_sons	Myriad Changes of the Thousand Sons	false
+unit_description_historical_texts_text_tza_inf_change_of_thousand_sons	Legend holds that Tzeentch selected a thousand of the most knowledge-hungry humans from among the Chaos hordes to form this warband, each of them driven by an insatiable thirst for every manner of knowledge.	false
+unit_description_short_texts_text_tza_inf_change_of_thousand_sons	The Myriad Changes of the Thousand Sons are Tzeentch's most powerful legion in the mortal realm, ever maintained at exactly one thousand strong.	false
+land_units_onscreen_name_tze_inf_centigors_great_sword	Tzeentch Centigors (Great Weapons)	false
+unit_description_historical_texts_text_tze_inf_centigors_great_sword	Beastmen are creatures of pure Chaos, and so they serve all four Ruinous Powers equally. Yet sometimes a dam will birth young clearly favoured by the Lord of Change, their hide marked with Tzeentch's brand, or their horns curling into the sign of his foul sigil. These Centigors are as savage and vicious as their non-Tzeentchian kin, but harbour a fiercer resentment for their own clumsy, dim-witted nature, breeding a deep jealousy toward creatures whose minds match their bodies. This jealousy fuels their rage, making them all the more dangerous—and given that Tzeentch himself has touched them, this may be no coincidence at all.	false
+unit_description_short_texts_text_tze_inf_centigors_great_sword	Betrayal, agony, violence, madness... you will taste them all, torn apart by a raging beast...	false

@@ -1,31 +1,31 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_wef_units_ability.loc		
-unit_abilities_additional_ui_effects_localised_text_unit_passive_ode_to_miraculous_magic	Mutually exclusive with "Ode to Miraculous Magic".	false
-unit_abilities_additional_ui_effects_localised_text_unit_passive_passive_voice_of_renewal	Mutually exclusive with "Voice of Renewal".	false
-unit_abilities_additional_ui_effects_localised_text_unit_passive_field_of_flowers	Mutually exclusive with "Flourishing Meadows".	false
-unit_abilities_additional_ui_effects_localised_text_wef_mon_durthus_wargrove_treekin	Summon a unit of Durthu's Wargrove (Treekin).	false
+unit_abilities_additional_ui_effects_localised_text_unit_passive_ode_to_miraculous_magic	Mutually exclusive with [Ode to Miraculous Magic]	false
+unit_abilities_additional_ui_effects_localised_text_unit_passive_passive_voice_of_renewal	Mutually exclusive with [Voice of Renewal]	false
+unit_abilities_additional_ui_effects_localised_text_unit_passive_field_of_flowers	Mutually exclusive with [Field of Flowers]	false
+unit_abilities_additional_ui_effects_localised_text_wef_mon_durthus_wargrove_treekin	Summons a unit of Durthu's Wargrove (Treekin).	false
 effects_description_effect_unit_cap_wef_mon_durthus_wargrove	Unit Capacity: Durthu's Wargrove %+n	true
 effects_description_effect_unit_cap_wef_inf_twilight_guard	Unit Capacity: Twilight Guard %+n	true
-special_ability_phases_onscreen_name_wood_elf_deadly_poison	[[col:red]][[img:ui/skins/default/modifier_icon_poison.png]][[/img]]Deadly Forest Poison![[/col]]	false
-unit_abilities_onscreen_name_unit_passive_wood_spirit_bless	Wood Spirit Blessing	false
-unit_abilities_tooltip_text_unit_passive_wood_spirit_bless	The ancient Treemen possess immense magical power, granting a powerful blessing to all those standing near them.	false
+special_ability_phases_onscreen_name_wood_elf_deadly_poison	[[col:red]][[img:ui/skins/default/modifier_icon_poison.png]][[/img]]Deadly Forest Venom![[/col]]	false
+unit_abilities_onscreen_name_unit_passive_wood_spirit_bless	Blessing of the Wood Spirits	false
+unit_abilities_tooltip_text_unit_passive_wood_spirit_bless	The ancient Treemen possess immense magical power, granting a potent blessing to all who stand near them.	false
 unit_abilities_onscreen_name_unit_passive_awakening_of_the_treekin	Awakening of the Treekin	false
-unit_abilities_tooltip_text_unit_passive_awakening_of_the_treekin	When Durthu’s allies are overwhelmed, they can call upon the Treekin of the forest to join the battle.	false
+unit_abilities_tooltip_text_unit_passive_awakening_of_the_treekin	Durthu's comrades can summon Treekin from the forest to fight at their side when they are overwhelmed.	false
 unit_abilities_onscreen_name_unit_passive_hunter_of_the_wildwood	Hunter of the Wildwood	false
-unit_abilities_tooltip_text_unit_passive_hunter_of_the_wildwood	Using the forest as a weapon is a mandatory skill for every Wood Elf.	false
-unit_abilities_onscreen_name_unit_passive_forest_favors	Forest’s Favor	false
-unit_abilities_tooltip_text_unit_passive_forest_favors	When the Twilight Maidens walk through the forest, they gather resources to replenish their equipment and restore their condition.	false
+unit_abilities_tooltip_text_unit_passive_hunter_of_the_wildwood	Wielding the forest itself as a weapon is a lesson every Wood Elf must learn.	false
+unit_abilities_onscreen_name_unit_passive_forest_favors	Favour of the Forest	false
+unit_abilities_tooltip_text_unit_passive_forest_favors	As the Twilight Handmaidens roam the forest, they gather various resources along the way to replenish their equipment and restore their condition.	false
 unit_abilities_onscreen_name_unit_passive_blazing_fate	Blazing Fate	false
-unit_abilities_tooltip_text_unit_passive_blazing_fate	The blessing of Naestra imbues the Twilight Maidens with fervor, allowing them to see farther on the battlefield.	false
+unit_abilities_tooltip_text_unit_passive_blazing_fate	Naestra's blessing fills the Twilight Handmaidens with fervour, sharpening their sight to see further.	false
 unit_abilities_onscreen_name_unit_passive_frozen_fate	Frozen Fate	false
-unit_abilities_tooltip_text_unit_passive_frozen_fate	The blessing of Arahan makes the Twilight Maidens cold and unyielding, preparing them to stand firm in battle.	false
+unit_abilities_tooltip_text_unit_passive_frozen_fate	Arahan's blessing hardens the Twilight Handmaidens with coldness, keeping them ever vigilant and ready.	false
 unit_abilities_onscreen_name_unit_passive_ode_to_miraculous_magic	Ode to Miraculous Magic	false
-unit_abilities_tooltip_text_unit_passive_ode_to_miraculous_magic	A special anthem inspires nearby allies, making them unstoppable on the battlefield.	false
+unit_abilities_tooltip_text_unit_passive_ode_to_miraculous_magic	A special melody inspires allies fighting alongside it, making them unstoppable on the battlefield.	false
 unit_abilities_onscreen_name_unit_passive_passive_voice_of_renewal	Voice of Renewal	false
-unit_abilities_tooltip_text_unit_passive_passive_voice_of_renewal	Magical music that seems to have healing powers, mending the wounds and fatigue of nearby warriors.	false
-unit_abilities_onscreen_name_unit_passive_field_of_flowers	Flourishing Meadows	false
-unit_abilities_tooltip_text_unit_passive_field_of_flowers	The Druid uses magic to keep enemies distracted in a hallucinatory flower field.	false
-unit_abilities_onscreen_name_unit_abilities_druid_beast_form	Griffon Transformation	false
-unit_abilities_tooltip_text_unit_abilities_druid_beast_form	Transform into a beast and deliver a deadly blow to the enemy.	false
+unit_abilities_tooltip_text_unit_passive_passive_voice_of_renewal	Wondrous music seems to hold a healing magic, soothing the wounds and fatigue of nearby warriors.	false
+unit_abilities_onscreen_name_unit_passive_field_of_flowers	Field of Flowers	false
+unit_abilities_tooltip_text_unit_passive_field_of_flowers	The Druid casts a spell that continually ensnares enemies in an illusory sea of flowers.	false
+unit_abilities_onscreen_name_unit_abilities_druid_beast_form	Gryphon Transformation	false
+unit_abilities_tooltip_text_unit_abilities_druid_beast_form	Transform into a beast to deliver a lethal blow to the enemy.	false
 unit_abilities_onscreen_name_unit_abilities_druid_human_form	Cancel Transformation	false
-unit_abilities_tooltip_textunit_abilities_druid_human_form	Revert back to human form.	false
+unit_abilities_tooltip_textunit_abilities_druid_human_form	Transform back into human form.	false

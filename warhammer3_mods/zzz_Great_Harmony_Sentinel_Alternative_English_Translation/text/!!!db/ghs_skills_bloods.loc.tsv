@@ -1,36 +1,36 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_skills_bloods.loc		
-character_skills_localised_name_kho_blood_magic_blade_shard	Khorne's Rain of Blades	true
-character_skills_localised_description_kho_blood_magic_blade_shard	Fragments of failed warriors' weapons fall from the heavens, vanishing alongside their masters on unknown battlefields.	true
-character_skills_localised_name_kho_blood_magic_passive_anti_missile	Skull Throne's Decree	true
-character_skills_localised_description_kho_blood_magic_passive_anti_missile	When the seas turn to blood and mountains to skull piles, our glory will be revealed.	true
-character_skills_localised_name_kho_blood_magic_sla_breath	Skullfire Breath	true
-character_skills_localised_description_kho_blood_magic_sla_breath	Dark Prince! Witness the fate of your pitiful servants—now reduced to tools for our glorious slaughter!	true
-character_skills_localised_name_kho_blood_magic_great_tempest	Blade Chain Tempest	true
-character_skills_localised_description_kho_blood_magic_great_tempest	With a distant gesture, Khorne's endless chains engulf cowardly fliers, shredding their wings and convictions.	true
-character_skills_localised_name_kho_blood_magic_khornesword	Skull-Cleaving Axe of Fury	true
-character_skills_localised_description_kho_blood_magic_khornesword	No battlements, flesh mounds, or metal walls can withstand the fury manifested by Khorne's bloodstained hand!	true
-character_skills_localised_name_kho_blood_magic_passive_cooldown	Song of Skulls	true
-character_skills_localised_description_kho_blood_magic_passive_cooldown	This is our hunting ground, teeming with prey awaiting slaughter—we are the singers of bloody odes!	true
-character_skills_localised_name_kho_blood_magic_khorne_foot	Khorne's Stomp	true
-character_skills_localised_description_kho_blood_magic_khorne_foot	Our brutality spares neither friend nor foe—the weak are unworthy of fighting for Khorne’s glory!	true
-character_skills_localised_name_kho_blood_magic_brass_fortress	Brass Citadel	true
-character_skills_localised_description_kho_blood_magic_brass_fortress	An endless torrent of war’s blood opens the gates to Khorne’s realm, drawing all life into the Brass Citadel for Khorne's trials.	true
-character_skills_localised_name_kho_cultist_magic_passive_bloom	Khorne's Glance	true
-character_skills_localised_description_kho_cultist_magic_passive_bloom	Even the slightest glance strikes fear into enemies, as if their souls are wrenched from their bodies.	true
-character_skills_localised_name_kho_cultist_magic_storm	Blood Tornado	true
-character_skills_localised_description_kho_cultist_magic_storm	Fanatical chants of Khorne’s greatness summon a blood-fueled storm, annihilating all who stand in its path.	true
-character_skills_localised_name_kho_cultist_magic_chain_cage	Infernal Chains	true
-character_skills_localised_description_kho_cultist_magic_chain_cage	Chains of brass emerge from the Inferno, binding cowards’ ankles and shrouding their vision of the sky.	true
+character_skills_localised_name_kho_blood_magic_blade_shard	Rain of Khornate Blades	true
+character_skills_localised_description_kho_blood_magic_blade_shard	Shards of the weapons of the Blood God's failures rain down from the sky, vanishing forever alongside their masters on some nameless battlefield.	true
+character_skills_localised_name_kho_blood_magic_passive_anti_missile	Skull-Throne Decree	true
+character_skills_localised_description_kho_blood_magic_passive_anti_missile	When the seas of the world are replaced by blood, and its mountains are draped in mounds of skulls, our glorious names shall also be made known.	true
+character_skills_localised_name_kho_blood_magic_sla_breath	Skullfire Blaze	true
+character_skills_localised_description_kho_blood_magic_sla_breath	Dark Prince! Behold the fate of your pitiful servants! Now fit only to become tools for our great work of slaughter!	true
+character_skills_localised_name_kho_blood_magic_great_tempest	Chain-Blade Tempest	true
+character_skills_localised_description_kho_blood_magic_great_tempest	The Blood God points to the distant sky, and countless chain-blades wrap layer upon layer around those cowards flying above, tearing apart their wings and their faith.	true
+character_skills_localised_name_kho_blood_magic_khornesword	Skull-Cleaving Wrath Axe	true
+character_skills_localised_description_kho_blood_magic_khornesword	Neither short parapets, rotting flesh, nor metal walls can withstand the fury made manifest by this blood-soaked hand!	true
+character_skills_localised_name_kho_blood_magic_passive_cooldown	Hymn of Skulls	true
+character_skills_localised_description_kho_blood_magic_passive_cooldown	This is our hunting ground, countless prey awaiting slaughter, and we are the singers of blood!	true
+character_skills_localised_name_kho_blood_magic_khorne_foot	Blood God's Trample	true
+character_skills_localised_description_kho_blood_magic_khorne_foot	Our savagery and wrath do not discriminate between friend and foe; cowardly maggots are not fit to fight for the glory of the Blood God!	true
+character_skills_localised_name_kho_blood_magic_brass_fortress	Brass Palace	true
+character_skills_localised_description_kho_blood_magic_brass_fortress	The endless bloodshed of war has opened the gates to the Blood God's realm; all creatures shall be drawn into the Brass Palace to face his trial!	true
+character_skills_localised_name_kho_cultist_magic_passive_bloom	Glimpse of the Blood God	true
+character_skills_localised_description_kho_cultist_magic_passive_bloom	Even the briefest glance is enough to break the hearts of enemies in battle, as though their souls were torn from their bodies.	true
+character_skills_localised_name_kho_cultist_magic_storm	Blood Cyclone	true
+character_skills_localised_description_kho_cultist_magic_storm	Fanatics chant the Blood God's great name, and blood gathers into a raging cyclone, grinding down every resister in its path.	true
+character_skills_localised_name_kho_cultist_magic_chain_cage	Chains of Purgatory	true
+character_skills_localised_description_kho_cultist_magic_chain_cage	Brass chains reach out from the abyss of perdition, binding tight the ankles of cowards and sealing off every inch of sky within their sight.	true
 character_skills_localised_name_kho_cultist_magic_fist	Skull-Crushing Blow	true
-character_skills_localised_description_kho_cultist_magic_fist	A giant bloodstained hand appears over Khorne’s foes, smashing their skulls into fragments with a single blow.	true
-character_skills_localised_name_kho_cultist_magic_flood_forbid	Weak Blood Fountain	true
-character_skills_localised_description_kho_cultist_magic_flood_forbid	The shattered skulls of Tzeentch’s servants explode, showing those fools who meddle with winds of magic their inevitable fate.	true
-character_skills_localised_name_kho_cultist_magic_mist	Bloodmark Mist	true
-character_skills_localised_description_kho_cultist_magic_mist	Followers summon Khorne's vast sigil, bolstering their allies’ resilience and driving them to bring death and ruin to their foes.	true
-character_skills_localised_name_kho_cultist_magic_whip	Bloodstained Lash	true
-character_skills_localised_description_kho_cultist_magic_whip	Killing a servant of Khorne is never a mistake—but if you do, rejoice in spreading the glory of the Blood God.	true
+character_skills_localised_description_kho_cultist_magic_fist	A colossal blood-stained hand appears above the enemies of the Blood God, and a single blow is enough to crush their skulls to dust.	true
+character_skills_localised_name_kho_cultist_magic_flood_forbid	Weak Blood Deluge	true
+character_skills_localised_description_kho_cultist_magic_flood_forbid	The skull of the Lord of Change's living servant bursts apart, letting those fools who believe they command the winds of magic taste their own future!	true
+character_skills_localised_name_kho_cultist_magic_mist	Blood-Sigil Mist	true
+character_skills_localised_description_kho_cultist_magic_mist	Fanatics summon a great mark of the Blood God, granting allies more tenacious vitality and inspiring them to bring death and defeat upon their enemies.	true
+character_skills_localised_name_kho_cultist_magic_whip	Blood-Stained Lash	true
+character_skills_localised_description_kho_cultist_magic_whip	Slaying a servant of Khorne is never a wrong deed, but if you must do so, be sure to celebrate it as a proclamation of the Blood God's glory.	true
 character_skills_localised_name_kho_blood_magic_cooldown	Brass Canopy	true
-character_skills_localised_description_kho_blood_magic_cooldown	Molten brass flows across the heavens, disrupting the balance of magical storms—only Khorne's chosen can sense its presence.	true
+character_skills_localised_description_kho_blood_magic_cooldown	Molten brass flows ceaselessly across the sky above, disturbing the balance of the magical storm; only the chosen warriors of Khorne can sense this shift.	true
 character_skills_localised_name_kho_cultist_magic_cooldown	Brass Canopy	true
-character_skills_localised_description_kho_cultist_magic_cooldown	Molten brass flows across the heavens, disrupting the balance of magical storms—only Khorne's chosen can sense its presence.	true
+character_skills_localised_description_kho_cultist_magic_cooldown	Molten brass flows ceaselessly across the sky above, disturbing the balance of the magical storm; only the chosen warriors of Khorne can sense this shift.	true

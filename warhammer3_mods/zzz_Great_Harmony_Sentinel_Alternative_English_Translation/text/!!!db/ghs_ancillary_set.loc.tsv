@@ -1,11 +1,16 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_ancillary_set.loc		
-ancillary_sets_description_wh2_dlc16_ancillary_set_dragon	Collecting the Dragon Breastplate, Dragon Pendant, Dragon Mask, and Dragon Spear reveals the power of the Dragon.	false
-ancillary_sets_description_wh2_dlc16_ancillary_set_dreaming	Collecting the Boots of Dreaming, Cloak of Dreaming, Ring of Dreaming, and Bow of Dreaming reveals the power of Dreams.	false
-ancillary_sets_description_wh2_dlc16_ancillary_set_eagle	Collecting the Eagle Bracers, Eagle Quiver, Eagle Mask, and Eagle Bow reveals the power of the Eagle.	false
-ancillary_sets_description_wh2_dlc16_ancillary_set_twilight	Collecting the Twilight Helm, Twilight Banner, Twilight Horn, and Twilight Spear reveals the power of Twilight.	false
+ancillary_sets_description_wh2_dlc16_ancillary_set_dragon	Gathering the full set of Dragon Cuirass, Dragon Pendant, Dragon Mask, and Dragon Spear reveals the power of the dragon.	false
+ancillary_sets_description_wh2_dlc16_ancillary_set_dreaming	Gathering the full set of Dream Boots, Dream Cloak, Dream Ring, and Dream Bow reveals the power of dreams.	false
+ancillary_sets_description_wh2_dlc16_ancillary_set_eagle	Gathering the full set of Eagle Vambraces, Eagle Quiver, Eagle Mask, and Eagle Bow reveals the power of the eagle.	false
+ancillary_sets_description_wh2_dlc16_ancillary_set_twilight	Gathering the full set of Twilight Helm, Twilight Banner, Twilight Horn, and Twilight Spear reveals the power of twilight.	false
 ancillary_sets_name_wh2_dlc16_ancillary_set_dragon	Might of the Dragon	false
-ancillary_sets_name_wh2_dlc16_ancillary_set_dreaming	Sea of Dreams	false
-ancillary_sets_name_wh2_dlc16_ancillary_set_eagle	Eagle’s Keen Sight	false
-ancillary_sets_name_wh2_dlc16_ancillary_set_twilight	Omen of Twilight	false
-ancillary_sets_name_ghs_ancillary_set_cth_hongying	Shadowed Celestial Raven	false
+ancillary_sets_name_wh2_dlc16_ancillary_set_dreaming	Dreaming Like the Sea	false
+ancillary_sets_name_wh2_dlc16_ancillary_set_eagle	Eagle's Keen Eye	false
+ancillary_sets_name_wh2_dlc16_ancillary_set_twilight	Twilight Omen	false
+ancillary_sets_name_ghs_ancillary_set_cth_hongying	Shadow Sky Crow	false
+ancillary_sets_name_ghs_ancillary_set_cth_wangque	Moonlight Fairy	true
+ancillary_sets_name_ghs_ancillary_set_cth_xiaoxiao	Candlelight Ascending to Heaven	true
+ancillary_sets_name_ghs_ancillary_set_cth_yangxing	Steadfast Commander	true
+ancillary_sets_name_ghs_ancillary_set_cth_zhaowang	Four Symbols Shake the Peaks	true
+ancillary_sets_name_ghs_ancillary_set_ghs_ksl_thor	Thunder-Forged Avatar	true

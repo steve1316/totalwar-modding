@@ -1,4 +1,4 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_special_ability_groups.loc		
-special_ability_groups_name_ghs_cha_lord_cth_general	General of the High Heavens	false
-special_ability_groups_name_ghs_cha_lord_cth_royal_guard	Xuan Armour Commandant	false
+special_ability_groups_name_ghs_cha_lord_cth_general	Heavenly General	false
+special_ability_groups_name_ghs_cha_lord_cth_royal_guard	Dark Armor Marquis	false

@@ -1,28 +1,29 @@
 key	text	tooltip
 #Loc;1;text/@@@Deer24HEF/deer24_hefability.loc		
-unit_abilities_onscreen_name_DEERHEF_BAITAJIANSHENG	Art of Supremacy	false
-unit_abilities_tooltip_text_DEERHEF_BAITAJIANSHENG	The art of Hoeth's swordsmanship reaches perfection in the hands of these masters. Their unfortunate foes will become stepping stones on their path to ultimate mastery.	false
-unit_abilities_onscreen_name_DEERHEF_FENGHUANGSHOUWEI	Embers of the Phoenix King	false
-unit_abilities_tooltip_text_DEERHEF_FENGHUANGSHOUWEI	The King's Wings have basked countless times in the light of the Eternal Flame, blessed by the gods themselves.	false
+unit_abilities_onscreen_name_DEERHEF_BAITAJIANSHENG	Supreme Art	false
+unit_abilities_tooltip_text_DEERHEF_BAITAJIANSHENG	Hoeth's swordsmanship is honed to its utmost perfection in the hands of these masters, and their pitiable foes shall become mere stepping stones on their pursuit of the highest art.	false
+unit_abilities_onscreen_name_DEERHEF_FENGHUANGSHOUWEI	Afterglow of Kingly Fire	false
+unit_abilities_tooltip_text_DEERHEF_FENGHUANGSHOUWEI	The King's wings have bathed countless times in the radiance of the Eternal Flame; they are a people blessed by the gods.	false
 unit_abilities_onscreen_name_DEERHEF_NVQISHI	Shield of the Queen	false
-unit_abilities_tooltip_text_DEERHEF_NVQISHI	The Queen's Knights of Avelorn are the Eternal Queen's most devoted defenders. On the battlefield, they will raise her banner and fight in her name.	false
+unit_abilities_tooltip_text_DEERHEF_NVQISHI	The Handmaidens of Avalon are the most loyal defenders of the Everqueen. They will raise the Queen's banner high upon the battlefield and fight in her name.	false
 unit_abilities_onscreen_name_DEERHEF_NVQISHI1	Blade of the Queen	false
-unit_abilities_tooltip_text_DEERHEF_NVQISHI1	The Queen's Knights of Avelorn are the Eternal Queen's most devoted defenders. On the battlefield, they will raise her banner and fight in her name.	false
-unit_abilities_onscreen_name_DEERHEF_SHOUWANGZHE	Skyborne Deadeye	false
-unit_abilities_tooltip_text_DEERHEF_SHOUWANGZHE	With pale eyes watching the earth from the skies, the Watchers swiftly eliminate Ulthuan's greatest threats.	false
-unit_abilities_onscreen_name_DEERHEF_AISAANGQISHI	Call to Charge	false
-unit_abilities_tooltip_text_DEERHEF_AISAANGQISHI	The Luminants spearhead the lines of order, tearing apart enemy formations. When their horns resound, all elves know it is time to attack.	false
-ui_unit_bullet_point_enums_onscreen_name_DEERHEF_DIGONGTONGWEI	Tidemancers	false
-ui_unit_bullet_point_enums_tooltip_DEERHEF_DIGONGTONGWEI	These masters launch a storm of attacks upon their enemies, striking at a much higher frequency than most units.	false
-unit_abilities_onscreen_name_DEERHEF_DIGONGTONGWEI	Clarity of the Current	false
-unit_abilities_tooltip_text_DEERHEF_DIGONGTONGWEI	Tidemancers are duel specialists, capable of detecting even the subtlest enemy movements, deflecting attacks, bypassing armor, and striking with deadly precision.	false
-unit_abilities_onscreen_name_DEERHEF_NAJIARUISIHEIWEI	Malign Intent	false
-unit_abilities_tooltip_text_DEERHEF_NAJIARUISIHEIWEI	Anlec is the foothold of elven warfare. The Throne Guard, hardened by centuries of turmoil, have embraced the ways of bloodshed, with some believing their minds are ruled by the God of Murder.	false
-unit_abilities_onscreen_name_DEERHEF_BAISHILIECHANG	Champions of the Pure Mane	false
-unit_abilities_tooltip_text_DEERHEF_BAISHILIECHANG	The Lion Heralds are the guardians of the White Lion homeland. Their names are legendary among every White Lion Guard.	false
-unit_abilities_onscreen_name_DEERHEF_LONGZHU	Lords of the Sky	false
-unit_abilities_tooltip_text_DEERHEF_LONGZHU	When you look up at these winged creatures, you realize the skies belong to them.	false
+unit_abilities_tooltip_text_DEERHEF_NVQISHI1	The Handmaidens of Avalon are the most loyal defenders of the Everqueen. They will raise the Queen's banner high upon the battlefield and fight in her name.	false
+unit_abilities_onscreen_name_DEERHEF_SHOUWANGZHE	Death-Eye of the Heavens	false
+unit_abilities_tooltip_text_DEERHEF_SHOUWANGZHE	Pale eyes keep watch over the land from the sky, and in an instant, the Watchers strike down Ulthuan's greatest foes.	false
+unit_abilities_onscreen_name_DEERHEF_AISAANGQISHI	War Cry of the Breaker	false
+unit_abilities_tooltip_text_DEERHEF_AISAANGQISHI	The Radiants shall serve as the vanguard of order, tearing through the enemy's lines. When their horns sound, every elf knows the hour of the attack has come.	false
+ui_unit_bullet_point_enums_onscreen_name_DEERHEF_DIGONGTONGWEI	Waterdancers	false
+ui_unit_bullet_point_enums_tooltip_DEERHEF_DIGONGTONGWEI	These masters unleash a storm of relentless assaults upon their enemies, striking far more frequently than other units.	false
+unit_abilities_onscreen_name_DEERHEF_DIGONGTONGWEI	Currents of Total Clarity	false
+unit_abilities_tooltip_text_DEERHEF_DIGONGTONGWEI	The Waterdancers are masters of the duel, capable of reading every subtle movement of their foes, deflecting their attacks, slipping past sturdy armor, and delivering a fatal strike.	false
+unit_abilities_onscreen_name_DEERHEF_NAJIARUISIHEIWEI	Spreading Bloodlust	false
+unit_abilities_tooltip_text_DEERHEF_NAJIARUISIHEIWEI	Naggarond is the bastion of elven war, and the Throne Guard have long grown accustomed to the ways of slaughter through endless strife. Some even whisper that their minds have come under the sway of the Blood God.	false
+unit_abilities_onscreen_name_DEERHEF_BAISHILIECHANG	Champion of the Pure Mane	false
+unit_abilities_tooltip_text_DEERHEF_BAISHILIECHANG	The Lion-Speakers are the guardians of the White Lions' homeland, and their name is a legend etched into the heart of every White Lion of Chrace.	false
+unit_abilities_onscreen_name_DEERHEF_LONGZHU	Master of the Skies	false
+unit_abilities_tooltip_text_DEERHEF_LONGZHU	When you gaze upon these winged creatures, you will realize that the sky belongs to them.	false
 unit_abilities_onscreen_name_DEERHEF_LONGZHU1	Pride of the Realm	false
-unit_abilities_tooltip_text_DEERHEF_LONGZHU1	With each attack, the knights quell Caledor's fury, delivering punishment and peace to the realm's enemies through the merciful dragons.	false
+unit_abilities_tooltip_text_DEERHEF_LONGZHU1	Every strike of the knight quells Caledor's wrath, for the merciful dragons shall bring both punishment and rest to the enemies of the realm.	false
 unit_abilities_onscreen_name_DEERHEF_HAIMEN	Bow of Stillness	false
-unit_abilities_tooltip_text_DEERHEF_HAIMEN	They are called Windcallers because their arrows, raining down like a storm, are believed to halt any tempest.	false
+unit_abilities_tooltip_text_DEERHEF_HAIMEN	They are called Windcallers because it is believed that their sky-blotting hail of arrows is enough to halt any storm.	false
+update	9	true

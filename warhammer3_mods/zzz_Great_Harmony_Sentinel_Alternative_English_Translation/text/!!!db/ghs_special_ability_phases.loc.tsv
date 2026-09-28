@@ -1,21 +1,22 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_special_ability_phases.loc		
-special_ability_phases_onscreen_name_ghs_lzd_thunder_engine_debuff	[[col:red]][[img:ui/battle ui/ability_icons/ghs_lzd_thunder_engine_debuff.png]][[/img]]Lightning Strike![[/col]]	false
-special_ability_phases_onscreen_name_dwf_god_thunder	[[col:red]][[img:ui/battle ui/ability_icons/dwf_god_thunder.png]][[/img]]Runic Thunder![[/col]]	true
-special_ability_phases_onscreen_name_cth_unit_contact_snow	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_snow.png]][[/img]]Jade Burial!	true
-special_ability_phases_onscreen_name_cth_unit_contact_moon_flame	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_moon_flame.png]][[/img]]Moonfire!	true
-special_ability_phases_onscreen_name_cth_unit_contact_ink	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_ink.png]][[/img]]Seal of Ink!\\n[[img:icon_magical_attacks]][[/img]]Removes Magical Attacks[[/col]]	true
-special_ability_phases_onscreen_name_cth_unit_contact_hongying_ink	[[col:red]][[img:ui/battle ui/ability_icons/ghs_ability_cth_royal_guard_avatar.png]][[/img]]Eternal Inkfire Seal!\\n[[img:icon_magical_attacks]][[/img]]Removes Magical Attacks[[/col]]	true
+special_ability_phases_onscreen_name_ghs_lzd_thunder_engine_debuff	[[col:red]][[img:ui/battle ui/ability_icons/ghs_lzd_thunder_engine_debuff.png]][[/img]]Thunderstrike![[/col]] 	false
+special_ability_phases_onscreen_name_dwf_god_thunder	[[col:red]][[img:ui/battle ui/ability_icons/dwf_god_thunder.png]][[/img]]Rune Thunder![[/col]] 	true
+special_ability_phases_onscreen_name_cth_unit_contact_snow	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_snow.png]][[/img]]Snow Burial!	true
+special_ability_phases_onscreen_name_cth_unit_contact_moon_flame	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_moon_flame.png]][[/img]]Moonflame!	true
+special_ability_phases_onscreen_name_cth_unit_contact_ink	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_ink.png]][[/img]]Ink Seal!\\n[[img:icon_magical_attacks]][[/img]]Removes Magical Attacks[[/col]]	true
+special_ability_phases_onscreen_name_cth_unit_contact_hongying_ink	[[col:red]][[img:ui/battle ui/ability_icons/ghs_ability_cth_royal_guard_avatar.png]][[/img]]Eternal Ink Flame Seal!\\n[[img:icon_magical_attacks]][[/img]]Removes Magical Attacks[[/col]]	true
 special_ability_phases_onscreen_name_cth_unit_contact_dragon_roar	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_dragon_roar.png]][[/img]]Dragon's Roar!	true
 special_ability_phases_onscreen_name_ghs_def_sea_dragon_waterlogged	[[col:red]][[img:ui/battle ui/ability_icons/ghs_def_sea_dragon_waterlogged.png]][[/img]]Drowning Waters![[/col]]	true
 special_ability_phases_onscreen_name_ghs_hef_skycutter_emulation_of_kalagan	Winged Quiver	true
-special_ability_phases_onscreen_name_dashenpoxie	[[col:red]]God-Slaying Exorcism[[/col]]	true
-special_ability_phases_onscreen_name_cth_unit_contact_jade_blood	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_jade_blood.png]][[/img]]Corrosion of Jade Blood[[/col]]	true
-special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_rune_spell_ii	Everlasting Vitality	true
-special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_rune_spell_iii	Lingfu's Resonance	false
-special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_rune_spell_i	New Spring from Withered Wood	false
-special_ability_phases_onscreen_name_ghs_def_medusa_curse_i	Lead-Laden Limbs	false
-special_ability_phases_onscreen_name_ghs_def_medusa_curse_ii	Rust Weapons	false
+special_ability_phases_onscreen_name_cth_unit_contact_jade_blood	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_jade_blood.png]][[/img]]Jade Blood Elixir Art[[/col]] 	true
+special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_rune_spell_ii	Endless Renewal	true
+special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_rune_spell_iii	Weng Chang's Spirit Hall	false
+special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_rune_spell_i	Withered Wood Springs Anew	false
+special_ability_phases_onscreen_name_ghs_def_medusa_curse_i	Leaden Limbs	false
+special_ability_phases_onscreen_name_ghs_def_medusa_curse_ii	Rusting Weapons	false
 special_ability_phases_onscreen_name_ghs_def_medusa_curse_iii	Petrifying Gaze	false
-special_ability_phases_onscreen_name_ghs_ksl_thor_lightning	[[col:red]][[img:ui/battle ui/ability_icons/wh_dlc08_quest_passive_lightening_down.png]][[/img]]Thor's Wrath![[/col]]	true
-special_ability_phases_onscreen_name_cth_unit_contact_jade_sword	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_jade_sword.png]][[/img]]Jadeblood Blade[[/col]]	true
+special_ability_phases_onscreen_name_ghs_ksl_thor_lightning	[[col:red]][[img:ui/battle ui/ability_icons/wh_dlc08_quest_passive_lightening_down.png]][[/img]]Tor's Lightning Judgment![[/col]]	true
+special_ability_phases_onscreen_name_cth_unit_contact_jade_sword	[[col:red]][[img:ui/battle ui/ability_icons/cth_unit_contact_jade_sword.png]][[/img]]Weng Chang's Strange Poison[[/col]] 	true
+special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_snake_heal	Restoration of the Life Spring	true
+special_ability_phases_onscreen_name_ghs_ability_cth_jade_blood_snake_poision	Insidious Corrosion	true

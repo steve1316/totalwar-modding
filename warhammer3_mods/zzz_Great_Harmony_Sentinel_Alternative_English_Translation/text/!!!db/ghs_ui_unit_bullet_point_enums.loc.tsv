@@ -1,65 +1,69 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_ui_unit_bullet_point_enums.loc		
-ui_unit_bullet_point_enums_onscreen_name_warpstone_keg	Warpstone Keg	false
-ui_unit_bullet_point_enums_onscreen_name_jade_taoist_rune_spell	Jade Taoist Rune Spell	false
-ui_unit_bullet_point_enums_tooltip_warpstone_keg	The frailty of Skavenslaves makes them the perfect fuse for a warpstone keg explosion.	false
-ui_unit_bullet_point_enums_onscreen_name_ghs_ability_dwf_beer_valaya	Valaya's Chalice	true
+ui_unit_bullet_point_enums_onscreen_name_jade_taoist_rune_spell	Jade Blood Rune Art	false
+ui_unit_bullet_point_enums_onscreen_name_ghs_ability_dwf_beer_valaya	Valaya's Goblet	true
 ui_unit_bullet_point_enums_onscreen_name_ghs_ability_dwf_forge_grungni	Grungni's Forge	true
 ui_unit_bullet_point_enums_onscreen_name_ghs_ability_dwf_powder_morgrim	Morgrim's Powder	true
 ui_unit_bullet_point_enums_onscreen_name_ghs_ability_dwf_rage_grimnir	Grimnir's Axe	true
-ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_beer_valaya	"Build fortresses, protect homes, and revel in the joy of Valaya's brew!"	true
-ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_forge_grungni	"The forge burns bright, the hammer rings, and a divine weapon is forged!"	true
-ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_powder_morgrim	"The cannon roars, the smoke clears, and the mountains tremble in song!"	true
-ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_rage_grimnir	"Slay the dragon, conquer the wilds, and cleanse the Chaos beasts!"	true
-ui_unit_bullet_point_enums_tooltip_jade_taoist_rune_spell	Jade Taoist Rune Spells are a unique development of the Wind of Qi. Casters store magical winds in talismans for later use, providing potent support despite limited control.	true
-ui_unit_bullet_point_enums_tooltip_ghs_cth_cha_hongying	Hong Ying is the Moon Empress's most trusted Dragonborn Lord, rumored to carry the mysterious bloodline of the Shadow Dragon. He oversees the Gui Po Division and commands the Obsidian Crows.	true
-ui_unit_bullet_point_enums_tooltip_magic_eater	Constructed from jade, these creatures boast incredible resilience and can draw power from the Winds of Magic.	true
-ui_unit_bullet_point_enums_tooltip_iron_eater	Sharp weapons and heavy armor are delectable treats for this iron-consuming beast!	true
-ui_unit_bullet_point_enums_tooltip_imperfect	These prototypes of the Dragon Emperor's creations cannot fully stabilize the power of the Aether Winds but still instill fear in their enemies.	true
-ui_unit_bullet_point_enums_onscreen_name_ghs_cth_cha_hongying	"The Pale Moon Raven"	true
-ui_unit_bullet_point_enums_onscreen_name_magic_eater	Jade Construct	true
-ui_unit_bullet_point_enums_onscreen_name_iron_eater	Iron Eater Beast	true
-ui_unit_bullet_point_enums_onscreen_name_imperfect	Dragon Emperor Prototype	true
+ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_beer_valaya	'Build the fortress, guard the home, drink deep and laugh with joy!'	true
+ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_forge_grungni	'The forge burns bright, the hammer rings, the peerless blade is cast!'	true
+ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_powder_morgrim	'The great cannon roars, the smoke disperses, the mountains tremble to its song!'	true
+ui_unit_bullet_point_enums_tooltip_ghs_ability_dwf_rage_grimnir	'Slay the dread dragon, march into the wastes, purge every foul creature of Chaos!'	true
+ui_unit_bullet_point_enums_tooltip_jade_taoist_rune_spell	The Jade Blood Rune Art is a unique innovation of the Jade Blood Taoists on the winds of magic; the caster stores everyday winds of magic within talismans, and even without precise control over the effect, it grants a powerful boon.	true
+ui_unit_bullet_point_enums_tooltip_ghs_cth_cha_hongying	Hong Ying is a Dragon-Blooded Lord favored deeply by the Moon Empress; he bears the mysterious bloodline of the shadow dragon, and not only commands the Cassia Confidants, but is also one of only two beings, besides the Jade Dragon, who know the full intelligence network across all of Cathay.	true
+ui_unit_bullet_point_enums_tooltip_magic_eater	These colossal creatures are forged of verdant jade, possessing exceptional resilience while drawing power from the winds of magic that surround them.	true
+ui_unit_bullet_point_enums_tooltip_iron_eater	Sharp weapons, heavy armor - it's all a delicious feast for this big lovable brute!	true
+ui_unit_bullet_point_enums_tooltip_imperfect	These prototypes of the Dragon Emperor cannot yet stably convert the power of the Wind of Aethyr, but they are still enough to make enemies quake in fear.	true
+ui_unit_bullet_point_enums_onscreen_name_ghs_cth_cha_hongying	[Pale Moon's Dark Crow]	true
+ui_unit_bullet_point_enums_onscreen_name_magic_eater	Verdant Jade Construct	true
+ui_unit_bullet_point_enums_onscreen_name_iron_eater	Iron-Devouring Beast	true
+ui_unit_bullet_point_enums_onscreen_name_imperfect	Dragon Emperor's Prototype	true
 ui_unit_bullet_point_enums_onscreen_name_tomb_dragon_breath	Soul Dragon's Breath	true
-ui_unit_bullet_point_enums_tooltip_tomb_dragon_breath	Those who disturb the Tomb Kings' rest will face the wrath of ancient tyrant souls.	true
-ui_unit_bullet_point_enums_onscreen_name_armour_hydra_breath	Cursed Flame	true
+ui_unit_bullet_point_enums_tooltip_tomb_dragon_breath	Any intruder who dares disturb the eternal slumber of the kings shall face the wrath of the souls of ancient tyrants.	true
+ui_unit_bullet_point_enums_onscreen_name_armour_hydra_breath	Bound Power	true
 ui_unit_bullet_point_enums_onscreen_name_black_ark	Black Ark	true
 ui_unit_bullet_point_enums_onscreen_name_khaine_avatar	Avatar of Khaine	true
 ui_unit_bullet_point_enums_onscreen_name_medusa_curse	Touch of a Thousand Eyes	true
-ui_unit_bullet_point_enums_onscreen_name_tzarkan	World Drinker	true
-ui_unit_bullet_point_enums_tooltip_armour_hydra_breath	Infused with destructive magic, the many-headed hydra spews dark flames with unparalleled vitality.	true
-ui_unit_bullet_point_enums_tooltip_black_ark	Though slow-moving, the Black Ark provides exceptional ranged and magical support, with the ability to extinguish surrounding flames with its tidal waves.	true
-ui_unit_bullet_point_enums_tooltip_khaine_avatar	Summoning it requires a price, whether in others' blood or your own.	true
-ui_unit_bullet_point_enums_tooltip_medusa_curse	A light touch may numb you, severe weakness will set in, or worse—your heart will be pierced before your eyes.	true
-ui_unit_bullet_point_enums_tooltip_tzarkan	The black soul of Malus Darkblade and the cunning demon Tzarkan are temporarily separated, but it won't last long.	true
+ui_unit_bullet_point_enums_onscreen_name_tzarkan	Devourer of Worlds	true
+ui_unit_bullet_point_enums_tooltip_armour_hydra_breath	This hydra, brimming with destructive magic, possesses astonishing vitality, and its heads can unleash blasts of fierce dark flame.	true
+ui_unit_bullet_point_enums_tooltip_black_ark	The floating fortress of the Druchii moves slowly, but the forces aboard are masters of shooting and sorcery, capable of unleashing devastating supporting fire, while the surging tides can easily douse any flames nearby.	true
+ui_unit_bullet_point_enums_tooltip_khaine_avatar	If you dare to summon it, you must pay the price in blood - either another's or your own.	true
+ui_unit_bullet_point_enums_tooltip_medusa_curse	A slight touch may leave you numb all over, or utterly weakened, and if your luck is worse still, the victim can only watch as their heart is pierced through!	true
+ui_unit_bullet_point_enums_tooltip_tzarkan	The dark soul of Malus Darkblade has been temporarily separated from the treacherous demon Tzarkan's soul, but this will not last long.	true
 ui_unit_bullet_point_enums_onscreen_name_ghs_legendry	Legendary Glory	true
 ui_unit_bullet_point_enums_onscreen_name_kurnous_chosen	Chosen of Kurnous	true
-ui_unit_bullet_point_enums_onscreen_name_moonfire_bow	Evil Moonfire Bow	true
-ui_unit_bullet_point_enums_tooltip_ghs_legendry	This unit possesses unparalleled combat prowess. May you continue to write their legendary tale!	true
-ui_unit_bullet_point_enums_tooltip_kurnous_chosen	The power of Kurnous flows in their veins. They serve directly under the King of the Forest in the Wild Hunt.	true
-ui_unit_bullet_point_enums_tooltip_moonfire_bow	These spectral blue bows absorb their wielder's malice to create even deadlier arrows, but have no effect on allies.	true
-ui_unit_bullet_point_enums_tooltip_dwarf_engineer_team	This unit is a professional combat engineer team with unique abilities to construct devices and weapons in battle.	false
+ui_unit_bullet_point_enums_onscreen_name_moonfire_bow	Vile Moonfire Bow	true
+ui_unit_bullet_point_enums_tooltip_ghs_legendry	This mighty unit possesses unrivaled combat skill or ability - may you continue to write their legendary deeds!	true
+ui_unit_bullet_point_enums_tooltip_kurnous_chosen	The power of Kurnous flows through their veins; they serve the Lord of the Forests directly, riding forth in the Wild Hunt.	true
+ui_unit_bullet_point_enums_tooltip_moonfire_bow	These pale blue-glowing magical longbows absorb the malice their wielders have gathered, empowering the wielder in turn while conjuring even more terrifying arrows, though they have no effect against allies.	true
+ui_unit_bullet_point_enums_tooltip_dwarf_engineer_team	This unit is a team of specialized combat engineers, possessing the unique ability to construct objects and weapons on the battlefield.	false
 ui_unit_bullet_point_enums_onscreen_name_dwarf_engineer_team	Combat Engineers	false
 ui_unit_bullet_point_enums_onscreen_name_weak_to_fire	Weak to Fire	false
-ui_unit_bullet_point_enums_tooltip_weak_to_fire	This unit is particularly vulnerable to [[img:ui/skins/default/modifier_icon_flaming.png]][[/img]] fire damage.	false
-ui_unit_bullet_point_enums_tooltip_short_range	This unit's ranged attacks have limited range.	false
+ui_unit_bullet_point_enums_tooltip_weak_to_fire	This unit is especially vulnerable to [[img:ui/skins/default/modifier_icon_flaming.png]][[/img]] fire damage.	false
+ui_unit_bullet_point_enums_tooltip_short_range	This unit's ranged attack has a limited range.	false
 ui_unit_bullet_point_enums_onscreen_name_short_range	Short Range	false
-ui_unit_bullet_point_enums_tooltip_incendiary_ammunition	This projectile causes [[img:ui/skins/default/modifier_icon_flaming.png]][[/img]] fire damage.	false
-ui_unit_bullet_point_enums_onscreen_name_incendiary_ammunition	Incendiary Rounds	false
+ui_unit_bullet_point_enums_tooltip_incendiary_ammunition	This projectile deals [[img:ui/skins/default/modifier_icon_flaming.png]][[/img]] fire damage.	false
+ui_unit_bullet_point_enums_onscreen_name_incendiary_ammunition	Incendiary Ammunition	false
 ui_unit_bullet_point_enums_onscreen_name_deployed_crew	Deployable Crew	true
-ui_unit_bullet_point_enums_onscreen_name_ammo_refill	Ammo Replenishment	true
-ui_unit_bullet_point_enums_tooltip_ammo_refill	This unit can replenish ammunition for allies.	true
+ui_unit_bullet_point_enums_onscreen_name_ammo_refill	Ammunition Resupply	true
+ui_unit_bullet_point_enums_tooltip_ammo_refill	This unit can resupply ammunition to allied units.	true
 ui_unit_bullet_point_enums_onscreen_name_strong_vs_single_entity	Monster Slayer	true
-ui_unit_bullet_point_enums_tooltip_strong_vs_single_entity	Thunder Cannons fire massive shells that deal enormous damage to single entities but are less effective against groups.	true
+ui_unit_bullet_point_enums_tooltip_strong_vs_single_entity	The Thunder Cannon fires a massive spherical projectile. It deals immense damage to a single entity, but is less effective against groups.	true
 ui_unit_bullet_point_enums_onscreen_name_stationary	Stationary Artillery	true
-ui_unit_bullet_point_enums_tooltip_stationary	Once deployed, the Thunder Cannon remains stationary for the duration of the battle.	true
-ui_unit_bullet_point_enums_onscreen_name_ghs_ksl_thor_weapon	Thunder God’s Hammer	false
-ui_unit_bullet_point_enums_tooltip_ghs_ksl_thor_weapon	Mjolnir, the divine hammer gifted to Hafdan by Thor, can be hurled with lightning force to shatter enemies—then instantly returns to his hand.	false
-ui_unit_bullet_point_enums_onscreen_name_ghs_dual_shot	Double-Barrel Hawkgun	false
-ui_unit_bullet_point_enums_tooltip_ghs_dual_shot	Forged in the Nan-Gau Foundry with exquisite craftsmanship, these advanced double-barrel firearms are paired with the finest black-powder techniques— even Engineering Masters praise such top-tier weapons	false
-ui_unit_bullet_point_enums_onscreen_name_ghs_war_drum	Heavenly War-Drum	false
-ui_unit_bullet_point_enums_tooltip_ghs_war_drum	Two wheels through the mists, four steeds restrained— raise the jade mallets and strike the roaring drums!	false
-ui_unit_bullet_point_enums_onscreen_name_ghs_war_painting	Tribal War-Paint	false
-ui_unit_bullet_point_enums_tooltip_ghs_war_painting	The many mountain tribes under Lidao’s dominion form the stoutest defense of southern Cathay; the secrets of their war-paint are the key to their victories	false
-ui_unit_bullet_point_enums_onscreen_name_ghs_vine_armour	Vine-Woven Armour	false
-ui_unit_bullet_point_enums_tooltip_ghs_vine_armour	Uniquely southern vines are repeatedly soaked, dried, and treated before being woven into a light yet sturdy armour— though its material bears one fatal flaw: it is highly flammable	false
+ui_unit_bullet_point_enums_tooltip_stationary	Once unhitched from its tow, the thunder cannon becomes a fixed piece of artillery for the rest of the battle.	true
+ui_unit_bullet_point_enums_onscreen_name_ghs_ksl_thor_weapon	Thunder God's Hammer	false
+ui_unit_bullet_point_enums_tooltip_ghs_ksl_thor_weapon	Mjolnir is the divine hammer granted to Halfdan by Thor - it can be hurled forth, crushing enemies amid crackling lightning, before instantly returning to Halfdan's hand.	false
+ui_unit_bullet_point_enums_onscreen_name_ghs_dual_shot	Dual-Barrel Eagle Rifle	false
+ui_unit_bullet_point_enums_tooltip_ghs_dual_shot	The most advanced dual-barrel firearms forged by Nan Gao's smithies, paired with the most refined black powder technology; the precision of these top-tier weapons is unmatched in the Old World.	false
+ui_unit_bullet_point_enums_onscreen_name_ghs_war_drum	Heavenly War Drum	false
+ui_unit_bullet_point_enums_tooltip_ghs_war_drum	Haze veils the two wheels, four steeds bound fast, raise the jade drumstick and strike the sounding drum! (Has the Savage Charge ability)	false
+ui_unit_bullet_point_enums_onscreen_name_ghs_war_painting	Tribal War Markings	false
+ui_unit_bullet_point_enums_tooltip_ghs_war_painting	The mountain tribes under the rule of Li Dao form the most solid line of defense in southern Cathay, and the secret of their war markings is the key to their victories.	false
+ui_unit_bullet_point_enums_onscreen_name_ghs_vine_armour	Unyielding Vine Armour	false
+ui_unit_bullet_point_enums_tooltip_ghs_vine_armour	A special vine material native to the southern frontier, repeatedly soaked and dried through many processes, is finally woven into a light yet sturdy armor - though its material carries the fatal flaw of flammability.	false
+ui_unit_bullet_point_enums_onscreen_name_cant_melee_attack	Cannot Melee Attack	true
+ui_unit_bullet_point_enums_onscreen_name_dragonship	Dragonsail Warship	true
+ui_unit_bullet_point_enums_onscreen_name_moxue_armour	Ink Jade Sturdy Armor	true
+ui_unit_bullet_point_enums_tooltip_cant_melee_attack	This unit cannot engage in melee combat.	true
+ui_unit_bullet_point_enums_tooltip_dragonship	A dragonship cutting through the waves is already an awe-inspiring sight, but to witness the great dragon perched atop its towering mast is a memory that will last a lifetime.	true
+ui_unit_bullet_point_enums_tooltip_moxue_armour	Armor forged from black jade, imbued with mysterious arcane arts that dampen magical energy.	true

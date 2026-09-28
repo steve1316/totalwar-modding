@@ -1,12 +1,13 @@
 key	text	tooltip
 #Loc;1;text/@@@Deer24batuoniya/!!!deer24_kkability.loc		
-unit_abilities_onscreen_name_BJQSBAB	Crusader Knights	false
-unit_abilities_tooltip_text_BJQSBAB	Knights of Glory will fearlessly throw themselves into the war against the great enemies of Order.	false
-unit_abilities_onscreen_name_YZQSBAB	The Glory of the Thirteen	false
-unit_abilities_tooltip_text_YZQSBAB	The miracles of the Grail Champions are once again witnessed on mortal soil. Here and now, a new legend is being written!	false
-unit_abilities_onscreen_name_SZQSBAB	The Lion Roars	false
-unit_abilities_tooltip_text_SZQSBAB	The proud lions dare to face any challenge.	false
-unit_abilities_onscreen_name_YEZHUQSBAB	Savage Fury	false
-unit_abilities_tooltip_text_YEZHUQSBAB	As the war becomes bloodier, these furious warriors will also sacrifice themselves.	false
-unit_abilities_onscreen_name_FMQSBAB	Pegasus Radiance	false
-unit_abilities_tooltip_text_FMQSBAB	These noble knights will always lend a hand whenever people are in need.	false
+unit_abilities_onscreen_name_BJQSBAB	Holy Warrior Knight	false
+unit_abilities_tooltip_text_BJQSBAB	The Glorious Knights shall throw themselves without hesitation into the war against the enemies of Order.	false
+unit_abilities_onscreen_name_YZQSBAB	Glory of the Thirteen Knights	false
+unit_abilities_tooltip_text_YZQSBAB	The miracle of the Grail Champion is reborn in the mortal world—here and now, a new legend is being written!	false
+unit_abilities_onscreen_name_SZQSBAB	Roar of the Lion	false
+unit_abilities_tooltip_text_SZQSBAB	The proud lion dares to face any challenge.	false
+unit_abilities_onscreen_name_YEZHUQSBAB	Feral Fury	false
+unit_abilities_tooltip_text_YEZHUQSBAB	As the war grows ever more bloody, these frenzied warriors shall fight even unto death.	false
+unit_abilities_onscreen_name_FMQSBAB	Radiance of the Pegasus	false
+unit_abilities_tooltip_text_FMQSBAB	These noble knights shall always lend an unconditional hand when the people are in need.	false
+UPDATE	9	true

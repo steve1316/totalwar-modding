@@ -1,22 +1,22 @@
 key	text	tooltip
 #Loc;1;text/@@zerooz_nur_units.loc		
-land_units_onscreen_name_nur_inf_plague_cultist	Plague Cultists	false
-unit_description_short_texts_text_nur_inf_plague_cultist	Their job is to spread plague; they may look like ordinary people, but their bodies are no longer human.	false
-land_units_onscreen_name_chs_inf_chaos_marauders_mnur_throwing_axes	Marauders of Nurgle (Throwing Axes)	false
+land_units_onscreen_name_nur_inf_plague_cultist	Nurgle Plague Cultists	false
+unit_description_short_texts_text_nur_inf_plague_cultist	Spreading plague is their sworn duty. Though they appear human, their inner structure is no longer of humankind.	false
+land_units_onscreen_name_chs_inf_chaos_marauders_mnur_throwing_axes	Nurgle Marauders (Throwing Axes)	false
 land_units_onscreen_name_chs_inf_death_guard_mnur	Death Guard	false
-unit_description_short_texts_text_chs_inf_death_guard_mnur	They are beyond the Chosen of Nurgle and act as the gardeners of Nurgle's garden, emitting a stench potent enough to rot everything.	false
-land_units_onscreen_name_nur_cav_plague_cultist	Plague Spreaders	false
-unit_description_short_texts_text_nur_cav_plague_cultist	Mounted for faster plague spreading and quicker escape from towns.	false
-land_units_onscreen_name_chs_cav_chaos_knights_mnur_axe	Chaos Knights (Great Axes)	false
-unit_description_short_texts_text_chs_cav_chaos_knights_mnur_axe	Chaos Knights wielding poison-coated great axes capable of rotting anything they touch, including armor and bones.	false
+unit_description_short_texts_text_chs_inf_death_guard_mnur	They stand beyond even the Chosen of Nurgle, tending the Garden of Nurgle as its gardeners. They exude a stench so foul it can rot flesh from the bone.	false
+land_units_onscreen_name_nur_cav_plague_cultist	Nurgle Plague Spreaders	false
+unit_description_short_texts_text_nur_cav_plague_cultist	Mounted, they can spread plague more swiftly, and flee the ravaged towns all the faster.	false
+land_units_onscreen_name_chs_cav_chaos_knights_mnur_axe	Nurgle Chaos Knights (Great Axe)	false
+unit_description_short_texts_text_chs_cav_chaos_knights_mnur_axe	Nurgle's Knights wield venom-laden great axes, whose poison is potent enough to rot anything it touches, be it armour or bone.	false
 land_units_onscreen_name_chs_cav_death_reaper_mnur	Death Reapers	false
-unit_description_short_texts_text_chs_cav_death_reaper_mnur	Loyal followers of Nurgle, wielding scythes as symbols of their role as the Father’s emissaries, leaving a trail of skeletons.	false
-land_units_onscreen_name_nur_mon_plague_toads_armoured	Armored Plague Toads of Nurgle	false
-unit_description_short_texts_text_nur_mon_plague_toads_armoured	More powerful toads, usually not leaving Nurgle’s garden, often collecting and decorating themselves with discarded parts from the garden.	false
-land_units_onscreen_name_nur_inf_centigors_throwing_axes	Centigors of Nurgle (Throwing Axes)	false
-unit_description_short_texts_text_nur_inf_centigors_throwing_axes	Centigors throwing poison-tipped axes; they lack heavy armor but are faster moving.	false
-land_units_onscreen_name_nur_inf_centigors_great_axe	Centigors of Nurgle (Great Axes)	false
-unit_description_short_texts_text_nur_inf_centigors_great_axe	Centigors wielding heavy weapons, crushing all enemies in sight. Blessed by the Plague Father with strong life and heavier armor.	false
-land_units_onscreen_name_nur_inf_plague_ogres_cannon	Plague Ogres (Nurgling Cannon)	false
-unit_description_short_texts_text_nur_inf_plague_ogres_cannon	Plague Ogres using a once-great cannon, now firing Nurgle's essence that has parasitized them.	false
-unit_description_short_texts_text_inf_chaos_marauders_mnur_throwing_axes	Plague Marauders throw axes to smash enemy armor, making it simpler and quicker.	false
+unit_description_short_texts_text_chs_cav_death_reaper_mnur	Devoted followers of Nurgle, they wield scythes as emissaries of the Father of Decay, leaving fields of bones in their wake.	false
+land_units_onscreen_name_nur_mon_plague_toads_armoured	Nurgle Blight Toads	false
+unit_description_short_texts_text_nur_mon_plague_toads_armoured	Mightier toads that rarely leave the Garden of Nurgle, adorning themselves with scavenged fragments lost within it.	false
+land_units_onscreen_name_nur_inf_centigors_throwing_axes	Nurgle Centigors	false
+unit_description_short_texts_text_nur_inf_centigors_throwing_axes	Centigors hurling venomous throwing axes - though lacking heavy armour, they move with impressive speed.	false
+land_units_onscreen_name_nur_inf_centigors_great_axe	Nurgle Centigors (Great Weapons)	false
+unit_description_short_texts_text_nur_inf_centigors_great_axe	Centigors wielding heavy weapons to crush any foe before them. Blessed by the Plague Father, they possess resilient vitality and thicker armour.	false
+land_units_onscreen_name_nur_inf_plague_ogres_cannon	Plague Ogres (Nurgle Soul Cannon)	false
+unit_description_short_texts_text_nur_inf_plague_ogres_cannon	Plague Ogres wield cannons of old, but what they fire forth are Nurglings nesting upon their backs.	false
+unit_description_short_texts_text_inf_chaos_marauders_mnur_throwing_axes	Nurgle's Marauders hurl throwing axes to shatter the enemy's armor, a simpler and quicker way to bring them down.	false

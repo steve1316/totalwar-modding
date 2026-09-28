@@ -1,40 +1,40 @@
 key	text	tooltip
 #Loc;1;text/!!!db/ghs_commandment_effects.loc		
-effects_description_ghs_dwf_edict_1	Greatly Strengthened Edict: Guild Authorization	true
-effects_description_ghs_dwf_edict_1_1	Moderately Strengthened Edict: Guild Authorization	true
-effects_description_ghs_dwf_edict_1_2	Slightly Strengthened Edict: Guild Authorization	true
-effects_description_ghs_dwf_edict_2	Greatly Strengthened Edict: Tribute to the High King	true
-effects_description_ghs_dwf_edict_2_1	Moderately Strengthened Edict: Tribute to the High King	true
-effects_description_ghs_dwf_edict_2_2	Slightly Strengthened Edict: Tribute to the High King	true
-effects_description_ghs_dwf_edict_3	Strengthened Edict: Master of Iron and Stone	true
-effects_description_ghs_dwf_edict_3_1	Moderately Strengthened Edict: Master of Iron and Stone	true
-effects_description_ghs_dwf_edict_3_2	Greatly Strengthened Edict: Master of Iron and Stone	true
-effects_description_ghs_dwf_edict_4	Strengthened Edict: Veneration of the Ancestors	true
-effects_description_ghs_dwf_edict_4_1	Moderately Strengthened Edict: Veneration of the Ancestors	true
-effects_description_ghs_dwf_edict_4_2	Greatly Strengthened Edict: Veneration of the Ancestors	true
-effects_description_ghs_kho_edict_1	You have spread the desire for slaughter, gaining Strengthened Edict Level: 1	true
-effects_description_ghs_kho_edict_11	You have earned the honor of slaughter, gaining Strengthened Edict Level: 2	true
-effects_description_ghs_kho_edict_21	You have fulfilled the will of slaughter, gaining Strengthened Edict Level: 3	true
-effects_description_ghs_valkia_edict_1	You have spread the desire for slaughter, gaining Strengthened Edict Level: 1	true
-effects_description_ghs_valkia_edict_11	You have earned the honor of slaughter, gaining Strengthened Edict Level: 2	true
-effects_description_ghs_valkia_edict_21	You have pleased your Supreme Consort! Gaining Strengthened Edict Level: 3	true
-effect_bundles_localised_title_wh3_main_edict_ksl_awaken_the_land_powerful	Strengthened Edict: Awaken the Land	false
-effect_bundles_localised_title_wh3_main_edict_ksl_purge_the_steppes_powerful	Strengthened Edict: Purge the Steppes	false
-effect_bundles_localised_title_wh3_main_edict_ksl_relief_columns_powerful	Strengthened Edict: Regroup the Forces	false
-effect_bundles_localised_title_wh3_main_edict_ksl_the_power_of_the_church_powerful	Strengthened Edict: Power of the Church	false
-effects_description_ghs_ksl_edict_development_01	Strengthened Edict: Awaken the Land	true
-effects_description_ghs_ksl_edict_development_02	Strengthened Edict: Purge the Steppes	true
-effects_description_ghs_ksl_edict_development_06	Strengthened Edict: Regroup the Forces	true
-effects_description_ghs_ksl_edict_development_07	Strengthened Edict: Power of the Church	true
-effects_description_ghs_cth_edict_8	Strengthened: Gale Dragon Edict	true
-effects_description_ghs_cth_edict_5	Strengthened: Abyss Dragon Edict	true
-effects_description_ghs_cth_edict_3	Strengthened: Tempered Dragon Edict	true
-effects_description_ghs_cth_edict_11	Strengthened: Jade Dragon Edict	true
-effects_description_ghs_cth_edict_1	Strengthened: Torch Dragon Edict	true
-effects_description_ghs_cth_edict_12	Strengthened: Jade Dragon Edict (The grand vision of the Jade Dragon solely lies in the welfare of the Celestial Empire's people; true fulfillment can only be achieved in times of harmony and equilibrium.)	true
-provincial_initiative_records_localised_name_wh3_main_edict_ksl_awaken_the_land_powerful	Strengthened Edict: Awaken the Land	false
-provincial_initiative_records_localised_name_wh3_main_edict_ksl_purge_the_steppes_powerful	Strengthened Edict: Purge the Steppes	false
-provincial_initiative_records_localised_name_wh3_main_edict_ksl_relief_columns_powerful	Strengthened Edict: Regroup the Forces	false
-provincial_initiative_records_localised_name_wh3_main_edict_ksl_the_power_of_the_church_powerful	Strengthened Edict: Power of the Church	false
-provincial_initiative_records_localised_name_wh3_main_edict_ogr_camp_king	The Hunger of the Great Maw	true
-effect_bundles_localised_title_wh3_main_edict_ogr_camp_king	The Hunger of the Great Maw	true
+effects_description_ghs_dwf_edict_1	Greatly Enhanced Edict: Chartered Guilds	true
+effects_description_ghs_dwf_edict_1_1	Moderately Enhanced Edict: Chartered Guilds	true
+effects_description_ghs_dwf_edict_1_2	Slightly Enhanced Edict: Chartered Guilds	true
+effects_description_ghs_dwf_edict_2	Greatly Enhanced Edict: High King's Tribute	true
+effects_description_ghs_dwf_edict_2_1	Moderately Enhanced Edict: High King's Tribute	true
+effects_description_ghs_dwf_edict_2_2	Slightly Enhanced Edict: High King's Tribute	true
+effects_description_ghs_dwf_edict_3	Enhanced Edict: Lord of Iron and Stone	true
+effects_description_ghs_dwf_edict_3_1	Moderately Enhanced Edict: Lord of Iron and Stone	true
+effects_description_ghs_dwf_edict_3_2	Greatly Enhanced Edict: Lord of Iron and Stone	true
+effects_description_ghs_dwf_edict_4	Enhanced Edict: Ancestor Veneration	true
+effects_description_ghs_dwf_edict_4_1	Moderately Enhanced Edict: Ancestor Veneration	true
+effects_description_ghs_dwf_edict_4_2	Greatly Enhanced Edict: Ancestor Veneration	true
+effects_description_ghs_kho_edict_1	You have spread the thirst for slaughter, gaining Enhanced Edict Rank: 1	true
+effects_description_ghs_kho_edict_11	You have won the honor of slaughter, gaining Enhanced Edict Rank: 2	true
+effects_description_ghs_kho_edict_21	You have carried out the will of slaughter, gaining Enhanced Edict Rank: 3	true
+effects_description_ghs_valkia_edict_1	You have spread the thirst for slaughter, gaining Enhanced Edict Rank: 1	true
+effects_description_ghs_valkia_edict_11	You have won the honor of slaughter, gaining Enhanced Edict Rank: 2	true
+effects_description_ghs_valkia_edict_21	You have pleased your Supreme Consort! Gaining Enhanced Edict Rank: 3	true
+effect_bundles_localised_title_wh3_main_edict_ksl_awaken_the_land_powerful	Enhanced Edict: Awaken the Land	false
+effect_bundles_localised_title_wh3_main_edict_ksl_purge_the_steppes_powerful	Enhanced Edict: Purge the Steppes	false
+effect_bundles_localised_title_wh3_main_edict_ksl_relief_columns_powerful	Enhanced Edict: Relief Columns	false
+effect_bundles_localised_title_wh3_main_edict_ksl_the_power_of_the_church_powerful	Enhanced Edict: Power of the Church	false
+effects_description_ghs_ksl_edict_development_01	Enhanced Edict: Awaken the Land	true
+effects_description_ghs_ksl_edict_development_02	Enhanced Edict: Purge the Steppes	true
+effects_description_ghs_ksl_edict_development_06	Enhanced Edict: Relief Columns	true
+effects_description_ghs_ksl_edict_development_07	Enhanced Edict: Power of the Church	true
+effects_description_ghs_cth_edict_8	Enhanced: Decree of the Soaring Dragon	true
+effects_description_ghs_cth_edict_5	Enhanced: Decree of the Abyssal Dragon	true
+effects_description_ghs_cth_edict_3	Enhanced: Decree of the Bin Dragon	true
+effects_description_ghs_cth_edict_11	Enhanced: Decree of the Jade Dragon	true
+effects_description_ghs_cth_edict_1	Enhanced: Decree of the Zhu Long	true
+effects_description_ghs_cth_edict_12	Enhanced: Decree of the Jade Dragon (The Jade Dragon seeks only the well-being of the Celestial Empire's people; only in peace and rectitude can its true purpose be fulfilled)	true
+provincial_initiative_records_localised_name_wh3_main_edict_ksl_awaken_the_land_powerful	Enhanced Edict: Awaken the Land	false
+provincial_initiative_records_localised_name_wh3_main_edict_ksl_purge_the_steppes_powerful	Enhanced Edict: Purge the Steppes	false
+provincial_initiative_records_localised_name_wh3_main_edict_ksl_relief_columns_powerful	Enhanced Edict: Relief Columns	false
+provincial_initiative_records_localised_name_wh3_main_edict_ksl_the_power_of_the_church_powerful	Enhanced Edict: Power of the Church	false
+provincial_initiative_records_localised_name_wh3_main_edict_ogr_camp_king	The Great Maw's Hunger	true
+effect_bundles_localised_title_wh3_main_edict_ogr_camp_king	The Great Maw's Hunger	true

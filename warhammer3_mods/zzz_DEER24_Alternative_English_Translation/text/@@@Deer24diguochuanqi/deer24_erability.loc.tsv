@@ -1,40 +1,42 @@
 key	text	tooltip
 #Loc;1;text/@@@Deer24diguochuanqi/deer24_erability.loc		
-unit_abilities_onscreen_name_GJAB	Martial Supremacy	false
-unit_abilities_tooltip_text_GJAB	Enemies lacking skill find themselves increasingly unable to stand before the Champion Swordsmen.	false
-unit_abilities_onscreen_name_YLKAB	Howl of the Pack	false
-unit_abilities_tooltip_text_YLKAB	Under the Wolf Leader’s gaze, the pack rips apart the War God’s enemies with the virtue of courage.	false
+unit_abilities_onscreen_name_GJAB	Martial Intimidation	false
+unit_abilities_tooltip_text_GJAB	Those enemies whose skill falls short shall find it ever harder to withstand the Champion Swordsmen.	false
+unit_abilities_onscreen_name_YLKAB	Howl of the Wolf Pack	false
+unit_abilities_tooltip_text_YLKAB	Beneath the watchful gaze of the Wolf Lord, the pack tears through the enemies of the War God with the virtue of courage.	false
 unit_abilities_onscreen_name_SSAB	Blood Debt	false
-unit_abilities_tooltip_text_SSAB	As rage takes over, the penitents honor their fallen comrades with the blood of their foes.	false
-unit_abilities_onscreen_name_SYRAB	Lone Light of the Dark	false
-unit_abilities_tooltip_text_SYRAB	In the endless night, the threat of the undead forges these hunters, who stand vigil as beacons of hope.	false
-unit_abilities_onscreen_name_HJTAB	Epic Resolve	false
-unit_abilities_tooltip_text_HJTAB	Members of the Golden Sons may not be the Empire's strongest warriors, but their passionate heroism drives them to spill their blood for the Empire.	false
-unit_abilities_onscreen_name_NHQSAB	Paragon of the Empire	false
-unit_abilities_tooltip_text_NHQSAB	Fighting alongside legends is the dream of every Imperial warrior. These great champions inspire armies with their every move.	false
-unit_abilities_onscreen_name_JJTTAB	Vow of Silence	false
-unit_abilities_tooltip_text_JJTTAB	As the winds of magic are severed and spells dissipate into the void, even the mightiest wizards perish in the oppressive silence.	false
-unit_abilities_onscreen_name_AGSAB	Honor Guard	false
-unit_abilities_tooltip_text_AGSAB	The Regiment of the Thousand stands as guardians of the temple and faithful followers of Sigmar, sworn to defend the Empire and its faith.	false
-unit_abilities_onscreen_name_PTAB	Tolling Requiem	false
-unit_abilities_tooltip_text_PTAB	Blood and fire rain down as steel and faith resonate, bringing divine retribution through sword and spear.	false
-unit_abilities_onscreen_name_XNAB	Saintly Redemption	false
-unit_abilities_tooltip_text_XNAB	The clash of blood and steel sparks a holy flame as the faithful fulfill their beliefs in battle.	false
-unit_abilities_onscreen_name_ZQQSAB	Awakened Machine Spirit	false
-unit_abilities_tooltip_text_ZQQSAB	The spirits embedded within the mechanisms roar back to life amidst blood and fire.	false
-unit_abilities_onscreen_name_BLAB	Feast of the Pack	false
-unit_abilities_tooltip_text_BLAB	The loyal beasts tear apart their unfortunate prey together.	false
+unit_abilities_tooltip_text_SSAB	As wrath overtakes them, the penitents shall offer blood in tribute to fallen comrades of old.	false
+unit_abilities_onscreen_name_SYRAB	Lone Lamp in Everlasting Darkness	false
+unit_abilities_tooltip_text_SYRAB	In the long night, the threat of the undead has forged these hunters who keep watch for the light amid the darkness.	false
+unit_abilities_onscreen_name_HJTAB	Epic Endless Cycle	false
+unit_abilities_tooltip_text_HJTAB	The members of the Order of the Golden Firstborn are not the Empire's finest warriors, but their boundless heroic fervor drives them to shed their blood for the Empire.	false
+unit_abilities_onscreen_name_NHQSAB	Exemplar of the Empire	false
+unit_abilities_tooltip_text_NHQSAB	To fight alongside a legend is a dream every Imperial warrior yearns for; every action of these great warriors is enough to stir the hearts of the army.	false
+unit_abilities_onscreen_name_JJTTAB	Silent Discipline	false
+unit_abilities_tooltip_text_JJTTAB	When the Winds of Magic are blocked and the echoes of spellcraft fade into the void, even the mightiest sorcerers can only perish in the silence.	false
+unit_abilities_onscreen_name_AGSAB	Legion of the Guard	false
+unit_abilities_tooltip_text_AGSAB	The Legion of a Thousand Men are the guardians of the temple, followers of Sigmar's holy power, and an unyielding shield sworn to protect the Empire and its faith.	false
+unit_abilities_onscreen_name_PTAB	Wailing of the Death Knell	false
+unit_abilities_tooltip_text_PTAB	Blood and fire rain down as steel and faith resound together, sword and gun executing heaven's judgment as one.	false
+unit_abilities_onscreen_name_XNAB	Self-Redemption of the Saint	false
+unit_abilities_tooltip_text_XNAB	Blood and blade clash in sparks, and the faithful carry out their devotion through battle.	false
+unit_abilities_onscreen_name_ZQQSAB	Revival of the Machine Spirit	false
+unit_abilities_tooltip_text_ZQQSAB	The wills bound within the machinery are awakened once more, baptized in blood and fire.	false
+unit_abilities_onscreen_name_BLAB	Feast of the Wolf Pack	false
+unit_abilities_tooltip_text_BLAB	The loyal pack shall tear apart their pitiable prey as one.	false
 unit_abilities_onscreen_name_ZQBFAB	Roaring Heatwave	false
-unit_abilities_tooltip_text_ZQBFAB	The spinning holy casket emits waves of scorching steam, incinerating any who come near.	false
-unit_abilities_onscreen_name_YLTWAB1	Imperial Guard	false
-unit_abilities_tooltip_text_YLTWAB1	These eight legendary swordsmen swore upon joining the Emperor's guard to protect him to their last breath, a vow they will uphold for the rest of their lives.	false
-unit_abilities_onscreen_name_YLTWAB2	Roar of Light	false
-unit_abilities_tooltip_text_YLTWAB2	Sigmar's power leaps forth from their blades as the guards radiate divine light.	false
-unit_abilities_onscreen_name_YLTWAB3	Vigil of Dawn	false
-unit_abilities_tooltip_text_YLTWAB3	Even amidst endless darkness, there will always be those who stand watch for the dawn.	false
+unit_abilities_tooltip_text_ZQBFAB	As the sarcophagus roars into motion, its scalding steam shall scorch any foe who dares draw near.	false
+unit_abilities_onscreen_name_YLTWAB1	Imperial Palace Guard	false
+unit_abilities_tooltip_text_YLTWAB1	From the day these eight legendary swordsmen became the Throne Guard, they swore to protect the Empire's leader to their final breath, and they shall spend the rest of their lives proving their word true.	false
+unit_abilities_onscreen_name_YLTWAB2	Howl of Radiance	false
+unit_abilities_tooltip_text_YLTWAB2	Sigmar's power leaps forth from the flash of their blades, and the guardsmen's bodies shine with divine light.	false
+unit_abilities_onscreen_name_YLTWAB3	Vigil at Dawn	false
+unit_abilities_tooltip_text_YLTWAB3	Even in the face of boundless darkness, there will always be those who keep watch for the dawn.	false
 unit_abilities_onscreen_name_MSAB	Walker of War	false
-unit_abilities_tooltip_text_MSAB	The scions of the Goddess of War dedicate their lives to mastering the art of battle and unleash their full might in the crucible of blood and steel.	false
-unit_abilities_onscreen_name_XGMCAB	Unwavering Devotion	false
-unit_abilities_tooltip_text_XGMCAB	As you chant hymns to Sigmar’s glory, the gaze of the God-King falls upon every loyal believer.	false
-unit_abilities_onscreen_name_JZQSAB	Arcane Chill	false
-unit_abilities_tooltip_text_JZQSAB	Though not true mages, the Dusk Knights wield the Eight Winds with skill to restrict their foes.	false
+unit_abilities_tooltip_text_MSAB	The children of the Goddess of War have devoted their entire lives to studying the art of war, unleashing it without reserve in the contest of blood and iron.	false
+unit_abilities_onscreen_name_XGMCAB	Unwavering Resolve	false
+unit_abilities_tooltip_text_XGMCAB	As you sing the hymn of Sigmar's divine power, the God-Emperor's gaze shall fall upon every faithful believer.	false
+unit_abilities_onscreen_name_JZQSAB	Chill of Sorcery	false
+unit_abilities_tooltip_text_JZQSAB	Though not true wizards, the Twilight Knights can still skillfully wield the power of the Eight Winds to bind their foes.	false
+file:///C:/yule/steamapps/workshop/content/1142710/2872222879/@Deer24batuoniya.pack	PLACEHOLDER	true
+update	9	true

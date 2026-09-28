@@ -1,6 +1,6 @@
 key	text	tooltip
 #Loc;1;text/!!!cth_fuyuanshan_jade_station.loc		
-building_culture_variants_name_jade_station	Jade Warrior Garrison	true
-building_short_description_texts_short_description_jade_station	After receiving the call to arms, Jade Warriors from all over Grand Cathay gather here for assembly and rest before heading to the Great Bastion.	true
-building_sets_onscreen_name_jade_station	Jade Warrior Garrison Chain	true
-building_sets_onscreen_description_jade_station	This location is well-equipped and has a direct Imperial Road leading to the Great Bastion.	true
+building_culture_variants_name_jade_station	Jade Guard Outpost	true
+building_short_description_texts_short_description_jade_station	After the call to arms is sounded, Jade Warriors from across Cathay gather here to muster and rest before marching to the Great Bastion.	true
+building_sets_onscreen_name_jade_station	Jade Warrior Outpost Chain	true
+building_sets_onscreen_description_jade_station	This site is fully equipped and connected by a highway leading to the Great Bastion.	true
