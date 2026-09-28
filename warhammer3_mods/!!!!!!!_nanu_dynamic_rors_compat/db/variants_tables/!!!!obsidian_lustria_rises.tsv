@@ -2,7 +2,12 @@ variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	sc
 #variants_tables;6;db/variants_tables/!!!!obsidian_lustria_rises
 lzd_cold_ones_riders_blessed_mount		lzd_cold_one_blessed_spawn_mount		1.1500	1.0000	0.0000	
 lzd_horned_ones_riders_blessed_mount		lzd_horned_one_blessed_spawn_mount		1.1500	1.0000	0.0000	
-lzd_skink_culchan_riders_mount		lzd_culchan_mount		1.1500	1.1500	0.0000	
-lzd_skink_horned_ones_riders_blessed_mount		lzd_horned_one_skink_blessed_spawn_mount		1.1000	1.1000	0.0000	
-lzd_skink_horned_ones_riders_mount		lzd_horned_one_skink_mount		1.1000	1.1000	0.0000	
-obsidian_lzd_great_wyrm_howdah	variantmeshes/wh_variantmodels/bi2/lzd/lzd_great_wyrm/tech	lzd_great_wyrm_howdah		1.3000	1.0000	0.0000	
+obsidian_lzd_ancient_stegadon_engine_blessed	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	lzd_ancient_stegadon_engine_blessed		1.5000	1.0000	0.0000	
+obsidian_lzd_cav_skink_culchan_riders_mount		lzd_culchan_mount		1.1500	1.1500	0.0000	
+obsidian_lzd_cav_skink_horned_ones_riders_blessed_mount		lzd_horned_one_skink_blessed_spawn_mount		1.1000	1.1000	0.0000	
+obsidian_lzd_cav_skink_horned_ones_riders_mount		lzd_horned_one_skink_mount		1.1000	1.1000	0.0000	
+obsidian_lzd_mon_bastiladon_blessed_ark_of_sotek	VariantMeshes/wh_variantmodels/hq1/lzd/lzd_bastiladon/tech	lzd_bastiladon_blessed_ark_of_sotek		1.2000	1.0000	0.0000	
+obsidian_lzd_mon_bastiladon_blessed_revivification_crystal	VariantMeshes/wh_variantmodels/hq1/lzd/lzd_bastiladon/tech	lzd_bastiladon_blessed_revivification_crystal		1.2000	1.0000	0.0000	
+obsidian_lzd_mon_dread_saurian_howdah_blessed	VariantMeshes/wh_variantmodels/rp4/lzd/lzd_dread_saurian/tech/	lzd_dread_saurian_blessed_howdah		1.0000	1.0000	0.0000	
+obsidian_lzd_mon_great_wyrm_1	variantmeshes/wh_variantmodels/bi2/lzd/lzd_great_wyrm/tech	lzd_great_wyrm_howdah		1.3000	1.0000	0.0000	
+obsidian_lzd_mon_great_wyrm_howdah_blessed	variantmeshes/wh_variantmodels/bi2/lzd/lzd_great_wyrm/tech	lzd_great_wyrm_blessed_howdah		1.3000	1.0000	0.0000	

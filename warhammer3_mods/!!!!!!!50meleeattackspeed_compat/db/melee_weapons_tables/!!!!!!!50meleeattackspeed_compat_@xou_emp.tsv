@@ -2,7 +2,6 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!!!50meleeattackspeed_compat_@xou_emp
 axe_knight_north_star	0	0	14	15	1.0000	axe	axe		1	1.0000	1.2500	0.0000	false		0	10	2.1		false
 banner	0	0	20	20	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	5	499.5		false
-cr_emp_hurricanum	0	0	20	6	1.0000	axe	unarmed	very_large	4	1.0000	1.0000	0.0000	false		3	2	2.0		false
 emp_cav_griffon_riders_ror	0	0	100	150	7.0000	sword	creatures_claws	large	8	1.0000	1.0000	0.0000	false		0	3	2.0		false
 emp_huntsmaster_0	0	0	232	80	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false		0	10	2.0		false
 emp_sisters_sigmar	0	10	12	20	3.0000	axe	hammer	medium	3	1.0000	1.0000	0.0000	false		0	10	2.0		false

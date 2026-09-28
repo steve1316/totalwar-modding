@@ -575,6 +575,71 @@ def sort_tsv_data(target_path: str, file_name: str, sort_key: str = None):
             f.write("\t".join(ordered_values) + "\n")
 
 
+def _rpfm_default(field: Dict) -> str:
+    """Format a schema field's default the way RPFM writes it into a TSV, e.g. `0` becomes `0.0000` for a float column.
+
+    Args:
+        field (Dict): One field entry from the schema JSON.
+
+    Returns:
+        The formatted default, or an empty string when the field has none.
+    """
+    default = field.get("default_value")
+    if default is None:
+        return ""
+    if field.get("field_type") in ("F32", "F64"):
+        return f"{float(default):.4f}"
+    if field.get("field_type") == "Boolean":
+        return str(default).lower()
+    return str(default)
+
+
+def drop_duplicate_rows(db_folder: str, schema_path: str = SCHEMA_PATH) -> int:
+    """Remove rows that exactly repeat an earlier row of the same table, so RPFM stops warning about duplicated keys across a pack's TSV files.
+
+    Files can sit at different table versions. RPFM fills a column an older file lacks with the schema default when it packs the file, so rows
+    are compared the same way. Any value that differs, even only in case, keeps the rows apart. Files are read in name order and the first copy
+    is kept. A file left with no rows is deleted.
+
+    Args:
+        db_folder (str): A pack's `db` folder, with one subfolder per table.
+        schema_path (str, optional): Path to the schema JSON file. Defaults to SCHEMA_PATH.
+
+    Returns:
+        The number of rows removed.
+    """
+    removed = 0
+    for table_name in sorted(os.listdir(db_folder)):
+        table_path = os.path.join(db_folder, table_name)
+        schema_info = _load_schema_table_info(schema_path, table_name)
+        defaults = {field["name"]: _rpfm_default(field) for field in schema_info[1]} if schema_info else {}
+        seen = set()
+        for file_name in sorted(os.listdir(table_path)):
+            file_path = os.path.join(table_path, file_name)
+            with open(file_path, "r", encoding="utf-8") as f:
+                lines = f.read().splitlines()
+            header, version_info, rows = lines[HEADER_ROW_INDEX], lines[VERSION_ROW_INDEX], lines[DATA_START_ROW:]
+            columns = header.split("\t")
+
+            kept = []
+            for row in rows:
+                values = tuple(sorted({**defaults, **dict(zip(columns, row.split("\t")))}.items()))
+                if values in seen:
+                    continue
+                seen.add(values)
+                kept.append(row)
+            if len(kept) == len(rows):
+                continue
+
+            removed += len(rows) - len(kept)
+            if kept:
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write("\n".join([header, version_info, *kept]) + "\n")
+            else:
+                os.remove(file_path)
+    return removed
+
+
 def merge_move(source_path: str, destination_path: str):
     """Moves a folder to its destination and overwrite any existing files.
 

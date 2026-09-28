@@ -79,8 +79,6 @@ slann_heaven_spell	false	slann_heaven_spell		false	false
 slann_high_spell	false	slann_high_spell		false	false
 slann_life_spell	false	slann_life_spell		false	false
 slann_light_spell	false	slann_light_spell		false	false
-snek_dwf_crank_gunners	false	snek_dwf_crank_gunners	repeater_rifle	false	false
-snek_dwf_githammers	false	snek_dwf_githammers	poison_wind_mortar	false	false
 tmb_elephant_arrow_flammable	false	tmb_elephant_arrow_flammable	bow	false	false
 tmb_khalida_giant_bow	false	tmb_khalida_giant_bolt		false	false
 tmb_prince_lion_halberd	false	tmb_prince_lion_halberd		false	false

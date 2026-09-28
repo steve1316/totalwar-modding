@@ -298,6 +298,7 @@ def walk_land_unit_to_related_tables(
     table_data: Dict[str, Any],
     tracker: DuplicateTracker,
     new_data: Dict[str, List[Any]],
+    land_units_by_key: Dict[str, Dict[str, Any]],
     vanilla_mounts_keys: Optional[set] = None,
     variant_mesh_definitions_to_add: Optional[List[str]] = None,
     variantmeshes_root: str = f"{TEMP_DIR}/modded_variantmeshes",
@@ -310,10 +311,14 @@ def walk_land_unit_to_related_tables(
         table_data (Dict[str, Any]): The mapping returned by `extract_and_load_table_data`.
         tracker (DuplicateTracker): Deduplication state shared across all mods in the run.
         new_data (Dict[str, List[Any]]): Buckets to append to, built by `make_new_data_buckets`. Mutated in place.
+        land_units_by_key (Dict[str, Dict[str, Any]]): The mod's land_units rows by key, as the caller will write them. Used to find the land unit `main_unit_data` actually references.
         vanilla_mounts_keys (Optional[set]): Set of vanilla mount keys; only mounts whose key is in this set have their variantmeshdefinitions captured. If None, no variantmesh capture happens.
         variant_mesh_definitions_to_add (Optional[List[str]]): List that is appended to with paths of variantmeshdefinition files to move into the compat pack. Mutated in place.
         variantmeshes_root (str): Folder containing the extracted `variantmeshes/variantmeshdefinitions/` tree to read from. Parallel callers should pass the per-mod folder used in `extract_variantmeshes_folder`. Defaults to `f"{TEMP_DIR}/modded_variantmeshes"`.
     """
+    # A main unit can point at a land unit under a different key. Walk that one, or the pack ships a main unit whose land unit is missing.
+    data = land_units_by_key.get(main_unit_data.get("land_unit"), data)
+
     if tracker.should_add("main_units_tables", main_unit_data):
         new_data["main_units"].append(main_unit_data)
     if tracker.should_add("land_units_tables", data):
@@ -350,7 +355,8 @@ def walk_land_unit_to_related_tables(
         if projectile_entry is not None:
             _add_related("spawned_vortex", projectile_entry, "battle_vortexs_tables", "battle_vortexs", table_data, tracker, new_data)
             _add_related("projectile_shot_type_display", projectile_entry, "projectile_shot_type_displays_tables", "projectile_shot_type_displays", table_data, tracker, new_data)
-        _add_related("scaling_damage", missile_weapon_data, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
+            # The game rejects a projectile whose scaling_damage row is missing, so ship it with the projectile.
+            _add_related("scaling_damage", projectile_entry, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
 
     _add_related("short_description_text", data, "unit_description_short_texts_tables", "unit_description_short_texts", table_data, tracker, new_data)
     _add_related("attribute_group", data, "unit_attributes_groups_tables", "unit_attributes_groups", table_data, tracker, new_data)

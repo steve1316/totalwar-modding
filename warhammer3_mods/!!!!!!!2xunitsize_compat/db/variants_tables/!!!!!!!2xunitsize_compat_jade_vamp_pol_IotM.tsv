@@ -1,8 +1,0 @@
-variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
-#variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_jade_vamp_pol_IotM
-jbv_barded_steed	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	jbv_barded_steed		1.0000	1.0000	0.0500	
-jbv_carriage	warmachines/engines/dae_skullcannon/tech	jbv_carriage_01		1.0000	1.0000	0.0000	
-jbv_necro_longma	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	jbv_necro_longma		1.0000	1.0000	0.0500	
-jbv_skel_horse		jbv_skel_horse		1.0000	1.0000	0.2000	
-jbv_skel_horse_2	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	jbv_skel_horse		1.0000	1.0000	0.2000	
-jbv_warhorse	VariantMeshes\wh_variantmodels\hr1\emp\emp_warbeast_horse\tech	jbv_warhorse		1.0000	1.2500	0.0500	

@@ -1,6 +1,5 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_str_skaven_clans
-cr_skv_mon_giant_rat	wh2_dlc16_skv_brood_horror	monster_beasts
 ferrik_iron_rats	wh_main_dwf_runesmith	infantry
 str_gnaw_beaststalker	wh2_main_missile_infantry_javelin	heroes_agents
 str_gnaw_boar_wranglers	wh_dlc03_bst_razorgor	infantry
