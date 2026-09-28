@@ -113,7 +113,7 @@ function M.install_game_stubs(random_values)
             end
             return value
         end,
-        add_ancillary_to_faction = function(_, faction, key)
+        add_ancillary_to_faction = function(_, faction, key, suppress)
             table.insert(stubs.added, { faction = faction:name(), key = key })
         end,
         force_add_ancillary = function(_, character, key, force_equip, suppress)
@@ -122,10 +122,10 @@ function M.install_game_stubs(random_values)
         add_first_tick_callback_new = function(_, callback)
             table.insert(stubs.first_tick, callback)
         end,
-        pending_battle_cache_get_attacker = function()
+        pending_battle_cache_get_attacker = function(_, index)
             return stubs.battle.attacker_cqi, 0, stubs.battle.attacker_name
         end,
-        pending_battle_cache_get_defender = function()
+        pending_battle_cache_get_defender = function(_, index)
             return stubs.battle.defender_cqi, 0, stubs.battle.defender_name
         end,
         get_faction = function(_, key)
