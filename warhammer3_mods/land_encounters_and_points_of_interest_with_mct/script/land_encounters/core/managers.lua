@@ -515,10 +515,16 @@ local function generate_random_force_makeup(difficulty_key, faction_shorthand_ke
         end
     end
 
-    --- If a lord was not able to be selected, then select a random vanilla lord instead.
+    --- If a lord was not able to be selected, then select a random vanilla lord instead. Vanilla is always loaded, so its lords are always valid.
     if not force_makeup.lord then
         out("DEBUG - A lord was not able to be selected. Selecting a random vanilla lord instead.")
-        force_makeup.lord = select_random_value(list_of_allowed_lord_objects)
+        local vanilla_lords = {}
+        for _, lord in ipairs(list_of_allowed_lord_objects) do
+            if lord.origin == "vanilla" then
+                table.insert(vanilla_lords, lord)
+            end
+        end
+        force_makeup.lord = select_random_value(vanilla_lords)
     end
 
     --- Select a random amount of heroes if their origin is enabled. Save the skill overrides for the heroes.
