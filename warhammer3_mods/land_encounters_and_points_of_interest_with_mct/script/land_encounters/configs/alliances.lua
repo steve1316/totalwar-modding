@@ -72,11 +72,12 @@ M.subculture_to_pool = {
     ["wh2_main_sc_tmb_tomb_kings"]       = "destruction",
 }
 
---- Picks a random ally faction shorthand key for the given player subculture.
---- Returns nil only if both pools are empty. Defensive guard - should never happen in normal use.
+--- Picks a random ally faction shorthand key for the given player subculture, never returning `exclude_faction`.
+--- Returns nil only if the pool is empty after the exclusion. Defensive guard - should never happen in normal use.
 --- @param player_subculture string The player's subculture key (e.g. "wh_main_sc_emp_empire").
+--- @param exclude_faction string A 3-letter faction shorthand to leave out, such as the enemy army's faction. May be nil.
 --- @returns string A 3-letter faction shorthand key, or nil when the pool is empty.
-function M.pick_for_subculture(player_subculture)
+function M.pick_for_subculture(player_subculture, exclude_faction)
     local pool_name = M.subculture_to_pool[player_subculture]
     local pool
     if pool_name == "order" then
@@ -88,8 +89,12 @@ function M.pick_for_subculture(player_subculture)
         for _, faction in ipairs(M.order_factions) do table.insert(pool, faction) end
         for _, faction in ipairs(M.destruction_factions) do table.insert(pool, faction) end
     end
-    if #pool == 0 then return nil end
-    return pool[random_number(#pool)]
+    local candidates = {}
+    for _, faction in ipairs(pool) do
+        if faction ~= exclude_faction then table.insert(candidates, faction) end
+    end
+    if #candidates == 0 then return nil end
+    return candidates[random_number(#candidates)]
 end
 
 return M

@@ -58,7 +58,7 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
     elseif not triggering_faction:is_human() then
         --- AI: silently grants a small loot.
         local trigger_event_feed = false
-        if math.random() < 0.10 then
+        if random_chance(10) then
             local ancillary = pick_random_item_for_current_difficulty(elligible_items)
             if ancillary ~= nil then
                 cm:add_ancillary_to_faction(triggering_faction, ancillary, trigger_event_feed)
@@ -259,11 +259,15 @@ function BattleEventDelegate:add_ancillary_to_feuding_factions(feuding_factions,
     end
 end
 
---- Builds the encounter Army from the current cached dilemma.
+--- Builds the encounter Army from the current cached dilemma. Allies are picked from the triggering player's subculture when it is known.
 --- @returns Army A new Army instance built from the cached dilemma key.
 function BattleEventDelegate:get_offensive_army()
     out("DEBUG - get_offensive_army Beginning process to generate the encounter force.")
-    return Army:new_from_event(self.cached_event.dilemma)
+    local player_subculture = nil
+    if self.cached_player_character and self.cached_player_character.faction then
+        player_subculture = self.cached_player_character:faction():subculture()
+    end
+    return Army:new_from_event(self.cached_event.dilemma, player_subculture)
 end
 
 

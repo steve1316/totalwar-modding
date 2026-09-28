@@ -41,12 +41,14 @@ local function get_player_subculture()
     return player_faction:subculture()
 end
 
---- Picks a random ally faction key based on the player's subculture. Returns nil if no ally can be sourced.
+--- Picks a random ally faction key based on the player's subculture, never the enemy's own faction. Returns nil if no ally can be sourced.
+--- @param player_subculture string The triggering player's subculture key. Falls back to the first human faction when nil.
+--- @param enemy_faction string The 3-letter shorthand of the enemy army, which the ally must not share.
 --- @returns string A 3-letter faction shorthand for the chosen ally, or nil when none is available.
-local function pick_ally_faction()
-    local player_subculture = get_player_subculture()
+local function pick_ally_faction(player_subculture, enemy_faction)
+    player_subculture = player_subculture or get_player_subculture()
     if player_subculture == nil then return nil end
-    return alliances.pick_for_subculture(player_subculture)
+    return alliances.pick_for_subculture(player_subculture, enemy_faction)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,7 +114,7 @@ end
 --- create_from sets on the lord table.
 function Army:randomize_lord()
     self.lord.subtype = self.lord_pool.agent_subtype
-    self.lord.level = random_number(self.lord_pool.level_range[2], self.lord_pool.level_range[1])
+    self.lord.level = random_range(self.lord_pool.level_range[1], self.lord_pool.level_range[2])
     out("DEBUG - Lord level: " .. self.lord.level)
 end
 
@@ -181,8 +183,9 @@ end
 --- Builds an Army for a random-encounter battle spot. Picks difficulty, faction, intervention type,
 --- optional allied reinforcements, and then materializes the encounter + any reinforcement armies.
 --- @param battle_event string An identifier label for the spawning event (used for logging only).
+--- @param player_subculture string The subculture of the player who triggered the encounter, used to pick an ally. May be nil.
 --- @returns Army A new Army instance with units_pool, lord_pool, and reinforcement arrays populated.
-function Army:new_from_event(battle_event)
+function Army:new_from_event(battle_event, player_subculture)
     out("DEBUG - new_from_event battle_event: " .. battle_event)
 
     local difficulty = get_current_difficulty()
@@ -195,7 +198,7 @@ function Army:new_from_event(battle_event)
     local intervention_type = pick_intervention_type()
     local ally_force_data = nil
     if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
-        local ally_faction = pick_ally_faction()
+        local ally_faction = pick_ally_faction(player_subculture, faction)
         if ally_faction == nil then
             out("DEBUG - Allied intervention picked but no ally faction available; demoting to INTERCEPTION_TYPE.")
             intervention_type = INTERCEPTION_TYPE
