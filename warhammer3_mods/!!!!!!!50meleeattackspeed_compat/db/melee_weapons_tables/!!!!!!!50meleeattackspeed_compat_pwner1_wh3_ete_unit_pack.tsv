@@ -161,6 +161,7 @@ wh3_dlc27_nor_mon_cursd_ettin_fist_runecaller_ete	0	0	300	250	5.0000	axe	unarmed
 wh3_dlc27_preyton_claws_ete	20	0	120	365	6.0000	axe	creatures_claws	large	5	1.5000	1.2500	0.0000	false	wh3_pro12_unit_contact_wounded_prey	0	3	2.0		false
 wh3_dlc27_preyton_ror_ete	25	0	145	385	6.0000	axe	creatures_claws	large	5	1.5000	1.2500	0.0000	true	wh3_pro12_unit_contact_wounded_prey	0	3	2.0		false
 wh3_dlc27_styrkaar_sword_and_shield_ete	0	0	360	140	3.0000	sword	sword	medium	4	1.3000	0.7500	0.0000	true	wh3_dlc27_unit_contact_enriched_soporific_musk	0	10	1.6		false
+wh3_dlc29_chs_giant_spined_chaos_beast_ror_ete	0	0	150	290	6.0000	axe	creatures_claws	large	5	1.2000	1.2500	0.0000	false	wh3_dlc24_unit_contact_dark_blood	0	10	0.0		false
 wh3_main_cth_shugengan_lord_ete	0	0	160	200	4.0000	sword	sword	large	4	1.0000	1.0000	1.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
 wh3_main_cth_terracotta_sentinel_ete	0	0	320	940	7.0000	spear	sword_huge	large	6	1.0000	0.5000	0.0000	true	wh2_dlc12_unit_contact_sundered_armour	0	10	2.0		false
 wh3_main_dae_belakor_sword_ete	0	0	300	700	9.0000	sword	sword_huge	large	5	1.0000	0.7500	0.0000	true		0	10	2.0		false
@@ -202,7 +203,7 @@ wh_dlc01_chs_dragon_ogre_shaggoth_ete	15	0	320	800	9.0000	axe	axe_medium	large	6
 wh_dlc01_chs_dragon_ogre_shaggoth_ete_ror	30	0	160	400	9.0000	axe	axe_medium	large	6	1.5000	1.0000	0.0000	true	wh2_dlc17_unit_contact_dazed	0	10	1.8		false
 wh_dlc01_chs_dragon_sla	0	0	140	410	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	0.0000	false	wh3_main_unit_contact_soporific_musk	0	3	1.9		false
 wh_dlc01_chs_dragon_tze	0	0	140	410	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	10.0000	true	wh3_main_unit_contact_warpflame	0	3	1.9		false
-wh_dlc01_chs_manticore_exalted_hero_ete	0	0	600	320	6.0000	axe	creatures_claws	large	5	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	0	3	1.8		false
+wh_dlc01_chs_manticore_exalted_hero_ete	0	0	300	160	6.0000	axe	creatures_claws	large	5	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	0	3	1.8		false
 wh_dlc01_chs_manticore_exalted_hero_kho	0	0	300	160	6.0000	axe	creatures_claws	large	5	1.0000	0.7500	1.0000	false		0	3	1.8		false
 wh_dlc01_chs_manticore_exalted_hero_nur	0	0	300	160	6.0000	axe	creatures_claws	large	5	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	3	1.8		false
 wh_dlc01_chs_manticore_exalted_hero_sla	0	0	300	160	6.0000	axe	creatures_claws	large	5	1.0000	0.7500	0.0000	false		0	3	1.8		false

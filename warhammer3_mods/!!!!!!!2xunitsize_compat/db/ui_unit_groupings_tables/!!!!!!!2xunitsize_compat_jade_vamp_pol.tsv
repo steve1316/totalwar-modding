@@ -1,9 +1,7 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_jade_vamp_pol
-cth_ghost	cth_ghost	monster_beasts
 cth_ghost_flying	cth_ghost_flying	missile_monster_beasts
 cth_ghost_greater	cth_ghost_greater	monster_beasts
-cth_jiangshi	cth_jiangshi_p	infantry
 cth_jiangshi_2	cth_jiangshi_2	infantry
 cth_jiangshi_3	cth_jiangshi_3	infantry
 jbv_courtesan	jbv_courtesan	heroes_agents

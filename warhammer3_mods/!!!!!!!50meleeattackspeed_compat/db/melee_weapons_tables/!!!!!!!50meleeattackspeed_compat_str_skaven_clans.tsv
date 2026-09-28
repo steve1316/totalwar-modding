@@ -42,7 +42,6 @@ str_crooktail_viciss	0	0	144	336	7.0000	axe	club_medium	large	6	1.0000	1.2500	0.
 str_feesik_plague_lord	0	15	224	96	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false		0	10	2.0		false
 str_feesik_plague_lord_sling	0	0	202	86	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false		0	10	2.0		false
 str_ferrik_forge_guard	0	0	12	36	1.0000	axe	hammer		1	1.0000	1.0000	0.0000	true		0	10	2.1		false
-str_flych	0	0	96	264	3.0000	sword	sword	medium	3	1.0000	1.0000	0.0000	false	wh2_main_unit_contact_weeping_blade	0	10	1.9		false
 str_gangrous_plague_lord	0	25	330	75	3.0000	sword	sword	medium	6	1.0000	1.0000	0.0000	false		0	10	2.0		false
 str_gangrous_vermin	0	9	33	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.25		false
 str_gangrous_vermin_ror	0	9	33	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.25	str_gangrous_vermin_ror	false

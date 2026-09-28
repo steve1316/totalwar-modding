@@ -6,7 +6,6 @@ frb_chaos_ogre_bruiser_weapon	0	0	150	300	4.0000	sword	sword	medium	6	1.0000	1.5
 frb_chaos_ogre_fighters_0_weapon	0	0	60	30	3.0000	sword	sword_medium	medium	3	1.0000	1.2500	0.0000	false		0	10	1.9		false
 frb_chaos_ogre_fighters_1_weapon	0	0	40	60	3.0000	sword	sword_medium	medium	3	1.0000	1.2500	0.0000	false		0	10	1.9		false
 frb_chaos_ogre_fighters_2_weapon	15	0	40	50	5.0000	spear	spear_medium	medium	3	1.0000	1.2500	0.0000	false		0	10	1.9		false
-frb_chaos_ogre_khorne_0_weapon	0	20	40	70	3.0000	axe	axe	medium	4	1.0000	1.5000	1.0000	false		0	10	1.9		false
 frb_chaos_ogre_khorne_exalted_weapon	0	25	130	320	7.0000	sword	sword	medium	7	1.0000	1.5000	1.0000	false		0	10	1.9		false
 frb_chaos_ogre_nurgle_0_weapon	0	0	60	40	3.0000	sword	sword_medium	medium	4	1.0000	1.5000	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
 frb_chaos_ogre_nurgle_exalted_weapon	0	0	150	250	6.0000	axe	axe	medium	8	1.0000	1.5000	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
