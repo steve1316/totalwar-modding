@@ -1,0 +1,11 @@
+variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
+#variants_tables;6;db/variants_tables/jvj_kadon							
+kadon_griffon		kadon_griffon		1.0000	1.6670	0.0000	
+kadon_war_lion		kadon_war_lion	bc4\hef\hef_war_lion\hef_war_lion_imposter	1.0000	0.5200	0.0000	bc4\hef\hef_war_lion\hef_war_lion_imposter
+kadon_chs_dragon		kadon_chs_dragon		1.0000	1.3500	0.0000	
+kadon_great_stag		kadon_great_stag		1.0000	1.5000	0.0500	
+kadon_giant_spider		grn_giant_spider	sp1\grn\grn_giant_spider\low_poly\grn_giant_spider_lowlod	0.0000	1.3000	0.0500	
+kadon_dread_saurian		kadon_dread_saurian		1.0000	1.0000	0.0000	
+kadon_great_cave_squigs		grn_squig	rp2\grn\grn_squig_herd\low_poly\grn_squig_lowlod	1.0000	2.0000	0.0500	
+kadon_ripperdactyl		kadon_ripperdactyl	bi3/lzd/lzd_ripperdactyl/lzd_ripperdactyl_imposter	1.0000	1.0000	0.0000	
+kadon_terradon		kadon_terradon	bi3\lzd\lzd_terradon\imposter\lzd_terradon_imposter	1.0000	1.0000	0.0000	

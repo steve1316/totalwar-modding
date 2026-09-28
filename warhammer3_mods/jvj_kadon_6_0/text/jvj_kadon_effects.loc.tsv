@@ -1,0 +1,93 @@
+key	text	tooltip
+#Loc;1;text/jvj_kadon_effects.loc		
+effects_description_kadon_bind_arcane_phoenix	Ability: "Kadon Scroll of Binding (Arcane Phoenix)"	true
+effects_description_kadon_bind_black_dragon	Ability: "Kadon Scroll of Binding (Black Dragon)"	true
+effects_description_kadon_bind_carnosaur	Ability: "Kadon Scroll of Binding (Carnosaur)"	true
+effects_description_kadon_bind_chaos_dragon	Ability: "Kadon Scroll of Binding (Chaos Dragon)"	true
+effects_description_kadon_bind_chaos_spawn	Ability: "Kadon Scroll of Binding (Chaos Spawn)"	true
+effects_description_kadon_bind_chaos_warhounds	Ability: "Kadon Scroll of Binding (Chaos Warhounds)"	true
+effects_description_kadon_bind_chs_trolls	Ability: "Kadon Scroll of Binding (Chaos Trolls)"	true
+effects_description_kadon_bind_cold_ones	Ability: "Kadon Scroll of Binding (Cold Ones)"	true
+effects_description_kadon_bind_cygor	Ability: "Kadon Scroll of Binding (Cygor)"	true
+effects_description_kadon_bind_dragon_ogre	Ability: "Kadon Scroll of Binding (Dragon Ogre)"	true
+effects_description_kadon_bind_dread_saurian	Ability: "Kadon Scroll of Binding (Dread Saurian)"	true
+effects_description_kadon_bind_fimir	Ability: "Kadon Scroll of Binding (Fimir)"	true
+effects_description_kadon_bind_forest_dragon	Ability: "Kadon Scroll of Binding (Forest Dragon)"	true
+effects_description_kadon_bind_frost_wyrm	Ability: "Kadon Scroll of Binding (Frost Wyrm)"	true
+effects_description_kadon_bind_giant	Ability: "Kadon Scroll of Binding (Giant)"	true
+effects_description_kadon_bind_great_eagle	Ability: "Kadon Scroll of Binding (Great Eagle)"	true
+effects_description_kadon_bind_griffon	Ability: "Kadon Scroll of Binding (Griffon)"	true
+effects_description_kadon_bind_harpies	Ability: "Kadon Scroll of Binding (Harpies)"	true
+effects_description_kadon_bind_hydra	Ability: "Kadon Scroll of Binding (Hydra)"	true
+effects_description_kadon_bind_manticore	Ability: "Kadon Scroll of Binding (Manticore)"	true
+effects_description_kadon_bind_moon_dragon	Ability: "Kadon Scroll of Binding (Moon Dragon)"	true
+effects_description_kadon_bind_mourngul	Ability: "Kadon Scroll of Binding (Mourngul)"	true
+effects_description_kadon_bind_necrofex_colossus	Ability: "Kadon Scroll of Binding (Necrofex Colossus)"	true
+effects_description_kadon_bind_nor_ice_trolls	Ability: "Kadon Scroll of Binding (Norscan Ice Trolls)"	true
+effects_description_kadon_bind_razorgor	Ability: "Kadon Scroll of Binding (Razorgors)"	true
+effects_description_kadon_bind_rogue_idol	Ability: "Kadon Scroll of Binding (Rogue Idol)"	true
+effects_description_kadon_bind_skinwolves	Ability: "Kadon Scroll of Binding (Skinwolves)"	true
+effects_description_kadon_bind_spiders	Ability: "Kadon Scroll of Binding (Giant Spiders)"	true
+effects_description_kadon_bind_stag	Ability: "Kadon Scroll of Binding (Great Stags)"	true
+effects_description_kadon_bind_star_dragon	Ability: "Kadon Scroll of Binding (Star Dragon)"	true
+effects_description_kadon_bind_stegadon	Ability: "Kadon Scroll of Binding (Stegadon)"	true
+effects_description_kadon_bind_sun_dragon	Ability: "Kadon Scroll of Binding (Sun Dragon)"	true
+effects_description_kadon_bind_trolls	Ability: "Kadon Scroll of Binding (Trolls)"	true
+effects_description_kadon_bind_unicorn	Ability: "Kadon Scroll of Binding (Unicorns)"	true
+effects_description_kadon_bind_war_lions_of_chrace	Ability: "Kadon Scroll of Binding (War Lions of Chrace)"	true
+effects_description_kadon_bind_war_mammoth	Ability: "Kadon Scroll of Binding (War Mammoth)"	true
+effects_description_kadon_bind_wyvern	Ability: "Kadon Scroll of Binding (Wyvern)"	true
+effects_description_kadon_kin_arcane_phoenix	Ability: "Kadon Scroll of Kin (Arcane Phoenix)"	true
+effects_description_kadon_kin_bst_giant	Ability: "Kadon Scroll of Kin (Beastmen Giant)"	true
+effects_description_kadon_kin_carnosaur	Ability: "Kadon Scroll of Kin (Carnosaur)"	true
+effects_description_kadon_kin_chaos_dragon	Ability: "Kadon Scroll of Kin (Chaos Dragon)"	true
+effects_description_kadon_kin_chaos_spawn	Ability: "Kadon Scroll of Kin (Chaos Spawn)"	true
+effects_description_kadon_kin_chaos_warhounds	Ability: "Kadon Scroll of Kin (Chaos Warhounds)"	true
+effects_description_kadon_kin_chs_giant	Ability: "Kadon Scroll of Kin (Chaos Giant)"	true
+effects_description_kadon_kin_chs_trolls	Ability: "Kadon Scroll of Kin (Chaos Trolls)"	true
+effects_description_kadon_kin_cold_ones	Ability: "Kadon Scroll of Kin (Cold Ones)"	true
+effects_description_kadon_kin_cygor	Ability: "Kadon Scroll of Kin (Cygor)"	true
+effects_description_kadon_kin_def_black_dragon	Ability: "Kadon Scroll of Kin (Black Dragon)"	true
+effects_description_kadon_kin_dragon_ogre	Ability: "Kadon Scroll of Kin (Dragon Ogre)"	true
+effects_description_kadon_kin_dread_saurian	Ability: "Kadon Scroll of Kin (Dread Saurian)"	true
+effects_description_kadon_kin_fimir	Ability: "Kadon Scroll of Kin (Fimir)"	true
+effects_description_kadon_kin_forest_dragon	Ability: "Kadon Scroll of Kin (Forest Dragon)"	true
+effects_description_kadon_kin_frost_wyrm	Ability: "Kadon Scroll of Kin (Frost Wyrm)"	true
+effects_description_kadon_kin_giant	Ability: "Kadon Scroll of Kin (Giant)"	true
+effects_description_kadon_kin_great_eagle	Ability: "Kadon Scroll of Kin (Great Eagle)"	true
+effects_description_kadon_kin_griffon	Ability: "Kadon Scroll of Kin (Griffon)"	true
+effects_description_kadon_kin_harpies	Ability: "Kadon Scroll of Kin (Harpies)"	true
+effects_description_kadon_kin_hef_moon_dragon	Ability: "Kadon Scroll of Kin (Moon Dragon)"	true
+effects_description_kadon_kin_hef_star_dragon	Ability: "Kadon Scroll of Kin (Star Dragon)"	true
+effects_description_kadon_kin_hydra	Ability: "Kadon Scroll of Kin (Hydra)"	true
+effects_description_kadon_kin_manticore	Ability: "Kadon Scroll of Kin (Manticore)"	true
+effects_description_kadon_kin_mourngul	Ability: "Kadon Scroll of Kin (Mourngul)"	true
+effects_description_kadon_kin_necrofex_colossus	Ability: "Kadon Scroll of Kin (Necrofex Colossus)"	true
+effects_description_kadon_kin_nor_giant	Ability: "Kadon Scroll of Kin (Norscan Giant)"	true
+effects_description_kadon_kin_nor_ice_trolls	Ability: "Kadon Scroll of Kin (Norscan Ice Trolls)"	true
+effects_description_kadon_kin_razorgor	Ability: "Kadon Scroll of Kin (Razorgors)"	true
+effects_description_kadon_kin_rogue_idol	Ability: "Kadon Scroll of Kin (Rogue Idol)"	true
+effects_description_kadon_kin_skinwolves	Ability: "Kadon Scroll of Kin (Skinwolves)"	true
+effects_description_kadon_kin_spiders	Ability: "Kadon Scroll of Kin (Giant Spiders)"	true
+effects_description_kadon_kin_stag	Ability: "Kadon Scroll of Kin (Great Stags)"	true
+effects_description_kadon_kin_stegadon	Ability: "Kadon Scroll of Kin (Stegadon)"	true
+effects_description_kadon_kin_sun_dragon	Ability: "Kadon Scroll of Kin (Sun Dragon)"	true
+effects_description_kadon_kin_trolls	Ability: "Kadon Scroll of Kin (Trolls)"	true
+effects_description_kadon_kin_unicorn	Ability: "Kadon Scroll of Kin (Unicorns)"	true
+effects_description_kadon_kin_war_lions_of_chrace	Ability: "Kadon Scroll of Kin (War Lions of Chrace)"	true
+effects_description_kadon_kin_war_mammoth	Ability: "Kadon Scroll of Kin (War Mammoth)"	true
+effects_description_kadon_kin_wyvern	Ability: "Kadon Scroll of Kin (Wyvern)"	true
+effects_description_kadon_bind_bastiladon	Ability: "Kadon Scroll of Binding (Bastiladon)"	true
+effects_description_kadon_bind_flamespyre_phoenix	Ability: "Kadon Scroll of Binding (Flamespyre Phoenix)"	true
+effects_description_kadon_bind_frostheart_phoenix	Ability: "Kadon Scroll of Binding (Frostheart Phoenix)"	true
+effects_description_kadon_bind_great_cave_squigs	Ability: "Kadon Scroll of Binding (Great Cave Squigs)"	true
+effects_description_kadon_bind_kharibdyss	Ability: "Kadon Scroll of Binding (Kharibdyss)"	true
+effects_description_kadon_bind_ripperdactyls	Ability: "Kadon Scroll of Binding (Ripperdactyls)"	true
+effects_description_kadon_bind_terradons	Ability: "Kadon Scroll of Binding (Terradons)"	true
+effects_description_kadon_kin_bastiladon	Ability: "Kadon Scroll of Kin (Bastiladon)"	true
+effects_description_kadon_kin_flamespyre_phoenix	Ability: "Kadon Scroll of Kin (Flamespyre Phoenix)"	true
+effects_description_kadon_kin_frostheart_phoenix	Ability: "Kadon Scroll of Kin (Frostheart Phoenix)"	true
+effects_description_kadon_kin_great_cave_squigs	Ability: "Kadon Scroll of Kin (Great Cave Squigs)"	true
+effects_description_kadon_kin_kharibdyss	Ability: "Kadon Scroll of Kin (Kharibdyss)"	true
+effects_description_kadon_kin_ripperdactyls	Ability: "Kadon Scroll of Kin (Ripperdactyls)"	true
+effects_description_kadon_kin_terradons	Ability: "Kadon Scroll of Kin (Terradons)"	true
