@@ -350,7 +350,8 @@ def walk_land_unit_to_related_tables(
         if projectile_entry is not None:
             _add_related("spawned_vortex", projectile_entry, "battle_vortexs_tables", "battle_vortexs", table_data, tracker, new_data)
             _add_related("projectile_shot_type_display", projectile_entry, "projectile_shot_type_displays_tables", "projectile_shot_type_displays", table_data, tracker, new_data)
-        _add_related("scaling_damage", missile_weapon_data, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
+            # The game rejects a projectile whose scaling_damage row is missing, so ship it with the projectile.
+            _add_related("scaling_damage", projectile_entry, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
 
     _add_related("short_description_text", data, "unit_description_short_texts_tables", "unit_description_short_texts", table_data, tracker, new_data)
     _add_related("attribute_group", data, "unit_attributes_groups_tables", "unit_attributes_groups", table_data, tracker, new_data)
