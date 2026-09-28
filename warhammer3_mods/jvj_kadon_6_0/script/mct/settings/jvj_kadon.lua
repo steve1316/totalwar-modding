@@ -16,7 +16,7 @@ local DLC_NOTE = "Creatures tagged DLC need that DLC. If a drop would give you a
 
 --- Mod description shown on the MCT mod page, adapted from the original WH2 Workshop description.
 local MOD_DESCRIPTION = table.concat({
-    "Each scroll is a magic item that lets its bearer summon a creature in battle. Over 40 creatures are available, giving factions"
+    "Each scroll is a magic item that lets its bearer summon a creature in battle. Over 150 creatures are available, giving factions"
         .. " access to beasts they could never recruit.",
     "Scrolls of Kin summon a creature that stays on the battlefield until it is killed. Scrolls of Binding summon a creature that suffers from"
         .. " Unbinding and dies after a time limit.",
