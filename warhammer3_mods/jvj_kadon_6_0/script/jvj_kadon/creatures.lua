@@ -1,6 +1,8 @@
 --- Creature data for Kadon's Scrolls. Each entry maps one creature to its Kin and Binding scroll keys, and is the source of the MCT creature
 --- toggles and the scroll picker's pool.
 
+local scroll_dlc = require("script/jvj_kadon/scroll_dlc")
+
 local M = {}
 
 --- Builds one creature entry. Kin and Bind keys default to `kadon_kin_<id>` and `kadon_bind_<id>`.
@@ -66,11 +68,21 @@ for _, entry in ipairs(require("script/jvj_kadon/creatures_generated")) do
     table.insert(M.list, creature(entry.id, entry.name, entry.game))
 end
 
---- Returns the MCT label of a creature: its display name followed by its game tag, e.g. "Carnosaur (WH2)".
+--- Marks a creature as DLC when every one of its scrolls needs paid DLC. A creature with any free scroll, like the Giant, is not DLC.
+for _, entry in ipairs(M.list) do
+    entry.dlc = true
+    for _, list in ipairs({ entry.kin, entry.bind }) do
+        for _, key in ipairs(list) do
+            if not scroll_dlc[key] then entry.dlc = false end
+        end
+    end
+end
+
+--- Returns the MCT label of a creature: its display name followed by its game tag, e.g. "Carnosaur (WH2)" or "Coatl (WH2 DLC)".
 --- @param entry table Creature entry from `list`.
 --- @returns string The label.
 function M.label(entry)
-    return entry.name .. " (" .. entry.game .. ")"
+    return entry.name .. " (" .. entry.game .. (entry.dlc and " DLC" or "") .. ")"
 end
 
 --- Returns the creature with the given id.

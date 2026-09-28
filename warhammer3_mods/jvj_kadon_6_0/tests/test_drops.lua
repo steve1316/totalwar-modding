@@ -95,6 +95,42 @@ h.test("each enable all toggle only covers its own creatures", function()
     h.eq(#drops.candidates(h.fake_faction()), originals, "only Original with the vanilla toggle off")
 end)
 
+h.test("humans only get DLC scrolls they own, AI gets every scroll", function()
+    local stubs = h.install_game_stubs()
+    settings.reset()
+    local scroll_dlc = require("script/jvj_kadon/scroll_dlc")
+    stubs.owned_dlc = {}
+    local human = h.fake_faction({ name = "p1" })
+    stubs.factions.p1 = human
+    local keys = pool_keys(drops.candidates(human))
+    for key in pairs(keys) do h.eq(scroll_dlc[key], nil, key .. " needs no DLC") end
+    h.truthy(keys.kadon_kin_giant and keys.kadon_bind_giant, "free giant scrolls stay")
+    h.eq(keys.kadon_kin_bst_giant, nil, "beastmen giant needs its DLC")
+    h.eq(keys.kadon_kin_ancient_salamander, nil, "ancient salamander needs its DLC")
+
+    stubs.owned_dlc = { TW_WH2_DLC12_PROPHET = true }
+    keys = pool_keys(drops.candidates(human))
+    h.truthy(keys.kadon_kin_ancient_salamander and keys.kadon_bind_ancient_salamander, "owned DLC scrolls drop")
+
+    local ai = h.fake_faction({ name = "ai1", human = false })
+    stubs.factions.ai1 = ai
+    h.eq(#drops.candidates(ai), #creatures.list, "AI gets every creature")
+end)
+
+h.test("chosen starting creature from unowned DLC falls back to a random owned scroll", function()
+    local stubs = h.install_game_stubs()
+    settings.reset()
+    local scroll_dlc = require("script/jvj_kadon/scroll_dlc")
+    settings.values.starting_scroll_creature = "ancient_salamander"
+    stubs.owned_dlc = {}
+    stubs.factions.p1 = h.fake_faction({ name = "p1" })
+    local key = drops.pick_starting_scroll(stubs.factions.p1)
+    h.truthy(key, "a scroll is picked")
+    h.eq(scroll_dlc[key], nil, key .. " needs no DLC")
+    stubs.owned_dlc = { TW_WH2_DLC12_PROPHET = true }
+    h.truthy(drops.pick_starting_scroll(stubs.factions.p1):find("ancient_salamander", 1, true), "owned choice is kept")
+end)
+
 h.test("kin only and bind only", function()
     h.install_game_stubs()
     settings.reset()

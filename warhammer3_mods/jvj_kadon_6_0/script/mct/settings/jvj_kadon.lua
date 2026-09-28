@@ -10,6 +10,10 @@ local SCROLL_TYPE_KEYS = { "allow_kin", "allow_bind" }
 --- Game tags in the order their creature sections and dropdown groups appear.
 local GAMES = { "Original", "WH1", "WH2", "WH3" }
 
+--- Description of the vanilla and DLC creature sections.
+local DLC_NOTE = "Creatures tagged DLC need that DLC. If a drop would give you a DLC creature you do not own, the mod will fall back to a random"
+    .. " vanilla or owned DLC creature instead."
+
 --- Mod description shown on the MCT mod page, adapted from the original WH2 Workshop description.
 local MOD_DESCRIPTION = table.concat({
     "Each scroll is a magic item that lets its bearer summon a creature in battle. Over 40 creatures are available, giving factions"
@@ -107,7 +111,7 @@ end
 local function add_starting_creature_dropdown()
     local option = mct_mod:add_new_option("starting_scroll_creature", "dropdown")
     option:set_text("Starting scroll creature", true)
-    option:set_tooltip_text("Which creature the faction leader's starting scroll summons. (Random) picks any enabled creature.", true)
+    option:set_tooltip_text("Which creature the faction leader's starting scroll summons. (Random) picks any enabled creature. A DLC creature you do not own falls back to (Random).", true)
     option:set_is_global(true)
     option:add_dropdown_value("random", "(Random)", "", true)
     for _, creature in ipairs(creatures_by_game()) do
@@ -212,7 +216,7 @@ add_spacer("scroll_types_spacer", "scroll_types_section")
 local sorted_creatures = creatures_by_game()
 for _, game in ipairs(GAMES) do
     local section = creature_section_key(game)
-    add_section(section, "Creatures - " .. game, game == "Original" and "Disabled creatures never drop. Takes effect on the next drop." or nil)
+    add_section(section, "Creatures - " .. game, game == "Original" and "Disabled creatures never drop. Takes effect on the next drop." or DLC_NOTE)
     if game == "Original" then
         add_checkbox("enable_all_creatures", section, "Enable all creatures (Original)",
             "When on, every Original creature can drop and their individual toggles are locked.")
