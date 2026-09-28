@@ -72,6 +72,7 @@ ghs_ksl_mon_ursun_winter_elemental_bear	0	0	200	500	12.0000	axe	creatures_claws	
 ghs_lzd_mon_chief_stegadon	0	20	160	380	10.0000	axe	creatures_claws	medium	8	1.5000	1.2500	0.0000	false	ghs_lzd_thunder_engine_debuff	10	5	3.5000		false
 ghs_lzd_mon_giant_ripperdactyl	25	0	150	280	8.0000	axe	creatures_claws	large	7	1.0000	1.2500	0.0000	false	wh_dlc06_unit_contact_sundered_armour	10	10	4.0000		false
 ghs_lzd_mon_vulcan_salamander	30	0	150	350	7.0000	axe	creatures_claws	large	4	1.0000	1.2500	1.0000	false	wh2_dlc12_unit_contact_flammable	4	4	4.0000		false
+ghs_lzd_salamander_skink	0	0	24	50	1.0000	sword	creatures_claws	medium	3	1.0000	1.0000	10.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
 ghs_main_emp_imperial_guard_mounted_lance	15	20	28	38	2.0000	lance	spear	small	2	1.0000	0.5000	0.0000	true		0	10	5.1000		false
 ghs_main_emp_imperial_guard_sword	0	15	25	15	1.0000	sword	sword		1	1.0000	0.7500	0.0000	true		0	10	4.3000		false
 ghs_main_emp_inf_halberdiers_heavy	26	0	18	29	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	false		0	10	4.3000		false
@@ -122,7 +123,7 @@ kho_slaughterbrute_melee	0	25	150	350	9.0000	axe	creatures_claws	large	12	1.0000
 kho_warrior_shooter_melee	0	0	5	25	1.0000	axe	axe	medium	2	0.1000	1.2500	0.0000	false		0	10	4.0000		false
 kho_warrior_thrower_melee	0	5	30	10	1.0000	axe	axe		1	1.0000	1.2500	0.0000	false		0	10	4.0000		false
 ogr_crossbowman	0	0	35	85	3.0000	sword	sword_medium	medium	4	1.0000	1.5000	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	4.0000		false
-wh2_dlc13_lzd_war_kroxigor_xs	0	0	38	90	3.0000	axe	axe	medium	6	3.0000	1.2500	1.0000	false		0	100	2.4000		false
+wh2_dlc13_lzd_war_kroxigor_xs	15	0	40	90	3.0000	axe	axe	medium	6	3.0000	1.2500	1.0000	true		0	10	3.5000		false
 wh2_main_lzd_bastiladon	0	15	90	160	9.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	false		20	20	3.7000		false
 wh_dlc08_nor_mammoth_tusks	0	34	155	370	10.0000	axe	creatures_claws	large	10	2.0000	1.2500	0.0000	false		8	2	3.5000		false
 wh_main_dwf_axe	0	0	21	7	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
