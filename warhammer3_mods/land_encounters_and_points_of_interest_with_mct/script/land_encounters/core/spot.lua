@@ -304,12 +304,6 @@ function SmithySpot.marker_id(zone_name, index)
     return "land_enc_marker_" .. zone_name .. "_smithy_" .. index
 end
 
---- Activates the smithy POI by placing its level 1 marker on the campaign map. Every smithy starts at level 1.
---- @param zone_name string The region key for the zone this smithy belongs to.
-function SmithySpot:activate(zone_name)
-    self:set_marker_on_map(SmithySpot.marker_id(zone_name, self.index), SMITHY_MARKER_KEY_BY_LEVEL[1], SMITHY_MARKER_RADIUS)
-end
-
 --- Replaces a smithy's marker with the skin for its forge level.
 --- @param zone_name string The region key for the zone the smithy belongs to.
 --- @param index number The 1-based smithy slot in the zone.
@@ -586,13 +580,11 @@ local PointOfInterestDelegate = {
     points_of_interest = {},
 }
 
---- Initializes the POI table from the configs (smithies, taverns, resources). Honors the MCT
---- disable_smithies toggle.
+--- Initializes the POI table from the configs (smithies, taverns, resources). Smithy spots always exist, so a smithy marker left in a save
+--- still resolves. Whether their markers show follows the Remove Smithies setting, see `SmithyEventDelegate:sync_markers`.
 --- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays.
 function PointOfInterestDelegate:initialize(points_of_interest_data)
-    if not get_mct_settings().disable_smithies then
-        self:initialize_smithies(points_of_interest_data["smithies"])
-    end
+    self:initialize_smithies(points_of_interest_data["smithies"])
     self:initialize_taverns(points_of_interest_data["taverns"])
     self:initialize_resources(points_of_interest_data["resources"])
 end
@@ -638,15 +630,6 @@ function PointOfInterestDelegate:initialize_resources(resources_data)
         for i=1, #resources_data do
             --TODO table.insert(self.points_of_interest, ResourceSpot:newFrom(resources_data[i]))
         end
-    end
-end
-
-
---- Activates the on-map marker for every POI in this zone.
---- @param zone_name string The region key for the zone.
-function PointOfInterestDelegate:activate_points_of_interest(zone_name)
-    for i=1, #self.points_of_interest do
-        self.points_of_interest[i]:activate(zone_name)
     end
 end
 
@@ -726,12 +709,6 @@ end
 --- @param mctSettings table Live MCT settings forwarded to the POI delegate (legacy parameter, currently unused).
 function Zone:initialize_points_of_interest(points_of_interest_data, mctSettings)
     self.point_of_interest_delegate:initialize(points_of_interest_data, mctSettings)
-end
-
-
---- Activates the on-map markers for every POI in this zone.
-function Zone:activate_points_of_interest()
-    self.point_of_interest_delegate:activate_points_of_interest(self.name)
 end
 
 

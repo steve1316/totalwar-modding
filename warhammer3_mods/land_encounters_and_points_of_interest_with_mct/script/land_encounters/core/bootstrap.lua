@@ -25,7 +25,6 @@ function LandEncounterManager:generate_land_encounters(coordinates_by_zone, perp
     self:initialize_spots_by_zone(coordinates_by_zone)
     self:populate_land_encounters()
     self:initialize_points_of_interest_by_zone(perpetual_coordinates_with_types)
-    self:activate_points_of_interest_by_zone()
 end
 
 --- Restores zones and POIs from a previously saved campaign state instead of generating fresh ones.
@@ -64,13 +63,6 @@ end
 function LandEncounterManager:populate_land_encounters()
     for i = 1, #self.zones do
         self:populate_zone(self.zones[i])
-    end
-end
-
---- Activates the POI markers in every zone (after they have been initialized).
-function LandEncounterManager:activate_points_of_interest_by_zone()
-    for i = 1, #self.zones do
-        self.zones[i]:activate_points_of_interest()
     end
 end
 

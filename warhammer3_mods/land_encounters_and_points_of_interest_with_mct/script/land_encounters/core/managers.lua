@@ -966,6 +966,12 @@ function PointOfInterestEventManager:initialize_towers(zones)
 end
 
 
+--- Shows or removes the smithy markers to match the Remove Smithies setting. Runs at first tick once the smithy states exist.
+function PointOfInterestEventManager:sync_smithy_markers()
+    self.smithy_event_delegate:sync_markers()
+end
+
+
 --- Forwards per-turn state updates to each POI delegate. Hidden smithies must not keep paying tributes or issuing missions.
 function PointOfInterestEventManager:update_state_given_turn_passing()
     self.tower_event_delegate:update_state_given_turn_passing()
@@ -992,6 +998,8 @@ end
 --- @param spot_info table The spot_info record for the triggered POI.
 function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_character_info, spot_info)
     if poi_type == "SmithySpot" then
+        --- A removed smithy's marker is taken off the map on load. This guards the turn it is still shown.
+        if get_mct_settings().disable_smithies then return end
         self.smithy_event_delegate:trigger_event(area_and_character_info, spot_info)
     elseif poi_type == "TowerSpot" then
         self.tower_event_delegate:trigger_event(area_and_character_info, spot_info)

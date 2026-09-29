@@ -786,6 +786,19 @@ function SmithyEventDelegate:generate_states(zone_name, smithies_initial_state)
     end
 end
 
+--- Shows every smithy marker at its forge level when smithies are enabled in MCT, and removes them when they are removed. Runs on every
+--- load, so changing the setting takes effect the next time a save is loaded.
+function SmithyEventDelegate:sync_markers()
+    local enabled = not get_mct_settings().disable_smithies
+    for _, smithy in ipairs(self.smithies_state) do
+        if enabled then
+            SmithySpot.replace_marker(smithy.zone_name, smithy.index_in_zone, smithy.coordinates, smithy.level)
+        else
+            cm:remove_interactable_campaign_marker(SmithySpot.marker_id(smithy.zone_name, smithy.index_in_zone))
+        end
+    end
+end
+
 --- Ticks every SmithyState. The FactionTurnStart listener calls this once per round.
 function SmithyEventDelegate:update_state_given_turn_passing()
     for i = 1, #self.smithies_state do

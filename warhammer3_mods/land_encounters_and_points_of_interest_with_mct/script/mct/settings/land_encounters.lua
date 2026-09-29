@@ -69,7 +69,7 @@ section:set_localised_text("Configuration", true)
 
 local disable_smithies_checkbox = mct_mod:add_new_option("disable_smithies", "checkbox")
 disable_smithies_checkbox:set_text("Remove Smithies from the map", true)
-disable_smithies_checkbox:set_tooltip_text("Requires loading the save again to take effect.", true)
+disable_smithies_checkbox:set_tooltip_text("Removes every Smithy from the map and pauses their tributes, takeovers and sieges. Takes effect the next time a save is loaded.", true)
 disable_smithies_checkbox:set_is_global(true)
 disable_smithies_checkbox:set_default_value(false)
 disable_smithies_checkbox:set_assigned_section("configuration_section")
