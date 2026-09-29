@@ -13,6 +13,9 @@ local SMITHY_MARKER_KEY_BY_LEVEL = { "encounter_marker_smithy", "encounter_marke
 --- Interaction radius of smithy markers.
 local SMITHY_MARKER_RADIUS = 8
 
+--- Interaction radius of battle and treasure spot markers.
+local ENCOUNTER_MARKER_RADIUS = 2.5
+
 --- Marker skin shared by every tower.
 local TOWER_MARKER_KEY = "encounter_marker_tower"
 
@@ -76,7 +79,7 @@ function Spot:activate(zone_name)
     end
 
     local marker_key = "encounter_marker_"..tostring(marker_number)
-    local interaction_radius = 4
+    local interaction_radius = ENCOUNTER_MARKER_RADIUS
     self:set_marker_on_map(marker_id, marker_key, interaction_radius)
 end
 
