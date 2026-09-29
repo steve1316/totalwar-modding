@@ -11,7 +11,7 @@ require("script/land_encounters/core/mct")
 local SMITHY_MARKER_KEY_BY_LEVEL = { "encounter_marker_smithy", "encounter_marker_smithy_level_2", "encounter_marker_smithy_level_3" }
 
 --- Interaction radius of smithy markers.
-local SMITHY_MARKER_RADIUS = 8
+local SMITHY_MARKER_RADIUS = 3
 
 --- Interaction radius of battle and treasure spot markers.
 local ENCOUNTER_MARKER_RADIUS = 2.5
