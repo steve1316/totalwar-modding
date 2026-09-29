@@ -48,13 +48,14 @@ local TOWER_TYPE = 2
 --- @returns table A 3-element array { zone_name string, spot_index number, type number } where type is LAND_ENCOUNTER_TYPE, SMITHY_TYPE or
 --- TOWER_TYPE.
 function process_marker_id(marker_id)
-    for infix, marker_type in pairs({ ["_smithy_"] = SMITHY_TYPE, ["_tower_"] = TOWER_TYPE }) do
-        local infix_start, infix_end = string.find(marker_id, infix, 1, true)
-        if infix_start ~= nil then
-            local zone_name = string.sub(marker_id, 17, infix_start - 1)
-            local spot_index = string.sub(marker_id, infix_end + 1, #marker_id)
-            return { zone_name, tonumber(spot_index), marker_type }
-        end
+    --- Two-argument string.find only. A version using a plain-text find over a pairs() loop crashed the game when a lord entered a smithy.
+    local infix_start, infix_end = string.find(marker_id, "_smithy_")
+    if infix_start ~= nil then
+        return { string.sub(marker_id, 17, infix_start - 1), tonumber(string.sub(marker_id, infix_end + 1, #marker_id)), SMITHY_TYPE }
+    end
+    infix_start, infix_end = string.find(marker_id, "_tower_")
+    if infix_start ~= nil then
+        return { string.sub(marker_id, 17, infix_start - 1), tonumber(string.sub(marker_id, infix_end + 1, #marker_id)), TOWER_TYPE }
     end
 
     --- The maximum number of points in a zone is <99, so look at the last 3 chars to find the trailing underscore.
