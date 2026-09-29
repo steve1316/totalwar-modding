@@ -253,12 +253,13 @@ end
 --- Builds a force makeup for the faction and difficulty by spending a rolled gold budget on a spine and then on the archetype's roles.
 --- @param difficulty_key string The difficulty key ("easy", "medium" or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
---- @param options table Optional battle-category overrides: `archetype_keys` (preferred archetypes) and `budget_multiplier` (scales the budget).
+--- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget) and `budget_range`
+--- ({min, max} gold that replaces the difficulty's MCT range).
 --- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields.
 function M.generate(difficulty_key, faction_shorthand_key, options)
     options = options or {}
     local settings = get_mct_settings()
-    local budget_range = settings.difficulties[difficulty_key].budget
+    local budget_range = options.budget_range or settings.difficulties[difficulty_key].budget
     local origins = enabled_origins()
     local lord, heroes = pick_lord_and_heroes(difficulty_key, faction_shorthand_key, origins)
     local pools = build_role_pools(faction_shorthand_key, origins)

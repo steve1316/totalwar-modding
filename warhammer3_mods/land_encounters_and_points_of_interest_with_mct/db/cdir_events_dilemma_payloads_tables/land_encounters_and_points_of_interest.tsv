@@ -119,3 +119,4 @@ id	choice_key	dilemma_key	payload_key	value	target_key
 7017900690	SECOND	land_enc_dilemma_tower_enter	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
 7017900694	FIRST	land_enc_dilemma_tower_deeper	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
 7017900695	SECOND	land_enc_dilemma_tower_deeper	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
+7017900699	FIRST	land_enc_dilemma_tower_claim	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default

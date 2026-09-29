@@ -41,3 +41,11 @@ dummy_land_enc_tower_descend_floor_2	ui/campaign ui/effect_bundles/icon_effects_
 dummy_land_enc_tower_descend_floor_3	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_descend_floor_4	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_descend_floor_5	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_claim	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_haul_units_0	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_haul_units_1	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_haul_units_2	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_haul_units_3	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_haul_units_4	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_haul_units_5	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_haul_units_6	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
