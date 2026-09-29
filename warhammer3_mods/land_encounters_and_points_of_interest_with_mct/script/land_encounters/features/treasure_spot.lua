@@ -6,7 +6,7 @@ require("script/land_encounters/core/managers")
 
 local treasure_events = require("script/land_encounters/configs/events").treasure_type
 
-local elligible_items = require("script/land_encounters/configs/items").balancing
+local item_pool = require("script/land_encounters/core/item_pool")
 
 local TreasureEventDelegate = {}
 
@@ -33,7 +33,7 @@ end
 function TreasureEventDelegate:trigger_balancing_benefit_for_ai(triggering_ai_character, triggering_faction, random_event)
     local trigger_event_feed_for_faction = false
     --- Add a random ancillary to an ai faction
-    local ancillary = pick_random_item_for_current_difficulty(elligible_items)
+    local ancillary = item_pool.pick_item_for_difficulty(triggering_faction:name())
     if ancillary ~= nil then
         cm:add_ancillary_to_faction(triggering_faction, ancillary, trigger_event_feed_for_faction)
     end

@@ -38,6 +38,10 @@ local PointOfInterestEventManager = managers.PointOfInterestEventManager
 local SpotEventManager = managers.SpotEventManager
 
 local listeners = require("script/land_encounters/core/listeners")
+
+--- CA's item helper is one of the globals this file sees but required modules do not, so hand the item pool this file's environment.
+--- The game runs Lua 5.1, which has getfenv. The guard only matters for tooling on newer Lua.
+require("script/land_encounters/core/item_pool").set_script_environment(getfenv and getfenv(1) or nil)
 local save_load = require("script/land_encounters/core/save_load")
 
 --- Save/load callbacks must register at module-load (BEFORE CA's LoadingGame fires).

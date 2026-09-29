@@ -1,0 +1,13 @@
+component	icon	state	sort_order
+#campaign_payload_ui_details_tables;2;db/campaign_payload_ui_details_tables/land_encounters_and_points_of_interest			
+dummy_land_enc_smithy_leave	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_unconditional_surrender	ui/campaign ui/effect_bundles/casualties.png	default	0
+dummy_land_enc_smithy_cannot_afford_commission_1	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_cannot_afford_commission_2	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_cannot_afford_commission_3	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_cannot_afford_upgrade_1	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_cannot_afford_upgrade_2	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_upgrade_1	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_upgrade_2	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_cannot_afford_legendary_3	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_smithy_no_legendary	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0

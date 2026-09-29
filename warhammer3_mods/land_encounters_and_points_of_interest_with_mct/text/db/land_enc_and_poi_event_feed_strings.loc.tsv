@@ -5,34 +5,82 @@ event_feed_strings_text_subtitle_event_land_enc_and_poi_encountered	Opportunity 
 event_feed_strings_text_description_event_land_enc_and_poi_encountered	Your army has spotted something in the surrounding area that may have been of interest to you, but you were marching too fast to have time to see what it was. Switch to default stance before returning to the location to take a closer look.	false
 event_feed_strings_text_title_event_land_enc_smithy_encountered	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_encountered	Smithy Missed	false
-event_feed_strings_text_description_event_land_enc_smithy_encountered	We have passed by a smithy while fast travelling. Perharps we should see what it holds?	false
-event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown	The Master Blacksmith Is Preparing...	false
-event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown	The master blacksmith cannot receive us right now. He is preparing the next set of equipments for the benefit of our kingdoms. He will warn us when he is finished.	false
+event_feed_strings_text_description_event_land_enc_smithy_encountered	We passed a smithy without stopping. Perhaps a lord should come back to see what it holds.	false
 event_feed_strings_text_title_event_land_enc_smithy_visit_available	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_available	The Master Blacksmith Is Ready To Receive You	false
-event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends his regards. He says to send a lord so he can choose from a set of masterpieces for our lord when possible. It would be ideal to attend to your suggestion.	false
-event_feed_strings_text_title_event_land_enc_smithy_default_occupation	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_default_occupation	Smithy Occupied	false
-event_feed_strings_text_description_event_land_enc_smithy_default_occupation	We have occupied this abandoned blacksmith shop that has ample capacity, tools and structures that allow creations of excellent quality. A new master smith of our kingdom has been assigned to produce with the artisans under his command and defend the smithy with the detachment that we have assigned to him. May it produce the best for the kingdom.	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends word that the forge is ready again. Send a lord to the smithy to choose from his new work.	false
 event_feed_strings_text_title_event_land_enc_smithy_ally_or_neutrally_controlled	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_ally_or_neutrally_controlled	Neutral Smithy Visited	false
-event_feed_strings_text_description_event_land_enc_smithy_ally_or_neutrally_controlled	We have visited a smithy belonging to a neighboring kingdom. The master blacksmith speaks to us from the walls of the building and tells us news about the kingdom to which he belongs, but he never lets us in. Only through war or the destruction of its owning faction can we take control of the smithy and appoint a new blacksmith to our kingdom. Maybe we should take it?	false
-event_feed_strings_text_title_event_land_enc_smithy_levelled_up	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_levelled_up	Smithy Levelled Up!	false
-event_feed_strings_text_description_event_land_enc_smithy_levelled_up	You have given a large sum of capital to the master blacksmith to improve the smithy and increased his garrison to protect it. Artisans rejoice and celebrate: lots of new tools and increased work area will allow them to get richer, keep more craftsmen and create equipment of even better quality. They also promise to increase the frequency of their tributes. All for the good of the kingdom!\\n	false
+event_feed_strings_text_description_event_land_enc_smithy_ally_or_neutrally_controlled	We have visited a smithy belonging to a neighboring kingdom. The master blacksmith speaks to us from the walls of the building and tells us news of his kingdom, but he never lets us in. Only through war or the destruction of its owning faction can we take control of the smithy and appoint a blacksmith of our own. Maybe we should take it?	false
 event_feed_strings_text_title_event_land_enc_smithy_unconditional_surrender	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_unconditional_surrender	Smithy Surrendered	false
-event_feed_strings_text_description_event_land_enc_smithy_unconditional_surrender	You have sent the master blacksmith and the garrison an urgent message to retreat. They have obeyed you. The enemies have taken control of the smithy but you have allowed your people to live another day. We'll get the smithy back in time.	false
-event_feed_strings_text_title_event_land_enc_smithy_successfully_reclaimed	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_reclaimed	Smithy Reclaimed	false
-event_feed_strings_text_description_event_land_enc_smithy_successfully_reclaimed	The enemy army routed, their master blacksmith killed with most of his disciples. We occupy the well equipped smithy with our own master blacksmith and assign a detachment of soldiers to protect him and his disciples. They will start sending tributes whenever they can. We can also visit them for special gifts from time to time. Everything for the good of the kingdom!	false
+event_feed_strings_text_description_event_land_enc_smithy_unconditional_surrender	We sent the master blacksmith and the garrison an urgent order to retreat, and they obeyed. The enemy has taken the smithy and its forge has lost a level, but our people live to fight another day. We will get the smithy back in time.	false
 event_feed_strings_text_title_event_land_enc_smithy_reclaimed_repelled	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_reclaimed_repelled	Enemy Defended Smithy	false
-event_feed_strings_text_description_event_land_enc_smithy_reclaimed_repelled	Surprisingly the hammers have been stronger than our army weapons.  We really should take  the smithy after having been routed by it. It is a testament of its importance for our kingdom.	false
+event_feed_strings_text_description_event_land_enc_smithy_reclaimed_repelled	Our army has been driven back from the smithy. Its defenders held the forge this time, but a smithy guarded so fiercely is worth taking. We should return with a stronger force.	false
 event_feed_strings_text_title_event_land_enc_smithy_successfully_defended	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_defended	Smithy Defended	false
-event_feed_strings_text_description_event_land_enc_smithy_successfully_defended	Blacksmith hammers along with more conventional weapons are filled with blood on the plain. The enemy is scared of both tools and weapons. They run without looking towards the smithy, that stands tall like a lord's castle overlooking it's domain. We have won to create another day!	false
+event_feed_strings_text_description_event_land_enc_smithy_successfully_defended	Hammers and blades alike lie red on the field. The enemy broke and fled, and the smithy still stands over its lands like a lord's keep. The forge will work another day.	false
 event_feed_strings_text_title_event_land_enc_smithy_lost	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_lost	Smithy Lost	false
-event_feed_strings_text_description_event_land_enc_smithy_lost	We lost control of the smithy. We were able to save the master blacksmith and part of his disciples, but we were unable to maintain control of the smithy, losing both the tribute and the opportunity to make official visits. As soon as we can recapture it we should do it.	false
+event_feed_strings_text_description_event_land_enc_smithy_lost	We lost control of the smithy. We saved the master blacksmith and some of his disciples, but the forge has lost a level, and we lose both its tribute and our visits to it. We should recapture it as soon as we can.	false
+event_feed_strings_text_title_event_land_enc_smithy_besieged	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_besieged	Smithy Under Siege!	false
+event_feed_strings_text_description_event_land_enc_smithy_besieged	An enemy army has surrounded our smithy. At the start of our turn we must decide whether to defend it or give it up.	false
+event_feed_strings_text_title_event_land_enc_smithy_raided	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_raided	Smithy Raided	false
+event_feed_strings_text_description_event_land_enc_smithy_raided	We could not raise a garrison in time. The raiders looted the forge before leaving, and it has lost a level of craft.	false
+event_feed_strings_text_title_event_land_enc_smithy_levelled_up_level_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_levelled_up_level_2	Forge Improved to Level 2	false
+event_feed_strings_text_description_event_land_enc_smithy_levelled_up_level_2	Our gold has rebuilt the forge and strengthened its garrison. It now stands at [[col:yellow]]level 2 of 3[[/col]]: its free pieces are of [[col:yellow]]uncommon or rare[[/col]] quality, it is ready again [[col:yellow]]7 turns[[/col]] after each piece, and its tribute arrives every [[col:yellow]]10 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_smithy_levelled_up_level_3	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_levelled_up_level_3	Forge Improved to Level 3	false
+event_feed_strings_text_description_event_land_enc_smithy_levelled_up_level_3	Our gold has rebuilt the forge and strengthened its garrison. It now stands at [[col:yellow]]level 3 of 3[[/col]], the finest it can be: its free pieces are all [[col:yellow]]rare[[/col]], it is ready again [[col:yellow]]5 turns[[/col]] after each piece, its tribute arrives every [[col:yellow]]5 turns[[/col]], a commission yields [[col:yellow]]two masterworks[[/col]], and the master blacksmith will craft a [[col:yellow]]legendary piece[[/col]] for [[col:yellow]]20,000[[/col]] gold.	false
+event_feed_strings_text_title_event_land_enc_smithy_successfully_reclaimed_level_1	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_reclaimed_level_1	Smithy Reclaimed	false
+event_feed_strings_text_description_event_land_enc_smithy_successfully_reclaimed_level_1	The enemy army has been routed and the smithy is ours. We install our own master blacksmith and a detachment to guard him. The forge stands at [[col:yellow]]level 1 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
+event_feed_strings_text_title_event_land_enc_smithy_default_occupation_level_1	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_default_occupation_level_1	Smithy Occupied	false
+event_feed_strings_text_description_event_land_enc_smithy_default_occupation_level_1	We have occupied this abandoned smithy and assigned our own master blacksmith and a detachment to guard it. The forge stands at [[col:yellow]]level 1 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
+event_feed_strings_text_title_event_land_enc_smithy_successfully_reclaimed_level_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_reclaimed_level_2	Smithy Reclaimed	false
+event_feed_strings_text_description_event_land_enc_smithy_successfully_reclaimed_level_2	The enemy army has been routed and the smithy is ours. We install our own master blacksmith and a detachment to guard him. The forge stands at [[col:yellow]]level 2 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
+event_feed_strings_text_title_event_land_enc_smithy_default_occupation_level_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_default_occupation_level_2	Smithy Occupied	false
+event_feed_strings_text_description_event_land_enc_smithy_default_occupation_level_2	We have occupied this abandoned smithy and assigned our own master blacksmith and a detachment to guard it. The forge stands at [[col:yellow]]level 2 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
+event_feed_strings_text_title_event_land_enc_smithy_successfully_reclaimed_level_3	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_reclaimed_level_3	Smithy Reclaimed	false
+event_feed_strings_text_description_event_land_enc_smithy_successfully_reclaimed_level_3	The enemy army has been routed and the smithy is ours. We install our own master blacksmith and a detachment to guard him. The forge stands at [[col:yellow]]level 3 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
+event_feed_strings_text_title_event_land_enc_smithy_default_occupation_level_3	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_default_occupation_level_3	Smithy Occupied	false
+event_feed_strings_text_description_event_land_enc_smithy_default_occupation_level_3	We have occupied this abandoned smithy and assigned our own master blacksmith and a detachment to guard it. The forge stands at [[col:yellow]]level 3 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_1	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_1	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_1	The forge is still cooling after our last piece. It will be ready again [[col:yellow]]next turn[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_2	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_2	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]2 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_3	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_3	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_3	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]3 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_4	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_4	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_4	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]4 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_5	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_5	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_5	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]5 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_6	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_6	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_6	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]6 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_7	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_7	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_7	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]7 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_8	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_8	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_8	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]8 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_9	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_9	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_9	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]9 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_10	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_10	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_10	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]10 turns[[/col]], and the master blacksmith will send word.	false

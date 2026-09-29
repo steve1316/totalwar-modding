@@ -141,6 +141,44 @@ function get_random_faction()
     return faction_keys[random_number(#faction_keys)]
 end
 
+--- Reports whether a faction fought in the battle that just completed, and whether it won.
+--- @param faction_name string The faction key to look for in the pending battle cache.
+--- @returns boolean True when the faction was the attacker or the defender.
+--- @returns boolean True when the faction's side won.
+function pending_battle_result_for_faction(faction_name)
+    if cm:pending_battle_cache_faction_is_attacker(faction_name) then
+        return true, cm:pending_battle_cache_attacker_victory()
+    elseif cm:pending_battle_cache_faction_is_defender(faction_name) then
+        return true, cm:pending_battle_cache_defender_victory()
+    end
+    return false, false
+end
+
+--- True when a military force with this cqi still exists.
+--- @param force_cqi number The force's command queue index, or nil.
+--- @returns boolean True when the force can be found.
+function force_exists(force_cqi)
+    if not force_cqi then return false end
+    local force = cm:get_military_force_by_cqi(force_cqi)
+    return force ~= nil and force ~= false and not force:is_null_interface()
+end
+
+--- Runs `kill` with the character-death and faction-destroyed event feeds muted, so scripted forces vanish without notices.
+--- @param kill function The function that removes the force.
+function with_death_feed_muted(kill)
+    cm:disable_event_feed_events(true, "", "", "diplomacy_faction_destroyed")
+    cm:disable_event_feed_events(true, "wh_event_category_character", "", "")
+    kill()
+    cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed") end, 1)
+    cm:callback(function() cm:disable_event_feed_events(false, "wh_event_category_character", "", "") end, 1)
+end
+
+--- Removes a character and its army without death notices.
+--- @param character_cqi number The general's command queue index.
+function kill_character_quietly(character_cqi)
+    with_death_feed_muted(function() cm:kill_character_and_commanded_unit(cm:char_lookup_str(character_cqi), true) end)
+end
+
 --- Returns true if `tbl` contains `element`. If `key_first` is true, checks keys; otherwise checks values.
 --- @param tbl table The table to search. nil is treated as empty.
 --- @param element any The value or key to search for.
@@ -370,33 +408,6 @@ local InvasionBattleManager = {
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Class methods
-
---- Generates a defense battle where the defender army holds the spot and the enemy character attacks it.
---- Preconditions: defender_army is the smithy/POI defender, enemy_character is at war with that faction
---- (or vice versa), and spot_coordinates is the defender's spawning point.
---- @param defender_army Army The Army instance that defends the spot.
---- @param enemy_character character The attacking character.
---- @param spot_coordinates table A {x, y} table for the defender spawn location.
-function InvasionBattleManager:generate_defense_battle(defender_army, enemy_character, spot_coordinates)
-    local x, y = self:find_location_for_character_to_spawn(defender_army.faction, spot_coordinates)
-    --- we try to correct the problem if we cannot find another place to spawn the enemy armies
-    local force_cqi = enemy_character:military_force():command_queue_index()
-
-    self.event_army = defender_army
-    self.event_army:randomize_units(self.random_army_manager)
-
-    local defender_force = self.random_army_manager:generate_force(defender_army.force_identifier)
-    local defence = self:setup_invasion(defender_army, enemy_character, defender_force, {x, y})
-    defence:start_invasion(
-        function(created_defender_force)
-            cm:force_attack_of_opportunity(created_defender_force:get_general():military_force():command_queue_index(), force_cqi, false)
-        end,
-        false,
-        false,
-        false
-    )
-end
-
 
 --- True if a valid spawn location exists for the offensive army near the spot.
 --- @param offensive_army Army The attacking Army instance.
@@ -724,22 +735,12 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             local found_encounter_faction = false
             local player_won_battle = false
 
-            local attacker_was_victorious = cm:pending_battle_cache_attacker_victory()
-            local defender_was_victorious = cm:pending_battle_cache_defender_victory()
-
             local encounter_invasion = self.invasion_manager:get_invasion(army.invasion_identifier)
             --- Defensive-type battles cannot be tracked easily, so we only branch on player attacker/defender.
             --- Check every human faction rather than the local one, so all multiplayer clients agree on the result.
             for _, player_faction_name in ipairs(cm:get_human_factions()) do
-                if cm:pending_battle_cache_faction_is_attacker(player_faction_name) then
-                    found_encounter_faction = true
-                    player_won_battle = attacker_was_victorious
-                    break
-                elseif cm:pending_battle_cache_faction_is_defender(player_faction_name) then
-                    found_encounter_faction = true
-                    player_won_battle = defender_was_victorious
-                    break
-                end
+                found_encounter_faction, player_won_battle = pending_battle_result_for_faction(player_faction_name)
+                if found_encounter_faction then break end
             end
             if found_encounter_faction and encounter_invasion then
                 self:remove_invasion_forces(army)
@@ -781,12 +782,16 @@ end
 function InvasionBattleManager:remove_invasion_force_by_identifier(invasion_identifier)
     local force = self.invasion_manager:get_invasion(invasion_identifier)
     if force then
-        cm:disable_event_feed_events(true, "", "", "diplomacy_faction_destroyed")
-        cm:disable_event_feed_events(true, "wh_event_category_character", "", "")
-        force:kill()
-        cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed") end, 1)
-        cm:callback(function() cm:disable_event_feed_events(false, "wh_event_category_character", "", "") end, 1)
+        with_death_feed_muted(function() force:kill() end)
     end
+end
+
+--- Declares an Army's units to the random army manager and returns them as the comma-separated list `cm:create_force` takes.
+--- @param army Army An Army built by one of the Army constructors.
+--- @returns string The unit list.
+function InvasionBattleManager:build_unit_list(army)
+    army:randomize_army_composition_and_declare(self.random_army_manager)
+    return self.random_army_manager:generate_force(army.force_identifier)
 end
 
 
@@ -929,6 +934,13 @@ function PointOfInterestEventManager:update_state_given_turn_passing()
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
 
+--- Runs the per-faction part of a human turn start (smithy sieges). Skipped when smithies are disabled in MCT.
+--- @param faction_name string The human faction whose turn is starting.
+function PointOfInterestEventManager:on_faction_turn_start(faction_name)
+    if get_mct_settings().disable_smithies then return end
+    self.smithy_event_delegate:on_faction_turn_start(faction_name)
+end
+
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -944,11 +956,11 @@ function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_charac
     end
 end
 
---- Forwards a dilemma-choice event to the smithy POI delegate.
+--- Forwards a dilemma-choice event to the smithy POI delegate, which finds the smithy by the choosing faction.
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 --- @param spot_info table The spot_info record for the triggered POI.
-function PointOfInterestEventManager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
-    self.smithy_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
+function PointOfInterestEventManager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+    self.smithy_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
 end
 
 

@@ -72,6 +72,7 @@ local function build_event(category, entries, faction_keys, difficulty)
         difficulty = (minimum and DIFFICULTY_RANK[minimum] > DIFFICULTY_RANK[difficulty]) and minimum or difficulty,
         archetype_keys = category.archetypes,
         budget_multiplier = category.budget_multiplier,
+        victory_items = category.victory_items,
         intervention = pick_intervention_type(INTERVENTION_BY_KEY[category.intervention]),
     }
     if #entries > 0 and (category.neutral == nil or random_chance(battle_categories.flavoured_chance)) then

@@ -69,7 +69,7 @@ section:set_localised_text("Configuration", true)
 
 local disable_smithies_checkbox = mct_mod:add_new_option("disable_smithies", "checkbox")
 disable_smithies_checkbox:set_text("Remove Smithies from the map", true)
-disable_smithies_checkbox:set_tooltip_text("Will need to load the save again to take effect.", true)
+disable_smithies_checkbox:set_tooltip_text("Requires loading the save again to take effect.", true)
 disable_smithies_checkbox:set_is_global(true)
 disable_smithies_checkbox:set_default_value(false)
 disable_smithies_checkbox:set_assigned_section("configuration_section")
@@ -77,7 +77,7 @@ disable_smithies_checkbox:set_assigned_section("configuration_section")
 --- Slider for what percentage of the possible total spots can have an event spawned into the world.
 local spawn_percentage_slider = mct_mod:add_new_option("spawn_percentage", "slider")
 spawn_percentage_slider:set_text("Controls the % of total points on the map that can have an encounter spawn", true)
-spawn_percentage_slider:set_tooltip_text("Default is 0.75 or 75% of total points on the map can be active at once.", true)
+spawn_percentage_slider:set_tooltip_text("Share of all points on the map that can hold an active encounter at once. Default is 0.75 (75%).", true)
 spawn_percentage_slider:set_is_global(true)
 spawn_percentage_slider:slider_set_min_max(0.10, 1.00)
 spawn_percentage_slider:slider_set_precision(2)
@@ -112,7 +112,7 @@ intervention_ambush_checkbox:set_assigned_section("battle_engagement_section")
 
 local intervention_interception_checkbox = mct_mod:add_new_option("intervention_interception", "checkbox")
 intervention_interception_checkbox:set_text("Allow Interception encounters", true)
-intervention_interception_checkbox:set_tooltip_text("When enabled, land-encounter battles will be set up as interceptions - enemy composition visible, no retreat from the dilemma but standard battle mechanics. This is the default behavior.", true)
+intervention_interception_checkbox:set_tooltip_text("When enabled, land-encounter battles will be set up as interceptions - enemy composition is visible and the battle cannot be declined from the dilemma, but standard battle mechanics apply. This is the default behavior.", true)
 intervention_interception_checkbox:set_is_global(true)
 intervention_interception_checkbox:set_default_value(true)
 intervention_interception_checkbox:set_assigned_section("battle_engagement_section")
@@ -133,12 +133,12 @@ lock_last_enabled_option({ "intervention_ambush", "intervention_interception", "
 
 local encounters_section = mct_mod:add_new_section("encounter_skins_section")
 encounters_section:set_localised_text("Encounter Skin Configuration", true)
-encounters_section:set_description("Checkboxes are provided for each encounter skin to show up in the randomized rotation. They are enabled by default.\n\nTakes effect the next time the locations are spawned in again.")
+encounters_section:set_description("Each encounter skin has a checkbox that controls whether it shows up in the randomized rotation. They are enabled by default.\n\nTakes effect the next time the locations are spawned in again.")
 
 --- Master checkbox to lock all encounter skin checkboxes.
 local enable_all_encounter_skins_checkbox = mct_mod:add_new_option("enable_all_encounter_skins", "checkbox")
 enable_all_encounter_skins_checkbox:set_text("Enable all encounter skins", true)
-enable_all_encounter_skins_checkbox:set_tooltip_text("When enabled, all encounter skins will be activated and individual checkboxes will be disabled.", true)
+enable_all_encounter_skins_checkbox:set_tooltip_text("When enabled, all encounter skins will be activated and individual checkboxes will be locked.", true)
 enable_all_encounter_skins_checkbox:set_is_global(true)
 enable_all_encounter_skins_checkbox:set_default_value(true)
 enable_all_encounter_skins_checkbox:set_assigned_section("encounter_skins_section")
@@ -229,7 +229,7 @@ enable_basic_progressive_difficulty_checkbox:set_assigned_section("randomized_en
 --- Sliders for the turn-number thresholds at which the progressive difficulty steps up.
 local turn_number_from_easy_to_medium_slider = mct_mod:add_new_option("turn_number_from_easy_to_medium_slider", "slider")
 turn_number_from_easy_to_medium_slider:set_text("Turn number at which difficulty increases from easy to medium", true)
-turn_number_from_easy_to_medium_slider:set_tooltip_text("Set the turn number at which the difficulty increase from easy to medium.", true)
+turn_number_from_easy_to_medium_slider:set_tooltip_text("Set the turn number at which the difficulty increases from easy to medium.", true)
 turn_number_from_easy_to_medium_slider:set_is_global(true)
 turn_number_from_easy_to_medium_slider:slider_set_min_max(2, 50)
 turn_number_from_easy_to_medium_slider:slider_set_precision(1)
@@ -238,7 +238,7 @@ turn_number_from_easy_to_medium_slider:set_default_value(15)
 turn_number_from_easy_to_medium_slider:set_assigned_section("randomized_encounter_force_generation_section")
 local turn_number_from_medium_to_hard_slider = mct_mod:add_new_option("turn_number_from_medium_to_hard_slider", "slider")
 turn_number_from_medium_to_hard_slider:set_text("Turn number at which difficulty increases from medium to hard", true)
-turn_number_from_medium_to_hard_slider:set_tooltip_text("Set the turn number at which the difficulty increase from medium to hard.", true)
+turn_number_from_medium_to_hard_slider:set_tooltip_text("Set the turn number at which the difficulty increases from medium to hard.", true)
 turn_number_from_medium_to_hard_slider:set_is_global(true)
 turn_number_from_medium_to_hard_slider:slider_set_min_max(3, 100)
 turn_number_from_medium_to_hard_slider:slider_set_precision(1)
@@ -330,7 +330,7 @@ local difficulty_slider_templates = {
 --- Create one collapsible section per difficulty.
 for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local difficulty_section = mct_mod:add_new_section("difficulty_" .. difficulty .. "_section")
-    difficulty_section:set_localised_text("Randomization Difficulty Settings: " .. difficulty, true)
+    difficulty_section:set_localised_text("Randomization Difficulty Settings: " .. difficulty:sub(1, 1):upper() .. difficulty:sub(2), true)
     difficulty_section:set_description("This section contains options for the random generation difficulty.\n\nYou do not need to load the save again for the changes to take effect.", true)
     difficulty_section:set_is_collapsible(true)
     difficulty_section:set_visibility(false)
@@ -365,7 +365,7 @@ end
 --- Section + checkboxes for enabling/disabling individual factions in the randomized encounter force generation.
 local faction_overrides_section = mct_mod:add_new_section("faction_overrides_section")
 faction_overrides_section:set_localised_text("Faction Overrides", true)
-faction_overrides_section:set_description("This section contains options to override the faction for the randomized encounter force generation.\n\nIt is okay to leave the modded factions enabled as they will not be included in the randomized encounter force generation if their respective mods are not loaded as well.")
+faction_overrides_section:set_description("This section lets you choose which factions the randomized encounter force generation can use.\n\nIt is okay to leave modded factions enabled. They are skipped when their mods are not loaded.")
 faction_overrides_section:assign_to_page(second_page)
 
 --- Master checkbox to enable/disable every faction at once.

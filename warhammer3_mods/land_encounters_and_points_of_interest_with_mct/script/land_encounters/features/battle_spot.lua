@@ -5,7 +5,8 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/core/managers")
 
 local complex_continuity_events = require("script/land_encounters/configs/events").complex_continuity
-local elligible_items = require("script/land_encounters/configs/items").balancing
+local item_pool = require("script/land_encounters/core/item_pool")
+local hard_legendary_chance = require("script/land_encounters/configs/battle_categories").hard_legendary_chance
 
 local battle_picker = require("script/land_encounters/core/battle_picker")
 
@@ -56,7 +57,7 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
         --- AI: silently grants a small loot.
         local trigger_event_feed = false
         if random_chance(10) then
-            local ancillary = pick_random_item_for_current_difficulty(elligible_items)
+            local ancillary = item_pool.pick_item_for_difficulty(triggering_faction_name)
             if ancillary ~= nil then
                 cm:add_ancillary_to_faction(triggering_faction, ancillary, trigger_event_feed)
             end
@@ -142,6 +143,7 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
     end
 
     trigger_incident(self.cached_event.victory_incident, self.cached_event.victory_targets, spot_info, self.cached_player_character)
+    self:grant_victory_items(self.cached_player_character:faction())
     --- Complex events trigger a balancing act on enemy AI factions.
     local continuity = self:check_if_incident_has_continuity(self.cached_event.victory_incident, self.cached_player_character:faction())
     if continuity ~= nil then
@@ -149,6 +151,23 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
         if continuity.balance ~= false then
             self:trigger_incident_for_ai_due_to_balance(continuity.balance, self.cached_player_character:faction())
         end
+    end
+end
+
+--- Grants the battle category's victory item, and on hard difficulty a small chance of a legendary item. Events saved before these rewards
+--- existed carry neither field and grant nothing extra.
+--- @param faction faction The victorious player faction.
+function BattleEventDelegate:grant_victory_items(faction)
+    local rewards = {}
+    local victory_items = self.cached_event.victory_items
+    if victory_items then
+        rewards = item_pool.pick_items(faction:name(), victory_items.rarities, victory_items.count)
+    end
+    if self.cached_event.difficulty == "hard" and random_chance(hard_legendary_chance) then
+        table.insert(rewards, item_pool.pick_legendary_item(faction:name()))
+    end
+    for _, ancillary in ipairs(rewards) do
+        cm:add_ancillary_to_faction(faction, ancillary, false)
     end
 end
 

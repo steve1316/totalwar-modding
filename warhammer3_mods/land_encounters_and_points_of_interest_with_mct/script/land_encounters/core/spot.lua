@@ -7,6 +7,12 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
 
+--- Smithy marker skin per forge level (1-3). Level 1 keeps the original key so markers from older saves stay valid.
+local SMITHY_MARKER_KEY_BY_LEVEL = { "encounter_marker_smithy", "encounter_marker_smithy_level_2", "encounter_marker_smithy_level_3" }
+
+--- Interaction radius of smithy markers.
+local SMITHY_MARKER_RADIUS = 8
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Spot (abstract base)
@@ -281,13 +287,29 @@ function SmithySpot:get_class()
     return "SmithySpot"
 end
 
---- Activates the smithy POI by placing its fixed marker (encounter_marker_smithy) on the campaign map.
+--- Returns the marker id of a smithy.
+--- @param zone_name string The region key for the zone the smithy belongs to.
+--- @param index number The 1-based smithy slot in the zone.
+--- @returns string The marker id.
+function SmithySpot.marker_id(zone_name, index)
+    return "land_enc_marker_" .. zone_name .. "_smithy_" .. index
+end
+
+--- Activates the smithy POI by placing its level 1 marker on the campaign map. Every smithy starts at level 1.
 --- @param zone_name string The region key for the zone this smithy belongs to.
 function SmithySpot:activate(zone_name)
-    local marker_id = "land_enc_marker_" .. zone_name .. "_smithy_" .. self.index
-    local marker_key = "encounter_marker_smithy"
-    local interaction_radius = 8
-    self:set_marker_on_map(marker_id, marker_key, interaction_radius)
+    self:set_marker_on_map(SmithySpot.marker_id(zone_name, self.index), SMITHY_MARKER_KEY_BY_LEVEL[1], SMITHY_MARKER_RADIUS)
+end
+
+--- Replaces a smithy's marker with the skin for its forge level.
+--- @param zone_name string The region key for the zone the smithy belongs to.
+--- @param index number The 1-based smithy slot in the zone.
+--- @param coordinates table The smithy's {x, y} position.
+--- @param level number The forge level (1-3).
+function SmithySpot.replace_marker(zone_name, index, coordinates, level)
+    local marker_id = SmithySpot.marker_id(zone_name, index)
+    cm:remove_interactable_campaign_marker(marker_id)
+    cm:add_interactable_campaign_marker(marker_id, SMITHY_MARKER_KEY_BY_LEVEL[level], coordinates[1], coordinates[2], SMITHY_MARKER_RADIUS, "", "")
 end
 
 --- Writes this smithy's data into the flat save-state table under a per-zone smithy key.
@@ -579,15 +601,6 @@ function PointOfInterestDelegate:activate_points_of_interest(zone_name)
 end
 
 
---- Ticks per-turn state updates for every POI in this zone.
---- @param mission_manager table The CA mission_manager handle forwarded to each POI.
-function PointOfInterestDelegate:update_points_of_interest_by_turn(mission_manager)
-    for i=1, #self.points_of_interest do
-        self.points_of_interest[i]:update_state_through_turn_passing(mission_manager)
-    end
-end
-
-
 --- Restores per-POI state from a previously saved campaign. New POIs added since the save are left at their fresh defaults.
 --- @param zone_name string The region key for the zone being restored.
 --- @param previous_state table Flattened save state previously produced for this zone.
@@ -663,13 +676,6 @@ end
 --- @param mctSettings table Live MCT settings forwarded to the POI delegate (legacy parameter, currently unused).
 function Zone:initialize_points_of_interest(points_of_interest_data, mctSettings)
     self.point_of_interest_delegate:initialize(points_of_interest_data, mctSettings)
-end
-
-
---- Ticks per-turn POI state updates.
---- @param mission_manager table The CA mission_manager handle forwarded to each POI.
-function Zone:update_points_of_interest_by_turn(mission_manager)
-    self.point_of_interest_delegate:update_points_of_interest_by_turn(mission_manager)
 end
 
 
