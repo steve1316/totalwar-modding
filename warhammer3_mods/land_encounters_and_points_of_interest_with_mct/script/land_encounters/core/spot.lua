@@ -16,8 +16,8 @@ local SMITHY_MARKER_RADIUS = 8
 --- Marker skin shared by every tower.
 local TOWER_MARKER_KEY = "encounter_marker_tower"
 
---- Interaction radius of tower markers. Matches encounter markers, since the tower model is about their size.
-local TOWER_MARKER_RADIUS = 4
+--- Interaction radius of tower markers, kept tight around the tower model.
+local TOWER_MARKER_RADIUS = 2.5
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
