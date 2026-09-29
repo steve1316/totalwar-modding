@@ -40,17 +40,21 @@ end
 
 local LAND_ENCOUNTER_TYPE = 0
 local SMITHY_TYPE = 1
+local TOWER_TYPE = 2
 
 --- Parses a marker id of the form "land_enc_marker_<zone>_<index>" (16-char prefix) and returns {zone, index, type}.
---- A "_smithy_" infix marks the marker as a smithy POI instead of a land encounter.
+--- A "_smithy_" infix marks the marker as a smithy POI and a "_tower_" infix as a tower, instead of a land encounter.
 --- @param marker_id string The full marker id to parse.
---- @returns table A 3-element array { zone_name string, spot_index number, type number } where type is LAND_ENCOUNTER_TYPE or SMITHY_TYPE.
+--- @returns table A 3-element array { zone_name string, spot_index number, type number } where type is LAND_ENCOUNTER_TYPE, SMITHY_TYPE or
+--- TOWER_TYPE.
 function process_marker_id(marker_id)
-    beginning_index, ending_index = string.find(marker_id, "_smithy_")
-    if beginning_index ~= nil then
-        local zone_name = string.sub(marker_id, 17, beginning_index - 1)
-        local spot_index = string.sub(marker_id, ending_index + 1, #marker_id)
-        return { zone_name, tonumber(spot_index), SMITHY_TYPE }
+    for infix, marker_type in pairs({ ["_smithy_"] = SMITHY_TYPE, ["_tower_"] = TOWER_TYPE }) do
+        local infix_start, infix_end = string.find(marker_id, infix, 1, true)
+        if infix_start ~= nil then
+            local zone_name = string.sub(marker_id, 17, infix_start - 1)
+            local spot_index = string.sub(marker_id, infix_end + 1, #marker_id)
+            return { zone_name, tonumber(spot_index), marker_type }
+        end
     end
 
     --- The maximum number of points in a zone is <99, so look at the last 3 chars to find the trailing underscore.

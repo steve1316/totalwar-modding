@@ -182,10 +182,11 @@ function Army:new_from_event(event, player_subculture)
     out("DEBUG - Starting force makeup generation for faction: " .. faction .. " and difficulty: " .. difficulty)
     local force_data = start_force_makeup_generation(difficulty, faction, event)
 
-    --- The battle type was decided by the picker. Allied Reinforcements may still drop to Interception below.
+    --- The battle type was decided by the picker. Allied Reinforcements may still drop to Interception below. `allow_ally` false keeps the
+    --- player-attacks battle type without an ally, as tower floors do.
     local intervention_type = event.intervention
     local ally_force_data = nil
-    if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
+    if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE and event.allow_ally ~= false then
         local ally_faction = pick_ally_faction(player_subculture, faction)
         if ally_faction == nil then
             out("DEBUG - Allied intervention picked but no ally faction available; demoting to INTERCEPTION_TYPE.")

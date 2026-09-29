@@ -11,6 +11,12 @@ local events = require("script/land_encounters/configs/events")
 local battle_dilemma_keys = require("script/land_encounters/configs/battle_categories").dilemma_keys
 local smithy_events = events.smithy
 
+--- Tower dilemma key -> true, for the tower choice listener.
+local tower_dilemma_keys = {}
+for _, key in ipairs(events.tower_spot) do
+    tower_dilemma_keys[key] = true
+end
+
 local M = {}
 
 --- Populated by the entry point's pre_first_tick_callback after the manager instances are created.
@@ -67,6 +73,9 @@ function M.register()
             elseif M.current_spot_info.spot_type == 1 then
                 --- Smithy spot.
                 M.point_of_interest_event_manager:trigger_poi_event("SmithySpot", area_and_character_info, M.current_spot_info)
+            elseif M.current_spot_info.spot_type == 2 then
+                --- Tower.
+                M.point_of_interest_event_manager:trigger_poi_event("TowerSpot", area_and_character_info, M.current_spot_info)
             end
 
             if can_delete_land_encounter then
@@ -114,6 +123,20 @@ function M.register()
         end,
         function(dilemma_choice_and_faction_info)
             M.point_of_interest_event_manager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+        end,
+        IS_PERSISTENT_LISTENER
+    )
+
+
+    --- Tower dilemma choice (enter, go deeper or leave).
+    core:add_listener(
+        "land_enc_tower_dilemma_choice",
+        "DilemmaChoiceMadeEvent",
+        function(dilemma_choice_and_faction_info)
+            return tower_dilemma_keys[dilemma_choice_and_faction_info:dilemma()] == true
+        end,
+        function(dilemma_choice_and_faction_info)
+            M.point_of_interest_event_manager:trigger_tower_dilemma_event_given_choice(dilemma_choice_and_faction_info)
         end,
         IS_PERSISTENT_LISTENER
     )

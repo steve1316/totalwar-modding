@@ -84,3 +84,105 @@ event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turn
 event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_10	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_10	The Forge Is Cooling	false
 event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_10	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]10 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_tower_left	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_left	We Leave the Tower	false
+event_feed_strings_text_description_event_land_enc_tower_left	We leave the tower with our haul. Its gates close behind us and stay barred for a while.	false
+event_feed_strings_text_title_event_land_enc_tower_lost	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_lost	Driven From the Tower	false
+event_feed_strings_text_description_event_land_enc_tower_lost	Our army is driven out of the tower. [[col:red]]The whole haul is lost[[/col]], and the gates close behind us.	false
+event_feed_strings_text_title_event_land_enc_tower_cleared	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cleared	The Master Has Fallen	false
+event_feed_strings_text_description_event_land_enc_tower_cleared	The Master of the Tower lies dead and every floor is ours. We claim the full haul before the gates close behind us.	false
+event_feed_strings_text_title_event_land_enc_tower_blocked	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_blocked	No Room to Muster	false
+event_feed_strings_text_description_event_land_enc_tower_blocked	The tower's defenders have no room to muster against us here. We can try the tower again later.	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_1	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_1	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_1	The tower's gates are barred after the last delve. They open again in [[col:yellow]]1 turn[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_2	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_2	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_2	The tower's gates are barred after the last delve. They open again in [[col:yellow]]2 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_3	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_3	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_3	The tower's gates are barred after the last delve. They open again in [[col:yellow]]3 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_4	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_4	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_4	The tower's gates are barred after the last delve. They open again in [[col:yellow]]4 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_5	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_5	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_5	The tower's gates are barred after the last delve. They open again in [[col:yellow]]5 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_6	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_6	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_6	The tower's gates are barred after the last delve. They open again in [[col:yellow]]6 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_7	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_7	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_7	The tower's gates are barred after the last delve. They open again in [[col:yellow]]7 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_8	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_8	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_8	The tower's gates are barred after the last delve. They open again in [[col:yellow]]8 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_9	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_9	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_9	The tower's gates are barred after the last delve. They open again in [[col:yellow]]9 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_10	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_10	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_10	The tower's gates are barred after the last delve. They open again in [[col:yellow]]10 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_11	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_11	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_11	The tower's gates are barred after the last delve. They open again in [[col:yellow]]11 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_12	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_12	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_12	The tower's gates are barred after the last delve. They open again in [[col:yellow]]12 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_13	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_13	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_13	The tower's gates are barred after the last delve. They open again in [[col:yellow]]13 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_14	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_14	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_14	The tower's gates are barred after the last delve. They open again in [[col:yellow]]14 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_15	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_15	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_15	The tower's gates are barred after the last delve. They open again in [[col:yellow]]15 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_16	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_16	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_16	The tower's gates are barred after the last delve. They open again in [[col:yellow]]16 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_17	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_17	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_17	The tower's gates are barred after the last delve. They open again in [[col:yellow]]17 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_18	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_18	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_18	The tower's gates are barred after the last delve. They open again in [[col:yellow]]18 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_19	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_19	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_19	The tower's gates are barred after the last delve. They open again in [[col:yellow]]19 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_20	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_20	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_20	The tower's gates are barred after the last delve. They open again in [[col:yellow]]20 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_21	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_21	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_21	The tower's gates are barred after the last delve. They open again in [[col:yellow]]21 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_22	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_22	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_22	The tower's gates are barred after the last delve. They open again in [[col:yellow]]22 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_23	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_23	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_23	The tower's gates are barred after the last delve. They open again in [[col:yellow]]23 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_24	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_24	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_24	The tower's gates are barred after the last delve. They open again in [[col:yellow]]24 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_25	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_25	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_25	The tower's gates are barred after the last delve. They open again in [[col:yellow]]25 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_26	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_26	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_26	The tower's gates are barred after the last delve. They open again in [[col:yellow]]26 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_27	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_27	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_27	The tower's gates are barred after the last delve. They open again in [[col:yellow]]27 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_28	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_28	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_28	The tower's gates are barred after the last delve. They open again in [[col:yellow]]28 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_29	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_29	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_29	The tower's gates are barred after the last delve. They open again in [[col:yellow]]29 turns[[/col]].	false
+event_feed_strings_text_title_event_land_enc_tower_cooling_turns_30	Ancient Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_30	The Gates Are Barred	false
+event_feed_strings_text_description_event_land_enc_tower_cooling_turns_30	The tower's gates are barred after the last delve. They open again in [[col:yellow]]30 turns[[/col]].	false
