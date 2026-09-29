@@ -4,6 +4,8 @@
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 
+local legendary_items = require("script/land_encounters/configs/legendary_items")
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constants
@@ -30,17 +32,15 @@ function M.set_script_environment(environment)
     script_environment = environment
 end
 
---- Returns CA's `get_random_ancillary_key_for_faction`, looking in this module's globals first and then in the mod entry script's environment.
---- @returns function The helper, or nil when neither has it.
-local function ca_random_ancillary_helper()
-    if type(get_random_ancillary_key_for_faction) == "function" then
-        return get_random_ancillary_key_for_faction
+--- Returns one of CA's campaign script functions, looking in this module's globals first and then in the mod entry script's environment.
+--- @param name string The global function name, e.g. "get_random_ancillary_key_for_faction".
+--- @returns function The function, or nil when neither has it.
+local function ca_function(name)
+    local helper = _G[name]
+    if type(helper) ~= "function" and script_environment then
+        helper = script_environment[name]
     end
-    local helper = script_environment and script_environment.get_random_ancillary_key_for_faction
-    if type(helper) == "function" then
-        return helper
-    end
-    return nil
+    return type(helper) == "function" and helper or nil
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ end
 --- @param count number How many items to pick.
 --- @returns table An array of ancillary keys. Shorter than `count` (or empty) when CA's pool runs dry or is unavailable.
 function M.pick_items(faction_key, rarities, count)
-    local random_ancillary = ca_random_ancillary_helper()
+    local random_ancillary = ca_function("get_random_ancillary_key_for_faction")
     if random_ancillary == nil then
         out("DEBUG - item_pool: CA's get_random_ancillary_key_for_faction is not loaded, so no item is given.")
         return {}
@@ -75,6 +75,29 @@ function M.pick_items(faction_key, rarities, count)
         if not found then break end
     end
     return picked
+end
+
+--- Picks one legendary item from configs/legendary_items.lua that the faction can use (CA's `ancillary_is_available_to_faction`), does not own,
+--- and whose DLC it has. The scan starts at a random item so every client picks the same one.
+--- @param faction_key string The receiving faction's key.
+--- @returns string An ancillary key, or nil when no legendary item qualifies.
+function M.pick_legendary_item(faction_key)
+    local is_available = ca_function("ancillary_is_available_to_faction")
+    local faction = cm:get_faction(faction_key)
+    if is_available == nil or not faction then
+        out("DEBUG - item_pool: no legendary item given (CA's ancillary_is_available_to_faction or the faction is missing).")
+        return nil
+    end
+    local start = random_number(#legendary_items)
+    for offset = 0, #legendary_items - 1 do
+        local item = legendary_items[(start + offset - 1) % #legendary_items + 1]
+        if not faction:ancillary_exists(item.key)
+            and (item.dlc == nil or cm:faction_has_dlc_or_is_ai(item.dlc, faction_key))
+            and is_available(item.key, faction_key) then
+            return item.key
+        end
+    end
+    return nil
 end
 
 --- Picks one item whose rarity is weighted by the encounter difficulty.
