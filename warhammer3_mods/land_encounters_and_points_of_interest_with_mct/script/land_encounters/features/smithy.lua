@@ -59,6 +59,12 @@ local PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE = "dummy_land_enc_smithy_cannot_afford_
 --- Payload text prefix describing the upgrade from the appended level to the next.
 local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_smithy_upgrade_"
 
+--- The longest free-pick cooldown. There is one cooling message per possible number of turns left, up to this.
+local LONGEST_COOLDOWN = 0
+for _, level in ipairs(smithy_data.levels) do
+    LONGEST_COOLDOWN = math.max(LONGEST_COOLDOWN, level.cooldown)
+end
+
 --- Turns between Dark Elf smithy missions for a player owner.
 local MISSION_INTERVAL = 30
 
@@ -198,9 +204,9 @@ function SmithyState:trigger_event(area_and_character_info)
 
     if is_human_and_it_is_its_turn(visiting_faction) then
         if self:is_occupied_by_same_faction(visiting_faction:name()) then
-            --- While the forge cools there is nothing to take, so a message replaces the dilemma.
+            --- While the forge cools there is nothing to take, so a message saying how many turns are left replaces the dilemma.
             if self:is_on_cooldown() then
-                self:show_message(visiting_faction:name(), "smithy_visit_on_cooldown")
+                self:show_message(visiting_faction:name(), "smithy_visit_on_cooldown_turns_" .. math.min(self.visit_cooldown, LONGEST_COOLDOWN))
                 return false
             end
             self:open_forge(visiting_faction)

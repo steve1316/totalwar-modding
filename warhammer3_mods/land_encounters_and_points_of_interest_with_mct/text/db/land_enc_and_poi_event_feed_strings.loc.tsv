@@ -6,9 +6,6 @@ event_feed_strings_text_description_event_land_enc_and_poi_encountered	Your army
 event_feed_strings_text_title_event_land_enc_smithy_encountered	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_encountered	Smithy Missed	false
 event_feed_strings_text_description_event_land_enc_smithy_encountered	We passed a smithy without stopping. Perhaps a lord should come back to see what it holds.	false
-event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown	The Forge Is Cooling	false
-event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown	The forge is still cooling after our last piece, so there is nothing to take yet. The master blacksmith will send word when it is ready again.	false
 event_feed_strings_text_title_event_land_enc_smithy_visit_available	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_available	The Master Blacksmith Is Ready To Receive You	false
 event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends word that the forge is ready again. Send a lord to the smithy to choose from his new work.	false
@@ -57,3 +54,33 @@ event_feed_strings_text_description_event_land_enc_smithy_successfully_reclaimed
 event_feed_strings_text_title_event_land_enc_smithy_default_occupation_level_3	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_default_occupation_level_3	Smithy Occupied	false
 event_feed_strings_text_description_event_land_enc_smithy_default_occupation_level_3	We have occupied this abandoned smithy and assigned our own master blacksmith and a detachment to guard it. The forge stands at [[col:yellow]]level 3 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_1	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_1	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_1	The forge is still cooling after our last piece. It will be ready again [[col:yellow]]next turn[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_2	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_2	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]2 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_3	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_3	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_3	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]3 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_4	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_4	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_4	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]4 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_5	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_5	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_5	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]5 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_6	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_6	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_6	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]6 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_7	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_7	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_7	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]7 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_8	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_8	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_8	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]8 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_9	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_9	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_9	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]9 turns[[/col]], and the master blacksmith will send word.	false
+event_feed_strings_text_title_event_land_enc_smithy_visit_on_cooldown_turns_10	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_visit_on_cooldown_turns_10	The Forge Is Cooling	false
+event_feed_strings_text_description_event_land_enc_smithy_visit_on_cooldown_turns_10	The forge is still cooling after our last piece. It will be ready again in [[col:yellow]]10 turns[[/col]], and the master blacksmith will send word.	false
