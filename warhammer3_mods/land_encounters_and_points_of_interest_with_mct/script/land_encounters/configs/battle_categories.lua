@@ -19,6 +19,9 @@ M.tier_weights = {
 --- Percent chance that a category with a neutral dilemma uses one of its flavoured dilemmas instead.
 M.flavoured_chance = 50
 
+--- Percent chance that winning a battle on hard difficulty also grants one item from configs/legendary_items.lua.
+M.hard_legendary_chance = 5
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Categories
@@ -34,12 +37,15 @@ Fields of each category:
   falls back to Interception, then to the MCT pick.
 - victory_incident / avoidance_incident: shared incidents. A flavoured entry may override either.
 - victory_targets / avoidance_targets: who each incident targets.
+- victory_items: the item a victory grants at runtime (`count` items of `rarities`), or nil for none. The victory incident itself only
+  carries gold and buffs.
 - neutral: the faction-free dilemma, or nil when the category only has flavoured dilemmas.
 - flavoured: dilemmas written for one faction (3-letter shorthand).
 --]]
 M.list = {
     {
         key = "skirmish",
+        victory_items = { rarities = { "common", "uncommon" }, count = 1 },
         text = "Skirmish",
         tier = 1,
         archetypes = { "battle_line" },
@@ -81,6 +87,7 @@ M.list = {
     },
     {
         key = "bandits",
+        victory_items = { rarities = { "uncommon", "rare" }, count = 1 },
         text = "Bandits",
         tier = 2,
         archetypes = { "raiders" },
@@ -119,6 +126,7 @@ M.list = {
     },
     {
         key = "incursion",
+        victory_items = { rarities = { "rare" }, count = 1 },
         text = "Incursion",
         tier = 2,
         archetypes = { "siege", "battle_line" },
@@ -138,6 +146,7 @@ M.list = {
     },
     {
         key = "battlefield",
+        victory_items = { rarities = { "rare" }, count = 1 },
         text = "Battlefield",
         tier = 3,
         archetypes = { "battle_line" },
