@@ -30,3 +30,5 @@ campaign_interactable_marker_infos_name_encounter_marker_smithy_level_2	Smithy (
 campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_2	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 2 of 3.	true
 campaign_interactable_marker_infos_name_encounter_marker_smithy_level_3	Smithy (Level 3)	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_3	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 3 of 3.	true
+campaign_interactable_marker_infos_name_encounter_marker_tower	Ancient Tower	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_tower	An ancient tower held by a hostile warband. Five floors of battles lead to its Master, and the deeper you go the richer the haul. [[col:magic]]This can be delved by a [[img:icon_general]][[/img]]Lord with an army.[[/col]]	true

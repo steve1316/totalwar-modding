@@ -12,6 +12,10 @@ local archetypes = require("script/land_encounters/configs/archetypes")
 --- finalized MCT option values via set_mct_settings.
 local mct_settings = {
     disable_smithies = false,
+    --- Towers are on the map and can be delved.
+    enable_towers = true,
+    --- Turns a tower stays closed after a delve ends.
+    tower_cooldown = 10,
     spawn_percentage = 0.75,
     --- Percent chance that a battle spot starts a battle instead of giving treasure.
     battle_chance = 70,
@@ -345,6 +349,8 @@ end
 --- @param mct_mod table The MCT mod handle returned by mct:get_mod_by_key.
 function set_mct_settings(mct_mod)
     mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
+    mct_settings.enable_towers = mct_mod:get_option_by_key("enable_towers"):get_finalized_setting()
+    mct_settings.tower_cooldown = mct_mod:get_option_by_key("tower_cooldown"):get_finalized_setting()
     mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
     mct_settings.battle_chance = mct_mod:get_option_by_key("battle_chance"):get_finalized_setting()
 
@@ -374,6 +380,7 @@ function set_mct_settings(mct_mod)
     mct_settings.enable_all_factions = mct_mod:get_option_by_key("enable_all_faction_checkboxes"):get_finalized_setting()
 
     out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies))
+    out("DEBUG - mct_settings.enable_towers: " .. tostring(mct_settings.enable_towers) .. ", tower_cooldown: " .. tostring(mct_settings.tower_cooldown))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))
     out("DEBUG - mct_settings.battle_chance: " .. tostring(mct_settings.battle_chance))
     out("DEBUG - mct_settings.enable_all_encounter_skins: " .. tostring(mct_settings.enable_all_encounter_skins))

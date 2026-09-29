@@ -12,6 +12,7 @@ local army_generator = require("script/land_encounters/core/army_generator")
 local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
+local TowerEventDelegate
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -921,7 +922,11 @@ end
 --- (from controllers/point_of_interest_event_manager.lua)
 
 local PointOfInterestEventManager = {
-    smithy_event_delegate = {}
+    smithy_event_delegate = {},
+    --- Places, saves and ticks the towers.
+    tower_event_delegate = {},
+    --- Tower records from the save, held until the zones exist and `initialize_towers` runs.
+    saved_towers = nil,
 }
 
 
@@ -935,8 +940,17 @@ function PointOfInterestEventManager:generate_points_of_interests_states(points_
 end
 
 
+--- Places or restores the towers. Runs at first tick once the land manager has built its zones.
+--- @param zones table The land manager's zones.
+function PointOfInterestEventManager:initialize_towers(zones)
+    self.tower_event_delegate:initialize(zones, self.saved_towers)
+    self.saved_towers = nil
+end
+
+
 --- Forwards per-turn state updates to each POI delegate. Hidden smithies must not keep paying tributes or issuing missions.
 function PointOfInterestEventManager:update_state_given_turn_passing()
+    self.tower_event_delegate:update_state_given_turn_passing()
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
@@ -976,25 +990,29 @@ end
 function PointOfInterestEventManager:export_state_as_table()
     local points_of_interests_data = {}
     points_of_interests_data["smithies"] = self.smithy_event_delegate:export_state_as_table()
+    points_of_interests_data["towers"] = self.tower_event_delegate:export_state_as_table()
     return points_of_interests_data
 end
 
 
---- Restores the smithy delegate's per-zone POI state from previously saved data.
+--- Restores the smithy delegate's per-zone POI state from previously saved data, and keeps the saved towers for `initialize_towers`.
 --- @param previous_state table The keyed save record previously produced by export_state_as_table.
 function PointOfInterestEventManager:reinstate_event_if_able(previous_state)
     self.smithy_event_delegate:reinstate_event_if_able(previous_state["smithies"])
+    self.saved_towers = previous_state["towers"]
 end
 
 
---- Lazy-loads the smithy delegate module (avoiding the circular require) and builds the manager.
+--- Lazy-loads the smithy and tower delegate modules (avoiding the circular require) and builds the manager.
 --- @param mission_manager table The CA mission_manager handle.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
---- @returns PointOfInterestEventManager A new manager with the smithy delegate wired in.
+--- @returns PointOfInterestEventManager A new manager with the smithy and tower delegates wired in.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
+    TowerEventDelegate = TowerEventDelegate or require("script/land_encounters/features/tower")
     local t = {
-        smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager)
+        smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager),
+        tower_event_delegate = TowerEventDelegate:new(invasion_battle_manager),
     }
     setmetatable(t, self)
     self.__index = self

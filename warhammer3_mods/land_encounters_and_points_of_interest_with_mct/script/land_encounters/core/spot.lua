@@ -1,7 +1,7 @@
 --- All spot classes for the mod: the abstract Spot base, EventSpot (random encounter),
---- SmithySpot, SpotDelegate, PointOfInterestDelegate, and the Zone aggregate. Also exports
---- seven doc-only placeholder classes (EmitterSpot, DungeonSpot, InvasionSpot, ResourceSpot,
---- RiftSpot, TavernSpot, TowerSpot) that the original mod never implemented.
+--- SmithySpot, TowerSpot, SpotDelegate, PointOfInterestDelegate, and the Zone aggregate. Also exports
+--- six doc-only placeholder classes (EmitterSpot, DungeonSpot, InvasionSpot, ResourceSpot,
+--- RiftSpot, TavernSpot) that the original mod never implemented.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
@@ -12,6 +12,12 @@ local SMITHY_MARKER_KEY_BY_LEVEL = { "encounter_marker_smithy", "encounter_marke
 
 --- Interaction radius of smithy markers.
 local SMITHY_MARKER_RADIUS = 8
+
+--- Marker skin shared by every tower.
+local TOWER_MARKER_KEY = "encounter_marker_tower"
+
+--- Interaction radius of tower markers.
+local TOWER_MARKER_RADIUS = 8
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -388,7 +394,33 @@ If you manage to suceed that battle, another dilemma would trigger that asks if 
 On the final or later floor, you would fight an actual-lord with spells/mounts and abilities that boost their troops refered to as the "Master of the Dungeon/Warren", and if you beat them it could give some cool item/rewards, or mayhap even a random hero from a random faction, where the roleplay is that you free-prisoners that swear fealty to you, or that you broke the curse of bla bla whatever n so on.
 ]]--
 
-local TowerSpot = nil
+--- Marker helpers for towers. A tower sits on one of its zone's encounter spots, so its marker is keyed by that spot's index.
+local TowerSpot = {}
+
+--- Returns the marker id of a tower.
+--- @param zone_name string The region key for the zone the tower stands in.
+--- @param spot_index number The index of the encounter spot the tower occupies.
+--- @returns string The marker id.
+function TowerSpot.marker_id(zone_name, spot_index)
+    return "land_enc_marker_" .. zone_name .. "_tower_" .. spot_index
+end
+
+--- Places a tower's marker on the campaign map, replacing any marker already under that id.
+--- @param zone_name string The region key for the zone the tower stands in.
+--- @param spot_index number The index of the encounter spot the tower occupies.
+--- @param coordinates table The tower's {x, y} position.
+function TowerSpot.place_marker(zone_name, spot_index, coordinates)
+    local marker_id = TowerSpot.marker_id(zone_name, spot_index)
+    cm:remove_interactable_campaign_marker(marker_id)
+    cm:add_interactable_campaign_marker(marker_id, TOWER_MARKER_KEY, coordinates[1], coordinates[2], TOWER_MARKER_RADIUS, "", "")
+end
+
+--- Removes a tower's marker from the campaign map.
+--- @param zone_name string The region key for the zone the tower stands in.
+--- @param spot_index number The index of the encounter spot the tower occupies.
+function TowerSpot.remove_marker(zone_name, spot_index)
+    cm:remove_interactable_campaign_marker(TowerSpot.marker_id(zone_name, spot_index))
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -405,6 +437,8 @@ local SpotDelegate = {
 
     active_spots = {},
     prohibited_spots = {},
+    --- Spot indexes held by a tower. They never activate as encounters. Rebuilt from tower state on every load, so not saved here.
+    reserved_spots = {},
 
     max_active_spots_count = 0
 }
@@ -430,7 +464,8 @@ function SpotDelegate:try_add_land_encounters(zone_name)
 
         --- Skip indexes that are currently active or in cooldown.
         local candidate_spot_to_activate_index = disordered_indexes[i]
-        if self.prohibited_spots[candidate_spot_to_activate_index] == nil and self.active_spots[candidate_spot_to_activate_index] == nil then
+        local is_free = self.prohibited_spots[candidate_spot_to_activate_index] == nil and self.active_spots[candidate_spot_to_activate_index] == nil
+        if is_free and not self.reserved_spots[candidate_spot_to_activate_index] then
             log("Adding land encounter in " .. zone_name .. "[" .. tostring(candidate_spot_to_activate_index) .. "]")
             self.active_spots[candidate_spot_to_activate_index] = true
             self.spots[candidate_spot_to_activate_index] = EventSpot:newFrom(self.spots[candidate_spot_to_activate_index])
@@ -482,6 +517,17 @@ function SpotDelegate:deactivate_spot_in_zone(zone_name, spot_index)
 end
 
 
+--- Holds a spot for a tower. An encounter already active there is removed first.
+--- @param zone_name string The region key for the zone this spot belongs to.
+--- @param spot_index number The 1-based slot index for the spot.
+function SpotDelegate:reserve_spot(zone_name, spot_index)
+    if self.active_spots[spot_index] then
+        self:deactivate_spot_in_zone(zone_name, spot_index)
+    end
+    self.reserved_spots[spot_index] = true
+end
+
+
 --- Restores active and prohibited spots from a previously saved campaign state.
 --- @param zone_name string The region key for the zone being restored.
 --- @param previous_state table Flattened save state previously produced by export_state_as_a_table.
@@ -519,6 +565,7 @@ function SpotDelegate:new(zone_coordinates, active_spot_percentage)
         spots = zone_spots,
         active_spots = {},
         prohibited_spots = {},
+        reserved_spots = {},
         max_active_spots_count = active_spot_percentage * #zone_coordinates
     }
     setmetatable(t, self)
