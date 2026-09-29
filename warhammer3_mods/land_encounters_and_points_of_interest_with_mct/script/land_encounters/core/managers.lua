@@ -394,6 +394,8 @@ local IncidentManager = {}
 --- (from controllers/invasion_battle_manager.lua)
 
 local IS_NOT_PERSISTENT_LISTENER = false
+--- svr key holding the encounter ally's faction key, so the battle script calls that army in as soon as the battle starts. Mirrored in script/battle/mod.
+local ALLY_ARRIVES_NOW_SVR_KEY = "land_enc_ally_arrives_now"
 
 local InvasionBattleManager = {
     --- Main listener manager.
@@ -600,6 +602,10 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
 
                     local faction_being_declared_war_to = local_context:character():faction():name()
                     if faction_being_declared_war_to == self.event_army.faction then
+                        --- The flag stays set until BattleCompleted, so a restarted battle keeps it.
+                        if self.event_army:has_ally_reinforcements() then
+                            self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, self.event_army.reinforcing_ally_armies[1].faction)
+                        end
                         if self.event_army.intervention_type == AMBUSH_TYPE then
                             out("DEBUG - AMBUSH_TYPE called.")
                             cm:force_attack_of_opportunity(invasion_force:get_general():military_force():command_queue_index(), player_force_cqi, true)
@@ -732,6 +738,7 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
         "BattleCompleted",
         true,
         function(context)
+            self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, "")
             local found_encounter_faction = false
             local player_won_battle = false
 
