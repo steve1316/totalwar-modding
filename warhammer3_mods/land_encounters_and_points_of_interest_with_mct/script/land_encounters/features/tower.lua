@@ -276,8 +276,9 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
     end
 end
 
---- Spawns the current floor's army and starts the battle, with the delving lord attacking and no ally. A lord who is gone ends the delve
---- as lost. A floor army with no spawn point ends it without a cooldown on floor 1, and as leaving on later floors.
+--- Spawns the current floor's army and starts the battle, with the floor army attacking the delving lord. The lord defends, so declining
+--- the battle is an ordinary retreat that keeps the army (a forced attacker who backs out loses the whole army). A lord who is gone ends the
+--- delve as lost. A floor army with no spawn point ends it without a cooldown on floor 1, and as leaving on later floors.
 --- @param faction_name string The delving faction.
 function TowerEventDelegate:launch_floor(faction_name)
     local delve = self.delves[faction_name]
@@ -294,9 +295,7 @@ function TowerEventDelegate:launch_floor(faction_name)
         faction = tower.faction,
         difficulty = floor.difficulty,
         budget_multiplier = floor.budget_multiplier,
-        --- The player attacks the floor. `allow_ally` false keeps this battle type from bringing an ally.
-        intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE,
-        allow_ally = false,
+        intervention = INTERCEPTION_TYPE,
         force_identifier = "tower_force_" .. faction_name,
         invasion_identifier = "tower_invasion_" .. faction_name,
     }, general:faction():subculture())
