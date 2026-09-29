@@ -2,10 +2,12 @@ key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_campaign_payload_ui_details.loc		
 campaign_payload_ui_details_description_dummy_land_enc_smithy_leave	Leave the forge as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_unconditional_surrender	We will lose control of the smithy to the enemy faction, and its forge will drop a level.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_1	A masterwork costs [[col:yellow]]4,000[[/col]] gold. We cannot afford it yet.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_2	A masterwork costs [[col:yellow]]3,000[[/col]] gold. We cannot afford it yet.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_3	A pair of masterworks costs [[col:yellow]]6,000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_1	A masterwork costs [[col:yellow]]5,000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_2	A masterwork costs [[col:yellow]]10,000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_3	A pair of masterworks costs [[col:yellow]]15,000[[/col]] gold. We cannot afford it yet.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_upgrade_1	Improving the forge to level 2 costs [[col:yellow]]10,000[[/col]] gold. We cannot afford it yet.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_upgrade_2	Improving the forge to level 3 costs [[col:yellow]]20,000[[/col]] gold. We cannot afford it yet.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_upgrade_1	The forge improves to [[col:yellow]]level 2[[/col]]: [[col:yellow]]uncommon or rare[[/col]] free pieces, ready again [[col:yellow]]7 turns[[/col]] after each piece, and tribute every [[col:yellow]]10 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_upgrade_2	The forge improves to [[col:yellow]]level 3[[/col]]: [[col:yellow]]rare[[/col]] free pieces, ready again [[col:yellow]]5 turns[[/col]] after each piece, tribute every [[col:yellow]]5 turns[[/col]], and [[col:yellow]]two masterworks[[/col]] per commission.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_upgrade_2	The forge improves to [[col:yellow]]level 3[[/col]]: [[col:yellow]]rare[[/col]] free pieces, ready again [[col:yellow]]5 turns[[/col]] after each piece, tribute every [[col:yellow]]5 turns[[/col]], [[col:yellow]]two masterworks[[/col]] per commission, and [[col:yellow]]legendary commissions[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_legendary_3	A legendary piece costs [[col:yellow]]20,000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_no_legendary	The master blacksmith has no legendary piece our faction can wield right now. Nothing is charged.	false

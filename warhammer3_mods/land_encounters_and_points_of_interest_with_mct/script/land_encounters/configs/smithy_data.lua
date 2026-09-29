@@ -5,27 +5,29 @@ local M = {}
 --- What each forge level (index 1-3) offers. Rarities are CA's ancillary rarities ("common", "uncommon", "rare").
 --- - free_pick_rarities: the rarities of the free picks and of the tribute and AI items. Each item rolls one of them.
 --- - commission: the paid option - `count` items of `rarities` for `price` gold.
+--- - legendary_commission: an optional second paid option - one item from configs/legendary_items.lua for `price` gold.
 --- - cooldown: turns after a free pick before the next free pick.
 --- - tribute_interval: turns between tribute items for a player owner.
 --- - upgrade_price: gold to reach the next level, or nil at the top level.
 M.levels = {
     {
         free_pick_rarities = { "common", "uncommon" },
-        commission = { rarities = { "rare" }, count = 1, price = 4000 },
+        commission = { rarities = { "rare" }, count = 1, price = 5000 },
         cooldown = 10,
         tribute_interval = 15,
         upgrade_price = 10000,
     },
     {
         free_pick_rarities = { "uncommon", "rare" },
-        commission = { rarities = { "rare" }, count = 1, price = 3000 },
+        commission = { rarities = { "rare" }, count = 1, price = 10000 },
         cooldown = 7,
         tribute_interval = 10,
         upgrade_price = 20000,
     },
     {
         free_pick_rarities = { "rare" },
-        commission = { rarities = { "rare" }, count = 2, price = 6000 },
+        commission = { rarities = { "rare" }, count = 2, price = 15000 },
+        legendary_commission = { price = 20000 },
         cooldown = 5,
         tribute_interval = 5,
         upgrade_price = nil,

@@ -56,6 +56,10 @@ local PAYLOAD_TEXT_LEAVE = "dummy_land_enc_smithy_leave"
 local PAYLOAD_TEXT_CANNOT_AFFORD_COMMISSION = "dummy_land_enc_smithy_cannot_afford_commission_"
 --- Payload text prefix for an upgrade the faction cannot afford. The forge level is appended, since the text states that level's price.
 local PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE = "dummy_land_enc_smithy_cannot_afford_upgrade_"
+--- Payload text prefix for a legendary commission the faction cannot afford. The forge level is appended, since the text states the price.
+local PAYLOAD_TEXT_CANNOT_AFFORD_LEGENDARY = "dummy_land_enc_smithy_cannot_afford_legendary_"
+--- Payload text for a legendary commission when no legendary item suits the faction.
+local PAYLOAD_TEXT_NO_LEGENDARY = "dummy_land_enc_smithy_no_legendary"
 --- Payload text prefix describing the upgrade from the appended level to the next.
 local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_smithy_upgrade_"
 
@@ -286,12 +290,25 @@ function SmithyState:open_forge(faction)
     end
     add_choice(COMMISSION_CHOICE)
 
+    --- The fifth choice upgrades the forge, or at the top level commissions a legendary piece instead.
     if level.upgrade_price and treasury >= level.upgrade_price then
         payload:treasury_adjustment(-level.upgrade_price)
         payload:text_display(PAYLOAD_TEXT_UPGRADE .. self.level)
         offer.upgrade = true
+    elseif level.upgrade_price then
+        payload:text_display(PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE .. self.level)
+    elseif level.legendary_commission and treasury < level.legendary_commission.price then
+        payload:text_display(PAYLOAD_TEXT_CANNOT_AFFORD_LEGENDARY .. self.level)
+    elseif level.legendary_commission then
+        local legendary = item_pool.pick_legendary_item(faction_key)
+        if legendary then
+            payload:treasury_adjustment(-level.legendary_commission.price)
+            payload:faction_ancillary_gain(faction, legendary)
+        else
+            payload:text_display(PAYLOAD_TEXT_NO_LEGENDARY)
+        end
     else
-        payload:text_display(level.upgrade_price and PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE .. self.level or PAYLOAD_TEXT_LEAVE)
+        payload:text_display(PAYLOAD_TEXT_LEAVE)
     end
     add_choice(UPGRADE_CHOICE)
 
