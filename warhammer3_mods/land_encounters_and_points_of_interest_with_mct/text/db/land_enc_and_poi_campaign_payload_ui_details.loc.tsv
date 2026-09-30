@@ -42,10 +42,3 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_3	Fig
 campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_4	Fight [[col:yellow]]floor 4 of 5[[/col]] (medium).	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_5	Fight the [[col:yellow]]Master of the Tower[[/col]] on floor 5 of 5 (hard).	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_claim	Claim everything the tower held.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_haul_units_0	Sworn units waiting: [[col:yellow]]none[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_haul_units_1	Sworn units waiting: [[col:yellow]]1 unit[[/col]], who join the army that leaves with the haul.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_haul_units_2	Sworn units waiting: [[col:yellow]]2 units[[/col]], who join the army that leaves with the haul.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_haul_units_3	Sworn units waiting: [[col:yellow]]3 units[[/col]], who join the army that leaves with the haul.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_haul_units_4	Sworn units waiting: [[col:yellow]]4 units[[/col]], who join the army that leaves with the haul.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_haul_units_5	Sworn units waiting: [[col:yellow]]5 units[[/col]], who join the army that leaves with the haul.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_haul_units_6	Sworn units waiting: [[col:yellow]]6 units[[/col]], who join the army that leaves with the haul.	false

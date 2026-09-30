@@ -38,12 +38,6 @@ M.legendary_fallback_rarity = "rare"
 --- Gold paid for each sworn unit that does not fit in the delving army.
 M.unit_overflow_gold = 500
 
---- Most units an army can hold, the lord included.
-M.army_unit_cap = 20
-
---- Highest sworn-unit count with its own payload text row on the payout choices.
-M.summary_units_max = 6
-
 --- Longest cooldown with its own message (the MCT slider maximum). Longer cooldowns show this message.
 M.longest_cooldown_message = 30
 

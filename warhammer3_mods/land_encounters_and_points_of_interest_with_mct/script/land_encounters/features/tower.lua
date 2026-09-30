@@ -106,9 +106,10 @@ local function faction_picker(taken)
     end
 end
 
---- Launches a custom dilemma. Each choice shows text lines and can pay gold and items when chosen.
+--- Launches a custom dilemma. Each choice shows text lines and can pay gold, items and units when chosen.
 --- @param key string The dilemma key.
---- @param choices table An array of { key = "FIRST", lines = { `dummy_` keys }, gold = number or nil, items = { ancillary keys } or nil }.
+--- @param choices table An array of { key = "FIRST", lines = { `dummy_` keys }, gold = number or nil, items = { ancillary keys } or nil,
+--- units = { force = military force, keys = { unit keys } } or nil }. Units show as cards and join that army.
 --- @param faction_name string The faction to show the dilemma to.
 local function launch_dilemma(key, choices, faction_name)
     local faction = cm:get_faction(faction_name)
@@ -120,6 +121,17 @@ local function launch_dilemma(key, choices, faction_name)
         end
         for _, item in ipairs(choice.items or {}) do
             payload:faction_ancillary_gain(faction, item)
+        end
+        if choice.units then
+            --- One card per unit key, with the number of copies, in the order the units were sworn.
+            local counts, order = {}, {}
+            for _, unit in ipairs(choice.units.keys) do
+                if not counts[unit] then order[#order + 1] = unit end
+                counts[unit] = (counts[unit] or 0) + 1
+            end
+            for _, unit in ipairs(order) do
+                payload:add_unit(choice.units.force, unit, counts[unit], 0)
+            end
         end
         for _, line in ipairs(choice.lines or {}) do
             payload:text_display(line)
@@ -185,14 +197,26 @@ local function pick_floor_items(faction_name, floor)
     return items
 end
 
---- Builds the choice that pays the whole haul: its gold and items as the payload, plus the sworn-unit line.
+--- Builds the choice that pays the whole haul. Its gold and items are the payload, and each sworn unit that fits under the delving army's unit
+--- limit shows as a card and joins the army. Each unit that does not fit, or every unit when the lord is gone, adds
+--- `tower_data.unit_overflow_gold` to the gold.
 --- @param choice_key string The choice key, e.g. "SECOND".
 --- @param line string The `dummy_` key describing the choice.
 --- @param haul table The delve's haul.
+--- @param general_cqi number The delving lord's command queue index.
 --- @returns table A choice record for `launch_dilemma`.
-local function payout_choice(choice_key, line, haul)
-    local units_line = "dummy_land_enc_tower_haul_units_" .. math.min(#haul.units, tower_data.summary_units_max)
-    return { key = choice_key, gold = haul.gold, items = haul.items, lines = { line, units_line } }
+local function payout_choice(choice_key, line, haul, general_cqi)
+    local general = cm:get_character_by_cqi(general_cqi)
+    local force, free = nil, 0
+    if general and not general:is_null_interface() and general:has_military_force() then
+        force = general:military_force()
+        free = math.max(0, force:unit_count_limit() - force:unit_list():num_items())
+    end
+    local fitting = {}
+    for i = 1, math.min(free, #haul.units) do fitting[i] = haul.units[i] end
+    local overflow_gold = (#haul.units - #fitting) * tower_data.unit_overflow_gold
+    local units = #fitting > 0 and { force = force, keys = fitting } or nil
+    return { key = choice_key, gold = haul.gold + overflow_gold, items = haul.items, units = units, lines = { line } }
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,7 +352,7 @@ function TowerEventDelegate:trigger_event(area_and_character_info, spot_info)
 end
 
 --- Applies a tower dilemma choice: enter floor 1 or walk away, after a win go deeper or leave, and after the last floor claim the haul. The
---- Leave and claim payloads already paid the gold and items, so only the sworn units are granted here.
+--- Leave and claim payloads pay the whole haul themselves, so choosing them only ends the delve.
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
     local key = dilemma_choice_and_faction_info:dilemma()
@@ -348,13 +372,10 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             delve.floor = delve.floor + 1
             self:launch_floor(faction_name)
         else
-            self:grant_sworn_units(faction_name, delve)
             self:end_delve(faction_name, "tower_left")
         end
     elseif key == EVENT_CLAIM then
-        local delve = self.delves[faction_name]
-        if delve == nil then return end
-        self:grant_sworn_units(faction_name, delve)
+        if self.delves[faction_name] == nil then return end
         self:end_delve(faction_name, "tower_cleared")
     end
 end
@@ -433,35 +454,13 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     end
     self:add_floor_rewards(faction_name, delve)
     if delve.floor >= #tower_data.floors then
-        launch_dilemma(EVENT_CLAIM, { payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul) }, faction_name)
+        launch_dilemma(EVENT_CLAIM, { payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul, delve.general_cqi) }, faction_name)
         return
     end
     launch_dilemma(EVENT_DEEPER, {
         { key = "FIRST", lines = { "dummy_land_enc_tower_descend_floor_" .. (delve.floor + 1) } },
-        payout_choice("SECOND", "dummy_land_enc_tower_leave", delve.haul),
+        payout_choice("SECOND", "dummy_land_enc_tower_leave", delve.haul, delve.general_cqi),
     }, faction_name)
-end
-
---- Grants the haul's sworn units to the delving lord's army, up to its free slots. Each unit that does not fit, or every unit when the lord is
---- gone, pays `tower_data.unit_overflow_gold` instead.
---- @param faction_name string The delving faction.
---- @param delve table The delve record.
-function TowerEventDelegate:grant_sworn_units(faction_name, delve)
-    local units = delve.haul.units
-    local granted = 0
-    local general = cm:get_character_by_cqi(delve.general_cqi)
-    if general and not general:is_null_interface() and general:has_military_force() then
-        local free = tower_data.army_unit_cap - general:military_force():unit_list():num_items()
-        local lookup = cm:char_lookup_str(general)
-        for i = 1, math.min(free, #units) do
-            cm:grant_unit_to_character(lookup, units[i])
-            granted = granted + 1
-        end
-    end
-    local overflow = #units - granted
-    if overflow > 0 then
-        cm:treasury_mod(faction_name, overflow * tower_data.unit_overflow_gold)
-    end
 end
 
 --- Ends a delve, puts its tower on cooldown and tells the player how it ended.
