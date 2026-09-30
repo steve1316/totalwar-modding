@@ -49,6 +49,28 @@ M.offers = {
     { key = "tithe", stay = true, share = 0.1, multiplier = 2, min_treasury = 1000 },
     --- Adds `gold` to the haul now, but the next floor's army is bigger.
     { key = "cursed_idol", gold = 1500, next_budget = 1.15 },
+    --- The next floor's gold doubles when the army loses under `max_loss` strength points on it, and is lost otherwise.
+    { key = "double_or_nothing", max_loss = 25 },
+    --- Puts `effect_bundle` on the army for the rest of the delve. One haul item is lost after every floor won from then on.
+    { key = "hellforge_pact", effect_bundle = "land_enc_effect_tower_hellforge" },
+    --- The next floor is fought and paid as the Master's floor. Not offered when the next floor is the Master's.
+    { key = "blood_moon" },
+    --- A random blessing or curse, shown when the dilemma reopens: free war rites, `gold` more in the haul, a `next_budget` bigger next
+    --- army, or every unit losing `bleed` strength points.
+    { key = "roll_the_bones", stay = true, gold = 1000, next_budget = 1.2, bleed = 10 },
+    --- Skips the next floor for `reward_share` of its gold and half its items, and the floor after becomes hard. Not offered when the next
+    --- floor is the Master's.
+    { key = "tempt_fate", skips = 1, reward_share = 0.5 },
+    --- Redraws the dilemma's offers.
+    { key = "reroll", cost = 300, stay = true, repeatable = true },
+    --- Skips the next floor with no rewards from it. Not offered when the next floor is the Master's.
+    { key = "secret_stair", cost = 1500, skips = 1 },
+    --- Fights `tower_data.hidden_floor` next, a bonus floor that does not count toward the climb.
+    { key = "hidden_floor", bonus_floor = true },
+    --- The next floor's army is one difficulty lower and pays `reward_share` of its gold. Not offered when it is already easy.
+    { key = "soft_landing", reward_share = 0.5 },
+    --- This tower remembers the faction: its later delves here start on floor 2 with floor 1's base gold in the haul.
+    { key = "echoes_of_the_climb" },
 }
 
 return M

@@ -7,3 +7,18 @@ campaign_localised_strings_string_land_enc_tower_result_tower_vault	[[col:yellow
 campaign_localised_strings_string_land_enc_tower_result_tower_dividends	[[col:yellow]]Tower dividends:[[/col]] [[col:green]]+%s gold[[/col]] will reach your treasury each turn for the next %s turns.	false
 campaign_localised_strings_string_land_enc_tower_result_strip_the_dead	[[col:yellow]]Strip the dead:[[/col]] [[col:green]]+%s gold[[/col]] joins the haul. The haul now holds [[col:yellow]]%s gold[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_tithe	[[col:yellow]]Tithe:[[/col]] %s gold from your treasury became [[col:green]]%s gold[[/col]] in the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_rites	[[col:yellow]]Roll the bones:[[/col]] [[col:green]]war rites![[/col]] The army fights the next floor with +10 melee attack, melee defence and leadership.	false
+campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_gold	[[col:yellow]]Roll the bones:[[/col]] [[col:green]]+%s gold[[/col]] joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_foe	[[col:yellow]]Roll the bones:[[/col]] [[col:red]]the next army is 20% stronger.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_bleed	[[col:yellow]]Roll the bones:[[/col]] [[col:red]]every unit loses %s strength.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_reroll	[[col:yellow]]Reroll:[[/col]] the offers were redrawn.	false
+campaign_localised_strings_string_land_enc_tower_climb_floor	Floor %d (%s)	false
+campaign_localised_strings_string_land_enc_tower_climb_master	Floor %d (%s), the Master of the Tower	false
+campaign_localised_strings_string_land_enc_tower_climb_hidden	Hidden floor (%s)	false
+campaign_localised_strings_string_land_enc_tower_climb_cleared	- %s: [[col:green]]cleared[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_climb_skipped	- %s: skipped	false
+campaign_localised_strings_string_land_enc_tower_climb_next	- [[col:yellow]]%s: next[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_climb_ahead	- %s	false
+campaign_localised_strings_string_land_enc_tower_climb_difficulty_easy	easy	false
+campaign_localised_strings_string_land_enc_tower_climb_difficulty_medium	medium	false
+campaign_localised_strings_string_land_enc_tower_climb_difficulty_hard	hard	false

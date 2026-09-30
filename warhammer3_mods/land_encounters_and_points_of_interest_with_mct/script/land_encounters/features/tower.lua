@@ -55,6 +55,8 @@ local TowerState = {
     faction = "",
     --- Turns left before the tower can be entered again. 0 means open.
     cooldown = 0,
+    --- Faction key -> true for factions whose delves here start on floor 2 (an Echoes of the climb offer).
+    echoes = {},
 }
 
 --- Builds a tower record.
@@ -63,9 +65,10 @@ local TowerState = {
 --- @param coordinates table The tower's {x, y} position.
 --- @param faction string Shorthand of the faction holding the tower.
 --- @param cooldown number Turns left before the tower opens.
+--- @param echoes table|nil Faction key -> true for factions the tower remembers.
 --- @returns TowerState The new tower.
-function TowerState:new(zone_name, spot_index, coordinates, faction, cooldown)
-    local t = { zone_name = zone_name, spot_index = spot_index, coordinates = coordinates, faction = faction, cooldown = cooldown or 0 }
+function TowerState:new(zone_name, spot_index, coordinates, faction, cooldown, echoes)
+    local t = { zone_name = zone_name, spot_index = spot_index, coordinates = coordinates, faction = faction, cooldown = cooldown or 0, echoes = echoes or {} }
     setmetatable(t, self)
     self.__index = self
     return t
@@ -74,7 +77,10 @@ end
 --- Exports the tower as a plain table for the save file.
 --- @returns table The tower's saved fields.
 function TowerState:export()
-    return { zone_name = self.zone_name, spot_index = self.spot_index, coordinates = self.coordinates, faction = self.faction, cooldown = self.cooldown }
+    return {
+        zone_name = self.zone_name, spot_index = self.spot_index, coordinates = self.coordinates, faction = self.faction, cooldown = self.cooldown,
+        echoes = self.echoes,
+    }
 end
 
 --- Shows a located event feed message at the tower.
@@ -244,10 +250,11 @@ local TowerEventDelegate = {
     --- Every tower on the map, one per zone, in zone-name order.
     towers = {},
     --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before,
-    --- floor_units, offers, taken, results, war_rites, in_battle }. `haul.units` are sworn units waiting for room and `haul.joined` counts
-    --- those already in the army. `offers` are the offer keys still on the current go-deeper dilemma, `taken` marks offers taken this delve and
-    --- `results` holds this floor's stay-offer result lines. `war_rites` is true while the delving army carries the war rites bundle, and
-    --- `in_battle` while a floor battle waits for its result. A delve starts and ends within one turn.
+    --- floor_units, offers, taken, results, climb, war_rites, in_battle }. `haul.units` are sworn units waiting for room and `haul.joined` counts
+    --- those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers taken this delve,
+    --- `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }. `war_rites`
+    --- is true while the delving army carries the war rites bundle, and `in_battle` while a floor battle waits for its result. A delve starts
+    --- and ends within one turn.
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},
@@ -281,7 +288,7 @@ function TowerEventDelegate:initialize(zones, saved)
         local spots = zone_by_name[name].spot_delegate.spots
         local record = saved_by_zone[name]
         if record and spots[record.spot_index] then
-            self.towers[#self.towers + 1] = TowerState:new(name, record.spot_index, spots[record.spot_index].coordinates, record.faction, record.cooldown)
+            self.towers[#self.towers + 1] = TowerState:new(name, record.spot_index, spots[record.spot_index].coordinates, record.faction, record.cooldown, record.echoes)
             taken[record.faction] = true
         elseif #spots > 0 then
             pending[#pending + 1] = name
@@ -380,8 +387,12 @@ function TowerEventDelegate:trigger_event(area_and_character_info, spot_info)
         return
     end
     self.pending_dilemma_by_faction[faction_name] = { zone_name = tower.zone_name, general_cqi = character:command_queue_index() }
+    local enter_lines = { "dummy_land_enc_tower_held_by_" .. tower.faction, "dummy_land_enc_tower_descend_floor_1" }
+    if tower.echoes[faction_name] then
+        enter_lines = { "dummy_land_enc_tower_held_by_" .. tower.faction, "dummy_land_enc_tower_echoes", "dummy_land_enc_tower_descend_floor_2" }
+    end
     launch_dilemma(EVENT_ENTER, {
-        { key = "FIRST", lines = { "dummy_land_enc_tower_held_by_" .. tower.faction, "dummy_land_enc_tower_descend_floor_1" } },
+        { key = "FIRST", lines = enter_lines },
         { key = "SECOND", lines = { "dummy_land_enc_tower_walk_away" } },
     }, faction_name)
 end
@@ -399,9 +410,12 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
         local pending = self.pending_dilemma_by_faction[faction_name]
         self.pending_dilemma_by_faction[faction_name] = nil
         if pending == nil or choice ~= FIRST_OPTION then return end
+        --- A tower that remembers this faction starts it on floor 2, with floor 1's base gold already in the haul and floor 1 skipped.
+        local echoed = self:tower_in_zone(pending.zone_name).echoes[faction_name]
         self.delves[faction_name] = {
-            zone_name = pending.zone_name, general_cqi = pending.general_cqi, floor = 1,
-            haul = { gold = 0, items = {}, units = {}, joined = 0 }, offers = {}, taken = {}, results = {},
+            zone_name = pending.zone_name, general_cqi = pending.general_cqi, floor = echoed and 2 or 1,
+            haul = { gold = echoed and tower_data.floors[1].gold or 0, items = {}, units = {}, joined = 0 }, offers = {}, taken = {}, results = {},
+            climb = echoed and { { floor = 1, difficulty = tower_data.floors[1].difficulty, state = "skipped" } } or {},
         }
         self:launch_floor(faction_name)
     elseif key == EVENT_DEEPER or key:sub(1, #EVENT_DEEPER + 7) == EVENT_DEEPER .. "_floor_" then
@@ -417,17 +431,21 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             self:end_delve(faction_name, "tower_left")
             return
         elseif choice_key ~= "FIRST" then
-            local offer, result = tower_offers.take(choice_key, delve, faction_name, self.dividends)
+            local offer, result = tower_offers.take(choice_key, delve, faction_name, { dividends = self.dividends, tower = self:tower_in_zone(delve.zone_name) })
             if offer == nil then return end
             if offer.stay then
                 delve.results = delve.results or {}
                 if result then delve.results[#delve.results + 1] = result end
-                tower_offers.show_results(delve)
                 self:launch_deeper(faction_name)
                 return
             end
         end
-        delve.floor = delve.floor + 1
+        --- A bonus floor (Hidden floor) is fought without moving up. Skips have already moved the floor on.
+        if delve.bonus_floor then
+            delve.bonus_floor = nil
+        else
+            delve.floor = delve.floor + 1
+        end
         self:launch_floor(faction_name)
     elseif key == EVENT_CLAIM then
         if self.delves[faction_name] == nil then return end
@@ -449,12 +467,14 @@ function TowerEventDelegate:launch_floor(faction_name)
     end
 
     delve.strength_before = tower_army.army_strength(delve.general_cqi)
-    local floor = tower_data.floors[delve.floor]
+    --- Offers can replace this floor's record (Blood moon, Soft landing, Tempt fate, Hidden floor) and its army's faction for one floor.
+    local next_floor = delve.next_floor or {}
+    local floor = next_floor.record or tower_data.floors[delve.floor]
     local budget = tower_data.budget_by_difficulty[floor.difficulty]
-    local budget_multiplier = delve.next_floor and delve.next_floor.budget or 1
+    local budget_multiplier = next_floor.budget or 1
     local army = Army:new_from_event({
         dilemma = "tower",
-        faction = tower.faction,
+        faction = next_floor.faction or tower.faction,
         difficulty = floor.difficulty,
         budget_range = { math.floor(budget[1] * budget_multiplier + 0.5), math.floor(budget[2] * budget_multiplier + 0.5) },
         intervention = INTERCEPTION_TYPE,
@@ -500,14 +520,24 @@ end
 --- @param faction_name string The delving faction.
 --- @param delve table The delve record.
 function TowerEventDelegate:add_floor_rewards(faction_name, delve)
-    local floor = tower_data.floors[delve.floor]
+    local next_floor = delve.next_floor or {}
+    delve.next_floor = nil
+    local floor = next_floor.record or tower_data.floors[delve.floor]
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0
     local step = tower_data.gold_step
-    local next_floor = delve.next_floor or {}
-    delve.next_floor = nil
-    delve.haul.gold = delve.haul.gold + math.floor(floor.gold * performance_multiplier(loss) * (next_floor.gold or 1) / step + 0.5) * step
+    local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1)
+    if next_floor.double_or_nothing then
+        gold_multiplier = gold_multiplier * (loss < next_floor.double_or_nothing and 2 or 0)
+    end
+    delve.haul.gold = delve.haul.gold + math.floor(floor.gold * gold_multiplier / step + 0.5) * step
+    delve.climb = delve.climb or {}
+    delve.climb[#delve.climb + 1] = { floor = delve.floor, difficulty = floor.difficulty, state = "cleared", bonus = next_floor.bonus }
     add_items(delve.haul, pick_floor_items(faction_name, floor, next_floor.rarity_shift))
+    --- A Hellforge pact costs one haul item for every floor won after it.
+    if delve.hellforge and #delve.haul.items > 0 then
+        table.remove(delve.haul.items, random_number(#delve.haul.items))
+    end
     local candidates = delve.floor_units or {}
     for _ = 1, math.min(floor.sworn_units, #candidates) do
         delve.haul.units[#delve.haul.units + 1] = table.remove(candidates, random_number(#candidates))
@@ -546,16 +576,18 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         launch_dilemma(EVENT_CLAIM, { payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul) }, faction_name)
         return
     end
-    delve.offers = tower_offers.draw(delve, faction_name)
+    delve.offers = tower_offers.draw(delve, faction_name, self:tower_in_zone(delve.zone_name))
     delve.results = {}
-    tower_offers.show_results(delve)
     self:launch_deeper(faction_name)
 end
 
---- Opens the current floor's go-deeper dilemma: Climb, the drawn offers still on it, then Leave with the haul.
+--- Opens the current floor's go-deeper dilemma: Climb, the drawn offers, then Leave with the haul. Its description shows this floor's
+--- stay-offer results and the climb so far.
 --- @param faction_name string The delving faction.
 function TowerEventDelegate:launch_deeper(faction_name)
     local delve = self.delves[faction_name]
+    tower_offers.show_results(delve)
+    tower_offers.show_climb(delve)
     local next_floor = delve.floor + 1
     local choices = { { key = "FIRST", lines = { "dummy_land_enc_tower_descend_floor_" .. next_floor } } }
     for _, offer_key in ipairs(delve.offers) do
@@ -565,11 +597,18 @@ function TowerEventDelegate:launch_deeper(faction_name)
     launch_dilemma(EVENT_DEEPER .. "_floor_" .. delve.floor, choices, faction_name)
 end
 
+--- Greys out the taken offers on a player's open go-deeper dilemma. UI only.
+--- @param faction_name string The local player's faction.
+function TowerEventDelegate:grey_out_taken_offers(faction_name)
+    local delve = self.delves[faction_name]
+    if delve and not delve.in_battle then tower_offers.grey_out_taken(delve, EVENT_DEEPER .. "_floor_" .. delve.floor) end
+end
+
 --- Ends a delve, takes off any one-battle effects, puts its tower on cooldown and tells the player how it ended.
 --- @param faction_name string The delving faction.
 --- @param outcome string The message suffix: "tower_left", "tower_lost" or "tower_cleared".
 function TowerEventDelegate:end_delve(faction_name, outcome)
-    tower_offers.end_battle_effects(self.delves[faction_name])
+    tower_offers.end_delve_effects(self.delves[faction_name])
     local tower = self:tower_in_zone(self.delves[faction_name].zone_name)
     self.delves[faction_name] = nil
     tower.cooldown = get_mct_settings().tower_cooldown

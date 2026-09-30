@@ -21,6 +21,12 @@ M.floors = {
     { difficulty = "hard", gold = 5000, legendary_count = 3, sworn_units = 2 },
 }
 
+--- The bonus floor a Hidden floor offer inserts. It is fought against another enabled faction and does not count toward the five floors.
+M.hidden_floor = { difficulty = "medium", gold = 3000, legendary_count = 1, sworn_units = 2 }
+
+--- Difficulties from easiest to hardest, for offers that move a floor up or down one step.
+M.difficulty_order = { "easy", "medium", "hard" }
+
 --- Gold multiplier by the share of the delving army's strength lost on the floor, checked in order. `max_loss` is in strength points (0-100).
 M.performance = {
     { max_loss = 10, multiplier = 1.5 },

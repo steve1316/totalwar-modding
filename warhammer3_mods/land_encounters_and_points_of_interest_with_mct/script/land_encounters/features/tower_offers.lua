@@ -22,6 +22,14 @@ local RETURNS_HERE_LINE = "dummy_land_enc_tower_returns_here"
 local RESULT_CONTEXT_KEY = "land_enc_tower_result"
 --- Prefix of the loc keys holding each stay offer's result line. The rest is the outcome, e.g. "loaded_dice_won".
 local RESULT_LOC_PREFIX = "campaign_localised_strings_string_land_enc_tower_result_"
+--- Payload line a taken stay offer shows in its slot for the rest of the floor.
+local TAKEN_LINE = "dummy_land_enc_tower_taken"
+--- Script context value holding the climb list in every per-floor go-deeper description.
+local CLIMB_CONTEXT_KEY = "land_enc_tower_climb"
+--- Prefix of the loc keys holding the climb list templates. The rest is the template, e.g. "cleared" or "difficulty_hard".
+local CLIMB_LOC_PREFIX = "campaign_localised_strings_string_land_enc_tower_climb_"
+--- Prefix of each choice row's id in the dilemma panel's list. The dilemma key and the choice key follow.
+local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
 local M = {
     --- Choice key of Leave on the per-floor go-deeper dilemmas.
@@ -79,11 +87,47 @@ local function heal(offer, ctx)
     tower_army.heal_army(ctx.delve.general_cqi, offer.heal_share)
 end
 
---- Records the offer's next-floor changes (`next_budget`, `next_gold`, `rarity_shift`) on the delve.
---- @param offer table The offer record.
+--- Adds changes to the next floor on the delve. Budget and gold multipliers stack, and any other field replaces what was there: `record`
+--- (a floor record fought instead), `faction` (the army's faction), `rarity_shift`, `double_or_nothing` (the loss limit) and `bonus` (a hidden floor).
 --- @param delve table The delve record.
-local function change_next_floor(offer, delve)
-    delve.next_floor = { budget = offer.next_budget, gold = offer.next_gold, rarity_shift = offer.rarity_shift }
+--- @param changes table The changes: { budget, gold, record, faction, rarity_shift, double_or_nothing, bonus }.
+local function change_next_floor(delve, changes)
+    local next_floor = delve.next_floor or {}
+    for key, value in pairs(changes) do
+        if key == "budget" or key == "gold" then
+            next_floor[key] = (next_floor[key] or 1) * value
+        else
+            next_floor[key] = value
+        end
+    end
+    delve.next_floor = next_floor
+end
+
+--- Copies a floor record, so an offer can change one floor without touching the config.
+--- @param record table A floor record from `tower_data.floors`.
+--- @returns table The copy.
+local function copy_floor(record)
+    local copy = {}
+    for key, value in pairs(record) do copy[key] = value end
+    return copy
+end
+
+--- True when a floor follows the next one, so the next floor is not the Master's.
+--- @param ctx table The offer context.
+--- @returns boolean True when the next floor is not the last.
+local function next_is_not_master(ctx)
+    return ctx.delve.floor + 1 < #tower_data.floors
+end
+
+--- Puts a bundle on the delving army until removed.
+--- @param delve table The delve record.
+--- @param bundle string The effect bundle key.
+--- @returns boolean True when the army was found.
+local function apply_army_bundle(delve, bundle)
+    local force = tower_army.delving_force(delve.general_cqi)
+    if not force then return false end
+    cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+    return true
 end
 
 --- Adds an item to the haul unless it already holds it.
@@ -94,6 +138,44 @@ local function add_item(haul, item)
         if held == item then return end
     end
     haul.items[#haul.items + 1] = item
+end
+
+--- True when an offer on the current dilemma was already taken there, so its slot only says so. A repeatable offer is never used up.
+--- @param offer table The offer record.
+--- @param delve table The delve record.
+--- @returns boolean True when the offer is used up.
+local function spent(offer, delve)
+    return delve.taken[offer.key] and not offer.repeatable
+end
+
+--- Skips floors past the next one, marking each as skipped in the climb list.
+--- @param delve table The delve record.
+--- @param count number How many floors to skip.
+local function skip_floors(delve, count)
+    delve.climb = delve.climb or {}
+    for _ = 1, count do
+        delve.floor = delve.floor + 1
+        delve.climb[#delve.climb + 1] = { floor = delve.floor, difficulty = tower_data.floors[delve.floor].difficulty, state = "skipped" }
+    end
+end
+
+--- Reads a climb list template.
+--- @param key string The template, e.g. "cleared".
+--- @returns string The template text.
+local function climb_text(key)
+    return common.get_localised_string(CLIMB_LOC_PREFIX .. key)
+end
+
+--- Names a floor for the climb list, e.g. "Floor 2 (medium)", with the Master's and the hidden floor named as such.
+--- @param floor number The floor number.
+--- @param difficulty string The difficulty it was or will be fought at.
+--- @param bonus boolean|nil True for a hidden floor.
+--- @returns string The floor's name.
+local function floor_name(floor, difficulty, bonus)
+    local shown = climb_text("difficulty_" .. difficulty)
+    if shown == "" then shown = difficulty end
+    if bonus then return string.format(climb_text("hidden"), shown) end
+    return string.format(climb_text(floor == #tower_data.floors and "master" or "floor"), floor, shown)
 end
 
 --- Reads the faction's treasury.
@@ -144,7 +226,7 @@ local HANDLERS = {
         eligible = army_damaged,
         apply = function(offer, ctx)
             heal(offer, ctx)
-            change_next_floor(offer, ctx.delve)
+            change_next_floor(ctx.delve, { budget = offer.next_budget })
         end,
     },
     reforge_the_fallen = {
@@ -164,10 +246,7 @@ local HANDLERS = {
     },
     war_rites = {
         apply = function(offer, ctx)
-            local force = tower_army.delving_force(ctx.delve.general_cqi)
-            if not force then return end
-            cm:apply_effect_bundle_to_force(offer.effect_bundle, force:command_queue_index(), 0)
-            ctx.delve.war_rites = true
+            if apply_army_bundle(ctx.delve, offer.effect_bundle) then ctx.delve.war_rites = true end
         end,
     },
     loaded_dice = {
@@ -210,9 +289,9 @@ local HANDLERS = {
             local next_floor = tower_data.floors[ctx.delve.floor + 1]
             return next_floor ~= nil and next_floor.item_rarities ~= nil
         end,
-        apply = function(_, ctx) ctx.delve.next_floor = { rarity_shift = 1 } end,
+        apply = function(_, ctx) change_next_floor(ctx.delve, { rarity_shift = 1 }) end,
     },
-    greedy_climb = { apply = function(offer, ctx) change_next_floor(offer, ctx.delve) end },
+    greedy_climb = { apply = function(offer, ctx) change_next_floor(ctx.delve, { budget = offer.next_budget, gold = offer.next_gold }) end },
     tower_dividends = {
         apply = function(offer, ctx)
             ctx.dividends[#ctx.dividends + 1] = { faction = ctx.faction_name, amount = offer.per_turn, turns = offer.turns }
@@ -240,7 +319,94 @@ local HANDLERS = {
     cursed_idol = {
         apply = function(offer, ctx)
             ctx.delve.haul.gold = ctx.delve.haul.gold + offer.gold
-            change_next_floor(offer, ctx.delve)
+            change_next_floor(ctx.delve, { budget = offer.next_budget })
+        end,
+    },
+    double_or_nothing = { apply = function(offer, ctx) change_next_floor(ctx.delve, { double_or_nothing = offer.max_loss }) end },
+    hellforge_pact = {
+        apply = function(offer, ctx)
+            if apply_army_bundle(ctx.delve, offer.effect_bundle) then ctx.delve.hellforge = true end
+        end,
+    },
+    blood_moon = {
+        eligible = next_is_not_master,
+        apply = function(_, ctx) change_next_floor(ctx.delve, { record = tower_data.floors[#tower_data.floors] }) end,
+    },
+    roll_the_bones = {
+        apply = function(offer, ctx)
+            local roll = random_number(4)
+            if roll == 1 then
+                if apply_army_bundle(ctx.delve, find("war_rites").effect_bundle) then ctx.delve.war_rites = true end
+                return "roll_the_bones_rites"
+            elseif roll == 2 then
+                ctx.delve.haul.gold = ctx.delve.haul.gold + offer.gold
+                return "roll_the_bones_gold", { gold_text(offer.gold) }
+            elseif roll == 3 then
+                change_next_floor(ctx.delve, { budget = offer.next_budget })
+                return "roll_the_bones_foe"
+            end
+            for _, entry in ipairs(tower_army.unit_strengths(ctx.delve.general_cqi)) do
+                tower_army.set_strength(entry.unit, entry.strength - offer.bleed)
+            end
+            return "roll_the_bones_bleed", { offer.bleed }
+        end,
+    },
+    tempt_fate = {
+        eligible = next_is_not_master,
+        apply = function(offer, ctx)
+            local delve = ctx.delve
+            local skipped = tower_data.floors[delve.floor + 1]
+            delve.haul.gold = delve.haul.gold + round_gold(skipped.gold * offer.reward_share)
+            for _, item in ipairs(item_pool.pick_items(ctx.faction_name, skipped.item_rarities, math.floor(skipped.item_count * offer.reward_share))) do
+                add_item(delve.haul, item)
+            end
+            skip_floors(delve, offer.skips)
+            local after = copy_floor(tower_data.floors[delve.floor + 1])
+            after.difficulty = tower_data.difficulty_order[#tower_data.difficulty_order]
+            change_next_floor(delve, { record = after })
+        end,
+    },
+    reroll = {
+        apply = function(_, ctx)
+            ctx.delve.offers = M.draw(ctx.delve, ctx.faction_name, ctx.tower)
+            return "reroll"
+        end,
+    },
+    secret_stair = {
+        eligible = next_is_not_master,
+        apply = function(offer, ctx) skip_floors(ctx.delve, offer.skips) end,
+    },
+    hidden_floor = {
+        apply = function(_, ctx)
+            --- A few tries at a faction other than the tower's. With a single enabled faction the bonus floor uses it too.
+            local faction = get_random_faction()
+            for _ = 1, 5 do
+                if not ctx.tower or faction ~= ctx.tower.faction then break end
+                faction = get_random_faction()
+            end
+            change_next_floor(ctx.delve, { record = tower_data.hidden_floor, faction = faction, bonus = true })
+            ctx.delve.bonus_floor = true
+        end,
+    },
+    soft_landing = {
+        eligible = function(ctx)
+            local next_floor = tower_data.floors[ctx.delve.floor + 1]
+            return next_floor ~= nil and next_floor.difficulty ~= tower_data.difficulty_order[1]
+        end,
+        apply = function(offer, ctx)
+            local record = copy_floor(tower_data.floors[ctx.delve.floor + 1])
+            for i, difficulty in ipairs(tower_data.difficulty_order) do
+                if difficulty == record.difficulty then record.difficulty = tower_data.difficulty_order[math.max(1, i - 1)] break end
+            end
+            record.gold = record.gold * offer.reward_share
+            change_next_floor(ctx.delve, { record = record })
+        end,
+    },
+    echoes_of_the_climb = {
+        eligible = function(ctx) return ctx.tower ~= nil and not (ctx.tower.echoes or {})[ctx.faction_name] end,
+        apply = function(_, ctx)
+            ctx.tower.echoes = ctx.tower.echoes or {}
+            ctx.tower.echoes[ctx.faction_name] = true
         end,
     },
 }
@@ -269,10 +435,11 @@ end
 --- Draws up to `offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones.
 --- @param delve table The delve record.
 --- @param faction_name string The delving faction.
+--- @param tower TowerState|nil The delve's tower. Offers about the tower itself are not drawn without it.
 --- @returns table Offer keys in popup order.
-function M.draw(delve, faction_name)
+function M.draw(delve, faction_name, tower)
     delve.taken = delve.taken or {}
-    local ctx = { delve = delve, faction_name = faction_name }
+    local ctx = { delve = delve, faction_name = faction_name, tower = tower }
     local pool = {}
     for _, offer in ipairs(offers_data.offers) do
         if eligible(offer, ctx) then pool[#pool + 1] = offer.key end
@@ -288,41 +455,50 @@ function M.draw(delve, faction_name)
     return keys
 end
 
---- Builds an offer's go-deeper choice: its line (or its not-enough-gold line when the haul cannot pay), then where it leads.
+--- Builds an offer's go-deeper choice: its line (or its not-enough-gold line when the haul cannot pay), then where it leads. A skip leads
+--- past the next floor, and a bonus floor's own line already says where it leads. A stay offer taken on this floor only says it was taken.
 --- @param offer_key string The offer key.
 --- @param delve table The delve record.
 --- @param next_floor number The floor a climbing offer leads to.
 --- @returns table A choice record for `launch_dilemma`.
 function M.choice(offer_key, delve, next_floor)
     local offer = find(offer_key)
+    if spent(offer, delve) then return { key = M.choice_key(offer), lines = { TAKEN_LINE } } end
     local line = LINE_PREFIX .. offer.key
     if offer.cost and delve.haul.gold < offer.cost then line = line .. "_unaffordable" end
-    local after = offer.stay and RETURNS_HERE_LINE or "dummy_land_enc_tower_descend_floor_" .. next_floor
-    return { key = M.choice_key(offer), lines = { line, after } }
+    local lines = { line }
+    if offer.stay then
+        lines[2] = RETURNS_HERE_LINE
+    elseif not offer.bonus_floor then
+        lines[2] = "dummy_land_enc_tower_descend_floor_" .. (next_floor + (offer.skips or 0))
+    end
+    return { key = M.choice_key(offer), lines = lines }
 end
 
---- Takes an offer from the delve's dilemma. It leaves the dilemma, and when the haul can pay its cost it is paid, marked taken and applied.
+--- Takes an offer from the delve's dilemma. When the haul can pay its cost it is paid, marked taken and applied. It keeps its slot, so a
+--- stay offer taken again (its button greyed out or not) changes nothing.
 --- @param choice_key string The chosen choice key.
 --- @param delve table The delve record.
 --- @param faction_name string The delving faction.
---- @param dividends table The tower delegate's dividend list, which Tower dividends adds to.
+--- @param extras table { dividends = the tower delegate's dividend list, tower = the delve's TowerState }.
 --- @returns table|nil The offer record, or nil when the choice is not an offer on the dilemma.
 --- @returns string|nil The offer's result line for the reopened dilemma, or nil when it has none.
-function M.take(choice_key, delve, faction_name, dividends)
+function M.take(choice_key, delve, faction_name, extras)
+    extras = extras or {}
     local offer = nil
-    for i, key in ipairs(delve.offers or {}) do
+    delve.taken = delve.taken or {}
+    for _, key in ipairs(delve.offers or {}) do
         if CHOICE_KEY_PREFIX .. key:upper() == choice_key then
-            offer = find(table.remove(delve.offers, i))
+            offer = find(key)
             break
         end
     end
-    if offer == nil or (offer.cost and delve.haul.gold < offer.cost) then return offer end
+    if offer == nil or spent(offer, delve) or (offer.cost and delve.haul.gold < offer.cost) then return offer end
     delve.haul.gold = delve.haul.gold - (offer.cost or 0)
-    delve.taken = delve.taken or {}
     delve.taken[offer.key] = true
     local handler = HANDLERS[offer.key]
     if not (handler and handler.apply) then return offer end
-    local outcome, values = handler.apply(offer, { delve = delve, faction_name = faction_name, dividends = dividends })
+    local outcome, values = handler.apply(offer, { delve = delve, faction_name = faction_name, dividends = extras.dividends, tower = extras.tower })
     local template = outcome and common.get_localised_string(RESULT_LOC_PREFIX .. outcome) or ""
     if template == "" then return offer end
     values = values or {}
@@ -337,6 +513,45 @@ function M.show_results(delve)
     common.set_context_value(RESULT_CONTEXT_KEY, #results > 0 and table.concat(results, "\n") .. "\n\n" or "")
 end
 
+--- Shows the climb list in the per-floor go-deeper descriptions: each floor so far as cleared or skipped at the difficulty it had, any hidden
+--- floor where it was fought, then the next floor and the ones ahead.
+--- @param delve table The delve record. `delve.climb` holds the floors so far, in order.
+function M.show_climb(delve)
+    local lines = {}
+    for _, entry in ipairs(delve.climb or {}) do
+        lines[#lines + 1] = string.format(climb_text(entry.state), floor_name(entry.floor, entry.difficulty, entry.bonus))
+    end
+    for floor = delve.floor + 1, #tower_data.floors do
+        lines[#lines + 1] = string.format(climb_text(floor == delve.floor + 1 and "next" or "ahead"), floor_name(floor, tower_data.floors[floor].difficulty))
+    end
+    common.set_context_value(CLIMB_CONTEXT_KEY, table.concat(lines, "\n"))
+end
+
+--- Greys out the buttons of the stay offers already taken on the open go-deeper dilemma, so each keeps its slot but cannot be clicked. Each
+--- choice's row in the panel's list is named after its choice record. UI only: a taken slot that is clicked anyway just reopens.
+--- @param delve table The delve record.
+--- @param dilemma_key string The open go-deeper dilemma's key.
+function M.grey_out_taken(delve, dilemma_key)
+    local taken = {}
+    for _, key in ipairs(delve.offers or {}) do
+        local offer = find(key)
+        if spent(offer, delve) then taken[CHOICE_ROW_PREFIX .. dilemma_key .. M.choice_key(offer)] = true end
+    end
+    if next(taken) == nil then return end
+    --- The game's UI helpers live in the script environment, not in a required module's globals.
+    local env = core:get_env()
+    local list = env.find_uicomponent(core:get_ui_root(), "events", "event_layouts", "dilemma_active", "dilemma", "background", "dilemma_list")
+    if not list then return end
+    for i = 0, list:ChildCount() - 1 do
+        local row = env.UIComponent(list:Find(i))
+        local button = taken[row:Id()] and env.find_uicomponent(row, "choice_button")
+        if button then
+            button:SetState("inactive")
+            button:SetDisabled(true)
+        end
+    end
+end
+
 --- Takes the one-battle effects off the delving army once the floor they were bought for is over.
 --- @param delve table The delve record.
 function M.end_battle_effects(delve)
@@ -344,6 +559,16 @@ function M.end_battle_effects(delve)
     delve.war_rites = nil
     local force = tower_army.delving_force(delve.general_cqi)
     if force then cm:remove_effect_bundle_from_force(find("war_rites").effect_bundle, force:command_queue_index()) end
+end
+
+--- Takes the delve-long effects off the delving army when the delve ends, however it ends.
+--- @param delve table The delve record.
+function M.end_delve_effects(delve)
+    M.end_battle_effects(delve)
+    if not delve.hellforge then return end
+    delve.hellforge = nil
+    local force = tower_army.delving_force(delve.general_cqi)
+    if force then cm:remove_effect_bundle_from_force(find("hellforge_pact").effect_bundle, force:command_queue_index()) end
 end
 
 return M

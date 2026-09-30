@@ -142,6 +142,19 @@ function M.register()
     )
 
 
+    --- Tower offers taken on the open go-deeper dilemma get greyed-out buttons once the dilemma panel has built them. The panel is the local
+    --- player's, so this UI-only step reads the local faction.
+    core:add_listener(
+        "land_enc_tower_grey_out_taken",
+        "PanelOpenedCampaign",
+        function(context) return context.string == "events" end,
+        function()
+            cm:callback(function() M.point_of_interest_event_manager:grey_out_taken_tower_offers(cm:get_local_faction_name(true)) end, 0.1)
+        end,
+        IS_PERSISTENT_LISTENER
+    )
+
+
     --- MCT initial setup. Caches the live MCT option values into the mod's settings table.
     core:add_listener(
         "mct_initial_setup",

@@ -1012,6 +1012,12 @@ function PointOfInterestEventManager:trigger_tower_dilemma_event_given_choice(di
     self.tower_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
 end
 
+--- Greys out the taken tower offers on the local player's open go-deeper dilemma.
+--- @param faction_name string The local player's faction.
+function PointOfInterestEventManager:grey_out_taken_tower_offers(faction_name)
+    self.tower_event_delegate:grey_out_taken_offers(faction_name)
+end
+
 --- Forwards a dilemma-choice event to the smithy POI delegate, which finds the smithy by the choosing faction.
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 --- @param spot_info table The spot_info record for the triggered POI.
