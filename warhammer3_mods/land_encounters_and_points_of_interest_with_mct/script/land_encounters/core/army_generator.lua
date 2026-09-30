@@ -115,6 +115,13 @@ local function build_role_pools(faction_shorthand_key, origins)
     return pools
 end
 
+--- True for a Regiment of Renown: flagged in factions_data, or named like one (some mod RoRs carry no flag).
+--- @param unit table A factions_data unit record.
+--- @returns boolean True for a Regiment of Renown.
+local function is_renown(unit)
+    return unit.is_renown == true or unit.land_unit:find("_ror") ~= nil
+end
+
 --- Picks a random archetype that is enabled in MCT and that the faction's roster can field. When `requested_keys` is given, only those
 --- archetypes are considered first. If none of them qualify, any qualifying archetype is used, and then the default archetype.
 --- @param pools table The faction's role pools from `build_role_pools`.
@@ -334,6 +341,34 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     local spent = budget - army.budget_left
     out("INFO - Generated a " .. archetype.key .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. (ARMY_UNIT_CAP - 1 - #heroes - army.slots_left) .. " units.")
     return { lord = lord, heroes = heroes, units = army.units, archetype = archetype.key, budget = budget, spent = spent }
+end
+
+--- Picks random units of a faction for the tower's unit offers: buyable units of the given tiers and unit types from enabled origins,
+--- never Regiments of Renown. A unit can be picked more than once.
+--- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param tiers table Tier numbers to pick from, e.g. { 4, 5 }.
+--- @param unit_types table|nil Unit-type buckets to pick from, or nil for every type.
+--- @param count number How many units to pick.
+--- @returns table Unit keys, empty when the faction has no data or no unit qualifies.
+function M.pick_units(faction_shorthand_key, tiers, unit_types, count)
+    local data = factions_data[faction_shorthand_key]
+    local pool, seen, picked = {}, {}, {}
+    if data == nil then return picked end
+    local origins = enabled_origins()
+    for _, tier in ipairs(tiers) do
+        local units = data.units["tier_" .. tier] or {}
+        for _, unit_type in ipairs(unit_types or UNIT_TYPES) do
+            for _, unit in ipairs(units[unit_type] or {}) do
+                if unit_price(unit) > 0 and origins[unit.origin] and not is_renown(unit) and not seen[unit.land_unit] then
+                    seen[unit.land_unit] = true
+                    pool[#pool + 1] = unit.land_unit
+                end
+            end
+        end
+    end
+    if #pool == 0 then return picked end
+    for i = 1, count do picked[i] = pool[random_number(#pool)] end
+    return picked
 end
 
 return M

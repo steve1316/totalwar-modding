@@ -67,6 +67,8 @@ dummy_land_enc_tower_blood_transfusion	ui/campaign ui/effect_bundles/icon_effect
 dummy_land_enc_tower_rest_by_the_fire	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_reforge_the_fallen	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_reforge_the_fallen_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_bribe_the_guards	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_bribe_the_guards_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_loaded_dice	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_send_a_runner	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_tower_vault	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
@@ -79,6 +81,14 @@ dummy_land_enc_tower_tower_dividends_unaffordable	ui/campaign ui/effect_bundles/
 dummy_land_enc_tower_strip_the_dead	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_tithe	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_cursed_idol	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_ransom_a_captive	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_ransom_a_captive_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_elite_recruit	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_elite_recruit_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_conscripts	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_conscripts_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_captured_war_machine	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_captured_war_machine_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_double_or_nothing	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_hellforge_pact	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_blood_moon	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0

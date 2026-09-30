@@ -30,6 +30,8 @@ M.offers = {
     { key = "reforge_the_fallen", cost = 2000, repeatable = true, below = 50 },
     --- Puts `effect_bundle` on the army for the next floor's battle only.
     { key = "war_rites", cost = 1500, effect_bundle = "land_enc_effect_tower_war_rites" },
+    --- The next floor's army budget is multiplied by `next_budget`.
+    { key = "bribe_the_guards", cost = 1500, next_budget = 0.8 },
     --- A 50/50 roll that doubles the haul's gold or halves it.
     { key = "loaded_dice", stay = true },
     --- Sends `share` of the haul's gold to the treasury, keeping it safe from a loss. The runner keeps `fee` of it.
@@ -49,6 +51,13 @@ M.offers = {
     { key = "tithe", stay = true, share = 0.1, multiplier = 2, min_treasury = 1000 },
     --- Adds `gold` to the haul now, but the next floor's army is bigger.
     { key = "cursed_idol", gold = 1500, next_budget = 1.15 },
+    --- Unit offers show their `count` units as cards, picked when drawn, and the choice's payload adds them to the army. Each needs room
+    --- for all of them. Ransom takes a unit from the army just beaten. The others pick units of `tiers` (and `unit_types` when set) from the
+    --- delving faction's culture, or from the tower's faction when `from_tower` is set.
+    { key = "ransom_a_captive", cost = 1000, count = 1 },
+    { key = "elite_recruit", cost = 2500, count = 2, tiers = { 4, 5 } },
+    { key = "conscripts", cost = 500, count = 2, tiers = { 1 } },
+    { key = "captured_war_machine", cost = 2000, count = 1, tiers = { 1, 2, 3, 4, 5 }, unit_types = { "warmachine" }, from_tower = true },
     --- The next floor's gold doubles when the army loses under `max_loss` strength points on it, and is lost otherwise.
     { key = "double_or_nothing", max_loss = 25 },
     --- Puts `effect_bundle` on the army for the rest of the delve. One haul item is lost after every floor won from then on.

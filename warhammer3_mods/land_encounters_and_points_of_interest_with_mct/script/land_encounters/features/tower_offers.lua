@@ -7,6 +7,8 @@ local offers_data = require("script/land_encounters/configs/tower_offers")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local tower_army = require("script/land_encounters/features/tower_army")
 local item_pool = require("script/land_encounters/core/item_pool")
+local army_generator = require("script/land_encounters/core/army_generator")
+local Army = require("script/land_encounters/core/army")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -178,6 +180,43 @@ local function floor_name(floor, difficulty, bonus)
     return string.format(climb_text(floor == #tower_data.floors and "master" or "floor"), floor, shown)
 end
 
+--- True when the delving army has room for `count` more units.
+--- @param ctx table The offer context.
+--- @param count number The units an offer adds.
+--- @returns boolean True with at least `count` free slots.
+local function has_room(ctx, count)
+    local force = tower_army.delving_force(ctx.delve.general_cqi)
+    return force ~= nil and tower_army.free_slots(force) >= count
+end
+
+--- Keeps a unit offer's picked units on the delve, so its choice shows them as cards and its payload adds them to the army.
+--- @param offer table The offer record.
+--- @param ctx table The offer context.
+--- @param units table The picked unit keys.
+--- @returns boolean True when all `offer.count` units were found.
+local function hold_units(offer, ctx, units)
+    ctx.delve.offer_units = ctx.delve.offer_units or {}
+    ctx.delve.offer_units[offer.key] = units
+    return #units == offer.count
+end
+
+--- Draw condition of the recruit offers: room in the army, and `offer.count` units of `offer.tiers` and `offer.unit_types` from the
+--- tower's faction (`offer.from_tower`) or the delving faction's culture.
+--- @param ctx table The offer context.
+--- @param offer table The offer record.
+--- @returns boolean True when the units were picked.
+local function recruit(ctx, offer)
+    if not has_room(ctx, offer.count) then return false end
+    local shorthand = nil
+    if offer.from_tower then
+        shorthand = ctx.tower and ctx.tower.faction
+    else
+        local faction = cm:get_faction(ctx.faction_name)
+        shorthand = faction and Army.faction_shorthand_for_subculture(faction:subculture())
+    end
+    return hold_units(offer, ctx, shorthand and army_generator.pick_units(shorthand, offer.tiers, offer.unit_types, offer.count) or {})
+end
+
 --- Reads the faction's treasury.
 --- @param faction_name string The faction key.
 --- @returns number The treasury gold, or 0 when the faction is missing.
@@ -292,6 +331,17 @@ local HANDLERS = {
         apply = function(_, ctx) change_next_floor(ctx.delve, { rarity_shift = 1 }) end,
     },
     greedy_climb = { apply = function(offer, ctx) change_next_floor(ctx.delve, { budget = offer.next_budget, gold = offer.next_gold }) end },
+    bribe_the_guards = { apply = function(offer, ctx) change_next_floor(ctx.delve, { budget = offer.next_budget }) end },
+    --- The unit offers' payloads add their units, so taking them only needs the gold paid.
+    ransom_a_captive = {
+        eligible = function(ctx, offer)
+            local captives = ctx.delve.floor_units or {}
+            return has_room(ctx, offer.count) and #captives > 0 and hold_units(offer, ctx, { captives[random_number(#captives)] })
+        end,
+    },
+    elite_recruit = { eligible = recruit },
+    conscripts = { eligible = recruit },
+    captured_war_machine = { eligible = recruit },
     tower_dividends = {
         apply = function(offer, ctx)
             ctx.dividends[#ctx.dividends + 1] = { faction = ctx.faction_name, amount = offer.per_turn, turns = offer.turns }
@@ -418,7 +468,7 @@ local HANDLERS = {
 local function eligible(offer, ctx)
     if ctx.delve.taken[offer.key] and not offer.repeatable then return false end
     local handler = HANDLERS[offer.key]
-    return not (handler and handler.eligible) or handler.eligible(ctx)
+    return not (handler and handler.eligible) or handler.eligible(ctx, offer)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -457,6 +507,7 @@ end
 
 --- Builds an offer's go-deeper choice: its line (or its not-enough-gold line when the haul cannot pay), then where it leads. A skip leads
 --- past the next floor, and a bonus floor's own line already says where it leads. A stay offer taken on this floor only says it was taken.
+--- A unit offer the haul can pay for shows its units as cards, and its payload adds them to the army.
 --- @param offer_key string The offer key.
 --- @param delve table The delve record.
 --- @param next_floor number The floor a climbing offer leads to.
@@ -464,15 +515,18 @@ end
 function M.choice(offer_key, delve, next_floor)
     local offer = find(offer_key)
     if spent(offer, delve) then return { key = M.choice_key(offer), lines = { TAKEN_LINE } } end
-    local line = LINE_PREFIX .. offer.key
-    if offer.cost and delve.haul.gold < offer.cost then line = line .. "_unaffordable" end
-    local lines = { line }
+    local affordable = not offer.cost or delve.haul.gold >= offer.cost
+    local lines = { LINE_PREFIX .. offer.key .. (affordable and "" or "_unaffordable") }
     if offer.stay then
         lines[2] = RETURNS_HERE_LINE
     elseif not offer.bonus_floor then
         lines[2] = "dummy_land_enc_tower_descend_floor_" .. (next_floor + (offer.skips or 0))
     end
-    return { key = M.choice_key(offer), lines = lines }
+    local choice = { key = M.choice_key(offer), lines = lines }
+    local units = (delve.offer_units or {})[offer.key]
+    local force = units and affordable and tower_army.delving_force(delve.general_cqi)
+    if force then choice.units = { force = force, keys = units } end
+    return choice
 end
 
 --- Takes an offer from the delve's dilemma. When the haul can pay its cost it is paid, marked taken and applied. It keeps its slot, so a
