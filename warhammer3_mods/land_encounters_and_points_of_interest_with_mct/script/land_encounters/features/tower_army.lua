@@ -26,17 +26,34 @@ function M.free_slots(force)
     return math.max(0, force:unit_count_limit() - force:unit_list():num_items())
 end
 
+--- Lists the delving army's units with their strength.
+--- @param general_cqi number The delving lord's command queue index.
+--- @returns table An array of { unit = unit interface, strength = 0-100 } in army order, empty when the lord leads no army.
+function M.unit_strengths(general_cqi)
+    local force = M.delving_force(general_cqi)
+    local list = {}
+    if not force then return list end
+    local units = force:unit_list()
+    for i = 0, units:num_items() - 1 do
+        local unit = units:item_at(i)
+        list[#list + 1] = { unit = unit, strength = unit:percentage_proportion_of_full_strength() }
+    end
+    return list
+end
+
+--- Sets one unit's strength.
+--- @param unit unit The unit interface.
+--- @param strength number The new strength in points (0-100).
+function M.set_strength(unit, strength)
+    cm:set_unit_hp_to_unary_of_maximum(unit, math.max(1, math.min(100, strength)) / 100)
+end
+
 --- Heals a share of each unit's missing strength in the delving army.
 --- @param general_cqi number The delving lord's command queue index.
 --- @param share number Share of the missing strength to restore (0-1).
 function M.heal_army(general_cqi, share)
-    local force = M.delving_force(general_cqi)
-    if not force then return end
-    local units = force:unit_list()
-    for i = 0, units:num_items() - 1 do
-        local unit = units:item_at(i)
-        local strength = unit:percentage_proportion_of_full_strength()
-        cm:set_unit_hp_to_unary_of_maximum(unit, (strength + share * (100 - strength)) / 100)
+    for _, entry in ipairs(M.unit_strengths(general_cqi)) do
+        M.set_strength(entry.unit, entry.strength + share * (100 - entry.strength))
     end
 end
 

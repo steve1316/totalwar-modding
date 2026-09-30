@@ -21,3 +21,5 @@ land_enc_effect_battle_clean_up_event			force	1	icon_effects_fortify.png	false	f
 land_enc_effect_battle_won_incursion_neutral			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_battle_won_surprise_neutral			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_war_rites			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_drained			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_dividends			faction	1	treasury.png	true	false	true

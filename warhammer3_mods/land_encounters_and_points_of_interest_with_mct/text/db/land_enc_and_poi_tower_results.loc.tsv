@@ -3,3 +3,7 @@ key	text	tooltip
 campaign_localised_strings_string_land_enc_tower_result_loaded_dice_won	[[col:yellow]]Loaded dice:[[/col]] [[col:green]]doubled![[/col]] The haul now holds [[col:yellow]]%s gold[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_loaded_dice_lost	[[col:yellow]]Loaded dice:[[/col]] [[col:red]]halved.[[/col]] The haul now holds [[col:yellow]]%s gold[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_send_a_runner	[[col:yellow]]Send a runner:[[/col]] [[col:green]]%s gold[[/col]] reached your treasury. The haul now holds [[col:yellow]]%s gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_tower_vault	[[col:yellow]]Tower vault:[[/col]] [[col:green]]%s[[/col]] joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_tower_dividends	[[col:yellow]]Tower dividends:[[/col]] [[col:green]]+%s gold[[/col]] will reach your treasury each turn for the next %s turns.	false
+campaign_localised_strings_string_land_enc_tower_result_strip_the_dead	[[col:yellow]]Strip the dead:[[/col]] [[col:green]]+%s gold[[/col]] joins the haul. The haul now holds [[col:yellow]]%s gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_tithe	[[col:yellow]]Tithe:[[/col]] %s gold from your treasury became [[col:green]]%s gold[[/col]] in the haul.	false

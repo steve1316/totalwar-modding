@@ -57,5 +57,23 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_8	[[co
 campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_9	[[col:yellow]]9 sworn units[[/col]] already joined the army.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_10	[[col:yellow]]10 sworn units[[/col]] already joined the army.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_returns_here	You return to this choice afterwards.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_field_surgeons	Pay [[col:yellow]]2,500 gold[[/col]] from the haul to heal every unit to full strength.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_field_surgeons_unaffordable	[[col:red]]The haul holds less than 2,500 gold[[/col]], so no one is healed. The army climbs as it is.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_forgotten_shrine	Drink from a forgotten shrine: heal [[col:yellow]]30%[[/col]] of each unit's losses for free.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_triage	Heal the [[col:yellow]]3 most battered units[[/col]] to full. The healthiest unit gives up [[col:red]]20 strength[[/col]] for it.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_blood_transfusion	Heal [[col:yellow]]40%[[/col]] of each unit's losses, but the army is [[col:red]]drained[[/col]] for 5 turns: -5 leadership and -5 melee attack.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_rest_by_the_fire	Heal [[col:yellow]]25%[[/col]] of each unit's losses. The tower regroups, and the next army is [[col:red]]10% stronger[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_reforge_the_fallen	Pay [[col:yellow]]2,000 gold[[/col]] from the haul to bring the weakest unit back to full strength.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_reforge_the_fallen_unaffordable	[[col:red]]The haul holds less than 2,000 gold[[/col]], so no unit is reforged. The army climbs as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_loaded_dice	A 50/50 roll: the haul's gold is [[col:green]]doubled[[/col]] or [[col:red]]halved[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_send_a_runner	Send [[col:yellow]]half[[/col]] the haul's gold to your treasury now, safe even if the delve is lost. The runner keeps [[col:yellow]]20%[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_tower_vault	Pay [[col:yellow]]2,000 gold[[/col]] from the haul for [[col:yellow]]1 legendary item[[/col]] from the tower's vault.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_tower_vault_unaffordable	[[col:red]]The haul holds less than 2,000 gold[[/col]], so the vault stays shut.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_treasure_map	Pay [[col:yellow]]1,000 gold[[/col]] from the haul: the next floor's items are [[col:yellow]]one rarity higher[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_treasure_map_unaffordable	[[col:red]]The haul holds less than 1,000 gold[[/col]], so the map goes unbought. The army climbs as it is.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_greedy_climb	The next floor pays [[col:green]]double gold[[/col]], but its army is [[col:red]]20% stronger[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_tower_dividends	Pay [[col:yellow]]1,500 gold[[/col]] from the haul for [[col:green]]+250 gold[[/col]] in your treasury each turn for 10 turns, kept even if the delve is lost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_tower_dividends_unaffordable	[[col:red]]The haul holds less than 1,500 gold[[/col]], so no share is bought.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_strip_the_dead	Strip the fallen: [[col:green]]+100 gold[[/col]] in the haul for each unit in the army just beaten.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_tithe	Pay [[col:yellow]]10%[[/col]] of your treasury. [[col:green]]Twice that[[/col]] joins the haul.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_cursed_idol	Take the idol: [[col:green]]+1,500 gold[[/col]] in the haul now, but the next army is [[col:red]]15% stronger[[/col]].	false

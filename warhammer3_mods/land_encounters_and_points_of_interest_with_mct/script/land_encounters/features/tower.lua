@@ -37,6 +37,9 @@ local EVENT_CLAIM = "land_enc_dilemma_tower_claim"
 --- Prefix of a floor army's invasion id. The delving faction's key follows, so each human faction has its own floor army.
 local FLOOR_INVASION_PREFIX = "tower_invasion_"
 
+--- The next rarity up for a Treasure map. A rare becomes a legendary, picked from the legendary pool.
+local RARITY_UP = { common = "uncommon", uncommon = "rare", rare = "legendary" }
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- TowerState
@@ -176,13 +179,36 @@ local function add_items(haul, items)
     end
 end
 
---- Picks a floor's items: its rarities, or legendary items with a rare standing in for each one the pool cannot supply.
+--- Picks one legendary item, or a rare standing in when the pool cannot supply one.
+--- @param faction_name string The delving faction.
+--- @returns string|nil An ancillary key, or nil when even the rare pool is dry.
+local function pick_legendary_or_fallback(faction_name)
+    return item_pool.pick_legendary_item(faction_name) or item_pool.pick_items(faction_name, { tower_data.legendary_fallback_rarity }, 1)[1]
+end
+
+--- Picks a floor's items: its rarities, or legendary items with a rare standing in for each one the pool cannot supply. `rarity_shift`
+--- raises each rarity by that many steps (a Treasure map), where a rare becomes a legendary.
 --- @param faction_name string The delving faction.
 --- @param floor table The floor record from `tower_data.floors`.
+--- @param rarity_shift number|nil Rarity steps to raise the floor's items by.
 --- @returns table Ancillary keys.
-local function pick_floor_items(faction_name, floor)
-    if not floor.legendary_count then
+local function pick_floor_items(faction_name, floor, rarity_shift)
+    if not floor.legendary_count and not rarity_shift then
         return item_pool.pick_items(faction_name, floor.item_rarities, floor.item_count)
+    end
+    if not floor.legendary_count then
+        local rarities = {}
+        for i, rarity in ipairs(floor.item_rarities) do
+            for _ = 1, rarity_shift do rarity = RARITY_UP[rarity] or rarity end
+            rarities[i] = rarity
+        end
+        local items = {}
+        for _ = 1, floor.item_count do
+            local rarity = rarities[random_number(#rarities)]
+            local item = rarity == "legendary" and pick_legendary_or_fallback(faction_name) or item_pool.pick_items(faction_name, { rarity }, 1)[1]
+            if item then items[#items + 1] = item end
+        end
+        return items
     end
     local items = {}
     for _ = 1, floor.legendary_count do
@@ -225,6 +251,8 @@ local TowerEventDelegate = {
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},
+    --- Tower dividends still paying out: { faction, amount, turns } per purchase, paid at each of that faction's turn starts.
+    dividends = {},
     --- Shared invasion battle manager that spawns and resolves floor battles.
     invasion_battle_manager = nil,
 }
@@ -277,6 +305,7 @@ function TowerEventDelegate:initialize(zones, saved)
         if delve.in_battle then self:rearm_floor_battle(faction_name) end
     end
     self.pending_dilemma_by_faction = saved.pending_dilemma_by_faction or {}
+    self.dividends = saved.dividends or {}
     self:sync_markers()
 end
 
@@ -312,9 +341,18 @@ function TowerEventDelegate:update_state_given_turn_passing()
     end
 end
 
---- Closes a delve that outlived its turn, for example when a floor battle never started. It counts as leaving the tower.
+--- Pays the faction's Tower dividends and closes a delve that outlived its turn, for example when a floor battle never started. A closed
+--- delve counts as leaving the tower.
 --- @param faction_name string The human faction whose turn is starting.
 function TowerEventDelegate:on_faction_turn_start(faction_name)
+    for i = #self.dividends, 1, -1 do
+        local dividend = self.dividends[i]
+        if dividend.faction == faction_name then
+            cm:treasury_mod(faction_name, dividend.amount)
+            dividend.turns = dividend.turns - 1
+            if dividend.turns <= 0 then table.remove(self.dividends, i) end
+        end
+    end
     if self.delves[faction_name] then
         self:end_delve(faction_name, "tower_left")
     end
@@ -379,7 +417,7 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             self:end_delve(faction_name, "tower_left")
             return
         elseif choice_key ~= "FIRST" then
-            local offer, result = tower_offers.take(choice_key, delve, faction_name)
+            local offer, result = tower_offers.take(choice_key, delve, faction_name, self.dividends)
             if offer == nil then return end
             if offer.stay then
                 delve.results = delve.results or {}
@@ -412,11 +450,13 @@ function TowerEventDelegate:launch_floor(faction_name)
 
     delve.strength_before = tower_army.army_strength(delve.general_cqi)
     local floor = tower_data.floors[delve.floor]
+    local budget = tower_data.budget_by_difficulty[floor.difficulty]
+    local budget_multiplier = delve.next_floor and delve.next_floor.budget or 1
     local army = Army:new_from_event({
         dilemma = "tower",
         faction = tower.faction,
         difficulty = floor.difficulty,
-        budget_range = tower_data.budget_by_difficulty[floor.difficulty],
+        budget_range = { math.floor(budget[1] * budget_multiplier + 0.5), math.floor(budget[2] * budget_multiplier + 0.5) },
         intervention = INTERCEPTION_TYPE,
         force_identifier = "tower_force_" .. faction_name,
         invasion_identifier = FLOOR_INVASION_PREFIX .. faction_name,
@@ -439,6 +479,7 @@ function TowerEventDelegate:launch_floor(faction_name)
     for _, row in ipairs(army.units or {}) do
         for _ = 1, row.count or 1 do delve.floor_units[#delve.floor_units + 1] = row.id end
     end
+    delve.floor_army_size = #delve.floor_units
     ibm:mark_battle_forces_for_removal(army)
     ibm:reset_state_post_battle(self, "TowerSpot", nil, army)
 end
@@ -463,8 +504,10 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0
     local step = tower_data.gold_step
-    delve.haul.gold = delve.haul.gold + math.floor(floor.gold * performance_multiplier(loss) / step + 0.5) * step
-    add_items(delve.haul, pick_floor_items(faction_name, floor))
+    local next_floor = delve.next_floor or {}
+    delve.next_floor = nil
+    delve.haul.gold = delve.haul.gold + math.floor(floor.gold * performance_multiplier(loss) * (next_floor.gold or 1) / step + 0.5) * step
+    add_items(delve.haul, pick_floor_items(faction_name, floor, next_floor.rarity_shift))
     local candidates = delve.floor_units or {}
     for _ = 1, math.min(floor.sworn_units, #candidates) do
         delve.haul.units[#delve.haul.units + 1] = table.remove(candidates, random_number(#candidates))
@@ -503,7 +546,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         launch_dilemma(EVENT_CLAIM, { payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul) }, faction_name)
         return
     end
-    delve.offers = tower_offers.draw(delve)
+    delve.offers = tower_offers.draw(delve, faction_name)
     delve.results = {}
     tower_offers.show_results(delve)
     self:launch_deeper(faction_name)
@@ -537,21 +580,21 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Save and load
 
---- Exports the towers, delves in progress and open enter dilemmas for the save file.
---- @returns table { towers, delves, pending_dilemma_by_faction }.
+--- Exports the towers, delves in progress, open enter dilemmas and dividends still paying for the save file.
+--- @returns table { towers, delves, pending_dilemma_by_faction, dividends }.
 function TowerEventDelegate:export_state_as_table()
     local towers = {}
     for i, tower in ipairs(self.towers) do
         towers[i] = tower:export()
     end
-    return { towers = towers, delves = self.delves, pending_dilemma_by_faction = self.pending_dilemma_by_faction }
+    return { towers = towers, delves = self.delves, pending_dilemma_by_faction = self.pending_dilemma_by_faction, dividends = self.dividends }
 end
 
 --- Builds an empty delegate. `initialize` places or restores the towers once the zones exist.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns TowerEventDelegate The new delegate.
 function TowerEventDelegate:new(invasion_battle_manager)
-    local t = { towers = {}, delves = {}, pending_dilemma_by_faction = {}, invasion_battle_manager = invasion_battle_manager }
+    local t = { towers = {}, delves = {}, pending_dilemma_by_faction = {}, dividends = {}, invasion_battle_manager = invasion_battle_manager }
     setmetatable(t, self)
     self.__index = self
     return t
