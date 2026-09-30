@@ -38,6 +38,12 @@ M.legendary_fallback_rarity = "rare"
 --- Gold paid for each sworn unit that does not fit in the delving army.
 M.unit_overflow_gold = 500
 
+--- Paid go-deeper option. `cost` gold comes out of the haul to heal `heal_share` of each unit's missing strength before the next floor.
+M.tend_wounded = { cost = 1000, heal_share = 0.5 }
+
+--- Paid go-deeper option. `cost` gold comes out of the haul to put `effect_bundle` on the delving army for the next floor's battle only.
+M.war_rites = { cost = 1500, effect_bundle = "land_enc_effect_tower_war_rites" }
+
 --- Longest cooldown with its own message (the MCT slider maximum). Longer cooldowns show this message.
 M.longest_cooldown_message = 30
 

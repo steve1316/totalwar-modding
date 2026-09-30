@@ -42,3 +42,7 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_3	Fig
 campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_4	Fight [[col:yellow]]floor 4 of 5[[/col]] (medium).	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_5	Fight the [[col:yellow]]Master of the Tower[[/col]] on floor 5 of 5 (hard).	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_claim	Claim everything the tower held.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_tend_wounded	Pay [[col:yellow]]1,000 gold[[/col]] from the haul to tend the wounded, healing half of each unit's losses.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_tend_wounded_unaffordable	[[col:red]]The haul holds less than 1,000 gold[[/col]], so no one is tended. The army climbs as it is.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_war_rites	Pay [[col:yellow]]1,500 gold[[/col]] from the haul for war rites: +10 melee attack, +10 melee defence and +10 leadership for the next battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_war_rites_unaffordable	[[col:red]]The haul holds less than 1,500 gold[[/col]], so no rites are held. The army climbs as it is.	false

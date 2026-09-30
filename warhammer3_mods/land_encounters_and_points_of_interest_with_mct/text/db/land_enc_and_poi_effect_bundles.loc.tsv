@@ -40,3 +40,5 @@ effect_bundles_localised_title_land_enc_effect_battle_won_incursion_neutral	Hard
 effect_bundles_localised_description_land_enc_effect_battle_won_incursion_neutral	The fresh memory of repelling the incursion is still with us.	false
 effect_bundles_localised_title_land_enc_effect_battle_won_surprise_neutral	Ambush Turned	false
 effect_bundles_localised_description_land_enc_effect_battle_won_surprise_neutral	Having turned an ambush against its makers, the army keeps a sharper watch.	false
+effect_bundles_localised_title_land_enc_effect_tower_war_rites	War Rites	false
+effect_bundles_localised_description_land_enc_effect_tower_war_rites	The army held its war rites before climbing to the next floor of the tower. The fervour lasts for that battle only.	false

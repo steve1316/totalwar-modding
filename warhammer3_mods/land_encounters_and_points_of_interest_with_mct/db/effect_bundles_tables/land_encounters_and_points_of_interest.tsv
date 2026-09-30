@@ -20,3 +20,4 @@ land_enc_effect_battle_avoided_daemonic_gift_slaanesh			force	1	icon_effects_for
 land_enc_effect_battle_clean_up_event			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_battle_won_incursion_neutral			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_battle_won_surprise_neutral			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_war_rites			force	1	icon_effects_fortify.png	false	false	true
