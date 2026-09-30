@@ -30,6 +30,10 @@ local TAKEN_LINE = "dummy_land_enc_tower_taken"
 local CLIMB_CONTEXT_KEY = "land_enc_tower_climb"
 --- Prefix of the loc keys holding the climb list templates. The rest is the template, e.g. "cleared" or "difficulty_hard".
 local CLIMB_LOC_PREFIX = "campaign_localised_strings_string_land_enc_tower_climb_"
+--- Prefix of every tower effect bundle key. The rest names the buff in the floor battle's notice.
+local BUNDLE_PREFIX = "land_enc_effect_tower_"
+--- svr key the floor battle's script reads the active buffs from. Mirrored in script/battle/mod/land_enc_tower_buffs.lua.
+local BATTLE_BUFFS_SVR_KEY = "land_enc_tower_battle_buffs"
 --- Prefix of each choice row's id in the dilemma panel's list. The dilemma key and the choice key follow.
 local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
@@ -638,9 +642,27 @@ function M.grey_out_taken(delve, dilemma_key)
     end
 end
 
---- Takes the one-battle effects off the delving army once the floor they were bought for is over.
+--- Hands the buffs on the delving army to the next battle's script, which announces them: the one-battle buffs, then the Hellforge pact. The list
+--- is comma-separated bundle names without `BUNDLE_PREFIX`. No delve hands over an empty list.
+--- @param delve table|nil The delve record.
+function M.hand_buffs_to_battle(delve)
+    local names, seen = {}, {}
+    local bundles = {}
+    for _, bundle in ipairs(delve and delve.battle_bundles or {}) do bundles[#bundles + 1] = bundle end
+    if delve and delve.hellforge then bundles[#bundles + 1] = find("hellforge_pact").effect_bundle end
+    for _, bundle in ipairs(bundles) do
+        if not seen[bundle] then
+            seen[bundle] = true
+            names[#names + 1] = bundle:sub(#BUNDLE_PREFIX + 1)
+        end
+    end
+    core:svr_save_string(BATTLE_BUFFS_SVR_KEY, table.concat(names, ","))
+end
+
+--- Takes the one-battle effects off the delving army once the floor they were bought for is over, and clears the battle's buff list.
 --- @param delve table The delve record.
 function M.end_battle_effects(delve)
+    M.hand_buffs_to_battle(nil)
     local bundles = delve.battle_bundles or {}
     delve.battle_bundles = nil
     local force = tower_army.delving_force(delve.general_cqi)

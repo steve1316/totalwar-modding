@@ -494,6 +494,7 @@ function TowerEventDelegate:launch_floor(faction_name)
     end
     ibm:generate_battle(army, general, tower.coordinates)
     delve.in_battle = true
+    tower_offers.hand_buffs_to_battle(delve)
     --- The army's units are only fixed once the battle is generated. Its lord and heroes are kept apart from `units`, so none can be sworn.
     delve.floor_units = {}
     for _, row in ipairs(army.units or {}) do
@@ -505,7 +506,8 @@ function TowerEventDelegate:launch_floor(faction_name)
 end
 
 --- Re-arms a floor battle that was pending when the game was saved. The battle result and floor army cleanup are game listeners, which are
---- not saved, so without this the floor never resolves after a load and the tower stays stuck in the delve until the next turn.
+--- not saved, so without this the floor never resolves after a load and the tower stays stuck in the delve until the next turn. The army's buffs
+--- are handed to the battle again too.
 --- @param faction_name string The delving faction.
 function TowerEventDelegate:rearm_floor_battle(faction_name)
     --- Only the invasion id and the empty reinforcement lists are needed to route the result and remove the floor army.
@@ -514,6 +516,7 @@ function TowerEventDelegate:rearm_floor_battle(faction_name)
     local ibm = self.invasion_battle_manager
     ibm:mark_battle_forces_for_removal(army)
     ibm:reset_state_post_battle(self, "TowerSpot", nil, army)
+    tower_offers.hand_buffs_to_battle(self.delves[faction_name])
 end
 
 --- Adds a won floor's rewards to the haul. Gold scales with how much of the delving army's strength the floor cost.
