@@ -34,6 +34,9 @@ local EVENT_DEEPER = "land_enc_dilemma_tower_deeper"
 --- One-choice dilemma that pays the full haul after the last floor.
 local EVENT_CLAIM = "land_enc_dilemma_tower_claim"
 
+--- Prefix of a floor army's invasion id. The delving faction's key follows, so each human faction has its own floor army.
+local FLOOR_INVASION_PREFIX = "tower_invasion_"
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- TowerState
@@ -215,10 +218,10 @@ local TowerEventDelegate = {
     --- Every tower on the map, one per zone, in zone-name order.
     towers = {},
     --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before,
-    --- floor_units, offers, taken, results, war_rites }. `haul.units` are sworn units waiting for room and `haul.joined` counts those already
-    --- in the army. `offers` are the offer keys still on the current go-deeper dilemma, `taken` marks offers taken this delve and `results`
-    --- holds this floor's stay-offer result lines. `war_rites` is true while the delving army carries the war rites bundle. A delve starts and
-    --- ends within one turn.
+    --- floor_units, offers, taken, results, war_rites, in_battle }. `haul.units` are sworn units waiting for room and `haul.joined` counts
+    --- those already in the army. `offers` are the offer keys still on the current go-deeper dilemma, `taken` marks offers taken this delve and
+    --- `results` holds this floor's stay-offer result lines. `war_rites` is true while the delving army carries the war rites bundle, and
+    --- `in_battle` while a floor battle waits for its result. A delve starts and ends within one turn.
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},
@@ -270,6 +273,9 @@ function TowerEventDelegate:initialize(zones, saved)
         zone_by_name[tower.zone_name].spot_delegate:reserve_spot(tower.zone_name, tower.spot_index)
     end
     self.delves = saved.delves or {}
+    for faction_name, delve in pairs(self.delves) do
+        if delve.in_battle then self:rearm_floor_battle(faction_name) end
+    end
     self.pending_dilemma_by_faction = saved.pending_dilemma_by_faction or {}
     self:sync_markers()
 end
@@ -413,7 +419,7 @@ function TowerEventDelegate:launch_floor(faction_name)
         budget_range = tower_data.budget_by_difficulty[floor.difficulty],
         intervention = INTERCEPTION_TYPE,
         force_identifier = "tower_force_" .. faction_name,
-        invasion_identifier = "tower_invasion_" .. faction_name,
+        invasion_identifier = FLOOR_INVASION_PREFIX .. faction_name,
     }, general:faction():subculture())
 
     local ibm = self.invasion_battle_manager
@@ -427,11 +433,24 @@ function TowerEventDelegate:launch_floor(faction_name)
         return
     end
     ibm:generate_battle(army, general, tower.coordinates)
+    delve.in_battle = true
     --- The army's units are only fixed once the battle is generated. Its lord and heroes are kept apart from `units`, so none can be sworn.
     delve.floor_units = {}
     for _, row in ipairs(army.units or {}) do
         for _ = 1, row.count or 1 do delve.floor_units[#delve.floor_units + 1] = row.id end
     end
+    ibm:mark_battle_forces_for_removal(army)
+    ibm:reset_state_post_battle(self, "TowerSpot", nil, army)
+end
+
+--- Re-arms a floor battle that was pending when the game was saved. The battle result and floor army cleanup are game listeners, which are
+--- not saved, so without this the floor never resolves after a load and the tower stays stuck in the delve until the next turn.
+--- @param faction_name string The delving faction.
+function TowerEventDelegate:rearm_floor_battle(faction_name)
+    --- Only the invasion id and the empty reinforcement lists are needed to route the result and remove the floor army.
+    local army = setmetatable({ invasion_identifier = FLOOR_INVASION_PREFIX .. faction_name, reinforcing_enemy_armies = {}, reinforcing_ally_armies = {} },
+        { __index = Army })
+    local ibm = self.invasion_battle_manager
     ibm:mark_battle_forces_for_removal(army)
     ibm:reset_state_post_battle(self, "TowerSpot", nil, army)
 end
@@ -473,6 +492,7 @@ end
 function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle, faction_name)
     local delve = self.delves[faction_name]
     if delve == nil then return end
+    delve.in_battle = nil
     tower_offers.end_battle_effects(delve)
     if not player_won_battle then
         self:end_delve(faction_name, "tower_lost")
