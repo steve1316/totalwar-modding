@@ -46,3 +46,13 @@ dummy_land_enc_tower_tend_wounded	ui/campaign ui/effect_bundles/icon_effects_arm
 dummy_land_enc_tower_tend_wounded_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_war_rites	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_war_rites_unaffordable	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_1	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_2	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_3	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_4	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_5	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_6	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_7	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_8	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_9	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_units_joined_10	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0

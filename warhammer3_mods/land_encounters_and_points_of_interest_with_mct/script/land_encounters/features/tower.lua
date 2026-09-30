@@ -258,22 +258,23 @@ local function pick_floor_items(faction_name, floor)
     return items
 end
 
---- Builds the choice that pays the whole haul. Its gold and items are the payload, and each sworn unit that fits under the delving army's unit
---- limit shows as a card and joins the army. Each unit that does not fit, or every unit when the lord is gone, adds
---- `tower_data.unit_overflow_gold` to the gold.
---- @param choice_key string The choice key, e.g. "SECOND".
+--- Counts the free unit slots in an army.
+--- @param force military_force The army.
+--- @returns number Slots left under its unit limit.
+local function free_slots(force)
+    return math.max(0, force:unit_count_limit() - force:unit_list():num_items())
+end
+
+--- Builds the choice that pays the whole haul: its gold and items as the payload, plus `tower_data.unit_overflow_gold` for each sworn unit
+--- still waiting (units only wait when the army has no room), and a line saying how many sworn units already joined the army.
+--- @param choice_key string The choice key, e.g. "FOURTH".
 --- @param line string The `dummy_` key describing the choice.
 --- @param haul table The delve's haul.
---- @param general_cqi number The delving lord's command queue index.
 --- @returns table A choice record for `launch_dilemma`.
-local function payout_choice(choice_key, line, haul, general_cqi)
-    local force = delving_force(general_cqi)
-    local free = force and math.max(0, force:unit_count_limit() - force:unit_list():num_items()) or 0
-    local fitting = {}
-    for i = 1, math.min(free, #haul.units) do fitting[i] = haul.units[i] end
-    local overflow_gold = (#haul.units - #fitting) * tower_data.unit_overflow_gold
-    local units = #fitting > 0 and { force = force, keys = fitting } or nil
-    return { key = choice_key, gold = haul.gold + overflow_gold, items = haul.items, units = units, lines = { line } }
+local function payout_choice(choice_key, line, haul)
+    local lines = { line }
+    if (haul.joined or 0) > 0 then lines[2] = "dummy_land_enc_tower_units_joined_" .. haul.joined end
+    return { key = choice_key, gold = haul.gold + #haul.units * tower_data.unit_overflow_gold, items = haul.items, lines = lines }
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -283,8 +284,9 @@ end
 local TowerEventDelegate = {
     --- Every tower on the map, one per zone, in zone-name order.
     towers = {},
-    --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units }, strength_before, floor_units,
-    --- war_rites }. `war_rites` is true while the delving army carries the war rites bundle. A delve starts and ends within one turn.
+    --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before,
+    --- floor_units, war_rites }. `haul.units` are sworn units waiting for room and `haul.joined` counts those already in the army. `war_rites`
+    --- is true while the delving army carries the war rites bundle. A delve starts and ends within one turn.
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},
@@ -421,7 +423,7 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
         local pending = self.pending_dilemma_by_faction[faction_name]
         self.pending_dilemma_by_faction[faction_name] = nil
         if pending == nil or choice ~= FIRST_OPTION then return end
-        self.delves[faction_name] = { zone_name = pending.zone_name, general_cqi = pending.general_cqi, floor = 1, haul = { gold = 0, items = {}, units = {} } }
+        self.delves[faction_name] = { zone_name = pending.zone_name, general_cqi = pending.general_cqi, floor = 1, haul = { gold = 0, items = {}, units = {}, joined = 0 } }
         self:launch_floor(faction_name)
     elseif key == EVENT_DEEPER or key:sub(1, #EVENT_DEEPER + 7) == EVENT_DEEPER .. "_floor_" then
         local delve = self.delves[faction_name]
@@ -506,6 +508,20 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     for _ = 1, math.min(floor.sworn_units, #candidates) do
         delve.haul.units[#delve.haul.units + 1] = table.remove(candidates, random_number(#candidates))
     end
+    self:swear_in_units(delve)
+end
+
+--- Moves sworn units waiting in the haul into the delving army while it has free slots, oldest first. Units that joined stay even if the
+--- delve is later lost. The rest keep waiting and try again after the next win, once losses may have freed slots.
+--- @param delve table The delve record.
+function TowerEventDelegate:swear_in_units(delve)
+    local force = delving_force(delve.general_cqi)
+    if not force then return end
+    local lookup = cm:char_lookup_str(cm:get_character_by_cqi(delve.general_cqi))
+    for _ = 1, math.min(free_slots(force), #delve.haul.units) do
+        cm:grant_unit_to_character(lookup, table.remove(delve.haul.units, 1))
+        delve.haul.joined = (delve.haul.joined or 0) + 1
+    end
 end
 
 --- Resolves a floor battle and ends any war rites bought for it. A loss ends the delve and forfeits the haul. A win adds the floor to the haul,
@@ -522,7 +538,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     end
     self:add_floor_rewards(faction_name, delve)
     if delve.floor >= #tower_data.floors then
-        launch_dilemma(EVENT_CLAIM, { payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul, delve.general_cqi) }, faction_name)
+        launch_dilemma(EVENT_CLAIM, { payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul) }, faction_name)
         return
     end
     local next_floor = delve.floor + 1
@@ -530,7 +546,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         { key = "FIRST", lines = { "dummy_land_enc_tower_descend_floor_" .. next_floor } },
         paid_choice("SECOND", "tend_wounded", delve.haul, next_floor),
         paid_choice("THIRD", "war_rites", delve.haul, next_floor),
-        payout_choice("FOURTH", "dummy_land_enc_tower_leave", delve.haul, delve.general_cqi),
+        payout_choice("FOURTH", "dummy_land_enc_tower_leave", delve.haul),
     }, faction_name)
 end
 

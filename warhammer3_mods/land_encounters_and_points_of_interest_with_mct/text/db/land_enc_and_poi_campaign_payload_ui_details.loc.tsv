@@ -46,3 +46,13 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_tend_wounded	Pay [[
 campaign_payload_ui_details_description_dummy_land_enc_tower_tend_wounded_unaffordable	[[col:red]]The haul holds less than 1,000 gold[[/col]], so no one is tended. The army climbs as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_war_rites	Pay [[col:yellow]]1,500 gold[[/col]] from the haul for war rites: +10 melee attack, +10 melee defence and +10 leadership for the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_war_rites_unaffordable	[[col:red]]The haul holds less than 1,500 gold[[/col]], so no rites are held. The army climbs as it is.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_1	[[col:yellow]]1 sworn unit[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_2	[[col:yellow]]2 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_3	[[col:yellow]]3 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_4	[[col:yellow]]4 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_5	[[col:yellow]]5 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_6	[[col:yellow]]6 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_7	[[col:yellow]]7 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_8	[[col:yellow]]8 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_9	[[col:yellow]]9 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_10	[[col:yellow]]10 sworn units[[/col]] already joined the army.	false

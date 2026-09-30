@@ -14,7 +14,7 @@ M.budget_by_difficulty = {
 --- `gold` is the base gold before the performance multiplier. `item_rarities` and `item_count` pick items from CA's pool, and `legendary_count`
 --- picks legendary items instead (each one that cannot be found becomes a rare). `sworn_units` is how many of the floor army's units join.
 M.floors = {
-    { difficulty = "easy", gold = 1000, item_rarities = { "common" }, item_count = 2, sworn_units = 0 },
+    { difficulty = "easy", gold = 2000, item_rarities = { "common" }, item_count = 2, sworn_units = 0 },
     { difficulty = "medium", gold = 2000, item_rarities = { "uncommon", "rare" }, item_count = 2, sworn_units = 0 },
     { difficulty = "medium", gold = 2000, item_rarities = { "uncommon", "rare" }, item_count = 2, sworn_units = 2 },
     { difficulty = "medium", gold = 2000, item_rarities = { "uncommon", "rare" }, item_count = 2, sworn_units = 2 },
