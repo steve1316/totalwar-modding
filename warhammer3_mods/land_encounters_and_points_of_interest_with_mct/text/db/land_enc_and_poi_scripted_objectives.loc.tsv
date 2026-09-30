@@ -1,12 +1,12 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_scripted_objectives.loc		
-scripted_objectives_localised_text_land_enc_tower_buff_war_rites	[[col:green]]War rites: +10 melee attack, melee defence and leadership.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites	[[col:green]]War rites: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_war_rites		false
-scripted_objectives_localised_text_land_enc_tower_buff_war_rites_message	War rites: +10 melee attack, melee defence and leadership.	false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites_message	War rites: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_war_rites_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil	[[col:green]]Whetstones and oil: +15% weapon strength and +15 armour-piercing damage.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil	[[col:green]]Whetstones and oil: +15% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +15 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil		false
-scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_message	Whetstones and oil: +15% weapon strength and +15 armour-piercing damage.	false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_message	Whetstones and oil: +15% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +15 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils	[[col:green]]Warding sigils: +10% ward save.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils		false
@@ -20,63 +20,63 @@ scripted_objectives_localised_text_land_enc_tower_buff_enchanted_steel	[[col:gre
 scripted_objectives_localised_description_land_enc_tower_buff_enchanted_steel		false
 scripted_objectives_localised_text_land_enc_tower_buff_enchanted_steel_message	Enchanted steel: magical attacks.	false
 scripted_objectives_localised_description_land_enc_tower_buff_enchanted_steel_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache	[[col:green]]Quartermaster's cache: +50% ammunition and 20% faster reloads.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache	[[col:green]]Quartermaster's cache: +50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 20% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache		false
-scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_message	Quartermaster's cache: +50% ammunition and 20% faster reloads.	false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_message	Quartermaster's cache: +50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 20% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant	[[col:green]]Drill sergeant: +15% speed and +10 charge bonus.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant	[[col:green]]Drill sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_message	Drill sergeant: +15% speed and +10 charge bonus.	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_message	Drill sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve	[[col:green]]Iron resolve: +20 leadership and immunity to fear and terror.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve	[[col:green]]Iron resolve: +20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve		false
-scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_message	Iron resolve: +20 leadership and immunity to fear and terror.	false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_message	Iron resolve: +20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_stoneskin	[[col:green]]Stoneskin: +15% physical resistance.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin		false
 scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_message	Stoneskin: +15% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_1	[[col:green]]Scaling blessing: +8 melee attack, melee defence and leadership.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_1	[[col:green]]Scaling blessing: +8 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_1		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_1_message	Scaling blessing: +8 melee attack, melee defence and leadership.	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_1_message	Scaling blessing: +8 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_1_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_2	[[col:green]]Scaling blessing: +11 melee attack, melee defence and leadership.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_2	[[col:green]]Scaling blessing: +11 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_2		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_2_message	Scaling blessing: +11 melee attack, melee defence and leadership.	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_2_message	Scaling blessing: +11 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_2_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_3	[[col:green]]Scaling blessing: +14 melee attack, melee defence and leadership.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_3	[[col:green]]Scaling blessing: +14 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_3		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_3_message	Scaling blessing: +14 melee attack, melee defence and leadership.	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_3_message	Scaling blessing: +14 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_3_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_4	[[col:green]]Scaling blessing: +17 melee attack, melee defence and leadership.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_4	[[col:green]]Scaling blessing: +17 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_4		false
-scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_4_message	Scaling blessing: +17 melee attack, melee defence and leadership.	false
+scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_4_message	Scaling blessing: +17 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_4_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_hellforge	[[col:green]]Hellforge pact: +10 melee attack, melee defence, leadership and armour, +10% weapon strength, charge, speed, missile strength, range and ammunition. One item leaves the haul after every floor won.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_hellforge	[[col:green]]Hellforge pact: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]][[img:ui/skins/default/icon_stat_armour.png]][[/img]] and +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]][[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]][[img:ui/skins/default/icon_stat_speed.png]][[/img]][[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]][[img:ui/skins/default/icon_stat_range.png]][[/img]][[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_hellforge		false
-scripted_objectives_localised_text_land_enc_tower_buff_hellforge_message	Hellforge pact: +10 melee attack, melee defence, leadership and armour, +10% weapon strength, charge, speed, missile strength, range and ammunition. One item leaves the haul after every floor won.	false
+scripted_objectives_localised_text_land_enc_tower_buff_hellforge_message	Hellforge pact: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]][[img:ui/skins/default/icon_stat_armour.png]][[/img]] and +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]][[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]][[img:ui/skins/default/icon_stat_speed.png]][[/img]][[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]][[img:ui/skins/default/icon_stat_range.png]][[/img]][[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_hellforge_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores	[[col:red]]Enemy army: Poison the stores: its units started at 75% strength.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores	[[col:red]]Poison the stores: enemy units started at 75% strength.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores		false
-scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_message	Enemy army: Poison the stores: its units started at 75% strength.	false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_message	Poison the stores: enemy units started at 75% strength.	false
 scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain	[[col:red]]Enemy army: Kill the captain: it has no heroes.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain	[[col:red]]Kill the captain: the enemy has no heroes.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain		false
-scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain_message	Enemy army: Kill the captain: it has no heroes.	false
+scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain_message	Kill the captain: the enemy has no heroes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks	[[col:red]]Enemy army: Thin the ranks: it fields 4 fewer units.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks	[[col:red]]Thin the ranks: the enemy fields 4 fewer units.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks		false
-scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_message	Enemy army: Thin the ranks: it fields 4 fewer units.	false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_message	Thin the ranks: the enemy fields 4 fewer units.	false
 scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only	[[col:red]]Enemy army: Lower tiers only: it has tier 1-2 units only.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only	[[col:red]]Lower tiers only: the enemy has tier 1-2 units only.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_lower_tiers_only		false
-scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only_message	Enemy army: Lower tiers only: it has tier 1-2 units only.	false
+scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only_message	Lower tiers only: the enemy has tier 1-2 units only.	false
 scripted_objectives_localised_description_land_enc_tower_buff_lower_tiers_only_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit	[[col:red]]Enemy army: Break their spirit: -15 leadership.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit	[[col:red]]Break their spirit: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit		false
-scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_message	Enemy army: Break their spirit: -15 leadership.	false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_message	Break their spirit: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades	[[col:red]]Enemy army: Curse their blades: -10 melee attack.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades	[[col:red]]Curse their blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_message	Enemy army: Curse their blades: -10 melee attack.	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_message	Curse their blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_message		false
