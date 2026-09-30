@@ -1,0 +1,7 @@
+choice_key	order
+#cdir_events_dilemma_choices_tables;1;db/cdir_events_dilemma_choices_tables/land_encounters_and_points_of_interest	
+LEAPOI_TWR_TEND_WOUNDED	100
+LEAPOI_TWR_WAR_RITES	101
+LEAPOI_TWR_LOADED_DICE	102
+LEAPOI_TWR_SEND_A_RUNNER	103
+LEAPOI_TWR_LEAVE	999

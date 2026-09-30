@@ -56,3 +56,6 @@ dummy_land_enc_tower_units_joined_7	ui/campaign ui/effect_bundles/icon_effects_a
 dummy_land_enc_tower_units_joined_8	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_units_joined_9	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
 dummy_land_enc_tower_units_joined_10	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_returns_here	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_loaded_dice	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tower_send_a_runner	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0

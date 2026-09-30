@@ -1,0 +1,5 @@
+key	text	tooltip
+#Loc;1;text/db/land_enc_and_poi_tower_results.loc		
+campaign_localised_strings_string_land_enc_tower_result_loaded_dice_won	[[col:yellow]]Loaded dice:[[/col]] [[col:green]]doubled![[/col]] The haul now holds [[col:yellow]]%s gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_loaded_dice_lost	[[col:yellow]]Loaded dice:[[/col]] [[col:red]]halved.[[/col]] The haul now holds [[col:yellow]]%s gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_send_a_runner	[[col:yellow]]Send a runner:[[/col]] [[col:green]]%s gold[[/col]] reached your treasury. The haul now holds [[col:yellow]]%s gold[[/col]].	false

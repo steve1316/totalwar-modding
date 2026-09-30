@@ -56,3 +56,6 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_7	[[co
 campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_8	[[col:yellow]]8 sworn units[[/col]] already joined the army.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_9	[[col:yellow]]9 sworn units[[/col]] already joined the army.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_units_joined_10	[[col:yellow]]10 sworn units[[/col]] already joined the army.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_returns_here	You return to this choice afterwards.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_loaded_dice	A 50/50 roll: the haul's gold is [[col:green]]doubled[[/col]] or [[col:red]]halved[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_send_a_runner	Send [[col:yellow]]half[[/col]] the haul's gold to your treasury now, safe even if the delve is lost. The runner keeps [[col:yellow]]20%[[/col]].	false
