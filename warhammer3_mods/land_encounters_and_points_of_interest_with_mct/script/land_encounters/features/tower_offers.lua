@@ -7,6 +7,7 @@ local offers_data = require("script/land_encounters/configs/tower_offers")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local tower_army = require("script/land_encounters/features/tower_army")
 local item_pool = require("script/land_encounters/core/item_pool")
+local debug_config = require("script/land_encounters/configs/debug")
 local army_generator = require("script/land_encounters/core/army_generator")
 local Army = require("script/land_encounters/core/army")
 
@@ -534,7 +535,8 @@ function M.choice_key(offer)
     return CHOICE_KEY_PREFIX .. offer.key:upper()
 end
 
---- Draws up to `offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones.
+--- Draws up to `offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones. Eligible offers in
+--- the debug `force_offers` list (configs/debug.lua) are drawn first.
 --- @param delve table The delve record.
 --- @param faction_name string The delving faction.
 --- @param tower TowerState|nil The delve's tower. Offers about the tower itself are not drawn without it.
@@ -546,8 +548,17 @@ function M.draw(delve, faction_name, tower)
     for _, offer in ipairs(offers_data.offers) do
         if eligible(offer, ctx) then pool[#pool + 1] = offer.key end
     end
-    local picked = {}
-    for _ = 1, math.min(offers_data.offers_per_floor, #pool) do
+    local picked, count = {}, 0
+    for _, key in ipairs(debug_config.force_offers) do
+        for i, pooled in ipairs(pool) do
+            if pooled == key and count < offers_data.offers_per_floor then
+                picked[table.remove(pool, i)] = true
+                count = count + 1
+                break
+            end
+        end
+    end
+    for _ = 1, math.min(offers_data.offers_per_floor - count, #pool) do
         picked[table.remove(pool, random_number(#pool))] = true
     end
     local keys = {}

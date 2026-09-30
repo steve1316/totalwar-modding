@@ -14,6 +14,7 @@ local TowerSpot = require("script/land_encounters/core/spot").TowerSpot
 local Army = require("script/land_encounters/core/army")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_offers = require("script/land_encounters/features/tower_offers")
+local debug_config = require("script/land_encounters/configs/debug")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,8 +252,8 @@ local TowerEventDelegate = {
     towers = {},
     --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before,
     --- floor_units, offers, taken, results, climb, battle_bundles, enemy_notices, in_battle }. `haul.units` are sworn units waiting for room
-    --- and `haul.joined` counts those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers taken this delve,
-    --- `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }.
+    --- and `haul.joined` counts those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers
+    --- taken this delve, `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }.
     --- `battle_bundles` are the one-battle bundles on the delving army, `enemy_notices` the sabotage on the floor army being fought, and
     --- `in_battle` is true while a floor battle waits for its result. A delve starts and ends within one turn.
     delves = {},
@@ -470,13 +471,15 @@ function TowerEventDelegate:launch_floor(faction_name)
     --- Offers can replace this floor's record (Blood moon, Soft landing, Tempt fate, Hidden floor) and its army's faction for one floor.
     local next_floor = delve.next_floor or {}
     local floor = next_floor.record or tower_data.floors[delve.floor]
-    local budget = tower_data.budget_by_difficulty[floor.difficulty]
+    --- The debug overrides (configs/debug.lua) replace the difficulty and budget for in-game testing.
+    local difficulty = debug_config.floor_difficulty[delve.floor] or floor.difficulty
+    local budget = #debug_config.floor_budget == 2 and debug_config.floor_budget or tower_data.budget_by_difficulty[difficulty]
     local budget_multiplier = next_floor.budget or 1
     local sabotage = tower_offers.sabotage_options(next_floor)
     local army = Army:new_from_event({
         dilemma = "tower",
         faction = next_floor.faction or tower.faction,
-        difficulty = floor.difficulty,
+        difficulty = difficulty,
         budget_range = { math.floor(budget[1] * budget_multiplier + 0.5), math.floor(budget[2] * budget_multiplier + 0.5) },
         intervention = INTERCEPTION_TYPE,
         force_identifier = "tower_force_" .. faction_name,
@@ -550,7 +553,7 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
         table.remove(delve.haul.items, random_number(#delve.haul.items))
     end
     local candidates = delve.floor_units or {}
-    for _ = 1, math.min(floor.sworn_units, #candidates) do
+    for _ = 1, math.min(debug_config.floor_sworn_units[delve.floor] or floor.sworn_units, #candidates) do
         delve.haul.units[#delve.haul.units + 1] = table.remove(candidates, random_number(#candidates))
     end
     self:swear_in_units(delve)
