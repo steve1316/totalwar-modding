@@ -48,3 +48,27 @@ effect_bundles_localised_title_land_enc_effect_tower_hellforge	Hellforge Pact	fa
 effect_bundles_localised_description_land_enc_effect_tower_hellforge	The army swore a pact in the tower's forges. Its strength burns bright, and the haul pays for it.	false
 effect_bundles_localised_title_land_enc_effect_tower_dividends	Tower Dividends	false
 effect_bundles_localised_description_land_enc_effect_tower_dividends	A share of a tower's vaults, paid into the treasury each turn.	false
+effect_bundles_localised_title_land_enc_effect_tower_whetstones_and_oil	Whetstones and Oil	false
+effect_bundles_localised_description_land_enc_effect_tower_whetstones_and_oil	Every blade in the army was honed and oiled before the next floor.	false
+effect_bundles_localised_title_land_enc_effect_tower_warding_sigils	Warding Sigils	false
+effect_bundles_localised_description_land_enc_effect_tower_warding_sigils	Sigils painted on shields and banners turn blows aside for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_fire_kissed_blades	Fire-Kissed Blades	false
+effect_bundles_localised_description_land_enc_effect_tower_fire_kissed_blades	The army's weapons were passed through the tower's braziers. They burn for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_enchanted_steel	Enchanted Steel	false
+effect_bundles_localised_description_land_enc_effect_tower_enchanted_steel	A charm on the army's weapons bites through spirit and daemon alike for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_quartermasters_cache	Quartermaster's Cache	false
+effect_bundles_localised_description_land_enc_effect_tower_quartermasters_cache	A cache of powder, shot and arrows fills every quiver for the next battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_drill_sergeant	Drill Sergeant	false
+effect_bundles_localised_description_land_enc_effect_tower_drill_sergeant	A hard morning of drill has the army moving and charging faster for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_iron_resolve	Iron Resolve	false
+effect_bundles_localised_description_land_enc_effect_tower_iron_resolve	The army swore to hold whatever comes up the stairs. Nothing frightens it for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_stoneskin	Stoneskin	false
+effect_bundles_localised_description_land_enc_effect_tower_stoneskin	A ward of living stone hardens the army's hide for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_1	Scaling Blessing	false
+effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_1	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_2	Scaling Blessing	false
+effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_2	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_3	Scaling Blessing	false
+effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_3	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_4	Scaling Blessing	false
+effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_4	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false

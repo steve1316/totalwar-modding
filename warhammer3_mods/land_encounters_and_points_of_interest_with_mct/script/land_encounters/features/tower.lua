@@ -250,11 +250,11 @@ local TowerEventDelegate = {
     --- Every tower on the map, one per zone, in zone-name order.
     towers = {},
     --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before,
-    --- floor_units, offers, taken, results, climb, war_rites, in_battle }. `haul.units` are sworn units waiting for room and `haul.joined` counts
-    --- those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers taken this delve,
-    --- `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }. `war_rites`
-    --- is true while the delving army carries the war rites bundle, and `in_battle` while a floor battle waits for its result. A delve starts
-    --- and ends within one turn.
+    --- floor_units, offers, taken, results, climb, battle_bundles, in_battle }. `haul.units` are sworn units waiting for room and `haul.joined`
+    --- counts those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers taken this delve,
+    --- `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }.
+    --- `battle_bundles` are the one-battle bundles on the delving army, and `in_battle` is true while a floor battle waits for its result. A
+    --- delve starts and ends within one turn.
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},

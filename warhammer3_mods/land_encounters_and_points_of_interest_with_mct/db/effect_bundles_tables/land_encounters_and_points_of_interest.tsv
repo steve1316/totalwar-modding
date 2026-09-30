@@ -24,3 +24,15 @@ land_enc_effect_tower_war_rites			force	1	icon_effects_fortify.png	false	false	t
 land_enc_effect_tower_drained			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_hellforge			force	1	icon_effects_fortify.png	true	false	true
 land_enc_effect_tower_dividends			faction	1	treasury.png	true	false	true
+land_enc_effect_tower_whetstones_and_oil			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_warding_sigils			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_fire_kissed_blades			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_enchanted_steel			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_quartermasters_cache			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_drill_sergeant			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_iron_resolve			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_stoneskin			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_scaling_blessing_1			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_scaling_blessing_2			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_scaling_blessing_3			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_scaling_blessing_4			force	1	icon_effects_fortify.png	false	false	true

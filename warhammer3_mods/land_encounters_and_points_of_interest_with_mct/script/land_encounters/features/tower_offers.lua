@@ -129,7 +129,33 @@ local function apply_army_bundle(delve, bundle)
     local force = tower_army.delving_force(delve.general_cqi)
     if not force then return false end
     cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+    log("tower: " .. bundle .. " on force " .. force:command_queue_index() .. ", present: " .. tostring(force:has_effect_bundle(bundle)))
     return true
+end
+
+--- Puts a bundle on the delving army for the next floor's battle only. `M.end_battle_effects` takes it off when that floor resolves.
+--- @param delve table The delve record.
+--- @param bundle string The effect bundle key.
+local function add_battle_bundle(delve, bundle)
+    if not apply_army_bundle(delve, bundle) then return end
+    delve.battle_bundles = delve.battle_bundles or {}
+    delve.battle_bundles[#delve.battle_bundles + 1] = bundle
+end
+
+--- Applies a battle buff: its bundle, or with `per_floor` this floor's version of it.
+--- @param offer table The offer record.
+--- @param ctx table The offer context.
+local function battle_buff(offer, ctx)
+    add_battle_bundle(ctx.delve, offer.effect_bundle .. (offer.per_floor and "_" .. ctx.delve.floor or ""))
+end
+
+--- An offer's gold cost from the haul: its fixed `cost`, or its `cost_share` of the haul's gold.
+--- @param offer table The offer record.
+--- @param delve table The delve record.
+--- @returns number The cost, 0 for a free offer.
+local function offer_cost(offer, delve)
+    if offer.cost_share then return round_gold(delve.haul.gold * offer.cost_share) end
+    return offer.cost or 0
 end
 
 --- Adds an item to the haul unless it already holds it.
@@ -283,11 +309,16 @@ local HANDLERS = {
             if weakest then tower_army.set_strength(weakest.unit, 100) end
         end,
     },
-    war_rites = {
-        apply = function(offer, ctx)
-            if apply_army_bundle(ctx.delve, offer.effect_bundle) then ctx.delve.war_rites = true end
-        end,
-    },
+    war_rites = { apply = battle_buff },
+    whetstones_and_oil = { apply = battle_buff },
+    warding_sigils = { apply = battle_buff },
+    fire_kissed_blades = { apply = battle_buff },
+    enchanted_steel = { apply = battle_buff },
+    quartermasters_cache = { apply = battle_buff },
+    drill_sergeant = { apply = battle_buff },
+    iron_resolve = { apply = battle_buff },
+    stoneskin = { apply = battle_buff },
+    scaling_blessing = { eligible = function(ctx) return has_gold(ctx.delve) end, apply = battle_buff },
     loaded_dice = {
         eligible = function(ctx) return has_gold(ctx.delve) end,
         apply = function(_, ctx)
@@ -386,7 +417,7 @@ local HANDLERS = {
         apply = function(offer, ctx)
             local roll = random_number(4)
             if roll == 1 then
-                if apply_army_bundle(ctx.delve, find("war_rites").effect_bundle) then ctx.delve.war_rites = true end
+                add_battle_bundle(ctx.delve, find("war_rites").effect_bundle)
                 return "roll_the_bones_rites"
             elseif roll == 2 then
                 ctx.delve.haul.gold = ctx.delve.haul.gold + offer.gold
@@ -515,8 +546,9 @@ end
 function M.choice(offer_key, delve, next_floor)
     local offer = find(offer_key)
     if spent(offer, delve) then return { key = M.choice_key(offer), lines = { TAKEN_LINE } } end
-    local affordable = not offer.cost or delve.haul.gold >= offer.cost
-    local lines = { LINE_PREFIX .. offer.key .. (affordable and "" or "_unaffordable") }
+    local affordable = delve.haul.gold >= offer_cost(offer, delve)
+    local line = LINE_PREFIX .. offer.key .. (offer.per_floor and "_" .. delve.floor or "")
+    local lines = { line .. (affordable and "" or "_unaffordable") }
     if offer.stay then
         lines[2] = RETURNS_HERE_LINE
     elseif not offer.bonus_floor then
@@ -547,8 +579,8 @@ function M.take(choice_key, delve, faction_name, extras)
             break
         end
     end
-    if offer == nil or spent(offer, delve) or (offer.cost and delve.haul.gold < offer.cost) then return offer end
-    delve.haul.gold = delve.haul.gold - (offer.cost or 0)
+    if offer == nil or spent(offer, delve) or delve.haul.gold < offer_cost(offer, delve) then return offer end
+    delve.haul.gold = delve.haul.gold - offer_cost(offer, delve)
     delve.taken[offer.key] = true
     local handler = HANDLERS[offer.key]
     if not (handler and handler.apply) then return offer end
@@ -609,10 +641,11 @@ end
 --- Takes the one-battle effects off the delving army once the floor they were bought for is over.
 --- @param delve table The delve record.
 function M.end_battle_effects(delve)
-    if not delve.war_rites then return end
-    delve.war_rites = nil
+    local bundles = delve.battle_bundles or {}
+    delve.battle_bundles = nil
     local force = tower_army.delving_force(delve.general_cqi)
-    if force then cm:remove_effect_bundle_from_force(find("war_rites").effect_bundle, force:command_queue_index()) end
+    if not force then return end
+    for _, bundle in ipairs(bundles) do cm:remove_effect_bundle_from_force(bundle, force:command_queue_index()) end
 end
 
 --- Takes the delve-long effects off the delving army when the delve ends, however it ends.

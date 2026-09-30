@@ -28,8 +28,18 @@ M.offers = {
     { key = "rest_by_the_fire", repeatable = true, heal_share = 0.25, next_budget = 1.1 },
     --- Brings the weakest unit back to full strength when it is below `below` strength points.
     { key = "reforge_the_fallen", cost = 2000, repeatable = true, below = 50 },
-    --- Puts `effect_bundle` on the army for the next floor's battle only.
+    --- Battle buffs put `effect_bundle` on the army for the next floor's battle only. A `per_floor` bundle has one version per floor, named
+    --- with the floor number, and `cost_share` charges that share of the haul's gold instead of a fixed cost.
     { key = "war_rites", cost = 1500, effect_bundle = "land_enc_effect_tower_war_rites" },
+    { key = "whetstones_and_oil", cost = 1000, effect_bundle = "land_enc_effect_tower_whetstones_and_oil" },
+    { key = "warding_sigils", cost = 1500, effect_bundle = "land_enc_effect_tower_warding_sigils" },
+    { key = "fire_kissed_blades", cost = 1000, effect_bundle = "land_enc_effect_tower_fire_kissed_blades" },
+    { key = "enchanted_steel", cost = 1200, effect_bundle = "land_enc_effect_tower_enchanted_steel" },
+    { key = "quartermasters_cache", cost = 800, effect_bundle = "land_enc_effect_tower_quartermasters_cache" },
+    { key = "drill_sergeant", cost = 800, effect_bundle = "land_enc_effect_tower_drill_sergeant" },
+    { key = "iron_resolve", cost = 1000, effect_bundle = "land_enc_effect_tower_iron_resolve" },
+    { key = "stoneskin", cost = 1500, effect_bundle = "land_enc_effect_tower_stoneskin" },
+    { key = "scaling_blessing", cost_share = 0.25, per_floor = true, effect_bundle = "land_enc_effect_tower_scaling_blessing" },
     --- The next floor's army budget is multiplied by `next_budget`.
     { key = "bribe_the_guards", cost = 1500, next_budget = 0.8 },
     --- A 50/50 roll that doubles the haul's gold or halves it.
