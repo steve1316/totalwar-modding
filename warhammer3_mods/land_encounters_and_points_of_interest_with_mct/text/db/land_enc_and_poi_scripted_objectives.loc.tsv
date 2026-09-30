@@ -56,3 +56,27 @@ scripted_objectives_localised_text_land_enc_tower_buff_hellforge	[[col:green]]He
 scripted_objectives_localised_description_land_enc_tower_buff_hellforge		false
 scripted_objectives_localised_text_land_enc_tower_buff_hellforge_message	Hellforge pact: +10 melee attack, melee defence, leadership and armour, +10% weapon strength, charge, speed, missile strength, range and ammunition. One item leaves the haul after every floor won.	false
 scripted_objectives_localised_description_land_enc_tower_buff_hellforge_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores	[[col:red]]Enemy army: Poison the stores: its units started at 75% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_message	Enemy army: Poison the stores: its units started at 75% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain	[[col:red]]Enemy army: Kill the captain: it has no heroes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain		false
+scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain_message	Enemy army: Kill the captain: it has no heroes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks	[[col:red]]Enemy army: Thin the ranks: it fields 4 fewer units.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_message	Enemy army: Thin the ranks: it fields 4 fewer units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only	[[col:red]]Enemy army: Lower tiers only: it has tier 1-2 units only.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lower_tiers_only		false
+scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only_message	Enemy army: Lower tiers only: it has tier 1-2 units only.	false
+scripted_objectives_localised_description_land_enc_tower_buff_lower_tiers_only_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit	[[col:red]]Enemy army: Break their spirit: -15 leadership.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_message	Enemy army: Break their spirit: -15 leadership.	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades	[[col:red]]Enemy army: Curse their blades: -10 melee attack.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_message	Enemy army: Curse their blades: -10 melee attack.	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_message		false

@@ -42,6 +42,14 @@ M.offers = {
     { key = "scaling_blessing", cost_share = 0.25, per_floor = true, effect_bundle = "land_enc_effect_tower_scaling_blessing" },
     --- The next floor's army budget is multiplied by `next_budget`.
     { key = "bribe_the_guards", cost = 1500, next_budget = 0.8 },
+    --- Sabotage weakens the next floor's army. `no_heroes`, `fewer_units` (off its unit cap) and `max_tier` (its highest unit tier) shape how it
+    --- is built. `enemy_strength` (each unit's starting strength) and `enemy_bundle` are put on it once it spawns.
+    { key = "poison_the_stores", cost = 1000, enemy_strength = 0.75 },
+    { key = "kill_the_captain", cost = 1500, no_heroes = true },
+    { key = "thin_the_ranks", cost = 1200, fewer_units = 4 },
+    { key = "lower_tiers_only", cost = 1000, max_tier = 2 },
+    { key = "break_their_spirit", cost = 1000, enemy_bundle = "land_enc_effect_tower_break_their_spirit" },
+    { key = "curse_their_blades", cost = 1200, enemy_bundle = "land_enc_effect_tower_curse_their_blades" },
     --- A 50/50 roll that doubles the haul's gold or halves it.
     { key = "loaded_dice", stay = true },
     --- Sends `share` of the haul's gold to the treasury, keeping it safe from a loss. The runner keeps `fee` of it.

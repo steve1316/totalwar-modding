@@ -93,15 +93,19 @@ local function heal(offer, ctx)
     tower_army.heal_army(ctx.delve.general_cqi, offer.heal_share)
 end
 
---- Adds changes to the next floor on the delve. Budget and gold multipliers stack, and any other field replaces what was there: `record`
---- (a floor record fought instead), `faction` (the army's faction), `rarity_shift`, `double_or_nothing` (the loss limit) and `bonus` (a hidden floor).
+--- Adds changes to the next floor on the delve. Budget and gold multipliers stack, `sabotage` offer keys add up in the order taken, and any
+--- other field replaces what was there: `record` (a floor record fought instead), `faction` (the army's faction), `rarity_shift`,
+--- `double_or_nothing` (the loss limit) and `bonus` (a hidden floor).
 --- @param delve table The delve record.
---- @param changes table The changes: { budget, gold, record, faction, rarity_shift, double_or_nothing, bonus }.
+--- @param changes table The changes: { budget, gold, sabotage, record, faction, rarity_shift, double_or_nothing, bonus }.
 local function change_next_floor(delve, changes)
     local next_floor = delve.next_floor or {}
     for key, value in pairs(changes) do
         if key == "budget" or key == "gold" then
             next_floor[key] = (next_floor[key] or 1) * value
+        elseif key == "sabotage" then
+            next_floor.sabotage = next_floor.sabotage or {}
+            next_floor.sabotage[#next_floor.sabotage + 1] = value
         else
             next_floor[key] = value
         end
@@ -151,6 +155,13 @@ end
 --- @param ctx table The offer context.
 local function battle_buff(offer, ctx)
     add_battle_bundle(ctx.delve, offer.effect_bundle .. (offer.per_floor and "_" .. ctx.delve.floor or ""))
+end
+
+--- Applies a sabotage offer: the next floor's army is built and marked with it, see `M.sabotage_options`.
+--- @param offer table The offer record.
+--- @param ctx table The offer context.
+local function sabotage(offer, ctx)
+    change_next_floor(ctx.delve, { sabotage = offer.key })
 end
 
 --- An offer's gold cost from the haul: its fixed `cost`, or its `cost_share` of the haul's gold.
@@ -367,6 +378,12 @@ local HANDLERS = {
     },
     greedy_climb = { apply = function(offer, ctx) change_next_floor(ctx.delve, { budget = offer.next_budget, gold = offer.next_gold }) end },
     bribe_the_guards = { apply = function(offer, ctx) change_next_floor(ctx.delve, { budget = offer.next_budget }) end },
+    poison_the_stores = { apply = sabotage },
+    kill_the_captain = { apply = sabotage },
+    thin_the_ranks = { apply = sabotage },
+    lower_tiers_only = { apply = sabotage },
+    break_their_spirit = { apply = sabotage },
+    curse_their_blades = { apply = sabotage },
     --- The unit offers' payloads add their units, so taking them only needs the gold paid.
     ransom_a_captive = {
         eligible = function(ctx, offer)
@@ -642,8 +659,29 @@ function M.grey_out_taken(delve, dilemma_key)
     end
 end
 
---- Hands the buffs on the delving army to the next battle's script, which announces them: the one-battle buffs, then the Hellforge pact. The list
---- is comma-separated bundle names without `BUNDLE_PREFIX`. No delve hands over an empty list.
+--- Turns the sabotage taken for the next floor into what its army needs: generator options (`no_heroes`, `fewer_units`, `max_tier`) and what is
+--- put on it once it spawns (`enemy_strength`, the lowest taken, and `enemy_bundles`).
+--- @param next_floor table|nil The delve's next-floor changes.
+--- @returns table The options, with `enemy_bundles` nil when no bundle was taken.
+function M.sabotage_options(next_floor)
+    local options = {}
+    for _, key in ipairs(next_floor and next_floor.sabotage or {}) do
+        local offer = find(key)
+        options.no_heroes = options.no_heroes or offer.no_heroes
+        options.fewer_units = offer.fewer_units and (options.fewer_units or 0) + offer.fewer_units or options.fewer_units
+        options.max_tier = offer.max_tier and math.min(options.max_tier or offer.max_tier, offer.max_tier) or options.max_tier
+        options.enemy_strength = offer.enemy_strength and math.min(options.enemy_strength or 1, offer.enemy_strength) or options.enemy_strength
+        if offer.enemy_bundle then
+            options.enemy_bundles = options.enemy_bundles or {}
+            options.enemy_bundles[#options.enemy_bundles + 1] = offer.enemy_bundle
+        end
+    end
+    return options
+end
+
+--- Hands the buffs on the delving army to the next battle's script, which announces them: the one-battle buffs, the Hellforge pact, then the
+--- sabotage on the enemy. The list is comma-separated bundle names without `BUNDLE_PREFIX`, then sabotage offer keys. No delve hands over an
+--- empty list.
 --- @param delve table|nil The delve record.
 function M.hand_buffs_to_battle(delve)
     local names, seen = {}, {}
@@ -656,6 +694,7 @@ function M.hand_buffs_to_battle(delve)
             names[#names + 1] = bundle:sub(#BUNDLE_PREFIX + 1)
         end
     end
+    for _, key in ipairs(delve and delve.enemy_notices or {}) do names[#names + 1] = key end
     core:svr_save_string(BATTLE_BUFFS_SVR_KEY, table.concat(names, ","))
 end
 
@@ -663,6 +702,7 @@ end
 --- @param delve table The delve record.
 function M.end_battle_effects(delve)
     M.hand_buffs_to_battle(nil)
+    delve.enemy_notices = nil
     local bundles = delve.battle_bundles or {}
     delve.battle_bundles = nil
     local force = tower_army.delving_force(delve.general_cqi)

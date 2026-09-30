@@ -602,6 +602,8 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     end
                 end
 
+                self:weaken_invasion_force(invasion_general:military_force())
+
                 local faction_being_declared_war_to = declaring_faction_name
                 if faction_being_declared_war_to == self.event_army.faction then
                     --- The flag stays set until BattleCompleted, so a restarted battle keeps it.
@@ -658,6 +660,22 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
         false,
         false
     )
+end
+
+--- Puts the event army's sabotage on its spawned force: each of `enemy_bundles`, and every unit but the characters at `enemy_strength` of full
+--- strength. Armies without them are left alone.
+--- @param force military_force The spawned invasion force.
+function InvasionBattleManager:weaken_invasion_force(force)
+    local army = self.event_army
+    for _, bundle in ipairs(army.enemy_bundles or {}) do
+        cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+    end
+    if not army.enemy_strength then return end
+    local units = force:unit_list()
+    for i = 0, units:num_items() - 1 do
+        local unit = units:item_at(i)
+        if unit:unit_class() ~= "com" then cm:set_unit_hp_to_unary_of_maximum(unit, army.enemy_strength) end
+    end
 end
 
 --- Applies the encounter lord's trait (if any) to the invasion general.

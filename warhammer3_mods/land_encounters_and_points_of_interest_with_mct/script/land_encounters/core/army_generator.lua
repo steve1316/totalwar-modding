@@ -87,16 +87,18 @@ local function unit_price(unit)
     return unit.multiplayer_cost or 0
 end
 
---- Builds per-role pools of the faction's buyable units across every tier. Each unit appears once, from its first enabled listing.
---- Tiers and unit types are walked in a fixed order so every multiplayer client builds identical pools.
+--- Builds per-role pools of the faction's buyable units across every tier up to `max_tier`. Each unit appears once, from its first enabled
+--- listing. Tiers and unit types are walked in a fixed order so every multiplayer client builds identical pools.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param origins table The allowed-origin set from `enabled_origins`.
+--- @param max_tier number|nil The highest tier to take units from, or nil for every tier.
 --- @returns table A role -> array of { land_unit, unit_type, price, is_renown } map, each array sorted by price, with a `median` price field.
-local function build_role_pools(faction_shorthand_key, origins)
+local function build_role_pools(faction_shorthand_key, origins, max_tier)
     local pools = { frontline = {}, missile = {}, cavalry = {}, monsters = {}, artillery = {} }
     local seen = {}
     local units_by_tier = factions_data[faction_shorthand_key].units
-    for _, tier_name in ipairs(TIER_NAMES) do
+    for tier, tier_name in ipairs(TIER_NAMES) do
+        if max_tier and tier - 1 > max_tier then break end
         for _, unit_type in ipairs(UNIT_TYPES) do
             local role = archetypes.role_by_unit_type[unit_type]
             for _, unit in ipairs(units_by_tier[tier_name] and units_by_tier[tier_name][unit_type] or {}) do
@@ -260,7 +262,8 @@ end
 --- Builds a force makeup for the faction and difficulty by spending a rolled gold budget on a spine and then on the archetype's roles.
 --- @param difficulty_key string The difficulty key ("easy", "medium" or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
---- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget) and `budget_range`
+--- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget), the tower's
+--- sabotage (`no_heroes`, `fewer_units` taken off the unit cap and `max_tier`, the highest unit tier) and `budget_range`
 --- ({min, max} gold that replaces the difficulty's MCT range).
 --- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields.
 function M.generate(difficulty_key, faction_shorthand_key, options)
@@ -269,11 +272,12 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     local budget_range = options.budget_range or settings.difficulties[difficulty_key].budget
     local origins = enabled_origins()
     local lord, heroes = pick_lord_and_heroes(difficulty_key, faction_shorthand_key, origins)
-    local pools = build_role_pools(faction_shorthand_key, origins)
+    if options.no_heroes then heroes = {} end
+    local pools = build_role_pools(faction_shorthand_key, origins, options.max_tier)
     local archetype = pick_archetype(pools, options.archetype_keys)
     local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1))
 
-    local army = { units = {}, copies = {}, budget_left = budget_roll, slots_left = ARMY_UNIT_CAP - 1 - #heroes }
+    local army = { units = {}, copies = {}, budget_left = budget_roll, slots_left = ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0) }
     for _, unit_type in ipairs(UNIT_TYPES) do
         army.units[unit_type] = {}
     end
@@ -339,7 +343,8 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     end
 
     local spent = budget - army.budget_left
-    out("INFO - Generated a " .. archetype.key .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. (ARMY_UNIT_CAP - 1 - #heroes - army.slots_left) .. " units.")
+    local bought = ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0) - army.slots_left
+    out("INFO - Generated a " .. archetype.key .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. bought .. " units.")
     return { lord = lord, heroes = heroes, units = army.units, archetype = archetype.key, budget = budget, spent = spent }
 end
 

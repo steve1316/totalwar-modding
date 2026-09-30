@@ -250,11 +250,11 @@ local TowerEventDelegate = {
     --- Every tower on the map, one per zone, in zone-name order.
     towers = {},
     --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before,
-    --- floor_units, offers, taken, results, climb, battle_bundles, in_battle }. `haul.units` are sworn units waiting for room and `haul.joined`
-    --- counts those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers taken this delve,
+    --- floor_units, offers, taken, results, climb, battle_bundles, enemy_notices, in_battle }. `haul.units` are sworn units waiting for room
+    --- and `haul.joined` counts those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers taken this delve,
     --- `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }.
-    --- `battle_bundles` are the one-battle bundles on the delving army, and `in_battle` is true while a floor battle waits for its result. A
-    --- delve starts and ends within one turn.
+    --- `battle_bundles` are the one-battle bundles on the delving army, `enemy_notices` the sabotage on the floor army being fought, and
+    --- `in_battle` is true while a floor battle waits for its result. A delve starts and ends within one turn.
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},
@@ -472,6 +472,7 @@ function TowerEventDelegate:launch_floor(faction_name)
     local floor = next_floor.record or tower_data.floors[delve.floor]
     local budget = tower_data.budget_by_difficulty[floor.difficulty]
     local budget_multiplier = next_floor.budget or 1
+    local sabotage = tower_offers.sabotage_options(next_floor)
     local army = Army:new_from_event({
         dilemma = "tower",
         faction = next_floor.faction or tower.faction,
@@ -480,7 +481,13 @@ function TowerEventDelegate:launch_floor(faction_name)
         intervention = INTERCEPTION_TYPE,
         force_identifier = "tower_force_" .. faction_name,
         invasion_identifier = FLOOR_INVASION_PREFIX .. faction_name,
+        no_heroes = sabotage.no_heroes,
+        fewer_units = sabotage.fewer_units,
+        max_tier = sabotage.max_tier,
     }, general:faction():subculture())
+    --- The battle manager puts these on the floor army once it spawns.
+    army.enemy_strength = sabotage.enemy_strength
+    army.enemy_bundles = sabotage.enemy_bundles
 
     local ibm = self.invasion_battle_manager
     if not ibm:can_generate_battle(army, tower.coordinates) then
@@ -494,6 +501,7 @@ function TowerEventDelegate:launch_floor(faction_name)
     end
     ibm:generate_battle(army, general, tower.coordinates)
     delve.in_battle = true
+    delve.enemy_notices = next_floor.sabotage
     tower_offers.hand_buffs_to_battle(delve)
     --- The army's units are only fixed once the battle is generated. Its lord and heroes are kept apart from `units`, so none can be sworn.
     delve.floor_units = {}
