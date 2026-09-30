@@ -120,3 +120,11 @@ SECOND	land_enc_dilemma_tower_enter
 FIRST	land_enc_dilemma_tower_deeper		
 SECOND	land_enc_dilemma_tower_deeper		
 FIRST	land_enc_dilemma_tower_claim		
+FIRST	land_enc_dilemma_tower_deeper_floor_1		
+SECOND	land_enc_dilemma_tower_deeper_floor_1		
+FIRST	land_enc_dilemma_tower_deeper_floor_2		
+SECOND	land_enc_dilemma_tower_deeper_floor_2		
+FIRST	land_enc_dilemma_tower_deeper_floor_3		
+SECOND	land_enc_dilemma_tower_deeper_floor_3		
+FIRST	land_enc_dilemma_tower_deeper_floor_4		
+SECOND	land_enc_dilemma_tower_deeper_floor_4		

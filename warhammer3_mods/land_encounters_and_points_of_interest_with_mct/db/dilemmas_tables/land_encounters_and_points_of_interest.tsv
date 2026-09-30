@@ -50,3 +50,7 @@ land_enc_dilemma_smithy_forge_level_3	false			faction	false	Event	UI_CAM_EVENT_D
 land_enc_dilemma_tower_enter	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tower_deeper	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tower_claim	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tower_deeper_floor_1	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tower_deeper_floor_2	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tower_deeper_floor_3	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tower_deeper_floor_4	false			faction	false	Event	UI_CAM_EVENT_Dilemma			false

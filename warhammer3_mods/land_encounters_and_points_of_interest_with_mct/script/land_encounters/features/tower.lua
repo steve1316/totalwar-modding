@@ -22,7 +22,8 @@ local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
 --- Dilemma offered when a lord enters an open tower.
 local EVENT_ENTER = "land_enc_dilemma_tower_enter"
---- Dilemma offered after winning every floor but the last.
+--- Dilemma offered after winning every floor but the last. The floor number is appended, so each floor's description can show the climb so
+--- far. The bare key is still handled, since older saves can hold a dilemma opened with it.
 local EVENT_DEEPER = "land_enc_dilemma_tower_deeper"
 --- One-choice dilemma that pays the full haul after the last floor.
 local EVENT_CLAIM = "land_enc_dilemma_tower_claim"
@@ -365,7 +366,7 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
         if pending == nil or choice ~= FIRST_OPTION then return end
         self.delves[faction_name] = { zone_name = pending.zone_name, general_cqi = pending.general_cqi, floor = 1, haul = { gold = 0, items = {}, units = {} } }
         self:launch_floor(faction_name)
-    elseif key == EVENT_DEEPER then
+    elseif key == EVENT_DEEPER or key:sub(1, #EVENT_DEEPER + 7) == EVENT_DEEPER .. "_floor_" then
         local delve = self.delves[faction_name]
         if delve == nil then return end
         if choice == FIRST_OPTION then
@@ -457,7 +458,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         launch_dilemma(EVENT_CLAIM, { payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul, delve.general_cqi) }, faction_name)
         return
     end
-    launch_dilemma(EVENT_DEEPER, {
+    launch_dilemma(EVENT_DEEPER .. "_floor_" .. delve.floor, {
         { key = "FIRST", lines = { "dummy_land_enc_tower_descend_floor_" .. (delve.floor + 1) } },
         payout_choice("SECOND", "dummy_land_enc_tower_leave", delve.haul, delve.general_cqi),
     }, faction_name)

@@ -18,6 +18,10 @@ M.tavern = {}
 M.tower_spot = {
     "land_enc_dilemma_tower_enter",
     "land_enc_dilemma_tower_deeper",
+    "land_enc_dilemma_tower_deeper_floor_1",
+    "land_enc_dilemma_tower_deeper_floor_2",
+    "land_enc_dilemma_tower_deeper_floor_3",
+    "land_enc_dilemma_tower_deeper_floor_4",
     "land_enc_dilemma_tower_claim",
 }
 
