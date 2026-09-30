@@ -76,6 +76,21 @@ M.offers = {
     { key = "elite_recruit", cost = 2500, count = 2, tiers = { 4, 5 } },
     { key = "conscripts", cost = 500, count = 2, tiers = { 1 } },
     { key = "captured_war_machine", cost = 2000, count = 1, tiers = { 1, 2, 3, 4, 5 }, unit_types = { "warmachine" }, from_tower = true },
+    --- Regiment of renown shows one Regiment of Renown of the delving faction's culture that the army does not already field.
+    { key = "regiment_of_renown", cost = 3000, count = 1 },
+    --- Gives `count` random regular units `ranks` ranks each. Units already within `ranks` of `max_rank` are skipped.
+    { key = "veterans_oath", cost = 1500, count = 3, ranks = 2, max_rank = 9 },
+    --- Trades the weakest regular unit for a random unit from the army just beaten.
+    { key = "swap_the_chaff" },
+    --- Removes the weakest regular unit and heals every other unit to full.
+    { key = "blood_price" },
+    --- Gives the delving lord `ranks` ranks.
+    { key = "lessons_in_blood", cost = 1000, ranks = 2 },
+    { key = "rousing_speech", cost = 500, effect_bundle = "land_enc_effect_tower_rousing_speech" },
+    --- Faction offers put `effect_bundle` on the delving faction for `turns` turns.
+    { key = "towers_favour", cost = 1000, stay = true, effect_bundle = "land_enc_effect_tower_towers_favour", turns = 5 },
+    { key = "research_scrolls", cost = 1000, stay = true, effect_bundle = "land_enc_effect_tower_research_scrolls", turns = 5 },
+    { key = "recruitment_cache", cost = 1000, stay = true, effect_bundle = "land_enc_effect_tower_recruitment_cache", turns = 5 },
     --- The next floor's gold doubles when the army loses under `max_loss` strength points on it, and is lost otherwise.
     { key = "double_or_nothing", max_loss = 25 },
     --- Puts `effect_bundle` on the army for the rest of the delve. One haul item is lost after every floor won from then on.

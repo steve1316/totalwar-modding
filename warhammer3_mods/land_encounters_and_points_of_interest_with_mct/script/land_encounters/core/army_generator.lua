@@ -349,13 +349,16 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
 end
 
 --- Picks random units of a faction for the tower's unit offers: buyable units of the given tiers and unit types from enabled origins,
---- never Regiments of Renown. A unit can be picked more than once.
+--- never Regiments of Renown unless `options.renown` asks for only them. A unit can be picked more than once.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param tiers table Tier numbers to pick from, e.g. { 4, 5 }.
 --- @param unit_types table|nil Unit-type buckets to pick from, or nil for every type.
 --- @param count number How many units to pick.
+--- @param options table|nil { renown = true to pick only Regiments of Renown, exclude = a unit key -> true set to leave out }.
 --- @returns table Unit keys, empty when the faction has no data or no unit qualifies.
-function M.pick_units(faction_shorthand_key, tiers, unit_types, count)
+function M.pick_units(faction_shorthand_key, tiers, unit_types, count, options)
+    options = options or {}
+    local exclude = options.exclude or {}
     local data = factions_data[faction_shorthand_key]
     local pool, seen, picked = {}, {}, {}
     if data == nil then return picked end
@@ -364,7 +367,8 @@ function M.pick_units(faction_shorthand_key, tiers, unit_types, count)
         local units = data.units["tier_" .. tier] or {}
         for _, unit_type in ipairs(unit_types or UNIT_TYPES) do
             for _, unit in ipairs(units[unit_type] or {}) do
-                if unit_price(unit) > 0 and origins[unit.origin] and not is_renown(unit) and not seen[unit.land_unit] then
+                if unit_price(unit) > 0 and origins[unit.origin] and is_renown(unit) == (options.renown == true) and not exclude[unit.land_unit]
+                    and not seen[unit.land_unit] then
                     seen[unit.land_unit] = true
                     pool[#pool + 1] = unit.land_unit
                 end

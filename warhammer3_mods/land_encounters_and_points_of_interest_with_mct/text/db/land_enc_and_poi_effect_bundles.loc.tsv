@@ -68,6 +68,8 @@ effect_bundles_localised_title_land_enc_effect_tower_break_their_spirit	Broken S
 effect_bundles_localised_description_land_enc_effect_tower_break_their_spirit	Word of what waits above has spread through the ranks. This army fights afraid.	false
 effect_bundles_localised_title_land_enc_effect_tower_curse_their_blades	Cursed Blades	false
 effect_bundles_localised_description_land_enc_effect_tower_curse_their_blades	A curse dulls every blade in this army.	false
+effect_bundles_localised_title_land_enc_effect_tower_rousing_speech	Rousing Speech	false
+effect_bundles_localised_description_land_enc_effect_tower_rousing_speech	The lord's words still ring in every ear. The army fights the next battle with fire in its heart.	false
 effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_1	Scaling Blessing	false
 effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_1	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false
 effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_2	Scaling Blessing	false
@@ -76,3 +78,9 @@ effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_3	Scaling 
 effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_3	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false
 effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_4	Scaling Blessing	false
 effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_4	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_towers_favour	Tower's Favour	false
+effect_bundles_localised_description_land_enc_effect_tower_towers_favour	The tower's masters speak well of us. Trade flows a little easier.	false
+effect_bundles_localised_title_land_enc_effect_tower_research_scrolls	Research Scrolls	false
+effect_bundles_localised_description_land_enc_effect_tower_research_scrolls	Scrolls from the tower's library keep our scholars busy.	false
+effect_bundles_localised_title_land_enc_effect_tower_recruitment_cache	Recruitment Cache	false
+effect_bundles_localised_description_land_enc_effect_tower_recruitment_cache	Arms and armour from a tower cache make every new regiment cheaper to raise.	false

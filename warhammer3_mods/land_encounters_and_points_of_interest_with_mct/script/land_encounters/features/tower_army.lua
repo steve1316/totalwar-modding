@@ -28,7 +28,8 @@ end
 
 --- Lists the delving army's units with their strength.
 --- @param general_cqi number The delving lord's command queue index.
---- @returns table An array of { unit = unit interface, strength = 0-100 } in army order, empty when the lord leads no army.
+--- @returns table An array of { unit = unit interface, strength = 0-100, index = 0-based position, character = true for the lord and heroes } in
+--- army order, empty when the lord leads no army.
 function M.unit_strengths(general_cqi)
     local force = M.delving_force(general_cqi)
     local list = {}
@@ -36,9 +37,43 @@ function M.unit_strengths(general_cqi)
     local units = force:unit_list()
     for i = 0, units:num_items() - 1 do
         local unit = units:item_at(i)
-        list[#list + 1] = { unit = unit, strength = unit:percentage_proportion_of_full_strength() }
+        list[#list + 1] = { unit = unit, strength = unit:percentage_proportion_of_full_strength(), index = i, character = unit:unit_class() == "com" }
     end
     return list
+end
+
+--- Lists the delving army's regular units, leaving out the lord and heroes.
+--- @param general_cqi number The delving lord's command queue index.
+--- @returns table The `unit_strengths` entries that are not characters.
+function M.regular_units(general_cqi)
+    local list = {}
+    for _, entry in ipairs(M.unit_strengths(general_cqi)) do
+        if not entry.character then list[#list + 1] = entry end
+    end
+    return list
+end
+
+--- Finds the delving army's weakest regular unit, the first one on a tie.
+--- @param general_cqi number The delving lord's command queue index.
+--- @returns table|nil Its `unit_strengths` entry, or nil when the army has no regular unit.
+function M.weakest_regular_unit(general_cqi)
+    local weakest = nil
+    for _, entry in ipairs(M.regular_units(general_cqi)) do
+        if not weakest or entry.strength < weakest.strength then weakest = entry end
+    end
+    return weakest
+end
+
+--- Writes the delving army's units to the log, one "position:unit key strength% rRank" entry each, so an offer's change can be checked.
+--- @param general_cqi number The delving lord's command queue index.
+--- @param label string What the snapshot is, e.g. "before Swap the chaff".
+function M.log_army(general_cqi, label)
+    local parts = {}
+    for _, entry in ipairs(M.unit_strengths(general_cqi)) do
+        parts[#parts + 1] = entry.index .. ":" .. entry.unit:unit_key() .. " " .. math.floor(entry.strength + 0.5) .. "% r" .. entry.unit:experience_level()
+            .. (entry.character and " (character)" or "")
+    end
+    log("tower army " .. label .. " (" .. #parts .. " units): " .. table.concat(parts, ", "))
 end
 
 --- Sets one unit's strength.
