@@ -7,7 +7,6 @@ local offers_data = require("script/land_encounters/configs/tower_offers")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local tower_army = require("script/land_encounters/features/tower_army")
 local item_pool = require("script/land_encounters/core/item_pool")
-local army_generator = require("script/land_encounters/core/army_generator")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,28 +31,20 @@ local M = {}
 --- @param key string The offer key.
 --- @returns table|nil The offer record.
 local function find(key)
-    for _, offer in ipairs(offers_data.offers) do
-        if offer.key == key then return offer end
-    end
-    return nil
+    return offers_data.by_key[key]
 end
 
---- Rounds gold to the tower's gold step.
---- @param gold number The gold amount.
---- @returns number The amount rounded to a multiple of `tower_data.gold_step`.
-local function round_gold(gold)
-    return math.floor(gold / tower_data.gold_step + 0.5) * tower_data.gold_step
-end
-
---- Fills a result line template from the tower results loc.
+--- Fills a result line template from the tower results loc. The offers' result lines use it too.
 --- @param name string The template name after `RESULT_LOC_PREFIX`.
 --- @param ... any The values for its `%s` slots.
 --- @returns string|nil The line, or nil when the template is missing.
-local function result_line(name, ...)
+function M.result_line(name, ...)
     local template = common.get_localised_string(RESULT_LOC_PREFIX .. name)
     if template == "" then return nil end
     return string.format(template, ...)
 end
+
+local result_line = M.result_line
 
 --- Splits a "key=value,key=value" svr string.
 --- @param key string The svr key.
@@ -129,12 +120,8 @@ function M.hand_to_battle(delve)
         local offer = find(key)
         local value = offer.battle_value
         if key == "trophy_hunt" then
-            local best, price = nil, -1
-            for _, unit in ipairs(delve.floor_units or {}) do
-                local cost = army_generator.unit_price_by_key(unit)
-                if cost > price then best, price = unit, cost end
-            end
-            delve.trophy, value = best, best
+            delve.trophy = tower_army.most_expensive(delve.floor_units or {}, 1)[1]
+            value = delve.trophy
         elseif key == "guard_the_standard" and delve.standard then
             value = delve.standard.key .. "#" .. delve.standard.nth
         end
@@ -187,13 +174,13 @@ function M.settle(delve, faction_name, outcomes, floor)
         elseif not mission.met then
             line = result_line("mission_failed_" .. offer.key)
         elseif offer.gold_share or offer.gold then
-            local gold = offer.gold or round_gold(floor.gold * offer.gold_share)
+            local gold = offer.gold or tower_data.round_gold(floor.gold * offer.gold_share)
             delve.haul.gold = delve.haul.gold + gold
             line = result_line("mission_met_" .. offer.key, gold)
         elseif offer.item_rarity or offer.floor_item then
             local rarities = offer.floor_item and floor.record.item_rarities or (offer.item_rarity ~= "legendary" and { offer.item_rarity }) or nil
             local item = reward_item(faction_name, rarities)
-            if item then delve.haul.items[#delve.haul.items + 1] = item end
+            if item then tower_data.add_items(delve.haul, { item }) end
             line = result_line("mission_met_" .. offer.key)
         elseif offer.unit_ranks then
             local entry = outcomes.standard and standard_unit(delve, outcomes.standard)
@@ -210,14 +197,15 @@ function M.settle(delve, faction_name, outcomes, floor)
             end
             line = result_line("mission_met_" .. offer.key)
         elseif offer.lord_ranks then
-            local general = cm:get_character_by_cqi(delve.general_cqi)
-            if general and not general:is_null_interface() then cm:add_agent_experience(cm:char_lookup_str(general), offer.lord_ranks, true) end
+            local general = tower_army.character(delve.general_cqi)
+            if general then cm:add_agent_experience(cm:char_lookup_str(general), offer.lord_ranks, true) end
             line = result_line("mission_met_" .. offer.key)
         elseif offer.sworn_copy and outcomes.trophy then
             delve.haul.units[#delve.haul.units + 1] = outcomes.trophy
             line = result_line("mission_met_" .. offer.key)
         end
-        log("tower: mission " .. offer.key .. " " .. (outcomes.untracked and "not counted" or mission.met and "met" or "failed") .. ", haul " .. delve.haul.gold .. " gold, " .. #delve.haul.items .. " items")
+        log("tower: mission " .. offer.key .. " " .. (outcomes.untracked and "not counted" or mission.met and "met" or "failed") .. ", haul " .. delve.haul.gold .. " gold, "
+            .. #delve.haul.items .. " items")
         if line then lines[#lines + 1] = line end
     end
     local rival = outcomes.rival

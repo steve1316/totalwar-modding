@@ -30,13 +30,7 @@ local function vanilla_heroes(shorthand)
 end
 
 --- Finds a living character by command queue index.
---- @param cqi number The character's command queue index.
---- @returns userdata|nil The character, or nil when gone.
-local function character(cqi)
-    local found = cm:get_character_by_cqi(cqi)
-    if not found or found:is_null_interface() then return nil end
-    return found
-end
+local character = tower_army.character
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

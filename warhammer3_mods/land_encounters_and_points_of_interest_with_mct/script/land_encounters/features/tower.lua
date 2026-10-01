@@ -17,6 +17,8 @@ local tower_offers = require("script/land_encounters/features/tower_offers")
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
+local tower_battlefields = require("script/land_encounters/features/tower_battlefields")
+local offers_data = require("script/land_encounters/configs/tower_offers")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,15 +26,12 @@ local tower_missions = require("script/land_encounters/features/tower_missions")
 
 local FIRST_OPTION = 0
 
---- Leave's index on the older shared go-deeper dilemma, which only has Climb and Leave. The per-floor dilemmas route by choice key.
-local CHOICE_LEAVE_SHARED_DILEMMA = 1
-
 local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
 --- Dilemma offered when a lord enters an open tower.
 local EVENT_ENTER = "land_enc_dilemma_tower_enter"
---- Dilemma offered after winning every floor but the last. The floor number is appended, so each floor's description can show the climb so
---- far. The bare key is still handled, since older saves can hold a dilemma opened with it.
+--- Dilemma offered after winning every floor but the last. "_floor_" and the floor number are appended, so each floor's description can
+--- show the climb so far.
 local EVENT_DEEPER = "land_enc_dilemma_tower_deeper"
 --- One-choice dilemma that pays the full haul after the last floor.
 local EVENT_CLAIM = "land_enc_dilemma_tower_claim"
@@ -105,13 +104,20 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
 
+--- The enabled faction shorthands, sorted so every multiplayer client walks them in the same order.
+--- @returns table An array of faction shorthands.
+local function sorted_faction_keys()
+    local keys = get_enabled_faction_keys()
+    table.sort(keys)
+    return keys
+end
+
 --- Returns a picker that hands out the enabled faction shorthands in a shuffled order, skipping ones already taken, and starts over once
 --- every faction is used. The shorthands are sorted before the shuffle so every multiplayer client sees the same order.
 --- @param taken table Shorthand -> true set of factions restored towers already hold.
 --- @returns function A function that returns the next faction shorthand.
 local function faction_picker(taken)
-    local keys = get_enabled_faction_keys()
-    table.sort(keys)
+    local keys = sorted_faction_keys()
     local queue = {}
     for _, key in ipairs(keys) do
         if not taken[key] then queue[#queue + 1] = key end
@@ -182,20 +188,6 @@ local function army_budget_text(budget, multiplier)
     return budget[1] .. "-" .. budget[2] .. " x" .. multiplier
 end
 
---- Adds picked items to the haul, skipping any already in it.
---- @param haul table The delve's haul.
---- @param items table Ancillary keys to add.
-local function add_items(haul, items)
-    local held = {}
-    for _, item in ipairs(haul.items) do held[item] = true end
-    for _, item in ipairs(items) do
-        if not held[item] then
-            haul.items[#haul.items + 1] = item
-            held[item] = true
-        end
-    end
-end
-
 --- Picks one legendary item, or a rare standing in when the pool cannot supply one.
 --- @param faction_name string The delving faction.
 --- @returns string|nil An ancillary key, or nil when even the rare pool is dry.
@@ -249,7 +241,7 @@ end
 --- @returns table A choice record for `launch_dilemma`.
 local function payout_choice(choice_key, line, haul)
     local lines = { line }
-    if (haul.joined or 0) > 0 then lines[2] = "dummy_land_enc_tower_units_joined_" .. haul.joined end
+    if haul.joined > 0 then lines[2] = "dummy_land_enc_tower_units_joined_" .. haul.joined end
     return { key = choice_key, gold = haul.gold + #haul.units * tower_data.unit_overflow_gold, items = haul.items, lines = lines }
 end
 
@@ -304,7 +296,7 @@ local TowerEventDelegate = {
     --- marks offers taken this delve, `results` holds this floor's result lines and `climb` the floors so far as { floor, difficulty, state, bonus }.
     --- `battle_bundles` are the one-battle bundles on the delving army, `battle_tricks` the in-battle tricks the battle script does, `missions` the
     --- missions it tracks, `enemy_notices` the sabotage on the floor army being fought, and `in_battle` is true while a floor battle waits for its
-    --- result. A delve ends within its turn unless it is `camping` until the next one.
+    --- result. `last_battlefield` is where the last floor was fought. A delve ends within its turn unless it is `camping` until the next one.
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},
@@ -312,6 +304,8 @@ local TowerEventDelegate = {
     dividends = {},
     --- Lords a Dark bargain wounds at their faction's next turn start: { faction, general_cqi, turns }.
     wounds = {},
+    --- Every encounter spot's {x, y} on the map, in zone-name order, where floors can be fought. Rebuilt from the zones on each load.
+    battlefield_spots = {},
     --- Shared invasion battle manager that spawns and resolves floor battles.
     invasion_battle_manager = nil,
 }
@@ -359,13 +353,17 @@ function TowerEventDelegate:initialize(zones, saved)
     for _, tower in ipairs(self.towers) do
         zone_by_name[tower.zone_name].spot_delegate:reserve_spot(tower.zone_name, tower.spot_index)
     end
+    self.battlefield_spots = {}
+    for _, name in ipairs(names) do
+        for _, zone_spot in ipairs(zone_by_name[name].spot_delegate.spots) do self.battlefield_spots[#self.battlefield_spots + 1] = zone_spot.coordinates end
+    end
     self.delves = saved.delves or {}
     for faction_name, delve in pairs(self.delves) do
         if delve.in_battle then self:rearm_floor_battle(faction_name) end
         --- A frozen lord is not kept in the save, so a camping lord is frozen again.
         if delve.camping then
-            local general = cm:get_character_by_cqi(delve.general_cqi)
-            if general and not general:is_null_interface() then cm:disable_movement_for_character(cm:char_lookup_str(general)) end
+            local general = tower_army.character(delve.general_cqi)
+            if general then cm:disable_movement_for_character(cm:char_lookup_str(general)) end
         end
     end
     self.pending_dilemma_by_faction = saved.pending_dilemma_by_faction or {}
@@ -424,10 +422,9 @@ function TowerEventDelegate:on_faction_turn_start(faction_name)
         local wound = self.wounds[i]
         if wound.faction == faction_name then
             table.remove(self.wounds, i)
-            local general = cm:get_character_by_cqi(wound.general_cqi)
-            if general and not general:is_null_interface() then
-                local force = tower_army.delving_force(wound.general_cqi)
-                if force then cm:remove_effect_bundle_from_force(tower_offers.dark_bargain_bundle(), force:command_queue_index()) end
+            local general = tower_army.character(wound.general_cqi)
+            if general then
+                tower_army.remove_bundle(wound.general_cqi, offers_data.by_key.dark_bargain.effect_bundle)
                 local x, y = general:logical_position_x(), general:logical_position_y()
                 cm:wound_character(cm:char_lookup_str(general), wound.turns)
                 cm:show_message_event_located(faction_name, "event_feed_strings_text_title_event_land_enc_tower_dark_bargain_paid",
@@ -504,17 +501,12 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             climb = echoed and { { floor = 1, difficulty = tower_data.floors[1].difficulty, state = "skipped" } } or {},
         }
         self:launch_floor(faction_name)
-    elseif key == EVENT_DEEPER or key:sub(1, #EVENT_DEEPER + 7) == EVENT_DEEPER .. "_floor_" then
+    elseif key:sub(1, #EVENT_DEEPER + 7) == EVENT_DEEPER .. "_floor_" then
         local delve = self.delves[faction_name]
         if delve == nil then return end
         local choice_key = dilemma_choice_and_faction_info:choice_key()
         log("tower: " .. faction_name .. " chose " .. tostring(choice_key) .. " on " .. key)
-        if key == EVENT_DEEPER then
-            if choice == CHOICE_LEAVE_SHARED_DILEMMA then
-                self:end_delve(faction_name, "tower_left")
-                return
-            end
-        elseif choice_key == tower_offers.LEAVE then
+        if choice_key == tower_offers.LEAVE then
             self:end_delve(faction_name, "tower_left")
             return
         elseif choice_key ~= "FIRST" then
@@ -526,7 +518,6 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             --- A camping delve waits for the next turn, see `on_faction_turn_start`.
             if delve.camping then return end
             if offer.stay then
-                delve.results = delve.results or {}
                 if result then delve.results[#delve.results + 1] = result end
                 self:launch_deeper(faction_name)
                 return
@@ -547,13 +538,14 @@ end
 
 --- Spawns the current floor's army and starts the battle, with the floor army attacking the delving lord. The lord defends, so declining
 --- the battle is an ordinary retreat that keeps the army. A floor with an allied army is our attack instead, since the game only brings allies
---- in on the attacking side. Declining it keeps the army too, and loses the floor. A lord who is gone ends the delve as lost. A floor army with no spawn point ends it without a cooldown on floor 1, and as leaving on later floors.
+--- in on the attacking side. Declining it keeps the army too, and loses the floor. A lord who is gone ends the delve as lost. A floor army with no
+--- spawn point ends it without a cooldown on floor 1, and as leaving on later floors.
 --- @param faction_name string The delving faction.
 function TowerEventDelegate:launch_floor(faction_name)
     local delve = self.delves[faction_name]
     local tower = self:tower_in_zone(delve.zone_name)
-    local general = cm:get_character_by_cqi(delve.general_cqi)
-    if not general or general:is_null_interface() or not cm:char_is_general_with_army(general) then
+    local general = tower_army.character(delve.general_cqi)
+    if not general or not cm:char_is_general_with_army(general) then
         self:end_delve(faction_name, "tower_lost")
         return
     end
@@ -566,13 +558,13 @@ function TowerEventDelegate:launch_floor(faction_name)
         army.units_pool = next_floor.scouted
         log("tower: floor " .. delve.floor .. " is fought against the scouted army")
     end
-    local sabotage = tower_offers.sabotage_options(next_floor)
-    --- The battle manager puts these on the floor army once it spawns.
-    army.enemy_strength = sabotage.enemy_strength
-    army.enemy_bundles = sabotage.enemy_bundles
 
+    --- Fought far from the last battle, so the game picks a different map. A floor with no battlefield is fought where the lord stands, which the
+    --- floor army must reach: the last floor's battlefield, or the tower.
+    local battlefield = tower_battlefields.pick(faction_name, self.battlefield_spots, delve.last_battlefield or tower.coordinates)
+    local spot = battlefield or { general:logical_position_x(), general:logical_position_y() }
     local ibm = self.invasion_battle_manager
-    if not ibm:can_generate_battle(army, tower.coordinates) then
+    if not ibm:can_generate_battle(army, spot) then
         if delve.floor == 1 then
             self.delves[faction_name] = nil
             tower:show_message(faction_name, "tower_blocked")
@@ -584,7 +576,10 @@ function TowerEventDelegate:launch_floor(faction_name)
     log("tower: launching floor " .. delve.floor .. " (" .. difficulty .. ", budget " .. army_budget_text(budget, budget_multiplier) .. ", faction "
         .. tostring(next_floor.faction or tower.faction) .. (next_floor.bonus and ", hidden floor" or "") .. ") against lord " .. delve.general_cqi
         .. ", next-floor changes " .. tower_offers.describe_next_floor(next_floor))
-    ibm:generate_battle(army, general, tower.coordinates)
+    if battlefield then tower_battlefields.move_lord(general, battlefield) end
+    delve.last_battlefield = spot
+    log("tower: floor " .. delve.floor .. " is fought at " .. spot[1] .. ", " .. spot[2] .. (battlefield and "" or ", where the lord stands"))
+    ibm:generate_battle(army, general, spot)
     delve.in_battle = true
     local ally = army.reinforcing_ally_armies and army.reinforcing_ally_armies[1]
     --- Kept so a floor re-armed after a reload still removes the allied army.
@@ -638,6 +633,9 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         min_tier = sabotage.min_tier,
         lord_subtype = sabotage.lord_subtype,
     }, general:faction():subculture())
+    --- The battle manager puts these on the floor army once it spawns.
+    army.enemy_strength = sabotage.enemy_strength
+    army.enemy_bundles = sabotage.enemy_bundles
     if next_floor.mirror then
         army.units_pool, delve.mirror_copied = tower_offers.mirror_units(delve)
         log("tower: the floor " .. floor_number .. " army mirrors " .. delve.mirror_copied .. " of our units")
@@ -670,12 +668,11 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local floor = next_floor.record or tower_data.floors[delve.floor]
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0
-    local step = tower_data.gold_step
     local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1)
     if next_floor.double_or_nothing then
         gold_multiplier = gold_multiplier * (loss < next_floor.double_or_nothing and 2 or 0)
     end
-    local gold = math.floor(floor.gold * gold_multiplier / step + 0.5) * step
+    local gold = tower_data.round_gold(floor.gold * gold_multiplier)
     if next_floor.mirror then
         local bonus = tower_offers.mirror_bonus(delve.mirror_copied or 0)
         log("tower: the mirror floor adds " .. bonus .. " gold for " .. tostring(delve.mirror_copied) .. " copied units")
@@ -685,12 +682,9 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     delve.haul.gold = delve.haul.gold + gold
     log("tower: floor " .. delve.floor .. " won: strength " .. tostring(before) .. " -> " .. tostring(after) .. " (loss " .. loss .. "), gold x"
         .. gold_multiplier .. " = +" .. gold .. ", haul now " .. delve.haul.gold .. " gold")
-    delve.climb = delve.climb or {}
     delve.climb[#delve.climb + 1] = { floor = delve.floor, difficulty = floor.difficulty, state = "cleared", bonus = next_floor.bonus }
     local items = pick_floor_items(faction_name, floor, next_floor.rarity_shift)
-    local floor_items = {}
-    for i, item in ipairs(items) do floor_items[i] = item end
-    add_items(delve.haul, items)
+    tower_data.add_items(delve.haul, items)
     log("tower: floor " .. delve.floor .. " items: " .. (#items > 0 and table.concat(items, ", ") or "none"))
     --- A Hellforge pact costs one haul item for every floor won after it.
     if delve.hellforge and #delve.haul.items > 0 then
@@ -701,7 +695,7 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
         delve.haul.units[#delve.haul.units + 1] = table.remove(candidates, random_number(#candidates))
         log("tower: floor " .. delve.floor .. " swears " .. delve.haul.units[#delve.haul.units])
     end
-    return { gold = gold, items = floor_items, record = floor }
+    return { gold = gold, items = items, record = floor }
 end
 
 --- Removes the delving army's weakest regular units after a won floor, as many as the debug `floor_kill_units` override says for it, so
@@ -727,7 +721,7 @@ function TowerEventDelegate:swear_in_units(delve)
     for _ = 1, math.min(tower_army.free_slots(force), #delve.haul.units) do
         local unit = table.remove(delve.haul.units, 1)
         cm:grant_unit_to_character(lookup, unit)
-        delve.haul.joined = (delve.haul.joined or 0) + 1
+        delve.haul.joined = delve.haul.joined + 1
         log("tower: sworn unit " .. unit .. " joins the army")
     end
 end
@@ -793,7 +787,7 @@ function TowerEventDelegate:grey_out_taken_offers(faction_name)
     if delve and not delve.in_battle then tower_offers.grey_out_taken(delve, EVENT_DEEPER .. "_floor_" .. delve.floor) end
 end
 
---- Sends a Daemon's deal army at the delving faction's capital: an army of a random Chaos faction from `tower_offers.daemon_army`, spawned
+--- Sends a Daemon's deal army at the delving faction's capital: an army of a random Chaos faction from the `daemons_deal` offer, spawned
 --- somewhere in the capital's province as a lasting invasion that stays until beaten. A faction with no capital is spared.
 --- @param faction_name string The delving faction.
 function TowerEventDelegate:send_daemon_army(faction_name)
@@ -803,7 +797,7 @@ function TowerEventDelegate:send_daemon_army(faction_name)
         log("tower: Daemon's deal has no capital to march on for " .. faction_name)
         return
     end
-    local deal = tower_offers.daemon_army()
+    local deal = offers_data.by_key.daemons_deal
     local shorthand = deal.factions[random_number(#deal.factions)]
     local army = Army:new_from_event({
         dilemma = "tower",
@@ -823,29 +817,53 @@ function TowerEventDelegate:send_daemon_army(faction_name)
         .. landing .. " at " .. x .. ", " .. y .. ": " .. (sent and "spawned" or "no room to spawn"))
 end
 
---- Ends a delve, takes off any one-battle effects, puts its tower on cooldown and tells the player how it ended.
+--- Hands a tower to a new enabled faction, preferring one no other tower holds. A tower whose faction is the only one enabled keeps it.
+--- Picks with `random_number`, so every multiplayer client agrees.
+--- @param tower table The TowerState to change.
+function TowerEventDelegate:reroll_faction(tower)
+    local held = {}
+    for _, other in ipairs(self.towers) do held[other.faction] = true end
+    local free, others = {}, {}
+    for _, key in ipairs(sorted_faction_keys()) do
+        if key ~= tower.faction then
+            others[#others + 1] = key
+            if not held[key] then free[#free + 1] = key end
+        end
+    end
+    local pool = #free > 0 and free or others
+    if #pool == 0 then return end
+    local was = tower.faction
+    tower.faction = pool[random_number(#pool)]
+    log("tower: " .. tower.zone_name .. " is now held by " .. tower.faction .. " (was " .. tostring(was) .. ")")
+end
+
+--- Ends a delve, takes off any one-battle effects, puts its tower on cooldown, hands it to a new faction and tells the player how it ended.
 --- @param faction_name string The delving faction.
 --- @param outcome string The message suffix: "tower_left", "tower_lost" or "tower_cleared".
 function TowerEventDelegate:end_delve(faction_name, outcome)
     local delve = self.delves[faction_name]
     log("tower: delve for " .. faction_name .. " ends: " .. outcome .. " on floor " .. delve.floor .. ", haul " .. delve.haul.gold .. " gold, "
         .. #delve.haul.items .. " items (" .. table.concat(delve.haul.items, ", ") .. "), " .. #delve.haul.units .. " sworn units waiting, "
-        .. (delve.haul.joined or 0) .. " joined")
+        .. delve.haul.joined .. " joined")
     tower_offers.end_delve_effects(delve)
-    local tower = self:tower_in_zone(self.delves[faction_name].zone_name)
+    local tower = self:tower_in_zone(delve.zone_name)
     self.delves[faction_name] = nil
+    --- Before the freed hero, who is placed beside the lord.
+    tower_battlefields.return_lord(delve.general_cqi, faction_name, tower.coordinates)
     tower.cooldown = get_mct_settings().tower_cooldown
     tower:show_message(faction_name, outcome)
     if outcome == "tower_cleared" then
         local rank = tower_data.floors[#tower_data.floors].freed_hero_rank
         if rank then tower_lords.free_hero(delve.general_cqi, faction_name, { tower.faction, tower_offers.culture_shorthand(faction_name) }, rank) end
         if delve.epithet then
-            local epithet = tower_offers.epithet()
+            local epithet = offers_data.by_key.epithet
             tower_lords.add_trait(delve.general_cqi, epithet.trait, 1, true)
             tower_lords.add_title(delve.general_cqi, common.get_localised_string(epithet.title_loc))
         end
     end
     if delve.dark_bargain then self.wounds[#self.wounds + 1] = { faction = faction_name, general_cqi = delve.general_cqi, turns = delve.dark_bargain } end
+    --- After the freed hero, who comes from the faction just beaten.
+    self:reroll_faction(tower)
     --- Sent last, so a failed spawn cannot leave the delve half-ended.
     if delve.daemons_deal then self:send_daemon_army(faction_name) end
 end
@@ -869,7 +887,8 @@ end
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns TowerEventDelegate The new delegate.
 function TowerEventDelegate:new(invasion_battle_manager)
-    local t = { towers = {}, delves = {}, pending_dilemma_by_faction = {}, dividends = {}, wounds = {}, invasion_battle_manager = invasion_battle_manager }
+    local t = { towers = {}, delves = {}, pending_dilemma_by_faction = {}, dividends = {}, wounds = {}, battlefield_spots = {},
+        invasion_battle_manager = invasion_battle_manager }
     setmetatable(t, self)
     self.__index = self
     return t

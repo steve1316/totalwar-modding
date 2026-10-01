@@ -284,7 +284,8 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     local archetype = pick_archetype(pools, options.archetype_keys)
     local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1))
 
-    local army = { units = {}, copies = {}, budget_left = budget_roll, slots_left = ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0) }
+    local unit_slots = ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0)
+    local army = { units = {}, copies = {}, budget_left = budget_roll, slots_left = unit_slots }
     for _, unit_type in ipairs(UNIT_TYPES) do
         army.units[unit_type] = {}
     end
@@ -350,7 +351,7 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     end
 
     local spent = budget - army.budget_left
-    local bought = ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0) - army.slots_left
+    local bought = unit_slots - army.slots_left
     out("INFO - Generated a " .. archetype.key .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. bought .. " units.")
     return { lord = lord, heroes = heroes, units = army.units, archetype = archetype.key, budget = budget, spent = spent }
 end

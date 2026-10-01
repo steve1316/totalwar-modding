@@ -28,8 +28,11 @@ M.climber_trait = "land_enc_trait_tower_climber"
 --- The bonus floor a Hidden floor offer inserts. It is fought against another enabled faction and does not count toward the five floors.
 M.hidden_floor = { difficulty = "medium", gold = 3000, legendary_count = 1, sworn_units = 2 }
 
---- Difficulties from easiest to hardest, for offers that move a floor up or down one step.
-M.difficulty_order = { "easy", "medium", "hard" }
+--- Least distance, in campaign map units, between a floor's battlefield and the last battle (the tower, for the first floor). The game picks
+--- a battle's map from where it is fought, so floors fought apart land on different maps.
+M.battlefield_min_distance = 50
+
+
 
 --- Gold multiplier by the share of the delving army's strength lost on the floor, checked in order. `max_loss` is in strength points (0-100).
 M.performance = {
@@ -50,5 +53,30 @@ M.unit_overflow_gold = 500
 
 --- Longest cooldown with its own message (the MCT slider maximum). Longer cooldowns show this message.
 M.longest_cooldown_message = 30
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Helpers
+
+--- Rounds gold to the tower's gold step.
+--- @param gold number The gold amount.
+--- @returns number The amount rounded to a multiple of `M.gold_step`.
+function M.round_gold(gold)
+    return math.floor(gold / M.gold_step + 0.5) * M.gold_step
+end
+
+--- Adds items to a haul, skipping any it already holds.
+--- @param haul table The delve's haul.
+--- @param items table Ancillary keys to add.
+function M.add_items(haul, items)
+    local held = {}
+    for _, item in ipairs(haul.items) do held[item] = true end
+    for _, item in ipairs(items) do
+        if not held[item] then
+            haul.items[#haul.items + 1] = item
+            held[item] = true
+        end
+    end
+end
 
 return M

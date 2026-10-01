@@ -1,14 +1,60 @@
 --- Helpers that read and change the delving lord's army, shared by the tower delve and its offers.
 
+local army_generator = require("script/land_encounters/core/army_generator")
+
 local M = {}
+
+--- Finds a living character by command queue index.
+--- @param cqi number The character's command queue index.
+--- @returns userdata|nil The character, or nil when gone.
+function M.character(cqi)
+    local found = cm:get_character_by_cqi(cqi)
+    if not found or found:is_null_interface() then return nil end
+    return found
+end
 
 --- Finds the delving lord's army.
 --- @param general_cqi number The delving lord's command queue index.
 --- @returns military_force|nil The army, or nil when the lord is gone or no longer leads one.
 function M.delving_force(general_cqi)
-    local general = cm:get_character_by_cqi(general_cqi)
-    if not general or general:is_null_interface() or not general:has_military_force() then return nil end
+    local general = M.character(general_cqi)
+    if not general or not general:has_military_force() then return nil end
     return general:military_force()
+end
+
+--- Puts an effect bundle on the delving army.
+--- @param general_cqi number The delving lord's command queue index.
+--- @param bundle string The effect bundle key.
+--- @param turns number|nil How many turns it lasts. nil or 0 keeps it until removed.
+--- @returns boolean True when the army was found.
+function M.apply_bundle(general_cqi, bundle, turns)
+    local force = M.delving_force(general_cqi)
+    if not force then return false end
+    cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), turns or 0)
+    log("tower: " .. bundle .. " on force " .. force:command_queue_index() .. (turns and turns > 0 and " for " .. turns .. " turns" or "") .. ", present: "
+        .. tostring(force:has_effect_bundle(bundle)))
+    return true
+end
+
+--- Takes an effect bundle off the delving army, if it still leads one.
+--- @param general_cqi number The delving lord's command queue index.
+--- @param bundle string The effect bundle key.
+function M.remove_bundle(general_cqi, bundle)
+    local force = M.delving_force(general_cqi)
+    if force then cm:remove_effect_bundle_from_force(bundle, force:command_queue_index()) end
+end
+
+--- The most expensive of a floor army's units. Ties keep the army's order.
+--- @param unit_keys table The floor army's unit keys, one per unit.
+--- @param count number How many units to pick.
+--- @returns table Unit keys, most expensive first. A key appears once per unit picked.
+function M.most_expensive(unit_keys, count)
+    local units = {}
+    for i, key in ipairs(unit_keys) do units[i] = { key = key, price = army_generator.unit_price_by_key(key), index = i } end
+    table.sort(units, function(a, b) return a.price > b.price or (a.price == b.price and a.index < b.index) end)
+    local picked = {}
+    for i = 1, math.min(count, #units) do picked[i] = units[i].key end
+    return picked
 end
 
 --- Reads the delving lord's army strength, or nil when the lord no longer leads an army.

@@ -117,6 +117,13 @@ local function sum(sunits, value)
     return total
 end
 
+--- Soldiers a unit has killed, for the Rival delvers kill counts.
+--- @param unit userdata The battle unit.
+--- @returns number Its kills.
+local function kills(unit)
+    return unit:number_of_enemies_killed()
+end
+
 --- Soldiers of the enemy army killed so far.
 --- @param theirs table The enemy's script units.
 --- @returns number The soldiers dead.
@@ -205,7 +212,7 @@ local TRICKS = {
 --- `elapsed` seconds). `tick` may settle the mission and returns the objective's counters. `finish` settles a mission still open.
 local MISSIONS = {
     blood_tally = {
-        start = function(m, ctx) m.target = math.ceil(tonumber(m.value) * sum(ctx.theirs, function(unit) return unit:initial_number_of_men() end)) end,
+        start = function(m, ctx) m.target = math.ceil(m.value * sum(ctx.theirs, function(unit) return unit:initial_number_of_men() end)) end,
         tick = function(m, ctx)
             local dead = enemy_dead(ctx.theirs)
             if dead >= m.target then m.state = "met" end
@@ -214,30 +221,28 @@ local MISSIONS = {
     },
     headhunt = {
         tick = function(m, ctx)
-            local lord = lord_of(ctx.theirs)
-            if lord and is_lost(lord) then m.state = "met" elseif ctx.elapsed > tonumber(m.value) then m.state = "failed" end
-            return math.max(0, tonumber(m.value) - ctx.elapsed)
+            if ctx.their_lord and is_lost(ctx.their_lord) then m.state = "met" elseif ctx.elapsed > m.value then m.state = "failed" end
+            return math.max(0, m.value - ctx.elapsed)
         end,
     },
     duelists_challenge = {
         tick = function(m, ctx)
-            local lord = lord_of(ctx.theirs)
-            if lord and is_lost(lord) then m.state = "met" end
+            if ctx.their_lord and is_lost(ctx.their_lord) then m.state = "met" end
         end,
     },
     hold_the_line = {
         tick = function(m, ctx)
             local lost = 0
             for _, sunit in ipairs(ctx.ours) do if is_lost(sunit) then lost = lost + 1 end end
-            if lost > tonumber(m.value) then m.state = "failed" end
-            return lost, tonumber(m.value)
+            if lost > m.value then m.state = "failed" end
+            return lost, m.value
         end,
         finish = function(m) m.state = "met" end,
     },
     swift_victory = {
         tick = function(m, ctx)
-            if ctx.elapsed > tonumber(m.value) then m.state = "failed" end
-            return math.max(0, tonumber(m.value) - ctx.elapsed)
+            if ctx.elapsed > m.value then m.state = "failed" end
+            return math.max(0, m.value - ctx.elapsed)
         end,
         finish = function(m) m.state = "met" end,
     },
@@ -266,8 +271,8 @@ local MISSIONS = {
                 if sunit.unit:is_routing() or is_lost(sunit) then m.routed[sunit] = true end
                 if m.routed[sunit] then count = count + 1 end
             end
-            if count >= tonumber(m.value) then m.state = "met" end
-            return count, tonumber(m.value)
+            if count >= m.value then m.state = "met" end
+            return count, m.value
         end,
     },
     trophy_hunt = {
@@ -292,18 +297,16 @@ local MISSIONS = {
         tick = function(m, ctx)
             local left = 0
             for _, sunit in ipairs(m.guns) do if not is_lost(sunit) then left = left + 1 end end
-            if left == 0 then m.state = "met" elseif ctx.elapsed > tonumber(m.value) then m.state = "failed" end
+            if left == 0 then m.state = "met" elseif ctx.elapsed > m.value then m.state = "failed" end
             return left
         end,
     },
     untouchable = {
         tick = function(_, ctx)
-            local lord = lord_of(ctx.ours)
-            return lord and math.floor(lord.unit:unary_hitpoints() * 100) or 0
+            return ctx.our_lord and math.floor(ctx.our_lord.unit:unary_hitpoints() * 100) or 0
         end,
         finish = function(m, ctx)
-            local lord = lord_of(ctx.ours)
-            m.state = (lord and lord.unit:unary_hitpoints() > tonumber(m.value)) and "met" or "failed"
+            m.state = (ctx.our_lord and ctx.our_lord.unit:unary_hitpoints() > m.value) and "met" or "failed"
         end,
     },
 }
@@ -338,7 +341,9 @@ local function track_missions(names, ours, theirs)
     for key, value in (core:svr_load_string(MISSION_TARGETS_SVR_KEY) or ""):gmatch("([%w_]+)=([^,]*)") do targets[key] = value end
     local missions, rival = {}, false
     for _, name in ipairs(names) do
-        if MISSIONS[name] then missions[#missions + 1] = { key = name, value = targets[name], state = "open", spec = MISSIONS[name] } end
+        if MISSIONS[name] then
+            missions[#missions + 1] = { key = name, value = tonumber(targets[name]) or targets[name], state = "open", spec = MISSIONS[name] }
+        end
         rival = rival or name == "rival_delvers"
     end
     if #missions == 0 and not rival then return end
@@ -346,13 +351,15 @@ local function track_missions(names, ours, theirs)
     local rivals = rival and script_units_of(bm:get_player_alliance(), function(army)
         return not army:is_player_controlled() and army:faction_key() == ally_faction
     end) or {}
-    local ctx = { ours = ours, theirs = theirs, elapsed = 0 }
+    local ctx = { ours = ours, theirs = theirs, elapsed = 0, our_lord = lord_of(ours), their_lord = lord_of(theirs) }
     for _, m in ipairs(missions) do
         if m.spec.start then m.spec.start(m, ctx) end
         if m.state ~= "open" then show_settled(m) end
     end
     report(missions)
     log("tracking missions: " .. #missions .. (rival and ", and kills against " .. #rivals .. " rival units" or ""))
+    --- The kill counts last sent, so an unchanged count is not saved and shown again.
+    local shown_kills = {}
 
     bm:repeat_callback(function()
         ctx.elapsed = ctx.elapsed + MISSION_TICK_MS / 1000
@@ -363,17 +370,20 @@ local function track_missions(names, ours, theirs)
                 if m.state ~= "open" then
                     show_settled(m)
                     changed = true
-                elseif a then
+                elseif a and (a ~= m.shown_a or b ~= m.shown_b) then
+                    m.shown_a, m.shown_b = a, b
                     bm:set_objective(OBJECTIVE_PREFIX .. m.key, a, b)
                 end
             end
         end
         if changed then report(missions) end
         if rival then
-            local kills = function(unit) return unit:number_of_enemies_killed() end
             local our_kills, their_kills = sum(ours, kills), sum(rivals, kills)
-            core:svr_save_string(RIVAL_SVR_KEY, our_kills .. "," .. their_kills)
-            bm:set_objective(OBJECTIVE_PREFIX .. "rival_delvers", our_kills, their_kills)
+            if our_kills ~= shown_kills[1] or their_kills ~= shown_kills[2] then
+                shown_kills = { our_kills, their_kills }
+                core:svr_save_string(RIVAL_SVR_KEY, our_kills .. "," .. their_kills)
+                bm:set_objective(OBJECTIVE_PREFIX .. "rival_delvers", our_kills, their_kills)
+            end
         end
     end, MISSION_TICK_MS, MISSION_PROCESS)
 

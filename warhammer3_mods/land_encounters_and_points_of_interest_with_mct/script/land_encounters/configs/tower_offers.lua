@@ -175,4 +175,8 @@ M.offers = {
     { key = "duelists_challenge", mission = true, item_rarity = "legendary" },
 }
 
+--- Each offer record by its key.
+M.by_key = {}
+for _, offer in ipairs(M.offers) do M.by_key[offer.key] = offer end
+
 return M
