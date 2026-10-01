@@ -153,5 +153,5 @@ dummy_land_enc_tower_secret_stair	ui/campaign ui/effect_bundles/stance_tunneling
 dummy_land_enc_tower_secret_stair_unaffordable	ui/campaign ui/effect_bundles/stance_tunneling.png	default	0
 dummy_land_enc_tower_hidden_floor	ui/campaign ui/effect_bundles/concealment.png	default	0
 dummy_land_enc_tower_soft_landing	ui/campaign ui/effect_bundles/peasant_negative.png	default	0
-dummy_land_enc_tower_tower_champion	ui/campaign ui/effect_bundles/exalted_hero.png	default	0
+dummy_land_enc_tower_tower_champion	ui/campaign ui/effect_bundles/nemesis_crown_sealed.png	default	0
 dummy_land_enc_tower_echoes_of_the_climb	ui/campaign ui/effect_bundles/vision.png	default	0
