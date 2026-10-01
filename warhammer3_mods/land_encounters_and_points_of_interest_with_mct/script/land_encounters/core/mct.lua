@@ -15,7 +15,7 @@ local mct_settings = {
     --- Towers are on the map and can be delved.
     enable_towers = true,
     --- Turns a tower stays closed after a delve ends.
-    tower_cooldown = 10,
+    tower_cooldown = 5,
     spawn_percentage = 0.75,
     --- Percent chance that a battle spot starts a battle instead of giving treasure.
     battle_chance = 70,

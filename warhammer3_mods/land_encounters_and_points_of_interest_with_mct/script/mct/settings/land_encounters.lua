@@ -85,7 +85,7 @@ enable_towers_checkbox:set_assigned_section("configuration_section")
 --- Slider for how long a tower stays closed after a delve.
 local tower_cooldown_slider = mct_mod:add_new_option("tower_cooldown", "slider")
 tower_cooldown_slider:set_text("Tower cooldown (turns)", true)
-tower_cooldown_slider:set_tooltip_text("Turns a tower stays closed after a delve ends, whether you left, cleared it or lost. Default is 10.", true)
+tower_cooldown_slider:set_tooltip_text("Turns a tower stays closed after a delve ends, whether you left, cleared it or lost. Default is 5.", true)
 tower_cooldown_slider:set_is_global(true)
 tower_cooldown_slider:slider_set_min_max(1, 30)
 tower_cooldown_slider:slider_set_precision(0)
