@@ -277,12 +277,12 @@ end
 local TowerEventDelegate = {
     --- Every tower on the map, one per zone, in zone-name order.
     towers = {},
-    --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before,
-    --- floor_units, offers, taken, results, climb, battle_bundles, enemy_notices, in_battle }. `haul.units` are sworn units waiting for room
-    --- and `haul.joined` counts those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers
-    --- taken this delve, `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }.
-    --- `battle_bundles` are the one-battle bundles on the delving army, `enemy_notices` the sabotage on the floor army being fought, and
-    --- `in_battle` is true while a floor battle waits for its result. A delve starts and ends within one turn.
+    --- Delve in progress per human faction: { zone_name, general_cqi, floor, haul = { gold, items, units, joined }, strength_before, floor_units,
+    --- offers, taken, results, climb, battle_bundles, battle_tricks, enemy_notices, in_battle }. `haul.units` are sworn units waiting for room and
+    --- `haul.joined` counts those already in the army. `offers` are the offer keys on the current go-deeper dilemma, `taken` marks offers taken this
+    --- delve, `results` holds this floor's stay-offer result lines and `climb` the floors so far as { floor, difficulty, state, bonus }.
+    --- `battle_bundles` are the one-battle bundles on the delving army, `battle_tricks` the in-battle tricks the battle script does, `enemy_notices`
+    --- the sabotage on the floor army being fought, and `in_battle` is true while a floor battle waits for its result. A delve starts and ends within one turn.
     delves = {},
     --- Enter dilemma waiting for an answer per human faction: { zone_name, general_cqi }.
     pending_dilemma_by_faction = {},
@@ -546,7 +546,6 @@ function TowerEventDelegate:launch_floor(faction_name)
     ibm:generate_battle(army, general, tower.coordinates)
     delve.in_battle = true
     delve.enemy_notices = next_floor.sabotage
-    tower_offers.hand_buffs_to_battle(delve)
     --- The army's units are only fixed once the battle is generated. Its lord and heroes are kept apart from `units`, so none can be sworn.
     delve.floor_units = {}
     for _, row in ipairs(army.units or {}) do
@@ -554,6 +553,8 @@ function TowerEventDelegate:launch_floor(faction_name)
     end
     delve.floor_army_size = #delve.floor_units
     log("tower: floor " .. delve.floor .. " army has " .. delve.floor_army_size .. " units: " .. table.concat(delve.floor_units, ", "))
+    --- Handed over once the units are known, since Night terrors picks its targets from them.
+    tower_offers.hand_buffs_to_battle(delve)
     ibm:mark_battle_forces_for_removal(army)
     ibm:reset_state_post_battle(self, "TowerSpot", nil, army)
 end

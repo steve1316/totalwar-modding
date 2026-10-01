@@ -36,6 +36,8 @@ local CLIMB_LOC_PREFIX = "campaign_localised_strings_string_land_enc_tower_climb
 local BUNDLE_PREFIX = "land_enc_effect_tower_"
 --- svr key the floor battle's script reads the active buffs from. Mirrored in script/battle/mod/land_enc_tower_buffs.lua.
 local BATTLE_BUFFS_SVR_KEY = "land_enc_tower_battle_buffs"
+--- svr key the floor battle's script reads Night terrors' target unit keys from. Mirrored in script/battle/mod/land_enc_tower_buffs.lua.
+local NIGHT_TERRORS_SVR_KEY = "land_enc_tower_night_terrors"
 --- Prefix of each choice row's id in the dilemma panel's list. The dilemma key and the choice key follow.
 local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
@@ -157,6 +159,39 @@ end
 --- @param ctx table The offer context.
 local function battle_buff(offer, ctx)
     add_battle_bundle(ctx.delve, offer.effect_bundle .. (offer.per_floor and "_" .. ctx.delve.floor or ""))
+end
+
+--- Applies an in-battle trick: the battle script does it in the next floor's battle, see `M.hand_buffs_to_battle`.
+--- @param offer table The offer record.
+--- @param ctx table The offer context.
+local function battle_trick(offer, ctx)
+    ctx.delve.battle_tricks = ctx.delve.battle_tricks or {}
+    ctx.delve.battle_tricks[#ctx.delve.battle_tricks + 1] = offer.key
+    log("tower: " .. offer.key .. " will act in the next battle")
+end
+
+--- True when the delving army has missile units or artillery, which Bottomless quivers needs.
+--- @param ctx table The offer context.
+--- @returns boolean True when a regular unit shoots.
+local function army_shoots(ctx)
+    for _, entry in ipairs(tower_army.regular_units(ctx.delve.general_cqi)) do
+        local class = entry.unit:unit_class()
+        if class:find("_mis$") or class:find("^art") then return true end
+    end
+    return false
+end
+
+--- The floor army's most expensive units, which Night terrors routs. Ties keep the army's order.
+--- @param delve table The delve record.
+--- @param count number How many units to pick.
+--- @returns table Unit keys, most expensive first. A key appears once per unit picked.
+local function night_terror_targets(delve, count)
+    local units = {}
+    for i, key in ipairs(delve.floor_units or {}) do units[i] = { key = key, price = army_generator.unit_price_by_key(key), index = i } end
+    table.sort(units, function(a, b) return a.price > b.price or (a.price == b.price and a.index < b.index) end)
+    local targets = {}
+    for i = 1, math.min(count, #units) do targets[i] = units[i].key end
+    return targets
 end
 
 --- Applies a sabotage offer: the next floor's army is built and marked with it, see `M.sabotage_options`.
@@ -479,6 +514,18 @@ local HANDLERS = {
     lower_tiers_only = { apply = sabotage },
     break_their_spirit = { apply = sabotage },
     curse_their_blades = { apply = sabotage },
+    assassinate = { eligible = function(ctx) return not (ctx.delve.next_floor and ctx.delve.next_floor.champion) end, apply = sabotage },
+    tower_artillery = { apply = battle_buff },
+    call_the_winds = { apply = battle_buff },
+    vortex_scroll = {
+        apply = function(offer, ctx)
+            add_battle_bundle(ctx.delve, offer.effect_bundles[random_number(#offer.effect_bundles)])
+        end,
+    },
+    bottomless_quivers = { eligible = army_shoots, apply = battle_trick },
+    oath_of_no_retreat = { apply = battle_trick },
+    divine_shield = { apply = battle_trick },
+    night_terrors = { apply = battle_trick },
     regiment_of_renown = { eligible = regiment_of_renown },
     veterans_oath = {
         eligible = function(ctx, offer) return #rankable_units(ctx, offer) >= offer.count end,
@@ -981,8 +1028,8 @@ function M.daemon_army()
 end
 
 --- Hands the buffs on the delving army to the next battle's script, which announces them: the one-battle buffs, the Hellforge pact, Drained,
---- then the sabotage on the enemy. The list is comma-separated bundle names without `BUNDLE_PREFIX`, then sabotage offer keys. No delve hands over an
---- empty list.
+--- then the in-battle tricks, then the sabotage on the enemy. The list is comma-separated bundle names without `BUNDLE_PREFIX`, then trick and
+--- sabotage offer keys. Night terrors' targets go under their own key. No delve hands over empty lists.
 --- @param delve table|nil The delve record.
 function M.hand_buffs_to_battle(delve)
     local names, seen = {}, {}
@@ -1000,9 +1047,18 @@ function M.hand_buffs_to_battle(delve)
             names[#names + 1] = bundle:sub(#BUNDLE_PREFIX + 1)
         end
     end
+    local targets = {}
+    for _, key in ipairs(delve and delve.battle_tricks or {}) do
+        names[#names + 1] = key
+        if key == "night_terrors" then targets = night_terror_targets(delve, find("night_terrors").targets) end
+    end
     for _, key in ipairs(delve and delve.enemy_notices or {}) do names[#names + 1] = key end
-    if delve then log("tower: battle notices for the next floor: " .. (#names > 0 and table.concat(names, ", ") or "none")) end
+    if delve then
+        log("tower: battle notices for the next floor: " .. (#names > 0 and table.concat(names, ", ") or "none"))
+        if #targets > 0 then log("tower: night terrors will rout " .. table.concat(targets, ", ")) end
+    end
     core:svr_save_string(BATTLE_BUFFS_SVR_KEY, table.concat(names, ","))
+    core:svr_save_string(NIGHT_TERRORS_SVR_KEY, table.concat(targets, ","))
 end
 
 --- Takes the one-battle effects off the delving army once the floor they were bought for is over, and clears the battle's buff list.
@@ -1010,6 +1066,7 @@ end
 function M.end_battle_effects(delve)
     M.hand_buffs_to_battle(nil)
     delve.enemy_notices = nil
+    delve.battle_tricks = nil
     local bundles = delve.battle_bundles or {}
     delve.battle_bundles = nil
     local force = tower_army.delving_force(delve.general_cqi)

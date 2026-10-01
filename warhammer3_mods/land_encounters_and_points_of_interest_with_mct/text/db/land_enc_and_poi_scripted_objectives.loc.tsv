@@ -60,6 +60,42 @@ scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_4	[[col:
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_4		false
 scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_4_message	Scaling blessing: +17 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_4_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_tower_artillery	[[col:green]]Tower artillery: Zhufbar 42 Pounders army ability.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_tower_artillery		false
+scripted_objectives_localised_text_land_enc_tower_buff_tower_artillery_message	Tower artillery: Zhufbar 42 Pounders army ability.	false
+scripted_objectives_localised_description_land_enc_tower_buff_tower_artillery_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds	[[col:green]]Call the winds: +30 Winds of Magic in reserve.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_message	Call the winds: +30 Winds of Magic in reserve.	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_storm_of_fire	[[col:green]]Vortex scroll: Storm of Fire army ability.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_vortex_scroll_storm_of_fire		false
+scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_storm_of_fire_message	Vortex scroll: Storm of Fire army ability.	false
+scripted_objectives_localised_description_land_enc_tower_buff_vortex_scroll_storm_of_fire_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_wraith_storm	[[col:green]]Vortex scroll: Wraith Storm army ability.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_vortex_scroll_wraith_storm		false
+scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_wraith_storm_message	Vortex scroll: Wraith Storm army ability.	false
+scripted_objectives_localised_description_land_enc_tower_buff_vortex_scroll_wraith_storm_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_soul_storm	[[col:green]]Vortex scroll: Soul Storm army ability.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_vortex_scroll_soul_storm		false
+scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_soul_storm_message	Vortex scroll: Soul Storm army ability.	false
+scripted_objectives_localised_description_land_enc_tower_buff_vortex_scroll_soul_storm_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bottomless_quivers	[[col:green]]Bottomless quivers: our missile units never run out of ammo.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_bottomless_quivers		false
+scripted_objectives_localised_text_land_enc_tower_buff_bottomless_quivers_message	Bottomless quivers: our missile units never run out of ammo.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bottomless_quivers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_oath_of_no_retreat	[[col:green]]Oath of no retreat: our units cannot rout.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_oath_of_no_retreat		false
+scripted_objectives_localised_text_land_enc_tower_buff_oath_of_no_retreat_message	Oath of no retreat: our units cannot rout.	false
+scripted_objectives_localised_description_land_enc_tower_buff_oath_of_no_retreat_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield	[[col:green]]Divine shield: our lord cannot be harmed for the first 5 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_message	Divine shield: our lord cannot be harmed for the first 5 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors	[[col:green]]Night terrors: after 1 minute, the enemy's 2 strongest units flee.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_message	Night terrors: after 1 minute, the enemy's 2 strongest units flee.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_hellforge	[[col:green]]Hellforge pact: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]][[img:ui/skins/default/icon_stat_armour.png]][[/img]] and +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]][[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]][[img:ui/skins/default/icon_stat_speed.png]][[/img]][[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]][[img:ui/skins/default/icon_stat_range.png]][[/img]][[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_hellforge		false
 scripted_objectives_localised_text_land_enc_tower_buff_hellforge_message	Hellforge pact: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]][[img:ui/skins/default/icon_stat_armour.png]][[/img]] and +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]][[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]][[img:ui/skins/default/icon_stat_speed.png]][[/img]][[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]][[img:ui/skins/default/icon_stat_range.png]][[/img]][[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
@@ -104,3 +140,7 @@ scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades	[[col:
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades		false
 scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_message	Curse their blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_assassinate	[[col:red]]Assassinate: the enemy lord is slain as the battle starts.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_assassinate		false
+scripted_objectives_localised_text_land_enc_tower_buff_assassinate_message	Assassinate: the enemy lord is slain as the battle starts.	false
+scripted_objectives_localised_description_land_enc_tower_buff_assassinate_message		false

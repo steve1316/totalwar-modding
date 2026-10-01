@@ -47,6 +47,9 @@ local UNIT_TYPES = {
 
 local M = {}
 
+--- Unit key -> price over every faction's units, built on first use by `M.unit_price_by_key`.
+local price_by_key = nil
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
@@ -350,6 +353,25 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     local bought = ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0) - army.slots_left
     out("INFO - Generated a " .. archetype.key .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. bought .. " units.")
     return { lord = lord, heroes = heroes, units = army.units, archetype = archetype.key, budget = budget, spent = spent }
+end
+
+--- The price of any unit in factions_data, by its key. A unit listed by several factions takes its highest price, so every client agrees.
+--- @param unit_key string The land unit key.
+--- @returns number The unit's price, or 0 when factions_data does not list it.
+function M.unit_price_by_key(unit_key)
+    if not price_by_key then
+        price_by_key = {}
+        for _, faction in pairs(factions_data) do
+            for _, by_type in pairs(faction.units or {}) do
+                for _, units in pairs(by_type) do
+                    for _, unit in ipairs(units) do
+                        price_by_key[unit.land_unit] = math.max(price_by_key[unit.land_unit] or 0, unit_price(unit))
+                    end
+                end
+            end
+        end
+    end
+    return price_by_key[unit_key] or 0
 end
 
 --- Picks random units of a faction for the tower's unit offers: buyable units of the given tiers and unit types from enabled origins,

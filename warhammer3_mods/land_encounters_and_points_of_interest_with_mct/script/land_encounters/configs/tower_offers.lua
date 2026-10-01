@@ -40,6 +40,17 @@ M.offers = {
     { key = "iron_resolve", cost = 1000, effect_bundle = "land_enc_effect_tower_iron_resolve" },
     { key = "stoneskin", cost = 1500, effect_bundle = "land_enc_effect_tower_stoneskin" },
     { key = "scaling_blessing", cost_share = 0.25, per_floor = true, effect_bundle = "land_enc_effect_tower_scaling_blessing" },
+    --- In-battle tricks act in the next floor's battle only. An `effect_bundle` grants a vanilla army ability or more winds of magic, and
+    --- `effect_bundles` picks one of several at random. A `trick` is done by the battle script (script/battle/mod/land_enc_tower_buffs.lua),
+    --- which holds its timings. Night terrors routs the floor army's `targets` most expensive units.
+    { key = "tower_artillery", cost = 2000, effect_bundle = "land_enc_effect_tower_tower_artillery" },
+    { key = "call_the_winds", cost = 1000, effect_bundle = "land_enc_effect_tower_call_the_winds" },
+    { key = "vortex_scroll", cost = 1500, effect_bundles = { "land_enc_effect_tower_vortex_scroll_storm_of_fire", "land_enc_effect_tower_vortex_scroll_wraith_storm",
+        "land_enc_effect_tower_vortex_scroll_soul_storm" } },
+    { key = "bottomless_quivers", cost = 1200, trick = true },
+    { key = "oath_of_no_retreat", cost = 1500, trick = true },
+    { key = "divine_shield", cost = 2500, trick = true },
+    { key = "night_terrors", cost = 1500, trick = true, targets = 2 },
     --- The next floor's army budget is multiplied by `next_budget`.
     { key = "bribe_the_guards", cost = 1500, next_budget = 0.8 },
     --- Sabotage weakens the next floor's army. `no_heroes`, `fewer_units` (off its unit cap) and `max_tier` (its highest unit tier) shape how it
@@ -50,6 +61,8 @@ M.offers = {
     { key = "lower_tiers_only", cost = 1000, max_tier = 2 },
     { key = "break_their_spirit", cost = 1000, enemy_bundle = "land_enc_effect_tower_break_their_spirit" },
     { key = "curse_their_blades", cost = 1200, enemy_bundle = "land_enc_effect_tower_curse_their_blades" },
+    --- The battle script slays the enemy lord as the battle starts. Not offered against a Tower champion.
+    { key = "assassinate", cost = 2500 },
     --- A 50/50 roll that doubles the haul's gold or halves it.
     { key = "loaded_dice", stay = true },
     --- Sends `share` of the haul's gold to the treasury, keeping it safe from a loss. The runner keeps `fee` of it.
