@@ -32,6 +32,8 @@ land_enc_effect_tower_quartermasters_cache			force	1	icon_effects_fortify.png	fa
 land_enc_effect_tower_drill_sergeant			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_iron_resolve			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_stoneskin			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_glass_cannon			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_plague_bearer			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_break_their_spirit			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_curse_their_blades			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_rousing_speech			force	1	icon_effects_fortify.png	false	false	true

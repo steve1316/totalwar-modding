@@ -64,6 +64,10 @@ effect_bundles_localised_title_land_enc_effect_tower_iron_resolve	Iron Resolve	f
 effect_bundles_localised_description_land_enc_effect_tower_iron_resolve	The army swore to hold whatever comes up the stairs. Nothing frightens it for one battle.	false
 effect_bundles_localised_title_land_enc_effect_tower_stoneskin	Stoneskin	false
 effect_bundles_localised_description_land_enc_effect_tower_stoneskin	A ward of living stone hardens the army's hide for one battle.	false
+effect_bundles_localised_title_land_enc_effect_tower_glass_cannon	Glass Cannon	false
+effect_bundles_localised_description_land_enc_effect_tower_glass_cannon	The army throws caution away for one battle: it hits harder and bleeds faster.	false
+effect_bundles_localised_title_land_enc_effect_tower_plague_bearer	Plague Bearer	false
+effect_bundles_localised_description_land_enc_effect_tower_plague_bearer	The army carried the tower's plague out with its gold. It wastes away for a few turns.	false
 effect_bundles_localised_title_land_enc_effect_tower_break_their_spirit	Broken Spirit	false
 effect_bundles_localised_description_land_enc_effect_tower_break_their_spirit	Word of what waits above has spread through the ranks. This army fights afraid.	false
 effect_bundles_localised_title_land_enc_effect_tower_curse_their_blades	Cursed Blades	false

@@ -100,6 +100,18 @@ M.offers = {
     --- A random blessing or curse, shown when the dilemma reopens: free war rites, `gold` more in the haul, a `next_budget` bigger next
     --- army, or every unit losing `bleed` strength points.
     { key = "roll_the_bones", stay = true, gold = 1000, next_budget = 1.2, bleed = 10 },
+    --- A one-battle bundle that trades defence for attack.
+    { key = "glass_cannon", effect_bundle = "land_enc_effect_tower_glass_cannon" },
+    --- Heals `heal_share` of each unit's missing strength. Losing the next floor then destroys the whole army, lord included.
+    { key = "last_stand", heal_share = 1 },
+    --- Adds `gold` to the haul and puts `effect_bundle` (attrition) on the army for `turns` turns.
+    { key = "plague_bearer", gold = 2000, effect_bundle = "land_enc_effect_tower_plague_bearer", turns = 3 },
+    --- The next floor's army copies the delving army's regular units. Winning it adds the gold of the first `bonus` step whose `units` the copy
+    --- reaches.
+    { key = "mirror_curse", bonus = { { units = 20, gold = 2000 }, { units = 15, gold = 1500 }, { units = 10, gold = 1000 } } },
+    --- Adds `items` unique items to the haul now. When the delve ends, a `difficulty` army of one of `factions` marches on the delving faction's
+    --- capital and stays until beaten. It lands `spawn_distance` (min, max) away from the settlement of a random region in the capital's province.
+    { key = "daemons_deal", stay = true, items = 2, difficulty = "hard", factions = { "chs", "kho", "nur", "sla", "tze" }, spawn_distance = { 10, 20 } },
     --- Skips the next floor for `reward_share` of its gold and half its items, and the floor after becomes hard. Not offered when the next
     --- floor is the Master's.
     { key = "tempt_fate", skips = 1, reward_share = 0.5 },
@@ -111,6 +123,9 @@ M.offers = {
     { key = "hidden_floor", bonus_floor = true },
     --- The next floor's army is one difficulty lower and pays `reward_share` of its gold. Not offered when it is already easy.
     { key = "soft_landing", reward_share = 0.5 },
+    --- The next floor is led by one of the tower faction's legendary lords (configs/tower_champions.lua) that no human faction holds, with no
+    --- heroes and a small guard (`fewer_units` off the cap, tiers `min_tier` and up). Its gold is multiplied by `next_gold`.
+    { key = "tower_champion", next_gold = 1.5, no_heroes = true, fewer_units = 13, min_tier = 4 },
     --- This tower remembers the faction: its later delves here start on floor 2 with floor 1's base gold in the haul.
     { key = "echoes_of_the_climb" },
 }

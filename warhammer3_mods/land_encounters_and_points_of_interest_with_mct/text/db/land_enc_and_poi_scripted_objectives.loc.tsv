@@ -36,6 +36,10 @@ scripted_objectives_localised_text_land_enc_tower_buff_stoneskin	[[col:green]]St
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin		false
 scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_message	Stoneskin: +15% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_glass_cannon	[[col:green]]Glass cannon: +20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]] and +20% [[img:ui/skins/default/icon_stat_damage.png]][[/img]], -20 [[img:ui/skins/default/icon_stat_defence.png]][[/img]] and -20 [[img:ui/skins/default/icon_stat_armour.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_glass_cannon		false
+scripted_objectives_localised_text_land_enc_tower_buff_glass_cannon_message	Glass cannon: +20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]] and +20% [[img:ui/skins/default/icon_stat_damage.png]][[/img]], -20 [[img:ui/skins/default/icon_stat_defence.png]][[/img]] and -20 [[img:ui/skins/default/icon_stat_armour.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_glass_cannon_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_rousing_speech	[[col:green]]Rousing speech: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]] and +5% [[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_rousing_speech		false
 scripted_objectives_localised_text_land_enc_tower_buff_rousing_speech_message	Rousing speech: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]] and +5% [[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]].	false
@@ -64,6 +68,18 @@ scripted_objectives_localised_text_land_enc_tower_buff_drained	[[col:yellow]]Dra
 scripted_objectives_localised_description_land_enc_tower_buff_drained		false
 scripted_objectives_localised_text_land_enc_tower_buff_drained_message	Drained: -5 [[img:ui/skins/default/icon_stat_morale.png]][[/img]] and -5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_drained_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_last_stand	[[col:yellow]]Last stand: lose this floor and our whole army is destroyed.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_last_stand		false
+scripted_objectives_localised_text_land_enc_tower_buff_last_stand_message	Last stand: lose this floor and our whole army is destroyed.	false
+scripted_objectives_localised_description_land_enc_tower_buff_last_stand_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_mirror_curse	[[col:red]]Mirror curse: the enemy army copies ours.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_mirror_curse		false
+scripted_objectives_localised_text_land_enc_tower_buff_mirror_curse_message	Mirror curse: the enemy army copies ours.	false
+scripted_objectives_localised_description_land_enc_tower_buff_mirror_curse_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_tower_champion	[[col:red]]Tower champion: a legendary lord leads the enemy.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_tower_champion		false
+scripted_objectives_localised_text_land_enc_tower_buff_tower_champion_message	Tower champion: a legendary lord leads the enemy.	false
+scripted_objectives_localised_description_land_enc_tower_buff_tower_champion_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores	[[col:red]]Poison the stores: enemy units started at 75% strength.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores		false
 scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_message	Poison the stores: enemy units started at 75% strength.	false

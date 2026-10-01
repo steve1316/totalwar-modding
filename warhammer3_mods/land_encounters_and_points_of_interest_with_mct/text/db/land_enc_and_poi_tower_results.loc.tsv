@@ -12,6 +12,7 @@ campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_gold	[[co
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_foe	[[col:yellow]]Roll the bones:[[/col]] [[col:red]]the next army is 20%% stronger.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_bleed	[[col:yellow]]Roll the bones:[[/col]] [[col:red]]every unit loses %s strength.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_reroll	[[col:yellow]]Reroll:[[/col]] the offers were redrawn.	false
+campaign_localised_strings_string_land_enc_tower_result_daemons_deal	[[col:yellow]]Daemon's deal:[[/col]] [[col:green]]%s unique items[[/col]] joined the haul. [[col:red]]A Chaos army will march on your capital when the delve ends.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_towers_favour	[[col:yellow]]Tower's favour:[[/col]] [[col:green]]+10%% income[[/col]] from all buildings for the next 5 turns.	false
 campaign_localised_strings_string_land_enc_tower_result_research_scrolls	[[col:yellow]]Research scrolls:[[/col]] [[col:green]]+25%% research rate[[/col]] for the next 5 turns.	false
 campaign_localised_strings_string_land_enc_tower_result_recruitment_cache	[[col:yellow]]Recruitment cache:[[/col]] [[col:green]]-30%% recruitment cost[[/col]] for the next 5 turns.	false

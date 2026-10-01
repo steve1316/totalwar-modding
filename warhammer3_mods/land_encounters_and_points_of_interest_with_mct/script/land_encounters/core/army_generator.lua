@@ -87,21 +87,23 @@ local function unit_price(unit)
     return unit.multiplayer_cost or 0
 end
 
---- Builds per-role pools of the faction's buyable units across every tier up to `max_tier`. Each unit appears once, from its first enabled
---- listing. Tiers and unit types are walked in a fixed order so every multiplayer client builds identical pools.
+--- Builds per-role pools of the faction's buyable units across the tiers from `min_tier` to `max_tier`. Each unit appears once, from its first
+--- enabled listing. Tiers and unit types are walked in a fixed order so every multiplayer client builds identical pools.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param origins table The allowed-origin set from `enabled_origins`.
 --- @param max_tier number|nil The highest tier to take units from, or nil for every tier.
+--- @param min_tier number|nil The lowest tier to take units from, or nil for every tier.
 --- @returns table A role -> array of { land_unit, unit_type, price, is_renown } map, each array sorted by price, with a `median` price field.
-local function build_role_pools(faction_shorthand_key, origins, max_tier)
+local function build_role_pools(faction_shorthand_key, origins, max_tier, min_tier)
     local pools = { frontline = {}, missile = {}, cavalry = {}, monsters = {}, artillery = {} }
     local seen = {}
     local units_by_tier = factions_data[faction_shorthand_key].units
     for tier, tier_name in ipairs(TIER_NAMES) do
         if max_tier and tier - 1 > max_tier then break end
+        local tier_units = (not min_tier or tier - 1 >= min_tier) and units_by_tier[tier_name] or {}
         for _, unit_type in ipairs(UNIT_TYPES) do
             local role = archetypes.role_by_unit_type[unit_type]
-            for _, unit in ipairs(units_by_tier[tier_name] and units_by_tier[tier_name][unit_type] or {}) do
+            for _, unit in ipairs(tier_units[unit_type] or {}) do
                 local price = unit_price(unit)
                 if price > 0 and not seen[unit.land_unit] and origins[unit.origin] then
                     seen[unit.land_unit] = true
@@ -263,7 +265,8 @@ end
 --- @param difficulty_key string The difficulty key ("easy", "medium" or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget), the tower's
---- sabotage (`no_heroes`, `fewer_units` taken off the unit cap and `max_tier`, the highest unit tier) and `budget_range`
+--- sabotage and champion (`no_heroes`, `fewer_units` taken off the unit cap, `max_tier` and `min_tier` for the unit tiers, and `lord_subtype`
+--- for the lord) and `budget_range`
 --- ({min, max} gold that replaces the difficulty's MCT range).
 --- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields.
 function M.generate(difficulty_key, faction_shorthand_key, options)
@@ -273,7 +276,8 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     local origins = enabled_origins()
     local lord, heroes = pick_lord_and_heroes(difficulty_key, faction_shorthand_key, origins)
     if options.no_heroes then heroes = {} end
-    local pools = build_role_pools(faction_shorthand_key, origins, options.max_tier)
+    if options.lord_subtype then lord = { agent_subtype = options.lord_subtype, legendary = true } end
+    local pools = build_role_pools(faction_shorthand_key, origins, options.max_tier, options.min_tier)
     local archetype = pick_archetype(pools, options.archetype_keys)
     local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1))
 

@@ -247,6 +247,7 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         --- empty strings / empty tables in Army:create_from.
         lord = {
             agent_subtype = force_makeup.lord.agent_subtype,
+            legendary = force_makeup.lord.legendary,
             level_range = { difficulties[difficulty].lord_level_range[1], difficulties[difficulty].lord_level_range[2] },
         },
         heroes = {},
@@ -638,6 +639,7 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                 function()
                     self:try_add_trait_to_invading_lord(invasion_force:get_general())
                     self:try_add_ancillaries_to_invading_lord(invasion_force:get_general())
+                    self:try_name_legendary_lord(invasion_force:get_general())
                 end,
             0.1)
 
@@ -686,6 +688,21 @@ function InvasionBattleManager:try_add_trait_to_invading_lord(invasion_general)
     if lord_trait ~= nil then
         cm:force_add_trait(lord_lookup, lord_trait, false , 1)
     end
+end
+
+--- Names a legendary lord general after their own lord unit (e.g. "Zhatan the Black"), in the player's language. A general created from a
+--- subtype alone is otherwise given a random name. Ordinary lords keep that name.
+--- @param invasion_general character The newly spawned invasion general.
+function InvasionBattleManager:try_name_legendary_lord(invasion_general)
+    if not self.event_army.lord.legendary then return end
+    local lord_unit = invasion_general:military_force():unit_list():item_at(0)
+    local name = common.get_localised_string("land_units_onscreen_name_" .. lord_unit:unit_key())
+    if not name or name == "" then
+        out("LEAPOI: legendary lord " .. self.event_army.lord.subtype .. " keeps their name, " .. lord_unit:unit_key() .. " has no localised name")
+        return
+    end
+    cm:change_character_custom_name(invasion_general, name, "", "", "")
+    out("LEAPOI: legendary lord " .. self.event_army.lord.subtype .. " is named " .. name)
 end
 
 --- Applies all of the encounter lord's ancillaries to the invasion general.
@@ -838,6 +855,35 @@ function InvasionBattleManager:build_unit_list(army)
     return self.random_army_manager:generate_force(army.force_identifier)
 end
 
+
+--- Sends an army at a region as a lasting invasion: it spawns beside the given position, marches on the region and stays until beaten. The
+--- army is never marked for removal, unlike an encounter's.
+--- @param army Army The army to send.
+--- @param region_key string The region it marches on.
+--- @param target_faction_name string The faction it declares war on.
+--- @param x number The position to spawn beside.
+--- @param y number The position to spawn beside.
+--- @returns boolean True when a spawn location was found and the invasion started.
+function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name, x, y)
+    local spawn_x, spawn_y = self:find_location_for_character_to_spawn(army.faction, { x, y })
+    if spawn_x == -1 then return false end
+    army:randomize_units(self.random_army_manager)
+    local force = self.random_army_manager:generate_force(army.force_identifier)
+    if self.invasion_manager:get_invasion(army.invasion_identifier) then
+        self.invasion_manager:remove_invasion(army.invasion_identifier)
+    end
+    local invasion = self.invasion_manager:new_invasion(army.invasion_identifier, army.faction, force, { spawn_x, spawn_y })
+    invasion:set_target("REGION", region_key, target_faction_name)
+    invasion:create_general(false, army.lord.subtype, "", "", "", "")
+    invasion:add_character_experience(army.lord.level, true)
+    invasion:add_unit_experience(army.unit_experience_amount)
+    invasion:start_invasion(function()
+        if not cm:get_faction(army.faction):at_war_with(cm:get_faction(target_faction_name)) then
+            cm:force_declare_war(army.faction, target_faction_name, false, false)
+        end
+    end, false, false, false)
+    return true
+end
 
 --- Finds a valid spawn location near `center_coordinates`. Walks outward in 2-meter steps up to 4 iterations,
 --- alternating between same-region and other-region checks. Returns (-1, -1) on failure - the battle will not trigger.

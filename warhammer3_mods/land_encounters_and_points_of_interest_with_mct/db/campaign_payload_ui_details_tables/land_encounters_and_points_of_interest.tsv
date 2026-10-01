@@ -141,6 +141,11 @@ dummy_land_enc_tower_double_or_nothing	ui/campaign ui/effect_bundles/trickster_c
 dummy_land_enc_tower_hellforge_pact	ui/campaign ui/effect_bundles/chd_hellforge.png	default	0
 dummy_land_enc_tower_blood_moon	ui/campaign ui/effect_bundles/mannslieb_full_moon_negative.png	default	0
 dummy_land_enc_tower_roll_the_bones	ui/campaign ui/effect_bundles/random_recipe.png	default	0
+dummy_land_enc_tower_glass_cannon	ui/campaign ui/effect_bundles/rampage_savage.png	default	0
+dummy_land_enc_tower_last_stand	ui/campaign ui/effect_bundles/attribute_unbreakable.png	default	0
+dummy_land_enc_tower_plague_bearer	ui/campaign ui/effect_bundles/plague.png	default	0
+dummy_land_enc_tower_mirror_curse	ui/campaign ui/effect_bundles/cotw_reveal_shroud.png	default	0
+dummy_land_enc_tower_daemons_deal	ui/campaign ui/effect_bundles/daemonic_gift.png	default	0
 dummy_land_enc_tower_tempt_fate	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
 dummy_land_enc_tower_reroll	ui/campaign ui/effect_bundles/random_recipe.png	default	0
 dummy_land_enc_tower_reroll_unaffordable	ui/campaign ui/effect_bundles/random_recipe.png	default	0
@@ -148,4 +153,5 @@ dummy_land_enc_tower_secret_stair	ui/campaign ui/effect_bundles/stance_tunneling
 dummy_land_enc_tower_secret_stair_unaffordable	ui/campaign ui/effect_bundles/stance_tunneling.png	default	0
 dummy_land_enc_tower_hidden_floor	ui/campaign ui/effect_bundles/concealment.png	default	0
 dummy_land_enc_tower_soft_landing	ui/campaign ui/effect_bundles/peasant_negative.png	default	0
+dummy_land_enc_tower_tower_champion	ui/campaign ui/effect_bundles/exalted_hero.png	default	0
 dummy_land_enc_tower_echoes_of_the_climb	ui/campaign ui/effect_bundles/vision.png	default	0
