@@ -5,36 +5,40 @@ lzd_cha_crotazl	0	15	150	260	3.0000	axe	club	medium	5	1.0000	0.7500	0.0000	false
 lzd_cha_crotazl_mount	0	15	140	290	4.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	false		0	10	4.0000		false
 lzd_chameleon_skink_eyes_of_the_canopy_ror	0	0	20	5	1.0000	axe	club		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.3000		false
 lzd_great_wyrm	10	0	170	235	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+lzd_great_wyrm_blessed	20	0	170	235	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	0.0000	false		0	10	4.0000		false
 lzd_kroxigor_makers_of_the_paths_ror	25	0	30	70	2.0000	axe	club_medium	medium	4	1.0000	1.2500	0.0000	false		0	10	3.8000		false
 lzd_red_crested_skinks_the_red_shields_ror	18	0	6	21	2.0000	spear	halberd		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.6000		false
 lzd_ripperdactyl_riders_the_wind_that_hungers_ror	0	15	32	94	2.0000	axe	creatures_claws	medium	4	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
 lzd_salamander_the_fire_lizards_ror	0	0	12	34	1.0000	sword	creatures_claws	small	2	0.6000	0.7500	10.0000	false	wh_main_unit_contact_morale	0	10	4.0000		false
 lzd_skink_altar_guardians	12	0	12	26	2.0000	spear	halberd		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.6000		false
-lzd_skink_culchan_riders	0	8	45	10	1.0000	axe	creatures_claws		2	1.0000	0.7500	0.0000	false		0	10	4.0000		false
-lzd_skink_horned_ones_riders	14	0	16	37	2.0000	spear	spear		2	1.0000	0.5000	0.0000	false		0	10	4.2000		false
-lzd_skink_horned_ones_riders_tichi_huichi	14	0	16	37	2.0000	spear	spear		2	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.2000		false
 lzd_spawn_leaders	0	10	26	26	2.0000	axe	club_saurus		2	1.0000	0.7500	0.0000	false		0	10	3.7000		false
 lzd_terradon_riders_wing_of_sotek_ror	0	0	52	13	2.0000	axe	creatures_claws	small	2	1.0000	0.7500	0.0000	false		0	10	4.0000		false
 obsidian_lzd_ancient_razordon	0	0	115	250	7.0000	axe	creatures_claws	large	4	1.0000	1.2500	0.0000	false		0	10	3.6000		false
+obsidian_lzd_bastiladon_blessed	0	15	90	160	9.0000	axe	creatures_claws	medium	3	1.0000	1.2500	0.0000	false	wh2_dlc17_unit_contact_dazed	0	10	3.7000		false
+obsidian_lzd_cav_skink_culchan_riders	0	8	45	10	1.0000	axe	creatures_claws		2	1.0000	0.7500	0.0000	false		0	10	4.0000		false
+obsidian_lzd_cav_skink_horned_ones_riders	14	0	16	37	2.0000	spear	spear		2	1.0000	0.5000	0.0000	false		0	10	4.2000		false
+obsidian_lzd_cav_skink_horned_ones_riders_tichi_huichi	14	0	16	37	2.0000	spear	spear		2	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.2000		false
 obsidian_lzd_cha_adohi_tehga	0	0	255	85	4.0000	spear	staff	very_large	6	1.0000	0.5000	0.0000	true		4	4	4.0000		false
 obsidian_lzd_cha_chameleon_skink_prowler	0	0	240	90	3.0000	axe	club	medium	5	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
 obsidian_lzd_cha_chameleon_skink_sentinel	0	0	255	95	3.0000	axe	club	medium	5	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
 obsidian_lzd_cha_kroxigor_elder	0	15	120	290	4.0000	axe	axe	medium	5	1.0000	1.0000	0.0000	false		0	10	4.0000		false
 obsidian_lzd_cha_tlatl	0	0	120	310	10.0000	axe	creatures_claws	large	4	1.0000	1.2500	0.0000	true		4	4	3.8000		false
 obsidian_lzd_coatl_young	0	0	100	240	9.0000	axe	creatures_claws	large	2	1.0000	1.1500	0.0000	true		0	10	3.8000		false
+obsidian_lzd_cold_one_club_sotek	0	0	15	35	1.0000	axe	creatures_claws		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	4.4000		false
 obsidian_lzd_cold_one_spear_sotek	14	0	14	34	2.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.2000		false
+obsidian_lzd_dread_saurian_ror	0	0	220	530	20.0000	axe	creatures_claws	large	8	1.7000	1.2500	0.0000	false		8	8	4.0000	wh2_dlc17_bst_ghorgon_ror	false
 obsidian_lzd_fogwreathed_elementals	0	0	36	84	2.0000	axe	axe	medium	4	1.3000	0.5000	0.0000	true		3	3	4.0000		false
 obsidian_lzd_horned_one_club_sotek	0	0	19	41	2.0000	axe	creatures_claws		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	4.5000		false
-obsidian_lzd_inf_saurus_spear_sotek	16	0	29	13	2.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.1000		false
-obsidian_lzd_inf_saurus_warrior_sotek	0	0	34	18	2.0000	axe	club_saurus		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	3.7000		false
+obsidian_lzd_inf_saurus_spear_shield_sotek	16	0	29	13	2.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.1000		false
+obsidian_lzd_inf_saurus_warrior_shield_sotek	0	0	34	18	2.0000	axe	club_saurus		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	3.7000		false
 obsidian_lzd_inf_temple_guard_sotek	16	0	13	29	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
 obsidian_lzd_kroxigor_sotek	25	0	30	70	2.0000	axe	club_medium	medium	4	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	0	10	3.8000		false
 obsidian_lzd_ripperdactyl_sotek	0	15	32	94	2.0000	axe	creatures_claws	medium	4	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
 obsidian_lzd_sacred_kroxigor_sotek	0	15	36	84	3.0000	axe	club_medium	medium	3	1.0000	1.2500	0.0000	true	wh_main_unit_contact_poison	0	10	4.0000		false
-obsidian_lzd_skink_culchan_riders_sotek	0	8	45	10	1.0000	axe	creatures_claws		2	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
-obsidian_lzd_skink_horned_ones_riders_sotek	14	0	16	37	2.0000	spear	spear		2	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.2000		false
 obsidian_lzd_spawn_leaders_sotek	0	10	26	26	2.0000	axe	club_saurus		2	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	3.7000		false
 obsidian_lzd_terradon_sotek	0	0	52	13	2.0000	axe	creatures_claws	small	4	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
+obsidian_obsidian_lzd_cav_skink_culchan_riders_sotek	0	8	45	10	1.0000	axe	creatures_claws		2	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	4.0000		false
+obsidian_obsidian_lzd_cav_skink_horned_ones_riders_sotek	14	0	16	37	2.0000	spear	spear		2	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	10	4.2000		false
 wh2_dlc13_lzd_sacred_kroxigor	0	15	36	84	3.0000	axe	club_medium	medium	3	1.0000	1.2500	0.0000	true		0	10	4.0000		false
 wh2_dlc13_lzd_sacred_kroxigor_ror	0	15	36	84	3.0000	axe	club_medium	medium	3	1.0000	1.2500	0.0000	true	wh2_dlc17_unit_contact_dazed	0	10	4.0000		false
 wh2_main_lzd_kroxigor	25	0	30	70	2.0000	axe	club_medium	medium	4	1.0000	1.2500	0.0000	false		0	10	3.8000		false
