@@ -44,6 +44,7 @@ from data.supported_mods import SUPPORTED_MODS
 
 MODDED_TABLE_NAME = "!!!!!!!2xunitsize_compat"
 VANILLA_LAND_UNITS_TABLES_DF = None
+VANILLA_ENGINE_TYPES: Dict[str, str] = {}
 
 
 def handle_kv_rules_tables(df: pd.DataFrame):
@@ -109,27 +110,24 @@ def handle_battle_currency_army_special_abilities_cost_values_tables(df: pd.Data
 
 
 def handle_main_units_tables(
-    df: pd.DataFrame, land_units_tables_df: pd.DataFrame = None, reference_vanilla_land_units_tables_df: pd.DataFrame = None
+    df: pd.DataFrame,
+    engine_types: Dict[str, str],
+    land_units_tables_df: pd.DataFrame = None,
+    reference_vanilla_land_units_tables_df: pd.DataFrame = None,
 ):
     """Handle the main_units_tables table. In addition, it also modifies the land_units_tables table to match.
 
     Args:
         df (pd.DataFrame): DataFrame containing the main_units_tables table.
+        engine_types (Dict[str, str]): battlefield_engines_tables key -> engine_type, used to tell crewless vehicles from crewed guns.
         land_units_tables_df (pd.DataFrame): DataFrame containing the land_units_tables table.
         reference_vanilla_land_units_tables_df (pd.DataFrame): DataFrame containing the reference vanilla land_units_tables table.
 
     Returns:
         Tuple containing the modified main_units_tables and land_units_tables dataframes.
     """
-    # Double the values of the num_men column but only if the original value is greater than 1.
     df["num_men"] = df["num_men"].astype(float).astype(int).astype(str)
-    df.loc[df["num_men"].astype(int) > 1, "num_men"] = (df.loc[df["num_men"].astype(int) > 1, "num_men"].astype(int) * 2).astype(str)
 
-    # Update the land_units_tables table as well.
-    # For all rows in the main_units_tables table via the unit column key, update the corresponding row in the land_units_tables table via the key column key
-    # by doubling the num_mounts column value.
-    # Also double the value of the rank_depth column.
-    # In addition, double the value of the bonus_hit_points column for the "lord", "hero" and "monster" caste categories.
     if land_units_tables_df is None:
         # Only extract vanilla when we actually need to read from it. Modded callers (workers) already supply the modded land_units_tables_df, so the re-extraction would be a wasted shared-folder write and a thread-safety hazard.
         extract_tsv_data("land_units_tables")
@@ -143,43 +141,57 @@ def handle_main_units_tables(
     for col in ["bonus_hit_points", "num_mounts", "num_engines", "rank_depth"]:
         if col in land_units_tables_df.columns:
             land_units_tables_df[col] = land_units_tables_df[col].astype(float).astype(int).astype(str)
-    for _, row in df.iterrows():
+
+    # For each main unit, double num_men and its land unit's num_mounts, num_engines and rank_depth, plus bonus_hit_points for lords, heroes and monsters.
+    # Single vehicles keep their size and a land unit shared by several main units is only doubled once.
+    doubled_land_units = set()
+    for index, row in df.iterrows():
         mask = land_units_tables_df["key"] == row["land_unit"]
 
         if mask.sum() == 0:
-            # fallback to vanilla reference
+            # The mod's main unit points at a vanilla land unit, so read it from the vanilla reference instead.
             mask = reference_vanilla_land_units_tables_df["key"] == row["land_unit"]
             if mask.sum() == 0:
                 logging.error(f"No matching row found for {row['land_unit']} in the land_units_tables table.")
                 raise ValueError("No matching row found for the land unit in the land_units_tables table.")
 
-            # Use the vanilla DF for reference, but still write into the actual modded DF
+            # Writes land in this throwaway copy and are dropped. The vanilla compat file already ships the doubled row, so writing it again would double it twice.
             src_df = reference_vanilla_land_units_tables_df
         else:
             src_df = land_units_tables_df
 
-        # Conditionally double the bonus HP, rank depth and number of engines.
+        # A unit built on one crewless vehicle (Steam Tank, Luminark, Land Ship) has its crew and draught animals fixed to that model, so it keeps its size.
+        num_engines = int(float(src_df.loc[mask, "num_engines"].iloc[0]))
+        engine_type = engine_types.get(src_df.loc[mask, "engine"].iloc[0], "")
+        single_vehicle = num_engines == 1 and engine_type.startswith("Generic_No_Crew")
+
+        # Double the num_men column but only if the original value is greater than 1.
+        if not single_vehicle and int(row["num_men"]) > 1:
+            df.loc[index, "num_men"] = str(int(row["num_men"]) * 2)
+
+        # Several main units can share one land unit (e.g. Imperial Supply copies). Only double it once.
+        if row["land_unit"] in doubled_land_units:
+            continue
+        doubled_land_units.add(row["land_unit"])
+
+        # Double the bonus HP of lords, heroes and monsters.
         if row["caste"] in ["lord", "hero", "monster"]:
             src_df.loc[mask, "bonus_hit_points"] = (src_df.loc[mask, "bonus_hit_points"].astype(int) * 2).astype(str)
 
-        if row["caste"] in ["warmachine", "chariot"]:
-            # Check the original num_engines value from the reference dataframe.
-            if mask.sum() > 0:
-                original_num_engines = src_df.loc[mask, "num_engines"].iloc[0]
-                original_num_engines_int = int(original_num_engines)
+        if single_vehicle:
+            continue
 
-                if original_num_engines_int == 0:
-                    # If num_engines is 0, the value was stored in num_mounts instead, so double num_mounts.
-                    # Always double num_mounts in this case, even if it's 1.
-                    original_num_mounts = src_df.loc[mask, "num_mounts"].iloc[0]
-                    src_df.loc[mask, "num_mounts"] = str(int(original_num_mounts) * 2)
-                else:
-                    # Double the engines, but only if the original value was not '1'.
-                    engine_mask = mask & (src_df["num_engines"].astype(int) != 1)
-                    src_df.loc[engine_mask, "num_engines"] = (src_df.loc[engine_mask, "num_engines"].astype(int) * 2).astype(str)
-                    # Also double the mounts, but only if the original value was not '1'.
-                    mount_mask = mask & (src_df["num_mounts"].astype(int) != 1)
-                    src_df.loc[mount_mask, "num_mounts"] = (src_df.loc[mount_mask, "num_mounts"].astype(int) * 2).astype(str)
+        if row["caste"] in ["warmachine", "chariot"]:
+            if num_engines == 0:
+                # If num_engines is 0, the value was stored in num_mounts instead, so always double num_mounts, even if it's 1.
+                src_df.loc[mask, "num_mounts"] = str(int(src_df.loc[mask, "num_mounts"].iloc[0]) * 2)
+            else:
+                # A single crewed gun (Hellcannon, Queen Bess) stays one gun and only doubles its crew.
+                if num_engines > 1:
+                    src_df.loc[mask, "num_engines"] = str(num_engines * 2)
+                # Also double the mounts, but only if the original value was not '1'.
+                mount_mask = mask & (src_df["num_mounts"].astype(int) != 1)
+                src_df.loc[mount_mask, "num_mounts"] = (src_df.loc[mount_mask, "num_mounts"].astype(int) * 2).astype(str)
         else:
             # Double the mounts, but only if the original value was not '1'.
             mount_mask = mask & (src_df["num_mounts"].astype(int) != 1)
@@ -265,6 +277,11 @@ if __name__ == "__main__":
         vanilla_mounts_tables_dataframe = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_mounts_tables/db/mounts_tables/data__.tsv", "mounts_tables")
         vanilla_mounts_keys = set(vanilla_mounts_tables_dataframe.key.values)
 
+        # Extract vanilla battlefield_engines_tables so single vehicles can be told apart from crewed guns.
+        extract_tsv_data("battlefield_engines_tables")
+        vanilla_engines_dataframe = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_battlefield_engines_tables/db/battlefield_engines_tables/data__.tsv", "battlefield_engines_tables")
+        VANILLA_ENGINE_TYPES = dict(zip(vanilla_engines_dataframe["key"], vanilla_engines_dataframe["engine_type"]))
+
         # Vanilla pass writes the base `_vanilla` TSVs into the shared compat-pack build dir and seeds `VANILLA_LAND_UNITS_TABLES_DF`. Run sequentially so the modded workers see a stable read-only reference.
         logging.info("Processing vanilla...")
         table_mappings = {
@@ -304,7 +321,7 @@ if __name__ == "__main__":
             elif table_name == "battle_currency_army_special_abilities_cost_values_tables":
                 df = handle_battle_currency_army_special_abilities_cost_values_tables(df)
             elif table_name == "main_units_tables":
-                df, land_units_tables_df = handle_main_units_tables(df)
+                df, land_units_tables_df = handle_main_units_tables(df, VANILLA_ENGINE_TYPES)
                 table_mappings["land_units_tables"] = land_units_tables_df
                 VANILLA_LAND_UNITS_TABLES_DF = land_units_tables_df.copy(deep=True)
             elif table_name == "special_ability_phases_tables":
@@ -391,8 +408,10 @@ if __name__ == "__main__":
             # - If the caste is "lord", "hero" or "monster", double the bonus_hit_points column value.
             # Pass a deep copy of the shared vanilla reference so the fallback branch's in-place mutations stay worker-local.
             try:
+                # The mod's own engines override vanilla ones with the same key.
+                engine_types = {**VANILLA_ENGINE_TYPES, **{key: row["engine_type"] for key, row in table_data["battlefield_engines_tables"].items()}}
                 main_units_tables_df, land_units_tables_df = handle_main_units_tables(
-                    main_units_tables_df, land_units_tables_df, VANILLA_LAND_UNITS_TABLES_DF.copy(deep=True)
+                    main_units_tables_df, engine_types, land_units_tables_df, VANILLA_LAND_UNITS_TABLES_DF.copy(deep=True)
                 )
             except ValueError as e:
                 logging.error(f"Error processing mod: {mod['package_name']}: {e}")
