@@ -1,7 +1,7 @@
 --- All spot classes for the mod: the abstract Spot base, EventSpot (random encounter),
---- SmithySpot, SpotDelegate, PointOfInterestDelegate, and the Zone aggregate. Also exports
---- seven doc-only placeholder classes (EmitterSpot, DungeonSpot, InvasionSpot, ResourceSpot,
---- RiftSpot, TavernSpot, TowerSpot) that the original mod never implemented.
+--- SmithySpot, TowerSpot, SpotDelegate, PointOfInterestDelegate, and the Zone aggregate. Also exports
+--- six doc-only placeholder classes (EmitterSpot, DungeonSpot, InvasionSpot, ResourceSpot,
+--- RiftSpot, TavernSpot) that the original mod never implemented.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
@@ -11,7 +11,16 @@ require("script/land_encounters/core/mct")
 local SMITHY_MARKER_KEY_BY_LEVEL = { "encounter_marker_smithy", "encounter_marker_smithy_level_2", "encounter_marker_smithy_level_3" }
 
 --- Interaction radius of smithy markers.
-local SMITHY_MARKER_RADIUS = 8
+local SMITHY_MARKER_RADIUS = 3
+
+--- Interaction radius of battle and treasure spot markers.
+local ENCOUNTER_MARKER_RADIUS = 2.5
+
+--- Marker skin shared by every tower.
+local TOWER_MARKER_KEY = "encounter_marker_tower"
+
+--- Interaction radius of tower markers, kept tight around the tower model.
+local TOWER_MARKER_RADIUS = 2.5
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +79,7 @@ function Spot:activate(zone_name)
     end
 
     local marker_key = "encounter_marker_"..tostring(marker_number)
-    local interaction_radius = 4
+    local interaction_radius = ENCOUNTER_MARKER_RADIUS
     self:set_marker_on_map(marker_id, marker_key, interaction_radius)
 end
 
@@ -295,12 +304,6 @@ function SmithySpot.marker_id(zone_name, index)
     return "land_enc_marker_" .. zone_name .. "_smithy_" .. index
 end
 
---- Activates the smithy POI by placing its level 1 marker on the campaign map. Every smithy starts at level 1.
---- @param zone_name string The region key for the zone this smithy belongs to.
-function SmithySpot:activate(zone_name)
-    self:set_marker_on_map(SmithySpot.marker_id(zone_name, self.index), SMITHY_MARKER_KEY_BY_LEVEL[1], SMITHY_MARKER_RADIUS)
-end
-
 --- Replaces a smithy's marker with the skin for its forge level.
 --- @param zone_name string The region key for the zone the smithy belongs to.
 --- @param index number The 1-based smithy slot in the zone.
@@ -388,7 +391,33 @@ If you manage to suceed that battle, another dilemma would trigger that asks if 
 On the final or later floor, you would fight an actual-lord with spells/mounts and abilities that boost their troops refered to as the "Master of the Dungeon/Warren", and if you beat them it could give some cool item/rewards, or mayhap even a random hero from a random faction, where the roleplay is that you free-prisoners that swear fealty to you, or that you broke the curse of bla bla whatever n so on.
 ]]--
 
-local TowerSpot = nil
+--- Marker helpers for towers. A tower sits on one of its zone's encounter spots, so its marker is keyed by that spot's index.
+local TowerSpot = {}
+
+--- Returns the marker id of a tower.
+--- @param zone_name string The region key for the zone the tower stands in.
+--- @param spot_index number The index of the encounter spot the tower occupies.
+--- @returns string The marker id.
+function TowerSpot.marker_id(zone_name, spot_index)
+    return "land_enc_marker_" .. zone_name .. "_tower_" .. spot_index
+end
+
+--- Places a tower's marker on the campaign map, replacing any marker already under that id.
+--- @param zone_name string The region key for the zone the tower stands in.
+--- @param spot_index number The index of the encounter spot the tower occupies.
+--- @param coordinates table The tower's {x, y} position.
+function TowerSpot.place_marker(zone_name, spot_index, coordinates)
+    local marker_id = TowerSpot.marker_id(zone_name, spot_index)
+    cm:remove_interactable_campaign_marker(marker_id)
+    cm:add_interactable_campaign_marker(marker_id, TOWER_MARKER_KEY, coordinates[1], coordinates[2], TOWER_MARKER_RADIUS, "", "")
+end
+
+--- Removes a tower's marker from the campaign map.
+--- @param zone_name string The region key for the zone the tower stands in.
+--- @param spot_index number The index of the encounter spot the tower occupies.
+function TowerSpot.remove_marker(zone_name, spot_index)
+    cm:remove_interactable_campaign_marker(TowerSpot.marker_id(zone_name, spot_index))
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -405,6 +434,8 @@ local SpotDelegate = {
 
     active_spots = {},
     prohibited_spots = {},
+    --- Spot indexes held by a tower. They never activate as encounters. Rebuilt from tower state on every load, so not saved here.
+    reserved_spots = {},
 
     max_active_spots_count = 0
 }
@@ -430,7 +461,8 @@ function SpotDelegate:try_add_land_encounters(zone_name)
 
         --- Skip indexes that are currently active or in cooldown.
         local candidate_spot_to_activate_index = disordered_indexes[i]
-        if self.prohibited_spots[candidate_spot_to_activate_index] == nil and self.active_spots[candidate_spot_to_activate_index] == nil then
+        local is_free = self.prohibited_spots[candidate_spot_to_activate_index] == nil and self.active_spots[candidate_spot_to_activate_index] == nil
+        if is_free and not self.reserved_spots[candidate_spot_to_activate_index] then
             log("Adding land encounter in " .. zone_name .. "[" .. tostring(candidate_spot_to_activate_index) .. "]")
             self.active_spots[candidate_spot_to_activate_index] = true
             self.spots[candidate_spot_to_activate_index] = EventSpot:newFrom(self.spots[candidate_spot_to_activate_index])
@@ -482,6 +514,17 @@ function SpotDelegate:deactivate_spot_in_zone(zone_name, spot_index)
 end
 
 
+--- Holds a spot for a tower. An encounter already active there is removed first.
+--- @param zone_name string The region key for the zone this spot belongs to.
+--- @param spot_index number The 1-based slot index for the spot.
+function SpotDelegate:reserve_spot(zone_name, spot_index)
+    if self.active_spots[spot_index] then
+        self:deactivate_spot_in_zone(zone_name, spot_index)
+    end
+    self.reserved_spots[spot_index] = true
+end
+
+
 --- Restores active and prohibited spots from a previously saved campaign state.
 --- @param zone_name string The region key for the zone being restored.
 --- @param previous_state table Flattened save state previously produced by export_state_as_a_table.
@@ -519,6 +562,7 @@ function SpotDelegate:new(zone_coordinates, active_spot_percentage)
         spots = zone_spots,
         active_spots = {},
         prohibited_spots = {},
+        reserved_spots = {},
         max_active_spots_count = active_spot_percentage * #zone_coordinates
     }
     setmetatable(t, self)
@@ -536,13 +580,11 @@ local PointOfInterestDelegate = {
     points_of_interest = {},
 }
 
---- Initializes the POI table from the configs (smithies, taverns, resources). Honors the MCT
---- disable_smithies toggle.
+--- Initializes the POI table from the configs (smithies, taverns, resources). Smithy spots always exist, so a smithy marker left in a save
+--- still resolves. Whether their markers show follows the Remove Smithies setting, see `SmithyEventDelegate:sync_markers`.
 --- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays.
 function PointOfInterestDelegate:initialize(points_of_interest_data)
-    if not get_mct_settings().disable_smithies then
-        self:initialize_smithies(points_of_interest_data["smithies"])
-    end
+    self:initialize_smithies(points_of_interest_data["smithies"])
     self:initialize_taverns(points_of_interest_data["taverns"])
     self:initialize_resources(points_of_interest_data["resources"])
 end
@@ -588,15 +630,6 @@ function PointOfInterestDelegate:initialize_resources(resources_data)
         for i=1, #resources_data do
             --TODO table.insert(self.points_of_interest, ResourceSpot:newFrom(resources_data[i]))
         end
-    end
-end
-
-
---- Activates the on-map marker for every POI in this zone.
---- @param zone_name string The region key for the zone.
-function PointOfInterestDelegate:activate_points_of_interest(zone_name)
-    for i=1, #self.points_of_interest do
-        self.points_of_interest[i]:activate(zone_name)
     end
 end
 
@@ -676,12 +709,6 @@ end
 --- @param mctSettings table Live MCT settings forwarded to the POI delegate (legacy parameter, currently unused).
 function Zone:initialize_points_of_interest(points_of_interest_data, mctSettings)
     self.point_of_interest_delegate:initialize(points_of_interest_data, mctSettings)
-end
-
-
---- Activates the on-map markers for every POI in this zone.
-function Zone:activate_points_of_interest()
-    self.point_of_interest_delegate:activate_points_of_interest(self.name)
 end
 
 

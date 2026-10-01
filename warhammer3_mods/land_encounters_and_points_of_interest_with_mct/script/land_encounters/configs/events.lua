@@ -1,5 +1,5 @@
 --- Event tables for the Land Encounters and Points of Interest mod. Defines the dilemma / incident event keys grouped by category
---- (treasure_type, complex_continuity, smithy) and their targets / effect bindings. Battle-spot dilemmas live in configs/battle_categories.lua.
+--- (treasure_type, complex_continuity, smithy, tower_spot) and their targets / effect bindings. Battle-spot dilemmas live in configs/battle_categories.lua.
 --- Pure data - no runtime logic.
 
 local M = {}
@@ -13,10 +13,16 @@ M.tavern = {}
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- tower_spot (from constants/events/tower_spot_events.lua)
---- Source file is empty (stub).
+--- tower_spot: the tower dilemmas, built at runtime by features/tower.lua.
 
-M.tower_spot = {}
+M.tower_spot = {
+    "land_enc_dilemma_tower_enter",
+    "land_enc_dilemma_tower_deeper_floor_1",
+    "land_enc_dilemma_tower_deeper_floor_2",
+    "land_enc_dilemma_tower_deeper_floor_3",
+    "land_enc_dilemma_tower_deeper_floor_4",
+    "land_enc_dilemma_tower_claim",
+}
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

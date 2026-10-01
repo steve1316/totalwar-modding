@@ -69,10 +69,29 @@ section:set_localised_text("Configuration", true)
 
 local disable_smithies_checkbox = mct_mod:add_new_option("disable_smithies", "checkbox")
 disable_smithies_checkbox:set_text("Remove Smithies from the map", true)
-disable_smithies_checkbox:set_tooltip_text("Requires loading the save again to take effect.", true)
+disable_smithies_checkbox:set_tooltip_text("Removes every Smithy from the map and pauses their tributes, takeovers and sieges. Takes effect the next time a save is loaded.", true)
 disable_smithies_checkbox:set_is_global(true)
 disable_smithies_checkbox:set_default_value(false)
 disable_smithies_checkbox:set_assigned_section("configuration_section")
+
+--- Checkbox for the towers a lord can delve.
+local enable_towers_checkbox = mct_mod:add_new_option("enable_towers", "checkbox")
+enable_towers_checkbox:set_text("Enable Towers", true)
+enable_towers_checkbox:set_tooltip_text("Places one tower per map zone that a lord can delve for gold, items and sworn units. Requires loading the save again to take effect.", true)
+enable_towers_checkbox:set_is_global(true)
+enable_towers_checkbox:set_default_value(get_mct_settings().enable_towers)
+enable_towers_checkbox:set_assigned_section("configuration_section")
+
+--- Slider for how long a tower stays closed after a delve.
+local tower_cooldown_slider = mct_mod:add_new_option("tower_cooldown", "slider")
+tower_cooldown_slider:set_text("Tower cooldown (turns)", true)
+tower_cooldown_slider:set_tooltip_text("Turns a tower stays closed after a delve ends, whether you left, cleared it or lost. Default is 5.", true)
+tower_cooldown_slider:set_is_global(true)
+tower_cooldown_slider:slider_set_min_max(1, 30)
+tower_cooldown_slider:slider_set_precision(0)
+tower_cooldown_slider:slider_set_step_size(1, 0)
+tower_cooldown_slider:set_default_value(get_mct_settings().tower_cooldown)
+tower_cooldown_slider:set_assigned_section("configuration_section")
 
 --- Slider for what percentage of the possible total spots can have an event spawned into the world.
 local spawn_percentage_slider = mct_mod:add_new_option("spawn_percentage", "slider")

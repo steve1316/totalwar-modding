@@ -7,3 +7,5 @@ effects_description_land_enc_diplomatic_relations_ecstasic_legion	Diplomatic rel
 effects_description_land_enc_diplomatic_relations_sigvald	Diplomatic relations: %+n with The Decadent Host	false
 effects_description_land_enc_diplomatic_relations_seducers_of_slaanesh	Diplomatic relations: %+n with Seducers of Slaanesh	false
 effects_description_land_enc_diplomatic_relations_cult_of_pleasure	Diplomatic relations: %+n with Cult of Pleasure	false
+effects_description_land_enc_effect_tower_dividends_income	Tower dividends: %+n gold each turn	false
+effects_description_land_enc_effect_tower_dark_bargain_owed	Dark bargain: our lord is wounded for %n turns at the start of the turn after the delve	false

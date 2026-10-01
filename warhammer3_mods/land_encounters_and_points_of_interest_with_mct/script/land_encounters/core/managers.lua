@@ -12,6 +12,7 @@ local army_generator = require("script/land_encounters/core/army_generator")
 local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
+local TowerEventDelegate
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,6 +247,7 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         --- empty strings / empty tables in Army:create_from.
         lord = {
             agent_subtype = force_makeup.lord.agent_subtype,
+            legendary = force_makeup.lord.legendary,
             level_range = { difficulties[difficulty].lord_level_range[1], difficulties[difficulty].lord_level_range[2] },
         },
         heroes = {},
@@ -553,74 +555,82 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
 
     invasion:start_invasion(
         function(invasion_force)
+            local engaged = false
+            --- Embeds heroes and skills, then starts the battle. Runs once, from the war declaration or directly when the factions are already at war.
+            --- @param declaring_faction_name string The faction named by the war declaration.
+            local function engage(declaring_faction_name)
+                if engaged then return end
+                engaged = true
+                --- Force-declare war on any reinforcement allies of the player.
+                self:declare_war_on_ally_reinforcement_if_available()
+
+                --- Spawn any heroes and embed them into the invasion army.
+                local skill_overrides = self.event_army:get_skill_overrides()
+                local heroes = self.event_army:get_heroes()
+                local invasion_general = invasion_force:get_general()
+                for _, hero_object in ipairs(heroes) do
+                    out("DEBUG - spawning invasion hero " .. hero_object.agent_subtype .. ".")
+                    --- A valid spawn location is required or the agent creation call fails. Search beside the invasion army so it works on every campaign map.
+                    local agent_x, agent_y = cm:find_valid_spawn_location_for_character_from_position(self.event_army.faction, invasion_general:logical_position_x(), invasion_general:logical_position_y(), false, 5)
+                    out("DEBUG - agent_x: " .. agent_x .. " agent_y: " .. agent_y)
+                    out("DEBUG - faction: " .. self.event_army.faction)
+                    out("DEBUG - hero_object.agent_subtype: " .. hero_object.agent_subtype)
+                    out("DEBUG - hero_object.agent_type: " .. hero_object.agent_type)
+                    local new_invasion_hero_agent = cm:create_agent(self.event_army.faction, hero_object.agent_type, hero_object.agent_subtype, agent_x, agent_y)
+
+                    out("DEBUG - new_invasion_hero_agent spawned with cqi: " .. new_invasion_hero_agent:command_queue_index())
+                    for temp_hero_agent_subtype, skill_override in pairs(skill_overrides) do
+                        if hero_object.agent_subtype == temp_hero_agent_subtype then
+                            out("DEBUG - adding skills to invasion force hero " .. temp_hero_agent_subtype .. " of cqi " .. new_invasion_hero_agent:command_queue_index())
+                            for _, skill in ipairs(skill_override) do
+                                cm:add_skill(cm:char_lookup_str(new_invasion_hero_agent), skill, true, true)
+                            end
+                        end
+                    end
+
+                    cm:embed_agent_in_force(new_invasion_hero_agent, invasion_general:military_force())
+                end
+
+                --- Apply skill overrides to the invasion force lord.
+                out("DEBUG - invasion force lord cqi: " .. invasion_general:command_queue_index())
+                for lord_agent_subtype, skill_override in pairs(skill_overrides) do
+                    if self.event_army.lord.subtype == lord_agent_subtype then
+                        out("DEBUG - adding skills to invasion force lord of cqi " .. invasion_general:command_queue_index())
+                        for _, skill in ipairs(skill_override) do
+                            cm:add_skill(cm:char_lookup_str(invasion_general), skill, true, true)
+                        end
+                        break
+                    end
+                end
+
+                self:weaken_invasion_force(invasion_general:military_force())
+
+                local faction_being_declared_war_to = declaring_faction_name
+                if faction_being_declared_war_to == self.event_army.faction then
+                    --- The flag stays set until BattleCompleted, so a restarted battle keeps it.
+                    if self.event_army:has_ally_reinforcements() then
+                        self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, self.event_army.reinforcing_ally_armies[1].faction)
+                    end
+                    if self.event_army.intervention_type == AMBUSH_TYPE then
+                        out("DEBUG - AMBUSH_TYPE called.")
+                        cm:force_attack_of_opportunity(invasion_force:get_general():military_force():command_queue_index(), player_force_cqi, true)
+                    elseif self.event_army.intervention_type == INTERCEPTION_TYPE then
+                        out("DEBUG - INTERCEPTION_TYPE called.")
+
+                        cm:force_attack_of_opportunity(invasion_force:get_general():military_force():command_queue_index(), player_force_cqi, false)
+                    else -- ALLIED_REINFORCEMENTS_PERMITTED_TYPE
+                        out("DEBUG - ALLIED_REINFORCEMENTS_PERMITTED_TYPE called.")
+                        cm:force_attack_of_opportunity(player_force_cqi, invasion_force:get_general():military_force():command_queue_index(), false)
+                    end
+                end
+
+                out("DEBUG - attack initiated")
+            end
             self.core:add_listener(
                 "land_enc_and_poi_encounter_engage_invader",
                 "FactionLeaderDeclaresWar",
                 true,
-                function(local_context)
-                    --- Force-declare war on any reinforcement allies of the player.
-                    self:declare_war_on_ally_reinforcement_if_available()
-
-                    --- Spawn any heroes and embed them into the invasion army.
-                    local skill_overrides = self.event_army:get_skill_overrides()
-                    local heroes = self.event_army:get_heroes()
-                    local invasion_general = invasion_force:get_general()
-                    for _, hero_object in ipairs(heroes) do
-                        out("DEBUG - spawning invasion hero " .. hero_object.agent_subtype .. ".")
-                        --- A valid spawn location is required or the agent creation call fails. Search beside the invasion army so it works on every campaign map.
-                        local agent_x, agent_y = cm:find_valid_spawn_location_for_character_from_position(self.event_army.faction, invasion_general:logical_position_x(), invasion_general:logical_position_y(), false, 5)
-                        out("DEBUG - agent_x: " .. agent_x .. " agent_y: " .. agent_y)
-                        out("DEBUG - faction: " .. self.event_army.faction)
-                        out("DEBUG - hero_object.agent_subtype: " .. hero_object.agent_subtype)
-                        out("DEBUG - hero_object.agent_type: " .. hero_object.agent_type)
-                        local new_invasion_hero_agent = cm:create_agent(self.event_army.faction, hero_object.agent_type, hero_object.agent_subtype, agent_x, agent_y)
-
-                        out("DEBUG - new_invasion_hero_agent spawned with cqi: " .. new_invasion_hero_agent:command_queue_index())
-                        for temp_hero_agent_subtype, skill_override in pairs(skill_overrides) do
-                            if hero_object.agent_subtype == temp_hero_agent_subtype then
-                                out("DEBUG - adding skills to invasion force hero " .. temp_hero_agent_subtype .. " of cqi " .. new_invasion_hero_agent:command_queue_index())
-                                for _, skill in ipairs(skill_override) do
-                                    cm:add_skill(cm:char_lookup_str(new_invasion_hero_agent), skill, true, true)
-                                end
-                            end
-                        end
-
-                        cm:embed_agent_in_force(new_invasion_hero_agent, invasion_general:military_force())
-                    end
-
-                    --- Apply skill overrides to the invasion force lord.
-                    out("DEBUG - invasion force lord cqi: " .. invasion_general:command_queue_index())
-                    for lord_agent_subtype, skill_override in pairs(skill_overrides) do
-                        if self.event_army.lord.subtype == lord_agent_subtype then
-                            out("DEBUG - adding skills to invasion force lord of cqi " .. invasion_general:command_queue_index())
-                            for _, skill in ipairs(skill_override) do
-                                cm:add_skill(cm:char_lookup_str(invasion_general), skill, true, true)
-                            end
-                            break
-                        end
-                    end
-
-                    local faction_being_declared_war_to = local_context:character():faction():name()
-                    if faction_being_declared_war_to == self.event_army.faction then
-                        --- The flag stays set until BattleCompleted, so a restarted battle keeps it.
-                        if self.event_army:has_ally_reinforcements() then
-                            self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, self.event_army.reinforcing_ally_armies[1].faction)
-                        end
-                        if self.event_army.intervention_type == AMBUSH_TYPE then
-                            out("DEBUG - AMBUSH_TYPE called.")
-                            cm:force_attack_of_opportunity(invasion_force:get_general():military_force():command_queue_index(), player_force_cqi, true)
-                        elseif self.event_army.intervention_type == INTERCEPTION_TYPE then
-                            out("DEBUG - INTERCEPTION_TYPE called.")
-
-                            cm:force_attack_of_opportunity(invasion_force:get_general():military_force():command_queue_index(), player_force_cqi, false)
-                        else -- ALLIED_REINFORCEMENTS_PERMITTED_TYPE
-                            out("DEBUG - ALLIED_REINFORCEMENTS_PERMITTED_TYPE called.")
-                            cm:force_attack_of_opportunity(player_force_cqi, invasion_force:get_general():military_force():command_queue_index(), false)
-                        end
-                    end
-
-                    out("DEBUG - attack initiated")
-                end,
+                function(local_context) engage(local_context:character():faction():name()) end,
                 IS_NOT_PERSISTENT_LISTENER
             )
 
@@ -629,22 +639,45 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                 function()
                     self:try_add_trait_to_invading_lord(invasion_force:get_general())
                     self:try_add_ancillaries_to_invading_lord(invasion_force:get_general())
+                    self:try_name_legendary_lord(invasion_force:get_general())
                 end,
             0.1)
 
             --- Force-declare war between the encounter faction and the player on a slightly longer delay.
             cm:callback(
                 function()
+                    --- No war declaration fires between factions already at war, such as a tower's second floor, so the battle starts directly.
+                    if cm:get_faction(player_faction_name):at_war_with(cm:get_faction(self.event_army.faction)) then
+                        self.core:remove_listener("land_enc_and_poi_encounter_engage_invader")
+                        engage(self.event_army.faction)
+                        return
+                    end
                     local call_player_allies_to_war = false
                     local call_faction_allies_to_war = false
                     cm:force_declare_war(self.event_army.faction, player_faction_name, call_player_allies_to_war, call_faction_allies_to_war)
-    			end,
-			0.5)
+                end,
+            0.5)
         end,
         false,
         false,
         false
     )
+end
+
+--- Puts the event army's sabotage on its spawned force: each of `enemy_bundles`, and every unit but the characters at `enemy_strength` of full
+--- strength. Armies without them are left alone.
+--- @param force military_force The spawned invasion force.
+function InvasionBattleManager:weaken_invasion_force(force)
+    local army = self.event_army
+    for _, bundle in ipairs(army.enemy_bundles or {}) do
+        cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+    end
+    if not army.enemy_strength then return end
+    local units = force:unit_list()
+    for i = 0, units:num_items() - 1 do
+        local unit = units:item_at(i)
+        if unit:unit_class() ~= "com" then cm:set_unit_hp_to_unary_of_maximum(unit, army.enemy_strength) end
+    end
 end
 
 --- Applies the encounter lord's trait (if any) to the invasion general.
@@ -655,6 +688,21 @@ function InvasionBattleManager:try_add_trait_to_invading_lord(invasion_general)
     if lord_trait ~= nil then
         cm:force_add_trait(lord_lookup, lord_trait, false , 1)
     end
+end
+
+--- Names a legendary lord general after their own lord unit (e.g. "Zhatan the Black"), in the player's language. A general created from a
+--- subtype alone is otherwise given a random name. Ordinary lords keep that name.
+--- @param invasion_general character The newly spawned invasion general.
+function InvasionBattleManager:try_name_legendary_lord(invasion_general)
+    if not self.event_army.lord.legendary then return end
+    local lord_unit = invasion_general:military_force():unit_list():item_at(0)
+    local name = common.get_localised_string("land_units_onscreen_name_" .. lord_unit:unit_key())
+    if not name or name == "" then
+        out("LEAPOI: legendary lord " .. self.event_army.lord.subtype .. " keeps their name, " .. lord_unit:unit_key() .. " has no localised name")
+        return
+    end
+    cm:change_character_custom_name(invasion_general, name, "", "", "")
+    out("LEAPOI: legendary lord " .. self.event_army.lord.subtype .. " is named " .. name)
 end
 
 --- Applies all of the encounter lord's ancillaries to the invasion general.
@@ -729,7 +777,7 @@ end
 
 --- Registers a one-off BattleCompleted listener that cleans up the invasion forces and routes the result to the delegate.
 --- @param delegate table The delegate (BattleSpotEventDelegate or SmithyEventDelegate) that receives the battle outcome.
---- @param spot_type string Either "BattleSpot" or "SmithySpot" - controls how the result is forwarded.
+--- @param spot_type string "BattleSpot", "SmithySpot" or "TowerSpot" - controls how the result is forwarded.
 --- @param spot_info table A spot_info record for the spot that triggered the battle.
 --- @param army Army The encounter Army whose invasion forces will be cleaned up.
 function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot_info, army)
@@ -741,13 +789,17 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, "")
             local found_encounter_faction = false
             local player_won_battle = false
+            local battle_faction_name = nil
 
             local encounter_invasion = self.invasion_manager:get_invasion(army.invasion_identifier)
             --- Defensive-type battles cannot be tracked easily, so we only branch on player attacker/defender.
             --- Check every human faction rather than the local one, so all multiplayer clients agree on the result.
             for _, player_faction_name in ipairs(cm:get_human_factions()) do
                 found_encounter_faction, player_won_battle = pending_battle_result_for_faction(player_faction_name)
-                if found_encounter_faction then break end
+                if found_encounter_faction then
+                    battle_faction_name = player_faction_name
+                    break
+                end
             end
             if found_encounter_faction and encounter_invasion then
                 self:remove_invasion_forces(army)
@@ -758,6 +810,8 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
                     delegate:trigger_event_given_battle_result(player_won_battle, spot_info)
                 elseif spot_type == "SmithySpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle)
+                elseif spot_type == "TowerSpot" then
+                    delegate:trigger_event_given_battle_result(player_won_battle, battle_faction_name)
                 end
             end
         end,
@@ -801,6 +855,35 @@ function InvasionBattleManager:build_unit_list(army)
     return self.random_army_manager:generate_force(army.force_identifier)
 end
 
+
+--- Sends an army at a region as a lasting invasion: it spawns beside the given position, marches on the region and stays until beaten. The
+--- army is never marked for removal, unlike an encounter's.
+--- @param army Army The army to send.
+--- @param region_key string The region it marches on.
+--- @param target_faction_name string The faction it declares war on.
+--- @param x number The position to spawn beside.
+--- @param y number The position to spawn beside.
+--- @returns boolean True when a spawn location was found and the invasion started.
+function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name, x, y)
+    local spawn_x, spawn_y = self:find_location_for_character_to_spawn(army.faction, { x, y })
+    if spawn_x == -1 then return false end
+    army:randomize_units(self.random_army_manager)
+    local force = self.random_army_manager:generate_force(army.force_identifier)
+    if self.invasion_manager:get_invasion(army.invasion_identifier) then
+        self.invasion_manager:remove_invasion(army.invasion_identifier)
+    end
+    local invasion = self.invasion_manager:new_invasion(army.invasion_identifier, army.faction, force, { spawn_x, spawn_y })
+    invasion:set_target("REGION", region_key, target_faction_name)
+    invasion:create_general(false, army.lord.subtype, "", "", "", "")
+    invasion:add_character_experience(army.lord.level, true)
+    invasion:add_unit_experience(army.unit_experience_amount)
+    invasion:start_invasion(function()
+        if not cm:get_faction(army.faction):at_war_with(cm:get_faction(target_faction_name)) then
+            cm:force_declare_war(army.faction, target_faction_name, false, false)
+        end
+    end, false, false, false)
+    return true
+end
 
 --- Finds a valid spawn location near `center_coordinates`. Walks outward in 2-meter steps up to 4 iterations,
 --- alternating between same-region and other-region checks. Returns (-1, -1) on failure - the battle will not trigger.
@@ -921,7 +1004,11 @@ end
 --- (from controllers/point_of_interest_event_manager.lua)
 
 local PointOfInterestEventManager = {
-    smithy_event_delegate = {}
+    smithy_event_delegate = {},
+    --- Places, saves and ticks the towers.
+    tower_event_delegate = {},
+    --- Tower records from the save, held until the zones exist and `initialize_towers` runs.
+    saved_towers = nil,
 }
 
 
@@ -935,15 +1022,31 @@ function PointOfInterestEventManager:generate_points_of_interests_states(points_
 end
 
 
+--- Places or restores the towers. Runs at first tick once the land manager has built its zones.
+--- @param zones table The land manager's zones.
+function PointOfInterestEventManager:initialize_towers(zones)
+    self.tower_event_delegate:initialize(zones, self.saved_towers)
+    self.saved_towers = nil
+end
+
+
+--- Shows or removes the smithy markers to match the Remove Smithies setting. Runs at first tick once the smithy states exist.
+function PointOfInterestEventManager:sync_smithy_markers()
+    self.smithy_event_delegate:sync_markers()
+end
+
+
 --- Forwards per-turn state updates to each POI delegate. Hidden smithies must not keep paying tributes or issuing missions.
 function PointOfInterestEventManager:update_state_given_turn_passing()
+    self.tower_event_delegate:update_state_given_turn_passing()
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
 
---- Runs the per-faction part of a human turn start (smithy sieges). Skipped when smithies are disabled in MCT.
+--- Runs the per-faction part of a human turn start: closing a delve left from last turn, and smithy sieges unless smithies are disabled.
 --- @param faction_name string The human faction whose turn is starting.
 function PointOfInterestEventManager:on_faction_turn_start(faction_name)
+    self.tower_event_delegate:on_faction_turn_start(faction_name)
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:on_faction_turn_start(faction_name)
 end
@@ -954,13 +1057,29 @@ end
 --- Event management
 
 --- Dispatches a POI event to the matching delegate.
---- @param poi_type string The POI type tag (e.g. "SmithySpot").
+--- @param poi_type string The POI type tag ("SmithySpot" or "TowerSpot").
 --- @param area_and_character_info table The AreaEntered context.
 --- @param spot_info table The spot_info record for the triggered POI.
 function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_character_info, spot_info)
     if poi_type == "SmithySpot" then
+        --- A removed smithy's marker is taken off the map on load. This guards the turn it is still shown.
+        if get_mct_settings().disable_smithies then return end
         self.smithy_event_delegate:trigger_event(area_and_character_info, spot_info)
+    elseif poi_type == "TowerSpot" then
+        self.tower_event_delegate:trigger_event(area_and_character_info, spot_info)
     end
+end
+
+--- Forwards a tower dilemma choice to the tower delegate.
+--- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
+function PointOfInterestEventManager:trigger_tower_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+    self.tower_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+end
+
+--- Greys out the taken tower offers on the local player's open go-deeper dilemma.
+--- @param faction_name string The local player's faction.
+function PointOfInterestEventManager:grey_out_taken_tower_offers(faction_name)
+    self.tower_event_delegate:grey_out_taken_offers(faction_name)
 end
 
 --- Forwards a dilemma-choice event to the smithy POI delegate, which finds the smithy by the choosing faction.
@@ -976,25 +1095,29 @@ end
 function PointOfInterestEventManager:export_state_as_table()
     local points_of_interests_data = {}
     points_of_interests_data["smithies"] = self.smithy_event_delegate:export_state_as_table()
+    points_of_interests_data["towers"] = self.tower_event_delegate:export_state_as_table()
     return points_of_interests_data
 end
 
 
---- Restores the smithy delegate's per-zone POI state from previously saved data.
+--- Restores the smithy delegate's per-zone POI state from previously saved data, and keeps the saved towers for `initialize_towers`.
 --- @param previous_state table The keyed save record previously produced by export_state_as_table.
 function PointOfInterestEventManager:reinstate_event_if_able(previous_state)
     self.smithy_event_delegate:reinstate_event_if_able(previous_state["smithies"])
+    self.saved_towers = previous_state["towers"]
 end
 
 
---- Lazy-loads the smithy delegate module (avoiding the circular require) and builds the manager.
+--- Lazy-loads the smithy and tower delegate modules (avoiding the circular require) and builds the manager.
 --- @param mission_manager table The CA mission_manager handle.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
---- @returns PointOfInterestEventManager A new manager with the smithy delegate wired in.
+--- @returns PointOfInterestEventManager A new manager with the smithy and tower delegates wired in.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
+    TowerEventDelegate = TowerEventDelegate or require("script/land_encounters/features/tower")
     local t = {
-        smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager)
+        smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager),
+        tower_event_delegate = TowerEventDelegate:new(invasion_battle_manager),
     }
     setmetatable(t, self)
     self.__index = self

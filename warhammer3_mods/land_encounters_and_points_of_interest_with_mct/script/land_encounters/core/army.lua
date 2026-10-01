@@ -97,11 +97,12 @@ function Army:randomize_army_composition_and_declare(random_army_manager)
 end
 
 
---- Picks a concrete lord subtype and level from the pool. Names, ancillaries, and traits are
+--- Picks a concrete lord subtype and level from the pool, and whether the lord is legendary. Names, ancillaries, and traits are
 --- not generated in the randomization-only pipeline - they keep their empty defaults that
 --- create_from sets on the lord table.
 function Army:randomize_lord()
     self.lord.subtype = self.lord_pool.agent_subtype
+    self.lord.legendary = self.lord_pool.legendary
     self.lord.level = random_range(self.lord_pool.level_range[1], self.lord_pool.level_range[2])
     out("DEBUG - Lord level: " .. self.lord.level)
 end
@@ -192,7 +193,7 @@ function Army:new_from_event(event, player_subculture)
             intervention_type = INTERCEPTION_TYPE
         else
             out("DEBUG - Allied intervention picked; generating ally force from faction: " .. ally_faction)
-            local ally_makeup = start_force_makeup_generation(difficulty, ally_faction)
+            local ally_makeup = start_force_makeup_generation(difficulty, ally_faction, event.ally_options)
             ally_force_data = convert_force_makeup_to_usable_format(difficulty, ally_makeup, ally_faction, "ally_force", "ally_invasion", INTERCEPTION_TYPE)
         end
     end

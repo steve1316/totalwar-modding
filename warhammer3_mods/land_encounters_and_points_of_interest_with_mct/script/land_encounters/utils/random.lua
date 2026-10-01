@@ -1,5 +1,5 @@
 --- Side-effect module that publishes random-number / shuffle utility globals used across the mod.
---- Every roll goes through cm:random_number so all multiplayer clients draw the same numbers.
+--- Every roll goes through `random_number`: the game's synced generator in multiplayer, Lua's clock-seeded one in single player.
 
 --- Builds a 1..n array and returns it shuffled.
 --- @param length_of_an_array number Size of the array to build before shuffling.
@@ -25,8 +25,9 @@ function randomic_shuffle(tbl)
 end
 
 
---- Returns a random integer in [min_num, max_num] (defaults 1..100). Wraps cm:random_number, which is synced across multiplayer
---- clients, and guards its quirks. Returns 0 for invalid inputs.
+--- Returns a random integer in [min_num, max_num] (defaults 1..100), and guards cm:random_number's quirks. Returns 0 for invalid inputs.
+--- Multiplayer uses cm:random_number, which is synced across clients. Single player uses `math.random`, which the game seeds from the clock
+--- at startup, so a reloaded save rolls new numbers rather than replaying the saved generator's.
 --- @param max_num number Upper bound inclusive. Defaults to 100 when nil.
 --- @param min_num number Lower bound inclusive. Defaults to 1 when nil.
 --- @returns number A random integer in the range, or 0 on invalid input.
@@ -55,6 +56,10 @@ function random_number(max_num, min_num)
 		return 0
 	end
 	
+	--- Only an explicit false counts as single player, so anything unsure keeps the synced generator.
+	if cm:is_multiplayer() == false then
+		return math.random(min_num, max_num)
+	end
 	return cm:random_number(max_num, min_num)
 end
 
