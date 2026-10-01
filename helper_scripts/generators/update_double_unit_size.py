@@ -45,6 +45,8 @@ from data.supported_mods import SUPPORTED_MODS
 MODDED_TABLE_NAME = "!!!!!!!2xunitsize_compat"
 VANILLA_LAND_UNITS_TABLES_DF = None
 VANILLA_ENGINE_TYPES: Dict[str, str] = {}
+# Submods that only rebalance their parent mod's units. The compat is always on, so shipping their rows would force them on players who only have the parent.
+PARENT_OVERRIDE_SUBMODS = {"Lost Calm: Nakai Submod"}
 
 
 def handle_kv_rules_tables(df: pd.DataFrame):
@@ -357,6 +359,9 @@ if __name__ == "__main__":
 
         # Filter out the vanilla entry and the explicitly-unsupported mods before parallel dispatch.
         skip_mod_names = {"Hooveric Overhaul (HVO) 2.0c", "Nanu's Dynamic Regiments of Renown (Beta)", "[GLF] Battle Mage 战斗法师"}
+        for name in sorted(PARENT_OVERRIDE_SUBMODS):
+            logging.info(f"Skipping {name}: it only rebalances its parent mod's units, which the compat already doubles.")
+        skip_mod_names |= PARENT_OVERRIDE_SUBMODS
         modded_mods = [m for m in SUPPORTED_MODS if m["package_name"] != "vanilla" and m["name"] not in skip_mod_names]
 
         def process_mod(mod: Dict) -> None:
