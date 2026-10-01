@@ -627,6 +627,14 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     local budget = #debug_config.floor_budget == 2 and debug_config.floor_budget or tower_data.budget_by_difficulty[difficulty]
     local budget_multiplier = next_floor.budget or 1
     local sabotage = tower_offers.sabotage_options(next_floor)
+    --- A sized allied army (Allies in the dark): its lord and a set number of regular units, with gold to buy them all.
+    local ally_options = nil
+    if type(next_floor.ally) == "table" then
+        local units = random_number(next_floor.ally[2], next_floor.ally[1]) - 1
+        local per_unit = offers_data.ally_gold_per_unit
+        ally_options = { no_heroes = true, unit_count = units, budget_range = { units * per_unit[1], units * per_unit[2] } }
+        log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units")
+    end
     local army = Army:new_from_event({
         dilemma = "tower",
         faction = next_floor.faction or tower.faction,
@@ -640,6 +648,7 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         max_tier = sabotage.max_tier,
         min_tier = sabotage.min_tier,
         lord_subtype = sabotage.lord_subtype,
+        ally_options = ally_options,
     }, general:faction():subculture())
     --- The battle manager puts these on the floor army once it spawns.
     army.enemy_strength = sabotage.enemy_strength
@@ -694,8 +703,9 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local items = pick_floor_items(faction_name, floor, next_floor.rarity_shift)
     tower_data.add_items(delve.haul, items)
     log("tower: floor " .. delve.floor .. " items: " .. (#items > 0 and table.concat(items, ", ") or "none"))
-    --- A Hellforge pact costs one haul item for every floor won after it.
-    if delve.hellforge and #delve.haul.items > 0 then
+    --- A Hellforge pact costs haul items for every floor won after it.
+    for _ = 1, delve.hellforge and offers_data.by_key.hellforge_pact.items_lost or 0 do
+        if #delve.haul.items == 0 then break end
         log("tower: the Hellforge pact takes " .. table.remove(delve.haul.items, random_number(#delve.haul.items)) .. " from the haul")
     end
     local candidates = delve.floor_units or {}

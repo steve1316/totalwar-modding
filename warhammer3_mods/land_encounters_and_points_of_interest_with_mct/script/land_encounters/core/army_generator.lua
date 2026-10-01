@@ -269,8 +269,8 @@ end
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget), the tower's
 --- sabotage and champion (`no_heroes`, `fewer_units` taken off the unit cap, `max_tier` and `min_tier` for the unit tiers, and `lord_subtype`
---- for the lord) and `budget_range`
---- ({min, max} gold that replaces the difficulty's MCT range).
+--- for the lord), `unit_count` (an exact number of regular units, for a sized allied army) and `budget_range` ({min, max} gold that replaces the
+--- difficulty's MCT range).
 --- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields.
 function M.generate(difficulty_key, faction_shorthand_key, options)
     options = options or {}
@@ -284,7 +284,7 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     local archetype = pick_archetype(pools, options.archetype_keys)
     local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1))
 
-    local unit_slots = ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0)
+    local unit_slots = options.unit_count or (ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0))
     local army = { units = {}, copies = {}, budget_left = budget_roll, slots_left = unit_slots }
     for _, unit_type in ipairs(UNIT_TYPES) do
         army.units[unit_type] = {}

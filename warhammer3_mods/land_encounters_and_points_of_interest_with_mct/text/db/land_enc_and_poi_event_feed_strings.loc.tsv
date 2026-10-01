@@ -88,7 +88,7 @@ event_feed_strings_text_title_event_land_enc_tower_left	Ancient Tower	false
 event_feed_strings_text_subtitle_event_land_enc_tower_left	We Leave the Tower	false
 event_feed_strings_text_description_event_land_enc_tower_left	We leave the tower with our haul. Its gates close behind us and stay barred for a while.	false
 event_feed_strings_text_title_event_land_enc_tower_lost	Ancient Tower	false
-event_feed_strings_text_subtitle_event_land_enc_tower_lost	Driven From the Tower	false
+event_feed_strings_text_subtitle_event_land_enc_tower_lost	Driven from the Tower	false
 event_feed_strings_text_description_event_land_enc_tower_lost	Our army is driven out of the tower. [[col:red]]The whole haul is lost[[/col]], and the gates close behind us.	false
 event_feed_strings_text_title_event_land_enc_tower_cleared	Ancient Tower	false
 event_feed_strings_text_subtitle_event_land_enc_tower_cleared	The Master Has Fallen	false
@@ -188,4 +188,4 @@ event_feed_strings_text_subtitle_event_land_enc_tower_cooling_turns_30	The Gates
 event_feed_strings_text_description_event_land_enc_tower_cooling_turns_30	The tower's gates are barred after the last delve. They open again in [[col:yellow]]30 turns[[/col]].	false
 event_feed_strings_text_title_event_land_enc_tower_dark_bargain_paid	Ancient Tower	false
 event_feed_strings_text_subtitle_event_land_enc_tower_dark_bargain_paid	The Dark Bargain Is Paid	false
-event_feed_strings_text_description_event_land_enc_tower_dark_bargain_paid	What we bargained with in the tower has taken its due. Our lord is [[col:red]]wounded for 3 turns[[/col]], but keeps the Daemon's mark.	false
+event_feed_strings_text_description_event_land_enc_tower_dark_bargain_paid	What we bargained with in the tower has taken its due. Our lord is [[col:red]]wounded for 5 turns[[/col]], but keeps the Daemon's mark.	false

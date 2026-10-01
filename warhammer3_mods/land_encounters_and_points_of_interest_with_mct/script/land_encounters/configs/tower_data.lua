@@ -65,12 +65,11 @@ function M.round_gold(gold)
     return math.floor(gold / M.gold_step + 0.5) * M.gold_step
 end
 
---- Writes gold with thousands separators, e.g. 3000 as "3,000".
+--- Writes gold as a whole number with no thousands separator, e.g. 3000, the way vanilla writes it.
 --- @param gold number The gold amount.
 --- @returns string The formatted amount.
 function M.gold_text(gold)
-    local text = tostring(math.floor(gold)):reverse():gsub("(%d%d%d)", "%1,"):reverse()
-    return (text:gsub("^,", ""))
+    return tostring(math.floor(gold))
 end
 
 --- Adds items to a haul, skipping any it already holds.

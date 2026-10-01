@@ -150,8 +150,16 @@ end
 --- @param ctx table The offer context.
 local function battle_trick(offer, ctx)
     ctx.delve.battle_tricks = ctx.delve.battle_tricks or {}
-    ctx.delve.battle_tricks[#ctx.delve.battle_tricks + 1] = offer.key
+    ctx.delve.battle_tricks[#ctx.delve.battle_tricks + 1] = offer.notice or offer.key
     log("tower: " .. offer.key .. " will act in the next battle")
+end
+
+--- Applies an Allies in the dark offer: an allied army of the offer's `ally_units` joins the next floor's battle.
+--- @param offer table The offer record.
+--- @param ctx table The offer context.
+local function allies(offer, ctx)
+    change_next_floor(ctx.delve, { ally = offer.ally_units })
+    battle_trick(offer, ctx)
 end
 
 --- True when the delving army has missile units or artillery, which Bottomless quivers needs.
@@ -177,7 +185,8 @@ end
 --- @param delve table The delve record.
 --- @returns number The cost, 0 for a free offer.
 local function offer_cost(offer, delve)
-    if offer.cost_share then return round_gold(delve.haul.gold * offer.cost_share) end
+    local share = offer.cost_share_by_floor and offer.cost_share_by_floor[delve.floor] or offer.cost_share
+    if share then return round_gold(delve.haul.gold * share) end
     return offer.cost or 0
 end
 
@@ -395,7 +404,7 @@ local HANDLERS = {
             for _, entry in ipairs(units) do
                 if not healed[entry] and (healthiest == nil or entry.strength > healthiest.strength) then healthiest = entry end
             end
-            if healthiest then tower_army.set_strength(healthiest.unit, healthiest.strength - offer.penalty) end
+            if healthiest then tower_army.set_strength(healthiest.unit, healthiest.strength * (1 - offer.penalty_share)) end
         end,
     },
     blood_transfusion = {
@@ -528,12 +537,9 @@ local HANDLERS = {
             log("tower: the army camps in the tower until next turn")
         end,
     },
-    allies_in_the_dark = {
-        apply = function(offer, ctx)
-            change_next_floor(ctx.delve, { ally = true })
-            battle_trick(offer, ctx)
-        end,
-    },
+    allies_in_the_dark_small = { apply = allies },
+    allies_in_the_dark_medium = { apply = allies },
+    allies_in_the_dark_large = { apply = allies },
     rival_delvers = {
         apply = function(offer, ctx)
             change_next_floor(ctx.delve, { ally = true })
@@ -577,10 +583,10 @@ local HANDLERS = {
     },
     blood_price = {
         eligible = function(ctx) return army_damaged(ctx) and #tower_army.regular_units(ctx.delve.general_cqi) >= 2 end,
-        apply = function(_, ctx)
+        apply = function(offer, ctx)
             local weakest = tower_army.weakest_regular_unit(ctx.delve.general_cqi)
             for _, entry in ipairs(tower_army.unit_strengths(ctx.delve.general_cqi)) do
-                if entry.index ~= weakest.index then tower_army.set_strength(entry.unit, 100) end
+                if entry.index ~= weakest.index then tower_army.set_strength(entry.unit, entry.strength + offer.heal_share * (100 - entry.strength)) end
             end
             remove_unit(ctx, weakest)
         end,
@@ -711,6 +717,8 @@ local HANDLERS = {
                 if difficulty == record.difficulty then record.difficulty = DIFFICULTY_KEYS[math.max(1, i - 1)] break end
             end
             record.gold = record.gold * offer.reward_share
+            if record.item_count then record.item_count = math.floor(record.item_count * offer.reward_share) end
+            if record.legendary_count then record.legendary_count = math.floor(record.legendary_count * offer.reward_share) end
             change_next_floor(ctx.delve, { record = record })
         end,
     },
@@ -804,9 +812,22 @@ end
 function M.draw(delve, faction_name, tower)
     local ctx = { delve = delve, faction_name = faction_name, tower = tower }
     local pool = {}
+    local groups = {}
     for _, offer in ipairs(offers_data.offers) do
-        if eligible(offer, ctx) then pool[#pool + 1] = offer.key end
+        if eligible(offer, ctx) then
+            if offer.group then
+                groups[offer.group] = groups[offer.group] or {}
+                table.insert(groups[offer.group], offer.key)
+            else
+                pool[#pool + 1] = offer.key
+            end
+        end
     end
+    --- Offers that share a `group` (the sizes of Allies in the dark) go in as one, picked at random. Groups are walked in a fixed order.
+    local group_names = {}
+    for name in pairs(groups) do group_names[#group_names + 1] = name end
+    table.sort(group_names)
+    for _, name in ipairs(group_names) do pool[#pool + 1] = groups[name][random_number(#groups[name])] end
     local picked, count = {}, 0
     for _, key in ipairs(debug_config.force_offers) do
         for i, pooled in ipairs(pool) do

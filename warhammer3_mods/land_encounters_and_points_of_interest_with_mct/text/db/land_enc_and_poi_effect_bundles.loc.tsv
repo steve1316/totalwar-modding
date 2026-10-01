@@ -47,11 +47,11 @@ effect_bundles_localised_description_land_enc_effect_tower_drained	The army gave
 effect_bundles_localised_title_land_enc_effect_tower_hellforge	Hellforge Pact	false
 effect_bundles_localised_description_land_enc_effect_tower_hellforge	The army swore a pact in the tower's forges. Its strength burns bright, and the haul pays for it.	false
 effect_bundles_localised_title_land_enc_effect_tower_dividends	Tower Dividends	false
-effect_bundles_localised_description_land_enc_effect_tower_dividends	A share of a tower's vaults, paid into the treasury each turn.	false
+effect_bundles_localised_description_land_enc_effect_tower_dividends	A share of a tower's vaults, paid into our treasury each turn.	false
 effect_bundles_localised_title_land_enc_effect_tower_dark_bargain	Dark Bargain	false
 effect_bundles_localised_description_land_enc_effect_tower_dark_bargain	A bargain struck deep in a tower. Its price comes due once the delve is over.	false
 effect_bundles_localised_title_land_enc_effect_tower_whetstones_and_oil	Whetstones and Oil	false
-effect_bundles_localised_description_land_enc_effect_tower_whetstones_and_oil	Every blade in the army was honed and oiled before the next floor.	false
+effect_bundles_localised_description_land_enc_effect_tower_whetstones_and_oil	Every blade in the army is honed and oiled for one battle.	false
 effect_bundles_localised_title_land_enc_effect_tower_warding_sigils	Warding Sigils	false
 effect_bundles_localised_description_land_enc_effect_tower_warding_sigils	Sigils painted on shields and banners turn blows aside for one battle.	false
 effect_bundles_localised_title_land_enc_effect_tower_fire_kissed_blades	Fire-Kissed Blades	false
@@ -87,7 +87,7 @@ effect_bundles_localised_description_land_enc_effect_tower_vortex_scroll_wraith_
 effect_bundles_localised_title_land_enc_effect_tower_vortex_scroll_soul_storm	Vortex Scroll	false
 effect_bundles_localised_description_land_enc_effect_tower_vortex_scroll_soul_storm	A scroll of raw sorcery waits to be read in the next battle.	false
 effect_bundles_localised_title_land_enc_effect_tower_rousing_speech	Rousing Speech	false
-effect_bundles_localised_description_land_enc_effect_tower_rousing_speech	The lord's words still ring in every ear. The army fights the next battle with fire in its heart.	false
+effect_bundles_localised_description_land_enc_effect_tower_rousing_speech	Our lord's words still ring in every ear. The army fights the next battle with fire in its heart.	false
 effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_1	Scaling Blessing	false
 effect_bundles_localised_description_land_enc_effect_tower_scaling_blessing_1	The tower's spirits bless a climb this deep. The blessing lasts for one battle.	false
 effect_bundles_localised_title_land_enc_effect_tower_scaling_blessing_2	Scaling Blessing	false

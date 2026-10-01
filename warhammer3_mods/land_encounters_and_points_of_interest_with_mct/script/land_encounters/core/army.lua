@@ -193,7 +193,7 @@ function Army:new_from_event(event, player_subculture)
             intervention_type = INTERCEPTION_TYPE
         else
             out("DEBUG - Allied intervention picked; generating ally force from faction: " .. ally_faction)
-            local ally_makeup = start_force_makeup_generation(difficulty, ally_faction)
+            local ally_makeup = start_force_makeup_generation(difficulty, ally_faction, event.ally_options)
             ally_force_data = convert_force_makeup_to_usable_format(difficulty, ally_makeup, ally_faction, "ally_force", "ally_invasion", INTERCEPTION_TYPE)
         end
     end
