@@ -144,9 +144,6 @@ id	dilemma_key	option_key	value	target
 7017900686	land_enc_dilemma_tower_enter	GEN_TARGET_NONE		default
 7017900687	land_enc_dilemma_tower_enter	VAR_CHANCE	100	default
 7017900688	land_enc_dilemma_tower_enter	VAR_FOLLOWUP_CHANCE	100	default
-7017900691	land_enc_dilemma_tower_deeper	GEN_TARGET_NONE		default
-7017900692	land_enc_dilemma_tower_deeper	VAR_CHANCE	100	default
-7017900693	land_enc_dilemma_tower_deeper	VAR_FOLLOWUP_CHANCE	100	default
 7017900696	land_enc_dilemma_tower_claim	GEN_TARGET_NONE		default
 7017900697	land_enc_dilemma_tower_claim	VAR_CHANCE	100	default
 7017900698	land_enc_dilemma_tower_claim	VAR_FOLLOWUP_CHANCE	100	default
