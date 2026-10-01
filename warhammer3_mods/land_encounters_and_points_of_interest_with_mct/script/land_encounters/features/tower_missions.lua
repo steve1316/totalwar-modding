@@ -197,8 +197,17 @@ function M.settle(delve, faction_name, outcomes, floor)
             line = result_line("mission_met_" .. offer.key)
         elseif offer.unit_ranks then
             local entry = outcomes.standard and standard_unit(delve, outcomes.standard)
-            if entry then cm:add_experience_to_unit(entry.unit, offer.unit_ranks) end
-            log("tower: guard the standard " .. (entry and "gives " .. entry.unit:unit_key() .. " " .. offer.unit_ranks .. " ranks" or "found no marked unit to rank"))
+            if entry then
+                local unit, before = entry.unit, entry.unit:experience_level()
+                cm:add_experience_to_unit(unit, offer.unit_ranks)
+                --- Read back once the game has applied the ranks.
+                cm:callback(function()
+                    log("tower: guard the standard raises " .. unit:unit_key() .. " from rank " .. before .. " to rank " .. unit:experience_level()
+                        .. " (+" .. offer.unit_ranks .. " given)")
+                end, 0.5)
+            else
+                log("tower: guard the standard found no marked unit to rank")
+            end
             line = result_line("mission_met_" .. offer.key)
         elseif offer.lord_ranks then
             local general = cm:get_character_by_cqi(delve.general_cqi)
