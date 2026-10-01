@@ -163,8 +163,8 @@ def _plural(count: int, noun: str) -> str:
 def build_change_note(record: Optional[Dict[str, Any]], limit: int = CHANGE_NOTE_LIMIT) -> str:
     """Build the Workshop change note from an item's pending rebuild reasons.
 
-    Changed mods are listed one per bullet line under an underlined headline. Plain bullet characters are used because Steam's `[list]` markup
-    breaks the change note's background into separate blocks. Past the limit, the last bullet counts the mods that did not fit.
+    Changed mods are listed one per `- ` dash line under an underlined headline. Dashes are used because Steam's `[list]` markup breaks the
+    change note's background into separate blocks. Past the limit, the last bullet counts the mods that did not fit.
 
     Args:
         record (Optional[Dict[str, Any]]): The item's publish record, or None if it has never been recorded.
@@ -180,9 +180,9 @@ def build_change_note(record: Optional[Dict[str, Any]], limit: int = CHANGE_NOTE
     header = f"[u]Compatibility update for {_plural(len(mods), 'updated mod')}[/u]\n"
     footer = f"\n\nAlso {GENERAL_NOTE[0].lower()}{GENERAL_NOTE[1:]}" if general else ""
     for shown in range(len(mods), -1, -1):
-        bullets = [f"• {mod}" for mod in mods[:shown]]
+        bullets = [f"- {mod}" for mod in mods[:shown]]
         if shown < len(mods):
-            bullets.append(f"• and {_plural(len(mods) - shown, 'more mod')}")
+            bullets.append(f"- and {_plural(len(mods) - shown, 'more mod')}")
         note = header + "\n" + "\n".join(bullets) + footer
         if len(note.encode("utf-8")) <= limit:
             return note

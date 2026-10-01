@@ -56,7 +56,7 @@ def test_preview_reports_item_matching_last_upload_as_not_pending(state_dir, mon
     result = change_notes.preview([MELEE.steam_id])[MELEE.steam_id]
 
     assert result["pending"] is False
-    assert result["note"] == "[u]Compatibility update for 1 updated mod[/u]\n\n• Mod A"
+    assert result["note"] == "[u]Compatibility update for 1 updated mod[/u]\n\n- Mod A"
 
 
 def test_preview_maps_unknown_ids_and_missing_packs_to_none(state_dir, monkeypatch):
@@ -103,7 +103,7 @@ def test_main_preview_prints_one_ascii_json_line(state_dir, monkeypatch, capsys)
     out = capsys.readouterr().out.strip()
     assert out.isascii()
     assert "\n" not in out
-    assert json.loads(out)[MELEE.steam_id]["note"].endswith("• Mod A")
+    assert json.loads(out)[MELEE.steam_id]["note"].endswith("- Mod A")
 
 
 def test_main_record_reads_a_utf8_note_file(state_dir, tmp_path):
