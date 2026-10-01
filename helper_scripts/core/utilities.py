@@ -6,7 +6,6 @@ import subprocess
 import os
 import shutil
 import stat
-import re
 import logging
 import json
 import threading
@@ -704,39 +703,6 @@ def cleanup_folders(folders_to_cleanup: List[str]):
     for folder in folders_to_cleanup:
         if os.path.exists(folder):
             shutil.rmtree(folder, onexc=_retry_remove)
-
-
-def extract_model_paths_from_variantmeshdefinition(file_path):
-    """Extract model paths from a variantmeshdefinition file.
-
-    Args:
-        file_path (str): Path to the variantmeshdefinition file.
-
-    Returns:
-        List[str]: List of normalized model directory paths.
-    """
-    model_paths = []
-    try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            content = f.read()
-            # Use regex to find all model paths
-            matches = re.findall(r'model="([^"]+)"', content)
-
-            for match in matches:
-                # Normalize path (convert backslashes to forward slashes).
-                normalized_path = match.replace("\\", "/")
-
-                # Remove the variantmeshes/wh_variantmodels/ prefix if present (case insensitive).
-                normalized_path = re.sub(r"^(?:variantmeshes/|VariantMeshes/)?(?:wh_variantmodels/)?", "", normalized_path)
-
-                # Extract just the directory path without the filename.
-                dir_path = os.path.dirname(normalized_path)
-
-                model_paths.append(dir_path)
-    except Exception as e:
-        logging.error(f"Error reading {file_path}: {e}")
-
-    return model_paths
 
 
 def _ensure_schema_json(schema_path: str):
