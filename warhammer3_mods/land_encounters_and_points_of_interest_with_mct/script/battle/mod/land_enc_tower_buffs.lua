@@ -1,7 +1,7 @@
 --- Announces the tower buffs on the delving army when a tower floor battle starts: one banner per buff above the army panel, and one entry per
---- buff in the objectives panel for the rest of the battle. It also does the in-battle tricks bought between floors. The campaign saves the
---- buff list under `land_enc_tower_battle_buffs` just before a floor battle and clears it once the floor resolves, so other battles see an
---- empty list.
+--- buff in the objectives panel for the rest of the battle. It also does the in-battle tricks bought between floors, tracks the missions taken
+--- for the floor, and counts kills against Rival delvers, reporting both back to the campaign. The campaign saves the buff list under
+--- `land_enc_tower_battle_buffs` just before a floor battle and clears it once the floor resolves, so other battles see an empty list.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,6 +11,14 @@
 local BUFFS_SVR_KEY = "land_enc_tower_battle_buffs"
 --- svr key holding Night terrors' comma-separated target unit keys. Mirrored in script/land_encounters/features/tower_offers.lua.
 local NIGHT_TERRORS_SVR_KEY = "land_enc_tower_night_terrors"
+--- svr key holding each mission's target, "key=value" pairs. Mirrored in script/land_encounters/features/tower_missions.lua.
+local MISSION_TARGETS_SVR_KEY = "land_enc_tower_mission_targets"
+--- svr key this script reports each mission's outcome to, "key=open|met|failed" pairs. Mirrored in tower_missions.lua.
+local MISSION_RESULTS_SVR_KEY = "land_enc_tower_mission_results"
+--- svr key this script reports Rival delvers' kills to, "ours,theirs". Mirrored in tower_missions.lua.
+local RIVAL_SVR_KEY = "land_enc_tower_rival_kills"
+--- svr key holding the allied army's faction key. Mirrored in script/land_encounters/core/managers.lua.
+local ALLY_SVR_KEY = "land_enc_ally_arrives_now"
 --- Prefix of each buff's scripted objective key. The buff name follows, e.g. "land_enc_tower_buff_iron_resolve".
 local OBJECTIVE_PREFIX = "land_enc_tower_buff_"
 --- Suffix of each buff's banner line, a plain version of its panel entry that reads well on the red banner.
@@ -25,6 +33,10 @@ local QUIVERS_REFILL_MS = 5000
 local DIVINE_SHIELD_MS = 300000
 --- How long Night terrors waits before the enemy units flee, in ms. The notice text says 1 minute.
 local NIGHT_TERRORS_MS = 60000
+--- How often the missions and the rival kill count are checked, in ms. Mission time limits count these ticks as seconds.
+local MISSION_TICK_MS = 1000
+--- Name of the repeating mission check, so it can be stopped when the battle is decided.
+local MISSION_PROCESS = "land_enc_tower_missions"
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,16 +59,20 @@ local function svr_list(key)
     return list
 end
 
---- Wraps every unit of an alliance in a script unit, army by army.
+--- Wraps the units of an alliance's armies in script units, army by army.
 --- @param alliance userdata The battle alliance.
+--- @param keep function|nil Takes a battle army and returns true to include it. nil includes every army.
 --- @returns table The script units.
-local function script_units_of(alliance)
+local function script_units_of(alliance, keep)
     local sunits = {}
     local armies = alliance:armies()
     for a = 1, armies:count() do
-        local units = armies:item(a):units()
-        for u = 1, units:count() do
-            sunits[#sunits + 1] = script_unit:new(units:item(u))
+        local army = armies:item(a)
+        if not keep or keep(army) then
+            local units = army:units()
+            for u = 1, units:count() do
+                sunits[#sunits + 1] = script_unit:new(units:item(u))
+            end
         end
     end
     return sunits
@@ -70,6 +86,30 @@ local function lord_of(sunits)
         if sunit.unit:is_commanding_unit() then return sunit end
     end
     return nil
+end
+
+--- True when a unit is out of the fight for good: every soldier dead, or shattered.
+--- @param sunit table The script unit.
+--- @returns boolean True when it is lost.
+local function is_lost(sunit)
+    return sunit.unit:number_of_men_alive() == 0 or sunit.unit:is_shattered()
+end
+
+--- Sums a number over script units.
+--- @param sunits table Script units.
+--- @param value function Takes a battle unit and returns a number.
+--- @returns number The total.
+local function sum(sunits, value)
+    local total = 0
+    for _, sunit in ipairs(sunits) do total = total + value(sunit.unit) end
+    return total
+end
+
+--- Soldiers of the enemy army killed so far.
+--- @param theirs table The enemy's script units.
+--- @returns number The soldiers dead.
+local function enemy_dead(theirs)
+    return sum(theirs, function(unit) return unit:initial_number_of_men() - unit:number_of_men_alive() end)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,22 +186,215 @@ local TRICKS = {
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Missions
+
+--- How each mission is tracked. `start` runs once the battle starts, `tick` once a second until the battle is decided, and `finish` when it
+--- is. Each gets the mission (`state` "open", "met" or "failed", `value` its target from the campaign) and the battle context (`ours`, `theirs`,
+--- `elapsed` seconds). `tick` may settle the mission and returns the objective's counters. `finish` settles a mission still open.
+local MISSIONS = {
+    blood_tally = {
+        start = function(m, ctx) m.target = math.ceil(tonumber(m.value) * sum(ctx.theirs, function(unit) return unit:initial_number_of_men() end)) end,
+        tick = function(m, ctx)
+            local dead = enemy_dead(ctx.theirs)
+            if dead >= m.target then m.state = "met" end
+            return dead, m.target
+        end,
+    },
+    headhunt = {
+        tick = function(m, ctx)
+            local lord = lord_of(ctx.theirs)
+            if lord and is_lost(lord) then m.state = "met" elseif ctx.elapsed > tonumber(m.value) then m.state = "failed" end
+            return math.max(0, tonumber(m.value) - ctx.elapsed)
+        end,
+    },
+    duelists_challenge = {
+        tick = function(m, ctx)
+            local lord = lord_of(ctx.theirs)
+            if lord and is_lost(lord) then m.state = "met" end
+        end,
+    },
+    hold_the_line = {
+        tick = function(m, ctx)
+            local lost = 0
+            for _, sunit in ipairs(ctx.ours) do if is_lost(sunit) then lost = lost + 1 end end
+            if lost > tonumber(m.value) then m.state = "failed" end
+            return lost, tonumber(m.value)
+        end,
+        finish = function(m) m.state = "met" end,
+    },
+    swift_victory = {
+        tick = function(m, ctx)
+            if ctx.elapsed > tonumber(m.value) then m.state = "failed" end
+            return math.max(0, tonumber(m.value) - ctx.elapsed)
+        end,
+        finish = function(m) m.state = "met" end,
+    },
+    guard_the_standard = {
+        start = function(m, ctx)
+            local key, nth = m.value:match("^(.+)#(%d+)$")
+            local seen = 0
+            for _, sunit in ipairs(ctx.ours) do
+                if not sunit.unit:is_commanding_unit() and sunit.unit:type() == key then
+                    seen = seen + 1
+                    if seen == tonumber(nth) then m.unit = sunit end
+                end
+            end
+            if not m.unit then m.state = "failed" end
+        end,
+        tick = function(m)
+            if is_lost(m.unit) then m.state = "failed" end
+        end,
+        finish = function(m) m.state = "met" end,
+    },
+    break_them = {
+        start = function(m) m.routed = {} end,
+        tick = function(m, ctx)
+            local count = 0
+            for _, sunit in ipairs(ctx.theirs) do
+                if sunit.unit:is_routing() or is_lost(sunit) then m.routed[sunit] = true end
+                if m.routed[sunit] then count = count + 1 end
+            end
+            if count >= tonumber(m.value) then m.state = "met" end
+            return count, tonumber(m.value)
+        end,
+    },
+    trophy_hunt = {
+        start = function(m, ctx)
+            for _, sunit in ipairs(ctx.theirs) do
+                if not m.unit and not sunit.unit:is_commanding_unit() and sunit.unit:type() == m.value then m.unit = sunit end
+            end
+            if not m.unit then m.state = "failed" end
+        end,
+        tick = function(m)
+            if is_lost(m.unit) then m.state = "met" end
+        end,
+    },
+    silence_the_guns = {
+        start = function(m, ctx)
+            m.guns = {}
+            for _, sunit in ipairs(ctx.theirs) do
+                if not sunit.unit:is_commanding_unit() and sunit.unit:starting_ammo() > 0 then m.guns[#m.guns + 1] = sunit end
+            end
+            if #m.guns == 0 then m.state = "failed" end
+        end,
+        tick = function(m, ctx)
+            local left = 0
+            for _, sunit in ipairs(m.guns) do if not is_lost(sunit) then left = left + 1 end end
+            if left == 0 then m.state = "met" elseif ctx.elapsed > tonumber(m.value) then m.state = "failed" end
+            return left
+        end,
+    },
+    untouchable = {
+        tick = function(_, ctx)
+            local lord = lord_of(ctx.ours)
+            return lord and math.floor(lord.unit:unary_hitpoints() * 100) or 0
+        end,
+        finish = function(m, ctx)
+            local lord = lord_of(ctx.ours)
+            m.state = (lord and lord.unit:unary_hitpoints() > tonumber(m.value)) and "met" or "failed"
+        end,
+    },
+}
+MISSIONS.bloodbath_wager = MISSIONS.blood_tally
+
+--- Saves every mission's state for the campaign.
+--- @param missions table The missions being tracked.
+local function report(missions)
+    local pairs_text = {}
+    for _, m in ipairs(missions) do pairs_text[#pairs_text + 1] = m.key .. "=" .. m.state end
+    core:svr_save_string(MISSION_RESULTS_SVR_KEY, table.concat(pairs_text, ","))
+end
+
+--- Shows a mission that has just been settled as completed or failed.
+--- @param m table The mission.
+local function show_settled(m)
+    if m.state == "met" then
+        bm:complete_objective(OBJECTIVE_PREFIX .. m.key)
+    else
+        bm:fail_objective(OBJECTIVE_PREFIX .. m.key)
+    end
+    log("mission " .. m.key .. " " .. m.state)
+end
+
+--- Tracks the missions and Rival delvers from the battle's start: checks each once a second, shows live counters, reports every change, and
+--- settles what is still open when the battle is decided.
+--- @param names table The buff names handed to the battle.
+--- @param ours table Our script units.
+--- @param theirs table The enemy's script units.
+local function track_missions(names, ours, theirs)
+    local targets = {}
+    for key, value in (core:svr_load_string(MISSION_TARGETS_SVR_KEY) or ""):gmatch("([%w_]+)=([^,]*)") do targets[key] = value end
+    local missions, rival = {}, false
+    for _, name in ipairs(names) do
+        if MISSIONS[name] then missions[#missions + 1] = { key = name, value = targets[name], state = "open", spec = MISSIONS[name] } end
+        rival = rival or name == "rival_delvers"
+    end
+    if #missions == 0 and not rival then return end
+    local ally_faction = core:svr_load_string(ALLY_SVR_KEY) or ""
+    local rivals = rival and script_units_of(bm:get_player_alliance(), function(army)
+        return not army:is_player_controlled() and army:faction_key() == ally_faction
+    end) or {}
+    local ctx = { ours = ours, theirs = theirs, elapsed = 0 }
+    for _, m in ipairs(missions) do
+        if m.spec.start then m.spec.start(m, ctx) end
+        if m.state ~= "open" then show_settled(m) end
+    end
+    report(missions)
+    log("tracking missions: " .. #missions .. (rival and ", and kills against " .. #rivals .. " rival units" or ""))
+
+    bm:repeat_callback(function()
+        ctx.elapsed = ctx.elapsed + MISSION_TICK_MS / 1000
+        local changed = false
+        for _, m in ipairs(missions) do
+            if m.state == "open" then
+                local a, b = m.spec.tick(m, ctx)
+                if m.state ~= "open" then
+                    show_settled(m)
+                    changed = true
+                elseif a then
+                    bm:set_objective(OBJECTIVE_PREFIX .. m.key, a, b)
+                end
+            end
+        end
+        if changed then report(missions) end
+        if rival then
+            local kills = function(unit) return unit:number_of_enemies_killed() end
+            local our_kills, their_kills = sum(ours, kills), sum(rivals, kills)
+            core:svr_save_string(RIVAL_SVR_KEY, our_kills .. "," .. their_kills)
+            bm:set_objective(OBJECTIVE_PREFIX .. "rival_delvers", our_kills, their_kills)
+        end
+    end, MISSION_TICK_MS, MISSION_PROCESS)
+
+    bm:register_phase_change_callback("VictoryCountdown", function()
+        bm:remove_process(MISSION_PROCESS)
+        for _, m in ipairs(missions) do
+            if m.state == "open" then
+                if m.spec.finish then m.spec.finish(m, ctx) else m.state = "failed" end
+                show_settled(m)
+            end
+        end
+        report(missions)
+        log("battle decided after " .. ctx.elapsed .. " s, missions reported")
+    end)
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Entry
 
 local buffs = svr_list(BUFFS_SVR_KEY)
 if #buffs > 0 then
     bm:out("[LEAPOI] tower floor battle with buffs: " .. table.concat(buffs, ", "))
-    --- Banners queued during deployment would play before the fight, so the announcement and the tricks wait for the battle to start.
+    --- Banners queued during deployment would play before the fight, so the announcement, the tricks and the missions wait for the battle
+    --- to start. Our units are the player's own armies, not an allied army.
     bm:register_phase_change_callback("Deployed", function()
-        local ours, theirs = nil, nil
+        local ours = script_units_of(bm:get_player_alliance(), function(army) return army:is_player_controlled() end)
+        local theirs = script_units_of(bm:get_non_player_alliance())
         for _, name in ipairs(buffs) do
             bm:set_objective(OBJECTIVE_PREFIX .. name)
             bm:queue_help_message(OBJECTIVE_PREFIX .. name .. MESSAGE_SUFFIX, MESSAGE_MS, FADE_MS)
-            if TRICKS[name] then
-                ours = ours or script_units_of(bm:get_player_alliance())
-                theirs = theirs or script_units_of(bm:get_non_player_alliance())
-                TRICKS[name](ours, theirs)
-            end
+            if TRICKS[name] then TRICKS[name](ours, theirs) end
         end
+        track_missions(buffs, ours, theirs)
     end)
 end

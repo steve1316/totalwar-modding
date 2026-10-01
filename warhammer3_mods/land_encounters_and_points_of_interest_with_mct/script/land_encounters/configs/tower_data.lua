@@ -12,14 +12,18 @@ M.budget_by_difficulty = {
 
 --- One record per floor. The last floor is the Master of the Tower. `difficulty` picks the floor army's budget, lord level and experience.
 --- `gold` is the base gold before the performance multiplier. `item_rarities` and `item_count` pick items from CA's pool, and `legendary_count`
---- picks legendary items instead (each one that cannot be found becomes a rare). `sworn_units` is how many of the floor army's units join.
+--- picks legendary items instead (each one that cannot be found becomes a rare). `sworn_units` is how many of the floor army's units join, and
+--- `freed_hero_rank` frees a hero of that rank on clearing it.
 M.floors = {
     { difficulty = "easy", gold = 2000, item_rarities = { "common" }, item_count = 2, sworn_units = 0 },
     { difficulty = "medium", gold = 2000, item_rarities = { "uncommon", "rare" }, item_count = 2, sworn_units = 0 },
     { difficulty = "medium", gold = 2000, item_rarities = { "uncommon", "rare" }, item_count = 2, sworn_units = 2 },
     { difficulty = "medium", gold = 2000, item_rarities = { "uncommon", "rare" }, item_count = 2, sworn_units = 2 },
-    { difficulty = "hard", gold = 5000, legendary_count = 3, sworn_units = 2 },
+    { difficulty = "hard", gold = 5000, legendary_count = 3, sworn_units = 2, freed_hero_rank = 10 },
 }
+
+--- Trait every floor won adds a point of to the delving lord. Its levels come with more floors, see the trait tables.
+M.climber_trait = "land_enc_trait_tower_climber"
 
 --- The bonus floor a Hidden floor offer inserts. It is fought against another enabled faction and does not count toward the five floors.
 M.hidden_floor = { difficulty = "medium", gold = 3000, legendary_count = 1, sworn_units = 2 }

@@ -18,7 +18,7 @@ local POLL_MS = 500
 local GROUP_TIMEOUT_MS = 15000
 --- Wait after the last group is called before the first attack order, so the game's reinforcement entry does not replace it, in ms.
 local ATTACK_DELAY_MS = 5000
---- How often the attack order is repeated until the ally is in melee, in ms.
+--- How often each ally unit picks the closest enemy again, and contact is checked, in ms.
 local REORDER_MS = 5000
 --- How long the attack order is repeated before the ally goes back to the battle AI even without contact, in ms.
 local ENGAGE_TIMEOUT_MS = 180000
@@ -85,31 +85,42 @@ local function any_in_melee(list)
     return false
 end
 
---- Orders the ally to attack the enemy army, repeating the order every `REORDER_MS` until any ally unit is in melee or `ENGAGE_TIMEOUT_MS` passes.
---- The ally then goes back to the battle AI.
+--- Sends the ally straight at the enemy army: every ally unit attacks the closest enemy unit, re-picking its target every `REORDER_MS`, until
+--- any ally unit is in melee or `ENGAGE_TIMEOUT_MS` passes. The ally then goes back to the battle AI. CA's attack planner is not used, since it
+--- led the ally off to the side of the enemy line to wait in cover.
 --- @param ally table Flat list of the ally's script units.
 local function send_ally_at_enemy(ally)
     local enemy = collect_ai_units(bm:get_non_player_alliance_num())
-    local planner, waited_ms = nil, 0
+    local waited_ms, attacking = 0, false
 
-    --- Repeats the attack order against the enemy units still fighting, or hands the ally back once it has made contact.
-    local function order_attack()
+    --- Stops the attack orders and gives the ally back to the battle AI.
+    --- @param reason string Why, for the log.
+    local function hand_back(reason)
+        for _, sunit in ipairs(ally) do
+            sunit:stop_attack_closest_enemy()
+            sunit:release_control()
+        end
+        log(string.format("ally handed back to the battle AI after %d s: %s", waited_ms / 1000, reason))
+    end
+
+    --- Starts the attack orders once, then checks for contact until the ally engages or the timeout passes.
+    local function check_contact()
         local attackers, targets = fighting_units(ally), fighting_units(enemy)
         local engaged = any_in_melee(attackers)
         if engaged or waited_ms >= ENGAGE_TIMEOUT_MS or #attackers == 0 or #targets == 0 then
-            if planner then planner:release() end
-            local reason = engaged and "in contact with the enemy" or waited_ms >= ENGAGE_TIMEOUT_MS and "no contact" or "one side has no units left"
-            log(string.format("ally handed back to the battle AI after %d s: %s", waited_ms / 1000, reason))
+            hand_back(engaged and "in contact with the enemy" or waited_ms >= ENGAGE_TIMEOUT_MS and "no contact" or "one side has no units left")
             return
         end
-        planner = planner or script_ai_planner:new("land_enc_ally_attack", attackers)
-        planner:attack_force(targets)
+        if not attacking then
+            for _, sunit in ipairs(attackers) do sunit:start_attack_closest_enemy(REORDER_MS) end
+            attacking = true
+        end
         local gap = centre_point_table(attackers):distance(centre_point_table(targets))
-        log(string.format("t+%ds: ally ordered to attack, %d units against %d, %.0f m apart", waited_ms / 1000, #attackers, #targets, gap))
+        log(string.format("t+%ds: ally attacking the closest enemies, %d units against %d, %.0f m apart", waited_ms / 1000, #attackers, #targets, gap))
         waited_ms = waited_ms + REORDER_MS
-        bm:callback(order_attack, REORDER_MS)
+        bm:callback(check_contact, REORDER_MS)
     end
-    bm:callback(order_attack, ATTACK_DELAY_MS)
+    bm:callback(check_contact, ATTACK_DELAY_MS)
 end
 
 --- Calls the ally in one group at a time. Each group is called once the previous one is on the field, or after `GROUP_TIMEOUT_MS`.
@@ -161,7 +172,12 @@ local function call_ally_in_groups(ally)
         bm:callback(poll, POLL_MS)
     end
 
-    if call_next_group() then bm:callback(poll, POLL_MS) end
+    if call_next_group() then
+        bm:callback(poll, POLL_MS)
+    else
+        --- Every ally unit is already on the field.
+        send_ally_at_enemy(ally)
+    end
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

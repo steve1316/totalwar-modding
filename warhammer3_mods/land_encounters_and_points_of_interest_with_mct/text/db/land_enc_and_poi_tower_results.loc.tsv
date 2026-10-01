@@ -16,6 +16,54 @@ campaign_localised_strings_string_land_enc_tower_result_daemons_deal	[[col:yello
 campaign_localised_strings_string_land_enc_tower_result_towers_favour	[[col:yellow]]Tower's favour:[[/col]] [[col:green]]+10%% income[[/col]] from all buildings for the next 5 turns.	false
 campaign_localised_strings_string_land_enc_tower_result_research_scrolls	[[col:yellow]]Research scrolls:[[/col]] [[col:green]]+25%% research rate[[/col]] for the next 5 turns.	false
 campaign_localised_strings_string_land_enc_tower_result_recruitment_cache	[[col:yellow]]Recruitment cache:[[/col]] [[col:green]]-30%% recruitment cost[[/col]] for the next 5 turns.	false
+campaign_localised_strings_string_land_enc_tower_result_scout_the_floor	[[col:yellow]]Scouts report:[[/col]] %s.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_blood_tally	[[col:green]]Blood tally met:[[/col]] +%s gold joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_headhunt	[[col:green]]Headhunt met:[[/col]] a rare item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_hold_the_line	[[col:green]]Hold the line met:[[/col]] +%s gold joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_swift_victory	[[col:green]]Swift victory met:[[/col]] an item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_guard_the_standard	[[col:green]]Guard the standard met:[[/col]] the marked unit gains 3 ranks.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_break_them	[[col:green]]Break them met:[[/col]] +%s gold joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_trophy_hunt	[[col:green]]Trophy hunt met:[[/col]] a copy of the trophy joins as a sworn unit.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_silence_the_guns	[[col:green]]Silence the guns met:[[/col]] a rare item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_untouchable	[[col:green]]Untouchable met:[[/col]] our lord gains a rank.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_bloodbath_wager	[[col:green]]Bloodbath wager won:[[/col]] +%s gold joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_duelists_challenge	[[col:green]]Duelist's challenge met:[[/col]] a unique item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_rival_won	[[col:red]]Rival delvers:[[/col]] the rivals out-killed us %s to %s and took %s gold and %s items.	false
+campaign_localised_strings_string_land_enc_tower_result_rival_lost	[[col:green]]Rival delvers:[[/col]] we out-killed the rivals %s to %s and keep the spoils.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_blood_tally	[[col:red]]Blood tally failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_blood_tally	[[col:yellow]]Blood tally was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_blood_tally	[[col:yellow]]Blood tally (Mission):[[/col]] kill [[col:yellow]]40%%[[/col]] of the next army's soldiers for [[col:green]]+50%% of the floor's gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_headhunt	[[col:red]]Headhunt failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_headhunt	[[col:yellow]]Headhunt was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_headhunt	[[col:yellow]]Headhunt (Mission):[[/col]] kill the enemy lord within [[col:yellow]]6 minutes[[/col]] for [[col:green]]a rare item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_hold_the_line	[[col:red]]Hold the line failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_hold_the_line	[[col:yellow]]Hold the line was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_hold_the_line	[[col:yellow]]Hold the line (Mission):[[/col]] lose [[col:yellow]]no more than 2 units[[/col]] for [[col:green]]+50%% of the floor's gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_swift_victory	[[col:red]]Swift victory failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_swift_victory	[[col:yellow]]Swift victory was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_swift_victory	[[col:yellow]]Swift victory (Mission):[[/col]] win within [[col:yellow]]8 minutes[[/col]] for [[col:green]]an extra item[[/col]] of the floor's rarity.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_guard_the_standard	[[col:red]]Guard the standard failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_guard_the_standard	[[col:yellow]]Guard the standard was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_guard_the_standard	[[col:yellow]]Guard the standard (Mission):[[/col]] keep [[col:yellow]]one marked unit[[/col]] alive, and it gains [[col:green]]3 ranks[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_break_them	[[col:red]]Break them failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_break_them	[[col:yellow]]Break them was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_break_them	[[col:yellow]]Break them (Mission):[[/col]] rout [[col:yellow]]6 enemy units[[/col]] for [[col:green]]+1,000 gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_trophy_hunt	[[col:red]]Trophy hunt failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_trophy_hunt	[[col:yellow]]Trophy hunt was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_trophy_hunt	[[col:yellow]]Trophy hunt (Mission):[[/col]] destroy the enemy's [[col:yellow]]most expensive unit[[/col]], and [[col:green]]a copy joins us[[/col]] as a sworn unit.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_silence_the_guns	[[col:red]]Silence the guns failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_silence_the_guns	[[col:yellow]]Silence the guns was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_silence_the_guns	[[col:yellow]]Silence the guns (Mission):[[/col]] destroy every enemy [[col:yellow]]missile and artillery unit within 5 minutes[[/col]] for [[col:green]]a rare item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_untouchable	[[col:red]]Untouchable failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_untouchable	[[col:yellow]]Untouchable was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_untouchable	[[col:yellow]]Untouchable (Mission):[[/col]] our lord ends the battle [[col:yellow]]above half health[[/col]] and gains [[col:green]]a rank[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_bloodbath_wager	[[col:red]]Bloodbath wager failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_bloodbath_wager	[[col:yellow]]Bloodbath wager was not counted:[[/col]] the battle was auto-resolved, so the wager is back in the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_bloodbath_wager	[[col:yellow]]Bloodbath wager (Mission):[[/col]] wager [[col:yellow]]1,000 gold[[/col]] from the haul: kill [[col:yellow]]80%%[[/col]] of the next army's soldiers for [[col:green]]+3,000 gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_duelists_challenge	[[col:red]]Duelist's challenge failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_duelists_challenge	[[col:yellow]]Duelist's challenge was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_duelists_challenge	[[col:yellow]]Duelist's challenge (Mission):[[/col]] challenge the next floor's lord: [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a unique item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_rival_untracked	[[col:yellow]]Rival delvers:[[/col]] the battle was auto-resolved, so no kills were counted and we keep the spoils.	false
 campaign_localised_strings_string_land_enc_tower_climb_floor	Floor %d (%s)	false
 campaign_localised_strings_string_land_enc_tower_climb_master	Floor %d (%s), the Master of the Tower	false
 campaign_localised_strings_string_land_enc_tower_climb_hidden	Hidden floor (%s)	false
@@ -26,3 +74,4 @@ campaign_localised_strings_string_land_enc_tower_climb_ahead	- %s	false
 campaign_localised_strings_string_land_enc_tower_climb_difficulty_easy	easy	false
 campaign_localised_strings_string_land_enc_tower_climb_difficulty_medium	medium	false
 campaign_localised_strings_string_land_enc_tower_climb_difficulty_hard	hard	false
+campaign_localised_strings_string_land_enc_tower_epithet	the Towerbreaker	false

@@ -96,6 +96,10 @@ scripted_objectives_localised_text_land_enc_tower_buff_night_terrors	[[col:green
 scripted_objectives_localised_description_land_enc_tower_buff_night_terrors		false
 scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_message	Night terrors: after 1 minute, the enemy's 2 strongest units flee.	false
 scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_allies_in_the_dark	[[col:green]]Allies in the dark: an allied army joins the battle.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_allies_in_the_dark		false
+scripted_objectives_localised_text_land_enc_tower_buff_allies_in_the_dark_message	Allies in the dark: an allied army joins the battle.	false
+scripted_objectives_localised_description_land_enc_tower_buff_allies_in_the_dark_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_hellforge	[[col:green]]Hellforge pact: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]][[img:ui/skins/default/icon_stat_armour.png]][[/img]] and +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]][[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]][[img:ui/skins/default/icon_stat_speed.png]][[/img]][[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]][[img:ui/skins/default/icon_stat_range.png]][[/img]][[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_hellforge		false
 scripted_objectives_localised_text_land_enc_tower_buff_hellforge_message	Hellforge pact: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]][[img:ui/skins/default/icon_stat_armour.png]][[/img]] and +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]][[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]][[img:ui/skins/default/icon_stat_speed.png]][[/img]][[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]][[img:ui/skins/default/icon_stat_range.png]][[/img]][[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
@@ -144,3 +148,55 @@ scripted_objectives_localised_text_land_enc_tower_buff_assassinate	[[col:red]]As
 scripted_objectives_localised_description_land_enc_tower_buff_assassinate		false
 scripted_objectives_localised_text_land_enc_tower_buff_assassinate_message	Assassinate: the enemy lord is slain as the battle starts.	false
 scripted_objectives_localised_description_land_enc_tower_buff_assassinate_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor	[[col:red]]Turn a traitor: one of the enemy's units turned and fights for us.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_message	Turn a traitor: one of the enemy's units turned and fights for us.	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_tally	Blood tally: soldiers killed	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_tally		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_tally_message	Blood tally: kill 40% of the enemy's soldiers.	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_tally_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_headhunt	Headhunt: seconds left to slay the enemy lord	false
+scripted_objectives_localised_description_land_enc_tower_buff_headhunt		false
+scripted_objectives_localised_text_land_enc_tower_buff_headhunt_message	Headhunt: slay the enemy lord within 6 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_headhunt_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hold_the_line	Hold the line: our units lost	false
+scripted_objectives_localised_description_land_enc_tower_buff_hold_the_line		false
+scripted_objectives_localised_text_land_enc_tower_buff_hold_the_line_message	Hold the line: lose no more than 2 units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_hold_the_line_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_swift_victory	Swift victory: seconds left to win	false
+scripted_objectives_localised_description_land_enc_tower_buff_swift_victory		false
+scripted_objectives_localised_text_land_enc_tower_buff_swift_victory_message	Swift victory: win within 8 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_swift_victory_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_guard_the_standard	Guard the standard: keep the marked unit alive	false
+scripted_objectives_localised_description_land_enc_tower_buff_guard_the_standard		false
+scripted_objectives_localised_text_land_enc_tower_buff_guard_the_standard_message	Guard the standard: keep the marked unit alive.	false
+scripted_objectives_localised_description_land_enc_tower_buff_guard_the_standard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_them	Break them: enemy units routed	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_them		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_them_message	Break them: rout 6 enemy units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_them_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_trophy_hunt	Trophy hunt: destroy their most expensive unit	false
+scripted_objectives_localised_description_land_enc_tower_buff_trophy_hunt		false
+scripted_objectives_localised_text_land_enc_tower_buff_trophy_hunt_message	Trophy hunt: destroy the enemy's most expensive unit.	false
+scripted_objectives_localised_description_land_enc_tower_buff_trophy_hunt_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_silence_the_guns	Silence the guns: enemy guns left	false
+scripted_objectives_localised_description_land_enc_tower_buff_silence_the_guns		false
+scripted_objectives_localised_text_land_enc_tower_buff_silence_the_guns_message	Silence the guns: destroy every enemy missile and artillery unit within 5 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_silence_the_guns_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_untouchable	Untouchable: our lord's health	false
+scripted_objectives_localised_description_land_enc_tower_buff_untouchable		false
+scripted_objectives_localised_text_land_enc_tower_buff_untouchable_message	Untouchable: end the battle with our lord above half health.	false
+scripted_objectives_localised_description_land_enc_tower_buff_untouchable_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bloodbath_wager	Bloodbath wager: soldiers killed	false
+scripted_objectives_localised_description_land_enc_tower_buff_bloodbath_wager		false
+scripted_objectives_localised_text_land_enc_tower_buff_bloodbath_wager_message	Bloodbath wager: kill 80% of the enemy's soldiers.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bloodbath_wager_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_duelists_challenge	Duelist's challenge: slay the enemy lord	false
+scripted_objectives_localised_description_land_enc_tower_buff_duelists_challenge		false
+scripted_objectives_localised_text_land_enc_tower_buff_duelists_challenge_message	Duelist's challenge: slay the enemy lord.	false
+scripted_objectives_localised_description_land_enc_tower_buff_duelists_challenge_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers	Rival delvers: our kills / the rivals' kills	false
+scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers		false
+scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers_message	Rival delvers: out-kill the rival army, or it takes half the floor's spoils.	false
+scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers_message		false

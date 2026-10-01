@@ -11,6 +11,8 @@ local debug_config = require("script/land_encounters/configs/debug")
 local tower_champions = require("script/land_encounters/configs/tower_champions")
 local army_generator = require("script/land_encounters/core/army_generator")
 local Army = require("script/land_encounters/core/army")
+local tower_lords = require("script/land_encounters/features/tower_lords")
+local tower_missions = require("script/land_encounters/features/tower_missions")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -99,11 +101,16 @@ end
 
 --- Adds changes to the next floor on the delve. Budget and gold multipliers stack, `sabotage` offer keys add up in the order taken, and any
 --- other field replaces what was there: `record` (a floor record fought instead), `faction` (the army's faction), `rarity_shift`,
---- `double_or_nothing` (the loss limit) and `bonus` (a hidden floor).
+--- `double_or_nothing` (the loss limit), `bonus` (a hidden floor), `scouted` (the army's units, built ahead) and `ally` (an allied army joins).
+--- Any other change makes a scouting report stale.
 --- @param delve table The delve record.
---- @param changes table The changes: { budget, gold, sabotage, record, faction, rarity_shift, double_or_nothing, bonus }.
+--- @param changes table The changes: { budget, gold, sabotage, record, faction, rarity_shift, double_or_nothing, bonus, scouted, ally }.
 local function change_next_floor(delve, changes)
     local next_floor = delve.next_floor or {}
+    if next_floor.scouted and changes.scouted == nil then
+        next_floor.scouted = nil
+        log("tower: the next floor changed, so the scouting report is stale")
+    end
     for key, value in pairs(changes) do
         if key == "budget" or key == "gold" then
             next_floor[key] = (next_floor[key] or 1) * value
@@ -515,6 +522,58 @@ local HANDLERS = {
     break_their_spirit = { apply = sabotage },
     curse_their_blades = { apply = sabotage },
     assassinate = { eligible = function(ctx) return not (ctx.delve.next_floor and ctx.delve.next_floor.champion) end, apply = sabotage },
+    turn_a_traitor = { eligible = recruit, apply = sabotage },
+    freed_prisoner = {
+        eligible = function(ctx) return has_room(ctx, 1) end,
+        apply = function(offer, ctx)
+            tower_lords.free_hero(ctx.delve.general_cqi, ctx.faction_name, { ctx.tower and ctx.tower.faction, culture_shorthand(ctx.faction_name) }, offer.rank)
+        end,
+    },
+    dark_bargain = {
+        apply = function(offer, ctx)
+            tower_lords.add_trait(ctx.delve.general_cqi, offer.trait, 1, true)
+            ctx.delve.dark_bargain = offer.wound_turns
+        end,
+    },
+    epithet = {
+        eligible = function(ctx, offer) return not tower_lords.has_trait(ctx.delve.general_cqi, offer.trait) end,
+        apply = function(_, ctx) ctx.delve.epithet = true end,
+    },
+    scout_the_floor = {
+        apply = function(_, ctx)
+            local rows = ctx.scout and ctx.scout() or {}
+            change_next_floor(ctx.delve, { scouted = rows })
+            local names = {}
+            for _, row in ipairs(rows) do
+                local name = common.get_localised_string("land_units_onscreen_name_" .. row.id)
+                names[#names + 1] = (row.count or 1) .. "x " .. (name ~= "" and name or row.id)
+            end
+            log("tower: scouted the next floor: " .. table.concat(names, ", "))
+            return "scout_the_floor", { table.concat(names, ", ") }
+        end,
+    },
+    camp_in_the_tower = {
+        apply = function(_, ctx)
+            ctx.delve.camping = true
+            local general = cm:get_character_by_cqi(ctx.delve.general_cqi)
+            if general and not general:is_null_interface() then cm:disable_movement_for_character(cm:char_lookup_str(general)) end
+            log("tower: the army camps in the tower until next turn")
+        end,
+    },
+    allies_in_the_dark = {
+        apply = function(offer, ctx)
+            change_next_floor(ctx.delve, { ally = true })
+            battle_trick(offer, ctx)
+        end,
+    },
+    rival_delvers = {
+        apply = function(offer, ctx)
+            change_next_floor(ctx.delve, { ally = true })
+            ctx.delve.rival = true
+            battle_trick(offer, ctx)
+        end,
+    },
+    guard_the_standard = { eligible = function(ctx) return tower_missions.has_standard(ctx.delve) end },
     tower_artillery = { apply = battle_buff },
     call_the_winds = { apply = battle_buff },
     vortex_scroll = {
@@ -818,6 +877,8 @@ function M.describe_next_floor(next_floor)
         local value = next_floor[key]
         if key == "record" then
             value = value.difficulty .. " floor"
+        elseif key == "scouted" then
+            value = #value .. " unit rows"
         elseif type(value) == "table" then
             value = table.concat(value, "+")
         end
@@ -856,7 +917,8 @@ end
 --- @param choice_key string The chosen choice key.
 --- @param delve table The delve record.
 --- @param faction_name string The delving faction.
---- @param extras table { dividends = the tower delegate's dividend list, tower = the delve's TowerState }.
+--- @param extras table { dividends = the tower delegate's dividend list, tower = the delve's TowerState, scout = builds the next floor's army and
+--- returns its unit rows }.
 --- @returns table|nil The offer record, or nil when the choice is not an offer on the dilemma.
 --- @returns string|nil The offer's result line for the reopened dilemma, or nil when it has none.
 function M.take(choice_key, delve, faction_name, extras)
@@ -889,9 +951,13 @@ function M.take(choice_key, delve, faction_name, extras)
     delve.taken[offer.key] = true
     local handler = HANDLERS[offer.key]
     local outcome, values = nil, nil
+    if offer.mission then tower_missions.take(offer, delve) end
     if handler and handler.apply then
-        outcome, values = handler.apply(offer, { delve = delve, faction_name = faction_name, dividends = extras.dividends, tower = extras.tower })
+        outcome, values = handler.apply(offer, { delve = delve, faction_name = faction_name, dividends = extras.dividends, tower = extras.tower,
+            scout = extras.scout })
     end
+    --- A stay mission lists itself on the reopened dilemma.
+    if offer.mission and offer.stay and not outcome then outcome = "mission_set_" .. offer.key end
     log("tower: " .. offer.key .. " done: haul " .. gold_before .. " -> " .. delve.haul.gold .. " gold, " .. items_before .. " -> " .. #delve.haul.items
         .. " items, next floor " .. M.describe_next_floor(delve.next_floor) .. ", outcome " .. (outcome or "none"))
     if not outcome then return offer end
@@ -1020,6 +1086,20 @@ function M.settle_last_stand(delve, won)
     end, false)
 end
 
+--- The Epithet offer's trait and title loc key, which the delve gives the lord on clearing the tower.
+--- @returns table { trait, title_loc }.
+function M.epithet()
+    local offer = find("epithet")
+    return { trait = offer.trait, title_loc = offer.title_loc }
+end
+
+--- Finds the faction shorthand of a faction's culture, for heroes of the player's own kind.
+--- @param faction_name string The faction key.
+--- @returns string|nil The shorthand, or nil when its culture has no army data.
+function M.culture_shorthand(faction_name)
+    return culture_shorthand(faction_name)
+end
+
 --- What a Daemon's deal sends at the delving faction's capital once the delve ends.
 --- @returns table { difficulty, factions, spawn_distance }.
 function M.daemon_army()
@@ -1028,8 +1108,8 @@ function M.daemon_army()
 end
 
 --- Hands the buffs on the delving army to the next battle's script, which announces them: the one-battle buffs, the Hellforge pact, Drained,
---- then the in-battle tricks, then the sabotage on the enemy. The list is comma-separated bundle names without `BUNDLE_PREFIX`, then trick and
---- sabotage offer keys. Night terrors' targets go under their own key. No delve hands over empty lists.
+--- then the in-battle tricks, the missions, then the sabotage on the enemy. The list is comma-separated bundle names without `BUNDLE_PREFIX`,
+--- then trick, mission and sabotage offer keys. Night terrors' and the missions' targets go under their own keys. No delve hands over empty lists.
 --- @param delve table|nil The delve record.
 function M.hand_buffs_to_battle(delve)
     local names, seen = {}, {}
@@ -1052,7 +1132,9 @@ function M.hand_buffs_to_battle(delve)
         names[#names + 1] = key
         if key == "night_terrors" then targets = night_terror_targets(delve, find("night_terrors").targets) end
     end
+    for _, key in ipairs(delve and delve.missions or {}) do names[#names + 1] = key end
     for _, key in ipairs(delve and delve.enemy_notices or {}) do names[#names + 1] = key end
+    tower_missions.hand_to_battle(delve)
     if delve then
         log("tower: battle notices for the next floor: " .. (#names > 0 and table.concat(names, ", ") or "none"))
         if #targets > 0 then log("tower: night terrors will rout " .. table.concat(targets, ", ")) end
@@ -1067,6 +1149,7 @@ function M.end_battle_effects(delve)
     M.hand_buffs_to_battle(nil)
     delve.enemy_notices = nil
     delve.battle_tricks = nil
+    tower_missions.end_battle(delve)
     local bundles = delve.battle_bundles or {}
     delve.battle_bundles = nil
     local force = tower_army.delving_force(delve.general_cqi)

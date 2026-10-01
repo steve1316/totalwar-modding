@@ -63,6 +63,8 @@ M.offers = {
     { key = "curse_their_blades", cost = 1200, enemy_bundle = "land_enc_effect_tower_curse_their_blades" },
     --- The battle script slays the enemy lord as the battle starts. Not offered against a Tower champion.
     { key = "assassinate", cost = 2500 },
+    --- A unit of `tiers` from the tower's faction turns: it joins the army now, and the next floor's army fields `fewer_units` fewer.
+    { key = "turn_a_traitor", cost = 2000, count = 1, tiers = { 2, 3, 4 }, from_tower = true, fewer_units = 1 },
     --- A 50/50 roll that doubles the haul's gold or halves it.
     { key = "loaded_dice", stay = true },
     --- Sends `share` of the haul's gold to the treasury, keeping it safe from a loss. The runner keeps `fee` of it.
@@ -100,6 +102,12 @@ M.offers = {
     --- Gives the delving lord `ranks` ranks.
     { key = "lessons_in_blood", cost = 1000, ranks = 2 },
     { key = "rousing_speech", cost = 500, effect_bundle = "land_enc_effect_tower_rousing_speech" },
+    --- Frees a hero of `rank` from the tower's faction, or of the delving faction's culture when that fails. It joins the army.
+    { key = "freed_prisoner", cost = 2000, rank = 7 },
+    --- Puts `trait` on the lord for good. When the delve ends, the lord is wounded for `wound_turns` turns at the start of the next turn.
+    { key = "dark_bargain", trait = "land_enc_trait_tower_daemon_marked", wound_turns = 3 },
+    --- On clearing the tower the lord takes `trait` and the title in the `title_loc` loc key after their name. Not offered to a lord who has it.
+    { key = "epithet", trait = "land_enc_trait_tower_towerbreaker", title_loc = "campaign_localised_strings_string_land_enc_tower_epithet" },
     --- Faction offers put `effect_bundle` on the delving faction for `turns` turns.
     { key = "towers_favour", cost = 1000, stay = true, effect_bundle = "land_enc_effect_tower_towers_favour", turns = 5 },
     { key = "research_scrolls", cost = 1000, stay = true, effect_bundle = "land_enc_effect_tower_research_scrolls", turns = 5 },
@@ -141,6 +149,29 @@ M.offers = {
     { key = "tower_champion", next_gold = 1.5, no_heroes = true, fewer_units = 13, min_tier = 4 },
     --- This tower remembers the faction: its later delves here start on floor 2 with floor 1's base gold in the haul.
     { key = "echoes_of_the_climb" },
+    --- Builds the next floor's army now and lists its units. The floor is fought against that army unless a later offer changes the floor.
+    { key = "scout_the_floor", cost = 500, stay = true },
+    --- Pauses the delve until the start of the next turn, so the army can replenish. The lord cannot move meanwhile.
+    { key = "camp_in_the_tower", camp = true },
+    --- An allied army joins the next floor's battle.
+    { key = "allies_in_the_dark", cost = 1500 },
+    --- A rival army joins the next floor's battle. If it kills more than our army, it takes `rival_share` of the floor's gold and items, rounded up.
+    { key = "rival_delvers", rival_share = 0.5 },
+    --- In-battle missions are free stay offers that stack, tracked by the battle script. `battle_value` is handed to the battle as the mission's
+    --- target. Meeting the goal on a won floor pays the reward: `gold`, `gold_share` of the floor's gold, an item of `item_rarity` (or of the
+    --- floor's own rarities with `floor_item`), `unit_ranks` for the guarded unit, `lord_ranks`, or a sworn copy of the trophy unit.
+    { key = "blood_tally", stay = true, mission = true, battle_value = 0.4, gold_share = 0.5 },
+    { key = "headhunt", stay = true, mission = true, battle_value = 360, item_rarity = "rare" },
+    { key = "hold_the_line", stay = true, mission = true, battle_value = 2, gold_share = 0.5 },
+    { key = "swift_victory", stay = true, mission = true, battle_value = 480, floor_item = true },
+    { key = "guard_the_standard", stay = true, mission = true, unit_ranks = 3 },
+    { key = "break_them", stay = true, mission = true, battle_value = 6, gold = 1000 },
+    { key = "trophy_hunt", stay = true, mission = true, sworn_copy = true },
+    { key = "silence_the_guns", stay = true, mission = true, battle_value = 300, item_rarity = "rare" },
+    { key = "untouchable", stay = true, mission = true, battle_value = 0.5, lord_ranks = 1 },
+    { key = "bloodbath_wager", cost = 1000, stay = true, mission = true, battle_value = 0.8, gold = 3000 },
+    --- A mission that climbs: killing the enemy lord adds a unique item.
+    { key = "duelists_challenge", mission = true, item_rarity = "legendary" },
 }
 
 return M
