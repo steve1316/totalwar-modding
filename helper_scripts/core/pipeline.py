@@ -3,18 +3,17 @@
 The dynamic_rors and double_unit_size scripts each walk every supported mod, follow foreign-key chains from `land_units_tables` to mounts, weapons, projectiles, etc., dedupe across mods, and write trimmed copies into a compat pack. This module owns the bits that are identical between them.
 """
 
+import functools
 import logging
 import os
-import shutil
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, Iterable, List, Optional, Set, Tuple
 
-from core.extract_cache import cached_pack_extract
 from core.utilities import (
     cleanup_folders,
-    ensure_temp_dir,
-    extract_model_paths_from_variantmeshdefinition,
     extract_modded_tsv_data,
+    extract_tsv_data,
     load_multiple_tsv_data,
+    load_tsv_data,
     run_rpfm_cli,
     write_updated_tsv_file,
     STEAM_LIBRARY_DRIVE,
@@ -79,6 +78,9 @@ OPTIONAL_TABLES: List[Tuple[str, str]] = [
     ("variants", "variants_tables"),
 ]
 
+# Table name -> bucket name, the reverse of `OPTIONAL_TABLES`.
+TABLE_BUCKETS: Dict[str, str] = {table_name: bucket_name for bucket_name, table_name in OPTIONAL_TABLES}
+
 
 def modded_folders_for(scratch_root: str) -> List[str]:
     """Return the list of `modded_*` scratch folders that live under `scratch_root`.
@@ -89,46 +91,92 @@ def modded_folders_for(scratch_root: str) -> List[str]:
         scratch_root (str): Folder under which each `modded_<folder_name>` extraction directory lives.
 
     Returns:
-        Full path list, one entry per `TABLE_CONFIGS.folder_name` plus the `modded_variantmeshes` sibling.
+        Full path list, one entry per `TABLE_CONFIGS.folder_name`.
     """
-    folders = [f"{scratch_root}/modded_{cfg['folder_name']}" for cfg in TABLE_CONFIGS]
-    folders.append(f"{scratch_root}/modded_variantmeshes")
-    return folders
+    return [f"{scratch_root}/modded_{cfg['folder_name']}" for cfg in TABLE_CONFIGS]
 
 
 # Default scratch folders the (sequential) scripts populate during a run and need to clean up after. Every entry lives directly under `TEMP_DIR`. Parallel callers should pass a per-mod `scratch_root` to `modded_folders_for` / `cleanup_modded_folders` / `extract_and_load_table_data` instead.
 MODDED_FOLDERS: List[str] = modded_folders_for(TEMP_DIR)
 
 
+def _is_vanilla_key(table_name: str, key: Optional[str], vanilla_keys: Dict[str, Set[str]]) -> bool:
+    """Return True when vanilla already has a row under `key` in `table_name`.
+
+    Args:
+        table_name (str): Table to check.
+        key (Optional[str]): Primary key to look for.
+        vanilla_keys (Dict[str, Set[str]]): Table name -> vanilla primary keys, from `load_vanilla_keys`.
+
+    Returns:
+        True if the key is a vanilla key.
+    """
+    return key in vanilla_keys.get(table_name, ())
+
+
+def load_vanilla_keys(table_names: Iterable[str]) -> Dict[str, Set[str]]:
+    """Load the primary keys of each vanilla table.
+
+    Args:
+        table_names (Iterable[str]): Tables to load.
+
+    Returns:
+        Table name -> set of vanilla primary keys.
+    """
+    keys = {}
+    for table_name in table_names:
+        rows, _, _ = load_tsv_data(f"{extract_tsv_data(table_name)}/db/{table_name}/data__.tsv")
+        key_field = TABLE_KEY_FIELDS.get(table_name, "key")
+        keys[table_name] = {row[key_field] for row in rows}
+    return keys
+
+
+def drop_vanilla_rows(rows: List[Dict[str, Any]], table_name: str, vanilla_keys: Dict[str, Set[str]]) -> List[Dict[str, Any]]:
+    """Drop a mod's rows for keys vanilla already has. Compat packs are always on, so shipping them would push the mod's edits onto players without it.
+
+    Args:
+        rows (List[Dict[str, Any]]): The mod's rows for `table_name`.
+        table_name (str): Table the rows belong to.
+        vanilla_keys (Dict[str, Set[str]]): Table name -> vanilla primary keys, from `load_vanilla_keys`.
+
+    Returns:
+        The rows whose key is not in vanilla.
+    """
+    key_field = TABLE_KEY_FIELDS.get(table_name, "key")
+    return [row for row in rows if not _is_vanilla_key(table_name, row.get(key_field), vanilla_keys)]
+
+
 def _add_related(
     field_key: str,
     source_dict: Dict[str, Any],
     table_name: str,
-    bucket_name: str,
     table_data: Dict[str, Any],
     tracker: "DuplicateTracker",
     new_data: Dict[str, List[Any]],
+    vanilla_keys: Dict[str, Set[str]],
 ) -> Optional[Dict[str, Any]]:
-    """Look up `source_dict[field_key]` in `table_data[table_name]` and, when present, append the row to `new_data[bucket_name]` (gated by `tracker`).
+    """Look up `source_dict[field_key]` in `table_data[table_name]` and, when present, append the row to its `TABLE_BUCKETS` bucket (gated by `tracker`).
+
+    A key vanilla already has is skipped and its chain is not followed, since vanilla's own row and everything it points at already exist.
 
     Args:
         field_key (str): Column in `source_dict` whose value is the foreign key.
         source_dict (Dict[str, Any]): Row that owns the foreign key, e.g. a land_units row or another related row mid-chain.
         table_name (str): Target table to look the value up in.
-        bucket_name (str): Bucket in `new_data` that receives the matching row.
         table_data (Dict[str, Any]): Mapping returned by `extract_and_load_table_data`.
         tracker (DuplicateTracker): Dedup state shared across all mods in the run.
         new_data (Dict[str, List[Any]]): Buckets to append to. Mutated in place.
+        vanilla_keys (Dict[str, Set[str]]): Table name -> vanilla primary keys, from `load_vanilla_keys`.
 
     Returns:
         The looked-up row when present, or None. Returning it lets callers continue the foreign-key chain.
     """
     value = source_dict.get(field_key)
-    if not value or value not in table_data[table_name]:
+    if not value or value not in table_data[table_name] or _is_vanilla_key(table_name, value, vanilla_keys):
         return None
     entry = table_data[table_name][value]
     if tracker.should_add(table_name, entry):
-        new_data[bucket_name].append(entry)
+        new_data[TABLE_BUCKETS[table_name]].append(entry)
     return entry
 
 
@@ -162,14 +210,14 @@ def clean_folder_name(package_name: str) -> str:
     return folder_name
 
 
-def reset_pack_folders(pack_path: str, folders: Tuple[str, ...] = ("db", "variantmeshes")) -> None:
+def reset_pack_folders(pack_path: str, folders: Tuple[str, ...] = ("db",)) -> None:
     """Delete the named top-level folders inside a pack via the RPFM CLI.
 
     Doing this folder-by-folder is more reliable than passing an empty `--folder-path`, which sometimes leaves stale content behind.
 
     Args:
         pack_path (str): Path to the `.pack` file to mutate.
-        folders (Tuple[str, ...]): Top-level folder names inside the pack to clear. Defaults to `("db", "variantmeshes")`.
+        folders (Tuple[str, ...]): Top-level folder names inside the pack to clear. Defaults to `("db",)`.
     """
     for folder in folders:
         run_rpfm_cli(["pack", "delete", "--pack-path", pack_path, "--folder-path", folder], capture_output=True)
@@ -184,17 +232,6 @@ def add_folder_to_pack(pack_path: str, source_folder: str, schema_path: str = SC
         schema_path (str): Path to the WH3 schema RON file used to convert TSVs to binary. Defaults to `SCHEMA_RON_PATH`.
     """
     run_rpfm_cli(["pack", "add", "--pack-path", pack_path, "--tsv-to-binary", schema_path, "--folder-path", source_folder], capture_output=True)
-
-
-def extract_variantmeshes_folder(mod_path: str, dest: str = f"{TEMP_DIR}/modded_variantmeshes") -> None:
-    """Extract the `variantmeshes` folder from a mod pack to the named destination.
-
-    Args:
-        mod_path (str): Path to the source `.pack` file.
-        dest (str): Local destination folder. Defaults to `{TEMP_DIR}/modded_variantmeshes`.
-    """
-    ensure_temp_dir(os.path.dirname(dest) or TEMP_DIR)
-    cached_pack_extract(mod_path, "variantmeshes", dest, tables_as_tsv=False, capture_output=True)
 
 
 class DuplicateTracker:
@@ -299,11 +336,11 @@ def walk_land_unit_to_related_tables(
     tracker: DuplicateTracker,
     new_data: Dict[str, List[Any]],
     land_units_by_key: Dict[str, Dict[str, Any]],
-    vanilla_mounts_keys: Optional[set] = None,
-    variant_mesh_definitions_to_add: Optional[List[str]] = None,
-    variantmeshes_root: str = f"{TEMP_DIR}/modded_variantmeshes",
+    vanilla_keys: Dict[str, Set[str]],
 ) -> None:
-    """Walk the foreign-key chain from a `land_units_tables` row, append related rows into `new_data`, and record any vanilla-mount variantmeshdefinitions to copy into the compat pack.
+    """Walk the foreign-key chain from a `land_units_tables` row and append related rows into `new_data`.
+
+    Rows whose key vanilla already has are never shipped. Compat packs are always on, so the mod's version would reach players without that mod.
 
     Args:
         data (Dict[str, Any]): The land_units row to walk from.
@@ -312,69 +349,61 @@ def walk_land_unit_to_related_tables(
         tracker (DuplicateTracker): Deduplication state shared across all mods in the run.
         new_data (Dict[str, List[Any]]): Buckets to append to, built by `make_new_data_buckets`. Mutated in place.
         land_units_by_key (Dict[str, Dict[str, Any]]): The mod's land_units rows by key, as the caller will write them. Used to find the land unit `main_unit_data` actually references.
-        vanilla_mounts_keys (Optional[set]): Set of vanilla mount keys; only mounts whose key is in this set have their variantmeshdefinitions captured. If None, no variantmesh capture happens.
-        variant_mesh_definitions_to_add (Optional[List[str]]): List that is appended to with paths of variantmeshdefinition files to move into the compat pack. Mutated in place.
-        variantmeshes_root (str): Folder containing the extracted `variantmeshes/variantmeshdefinitions/` tree to read from. Parallel callers should pass the per-mod folder used in `extract_variantmeshes_folder`. Defaults to `f"{TEMP_DIR}/modded_variantmeshes"`.
+        vanilla_keys (Dict[str, Set[str]]): Table name -> vanilla primary keys, from `load_vanilla_keys`.
     """
     # A main unit can point at a land unit under a different key. Walk that one, or the pack ships a main unit whose land unit is missing.
     data = land_units_by_key.get(main_unit_data.get("land_unit"), data)
+    add = functools.partial(_add_related, table_data=table_data, tracker=tracker, new_data=new_data, vanilla_keys=vanilla_keys)
 
-    if tracker.should_add("main_units_tables", main_unit_data):
-        new_data["main_units"].append(main_unit_data)
+    if not _is_vanilla_key("main_units_tables", main_unit_data.get("unit"), vanilla_keys):
+        if tracker.should_add("main_units_tables", main_unit_data):
+            new_data["main_units"].append(main_unit_data)
+        ui_unit_grouping_data = add("ui_unit_group_land", main_unit_data, "ui_unit_groupings_tables")
+        if ui_unit_grouping_data is not None:
+            add("parent_group", ui_unit_grouping_data, "ui_unit_group_parents_tables")
+
+    # Vanilla's own land unit and everything it points at already exist.
+    if _is_vanilla_key("land_units_tables", data.get("key"), vanilla_keys):
+        return
     if tracker.should_add("land_units_tables", data):
         new_data["land_units"].append(data)
 
-    _add_related("historical_description_text", data, "unit_description_historical_texts_tables", "unit_description_historical_texts", table_data, tracker, new_data)
-    _add_related("man_animation", data, "battle_animations_table_tables", "battle_animations", table_data, tracker, new_data)
-    _add_related("man_entity", data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
+    add("historical_description_text", data, "unit_description_historical_texts_tables")
+    add("man_animation", data, "battle_animations_table_tables")
+    add("man_entity", data, "battle_entities_tables")
 
-    mount_data = _add_related("mount", data, "mounts_tables", "mounts", table_data, tracker, new_data)
+    mount_data = add("mount", data, "mounts_tables")
     if mount_data is not None:
-        _add_related("entity", mount_data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
-        variant_data = _add_related("variant", mount_data, "variants_tables", "variants", table_data, tracker, new_data)
-        # Capture variantmeshdefinitions for vanilla mounts so the compat pack remains standalone.
-        if (
-            variant_data is not None
-            and vanilla_mounts_keys is not None
-            and variant_mesh_definitions_to_add is not None
-            and mount_data.get("key") in vanilla_mounts_keys
-            and variant_data.get("variant_filename")
-            and os.path.exists(f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition")
-        ):
-            variant_mesh_definitions_to_add.append(
-                f"{variantmeshes_root}/variantmeshes/variantmeshdefinitions/{variant_data['variant_filename']}.variantmeshdefinition"
-            )
+        add("entity", mount_data, "battle_entities_tables")
+        add("variant", mount_data, "variants_tables")
 
-    melee_weapon_data = _add_related("primary_melee_weapon", data, "melee_weapons_tables", "melee_weapons", table_data, tracker, new_data)
+    melee_weapon_data = add("primary_melee_weapon", data, "melee_weapons_tables")
     if melee_weapon_data is not None:
-        _add_related("scaling_damage", melee_weapon_data, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
+        add("scaling_damage", melee_weapon_data, "projectiles_scaling_damages_tables")
 
-    missile_weapon_data = _add_related("primary_missile_weapon", data, "missile_weapons_tables", "missile_weapons", table_data, tracker, new_data)
+    missile_weapon_data = add("primary_missile_weapon", data, "missile_weapons_tables")
     if missile_weapon_data is not None:
-        projectile_entry = _add_related("default_projectile", missile_weapon_data, "projectiles_tables", "projectiles", table_data, tracker, new_data)
+        projectile_entry = add("default_projectile", missile_weapon_data, "projectiles_tables")
         if projectile_entry is not None:
-            _add_related("spawned_vortex", projectile_entry, "battle_vortexs_tables", "battle_vortexs", table_data, tracker, new_data)
-            _add_related("projectile_shot_type_display", projectile_entry, "projectile_shot_type_displays_tables", "projectile_shot_type_displays", table_data, tracker, new_data)
+            add("spawned_vortex", projectile_entry, "battle_vortexs_tables")
+            add("projectile_shot_type_display", projectile_entry, "projectile_shot_type_displays_tables")
             # The game rejects a projectile whose scaling_damage row is missing, so ship it with the projectile.
-            _add_related("scaling_damage", projectile_entry, "projectiles_scaling_damages_tables", "projectiles_scaling_damages", table_data, tracker, new_data)
+            add("scaling_damage", projectile_entry, "projectiles_scaling_damages_tables")
 
-    _add_related("short_description_text", data, "unit_description_short_texts_tables", "unit_description_short_texts", table_data, tracker, new_data)
-    _add_related("attribute_group", data, "unit_attributes_groups_tables", "unit_attributes_groups", table_data, tracker, new_data)
+    add("short_description_text", data, "unit_description_short_texts_tables")
+    add("attribute_group", data, "unit_attributes_groups_tables")
 
-    engine_data = _add_related("engine", data, "battlefield_engines_tables", "battlefield_engines", table_data, tracker, new_data)
+    engine_data = add("engine", data, "battlefield_engines_tables")
     if engine_data is not None:
-        _add_related("battle_entity", engine_data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
+        add("battle_entity", engine_data, "battle_entities_tables")
 
-    _add_related("spacing", data, "unit_spacings_tables", "unit_spacings", table_data, tracker, new_data)
-    _add_related("first_person", data, "first_person_engines_tables", "first_person_engines", table_data, tracker, new_data)
+    add("spacing", data, "unit_spacings_tables")
+    add("first_person", data, "first_person_engines_tables")
 
-    articulated_vehicle_data = _add_related("articulated_record", data, "land_unit_articulated_vehicles_tables", "land_unit_articulated_vehicles", table_data, tracker, new_data)
+    articulated_vehicle_data = add("articulated_record", data, "land_unit_articulated_vehicles_tables")
     if articulated_vehicle_data is not None:
-        _add_related("articulated_entity", articulated_vehicle_data, "battle_entities_tables", "battle_entities", table_data, tracker, new_data)
+        add("articulated_entity", articulated_vehicle_data, "battle_entities_tables")
 
-    ui_unit_grouping_data = _add_related("ui_unit_group_land", main_unit_data, "ui_unit_groupings_tables", "ui_unit_groupings", table_data, tracker, new_data)
-    if ui_unit_grouping_data is not None:
-        _add_related("parent_group", ui_unit_grouping_data, "ui_unit_group_parents_tables", "ui_unit_group_parents", table_data, tracker, new_data)
 
 
 def _replace_version_info_filename(version_info: str, new_filename: str) -> str:
@@ -423,46 +452,6 @@ def write_optional_tables(
         path = f"{output_root}/db/{table_name}"
         if path not in tables_to_sort:
             tables_to_sort.append(path)
-
-
-def move_variantmesh_definitions(
-    variant_mesh_definitions: List[str],
-    output_root: str,
-    variantmeshes_root: str = f"{TEMP_DIR}/modded_variantmeshes",
-) -> None:
-    """Move variantmeshdefinitions and their referenced wh_variantmodels into the compat pack folder structure.
-
-    Each definition file is moved out of `<variantmeshes_root>/...` into `<output_root>/variantmeshes/variantmeshdefinitions/`, then any model paths referenced inside it are moved out of `<variantmeshes_root>/variantmeshes/wh_variantmodels/` into `<output_root>/variantmeshes/wh_variantmodels/`. Missing source files are skipped silently.
-
-    Args:
-        variant_mesh_definitions (List[str]): Source paths for the variantmeshdefinition files to move. May contain duplicates; missing entries are skipped.
-        output_root (str): Root output folder (e.g. `./temp/!!!!!!!_nanu_dynamic_rors_compat`).
-        variantmeshes_root (str): Folder containing the source `variantmeshes/wh_variantmodels/` tree. Parallel callers should pass the per-mod folder used in `extract_variantmeshes_folder`. Defaults to `f"{TEMP_DIR}/modded_variantmeshes"`.
-    """
-    if not variant_mesh_definitions:
-        return
-    for variant_mesh_definition in variant_mesh_definitions:
-        if not os.path.exists(variant_mesh_definition):
-            continue
-        os.makedirs(f"{output_root}/variantmeshes/variantmeshdefinitions", exist_ok=True)
-        try:
-            shutil.move(
-                variant_mesh_definition,
-                f"{output_root}/variantmeshes/variantmeshdefinitions/{os.path.basename(variant_mesh_definition)}",
-            )
-            mesh_model_paths = extract_model_paths_from_variantmeshdefinition(
-                f"{output_root}/variantmeshes/variantmeshdefinitions/{os.path.basename(variant_mesh_definition)}"
-            )
-            for mesh_model_path in mesh_model_paths:
-                target = f"{output_root}/variantmeshes/wh_variantmodels/{mesh_model_path}"
-                if os.path.exists(target):
-                    os.remove(target)
-                os.makedirs(f"{output_root}/variantmeshes/wh_variantmodels", exist_ok=True)
-                source = f"{variantmeshes_root}/variantmeshes/wh_variantmodels/{mesh_model_path}"
-                if os.path.exists(source):
-                    shutil.move(source, target)
-        except FileNotFoundError:
-            logging.error(f"variantmeshdefinition not found: {variant_mesh_definition}.")
 
 
 def cleanup_modded_folders(scratch_root: Optional[str] = None) -> None:

@@ -30,14 +30,14 @@ from core.pipeline import (
     add_folder_to_pack,
     cleanup_modded_folders,
     extract_and_load_table_data,
-    extract_variantmeshes_folder,
+    load_vanilla_keys,
     make_new_data_buckets,
-    move_variantmesh_definitions,
     reset_pack_folders,
     walk_land_unit_to_related_tables,
     workshop_pack_path,
     write_optional_tables,
     TABLE_CONFIGS,
+    TABLE_KEY_FIELDS,
 )
 from data.supported_mods import SUPPORTED_MODS
 
@@ -259,12 +259,7 @@ if __name__ == "__main__":
 
     if args.reset:
         logging.info("Will reset folders in the packfile before writing.")
-        cleanup_folders(
-            [
-                f"../warhammer3_mods/{MODDED_TABLE_NAME}/db",
-                f"../warhammer3_mods/{MODDED_TABLE_NAME}/variantmeshes",
-            ]
-        )
+        cleanup_folders([f"../warhammer3_mods/{MODDED_TABLE_NAME}/db"])
 
     ensure_temp_dir()
 
@@ -274,10 +269,8 @@ if __name__ == "__main__":
         cleanup_folders([f"{TEMP_DIR}/{MODDED_TABLE_NAME}"])
         cleanup_modded_folders()
 
-        # Extract vanilla mounts_tables for variantmesh handling.
-        extract_tsv_data("mounts_tables")
-        vanilla_mounts_tables_dataframe = read_and_clean_tsv(f"{TEMP_DIR}/vanilla_mounts_tables/db/mounts_tables/data__.tsv", "mounts_tables")
-        vanilla_mounts_keys = set(vanilla_mounts_tables_dataframe.key.values)
+        # Mods' versions of vanilla rows are never shipped, so the compat cannot push one mod's edits onto everyone.
+        vanilla_keys = load_vanilla_keys(TABLE_KEY_FIELDS)
 
         # Extract vanilla battlefield_engines_tables so single vehicles can be told apart from crewed guns.
         extract_tsv_data("battlefield_engines_tables")
@@ -377,7 +370,6 @@ if __name__ == "__main__":
             if package_name[-1].isdigit():
                 package_name = package_name[:-1]
             scratch_root = f"{TEMP_DIR}/{package_name}"
-            variantmeshes_root = f"{scratch_root}/modded_variantmeshes"
 
             logging.info(f"Processing mod: {mod['package_name']}")
             tracker = DuplicateTracker()
@@ -393,10 +385,6 @@ if __name__ == "__main__":
                 logging.info(f"Skipping {mod['package_name']}: no main_units_tables/land_units_tables to double.")
                 cleanup_modded_folders(scratch_root=scratch_root)
                 return
-
-            # Extract the variantmeshes/variantmeshdefinitions folder into the per-mod scratch dir.
-            variant_mesh_definitions_to_add = []
-            extract_variantmeshes_folder(mod["path"], dest=variantmeshes_root)
 
             modded_land_units_headers = table_data["land_units_tables_headers"]
             modded_land_units_version_info = table_data["land_units_tables_version_info"]
@@ -442,10 +430,8 @@ if __name__ == "__main__":
                         table_data=table_data,
                         tracker=tracker,
                         new_data=new_data,
-                        vanilla_mounts_keys=vanilla_mounts_keys,
-                        variant_mesh_definitions_to_add=variant_mesh_definitions_to_add,
-                        variantmeshes_root=variantmeshes_root,
                         land_units_by_key=land_units_by_key,
+                        vanilla_keys=vanilla_keys,
                     )
 
                 list_of_data_to_add.append(new_data)
@@ -486,11 +472,6 @@ if __name__ == "__main__":
                         data_to_add, f"{TEMP_DIR}/{MODDED_TABLE_NAME}", f"{MODDED_TABLE_NAME}_{package_name}", table_data, tables_to_sort, writer=tsv_buffer.add
                     )
                 tsv_buffer.flush()
-
-                # Move any captured variantmeshdefinitions (and their wh_variantmodels) out of the per-mod scratch dir into the compat pack.
-                move_variantmesh_definitions(
-                    variant_mesh_definitions_to_add, f"{TEMP_DIR}/{MODDED_TABLE_NAME}", variantmeshes_root=variantmeshes_root
-                )
 
                 # After writing is complete, sort the required and optional tables. Each worker only sorts its own per-mod-named TSV file.
                 for table_path in tables_to_sort:

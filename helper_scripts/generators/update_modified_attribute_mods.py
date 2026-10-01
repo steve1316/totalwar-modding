@@ -4,7 +4,7 @@ import logging
 import time
 import shutil
 import os
-from typing import Callable, List, Dict
+from typing import Callable, List, Dict, Set
 from core.utilities import (
     extract_tsv_data,
     extract_modded_tsv_data,
@@ -21,7 +21,7 @@ from core.utilities import (
     clear_temp_root,
     TEMP_DIR,
 )
-from core.pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
+from core.pipeline import add_folder_to_pack, drop_vanilla_rows, load_vanilla_keys, reset_pack_folders, workshop_pack_path
 from core.delta import publish_pack
 from data.supported_mods import SUPPORTED_MODS
 
@@ -48,6 +48,9 @@ ALL_VANILLA_TABLES = [
 
 # Populated at startup via `get_vanilla_table_versions`. Maps table name to its current vanilla schema version.
 TABLE_VERSIONS: Dict[str, int] = {}
+
+# Populated at startup via `load_vanilla_keys`. Mods' versions of these rows are never shipped, since each compat already ships its own vanilla file.
+VANILLA_KEYS: Dict[str, Set[str]] = {}
 
 
 def update_melee_attack_intervals(unit_data: List[Dict]):
@@ -177,6 +180,10 @@ def _process_attribute_tables(
         elif os.path.exists(f"{TEMP_DIR}/{folder_name}/db/{table_name}") and any(file.endswith(".tsv") for file in os.listdir(f"{TEMP_DIR}/{folder_name}/db/{table_name}")):
             logging.info(f"There are TSV files in {folder_name}/db/{table_name}.")
             data, headers, _ = load_multiple_tsv_data(f"{TEMP_DIR}/{folder_name}/db/{table_name}")
+            # The compat is always on, so a mod's edit of a vanilla row would reach players without that mod.
+            data = drop_vanilla_rows(data, table_name, VANILLA_KEYS)
+            if not data:
+                continue
             version_info = f"#{table_name};{TABLE_VERSIONS[table_name]};db/{table_name}/{prepend_name}_{folder_name}"
             updated = sorted(transform_fn(data), key=lambda x: x[sort_key])
             write_updated_tsv_file(updated, headers, version_info, f"{TEMP_DIR}/{prepend_name}/db/{table_name}", f"{prepend_name}_{folder_name}")
@@ -284,6 +291,7 @@ if __name__ == "__main__":
     try:
         # Extract every vanilla table the compat pipelines touch and read each table's current schema version straight off its TSV header. This replaces the previous set of hardcoded version constants and keeps the script self-updating when CA bumps a schema.
         TABLE_VERSIONS.update(get_vanilla_table_versions(ALL_VANILLA_TABLES))
+        VANILLA_KEYS.update(load_vanilla_keys(ALL_VANILLA_TABLES))
 
         # The vanilla pass writes the shared `_vanilla_and_dlc` TSVs into the compat-pack build dirs. Run it serially before the pool so workers never race on the `temp/vanilla_*` extracts produced above.
         vanilla_mods = [m for m in SUPPORTED_MODS if m["package_name"] == "vanilla"]
