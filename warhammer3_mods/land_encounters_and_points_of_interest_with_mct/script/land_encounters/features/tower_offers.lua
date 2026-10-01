@@ -54,12 +54,7 @@ local M = {
 local round_gold = tower_data.round_gold
 
 --- Writes gold with thousands separators, e.g. 3000 as "3,000".
---- @param gold number The gold amount.
---- @returns string The formatted amount.
-local function gold_text(gold)
-    local text = tostring(math.floor(gold)):reverse():gsub("(%d%d%d)", "%1,"):reverse()
-    return (text:gsub("^,", ""))
-end
+local gold_text = tower_data.gold_text
 
 --- True when the haul holds enough gold for a gold offer to change it.
 --- @param ctx table The offer context.
@@ -194,10 +189,27 @@ local function spent(offer, delve)
     return delve.taken[offer.key] and not offer.repeatable
 end
 
+--- What an offer's climb line says about the floor it climbs to: its `climb_difficulty` ("lower" is one step below that floor's own), or nil
+--- for the floor's own difficulty.
+--- @param offer table The offer record.
+--- @param floor number The floor the offer climbs to.
+--- @returns string|nil "easy", "medium", "hard" or "champion", or nil.
+local function climb_difficulty(offer, floor)
+    if offer.climb_difficulty ~= "lower" then return offer.climb_difficulty end
+    for i, difficulty in ipairs(DIFFICULTY_KEYS) do
+        if difficulty == tower_data.floors[floor].difficulty then return DIFFICULTY_KEYS[math.max(1, i - 1)] end
+    end
+    return nil
+end
+
 --- Skips floors past the next one, marking each as skipped in the climb list.
 --- @param delve table The delve record.
 --- @param count number How many floors to skip.
 local function skip_floors(delve, count)
+    if delve.next_floor and delve.next_floor.scouted then
+        delve.next_floor.scouted = nil
+        log("tower: the scouted floor is skipped, so the scouting report is stale")
+    end
     for _ = 1, count do
         delve.floor = delve.floor + 1
         delve.climb[#delve.climb + 1] = { floor = delve.floor, difficulty = tower_data.floors[delve.floor].difficulty, state = "skipped" }
@@ -855,7 +867,9 @@ function M.choice(offer_key, delve, next_floor)
     if offer.stay then
         lines[2] = RETURNS_HERE_LINE
     elseif not offer.bonus_floor then
-        lines[2] = "dummy_land_enc_tower_descend_floor_" .. (next_floor + (offer.skips or 0))
+        local floor = next_floor + (offer.skips or 0)
+        local difficulty = climb_difficulty(offer, floor)
+        lines[2] = "dummy_land_enc_tower_descend_floor_" .. floor .. (difficulty and "_" .. difficulty or "")
     end
     local choice = { key = M.choice_key(offer), lines = lines }
     local units = (delve.offer_units or {})[offer.key]

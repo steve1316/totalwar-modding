@@ -28,6 +28,9 @@ local FIRST_OPTION = 0
 
 local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
+--- The highest units-joined payload line. More units than that show this line.
+local MOST_JOINED_LINE = 10
+
 --- Dilemma offered when a lord enters an open tower.
 local EVENT_ENTER = "land_enc_dilemma_tower_enter"
 --- Dilemma offered after winning every floor but the last. "_floor_" and the floor number are appended, so each floor's description can
@@ -241,7 +244,7 @@ end
 --- @returns table A choice record for `launch_dilemma`.
 local function payout_choice(choice_key, line, haul)
     local lines = { line }
-    if haul.joined > 0 then lines[2] = "dummy_land_enc_tower_units_joined_" .. haul.joined end
+    if haul.joined > 0 then lines[2] = "dummy_land_enc_tower_units_joined_" .. math.min(haul.joined, MOST_JOINED_LINE) end
     return { key = choice_key, gold = haul.gold + #haul.units * tower_data.unit_overflow_gold, items = haul.items, lines = lines }
 end
 
@@ -442,6 +445,7 @@ function TowerEventDelegate:on_faction_turn_start(faction_name)
         delve.results = line ~= "" and { line } or {}
         self:launch_deeper(faction_name)
     elseif delve then
+        self:pay_haul(faction_name, delve)
         self:end_delve(faction_name, "tower_left")
     end
     self.pending_dilemma_by_faction[faction_name] = nil
@@ -514,7 +518,10 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             local scout = function() return (self:floor_army(faction_name, delve.bonus_floor and delve.floor or delve.floor + 1)).units_pool end
             local offer, result = tower_offers.take(choice_key, delve, faction_name, { dividends = self.dividends, tower = self:tower_in_zone(delve.zone_name),
                 scout = scout })
-            if offer == nil then return end
+            if offer == nil then
+                self:launch_deeper(faction_name)
+                return
+            end
             --- A camping delve waits for the next turn, see `on_faction_turn_start`.
             if delve.camping then return end
             if offer.stay then
@@ -569,6 +576,7 @@ function TowerEventDelegate:launch_floor(faction_name)
             self.delves[faction_name] = nil
             tower:show_message(faction_name, "tower_blocked")
         else
+            self:pay_haul(faction_name, delve)
             self:end_delve(faction_name, "tower_left")
         end
         return
@@ -741,7 +749,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     delve.ally_invasion = nil
     tower_offers.settle_last_stand(delve, player_won_battle)
     if not player_won_battle then
-        self:end_delve(faction_name, "tower_lost")
+        self:end_delve(faction_name, "tower_lost", true)
         return
     end
     local floor = self:add_floor_rewards(faction_name, delve)
@@ -837,10 +845,24 @@ function TowerEventDelegate:reroll_faction(tower)
     log("tower: " .. tower.zone_name .. " is now held by " .. tower.faction .. " (was " .. tostring(was) .. ")")
 end
 
+--- Pays a delve's haul from script, for a delve that ends without its Leave or claim dilemma: its gold, its items, and the overflow gold of each
+--- sworn unit still waiting for room.
+--- @param faction_name string The delving faction.
+--- @param delve table The delve record.
+function TowerEventDelegate:pay_haul(faction_name, delve)
+    local haul = delve.haul
+    local gold = haul.gold + #haul.units * tower_data.unit_overflow_gold
+    if gold > 0 then cm:treasury_mod(faction_name, gold) end
+    local faction = cm:get_faction(faction_name)
+    for _, item in ipairs(haul.items) do cm:add_ancillary_to_faction(faction, item, false) end
+    log("tower: paid the haul of a delve closed without a choice: " .. gold .. " gold, " .. #haul.items .. " items")
+end
+
 --- Ends a delve, takes off any one-battle effects, puts its tower on cooldown, hands it to a new faction and tells the player how it ended.
 --- @param faction_name string The delving faction.
 --- @param outcome string The message suffix: "tower_left", "tower_lost" or "tower_cleared".
-function TowerEventDelegate:end_delve(faction_name, outcome)
+--- @param in_battle_sequence boolean|nil True when called from a battle's result, so the lord is only moved once the battle sequence is over.
+function TowerEventDelegate:end_delve(faction_name, outcome, in_battle_sequence)
     local delve = self.delves[faction_name]
     log("tower: delve for " .. faction_name .. " ends: " .. outcome .. " on floor " .. delve.floor .. ", haul " .. delve.haul.gold .. " gold, "
         .. #delve.haul.items .. " items (" .. table.concat(delve.haul.items, ", ") .. "), " .. #delve.haul.units .. " sworn units waiting, "
@@ -848,8 +870,15 @@ function TowerEventDelegate:end_delve(faction_name, outcome)
     tower_offers.end_delve_effects(delve)
     local tower = self:tower_in_zone(delve.zone_name)
     self.delves[faction_name] = nil
-    --- Before the freed hero, who is placed beside the lord.
-    tower_battlefields.return_lord(delve.general_cqi, faction_name, tower.coordinates)
+    if in_battle_sequence then
+        --- Touching the lord during the battle sequence leaves the game on a stale pre-battle screen.
+        core:add_listener("land_enc_tower_return_lord_" .. delve.general_cqi, "ScriptEventPlayerBattleSequenceCompleted", true, function()
+            tower_battlefields.return_lord(delve.general_cqi, faction_name, tower.coordinates)
+        end, false)
+    else
+        --- Before the freed hero, who is placed beside the lord.
+        tower_battlefields.return_lord(delve.general_cqi, faction_name, tower.coordinates)
+    end
     tower.cooldown = get_mct_settings().tower_cooldown
     tower:show_message(faction_name, outcome)
     if outcome == "tower_cleared" then

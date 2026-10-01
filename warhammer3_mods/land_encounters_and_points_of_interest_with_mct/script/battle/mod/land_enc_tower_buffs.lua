@@ -312,6 +312,18 @@ local MISSIONS = {
 }
 MISSIONS.bloodbath_wager = MISSIONS.blood_tally
 
+--- Runs one step of a mission. A mission that errors, e.g. one whose target never reached the battle, fails on its own so the others go on.
+--- @param m table The mission.
+--- @param fn function The spec's start, tick or finish.
+--- @param ctx table The battle context.
+--- @returns any The step's objective counters, if it gives any.
+local function step(m, fn, ctx)
+    local ok, a, b = pcall(fn, m, ctx)
+    if ok then return a, b end
+    m.state = "failed"
+    log("mission " .. m.key .. " failed on an error: " .. tostring(a))
+end
+
 --- Saves every mission's state for the campaign.
 --- @param missions table The missions being tracked.
 local function report(missions)
@@ -353,7 +365,7 @@ local function track_missions(names, ours, theirs)
     end) or {}
     local ctx = { ours = ours, theirs = theirs, elapsed = 0, our_lord = lord_of(ours), their_lord = lord_of(theirs) }
     for _, m in ipairs(missions) do
-        if m.spec.start then m.spec.start(m, ctx) end
+        if m.spec.start then step(m, m.spec.start, ctx) end
         if m.state ~= "open" then show_settled(m) end
     end
     report(missions)
@@ -366,7 +378,7 @@ local function track_missions(names, ours, theirs)
         local changed = false
         for _, m in ipairs(missions) do
             if m.state == "open" then
-                local a, b = m.spec.tick(m, ctx)
+                local a, b = step(m, m.spec.tick, ctx)
                 if m.state ~= "open" then
                     show_settled(m)
                     changed = true
@@ -391,7 +403,7 @@ local function track_missions(names, ours, theirs)
         bm:remove_process(MISSION_PROCESS)
         for _, m in ipairs(missions) do
             if m.state == "open" then
-                if m.spec.finish then m.spec.finish(m, ctx) else m.state = "failed" end
+                if m.spec.finish then step(m, m.spec.finish, ctx) else m.state = "failed" end
                 show_settled(m)
             end
         end

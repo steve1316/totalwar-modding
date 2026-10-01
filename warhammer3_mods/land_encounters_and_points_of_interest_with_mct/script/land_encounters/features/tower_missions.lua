@@ -176,9 +176,15 @@ function M.settle(delve, faction_name, outcomes, floor)
         elseif offer.gold_share or offer.gold then
             local gold = offer.gold or tower_data.round_gold(floor.gold * offer.gold_share)
             delve.haul.gold = delve.haul.gold + gold
-            line = result_line("mission_met_" .. offer.key, gold)
+            line = result_line("mission_met_" .. offer.key, tower_data.gold_text(gold))
         elseif offer.item_rarity or offer.floor_item then
-            local rarities = offer.floor_item and floor.record.item_rarities or (offer.item_rarity ~= "legendary" and { offer.item_rarity }) or nil
+            --- A floor item on a floor that pays legendary items (no `item_rarities`) is a legendary item too.
+            local rarities = nil
+            if offer.floor_item then
+                rarities = floor.record.item_rarities
+            elseif offer.item_rarity ~= "legendary" then
+                rarities = { offer.item_rarity }
+            end
             local item = reward_item(faction_name, rarities)
             if item then tower_data.add_items(delve.haul, { item }) end
             line = result_line("mission_met_" .. offer.key)

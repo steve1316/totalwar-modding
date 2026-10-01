@@ -64,6 +64,25 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_scaling_blessing_3	
 campaign_payload_ui_details_description_dummy_land_enc_tower_scaling_blessing_4	Pay [[col:yellow]]25%[[/col]] of the haul's gold: [[col:green]]+17[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]] for the next battle. The deeper the floor, the stronger the blessing.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_freed_hero	A [[col:green]]rank 10 hero[[/col]] freed from the tower's dungeon joins you.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_echoes	[[col:green]]This tower remembers you.[[/col]] The climb starts on floor 2, with floor 1's [[col:yellow]]2,000 gold[[/col]] already in the haul.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_1_easy	Fight [[col:yellow]]floor 1 of 5[[/col]] (easy).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_1_medium	Fight [[col:yellow]]floor 1 of 5[[/col]] (medium).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_1_hard	Fight [[col:yellow]]floor 1 of 5[[/col]] (hard).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_1_champion	Fight [[col:yellow]]floor 1 of 5[[/col]] (the tower's champion).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_2_easy	Fight [[col:yellow]]floor 2 of 5[[/col]] (easy).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_2_medium	Fight [[col:yellow]]floor 2 of 5[[/col]] (medium).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_2_hard	Fight [[col:yellow]]floor 2 of 5[[/col]] (hard).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_2_champion	Fight [[col:yellow]]floor 2 of 5[[/col]] (the tower's champion).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_3_easy	Fight [[col:yellow]]floor 3 of 5[[/col]] (easy).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_3_medium	Fight [[col:yellow]]floor 3 of 5[[/col]] (medium).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_3_hard	Fight [[col:yellow]]floor 3 of 5[[/col]] (hard).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_3_champion	Fight [[col:yellow]]floor 3 of 5[[/col]] (the tower's champion).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_4_easy	Fight [[col:yellow]]floor 4 of 5[[/col]] (easy).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_4_medium	Fight [[col:yellow]]floor 4 of 5[[/col]] (medium).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_4_hard	Fight [[col:yellow]]floor 4 of 5[[/col]] (hard).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_4_champion	Fight [[col:yellow]]floor 4 of 5[[/col]] (the tower's champion).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_5_easy	Fight the [[col:yellow]]Master of the Tower[[/col]] on floor 5 of 5 (easy).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_5_medium	Fight the [[col:yellow]]Master of the Tower[[/col]] on floor 5 of 5 (medium).	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_descend_floor_5_hard	Fight the [[col:yellow]]Master of the Tower[[/col]] on floor 5 of 5 (hard).	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_field_surgeons	Pay [[col:yellow]]2,500 gold[[/col]] from the haul to heal every unit to full strength.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_field_surgeons_unaffordable	[[col:red]]The haul holds less than 2,500 gold[[/col]], so no one is healed. The army climbs as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_forgotten_shrine	Drink from a forgotten shrine: heal [[col:yellow]]30%[[/col]] of each unit's losses for free.	false
