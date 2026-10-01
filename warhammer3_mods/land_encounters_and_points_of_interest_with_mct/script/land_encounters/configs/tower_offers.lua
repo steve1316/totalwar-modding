@@ -105,7 +105,8 @@ M.offers = {
     --- Frees a hero of `rank` from the tower's faction, or of the delving faction's culture when that fails. It joins the army.
     { key = "freed_prisoner", cost = 2000, rank = 7 },
     --- Puts `trait` on the lord for good. When the delve ends, the lord is wounded for `wound_turns` turns at the start of the next turn.
-    { key = "dark_bargain", trait = "land_enc_trait_tower_daemon_marked", wound_turns = 3 },
+    --- `effect_bundle` shows that price on the army until it is paid.
+    { key = "dark_bargain", trait = "land_enc_trait_tower_daemon_marked", wound_turns = 3, effect_bundle = "land_enc_effect_tower_dark_bargain" },
     --- On clearing the tower the lord takes `trait` and the title in the `title_loc` loc key after their name. Not offered to a lord who has it.
     { key = "epithet", trait = "land_enc_trait_tower_towerbreaker", title_loc = "campaign_localised_strings_string_land_enc_tower_epithet" },
     --- Faction offers put `effect_bundle` on the delving faction for `turns` turns.
@@ -151,8 +152,8 @@ M.offers = {
     { key = "echoes_of_the_climb" },
     --- Builds the next floor's army now and lists its units. The floor is fought against that army unless a later offer changes the floor.
     { key = "scout_the_floor", cost = 500, stay = true },
-    --- Pauses the delve until the start of the next turn, so the army can replenish. The lord cannot move meanwhile.
-    { key = "camp_in_the_tower", camp = true },
+    --- Pauses the delve until the start of the next turn, so the army can replenish. `effect_bundle` stops the army moving meanwhile and says why.
+    { key = "camp_in_the_tower", camp = true, effect_bundle = "land_enc_effect_tower_camping" },
     --- An allied army joins the next floor's battle.
     { key = "allies_in_the_dark", cost = 1500 },
     --- A rival army joins the next floor's battle. If it kills more than our army, it takes `rival_share` of the floor's gold and items, rounded up.

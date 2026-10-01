@@ -24,6 +24,7 @@ land_enc_effect_tower_war_rites			force	1	icon_effects_fortify.png	false	false	t
 land_enc_effect_tower_drained			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_hellforge			force	1	icon_effects_fortify.png	true	false	true
 land_enc_effect_tower_dividends			faction	1	treasury.png	true	false	true
+land_enc_effect_tower_dark_bargain			force	1	chaos_gifts.png	false	false	true
 land_enc_effect_tower_whetstones_and_oil			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_warding_sigils			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_fire_kissed_blades			force	1	icon_effects_fortify.png	false	false	true
@@ -34,6 +35,7 @@ land_enc_effect_tower_iron_resolve			force	1	icon_effects_fortify.png	false	fals
 land_enc_effect_tower_stoneskin			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_glass_cannon			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_plague_bearer			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_camping			force	1	land_enc_tower_camping.png	false	false	true
 land_enc_effect_tower_break_their_spirit			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_curse_their_blades			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_tower_artillery			force	1	icon_effects_fortify.png	false	false	true

@@ -88,6 +88,18 @@ local function lord_of(sunits)
     return nil
 end
 
+--- Marks a mission's unit for the whole battle: a ping icon above it and a pulsing unit card, so the player can tell which it is. UI only, so a
+--- failure is logged and the mission goes on.
+--- @param sunit table The script unit.
+--- @param why string What the unit is, for the log.
+local function mark_unit(sunit, why)
+    local ok, err = pcall(function()
+        sunit:add_ping_icon()
+        sunit:highlight_unit_card(true, nil, true)
+    end)
+    log(why .. " " .. sunit.unit:type() .. (ok and " is marked" or " could not be marked: " .. tostring(err)))
+end
+
 --- True when a unit is out of the fight for good: every soldier dead, or shattered.
 --- @param sunit table The script unit.
 --- @returns boolean True when it is lost.
@@ -239,7 +251,7 @@ local MISSIONS = {
                     if seen == tonumber(nth) then m.unit = sunit end
                 end
             end
-            if not m.unit then m.state = "failed" end
+            if m.unit then mark_unit(m.unit, "Guard the standard:") else m.state = "failed" end
         end,
         tick = function(m)
             if is_lost(m.unit) then m.state = "failed" end
@@ -263,7 +275,7 @@ local MISSIONS = {
             for _, sunit in ipairs(ctx.theirs) do
                 if not m.unit and not sunit.unit:is_commanding_unit() and sunit.unit:type() == m.value then m.unit = sunit end
             end
-            if not m.unit then m.state = "failed" end
+            if m.unit then mark_unit(m.unit, "Trophy hunt:") else m.state = "failed" end
         end,
         tick = function(m)
             if is_lost(m.unit) then m.state = "met" end

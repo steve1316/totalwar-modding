@@ -15,4 +15,8 @@ M.floor_budget = {}
 --- Tower floor number -> sworn units instead of the floor's own, e.g. { [1] = 2, [2] = 2 }.
 M.floor_sworn_units = {}
 
+--- Tower floor number -> how many of the delving army's weakest regular units are removed after that floor is won, to free slots for offers
+--- that need room, e.g. { [1] = 1, [2] = 1, [3] = 1, [4] = 1 }.
+M.floor_kill_units = {}
+
 return M

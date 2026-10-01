@@ -17,6 +17,7 @@ campaign_localised_strings_string_land_enc_tower_result_towers_favour	[[col:yell
 campaign_localised_strings_string_land_enc_tower_result_research_scrolls	[[col:yellow]]Research scrolls:[[/col]] [[col:green]]+25%% research rate[[/col]] for the next 5 turns.	false
 campaign_localised_strings_string_land_enc_tower_result_recruitment_cache	[[col:yellow]]Recruitment cache:[[/col]] [[col:green]]-30%% recruitment cost[[/col]] for the next 5 turns.	false
 campaign_localised_strings_string_land_enc_tower_result_scout_the_floor	[[col:yellow]]Scouts report:[[/col]] %s.	false
+campaign_localised_strings_string_land_enc_tower_result_camp_in_the_tower	[[col:yellow]]Camp in the tower:[[/col]] the army rested and [[col:green]]replenished[[/col]] overnight. The climb goes on.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_blood_tally	[[col:green]]Blood tally met:[[/col]] +%s gold joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_headhunt	[[col:green]]Headhunt met:[[/col]] a rare item joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_hold_the_line	[[col:green]]Hold the line met:[[/col]] +%s gold joins the haul.	false

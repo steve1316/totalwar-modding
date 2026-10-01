@@ -532,6 +532,7 @@ local HANDLERS = {
     dark_bargain = {
         apply = function(offer, ctx)
             tower_lords.add_trait(ctx.delve.general_cqi, offer.trait, 1, true)
+            apply_army_bundle(ctx.delve, offer.effect_bundle)
             ctx.delve.dark_bargain = offer.wound_turns
         end,
     },
@@ -553,8 +554,9 @@ local HANDLERS = {
         end,
     },
     camp_in_the_tower = {
-        apply = function(_, ctx)
+        apply = function(offer, ctx)
             ctx.delve.camping = true
+            apply_army_bundle(ctx.delve, offer.effect_bundle)
             local general = cm:get_character_by_cqi(ctx.delve.general_cqi)
             if general and not general:is_null_interface() then cm:disable_movement_for_character(cm:char_lookup_str(general)) end
             log("tower: the army camps in the tower until next turn")
@@ -967,12 +969,22 @@ function M.take(choice_key, delve, faction_name, extras)
     return offer, string.format(template, values[1], values[2])
 end
 
---- Shows the floor's stay-offer results at the top of the per-floor go-deeper descriptions, one line each in the order taken, then a blank
---- line before the description. No results clears it.
+--- Sets a script context value both under its key and under the floor's own key, which that floor's dilemma reads. An older floor's event
+--- then still shows that floor rather than the latest one.
+--- @param key string The context key.
+--- @param floor number The floor the value belongs to.
+--- @param value string The value.
+local function set_floor_context(key, floor, value)
+    common.set_context_value(key, value)
+    common.set_context_value(key .. "_floor_" .. floor, value)
+end
+
+--- Shows the floor's results at the top of its go-deeper description, one line each in the order they came, then a blank line before the
+--- description. No results clears it.
 --- @param delve table The delve record. `delve.results` holds this floor's result lines.
 function M.show_results(delve)
     local results = delve.results or {}
-    common.set_context_value(RESULT_CONTEXT_KEY, #results > 0 and table.concat(results, "\n") .. "\n\n" or "")
+    set_floor_context(RESULT_CONTEXT_KEY, delve.floor, #results > 0 and table.concat(results, "\n") .. "\n\n" or "")
 end
 
 --- Shows the climb list in the per-floor go-deeper descriptions: each floor so far as cleared or skipped at the difficulty it had, any hidden
@@ -986,7 +998,7 @@ function M.show_climb(delve)
     for floor = delve.floor + 1, #tower_data.floors do
         lines[#lines + 1] = string.format(climb_text(floor == delve.floor + 1 and "next" or "ahead"), floor_name(floor, tower_data.floors[floor].difficulty))
     end
-    common.set_context_value(CLIMB_CONTEXT_KEY, table.concat(lines, "\n"))
+    set_floor_context(CLIMB_CONTEXT_KEY, delve.floor, table.concat(lines, "\n"))
 end
 
 --- Greys out the buttons of the stay offers already taken on the open go-deeper dilemma, so each keeps its slot but cannot be clicked. Each
@@ -1093,11 +1105,27 @@ function M.epithet()
     return { trait = offer.trait, title_loc = offer.title_loc }
 end
 
+--- The bundle that shows the Dark bargain's price on the army until the lord is wounded.
+--- @returns string The effect bundle key.
+function M.dark_bargain_bundle()
+    return find("dark_bargain").effect_bundle
+end
+
 --- Finds the faction shorthand of a faction's culture, for heroes of the player's own kind.
 --- @param faction_name string The faction key.
 --- @returns string|nil The shorthand, or nil when its culture has no army data.
 function M.culture_shorthand(faction_name)
     return culture_shorthand(faction_name)
+end
+
+--- Ends a camp: the army may move again.
+--- @param delve table The delve record.
+function M.end_camp(delve)
+    delve.camping = nil
+    local force = tower_army.delving_force(delve.general_cqi)
+    if force then cm:remove_effect_bundle_from_force(find("camp_in_the_tower").effect_bundle, force:command_queue_index()) end
+    local general = cm:get_character_by_cqi(delve.general_cqi)
+    if general and not general:is_null_interface() then cm:enable_movement_for_character(cm:char_lookup_str(general)) end
 end
 
 --- What a Daemon's deal sends at the delving faction's capital once the delve ends.

@@ -362,6 +362,11 @@ function TowerEventDelegate:initialize(zones, saved)
     self.delves = saved.delves or {}
     for faction_name, delve in pairs(self.delves) do
         if delve.in_battle then self:rearm_floor_battle(faction_name) end
+        --- A frozen lord is not kept in the save, so a camping lord is frozen again.
+        if delve.camping then
+            local general = cm:get_character_by_cqi(delve.general_cqi)
+            if general and not general:is_null_interface() then cm:disable_movement_for_character(cm:char_lookup_str(general)) end
+        end
     end
     self.pending_dilemma_by_faction = saved.pending_dilemma_by_faction or {}
     self.dividends = saved.dividends or {}
@@ -421,17 +426,23 @@ function TowerEventDelegate:on_faction_turn_start(faction_name)
             table.remove(self.wounds, i)
             local general = cm:get_character_by_cqi(wound.general_cqi)
             if general and not general:is_null_interface() then
+                local force = tower_army.delving_force(wound.general_cqi)
+                if force then cm:remove_effect_bundle_from_force(tower_offers.dark_bargain_bundle(), force:command_queue_index()) end
+                local x, y = general:logical_position_x(), general:logical_position_y()
                 cm:wound_character(cm:char_lookup_str(general), wound.turns)
+                cm:show_message_event_located(faction_name, "event_feed_strings_text_title_event_land_enc_tower_dark_bargain_paid",
+                    "event_feed_strings_text_subtitle_event_land_enc_tower_dark_bargain_paid", "event_feed_strings_text_description_event_land_enc_tower_dark_bargain_paid",
+                    x, y, false, EVENT_IMAGE_ID_LOCATION_OF_INTEREST)
                 log("tower: the Dark bargain wounds lord " .. wound.general_cqi .. " for " .. wound.turns .. " turns")
             end
         end
     end
     local delve = self.delves[faction_name]
     if delve and delve.camping then
-        delve.camping = nil
-        local general = cm:get_character_by_cqi(delve.general_cqi)
-        if general and not general:is_null_interface() then cm:enable_movement_for_character(cm:char_lookup_str(general)) end
+        tower_offers.end_camp(delve)
         log("tower: " .. faction_name .. " breaks camp on floor " .. delve.floor)
+        local line = common.get_localised_string("campaign_localised_strings_string_land_enc_tower_result_camp_in_the_tower")
+        delve.results = line ~= "" and { line } or {}
         self:launch_deeper(faction_name)
     elseif delve then
         self:end_delve(faction_name, "tower_left")
@@ -693,6 +704,19 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     return { gold = gold, items = floor_items, record = floor }
 end
 
+--- Removes the delving army's weakest regular units after a won floor, as many as the debug `floor_kill_units` override says for it, so
+--- offers that need room can be tested with a full army. Does nothing while the override is empty.
+--- @param delve table The delve record.
+function TowerEventDelegate:debug_kill_units(delve)
+    local general = cm:get_character_by_cqi(delve.general_cqi)
+    for _ = 1, debug_config.floor_kill_units[delve.floor] or 0 do
+        local weakest = tower_army.weakest_regular_unit(delve.general_cqi)
+        if not weakest or not general or general:is_null_interface() then return end
+        cm:remove_unit_from_character(cm:char_lookup_str(general), weakest.unit:unit_key())
+        log("tower: debug override removes " .. weakest.unit:unit_key() .. " after floor " .. delve.floor .. " to free a slot")
+    end
+end
+
 --- Moves sworn units waiting in the haul into the delving army while it has free slots, oldest first. Units that joined stay even if the
 --- delve is later lost. The rest keep waiting and try again after the next win, once losses may have freed slots.
 --- @param delve table The delve record.
@@ -729,8 +753,13 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     local floor = self:add_floor_rewards(faction_name, delve)
     local results = tower_missions.settle(delve, faction_name, outcomes, floor)
     self:swear_in_units(delve)
+    self:debug_kill_units(delve)
     tower_lords.add_trait(delve.general_cqi, tower_data.climber_trait, 1, false)
     if delve.floor >= #tower_data.floors then
+        --- The claim shows the last floor's results and the whole climb.
+        delve.results = results
+        tower_offers.show_results(delve)
+        tower_offers.show_climb(delve)
         local claim = payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul)
         if tower_data.floors[delve.floor].freed_hero_rank then claim.lines[#claim.lines + 1] = "dummy_land_enc_tower_freed_hero" end
         launch_dilemma(EVENT_CLAIM, { claim }, faction_name)

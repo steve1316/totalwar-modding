@@ -48,6 +48,8 @@ effect_bundles_localised_title_land_enc_effect_tower_hellforge	Hellforge Pact	fa
 effect_bundles_localised_description_land_enc_effect_tower_hellforge	The army swore a pact in the tower's forges. Its strength burns bright, and the haul pays for it.	false
 effect_bundles_localised_title_land_enc_effect_tower_dividends	Tower Dividends	false
 effect_bundles_localised_description_land_enc_effect_tower_dividends	A share of a tower's vaults, paid into the treasury each turn.	false
+effect_bundles_localised_title_land_enc_effect_tower_dark_bargain	Dark Bargain	false
+effect_bundles_localised_description_land_enc_effect_tower_dark_bargain	A bargain struck deep in a tower. Its price comes due once the delve is over.	false
 effect_bundles_localised_title_land_enc_effect_tower_whetstones_and_oil	Whetstones and Oil	false
 effect_bundles_localised_description_land_enc_effect_tower_whetstones_and_oil	Every blade in the army was honed and oiled before the next floor.	false
 effect_bundles_localised_title_land_enc_effect_tower_warding_sigils	Warding Sigils	false
@@ -68,6 +70,8 @@ effect_bundles_localised_title_land_enc_effect_tower_glass_cannon	Glass Cannon	f
 effect_bundles_localised_description_land_enc_effect_tower_glass_cannon	The army throws caution away for one battle: it hits harder and bleeds faster.	false
 effect_bundles_localised_title_land_enc_effect_tower_plague_bearer	Plague Bearer	false
 effect_bundles_localised_description_land_enc_effect_tower_plague_bearer	The army carried the tower's plague out with its gold. It wastes away for a few turns.	false
+effect_bundles_localised_title_land_enc_effect_tower_camping	Camping in the Tower	false
+effect_bundles_localised_description_land_enc_effect_tower_camping	The army rests inside the tower until next turn and cannot march.	false
 effect_bundles_localised_title_land_enc_effect_tower_break_their_spirit	Broken Spirit	false
 effect_bundles_localised_description_land_enc_effect_tower_break_their_spirit	Word of what waits above has spread through the ranks. This army fights afraid.	false
 effect_bundles_localised_title_land_enc_effect_tower_curse_their_blades	Cursed Blades	false
