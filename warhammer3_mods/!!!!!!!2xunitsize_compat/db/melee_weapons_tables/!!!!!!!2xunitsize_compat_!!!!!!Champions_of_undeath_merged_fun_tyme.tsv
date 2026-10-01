@@ -42,11 +42,9 @@ chosen_disciples_of_the_path_cav_glaive	10	0	25	45	6.0000	lance	spear	medium	2	1
 chosen_disciples_of_the_path_inf_glaive	15	0	20	40	4.0000	lance	spear	medium	2	1.0000	0.7500	0.0000	true		0	10	3.8000		false
 chosen_disciples_of_the_path_terror_claws	20	0	30	150	8.0000	axe	creatures_claws	large	4	1.0000	1.2500	0.0000	true		0	10	4.6000		false
 da_bulls	10	0	55	125	8.0000	lance	spear	medium	3	1.5000	0.7500	0.0000	true		0	10	3.6000		false
-depth_guard_axe	0	10	30	25	1.0000	axe	axe	small	1	1.0000	1.2500	0.0000	true		0	10	3.5000		false
 depth_guard_champion_axe	0	0	200	200	3.0000	axe	axe	medium	6	1.7500	1.2500	0.0000	true	dg_weeping_blades	0	10	3.5000		false
 depth_guard_champion_bonezz	15	0	150	300	20.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	true	dg_weeping_blades	0	10	4.0000		false
 depth_guard_elder_glaive	10	0	30	40	4.0000	axe	axe	medium	6	1.2500	1.2500	0.0000	true		0	10	3.8000		false
-depth_guard_halberd	10	0	30	25	3.0000	spear	halberd	very_small	1	1.0000	0.7500	0.0000	true		0	10	3.8000		false
 depth_guard_lord_bonezz	15	0	200	300	20.0000	axe	creatures_claws	large	8	1.0000	1.2500	0.0000	true	dg_weeping_blades	0	10	4.0000		false
 depth_guard_lord_glaive	10	0	250	200	4.0000	axe	axe	medium	6	1.7500	1.2500	0.0000	true	dg_weeping_blades	0	10	3.5000		false
 depth_guard_mourngul	0	10	10	60	3.0000	axe	creatures_claws	medium	3	1.3000	1.2500	0.0000	true		0	10	3.5000		false
@@ -116,7 +114,6 @@ stal_bkc_0	0	10	140	330	3.0000	sword	sword	medium	7	2.0000	1.0000	0.0000	true	dt
 stal_bkc_1	0	15	140	330	4.0000	sword	sword	medium	7	2.0000	1.0000	0.0000	true	dt_soul_siphoner	0	10	3.5000		false
 stal_bkc_black_knight_oath	0	10	25	40	4.0000	sword	sword	medium	2	2.0000	1.0000	0.0000	true		0	10	4.5000		false
 thrall_inf_dual_weapon	0	5	30	15	1.0000	axe	axe	very_small	1	1.0000	1.2500	0.0000	false		0	10	4.0000		false
-thrall_knight_lance	10	0	30	20	3.0000	lance	spear	very_small	1	1.0000	0.7500	0.0000	false		0	10	4.0000		false
 tibeius_maul	10	0	150	300	3.0000	axe	hammer_huge	medium	6	1.8000	1.2500	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	4.0000		false
 tibeius_maul_mounted	25	0	150	325	3.0000	axe	hammer_huge	medium	8	1.8000	1.2500	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	4.0000		false
 vlad_simp	0	10	125	275	3.0000	sword	sword_medium	medium	4	1.0000	1.0000	0.0000	true		0	10	4.5000		false

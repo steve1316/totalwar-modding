@@ -26,13 +26,8 @@ secrets_ror	15	0	130	390	12.0000	sword	sword_huge	very_large	12	1.0000	1.0000	0.
 terra_ror	0	0	150	450	7.0000	spear	sword_huge	very_large	18	1.0000	0.7500	0.0000	true	wh_dlc06_unit_contact_discouraged	0	10	0.0		false
 thirster_ror	30	0	185	435	9.0000	axe	axe_huge	very_large	12	1.0000	1.2500	1.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	0.0		false
 w3h_main_tze_screamer_pro	25	0	20	40	4.0000	sword	creatures_claws	small	3	1.0000	1.0000	0.0000	true	wh_dlc06_unit_contact_discouraged	0	10	2.0		false
-wh2_dlc09_dual_swords_ushabti	0	12	42	67	2.0000	sword	sword_medium	medium	4	1.0000	1.0000	0.0000	true		0	10	0.0		false
 wh2_dlc09_dual_swords_ushabti_	26	0	27	62	2.0000	sword	sword_medium	medium	6	1.0000	1.0000	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	0.0		false
-wh2_dlc09_sword_ushabti	0	8	22	57	2.0000	sword	sword_medium	medium	4	1.0000	1.0000	0.0000	true		0	10	0.0		false
 wh2_dlc09_tmb_halberd_	0	0	20	28	1.0000	axe	axe		1	1.0000	1.2500	0.0000	true		0	10	0.0		false
-wh2_dlc09_tmb_scorpion_claws	0	15	110	270	7.0000	axe	creatures_claws	medium	5	1.0000	1.2500	0.0000	true	wh_dlc06_unit_contact_sundered_armour	0	10	0.0		false
-wh2_dlc09_tmb_warsphinx	0	15	140	340	9.0000	axe	creatures_claws	medium	7	1.5000	1.2500	0.0000	false		0	10	0.0		false
-wh2_dlc09_tmb_warsphinx_lord	0	15	145	345	9.0000	axe	creatures_claws	medium	7	1.5000	1.2500	0.0000	false		0	10	0.0		false
 wh3_main_dae_furies_claws_pro	0	0	8	24	1.0000	axe	creatures_claws		1	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	0	0	2.0		false
 wh3_main_exalted_great_unclean_one_ror	0	0	165	385	6.0000	axe	club_huge	very_large	12	1.0000	1.2500	0.0000	true	wh_dlc06_unit_contact_discouraged	0	10	0.0		false
 wh3_main_kho_bloodcrusher_pro	0	18	18	42	4.0000	sword	sword	small	4	0.4000	1.0000	0.0000	true		0	10	2.0		false
@@ -85,5 +80,4 @@ wh3_main_tze_sword_chaos_knight_pro	20	0	21	25	1.0000	lance	spear		1	1.0000	0.75
 wh_main_chs_axe_pro	0	0	24	24	1.0000	axe	axe		1	1.0000	1.2500	1.0000	false		0	10	1.9		false
 wh_main_chs_warhound_pro	0	10	16	34	1.0000	axe	creatures_claws	medium	3	1.0000	1.2500	0.0000	false	wh_dlc08_unit_contact_frostbite	0	3	0.0		false
 wh_main_dwf_axe_ironbreakers_pro	0	0	22	10	1.0000	axe	axe		1	1.0000	1.2500	0.0000	false		0	10	0.0		false
-whh2_dlc09_tmb_heirotitan	0	0	137	413	6.0000	axe	club_huge	very_large	10	1.2500	1.2500	10.0000	true	wh_dlc06_unit_contact_discouraged	0	10	0.0		false
 whh2_dlc09_tmb_heirotitan_	0	0	137	413	6.0000	axe	club_huge	very_large	12	1.5000	1.2500	10.0000	true	wh_dlc06_unit_contact_discouraged	0	10	0.0		false

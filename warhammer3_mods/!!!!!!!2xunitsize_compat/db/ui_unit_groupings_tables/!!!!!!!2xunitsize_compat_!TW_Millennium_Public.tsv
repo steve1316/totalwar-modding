@@ -1,7 +1,5 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_!TW_Millennium_Public
-magic_chariot	magic_chariot	classic_artillery_war_machines
-monstrous_infantry	monstrous_infantry	classic_monster_beasts
 twm_aircraft_airship	twm_airship	twm_aircraft
 twm_aircraft_helicopter	dwf_gyrocopter	twm_aircraft
 twm_aircraft_plane_bomber	dwf_gyrocopter	twm_aircraft

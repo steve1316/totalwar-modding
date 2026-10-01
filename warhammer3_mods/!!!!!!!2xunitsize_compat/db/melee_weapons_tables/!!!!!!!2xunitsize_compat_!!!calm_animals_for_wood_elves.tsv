@@ -2,7 +2,6 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!!!2xunitsize_compat_!!!calm_animals_for_wood_elves
 rory_wef_lake_dragon	0	0	150	440	8.0000	axe	creatures_claws	large	8	1.5000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	3.8000		false
 rory_welf_boar_tusk	0	0	8	22	1.0000	sword	creatures_claws		1	1.0000	1.0000	0.0000	false		0	10	4.5000		false
-rory_welf_eagle_claw	0	0	92	80	7.0000	axe	creatures_claws	large	5	1.0000	1.2500	0.0000	false		0	3	4.0000		false
 rory_welf_elk_antler	0	0	20	5	1.5000	sword	creatures_claws		1	1.0000	1.0000	0.0000	false		0	10	5.0000		false
 rory_welf_giant_tusk	0	15	20	45	2.0000	sword	creatures_claws	medium	2	1.0000	1.0000	0.0000	false		0	10	4.0000		false
 rory_welf_grey_wolf_claw	25	0	40	25	2.0000	axe	creatures_claws	small	3	1.0000	1.0000	0.0000	false		0	10	4.0000		false

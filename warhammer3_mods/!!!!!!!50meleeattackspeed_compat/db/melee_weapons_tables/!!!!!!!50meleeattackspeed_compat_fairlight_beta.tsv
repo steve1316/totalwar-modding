@@ -5,7 +5,3 @@ ML_Fairlight_LL_2Hsword_Griffon	0	0	145	325	9.0000	sword	claw	large	8	1.0000	1.0
 ML_Fairlight_modrator_hammer	0	0	39	81	2.0000	axe	club_medium	medium	4	1.0000	1.2500	0.0000	false		0	10	2.0		false
 ml_brt_spear_crusader	15	0	19	5	1.0000	spear	spear		1	1.0000	0.7500	0.0000	false		0	10	2.4		false
 ml_brt_sword_crusader	0	0	20	6	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
-wh_dlc07_brt_hippogryph_knight	0	0	35	100	4.0000	axe	claw	medium	2	1.3000	1.2500	0.0000	true		0	10	2.0		false
-wh_dlc07_brt_lance_royal_pegasus_knights	18	0	53	32	2.0000	lance	spear		2	1.0000	1.0000	0.0000	true		0	10	2.35		false
-wh_dlc07_brt_sword_grail_guardian	0	10	38	34	2.0000	sword	sword	medium	2	1.4000	1.0000	0.0000	true		0	10	2.25		false
-wh_main_brt_lance_grail_knight	24	0	42	38	2.0000	lance	spear	medium	2	1.0000	1.0000	0.0000	true		0	10	2.55		false

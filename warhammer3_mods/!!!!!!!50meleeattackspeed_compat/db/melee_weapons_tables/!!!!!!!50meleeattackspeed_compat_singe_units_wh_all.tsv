@@ -98,7 +98,3 @@ singe_witch_spear	16	0	9	18	2.0000	spear	spear		1	1.0000	1.0000	0.0000	false	wh_
 singe_wyvern_blackaxe	25	0	52	189	8.0000	axe	creatures_big	large	6	1.3000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 singe_wyvern_savageaxes	0	0	164	48	8.0000	axe	creatures_big	large	6	1.3000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
 spirits_fay_sword	0	0	20	35	1.0000	sword	sword		7	1.0000	1.0000	0.0000	true		0	10	2.0		false
-wh_dlc05_bst_harpy_claws	0	0	32	12	1.0000	axe	creatures_claws		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	0	2.0		false
-wh_dlc07_brt_hippogryph_knight	0	0	35	100	4.0000	axe	creatures_claws	medium	4	1.3000	1.0000	0.0000	false		0	10	2.0		false
-wh_dlc07_brt_lance_royal_pegasus_knights	12	0	42	19	1.0000	lance	spear	medium	3	1.0000	1.0000	0.0000	true		0	10	2.35		false
-wh_pro04_bst_bestigor_halberd	20	0	14	30	2.0000	spear	halberd		1	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false

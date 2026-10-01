@@ -141,4 +141,3 @@ vmp_teb_commandant	0	0	300	125	3.0000	sword	sword	medium	6	1.0000	1.0000	0.0000	
 vmp_teb_commandant_dread_saurian	15	0	220	380	20.0000	axe	creatures_claws	large	12	1.7000	1.2500	0.0000	false		0	10	2.0		false
 vmp_teb_spear	0	10	25	25	3.0000	spear	spear	very_small	1	1.0000	0.7500	0.0000	false		0	10	2.0		false
 vmp_teb_sword	0	10	15	30	2.0000	sword	sword	very_small	1	1.0000	1.0000	0.0000	false		0	10	1.9		false
-wh3_main_ie_nor_bloodreaper_juggernaut_killgore	0	20	125	425	5.0000	axe	axe	large	8	1.0000	2.0000	1.0000	true		0	10	1.5	wh3_main_ie_cha_cull_the_weak	false

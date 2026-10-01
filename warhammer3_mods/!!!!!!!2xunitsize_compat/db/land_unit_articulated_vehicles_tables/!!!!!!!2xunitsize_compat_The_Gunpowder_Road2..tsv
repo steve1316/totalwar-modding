@@ -1,6 +1,4 @@
 key	ammo_caisson_entity	ammo_caisson_destruction	ammo_caisson_model	ammo_caisson_destroyed_model	articulated_entity	head_offset	engine_articulation_node_index	draughts_articulation_node_index	is_train
 #land_unit_articulated_vehicles_tables;6;db/land_unit_articulated_vehicles_tables/!!!!!!!2xunitsize_compat_The_Gunpowder_Road2.
 huolongchushui00_articulation		vmp_black_coach_01			huolongchushui00_articulation	0.0000	0	0	false
-wh2_dlc13_emp_war_wagon		vmp_black_coach_01			wh2_dlc13_vehicle_war_wagon_articulation	2.0000	2	0	false
-wh3_main_cth_art_grand_cannon_articulation		vmp_black_coach_01			wh3_main_cth_art_grand_cannon_articulation	1.8000	2	0	false
 zhongxingzizhongche		vmp_black_coach_01			zhongxingzizhongche	0.0000	0	0	false

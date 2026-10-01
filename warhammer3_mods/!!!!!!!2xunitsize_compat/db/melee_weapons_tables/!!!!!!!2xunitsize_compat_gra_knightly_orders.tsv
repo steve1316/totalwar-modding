@@ -4,7 +4,6 @@ wh_main_emp_dual_axe_black_bear	0	6	32	12	1.0000	axe	axe		1	1.0000	1.0000	0.0000
 wh_main_emp_halberd_black_guard	16	0	10	20	1.0000	spear	halberd		1	1.0000	0.5000	0.0000	false		0	10	5.6000		false
 wh_main_emp_halberd_knights_griffon	16	0	12	28	1.0000	lance	halberd		1	1.0000	0.5000	0.0000	false		0	10	5.6000		false
 wh_main_emp_hammer_fiery_heart	0	0	14	26	1.0000	axe	hammer		1	1.0000	0.7500	0.0000	false		0	10	4.3000		false
-wh_main_emp_lance_blazing_sun	0	0	28	12	1.0000	lance	spear		1	1.0000	0.5000	1.0000	false		0	10	5.1000		false
 wh_main_emp_lance_everlasting_light	0	0	28	12	1.0000	lance	spear		1	1.0000	0.5000	0.0000	true		0	10	5.1000		false
 wh_main_emp_lance_gold_lion	6	0	28	12	1.0000	lance	spear		1	1.0000	0.5000	0.0000	false		0	10	5.1000		false
 wh_main_emp_scythe_sacred_scythe	0	14	30	6	1.0000	axe	halberd		1	1.0000	0.7500	0.0000	false		0	10	4.3000		false

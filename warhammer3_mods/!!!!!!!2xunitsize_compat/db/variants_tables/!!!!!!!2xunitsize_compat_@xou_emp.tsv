@@ -1,8 +1,6 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_@xou_emp
 emp_cav_knight_north_star_warhorse		xou_nordland/emp_cav_knight_north_star_warhorse	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0500	
-emp_cav_knights_higth_helms_mount		xou_reikland/emp_cav_knights_higth_helms_horse	hr1\emp\emp_warhorse_armoured\low_poly\emp_horse_armoured_lowlod	1.0000	1.0000	0.0500	
-emp_gelt_pegasus		emp_cha_gelt_pegasus		1.0000	1.0000	0.0500	
 emp_helborg_warhorse		emp_cha_helborg_warhorse		1.0000	1.1500	0.0500	
 emp_iron_colossus	VariantMeshes\wh_variantmodels\gi2\cst\cst_necrofex_colossus\tech	xou_wissenland\emp_iron_colossus		1.0000	1.0000	0.0000	
 emp_mnt_imp_dragon	VariantMeshes\wh_variantmodels\dr1\hef\hef_sun_dragon\tech	xou_reikland/emp_mnt_imp_dragon		0.7800	1.1500	0.0000	

@@ -1,7 +1,5 @@
 key	icon	order	mp_cap
 #ui_unit_group_parents_tables;1;db/ui_unit_group_parents_tables/!!!!!!!2xunitsize_compat_!TW_Millennium_Public
-classic_artillery_war_machines	artillery_field_gun	20	0
-classic_monster_beasts	monstrous_infantry	16	0
 twm_aircraft	dwf_gyrocopter	9	0
 twm_artillery	twm_artillery	6	0
 twm_cavalry	missile_cavalry_rifle	5	0

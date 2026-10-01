@@ -2,7 +2,6 @@ key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_!!!laf_dwarfs
 laf_drakefire_pistol	missile_infantry_rifle	missile_infantry
 laf_dwf_cha_unrad	laf_dwf_mining_lantern	heroes_agents
-laf_dwf_crossbow	laf_dwf_crossbow	missile_infantry
 laf_dwf_drill_machine	laf_dwf_drill_machine	artillery_war_machines
 laf_dwf_hand_drill	laf_dwf_hand_drill	infantry
 laf_dwf_juggernaut_bolt_thrower	wh_dlc06_dwf_bolt_thrower	artillery_war_machines
@@ -12,7 +11,6 @@ laf_dwf_lord_crossbow	laf_dwf_crossbow	commander
 laf_dwf_lord_pistol	wh2_dlc11_cst_missile_pistol	commander
 laf_dwf_prospector	laf_dwf_prospector	heroes_agents
 laf_dwf_thane_axe	laf_dwf_thane_axe	heroes_agents
-laf_dwf_thane_axe_campaign	laf_dwf_thane_axe	campaign_exclusives
 laf_dwf_thane_crossbow	laf_dwf_thane_crossbow	heroes_agents
 laf_dwf_thane_pickaxe	laf_dwf_thane_pickaxe	heroes_agents
 laf_dwf_thane_pistol	laf_dwf_thane_pistol	heroes_agents

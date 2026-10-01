@@ -1,12 +1,5 @@
 key	close_formation_spacing_horizontal	close_formation_spacing_vertical	close_formation_spacing_variation	loose_formation_spacing_horizontal	loose_formation_spacing_vertical	loose_formation_spacing_variation	dismounted_close_formation_spacing_horizontal	dismounted_close_formation_spacing_vertical	dismounted_close_formation_spacing_variation	dismounted_loose_formation_spacing_horizontal	dismounted_loose_formation_spacing_vertical	dismounted_loose_formation_spacing_variation	routing_space_variation	is_chaotic_formation	testudo_horizontal_spacing	testudo_vertical_spacing	shield_wall_horizontal_spacing	shield_wall_vertical_spacing
 #unit_spacings_tables;7;db/unit_spacings_tables/!!!!!!!2xunitsize_compat_Guns_of_Bretonnia_III
-wh2_dlc09_tmb_chariot	14.0000	13.0000	1.0000	0.0000	3.0000	14.0000	1.0000	1.0000	0.0000	2.0000	2.0000	0.0000	1.0000	false	0.85	1	0.85	0.85
-wh_main_artillery_small	10.0000	10.0000	0.0000	10.0000	12.0000	0.0000	2.0000	2.0000	1.0000	1.0000	1.0000	1.0000	3.0000	false	0.85	1	0.85	0.85
-wh_main_cavalry_chaotic	2.6000	4.0000	0.8600	2.8000	5.0000	0.8000	1.2000	1.0000	1.0000	1.0000	1.0000	1.0000	3.0000	false	0.85	1	0.85	0.85
-wh_main_cavalry_ordered	2.2000	4.0000	0.6000	0.6000	5.0000	0.8000	1.2000	1.0000	1.0000	1.0000	1.0000	1.0000	3.0000	false	0.85	1	0.85	0.85
-wh_main_infantry	1.3000	1.5000	0.5000	2.6000	2.0000	0.8000	1.0000	1.0000	0.0000	1.0000	1.0000	0.0000	3.0000	false	0.85	1	0.85	0.85
-wh_main_infantry_greatswords	1.6000	1.8000	0.5000	2.6000	2.0000	0.8000	1.0000	1.0000	0.0000	1.0000	1.0000	0.0000	3.0000	false	0.85	1	0.85	0.85
 wh_main_infantry_musket	1.1000	1.6000	0.4000	3.6000	3.6000	1.5000	1.0000	1.0000	1.0000	1.0000	1.0000	1.0000	3.0000	false	0.85	1	0.85	0.85
 wh_main_infantry_musket_elite	1.1000	1.6000	0.3200	3.6000	3.6000	1.5000	1.0000	1.0000	1.0000	1.0000	1.0000	1.0000	3.0000	false	0.85	1	0.85	0.85
 wh_main_infantry_pike	1.3000	1.6000	0.3600	2.6000	2.0000	0.8000	1.0000	1.0000	0.0000	1.0000	1.0000	0.0000	3.0000	false	0.85	1	0.85	0.85
-wh_main_infantry_ranged	1.3000	1.7000	0.4200	3.6000	3.6000	1.5000	1.0000	1.0000	1.0000	1.0000	1.0000	1.0000	3.0000	false	0.85	1	0.85	0.85

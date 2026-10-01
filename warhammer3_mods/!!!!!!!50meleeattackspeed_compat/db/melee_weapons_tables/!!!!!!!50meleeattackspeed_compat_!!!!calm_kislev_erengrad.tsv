@@ -12,4 +12,3 @@ calm_straznik_sabre	0	0	25	9	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0
 calm_voivoda_sabre	0	15	250	140	3.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	false		0	10	2.0		false
 kislev_pike	17	0	19	6	2.0000	long_spear	spear		1	1.0000	0.5000	0.0000	false		0	10	2.0		false
 mounted_kirasir_sabre	0	8	28	12	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
-wh3_main_ksl_streltsi_gun_halberd	0	0	9	25	1.0000	axe	axe	small	1	1.0000	1.0000	0.0000	false		0	10	2.0		false

@@ -43,5 +43,4 @@ sla_forsaken	0	0	44	14	2.0000	axe	creatures_claws		1	1.0000	1.2500	0.0000	false	
 sons_of_gunnisson_axe	20	0	25	7	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
 the_arisen_sword	0	0	24	8	2.0000	sword	sword		1	1.0000	1.0000	0.0000	false	unit_contact_plagued	0	10	2.15		false
 twelve_arms_assassins_dual_swords	0	16	30	15	1.0000	sword	sword		4	1.0000	0.7500	0.0000	false		0	10	2.4		false
-wh3_main_ogr_maneater_sword	0	0	33	77	3.0000	sword	sword_medium	medium	3	1.0000	1.2500	0.0000	false		0	10	1.9		false
 worldroot_serpent_attack	0	0	115	280	10.0000	axe	creatures_claws	large	6	1.0000	600.0000	0.0000	true	wh_main_unit_contact_poison	0	10	1.9		false
