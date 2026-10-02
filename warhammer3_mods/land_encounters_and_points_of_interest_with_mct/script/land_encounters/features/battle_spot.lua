@@ -21,7 +21,6 @@ local BattleEventDelegate = {
     is_triggered = false
 }
 
-local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 local FIRST_OPTION = 0
 local ERROR_BATTLE_CLEAN_UP_EVENT = {
     incident = "land_enc_incident_battle_clean_up_event",

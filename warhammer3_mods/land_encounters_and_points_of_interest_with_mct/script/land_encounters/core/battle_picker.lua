@@ -6,6 +6,7 @@ require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
 
 local battle_categories = require("script/land_encounters/configs/battle_categories")
+local debug_config = require("script/land_encounters/configs/debug")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,18 +104,31 @@ function M.pick_event(category, difficulty)
 end
 
 --- Picks a battle event: a tier by the current difficulty's tier weights, a category in that tier, then the event. Categories that cannot
---- fire with the enabled factions (Daemonic Gift without Khorne or Slaanesh) are left out.
+--- fire with the enabled factions (Daemonic Gift without Khorne or Slaanesh) are left out. The debug `battle_difficulty` and
+--- `force_battle_categories` switches (configs/debug.lua) override the difficulty and the first category that can fire.
 --- @param difficulty string The difficulty key. Defaults to `get_current_difficulty()`.
 --- @returns table The event record from `build_event`.
 function M.pick(difficulty)
-    difficulty = difficulty or get_current_difficulty()
+    if debug_config.battle_difficulty[1] then log("battle_picker: debug battle_difficulty forces " .. debug_config.battle_difficulty[1]) end
+    difficulty = debug_config.battle_difficulty[1] or difficulty or get_current_difficulty()
     local faction_keys, faction_set = enabled_factions()
     local choices_by_tier = {}
+    local choice_by_key = {}
     for _, category in ipairs(battle_categories.list) do
         local entries = enabled_flavoured_entries(category, faction_set)
         if category.neutral ~= nil or #entries > 0 then
             choices_by_tier[category.tier] = choices_by_tier[category.tier] or {}
-            table.insert(choices_by_tier[category.tier], { category = category, entries = entries })
+            local choice = { category = category, entries = entries }
+            table.insert(choices_by_tier[category.tier], choice)
+            choice_by_key[category.key] = choice
+        end
+    end
+
+    for _, forced_key in ipairs(debug_config.force_battle_categories) do
+        local forced = choice_by_key[forced_key]
+        if forced then
+            log("battle_picker: debug force_battle_categories picks " .. forced_key)
+            return build_event(forced.category, forced.entries, faction_keys, difficulty)
         end
     end
 

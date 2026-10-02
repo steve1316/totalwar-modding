@@ -29,6 +29,7 @@ M.hard_legendary_chance = 5
 --[[
 Fields of each category:
 - key / text: id and display name.
+- guide: one short line for the MCT Encounters page guide. The rest of the guide line is built from the fields below.
 - tier: rarity tier, 1 (common) to 4 (rare). See `tier_weights`.
 - archetypes: army archetype keys the generator should use (configs/archetypes.lua). It falls back when none are enabled or fieldable.
 - budget_multiplier: scales the difficulty's gold budget.
@@ -47,6 +48,7 @@ M.list = {
         key = "skirmish",
         victory_items = { rarities = { "common", "uncommon" }, count = 1 },
         text = "Skirmish",
+        guide = "A small band blocks the road.",
         tier = 1,
         archetypes = { "battle_line" },
         budget_multiplier = 0.6,
@@ -68,6 +70,7 @@ M.list = {
     {
         key = "underground",
         text = "Nascent Rebellion",
+        guide = "Rebels gather in hiding and strike from ambush.",
         tier = 1,
         archetypes = { "horde" },
         budget_multiplier = 0.8,
@@ -89,6 +92,7 @@ M.list = {
         key = "bandits",
         victory_items = { rarities = { "uncommon", "rare" }, count = 1 },
         text = "Bandits",
+        guide = "Fast raiders prey on travellers.",
         tier = 2,
         archetypes = { "raiders" },
         budget_multiplier = 0.8,
@@ -109,6 +113,7 @@ M.list = {
     {
         key = "surprise_attack",
         text = "Surprise Attack",
+        guide = "A horde or a pack of monsters springs an ambush.",
         tier = 2,
         archetypes = { "horde", "monster_hunt" },
         budget_multiplier = 1.0,
@@ -128,6 +133,7 @@ M.list = {
         key = "incursion",
         victory_items = { rarities = { "rare" }, count = 1 },
         text = "Incursion",
+        guide = "An invading army digs in with artillery.",
         tier = 2,
         archetypes = { "siege", "battle_line" },
         budget_multiplier = 1.0,
@@ -148,6 +154,7 @@ M.list = {
         key = "battlefield",
         victory_items = { rarities = { "rare" }, count = 1 },
         text = "Battlefield",
+        guide = "Two armies clash, and allies can join our side.",
         tier = 3,
         archetypes = { "battle_line" },
         budget_multiplier = 1.3,
@@ -169,6 +176,7 @@ M.list = {
     {
         key = "daemonic_gift",
         text = "Daemonic Gift",
+        guide = "A daemon's champion guards a gift of Khorne or Slaanesh.",
         tier = 4,
         archetypes = { "elite" },
         budget_multiplier = 1.3,

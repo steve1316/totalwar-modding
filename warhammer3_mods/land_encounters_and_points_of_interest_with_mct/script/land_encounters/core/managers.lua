@@ -6,6 +6,7 @@ require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
 
 local army_generator = require("script/land_encounters/core/army_generator")
+local debug_config = require("script/land_encounters/configs/debug")
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
 --- require (the delegates pull core/managers back in for the incident globals).
@@ -200,11 +201,11 @@ function contains(tbl, element, key_first)
 end
 
 --- Returns the current encounter difficulty as one of "easy", "medium", or "hard". Uses the MCT
---- dropdown unless progressive scaling is enabled, in which case difficulty ramps up by turn.
+--- dropdown unless it is set to "progressive", in which case difficulty ramps up by turn.
 --- @returns string The current difficulty key.
 function get_current_difficulty()
     local mct = get_mct_settings()
-    if not mct.enable_basic_progressive_difficulty then
+    if mct.randomized_encounter_force_generation_difficulty ~= "progressive" then
         return mct.randomized_encounter_force_generation_difficulty
     end
     if cm:turn_number() < mct.turn_number_from_easy_to_medium then
@@ -950,12 +951,20 @@ function SpotEventManager:set_current_spot_info(spot_info)
 end
 
 
---- Rolls battle vs treasure for the current spot using the MCT battle chance and dispatches to the matching delegate.
---- Returns true when the spot should be removed from the map.
+--- Rolls battle vs treasure for the current spot using the MCT battle chance and dispatches to the matching delegate. The debug `spot_kind`
+--- switch (configs/debug.lua) picks the kind instead. Returns true when the spot should be removed from the map.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
 --- @returns boolean True when the spot should be deactivated after dispatch.
 function SpotEventManager:trigger_spot_event(area_and_character_info)
-    if not random_chance(get_mct_settings().battle_chance) then
+    local forced_kind = debug_config.spot_kind[1]
+    local is_treasure
+    if forced_kind ~= nil then
+        log("spot: debug spot_kind makes this spot a " .. forced_kind)
+        is_treasure = forced_kind == "treasure"
+    else
+        is_treasure = not random_chance(get_mct_settings().battle_chance)
+    end
+    if is_treasure then
         self.treasure_event_delegate:trigger_event(area_and_character_info)
         return true
     else

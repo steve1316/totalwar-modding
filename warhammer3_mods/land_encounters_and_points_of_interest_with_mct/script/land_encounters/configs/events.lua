@@ -31,7 +31,8 @@ M.tower_spot = {
 --[[
 Treasure-type incidents (no dilemma - just fire-and-grant). No variations.
 
-Each entry below pairs an incident key with the targets bitmask and an optional effect_bundle key.
+Each entry below pairs an incident key with the targets bitmask and an optional effect_bundle key. `guide` is the reward line the MCT
+Encounters page guide shows after the incident's title.
 Adding a new treasure requires DB rows in incidents_tables, cdir_events_incident_option_junctions_tables,
 and cdir_events_incident_payloads_tables, plus matching .loc entries for the incident title/description.
 Effects (when set) additionally need effect_bundles_tables + effect_bundles_to_effects_junctions_tables rows
@@ -41,41 +42,49 @@ M.treasure_type = {
     --"land_enc_incident_clean_up_event" SPECIAL: Only used for the abstract class spot to eliminate bugged points
     {
         incident = "land_enc_incident_tomb_robbing",
+        guide = "1500 gold, a random item and lord experience.",
         targets =  { character = true, force = false, faction = false, region = false },
         effect = false -- for AI
     },
     {
         incident = "land_enc_incident_abandoned_camp",
+        guide = "The army replenishes and marches faster for 8 turns, and the lord gains experience each turn.",
         targets = { character = false, force = true, faction = false, region = false },
         effect = "land_enc_effect_abandoned_camp"
     },
     {
         incident = "land_enc_incident_buried_relics",
+        guide = "Two random items and a Talisman of Preservation.",
         targets = { character = false, force = true, faction = false, region = false },
         effect = false
     },
     {
         incident = "land_enc_incident_hidden_temple",
+        guide = "More unit health and a ward save for 5 turns, and the lord gains experience each turn.",
         targets = { character = false, force = true, faction = false, region = false },
         effect = "land_enc_effect_hidden_temple"
     },
     {
         incident = "land_enc_incident_caravan_remnants",
+        guide = "5000 gold, a random item and lord experience.",
         targets = { character = true, force = false, faction = false, region = false },
         effect = false
     },
     {
         incident = "land_enc_incident_whispers_of_the_gods",
+        guide = "The army is unbreakable and never tires for 4 turns, and the lord gains experience each turn.",
         targets = { character = false, force = true, faction = false, region = false },
         effect = "land_enc_effect_whispers_of_the_gods"
     },
     {
         incident = "land_enc_incident_the_explorer",
+        guide = "The army ignores attrition, marches further and resists ambushes for 10 turns.",
         targets = { character = false, force = true, faction = false, region = false },
         effect = "land_enc_effect_the_explorer"
     },
     {
         incident = "land_enc_incident_legendary_bard",
+        guide = "Cheaper buildings and more income in the province for 10 turns.",
         targets = { character = false, force = false, faction = true, region = false },
         effect = false
     }

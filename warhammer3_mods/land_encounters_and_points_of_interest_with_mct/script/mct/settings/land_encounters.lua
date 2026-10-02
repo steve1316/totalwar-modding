@@ -1,10 +1,14 @@
 --- MCT anchor file for the Land Encounters and Points of Interest mod. Auto-discovered by MCT,
 --- this declares every settings option, the layout of pages/sections, and the listeners that
 --- enforce inter-option constraints (at-least-one rules, master/child checkbox locking).
+--- Option keys never change, so players keep their saved settings. Labels, sections and pages are free to move.
 
 require("script/land_encounters/core/mct")
 
 local archetypes = require("script/land_encounters/configs/archetypes")
+local smithy_data = require("script/land_encounters/configs/smithy_data")
+local tower_data = require("script/land_encounters/configs/tower_data")
+local mct_guides = require("script/land_encounters/core/mct_guides")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,6 +22,25 @@ end;
 if is_function(mct_mod.set_main_image) then
     mct_mod:set_main_image("ui/images/mct_main_image.png", 300, 300);
 end;
+
+--- Set title, author and description.
+mct_mod:set_title("!!!land_encounters_and_points_of_interest_mct_title", true)
+mct_mod:set_author("!!!land_encounters_and_points_of_interest_mct_author")
+mct_mod:set_description("!!!land_encounters_and_points_of_interest_mct_description", true)
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Helpers
+
+--- Runs a lock recompute again once MCT has loaded the saved settings and whenever the panel opens. Loading the saved settings resets every
+--- option's lock, so locks set while this file loads do not survive on their own.
+--- @param listener_name string A unique prefix for the MCT listeners.
+--- @param recompute function Sets the locks from the current settings.
+local function reapply_after_mct_load(listener_name, recompute)
+    for _, event in ipairs({ "MctInitialized", "MctPanelOpened" }) do
+        core:add_listener(listener_name .. "_" .. event, event, true, function() recompute() end, true)
+    end
+end
 
 --- Keeps at least one checkbox of a group enabled by locking whichever one is the last checked. Recomputes after any toggle in the group.
 --- @param option_keys table The checkbox option keys in the group.
@@ -37,6 +60,7 @@ local function lock_last_enabled_option(option_keys, listener_name)
     end
 
     recompute_locks()
+    reapply_after_mct_load(listener_name, recompute_locks)
 
     core:add_listener(
         listener_name,
@@ -55,235 +79,229 @@ local function lock_last_enabled_option(option_keys, listener_name)
     )
 end
 
---- Set title, author and description.
-mct_mod:set_title("!!!land_encounters_and_points_of_interest_mct_title", true)
-mct_mod:set_author("!!!land_encounters_and_points_of_interest_mct_author")
-mct_mod:set_description("!!!land_encounters_and_points_of_interest_mct_description", true)
+--- Locks a set of options whenever a controlling option's value makes them do nothing. Applies on load, once MCT has loaded the saved settings,
+--- when the panel opens and after every change to the controller.
+--- @param option_keys table The option keys to lock.
+--- @param controller_key string The option key whose value decides the lock.
+--- @param is_locked function Takes the controller's value and returns true when the options should be locked.
+--- @param listener_name string A unique name for the MCT listener.
+local function lock_options_by(option_keys, controller_key, is_locked, listener_name)
+    local function apply(value)
+        for _, key in ipairs(option_keys) do
+            mct_mod:get_option_by_key(key):set_locked(is_locked(value))
+        end
+    end
+
+    local function apply_current()
+        apply(mct_mod:get_option_by_key(controller_key):get_selected_setting())
+    end
+
+    apply_current()
+    reapply_after_mct_load(listener_name, apply_current)
+
+    core:add_listener(
+        listener_name,
+        "MctOptionSelectedSettingSet",
+        function(context)
+            return context:option():get_key() == controller_key
+        end,
+        function(context)
+            --- Read the live UI value via context:setting(). get_finalized_setting() is not updated until the UI is closed.
+            apply(context:setting())
+        end,
+        true
+    )
+end
+
+--- Adds a section to a page.
+--- @param key string The section key.
+--- @param title string The section title.
+--- @param page table The MCT settings page.
+--- @param description string|nil Optional text shown under the title.
+--- @param collapsed boolean|nil True for a collapsible section that starts closed, false for one that starts open, nil for a fixed one.
+--- @returns table The MCT section.
+local function add_section(key, title, page, description, collapsed)
+    local section = mct_mod:add_new_section(key)
+    section:set_localised_text(title, true)
+    if description then section:set_description(description) end
+    section:assign_to_page(page)
+    if collapsed ~= nil then
+        section:set_is_collapsible(true)
+        section:set_visibility(not collapsed)
+    end
+    return section
+end
+
+--- Adds a collapsible, read-only guide section to a page. MCT skips a section with no options, so each guide holds one hidden dummy option.
+--- @param key string The guide key. The section is "guide_<key>_section" and its dummy option "guide_<key>".
+--- @param title string The section title.
+--- @param page table The MCT settings page.
+--- @param text string The guide text.
+--- @param is_open boolean True to start the section open.
+local function add_guide_section(key, title, page, text, is_open)
+    local section_key = "guide_" .. key .. "_section"
+    add_section(section_key, title, page, text, not is_open)
+    local dummy = mct_mod:add_new_option("guide_" .. key, "dummy")
+    dummy:set_assigned_section(section_key)
+    dummy:set_uic_visibility(false, false)
+end
+
+--- Adds a global checkbox to a section.
+--- @param key string The option key.
+--- @param section_key string The section it sits in.
+--- @param text string The label.
+--- @param tooltip string The tooltip.
+--- @param default boolean The default value.
+--- @returns table The MCT option.
+local function add_checkbox(key, section_key, text, tooltip, default)
+    local checkbox = mct_mod:add_new_option(key, "checkbox")
+    checkbox:set_text(text, true)
+    checkbox:set_tooltip_text(tooltip, true)
+    checkbox:set_is_global(true)
+    checkbox:set_default_value(default)
+    checkbox:set_assigned_section(section_key)
+    return checkbox
+end
+
+--- Adds a global slider to a section.
+--- @param key string The option key.
+--- @param section_key string The section it sits in.
+--- @param text string The label.
+--- @param tooltip string The tooltip.
+--- @param range table { min, max, step, precision }.
+--- @param default number The default value.
+--- @returns table The MCT option.
+local function add_slider(key, section_key, text, tooltip, range, default)
+    local slider = mct_mod:add_new_option(key, "slider")
+    slider:set_text(text, true)
+    slider:set_tooltip_text(tooltip, true)
+    slider:set_is_global(true)
+    slider:slider_set_min_max(range[1], range[2])
+    slider:slider_set_precision(range[4])
+    slider:slider_set_step_size(range[3], range[4])
+    slider:set_default_value(default)
+    slider:set_assigned_section(section_key)
+    return slider
+end
+
+--- Locks every child checkbox while its "enable all" master checkbox is on.
+--- @param master_key string The master checkbox key.
+--- @param prefix string The child option key prefix, e.g. "faction_".
+--- @param ids table The child ids appended to `prefix`.
+--- @param listener_name string A unique name for the MCT listener.
+local function lock_children_of_master(master_key, prefix, ids, listener_name)
+    local child_keys = {}
+    for _, id in ipairs(ids) do child_keys[#child_keys + 1] = prefix .. id end
+    lock_options_by(child_keys, master_key, function(value) return value end, listener_name)
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Configuration section and the first page
+--- Pages
 
-local section = mct_mod:add_new_section("configuration_section")
-section:set_localised_text("Configuration", true)
-
-local disable_smithies_checkbox = mct_mod:add_new_option("disable_smithies", "checkbox")
-disable_smithies_checkbox:set_text("Remove Smithies from the map", true)
-disable_smithies_checkbox:set_tooltip_text("Removes every Smithy from the map and pauses their tributes, takeovers and sieges. Takes effect the next time a save is loaded.", true)
-disable_smithies_checkbox:set_is_global(true)
-disable_smithies_checkbox:set_default_value(false)
-disable_smithies_checkbox:set_assigned_section("configuration_section")
-
---- Checkbox for the towers a lord can delve.
-local enable_towers_checkbox = mct_mod:add_new_option("enable_towers", "checkbox")
-enable_towers_checkbox:set_text("Enable Towers", true)
-enable_towers_checkbox:set_tooltip_text("Places one tower per map zone that a lord can delve for gold, items and sworn units. Requires loading the save again to take effect.", true)
-enable_towers_checkbox:set_is_global(true)
-enable_towers_checkbox:set_default_value(get_mct_settings().enable_towers)
-enable_towers_checkbox:set_assigned_section("configuration_section")
-
---- Slider for how long a tower stays closed after a delve.
-local tower_cooldown_slider = mct_mod:add_new_option("tower_cooldown", "slider")
-tower_cooldown_slider:set_text("Tower cooldown (turns)", true)
-tower_cooldown_slider:set_tooltip_text("Turns a tower stays closed after a delve ends, whether you left, cleared it or lost. Default is 5.", true)
-tower_cooldown_slider:set_is_global(true)
-tower_cooldown_slider:slider_set_min_max(1, 30)
-tower_cooldown_slider:slider_set_precision(0)
-tower_cooldown_slider:slider_set_step_size(1, 0)
-tower_cooldown_slider:set_default_value(get_mct_settings().tower_cooldown)
-tower_cooldown_slider:set_assigned_section("configuration_section")
-
---- Slider for what percentage of the possible total spots can have an event spawned into the world.
-local spawn_percentage_slider = mct_mod:add_new_option("spawn_percentage", "slider")
-spawn_percentage_slider:set_text("Controls the % of total points on the map that can have an encounter spawn", true)
-spawn_percentage_slider:set_tooltip_text("Share of all points on the map that can hold an active encounter at once. Default is 0.75 (75%).", true)
-spawn_percentage_slider:set_is_global(true)
-spawn_percentage_slider:slider_set_min_max(0.10, 1.00)
-spawn_percentage_slider:slider_set_precision(2)
-spawn_percentage_slider:slider_set_step_size(0.05, 2)
-spawn_percentage_slider:set_default_value(0.75)
-spawn_percentage_slider:set_assigned_section("configuration_section")
-
---- Slider for how often an encounter spot starts a battle instead of giving treasure.
-local battle_chance_slider = mct_mod:add_new_option("battle_chance", "slider")
-battle_chance_slider:set_text("Battle chance %", true)
-battle_chance_slider:set_tooltip_text("Chance that an encounter spot starts a battle. The rest give treasure. Default is 70.", true)
-battle_chance_slider:set_is_global(true)
-battle_chance_slider:slider_set_min_max(0, 100)
-battle_chance_slider:slider_set_precision(0)
-battle_chance_slider:slider_set_step_size(5, 0)
-battle_chance_slider:set_default_value(get_mct_settings().battle_chance)
-battle_chance_slider:set_assigned_section("configuration_section")
+--- Pages in menu order. MCT's own default "Settings" page is replaced by General, so new sections land there unless assigned elsewhere.
+local mct_default_page = mct_mod:get_default_settings_page()
+local general_page = mct_mod:create_settings_page("General", 1)
+local encounters_page = mct_mod:create_settings_page("Encounters", 1)
+local forces_page = mct_mod:create_settings_page("Enemy Forces", 2)
+local towers_page = mct_mod:create_settings_page("Towers", 1)
+local smithies_page = mct_mod:create_settings_page("Smithies", 1)
+if mct_default_page then
+    mct_mod:set_default_settings_page(general_page)
+    mct_default_page:remove()
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Battle Engagement Behavior
+--- General page
 
-local battle_engagement_section = mct_mod:add_new_section("battle_engagement_section")
-battle_engagement_section:set_localised_text("Battle Engagement Behavior", true)
+add_section("configuration_section", "General", general_page)
 
-local intervention_ambush_checkbox = mct_mod:add_new_option("intervention_ambush", "checkbox")
-intervention_ambush_checkbox:set_text("Allow Ambush encounters", true)
-intervention_ambush_checkbox:set_tooltip_text("When enabled, some land-encounter battles will be set up as ambushes - enemy composition will be hidden and the battle cannot be retreated from before it starts. Higher difficulty. Nascent Rebellion and Surprise Attack battles always use it when it is enabled.", true)
-intervention_ambush_checkbox:set_is_global(true)
-intervention_ambush_checkbox:set_default_value(false)
-intervention_ambush_checkbox:set_assigned_section("battle_engagement_section")
+add_slider("spawn_percentage", "configuration_section", "Active encounter share",
+    "Share of all points on the map that can hold an active encounter at once. Default is 0.75 (75%).", { 0.10, 1.00, 0.05, 2 }, 0.75)
+add_slider("battle_chance", "configuration_section", "Battle chance %",
+    "Chance that an encounter spot starts a battle. The rest give treasure. Default is 70.", { 0, 100, 5, 0 }, get_mct_settings().battle_chance)
+add_checkbox("ready_notices", "configuration_section", "Ready notices",
+    "Tells you when a Smithy you hold, or a Tower you last delved, is ready again. The notice names the region.", get_mct_settings().ready_notices)
 
-local intervention_interception_checkbox = mct_mod:add_new_option("intervention_interception", "checkbox")
-intervention_interception_checkbox:set_text("Allow Interception encounters", true)
-intervention_interception_checkbox:set_tooltip_text("When enabled, land-encounter battles will be set up as interceptions - enemy composition is visible and the battle cannot be declined from the dilemma, but standard battle mechanics apply. This is the default behavior.", true)
-intervention_interception_checkbox:set_is_global(true)
-intervention_interception_checkbox:set_default_value(true)
-intervention_interception_checkbox:set_assigned_section("battle_engagement_section")
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Encounters page
 
-local intervention_allied_checkbox = mct_mod:add_new_option("intervention_allied_reinforcements", "checkbox")
-intervention_allied_checkbox:set_text("Allow Allied-Reinforcement encounters", true)
-intervention_allied_checkbox:set_tooltip_text("When enabled, some land-encounter battles will let the player attack the encounter with allied reinforcements available. Easier difficulty. Battlefield battles always use it when it is enabled.", true)
-intervention_allied_checkbox:set_is_global(true)
-intervention_allied_checkbox:set_default_value(false)
-intervention_allied_checkbox:set_assigned_section("battle_engagement_section")
+add_section("battle_engagement_section", "Battle Engagement", encounters_page,
+    "Which battle types encounter battles can use. At least one stays on.")
+
+add_checkbox("intervention_ambush", "battle_engagement_section", "Ambush battles",
+    "Some encounter battles are ambushes: the enemy army is hidden and the battle cannot be retreated from before it starts. Harder. Nascent "
+    .. "Rebellion and Surprise Attack battles always use it when it is enabled.", false)
+add_checkbox("intervention_interception", "battle_engagement_section", "Interception battles",
+    "Encounter battles are interceptions: the enemy army is visible and the battle cannot be declined from the dilemma, but standard battle "
+    .. "mechanics apply. This is the default.", true)
+add_checkbox("intervention_allied_reinforcements", "battle_engagement_section", "Allied reinforcement battles",
+    "Some encounter battles let you attack with allied reinforcements available. Easier. Battlefield battles always use it when it is enabled.", false)
 
 --- At-least-one enforcement so the user cannot turn every battle type off.
 lock_last_enabled_option({ "intervention_ambush", "intervention_interception", "intervention_allied_reinforcements" }, "leapoi_intervention_at_least_one_enforcer")
 
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Encounter skin configuration
+add_section("encounter_skins_section", "Encounter Skins", encounters_page,
+    "Each encounter skin can be left in or out of the random rotation. Takes effect the next time the locations spawn.", true)
 
-local encounters_section = mct_mod:add_new_section("encounter_skins_section")
-encounters_section:set_localised_text("Encounter Skin Configuration", true)
-encounters_section:set_description("Each encounter skin has a checkbox that controls whether it shows up in the randomized rotation. They are enabled by default.\n\nTakes effect the next time the locations are spawned in again.")
-
---- Master checkbox to lock all encounter skin checkboxes.
-local enable_all_encounter_skins_checkbox = mct_mod:add_new_option("enable_all_encounter_skins", "checkbox")
-enable_all_encounter_skins_checkbox:set_text("Enable all encounter skins", true)
-enable_all_encounter_skins_checkbox:set_tooltip_text("When enabled, all encounter skins will be activated and individual checkboxes will be locked.", true)
-enable_all_encounter_skins_checkbox:set_is_global(true)
-enable_all_encounter_skins_checkbox:set_default_value(true)
-enable_all_encounter_skins_checkbox:set_assigned_section("encounter_skins_section")
+add_checkbox("enable_all_encounter_skins", "encounter_skins_section", "Enable all encounter skins",
+    "Uses every encounter skin and locks the checkboxes below.", true)
 
 --- Individual encounter skin checkboxes.
 local encounter_checkbox_ids = get_encounter_checkbox_ids()
 for _, encounter in ipairs(get_encounter_data()) do
-    local key = "encounter_" .. encounter.id
-    local checkbox = mct_mod:add_new_option(key, "checkbox")
-    checkbox:set_text(encounter.text, true)
-    checkbox:set_tooltip_text("Enable this encounter skin.", true)
-    checkbox:set_is_global(true)
-    checkbox:set_default_value(true)
-    checkbox:set_assigned_section("encounter_skins_section")
+    add_checkbox("encounter_" .. encounter.id, "encounter_skins_section", encounter.text, "Enable this encounter skin.", true)
     table.insert(encounter_checkbox_ids, encounter.id)
 end
+lock_children_of_master("enable_all_encounter_skins", "encounter_", encounter_checkbox_ids, "lock_all_encounter_checkboxes")
 
---- When the master "enable all encounter skins" checkbox is toggled, lock/unlock every individual skin checkbox to match.
-core:add_listener(
-    "lock_all_encounter_checkboxes",
-    "MctOptionSelectedSettingSet",
-    function(context)
-        return context:option():get_key() == "enable_all_encounter_skins"
-    end,
-    function(context)
-        local option = context:option()
-        local mct_mod = option:get_mod()
-
-        --- Read the live UI value via context:setting(). get_finalized_setting() is not updated until the UI is closed.
-        local new_checkbox_val = context:setting()
-
-        for i = 1, #encounter_checkbox_ids do
-            local i_option_key = encounter_checkbox_ids[i]
-            local key = "encounter_" .. i_option_key
-            local i_option = mct_mod:get_option_by_key(key)
-            i_option:set_locked(new_checkbox_val)
-        end
-    end,
-    true
-)
+add_guide_section("battle_spots", "Guide: Battle Spots", encounters_page, mct_guides.battle_spots_text(), false)
+add_guide_section("treasure_spots", "Guide: Treasure Spots", encounters_page, mct_guides.treasure_spots_text(), false)
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Randomized encounter force generation section
+--- Enemy Forces page
 
---- Sections for the new randomized encounter force generation, assigned to their own page.
-local randomized_encounter_force_generation_section = mct_mod:add_new_section("randomized_encounter_force_generation_section")
-randomized_encounter_force_generation_section:set_localised_text("Randomized Encounter Force Configuration (Beta)", true)
-randomized_encounter_force_generation_section:set_description("This section contains options to enable and customize the new randomized encounter force generation system. This also includes enabling compatibility with many mods.\n\nYou do not need to load the save again for the changes to take effect.")
-local second_page = mct_mod:create_settings_page("Randomized Encounter Force Configuration (Beta)", 2)
-randomized_encounter_force_generation_section:assign_to_page(second_page)
+add_section("randomized_encounter_force_generation_section", "Enemy Forces", forces_page,
+    "How encounter armies are built. Changes apply without loading the save again.")
 
---- Checkbox to enable compatibility with supported mods defined in shared/mct_settings.lua.
-local enable_compatibility_with_supported_mods_checkbox = mct_mod:add_new_option("enable_compatibility_with_supported_mods", "checkbox")
-enable_compatibility_with_supported_mods_checkbox:set_text("Enable compatibility with supported mods", true)
-enable_compatibility_with_supported_mods_checkbox:set_tooltip_text("When enabled, the new randomized encounter force generation will use the supported mods. Refer to the Steam Workshop page for the list of supported mods.", true)
-enable_compatibility_with_supported_mods_checkbox:set_is_global(true)
-enable_compatibility_with_supported_mods_checkbox:set_default_value(false)
-enable_compatibility_with_supported_mods_checkbox:set_assigned_section("randomized_encounter_force_generation_section")
+add_checkbox("enable_compatibility_with_supported_mods", "randomized_encounter_force_generation_section", "Use supported mods' units",
+    "Encounter armies can use units from the supported mods you have loaded. See the Steam Workshop page for the list.", false)
+add_checkbox("use_only_modded_units", "randomized_encounter_force_generation_section", "Only modded units",
+    "Encounter armies use only units from the supported mods (vanilla units may still appear where a supported mod overrides them). Needs "
+    .. "Use supported mods' units.", false)
+lock_options_by({ "use_only_modded_units" }, "enable_compatibility_with_supported_mods", function(value) return not value end, "leapoi_modded_units_lock")
 
---- Checkbox to restrict encounter force generation to only use modded units.
-local use_only_modded_units_checkbox = mct_mod:add_new_option("use_only_modded_units", "checkbox")
-use_only_modded_units_checkbox:set_text("Use only modded units for encounter forces", true)
-use_only_modded_units_checkbox:set_tooltip_text("When enabled, the new randomized encounter force generation will only use modded units (vanilla units may be added if any of the supported mods overrode them).", true)
-use_only_modded_units_checkbox:set_is_global(true)
-use_only_modded_units_checkbox:set_default_value(false)
-use_only_modded_units_checkbox:set_assigned_section("randomized_encounter_force_generation_section")
-
---- Dropdown to pick one of the three randomization difficulties.
+--- Dropdown for the encounter difficulty. Progressive steps up by turn number.
 local difficulty_dropdown = mct_mod:add_new_option("difficulty_dropdown", "dropdown")
-difficulty_dropdown:set_text("Select randomization difficulty", true)
-difficulty_dropdown:set_tooltip_text("Select the difficulty for the randomized encounter force generation. Note that this will be overridden by the basic progressive difficulty if enabled.", true)
+difficulty_dropdown:set_text("Difficulty", true)
+difficulty_dropdown:set_tooltip_text("Difficulty of encounter armies. Progressive starts on Easy and steps up at the turns set below.", true)
 difficulty_dropdown:add_dropdown_values({
     {key = "easy", text = "Easy"},
     {key = "medium", text = "Medium"},
     {key = "hard", text = "Hard"},
+    {key = "progressive", text = "Progressive"},
 })
+difficulty_dropdown:set_is_global(true)
+difficulty_dropdown:set_default_value("easy")
 difficulty_dropdown:set_assigned_section("randomized_encounter_force_generation_section")
 
---- Basic progressive difficulty option (turn-based scaling).
-local enable_basic_progressive_difficulty_checkbox = mct_mod:add_new_option("enable_basic_progressive_difficulty", "checkbox")
-enable_basic_progressive_difficulty_checkbox:set_text("Enable basic progressive difficulty using turn numbers", true)
-enable_basic_progressive_difficulty_checkbox:set_tooltip_text("When enabled, the difficulty will increase based on the turn number starting from easy to hard.", true)
-enable_basic_progressive_difficulty_checkbox:set_is_global(true)
-enable_basic_progressive_difficulty_checkbox:set_default_value(false)
-enable_basic_progressive_difficulty_checkbox:set_assigned_section("randomized_encounter_force_generation_section")
+add_slider("turn_number_from_easy_to_medium_slider", "randomized_encounter_force_generation_section", "Medium from turn",
+    "With Progressive difficulty, the turn encounters step up from Easy to Medium.", { 2, 50, 1, 0 }, get_mct_settings().turn_number_from_easy_to_medium)
+add_slider("turn_number_from_medium_to_hard_slider", "randomized_encounter_force_generation_section", "Hard from turn",
+    "With Progressive difficulty, the turn encounters step up from Medium to Hard.", { 3, 100, 1, 0 }, get_mct_settings().turn_number_from_medium_to_hard)
+lock_options_by({ "turn_number_from_easy_to_medium_slider", "turn_number_from_medium_to_hard_slider" }, "difficulty_dropdown",
+    function(value) return value ~= "progressive" end, "leapoi_progressive_turns_lock")
 
---- Sliders for the turn-number thresholds at which the progressive difficulty steps up.
-local turn_number_from_easy_to_medium_slider = mct_mod:add_new_option("turn_number_from_easy_to_medium_slider", "slider")
-turn_number_from_easy_to_medium_slider:set_text("Turn number at which difficulty increases from easy to medium", true)
-turn_number_from_easy_to_medium_slider:set_tooltip_text("Set the turn number at which the difficulty increases from easy to medium.", true)
-turn_number_from_easy_to_medium_slider:set_is_global(true)
-turn_number_from_easy_to_medium_slider:slider_set_min_max(2, 50)
-turn_number_from_easy_to_medium_slider:slider_set_precision(1)
-turn_number_from_easy_to_medium_slider:slider_set_step_size(1, 1)
-turn_number_from_easy_to_medium_slider:set_default_value(15)
-turn_number_from_easy_to_medium_slider:set_assigned_section("randomized_encounter_force_generation_section")
-local turn_number_from_medium_to_hard_slider = mct_mod:add_new_option("turn_number_from_medium_to_hard_slider", "slider")
-turn_number_from_medium_to_hard_slider:set_text("Turn number at which difficulty increases from medium to hard", true)
-turn_number_from_medium_to_hard_slider:set_tooltip_text("Set the turn number at which the difficulty increases from medium to hard.", true)
-turn_number_from_medium_to_hard_slider:set_is_global(true)
-turn_number_from_medium_to_hard_slider:slider_set_min_max(3, 100)
-turn_number_from_medium_to_hard_slider:slider_set_precision(1)
-turn_number_from_medium_to_hard_slider:slider_set_step_size(1, 1)
-turn_number_from_medium_to_hard_slider:set_default_value(25)
-turn_number_from_medium_to_hard_slider:set_assigned_section("randomized_encounter_force_generation_section")
+add_slider("max_unit_copies", "randomized_encounter_force_generation_section", "Max copies of one unit",
+    "Caps how many copies of the same unit an encounter army can have. Regiments of Renown are always limited to one.", { 1, 6, 1, 0 },
+    get_mct_settings().max_unit_copies)
 
---- Slider for how many copies of one unit an encounter force may field.
-local max_unit_copies_slider = mct_mod:add_new_option("max_unit_copies", "slider")
-max_unit_copies_slider:set_text("Max copies of one unit in a force", true)
-max_unit_copies_slider:set_tooltip_text("Caps how many copies of the same unit a generated encounter force can have. Regiments of Renown are always limited to one.", true)
-max_unit_copies_slider:set_is_global(true)
-max_unit_copies_slider:slider_set_min_max(1, 6)
-max_unit_copies_slider:slider_set_precision(0)
-max_unit_copies_slider:slider_set_step_size(1, 0)
-max_unit_copies_slider:set_default_value(get_mct_settings().max_unit_copies)
-max_unit_copies_slider:set_assigned_section("randomized_encounter_force_generation_section")
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Army archetypes
-
-local archetypes_section = mct_mod:add_new_section("army_archetypes_section")
-archetypes_section:set_localised_text("Army Archetypes", true)
-archetypes_section:set_description("Each encounter force rolls one enabled archetype that its faction can field. Every archetype keeps a frontline and a ranged or support unit.\n\nFactions that cannot field any enabled archetype use Battle line.", true)
-archetypes_section:assign_to_page(second_page)
+local archetypes_section = add_section("army_archetypes_section", "Army Archetypes", forces_page,
+    "Each encounter army rolls one enabled archetype that its faction can field. Every archetype keeps a frontline and a ranged or support "
+    .. "unit.\n\nFactions that cannot field any enabled archetype use Battle line.")
 
 --- Tooltip for each archetype checkbox, keyed by archetype key.
 local archetype_tooltips = {
@@ -298,16 +316,25 @@ local archetype_tooltips = {
 local archetype_option_keys = {}
 for _, archetype in ipairs(archetypes.list) do
     local key = "archetype_" .. archetype.key
-    local checkbox = mct_mod:add_new_option(key, "checkbox")
-    checkbox:set_text("Enable " .. archetype.text, true)
-    checkbox:set_tooltip_text(archetype_tooltips[archetype.key], true)
-    checkbox:set_is_global(true)
-    checkbox:set_default_value(true)
-    checkbox:set_assigned_section("army_archetypes_section")
+    add_checkbox(key, "army_archetypes_section", archetype.text, archetype_tooltips[archetype.key], true)
     table.insert(archetype_option_keys, key)
 end
 archetypes_section:set_option_sort_function("index_sort")
 lock_last_enabled_option(archetype_option_keys, "leapoi_archetype_at_least_one_enforcer")
+
+add_section("faction_overrides_section", "Faction Overrides", forces_page,
+    "Which factions encounter armies can come from. Modded factions can stay enabled: they are skipped when their mods are not loaded.", true)
+
+add_checkbox("enable_all_faction_checkboxes", "faction_overrides_section", "Enable all factions",
+    "Allows every faction and locks the checkboxes below.", true)
+
+--- Per-faction checkboxes.
+local faction_checkbox_ids = get_faction_checkbox_ids()
+for _, faction in ipairs(get_faction_mapping()) do
+    add_checkbox("faction_" .. faction.key, "faction_overrides_section", faction.text, "Allow this faction for encounter armies.", true)
+    table.insert(faction_checkbox_ids, faction.key)
+end
+lock_children_of_master("enable_all_faction_checkboxes", "faction_", faction_checkbox_ids, "lock_all_faction_checkboxes")
 
 --- Per-difficulty slider pairs. Each template makes a min and a max slider keyed "min_<field>_<difficulty>" / "max_<field>_<difficulty>".
 --- `field` "limit_hero" keeps the older hero count keys so existing MCT settings carry over.
@@ -315,7 +342,7 @@ local difficulty_slider_templates = {
     {
         field = "budget",
         title = "gold budget",
-        tooltip = "The generated encounter force spends a random amount of gold between the min and max on its units. The lord and heroes are free. A bigger budget buys more and pricier units, up to the 20 unit army cap.",
+        tooltip = "The encounter army spends a random amount of gold between the min and max on its units. The lord and heroes are free. A bigger budget buys more and pricier units, up to the 20 unit army cap.",
         min = 0,
         max = 40000,
         step = 500,
@@ -323,7 +350,7 @@ local difficulty_slider_templates = {
     {
         field = "unit_experience_amount",
         title = "unit rank",
-        tooltip = "Set the rank of each unit in the generated encounter force. The rank is picked randomly between the min and max.",
+        tooltip = "The rank of each unit in the encounter army, picked randomly between the min and max.",
         min = 1,
         max = 9,
         step = 1,
@@ -331,7 +358,7 @@ local difficulty_slider_templates = {
     {
         field = "lord_level_range",
         title = "lord level",
-        tooltip = "Set the level of the lord for the generated encounter force. The level is picked randomly between the min and max.",
+        tooltip = "The level of the encounter army's lord, picked randomly between the min and max.",
         min = 1,
         max = 30,
         step = 1,
@@ -339,98 +366,62 @@ local difficulty_slider_templates = {
     {
         field = "limit_hero",
         title = "number of heroes",
-        tooltip = "Set how many heroes join the generated encounter force. Heroes count toward the 20 unit army cap.",
+        tooltip = "How many heroes join the encounter army. Heroes count toward the 20 unit army cap.",
         min = 0,
         max = 10,
         step = 1,
     },
 }
 
---- Create one collapsible section per difficulty.
+--- One collapsed section per difficulty, holding the min and max slider of every template in template order.
 for _, difficulty in ipairs(DIFFICULTY_KEYS) do
-    local difficulty_section = mct_mod:add_new_section("difficulty_" .. difficulty .. "_section")
-    difficulty_section:set_localised_text("Randomization Difficulty Settings: " .. difficulty:sub(1, 1):upper() .. difficulty:sub(2), true)
-    difficulty_section:set_description("This section contains options for the random generation difficulty.\n\nYou do not need to load the save again for the changes to take effect.", true)
-    difficulty_section:set_is_collapsible(true)
-    difficulty_section:set_visibility(false)
-    difficulty_section:assign_to_page(second_page)
-end
+    local section_key = "difficulty_" .. difficulty .. "_section"
+    local difficulty_section = add_section(section_key, "Difficulty: " .. difficulty:sub(1, 1):upper() .. difficulty:sub(2), forces_page,
+        "Army settings for this difficulty. Changes apply without loading the save again.", true)
 
---- Materialize the min and max slider for every template in each difficulty section, in template order.
-for _, difficulty in ipairs(DIFFICULTY_KEYS) do
     local settings = get_mct_settings().difficulties[difficulty]
     for _, template in ipairs(difficulty_slider_templates) do
         local defaults = template.field == "limit_hero" and settings.limits.hero or settings[template.field]
         for bound_index, bound in ipairs({"min", "max"}) do
-            local slider = mct_mod:add_new_option(bound .. "_" .. template.field .. "_" .. difficulty, "slider")
-            slider:set_text((bound == "min" and "Min " or "Max ") .. template.title, true)
-            slider:set_tooltip_text(template.tooltip, true)
-            slider:set_is_global(true)
-            slider:slider_set_min_max(template.min, template.max)
-            slider:slider_set_precision(0)
-            slider:slider_set_step_size(template.step, 0)
-            slider:set_default_value(defaults[bound_index])
-            slider:set_assigned_section("difficulty_" .. difficulty .. "_section")
+            add_slider(bound .. "_" .. template.field .. "_" .. difficulty, section_key, (bound == "min" and "Min " or "Max ") .. template.title,
+                template.tooltip, { template.min, template.max, template.step, 0 }, defaults[bound_index])
         end
     end
-end
-
---- Tell each difficulty section to sort options by insertion index now that all sliders are created.
-for _, difficulty in ipairs(DIFFICULTY_KEYS) do
-    local difficulty_section = mct_mod:get_section_by_key("difficulty_" .. difficulty .. "_section")
     difficulty_section:set_option_sort_function("index_sort")
 end
 
---- Section + checkboxes for enabling/disabling individual factions in the randomized encounter force generation.
-local faction_overrides_section = mct_mod:add_new_section("faction_overrides_section")
-faction_overrides_section:set_localised_text("Faction Overrides", true)
-faction_overrides_section:set_description("This section lets you choose which factions the randomized encounter force generation can use.\n\nIt is okay to leave modded factions enabled. They are skipped when their mods are not loaded.")
-faction_overrides_section:assign_to_page(second_page)
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Towers page
 
---- Master checkbox to enable/disable every faction at once.
-local enable_all_faction_checkboxes = mct_mod:add_new_option("enable_all_faction_checkboxes", "checkbox")
-enable_all_faction_checkboxes:set_text("Enable all factions", true)
-enable_all_faction_checkboxes:set_tooltip_text("When enabled, all factions will be allowed for the randomized encounter force generation.", true)
-enable_all_faction_checkboxes:set_is_global(true)
-enable_all_faction_checkboxes:set_default_value(true)
-enable_all_faction_checkboxes:set_assigned_section("faction_overrides_section")
+add_section("towers_section", "Towers", towers_page)
 
---- Per-faction checkboxes.
-local faction_checkbox_ids = get_faction_checkbox_ids()
-for _, faction in ipairs(get_faction_mapping()) do
-    local key = "faction_" .. faction.key
-    local checkbox = mct_mod:add_new_option(key, "checkbox")
-    checkbox:set_text(faction.text, true)
-    checkbox:set_tooltip_text("Enable this faction for the randomized encounter force generation.", true)
-    checkbox:set_is_global(true)
-    checkbox:set_default_value(true)
-    checkbox:set_assigned_section("faction_overrides_section")
-    table.insert(faction_checkbox_ids, faction.key)
+add_checkbox("enable_towers", "towers_section", "Enable Towers",
+    "Places one tower per map zone that a lord can delve for gold, items and sworn units. Requires loading the save again to take effect.",
+    get_mct_settings().enable_towers)
+add_slider("tower_cooldown", "towers_section", "Tower cooldown (turns)",
+    "Turns a tower stays closed after a delve ends, whether you left, cleared it or lost. Default is 5.", { 1, tower_data.longest_cooldown_message, 1, 0 },
+    get_mct_settings().tower_cooldown)
+
+add_guide_section("towers", "Guide: How Towers Work", towers_page, mct_guides.towers_text(), true)
+for _, offer_section in ipairs(mct_guides.tower_offer_sections()) do
+    add_guide_section("tower_" .. offer_section.key, "Offers: " .. offer_section.title, towers_page, offer_section.text, false)
 end
 
---- When the master "enable all factions" checkbox is toggled, lock/unlock every individual faction checkbox to match.
-core:add_listener(
-    "lock_all_faction_checkboxes",
-    "MctOptionSelectedSettingSet",
-    function(context)
-        return context:option():get_key() == "enable_all_faction_checkboxes"
-    end,
-    function(context)
-        local option = context:option()
-        local mct_mod = option:get_mod()
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Smithies page
 
-        --- Read the live UI value via context:setting(). get_finalized_setting() is not updated until the UI is closed.
-        local new_checkbox_val = context:setting()
+add_section("smithies_section", "Smithies", smithies_page)
 
-        for i = 1, #faction_checkbox_ids do
-            local i_option_key = faction_checkbox_ids[i]
-            local key = "faction_" .. i_option_key
-            local i_option = mct_mod:get_option_by_key(key)
-            i_option:set_locked(new_checkbox_val)
-        end
-    end,
-    true
-)
+add_checkbox("disable_smithies", "smithies_section", "Remove Smithies from the map",
+    "Removes every Smithy from the map and pauses their tributes, takeovers and sieges. Takes effect the next time a save is loaded.", false)
+add_slider("smithy_cooldown", "smithies_section", "Smithy cooldown (turns)",
+    "Turns a level 3 forge cools after a free pick. Level 2 adds " .. smithy_data.levels[2].cooldown_offset .. " turns and level 1 adds "
+    .. smithy_data.levels[1].cooldown_offset .. ". Default is " .. get_mct_settings().smithy_cooldown .. ".", { 1, smithy_data.cooldown_slider_max, 1, 0 },
+    get_mct_settings().smithy_cooldown)
+
+add_guide_section("smithy", "Guide: The Smithy", smithies_page, mct_guides.smithy_text(), true)
 
 out("DEBUG - UI elements creation completed.")
 
