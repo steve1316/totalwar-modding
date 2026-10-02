@@ -26,8 +26,6 @@ local offers_data = require("script/land_encounters/configs/tower_offers")
 
 local FIRST_OPTION = 0
 
-local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
-
 --- The highest units-joined payload line. More units than that show this line.
 local MOST_JOINED_LINE = 10
 
@@ -62,6 +60,8 @@ local TowerState = {
     cooldown = 0,
     --- Faction key -> true for factions whose delves here start on floor 2 (an Echoes of the climb offer).
     echoes = {},
+    --- Faction key of the last faction to delve the tower, told when it opens again. Empty when none has.
+    last_delver = "",
 }
 
 --- Builds a tower record.
@@ -71,9 +71,13 @@ local TowerState = {
 --- @param faction string Shorthand of the faction holding the tower.
 --- @param cooldown number Turns left before the tower opens.
 --- @param echoes table|nil Faction key -> true for factions the tower remembers.
+--- @param last_delver string|nil Faction key of the last faction to delve the tower.
 --- @returns TowerState The new tower.
-function TowerState:new(zone_name, spot_index, coordinates, faction, cooldown, echoes)
-    local t = { zone_name = zone_name, spot_index = spot_index, coordinates = coordinates, faction = faction, cooldown = cooldown or 0, echoes = echoes or {} }
+function TowerState:new(zone_name, spot_index, coordinates, faction, cooldown, echoes, last_delver)
+    local t = {
+        zone_name = zone_name, spot_index = spot_index, coordinates = coordinates, faction = faction, cooldown = cooldown or 0, echoes = echoes or {},
+        last_delver = last_delver or "",
+    }
     setmetatable(t, self)
     self.__index = self
     return t
@@ -84,7 +88,7 @@ end
 function TowerState:export()
     return {
         zone_name = self.zone_name, spot_index = self.spot_index, coordinates = self.coordinates, faction = self.faction, cooldown = self.cooldown,
-        echoes = self.echoes,
+        echoes = self.echoes, last_delver = self.last_delver,
     }
 end
 
@@ -92,15 +96,7 @@ end
 --- @param faction_name string The faction to show the message to.
 --- @param message string The message suffix, e.g. "tower_lost" for event_feed_strings_text_title_event_land_enc_tower_lost.
 function TowerState:show_message(faction_name, message)
-    cm:show_message_event_located(faction_name,
-        "event_feed_strings_text_title_event_land_enc_" .. message,
-        "event_feed_strings_text_subtitle_event_land_enc_" .. message,
-        "event_feed_strings_text_description_event_land_enc_" .. message,
-        self.coordinates[1],
-        self.coordinates[2],
-        false,
-        EVENT_IMAGE_ID_LOCATION_OF_INTEREST
-    )
+    show_located_message(faction_name, message, self.coordinates)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,7 +333,8 @@ function TowerEventDelegate:initialize(zones, saved)
         local spots = zone_by_name[name].spot_delegate.spots
         local record = saved_by_zone[name]
         if record and spots[record.spot_index] then
-            self.towers[#self.towers + 1] = TowerState:new(name, record.spot_index, spots[record.spot_index].coordinates, record.faction, record.cooldown, record.echoes)
+            self.towers[#self.towers + 1] = TowerState:new(name, record.spot_index, spots[record.spot_index].coordinates, record.faction, record.cooldown, record.echoes,
+                record.last_delver)
             taken[record.faction] = true
         elseif #spots > 0 then
             pending[#pending + 1] = name
@@ -397,12 +394,14 @@ function TowerEventDelegate:sync_markers()
     end
 end
 
---- Ticks every tower's cooldown down by one turn. Runs once per round and does nothing while towers are disabled.
+--- Ticks every tower's cooldown down by one turn and tells the last delver when a tower opens again. Runs once per round and does nothing
+--- while towers are disabled.
 function TowerEventDelegate:update_state_given_turn_passing()
     if not get_mct_settings().enable_towers then return end
     for _, tower in ipairs(self.towers) do
         if tower.cooldown > 0 then
             tower.cooldown = tower.cooldown - 1
+            if tower.cooldown == 0 then show_ready_notice(tower.last_delver, "tower_ready", tower.coordinates) end
         end
     end
 end
@@ -890,6 +889,8 @@ function TowerEventDelegate:end_delve(faction_name, outcome, in_battle_sequence)
         tower_battlefields.return_lord(delve.general_cqi, faction_name, tower.coordinates)
     end
     tower.cooldown = get_mct_settings().tower_cooldown
+    tower.last_delver = faction_name
+    log("tower: " .. tower.zone_name .. " closed for " .. tower.cooldown .. " turns, last delver " .. faction_name)
     tower:show_message(faction_name, outcome)
     if outcome == "tower_cleared" then
         local rank = tower_data.floors[#tower_data.floors].freed_hero_rank

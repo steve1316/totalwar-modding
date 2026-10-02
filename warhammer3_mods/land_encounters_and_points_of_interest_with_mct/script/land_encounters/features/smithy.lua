@@ -6,6 +6,7 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/core/managers")
 
 local smithy_data = require("script/land_encounters/configs/smithy_data")
+local debug_config = require("script/land_encounters/configs/debug")
 local item_pool = require("script/land_encounters/core/item_pool")
 local SmithySpot = require("script/land_encounters/core/spot").SmithySpot
 
@@ -16,8 +17,6 @@ local Army = require("script/land_encounters/core/army")
 --- Constants
 
 local FIRST_OPTION = 0
-
-local EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
 --- The forge dilemma opened when the owner visits, one per forge level so the description can state the level.
 local EVENT_FORGE_BY_LEVEL = { "land_enc_dilemma_smithy_forge_level_1", "land_enc_dilemma_smithy_forge_level_2", "land_enc_dilemma_smithy_forge_level_3" }
@@ -63,10 +62,10 @@ local PAYLOAD_TEXT_NO_LEGENDARY = "dummy_land_enc_smithy_no_legendary"
 --- Payload text prefix describing the upgrade from the appended level to the next.
 local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_smithy_upgrade_"
 
---- The longest free-pick cooldown. There is one cooling message per possible number of turns left, up to this.
-local LONGEST_COOLDOWN = 0
+--- The longest free-pick cooldown: the slider maximum plus the largest level offset. There is one cooling message per possible number of turns left, up to this.
+local LONGEST_COOLDOWN = smithy_data.cooldown_slider_max
 for _, level in ipairs(smithy_data.levels) do
-    LONGEST_COOLDOWN = math.max(LONGEST_COOLDOWN, level.cooldown)
+    LONGEST_COOLDOWN = math.max(LONGEST_COOLDOWN, smithy_data.cooldown_slider_max + level.cooldown_offset)
 end
 
 --- Turns between Dark Elf smithy missions for a player owner.
@@ -158,7 +157,7 @@ function SmithyState:update_visit_cooldown(controlling_faction)
     if self.visit_cooldown > 0 then
         self.visit_cooldown = self.visit_cooldown - 1
         if self.visit_cooldown == 0 then
-            self:show_message(controlling_faction, "smithy_visit_available")
+            show_ready_notice(controlling_faction, "smithy_visit_available", self.coordinates)
         end
     end
 end
@@ -250,6 +249,20 @@ function SmithyState:level_data()
     return smithy_data.levels[self.level]
 end
 
+--- Returns the turns the forge cools for after a free pick: the MCT `smithy_cooldown` slider plus the forge level's offset. The debug
+--- `smithy_cooldown` switch (configs/debug.lua) replaces both.
+--- @returns number The cooldown in turns.
+function SmithyState:free_pick_cooldown()
+    local forced = debug_config.smithy_cooldown[1]
+    if forced then
+        log("smithy: debug smithy_cooldown sets the free-pick cooldown to " .. forced)
+        return forced
+    end
+    local slider, offset = get_mct_settings().smithy_cooldown, self:level_data().cooldown_offset
+    log("smithy: free-pick cooldown " .. (slider + offset) .. " turns (slider " .. slider .. " + level offset " .. offset .. ")")
+    return slider + offset
+end
+
 --- Builds and opens the forge dilemma for the owner: three free picks, a paid commission and a paid upgrade. Only called while the forge is
 --- ready. Choices the faction cannot afford show a text line with the price and cost nothing.
 --- @param faction faction The owning player faction.
@@ -322,7 +335,7 @@ function SmithyState:resolve_forge_choice(choice)
     local offer = self.pending_forge_offer or { free_picks = {} }
     local index = choice + 1
     if offer.free_picks[index] then
-        self.visit_cooldown = self:level_data().cooldown
+        self.visit_cooldown = self:free_pick_cooldown()
     elseif index == UPGRADE_CHOICE and offer.upgrade then
         self:set_level(self.level + 1)
         self:show_message(self.controlling_faction_name, "smithy_levelled_up_level_" .. self.level)
@@ -564,7 +577,7 @@ function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
         if choice == FIRST_OPTION and LEGACY_VISIT_EVENTS[dilemma] < 3 then
             self:set_level(self.level + 1)
         else
-            self.visit_cooldown = self:level_data().cooldown
+            self.visit_cooldown = self:free_pick_cooldown()
         end
     end
 end
@@ -577,25 +590,13 @@ end
 --- @param faction_name string The faction that sees the message.
 --- @param message string The message suffix, e.g. "smithy_lost" for event_feed_strings_text_title_event_land_enc_smithy_lost.
 function SmithyState:show_message(faction_name, message)
-    cm:show_message_event_located(faction_name,
-        "event_feed_strings_text_title_event_land_enc_" .. message,
-        "event_feed_strings_text_subtitle_event_land_enc_" .. message,
-        "event_feed_strings_text_description_event_land_enc_" .. message,
-        self.coordinates[1],
-        self.coordinates[2],
-        false,
-        EVENT_IMAGE_ID_LOCATION_OF_INTEREST
-    )
+    show_located_message(faction_name, message, self.coordinates)
 end
 
 --- Returns the region under the smithy.
 --- @returns region The region interface, or nil when the position has none.
 function SmithyState:region()
-    local region_data = cm:get_region_data_at_position(self.coordinates[1], self.coordinates[2])
-    if region_data and not region_data:is_null_interface() and region_data:region() ~= nil then
-        return region_data:region()
-    end
-    return nil
+    return region_at(self.coordinates)
 end
 
 --- Resolves the controlling faction or clears ownership if the faction is dead or missing.
@@ -787,10 +788,16 @@ function SmithyEventDelegate:generate_states(zone_name, smithies_initial_state)
 end
 
 --- Shows every smithy marker at its forge level when smithies are enabled in MCT, and removes them when they are removed. Runs on every
---- load, so changing the setting takes effect the next time a save is loaded.
+--- load, so changing the setting takes effect the next time a save is loaded. The debug `smithy_level` switch (configs/debug.lua) sets every
+--- smithy to that level first.
 function SmithyEventDelegate:sync_markers()
     local enabled = not get_mct_settings().disable_smithies
+    local forced_level = debug_config.smithy_level[1]
     for _, smithy in ipairs(self.smithies_state) do
+        if forced_level then
+            log("smithy: debug smithy_level sets the " .. smithy.zone_name .. " smithy from level " .. smithy.level .. " to " .. forced_level)
+            smithy.level = forced_level
+        end
         if enabled then
             SmithySpot.replace_marker(smithy.zone_name, smithy.index_in_zone, smithy.coordinates, smithy.level)
         else

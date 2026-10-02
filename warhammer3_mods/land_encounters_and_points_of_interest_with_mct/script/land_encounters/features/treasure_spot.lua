@@ -7,8 +7,23 @@ require("script/land_encounters/core/managers")
 local treasure_events = require("script/land_encounters/configs/events").treasure_type
 
 local item_pool = require("script/land_encounters/core/item_pool")
+local debug_config = require("script/land_encounters/configs/debug")
 
 local TreasureEventDelegate = {}
+
+--- Picks the treasure event for a spot. The first known incident in the debug `force_treasure_events` list (configs/debug.lua) wins.
+--- @returns table A treasure event record from configs/events.lua.
+local function pick_treasure_event()
+    for _, forced_incident in ipairs(debug_config.force_treasure_events) do
+        for _, event in ipairs(treasure_events) do
+            if event.incident == forced_incident then
+                log("treasure: debug force_treasure_events picks " .. forced_incident)
+                return event
+            end
+        end
+    end
+    return treasure_events[random_number(#treasure_events)]
+end
 
 --- Picks a random treasure incident for the entered spot. Humans see the incident directly,
 --- AI factions are funnelled through trigger_balancing_benefit_for_ai (events do not fire for AI).
@@ -16,7 +31,7 @@ local TreasureEventDelegate = {}
 function TreasureEventDelegate:trigger_event(area_and_character_info)
     local character = area_and_character_info:family_member():character()
     local triggering_faction = character:faction()
-    local random_event = treasure_events[random_number(#treasure_events)]
+    local random_event = pick_treasure_event()
 
     if is_human_and_it_is_its_turn(triggering_faction) then
         trigger_incident_for_character(random_event.incident, random_event.targets, character)

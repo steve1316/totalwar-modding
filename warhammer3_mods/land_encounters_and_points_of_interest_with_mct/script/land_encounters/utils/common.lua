@@ -1,6 +1,9 @@
 --- Side-effect module that publishes shared utility globals: log(), boolean/string helpers,
 --- and the AMBUSH/INTERCEPTION/ALLIED_REINFORCEMENTS_PERMITTED battle-type constants.
 
+--- Event feed picture shown on located LEAPOI messages.
+EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- logger
@@ -161,4 +164,56 @@ function pick_weighted(entries)
         if roll <= acc then return entry[1] end
     end
     return entries[#entries][1]
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Located messages
+
+--- Returns the region at a map position.
+--- @param coordinates table The { x, y } map position.
+--- @returns region The region interface, or nil when the position has none.
+function region_at(coordinates)
+    local region_data = cm:get_region_data_at_position(coordinates[1], coordinates[2])
+    if region_data and not region_data:is_null_interface() and region_data:region() ~= nil then
+        return region_data:region()
+    end
+    return nil
+end
+
+--- Shows one of the LEAPOI event feed messages at a map position.
+--- @param faction_name string The faction that sees the message.
+--- @param message string The message suffix, e.g. "smithy_lost" for event_feed_strings_text_title_event_land_enc_smithy_lost.
+--- @param coordinates table The { x, y } map position.
+--- @param subtitle_key string|nil A loc key to use as the subtitle instead of the message's own.
+function show_located_message(faction_name, message, coordinates, subtitle_key)
+    cm:show_message_event_located(faction_name,
+        "event_feed_strings_text_title_event_land_enc_" .. message,
+        subtitle_key or "event_feed_strings_text_subtitle_event_land_enc_" .. message,
+        "event_feed_strings_text_description_event_land_enc_" .. message,
+        coordinates[1],
+        coordinates[2],
+        false,
+        EVENT_IMAGE_ID_LOCATION_OF_INTEREST
+    )
+end
+
+--- Tells a living human faction that a Smithy or Tower is ready again, at its position on the map. The subtitle names the region under it,
+--- or falls back to the message's own subtitle. Does nothing while the MCT `ready_notices` option is off.
+--- @param faction_name string The faction to tell.
+--- @param message string The event feed message suffix, e.g. "smithy_visit_available".
+--- @param coordinates table The { x, y } map position of the Smithy or Tower.
+function show_ready_notice(faction_name, message, coordinates)
+    if not get_mct_settings().ready_notices then
+        log("ready notice " .. message .. " for " .. tostring(faction_name) .. " skipped: ready notices are off")
+        return
+    end
+    if not is_human_faction_name(faction_name) or not cm:faction_is_alive(cm:get_faction(faction_name)) then
+        log("ready notice " .. message .. " skipped: " .. tostring(faction_name) .. " is not a living human faction")
+        return
+    end
+    local region = region_at(coordinates)
+    local subtitle = region and "regions_onscreen_" .. region:name() or nil
+    log("ready notice " .. message .. " sent to " .. faction_name .. " at (" .. coordinates[1] .. ", " .. coordinates[2] .. "), subtitle " .. tostring(subtitle))
+    show_located_message(faction_name, message, coordinates, subtitle)
 end

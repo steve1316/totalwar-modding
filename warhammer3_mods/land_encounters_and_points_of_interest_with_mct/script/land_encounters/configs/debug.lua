@@ -19,4 +19,22 @@ M.floor_sworn_units = {}
 --- that need room, e.g. { [1] = 1, [2] = 1, [3] = 1, [4] = 1 }.
 M.floor_kill_units = {}
 
+--- Spot kind every encounter spot becomes instead of rolling the MCT battle chance, either { "battle" } or { "treasure" }.
+M.spot_kind = {}
+
+--- Treasure incident keys drawn first on every treasure spot, e.g. { "land_enc_incident_hidden_temple" }.
+M.force_treasure_events = {}
+
+--- Battle category keys drawn first on every battle spot while they can fire, e.g. { "bandits" }.
+M.force_battle_categories = {}
+
+--- Difficulty key every battle spot uses instead of the current one, e.g. { "hard" }.
+M.battle_difficulty = {}
+
+--- Smithy free-pick cooldown in turns instead of the MCT slider and forge level, e.g. { 1 }.
+M.smithy_cooldown = {}
+
+--- Forge level every Smithy acts as instead of its own, e.g. { 3 }.
+M.smithy_level = {}
+
 return M

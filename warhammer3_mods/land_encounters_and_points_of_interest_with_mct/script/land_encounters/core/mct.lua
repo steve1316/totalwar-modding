@@ -16,6 +16,10 @@ local mct_settings = {
     enable_towers = true,
     --- Turns a tower stays closed after a delve ends.
     tower_cooldown = 5,
+    --- Turns a level 3 Smithy cools after a free pick. Lower forge levels add their `cooldown_offset`.
+    smithy_cooldown = 5,
+    --- Tell the player when a Smithy or Tower is ready again.
+    ready_notices = true,
     spawn_percentage = 0.75,
     --- Percent chance that a battle spot starts a battle instead of giving treasure.
     battle_chance = 70,
@@ -26,10 +30,10 @@ local mct_settings = {
     enable_all_encounter_skins = true,
     use_only_modded_units = false,
     enable_compatibility_with_supported_mods = false,
+    --- "easy", "medium", "hard", or "progressive" to step up by turn number.
     randomized_encounter_force_generation_difficulty = "easy",
-    enable_basic_progressive_difficulty = false,
-    turn_number_from_easy_to_medium = 10,
-    turn_number_from_medium_to_hard = 20,
+    turn_number_from_easy_to_medium = 15,
+    turn_number_from_medium_to_hard = 25,
     enable_all_factions = true,
     enabled_faction_keys = {},
     --- faction_overrides = {
@@ -351,6 +355,8 @@ function set_mct_settings(mct_mod)
     mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
     mct_settings.enable_towers = mct_mod:get_option_by_key("enable_towers"):get_finalized_setting()
     mct_settings.tower_cooldown = mct_mod:get_option_by_key("tower_cooldown"):get_finalized_setting()
+    mct_settings.smithy_cooldown = mct_mod:get_option_by_key("smithy_cooldown"):get_finalized_setting()
+    mct_settings.ready_notices = mct_mod:get_option_by_key("ready_notices"):get_finalized_setting()
     mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
     mct_settings.battle_chance = mct_mod:get_option_by_key("battle_chance"):get_finalized_setting()
 
@@ -373,7 +379,6 @@ function set_mct_settings(mct_mod)
     mct_settings.enable_compatibility_with_supported_mods = mct_mod:get_option_by_key("enable_compatibility_with_supported_mods"):get_finalized_setting()
     mct_settings.randomized_encounter_force_generation_difficulty = mct_mod:get_option_by_key("difficulty_dropdown"):get_finalized_setting()
 
-    mct_settings.enable_basic_progressive_difficulty = mct_mod:get_option_by_key("enable_basic_progressive_difficulty"):get_finalized_setting()
     mct_settings.turn_number_from_easy_to_medium = mct_mod:get_option_by_key("turn_number_from_easy_to_medium_slider"):get_finalized_setting()
     mct_settings.turn_number_from_medium_to_hard = mct_mod:get_option_by_key("turn_number_from_medium_to_hard_slider"):get_finalized_setting()
 
@@ -381,13 +386,13 @@ function set_mct_settings(mct_mod)
 
     out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies))
     out("DEBUG - mct_settings.enable_towers: " .. tostring(mct_settings.enable_towers) .. ", tower_cooldown: " .. tostring(mct_settings.tower_cooldown))
+    out("DEBUG - mct_settings.smithy_cooldown: " .. tostring(mct_settings.smithy_cooldown) .. ", ready_notices: " .. tostring(mct_settings.ready_notices))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))
     out("DEBUG - mct_settings.battle_chance: " .. tostring(mct_settings.battle_chance))
     out("DEBUG - mct_settings.enable_all_encounter_skins: " .. tostring(mct_settings.enable_all_encounter_skins))
     out("DEBUG - mct_settings.use_only_modded_units: " .. tostring(mct_settings.use_only_modded_units))
     out("DEBUG - mct_settings.enable_compatibility_with_supported_mods: " .. tostring(mct_settings.enable_compatibility_with_supported_mods))
     out("DEBUG - mct_settings.randomized_encounter_force_generation_difficulty: " .. tostring(mct_settings.randomized_encounter_force_generation_difficulty))
-    out("DEBUG - mct_settings.enable_basic_progressive_difficulty: " .. tostring(mct_settings.enable_basic_progressive_difficulty))
     out("DEBUG - mct_settings.turn_number_from_easy_to_medium: " .. tostring(mct_settings.turn_number_from_easy_to_medium))
     out("DEBUG - mct_settings.turn_number_from_medium_to_hard: " .. tostring(mct_settings.turn_number_from_medium_to_hard))
     out("DEBUG - mct_settings.enable_all_factions: " .. tostring(mct_settings.enable_all_factions))

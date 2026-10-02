@@ -6,21 +6,21 @@ local M = {}
 --- - free_pick_rarities: the rarities of the free picks and of the tribute and AI items. Each item rolls one of them.
 --- - commission: the paid option - `count` items of `rarities` for `price` gold.
 --- - legendary_commission: an optional second paid option - one item from configs/legendary_items.lua for `price` gold.
---- - cooldown: turns after a free pick before the next free pick.
+--- - cooldown_offset: turns added to the MCT `smithy_cooldown` slider (the level 3 cooldown) after a free pick, before the next one.
 --- - tribute_interval: turns between tribute items for a player owner.
 --- - upgrade_price: gold to reach the next level, or nil at the top level.
 M.levels = {
     {
         free_pick_rarities = { "common", "uncommon" },
         commission = { rarities = { "rare" }, count = 1, price = 5000 },
-        cooldown = 10,
+        cooldown_offset = 5,
         tribute_interval = 15,
         upgrade_price = 10000,
     },
     {
         free_pick_rarities = { "uncommon", "rare" },
         commission = { rarities = { "rare" }, count = 1, price = 10000 },
-        cooldown = 7,
+        cooldown_offset = 2,
         tribute_interval = 10,
         upgrade_price = 20000,
     },
@@ -28,11 +28,14 @@ M.levels = {
         free_pick_rarities = { "rare" },
         commission = { rarities = { "rare" }, count = 2, price = 15000 },
         legendary_commission = { price = 20000 },
-        cooldown = 5,
+        cooldown_offset = 0,
         tribute_interval = 5,
         upgrade_price = nil,
     },
 }
+
+--- Maximum of the MCT `smithy_cooldown` slider (the level 3 cooldown).
+M.cooldown_slider_max = 30
 
 --- Turns between the item an AI owner gets from its smithy.
 M.ai_item_interval = 10
