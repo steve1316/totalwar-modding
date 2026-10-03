@@ -399,6 +399,18 @@ local IncidentManager = {}
 local IS_NOT_PERSISTENT_LISTENER = false
 --- svr key holding the encounter ally's faction key, so the battle script calls that army in as soon as the battle starts. Mirrored in script/battle/mod.
 local ALLY_ARRIVES_NOW_SVR_KEY = "land_enc_ally_arrives_now"
+--- svr key holding the allied-army test's mode, so the battle script logs where each army starts. Mirrored in script/battle/mod.
+local ALLY_TEST_SVR_KEY = "land_enc_ally_test"
+--- Bundle the allied-army test puts on the ally, to see whether ally changes carry into the battle. A copy of War Rites that every faction
+--- can see, since our own bundles are owner-only and so hidden on an AI army.
+local ALLY_TEST_BUNDLE = "land_enc_effect_ally_test_war_rites"
+--- Bundle the "_bundle" tests put on the main army so its reinforcements arrive at once (-100% reinforcement time): on the ally in
+--- "relief_column_bundle", where we are its reinforcement, and on our army in "side_by_side_bundle", where the ally is ours.
+local ALLY_TEST_REINFORCEMENT_BUNDLE = "land_enc_effect_ally_test_reinforcement_time"
+--- How far off our lord is moved in the relief column test, in hexes.
+local ALLY_TEST_RELIEF_DISTANCE = 6
+--- svr key the battle script reads its notice names from, shared with the tower and the battle spots. Mirrored in script/battle/mod.
+local BATTLE_NOTICES_SVR_KEY = "land_enc_tower_battle_buffs"
 
 local InvasionBattleManager = {
     --- Main listener manager.
@@ -407,8 +419,66 @@ local InvasionBattleManager = {
     random_army_manager = false,
     invasion_manager = false,
     --- The army currently engaging the player.
-    event_army = false
+    event_army = false,
+    --- The allied army's force cqi once it is spawned.
+    ally_force_cqi = false,
+    --- The running allied-army test, { mode, player_cqi }, or nil. Set by the battle spot delegate from configs/debug.lua `ally_test`.
+    ally_test = nil,
 }
+
+--- Logs the allied army's units and bundle for the allied-army test, after starting them at 50% strength with War Rites. The
+--- "relief_column_bundle" test also gives the ally the reinforcement-time bundle.
+--- @param ally_force_cqi number The allied army's force cqi.
+--- @param mode string The test's mode.
+local function prepare_ally_test_force(ally_force_cqi, mode)
+    local force = cm:get_military_force_by_cqi(ally_force_cqi)
+    if not force or force:is_null_interface() then
+        out("LEAPOI: ally test: no allied force for cqi " .. tostring(ally_force_cqi))
+        return
+    end
+    local units = force:unit_list()
+    for i = 0, units:num_items() - 1 do
+        local unit = units:item_at(i)
+        if not unit:unit_key():find("_cha_") then cm:set_unit_hp_to_unary_of_maximum(unit, 0.5) end
+    end
+    cm:apply_effect_bundle_to_force(ALLY_TEST_BUNDLE, ally_force_cqi, 1)
+    if mode == "relief_column_bundle" then
+        cm:apply_effect_bundle_to_force(ALLY_TEST_REINFORCEMENT_BUNDLE, ally_force_cqi, 1)
+        out("LEAPOI: ally test: " .. ALLY_TEST_REINFORCEMENT_BUNDLE .. " on the ally")
+    end
+    cm:callback(function()
+        local parts = {}
+        for i = 0, units:num_items() - 1 do
+            local unit = units:item_at(i)
+            parts[#parts + 1] = unit:unit_key() .. " " .. math.floor(unit:percentage_proportion_of_full_strength() + 0.5) .. "%"
+        end
+        out("LEAPOI: ally test: ally force " .. ally_force_cqi .. " of " .. force:faction():name() .. " has " .. ALLY_TEST_BUNDLE .. ": "
+            .. tostring(force:has_effect_bundle(ALLY_TEST_BUNDLE)) .. ", units: " .. table.concat(parts, ", "))
+    end, 0.5)
+end
+
+--- Logs who the pending battle lists on each side and whether a human army is in it, once, for the allied-army test.
+local function log_ally_test_battle()
+    core:add_listener("land_enc_ally_test_pending", "PendingBattle", true, function(context)
+        local listed, problem = pcall(function()
+            local battle = context:pending_battle()
+            local function names(list)
+                local parts = {}
+                for i = 0, list:num_items() - 1 do
+                    local character = list:item_at(i)
+                    parts[#parts + 1] = character:faction():name() .. (character:faction():is_human() and " (human)" or "")
+                end
+                return table.concat(parts, ", ")
+            end
+            local function name(character)
+                return character:faction():name() .. (character:faction():is_human() and " (human)" or "")
+            end
+            out("LEAPOI: ally test: pending battle: attacker " .. name(battle:attacker()) .. ", defender " .. name(battle:defender())
+                .. ", secondary attackers [" .. names(battle:secondary_attackers()) .. "], secondary defenders [" .. names(battle:secondary_defenders()) .. "]")
+        end)
+        if not listed then out("LEAPOI: ally test: pending battle check failed: " .. tostring(problem)) end
+    end, false)
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -517,6 +587,8 @@ function InvasionBattleManager:create_allied_reinforcements_before_attack(player
     local invasion = self:setup_invasion(reinforcing_army, enemy_character, invader_force, {x, y})
     invasion:start_invasion(
         function(invasion_force)
+            self.ally_force_cqi = invasion_force:get_general():military_force():command_queue_index()
+            if self.ally_test then prepare_ally_test_force(self.ally_force_cqi, self.ally_test.mode) end
             --- Force war with the enemy reinforcement armies.
             self:ally_reinforcement_declares_war_to_enemy_reinforcements_if_available(reinforcing_army.faction)
             self:main_attacker_attacks_player_and_allies(player_character, player_faction_name, force_cqi, spot_coordinates)
@@ -608,11 +680,40 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
 
                 local faction_being_declared_war_to = declaring_faction_name
                 if faction_being_declared_war_to == self.event_army.faction then
-                    --- The flag stays set until BattleCompleted, so a restarted battle keeps it.
-                    if self.event_army:has_ally_reinforcements() then
+                    --- The flag stays set until BattleCompleted, so a restarted battle keeps it. The allied-army test leaves the ally to the
+                    --- game's own reinforcement rules, which is what it checks.
+                    if self.event_army:has_ally_reinforcements() and not self.ally_test then
                         self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, self.event_army.reinforcing_ally_armies[1].faction)
                     end
-                    if self.event_army.intervention_type == AMBUSH_TYPE then
+                    local enemy_force_cqi = invasion_force:get_general():military_force():command_queue_index()
+                    local relief = self.ally_test ~= nil and (self.ally_test.mode == "relief_column" or self.ally_test.mode == "relief_column_bundle")
+                    if self.ally_test and (self.ally_test.mode == "side_by_side_bundle" or self.ally_test.mode == "ambush_ally") then
+                        cm:apply_effect_bundle_to_force(ALLY_TEST_REINFORCEMENT_BUNDLE, player_force_cqi, 1)
+                        out("LEAPOI: ally test: " .. ALLY_TEST_REINFORCEMENT_BUNDLE .. " on our army " .. player_force_cqi)
+                    end
+                    if self.ally_test then
+                        self.core:svr_save_string(ALLY_TEST_SVR_KEY, self.ally_test.mode)
+                        --- The ally's changes are announced in the objectives panel and a banner, since the game lists only our own army's effects.
+                        local notices = relief and "ally_war_rites,ally_relief" or "ally_war_rites"
+                        self.core:svr_save_string(BATTLE_NOTICES_SVR_KEY, notices)
+                        out("LEAPOI: ally test: battle notices " .. notices)
+                        log_ally_test_battle()
+                    end
+                    if self.ally_test and self.ally_test.mode == "ambush_ally" then
+                        --- The enemy springs an ambush on us with our allied escort beside us, to see whether an ally joins a battle we defend.
+                        out("LEAPOI: ally test: ambush: the enemy " .. enemy_force_cqi .. " ambushes our army " .. player_force_cqi .. ", ally " .. tostring(self.ally_force_cqi)
+                            .. " beside us")
+                        cm:force_attack_of_opportunity(enemy_force_cqi, player_force_cqi, true)
+                    elseif self.ally_test and relief and self.ally_force_cqi then
+                        --- Our lord steps back so the ally starts the fight and we are only close enough to join it.
+                        local lord = cm:get_character_by_cqi(self.ally_test.player_cqi)
+                        local x, y = cm:find_valid_spawn_location_for_character_from_position(lord:faction():name(), lord:logical_position_x(),
+                            lord:logical_position_y(), false, ALLY_TEST_RELIEF_DISTANCE)
+                        if x ~= -1 then cm:teleport_to(cm:char_lookup_str(lord), x, y) end
+                        out("LEAPOI: ally test: relief column: our lord moved to (" .. x .. ", " .. y .. "), the ally " .. self.ally_force_cqi
+                            .. " attacks the enemy " .. enemy_force_cqi)
+                        cm:force_attack_of_opportunity(self.ally_force_cqi, enemy_force_cqi, false)
+                    elseif self.event_army.intervention_type == AMBUSH_TYPE then
                         out("DEBUG - AMBUSH_TYPE called.")
                         cm:force_attack_of_opportunity(invasion_force:get_general():military_force():command_queue_index(), player_force_cqi, true)
                     elseif self.event_army.intervention_type == INTERCEPTION_TYPE then
@@ -788,6 +889,16 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
         true,
         function(context)
             self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, "")
+            if self.ally_test then
+                out("LEAPOI: ally test: " .. self.ally_test.mode .. " battle completed")
+                local lord = cm:get_character_by_cqi(self.ally_test.player_cqi)
+                if lord and lord:has_military_force() then
+                    cm:remove_effect_bundle_from_force(ALLY_TEST_REINFORCEMENT_BUNDLE, lord:military_force():command_queue_index())
+                end
+                self.core:svr_save_string(ALLY_TEST_SVR_KEY, "")
+                self.core:svr_save_string(BATTLE_NOTICES_SVR_KEY, "")
+                self.ally_test = nil
+            end
             local found_encounter_faction = false
             local player_won_battle = false
             local battle_faction_name = nil

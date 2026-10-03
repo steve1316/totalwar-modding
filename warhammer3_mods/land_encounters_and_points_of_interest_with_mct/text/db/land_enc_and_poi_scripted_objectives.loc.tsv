@@ -200,6 +200,14 @@ scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers	Rival Delve
 scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers		false
 scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers_message	Rival Delvers: out-kill the rival army, or it takes half the floor's spoils.	false
 scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_war_rites	[[col:green]]Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_war_rites		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_war_rites_message	Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_war_rites_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief	[[col:yellow]]Relief Column: the enemy falls on our allies! They hold at half strength until we arrive.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_message	Relief Column: the enemy falls on our allies! They hold at half strength until we arrive.	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain	Spare the Captain: keep the enemy lord alive	false
 scripted_objectives_localised_description_land_enc_tower_buff_spare_the_captain		false
 scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain_message	Spare the Captain: win with the enemy lord still alive.	false

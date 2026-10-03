@@ -100,6 +100,10 @@ land_enc_tower_buff_duelists_challenge	ui/campaign ui/effect_bundles/rampage_har
 land_enc_tower_buff_duelists_challenge_message	ui/campaign ui/effect_bundles/rampage_harsh.png
 land_enc_tower_buff_rival_delvers	ui/campaign ui/effect_bundles/disciple_army.png
 land_enc_tower_buff_rival_delvers_message	ui/campaign ui/effect_bundles/disciple_army.png
+land_enc_tower_buff_ally_war_rites	ui/campaign ui/effect_bundles/effect_rite.png
+land_enc_tower_buff_ally_war_rites_message	ui/campaign ui/effect_bundles/effect_rite.png
+land_enc_tower_buff_ally_relief	ui/campaign ui/effect_bundles/icon_effects_army.png
+land_enc_tower_buff_ally_relief_message	ui/campaign ui/effect_bundles/icon_effects_army.png
 land_enc_tower_buff_spare_the_captain	ui/campaign ui/effect_bundles/noble.png
 land_enc_tower_buff_spare_the_captain_message	ui/campaign ui/effect_bundles/noble.png
 land_enc_tower_buff_flawless_victory	ui/campaign ui/effect_bundles/champions_rift.png

@@ -46,4 +46,15 @@ M.battle_event_rolls = {}
 --- Gold every paid site and battle offer costs instead of its own, e.g. { 10000 } to see them unaffordable. Their lines still name their own cost.
 M.spot_cost = {}
 
+--- Allied-army test battle every battle spot starts instead of its dilemma, with results in the script log, e.g. { "relief_column" }.
+--- "side_by_side": we attack, and the allied army spawned beside us is not called onto the field early, to see whether it deploys with us or
+--- marches in from the map edge. "relief_column": the allied army attacks the enemy while our lord stands a few hexes off, to see whether we
+--- get the battle and where each army starts. Both start the ally at 50% strength with War Rites on it, to see whether ally changes carry over.
+--- "relief_column_bundle": the relief column with a reinforcement-time bundle (-100%) on the ally instead of the scripted arrival call.
+--- "side_by_side_bundle": side by side with the same bundle on our army, so the ally arrives at once without the scripted call.
+--- "ambush_ally": the enemy ambushes us with the allied escort beside us and the same bundle on our army, to see whether an ally joins a
+--- battle we defend.
+--- Listed modes take turns, one per battle spot entered. The turns start over each time the game loads.
+M.ally_test = {}
+
 return M

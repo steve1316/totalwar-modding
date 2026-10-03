@@ -51,6 +51,8 @@ land_enc_effect_tower_scaling_blessing_4			force	1	icon_effects_fortify.png	fals
 land_enc_effect_tower_towers_favour			faction	1	income.png	true	false	true
 land_enc_effect_tower_research_scrolls			faction	1	technology.png	true	false	true
 land_enc_effect_tower_recruitment_cache			faction	1	military_spending.png	true	false	true
+land_enc_effect_ally_test_war_rites			force	1	icon_effects_fortify.png	false	false	false
+land_enc_effect_ally_test_reinforcement_time			force	1	military.png	false	false	false
 land_enc_effect_spot_camping			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_strip_the_valuables			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_bless_the_banners			force	1	icon_effects_fortify.png	false	false	true
