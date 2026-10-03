@@ -1120,7 +1120,8 @@ end
 --- Lazy-loads the smithy and tower delegate modules (avoiding the circular require) and builds the manager.
 --- @param mission_manager table The CA mission_manager handle.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
---- @returns PointOfInterestEventManager A new manager with the smithy and tower delegates wired in.
+--- @returns PointOfInterestEventManager A new manager with the smithy and tower delegates wired in, and the tower's Daemon's deal army
+--- handed to spot offers.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
     TowerEventDelegate = TowerEventDelegate or require("script/land_encounters/features/tower")
@@ -1128,6 +1129,10 @@ function PointOfInterestEventManager:new(mission_manager, invasion_battle_manage
         smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager),
         tower_event_delegate = TowerEventDelegate:new(invasion_battle_manager),
     }
+    --- A treasure site's Daemon's bargain sends the same army as the tower's Daemon's deal.
+    require("script/land_encounters/features/spot_offers").send_daemon_army = function(faction_name)
+        t.tower_event_delegate:send_daemon_army(faction_name)
+    end
     setmetatable(t, self)
     self.__index = self
     return t

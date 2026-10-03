@@ -22,9 +22,6 @@ M.floor_kill_units = {}
 --- Spot kind every encounter spot becomes instead of rolling the MCT battle chance, either { "battle" } or { "treasure" }.
 M.spot_kind = {}
 
---- Treasure incident keys drawn first on every treasure spot, e.g. { "land_enc_incident_hidden_temple" }.
-M.force_treasure_events = {}
-
 --- Battle category keys drawn first on every battle spot while they can fire, e.g. { "bandits" }.
 M.force_battle_categories = {}
 
@@ -37,7 +34,10 @@ M.smithy_cooldown = {}
 --- Forge level every Smithy acts as instead of its own, e.g. { 3 }.
 M.smithy_level = {}
 
---- Runs the realm test instead of the treasure incident when a human army enters a treasure spot, e.g. { true }. Results go to the script log.
-M.realm_test = {}
+--- Spot offer keys drawn first on every treasure site after its signature offer, while they are eligible, e.g. { "send_gifts", "roll_the_bones" }.
+M.force_spot_offers = {}
+
+--- Treasure site key every treasure spot opens instead of a random one, e.g. { "witchs_hut" }.
+M.force_treasure_site = {}
 
 return M

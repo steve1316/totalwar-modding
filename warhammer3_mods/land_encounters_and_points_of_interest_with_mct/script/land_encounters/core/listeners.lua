@@ -1,6 +1,5 @@
---- Registers every core:add_listener used by the mod: FactionTurnStart, AreaEntered, the two
---- DilemmaChoiceMadeEvent listeners (battle + POI), and the MctInitialized hook. Manager
---- instances are populated by the entry point's pre_first_tick_callback.
+--- Registers every core:add_listener used by the mod: FactionTurnStart, AreaEntered, the DilemmaChoiceMadeEvent listeners (battle, smithy,
+--- treasure site and tower), and the MctInitialized hook. Manager instances are populated by the entry point's pre_first_tick_callback.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/core/mct")
@@ -10,6 +9,7 @@ local IS_PERSISTENT_LISTENER = true
 local events = require("script/land_encounters/configs/events")
 local battle_dilemma_keys = require("script/land_encounters/configs/battle_categories").dilemma_keys
 local smithy_events = events.smithy
+local spot_offers = require("script/land_encounters/features/spot_offers")
 
 --- Tower dilemma key -> true, for the tower choice listener.
 local tower_dilemma_keys = {}
@@ -47,6 +47,7 @@ function M.register()
                 M.point_of_interest_event_manager:update_state_given_turn_passing()
             end
             M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
+            spot_offers.on_faction_turn_start(context:faction():name())
         end,
         IS_PERSISTENT_LISTENER
     )
@@ -123,6 +124,20 @@ function M.register()
         end,
         function(dilemma_choice_and_faction_info)
             M.point_of_interest_event_manager:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+        end,
+        IS_PERSISTENT_LISTENER
+    )
+
+
+    --- Treasure site dilemma choice (an offer or Walk away).
+    core:add_listener(
+        "land_enc_site_dilemma_choice",
+        "DilemmaChoiceMadeEvent",
+        function(dilemma_choice_and_faction_info)
+            return spot_offers.is_site_dilemma(dilemma_choice_and_faction_info:dilemma())
+        end,
+        function(dilemma_choice_and_faction_info)
+            spot_offers.take(dilemma_choice_and_faction_info:faction():name(), dilemma_choice_and_faction_info:choice_key())
         end,
         IS_PERSISTENT_LISTENER
     )

@@ -1,5 +1,5 @@
---- TreasureEventDelegate. Fires the treasure-type incident when a player enters a spot, or grants
---- balancing buffs / loot to AI factions that hit the same spot.
+--- TreasureEventDelegate. Opens a treasure site dilemma when a player enters a spot, or grants balancing buffs and loot to AI factions that
+--- hit the same spot.
 
 require("script/land_encounters/core/managers")
 
@@ -7,39 +7,20 @@ require("script/land_encounters/core/managers")
 local treasure_events = require("script/land_encounters/configs/events").treasure_type
 
 local item_pool = require("script/land_encounters/core/item_pool")
-local debug_config = require("script/land_encounters/configs/debug")
-local realm_effects = require("script/land_encounters/core/realm_effects")
+local spot_offers = require("script/land_encounters/features/spot_offers")
 
 local TreasureEventDelegate = {}
 
---- Picks the treasure event for a spot. The first known incident in the debug `force_treasure_events` list (configs/debug.lua) wins.
---- @returns table A treasure event record from configs/events.lua.
-local function pick_treasure_event()
-    for _, forced_incident in ipairs(debug_config.force_treasure_events) do
-        for _, event in ipairs(treasure_events) do
-            if event.incident == forced_incident then
-                log("treasure: debug force_treasure_events picks " .. forced_incident)
-                return event
-            end
-        end
-    end
-    return treasure_events[random_number(#treasure_events)]
-end
-
---- Picks a random treasure incident for the entered spot. Humans see the incident directly,
---- AI factions are funnelled through trigger_balancing_benefit_for_ai (events do not fire for AI).
+--- Opens a treasure site dilemma for a human lord (features/spot_offers.lua). AI factions are funnelled through
+--- trigger_balancing_benefit_for_ai with a random treasure incident's reward, since events do not fire for AI.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
 function TreasureEventDelegate:trigger_event(area_and_character_info)
     local character = area_and_character_info:family_member():character()
     local triggering_faction = character:faction()
-    local random_event = pick_treasure_event()
-
-    if is_human_and_it_is_its_turn(triggering_faction) and debug_config.realm_test[1] then
-        realm_effects.run_test(triggering_faction, character:logical_position_x(), character:logical_position_y())
-    elseif is_human_and_it_is_its_turn(triggering_faction) then
-        trigger_incident_for_character(random_event.incident, random_event.targets, character)
+    if is_human_and_it_is_its_turn(triggering_faction) then
+        spot_offers.open_site(character, triggering_faction)
     elseif not triggering_faction:is_human() then
-        self:trigger_balancing_benefit_for_ai(character, triggering_faction, random_event)
+        self:trigger_balancing_benefit_for_ai(character, triggering_faction, treasure_events[random_number(#treasure_events)])
     end
 end
 

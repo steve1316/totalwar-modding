@@ -1,20 +1,17 @@
 --- Realm effects for spot offers: bundles on regions, provinces and factions (yours or another faction's), relations, development points,
---- garrison heals, settlement upgrades and shroud reveals. Targets are measured from a map position, usually the spot.
---- `run_test` is the in-game realm test: it tries each CA call's likely signatures and logs which one changed the game.
+--- garrison heals, settlement upgrades and shroud reveals. Targets are measured from a map position, usually the spot. Every call here was
+--- checked in game on 2026-10-02 with the signature used below.
 
 require("script/land_encounters/utils/common")
 
---- Turns every test bundle lasts.
-local TEST_TURNS = 5
+--- How many of the nearest factions a `rival_pair` target is picked from.
+local RIVAL_POOL = 6
 
---- Test bundle keys from the database. The templates are empty records that custom bundles are built on.
-local TEST_BUNDLES = {
-    template_region = "land_enc_effect_test_template_region",
-    template_province = "land_enc_effect_test_template_province",
-    template_faction = "land_enc_effect_test_template_faction",
-    region = "land_enc_effect_test_region",
-    province = "land_enc_effect_test_province",
-}
+--- Main building level a province capital can reach.
+local PROVINCE_CAPITAL_MAX_LEVEL = 5
+
+--- Main building level a settlement that is not a province capital can reach.
+local MINOR_SETTLEMENT_MAX_LEVEL = 3
 
 local M = {}
 
@@ -28,6 +25,31 @@ local M = {}
 --- @returns boolean True when the faction can be targeted.
 local function is_other_living_faction(faction, self_name)
     return faction ~= nil and not faction:is_null_interface() and not faction:is_dead() and not faction:is_rebel() and faction:name() ~= self_name
+end
+
+--- Returns how many regions a faction owns.
+--- @param faction faction The faction.
+--- @returns number The region count.
+local function region_count(faction)
+    return faction:region_list():num_items()
+end
+
+--- Sorts factions by region count, most first, then by key so every client agrees.
+--- @param factions table A list of faction interfaces, sorted in place.
+local function sort_by_size(factions)
+    table.sort(factions, function(a, b)
+        local count_a, count_b = region_count(a), region_count(b)
+        if count_a ~= count_b then return count_a > count_b end
+        return a:name() < b:name()
+    end)
+end
+
+--- Returns a settlement's main building level.
+--- @param region region The region.
+--- @returns number|nil The level, or nil when it cannot be read.
+local function settlement_level(region)
+    local ok, level = pcall(function() return region:settlement():primary_slot():building():building_level() end)
+    return ok and level or nil
 end
 
 --- Returns the region whose settlement is nearest a map position, among regions that pass a filter.
@@ -67,12 +89,13 @@ end
 --- @param faction faction The faction whose enemies are searched.
 --- @param x number The map x position.
 --- @param y number The map y position.
+--- @param skip table|nil Region keys -> true to leave out.
 --- @returns region The region, or nil when no enemy owns one.
-function M.nearest_enemy_region(faction, x, y)
+function M.nearest_enemy_region(faction, x, y, skip)
     return M.nearest_region(x, y, function(region)
         local owner = region:owning_faction()
         return is_other_living_faction(owner, faction:name()) and faction:at_war_with(owner)
-    end)
+    end, skip)
 end
 
 --- Returns the owners of the nearest regions that pass a filter, nearest first, each faction once.
@@ -97,235 +120,196 @@ function M.nearest_factions(faction, x, y, count, filter)
     return found
 end
 
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Realm test
-
---- Returns a readable state string from a check function, or the error it raised.
---- @param check function Returns the state to log.
---- @returns string The state, or "error: ..." when the check failed.
-local function read_state(check)
-    local ok, state = pcall(check)
-    return ok and tostring(state) or ("error: " .. tostring(state))
+--- Wraps one region and its owner as a target.
+--- @param region region The region, or nil.
+--- @param with_owner boolean True to list the region's owner as a target faction too.
+--- @returns table|nil { regions, factions }, or nil without a region.
+local function region_target(region, with_owner)
+    if region == nil then return nil end
+    return { regions = { region:name() }, factions = with_owner and { region:owning_faction():name() } or {} }
 end
 
---- Tries each variant of a CA call until the state read by `check` changes, logging every attempt. Without a check, the first variant that
---- runs without an error is kept, and the result has to be looked at in game.
---- @param label string What the step tests, for the log.
---- @param check function|nil Returns the state that the call should change.
---- @param variants table A list of { name, function } pairs, tried in order.
-local function try_variants(label, check, variants)
-    local before = check and read_state(check) or "-"
-    for _, variant in ipairs(variants) do
-        local ok, err = pcall(variant[2])
-        local after = check and read_state(check) or "-"
-        log("realm test " .. label .. " | " .. variant[1] .. " | ok=" .. tostring(ok) .. (ok and "" or " err=" .. tostring(err)) .. " | before=" .. before .. " after=" .. after)
-        if ok and check == nil then
-            log("realm test " .. label .. " | RAN with " .. variant[1] .. " (check in game)")
-            return
+--- Finders by target kind. Each returns { regions = { region keys }, factions = { faction keys } }, or nil when there is no target.
+local FINDERS = {
+    own_region = function(faction, x, y) return region_target(M.nearest_own_region(faction:name(), x, y)) end,
+    own_province = function(faction, x, y) return region_target(M.nearest_own_region(faction:name(), x, y)) end,
+    raise_region = function(faction, x, y)
+        return region_target(M.nearest_region(x, y, function(candidate)
+            if candidate:owning_faction():name() ~= faction:name() then return false end
+            local level = settlement_level(candidate)
+            return level ~= nil and level < (candidate:is_province_capital() and PROVINCE_CAPITAL_MAX_LEVEL or MINOR_SETTLEMENT_MAX_LEVEL)
+        end))
+    end,
+    enemy_region = function(faction, x, y) return region_target(M.nearest_enemy_region(faction, x, y), true) end,
+    enemy_province = function(faction, x, y) return region_target(M.nearest_enemy_region(faction, x, y), true) end,
+    enemy_regions = function(faction, x, y, count)
+        local target, skip = { regions = {}, factions = {} }, {}
+        for _ = 1, count or 1 do
+            local region = M.nearest_enemy_region(faction, x, y, skip)
+            if region == nil then break end
+            skip[region:name()] = true
+            table.insert(target.regions, region:name())
         end
-        if ok and after ~= before then
-            log("realm test " .. label .. " | WORKS with " .. variant[1])
-            return
+        return #target.regions > 0 and target or nil
+    end,
+    enemy_capital = function(faction, x, y)
+        local enemy = M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) and other:has_home_region() end)[1]
+        return enemy and { regions = { enemy:home_region():name() }, factions = { enemy:name() } } or nil
+    end,
+    friend = function(faction, x, y)
+        local friend = M.nearest_factions(faction, x, y, 1, function(other) return not faction:at_war_with(other) end)[1]
+        return friend and { regions = {}, factions = { friend:name() } } or nil
+    end,
+    biggest_faction = function(faction)
+        local candidates = {}
+        local factions = cm:model():world():faction_list()
+        for i = 0, factions:num_items() - 1 do
+            local other = factions:item_at(i)
+            if is_other_living_faction(other, faction:name()) and region_count(other) > 0 then table.insert(candidates, other) end
         end
-    end
-    log("realm test " .. label .. " | NO VARIANT CHANGED THE STATE (check in game)")
-end
+        if #candidates == 0 then return nil end
+        sort_by_size(candidates)
+        return { regions = {}, factions = { candidates[1]:name() } }
+    end,
+    neighbours = function(faction)
+        local seen, names = {}, {}
+        local regions = faction:region_list()
+        for i = 0, regions:num_items() - 1 do
+            local adjacent = regions:item_at(i):adjacent_region_list()
+            for j = 0, adjacent:num_items() - 1 do
+                local owner = adjacent:item_at(j):owning_faction()
+                if is_other_living_faction(owner, faction:name()) and not faction:at_war_with(owner) and not seen[owner:name()] then
+                    seen[owner:name()] = true
+                    table.insert(names, owner:name())
+                end
+            end
+        end
+        table.sort(names)
+        return #names > 0 and { regions = {}, factions = names } or nil
+    end,
+    rival_pair = function(faction, x, y)
+        local pool = M.nearest_factions(faction, x, y, RIVAL_POOL)
+        if #pool < 2 then return nil end
+        sort_by_size(pool)
+        return { regions = {}, factions = { pool[1]:name(), pool[2]:name() } }
+    end,
+    enemy_friends = function(faction, x, y)
+        local enemy = M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) end)[1]
+        if enemy == nil then return nil end
+        local names = { enemy:name() }
+        local enemies = faction:factions_at_war_with()
+        for i = 0, enemies:num_items() - 1 do
+            local other = enemies:item_at(i)
+            if is_other_living_faction(other, faction:name()) and other:name() ~= enemy:name() then table.insert(names, other:name()) end
+        end
+        return #names > 1 and { regions = {}, factions = names } or nil
+    end,
+}
 
---- Builds a custom bundle on a database template, or returns nil and logs why it failed.
---- @param template string The template bundle key.
---- @param effects table A list of { effect_key, scope, value }.
---- @returns userdata The custom bundle, or nil.
-local function build_custom_bundle(template, effects)
-    local ok, bundle = pcall(function()
-        local custom = cm:create_new_custom_effect_bundle(template)
-        for _, effect in ipairs(effects) do
-            custom:add_effect(effect[1], effect[2], effect[3])
-        end
-        custom:set_duration(TEST_TURNS)
-        return custom
-    end)
-    if not ok or bundle == nil then
-        log("realm test custom bundle " .. template .. " | build FAILED: " .. tostring(bundle))
+--- Finds a realm offer's target from a map position.
+--- @param kind string The target kind, one of `configs/spot_offers.lua` `realm_kinds`.
+--- @param faction faction The faction taking the offer.
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param count number|nil How many targets, for kinds that take several.
+--- @returns table|nil { regions = { region keys }, factions = { faction keys } }, or nil when there is no target.
+function M.find_target(kind, faction, x, y, count)
+    local finder = FINDERS[kind]
+    if finder == nil then
+        log("realm: unknown target kind " .. tostring(kind))
         return nil
     end
-    return bundle
+    return finder(faction, x, y, count)
 end
 
---- Logs a region and its owner, or that there is none.
---- @param label string What the region is for.
---- @param region region The region, or nil.
-local function log_target(label, region)
-    if region == nil then
-        log("realm test target " .. label .. ": none found")
-    else
-        log("realm test target " .. label .. ": " .. region:name() .. " (" .. region:province_name() .. "), owner " .. region:owning_faction():name())
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Effects
+
+--- Changes relations between two factions.
+--- @param a string The first faction key.
+--- @param b string The second faction key.
+--- @param amount number The bonus, e.g. 3 or -3.
+local function change_relations(a, b, amount)
+    cm:apply_dilemma_diplomatic_bonus(a, b, amount)
+    log("realm: relations " .. a .. " / " .. b .. " " .. (amount > 0 and "+" or "") .. amount)
+end
+
+--- Applies the parts of a realm offer that act on one target region.
+--- @param offer table The offer record from `configs/spot_offers.lua`.
+--- @param region region The target region.
+--- @param faction_name string The faction that took the offer.
+local function apply_to_region(offer, region, faction_name)
+    local region_key, owner = region:name(), region:owning_faction():name()
+    if offer.region_bundle then
+        cm:apply_effect_bundle_to_region(offer.region_bundle[1], region_key, offer.region_bundle[2])
+        log("realm: " .. offer.region_bundle[1] .. " on region " .. region_key .. " (" .. owner .. ") for " .. offer.region_bundle[2] .. " turns")
     end
-end
-
---- Region and province bundles, plain and custom, on your nearest region and the nearest enemy region.
---- @param faction faction The faction running the test.
---- @param own region Your nearest region, or nil.
---- @param enemy region The nearest enemy region, or nil.
-local function test_bundles(faction, own, enemy)
-    local targets = { { "own", own, 1 }, { "enemy", enemy, -1 } }
-    for _, target in ipairs(targets) do
-        local side, region, sign = target[1], target[2], target[3]
-        if region ~= nil then
-            local region_key, owner_key = region:name(), region:owning_faction():name()
-            local province_key = region:province_name()
-
-            try_variants("region bundle (" .. side .. ")", function() return region:has_effect_bundle(TEST_BUNDLES.region) end, {
-                { "apply_effect_bundle_to_region(key, region_key, turns)", function() cm:apply_effect_bundle_to_region(TEST_BUNDLES.region, region_key, TEST_TURNS) end },
-            })
-
-            try_variants("province bundle (" .. side .. ")", function() return region:faction_province_has_effect_bundle(TEST_BUNDLES.province) end, {
-                { "apply_effect_bundle_to_faction_province(key, region, turns)", function() cm:apply_effect_bundle_to_faction_province(TEST_BUNDLES.province, region, TEST_TURNS) end },
-                { "apply_effect_bundle_to_faction_province(key, region_key, turns)", function() cm:apply_effect_bundle_to_faction_province(TEST_BUNDLES.province, region_key, TEST_TURNS) end },
-                { "apply_effect_bundle_to_faction_province(key, faction_key, province_key, turns)", function() cm:apply_effect_bundle_to_faction_province(TEST_BUNDLES.province, owner_key, province_key, TEST_TURNS) end },
-            })
-
-            local custom_region = build_custom_bundle(TEST_BUNDLES.template_region, {
-                { "wh_main_effect_economy_gdp_mod_all", "region_to_region_own", 10 * sign },
-                { "wh_main_effect_public_order_events", "region_to_province_own", 5 * sign },
-                { "wh_main_effect_force_army_campaign_siege_defend_attrition", "region_to_force_own", -50 * sign },
-            })
-            if custom_region ~= nil then
-                try_variants("custom region bundle (" .. side .. ")", function() return region:has_effect_bundle(TEST_BUNDLES.template_region) end, {
-                    { "apply_custom_effect_bundle_to_region(bundle, region)", function() cm:apply_custom_effect_bundle_to_region(custom_region, region) end },
-                    { "apply_custom_effect_bundle_to_region(bundle, region_key)", function() cm:apply_custom_effect_bundle_to_region(custom_region, region_key) end },
-                })
-            end
-
-            local custom_province = build_custom_bundle(TEST_BUNDLES.template_province, {
-                { "wh_main_effect_public_order_events", "province_to_province_own", 10 * sign },
-                { "wh_main_effect_province_growth_events", "province_to_province_own", 30 * sign },
-            })
-            if custom_province ~= nil then
-                try_variants("custom province bundle (" .. side .. ")", function() return region:faction_province_has_effect_bundle(TEST_BUNDLES.template_province) end, {
-                    { "apply_custom_effect_bundle_to_faction_province(bundle, region)", function() cm:apply_custom_effect_bundle_to_faction_province(custom_province, region) end },
-                    { "apply_custom_effect_bundle_to_faction_province(bundle, faction_province)", function() cm:apply_custom_effect_bundle_to_faction_province(custom_province, region:faction_province()) end },
-                    { "apply_custom_effect_bundle_to_faction_province(bundle, faction_key, province_key)", function() cm:apply_custom_effect_bundle_to_faction_province(custom_province, owner_key, province_key) end },
-                })
-            end
+    if offer.province_bundle then
+        cm:apply_effect_bundle_to_faction_province(offer.province_bundle[1], region, offer.province_bundle[2])
+        log("realm: " .. offer.province_bundle[1] .. " on province " .. region:province_name() .. " (" .. owner .. ") for " .. offer.province_bundle[2] .. " turns")
+    end
+    if offer.points then
+        cm:add_development_points_to_region(region_key, offer.points)
+        log("realm: +" .. offer.points .. " development points in " .. region_key)
+    end
+    if offer.heal_garrison then
+        cm:heal_garrison(region:cqi())
+        log("realm: garrison of " .. region_key .. " healed")
+    end
+    if offer.realm == "raise_region" then
+        local level = settlement_level(region)
+        if level then
+            cm:instantly_set_settlement_primary_slot_level(region:settlement(), level + 1)
+            log("realm: " .. region_key .. " main building " .. level .. " -> " .. tostring(settlement_level(region)))
         end
     end
+    if offer.realm == "enemy_capital" then
+        cm:make_region_visible_in_shroud(faction_name, region_key)
+        log("realm: shroud lifted over " .. region_key .. " for " .. faction_name)
+    end
+end
 
-    if enemy ~= nil then
-        local other = enemy:owning_faction()
-        local custom_faction = build_custom_bundle(TEST_BUNDLES.template_faction, {
-            { "wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", -10 },
-        })
-        if custom_faction ~= nil then
-            try_variants("custom faction bundle (" .. other:name() .. ")", function() return other:has_effect_bundle(TEST_BUNDLES.template_faction) end, {
-                { "apply_custom_effect_bundle_to_faction(bundle, faction)", function() cm:apply_custom_effect_bundle_to_faction(custom_faction, other) end },
-                { "apply_custom_effect_bundle_to_faction(bundle, faction_key)", function() cm:apply_custom_effect_bundle_to_faction(custom_faction, other:name()) end },
-            })
+--- Applies a realm offer to its target: region and province bundles on the target regions, a bundle on the target factions, relations,
+--- development points, a garrison heal, a settlement upgrade and a shroud reveal, as the offer's fields ask.
+--- @param offer table The offer record from `configs/spot_offers.lua`.
+--- @param target table The target from `M.find_target`.
+--- @param faction_name string The faction that took the offer.
+function M.apply(offer, target, faction_name)
+    for _, region_key in ipairs(target.regions) do
+        local region = cm:get_region(region_key)
+        if region and not region:is_null_interface() then apply_to_region(offer, region, faction_name) end
+    end
+    if offer.target_faction_bundle then
+        for _, other in ipairs(target.factions) do
+            cm:apply_effect_bundle(offer.target_faction_bundle[1], other, offer.target_faction_bundle[2])
+            log("realm: " .. offer.target_faction_bundle[1] .. " on faction " .. other .. " for " .. offer.target_faction_bundle[2] .. " turns")
+        end
+    end
+    if offer.relations then
+        if offer.realm == "rival_pair" then
+            change_relations(target.factions[1], target.factions[2], offer.relations)
+        elseif offer.realm == "enemy_friends" then
+            for i = 2, #target.factions do change_relations(target.factions[1], target.factions[i], offer.relations) end
+        else
+            for _, other in ipairs(target.factions) do change_relations(faction_name, other, offer.relations) end
         end
     end
 end
 
---- Relations: you and the nearest faction at peace with you, then the two nearest other factions with each other.
---- @param faction faction The faction running the test.
---- @param x number The map x position.
---- @param y number The map y position.
-local function test_relations(faction, x, y)
-    local self_name = faction:name()
-    local friend = M.nearest_factions(faction, x, y, 1, function(other) return not faction:at_war_with(other) end)[1]
-    if friend == nil then
-        log("realm test relations (you): no faction at peace with you")
-    else
-        local friend_name = friend:name()
-        local check = function()
-            return "standing " .. faction:diplomatic_standing_with(friend_name) .. ", their attitude " .. friend:diplomatic_attitude_towards(self_name)
-        end
-        try_variants("relations (you + " .. friend_name .. ")", check, {
-            { "apply_dilemma_diplomatic_bonus(self, other, 3)", function() cm:apply_dilemma_diplomatic_bonus(self_name, friend_name, 3) end },
-            { "apply_dilemma_diplomatic_bonus(other, self, 3)", function() cm:apply_dilemma_diplomatic_bonus(friend_name, self_name, 3) end },
-        })
+--- Returns where a realm offer's message points: the first target region's settlement, or else the first target faction's capital.
+--- @param target table The target from `M.find_target`.
+--- @returns table|nil The { x, y } position, or nil when the target has neither.
+--- @returns string|nil The region key at that position.
+function M.target_position(target)
+    local region = target.regions[1] and cm:get_region(target.regions[1]) or nil
+    if region == nil and target.factions[1] then
+        local faction = cm:get_faction(target.factions[1])
+        region = faction and faction:has_home_region() and faction:home_region() or nil
     end
-
-    local pair = M.nearest_factions(faction, x, y, 2)
-    if #pair < 2 then
-        log("realm test relations (others): fewer than 2 other factions found")
-        return
-    end
-    local a, b = pair[1], pair[2]
-    local check = function()
-        return "standing " .. a:diplomatic_standing_with(b:name()) .. ", attitude " .. b:diplomatic_attitude_towards(a:name())
-    end
-    try_variants("relations (" .. a:name() .. " + " .. b:name() .. ")", check, {
-        { "apply_dilemma_diplomatic_bonus(a, b, -3)", function() cm:apply_dilemma_diplomatic_bonus(a:name(), b:name(), -3) end },
-    })
-end
-
---- Development points, garrison heal and settlement upgrade on your regions, and a shroud reveal on the nearest enemy capital.
---- @param faction faction The faction running the test.
---- @param own region Your nearest region, or nil.
---- @param second region Your second-nearest region, or nil.
---- @param x number The map x position.
---- @param y number The map y position.
-local function test_settlements(faction, own, second, x, y)
-    if own ~= nil then
-        local region_key = own:name()
-        try_variants("development points (" .. region_key .. ")", function() return own:has_development_points_to_upgrade() end, {
-            { "add_development_points_to_region(region_key, 50)", function() cm:add_development_points_to_region(region_key, 50) end },
-        })
-
-        try_variants("heal garrison (" .. region_key .. ")", nil, {
-            { "heal_garrison(region_cqi)", function() cm:heal_garrison(own:cqi()) end },
-        })
-    end
-
-    local target = second or own
-    if target ~= nil then
-        local settlement = target:settlement()
-        local level = function() return settlement:primary_slot():building():building_level() end
-        local next_level = (tonumber(read_state(level)) or 0) + 1
-        try_variants("settlement upgrade (" .. target:name() .. " to " .. next_level .. ")", level, {
-            { "instantly_set_settlement_primary_slot_level(settlement, level)", function() cm:instantly_set_settlement_primary_slot_level(settlement, next_level) end },
-            { "instantly_set_settlement_primary_slot_level(region, level)", function() cm:instantly_set_settlement_primary_slot_level(target, next_level) end },
-            { "instantly_set_settlement_primary_slot_level(region_key, level)", function() cm:instantly_set_settlement_primary_slot_level(target:name(), next_level) end },
-        })
-    end
-
-    local enemy = M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) and other:has_home_region() end)[1]
-    if enemy == nil then
-        log("realm test shroud: no enemy with a capital")
-        return
-    end
-    local capital = enemy:home_region():name()
-    try_variants("shroud (" .. capital .. ")", nil, {
-        { "make_region_visible_in_shroud(faction_key, region_key)", function() cm:make_region_visible_in_shroud(faction:name(), capital) end },
-    })
-end
-
---- Runs every realm call LEAPOI has not used yet, measured from a map position, and logs which signature worked. Bundles last
---- `TEST_TURNS` turns. Some results (garrison heal, shroud, relations text) only show in game, so the log names what to look at.
---- @param faction faction The human faction that entered the spot.
---- @param x number The map x position of the spot.
---- @param y number The map y position of the spot.
-function M.run_test(faction, x, y)
-    log("realm test START for " .. faction:name() .. " at (" .. x .. ", " .. y .. ")")
-    local own = M.nearest_own_region(faction:name(), x, y)
-    local second = own and M.nearest_own_region(faction:name(), x, y, { [own:name()] = true }) or nil
-    local enemy = M.nearest_enemy_region(faction, x, y)
-    log_target("own region", own)
-    log_target("second own region", second)
-    log_target("enemy region", enemy)
-
-    local steps = {
-        { "bundles", function() test_bundles(faction, own, enemy) end },
-        { "relations", function() test_relations(faction, x, y) end },
-        { "settlements", function() test_settlements(faction, own, second, x, y) end },
-    }
-    for _, step in ipairs(steps) do
-        local ok, err = pcall(step[2])
-        if not ok then
-            log("realm test step " .. step[1] .. " CRASHED: " .. tostring(err))
-        end
-    end
-    log("realm test END")
+    if region == nil or region:is_null_interface() then return nil, nil end
+    local settlement = region:settlement()
+    return { settlement:logical_position_x(), settlement:logical_position_y() }, region:name()
 end
 
 return M

@@ -1,0 +1,472 @@
+--- Spot offers on treasure sites: a human lord entering a treasure spot rolls a site, whose dilemma offers its signature reward, 2 more offers
+--- drawn toward its tags, and Walk away. Offers are paid from the treasury and act through the shared offer effects and realm effects. The
+--- offer and site records live in configs/spot_offers.lua.
+
+require("script/land_encounters/utils/random")
+
+local offers_data = require("script/land_encounters/configs/spot_offers")
+local treasure_events = require("script/land_encounters/configs/events").treasure_type
+local debug_config = require("script/land_encounters/configs/debug")
+local offer_effects = require("script/land_encounters/core/offer_effects")
+local realm_effects = require("script/land_encounters/core/realm_effects")
+local item_pool = require("script/land_encounters/core/item_pool")
+local dilemmas = require("script/land_encounters/core/dilemmas")
+local tower_army = require("script/land_encounters/features/tower_army")
+local tower_lords = require("script/land_encounters/features/tower_lords")
+
+local M = {
+    --- Faction key -> the site dilemma it has open: { site, offers, signature, general_cqi, x, y, difficulty, cards, targets, shown_affordable }.
+    --- `cards` maps an offer's key to the { units, items } it shows, and `targets` a realm offer's key to its target, so a reopened site shows
+    --- the same ones. `shown_affordable` says whether each offer's button could be bought when the dilemma was last shown.
+    pending_by_faction = {},
+    --- Lords to wound at their faction's next turn start: { faction, general_cqi, turns }.
+    wounds = {},
+    --- Lords who may move again at their faction's next turn start: { faction, general_cqi }.
+    camps = {},
+    --- Caravan investments still paying out: { faction, amount, turns }, paid at each of that faction's turn starts.
+    dividends = {},
+    --- Sends a Daemon's bargain army at a faction's capital. Set by the POI manager to the tower's sender, which owns the invasion plumbing.
+    send_daemon_army = nil,
+}
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Helpers
+
+--- Scales gold by the difficulty and rounds it to the gold step.
+--- @param amount number The Easy amount.
+--- @param difficulty string "easy", "medium" or "hard".
+--- @param offer table The offer record. `fixed_gold` keeps the amount as it is.
+--- @returns number The scaled amount.
+local function scale_gold(amount, difficulty, offer)
+    if offer.fixed_gold then return amount end
+    local step = offers_data.gold_step
+    return math.floor(amount * (offers_data.gold_multiplier[difficulty] or 1) / step + 0.5) * step
+end
+
+--- Builds an offer's choice key.
+--- @param key string The offer key.
+--- @returns string The choice key, e.g. LEAPOI_SPT_TAKE_THE_GOLD.
+function M.choice_key(key)
+    return offers_data.choice_key_prefix .. key:upper()
+end
+
+--- Finds the old treasure incident's targets, for a signature offer that fires it.
+--- @param incident string The incident key.
+--- @returns table The targets flag map.
+local function incident_targets(incident)
+    for _, event in ipairs(treasure_events) do
+        if event.incident == incident then return event.targets end
+    end
+    return { character = true }
+end
+
+--- True when an offer only needs a legendary item somewhere in its gamble outcomes.
+--- @param offer table The offer record.
+--- @returns boolean True when an outcome gives unique items.
+local function gamble_wants_unique(offer)
+    for _, outcome in ipairs(offer.gamble or {}) do
+        if outcome.unique then return true end
+    end
+    return false
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Drawing
+
+--- True when an offer would do something for this lord right now. Its cost is not a condition: an offer the treasury cannot pay is still
+--- drawn and says so, as tower offers do. Unit and item rewards are picked here and kept on `ctx.cards`, and realm targets on `ctx.targets`,
+--- so the dilemma shows exactly what the offer gives.
+--- @param offer table The offer record.
+--- @param ctx table { faction, faction_name, general_cqi, x, y, difficulty, cards, targets }.
+--- @returns boolean True when the offer can be drawn.
+local function eligible(offer, ctx)
+    if offer.trait and tower_lords.has_trait(ctx.general_cqi, offer.trait) then return false end
+    if offer.heal and not offer_effects.army_damaged(ctx.general_cqi) then return false end
+    if offer.hero_rank and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
+    if offer.sacrifice and #tower_army.regular_units(ctx.general_cqi) < 2 then return false end
+    if offer.daemon_army and not ctx.faction:has_home_region() then return false end
+    if gamble_wants_unique(offer) and item_pool.pick_legendary_item(ctx.faction_name) == nil then return false end
+
+    local cards = {}
+    if offer.recruit then
+        cards.units = offer_effects.pick_recruits(ctx.general_cqi, offer_effects.culture_shorthand(ctx.faction_name), offer.recruit)
+        if #cards.units < offer.recruit.count then return false end
+    end
+    if offer.renown then
+        cards.units = offer_effects.pick_renown(ctx.general_cqi, ctx.faction_name, offer.renown)
+        if #cards.units < offer.renown then return false end
+    end
+    if offer.unique then
+        cards.items = offer_effects.pick_unique_items(ctx.faction_name, offer.unique)
+        if #cards.items < offer.unique then return false end
+    end
+    if offer.items then
+        cards.items = item_pool.pick_items(ctx.faction_name, offer.items.rarities, offer.items.count)
+        if #cards.items == 0 then return false end
+    end
+    if offer.realm then
+        local target = realm_effects.find_target(offer.realm, ctx.faction, ctx.x, ctx.y, offer.count)
+        if target == nil then return false end
+        ctx.targets[offer.key] = target
+    end
+    ctx.cards[offer.key] = cards
+    return true
+end
+
+--- Draws a site's offers: its signature offer when eligible, then `extras_per_site` more from the treasure and realm pools, weighted toward
+--- offers that share a tag with the site. Eligible offers in the debug `force_spot_offers` list are drawn first. Uses `random_number`, so every
+--- multiplayer client draws the same ones.
+--- @param site table The site record.
+--- @param ctx table The draw context, see `eligible`.
+--- @returns table Offer keys in popup order.
+--- @returns string|nil The signature offer's key when it was drawn, first in the list.
+function M.draw(site, ctx)
+    local keys, taken = {}, {}
+    local signature = offers_data.by_key[site.signature]
+    if signature and eligible(signature, ctx) then
+        keys[1] = signature.key
+        taken[signature.key] = true
+    end
+    local site_tags = {}
+    for _, tag in ipairs(site.tags) do site_tags[tag] = true end
+    local pool, total = {}, 0
+    for _, offer in ipairs(offers_data.offers) do
+        if offer.pool ~= "signature" and not taken[offer.key] and eligible(offer, ctx) then
+            local weight = 1
+            for _, tag in ipairs(offer.tags) do
+                if site_tags[tag] then weight = offers_data.tag_weight end
+            end
+            pool[#pool + 1] = { key = offer.key, weight = weight }
+            total = total + weight
+        end
+    end
+    --- Without its signature offer a site draws one more extra, so it still shows 3 offers.
+    local wanted = offers_data.extras_per_site + (keys[1] and 0 or 1)
+    local extras, forced = 0, 0
+    local function take(i)
+        keys[#keys + 1] = pool[i].key
+        total = total - pool[i].weight
+        table.remove(pool, i)
+        extras = extras + 1
+    end
+    for _, forced_key in ipairs(debug_config.force_spot_offers) do
+        for i, entry in ipairs(pool) do
+            if entry.key == forced_key and extras < wanted then
+                take(i)
+                forced = forced + 1
+                break
+            end
+        end
+    end
+    while extras < wanted and #pool > 0 do
+        local roll, acc = random_number(total), 0
+        for i, entry in ipairs(pool) do
+            acc = acc + entry.weight
+            if roll <= acc then
+                take(i)
+                break
+            end
+        end
+    end
+    log("spot: drew for " .. ctx.faction_name .. " at " .. site.key .. " (" .. ctx.difficulty .. "): " .. table.concat(keys, ", ") .. " (" .. #pool
+        .. " more eligible, " .. forced .. " forced)")
+    return keys, taken[site.signature] and site.signature or nil
+end
+
+--- Picks the site for a treasure spot. The first known site in the debug `force_treasure_site` list wins.
+--- @returns table The site record.
+local function pick_site()
+    for _, key in ipairs(debug_config.force_treasure_site) do
+        if offers_data.site_by_key[key] then
+            log("spot: debug force_treasure_site picks " .. key)
+            return offers_data.site_by_key[key]
+        end
+    end
+    return offers_data.sites[random_number(#offers_data.sites)]
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Site dilemma
+
+--- True when the faction's treasury covers an offer's cost at the site's difficulty.
+--- @param offer table The offer record.
+--- @param pending table The open site, see `M.pending_by_faction`.
+--- @param faction_name string The faction key.
+--- @returns boolean True for a free offer or one the treasury can pay.
+local function affordable(offer, pending, faction_name)
+    return not offer.cost or offer_effects.treasury(faction_name) >= scale_gold(offer.cost, pending.difficulty, offer)
+end
+
+--- Builds an offer's choice: its line for this difficulty, plus the gold, items and units it gives as cards. An offer the treasury cannot pay
+--- shows its not-enough-gold line instead and gives nothing. Which way each offer was shown is kept on `pending.shown_affordable`.
+--- @param offer table The offer record.
+--- @param pending table The open site.
+--- @param faction_name string The faction key.
+--- @param choice_key string The choice key it sits on.
+--- @returns table A choice record for `dilemmas.launch`.
+local function build_choice(offer, pending, faction_name, choice_key)
+    local line = offers_data.line_prefix .. offer.key .. "_" .. pending.difficulty
+    pending.shown_affordable[offer.key] = affordable(offer, pending, faction_name)
+    if not pending.shown_affordable[offer.key] then return { key = choice_key, lines = { line .. "_unaffordable" } } end
+    local choice = { key = choice_key, lines = { line } }
+    if offer.gold and not offer.gamble then choice.gold = scale_gold(offer.gold, pending.difficulty, offer) end
+    local cards = pending.cards[offer.key] or {}
+    choice.items = cards.items
+    local force = cards.units and tower_army.delving_force(pending.general_cqi)
+    if force then choice.units = { force = force, keys = cards.units } end
+    return choice
+end
+
+--- Shows a faction's open site dilemma: the signature offer on the first key, the other offers on their own keys, and Walk away last.
+--- @param faction_name string The faction key.
+function M.launch_site(faction_name)
+    local pending = M.pending_by_faction[faction_name]
+    pending.shown_affordable = {}
+    local choices = {}
+    for _, key in ipairs(pending.offers) do
+        local choice_key = key == pending.signature and offers_data.signature_choice_key or M.choice_key(key)
+        choices[#choices + 1] = build_choice(offers_data.by_key[key], pending, faction_name, choice_key)
+    end
+    choices[#choices + 1] = { key = offers_data.walk_away_choice_key, lines = { offers_data.line_prefix .. "walk_away" } }
+    dilemmas.launch(offers_data.dilemma_prefix .. pending.site, choices, faction_name)
+end
+
+--- Opens a treasure site for a human lord: rolls the site, draws its offers and shows its dilemma.
+--- @param character character The lord who entered the spot.
+--- @param faction faction The lord's faction.
+function M.open_site(character, faction)
+    local faction_name = faction:name()
+    local site = pick_site()
+    local ctx = {
+        faction = faction,
+        faction_name = faction_name,
+        general_cqi = character:command_queue_index(),
+        x = character:logical_position_x(),
+        y = character:logical_position_y(),
+        difficulty = get_current_difficulty(),
+        cards = {},
+        targets = {},
+    }
+    local keys, signature = M.draw(site, ctx)
+    local pending = { site = site.key, offers = keys, signature = signature, general_cqi = ctx.general_cqi, x = ctx.x, y = ctx.y,
+        difficulty = ctx.difficulty, cards = {}, targets = {} }
+    for _, key in ipairs(keys) do
+        pending.cards[key] = ctx.cards[key]
+        pending.targets[key] = ctx.targets[key]
+    end
+    M.pending_by_faction[faction_name] = pending
+    log("spot: " .. faction_name .. " opens " .. site.key .. " with lord " .. ctx.general_cqi .. ", treasury " .. offer_effects.treasury(faction_name))
+    M.launch_site(faction_name)
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Taking an offer
+
+--- Applies the effects an offer's payload does not: bundles, traits, wounds, camps, heals, sacrifices, heroes, dividends, the Daemon's
+--- bargain army and the old incident. With `scripted_rewards` (a gamble outcome) gold and items are granted here too, since a rolled outcome
+--- has no cards.
+--- @param fields table The offer record or a gamble outcome.
+--- @param offer table The offer record, for scaling and the log.
+--- @param state table { faction_name, general_cqi, difficulty }.
+--- @param scripted_rewards boolean True to grant `gold`, `items` and `unique` in script.
+local function apply_fields(fields, offer, state, scripted_rewards)
+    local faction_name, general_cqi = state.faction_name, state.general_cqi
+    local general = tower_army.character(general_cqi)
+    if scripted_rewards then
+        if fields.gold then
+            local gold = scale_gold(fields.gold, state.difficulty, offer)
+            cm:treasury_mod(faction_name, gold)
+            log("spot: " .. offer.key .. " treasury " .. (gold > 0 and "+" or "") .. gold)
+        end
+        local items = {}
+        if fields.items then items = item_pool.pick_items(faction_name, fields.items.rarities, fields.items.count) end
+        if fields.unique then items = offer_effects.pick_unique_items(faction_name, fields.unique) end
+        for _, item in ipairs(items) do
+            cm:add_ancillary_to_faction(cm:get_faction(faction_name), item, false)
+            log("spot: " .. offer.key .. " grants item " .. item)
+        end
+    end
+    if fields.army_bundle then tower_army.apply_bundle(general_cqi, fields.army_bundle[1], fields.army_bundle[2]) end
+    if fields.faction_bundle then offer_effects.faction_bundle(faction_name, fields.faction_bundle[1], fields.faction_bundle[2]) end
+    if fields.trait then tower_lords.add_trait(general_cqi, fields.trait, 1, true) end
+    if fields.heal then tower_army.heal_army(general_cqi, 1) end
+    if fields.sacrifice then
+        offer_effects.remove_unit(general_cqi, tower_army.weakest_regular_unit(general_cqi))
+        for _, entry in ipairs(tower_army.regular_units(general_cqi)) do cm:add_experience_to_unit(entry.unit, fields.sacrifice.ranks) end
+    end
+    if fields.hero_rank then
+        tower_lords.free_hero(general_cqi, faction_name, { offer_effects.culture_shorthand(faction_name) }, fields.hero_rank)
+    end
+    if fields.wound then
+        M.wounds[#M.wounds + 1] = { faction = faction_name, general_cqi = general_cqi, turns = fields.wound }
+        tower_army.apply_bundle(general_cqi, offers_data.wound_bundle_prefix .. fields.wound)
+        log("spot: lord " .. general_cqi .. " will be wounded for " .. fields.wound .. " turns at the next turn start")
+    end
+    if fields.camp and general then
+        cm:disable_movement_for_character(cm:char_lookup_str(general))
+        tower_army.apply_bundle(general_cqi, offers_data.camp_bundle)
+        M.camps[#M.camps + 1] = { faction = faction_name, general_cqi = general_cqi }
+        log("spot: lord " .. general_cqi .. " cannot move until the next turn")
+    end
+    if fields.dividends then
+        local amount = scale_gold(fields.dividends.per_turn, state.difficulty, offer)
+        M.dividends[#M.dividends + 1] = { faction = faction_name, amount = amount, turns = fields.dividends.turns }
+        cm:apply_effect_bundle(fields.dividends.effect_bundle, faction_name, fields.dividends.turns)
+        log("spot: " .. faction_name .. " gets " .. amount .. " gold for " .. fields.dividends.turns .. " turns")
+    end
+    if fields.daemon_army then
+        if M.send_daemon_army then M.send_daemon_army(faction_name) else log("spot: no Daemon's bargain sender is set") end
+    end
+    if fields.incident and general then
+        trigger_incident_for_character(fields.incident, incident_targets(fields.incident), general)
+        log("spot: " .. offer.key .. " fires " .. fields.incident)
+    end
+end
+
+--- Rolls a gamble's outcome with `random_number`, weighted by each outcome's weight.
+--- @param gamble table The offer's outcomes, each { weight, name, ...fields }.
+--- @returns table The outcome.
+local function roll_outcome(gamble)
+    local total = 0
+    for _, outcome in ipairs(gamble) do total = total + outcome[1] end
+    local roll, acc = random_number(total), 0
+    for _, outcome in ipairs(gamble) do
+        acc = acc + outcome[1]
+        if roll <= acc then return outcome end
+    end
+    return gamble[#gamble]
+end
+
+--- Takes a choice from a faction's open site dilemma: pays the offer's cost, applies it, and shows where a realm offer landed or how a gamble
+--- went. The payload already granted the offer's gold, item and unit cards. An offer the treasury cannot pay changes nothing and reopens the
+--- site. Walk away and unknown choices only close the site.
+--- @param faction_name string The faction that chose.
+--- @param choice_key string The chosen choice key.
+function M.take(faction_name, choice_key)
+    local pending = M.pending_by_faction[faction_name]
+    if pending == nil then
+        log("spot: " .. faction_name .. " chose " .. tostring(choice_key) .. " with no site open")
+        return
+    end
+    local offer = nil
+    for _, key in ipairs(pending.offers) do
+        if M.choice_key(key) == choice_key or (key == pending.signature and choice_key == offers_data.signature_choice_key) then
+            offer = offers_data.by_key[key]
+        end
+    end
+    if offer == nil then
+        M.pending_by_faction[faction_name] = nil
+        log("spot: " .. faction_name .. " walks away from " .. pending.site)
+        return
+    end
+    --- The button decides: one shown as unaffordable had no cards, so it buys nothing even if the treasury has grown since, and the reopened
+    --- site shows the offer as it stands now.
+    if pending.shown_affordable and pending.shown_affordable[offer.key] == false then
+        log("spot: " .. offer.key .. " was shown as unaffordable (cost " .. scale_gold(offer.cost, pending.difficulty, offer) .. ", treasury now "
+            .. offer_effects.treasury(faction_name) .. "), nothing is bought and the site reopens")
+        M.launch_site(faction_name)
+        return
+    end
+    M.pending_by_faction[faction_name] = nil
+    local state = { faction_name = faction_name, general_cqi = pending.general_cqi, difficulty = pending.difficulty }
+    local before = offer_effects.treasury(faction_name)
+    offer_effects.log_army_change(pending.general_cqi, offer.key)
+    if offer.cost then cm:treasury_mod(faction_name, -scale_gold(offer.cost, pending.difficulty, offer)) end
+    apply_fields(offer, offer, state, false)
+    if offer.gamble then
+        local outcome = roll_outcome(offer.gamble)
+        log("spot: " .. offer.key .. " rolls " .. outcome[2])
+        apply_fields(outcome, offer, state, true)
+        show_located_message(faction_name, offers_data.message_prefix .. offer.key .. "_" .. outcome[2], { pending.x, pending.y })
+    end
+    local target = pending.targets and pending.targets[offer.key]
+    if target then
+        realm_effects.apply(offer, target, faction_name)
+        local position, region_key = realm_effects.target_position(target)
+        if position then
+            show_located_message(faction_name, offers_data.message_prefix .. offer.key, position, "regions_onscreen_" .. region_key)
+        end
+    end
+    log("spot: " .. faction_name .. " took " .. offer.key .. " at " .. pending.site .. ", treasury " .. before .. " -> " .. offer_effects.treasury(faction_name)
+        .. " (payload cards land after this)")
+end
+
+--- True when a dilemma key is a treasure site's.
+--- @param dilemma_key string The dilemma key.
+--- @returns boolean True for a site dilemma.
+function M.is_site_dilemma(dilemma_key)
+    return dilemma_key:sub(1, #offers_data.dilemma_prefix) == offers_data.dilemma_prefix
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Turn start and saves
+
+--- At a faction's turn start: wounds lords a pact or a failed gamble claimed and says so, frees camping lords, and pays caravan investments.
+--- @param faction_name string The faction whose turn starts.
+function M.on_faction_turn_start(faction_name)
+    for i = #M.wounds, 1, -1 do
+        local wound = M.wounds[i]
+        if wound.faction == faction_name then
+            table.remove(M.wounds, i)
+            local general = tower_army.character(wound.general_cqi)
+            if general then
+                tower_army.remove_bundle(wound.general_cqi, offers_data.wound_bundle_prefix .. wound.turns)
+                cm:wound_character(cm:char_lookup_str(general), wound.turns)
+                show_located_message(faction_name, offers_data.message_prefix .. "wound_paid_" .. wound.turns,
+                    { general:logical_position_x(), general:logical_position_y() })
+                log("spot: lord " .. wound.general_cqi .. " wounded for " .. wound.turns .. " turns")
+            end
+        end
+    end
+    for i = #M.camps, 1, -1 do
+        local camp = M.camps[i]
+        if camp.faction == faction_name then
+            table.remove(M.camps, i)
+            local general = tower_army.character(camp.general_cqi)
+            if general then
+                tower_army.remove_bundle(camp.general_cqi, offers_data.camp_bundle)
+                cm:enable_movement_for_character(cm:char_lookup_str(general))
+            end
+        end
+    end
+    for i = #M.dividends, 1, -1 do
+        local dividend = M.dividends[i]
+        if dividend.faction == faction_name then
+            cm:treasury_mod(faction_name, dividend.amount)
+            dividend.turns = dividend.turns - 1
+            log("spot: caravan pays " .. faction_name .. " " .. dividend.amount .. ", " .. dividend.turns .. " turns left")
+            if dividend.turns <= 0 then table.remove(M.dividends, i) end
+        end
+    end
+end
+
+--- Exports the open site dilemmas, pending wounds, camps and dividends for the save file.
+--- @returns table { pending_by_faction, wounds, camps, dividends }.
+function M.export_state()
+    return { pending_by_faction = M.pending_by_faction, wounds = M.wounds, camps = M.camps, dividends = M.dividends }
+end
+
+--- Restores the state saved by `M.export_state`, from the load callback. A save from before spot offers restores nothing. A camping lord is
+--- frozen again on the first tick, once the game's characters can be looked up, since a frozen lord is not kept in the save.
+--- @param saved table|nil The saved state.
+function M.restore_state(saved)
+    saved = saved or {}
+    M.pending_by_faction = saved.pending_by_faction or {}
+    M.wounds = saved.wounds or {}
+    M.camps = saved.camps or {}
+    M.dividends = saved.dividends or {}
+    if #M.camps == 0 then return end
+    cm:add_first_tick_callback(function()
+        for _, camp in ipairs(M.camps) do
+            local general = tower_army.character(camp.general_cqi)
+            if general then cm:disable_movement_for_character(cm:char_lookup_str(general)) end
+        end
+    end)
+end
+
+return M
