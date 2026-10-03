@@ -27,6 +27,8 @@ local M = {
     dividends = {},
     --- Sends a Daemon's bargain army at a faction's capital. Set by the POI manager to the tower's sender, which owns the invasion plumbing.
     send_daemon_army = nil,
+    --- Starts Wake the guardian's battle for a lord at a map position. Set by the spot event manager to the battle spots' own battle start.
+    start_guardian_battle = nil,
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,12 +74,61 @@ local function incident_targets(incident)
     return { character = true }
 end
 
+--- Line on a choice that may start a battle, as the battle spots show it.
+local FIGHT_LINE = "dummy_wh2_dlc11_neo_counter_fight_chance"
+
+--- Shows a result as an incident built in script: its payload grants the result's gold, items and units as cards, and shows its effect line
+--- when it has one. If the incident cannot be built, the rewards are granted in script and the result's old event message shows instead,
+--- so nothing is lost.
+--- @param faction_name string The faction the result is for.
+--- @param result string The result name, e.g. "roll_the_bones_won".
+--- @param rewards table { gold, items, units, character }: gold to add or take, item keys, and unit keys to join the lord `character`'s army.
+--- @param position table The { x, y } map position of the fallback message.
+--- @param subtitle string|nil A loc key for the fallback message's subtitle. A realm result's incident names it in its text.
+function M.show_result(faction_name, result, rewards, position, subtitle)
+    local faction = cm:get_faction(faction_name)
+    local character = rewards.character
+    local force = character and character:has_military_force() and character:military_force() or nil
+    local line = offers_data.line_prefix .. "result_" .. result
+    local ok, err = pcall(function()
+        common.set_context_value(offers_data.result_place_context, subtitle and common.get_localised_string(subtitle) or "")
+        local builder = cm:create_incident_builder(offers_data.result_incident_prefix .. result)
+        local payload = cm:create_payload()
+        if rewards.gold and rewards.gold ~= 0 then payload:treasury_adjustment(rewards.gold) end
+        for _, item in ipairs(rewards.items or {}) do payload:faction_ancillary_gain(faction, item) end
+        for _, unit in ipairs(force and rewards.units or {}) do payload:add_unit(force, unit, 1, 0) end
+        if common.get_localised_string("campaign_payload_ui_details_description_" .. line) ~= "" then payload:text_display(line) end
+        builder:set_payload(payload)
+        cm:launch_custom_incident_from_builder(builder, faction)
+    end)
+    if ok then
+        log("spot: result " .. result .. " shown for " .. faction_name .. " with gold " .. tostring(rewards.gold) .. ", items "
+            .. table.concat(rewards.items or {}, ", ") .. ", units " .. table.concat(rewards.units or {}, ", "))
+        return
+    end
+    log("spot: result incident " .. result .. " could not be built (" .. tostring(err) .. "), granting in script and showing its message")
+    if rewards.gold and rewards.gold ~= 0 then cm:treasury_mod(faction_name, rewards.gold) end
+    for _, item in ipairs(rewards.items or {}) do cm:add_ancillary_to_faction(faction, item, false) end
+    for _, unit in ipairs(character and rewards.units or {}) do cm:grant_unit_to_character(cm:char_lookup_str(character), unit) end
+    show_located_message(faction_name, offers_data.message_prefix .. result, position, subtitle)
+end
+
 --- True when an offer only needs a legendary item somewhere in its gamble outcomes.
 --- @param offer table The offer record.
 --- @returns boolean True when an outcome gives unique items.
 local function gamble_wants_unique(offer)
     for _, outcome in ipairs(offer.gamble or {}) do
         if outcome.unique then return true end
+    end
+    return false
+end
+
+--- True when one of an offer's gamble outcomes starts a battle.
+--- @param offer table The offer record.
+--- @returns boolean True when an outcome wakes a guardian.
+local function gamble_may_fight(offer)
+    for _, outcome in ipairs(offer.gamble or {}) do
+        if outcome.guardian then return true end
     end
     return false
 end
@@ -105,12 +156,14 @@ local function eligible(offer, ctx)
     if offer.captive and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
 
     local cards = {}
+    --- Units another offer on this dilemma already shows are left out, so no unit is offered twice.
+    ctx.shown_units = ctx.shown_units or {}
     if offer.recruit then
-        cards.units = offer_effects.pick_recruits(ctx.general_cqi, offer_effects.culture_shorthand(ctx.faction_name), offer.recruit)
+        cards.units = offer_effects.pick_recruits(ctx.general_cqi, offer_effects.culture_shorthand(ctx.faction_name), offer.recruit, ctx.shown_units)
         if #cards.units < offer.recruit.count then return false end
     end
     if offer.renown then
-        cards.units = offer_effects.pick_renown(ctx.general_cqi, ctx.faction_name, offer.renown)
+        cards.units = offer_effects.pick_renown(ctx.general_cqi, ctx.faction_name, offer.renown, ctx.shown_units)
         if #cards.units < offer.renown then return false end
     end
     if offer.unique then
@@ -126,7 +179,15 @@ local function eligible(offer, ctx)
         cards.items = item_pool.pick_items(ctx.faction_name, rarities, 1)
         if #cards.items == 0 then return false end
     end
-    if offer.captive then cards.units = { enemy_units[random_number(#enemy_units)] } end
+    if offer.captive then
+        local captives = {}
+        for _, key in ipairs(enemy_units) do
+            if not ctx.shown_units[key] then captives[#captives + 1] = key end
+        end
+        if #captives == 0 then return false end
+        cards.units = { captives[random_number(#captives)] }
+    end
+    for _, key in ipairs(cards.units or {}) do ctx.shown_units[key] = true end
     if offer.gold_per_enemy_unit then cards.gold = scale_gold(offer.gold_per_enemy_unit * #enemy_units, ctx.difficulty, offer) end
     if offer.ransom then
         local beaten = ctx.event and ctx.event.faction
@@ -242,7 +303,8 @@ local function build_choice(offer, pending, faction_name, choice_key)
     local line = offers_data.line_prefix .. offer.key .. "_" .. pending.difficulty
     pending.shown_affordable[offer.key] = affordable(offer, pending, faction_name)
     if not pending.shown_affordable[offer.key] then return { key = choice_key, lines = { line, offers_data.unaffordable_line } } end
-    local choice = { key = choice_key, lines = { line } }
+    --- An offer that may start a battle says so, as every battle spot choice that leads to a fight does.
+    local choice = { key = choice_key, lines = gamble_may_fight(offer) and { line, FIGHT_LINE } or { line } }
     local cards = pending.cards[offer.key] or {}
     if offer.gold and not offer.gamble then choice.gold = scale_gold(offer.gold, pending.difficulty, offer) end
     if cards.gold then choice.gold = cards.gold end
@@ -306,24 +368,18 @@ end
 --- has no cards.
 --- @param fields table The offer record or a gamble outcome.
 --- @param offer table The offer record, for scaling and the log.
---- @param state table { faction_name, general_cqi, difficulty }.
---- @param scripted_rewards boolean True to grant `gold`, `items` and `unique` in script.
-local function apply_fields(fields, offer, state, scripted_rewards)
+--- @param state table { faction_name, general_cqi, difficulty, x, y }.
+--- @param rolled boolean True for a gamble outcome, whose `gold`, `items` and `unique` are picked here and granted by its result.
+--- @returns table The outcome's rewards { gold, items } for its result, empty for an offer.
+local function apply_fields(fields, offer, state, rolled)
     local faction_name, general_cqi = state.faction_name, state.general_cqi
     local general = tower_army.character(general_cqi)
-    if scripted_rewards then
-        if fields.gold then
-            local gold = scale_gold(fields.gold, state.difficulty, offer)
-            cm:treasury_mod(faction_name, gold)
-            log("spot: " .. offer.key .. " treasury " .. (gold > 0 and "+" or "") .. gold)
-        end
-        local items = {}
-        if fields.items then items = item_pool.pick_items(faction_name, fields.items.rarities, fields.items.count) end
-        if fields.unique then items = offer_effects.pick_unique_items(faction_name, fields.unique) end
-        for _, item in ipairs(items) do
-            cm:add_ancillary_to_faction(cm:get_faction(faction_name), item, false)
-            log("spot: " .. offer.key .. " grants item " .. item)
-        end
+    local rewards = { items = {} }
+    if rolled then
+        if fields.gold then rewards.gold = scale_gold(fields.gold, state.difficulty, offer) end
+        if fields.items then rewards.items = item_pool.pick_items(faction_name, fields.items.rarities, fields.items.count) end
+        if fields.unique then rewards.items = offer_effects.pick_unique_items(faction_name, fields.unique) end
+        log("spot: " .. offer.key .. " rolls gold " .. tostring(rewards.gold) .. ", items " .. table.concat(rewards.items, ", "))
     end
     if fields.army_bundle then tower_army.apply_bundle(general_cqi, fields.army_bundle[1], fields.army_bundle[2]) end
     if fields.faction_bundle then offer_effects.faction_bundle(faction_name, fields.faction_bundle[1], fields.faction_bundle[2]) end
@@ -367,6 +423,8 @@ local function apply_fields(fields, offer, state, scripted_rewards)
         trigger_incident_for_character(fields.incident, incident_targets(fields.incident), general)
         log("spot: " .. offer.key .. " fires " .. fields.incident)
     end
+    rewards.character = general
+    return rewards
 end
 
 --- Rolls a gamble's outcome with `random_number`, weighted by each outcome's weight.
@@ -391,6 +449,17 @@ M.roll_outcome = roll_outcome
 --- site. Walk away and unknown choices only close the site.
 --- @param faction_name string The faction that chose.
 --- @param choice_key string The chosen choice key.
+--- Starts Wake the guardian's battle at the site against the lord.
+--- @param state table { general_cqi, x, y } of the site taken.
+local function wake_guardian(state)
+    local general = tower_army.character(state.general_cqi)
+    if M.start_guardian_battle and general then
+        M.start_guardian_battle(general, state.x, state.y)
+    else
+        log("spot: no guardian battle could start for lord " .. tostring(state.general_cqi))
+    end
+end
+
 function M.take(faction_name, choice_key)
     local pending = M.pending_by_faction[faction_name]
     if pending == nil then
@@ -417,7 +486,7 @@ function M.take(faction_name, choice_key)
         return
     end
     M.pending_by_faction[faction_name] = nil
-    local state = { faction_name = faction_name, general_cqi = pending.general_cqi, difficulty = pending.difficulty }
+    local state = { faction_name = faction_name, general_cqi = pending.general_cqi, difficulty = pending.difficulty, x = pending.x, y = pending.y }
     local before = offer_effects.treasury(faction_name)
     offer_effects.log_army_change(pending.general_cqi, offer.key)
     if offer.cost then cm:treasury_mod(faction_name, -M.offer_cost(offer, pending.difficulty)) end
@@ -425,16 +494,19 @@ function M.take(faction_name, choice_key)
     if offer.gamble then
         local outcome = roll_outcome(offer.gamble)
         log("spot: " .. offer.key .. " rolls " .. outcome[2])
-        apply_fields(outcome, offer, state, true)
-        show_located_message(faction_name, offers_data.message_prefix .. offer.key .. "_" .. outcome[2], { pending.x, pending.y })
+        local rewards = apply_fields(outcome, offer, state, true)
+        M.show_result(faction_name, offer.key .. "_" .. outcome[2], rewards, { pending.x, pending.y },
+            rewards.items[1] and "ancillaries_onscreen_name_" .. rewards.items[1] or nil)
+        --- The battle waits until the result is shown: a result incident fired while the battle was pending froze the game when hovered.
+        if outcome.guardian then cm:callback(function() wake_guardian(state) end, 0.5) end
     end
     local target = pending.targets and pending.targets[offer.key]
     if target then
         realm_effects.apply(offer, target, faction_name)
         local position, region_key = realm_effects.target_position(target)
-        if position then
-            show_located_message(faction_name, offers_data.message_prefix .. offer.key, position, "regions_onscreen_" .. region_key)
-        end
+        --- The result names the target region, or the target faction when it holds none.
+        local place = region_key and "regions_onscreen_" .. region_key or target.factions[1] and "factions_screen_name_" .. target.factions[1] or nil
+        M.show_result(faction_name, offer.key, { character = tower_army.character(pending.general_cqi) }, position or { pending.x, pending.y }, place)
     end
     log("spot: " .. faction_name .. " took " .. offer.key .. " at " .. pending.site .. ", treasury " .. before .. " -> " .. offer_effects.treasury(faction_name)
         .. " (payload cards land after this)")
@@ -477,7 +549,7 @@ function M.on_faction_turn_start(faction_name)
             if general then
                 tower_army.remove_bundle(wound.general_cqi, offers_data.wound_bundle_prefix .. wound.turns)
                 cm:wound_character(cm:char_lookup_str(general), wound.turns)
-                show_located_message(faction_name, offers_data.message_prefix .. "wound_paid_" .. wound.turns,
+                M.show_result(faction_name, "wound_paid_" .. wound.turns, { character = general },
                     { general:logical_position_x(), general:logical_position_y() })
                 log("spot: lord " .. wound.general_cqi .. " wounded for " .. wound.turns .. " turns")
             end

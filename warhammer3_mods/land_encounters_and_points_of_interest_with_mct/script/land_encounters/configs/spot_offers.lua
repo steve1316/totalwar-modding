@@ -19,6 +19,7 @@
 ---   heal            True: every unit is healed to full.
 ---   sacrifice       { ranks }: the weakest regular unit is removed and every other unit gains that many ranks.
 ---   daemon_army     True: a hard Chaos army marches on the faction's capital.
+---   guardian        True (a gamble outcome): a battle starts at the site, against an army that attacks the lord at once.
 ---   dividends       { per_turn, turns, effect_bundle }: gold each turn start.
 ---   incident        A site's old incident, fired as the signature reward.
 ---   gamble          A list of outcomes { weight, name, ...fields }. One is rolled when the offer is taken, and its fields apply.
@@ -106,7 +107,15 @@ M.line_prefix = "dummy_land_enc_spot_"
 --- Line under an offer the treasury cannot pay, the same for every offer.
 M.unaffordable_line = "dummy_land_enc_spot_unaffordable"
 
---- Event feed message prefix after `land_enc_`, e.g. spot_roll_the_bones_won.
+--- Incident key prefix of a result, followed by the result name, e.g. land_enc_incident_spot_roll_the_bones_won. Each result is shown as an
+--- incident built in script, whose payload grants and shows its rewards.
+M.result_incident_prefix = "land_enc_incident_spot_"
+
+--- Context value read by a realm result's incident text: the name of the region or faction it touched.
+M.result_place_context = "land_enc_spot_result_place"
+
+--- Event feed message prefix after `land_enc_`, e.g. spot_roll_the_bones_won. A result falls back to its message if its incident cannot be
+--- built.
 M.message_prefix = "spot_"
 
 --- Percent chance a won battle spot opens the spoils pick after its victory reward.
@@ -238,6 +247,10 @@ M.offers = {
         { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 5 } },
         { 1, "cursed", army_bundle = { PLAGUE[1], 5 } },
         { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "touch_the_relic_frailty", 5 } },
+    } },
+    { key = "wake_the_guardian", pool = "treasure", tags = { "gamble" }, gamble = {
+        { 3, "won", items = { rarities = { "rare" }, count = 1 } },
+        { 2, "lost", guardian = true },
     } },
     { key = "gamble_with_the_hermit", pool = "treasure", tags = { "gamble" }, cost = 500, gamble = {
         { 1, "won", unique = 1 },

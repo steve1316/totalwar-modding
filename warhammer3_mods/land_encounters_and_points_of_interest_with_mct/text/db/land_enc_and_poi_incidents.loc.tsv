@@ -114,3 +114,123 @@ incidents_localised_title_land_enc_incident_battle_won_surprise_neutral	Ambush T
 incidents_localised_description_land_enc_incident_battle_won_surprise_neutral	We turned their ambush against them and broke them on their own ground. The soldiers are in high spirits after the fight.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_neutral	A Battle to Remember	false
 incidents_localised_description_land_enc_incident_battle_won_battlefield_neutral	The enemy army lies broken across the field. Among the spoils we find weapons and relics worth carrying into the wars to come.	false
+incidents_localised_title_land_enc_incident_spot_roll_the_bones_won	Roll the Bones	false
+incidents_localised_description_land_enc_incident_spot_roll_the_bones_won	The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours.	false
+incidents_localised_title_land_enc_incident_spot_roll_the_bones_lost	Roll the Bones	false
+incidents_localised_description_land_enc_incident_spot_roll_the_bones_lost	The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue.	false
+incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_won	Drink from the Spring	false
+incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_won	The water runs cold and clear. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
+incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_lost	Drink from the Spring	false
+incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_lost	The water tastes of rot. Within hours sickness spreads through the camp, and it will be 3 turns before the army is itself again.	false
+incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_won	Open the Sealed Door	false
+incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours.	false
+incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_lost	Open the Sealed Door	false
+incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns at the start of our next turn.	false
+incidents_localised_title_land_enc_incident_spot_stake_the_treasury_won	Stake the Treasury	false
+incidents_localised_description_land_enc_incident_spot_stake_the_treasury_won	The venture pays off handsomely. Our stake comes back to the treasury with a healthy profit on top.	false
+incidents_localised_title_land_enc_incident_spot_stake_the_treasury_lost	Stake the Treasury	false
+incidents_localised_description_land_enc_incident_spot_stake_the_treasury_lost	The venture collapses, and the merchants we backed are nowhere to be found. Our stake is gone.	false
+incidents_localised_title_land_enc_incident_spot_wake_the_guardian_won	Wake the Guardian	false
+incidents_localised_description_land_enc_incident_spot_wake_the_guardian_won	The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
+incidents_localised_title_land_enc_incident_spot_wake_the_guardian_lost	Wake the Guardian	false
+incidents_localised_description_land_enc_incident_spot_wake_the_guardian_lost	The ground shakes as the guardian of this place rises from its slumber. It sees intruders in its lair and charges, and our army must stand and fight!	false
+incidents_localised_title_land_enc_incident_spot_touch_the_relic_blessed	Touch the Relic	false
+incidents_localised_description_land_enc_incident_spot_touch_the_relic_blessed	Warmth spreads from the relic into the hands that hold it. A blessing settles over our army and will stay with it for 5 turns.	false
+incidents_localised_title_land_enc_incident_spot_touch_the_relic_cursed	Touch the Relic	false
+incidents_localised_description_land_enc_incident_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 5 turns.	false
+incidents_localised_title_land_enc_incident_spot_gamble_with_the_hermit_won	Gamble with the Hermit	false
+incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_won	The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands.	false
+incidents_localised_title_land_enc_incident_spot_gamble_with_the_hermit_lost	Gamble with the Hermit	false
+incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_lost	The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone.	false
+incidents_localised_title_land_enc_incident_spot_endow_the_province	Endow the Province	false
+incidents_localised_description_land_enc_incident_spot_endow_the_province	Our gold builds up [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]: [[col:green]]+50 development points[[/col]].	false
+incidents_localised_title_land_enc_incident_spot_shore_up_the_walls	Shore Up the Walls	false
+incidents_localised_description_land_enc_incident_spot_shore_up_the_walls	The garrison of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] is healed and its walls are shored up.	false
+incidents_localised_title_land_enc_incident_spot_raise_the_settlement	Raise the Settlement	false
+incidents_localised_description_land_enc_incident_spot_raise_the_settlement	[[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] grows, its main building raised a level.	false
+incidents_localised_title_land_enc_incident_spot_quell_the_unrest	Quell the Unrest	false
+incidents_localised_description_land_enc_incident_spot_quell_the_unrest	Order returns to [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_title_land_enc_incident_spot_bountiful_harvest	Bountiful Harvest	false
+incidents_localised_description_land_enc_incident_spot_bountiful_harvest	[[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] prospers with a bountiful harvest.	false
+incidents_localised_title_land_enc_incident_spot_stir_their_rebels	Stir Their Rebels	false
+incidents_localised_description_land_enc_incident_spot_stir_their_rebels	Unrest spreads through the enemy's lands around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_title_land_enc_incident_spot_poison_their_wells	Poison Their Wells	false
+incidents_localised_description_land_enc_incident_spot_poison_their_wells	The wells of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] are fouled.	false
+incidents_localised_title_land_enc_incident_spot_undermine_their_walls	Undermine Their Walls	false
+incidents_localised_description_land_enc_incident_spot_undermine_their_walls	The walls of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] are undermined.	false
+incidents_localised_title_land_enc_incident_spot_spread_the_plague	Spread the Plague	false
+incidents_localised_description_land_enc_incident_spot_spread_the_plague	Plague spreads through the enemy's lands around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_title_land_enc_incident_spot_send_gifts	Send Gifts	false
+incidents_localised_description_land_enc_incident_spot_send_gifts	Our gifts are well received at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_title_land_enc_incident_spot_spy_on_their_capital	Spy on Their Capital	false
+incidents_localised_description_land_enc_incident_spot_spy_on_their_capital	Our spies have mapped the enemy's capital, [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_title_land_enc_incident_spot_curse_a_distant_king	Curse a Distant King	false
+incidents_localised_description_land_enc_incident_spot_curse_a_distant_king	A curse falls on the coffers of the king at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_title_land_enc_incident_spot_share_the_find	Share the Find	false
+incidents_localised_description_land_enc_incident_spot_share_the_find	Our neighbours at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] learn from what we found, and think better of us.	false
+incidents_localised_title_land_enc_incident_spot_point_them_at_each_other	Point Them at Each Other	false
+incidents_localised_description_land_enc_incident_spot_point_them_at_each_other	Rumours spread from [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and two rivals now eye each other with suspicion.	false
+incidents_localised_title_land_enc_incident_spot_sell_their_secrets	Sell Their Secrets	false
+incidents_localised_description_land_enc_incident_spot_sell_their_secrets	The secrets are sold at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and our enemies grow closer.	false
+incidents_localised_title_land_enc_incident_spot_ransom_the_captain	Ransom the Captain	false
+incidents_localised_description_land_enc_incident_spot_ransom_the_captain	Their captain is ransomed to [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and their kin will not forget it.	false
+incidents_localised_title_land_enc_incident_spot_chase_the_routers_won	Chase the Routers	false
+incidents_localised_description_land_enc_incident_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours.	false
+incidents_localised_title_land_enc_incident_spot_chase_the_routers_lost	Chase the Routers	false
+incidents_localised_description_land_enc_incident_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns at the start of our next turn.	false
+incidents_localised_title_land_enc_incident_spot_mission_headhunt_met	Headhunt	false
+incidents_localised_description_land_enc_incident_spot_mission_headhunt_met	The enemy lord fell in time, just as we vowed. Their finest possession, a rare item, now belongs to us.	false
+incidents_localised_title_land_enc_incident_spot_mission_headhunt_failed	Headhunt	false
+incidents_localised_description_land_enc_incident_spot_mission_headhunt_failed	The enemy lord lived too long, and our vow goes unfulfilled.	false
+incidents_localised_title_land_enc_incident_spot_mission_blood_tally_met	Blood Tally	false
+incidents_localised_description_land_enc_incident_spot_mission_blood_tally_met	The enemy's soldiers fell in their hundreds, and the tally is met. The gold we were promised is ours.	false
+incidents_localised_title_land_enc_incident_spot_mission_blood_tally_failed	Blood Tally	false
+incidents_localised_description_land_enc_incident_spot_mission_blood_tally_failed	Too few of the enemy fell, and the tally comes up short.	false
+incidents_localised_title_land_enc_incident_spot_mission_hold_the_line_met	Hold the Line	false
+incidents_localised_description_land_enc_incident_spot_mission_hold_the_line_met	Our line bent but never broke, and few of our units were lost. The gold we were promised is ours.	false
+incidents_localised_title_land_enc_incident_spot_mission_hold_the_line_failed	Hold the Line	false
+incidents_localised_description_land_enc_incident_spot_mission_hold_the_line_failed	Our line held in the end, but too many of our units were lost along the way.	false
+incidents_localised_title_land_enc_incident_spot_mission_swift_victory_met	Swift Victory	false
+incidents_localised_description_land_enc_incident_spot_mission_swift_victory_met	The battle was over almost before it began. Word of the swift victory spreads, and an extra item comes our way.	false
+incidents_localised_title_land_enc_incident_spot_mission_swift_victory_failed	Swift Victory	false
+incidents_localised_description_land_enc_incident_spot_mission_swift_victory_failed	The battle dragged on too long for the victory to be called swift.	false
+incidents_localised_title_land_enc_incident_spot_mission_guard_the_standard_met	Guard the Standard	false
+incidents_localised_description_land_enc_incident_spot_mission_guard_the_standard_met	The marked unit stood firm through the worst of the fighting. They return as hardened veterans, 3 ranks the wiser.	false
+incidents_localised_title_land_enc_incident_spot_mission_guard_the_standard_failed	Guard the Standard	false
+incidents_localised_description_land_enc_incident_spot_mission_guard_the_standard_failed	The marked unit was lost in the fighting, and their sacrifice earns no reward.	false
+incidents_localised_title_land_enc_incident_spot_mission_break_them_met	Break Them	false
+incidents_localised_description_land_enc_incident_spot_mission_break_them_met	Unit after unit of theirs broke and fled before us. The gold we were promised is ours.	false
+incidents_localised_title_land_enc_incident_spot_mission_break_them_failed	Break Them	false
+incidents_localised_description_land_enc_incident_spot_mission_break_them_failed	Too few of their units broke, and they fought on to the bitter end.	false
+incidents_localised_title_land_enc_incident_spot_mission_trophy_hunt_met	Trophy Hunt	false
+incidents_localised_description_land_enc_incident_spot_mission_trophy_hunt_met	Their finest unit fell to our blades. Its survivors are pressed into our service, and a copy of it joins our army.	false
+incidents_localised_title_land_enc_incident_spot_mission_trophy_hunt_failed	Trophy Hunt	false
+incidents_localised_description_land_enc_incident_spot_mission_trophy_hunt_failed	Their finest unit survived the battle, and the trophy slips through our fingers.	false
+incidents_localised_title_land_enc_incident_spot_mission_silence_the_guns_met	Silence the Guns	false
+incidents_localised_description_land_enc_incident_spot_mission_silence_the_guns_met	Their guns fell silent before they could do much harm. Among the wreckage we find a rare item, and it is ours.	false
+incidents_localised_title_land_enc_incident_spot_mission_silence_the_guns_failed	Silence the Guns	false
+incidents_localised_description_land_enc_incident_spot_mission_silence_the_guns_failed	Their guns kept firing for too long, and the mission is failed.	false
+incidents_localised_title_land_enc_incident_spot_mission_bloodbath_wager_met	Bloodbath Wager	false
+incidents_localised_description_land_enc_incident_spot_mission_bloodbath_wager_met	The field ran red, and the wager is won. The gold comes back to us many times over.	false
+incidents_localised_title_land_enc_incident_spot_mission_bloodbath_wager_failed	Bloodbath Wager	false
+incidents_localised_description_land_enc_incident_spot_mission_bloodbath_wager_failed	Too few of the enemy fell, and the gold we wagered is lost.	false
+incidents_localised_title_land_enc_incident_spot_mission_duelists_challenge_met	Duellist's Challenge	false
+incidents_localised_description_land_enc_incident_spot_mission_duelists_challenge_met	Our lord met theirs blade to blade and struck them down. A unique item is taken from the fallen lord, and it is ours.	false
+incidents_localised_title_land_enc_incident_spot_mission_duelists_challenge_failed	Duellist's Challenge	false
+incidents_localised_description_land_enc_incident_spot_mission_duelists_challenge_failed	Our lord did not slay theirs, and the challenge goes unanswered.	false
+incidents_localised_title_land_enc_incident_spot_mission_spare_the_captain_met	Spare the Captain	false
+incidents_localised_description_land_enc_incident_spot_mission_spare_the_captain_met	Their lord was taken alive, just as we planned. The ransom has been paid, and the gold is ours.	false
+incidents_localised_title_land_enc_incident_spot_mission_spare_the_captain_failed	Spare the Captain	false
+incidents_localised_description_land_enc_incident_spot_mission_spare_the_captain_failed	Their lord fell in the fighting, so there is no one left to ransom.	false
+incidents_localised_title_land_enc_incident_spot_mission_flawless_victory_met	Flawless Victory	false
+incidents_localised_description_land_enc_incident_spot_mission_flawless_victory_met	Not a single unit of ours was lost. Songs of the flawless victory spread far, and a unique item is ours.	false
+incidents_localised_title_land_enc_incident_spot_mission_flawless_victory_failed	Flawless Victory	false
+incidents_localised_description_land_enc_incident_spot_mission_flawless_victory_failed	We lost a unit, and the victory was not flawless.	false
+incidents_localised_title_land_enc_incident_spot_missions_untracked	Missions	false
+incidents_localised_description_land_enc_incident_spot_missions_untracked	The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.	false
+incidents_localised_title_land_enc_incident_spot_wound_paid_2	The Price Is Paid	false
+incidents_localised_description_land_enc_incident_spot_wound_paid_2	The price of what we took has come due. Our lord is struck down by a wound that will take 2 turns to heal.	false
+incidents_localised_title_land_enc_incident_spot_wound_paid_3	The Price Is Paid	false
+incidents_localised_description_land_enc_incident_spot_wound_paid_3	The price of what we took has come due. Our lord is struck down by a wound that will take 3 turns to heal.	false
+incidents_localised_title_land_enc_incident_spot_wound_paid_5	The Price Is Paid	false
+incidents_localised_description_land_enc_incident_spot_wound_paid_5	The price of what we took has come due. Our lord is struck down by a wound that will take 5 turns to heal.	false

@@ -73,21 +73,24 @@ end
 --- @param general_cqi number The lord's command queue index.
 --- @param shorthand string|nil The faction shorthand to recruit from.
 --- @param offer table The offer record: `count`, `tiers` and `unit_types`.
+--- @param exclude table|nil Unit key -> true set to leave out, e.g. the units other offers on the same dilemma already show.
 --- @returns table The picked unit keys, empty without room or a shorthand.
-function M.pick_recruits(general_cqi, shorthand, offer)
+function M.pick_recruits(general_cqi, shorthand, offer, exclude)
     if not M.has_room(general_cqi, offer.count) or not shorthand then return {} end
-    return army_generator.pick_units(shorthand, offer.tiers, offer.unit_types, offer.count)
+    return army_generator.pick_units(shorthand, offer.tiers, offer.unit_types, offer.count, { exclude = exclude })
 end
 
 --- Picks Regiments of Renown of a faction's culture that the army does not field, when the army has room for them.
 --- @param general_cqi number The lord's command queue index.
 --- @param faction_name string The lord's faction key.
 --- @param count number How many to pick.
+--- @param exclude table|nil Unit key -> true set to leave out as well, e.g. the units other offers on the same dilemma already show.
 --- @returns table The picked unit keys, empty without room.
-function M.pick_renown(general_cqi, faction_name, count)
+function M.pick_renown(general_cqi, faction_name, count, exclude)
     if not M.has_room(general_cqi, count) then return {} end
     local shorthand = M.culture_shorthand(faction_name)
     local fielded = {}
+    for key in pairs(exclude or {}) do fielded[key] = true end
     for _, entry in ipairs(tower_army.unit_strengths(general_cqi)) do fielded[entry.unit:unit_key()] = true end
     return shorthand and army_generator.pick_units(shorthand, { 0, 1, 2, 3, 4, 5 }, nil, count, { renown = true, exclude = fielded }) or {}
 end

@@ -88,9 +88,10 @@ local function eligible(offer, ctx)
     if offer.shoots and not offer_effects.army_shoots(ctx.general_cqi) then return false end
     if offer.unit_ranks and #tower_army.regular_units(ctx.general_cqi) == 0 then return false end
     if offer.traitor then
-        local units = offer_effects.pick_recruits(ctx.general_cqi, ctx.event.faction, offer.traitor)
+        local units = offer_effects.pick_recruits(ctx.general_cqi, ctx.event.faction, offer.traitor, ctx.shown_units)
         if #units < offer.traitor.count then return false end
         ctx.cards[offer.key] = { units = units }
+        for _, key in ipairs(units) do ctx.shown_units[key] = true end
     end
     return true
 end
@@ -198,7 +199,7 @@ end
 --- @param with_offers boolean True to draw pre-battle offers and missions, see `M.roll`.
 function M.open(event, character, faction, with_offers)
     local faction_name = faction:name()
-    local ctx = { faction_name = faction_name, general_cqi = character:command_queue_index(), event = event, cards = {} }
+    local ctx = { faction_name = faction_name, general_cqi = character:command_queue_index(), event = event, cards = {}, shown_units = {} }
     local offers, missions = {}, {}
     if with_offers then offers, missions = M.draw(ctx) end
     M.pending_by_faction[faction_name] = { dilemma = event.dilemma, offers = offers, missions = missions, general_cqi = ctx.general_cqi,
@@ -403,31 +404,31 @@ local function standard_unit(general_cqi, standard)
     return nil
 end
 
---- Pays one mission met: gold, items, ranks for the marked unit, or a copy of the enemy's most expensive unit.
+--- Works out one mission met's rewards: gold, items, or a copy of the enemy's most expensive unit, which its result grants. Ranks for the
+--- marked unit are given here.
 --- @param offer table The mission's offer record.
 --- @param event table The battle event.
 --- @param faction_name string Our faction key.
 --- @param general_cqi number Our lord's command queue index.
+--- @returns table The rewards { gold, items, units } for the mission's result.
 local function pay_mission(offer, event, faction_name, general_cqi)
     local gold = offer.gold and spot_offers.scale_gold(offer.gold, event.difficulty, offer) or nil
-    if gold then cm:treasury_mod(faction_name, gold) end
     local items = {}
     if offer.items then items = item_pool.pick_items(faction_name, offer.items.rarities, offer.items.count) end
     if offer.unique then items = offer_effects.pick_unique_items(faction_name, offer.unique) end
     if offer.battle_item then items = item_pool.pick_items(faction_name, (event.victory_items or {}).rarities or DEFAULT_BATTLE_RARITIES, 1) end
-    for _, item in ipairs(items) do cm:add_ancillary_to_faction(cm:get_faction(faction_name), item, false) end
     if offer.unit_ranks then
         local entry = event.standard and standard_unit(general_cqi, event.standard)
         if entry then cm:add_experience_to_unit(entry.unit, offer.unit_ranks) else log("spot battle: guard the standard found no marked unit") end
     end
-    local general = tower_army.character(general_cqi)
-    if offer.trophy and event.trophy and general then cm:grant_unit_to_character(cm:char_lookup_str(general), event.trophy) end
+    local units = offer.trophy and event.trophy and { event.trophy } or {}
     log("spot battle: mission " .. offer.key .. " pays" .. (gold and " " .. gold .. " gold" or "") .. (#items > 0 and ", items " .. table.concat(items, ", ") or "")
-        .. (offer.trophy and ", trophy " .. tostring(event.trophy) or ""))
+        .. (#units > 0 and ", trophy " .. units[1] or ""))
+    return { gold = gold, items = items, units = units }
 end
 
---- Settles a won battle's missions from what the battle script reported, with a message for each met or failed. After an auto-resolved
---- battle nothing was counted: a paid mission's cost comes back and one message says so.
+--- Settles a won battle's missions from what the battle script reported, with a result for each met or failed that grants its rewards. After
+--- an auto-resolved battle nothing was counted: one result says so and gives back the paid missions' stakes.
 --- @param event table The battle event.
 --- @param faction_name string Our faction key.
 --- @param general_cqi number Our lord's command queue index.
@@ -437,19 +438,22 @@ function M.settle_missions(event, faction_name, general_cqi)
     local general = tower_army.character(general_cqi)
     local position = general and { general:logical_position_x(), general:logical_position_y() } or { 0, 0 }
     if outcomes.untracked then
+        local refund = 0
         for _, key in ipairs(event.missions) do
             local offer = offers_data.by_key[key]
-            if offer.cost then cm:treasury_mod(faction_name, spot_offers.offer_cost(offer, event.difficulty)) end
+            if offer.cost then refund = refund + spot_offers.offer_cost(offer, event.difficulty) end
         end
-        log("spot battle: the battle was auto-resolved, so no mission was counted and their stakes come back")
-        show_located_message(faction_name, offers_data.message_prefix .. "missions_untracked", position)
+        log("spot battle: the battle was auto-resolved, so no mission was counted and " .. refund .. " gold of stakes comes back")
+        spot_offers.show_result(faction_name, "missions_untracked", { gold = refund, character = general }, position)
         return
     end
     for _, mission in ipairs(outcomes.missions) do
         local offer = offers_data.by_key[mission.key]
         log("spot battle: mission " .. mission.key .. " " .. (mission.met and "met" or "failed"))
-        if mission.met then pay_mission(offer, event, faction_name, general_cqi) end
-        show_located_message(faction_name, offers_data.message_prefix .. "mission_" .. mission.key .. (mission.met and "_met" or "_failed"), position)
+        local rewards = mission.met and pay_mission(offer, event, faction_name, general_cqi) or { items = {} }
+        rewards.character = general
+        spot_offers.show_result(faction_name, "mission_" .. mission.key .. (mission.met and "_met" or "_failed"), rewards, position,
+            rewards.items[1] and "ancillaries_onscreen_name_" .. rewards.items[1] or nil)
     end
 end
 

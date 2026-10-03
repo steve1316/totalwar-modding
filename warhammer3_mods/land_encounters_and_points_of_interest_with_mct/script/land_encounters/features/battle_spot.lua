@@ -98,27 +98,44 @@ function BattleEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
     if action == "fight" or (action == nil and choice == FIRST_OPTION) then
         out("DEBUG - trigger_dilemma_event_given_choice dilemma: " .. dilemma_choice_and_faction_info:dilemma())
         out("DEBUG - trigger_dilemma_event_given_choice choice: " .. dilemma_choice_and_faction_info:choice())
-        --- Generate the army and confirm a spawn location exists before firing the battle.
-        local offensive_army = self:get_offensive_army()
-        out("DEBUG - offensive_army generated")
-        if self.invasion_battle_manager:can_generate_battle(offensive_army, spot_info.coordinates) then
-            self.is_triggered = true
-
-            spot_battles.prepare_battle(self.cached_event, self.cached_player_character:command_queue_index())
-            self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
-            --- Handed over once the army is generated, since Night terrors and the missions pick targets from its units.
-            spot_battles.hand_to_battle(self.cached_event, offensive_army)
-            self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
-            self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
-        else
-            --- No valid spawn location, so we trigger the default removal incident.
-            self:trigger_battle_removal_incident(spot_info)
-        end
+        self:start_battle(spot_info)
     else
         self:trigger_battle_avoidance_incident(spot_info)
     end
 end
 
+
+--- Starts the battle the cached event describes at a spot: generates the army, readies ours with any pre-battle offers, fires the battle and
+--- routes its result. With no valid spawn location the default removal incident fires instead.
+--- @param spot_info table A spot_info record with the battle's coordinates.
+function BattleEventDelegate:start_battle(spot_info)
+    local offensive_army = self:get_offensive_army()
+    out("DEBUG - offensive_army generated")
+    if not self.invasion_battle_manager:can_generate_battle(offensive_army, spot_info.coordinates) then
+        self:trigger_battle_removal_incident(spot_info)
+        return
+    end
+    self.is_triggered = true
+    spot_battles.prepare_battle(self.cached_event, self.cached_player_character:command_queue_index())
+    self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
+    --- Handed over once the army is generated, since Night terrors and the missions pick targets from its units.
+    spot_battles.hand_to_battle(self.cached_event, offensive_army)
+    self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
+    self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
+end
+
+--- Starts Wake the guardian's battle at a treasure site (features/spot_offers.lua): a battle picked as for a battle spot, whose army attacks
+--- the lord at once. Its result is a battle spot's: the victory reward and the spoils roll.
+--- @param character character The lord who woke the guardian.
+--- @param spot_info table A spot_info record with the site's coordinates.
+function BattleEventDelegate:start_guardian_battle(character, spot_info)
+    self.cached_player_character = character
+    self.cached_event = battle_picker.pick()
+    self.cached_event.intervention = INTERCEPTION_TYPE
+    log("spot: the guardian wakes and attacks lord " .. character:command_queue_index() .. " with a " .. self.cached_event.category .. " battle at ("
+        .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
+    self:start_battle(spot_info)
+end
 
 --- Fires the generic clean-up incident when a battle could not be spawned (no valid spawn location).
 --- @param spot_info table A spot_info record for the triggering spot.

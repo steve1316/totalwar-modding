@@ -40,7 +40,11 @@ NOTICE_PREFIX = "land_enc_tower_buff_"
 
 # Line markers that make a row this script's own, so a run replaces it.
 OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_",
-                 "string_land_enc_spot_")
+                 "string_land_enc_spot_", "land_enc_incident_spot_")
+
+# Picture of a result's incident: missions show a victory, everything else a found treasure.
+RESULT_IMAGE = "wh2_sea_encounters_1"
+MISSION_RESULT_IMAGE = "land_victory"
 
 # Loc file of the strings the script reads at runtime: the taken missions' lines.
 STRINGS_LOC = LOC_PREFIX + "spot_strings.loc.tsv"
@@ -130,6 +134,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for 3 turns[[/col]], decided now."),
     "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]] at the start of our next turn, decided now."),
     "stake_the_treasury": ("Stake the Treasury", "Stake [[col:yellow]]{cost} gold[[/col]] from our treasury: a 50/50 chance it comes back as [[col:green]]{won_gold} gold[[/col]] or is [[col:red]]lost[[/col]], decided now."),
+    "wake_the_guardian": ("Wake the Guardian", "Wake the guardian: a 60/40 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]it attacks[[/col]] and a battle starts here, decided now."),
     "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing[[/col]] or [[col:red]]curse[[/col]] for 5 turns, decided now."),
     "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 unique item[[/col]], decided now."),
     "leave_an_offering": ("Leave an Offering", PAY + "leave an offering: [[col:green]]+10% ward save[[/col]] for our army for 5 turns."),
@@ -237,7 +242,7 @@ ICONS = {
     "the_explorer": "vision.png", "legendary_bard": "income.png", "take_the_gold": "treasury.png", "strip_the_valuables": "nor_spoils.png",
     "pry_open_the_reliquary": "hex_1.png", "search_every_corner": "cotw_track_army.png", "the_hidden_vault": "resource_gold_idols_large.png",
     "roll_the_bones": "random_recipe.png", "drink_from_the_spring": "stat_healing_received.png", "open_the_sealed_door": "concealment.png",
-    "stake_the_treasury": "trickster_cult.png", "touch_the_relic": "fractured_mind.png", "gamble_with_the_hermit": "random_recipe.png",
+    "stake_the_treasury": "trickster_cult.png", "wake_the_guardian": "hellforged.png", "touch_the_relic": "fractured_mind.png", "gamble_with_the_hermit": "random_recipe.png",
     "leave_an_offering": "resistance_ward_save.png", "bless_the_banners": "effect_rite.png", "holy_water": "resistance_physical.png",
     "oath_at_the_altar": "champions_rift.png", "sanctified_weapons": "magical_attacks_force.png", "dark_pact": "chaos_gifts.png",
     "cursed_hoard": "plague.png", "bloodstained_blades": "rampage_savage.png", "feed_the_shadows": "bloodreaper.png",
@@ -271,20 +276,44 @@ ICONS = {
 # Line on a mission already taken on the open battle dilemma: (icon, text).
 TAKEN = ("icon_blank.png", "[[col:red]]Already taken.[[/col]]")
 
-# Mission key -> (what it asked, said when met, said when failed). Each becomes a message after a won battle.
+# Mission key -> (what it asked, said when met, said when failed). Each becomes a result after a won battle.
 MISSION_MESSAGES = {
-    "headhunt": ("Headhunt", "The enemy lord fell in time, and a rare item is ours.", "The enemy lord was not slain in time."),
-    "blood_tally": ("Blood Tally", "We cut down the enemy's soldiers, and the gold is ours.", "Too few of the enemy fell."),
-    "hold_the_line": ("Hold the Line", "Our line held, and the gold is ours.", "We lost too many units."),
-    "swift_victory": ("Swift Victory", "We won in time, and an extra item is ours.", "The battle took too long."),
-    "guard_the_standard": ("Guard the Standard", "The marked unit survived and gains 3 ranks.", "The marked unit was lost."),
-    "break_them": ("Break Them", "Their units broke, and the gold is ours.", "Too few of their units broke."),
-    "trophy_hunt": ("Trophy Hunt", "Their finest unit fell, and a copy joins our army.", "Their finest unit survived."),
-    "silence_the_guns": ("Silence the Guns", "Their guns fell silent in time, and a rare item is ours.", "Their guns were not silenced in time."),
-    "bloodbath_wager": ("Bloodbath Wager", "The bloodbath paid off, and the gold is ours.", "Too few of the enemy fell, and the wager is lost."),
-    "duelists_challenge": ("Duellist's Challenge", "Our lord slew theirs, and a unique item is ours.", "Our lord did not slay theirs."),
-    "spare_the_captain": ("Spare the Captain", "Their lord lived, and the ransom is ours.", "Their lord fell, so there is no ransom."),
-    "flawless_victory": ("Flawless Victory", "Not a single unit was lost, and a unique item is ours.", "We lost a unit."),
+    "headhunt": ("Headhunt",
+        "The enemy lord fell in time, just as we vowed. Their finest possession, a rare item, now belongs to us.",
+        "The enemy lord lived too long, and our vow goes unfulfilled."),
+    "blood_tally": ("Blood Tally",
+        "The enemy's soldiers fell in their hundreds, and the tally is met. The gold we were promised is ours.",
+        "Too few of the enemy fell, and the tally comes up short."),
+    "hold_the_line": ("Hold the Line",
+        "Our line bent but never broke, and few of our units were lost. The gold we were promised is ours.",
+        "Our line held in the end, but too many of our units were lost along the way."),
+    "swift_victory": ("Swift Victory",
+        "The battle was over almost before it began. Word of the swift victory spreads, and an extra item comes our way.",
+        "The battle dragged on too long for the victory to be called swift."),
+    "guard_the_standard": ("Guard the Standard",
+        "The marked unit stood firm through the worst of the fighting. They return as hardened veterans, 3 ranks the wiser.",
+        "The marked unit was lost in the fighting, and their sacrifice earns no reward."),
+    "break_them": ("Break Them",
+        "Unit after unit of theirs broke and fled before us. The gold we were promised is ours.",
+        "Too few of their units broke, and they fought on to the bitter end."),
+    "trophy_hunt": ("Trophy Hunt",
+        "Their finest unit fell to our blades. Its survivors are pressed into our service, and a copy of it joins our army.",
+        "Their finest unit survived the battle, and the trophy slips through our fingers."),
+    "silence_the_guns": ("Silence the Guns",
+        "Their guns fell silent before they could do much harm. Among the wreckage we find a rare item, and it is ours.",
+        "Their guns kept firing for too long, and the mission is failed."),
+    "bloodbath_wager": ("Bloodbath Wager",
+        "The field ran red, and the wager is won. The gold comes back to us many times over.",
+        "Too few of the enemy fell, and the gold we wagered is lost."),
+    "duelists_challenge": ("Duellist's Challenge",
+        "Our lord met theirs blade to blade and struck them down. A unique item is taken from the fallen lord, and it is ours.",
+        "Our lord did not slay theirs, and the challenge goes unanswered."),
+    "spare_the_captain": ("Spare the Captain",
+        "Their lord was taken alive, just as we planned. The ransom has been paid, and the gold is ours.",
+        "Their lord fell in the fighting, so there is no one left to ransom."),
+    "flawless_victory": ("Flawless Victory",
+        "Not a single unit of ours was lost. Songs of the flawless victory spread far, and a unique item is ours.",
+        "We lost a unit, and the victory was not flawless."),
 }
 
 # Battle objectives for the missions the tower does not have: name -> (panel text, banner).
@@ -317,44 +346,98 @@ AVOID_CONSEQUENCES = ("avoid_consequences", "random_recipe.png", "[[col:yellow]]
 
 
 
-# Message suffix after `spot_` -> (title, subtitle, description). Realm messages use the target region's name as their subtitle in game.
+# Message suffix after `spot_` -> (title, subtitle, description). Realm messages have no subtitle: their {place} is the target region's name,
+# or the target faction's when it holds no region. Each is also a result incident, which shows only the title and description, with the
+# place highlighted.
 MESSAGES = {
-    "roll_the_bones_won": ("Roll the Bones", "Fortune Smiles", "The bones fall our way, and a rare item is ours."),
-    "roll_the_bones_lost": ("Roll the Bones", "Fortune Frowns", "The bones turn against us, and the gold is gone."),
-    "drink_from_the_spring_won": ("Drink from the Spring", "Healing Waters", "The waters are pure. Every wound in our army closes."),
-    "drink_from_the_spring_lost": ("Drink from the Spring", "Foul Waters", "The waters are tainted. Sickness spreads through our army for 3 turns."),
-    "open_the_sealed_door_won": ("Open the Sealed Door", "A Treasure Within", "Beyond the door lies a unique treasure, and it is ours."),
-    "open_the_sealed_door_lost": ("Open the Sealed Door", "A Trap Sprung", "The door was trapped. Our lord will be wounded for 3 turns at the start of our next turn."),
-    "stake_the_treasury_won": ("Stake the Treasury", "The Stake Pays", "Our stake comes back richer."),
-    "stake_the_treasury_lost": ("Stake the Treasury", "The Stake Is Lost", "Our stake is lost."),
-    "touch_the_relic_blessed": ("Touch the Relic", "A Blessing", "The relic glows warm, and its blessing settles on our army for 5 turns."),
-    "touch_the_relic_cursed": ("Touch the Relic", "A Curse", "The relic burns cold, and its curse settles on our army for 5 turns."),
-    "gamble_with_the_hermit_won": ("Gamble with the Hermit", "A Lucky Throw", "The hermit loses, and pays with a unique treasure."),
-    "gamble_with_the_hermit_lost": ("Gamble with the Hermit", "The Hermit Wins", "The hermit wins, and keeps our gold."),
-    "endow_the_province": ("Endow the Province", "", "Our gold builds up the region: [[col:green]]+50 development points[[/col]]."),
-    "shore_up_the_walls": ("Shore Up the Walls", "", "The garrison is healed and the walls are shored up."),
-    "raise_the_settlement": ("Raise the Settlement", "", "The settlement grows, its main building raised a level."),
-    "quell_the_unrest": ("Quell the Unrest", "", "Order returns to the province."),
-    "bountiful_harvest": ("Bountiful Harvest", "", "The province prospers with a bountiful harvest."),
-    "stir_their_rebels": ("Stir Their Rebels", "", "Unrest spreads through the enemy's province."),
-    "poison_their_wells": ("Poison Their Wells", "", "The enemy's wells are fouled."),
-    "undermine_their_walls": ("Undermine Their Walls", "", "The enemy's walls are undermined."),
-    "spread_the_plague": ("Spread the Plague", "", "Plague spreads through the enemy's lands."),
-    "send_gifts": ("Send Gifts", "", "Our gifts are well received."),
-    "spy_on_their_capital": ("Spy on Their Capital", "", "Our spies have mapped the enemy's capital."),
-    "curse_a_distant_king": ("Curse a Distant King", "", "A curse falls on a distant king's coffers."),
-    "share_the_find": ("Share the Find", "", "Our neighbours learn from what we found, and think better of us."),
-    "point_them_at_each_other": ("Point Them at Each Other", "", "Two rivals now eye each other with suspicion."),
-    "sell_their_secrets": ("Sell Their Secrets", "", "The secrets are sold, and our enemies grow closer."),
-    "ransom_the_captain": ("Ransom the Captain", "", "Their captain is ransomed, and their kin will not forget it."),
-    "chase_the_routers_won": ("Chase the Routers", "A Rich Catch", "We ran them down, and a rare item is ours."),
-    "chase_the_routers_lost": ("Chase the Routers", "Ambushed", "The routers turned on us. Our lord will be wounded for 2 turns at the start of our next turn."),
+    "roll_the_bones_won": ("Roll the Bones", "Fortune Smiles",
+        "The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours."),
+    "roll_the_bones_lost": ("Roll the Bones", "Fortune Frowns",
+        "The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue."),
+    "drink_from_the_spring_won": ("Drink from the Spring", "Healing Waters",
+        "The water runs cold and clear. Wounds close and tired limbs grow strong again as the whole army drinks its fill."),
+    "drink_from_the_spring_lost": ("Drink from the Spring", "Foul Waters",
+        "The water tastes of rot. Within hours sickness spreads through the camp, and it will be 3 turns before the army is itself again."),
+    "open_the_sealed_door_won": ("Open the Sealed Door", "A Treasure Within",
+        "The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours."),
+    "open_the_sealed_door_lost": ("Open the Sealed Door", "A Trap Sprung",
+        "The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns at the start of our next turn."),
+    "stake_the_treasury_won": ("Stake the Treasury", "The Stake Pays",
+        "The venture pays off handsomely. Our stake comes back to the treasury with a healthy profit on top."),
+    "stake_the_treasury_lost": ("Stake the Treasury", "The Stake Is Lost",
+        "The venture collapses, and the merchants we backed are nowhere to be found. Our stake is gone."),
+    "wake_the_guardian_won": ("Wake the Guardian", "It Sleeps On",
+        "The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard."),
+    "wake_the_guardian_lost": ("Wake the Guardian", "It Wakes!",
+        "The ground shakes as the guardian of this place rises from its slumber. It sees intruders in its lair and charges, and our army must stand and fight!"),
+    "touch_the_relic_blessed": ("Touch the Relic", "A Blessing",
+        "Warmth spreads from the relic into the hands that hold it. A blessing settles over our army and will stay with it for 5 turns."),
+    "touch_the_relic_cursed": ("Touch the Relic", "A Curse",
+        "The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 5 turns."),
+    "gamble_with_the_hermit_won": ("Gamble with the Hermit", "A Lucky Throw",
+        "The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands."),
+    "gamble_with_the_hermit_lost": ("Gamble with the Hermit", "The Hermit Wins",
+        "The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone."),
+    "endow_the_province": ("Endow the Province", "", "Our gold builds up {place}: [[col:green]]+50 development points[[/col]]."),
+    "shore_up_the_walls": ("Shore Up the Walls", "", "The garrison of {place} is healed and its walls are shored up."),
+    "raise_the_settlement": ("Raise the Settlement", "", "{place} grows, its main building raised a level."),
+    "quell_the_unrest": ("Quell the Unrest", "", "Order returns to {place}."),
+    "bountiful_harvest": ("Bountiful Harvest", "", "{place} prospers with a bountiful harvest."),
+    "stir_their_rebels": ("Stir Their Rebels", "", "Unrest spreads through the enemy's lands around {place}."),
+    "poison_their_wells": ("Poison Their Wells", "", "The wells of {place} are fouled."),
+    "undermine_their_walls": ("Undermine Their Walls", "", "The walls of {place} are undermined."),
+    "spread_the_plague": ("Spread the Plague", "", "Plague spreads through the enemy's lands around {place}."),
+    "send_gifts": ("Send Gifts", "", "Our gifts are well received at {place}."),
+    "spy_on_their_capital": ("Spy on Their Capital", "", "Our spies have mapped the enemy's capital, {place}."),
+    "curse_a_distant_king": ("Curse a Distant King", "", "A curse falls on the coffers of the king at {place}."),
+    "share_the_find": ("Share the Find", "", "Our neighbours at {place} learn from what we found, and think better of us."),
+    "point_them_at_each_other": ("Point Them at Each Other", "", "Rumours spread from {place}, and two rivals now eye each other with suspicion."),
+    "sell_their_secrets": ("Sell Their Secrets", "", "The secrets are sold at {place}, and our enemies grow closer."),
+    "ransom_the_captain": ("Ransom the Captain", "", "Their captain is ransomed to {place}, and their kin will not forget it."),
+    "chase_the_routers_won": ("Chase the Routers", "A Rich Catch",
+        "Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours."),
+    "chase_the_routers_lost": ("Chase the Routers", "Ambushed",
+        "The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns at the start of our next turn."),
 }
 
 # Shown when a wound an offer owed lands, by its turns. The bundle title for the owed wound is the same for every length.
-WOUND_PAID = ("The Price Is Paid", "Our Lord Is Wounded", "What we took has taken its due. Our lord is [[col:red]]wounded for {turns} turns[[/col]].")
+WOUND_PAID = ("The Price Is Paid", "Our Lord Is Wounded", "The price of what we took has come due. Our lord is struck down by a wound that will take {turns} turns to heal.")
 WOUND_OWED = ("A Price Owed", "What we took will take its due when our next turn starts.")
 WOUND_OWED_EFFECT = "Our lord is wounded for %n turns at the start of our next turn"
+
+# Result -> (colour, text) of the effect line under a result's incident, for results whose payload shows no gold, item or unit card.
+# Every mission failed gets its own line, and every wound paid one built from WOUND_PAID_LINE.
+RESULT_LINES = {
+    "roll_the_bones_lost": ("red", "The gold we staked is lost."),
+    "drink_from_the_spring_won": ("green", "Every unit in our army is healed."),
+    "drink_from_the_spring_lost": ("red", "Our army is sick for 3 turns."),
+    "open_the_sealed_door_lost": ("red", "Our lord is wounded for 3 turns at the start of our next turn."),
+    "stake_the_treasury_lost": ("red", "The gold we staked is lost."),
+    "wake_the_guardian_lost": ("red", "The guardian attacks our army!"),
+    "touch_the_relic_blessed": ("green", "A blessing settles on our army for 5 turns."),
+    "touch_the_relic_cursed": ("red", "A curse settles on our army for 5 turns."),
+    "gamble_with_the_hermit_lost": ("red", "The hermit keeps our gold."),
+    "chase_the_routers_lost": ("red", "Our lord is wounded for 2 turns at the start of our next turn."),
+    "endow_the_province": ("green", "+50 development points in the region."),
+    "shore_up_the_walls": ("green", "The garrison is healed and the walls are shored up."),
+    "raise_the_settlement": ("green", "The settlement's main building is raised a level."),
+    "quell_the_unrest": ("green", "Order returns to the province."),
+    "bountiful_harvest": ("green", "The province prospers with a bountiful harvest."),
+    "stir_their_rebels": ("green", "Unrest spreads through the enemy's province."),
+    "poison_their_wells": ("green", "The enemy's wells are fouled."),
+    "undermine_their_walls": ("green", "The enemy's walls are undermined."),
+    "spread_the_plague": ("green", "Plague spreads through the enemy's lands."),
+    "send_gifts": ("green", "Their opinion of us improves."),
+    "spy_on_their_capital": ("green", "The enemy's capital is revealed to us."),
+    "curse_a_distant_king": ("green", "A distant king's income falls."),
+    "share_the_find": ("green", "Our neighbours think better of us."),
+    "point_them_at_each_other": ("green", "Two rivals now eye each other with suspicion."),
+    "sell_their_secrets": ("yellow", "Our enemies think better of each other."),
+    "ransom_the_captain": ("yellow", "Their captain's kin think worse of us."),
+    "mission_guard_the_standard_met": ("green", "The marked unit gains 3 ranks."),
+    "missions_untracked": ("yellow", "No mission was counted. Any wager comes back to our treasury."),
+}
+WOUND_PAID_LINE = ("red", "Our lord is wounded for {turns} turns.")
 
 # Bundle key suffix after `land_enc_effect_spot_` -> (target, icon, title, description, [(effect, scope, value)]).
 BUNDLES = {
@@ -463,6 +546,7 @@ end
 io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.offers, gold_multiplier = data.gold_multiplier, gold_step = data.gold_step,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
+    result_incident_prefix = data.result_incident_prefix, result_place_context = data.result_place_context,
     wound_bundle_prefix = data.wound_bundle_prefix, avoid_choice_key = data.avoid_choice_key,
     unaffordable_line = data.unaffordable_line, taken_line = data.taken_line, missions_context = data.missions_context,
     mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas }))
@@ -668,7 +752,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     for key, (title, met, failed) in MISSION_MESSAGES.items():
         messages["mission_" + key + "_met"] = (title, "Mission Met", met)
         messages["mission_" + key + "_failed"] = (title, "Mission Failed", failed)
-    messages["missions_untracked"] = ("Missions", "Not Counted", "The battle was auto-resolved, so no mission was counted. Any wager comes back to our treasury.")
+    messages["missions_untracked"] = ("Missions", "Not Counted",
+                                      "The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.")
     owed_effect = config["wound_bundle_prefix"].rstrip("_")
     add(table("effects_tables"), owed_effect, "chaos_gifts.png", 2, "chaos_gifts.png", "campaign", "false")
     add(LOC_PREFIX + "effects.loc.tsv", "effects_description_" + owed_effect, WOUND_OWED_EFFECT, "false")
@@ -691,11 +776,60 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             for field, text in [("onscreen_name", title_case(name)), ("colour_text", colour), ("explanation_text", explanation), ("removal", "")]:
                 add(LOC_PREFIX + "character_traits.loc.tsv", f"character_trait_levels_{field}_{level}", text, "false")
 
+    lines = dict(RESULT_LINES)
+    for key, (title, _, _) in MISSION_MESSAGES.items():
+        lines["mission_" + key + "_failed"] = ("red", f"{title_case(title)}: mission failed.")
+    for turns in wound_turns(config):
+        lines["wound_paid_" + str(turns)] = (WOUND_PAID_LINE[0], WOUND_PAID_LINE[1].format(turns=turns))
     for suffix, (title, subtitle, description) in messages.items():
         name = config["message_prefix"] + suffix
-        for field, text in [("title", title_case(title)), ("subtitle", title_case(subtitle or title)), ("description", description)]:
+        for field, text in [("title", title_case(title)), ("subtitle", title_case(subtitle or title)), ("description", fallback_text(description))]:
             add(LOC_PREFIX + "event_feed_strings.loc.tsv", f"event_feed_strings_text_{field}_event_land_enc_{name}", text, "false")
+        incident = config["result_incident_prefix"] + suffix
+        image = MISSION_RESULT_IMAGE if suffix.startswith("mission") else RESULT_IMAGE
+        add(table("incidents_tables"), incident, "false", image, "false", "Event", "", "false", "", "0.0000", "false")
+        for option, value in [("GEN_TARGET_NONE", ""), ("VAR_CHANCE", "100")]:
+            add(table("cdir_events_incident_option_junctions_tables"), row_id, incident, option, value, "default")
+            row_id += 1
+        place = f'{{{{CcoCampaignEventIncident:ScriptObjectContext("{config["result_place_context"]}").StringValue}}}}'
+        shown = description.replace("{place}", f"[[col:yellow]]{place}[[/col]]")
+        add(LOC_PREFIX + "incidents.loc.tsv", "incidents_localised_title_" + incident, title_case(title), "false")
+        add(LOC_PREFIX + "incidents.loc.tsv", "incidents_localised_description_" + incident, shown, "false")
+        if suffix in lines:
+            colour, text = lines[suffix]
+            line(config["line_prefix"] + "result_" + suffix, result_icon(suffix), f"[[col:{colour}]]{text}[[/col]]")
     return rows
+
+
+def fallback_text(description: str) -> str:
+    """Words a result's description for its fallback message, whose subtitle names the place, so {place} becomes "the place named above".
+
+    Args:
+        description (str): The description, maybe with {place}.
+
+    Returns:
+        str: The description for the event feed message.
+    """
+    if description.startswith("{place}"):
+        description = "The place named above" + description[len("{place}"):]
+    return description.replace("{place}", "the place named above")
+
+
+def result_icon(result: str) -> str:
+    """Picks the icon of a result's effect line: its offer's or mission's icon, or the treasury or wound icon.
+
+    Args:
+        result (str): The result name, e.g. "roll_the_bones_won" or "mission_headhunt_failed".
+
+    Returns:
+        str: The icon file under the effect bundle icons.
+    """
+    if result.startswith("wound_paid_"):
+        return "chaos_gifts.png"
+    if result == "missions_untracked":
+        return "treasury.png"
+    key = re.sub(r"^mission_|_(won|lost|blessed|cursed|met|failed)$", "", result)
+    return ICONS[key]
 
 
 def read_labels(dilemmas: List[str], choice: str) -> Dict[str, str]:
@@ -800,7 +934,9 @@ def check_text(config: Dict) -> None:
                  if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and "trick" not in o and o["key"] not in NOTICES
                  and o["key"] not in TOWER_NOTICES]
     problems += [f"no messages for mission {o['key']}" for o in config["offers"] if o["pool"] == "mission" and o["key"] not in MISSION_MESSAGES]
+    problems += [f"no result for line {key}" for key in RESULT_LINES if key not in MESSAGES and not key.startswith("mission")]
     every = [t for entry in OFFERS.values() for t in entry if t] + [t for entry in MESSAGES.values() for t in entry] + [d for _, d in SITES.values()]
+    every += [t for _, t in RESULT_LINES.values()]
     problems += [f"gold with a separator: {t}" for t in every if re.search(r"\d,\d{3}", t)]
     if problems:
         raise SystemExit("\n".join(problems))
