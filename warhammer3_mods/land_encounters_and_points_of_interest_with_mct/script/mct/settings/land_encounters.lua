@@ -257,8 +257,20 @@ for _, encounter in ipairs(get_encounter_data()) do
 end
 lock_children_of_master("enable_all_encounter_skins", "encounter_", encounter_checkbox_ids, "lock_all_encounter_checkboxes")
 
+add_section("battle_events_section", "Battle Events", encounters_page, "Extra choices around encounter battles. Set a chance to 0 to turn it off.")
+
+add_slider("pre_battle_chance", "battle_events_section", "Pre-battle event chance %",
+    "Chance that a battle's dilemma also offers ways to tip the battle for gold, and missions that pay out if met. Default is "
+    .. get_mct_settings().pre_battle_chance .. ".", { 0, 100, 5, 0 }, get_mct_settings().pre_battle_chance)
+add_slider("spoils_chance", "battle_events_section", "Spoils event chance %",
+    "Chance that winning an encounter battle opens a pick of spoils. Default is " .. get_mct_settings().spoils_chance .. ".", { 0, 100, 5, 0 },
+    get_mct_settings().spoils_chance)
+
 add_guide_section("battle_spots", "Guide: Battle Spots", encounters_page, mct_guides.battle_spots_text(), false)
-add_guide_section("treasure_spots", "Guide: Treasure Spots", encounters_page, mct_guides.treasure_spots_text(), false)
+add_guide_section("treasure_spots", "Guide: Treasure Sites", encounters_page, mct_guides.treasure_spots_text(), false)
+for _, offer_section in ipairs(mct_guides.spot_offer_sections()) do
+    add_guide_section("spot_" .. offer_section.key, "Offers: " .. offer_section.title, encounters_page, offer_section.text, false)
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

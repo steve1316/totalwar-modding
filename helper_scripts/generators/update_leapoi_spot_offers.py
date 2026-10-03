@@ -546,7 +546,7 @@ end
 io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.offers, gold_multiplier = data.gold_multiplier, gold_step = data.gold_step,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
-    result_incident_prefix = data.result_incident_prefix, result_place_context = data.result_place_context,
+    result_incident_prefix = data.result_incident_prefix, result_place_context = data.result_place_context, battle_pools = data.battle_pools,
     wound_bundle_prefix = data.wound_bundle_prefix, avoid_choice_key = data.avoid_choice_key,
     unaffordable_line = data.unaffordable_line, taken_line = data.taken_line, missions_context = data.missions_context,
     mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas }))
@@ -676,10 +676,21 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(table("campaign_payload_ui_details_tables"), component, "ui/campaign ui/effect_bundles/" + icon, "default", 0)
         add(LOC_PREFIX + "campaign_payload_ui_details.loc.tsv", "campaign_payload_ui_details_description_" + component, text, "false")
 
+    def label(dilemma: str, choice: str, text: str) -> None:
+        add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
+        add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
+            text, "false")
+
+    def objective(name: str, icon: str, text: str, banner: str) -> None:
+        for suffix, shown in [("", text), ("_message", banner)]:
+            add(table("scripted_objectives_tables"), NOTICE_PREFIX + name + suffix, "ui/campaign ui/effect_bundles/" + icon)
+            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_text_" + NOTICE_PREFIX + name + suffix, shown, "false")
+            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_description_" + NOTICE_PREFIX + name + suffix, "", "false")
+
     by_key = {o["key"]: o for o in config["offers"]}
     choice_keys = [(config["choice_key_prefix"] + o["key"].upper(), o["key"]) for o in config["offers"]] + [(config["walk_away_choice_key"], "walk_away")]
-    site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] not in ("pre_battle", "mission")]
-    battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] in ("pre_battle", "mission")]
+    site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] not in config["battle_pools"]]
+    battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] in config["battle_pools"]]
     row_id = FIRST_ROW_ID
     for site in config["sites"] + [config["spoils"]]:
         dilemma = config["dilemma_prefix"] + site["key"]
@@ -694,36 +705,22 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_description_" + dilemma, description + SITE_FOOTER, "false")
         labels = site_keys + ([(config["signature_choice_key"], site["signature"])] if site.get("signature") else [])
         for choice, key in labels:
-            add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
-            add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
-                title_case(OFFERS[key][0]), "false")
+            label(dilemma, choice, title_case(OFFERS[key][0]))
 
     avoid_labels = read_labels(config["battle_dilemmas"], "SECOND")
     line(config["unaffordable_line"], UNAFFORDABLE[0], UNAFFORDABLE[1])
     line(config["taken_line"], TAKEN[0], TAKEN[1])
     for name, (text, banner) in MISSION_OBJECTIVES.items():
-        icon = "ui/campaign ui/effect_bundles/" + ICONS[name]
-        for suffix, shown in [("", text), ("_message", banner)]:
-            add(table("scripted_objectives_tables"), NOTICE_PREFIX + name + suffix, icon)
-            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_text_" + NOTICE_PREFIX + name + suffix, shown, "false")
-            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_description_" + NOTICE_PREFIX + name + suffix, "", "false")
+        objective(name, ICONS[name], text, banner)
     consequences = config["line_prefix"] + AVOID_CONSEQUENCES[0]
     line(consequences, AVOID_CONSEQUENCES[1], AVOID_CONSEQUENCES[2])
     for dilemma in config["battle_dilemmas"]:
         for choice, key in battle_keys:
-            add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
-            add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
-                title_case(OFFERS[key][0]), "false")
-        add(table("cdir_events_dilemma_choice_details_tables"), config["avoid_choice_key"], dilemma, "", "")
-        add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv",
-            "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + config["avoid_choice_key"], avoid_labels[dilemma], "false")
+            label(dilemma, choice, title_case(OFFERS[key][0]))
+        label(dilemma, config["avoid_choice_key"], avoid_labels[dilemma])
     add(table("cdir_events_dilemma_choices_tables"), config["avoid_choice_key"], AVOID_ORDER)
     for notice, (colour, text) in NOTICES.items():
-        icon = "ui/campaign ui/effect_bundles/" + ICONS[NOTICE_ICONS.get(notice, notice)]
-        for suffix, shown in [("", f"[[col:{colour}]]{text}[[/col]]"), ("_message", text)]:
-            add(table("scripted_objectives_tables"), NOTICE_PREFIX + notice + suffix, icon)
-            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_text_" + NOTICE_PREFIX + notice + suffix, shown, "false")
-            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_description_" + NOTICE_PREFIX + notice + suffix, "", "false")
+        objective(notice, ICONS[NOTICE_ICONS.get(notice, notice)], f"[[col:{colour}]]{text}[[/col]]", text)
 
     for i, (choice, key) in enumerate(choice_keys):
         add(table("cdir_events_dilemma_choices_tables"), choice, WALK_AWAY_ORDER if key == "walk_away" else FIRST_CHOICE_ORDER + i)

@@ -14,32 +14,24 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_missions = require("script/land_encounters/features/tower_missions")
+local tower_offers = require("script/land_encounters/features/tower_offers")
 local spot_offers = require("script/land_encounters/features/spot_offers")
 
---- svr key holding the battle's comma-separated buff, notice, trick and mission names. Mirrored in script/battle/mod/land_enc_tower_buffs.lua.
-local BATTLE_BUFFS_SVR_KEY = "land_enc_tower_battle_buffs"
+--- svr keys the battle script reads the buff, notice, trick and mission names, Night terrors' targets and the mission targets from, and the
+--- prefix it strips from a one-battle bundle to find its notice. The tower owns them, since the battle script plays both under its names.
+local BATTLE_BUFFS_SVR_KEY = tower_offers.BATTLE_BUFFS_SVR_KEY
+local NIGHT_TERRORS_SVR_KEY = tower_offers.NIGHT_TERRORS_SVR_KEY
+local MISSION_TARGETS_SVR_KEY = tower_missions.TARGETS_SVR_KEY
+local TOWER_BUNDLE_PREFIX = tower_offers.BUNDLE_PREFIX
 
---- svr key holding Night terrors' comma-separated target unit keys. Mirrored in the battle script.
-local NIGHT_TERRORS_SVR_KEY = "land_enc_tower_night_terrors"
-
---- svr key holding each mission's target, "key=value" pairs. Mirrored in the battle script and features/tower_missions.lua.
-local MISSION_TARGETS_SVR_KEY = "land_enc_tower_mission_targets"
-
---- Prefix the battle script strips from a one-battle bundle to find its notice, as for the tower's bundles.
-local TOWER_BUNDLE_PREFIX = "land_enc_effect_tower_"
-
---- Line on Fight and on every offer that can be bought, since each of them starts the battle, from the vanilla dilemmas the battle spots
---- already use.
-local FIGHT_LINE = "dummy_wh2_dlc11_neo_counter_fight_chance"
+--- Line on Fight and on every offer that can be bought, since each of them starts the battle.
+local FIGHT_LINE = offers_data.fight_line
 
 --- Line on Avoid, as the battle dilemmas already use.
 local AVOID_LINE = "dummy_do_nothing"
 
 --- Second line on Avoid: avoiding fires the category's avoidance incident.
 local AVOID_CONSEQUENCES_LINE = "dummy_land_enc_spot_avoid_consequences"
-
---- Rarities of the item Swift victory pays when the battle category grants no victory item.
-local DEFAULT_BATTLE_RARITIES = { "uncommon", "rare" }
 
 local M = {
     --- Faction key -> its open pre-battle dilemma: { dilemma, offers, missions, general_cqi, difficulty, cards, shown_affordable, taken,
@@ -52,30 +44,30 @@ local M = {
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Drawing
 
---- True when a battle spot should open with offers: the `pre_battle_chance` roll, or always while the debug `battle_event_rolls` holds
---- "before".
---- @returns boolean True to show offers.
-function M.roll()
+--- Rolls one of the battle events: its MCT chance, or always while the debug `battle_event_rolls` holds its name.
+--- @param name string "before" or "after".
+--- @param setting string The MCT setting holding its percent chance.
+--- @returns boolean True when the event happens.
+local function roll_event(name, setting)
     for _, roll in ipairs(debug_config.battle_event_rolls) do
-        if roll == "before" then
-            log("spot battle: debug battle_event_rolls forces the pre-battle offers")
+        if roll == name then
+            log("spot battle: debug battle_event_rolls forces the " .. name .. " event")
             return true
         end
     end
-    return random_chance(offers_data.pre_battle_chance)
+    return random_chance(get_mct_settings()[setting])
 end
 
---- True when a won battle spot should open the spoils pick: the `spoils_chance` roll, or always while the debug `battle_event_rolls` holds
---- "after".
+--- True when a battle spot should open with offers: the MCT `pre_battle_chance` roll, or the debug "before" roll.
+--- @returns boolean True to show offers.
+function M.roll()
+    return roll_event("before", "pre_battle_chance")
+end
+
+--- True when a won battle spot should open the spoils pick: the MCT `spoils_chance` roll, or the debug "after" roll.
 --- @returns boolean True to open the spoils pick.
 function M.roll_spoils()
-    for _, roll in ipairs(debug_config.battle_event_rolls) do
-        if roll == "after" then
-            log("spot battle: debug battle_event_rolls forces the spoils pick")
-            return true
-        end
-    end
-    return random_chance(offers_data.spoils_chance)
+    return roll_event("after", "spoils_chance")
 end
 
 --- True when a pre-battle offer or mission would do something for this battle. A traitor's units are picked here and kept on `ctx.cards`.
@@ -136,15 +128,6 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Dilemma
 
---- True when the faction's treasury covers an offer's cost.
---- @param offer table The offer record.
---- @param pending table The open dilemma.
---- @param faction_name string The faction key.
---- @returns boolean True for a free offer or one the treasury can pay.
-local function affordable(offer, pending, faction_name)
-    return not offer.cost or offer_effects.treasury(faction_name) >= spot_offers.offer_cost(offer, pending.difficulty)
-end
-
 --- Lists the missions taken on the open dilemma at the top of its description, one line each with a blank line after them, as the tower
 --- lists a floor's results. No missions taken clears it.
 --- @param pending table The open dilemma.
@@ -168,7 +151,7 @@ function M.launch(faction_name)
     for _, key in ipairs(pending.offers) do
         local offer = offers_data.by_key[key]
         local line = offers_data.line_prefix .. key .. "_" .. pending.difficulty
-        local can_pay = affordable(offer, pending, faction_name)
+        local can_pay = spot_offers.affordable(offer, pending, faction_name)
         pending.shown_affordable[key] = can_pay
         local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line } }
         local cards = pending.cards[key]
@@ -180,7 +163,7 @@ function M.launch(faction_name)
         local line = offers_data.line_prefix .. key .. "_" .. pending.difficulty
         local lines = { offers_data.taken_line }
         if not pending.taken[key] then
-            local can_pay = affordable(offers_data.by_key[key], pending, faction_name)
+            local can_pay = spot_offers.affordable(offers_data.by_key[key], pending, faction_name)
             pending.shown_affordable[key] = can_pay
             lines = can_pay and { line, offers_data.returns_line } or { line, offers_data.unaffordable_line }
         end
@@ -389,21 +372,6 @@ function M.hand_to_battle(event, army)
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, table.concat(terrors, ","))
 end
 
---- Finds the unit Guard the standard marked: the `nth` regular unit with its key.
---- @param general_cqi number Our lord's command queue index.
---- @param standard table { key, nth }.
---- @returns table|nil Its `tower_army.regular_units` entry.
-local function standard_unit(general_cqi, standard)
-    local seen = 0
-    for _, entry in ipairs(tower_army.regular_units(general_cqi)) do
-        if entry.unit:unit_key() == standard.key then
-            seen = seen + 1
-            if seen == standard.nth then return entry end
-        end
-    end
-    return nil
-end
-
 --- Works out one mission met's rewards: gold, items, or a copy of the enemy's most expensive unit, which its result grants. Ranks for the
 --- marked unit are given here.
 --- @param offer table The mission's offer record.
@@ -416,9 +384,9 @@ local function pay_mission(offer, event, faction_name, general_cqi)
     local items = {}
     if offer.items then items = item_pool.pick_items(faction_name, offer.items.rarities, offer.items.count) end
     if offer.unique then items = offer_effects.pick_unique_items(faction_name, offer.unique) end
-    if offer.battle_item then items = item_pool.pick_items(faction_name, (event.victory_items or {}).rarities or DEFAULT_BATTLE_RARITIES, 1) end
+    if offer.battle_item then items = item_pool.pick_items(faction_name, (event.victory_items or {}).rarities or offers_data.default_battle_rarities, 1) end
     if offer.unit_ranks then
-        local entry = event.standard and standard_unit(general_cqi, event.standard)
+        local entry = event.standard and tower_missions.standard_unit({ general_cqi = general_cqi }, event.standard)
         if entry then cm:add_experience_to_unit(entry.unit, offer.unit_ranks) else log("spot battle: guard the standard found no marked unit") end
     end
     local units = offer.trophy and event.trophy and { event.trophy } or {}

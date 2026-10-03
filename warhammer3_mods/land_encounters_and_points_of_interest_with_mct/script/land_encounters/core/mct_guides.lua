@@ -5,8 +5,8 @@ local guides = require("script/land_encounters/configs/mct_guides")
 local tower_offers = require("script/land_encounters/configs/tower_offers")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local battle_categories = require("script/land_encounters/configs/battle_categories")
-local treasure_events = require("script/land_encounters/configs/events").treasure_type
 local smithy_data = require("script/land_encounters/configs/smithy_data")
+local spot_offers = require("script/land_encounters/configs/spot_offers")
 local archetypes = require("script/land_encounters/configs/archetypes")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,8 +20,14 @@ local OFFER_DESCRIPTION_PREFIX = "campaign_payload_ui_details_description_dummy_
 --- choice on that dilemma.
 local OFFER_NAME_PREFIX = "cdir_events_dilemma_choice_details_localised_choice_label_land_enc_dilemma_tower_deeper_floor_1LEAPOI_TWR_"
 
---- Loc key prefix of an incident's title.
-local INCIDENT_TITLE_PREFIX = "incidents_localised_title_"
+--- Loc key prefix of a spot offer's choice name on the first treasure site's dilemma and on the first battle category's neutral dilemma. The
+--- offer's choice key follows it. Every site offer has a choice on every site dilemma, and every battle pool offer on every battle dilemma.
+local CHOICE_LABEL_PREFIX = "cdir_events_dilemma_choice_details_localised_choice_label_"
+local SITE_OFFER_NAME_PREFIX = CHOICE_LABEL_PREFIX .. spot_offers.dilemma_prefix .. spot_offers.sites[1].key
+local BATTLE_OFFER_NAME_PREFIX = CHOICE_LABEL_PREFIX .. battle_categories.list[1].neutral.dilemma
+
+--- Loc key prefix of a dilemma's title.
+local DILEMMA_TITLE_PREFIX = "dilemmas_localised_title_"
 
 --- Name of each battle category tier (1-4).
 local TIER_NAMES = { "common", "uncommon", "rare", "very rare" }
@@ -138,14 +144,40 @@ function M.battle_spots_text()
     return table.concat(lines, "\n")
 end
 
---- Builds the Encounters page treasure spot guide: the intro, then each treasure's title and reward.
+--- Names a spot offer as its dilemma choice shows it.
+--- @param offer table The offer record.
+--- @returns string The offer's name.
+local function spot_offer_name(offer)
+    local prefix = spot_offers.battle_pools[offer.pool] and BATTLE_OFFER_NAME_PREFIX or SITE_OFFER_NAME_PREFIX
+    return loc(prefix .. spot_offers.choice_key_prefix .. offer.key:upper())
+end
+
+--- Builds the Encounters page treasure site guide: the intro, then each site's title and the special offer it always shows.
 --- @returns string The guide text.
 function M.treasure_spots_text()
     local lines = { guides.treasure_spots_intro, "" }
-    for _, event in ipairs(treasure_events) do
-        lines[#lines + 1] = guide_line(loc(INCIDENT_TITLE_PREFIX .. event.incident), event.guide)
+    for _, site in ipairs(spot_offers.sites) do
+        local special = spot_offers.by_key[site.signature]
+        lines[#lines + 1] = guide_line(loc(DILEMMA_TITLE_PREFIX .. spot_offers.dilemma_prefix .. site.key), "always offers " .. spot_offer_name(special) .. ".")
     end
     return table.concat(lines, "\n")
+end
+
+--- Builds the Encounters page spot offer sections in page order: each lists the name and Easy line of every offer in its pool, as the
+--- dilemmas show them.
+--- @returns table An array of { key, title, text }.
+function M.spot_offer_sections()
+    local lines_by_pool = {}
+    for _, offer in ipairs(spot_offers.offers) do
+        local lines = lines_by_pool[offer.pool] or {}
+        lines[#lines + 1] = guide_line(spot_offer_name(offer), loc("campaign_payload_ui_details_description_" .. spot_offers.line_prefix .. offer.key .. "_easy"))
+        lines_by_pool[offer.pool] = lines
+    end
+    local sections = {}
+    for _, section in ipairs(guides.spot_offer_sections) do
+        sections[#sections + 1] = { key = section.key, title = section.title, text = table.concat(lines_by_pool[section.key] or {}, "\n") }
+    end
+    return sections
 end
 
 --- Builds the Smithies page guide: the intro, then one line per forge level with its free picks, cooldown, commission and upgrade price.

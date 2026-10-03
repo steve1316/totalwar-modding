@@ -38,11 +38,14 @@ local BUNDLE_PREFIX = "land_enc_effect_tower_"
 local BATTLE_BUFFS_SVR_KEY = "land_enc_tower_battle_buffs"
 --- svr key the floor battle's script reads Night terrors' target unit keys from. Mirrored in script/battle/mod/land_enc_tower_buffs.lua.
 local NIGHT_TERRORS_SVR_KEY = "land_enc_tower_night_terrors"
---- Prefix of each choice row's id in the dilemma panel's list. The dilemma key and the choice key follow.
 
 local M = {
     --- Choice key of Leave on the per-floor go-deeper dilemmas.
     LEAVE = offers_data.leave_choice_key,
+    --- Battle script hand-over keys and the bundle prefix, shared with the battle spot offers.
+    BUNDLE_PREFIX = BUNDLE_PREFIX,
+    BATTLE_BUFFS_SVR_KEY = BATTLE_BUFFS_SVR_KEY,
+    NIGHT_TERRORS_SVR_KEY = NIGHT_TERRORS_SVR_KEY,
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

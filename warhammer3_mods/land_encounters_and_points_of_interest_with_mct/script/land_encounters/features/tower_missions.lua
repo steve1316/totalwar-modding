@@ -21,7 +21,10 @@ local RIVAL_SVR_KEY = "land_enc_tower_rival_kills"
 --- Prefix of the loc keys holding the mission and rival result lines.
 local RESULT_LOC_PREFIX = "campaign_localised_strings_string_land_enc_tower_result_"
 
-local M = {}
+local M = {
+    --- svr key of the mission targets, shared with the battle spot missions.
+    TARGETS_SVR_KEY = TARGETS_SVR_KEY,
+}
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,8 +58,8 @@ local function load_pairs(key)
     return map
 end
 
---- Finds the guarded unit in the delving army: the `nth` regular unit with its key.
---- @param delve table The delve record.
+--- Finds the guarded unit in the delving army: the `nth` regular unit with its key. Shared with the battle spot missions.
+--- @param delve table The delve record, or any record with the lord's `general_cqi`.
 --- @param standard table { key, nth }.
 --- @returns table|nil Its `tower_army.unit_strengths` entry.
 local function standard_unit(delve, standard)
@@ -69,6 +72,7 @@ local function standard_unit(delve, standard)
     end
     return nil
 end
+M.standard_unit = standard_unit
 
 --- Picks one item for a mission reward.
 --- @param faction_name string The delving faction.

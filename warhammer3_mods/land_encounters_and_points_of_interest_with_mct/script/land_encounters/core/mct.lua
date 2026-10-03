@@ -23,6 +23,10 @@ local mct_settings = {
     spawn_percentage = 0.75,
     --- Percent chance that a battle spot starts a battle instead of giving treasure.
     battle_chance = 70,
+    --- Percent chance a battle spot's dilemma also shows pre-battle offers and missions.
+    pre_battle_chance = 30,
+    --- Percent chance a won battle spot opens the spoils pick.
+    spoils_chance = 30,
     --- Default to interception only - matches the pre-MCT-toggle behavior the user established.
     enabled_intervention_types = { INTERCEPTION_TYPE },
     enabled_encounter_skin_ids = {},
@@ -359,6 +363,8 @@ function set_mct_settings(mct_mod)
     mct_settings.ready_notices = mct_mod:get_option_by_key("ready_notices"):get_finalized_setting()
     mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
     mct_settings.battle_chance = mct_mod:get_option_by_key("battle_chance"):get_finalized_setting()
+    mct_settings.pre_battle_chance = mct_mod:get_option_by_key("pre_battle_chance"):get_finalized_setting()
+    mct_settings.spoils_chance = mct_mod:get_option_by_key("spoils_chance"):get_finalized_setting()
 
     --- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
     --- at-least-one via set_locked, so this list should never be empty, but `pick_intervention_type`
@@ -388,7 +394,8 @@ function set_mct_settings(mct_mod)
     out("DEBUG - mct_settings.enable_towers: " .. tostring(mct_settings.enable_towers) .. ", tower_cooldown: " .. tostring(mct_settings.tower_cooldown))
     out("DEBUG - mct_settings.smithy_cooldown: " .. tostring(mct_settings.smithy_cooldown) .. ", ready_notices: " .. tostring(mct_settings.ready_notices))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))
-    out("DEBUG - mct_settings.battle_chance: " .. tostring(mct_settings.battle_chance))
+    out("DEBUG - mct_settings.battle_chance: " .. tostring(mct_settings.battle_chance) .. ", pre_battle_chance: " .. tostring(mct_settings.pre_battle_chance)
+        .. ", spoils_chance: " .. tostring(mct_settings.spoils_chance))
     out("DEBUG - mct_settings.enable_all_encounter_skins: " .. tostring(mct_settings.enable_all_encounter_skins))
     out("DEBUG - mct_settings.use_only_modded_units: " .. tostring(mct_settings.use_only_modded_units))
     out("DEBUG - mct_settings.enable_compatibility_with_supported_mods: " .. tostring(mct_settings.enable_compatibility_with_supported_mods))

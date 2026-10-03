@@ -3,6 +3,7 @@
 --- offer and site records live in configs/spot_offers.lua.
 
 require("script/land_encounters/utils/random")
+require("script/land_encounters/utils/common")
 
 local offers_data = require("script/land_encounters/configs/spot_offers")
 local treasure_events = require("script/land_encounters/configs/events").treasure_type
@@ -74,9 +75,6 @@ local function incident_targets(incident)
     return { character = true }
 end
 
---- Line on a choice that may start a battle, as the battle spots show it.
-local FIGHT_LINE = "dummy_wh2_dlc11_neo_counter_fight_chance"
-
 --- Shows a result as an incident built in script: its payload grants the result's gold, items and units as cards, and shows its effect line
 --- when it has one. If the incident cannot be built, the rewards are granted in script and the result's old event message shows instead,
 --- so nothing is lost.
@@ -113,22 +111,13 @@ function M.show_result(faction_name, result, rewards, position, subtitle)
     show_located_message(faction_name, offers_data.message_prefix .. result, position, subtitle)
 end
 
---- True when an offer only needs a legendary item somewhere in its gamble outcomes.
+--- True when one of an offer's gamble outcomes has a field, e.g. `unique` or `guardian`.
 --- @param offer table The offer record.
---- @returns boolean True when an outcome gives unique items.
-local function gamble_wants_unique(offer)
+--- @param field string The outcome field.
+--- @returns boolean True when an outcome sets it.
+local function gamble_has(offer, field)
     for _, outcome in ipairs(offer.gamble or {}) do
-        if outcome.unique then return true end
-    end
-    return false
-end
-
---- True when one of an offer's gamble outcomes starts a battle.
---- @param offer table The offer record.
---- @returns boolean True when an outcome wakes a guardian.
-local function gamble_may_fight(offer)
-    for _, outcome in ipairs(offer.gamble or {}) do
-        if outcome.guardian then return true end
+        if outcome[field] then return true end
     end
     return false
 end
@@ -150,7 +139,7 @@ local function eligible(offer, ctx)
     if offer.hero_rank and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
     if offer.sacrifice and #tower_army.regular_units(ctx.general_cqi) < 2 then return false end
     if offer.daemon_army and not ctx.faction:has_home_region() then return false end
-    if gamble_wants_unique(offer) and item_pool.pick_legendary_item(ctx.faction_name) == nil then return false end
+    if gamble_has(offer, "unique") and item_pool.pick_legendary_item(ctx.faction_name) == nil then return false end
     local enemy_units = ctx.event and ctx.event.enemy_units or {}
     if (offer.gold_per_enemy_unit or offer.captive) and #enemy_units == 0 then return false end
     if offer.captive and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
@@ -207,64 +196,62 @@ local function eligible(offer, ctx)
 end
 
 --- Draws a site's offers: its signature offer when eligible, then `extras_per_site` more from the treasure and realm pools, weighted toward
---- offers that share a tag with the site. Eligible offers in the debug `force_spot_offers` list are drawn first. Uses `random_number`, so every
---- multiplayer client draws the same ones.
+--- offers that share a tag with the site. Eligible offers in the debug `force_spot_offers` list are drawn first. An offer is only checked once
+--- it is drawn, since checking runs map searches and item picks: one that fails leaves the pool and the roll goes again, which draws the same
+--- way as checking every offer first. Uses `random_number`, so every multiplayer client draws the same ones.
 --- @param site table The site record.
 --- @param ctx table The draw context, see `eligible`.
 --- @returns table Offer keys in popup order.
 --- @returns string|nil The signature offer's key when it was drawn, first in the list.
 function M.draw(site, ctx)
-    local keys, taken = {}, {}
     local signature = site.signature and offers_data.by_key[site.signature]
-    if signature and eligible(signature, ctx) then
-        keys[1] = signature.key
-        taken[signature.key] = true
-    end
+    local signature_key = signature and eligible(signature, ctx) and signature.key or nil
+    local keys = { signature_key }
     local site_tags, pools = {}, {}
     for _, tag in ipairs(site.tags) do site_tags[tag] = true end
     for _, pool in ipairs(site.pools or { "treasure", "realm" }) do pools[pool] = true end
-    local pool, total = {}, 0
+    --- Candidates as { offer, weight } pairs.
+    local pool = {}
     for _, offer in ipairs(offers_data.offers) do
-        if (pools[offer.pool] or (site.pools and offer.spoils)) and not taken[offer.key] and eligible(offer, ctx) then
+        if (pools[offer.pool] or (site.pools and offer.spoils)) and offer.key ~= signature_key then
             local weight = 1
             for _, tag in ipairs(offer.tags) do
                 if site_tags[tag] then weight = offers_data.tag_weight end
             end
-            pool[#pool + 1] = { key = offer.key, weight = weight }
-            total = total + weight
+            pool[#pool + 1] = { offer, weight }
         end
     end
     --- Without its signature offer a site draws one more extra, so it still shows 3 offers.
-    local wanted = offers_data.extras_per_site + (keys[1] and 0 or 1)
+    local wanted = offers_data.extras_per_site + (signature_key and 0 or 1)
     local extras, forced = 0, 0
-    local function take(i)
-        keys[#keys + 1] = pool[i].key
-        total = total - pool[i].weight
-        table.remove(pool, i)
+    --- Takes the candidate at `i` out of the pool, and keeps it when it is eligible.
+    local function try(i)
+        local offer = table.remove(pool, i)[1]
+        if not eligible(offer, ctx) then return false end
+        keys[#keys + 1] = offer.key
         extras = extras + 1
+        return true
     end
     for _, forced_key in ipairs(debug_config.force_spot_offers) do
         for i, entry in ipairs(pool) do
-            if entry.key == forced_key and extras < wanted then
-                take(i)
-                forced = forced + 1
+            if entry[1].key == forced_key and extras < wanted then
+                if try(i) then forced = forced + 1 end
                 break
             end
         end
     end
     while extras < wanted and #pool > 0 do
-        local roll, acc = random_number(total), 0
+        local picked = pick_weighted(pool)
         for i, entry in ipairs(pool) do
-            acc = acc + entry.weight
-            if roll <= acc then
-                take(i)
+            if entry[1] == picked then
+                try(i)
                 break
             end
         end
     end
     log("spot: drew for " .. ctx.faction_name .. " at " .. site.key .. " (" .. ctx.difficulty .. "): " .. table.concat(keys, ", ") .. " (" .. #pool
-        .. " more eligible, " .. forced .. " forced)")
-    return keys, taken[site.signature] and site.signature or nil
+        .. " candidates left unchecked, " .. forced .. " forced)")
+    return keys, signature_key
 end
 
 --- Picks the site for a treasure spot. The first known site in the debug `force_treasure_site` list wins.
@@ -283,13 +270,21 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Site dilemma
 
---- True when the faction's treasury covers an offer's cost at the site's difficulty.
+--- True when the faction's treasury covers an offer's cost at the site's or battle's difficulty.
 --- @param offer table The offer record.
---- @param pending table The open site, see `M.pending_by_faction`.
+--- @param pending table The open site or battle dilemma, with its `difficulty`.
 --- @param faction_name string The faction key.
 --- @returns boolean True for a free offer or one the treasury can pay.
-local function affordable(offer, pending, faction_name)
+function M.affordable(offer, pending, faction_name)
     return not offer.cost or offer_effects.treasury(faction_name) >= M.offer_cost(offer, pending.difficulty)
+end
+
+--- An offer's choice key on its open site: the signature offer sits on the first key.
+--- @param pending table The open site.
+--- @param key string The offer key.
+--- @returns string The choice key.
+local function site_choice_key(pending, key)
+    return key == pending.signature and offers_data.signature_choice_key or M.choice_key(key)
 end
 
 --- Builds an offer's choice: its line for this difficulty, plus the gold, items and units it gives as cards. An offer the treasury cannot pay
@@ -301,10 +296,10 @@ end
 --- @returns table A choice record for `dilemmas.launch`.
 local function build_choice(offer, pending, faction_name, choice_key)
     local line = offers_data.line_prefix .. offer.key .. "_" .. pending.difficulty
-    pending.shown_affordable[offer.key] = affordable(offer, pending, faction_name)
+    pending.shown_affordable[offer.key] = M.affordable(offer, pending, faction_name)
     if not pending.shown_affordable[offer.key] then return { key = choice_key, lines = { line, offers_data.unaffordable_line } } end
     --- An offer that may start a battle says so, as every battle spot choice that leads to a fight does.
-    local choice = { key = choice_key, lines = gamble_may_fight(offer) and { line, FIGHT_LINE } or { line } }
+    local choice = { key = choice_key, lines = gamble_has(offer, "guardian") and { line, offers_data.fight_line } or { line } }
     local cards = pending.cards[offer.key] or {}
     if offer.gold and not offer.gamble then choice.gold = scale_gold(offer.gold, pending.difficulty, offer) end
     if cards.gold then choice.gold = cards.gold end
@@ -321,8 +316,7 @@ function M.launch_site(faction_name)
     pending.shown_affordable = {}
     local choices = {}
     for _, key in ipairs(pending.offers) do
-        local choice_key = key == pending.signature and offers_data.signature_choice_key or M.choice_key(key)
-        choices[#choices + 1] = build_choice(offers_data.by_key[key], pending, faction_name, choice_key)
+        choices[#choices + 1] = build_choice(offers_data.by_key[key], pending, faction_name, site_choice_key(pending, key))
     end
     choices[#choices + 1] = { key = offers_data.walk_away_choice_key, lines = { offers_data.line_prefix .. "walk_away" } }
     dilemmas.launch(offers_data.dilemma_prefix .. pending.site, choices, faction_name)
@@ -364,8 +358,7 @@ end
 --- Taking an offer
 
 --- Applies the effects an offer's payload does not: bundles, traits, wounds, camps, heals, sacrifices, heroes, dividends, the Daemon's
---- bargain army and the old incident. With `scripted_rewards` (a gamble outcome) gold and items are granted here too, since a rolled outcome
---- has no cards.
+--- bargain army and the old incident. A gamble outcome has no cards, so its gold and items are picked here for its result to grant.
 --- @param fields table The offer record or a gamble outcome.
 --- @param offer table The offer record, for scaling and the log.
 --- @param state table { faction_name, general_cqi, difficulty, x, y }.
@@ -431,24 +424,14 @@ end
 --- @param gamble table The offer's outcomes, each { weight, name, ...fields }.
 --- @returns table The outcome.
 local function roll_outcome(gamble)
-    local total = 0
-    for _, outcome in ipairs(gamble) do total = total + outcome[1] end
-    local roll, acc = random_number(total), 0
-    for _, outcome in ipairs(gamble) do
-        acc = acc + outcome[1]
-        if roll <= acc then return outcome end
-    end
-    return gamble[#gamble]
+    local entries = {}
+    for i, outcome in ipairs(gamble) do entries[i] = { outcome, outcome[1] } end
+    return pick_weighted(entries)
 end
 
 --- Rolls a gamble's outcome, shared with the battle offers. See `roll_outcome`.
 M.roll_outcome = roll_outcome
 
---- Takes a choice from a faction's open site dilemma: pays the offer's cost, applies it, and shows where a realm offer landed or how a gamble
---- went. The payload already granted the offer's gold, item and unit cards. An offer the treasury cannot pay changes nothing and reopens the
---- site. Walk away and unknown choices only close the site.
---- @param faction_name string The faction that chose.
---- @param choice_key string The chosen choice key.
 --- Starts Wake the guardian's battle at the site against the lord.
 --- @param state table { general_cqi, x, y } of the site taken.
 local function wake_guardian(state)
@@ -460,6 +443,11 @@ local function wake_guardian(state)
     end
 end
 
+--- Takes a choice from a faction's open site dilemma: pays the offer's cost, applies it, and shows where a realm offer landed or how a gamble
+--- went. The payload already granted the offer's gold, item and unit cards. An offer the treasury cannot pay changes nothing and reopens the
+--- site. Walk away and unknown choices only close the site.
+--- @param faction_name string The faction that chose.
+--- @param choice_key string The chosen choice key.
 function M.take(faction_name, choice_key)
     local pending = M.pending_by_faction[faction_name]
     if pending == nil then
@@ -468,9 +456,7 @@ function M.take(faction_name, choice_key)
     end
     local offer = nil
     for _, key in ipairs(pending.offers) do
-        if M.choice_key(key) == choice_key or (key == pending.signature and choice_key == offers_data.signature_choice_key) then
-            offer = offers_data.by_key[key]
-        end
+        if site_choice_key(pending, key) == choice_key then offer = offers_data.by_key[key] end
     end
     if offer == nil then
         M.pending_by_faction[faction_name] = nil
@@ -521,7 +507,7 @@ function M.grey_out_unaffordable(faction_name)
     local keys = {}
     for _, key in ipairs(pending.offers) do
         if pending.shown_affordable[key] == false then
-            keys[#keys + 1] = key == pending.signature and offers_data.signature_choice_key or M.choice_key(key)
+            keys[#keys + 1] = site_choice_key(pending, key)
         end
     end
     dilemmas.grey_out(offers_data.dilemma_prefix .. pending.site, keys)

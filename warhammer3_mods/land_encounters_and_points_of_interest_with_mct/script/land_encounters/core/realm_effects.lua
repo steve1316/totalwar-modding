@@ -34,11 +34,13 @@ local function region_count(faction)
     return faction:region_list():num_items()
 end
 
---- Sorts factions by region count, most first, then by key so every client agrees.
+--- Sorts factions by region count, most first, then by key so every client agrees. Each count is read once.
 --- @param factions table A list of faction interfaces, sorted in place.
 local function sort_by_size(factions)
+    local counts = {}
+    for _, faction in ipairs(factions) do counts[faction:name()] = region_count(faction) end
     table.sort(factions, function(a, b)
-        local count_a, count_b = region_count(a), region_count(b)
+        local count_a, count_b = counts[a:name()], counts[b:name()]
         if count_a ~= count_b then return count_a > count_b end
         return a:name() < b:name()
     end)
@@ -52,71 +54,99 @@ local function settlement_level(region)
     return ok and level or nil
 end
 
+--- Walks every region that is not abandoned once, with its owner and its settlement's squared distance from a map position.
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param visit function Called with (region, owner, distance, index) for each region.
+local function each_region(x, y, visit)
+    local regions = cm:model():world():region_manager():region_list()
+    for i = 0, regions:num_items() - 1 do
+        local region = regions:item_at(i)
+        if not region:is_abandoned() then
+            local settlement = region:settlement()
+            local dx, dy = settlement:logical_position_x() - x, settlement:logical_position_y() - y
+            visit(region, region:owning_faction(), dx * dx + dy * dy, i)
+        end
+    end
+end
+
+--- Sorts { value, distance, index } entries nearest first, then by map order so every client agrees.
+--- @param entries table The entries, sorted in place.
+local function sort_nearest(entries)
+    table.sort(entries, function(a, b)
+        if a[2] ~= b[2] then return a[2] < b[2] end
+        return a[3] < b[3]
+    end)
+end
+
+--- Returns the regions whose settlements are nearest a map position, among regions that pass a filter, nearest first.
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param filter function Called with each region and its owner, returns true to keep it.
+--- @param count number How many regions to return at most.
+--- @returns table A list of region interfaces.
+function M.nearest_regions(x, y, filter, count)
+    local found = {}
+    each_region(x, y, function(region, owner, distance, index)
+        if filter(region, owner) then found[#found + 1] = { region, distance, index } end
+    end)
+    sort_nearest(found)
+    local regions = {}
+    for i = 1, math.min(count, #found) do regions[i] = found[i][1] end
+    return regions
+end
+
 --- Returns the region whose settlement is nearest a map position, among regions that pass a filter.
 --- @param x number The map x position.
 --- @param y number The map y position.
---- @param filter function Called with each owned region, returns true to keep it.
---- @param skip table|nil Region keys -> true to leave out.
+--- @param filter function Called with each region and its owner, returns true to keep it.
 --- @returns region The nearest region, or nil when none passes.
-function M.nearest_region(x, y, filter, skip)
-    local regions = cm:model():world():region_manager():region_list()
-    local best, best_distance = nil, nil
-    for i = 0, regions:num_items() - 1 do
-        local region = regions:item_at(i)
-        if not region:is_abandoned() and not (skip and skip[region:name()]) and filter(region) then
-            local settlement = region:settlement()
-            local dx, dy = settlement:logical_position_x() - x, settlement:logical_position_y() - y
-            local distance = dx * dx + dy * dy
-            if best_distance == nil or distance < best_distance then
-                best, best_distance = region, distance
-            end
-        end
-    end
-    return best
+function M.nearest_region(x, y, filter)
+    return M.nearest_regions(x, y, filter, 1)[1]
 end
 
---- Returns the nearest region owned by a faction.
+--- Builds a region filter for regions owned by a faction.
 --- @param faction_name string The owning faction key.
---- @param x number The map x position.
---- @param y number The map y position.
---- @param skip table|nil Region keys -> true to leave out.
---- @returns region The region, or nil when the faction owns none.
-function M.nearest_own_region(faction_name, x, y, skip)
-    return M.nearest_region(x, y, function(region) return region:owning_faction():name() == faction_name end, skip)
+--- @returns function The filter.
+local function owned_by(faction_name)
+    return function(_, owner) return owner:name() == faction_name end
 end
 
---- Returns the nearest region owned by a faction at war with the given one.
+--- Builds a region filter for regions owned by a faction at war with the given one.
 --- @param faction faction The faction whose enemies are searched.
---- @param x number The map x position.
---- @param y number The map y position.
---- @param skip table|nil Region keys -> true to leave out.
---- @returns region The region, or nil when no enemy owns one.
-function M.nearest_enemy_region(faction, x, y, skip)
-    return M.nearest_region(x, y, function(region)
-        local owner = region:owning_faction()
-        return is_other_living_faction(owner, faction:name()) and faction:at_war_with(owner)
-    end, skip)
+--- @returns function The filter.
+local function owned_by_enemy_of(faction)
+    local self_name = faction:name()
+    return function(_, owner) return is_other_living_faction(owner, self_name) and faction:at_war_with(owner) end
 end
 
---- Returns the owners of the nearest regions that pass a filter, nearest first, each faction once.
+--- Returns the owners of the nearest regions that pass a filter, nearest first, each faction once. Walks the map once.
 --- @param faction faction The faction searching (never returned).
 --- @param x number The map x position.
 --- @param y number The map y position.
 --- @param count number How many factions to return at most.
---- @param filter function|nil Called with each candidate faction, returns true to keep it.
+--- @param filter function|nil Called once with each candidate faction, returns true to keep it.
 --- @returns table A list of faction interfaces.
 function M.nearest_factions(faction, x, y, count, filter)
-    local found, seen = {}, {}
-    while #found < count do
-        local region = M.nearest_region(x, y, function(candidate)
-            local owner = candidate:owning_faction()
-            return is_other_living_faction(owner, faction:name()) and not seen[owner:name()] and (filter == nil or filter(owner))
-        end)
-        if region == nil then break end
-        local owner = region:owning_faction()
-        seen[owner:name()] = true
-        table.insert(found, owner)
-    end
+    local self_name = faction:name()
+    local kept, nearest = {}, {}
+    each_region(x, y, function(_, owner, distance, index)
+        if owner:is_null_interface() then return end
+        local name = owner:name()
+        if kept[name] == nil then kept[name] = is_other_living_faction(owner, self_name) and (filter == nil or filter(owner)) end
+        if not kept[name] then return end
+        local entry = nearest[name]
+        if entry == nil then
+            nearest[name] = { owner, distance, index }
+        elseif distance < entry[2] then
+            entry[2], entry[3] = distance, index
+        end
+    end)
+    local entries = {}
+    for _, entry in pairs(nearest) do entries[#entries + 1] = entry end
+    sort_nearest(entries)
+    local found = {}
+    for i = 1, math.min(count, #entries) do found[i] = entries[i][1] end
     return found
 end
 
@@ -131,25 +161,19 @@ end
 
 --- Finders by target kind. Each returns { regions = { region keys }, factions = { faction keys } }, or nil when there is no target.
 local FINDERS = {
-    own_region = function(faction, x, y) return region_target(M.nearest_own_region(faction:name(), x, y)) end,
-    own_province = function(faction, x, y) return region_target(M.nearest_own_region(faction:name(), x, y)) end,
+    own_region = function(faction, x, y) return region_target(M.nearest_region(x, y, owned_by(faction:name()))) end,
     raise_region = function(faction, x, y)
-        return region_target(M.nearest_region(x, y, function(candidate)
-            if candidate:owning_faction():name() ~= faction:name() then return false end
+        local self_name = faction:name()
+        return region_target(M.nearest_region(x, y, function(candidate, owner)
+            if owner:name() ~= self_name then return false end
             local level = settlement_level(candidate)
             return level ~= nil and level < (candidate:is_province_capital() and PROVINCE_CAPITAL_MAX_LEVEL or MINOR_SETTLEMENT_MAX_LEVEL)
         end))
     end,
-    enemy_region = function(faction, x, y) return region_target(M.nearest_enemy_region(faction, x, y), true) end,
-    enemy_province = function(faction, x, y) return region_target(M.nearest_enemy_region(faction, x, y), true) end,
+    enemy_region = function(faction, x, y) return region_target(M.nearest_region(x, y, owned_by_enemy_of(faction)), true) end,
     enemy_regions = function(faction, x, y, count)
-        local target, skip = { regions = {}, factions = {} }, {}
-        for _ = 1, count or 1 do
-            local region = M.nearest_enemy_region(faction, x, y, skip)
-            if region == nil then break end
-            skip[region:name()] = true
-            table.insert(target.regions, region:name())
-        end
+        local target = { regions = {}, factions = {} }
+        for _, region in ipairs(M.nearest_regions(x, y, owned_by_enemy_of(faction), count or 1)) do table.insert(target.regions, region:name()) end
         return #target.regions > 0 and target or nil
     end,
     enemy_capital = function(faction, x, y)
@@ -161,15 +185,16 @@ local FINDERS = {
         return friend and { regions = {}, factions = { friend:name() } } or nil
     end,
     biggest_faction = function(faction)
-        local candidates = {}
+        local self_name, best, best_count = faction:name(), nil, 0
         local factions = cm:model():world():faction_list()
         for i = 0, factions:num_items() - 1 do
             local other = factions:item_at(i)
-            if is_other_living_faction(other, faction:name()) and region_count(other) > 0 then table.insert(candidates, other) end
+            if is_other_living_faction(other, self_name) then
+                local count = region_count(other)
+                if count > best_count or (count == best_count and best and other:name() < best:name()) then best, best_count = other, count end
+            end
         end
-        if #candidates == 0 then return nil end
-        sort_by_size(candidates)
-        return { regions = {}, factions = { candidates[1]:name() } }
+        return best and { regions = {}, factions = { best:name() } } or nil
     end,
     neighbours = function(faction)
         local seen, names = {}, {}
@@ -205,6 +230,10 @@ local FINDERS = {
         return #names > 1 and { regions = {}, factions = names } or nil
     end,
 }
+
+--- Province kinds find the same region as their region kinds. The offer's province bundle is what reaches the whole province.
+FINDERS.own_province = FINDERS.own_region
+FINDERS.enemy_province = FINDERS.enemy_region
 
 --- Finds a realm offer's target from a map position.
 --- @param kind string The target kind, one of `configs/spot_offers.lua` `realm_kinds`.

@@ -118,14 +118,14 @@ M.result_place_context = "land_enc_spot_result_place"
 --- built.
 M.message_prefix = "spot_"
 
---- Percent chance a won battle spot opens the spoils pick after its victory reward.
-M.spoils_chance = 30
+--- Line on a choice that may start a battle, from the vanilla dilemmas the battle spots already use.
+M.fight_line = "dummy_wh2_dlc11_neo_counter_fight_chance"
+
+--- Pools whose offers sit on the battle dilemmas. Every other pool's offers sit on the treasure site dilemmas.
+M.battle_pools = { pre_battle = true, mission = true }
 
 --- Rarities of the item a battle pays when its category grants no victory item.
 M.default_battle_rarities = { "uncommon", "rare" }
-
---- Percent chance a battle spot opens with pre-battle offers instead of its plain Fight or Avoid dilemma.
-M.pre_battle_chance = 30
 
 --- Pre-battle offers drawn between Fight and Avoid.
 M.offers_per_battle = 2
