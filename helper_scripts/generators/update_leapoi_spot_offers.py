@@ -102,6 +102,7 @@ SITES = {
     "collapsed_mine": ("Collapsed Mine", "A collapsed mine, half-flooded. The deeper tunnels are still rich, and still dangerous."),
     "merchants_wagon": ("Merchant's Wagon", "A travelling merchant, far from any market, is glad of customers."),
     "sunken_library": ("Sunken Library", "A sunken library, its shelves rotting. Some scrolls still hold the secrets of other realms."),
+    "spoils_of_war": ("Spoils of War", "The field is ours. Before we march on, there is more to take from it."),
 }
 
 # Shown under every site's description: the rules, said once, then the choice. Loc files store a line break as an escaped `\\n`.
@@ -213,6 +214,19 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "duelists_challenge": ("Duellist's Challenge", MISSION + "challenge the enemy lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a unique item[[/col]]."),
     "spare_the_captain": ("Spare the Captain", MISSION + "win with the [[col:yellow]]enemy lord still alive[[/col]], and ransom them for [[col:green]]+{gold} gold[[/col]]."),
     "flawless_victory": ("Flawless Victory", MISSION + "win [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "strip_the_dead": ("Strip the Dead", "Strip the dead: [[col:green]]+{per_unit} gold[[/col]] to our treasury for each unit in the army we beat."),
+    "ransom_the_captain": ("Ransom the Captain", "Ransom their captain: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest faction of their kind has [[col:red]]worse relations[[/col]] with us."),
+    "tribute_from_the_locals": ("Tribute from the Locals", "Accept tribute from the grateful locals: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for 5 turns."),
+    "loot_the_baggage": ("Loot the Baggage", "Loot their baggage train: [[col:green]]a random item[[/col]] of the battle's rarity."),
+    "recruit_a_captive": ("Recruit a Captive", "Recruit a captive: [[col:green]]a random unit[[/col]] of the army we beat joins our army now."),
+    "freed_captives": ("Free the Captives", "Free their captives: [[col:green]]2 random units[[/col]] of our own kind join our army now."),
+    "bury_the_dead": ("Bury the Dead", "Bury our dead with honour: " + stat("+10", *LEADERSHIP) + " for 5 turns."),
+    "press_on": ("Press On", "Press on while they flee: [[col:green]]+25% movement range[[/col]] next turn."),
+    "victory_feast": ("Victory Feast", PAY + "hold a victory feast: " + stat("+10", *LEADERSHIP) + " and " + stat("+5", *ATTACK) + " for 5 turns."),
+    "trophy_of_war": ("Trophy of War", "Take a trophy of war: our lord grows as a [[col:green]]Trophy Hunter[[/col]], a trait that rises with every trophy taken."),
+    "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn, decided now."),
+    "cursed_trophy": ("Take the Cursed Trophy", "Take the cursed trophy: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
+    "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]2 ranks[[/col]] and [[col:green]]+10% ward save[[/col]] for our army for 5 turns."),
     "walk_away": ("Walk Away", "Leave this place be."),
 }
 
@@ -238,6 +252,10 @@ ICONS = {
     "spread_the_plague": "plague.png", "send_gifts": "trade_agreement.png", "spy_on_their_capital": "cotw_reveal_shroud.png",
     "curse_a_distant_king": "hex_1.png", "share_the_find": "technology.png", "point_them_at_each_other": "subterfuge.png",
     "sell_their_secrets": "assassin.png", "walk_away": "campaign_movement.png",
+    "strip_the_dead": "nor_spoils.png", "ransom_the_captain": "noble.png", "tribute_from_the_locals": "income.png", "loot_the_baggage": "treasure_map.png",
+    "recruit_a_captive": "slaves.png", "freed_captives": "edict_levy_conscripts.png", "bury_the_dead": "army_morale.png", "press_on": "campaign_movement.png",
+    "victory_feast": "effect_rite.png", "trophy_of_war": "wh3_cp1_unit_reward.png", "chase_the_routers": "cotw_track_army.png", "cursed_trophy": "plague.png",
+    "dark_offering": "bloodreaper.png",
     "bribe_a_scout": "subterfuge.png", "thin_their_ranks": "attrition.png", "poison_their_stores": "phase_posion.png",
     "kill_the_captain": "dlc10_assassination_targets.png", "keep_the_veterans_away": "peasant.png", "spread_dread": "discouraged.png",
     "turn_a_traitor": "khainite_assassin.png", "hold_war_rites": "effect_rite.png", "hone_the_blades": "weapon_damage.png",
@@ -328,6 +346,9 @@ MESSAGES = {
     "share_the_find": ("Share the Find", "", "Our neighbours learn from what we found, and think better of us."),
     "point_them_at_each_other": ("Point Them at Each Other", "", "Two rivals now eye each other with suspicion."),
     "sell_their_secrets": ("Sell Their Secrets", "", "The secrets are sold, and our enemies grow closer."),
+    "ransom_the_captain": ("Ransom the Captain", "", "Their captain is ransomed, and their kin will not forget it."),
+    "chase_the_routers_won": ("Chase the Routers", "A Rich Catch", "We ran them down, and a rare item is ours."),
+    "chase_the_routers_lost": ("Chase the Routers", "Ambushed", "The routers turned on us. Our lord will be wounded for 2 turns at the start of our next turn."),
 }
 
 # Shown when a wound an offer owed lands, by its turns. The bundle title for the owed wound is the same for every length.
@@ -384,14 +405,34 @@ BUNDLES = {
                           [("wh_main_effect_province_growth_events", "province_to_province_own", 30), ("wh_main_effect_economy_gdp_mod_all", "province_to_region_own", 10)]),
     "stir_their_rebels": ("province", "chaos_gifts.png", "Stirred Rebels", "Rebels stir in the province.",
                           [("wh_main_effect_public_order_events", "province_to_province_own", -15)]),
+    "bury_the_dead": ("force", "icon_effects_fortify.png", "Honoured Dead", "Our dead were buried with honour.",
+                      [("wh_main_effect_force_stat_leadership", "force_to_force_own", 10)]),
+    "press_on": ("force", "icon_effects_fortify.png", "Pressing On", "Our army presses on while the enemy flees.",
+                 [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 25)]),
+    "victory_feast": ("force", "icon_effects_fortify.png", "Victory Feast", "Our army feasted on its victory.",
+                      [("wh_main_effect_force_stat_leadership", "force_to_force_own", 10), ("wh_main_effect_force_stat_melee_attack", "force_to_force_own", 5)]),
+    "dark_offering": ("force", "icon_effects_fortify.png", "Dark Offering", "A dark offering wards our army.",
+                      [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 10)]),
 }
 
-# Trait key -> (icon, name, flavour, what earned it, [(effect, scope, value)]).
+# Trait key -> (icon, [(points needed, name, flavour, what earned it, [(effect, scope, value)])] one per level).
 TRAITS = {
-    "land_enc_trait_spot_shrine_sworn": ("trait_good", "Shrine-Sworn", "Swore an oath at a ruined altar, and the army believes it.", "Swore an oath at a ruined shrine",
-                                         [("wh_main_effect_force_stat_leadership", "character_to_force_own", 5)]),
-    "land_enc_trait_spot_pact_bound": ("chaos", "Pact-Bound", "The power is real, and so is the price.", "Struck a dark pact in a witch's hut",
-                                       [("wh_main_effect_character_stat_melee_attack", "character_to_character_own", 10)]),
+    "land_enc_trait_spot_shrine_sworn": ("trait_good", [
+        (1, "Shrine-Sworn", "Swore an oath at a ruined altar, and the army believes it.", "Swore an oath at a ruined shrine",
+         [("wh_main_effect_force_stat_leadership", "character_to_force_own", 5)]),
+    ]),
+    "land_enc_trait_spot_pact_bound": ("chaos", [
+        (1, "Pact-Bound", "The power is real, and so is the price.", "Struck a dark pact in a witch's hut",
+         [("wh_main_effect_character_stat_melee_attack", "character_to_character_own", 10)]),
+    ]),
+    "land_enc_trait_spot_trophy_hunter": ("trait_good", [
+        (1, "Trophy Hunter", "Keeps a trophy from every field won.", "Took a trophy of war",
+         [("wh_main_effect_force_stat_leadership", "character_to_force_own", 4)]),
+        (3, "Seasoned Trophy Hunter", "The trophies pile up, and so does the army's pride.", "Took 3 trophies of war",
+         [("wh_main_effect_force_stat_leadership", "character_to_force_own", 8), ("wh_main_effect_force_stat_melee_attack", "character_to_force_own", 4)]),
+        (6, "Famed Trophy Hunter", "Every army in the land has heard of this lord's trophies.", "Took 6 trophies of war",
+         [("wh_main_effect_force_stat_leadership", "character_to_force_own", 12), ("wh_main_effect_force_stat_melee_attack", "character_to_force_own", 8)]),
+    ]),
 }
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -419,7 +460,7 @@ local function encode(v)
     for k, value in pairs(v) do parts[#parts + 1] = string.format("%q", tostring(k)) .. ":" .. encode(value) end
     return "{" .. table.concat(parts, ",") .. "}"
 end
-io.write(encode({ sites = data.sites, offers = data.offers, gold_multiplier = data.gold_multiplier, gold_step = data.gold_step,
+io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.offers, gold_multiplier = data.gold_multiplier, gold_step = data.gold_step,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
     wound_bundle_prefix = data.wound_bundle_prefix, avoid_choice_key = data.avoid_choice_key,
@@ -496,9 +537,9 @@ def line_values(offer: Dict, difficulty: str, config: Dict) -> Dict[str, str]:
         config (Dict): The loaded config.
 
     Returns:
-        Dict[str, str]: Values for {cost}, {gold}, {won_gold}, {lost_gold} and {per_turn}.
+        Dict[str, str]: Values for {cost}, {gold}, {won_gold}, {lost_gold}, {per_turn} and {per_unit}.
     """
-    values = {"cost": "", "gold": "", "won_gold": "", "lost_gold": "", "per_turn": ""}
+    values = {"cost": "", "gold": "", "won_gold": "", "lost_gold": "", "per_turn": "", "per_unit": ""}
     if "cost" in offer:
         values["cost"] = gold_text(scale(offer["cost"], difficulty, offer, config))
     if "gold" in offer:
@@ -508,6 +549,8 @@ def line_values(offer: Dict, difficulty: str, config: Dict) -> Dict[str, str]:
             values[outcome["2"] + "_gold"] = gold_text(abs(scale(outcome["gold"], difficulty, offer, config)))
     if "dividends" in offer:
         values["per_turn"] = gold_text(scale(offer["dividends"]["per_turn"], difficulty, offer, config))
+    if "gold_per_enemy_unit" in offer:
+        values["per_unit"] = gold_text(scale(offer["gold_per_enemy_unit"], difficulty, offer, config))
     return values
 
 
@@ -554,7 +597,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] not in ("pre_battle", "mission")]
     battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] in ("pre_battle", "mission")]
     row_id = FIRST_ROW_ID
-    for site in config["sites"]:
+    for site in config["sites"] + [config["spoils"]]:
         dilemma = config["dilemma_prefix"] + site["key"]
         title, description = SITES[site["key"]]
         add(table("dilemmas_tables"), dilemma, "false", "", "", site["ui_image"], "false", "Event", "UI_CAM_EVENT_Dilemma", "", "", "false")
@@ -565,7 +608,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         row_id += 1
         add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_title_" + dilemma, title_case(title), "false")
         add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_description_" + dilemma, description + SITE_FOOTER, "false")
-        labels = site_keys + [(config["signature_choice_key"], site["signature"])]
+        labels = site_keys + ([(config["signature_choice_key"], site["signature"])] if site.get("signature") else [])
         for choice, key in labels:
             add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
             add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
@@ -583,9 +626,6 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     consequences = config["line_prefix"] + AVOID_CONSEQUENCES[0]
     line(consequences, AVOID_CONSEQUENCES[1], AVOID_CONSEQUENCES[2])
     for dilemma in config["battle_dilemmas"]:
-        # The plain battle dilemma's Avoid (its DB SECOND choice) says so too.
-        add(table("cdir_events_dilemma_payloads_tables"), row_id, "SECOND", dilemma, "TEXT_DISPLAY", f"LOOKUP[{consequences}]", "default")
-        row_id += 1
         for choice, key in battle_keys:
             add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
             add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
@@ -640,15 +680,16 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(LOC_PREFIX + "effect_bundles.loc.tsv", "effect_bundles_localised_description_" + key, WOUND_OWED[1], "false")
         messages["wound_paid_" + str(turns)] = (WOUND_PAID[0], WOUND_PAID[1], WOUND_PAID[2].format(turns=turns))
 
-    for key, (icon, name, colour, explanation, effects) in TRAITS.items():
-        level = key + "_1"
+    for key, (icon, levels) in TRAITS.items():
         add(table("character_traits_tables"), key, 0, "false", 999, icon, 1, "", "false")
-        add(table("character_trait_levels_tables"), level, 1, key, 1)
         add(table("trait_info_tables"), key)
-        for effect, scope, value in effects:
-            add(table("trait_level_effects_tables"), level, effect, scope, f"{value:.4f}")
-        for field, text in [("onscreen_name", title_case(name)), ("colour_text", colour), ("explanation_text", explanation), ("removal", "")]:
-            add(LOC_PREFIX + "character_traits.loc.tsv", f"character_trait_levels_{field}_{level}", text, "false")
+        for number, (points, name, colour, explanation, effects) in enumerate(levels, 1):
+            level = f"{key}_{number}"
+            add(table("character_trait_levels_tables"), level, number, key, points)
+            for effect, scope, value in effects:
+                add(table("trait_level_effects_tables"), level, effect, scope, f"{value:.4f}")
+            for field, text in [("onscreen_name", title_case(name)), ("colour_text", colour), ("explanation_text", explanation), ("removal", "")]:
+                add(LOC_PREFIX + "character_traits.loc.tsv", f"character_trait_levels_{field}_{level}", text, "false")
 
     for suffix, (title, subtitle, description) in messages.items():
         name = config["message_prefix"] + suffix
@@ -753,7 +794,7 @@ def check_text(config: Dict) -> None:
         SystemExit: Naming every problem found.
     """
     problems = [f"no text for {o['key']}" for o in config["offers"] if o["key"] not in OFFERS]
-    problems += [f"no text for site {s['key']}" for s in config["sites"] if s["key"] not in SITES]
+    problems += [f"no text for site {s['key']}" for s in config["sites"] + [config["spoils"]] if s["key"] not in SITES]
     problems += [f"no icon for {key}" for key in OFFERS if key not in ICONS]
     problems += [f"no notice for {o['key']}" for o in config["offers"]
                  if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and "trick" not in o and o["key"] not in NOTICES

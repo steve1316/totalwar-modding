@@ -52,6 +52,15 @@
 ---   battle_item     True: 1 item of the battle's own victory rarities.
 ---   unit_ranks      Ranks for the unit Guard the standard marks.
 ---   trophy          True: a copy of the enemy's most expensive unit joins our army.
+---
+--- Spoils fields (pool "spoils", drawn on the spoils pick after a won battle spot, which also draws realm offers and offers marked `spoils`):
+---   spoils               True on an offer of another pool that the spoils pick can draw too.
+---   gold_per_enemy_unit  Gold for each unit in the army we beat (Easy value, scaled).
+---   battle_item          True: 1 item of the battle's own victory rarities.
+---   captive              True: a random unit of the army we beat joins our army.
+---   ransom               True: worse relations (`relations`) with the nearest faction of the beaten army's culture.
+---   trait_points         A trait the lord gains a point of each time, growing through its levels.
+---   lord_ranks           Ranks the lord gains.
 
 --- Key prefix of the spot offers' own effect bundles.
 local SPOT_BUNDLE = "land_enc_effect_spot_"
@@ -99,6 +108,12 @@ M.unaffordable_line = "dummy_land_enc_spot_unaffordable"
 
 --- Event feed message prefix after `land_enc_`, e.g. spot_roll_the_bones_won.
 M.message_prefix = "spot_"
+
+--- Percent chance a won battle spot opens the spoils pick after its victory reward.
+M.spoils_chance = 30
+
+--- Rarities of the item a battle pays when its category grants no victory item.
+M.default_battle_rarities = { "uncommon", "rare" }
 
 --- Percent chance a battle spot opens with pre-battle offers instead of its plain Fight or Avoid dilemma.
 M.pre_battle_chance = 30
@@ -173,6 +188,10 @@ M.sites = {
     { key = "sunken_library", tags = { "lore", "realm" }, signature = "read_the_scrolls", ui_image = "story_panels/chd_drill_machinations" },
 }
 
+--- The spoils pick after a won battle spot: a site with no signature that draws from its own pools. The picture is culture-aware, so each
+--- player sees their own culture's victory.
+M.spoils = { key = "spoils_of_war", tags = { "loot", "recovery" }, pools = { "spoils", "realm" }, ui_image = "land_victory" }
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Offers
@@ -189,7 +208,7 @@ M.offers = {
     { key = "legendary_bard", pool = "signature", tags = {}, incident = "land_enc_incident_legendary_bard" },
 
     --- Treasure: loot.
-    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = 1500 },
+    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = 1500, spoils = true },
     { key = "strip_the_valuables", pool = "treasure", tags = { "loot", "curse" }, gold = 3000, army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 5 } },
     { key = "pry_open_the_reliquary", pool = "treasure", tags = { "loot", "curse" }, items = { rarities = { "rare" }, count = 1 }, wound = 2 },
     { key = "search_every_corner", pool = "treasure", tags = { "loot" }, items = { rarities = { "common", "uncommon", "rare" }, count = 2 }, camp = true },
@@ -319,6 +338,26 @@ M.offers = {
     { key = "night_terrors", pool = "pre_battle", tags = { "trick" }, cost = 1500, trick = true },
     { key = "assassinate", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true },
 
+    --- Spoils, picked after a won battle spot.
+    { key = "strip_the_dead", pool = "spoils", tags = { "loot" }, gold_per_enemy_unit = 100 },
+    { key = "ransom_the_captain", pool = "spoils", tags = { "loot", "deal" }, gold = 2500, ransom = true, relations = -2 },
+    { key = "tribute_from_the_locals", pool = "spoils", tags = { "deal" }, fixed_gold = true,
+        dividends = { per_turn = 250, turns = 5, effect_bundle = "land_enc_effect_tower_dividends" } },
+    { key = "loot_the_baggage", pool = "spoils", tags = { "loot" }, battle_item = true },
+    { key = "recruit_a_captive", pool = "spoils", tags = { "recruit" }, captive = true },
+    { key = "freed_captives", pool = "spoils", tags = { "recruit" }, recruit = { count = 2, tiers = { 1, 2 } } },
+    { key = "bury_the_dead", pool = "spoils", tags = { "recovery" }, army_bundle = { SPOT_BUNDLE .. "bury_the_dead", 5 } },
+    { key = "press_on", pool = "spoils", tags = { "recovery" }, army_bundle = { SPOT_BUNDLE .. "press_on", 1 } },
+    { key = "victory_feast", pool = "spoils", tags = { "recovery" }, cost = 500, army_bundle = { SPOT_BUNDLE .. "victory_feast", 5 } },
+    { key = "trophy_of_war", pool = "spoils", tags = { "loot" }, trait_points = "land_enc_trait_spot_trophy_hunter" },
+    { key = "chase_the_routers", pool = "spoils", tags = { "gamble" }, gamble = {
+        { 1, "won", items = { rarities = { "rare" }, count = 1 } },
+        { 1, "lost", wound = 2 },
+    } },
+    { key = "cursed_trophy", pool = "spoils", tags = { "curse", "loot" }, gold = 3000, army_bundle = PLAGUE },
+    { key = "dark_offering", pool = "spoils", tags = { "curse" }, sacrifice = { ranks = 0 }, lord_ranks = 2,
+        army_bundle = { SPOT_BUNDLE .. "dark_offering", 5 } },
+
     --- Missions, tracked by the battle script under the tower's names, plus two of their own.
     { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },
     { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = 1500 },
@@ -340,8 +379,8 @@ for _, offer in ipairs(M.offers) do
     M.by_key[offer.key] = offer
 end
 
---- Site key -> site record.
-M.site_by_key = {}
+--- Site key -> site record, the spoils pick included.
+M.site_by_key = { [M.spoils.key] = M.spoils }
 for _, site in ipairs(M.sites) do
     M.site_by_key[site.key] = site
 end

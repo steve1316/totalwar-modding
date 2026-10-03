@@ -207,3 +207,6 @@ id	dilemma_key	option_key	value	target
 7018100060	land_enc_dilemma_site_sunken_library	GEN_TARGET_NONE		default
 7018100061	land_enc_dilemma_site_sunken_library	VAR_CHANCE	100	default
 7018100062	land_enc_dilemma_site_sunken_library	VAR_FOLLOWUP_CHANCE	100	default
+7018100064	land_enc_dilemma_site_spoils_of_war	GEN_TARGET_NONE		default
+7018100065	land_enc_dilemma_site_spoils_of_war	VAR_CHANCE	100	default
+7018100066	land_enc_dilemma_site_spoils_of_war	VAR_FOLLOWUP_CHANCE	100	default

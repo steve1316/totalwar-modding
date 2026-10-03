@@ -10,6 +10,8 @@ local hard_legendary_chance = require("script/land_encounters/configs/battle_cat
 
 local battle_picker = require("script/land_encounters/core/battle_picker")
 local spot_battles = require("script/land_encounters/features/spot_battles")
+local spot_offers = require("script/land_encounters/features/spot_offers")
+local spoils_site = require("script/land_encounters/configs/spot_offers").spoils
 
 local Army = require("script/land_encounters/core/army")
 
@@ -41,7 +43,7 @@ end
 
 --- Routes a freshly entered battle spot to the right code path: human-general -> dilemma, AI ->
 --- silent loot, human-non-general -> show-only event-feed message. Returns whether the spot should be removed. A human general's dilemma
---- opens with pre-battle offers when the pre-battle roll hits (features/spot_battles.lua), else as the plain Fight or Avoid dilemma.
+--- is built in script (features/spot_battles.lua), with pre-battle offers when the pre-battle roll hits, else as plain Fight or Avoid.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
 --- @param spot_info table A spot_info record for the spot being entered.
 --- @returns boolean True when the spot should be deactivated after dispatch.
@@ -52,12 +54,7 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
 
     if is_human_and_it_is_its_turn(triggering_faction) and self:character_is_general_and_can_trigger_dilemma(self.cached_player_character) then
         self.cached_event = battle_picker.pick()
-        if spot_battles.roll() then
-            spot_battles.open(self.cached_event, self.cached_player_character, triggering_faction)
-        else
-            spot_battles.show_missions(nil)
-            cm:trigger_dilemma(triggering_faction_name, self.cached_event.dilemma)
-        end
+        spot_battles.open(self.cached_event, self.cached_player_character, triggering_faction, spot_battles.roll())
         return true
     elseif not triggering_faction:is_human() then
         --- AI: silently grants a small loot.
@@ -152,7 +149,7 @@ function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle
 end
 
 
---- Fires the victory incident, then runs any continuity follow-up and AI balancing.
+--- Fires the victory incident, grants the victory items, may open the spoils pick, then runs any continuity follow-up and AI balancing.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_victory_incident(spot_info)
     --- The cached player can be cleared by a battle reload, so resolve it here too.
@@ -162,6 +159,10 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
 
     trigger_incident(self.cached_event.victory_incident, self.cached_event.victory_targets, spot_info, self.cached_player_character)
     self:grant_victory_items(self.cached_player_character:faction())
+    --- The spoils pick (features/spot_offers.lua) follows the victory reward when its roll hits.
+    if self.cached_player_character:faction():is_human() and spot_battles.roll_spoils() then
+        spot_offers.open_site(self.cached_player_character, self.cached_player_character:faction(), spoils_site, self.cached_event)
+    end
     --- Complex events trigger a balancing act on enemy AI factions.
     local continuity = self:check_if_incident_has_continuity(self.cached_event.victory_incident, self.cached_player_character:faction())
     if continuity ~= nil then

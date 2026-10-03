@@ -69,3 +69,4 @@ land_enc_dilemma_site_witchs_hut	false			ai_wins_soul	false	Event	UI_CAM_EVENT_D
 land_enc_dilemma_site_collapsed_mine	false			under_empire_discovered	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_merchants_wagon	false			imperial_supplies	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_sunken_library	false			story_panels/chd_drill_machinations	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_site_spoils_of_war	false			land_victory	false	Event	UI_CAM_EVENT_Dilemma			false

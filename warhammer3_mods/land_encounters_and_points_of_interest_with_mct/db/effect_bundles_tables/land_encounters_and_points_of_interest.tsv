@@ -74,6 +74,10 @@ land_enc_effect_spot_spread_the_plague			region	1	chaos_gifts.png	false	false	tr
 land_enc_effect_spot_quell_the_unrest			province	1	income.png	false	false	true
 land_enc_effect_spot_bountiful_harvest			province	1	income.png	false	false	true
 land_enc_effect_spot_stir_their_rebels			province	1	chaos_gifts.png	false	false	true
+land_enc_effect_spot_bury_the_dead			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_press_on			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_victory_feast			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_dark_offering			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_wound_owed_2			force	1	chaos_gifts.png	false	false	true
 land_enc_effect_spot_wound_owed_3			force	1	chaos_gifts.png	false	false	true
 land_enc_effect_spot_wound_owed_5			force	1	chaos_gifts.png	false	false	true

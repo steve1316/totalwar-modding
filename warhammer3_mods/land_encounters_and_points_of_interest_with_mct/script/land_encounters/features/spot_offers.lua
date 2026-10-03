@@ -90,7 +90,8 @@ end
 --- drawn and says so, as tower offers do. Unit and item rewards are picked here and kept on `ctx.cards`, and realm targets on `ctx.targets`,
 --- so the dilemma shows exactly what the offer gives.
 --- @param offer table The offer record.
---- @param ctx table { faction, faction_name, general_cqi, x, y, difficulty, cards, targets }.
+--- @param ctx table { faction, faction_name, general_cqi, x, y, difficulty, cards, targets, event }. `event` is the won battle's, on the
+--- spoils pick only.
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
     if offer.trait and tower_lords.has_trait(ctx.general_cqi, offer.trait) then return false end
@@ -99,6 +100,9 @@ local function eligible(offer, ctx)
     if offer.sacrifice and #tower_army.regular_units(ctx.general_cqi) < 2 then return false end
     if offer.daemon_army and not ctx.faction:has_home_region() then return false end
     if gamble_wants_unique(offer) and item_pool.pick_legendary_item(ctx.faction_name) == nil then return false end
+    local enemy_units = ctx.event and ctx.event.enemy_units or {}
+    if (offer.gold_per_enemy_unit or offer.captive) and #enemy_units == 0 then return false end
+    if offer.captive and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
 
     local cards = {}
     if offer.recruit then
@@ -116,6 +120,21 @@ local function eligible(offer, ctx)
     if offer.items then
         cards.items = item_pool.pick_items(ctx.faction_name, offer.items.rarities, offer.items.count)
         if #cards.items == 0 then return false end
+    end
+    if offer.battle_item then
+        local rarities = ctx.event and ctx.event.victory_items and ctx.event.victory_items.rarities or offers_data.default_battle_rarities
+        cards.items = item_pool.pick_items(ctx.faction_name, rarities, 1)
+        if #cards.items == 0 then return false end
+    end
+    if offer.captive then cards.units = { enemy_units[random_number(#enemy_units)] } end
+    if offer.gold_per_enemy_unit then cards.gold = scale_gold(offer.gold_per_enemy_unit * #enemy_units, ctx.difficulty, offer) end
+    if offer.ransom then
+        local beaten = ctx.event and ctx.event.faction
+        local kin = realm_effects.nearest_factions(ctx.faction, ctx.x, ctx.y, 1, function(other)
+            return offer_effects.culture_shorthand(other:name()) == beaten
+        end)[1]
+        if kin == nil then return false end
+        ctx.targets[offer.key] = { regions = {}, factions = { kin:name() } }
     end
     if offer.realm then
         local target = realm_effects.find_target(offer.realm, ctx.faction, ctx.x, ctx.y, offer.count)
@@ -135,16 +154,17 @@ end
 --- @returns string|nil The signature offer's key when it was drawn, first in the list.
 function M.draw(site, ctx)
     local keys, taken = {}, {}
-    local signature = offers_data.by_key[site.signature]
+    local signature = site.signature and offers_data.by_key[site.signature]
     if signature and eligible(signature, ctx) then
         keys[1] = signature.key
         taken[signature.key] = true
     end
-    local site_tags = {}
+    local site_tags, pools = {}, {}
     for _, tag in ipairs(site.tags) do site_tags[tag] = true end
+    for _, pool in ipairs(site.pools or { "treasure", "realm" }) do pools[pool] = true end
     local pool, total = {}, 0
     for _, offer in ipairs(offers_data.offers) do
-        if (offer.pool == "treasure" or offer.pool == "realm") and not taken[offer.key] and eligible(offer, ctx) then
+        if (pools[offer.pool] or (site.pools and offer.spoils)) and not taken[offer.key] and eligible(offer, ctx) then
             local weight = 1
             for _, tag in ipairs(offer.tags) do
                 if site_tags[tag] then weight = offers_data.tag_weight end
@@ -223,8 +243,9 @@ local function build_choice(offer, pending, faction_name, choice_key)
     pending.shown_affordable[offer.key] = affordable(offer, pending, faction_name)
     if not pending.shown_affordable[offer.key] then return { key = choice_key, lines = { line, offers_data.unaffordable_line } } end
     local choice = { key = choice_key, lines = { line } }
-    if offer.gold and not offer.gamble then choice.gold = scale_gold(offer.gold, pending.difficulty, offer) end
     local cards = pending.cards[offer.key] or {}
+    if offer.gold and not offer.gamble then choice.gold = scale_gold(offer.gold, pending.difficulty, offer) end
+    if cards.gold then choice.gold = cards.gold end
     choice.items = cards.items
     local force = cards.units and tower_army.delving_force(pending.general_cqi)
     if force then choice.units = { force = force, keys = cards.units } end
@@ -245,21 +266,24 @@ function M.launch_site(faction_name)
     dilemmas.launch(offers_data.dilemma_prefix .. pending.site, choices, faction_name)
 end
 
---- Opens a treasure site for a human lord: rolls the site, draws its offers and shows its dilemma.
+--- Opens a treasure site for a human lord: rolls the site, or uses the one given, draws its offers and shows its dilemma.
 --- @param character character The lord who entered the spot.
 --- @param faction faction The lord's faction.
-function M.open_site(character, faction)
+--- @param site table|nil The site record to open, e.g. the spoils pick, or nil to roll a treasure site.
+--- @param event table|nil The won battle's event, for the spoils pick.
+function M.open_site(character, faction, site, event)
     local faction_name = faction:name()
-    local site = pick_site()
+    site = site or pick_site()
     local ctx = {
         faction = faction,
         faction_name = faction_name,
         general_cqi = character:command_queue_index(),
         x = character:logical_position_x(),
         y = character:logical_position_y(),
-        difficulty = get_current_difficulty(),
+        difficulty = event and event.difficulty or get_current_difficulty(),
         cards = {},
         targets = {},
+        event = event,
     }
     local keys, signature = M.draw(site, ctx)
     local pending = { site = site.key, offers = keys, signature = signature, general_cqi = ctx.general_cqi, x = ctx.x, y = ctx.y,
@@ -304,10 +328,17 @@ local function apply_fields(fields, offer, state, scripted_rewards)
     if fields.army_bundle then tower_army.apply_bundle(general_cqi, fields.army_bundle[1], fields.army_bundle[2]) end
     if fields.faction_bundle then offer_effects.faction_bundle(faction_name, fields.faction_bundle[1], fields.faction_bundle[2]) end
     if fields.trait then tower_lords.add_trait(general_cqi, fields.trait, 1, true) end
+    if fields.trait_points then tower_lords.add_trait(general_cqi, fields.trait_points, 1, true) end
+    if fields.lord_ranks and general then
+        cm:add_agent_experience(cm:char_lookup_str(general), fields.lord_ranks, true)
+        log("spot: lord " .. general_cqi .. " gains " .. fields.lord_ranks .. " ranks")
+    end
     if fields.heal then tower_army.heal_army(general_cqi, 1) end
     if fields.sacrifice then
         offer_effects.remove_unit(general_cqi, tower_army.weakest_regular_unit(general_cqi))
-        for _, entry in ipairs(tower_army.regular_units(general_cqi)) do cm:add_experience_to_unit(entry.unit, fields.sacrifice.ranks) end
+        if fields.sacrifice.ranks > 0 then
+            for _, entry in ipairs(tower_army.regular_units(general_cqi)) do cm:add_experience_to_unit(entry.unit, fields.sacrifice.ranks) end
+        end
     end
     if fields.hero_rank then
         tower_lords.free_hero(general_cqi, faction_name, { offer_effects.culture_shorthand(faction_name) }, fields.hero_rank)

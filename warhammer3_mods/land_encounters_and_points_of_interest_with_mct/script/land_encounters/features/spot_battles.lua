@@ -65,6 +65,19 @@ function M.roll()
     return random_chance(offers_data.pre_battle_chance)
 end
 
+--- True when a won battle spot should open the spoils pick: the `spoils_chance` roll, or always while the debug `battle_event_rolls` holds
+--- "after".
+--- @returns boolean True to open the spoils pick.
+function M.roll_spoils()
+    for _, roll in ipairs(debug_config.battle_event_rolls) do
+        if roll == "after" then
+            log("spot battle: debug battle_event_rolls forces the spoils pick")
+            return true
+        end
+    end
+    return random_chance(offers_data.spoils_chance)
+end
+
 --- True when a pre-battle offer or mission would do something for this battle. A traitor's units are picked here and kept on `ctx.cards`.
 --- @param offer table The offer record.
 --- @param ctx table { faction_name, general_cqi, event, cards }.
@@ -132,11 +145,11 @@ local function affordable(offer, pending, faction_name)
 end
 
 --- Lists the missions taken on the open dilemma at the top of its description, one line each with a blank line after them, as the tower
---- lists a floor's results. No missions taken clears it, which a plain battle dilemma also needs.
---- @param pending table|nil The open dilemma, or nil to clear the list.
+--- lists a floor's results. No missions taken clears it.
+--- @param pending table The open dilemma.
 function M.show_missions(pending)
     local lines = {}
-    for _, key in ipairs(pending and pending.battle.missions or {}) do
+    for _, key in ipairs(pending.battle.missions) do
         lines[#lines + 1] = common.get_localised_string(offers_data.mission_set_loc_prefix .. key .. "_" .. pending.difficulty)
     end
     common.set_context_value(offers_data.missions_context, #lines > 0 and table.concat(lines, "\n") .. "\n\n" or "")
@@ -177,18 +190,21 @@ function M.launch(faction_name)
     dilemmas.launch(pending.dilemma, choices, faction_name)
 end
 
---- Opens a battle spot's dilemma with pre-battle offers and missions for a human lord.
+--- Opens a battle spot's dilemma for a human lord, built in script so it only shows the choices given a payload. Every battle dilemma has
+--- the offers and missions registered as choices, which a dilemma fired from the DB would all show. Without offers it is Fight and Avoid.
 --- @param event table The battle event from `battle_picker.pick`.
 --- @param character character The lord who entered the spot.
 --- @param faction faction The lord's faction.
-function M.open(event, character, faction)
+--- @param with_offers boolean True to draw pre-battle offers and missions, see `M.roll`.
+function M.open(event, character, faction, with_offers)
     local faction_name = faction:name()
     local ctx = { faction_name = faction_name, general_cqi = character:command_queue_index(), event = event, cards = {} }
-    local offers, missions = M.draw(ctx)
+    local offers, missions = {}, {}
+    if with_offers then offers, missions = M.draw(ctx) end
     M.pending_by_faction[faction_name] = { dilemma = event.dilemma, offers = offers, missions = missions, general_cqi = ctx.general_cqi,
         difficulty = event.difficulty, cards = ctx.cards, taken = {}, battle = { general_cqi = ctx.general_cqi, missions = {} } }
-    log("spot battle: " .. faction_name .. " opens " .. event.dilemma .. " with offers, lord " .. ctx.general_cqi .. ", treasury "
-        .. offer_effects.treasury(faction_name))
+    log("spot battle: " .. faction_name .. " opens " .. event.dilemma .. (with_offers and " with offers" or " plain") .. ", lord " .. ctx.general_cqi
+        .. ", treasury " .. offer_effects.treasury(faction_name))
     M.launch(faction_name)
 end
 
