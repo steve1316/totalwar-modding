@@ -8,6 +8,7 @@ local treasure_events = require("script/land_encounters/configs/events").treasur
 
 local item_pool = require("script/land_encounters/core/item_pool")
 local debug_config = require("script/land_encounters/configs/debug")
+local realm_effects = require("script/land_encounters/core/realm_effects")
 
 local TreasureEventDelegate = {}
 
@@ -33,7 +34,9 @@ function TreasureEventDelegate:trigger_event(area_and_character_info)
     local triggering_faction = character:faction()
     local random_event = pick_treasure_event()
 
-    if is_human_and_it_is_its_turn(triggering_faction) then
+    if is_human_and_it_is_its_turn(triggering_faction) and debug_config.realm_spike[1] then
+        realm_effects.run_spike(triggering_faction, character:logical_position_x(), character:logical_position_y())
+    elseif is_human_and_it_is_its_turn(triggering_faction) then
         trigger_incident_for_character(random_event.incident, random_event.targets, character)
     elseif not triggering_faction:is_human() then
         self:trigger_balancing_benefit_for_ai(character, triggering_faction, random_event)

@@ -37,4 +37,7 @@ M.smithy_cooldown = {}
 --- Forge level every Smithy acts as instead of its own, e.g. { 3 }.
 M.smithy_level = {}
 
+--- Runs the realm spike instead of the treasure incident when a human army enters a treasure spot, e.g. { true }. Results go to the script log.
+M.realm_spike = {}
+
 return M
