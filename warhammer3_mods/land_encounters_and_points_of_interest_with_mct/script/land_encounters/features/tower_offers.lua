@@ -9,8 +9,7 @@ local tower_army = require("script/land_encounters/features/tower_army")
 local item_pool = require("script/land_encounters/core/item_pool")
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_champions = require("script/land_encounters/configs/tower_champions")
-local army_generator = require("script/land_encounters/core/army_generator")
-local Army = require("script/land_encounters/core/army")
+local offer_effects = require("script/land_encounters/core/offer_effects")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
 
@@ -75,8 +74,7 @@ end
 --- @returns boolean True when the army is below full strength.
 local function army_damaged(ctx)
     if ctx.damaged == nil then
-        local strength = tower_army.army_strength(ctx.delve.general_cqi)
-        ctx.damaged = strength ~= nil and strength < 100
+        ctx.damaged = offer_effects.army_damaged(ctx.delve.general_cqi)
     end
     return ctx.damaged
 end
@@ -162,17 +160,6 @@ local function allies(offer, ctx)
     battle_trick(offer, ctx)
 end
 
---- True when the delving army has missile units or artillery, which Bottomless quivers needs.
---- @param ctx table The offer context.
---- @returns boolean True when a regular unit shoots.
-local function army_shoots(ctx)
-    for _, entry in ipairs(tower_army.regular_units(ctx.delve.general_cqi)) do
-        local class = entry.unit:unit_class()
-        if class:find("_mis$") or class:find("^art") then return true end
-    end
-    return false
-end
-
 --- Applies a sabotage offer: the next floor's army is built and marked with it, see `M.sabotage_options`.
 --- @param offer table The offer record.
 --- @param ctx table The offer context.
@@ -244,15 +231,6 @@ local function floor_name(floor, difficulty, bonus)
     return string.format(climb_text(floor == #tower_data.floors and "master" or "floor"), floor, shown)
 end
 
---- True when the delving army has room for `count` more units.
---- @param ctx table The offer context.
---- @param count number The units an offer adds.
---- @returns boolean True with at least `count` free slots.
-local function has_room(ctx, count)
-    local force = tower_army.delving_force(ctx.delve.general_cqi)
-    return force ~= nil and tower_army.free_slots(force) >= count
-end
-
 --- Keeps a unit offer's picked units on the delve, so its choice shows them as cards and its payload adds them to the army.
 --- @param offer table The offer record.
 --- @param ctx table The offer context.
@@ -262,14 +240,6 @@ local function hold_units(offer, ctx, units)
     ctx.delve.offer_units = ctx.delve.offer_units or {}
     ctx.delve.offer_units[offer.key] = units
     return #units == offer.count
-end
-
---- Finds the faction shorthand of the delving faction's culture.
---- @param faction_name string The faction key.
---- @returns string|nil The shorthand, or nil when its culture has no army data.
-local function culture_shorthand(faction_name)
-    local faction = cm:get_faction(faction_name)
-    return faction and Army.faction_shorthand_for_subculture(faction:subculture()) or nil
 end
 
 --- Collects the agent subtypes every human faction's characters have, so a Tower champion never copies a legendary lord a player holds.
@@ -292,14 +262,13 @@ end
 --- @param offer table The offer record.
 --- @returns boolean True when the units were picked.
 local function recruit(ctx, offer)
-    if not has_room(ctx, offer.count) then return false end
     local shorthand = nil
     if offer.from_tower then
         shorthand = ctx.tower and ctx.tower.faction
     else
-        shorthand = culture_shorthand(ctx.faction_name)
+        shorthand = offer_effects.culture_shorthand(ctx.faction_name)
     end
-    return hold_units(offer, ctx, shorthand and army_generator.pick_units(shorthand, offer.tiers, offer.unit_types, offer.count) or {})
+    return hold_units(offer, ctx, offer_effects.pick_recruits(ctx.delve.general_cqi, shorthand, offer))
 end
 
 --- Draw condition of Regiment of renown: room in the army, and a Regiment of Renown of the delving faction's culture that it does not field.
@@ -307,58 +276,7 @@ end
 --- @param offer table The offer record.
 --- @returns boolean True when one was picked.
 local function regiment_of_renown(ctx, offer)
-    if not has_room(ctx, offer.count) then return false end
-    local shorthand = culture_shorthand(ctx.faction_name)
-    local fielded = {}
-    for _, entry in ipairs(tower_army.unit_strengths(ctx.delve.general_cqi)) do fielded[entry.unit:unit_key()] = true end
-    local units = shorthand and army_generator.pick_units(shorthand, { 0, 1, 2, 3, 4, 5 }, nil, offer.count, { renown = true, exclude = fielded }) or {}
-    return hold_units(offer, ctx, units)
-end
-
---- The regular units that can still take an offer's ranks.
---- @param ctx table The offer context.
---- @param offer table The offer record: `ranks` and `max_rank`.
---- @returns table The `tower_army.regular_units` entries below `max_rank - ranks`, plus one.
-local function rankable_units(ctx, offer)
-    local list = {}
-    for _, entry in ipairs(tower_army.regular_units(ctx.delve.general_cqi)) do
-        if entry.unit:experience_level() <= offer.max_rank - offer.ranks then list[#list + 1] = entry end
-    end
-    return list
-end
-
---- Removes one unit from the delving army. The game only removes by unit key, taking a copy of its own choosing, so when the army has other
---- copies the ones left are given the strengths they had beside this unit, strongest to strongest. The result matches removing this one.
---- @param ctx table The offer context.
---- @param entry table The unit's `tower_army.unit_strengths` entry.
-local function remove_unit(ctx, entry)
-    local general_cqi = ctx.delve.general_cqi
-    local key = entry.unit:unit_key()
-    local kept = {}
-    for _, other in ipairs(tower_army.regular_units(general_cqi)) do
-        if other.index ~= entry.index and other.unit:unit_key() == key then kept[#kept + 1] = other.strength end
-    end
-    local lookup = cm:char_lookup_str(cm:get_character_by_cqi(general_cqi))
-    log("tower: removing unit " .. key .. " at " .. entry.index .. " (" .. math.floor(entry.strength + 0.5) .. "%) from " .. lookup)
-    cm:remove_unit_from_character(lookup, key)
-    if #kept == 0 then return end
-    local copies = {}
-    for _, other in ipairs(tower_army.regular_units(general_cqi)) do
-        if other.unit:unit_key() == key then copies[#copies + 1] = other end
-    end
-    table.sort(kept, function(a, b) return a > b end)
-    table.sort(copies, function(a, b) return a.strength > b.strength end)
-    for i, copy in ipairs(copies) do
-        if kept[i] then tower_army.set_strength(copy.unit, kept[i]) end
-    end
-end
-
---- Logs the delving army now and again half a second later, once the game has applied an offer's changes, so they can be checked.
---- @param general_cqi number The delving lord's command queue index.
---- @param offer_key string The offer's key for the log.
-local function log_army_change(general_cqi, offer_key)
-    tower_army.log_army(general_cqi, "before " .. offer_key)
-    cm:callback(function() tower_army.log_army(general_cqi, "after " .. offer_key) end, 0.5)
+    return hold_units(offer, ctx, offer_effects.pick_renown(ctx.delve.general_cqi, ctx.faction_name, offer.count))
 end
 
 --- Puts a faction offer's bundle on the delving faction.
@@ -366,17 +284,8 @@ end
 --- @param ctx table The offer context.
 --- @returns string The result outcome, the offer's key.
 local function faction_bundle(offer, ctx)
-    cm:apply_effect_bundle(offer.effect_bundle, ctx.faction_name, offer.turns)
-    log("tower: " .. offer.effect_bundle .. " on faction " .. ctx.faction_name .. " for " .. offer.turns .. " turns")
+    offer_effects.faction_bundle(ctx.faction_name, offer.effect_bundle, offer.turns)
     return offer.key
-end
-
---- Reads the faction's treasury.
---- @param faction_name string The faction key.
---- @returns number The treasury gold, or 0 when the faction is missing.
-local function treasury(faction_name)
-    local faction = cm:get_faction(faction_name)
-    return faction and faction:treasury() or 0
 end
 
 --- When each offer can be drawn and what it does. `eligible(ctx)` returns true when the offer would do something. `apply(offer, ctx)` runs
@@ -499,15 +408,14 @@ local HANDLERS = {
     assassinate = { eligible = function(ctx) return not (ctx.delve.next_floor and ctx.delve.next_floor.champion) end, apply = sabotage },
     turn_a_traitor = { eligible = recruit, apply = sabotage },
     freed_prisoner = {
-        eligible = function(ctx) return has_room(ctx, 1) end,
+        eligible = function(ctx) return offer_effects.has_room(ctx.delve.general_cqi, 1) end,
         apply = function(offer, ctx)
-            tower_lords.free_hero(ctx.delve.general_cqi, ctx.faction_name, { ctx.tower and ctx.tower.faction, culture_shorthand(ctx.faction_name) }, offer.rank)
+            tower_lords.free_hero(ctx.delve.general_cqi, ctx.faction_name, { ctx.tower and ctx.tower.faction, offer_effects.culture_shorthand(ctx.faction_name) }, offer.rank)
         end,
     },
     dark_bargain = {
         apply = function(offer, ctx)
-            tower_lords.add_trait(ctx.delve.general_cqi, offer.trait, 1, true)
-            tower_army.apply_bundle(ctx.delve.general_cqi, offer.effect_bundle)
+            offer_effects.dark_bargain(ctx.delve.general_cqi, offer)
             ctx.delve.dark_bargain = offer.wound_turns
         end,
     },
@@ -555,27 +463,20 @@ local HANDLERS = {
             add_battle_bundle(ctx.delve, offer.effect_bundles[random_number(#offer.effect_bundles)])
         end,
     },
-    bottomless_quivers = { eligible = army_shoots, apply = battle_trick },
+    bottomless_quivers = { eligible = function(ctx) return offer_effects.army_shoots(ctx.delve.general_cqi) end, apply = battle_trick },
     oath_of_no_retreat = { apply = battle_trick },
     divine_shield = { apply = battle_trick },
     night_terrors = { apply = battle_trick },
     regiment_of_renown = { eligible = regiment_of_renown },
     veterans_oath = {
-        eligible = function(ctx, offer) return #rankable_units(ctx, offer) >= offer.count end,
-        apply = function(offer, ctx)
-            local pool = rankable_units(ctx, offer)
-            for _ = 1, math.min(offer.count, #pool) do
-                local entry = table.remove(pool, random_number(#pool))
-                log("tower: +" .. offer.ranks .. " ranks to " .. entry.unit:unit_key() .. " at " .. entry.index)
-                cm:add_experience_to_unit(entry.unit, offer.ranks)
-            end
-        end,
+        eligible = function(ctx, offer) return #offer_effects.rankable_units(ctx.delve.general_cqi, offer.ranks, offer.max_rank) >= offer.count end,
+        apply = function(offer, ctx) offer_effects.add_ranks(ctx.delve.general_cqi, offer) end,
     },
     swap_the_chaff = {
         eligible = function(ctx) return #(ctx.delve.floor_units or {}) > 0 and tower_army.weakest_regular_unit(ctx.delve.general_cqi) ~= nil end,
         apply = function(_, ctx)
             local captives = ctx.delve.floor_units
-            remove_unit(ctx, tower_army.weakest_regular_unit(ctx.delve.general_cqi))
+            offer_effects.remove_unit(ctx.delve.general_cqi, tower_army.weakest_regular_unit(ctx.delve.general_cqi))
             local captive = table.remove(captives, random_number(#captives))
             log("tower: granting captive " .. captive)
             cm:grant_unit_to_character(cm:char_lookup_str(cm:get_character_by_cqi(ctx.delve.general_cqi)), captive)
@@ -583,13 +484,7 @@ local HANDLERS = {
     },
     blood_price = {
         eligible = function(ctx) return army_damaged(ctx) and #tower_army.regular_units(ctx.delve.general_cqi) >= 2 end,
-        apply = function(offer, ctx)
-            local weakest = tower_army.weakest_regular_unit(ctx.delve.general_cqi)
-            for _, entry in ipairs(tower_army.unit_strengths(ctx.delve.general_cqi)) do
-                if entry.index ~= weakest.index then tower_army.set_strength(entry.unit, entry.strength + offer.heal_share * (100 - entry.strength)) end
-            end
-            remove_unit(ctx, weakest)
-        end,
+        apply = function(offer, ctx) offer_effects.blood_price(ctx.delve.general_cqi, offer.heal_share) end,
     },
     lessons_in_blood = {
         apply = function(offer, ctx)
@@ -604,7 +499,7 @@ local HANDLERS = {
     ransom_a_captive = {
         eligible = function(ctx, offer)
             local captives = ctx.delve.floor_units or {}
-            return has_room(ctx, offer.count) and #captives > 0 and hold_units(offer, ctx, { captives[random_number(#captives)] })
+            return offer_effects.has_room(ctx.delve.general_cqi, offer.count) and #captives > 0 and hold_units(offer, ctx, { captives[random_number(#captives)] })
         end,
     },
     elite_recruit = { eligible = recruit },
@@ -626,9 +521,9 @@ local HANDLERS = {
         end,
     },
     tithe = {
-        eligible = function(ctx, offer) return treasury(ctx.faction_name) >= offer.min_treasury end,
+        eligible = function(ctx, offer) return offer_effects.treasury(ctx.faction_name) >= offer.min_treasury end,
         apply = function(offer, ctx)
-            local paid = round_gold(treasury(ctx.faction_name) * offer.share)
+            local paid = round_gold(offer_effects.treasury(ctx.faction_name) * offer.share)
             cm:treasury_mod(ctx.faction_name, -paid)
             ctx.delve.haul.gold = ctx.delve.haul.gold + paid * offer.multiplier
             return "tithe", { gold_text(paid), gold_text(paid * offer.multiplier) }
@@ -740,17 +635,8 @@ local HANDLERS = {
     daemons_deal = {
         --- The unique items are picked when the offer is considered, so it only shows when enough qualify.
         eligible = function(ctx, offer)
-            local items, tries = {}, 0
-            while #items < offer.items and tries < offer.items * 5 do
-                tries = tries + 1
-                local item = item_pool.pick_legendary_item(ctx.faction_name)
-                if item == nil then break end
-                local fresh = true
-                for _, held in ipairs(items) do fresh = fresh and held ~= item end
-                if fresh then items[#items + 1] = item end
-            end
-            ctx.delve.deal_items = items
-            return #items == offer.items
+            ctx.delve.deal_items = offer_effects.pick_unique_items(ctx.faction_name, offer.items)
+            return #ctx.delve.deal_items == offer.items
         end,
         apply = function(_, ctx)
             tower_data.add_items(ctx.delve.haul, ctx.delve.deal_items or {})
@@ -932,7 +818,7 @@ function M.take(choice_key, delve, faction_name, extras)
     end
     local gold_before, items_before = delve.haul.gold, #delve.haul.items
     log("tower: " .. faction_name .. " takes " .. offer.key .. " for " .. cost .. " gold (haul " .. gold_before .. " gold, " .. items_before .. " items)")
-    log_army_change(delve.general_cqi, offer.key)
+    offer_effects.log_army_change(delve.general_cqi, offer.key)
     delve.haul.gold = delve.haul.gold - cost
     delve.taken[offer.key] = true
     local handler = HANDLERS[offer.key]
@@ -1079,9 +965,6 @@ function M.settle_last_stand(delve, won)
         log("tower: Last stand lost, the army of lord " .. general_cqi .. " is destroyed")
     end, false)
 end
-
---- Finds the faction shorthand of a faction's culture, for heroes of the player's own kind.
-M.culture_shorthand = culture_shorthand
 
 --- Ends a camp: the army may move again.
 --- @param delve table The delve record.

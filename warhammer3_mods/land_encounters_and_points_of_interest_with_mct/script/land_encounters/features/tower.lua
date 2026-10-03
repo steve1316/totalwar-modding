@@ -14,6 +14,7 @@ local TowerSpot = require("script/land_encounters/core/spot").TowerSpot
 local Army = require("script/land_encounters/core/army")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_offers = require("script/land_encounters/features/tower_offers")
+local offer_effects = require("script/land_encounters/core/offer_effects")
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
@@ -894,7 +895,7 @@ function TowerEventDelegate:end_delve(faction_name, outcome, in_battle_sequence)
     tower:show_message(faction_name, outcome)
     if outcome == "tower_cleared" then
         local rank = tower_data.floors[#tower_data.floors].freed_hero_rank
-        if rank then tower_lords.free_hero(delve.general_cqi, faction_name, { tower.faction, tower_offers.culture_shorthand(faction_name) }, rank) end
+        if rank then tower_lords.free_hero(delve.general_cqi, faction_name, { tower.faction, offer_effects.culture_shorthand(faction_name) }, rank) end
         if delve.epithet then
             local epithet = offers_data.by_key.epithet
             tower_lords.add_trait(delve.general_cqi, epithet.trait, 1, true)
