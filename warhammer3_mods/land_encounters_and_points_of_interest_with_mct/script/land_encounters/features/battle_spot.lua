@@ -55,6 +55,7 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
         if spot_battles.roll() then
             spot_battles.open(self.cached_event, self.cached_player_character, triggering_faction)
         else
+            spot_battles.show_missions(nil)
             cm:trigger_dilemma(triggering_faction_name, self.cached_event.dilemma)
         end
         return true
@@ -95,6 +96,8 @@ end
 function BattleEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
     local choice = dilemma_choice_and_faction_info:choice()
     local action = spot_battles.take(dilemma_choice_and_faction_info:faction():name(), dilemma_choice_and_faction_info:choice_key(), self.cached_event)
+    --- A mission was taken: the same dilemma is already open again.
+    if action == "reopen" then return end
     if action == "fight" or (action == nil and choice == FIRST_OPTION) then
         out("DEBUG - trigger_dilemma_event_given_choice dilemma: " .. dilemma_choice_and_faction_info:dilemma())
         out("DEBUG - trigger_dilemma_event_given_choice choice: " .. dilemma_choice_and_faction_info:choice())
@@ -106,6 +109,8 @@ function BattleEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
 
             spot_battles.prepare_battle(self.cached_event, self.cached_player_character:command_queue_index())
             self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
+            --- Handed over once the army is generated, since Night terrors and the missions pick targets from its units.
+            spot_battles.hand_to_battle(self.cached_event, offensive_army)
             self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
             self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
         else
@@ -131,13 +136,15 @@ function BattleEventDelegate:trigger_battle_avoidance_incident(spot_info)
     trigger_incident(self.cached_event.avoidance_incident, self.cached_event.avoidance_targets, spot_info, self.cached_player_character)
 end
 
---- Called by InvasionBattleManager after BattleCompleted. On player win, fires the victory incident. Either way the pre-battle offers'
---- one-battle bundles come off and the battle script's notices are cleared.
+--- Called by InvasionBattleManager after BattleCompleted. On player win, pays the missions met and fires the victory incident. Either way
+--- the pre-battle offers' one-battle bundles come off and everything handed to the battle script is cleared.
 --- @param player_won_battle boolean True when the player was victorious.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
     local character = self.cached_player_character
-    spot_battles.end_battle(self.cached_event, character and character.command_queue_index and character:command_queue_index() or nil)
+    local general_cqi = character and character.command_queue_index and character:command_queue_index() or nil
+    if player_won_battle and general_cqi then spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi) end
+    spot_battles.end_battle(self.cached_event, general_cqi)
     if player_won_battle then
         self:trigger_victory_incident(spot_info)
     end
@@ -335,8 +342,8 @@ function BattleEventDelegate:reinstate_event_if_able(previous_state)
         self.invasion_battle_manager:set_auxiliary_army_for_reset(offensive_army)
         self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
         self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
-        --- The battle script's notices are not in the save, so they are handed over again.
-        spot_battles.hand_to_battle(self.cached_event)
+        --- What the battle script was handed is not in the save, so it is handed over again.
+        spot_battles.hand_to_battle(self.cached_event, nil)
     end
 end
 

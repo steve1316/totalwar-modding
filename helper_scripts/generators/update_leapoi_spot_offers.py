@@ -39,7 +39,11 @@ AVOID_ORDER = 999
 NOTICE_PREFIX = "land_enc_tower_buff_"
 
 # Line markers that make a row this script's own, so a run replaces it.
-OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_")
+OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_",
+                 "string_land_enc_spot_")
+
+# Loc file of the strings the script reads at runtime: the taken missions' lines.
+STRINGS_LOC = LOC_PREFIX + "spot_strings.loc.tsv"
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +76,9 @@ UNAFFORDABLE = ("treasury.png", "[[col:red]]We cannot afford this.[[/col]]")
 
 # Start of a paid offer's line, as the tower writes "Pay N gold from the haul to".
 PAY = "Pay [[col:yellow]]{cost} gold[[/col]] from our treasury to "
+
+# Start of a mission's line, as the tower writes its missions.
+MISSION = "[[col:yellow]]Mission:[[/col]] "
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -187,6 +194,25 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                                "and [[col:green]]20%[[/col]] [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]] faster reloads in this battle."),
     "hire_local_allies": ("Hire Local Allies", PAY + "hire local allies: [[col:green]]a small allied army[[/col]] of 5 to 7 units joins us in this battle."),
     "night_raid": ("Night Raid", "Raid their camp by night: a 50/50 chance the enemy army is [[col:green]]25% weaker[[/col]] or our units start at [[col:red]]90% strength[[/col]], decided now."),
+
+    "bottomless_quivers": ("Bottomless Quivers", PAY + "fill bottomless quivers: our missile units [[col:green]]never run out of ammunition[[/col]] in this battle."),
+    "oath_of_no_retreat": ("Oath of No Retreat", PAY + "swear an oath of no retreat: our units [[col:green]]cannot rout[[/col]] in this battle."),
+    "divine_shield": ("Divine Shield", PAY + "raise a divine shield: our lord [[col:green]]cannot be harmed for the first 5 minutes[[/col]] of this battle."),
+    "night_terrors": ("Night Terrors", PAY + "send night terrors: the enemy's [[col:green]]2 most expensive units flee[[/col]] after 1 minute of this battle."),
+    "assassinate": ("Assassinate", PAY + "send an assassin: the enemy [[col:green]]lord is slain as the battle starts[[/col]]."),
+
+    "headhunt": ("Headhunt", MISSION + "kill the enemy lord within [[col:yellow]]6 minutes[[/col]] for [[col:green]]a random rare item[[/col]]."),
+    "blood_tally": ("Blood Tally", MISSION + "kill [[col:yellow]]40%[[/col]] of the enemy's soldiers for [[col:green]]+{gold} gold[[/col]]."),
+    "hold_the_line": ("Hold the Line", MISSION + "lose [[col:yellow]]no more than 2 units[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
+    "swift_victory": ("Swift Victory", MISSION + "win within [[col:yellow]]8 minutes[[/col]] for [[col:green]]an extra random item[[/col]] of the battle's rarity."),
+    "guard_the_standard": ("Guard the Standard", MISSION + "keep [[col:yellow]]one marked unit[[/col]] alive, and it gains [[col:green]]3 ranks[[/col]]."),
+    "break_them": ("Break Them", MISSION + "rout [[col:yellow]]6 enemy units[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
+    "trophy_hunt": ("Trophy Hunt", MISSION + "destroy the enemy's [[col:yellow]]most expensive unit[[/col]], and [[col:green]]a copy joins our army[[/col]]."),
+    "silence_the_guns": ("Silence the Guns", MISSION + "destroy every enemy [[col:yellow]]missile and artillery unit within 5 minutes[[/col]] for [[col:green]]a random rare item[[/col]]."),
+    "bloodbath_wager": ("Bloodbath Wager", MISSION + "wager [[col:yellow]]{cost} gold[[/col]] from our treasury and kill [[col:yellow]]75%[[/col]] of the enemy's soldiers for [[col:green]]+{gold} gold[[/col]]."),
+    "duelists_challenge": ("Duellist's Challenge", MISSION + "challenge the enemy lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "spare_the_captain": ("Spare the Captain", MISSION + "win with the [[col:yellow]]enemy lord still alive[[/col]], and ransom them for [[col:green]]+{gold} gold[[/col]]."),
+    "flawless_victory": ("Flawless Victory", MISSION + "win [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]]."),
     "walk_away": ("Walk Away", "Leave this place be."),
 }
 
@@ -217,6 +243,36 @@ ICONS = {
     "turn_a_traitor": "khainite_assassin.png", "hold_war_rites": "effect_rite.png", "hone_the_blades": "weapon_damage.png",
     "paint_warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "steel_our_resolve": "attribute_immune_to_psychology.png",
     "call_the_winds": "wh3_dlc24_wind_blast.png", "raid_the_quartermaster": "ammo.png", "hire_local_allies": "trade_agreement.png", "night_raid": "dlc10_death_night.png",
+    "bottomless_quivers": "ammo_character.png", "oath_of_no_retreat": "morale.png", "divine_shield": "lileaths_blessing.png",
+    "night_terrors": "dlc10_death_night.png", "assassinate": "assassin.png", "headhunt": "dlc10_assassination_targets.png", "blood_tally": "casualties.png",
+    "hold_the_line": "siege_defence.png", "swift_victory": "vigour.png", "guard_the_standard": "vow_knights_positive.png",
+    "break_them": "attribute_causes_terror.png", "trophy_hunt": "wh3_cp1_unit_reward.png", "silence_the_guns": "artillery.png",
+    "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
+}
+
+# Line on a mission already taken on the open battle dilemma: (icon, text).
+TAKEN = ("icon_blank.png", "[[col:red]]Already taken.[[/col]]")
+
+# Mission key -> (what it asked, said when met, said when failed). Each becomes a message after a won battle.
+MISSION_MESSAGES = {
+    "headhunt": ("Headhunt", "The enemy lord fell in time, and a rare item is ours.", "The enemy lord was not slain in time."),
+    "blood_tally": ("Blood Tally", "We cut down the enemy's soldiers, and the gold is ours.", "Too few of the enemy fell."),
+    "hold_the_line": ("Hold the Line", "Our line held, and the gold is ours.", "We lost too many units."),
+    "swift_victory": ("Swift Victory", "We won in time, and an extra item is ours.", "The battle took too long."),
+    "guard_the_standard": ("Guard the Standard", "The marked unit survived and gains 3 ranks.", "The marked unit was lost."),
+    "break_them": ("Break Them", "Their units broke, and the gold is ours.", "Too few of their units broke."),
+    "trophy_hunt": ("Trophy Hunt", "Their finest unit fell, and a copy joins our army.", "Their finest unit survived."),
+    "silence_the_guns": ("Silence the Guns", "Their guns fell silent in time, and a rare item is ours.", "Their guns were not silenced in time."),
+    "bloodbath_wager": ("Bloodbath Wager", "The bloodbath paid off, and the gold is ours.", "Too few of the enemy fell, and the wager is lost."),
+    "duelists_challenge": ("Duellist's Challenge", "Our lord slew theirs, and a unique item is ours.", "Our lord did not slay theirs."),
+    "spare_the_captain": ("Spare the Captain", "Their lord lived, and the ransom is ours.", "Their lord fell, so there is no ransom."),
+    "flawless_victory": ("Flawless Victory", "Not a single unit was lost, and a unique item is ours.", "We lost a unit."),
+}
+
+# Battle objectives for the missions the tower does not have: name -> (panel text, banner).
+MISSION_OBJECTIVES = {
+    "spare_the_captain": ("Spare the Captain: keep the enemy lord alive", "Spare the Captain: win with the enemy lord still alive."),
+    "flawless_victory": ("Flawless Victory: our units lost", "Flawless Victory: win without losing a single unit."),
 }
 
 # Battle notice name -> (colour, text) the battle script shows for a pre-battle offer: red for what weakens the enemy, green for our help,
@@ -367,7 +423,8 @@ io.write(encode({ sites = data.sites, offers = data.offers, gold_multiplier = da
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
     wound_bundle_prefix = data.wound_bundle_prefix, avoid_choice_key = data.avoid_choice_key,
-    unaffordable_line = data.unaffordable_line, battle_dilemmas = battle_dilemmas }))
+    unaffordable_line = data.unaffordable_line, taken_line = data.taken_line, missions_context = data.missions_context,
+    mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas }))
 """
 
 
@@ -494,8 +551,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
 
     by_key = {o["key"]: o for o in config["offers"]}
     choice_keys = [(config["choice_key_prefix"] + o["key"].upper(), o["key"]) for o in config["offers"]] + [(config["walk_away_choice_key"], "walk_away")]
-    site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] != "pre_battle"]
-    battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] == "pre_battle"]
+    site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] not in ("pre_battle", "mission")]
+    battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] in ("pre_battle", "mission")]
     row_id = FIRST_ROW_ID
     for site in config["sites"]:
         dilemma = config["dilemma_prefix"] + site["key"]
@@ -516,6 +573,13 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
 
     avoid_labels = read_labels(config["battle_dilemmas"], "SECOND")
     line(config["unaffordable_line"], UNAFFORDABLE[0], UNAFFORDABLE[1])
+    line(config["taken_line"], TAKEN[0], TAKEN[1])
+    for name, (text, banner) in MISSION_OBJECTIVES.items():
+        icon = "ui/campaign ui/effect_bundles/" + ICONS[name]
+        for suffix, shown in [("", text), ("_message", banner)]:
+            add(table("scripted_objectives_tables"), NOTICE_PREFIX + name + suffix, icon)
+            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_text_" + NOTICE_PREFIX + name + suffix, shown, "false")
+            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_description_" + NOTICE_PREFIX + name + suffix, "", "false")
     consequences = config["line_prefix"] + AVOID_CONSEQUENCES[0]
     line(consequences, AVOID_CONSEQUENCES[1], AVOID_CONSEQUENCES[2])
     for dilemma in config["battle_dilemmas"]:
@@ -548,6 +612,9 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             values = line_values(offer, difficulty, config)
             component = config["line_prefix"] + key + "_" + difficulty
             line(component, ICONS[key], text.format(**values))
+            if offer["pool"] == "mission":
+                taken = text.format(**values).replace(MISSION, f"[[col:yellow]]{title_case(OFFERS[key][0])} (Mission):[[/col]] ", 1)
+                add(STRINGS_LOC, config["mission_set_loc_prefix"] + key + "_" + difficulty, taken, "false")
 
     for suffix, (target, icon, title, description, effects) in BUNDLES.items():
         key = "land_enc_effect_spot_" + suffix
@@ -558,6 +625,10 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(LOC_PREFIX + "effect_bundles.loc.tsv", "effect_bundles_localised_description_" + key, description, "false")
 
     messages = dict(MESSAGES)
+    for key, (title, met, failed) in MISSION_MESSAGES.items():
+        messages["mission_" + key + "_met"] = (title, "Mission Met", met)
+        messages["mission_" + key + "_failed"] = (title, "Mission Failed", failed)
+    messages["missions_untracked"] = ("Missions", "Not Counted", "The battle was auto-resolved, so no mission was counted. Any wager comes back to our treasury.")
     owed_effect = config["wound_bundle_prefix"].rstrip("_")
     add(table("effects_tables"), owed_effect, "chaos_gifts.png", 2, "chaos_gifts.png", "campaign", "false")
     add(LOC_PREFIX + "effects.loc.tsv", "effects_description_" + owed_effect, WOUND_OWED_EFFECT, "false")
@@ -611,6 +682,29 @@ def read_labels(dilemmas: List[str], choice: str) -> Dict[str, str]:
     return labels
 
 
+def hook_battle_descriptions(config: Dict, dry_run: bool) -> None:
+    """Starts every battle dilemma's description with the missions-taken context, as the tower's floors start with their results.
+
+    Args:
+        config (Dict): The loaded config.
+        dry_run (bool): True to only print how many would change.
+    """
+    hook = '{{CcoCampaignEventDilemma:ScriptObjectContext("' + config["missions_context"] + '").StringValue}}'
+    path = MOD_ROOT + LOC_PREFIX + "dilemmas.loc.tsv"
+    lines = open(path, "rb").read().decode("utf-8").splitlines(keepends=True)
+    wanted = {"dilemmas_localised_description_" + d for d in config["battle_dilemmas"]}
+    changed = 0
+    for i, line in enumerate(lines):
+        fields = line.split("\t")
+        if fields[0] in wanted and not fields[1].startswith(hook):
+            fields[1] = hook + fields[1]
+            lines[i] = "\t".join(fields)
+            changed += 1
+    print(f"{LOC_PREFIX}dilemmas.loc.tsv: {changed} battle descriptions hooked")
+    if changed and not dry_run:
+        open(path, "wb").write("".join(lines).encode("utf-8"))
+
+
 def owned(line: str) -> bool:
     """True when a row belongs to this script, so a run replaces it.
 
@@ -621,8 +715,9 @@ def owned(line: str) -> bool:
         bool: True for spot offer rows, including the FIRST choice rows on site dilemmas.
     """
     key = line.split("\t", 1)[0]
-    notice = key.startswith(NOTICE_PREFIX) and key[len(NOTICE_PREFIX):].replace("_message", "") in NOTICES
-    loc_notice = key.startswith("scripted_objectives_localised_") and any(key.endswith(NOTICE_PREFIX + n + s) for n in NOTICES for s in ("", "_message"))
+    names = list(NOTICES) + list(MISSION_OBJECTIVES)
+    notice = key.startswith(NOTICE_PREFIX) and key[len(NOTICE_PREFIX):].replace("_message", "") in names
+    loc_notice = key.startswith("scripted_objectives_localised_") and any(key.endswith(NOTICE_PREFIX + n + s) for n in names for s in ("", "_message"))
     return any(marker in line for marker in OWNED_MARKERS) or line.startswith("70181") or notice or loc_notice
 
 
@@ -661,7 +756,9 @@ def check_text(config: Dict) -> None:
     problems += [f"no text for site {s['key']}" for s in config["sites"] if s["key"] not in SITES]
     problems += [f"no icon for {key}" for key in OFFERS if key not in ICONS]
     problems += [f"no notice for {o['key']}" for o in config["offers"]
-                 if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and o["key"] not in NOTICES and o["key"] not in TOWER_NOTICES]
+                 if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and "trick" not in o and o["key"] not in NOTICES
+                 and o["key"] not in TOWER_NOTICES]
+    problems += [f"no messages for mission {o['key']}" for o in config["offers"] if o["pool"] == "mission" and o["key"] not in MISSION_MESSAGES]
     every = [t for entry in OFFERS.values() for t in entry if t] + [t for entry in MESSAGES.values() for t in entry] + [d for _, d in SITES.values()]
     problems += [f"gold with a separator: {t}" for t in every if re.search(r"\d,\d{3}", t)]
     if problems:
@@ -678,6 +775,7 @@ def main() -> None:
     config = load_config()
     check_text(config)
     write_rows(build_rows(config), args.dry_run)
+    hook_battle_descriptions(config, args.dry_run)
 
 
 if __name__ == "__main__":

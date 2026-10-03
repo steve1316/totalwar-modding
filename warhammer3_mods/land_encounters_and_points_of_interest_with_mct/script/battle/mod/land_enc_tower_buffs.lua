@@ -1,7 +1,8 @@
 --- Announces the tower buffs on the delving army when a tower floor battle starts: one banner per buff above the army panel, and one entry per
 --- buff in the objectives panel for the rest of the battle. It also does the in-battle tricks bought between floors, tracks the missions taken
 --- for the floor, and counts kills against Rival delvers, reporting both back to the campaign. The campaign saves the buff list under
---- `land_enc_tower_battle_buffs` just before a floor battle and clears it once the floor resolves, so other battles see an empty list.
+--- `land_enc_tower_battle_buffs` just before a floor battle and clears it once the floor resolves, so other battles see an empty list. A
+--- battle spot hands over its pre-battle offers, tricks and missions the same way.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -311,6 +312,15 @@ local MISSIONS = {
     },
 }
 MISSIONS.bloodbath_wager = MISSIONS.blood_tally
+--- A battle spot's Flawless victory is Hold the line with a limit of 0, which the campaign hands over as its target.
+MISSIONS.flawless_victory = MISSIONS.hold_the_line
+--- A battle spot's Spare the captain: fails once the enemy lord falls, and is met when the battle is decided with that lord still standing.
+MISSIONS.spare_the_captain = {
+    tick = function(m, ctx)
+        if ctx.their_lord and is_lost(ctx.their_lord) then m.state = "failed" end
+    end,
+    finish = function(m) m.state = "met" end,
+}
 
 --- Runs one step of a mission. A mission that errors, e.g. one whose target never reached the battle, fails on its own so the others go on.
 --- @param m table The mission.

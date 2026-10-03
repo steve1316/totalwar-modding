@@ -40,6 +40,18 @@
 ---   battle_bundle   A bundle on our army for this battle only, taken off when it ends. Its notice is the tower's for that bundle.
 ---   allies          { min, max } regular units in an allied army that joins the battle, with its lord.
 ---   own_strength    Our units start the battle at this share of their strength (a gamble outcome).
+---   trick           True: the battle script does it in this battle, under the offer's key (the tower's trick names).
+---   shoots          True: only drawn when our army has missile units or artillery.
+---
+--- Mission fields (pool "mission"). A mission is a stay offer: taking it pays its cost and reopens the dilemma, so missions stack before the
+--- battle. The battle script tracks it under its key (the tower's mission names). A won battle pays a mission met:
+---   battle_value    The mission's target in battle, e.g. 0.4 of the enemy's soldiers or 480 seconds.
+---   gold            Gold to the treasury (Easy value, scaled).
+---   items           { rarities, count }: random items.
+---   unique          How many unique items.
+---   battle_item     True: 1 item of the battle's own victory rarities.
+---   unit_ranks      Ranks for the unit Guard the standard marks.
+---   trophy          True: a copy of the enemy's most expensive unit joins our army.
 
 --- Key prefix of the spot offers' own effect bundles.
 local SPOT_BUNDLE = "land_enc_effect_spot_"
@@ -93,6 +105,24 @@ M.pre_battle_chance = 30
 
 --- Pre-battle offers drawn between Fight and Avoid.
 M.offers_per_battle = 2
+
+--- Missions drawn after the pre-battle offers, before Avoid.
+M.missions_per_battle = 2
+
+--- Line on a mission already taken on the open dilemma.
+M.taken_line = "dummy_land_enc_spot_taken"
+
+--- Line under a mission: taking it returns to the same dilemma. The tower's own line.
+M.returns_line = "dummy_land_enc_tower_returns_here"
+
+--- Script context value every battle dilemma's description starts with: the missions taken so far, one line each, or empty.
+M.missions_context = "land_enc_spot_battle_missions"
+
+--- Loc key prefix of a taken mission's line in that list, followed by the mission key and the difficulty.
+M.mission_set_loc_prefix = "campaign_localised_strings_string_land_enc_spot_mission_set_"
+
+--- How many of the enemy's most expensive units Night terrors routs.
+M.night_terrors_targets = 2
 
 --- Choice key of Avoid on a battle dilemma with offers. It sorts last, as the tower's Leave does, and carries the dilemma's own Avoid label.
 M.avoid_choice_key = "LEAPOI_SPT_AVOID"
@@ -281,6 +311,27 @@ M.offers = {
         { 1, "won", budget = 0.75 },
         { 1, "lost", own_strength = 0.9 },
     } },
+
+    --- Pre-battle: tricks the battle script plays, under the tower's names.
+    { key = "bottomless_quivers", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true, shoots = true },
+    { key = "oath_of_no_retreat", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true },
+    { key = "divine_shield", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true },
+    { key = "night_terrors", pool = "pre_battle", tags = { "trick" }, cost = 1500, trick = true },
+    { key = "assassinate", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true },
+
+    --- Missions, tracked by the battle script under the tower's names, plus two of their own.
+    { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },
+    { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = 1500 },
+    { key = "hold_the_line", pool = "mission", tags = {}, battle_value = 2, gold = 1500 },
+    { key = "swift_victory", pool = "mission", tags = {}, battle_value = 480, battle_item = true },
+    { key = "guard_the_standard", pool = "mission", tags = {}, unit_ranks = 3 },
+    { key = "break_them", pool = "mission", tags = {}, battle_value = 6, gold = 1000 },
+    { key = "trophy_hunt", pool = "mission", tags = {}, trophy = true },
+    { key = "silence_the_guns", pool = "mission", tags = {}, battle_value = 300, items = { rarities = { "rare" }, count = 1 } },
+    { key = "bloodbath_wager", pool = "mission", tags = {}, cost = 1000, battle_value = 0.75, gold = 2000 },
+    { key = "duelists_challenge", pool = "mission", tags = {}, unique = 1 },
+    { key = "spare_the_captain", pool = "mission", tags = {}, gold = 2500 },
+    { key = "flawless_victory", pool = "mission", tags = {}, battle_value = 0, unique = 1 },
 }
 
 --- Offer key -> offer record.
