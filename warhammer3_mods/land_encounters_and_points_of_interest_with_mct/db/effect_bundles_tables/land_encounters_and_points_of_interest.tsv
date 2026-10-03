@@ -51,8 +51,8 @@ land_enc_effect_tower_scaling_blessing_4			force	1	icon_effects_fortify.png	fals
 land_enc_effect_tower_towers_favour			faction	1	income.png	true	false	true
 land_enc_effect_tower_research_scrolls			faction	1	technology.png	true	false	true
 land_enc_effect_tower_recruitment_cache			faction	1	military_spending.png	true	false	true
-land_enc_effect_spike_template_region			region	1	income.png	true	false	true
-land_enc_effect_spike_template_province			province	1	income.png	true	false	true
-land_enc_effect_spike_template_faction			faction	1	technology.png	true	false	true
-land_enc_effect_spike_region			region	1	income.png	true	false	true
-land_enc_effect_spike_province			province	1	income.png	true	false	true
+land_enc_effect_test_template_region			region	1	income.png	true	false	true
+land_enc_effect_test_template_province			province	1	income.png	true	false	true
+land_enc_effect_test_template_faction			faction	1	technology.png	true	false	true
+land_enc_effect_test_region			region	1	income.png	true	false	true
+land_enc_effect_test_province			province	1	income.png	true	false	true

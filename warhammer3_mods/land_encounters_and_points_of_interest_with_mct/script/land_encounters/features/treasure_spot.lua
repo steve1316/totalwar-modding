@@ -34,8 +34,8 @@ function TreasureEventDelegate:trigger_event(area_and_character_info)
     local triggering_faction = character:faction()
     local random_event = pick_treasure_event()
 
-    if is_human_and_it_is_its_turn(triggering_faction) and debug_config.realm_spike[1] then
-        realm_effects.run_spike(triggering_faction, character:logical_position_x(), character:logical_position_y())
+    if is_human_and_it_is_its_turn(triggering_faction) and debug_config.realm_test[1] then
+        realm_effects.run_test(triggering_faction, character:logical_position_x(), character:logical_position_y())
     elseif is_human_and_it_is_its_turn(triggering_faction) then
         trigger_incident_for_character(random_event.incident, random_event.targets, character)
     elseif not triggering_faction:is_human() then
