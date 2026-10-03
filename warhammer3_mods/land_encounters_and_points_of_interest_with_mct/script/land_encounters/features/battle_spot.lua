@@ -9,6 +9,7 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local hard_legendary_chance = require("script/land_encounters/configs/battle_categories").hard_legendary_chance
 
 local battle_picker = require("script/land_encounters/core/battle_picker")
+local spot_battles = require("script/land_encounters/features/spot_battles")
 
 local Army = require("script/land_encounters/core/army")
 
@@ -39,7 +40,8 @@ function BattleEventDelegate:get_cached_player_character()
 end
 
 --- Routes a freshly entered battle spot to the right code path: human-general -> dilemma, AI ->
---- silent loot, human-non-general -> show-only event-feed message. Returns whether the spot should be removed.
+--- silent loot, human-non-general -> show-only event-feed message. Returns whether the spot should be removed. A human general's dilemma
+--- opens with pre-battle offers when the pre-battle roll hits (features/spot_battles.lua), else as the plain Fight or Avoid dilemma.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
 --- @param spot_info table A spot_info record for the spot being entered.
 --- @returns boolean True when the spot should be deactivated after dispatch.
@@ -50,7 +52,11 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
 
     if is_human_and_it_is_its_turn(triggering_faction) and self:character_is_general_and_can_trigger_dilemma(self.cached_player_character) then
         self.cached_event = battle_picker.pick()
-        cm:trigger_dilemma(triggering_faction_name, self.cached_event.dilemma)
+        if spot_battles.roll() then
+            spot_battles.open(self.cached_event, self.cached_player_character, triggering_faction)
+        else
+            cm:trigger_dilemma(triggering_faction_name, self.cached_event.dilemma)
+        end
         return true
     elseif not triggering_faction:is_human() then
         --- AI: silently grants a small loot.
@@ -82,12 +88,14 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Dilemmas
 
---- Handles the player's dilemma choice: option 0 spawns + fires the battle, anything else triggers the avoidance incident.
+--- Handles the player's dilemma choice: Fight spawns + fires the battle, anything else triggers the avoidance incident. A dilemma with
+--- pre-battle offers is routed by choice key, and a taken offer fights with its changes on the battle event.
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
     local choice = dilemma_choice_and_faction_info:choice()
-    if choice == FIRST_OPTION then
+    local action = spot_battles.take(dilemma_choice_and_faction_info:faction():name(), dilemma_choice_and_faction_info:choice_key(), self.cached_event)
+    if action == "fight" or (action == nil and choice == FIRST_OPTION) then
         out("DEBUG - trigger_dilemma_event_given_choice dilemma: " .. dilemma_choice_and_faction_info:dilemma())
         out("DEBUG - trigger_dilemma_event_given_choice choice: " .. dilemma_choice_and_faction_info:choice())
         --- Generate the army and confirm a spawn location exists before firing the battle.
@@ -96,6 +104,7 @@ function BattleEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
         if self.invasion_battle_manager:can_generate_battle(offensive_army, spot_info.coordinates) then
             self.is_triggered = true
 
+            spot_battles.prepare_battle(self.cached_event, self.cached_player_character:command_queue_index())
             self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
             self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
             self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
@@ -122,10 +131,13 @@ function BattleEventDelegate:trigger_battle_avoidance_incident(spot_info)
     trigger_incident(self.cached_event.avoidance_incident, self.cached_event.avoidance_targets, spot_info, self.cached_player_character)
 end
 
---- Called by InvasionBattleManager after BattleCompleted. On player win, fires the victory incident.
+--- Called by InvasionBattleManager after BattleCompleted. On player win, fires the victory incident. Either way the pre-battle offers'
+--- one-battle bundles come off and the battle script's notices are cleared.
 --- @param player_won_battle boolean True when the player was victorious.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
+    local character = self.cached_player_character
+    spot_battles.end_battle(self.cached_event, character and character.command_queue_index and character:command_queue_index() or nil)
     if player_won_battle then
         self:trigger_victory_incident(spot_info)
     end
@@ -274,7 +286,8 @@ function BattleEventDelegate:add_ancillary_to_feuding_factions(feuding_factions,
     end
 end
 
---- Builds the encounter Army from the cached battle event. Allies are picked from the triggering player's subculture when it is known.
+--- Builds the encounter Army from the cached battle event, with any pre-battle sabotage taken. Allies are picked from the triggering
+--- player's subculture when it is known.
 --- @returns Army A new Army instance built from the cached event.
 function BattleEventDelegate:get_offensive_army()
     out("DEBUG - get_offensive_army Beginning process to generate the encounter force.")
@@ -282,7 +295,11 @@ function BattleEventDelegate:get_offensive_army()
     if self.cached_player_character and self.cached_player_character.faction then
         player_subculture = self.cached_player_character:faction():subculture()
     end
-    return Army:new_from_event(self.cached_event, player_subculture)
+    local army = Army:new_from_event(self.cached_event, player_subculture)
+    --- The battle manager puts the pre-battle offers' sabotage on the army once it spawns.
+    army.enemy_strength = self.cached_event.enemy_strength
+    army.enemy_bundles = self.cached_event.enemy_bundles
+    return army
 end
 
 
@@ -318,6 +335,8 @@ function BattleEventDelegate:reinstate_event_if_able(previous_state)
         self.invasion_battle_manager:set_auxiliary_army_for_reset(offensive_army)
         self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
         self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
+        --- The battle script's notices are not in the save, so they are handed over again.
+        spot_battles.hand_to_battle(self.cached_event)
     end
 end
 

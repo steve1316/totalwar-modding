@@ -200,3 +200,35 @@ scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers	Rival Delve
 scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers		false
 scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers_message	Rival Delvers: out-kill the rival army, or it takes half the floor's spoils.	false
 scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_a_scout	[[col:red]]Bribe a Scout: the enemy army is 25% weaker.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_a_scout		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_a_scout_message	Bribe a Scout: the enemy army is 25% weaker.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_a_scout_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_their_ranks	[[col:red]]Thin Their Ranks: the enemy fields 3 fewer units.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_their_ranks		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_their_ranks_message	Thin Their Ranks: the enemy fields 3 fewer units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_their_ranks_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_their_stores	[[col:red]]Poison Their Stores: enemy units start at 75% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_their_stores		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_their_stores_message	Poison Their Stores: enemy units start at 75% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_their_stores_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_keep_the_veterans_away	[[col:red]]Keep the Veterans Away: the enemy has tier 1-2 units only.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_keep_the_veterans_away		false
+scripted_objectives_localised_text_land_enc_tower_buff_keep_the_veterans_away_message	Keep the Veterans Away: the enemy has tier 1-2 units only.	false
+scripted_objectives_localised_description_land_enc_tower_buff_keep_the_veterans_away_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spread_dread	[[col:red]]Spread Dread: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spread_dread		false
+scripted_objectives_localised_text_land_enc_tower_buff_spread_dread_message	Spread Dread: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_spread_dread_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hire_local_allies	[[col:green]]Hire Local Allies: an allied army joins the battle.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hire_local_allies		false
+scripted_objectives_localised_text_land_enc_tower_buff_hire_local_allies_message	Hire Local Allies: an allied army joins the battle.	false
+scripted_objectives_localised_description_land_enc_tower_buff_hire_local_allies_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_won	[[col:red]]Night Raid: the enemy army is 25% weaker.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_won		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_won_message	Night Raid: the enemy army is 25% weaker.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_won_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost	[[col:yellow]]Night Raid: our units start at 90% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_message	Night Raid: our units start at 90% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_message		false

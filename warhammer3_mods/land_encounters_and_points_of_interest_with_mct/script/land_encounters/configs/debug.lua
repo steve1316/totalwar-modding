@@ -40,4 +40,10 @@ M.force_spot_offers = {}
 --- Treasure site key every treasure spot opens instead of a random one, e.g. { "witchs_hut" }.
 M.force_treasure_site = {}
 
+--- Battle spot event rolls that always hit, e.g. { "before" } for the pre-battle offers.
+M.battle_event_rolls = {}
+
+--- Gold every paid site and battle offer costs instead of its own, e.g. { 10000 } to see them unaffordable. Their lines still name their own cost.
+M.spot_cost = {}
+
 return M

@@ -28,6 +28,18 @@
 ---   points          Development points for the realm target.
 ---   heal_garrison   True: the realm target's garrison is healed to full.
 ---   count           How many realm targets.
+---
+--- Pre-battle offer fields (pool "pre_battle"). Taking one pays its cost and the battle starts with it:
+---   budget          Multiplies the enemy army's gold budget, e.g. 0.75.
+---   fewer_units     The enemy army fields this many fewer units.
+---   no_heroes       True: the enemy army has no heroes.
+---   max_tier        The enemy army's units are at most this tier.
+---   enemy_strength  The enemy's units start at this share of full strength.
+---   enemy_bundle    A bundle on the enemy army for the battle.
+---   traitor         { count, tiers }: units of the enemy's faction join our army, and the enemy fields that many fewer.
+---   battle_bundle   A bundle on our army for this battle only, taken off when it ends. Its notice is the tower's for that bundle.
+---   allies          { min, max } regular units in an allied army that joins the battle, with its lord.
+---   own_strength    Our units start the battle at this share of their strength (a gamble outcome).
 
 --- Key prefix of the spot offers' own effect bundles.
 local SPOT_BUNDLE = "land_enc_effect_spot_"
@@ -70,8 +82,26 @@ M.dilemma_prefix = "land_enc_dilemma_site_"
 --- Text line prefix of an offer, followed by the offer key and the difficulty, e.g. dummy_land_enc_spot_take_the_gold_easy.
 M.line_prefix = "dummy_land_enc_spot_"
 
+--- Line under an offer the treasury cannot pay, the same for every offer.
+M.unaffordable_line = "dummy_land_enc_spot_unaffordable"
+
 --- Event feed message prefix after `land_enc_`, e.g. spot_roll_the_bones_won.
 M.message_prefix = "spot_"
+
+--- Percent chance a battle spot opens with pre-battle offers instead of its plain Fight or Avoid dilemma.
+M.pre_battle_chance = 30
+
+--- Pre-battle offers drawn between Fight and Avoid.
+M.offers_per_battle = 2
+
+--- Choice key of Avoid on a battle dilemma with offers. It sorts last, as the tower's Leave does, and carries the dilemma's own Avoid label.
+M.avoid_choice_key = "LEAPOI_SPT_AVOID"
+
+--- Choice key of Fight, the vanilla FIRST key the battle dilemmas already use.
+M.fight_choice_key = "FIRST"
+
+--- Gold per unit of a hired allied army, { min, max }, as the tower's allies use.
+M.ally_gold_per_unit = { 700, 1000 }
 
 --- Realm target kinds, measured from the spot:
 ---   own_region       Your nearest region.
@@ -226,6 +256,31 @@ M.offers = {
         faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 }, target_faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 } },
     { key = "point_them_at_each_other", pool = "realm", tags = { "realm_others" }, cost = 2000, realm = "rival_pair", relations = -3 },
     { key = "sell_their_secrets", pool = "realm", tags = { "realm_others", "deal" }, gold = 2000, realm = "enemy_friends", relations = 2 },
+
+    --- Pre-battle: sabotage on the enemy army.
+    { key = "bribe_a_scout", pool = "pre_battle", tags = { "sabotage" }, cost = 1500, budget = 0.75 },
+    { key = "thin_their_ranks", pool = "pre_battle", tags = { "sabotage" }, cost = 1000, fewer_units = 3 },
+    { key = "poison_their_stores", pool = "pre_battle", tags = { "sabotage" }, cost = 1000, enemy_strength = 0.75 },
+    { key = "kill_the_captain", pool = "pre_battle", tags = { "sabotage" }, cost = 1500, no_heroes = true },
+    { key = "keep_the_veterans_away", pool = "pre_battle", tags = { "sabotage" }, cost = 1000, max_tier = 2 },
+    { key = "spread_dread", pool = "pre_battle", tags = { "sabotage" }, cost = 1500, enemy_bundle = "land_enc_effect_tower_break_their_spirit" },
+    { key = "turn_a_traitor", pool = "pre_battle", tags = { "sabotage" }, cost = 2000, traitor = { count = 1, tiers = { 2, 3, 4 } } },
+
+    --- Pre-battle: buffs on our army for this battle.
+    { key = "hold_war_rites", pool = "pre_battle", tags = { "buff" }, cost = 1500, battle_bundle = "land_enc_effect_tower_war_rites" },
+    { key = "hone_the_blades", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_whetstones_and_oil" },
+    { key = "paint_warding_sigils", pool = "pre_battle", tags = { "buff" }, cost = 1500, battle_bundle = "land_enc_effect_tower_warding_sigils" },
+    { key = "fire_kissed_blades", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_fire_kissed_blades" },
+    { key = "steel_our_resolve", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_iron_resolve" },
+    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_call_the_winds" },
+    { key = "raid_the_quartermaster", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_quartermasters_cache" },
+
+    --- Pre-battle: allies and gambles.
+    { key = "hire_local_allies", pool = "pre_battle", tags = { "allies" }, cost = 3000, allies = { 5, 7 } },
+    { key = "night_raid", pool = "pre_battle", tags = { "gamble" }, gamble = {
+        { 1, "won", budget = 0.75 },
+        { 1, "lost", own_strength = 0.9 },
+    } },
 }
 
 --- Offer key -> offer record.

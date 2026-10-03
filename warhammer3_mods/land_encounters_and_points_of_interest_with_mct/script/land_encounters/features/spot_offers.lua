@@ -44,6 +44,17 @@ local function scale_gold(amount, difficulty, offer)
     return math.floor(amount * (offers_data.gold_multiplier[difficulty] or 1) / step + 0.5) * step
 end
 
+--- Scales gold by the difficulty, shared with the battle offers. See `scale_gold`.
+M.scale_gold = scale_gold
+
+--- An offer's cost at a difficulty, or the debug `spot_cost` (configs/debug.lua) for every paid offer while it is set.
+--- @param offer table The offer record, with a `cost`.
+--- @param difficulty string "easy", "medium" or "hard".
+--- @returns number The gold it costs.
+function M.offer_cost(offer, difficulty)
+    return debug_config.spot_cost[1] or scale_gold(offer.cost, difficulty, offer)
+end
+
 --- Builds an offer's choice key.
 --- @param key string The offer key.
 --- @returns string The choice key, e.g. LEAPOI_SPT_TAKE_THE_GOLD.
@@ -133,7 +144,7 @@ function M.draw(site, ctx)
     for _, tag in ipairs(site.tags) do site_tags[tag] = true end
     local pool, total = {}, 0
     for _, offer in ipairs(offers_data.offers) do
-        if offer.pool ~= "signature" and not taken[offer.key] and eligible(offer, ctx) then
+        if (offer.pool == "treasure" or offer.pool == "realm") and not taken[offer.key] and eligible(offer, ctx) then
             local weight = 1
             for _, tag in ipairs(offer.tags) do
                 if site_tags[tag] then weight = offers_data.tag_weight end
@@ -197,11 +208,11 @@ end
 --- @param faction_name string The faction key.
 --- @returns boolean True for a free offer or one the treasury can pay.
 local function affordable(offer, pending, faction_name)
-    return not offer.cost or offer_effects.treasury(faction_name) >= scale_gold(offer.cost, pending.difficulty, offer)
+    return not offer.cost or offer_effects.treasury(faction_name) >= M.offer_cost(offer, pending.difficulty)
 end
 
 --- Builds an offer's choice: its line for this difficulty, plus the gold, items and units it gives as cards. An offer the treasury cannot pay
---- shows its not-enough-gold line instead and gives nothing. Which way each offer was shown is kept on `pending.shown_affordable`.
+--- shows its line with the not-enough-gold line under it, and no cards. Which way each offer was shown is kept on `pending.shown_affordable`.
 --- @param offer table The offer record.
 --- @param pending table The open site.
 --- @param faction_name string The faction key.
@@ -210,7 +221,7 @@ end
 local function build_choice(offer, pending, faction_name, choice_key)
     local line = offers_data.line_prefix .. offer.key .. "_" .. pending.difficulty
     pending.shown_affordable[offer.key] = affordable(offer, pending, faction_name)
-    if not pending.shown_affordable[offer.key] then return { key = choice_key, lines = { line .. "_unaffordable" } } end
+    if not pending.shown_affordable[offer.key] then return { key = choice_key, lines = { line, offers_data.unaffordable_line } } end
     local choice = { key = choice_key, lines = { line } }
     if offer.gold and not offer.gamble then choice.gold = scale_gold(offer.gold, pending.difficulty, offer) end
     local cards = pending.cards[offer.key] or {}
@@ -341,6 +352,9 @@ local function roll_outcome(gamble)
     return gamble[#gamble]
 end
 
+--- Rolls a gamble's outcome, shared with the battle offers. See `roll_outcome`.
+M.roll_outcome = roll_outcome
+
 --- Takes a choice from a faction's open site dilemma: pays the offer's cost, applies it, and shows where a realm offer landed or how a gamble
 --- went. The payload already granted the offer's gold, item and unit cards. An offer the treasury cannot pay changes nothing and reopens the
 --- site. Walk away and unknown choices only close the site.
@@ -366,7 +380,7 @@ function M.take(faction_name, choice_key)
     --- The button decides: one shown as unaffordable had no cards, so it buys nothing even if the treasury has grown since, and the reopened
     --- site shows the offer as it stands now.
     if pending.shown_affordable and pending.shown_affordable[offer.key] == false then
-        log("spot: " .. offer.key .. " was shown as unaffordable (cost " .. scale_gold(offer.cost, pending.difficulty, offer) .. ", treasury now "
+        log("spot: " .. offer.key .. " was shown as unaffordable (cost " .. M.offer_cost(offer, pending.difficulty) .. ", treasury now "
             .. offer_effects.treasury(faction_name) .. "), nothing is bought and the site reopens")
         M.launch_site(faction_name)
         return
@@ -375,7 +389,7 @@ function M.take(faction_name, choice_key)
     local state = { faction_name = faction_name, general_cqi = pending.general_cqi, difficulty = pending.difficulty }
     local before = offer_effects.treasury(faction_name)
     offer_effects.log_army_change(pending.general_cqi, offer.key)
-    if offer.cost then cm:treasury_mod(faction_name, -scale_gold(offer.cost, pending.difficulty, offer)) end
+    if offer.cost then cm:treasury_mod(faction_name, -M.offer_cost(offer, pending.difficulty)) end
     apply_fields(offer, offer, state, false)
     if offer.gamble then
         local outcome = roll_outcome(offer.gamble)
@@ -393,6 +407,21 @@ function M.take(faction_name, choice_key)
     end
     log("spot: " .. faction_name .. " took " .. offer.key .. " at " .. pending.site .. ", treasury " .. before .. " -> " .. offer_effects.treasury(faction_name)
         .. " (payload cards land after this)")
+end
+
+--- Greys out the offers on a faction's open site dilemma that the treasury could not pay when it was shown. UI only: one clicked anyway
+--- reopens the site.
+--- @param faction_name string The local faction key.
+function M.grey_out_unaffordable(faction_name)
+    local pending = M.pending_by_faction[faction_name]
+    if pending == nil or pending.shown_affordable == nil then return end
+    local keys = {}
+    for _, key in ipairs(pending.offers) do
+        if pending.shown_affordable[key] == false then
+            keys[#keys + 1] = key == pending.signature and offers_data.signature_choice_key or M.choice_key(key)
+        end
+    end
+    dilemmas.grey_out(offers_data.dilemma_prefix .. pending.site, keys)
 end
 
 --- True when a dilemma key is a treasure site's.

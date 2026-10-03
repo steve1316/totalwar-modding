@@ -10,6 +10,7 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_champions = require("script/land_encounters/configs/tower_champions")
 local offer_effects = require("script/land_encounters/core/offer_effects")
+local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
 
@@ -38,7 +39,6 @@ local BATTLE_BUFFS_SVR_KEY = "land_enc_tower_battle_buffs"
 --- svr key the floor battle's script reads Night terrors' target unit keys from. Mirrored in script/battle/mod/land_enc_tower_buffs.lua.
 local NIGHT_TERRORS_SVR_KEY = "land_enc_tower_night_terrors"
 --- Prefix of each choice row's id in the dilemma panel's list. The dilemma key and the choice key follow.
-local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
 local M = {
     --- Choice key of Leave on the per-floor go-deeper dilemmas.
@@ -869,29 +869,17 @@ function M.show_climb(delve)
     set_floor_context(CLIMB_CONTEXT_KEY, delve.floor, table.concat(lines, "\n"))
 end
 
---- Greys out the buttons of the stay offers already taken on the open go-deeper dilemma, so each keeps its slot but cannot be clicked. Each
---- choice's row in the panel's list is named after its choice record. UI only: a taken slot that is clicked anyway just reopens.
+--- Greys out the buttons of the stay offers already taken on the open go-deeper dilemma, so each keeps its slot but cannot be clicked. UI only:
+--- a taken slot that is clicked anyway just reopens.
 --- @param delve table The delve record.
 --- @param dilemma_key string The open go-deeper dilemma's key.
 function M.grey_out_taken(delve, dilemma_key)
     local taken = {}
     for _, key in ipairs(delve.offers or {}) do
         local offer = find(key)
-        if spent(offer, delve) then taken[CHOICE_ROW_PREFIX .. dilemma_key .. M.choice_key(offer)] = true end
+        if spent(offer, delve) then taken[#taken + 1] = M.choice_key(offer) end
     end
-    if next(taken) == nil then return end
-    --- The game's UI helpers live in the script environment, not in a required module's globals.
-    local env = core:get_env()
-    local list = env.find_uicomponent(core:get_ui_root(), "events", "event_layouts", "dilemma_active", "dilemma", "background", "dilemma_list")
-    if not list then return end
-    for i = 0, list:ChildCount() - 1 do
-        local row = env.UIComponent(list:Find(i))
-        local button = taken[row:Id()] and env.find_uicomponent(row, "choice_button")
-        if button then
-            button:SetState("inactive")
-            button:SetDisabled(true)
-        end
-    end
+    dilemmas.grey_out(dilemma_key, taken)
 end
 
 --- Turns the sabotage taken for the next floor into what its army needs: generator options (`no_heroes`, `fewer_units`, `max_tier`) and what is

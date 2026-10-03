@@ -1,4 +1,5 @@
-"""Writes the LEAPOI treasure site rows: site dilemmas, offer choices, choice lines, effect bundles, traits and every loc string they need.
+"""Writes the LEAPOI spot offer rows: treasure site dilemmas, the pre-battle choices on battle dilemmas, choice lines, battle notices, effect
+bundles, traits and every loc string they need.
 
 The sites and offers come from the mod's `configs/spot_offers.lua`, read through the `lua` executable. The text lives here and follows the
 tower's reviewed house rules: names in title case, gold without separators, "our" voice, paid lines as "Pay N gold from our treasury to ...",
@@ -13,7 +14,7 @@ import json
 import os
 import re
 import subprocess
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
 TABLE_FILE = "land_encounters_and_points_of_interest.tsv"
@@ -30,6 +31,12 @@ DIFFICULTIES = ["easy", "medium", "hard"]
 
 # Words a title-case name keeps lowercase after its first word, as vanilla does.
 SMALL_WORDS = {"a", "an", "and", "at", "by", "for", "from", "in", "into", "of", "on", "or", "the", "to", "with"}
+
+# Choice order of Avoid on a battle dilemma with offers: last, as the tower's Leave.
+AVOID_ORDER = 999
+
+# Prefix of a battle notice's scripted objective, shared with the tower's notices and the battle script.
+NOTICE_PREFIX = "land_enc_tower_buff_"
 
 # Line markers that make a row this script's own, so a run replaces it.
 OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_")
@@ -59,6 +66,9 @@ DEFENCE = ("icon_stat_defence", "melee defence")
 LEADERSHIP = ("icon_stat_morale", "leadership")
 SPEED = ("icon_stat_speed", "speed")
 CHARGE = ("icon_stat_charge_bonus", "charge bonus")
+
+# The line under every offer the treasury cannot pay: (icon, text).
+UNAFFORDABLE = ("treasury.png", "[[col:red]]We cannot afford this.[[/col]]")
 
 # Start of a paid offer's line, as the tower writes "Pay N gold from the haul to".
 PAY = "Pay [[col:yellow]]{cost} gold[[/col]] from our treasury to "
@@ -91,74 +101,93 @@ SITES = {
 SITE_FOOTER = ("\\\\n\\\\nPaid offers come from our treasury. Anything left to chance is decided the moment it is chosen. Effects on other lands"
                " start at once.\\\\n\\\\n[[col:yellow]]Choose one, or walk away.[[/col]]")
 
-# Offer key -> (choice label, line, what happens when the treasury cannot pay, or None for a free offer). A line may use {cost}, {gold},
-# {won_gold}, {lost_gold} and {per_turn}, filled per difficulty.
-OFFERS: Dict[str, Tuple[str, str, Optional[str]]] = {
-    "tomb_robbing": ("Rob the Tomb", "Rob the tomb: [[col:green]]+1500 gold[[/col]] to our treasury, a random item and experience for our lord.", None),
-    "abandoned_camp": ("Rest at the Camp", "Rest at the camp: [[col:green]]+8% replenishment[[/col]] and [[col:green]]+8% movement range[[/col]] for 8 turns, and our lord gains experience each turn.", None),
-    "buried_relics": ("Dig Up the Relics", "Dig up the relics: [[col:green]]2 random items[[/col]] and the [[col:green]]Talisman of Preservation[[/col]].", None),
-    "hidden_temple": ("Pray at the Temple", "Pray at the temple: [[col:green]]+8% unit health[[/col]] and [[col:green]]+4% ward save[[/col]] for 5 turns, and our lord gains experience each turn.", None),
-    "caravan_remnants": ("Salvage the Caravan", "Salvage the caravan: [[col:green]]+5000 gold[[/col]] to our treasury, a random item and experience for our lord.", None),
-    "whispers_of_the_gods": ("Heed the Whisper", "Heed the whisper: our army is [[col:green]]unbreakable[[/col]] and [[col:green]]never tires[[/col]] for 4 turns, and our lord gains experience each turn.", None),
-    "the_explorer": ("Hear the Explorers Out", "Hear the explorers out: [[col:green]]+16% movement range[[/col]], [[col:green]]+16% ambush defence[[/col]] and [[col:green]]no attrition[[/col]] for 10 turns.", None),
-    "legendary_bard": ("Free the Bard", "Free the bard: [[col:green]]+10% income[[/col]] and [[col:green]]-30% construction cost[[/col]] in our provinces for 10 turns.", None),
+# Offer key -> (choice label, line). A line may use {cost}, {gold}, {won_gold}, {lost_gold} and {per_turn}, filled per difficulty.
+OFFERS: Dict[str, Tuple[str, str]] = {
+    "tomb_robbing": ("Rob the Tomb", "Rob the tomb: [[col:green]]+1500 gold[[/col]] to our treasury, a random item and experience for our lord."),
+    "abandoned_camp": ("Rest at the Camp", "Rest at the camp: [[col:green]]+8% replenishment[[/col]] and [[col:green]]+8% movement range[[/col]] for 8 turns, and our lord gains experience each turn."),
+    "buried_relics": ("Dig Up the Relics", "Dig up the relics: [[col:green]]2 random items[[/col]] and the [[col:green]]Talisman of Preservation[[/col]]."),
+    "hidden_temple": ("Pray at the Temple", "Pray at the temple: [[col:green]]+8% unit health[[/col]] and [[col:green]]+4% ward save[[/col]] for 5 turns, and our lord gains experience each turn."),
+    "caravan_remnants": ("Salvage the Caravan", "Salvage the caravan: [[col:green]]+5000 gold[[/col]] to our treasury, a random item and experience for our lord."),
+    "whispers_of_the_gods": ("Heed the Whisper", "Heed the whisper: our army is [[col:green]]unbreakable[[/col]] and [[col:green]]never tires[[/col]] for 4 turns, and our lord gains experience each turn."),
+    "the_explorer": ("Hear the Explorers Out", "Hear the explorers out: [[col:green]]+16% movement range[[/col]], [[col:green]]+16% ambush defence[[/col]] and [[col:green]]no attrition[[/col]] for 10 turns."),
+    "legendary_bard": ("Free the Bard", "Free the bard: [[col:green]]+10% income[[/col]] and [[col:green]]-30% construction cost[[/col]] in our provinces for 10 turns."),
 
-    "take_the_gold": ("Take the Gold", "Take the gold: [[col:green]]+{gold} gold[[/col]] to our treasury.", None),
+    "take_the_gold": ("Take the Gold", "Take the gold: [[col:green]]+{gold} gold[[/col]] to our treasury."),
     "strip_the_valuables": ("Strip the Valuables", "Strip everything of value: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army is weighed down: "
-                            + stat("-10", *LEADERSHIP, colour="red") + " for 5 turns.", None),
-    "pry_open_the_reliquary": ("Pry Open the Reliquary", "Pry open the reliquary: [[col:green]]a random rare item[[/col]], but our lord is [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn.", None),
-    "search_every_corner": ("Search Every Corner", "Search every corner: [[col:green]]2 random items[[/col]], but our army [[col:red]]cannot move again this turn[[/col]].", None),
-    "the_hidden_vault": ("Open the Hidden Vault", PAY + "open the hidden vault: [[col:green]]1 unique item[[/col]].", "the vault stays shut"),
-    "roll_the_bones": ("Roll the Bones", "Roll the bones: a 50/50 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]losing {lost_gold} gold[[/col]], decided now.", None),
-    "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for 3 turns[[/col]], decided now.", None),
-    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]] at the start of our next turn, decided now.", None),
-    "stake_the_treasury": ("Stake the Treasury", "Stake [[col:yellow]]{cost} gold[[/col]] from our treasury: a 50/50 chance it comes back as [[col:green]]{won_gold} gold[[/col]] or is [[col:red]]lost[[/col]], decided now.", "there is nothing to stake"),
-    "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing[[/col]] or [[col:red]]curse[[/col]] for 5 turns, decided now.", None),
-    "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 unique item[[/col]], decided now.", "the hermit will not play"),
-    "leave_an_offering": ("Leave an Offering", PAY + "leave an offering: [[col:green]]+10% ward save[[/col]] for our army for 5 turns.", "there is nothing to offer"),
+                            + stat("-10", *LEADERSHIP, colour="red") + " for 5 turns."),
+    "pry_open_the_reliquary": ("Pry Open the Reliquary", "Pry open the reliquary: [[col:green]]a random rare item[[/col]], but our lord is [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn."),
+    "search_every_corner": ("Search Every Corner", "Search every corner: [[col:green]]2 random items[[/col]], but our army [[col:red]]cannot move again this turn[[/col]]."),
+    "the_hidden_vault": ("Open the Hidden Vault", PAY + "open the hidden vault: [[col:green]]1 unique item[[/col]]."),
+    "roll_the_bones": ("Roll the Bones", "Roll the bones: a 50/50 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]losing {lost_gold} gold[[/col]], decided now."),
+    "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for 3 turns[[/col]], decided now."),
+    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]] at the start of our next turn, decided now."),
+    "stake_the_treasury": ("Stake the Treasury", "Stake [[col:yellow]]{cost} gold[[/col]] from our treasury: a 50/50 chance it comes back as [[col:green]]{won_gold} gold[[/col]] or is [[col:red]]lost[[/col]], decided now."),
+    "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing[[/col]] or [[col:red]]curse[[/col]] for 5 turns, decided now."),
+    "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 unique item[[/col]], decided now."),
+    "leave_an_offering": ("Leave an Offering", PAY + "leave an offering: [[col:green]]+10% ward save[[/col]] for our army for 5 turns."),
     "bless_the_banners": ("Bless the Banners", PAY + "bless our banners: [[col:green]]+10[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack and "
-                          "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for 8 turns.", "the banners go unblessed"),
-    "holy_water": ("Holy Water", PAY + "buy holy water: [[col:green]]+15% physical resistance[[/col]] for our army for 5 turns.", "the water stays in the font"),
-    "oath_at_the_altar": ("Oath at the Altar", "Swear an oath at the altar: our lord is [[col:green]]Shrine-Sworn[[/col]] for good (" + stat("+5", *LEADERSHIP) + " for our army).", None),
-    "sanctified_weapons": ("Sanctify the Weapons", PAY + "sanctify our weapons: [[col:green]]magical attacks[[/col]] for every unit for 5 turns.", "our weapons stay as they are"),
-    "dark_pact": ("Make a Dark Pact", "Make a dark pact: our lord is [[col:green]]Pact-Bound[[/col]] for good (" + stat("+10", *ATTACK) + "), but is [[col:red]]wounded for 5 turns[[/col]] at the start of our next turn.", None),
-    "cursed_hoard": ("Take the Cursed Hoard", "Take the cursed hoard: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for 3 turns[[/col]].", None),
-    "bloodstained_blades": ("Take Up the Bloodstained Blades", "Take up the bloodstained blades: " + stat("+20", *ATTACK) + ", but " + stat("-20", *DEFENCE, colour="red") + " for 5 turns.", None),
-    "feed_the_shadows": ("Feed the Shadows", "Feed the shadows: sacrifice our [[col:red]]weakest unit[[/col]], and every other unit [[col:green]]gains 1 rank[[/col]].", None),
-    "daemons_bargain": ("Strike a Daemon's Bargain", "Strike a daemon's bargain: [[col:green]]2 unique items[[/col]] now, but [[col:red]]a hard Chaos army marches on our capital[[/col]].", None),
-    "recruit_the_survivors": ("Recruit the Survivors", "Recruit the survivors: [[col:green]]2 random units[[/col]] of our own kind join our army now.", None),
-    "hire_sellswords": ("Hire Sellswords", PAY + "hire sellswords: [[col:green]]a random elite unit[[/col]] of our own kind joins our army now.", "the sellswords move on"),
-    "free_the_prisoner": ("Free the Prisoner", "Free the prisoner: [[col:green]]a rank 5 hero[[/col]] joins our army.", None),
-    "tame_the_beast": ("Tame the Beast", "Tame the beast: [[col:green]]a random monster[[/col]] of our own kind joins our army now.", None),
-    "hire_a_regiment_of_renown": ("Hire a Regiment of Renown", PAY + "hire a [[col:green]]Regiment of Renown[[/col]] of our own kind: it joins our army now.", "the regiment will not sign on"),
-    "salvage_a_war_machine": ("Salvage a War Machine", PAY + "salvage a war machine: [[col:green]]a random war machine[[/col]] of our own kind joins our army now.", "the wreck stays where it lies"),
-    "buy_from_the_trader": ("Buy from the Trader", PAY + "buy from the trader: [[col:green]]a random rare item[[/col]].", "the trader keeps the wares"),
-    "pay_the_smugglers": ("Pay the Smugglers", PAY + "pay the smugglers: [[col:green]]-25% recruitment cost[[/col]] for 5 turns.", "the smugglers will not deal"),
-    "invest_in_the_caravan": ("Invest in the Caravan", PAY + "invest in the caravan: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for 10 turns.", "there is nothing to invest"),
-    "hire_guides": ("Hire Guides", PAY + "hire guides: [[col:green]]+25% movement range[[/col]] for 5 turns.", "we find our own way"),
-    "buy_supplies": ("Buy Supplies", PAY + "buy supplies: our army [[col:green]]ignores attrition[[/col]] for 5 turns.", "the supplies stay unsold"),
-    "read_the_scrolls": ("Read the Scrolls", "Read the scrolls: [[col:green]]+20% research rate[[/col]] for 5 turns.", None),
-    "map_the_passes": ("Map the Passes", "Map the passes: [[col:green]]+20% movement range[[/col]] and [[col:green]]+20% ambush defence[[/col]] for 10 turns.", None),
-    "ancient_tactics": ("Study the Ancient Tactics", "Study the ancient tactics: " + stat("+10", *CHARGE) + " and " + stat("+10%", *SPEED) + " for 5 turns.", None),
+                          "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for 8 turns."),
+    "holy_water": ("Holy Water", PAY + "buy holy water: [[col:green]]+15% physical resistance[[/col]] for our army for 5 turns."),
+    "oath_at_the_altar": ("Oath at the Altar", "Swear an oath at the altar: our lord is [[col:green]]Shrine-Sworn[[/col]] for good (" + stat("+5", *LEADERSHIP) + " for our army)."),
+    "sanctified_weapons": ("Sanctify the Weapons", PAY + "sanctify our weapons: [[col:green]]magical attacks[[/col]] for every unit for 5 turns."),
+    "dark_pact": ("Make a Dark Pact", "Make a dark pact: our lord is [[col:green]]Pact-Bound[[/col]] for good (" + stat("+10", *ATTACK) + "), but is [[col:red]]wounded for 5 turns[[/col]] at the start of our next turn."),
+    "cursed_hoard": ("Take the Cursed Hoard", "Take the cursed hoard: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
+    "bloodstained_blades": ("Take the Bloodstained Blades", "Take up the bloodstained blades: " + stat("+20", *ATTACK) + ", but " + stat("-20", *DEFENCE, colour="red") + " for 5 turns."),
+    "feed_the_shadows": ("Feed the Shadows", "Feed the shadows: sacrifice our [[col:red]]weakest unit[[/col]], and every other unit [[col:green]]gains 1 rank[[/col]]."),
+    "daemons_bargain": ("Strike a Daemon's Bargain", "Strike a daemon's bargain: [[col:green]]2 unique items[[/col]] now, but [[col:red]]a hard Chaos army marches on our capital[[/col]]."),
+    "recruit_the_survivors": ("Recruit the Survivors", "Recruit the survivors: [[col:green]]2 random units[[/col]] of our own kind join our army now."),
+    "hire_sellswords": ("Hire Sellswords", PAY + "hire sellswords: [[col:green]]a random elite unit[[/col]] of our own kind joins our army now."),
+    "free_the_prisoner": ("Free the Prisoner", "Free the prisoner: [[col:green]]a rank 5 hero[[/col]] joins our army."),
+    "tame_the_beast": ("Tame the Beast", "Tame the beast: [[col:green]]a random monster[[/col]] of our own kind joins our army now."),
+    "hire_a_regiment_of_renown": ("Hire a Regiment of Renown", PAY + "hire a [[col:green]]Regiment of Renown[[/col]] of our own kind: it joins our army now."),
+    "salvage_a_war_machine": ("Salvage a War Machine", PAY + "salvage a war machine: [[col:green]]a random war machine[[/col]] of our own kind joins our army now."),
+    "buy_from_the_trader": ("Buy from the Trader", PAY + "buy from the trader: [[col:green]]a random rare item[[/col]]."),
+    "pay_the_smugglers": ("Pay the Smugglers", PAY + "pay the smugglers: [[col:green]]-25% recruitment cost[[/col]] for 5 turns."),
+    "invest_in_the_caravan": ("Invest in the Caravan", PAY + "invest in the caravan: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for 10 turns."),
+    "hire_guides": ("Hire Guides", PAY + "hire guides: [[col:green]]+25% movement range[[/col]] for 5 turns."),
+    "buy_supplies": ("Buy Supplies", PAY + "buy supplies: our army [[col:green]]ignores attrition[[/col]] for 5 turns."),
+    "read_the_scrolls": ("Read the Scrolls", "Read the scrolls: [[col:green]]+20% research rate[[/col]] for 5 turns."),
+    "map_the_passes": ("Map the Passes", "Map the passes: [[col:green]]+20% movement range[[/col]] and [[col:green]]+20% ambush defence[[/col]] for 10 turns."),
+    "ancient_tactics": ("Study the Ancient Tactics", "Study the ancient tactics: " + stat("+10", *CHARGE) + " and " + stat("+10%", *SPEED) + " for 5 turns."),
 
-    "endow_the_province": ("Endow the Province", PAY + "endow our nearest region: [[col:green]]+50 development points[[/col]].", "the region waits"),
+    "endow_the_province": ("Endow the Province", PAY + "endow our nearest region: [[col:green]]+50 development points[[/col]]."),
     "shore_up_the_walls": ("Shore Up the Walls", PAY + "shore up our nearest settlement: its garrison is [[col:green]]healed to full[[/col]], and its defenders take "
-                           "[[col:green]]50% less attrition under siege[[/col]] for 10 turns.", "the walls stay as they are"),
-    "raise_the_settlement": ("Raise the Settlement", PAY + "raise our nearest settlement: its [[col:green]]main building goes up one level[[/col]].", "the settlement stays as it is"),
-    "quell_the_unrest": ("Quell the Unrest", "Quell the unrest: [[col:green]]+10 public order[[/col]] in our nearest province for 10 turns.", None),
-    "bountiful_harvest": ("Bountiful Harvest", PAY + "sow a bountiful harvest: [[col:green]]+30 growth[[/col]] and [[col:green]]+10% income[[/col]] in our nearest province for 10 turns.", "the fields stay as they are"),
-    "hidden_mint": ("Seize the Hidden Mint", "Seize the hidden mint: [[col:green]]+5% income[[/col]] from all buildings for 10 turns.", None),
-    "stir_their_rebels": ("Stir Their Rebels", PAY + "stir up rebels: the nearest enemy province has [[col:green]]-15 public order[[/col]] for 5 turns.", "the rebels stay quiet"),
-    "poison_their_wells": ("Poison Their Wells", PAY + "poison their wells: the nearest enemy region has [[col:green]]-20 growth[[/col]], and its armies suffer [[col:green]]attrition[[/col]] for 5 turns.", "the wells stay clean"),
-    "undermine_their_walls": ("Undermine Their Walls", PAY + "undermine their walls: the nearest enemy settlement's defenders take [[col:green]]50% more attrition under siege[[/col]] for 5 turns.", "the walls stand"),
-    "spread_the_plague": ("Spread the Plague", "Spread the plague: the 3 nearest enemy regions have [[col:green]]-5 public order[[/col]] and [[col:green]]-20 growth[[/col]] for 5 turns, but our army suffers [[col:red]]attrition for 2 turns[[/col]].", None),
-    "send_gifts": ("Send Gifts", PAY + "send gifts: [[col:green]]better relations[[/col]] with the nearest faction we are not at war with.", "there is nothing to send"),
-    "spy_on_their_capital": ("Spy on Their Capital", PAY + "spy on their capital: [[col:green]]the shroud lifts[[/col]] over the nearest enemy capital.", "our spies stay home"),
-    "curse_a_distant_king": ("Curse a Distant King", PAY + "curse a distant king: the faction with the most regions has [[col:green]]-10% income[[/col]] for 10 turns.", "the curse is never cast"),
-    "share_the_find": ("Share the Find", "Share the find: [[col:green]]+10% research rate[[/col]] for 5 turns, for us and every neighbour at peace with us, who think [[col:green]]better of us[[/col]] for it.", None),
-    "point_them_at_each_other": ("Point Them at Each Other", PAY + "set rivals against each other: the two biggest factions near us have [[col:green]]worse relations[[/col]] with each other.", "the rivals stay at peace"),
-    "sell_their_secrets": ("Sell Their Secrets", "Sell their secrets: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest enemy has [[col:red]]better relations[[/col]] with our other enemies.", None),
-    "walk_away": ("Walk Away", "Leave this place be.", None),
+                           "[[col:green]]50% less attrition under siege[[/col]] for 10 turns."),
+    "raise_the_settlement": ("Raise the Settlement", PAY + "raise our nearest settlement: its [[col:green]]main building goes up one level[[/col]]."),
+    "quell_the_unrest": ("Quell the Unrest", "Quell the unrest: [[col:green]]+10 public order[[/col]] in our nearest province for 10 turns."),
+    "bountiful_harvest": ("Bountiful Harvest", PAY + "sow a bountiful harvest: [[col:green]]+30 growth[[/col]] and [[col:green]]+10% income[[/col]] in our nearest province for 10 turns."),
+    "hidden_mint": ("Seize the Hidden Mint", "Seize the hidden mint: [[col:green]]+5% income[[/col]] from all buildings for 10 turns."),
+    "stir_their_rebels": ("Stir Their Rebels", PAY + "stir up rebels: the nearest enemy province has [[col:green]]-15 public order[[/col]] for 5 turns."),
+    "poison_their_wells": ("Poison Their Wells", PAY + "poison their wells: the nearest enemy region has [[col:green]]-20 growth[[/col]], and its armies suffer [[col:green]]attrition[[/col]] for 5 turns."),
+    "undermine_their_walls": ("Undermine Their Walls", PAY + "undermine their walls: the nearest enemy settlement's defenders take [[col:green]]50% more attrition under siege[[/col]] for 5 turns."),
+    "spread_the_plague": ("Spread the Plague", "Spread the plague: the 3 nearest enemy regions have [[col:green]]-5 public order[[/col]] and [[col:green]]-20 growth[[/col]] for 5 turns, but our army suffers [[col:red]]attrition for 2 turns[[/col]]."),
+    "send_gifts": ("Send Gifts", PAY + "send gifts: [[col:green]]better relations[[/col]] with the nearest faction we are not at war with."),
+    "spy_on_their_capital": ("Spy on Their Capital", PAY + "spy on their capital: [[col:green]]the shroud lifts[[/col]] over the nearest enemy capital."),
+    "curse_a_distant_king": ("Curse a Distant King", PAY + "curse a distant king: the faction with the most regions has [[col:green]]-10% income[[/col]] for 10 turns."),
+    "share_the_find": ("Share the Find", "Share the find: [[col:green]]+10% research rate[[/col]] for 5 turns, for us and every neighbour at peace with us, who think [[col:green]]better of us[[/col]] for it."),
+    "point_them_at_each_other": ("Point Them at Each Other", PAY + "set rivals against each other: the two biggest factions near us have [[col:green]]worse relations[[/col]] with each other."),
+    "sell_their_secrets": ("Sell Their Secrets", "Sell their secrets: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest enemy has [[col:red]]better relations[[/col]] with our other enemies."),
+
+    "bribe_a_scout": ("Bribe a Scout", PAY + "bribe one of their scouts: the enemy army is [[col:green]]25% weaker[[/col]]."),
+    "thin_their_ranks": ("Thin Their Ranks", PAY + "thin their ranks: the enemy army fields [[col:green]]3 fewer units[[/col]]."),
+    "poison_their_stores": ("Poison Their Stores", PAY + "poison their stores: enemy units start at [[col:green]]75% strength[[/col]]."),
+    "kill_the_captain": ("Kill the Captain", PAY + "kill their captain: the enemy army has [[col:green]]no heroes[[/col]]."),
+    "keep_the_veterans_away": ("Keep the Veterans Away", PAY + "keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]]."),
+    "spread_dread": ("Spread Dread", PAY + "spread dread through their camp: enemy units have " + stat("-15", *LEADERSHIP) + "."),
+    "turn_a_traitor": ("Turn a Traitor", PAY + "turn a traitor: [[col:green]]a random unit[[/col]] of the enemy's kind joins our army now, and the enemy fields one unit fewer."),
+    "hold_war_rites": ("Hold War Rites", PAY + "hold war rites: [[col:green]]+10[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, "
+                       "[[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership in this battle."),
+    "hone_the_blades": ("Hone the Blades", PAY + "hone every blade: [[col:green]]+15%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength and "
+                        "[[col:green]]+15[[/col]] [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]] armour-piercing damage in this battle."),
+    "paint_warding_sigils": ("Paint Warding Sigils", PAY + "paint warding sigils: [[col:green]]+10% ward save[[/col]] in this battle."),
+    "fire_kissed_blades": ("Fire-Kissed Blades", PAY + "pass our blades through the braziers: [[col:green]]flaming attacks[[/col]] for every unit in this battle."),
+    "steel_our_resolve": ("Steel Our Resolve", PAY + "steel our resolve: " + stat("+20", *LEADERSHIP) + " and [[col:green]]immunity to fear and terror[[/col]] in this battle."),
+    "call_the_winds": ("Call the Winds", PAY + "call the winds: [[col:green]]+30 Winds of Magic[[/col]] reserve in this battle."),
+    "raid_the_quartermaster": ("Raid the Quartermaster", PAY + "raid the quartermaster's stores: [[col:green]]+50%[[/col]] [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] ammunition "
+                               "and [[col:green]]20%[[/col]] [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]] faster reloads in this battle."),
+    "hire_local_allies": ("Hire Local Allies", PAY + "hire local allies: [[col:green]]a small allied army[[/col]] of 5 to 7 units joins us in this battle."),
+    "night_raid": ("Night Raid", "Raid their camp by night: a 50/50 chance the enemy army is [[col:green]]25% weaker[[/col]] or our units start at [[col:red]]90% strength[[/col]], decided now."),
+    "walk_away": ("Walk Away", "Leave this place be."),
 }
 
 # Offer key -> its line's vanilla effect-bundle icon, reusing the icons Steve picked for the matching tower offers.
@@ -183,7 +212,36 @@ ICONS = {
     "spread_the_plague": "plague.png", "send_gifts": "trade_agreement.png", "spy_on_their_capital": "cotw_reveal_shroud.png",
     "curse_a_distant_king": "hex_1.png", "share_the_find": "technology.png", "point_them_at_each_other": "subterfuge.png",
     "sell_their_secrets": "assassin.png", "walk_away": "campaign_movement.png",
+    "bribe_a_scout": "subterfuge.png", "thin_their_ranks": "attrition.png", "poison_their_stores": "phase_posion.png",
+    "kill_the_captain": "dlc10_assassination_targets.png", "keep_the_veterans_away": "peasant.png", "spread_dread": "discouraged.png",
+    "turn_a_traitor": "khainite_assassin.png", "hold_war_rites": "effect_rite.png", "hone_the_blades": "weapon_damage.png",
+    "paint_warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "steel_our_resolve": "attribute_immune_to_psychology.png",
+    "call_the_winds": "wh3_dlc24_wind_blast.png", "raid_the_quartermaster": "ammo.png", "hire_local_allies": "trade_agreement.png", "night_raid": "dlc10_death_night.png",
 }
+
+# Battle notice name -> (colour, text) the battle script shows for a pre-battle offer: red for what weakens the enemy, green for our help,
+# yellow for a cost to our army, as the tower's notices do. A one-battle bundle uses the tower's own notice.
+NOTICES = {
+    "bribe_a_scout": ("red", "Bribe a Scout: the enemy army is 25% weaker."),
+    "thin_their_ranks": ("red", "Thin Their Ranks: the enemy fields 3 fewer units."),
+    "poison_their_stores": ("red", "Poison Their Stores: enemy units start at 75% strength."),
+    "keep_the_veterans_away": ("red", "Keep the Veterans Away: the enemy has tier 1-2 units only."),
+    "spread_dread": ("red", "Spread Dread: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]]."),
+    "hire_local_allies": ("green", "Hire Local Allies: an allied army joins the battle."),
+    "night_raid_won": ("red", "Night Raid: the enemy army is 25% weaker."),
+    "night_raid_lost": ("yellow", "Night Raid: our units start at 90% strength."),
+}
+
+# Pre-battle offers that share a key and an effect with a tower offer, so the battle script shows the tower's notice for them.
+TOWER_NOTICES = {"kill_the_captain", "turn_a_traitor"}
+
+# Notice -> the offer whose line icon it shows.
+NOTICE_ICONS = {"night_raid_won": "night_raid", "night_raid_lost": "night_raid"}
+
+# Second line under Avoid on every battle dilemma, since avoiding fires the category's avoidance incident.
+AVOID_CONSEQUENCES = ("avoid_consequences", "random_recipe.png", "[[col:yellow]]This may have unforeseen consequences.[[/col]]")
+
+
 
 # Message suffix after `spot_` -> (title, subtitle, description). Realm messages use the target region's name as their subtitle in game.
 MESSAGES = {
@@ -287,6 +345,9 @@ TRAITS = {
 LUA_DUMP = r"""
 package.path = arg[1] .. "?.lua;" .. package.path
 local data = require("script/land_encounters/configs/spot_offers")
+local battle_dilemmas = {}
+for key in pairs(require("script/land_encounters/configs/battle_categories").dilemma_keys) do battle_dilemmas[#battle_dilemmas + 1] = key end
+table.sort(battle_dilemmas)
 local function encode(v)
     local t = type(v)
     if t == "number" then return tostring(v) end
@@ -305,7 +366,8 @@ end
 io.write(encode({ sites = data.sites, offers = data.offers, gold_multiplier = data.gold_multiplier, gold_step = data.gold_step,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
-    wound_bundle_prefix = data.wound_bundle_prefix }))
+    wound_bundle_prefix = data.wound_bundle_prefix, avoid_choice_key = data.avoid_choice_key,
+    unaffordable_line = data.unaffordable_line, battle_dilemmas = battle_dilemmas }))
 """
 
 
@@ -432,6 +494,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
 
     by_key = {o["key"]: o for o in config["offers"]}
     choice_keys = [(config["choice_key_prefix"] + o["key"].upper(), o["key"]) for o in config["offers"]] + [(config["walk_away_choice_key"], "walk_away")]
+    site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] != "pre_battle"]
+    battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] == "pre_battle"]
     row_id = FIRST_ROW_ID
     for site in config["sites"]:
         dilemma = config["dilemma_prefix"] + site["key"]
@@ -444,15 +508,38 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         row_id += 1
         add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_title_" + dilemma, title_case(title), "false")
         add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_description_" + dilemma, description + SITE_FOOTER, "false")
-        labels = choice_keys + [(config["signature_choice_key"], site["signature"])]
+        labels = site_keys + [(config["signature_choice_key"], site["signature"])]
         for choice, key in labels:
             add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
             add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
                 title_case(OFFERS[key][0]), "false")
 
+    avoid_labels = read_labels(config["battle_dilemmas"], "SECOND")
+    line(config["unaffordable_line"], UNAFFORDABLE[0], UNAFFORDABLE[1])
+    consequences = config["line_prefix"] + AVOID_CONSEQUENCES[0]
+    line(consequences, AVOID_CONSEQUENCES[1], AVOID_CONSEQUENCES[2])
+    for dilemma in config["battle_dilemmas"]:
+        # The plain battle dilemma's Avoid (its DB SECOND choice) says so too.
+        add(table("cdir_events_dilemma_payloads_tables"), row_id, "SECOND", dilemma, "TEXT_DISPLAY", f"LOOKUP[{consequences}]", "default")
+        row_id += 1
+        for choice, key in battle_keys:
+            add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
+            add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
+                title_case(OFFERS[key][0]), "false")
+        add(table("cdir_events_dilemma_choice_details_tables"), config["avoid_choice_key"], dilemma, "", "")
+        add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv",
+            "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + config["avoid_choice_key"], avoid_labels[dilemma], "false")
+    add(table("cdir_events_dilemma_choices_tables"), config["avoid_choice_key"], AVOID_ORDER)
+    for notice, (colour, text) in NOTICES.items():
+        icon = "ui/campaign ui/effect_bundles/" + ICONS[NOTICE_ICONS.get(notice, notice)]
+        for suffix, shown in [("", f"[[col:{colour}]]{text}[[/col]]"), ("_message", text)]:
+            add(table("scripted_objectives_tables"), NOTICE_PREFIX + notice + suffix, icon)
+            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_text_" + NOTICE_PREFIX + notice + suffix, shown, "false")
+            add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_description_" + NOTICE_PREFIX + notice + suffix, "", "false")
+
     for i, (choice, key) in enumerate(choice_keys):
         add(table("cdir_events_dilemma_choices_tables"), choice, WALK_AWAY_ORDER if key == "walk_away" else FIRST_CHOICE_ORDER + i)
-        _, text, unaffordable = OFFERS[key]
+        _, text = OFFERS[key]
         if key == "walk_away":
             line(config["line_prefix"] + "walk_away", ICONS[key], text)
             continue
@@ -461,9 +548,6 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             values = line_values(offer, difficulty, config)
             component = config["line_prefix"] + key + "_" + difficulty
             line(component, ICONS[key], text.format(**values))
-            if "cost" in offer:
-                line(component + "_unaffordable", ICONS[key],
-                     f"[[col:red]]Our treasury holds less than {values['cost']} gold[[/col]], so {unaffordable}. We return to this choice.")
 
     for suffix, (target, icon, title, description, effects) in BUNDLES.items():
         key = "land_enc_effect_spot_" + suffix
@@ -502,6 +586,31 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     return rows
 
 
+def read_labels(dilemmas: List[str], choice: str) -> Dict[str, str]:
+    """Reads each dilemma's existing label for a vanilla choice key, e.g. the Avoid text of the battle dilemmas' SECOND choice.
+
+    Args:
+        dilemmas (List[str]): The dilemma keys.
+        choice (str): The choice key, e.g. "SECOND".
+
+    Returns:
+        Dict[str, str]: Dilemma key -> its label.
+
+    Raises:
+        SystemExit: When a dilemma has no label for the choice.
+    """
+    prefix = "cdir_events_dilemma_choice_details_localised_choice_label_"
+    labels = {}
+    for line in open(MOD_ROOT + LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", encoding="utf-8").read().splitlines():
+        key, _, rest = line.partition("\t")
+        if key.startswith(prefix) and key.endswith(choice):
+            labels[key[len(prefix):-len(choice)]] = rest.split("\t")[0]
+    missing = [d for d in dilemmas if d not in labels]
+    if missing:
+        raise SystemExit(f"No {choice} label for: " + ", ".join(missing))
+    return labels
+
+
 def owned(line: str) -> bool:
     """True when a row belongs to this script, so a run replaces it.
 
@@ -511,7 +620,10 @@ def owned(line: str) -> bool:
     Returns:
         bool: True for spot offer rows, including the FIRST choice rows on site dilemmas.
     """
-    return any(marker in line for marker in OWNED_MARKERS) or line.startswith("70181")
+    key = line.split("\t", 1)[0]
+    notice = key.startswith(NOTICE_PREFIX) and key[len(NOTICE_PREFIX):].replace("_message", "") in NOTICES
+    loc_notice = key.startswith("scripted_objectives_localised_") and any(key.endswith(NOTICE_PREFIX + n + s) for n in NOTICES for s in ("", "_message"))
+    return any(marker in line for marker in OWNED_MARKERS) or line.startswith("70181") or notice or loc_notice
 
 
 def write_rows(rows: Dict[str, List[str]], dry_run: bool) -> None:
@@ -523,6 +635,9 @@ def write_rows(rows: Dict[str, List[str]], dry_run: bool) -> None:
     """
     for path, new_rows in sorted(rows.items()):
         full = MOD_ROOT + path
+        if not os.path.exists(full):
+            name = path.split("/")[-1].replace(".tsv", "")
+            open(full, "wb").write(f"key\ttext\ttooltip\r\n#Loc;1;text/db/{name}\t\t\r\n".encode("utf-8"))
         lines = open(full, "rb").read().decode("utf-8").splitlines(keepends=True)
         kept = lines[:2] + [line for line in lines[2:] if not owned(line)]
         if kept and not kept[-1].endswith("\n"):
@@ -545,7 +660,8 @@ def check_text(config: Dict) -> None:
     problems = [f"no text for {o['key']}" for o in config["offers"] if o["key"] not in OFFERS]
     problems += [f"no text for site {s['key']}" for s in config["sites"] if s["key"] not in SITES]
     problems += [f"no icon for {key}" for key in OFFERS if key not in ICONS]
-    problems += [f"{o['key']} costs gold but has no not-enough-gold text" for o in config["offers"] if "cost" in o and not OFFERS.get(o["key"], ("", "", None))[2]]
+    problems += [f"no notice for {o['key']}" for o in config["offers"]
+                 if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and o["key"] not in NOTICES and o["key"] not in TOWER_NOTICES]
     every = [t for entry in OFFERS.values() for t in entry if t] + [t for entry in MESSAGES.values() for t in entry] + [d for _, d in SITES.values()]
     problems += [f"gold with a separator: {t}" for t in every if re.search(r"\d,\d{3}", t)]
     if problems:

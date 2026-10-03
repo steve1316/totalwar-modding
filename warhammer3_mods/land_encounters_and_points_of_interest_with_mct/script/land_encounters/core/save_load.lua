@@ -1,5 +1,5 @@
---- Registers cm:add_saving_game_callback and cm:add_loading_game_callback for the mod's four state blobs: land manager, POI event manager,
---- spot event manager and spot offers. Manager references are populated by the entry point's pre_first_tick_callback.
+--- Registers cm:add_saving_game_callback and cm:add_loading_game_callback for the mod's state blobs: land manager, POI event manager, spot
+--- event manager, spot offers and spot battle offers. Manager references are populated by the entry point's pre_first_tick_callback.
 
 require("script/land_encounters/utils/common")
 
@@ -7,6 +7,7 @@ local FLATTENED_LAND_MANAGER_LAND_STATE = "flattened_land_encounters_land_manage
 local FLATTENED_POI_EVENT_STATE = "flattened_land_encounters_poi_event_manager_state"
 local FLATTENED_SPOT_EVENT_STATE = "flattened_land_encounters_spot_event_manager_state"
 local SPOT_OFFERS_STATE = "land_encounters_spot_offers_state"
+local SPOT_BATTLES_STATE = "land_encounters_spot_battles_state"
 local DEFAULT_FLATTENED_SPOTS_VALUE = {}
 
 local M = {}
@@ -30,6 +31,7 @@ function M.register()
             cm:save_named_value(FLATTENED_POI_EVENT_STATE, M.point_of_interest_event_manager:export_state_as_table(), context)
             cm:save_named_value(FLATTENED_SPOT_EVENT_STATE, M.spot_event_manager:export_state_as_a_table(), context)
             cm:save_named_value(SPOT_OFFERS_STATE, require("script/land_encounters/features/spot_offers").export_state(), context)
+            cm:save_named_value(SPOT_BATTLES_STATE, require("script/land_encounters/features/spot_battles").export_state(), context)
         end
     )
 
@@ -40,6 +42,7 @@ function M.register()
             M.saved_poi_event_state = cm:load_named_value(FLATTENED_POI_EVENT_STATE, DEFAULT_FLATTENED_SPOTS_VALUE, context)
             M.saved_spot_event_state = cm:load_named_value(FLATTENED_SPOT_EVENT_STATE, DEFAULT_FLATTENED_SPOTS_VALUE, context)
             require("script/land_encounters/features/spot_offers").restore_state(cm:load_named_value(SPOT_OFFERS_STATE, {}, context))
+            require("script/land_encounters/features/spot_battles").restore_state(cm:load_named_value(SPOT_BATTLES_STATE, {}, context))
         end
     )
 end

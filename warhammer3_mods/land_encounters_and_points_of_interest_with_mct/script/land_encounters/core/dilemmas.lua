@@ -1,5 +1,8 @@
---- Custom dilemmas built in script: each choice shows text lines and can pay gold, items and units when chosen. Shared by the tower and the
---- treasure sites.
+--- Custom dilemmas built in script: each choice shows text lines and can pay gold, items and units when chosen, and chosen buttons can be
+--- greyed out. Shared by the tower, the treasure sites and the battle offers.
+
+--- Prefix of each choice's row id in the dilemma panel's list, followed by the dilemma key and the choice key.
+local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
 local M = {}
 
@@ -37,6 +40,28 @@ function M.launch(key, choices, faction_name)
         payload:clear()
     end
     cm:launch_custom_dilemma_from_builder(builder, faction)
+end
+
+--- Greys out choice buttons on the open dilemma panel, so each keeps its slot but cannot be clicked. UI only: the local player's panel is
+--- changed, and a greyed choice clicked anyway still reaches the script.
+--- @param dilemma_key string The open dilemma's key.
+--- @param choice_keys table The choice keys to grey out.
+function M.grey_out(dilemma_key, choice_keys)
+    if #choice_keys == 0 then return end
+    local rows = {}
+    for _, choice_key in ipairs(choice_keys) do rows[CHOICE_ROW_PREFIX .. dilemma_key .. choice_key] = true end
+    --- The game's UI helpers live in the script environment, not in a required module's globals.
+    local env = core:get_env()
+    local list = env.find_uicomponent(core:get_ui_root(), "events", "event_layouts", "dilemma_active", "dilemma", "background", "dilemma_list")
+    if not list then return end
+    for i = 0, list:ChildCount() - 1 do
+        local row = env.UIComponent(list:Find(i))
+        local button = rows[row:Id()] and env.find_uicomponent(row, "choice_button")
+        if button then
+            button:SetState("inactive")
+            button:SetDisabled(true)
+        end
+    end
 end
 
 return M
