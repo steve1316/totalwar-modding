@@ -110,8 +110,7 @@ SITES = {
 }
 
 # Shown under every site's description: the rules, said once, then the choice. Loc files store a line break as an escaped `\\n`.
-SITE_FOOTER = ("\\\\n\\\\nPaid offers come from our treasury. Anything left to chance is decided the moment it is chosen. Effects on other lands"
-               " start at once.\\\\n\\\\n[[col:yellow]]Choose one, or walk away.[[/col]]")
+SITE_FOOTER = "\\\\n\\\\n[[col:yellow]]Choose one, or walk away.[[/col]]"
 
 # Offer key -> (choice label, line). A line may use {cost}, {gold}, {won_gold}, {lost_gold} and {per_turn}, filled per difficulty.
 OFFERS: Dict[str, Tuple[str, str]] = {
@@ -130,13 +129,13 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "pry_open_the_reliquary": ("Pry Open the Reliquary", "Pry open the reliquary: [[col:green]]a random rare item[[/col]], but our lord is [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn."),
     "search_every_corner": ("Search Every Corner", "Search every corner: [[col:green]]2 random items[[/col]], but our army [[col:red]]cannot move again this turn[[/col]]."),
     "the_hidden_vault": ("Open the Hidden Vault", PAY + "open the hidden vault: [[col:green]]1 unique item[[/col]]."),
-    "roll_the_bones": ("Roll the Bones", "Roll the bones: a 50/50 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]losing {lost_gold} gold[[/col]], decided now."),
-    "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for 3 turns[[/col]], decided now."),
-    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]] at the start of our next turn, decided now."),
-    "stake_the_treasury": ("Stake the Treasury", "Stake [[col:yellow]]{cost} gold[[/col]] from our treasury: a 50/50 chance it comes back as [[col:green]]{won_gold} gold[[/col]] or is [[col:red]]lost[[/col]], decided now."),
-    "wake_the_guardian": ("Wake the Guardian", "Wake the guardian: a 60/40 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]it attacks[[/col]] and a battle starts here, decided now."),
-    "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing[[/col]] or [[col:red]]curse[[/col]] for 5 turns, decided now."),
-    "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 unique item[[/col]], decided now."),
+    "roll_the_bones": ("Roll the Bones", "Roll the bones: a 50/50 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]losing {lost_gold} gold[[/col]]."),
+    "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
+    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]] at the start of our next turn."),
+    "stake_the_treasury": ("Stake the Treasury", "Stake [[col:yellow]]{cost} gold[[/col]] from our treasury: a 50/50 chance it comes back as [[col:green]]{won_gold} gold[[/col]] or is [[col:red]]lost[[/col]]."),
+    "wake_the_guardian": ("Wake the Guardian", "Wake the guardian: a 60/40 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]it attacks[[/col]] and a battle starts here."),
+    "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing[[/col]] or [[col:red]]curse[[/col]] for 5 turns."),
+    "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 unique item[[/col]]."),
     "leave_an_offering": ("Leave an Offering", PAY + "leave an offering: [[col:green]]+10% ward save[[/col]] for our army for 5 turns."),
     "bless_the_banners": ("Bless the Banners", PAY + "bless our banners: [[col:green]]+10[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack and "
                           "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for 8 turns."),
@@ -199,7 +198,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "raid_the_quartermaster": ("Raid the Quartermaster", PAY + "raid the quartermaster's stores: [[col:green]]+50%[[/col]] [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] ammunition "
                                "and [[col:green]]20%[[/col]] [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]] faster reloads in this battle."),
     "hire_local_allies": ("Hire Local Allies", PAY + "hire local allies: [[col:green]]a small allied army[[/col]] of 5 to 7 units joins us in this battle."),
-    "night_raid": ("Night Raid", "Raid their camp by night: a 50/50 chance the enemy army is [[col:green]]25% weaker[[/col]] or our units start at [[col:red]]90% strength[[/col]], decided now."),
+    "night_raid": ("Night Raid", "Raid their camp by night: a 50/50 chance the enemy army is [[col:green]]25% weaker[[/col]] or our units start at [[col:red]]90% strength[[/col]]."),
 
     "bottomless_quivers": ("Bottomless Quivers", PAY + "fill bottomless quivers: our missile units [[col:green]]never run out of ammunition[[/col]] in this battle."),
     "oath_of_no_retreat": ("Oath of No Retreat", PAY + "swear an oath of no retreat: our units [[col:green]]cannot rout[[/col]] in this battle."),
@@ -229,7 +228,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "press_on": ("Press On", "Press on while they flee: [[col:green]]+25% movement range[[/col]] next turn."),
     "victory_feast": ("Victory Feast", PAY + "hold a victory feast: " + stat("+10", *LEADERSHIP) + " and " + stat("+5", *ATTACK) + " for 5 turns."),
     "trophy_of_war": ("Trophy of War", "Take a trophy of war: our lord grows as a [[col:green]]Trophy Hunter[[/col]], a trait that rises with every trophy taken."),
-    "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn, decided now."),
+    "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn."),
     "cursed_trophy": ("Take the Cursed Trophy", "Take the cursed trophy: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
     "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]2 ranks[[/col]] and [[col:green]]+10% ward save[[/col]] for our army for 5 turns."),
     "walk_away": ("Walk Away", "Leave this place be."),

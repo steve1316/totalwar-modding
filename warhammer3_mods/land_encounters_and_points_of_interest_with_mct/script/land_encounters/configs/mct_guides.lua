@@ -11,8 +11,8 @@ M.battle_spots_intro = "Most encounter spots start a battle when a lord walks on
 
 --- Intro of the Encounters page treasure spot guide.
 M.treasure_spots_intro = "The rest of the encounter spots hold treasure instead (see Battle chance on the General page). Walking onto one "
-    .. "opens a treasure site: its own special offer, two more drawn from the site offers below, and Walk away. Paid offers come from the "
-    .. "treasury, and costs and gold grow with the difficulty. The offer guides show the Easy amounts. AI factions take a flat reward instead."
+    .. "opens a treasure site: its own special offer, two more drawn from the site offers below, and Walk away. Costs and gold grow with the "
+    .. "difficulty. The offer guides show the Easy amounts. AI factions take a flat reward instead."
 
 --- Text of the Towers page guide on how towers work.
 M.towers_intro = "One tower stands in each map zone, held by a random faction. Move a lord onto it to delve. Each floor is a battle somewhere "
