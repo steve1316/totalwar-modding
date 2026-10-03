@@ -440,6 +440,12 @@ WOUND_PAID_LINE = ("red", "Our lord is wounded for {turns} turns.")
 
 # Bundle key suffix after `land_enc_effect_spot_` -> (target, icon, title, description, [(effect, scope, value)]).
 BUNDLES = {
+    "reinforcement_time_25": ("force", "military.png", "Swift Reinforcements", "Reinforcements for this army arrive sooner.",
+                              [("wh3_main_effect_own_reinforcement_time_percentage_mod", "force_to_force_own", -25)]),
+    "reinforcement_time_50": ("force", "military.png", "Swift Reinforcements", "Reinforcements for this army arrive sooner.",
+                              [("wh3_main_effect_own_reinforcement_time_percentage_mod", "force_to_force_own", -50)]),
+    "reinforcement_time_75": ("force", "military.png", "Swift Reinforcements", "Reinforcements for this army arrive sooner.",
+                              [("wh3_main_effect_own_reinforcement_time_percentage_mod", "force_to_force_own", -75)]),
     "camping": ("force", "icon_effects_fortify.png", "Searching Every Corner", "Our army searches every corner and cannot march until our next turn.",
                 [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", -100)]),
     "strip_the_valuables": ("force", "icon_effects_fortify.png", "Weighed Down", "Our army carries heavy loot.",

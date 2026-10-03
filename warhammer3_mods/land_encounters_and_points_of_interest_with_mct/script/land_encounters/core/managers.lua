@@ -399,6 +399,11 @@ local IncidentManager = {}
 local IS_NOT_PERSISTENT_LISTENER = false
 --- svr key holding the encounter ally's faction key, so the battle script calls that army in as soon as the battle starts. Mirrored in script/battle/mod.
 local ALLY_ARRIVES_NOW_SVR_KEY = "land_enc_ally_arrives_now"
+--- Share of the reinforcement timer an allied battle cuts, in percent. One is picked at random for each allied battle. 100 calls the ally in by
+--- script, a few units at a time, since a -100% bundle brings every unit in at once and some jump to the map centre and back.
+local ALLY_TIMER_CUTS = { 0, 25, 50, 75, 100 }
+--- Prefix of the bundle that cuts the main army's reinforcement timer. The cut follows, e.g. land_enc_effect_spot_reinforcement_time_50.
+local ALLY_TIMER_BUNDLE_PREFIX = "land_enc_effect_spot_reinforcement_time_"
 --- svr key holding the allied-army test's mode, so the battle script logs where each army starts. Mirrored in script/battle/mod.
 local ALLY_TEST_SVR_KEY = "land_enc_ally_test"
 --- Bundle the allied-army test puts on the ally, to see whether ally changes carry into the battle. A copy of War Rites that every faction
@@ -422,6 +427,8 @@ local InvasionBattleManager = {
     event_army = false,
     --- The allied army's force cqi once it is spawned.
     ally_force_cqi = false,
+    --- The reinforcement-timer bundle on the main army of the current allied battle, { key, force_cqi }, or nil.
+    ally_timer_bundle = nil,
     --- The running allied-army test, { mode, player_cqi }, or nil. Set by the battle spot delegate from configs/debug.lua `ally_test`.
     ally_test = nil,
 }
@@ -455,6 +462,22 @@ local function prepare_ally_test_force(ally_force_cqi, mode)
         out("LEAPOI: ally test: ally force " .. ally_force_cqi .. " of " .. force:faction():name() .. " has " .. ALLY_TEST_BUNDLE .. ": "
             .. tostring(force:has_effect_bundle(ALLY_TEST_BUNDLE)) .. ", units: " .. table.concat(parts, ", "))
     end, 0.5)
+end
+
+--- Picks how much of the reinforcement timer an allied battle cuts, and applies it: a bundle on the main army for 25-75%, the battle script's
+--- early call for 100%, nothing for 0%. The flag and the bundle stay until BattleCompleted, so a restarted battle keeps them.
+--- @param manager table The invasion battle manager.
+--- @param main_force_cqi number The force cqi of the army whose reinforcement the ally is.
+local function cut_ally_timer(manager, main_force_cqi)
+    local cut = ALLY_TIMER_CUTS[random_number(#ALLY_TIMER_CUTS)]
+    manager.ally_timer_bundle = nil
+    if cut == 100 then
+        manager.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, manager.event_army.reinforcing_ally_armies[1].faction)
+    elseif cut > 0 then
+        manager.ally_timer_bundle = { key = ALLY_TIMER_BUNDLE_PREFIX .. cut, force_cqi = main_force_cqi }
+        cm:apply_effect_bundle_to_force(manager.ally_timer_bundle.key, main_force_cqi, 1)
+    end
+    out("LEAPOI: allied battle: the reinforcement timer is cut by " .. cut .. "%")
 end
 
 --- Logs who the pending battle lists on each side and whether a human army is in it, once, for the allied-army test.
@@ -680,11 +703,8 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
 
                 local faction_being_declared_war_to = declaring_faction_name
                 if faction_being_declared_war_to == self.event_army.faction then
-                    --- The flag stays set until BattleCompleted, so a restarted battle keeps it. The allied-army test leaves the ally to the
-                    --- game's own reinforcement rules, which is what it checks.
-                    if self.event_army:has_ally_reinforcements() and not self.ally_test then
-                        self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, self.event_army.reinforcing_ally_armies[1].faction)
-                    end
+                    --- The allied-army test leaves the ally to the game's own reinforcement rules, which is what it checks.
+                    if self.event_army:has_ally_reinforcements() and not self.ally_test then cut_ally_timer(self, player_force_cqi) end
                     local enemy_force_cqi = invasion_force:get_general():military_force():command_queue_index()
                     local relief = self.ally_test ~= nil and (self.ally_test.mode == "relief_column" or self.ally_test.mode == "relief_column_bundle")
                     if self.ally_test and (self.ally_test.mode == "side_by_side_bundle" or self.ally_test.mode == "ambush_ally") then
@@ -889,6 +909,10 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
         true,
         function(context)
             self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, "")
+            if self.ally_timer_bundle then
+                cm:remove_effect_bundle_from_force(self.ally_timer_bundle.key, self.ally_timer_bundle.force_cqi)
+                self.ally_timer_bundle = nil
+            end
             if self.ally_test then
                 out("LEAPOI: ally test: " .. self.ally_test.mode .. " battle completed")
                 local lord = cm:get_character_by_cqi(self.ally_test.player_cqi)
