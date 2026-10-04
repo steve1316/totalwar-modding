@@ -531,14 +531,20 @@ function InvasionBattleManager:relief_mode()
     return ally and ally.relief and "scripted" or nil
 end
 
---- Lists the allied army's surviving regular units by key: none when there was no ally or it was destroyed.
+--- Lists the allied army's surviving regular units by key: none when there was no ally or its lord fell. The ally is found through its
+--- invasion, since the campaign scripts reload after a battle and forget anything not saved.
+--- @param army Army The encounter Army.
 --- @returns table The unit keys.
-function InvasionBattleManager:surviving_ally_units()
+function InvasionBattleManager:surviving_ally_units(army)
     local survivors = {}
-    if not self.event_army or not self.event_army:has_ally_reinforcements() or not self.ally_force_cqi then return survivors end
-    local force = cm:get_military_force_by_cqi(self.ally_force_cqi)
-    if not force or force:is_null_interface() then return survivors end
-    local units = force:unit_list()
+    local ally = army:has_ally_reinforcements() and army.reinforcing_ally_armies[1]
+    local invasion = ally and self.invasion_manager:get_invasion(ally.invasion_identifier)
+    local general = invasion and invasion:get_general()
+    if not general or general:is_null_interface() or not general:has_military_force() then
+        out("LEAPOI: allied survivors: " .. (invasion and "the allied lord fell" or "no allied invasion"))
+        return survivors
+    end
+    local units = general:military_force():unit_list()
     for i = 0, units:num_items() - 1 do
         local unit = units:item_at(i)
         if unit:unit_class() ~= "com" then survivors[#survivors + 1] = unit:unit_key() end
@@ -967,7 +973,7 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, "")
             self.core:svr_save_string(RELIEF_COLUMN_SVR_KEY, "")
             --- Read before the encounter's armies are removed below.
-            self.ally_survivors = self:surviving_ally_units()
+            self.ally_survivors = self:surviving_ally_units(army)
             if self.ally_timer_bundle then
                 cm:remove_effect_bundle_from_force(self.ally_timer_bundle.key, self.ally_timer_bundle.force_cqi)
                 self.ally_timer_bundle = nil

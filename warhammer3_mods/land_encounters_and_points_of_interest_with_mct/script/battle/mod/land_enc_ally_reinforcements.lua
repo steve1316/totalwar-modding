@@ -30,7 +30,7 @@ local REORDER_MS = 5000
 --- How long the ally's attack order is repeated before it goes back to the battle AI even without contact, in ms.
 local ENGAGE_TIMEOUT_MS = 180000
 --- How long after a relief column battle starts the enemy charges the ally, in ms.
-local CHARGE_DELAY_MS = 3000
+local CHARGE_DELAY_MS = 0
 --- When our army is called into a relief column anyway if the enemy never reaches the ally, in ms after the battle starts. The enemy's charge
 --- orders end then too.
 local ARRIVAL_LATEST_MS = 90000

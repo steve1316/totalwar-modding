@@ -588,7 +588,7 @@ BUNDLES = {
                           [("wh_main_effect_province_growth_events", "province_to_province_own", (10, 20, 30)),
                            ("wh_main_effect_economy_gdp_mod_all", "province_to_region_own", (5, 10, 15))]),
     "stir_their_rebels": ("province", "chaos_gifts.png", "Stirred Rebels", "Rebels stir in the province.",
-                          [("wh_main_effect_public_order_events", "province_to_province_own", (-5, -10, -15))]),
+                          [("wh_main_effect_public_order_events", "province_to_province_own", (-10, -15, -20))]),
     "press_on": ("force", "icon_effects_fortify.png", "Pressing On", "Our army presses on while the enemy flees.",
                  [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 50)]),
     "victory_feast": ("force", "icon_effects_fortify.png", "Victory Feast", "Our army feasted on its victory.",

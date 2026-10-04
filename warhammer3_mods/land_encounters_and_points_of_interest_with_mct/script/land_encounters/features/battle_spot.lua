@@ -207,7 +207,12 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
         self.cached_player_character = get_player_faction_character_closest_to_spot(spot_info)
     end
 
-    trigger_incident(self.cached_event.victory_incident, self.cached_event.victory_targets, spot_info, self.cached_player_character)
+    local gift = self:pick_ally_gift(self.cached_player_character)
+    if gift then
+        self:trigger_victory_with_gift(self.cached_player_character, gift, spot_info)
+    else
+        trigger_incident(self.cached_event.victory_incident, self.cached_event.victory_targets, spot_info, self.cached_player_character)
+    end
     self:grant_victory_items(self.cached_player_character:faction())
     self:grant_ally_rewards(self.cached_player_character, spot_info)
     --- The spoils pick (features/spot_offers.lua) follows the victory reward when its roll hits.
@@ -254,8 +259,51 @@ function BattleEventDelegate:ally_kin(faction, spot_info)
         function(other) return other:culture() == culture and not other:at_war_with(faction) end)[1]
 end
 
---- Rewards an Ally in Peril win: `ally.relations` with the ally's kin (gold when there is none), and for `ally.gift_unit` a random surviving
---- allied unit, when our army has room. A battle whose ally never spawned rewards nothing extra.
+--- Picks the surviving allied unit that joins us on an `ally.gift_unit` win, when our army has room.
+--- @param character character Our lord.
+--- @returns string|nil The unit key, or nil for none.
+function BattleEventDelegate:pick_ally_gift(character)
+    local ally = self.cached_event.ally
+    if not ally or not ally.gift_unit or not self.cached_event.ally_faction then return nil end
+    local survivors = self.invasion_battle_manager.ally_survivors or {}
+    if #survivors == 0 then
+        log("spot battle: no allied unit survived to join us")
+        return nil
+    end
+    if not offer_effects.has_room(character:command_queue_index(), 1) then
+        log("spot battle: our army has no room for an allied unit")
+        return nil
+    end
+    return survivors[random_number(#survivors)]
+end
+
+--- Fires the victory incident built in script, so the allied unit joining us shows as a card beside the gold (`ally.victory_gold`). When it
+--- cannot be built, the plain incident fires and the unit joins in script.
+--- @param character character Our lord.
+--- @param gift string The joining unit's key.
+--- @param spot_info table A spot_info record for the battle's spot.
+function BattleEventDelegate:trigger_victory_with_gift(character, gift, spot_info)
+    local event = self.cached_event
+    local ok, err = pcall(function()
+        local builder = cm:create_incident_builder(event.victory_incident)
+        local payload = cm:create_payload()
+        payload:treasury_adjustment(event.ally.victory_gold)
+        payload:add_unit(character:military_force(), gift, 1, 0)
+        builder:set_payload(payload)
+        builder:add_target("default", character)
+        cm:launch_custom_incident_from_builder(builder, character:faction())
+    end)
+    if ok then
+        log("spot battle: the surviving ally " .. gift .. " joins our army, shown on " .. event.victory_incident)
+        return
+    end
+    log("spot battle: " .. event.victory_incident .. " could not be built (" .. tostring(err) .. "), the ally " .. gift .. " joins in script")
+    trigger_incident(event.victory_incident, event.victory_targets, spot_info, character)
+    cm:grant_unit_to_character(cm:char_lookup_str(character), gift)
+end
+
+--- Rewards an Ally in Peril win with `ally.relations` with the ally's kin, or gold when there is none. A battle whose ally never spawned
+--- rewards nothing extra.
 --- @param character character Our lord.
 --- @param spot_info table A spot_info record for the battle's spot.
 function BattleEventDelegate:grant_ally_rewards(character, spot_info)
@@ -270,18 +318,6 @@ function BattleEventDelegate:grant_ally_rewards(character, spot_info)
             local gold = ally.relations * battle_categories.ally_relations_gold
             cm:treasury_mod(faction:name(), gold)
             log("spot battle: no kin of the ally " .. self.cached_event.ally_faction .. " is near and at peace, " .. gold .. " gold instead")
-        end
-    end
-    if ally.gift_unit then
-        local survivors = self.invasion_battle_manager.ally_survivors or {}
-        if #survivors == 0 then
-            log("spot battle: no allied unit survived to join us")
-        elseif not offer_effects.has_room(character:command_queue_index(), 1) then
-            log("spot battle: our army has no room for an allied unit")
-        else
-            local unit = survivors[random_number(#survivors)]
-            cm:grant_unit_to_character(cm:char_lookup_str(character), unit)
-            log("spot battle: the surviving ally " .. unit .. " joins our army")
         end
     end
 end
