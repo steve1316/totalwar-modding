@@ -65,6 +65,9 @@ M.divine_shield = { cost = M.STANDARD, battle_value = S(300, 420, 600) }
 M.night_terrors = { cost = M.STRONG, targets = S(1, 2, 3) }
 M.assassinate = { cost = M.PREMIUM }
 
+--- Gold per regular unit a sized allied army is given, { min, max }, so its budget fills its slots.
+M.ally_gold_per_unit = { 700, 1000 }
+
 --- Allied armies by size: the units in the army, its lord included.
 M.allies_in_the_dark_small = { cost = 5000, ally_units = { 7, 9 } }
 M.allies_in_the_dark_medium = { cost = 7500, ally_units = { 11, 15 } }

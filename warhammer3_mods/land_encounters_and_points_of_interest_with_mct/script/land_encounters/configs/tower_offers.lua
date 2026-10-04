@@ -25,8 +25,6 @@ M.leave_choice_key = "LEAPOI_TWR_LEAVE"
 --- Most offers drawn onto one go-deeper dilemma.
 M.offers_per_floor = 4
 
---- Gold per regular unit an allied army of a set size is given, as { min, max }, so its budget fills its slots.
-M.ally_gold_per_unit = { 700, 1000 }
 
 --- Offer records in popup order. `guide_section` is the MCT Towers page guide section that lists the offer (configs/mct_guides.lua). `cost`
 --- is gold taken from the haul (none means free). Any field may differ by difficulty (`S` and `tiered`). An offer that does has one line per

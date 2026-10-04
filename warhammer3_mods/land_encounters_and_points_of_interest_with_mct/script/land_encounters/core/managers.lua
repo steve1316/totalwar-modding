@@ -412,8 +412,13 @@ local ALLY_TEST_BUNDLE = "land_enc_effect_ally_test_war_rites"
 --- Bundle the "_bundle" tests put on the main army so its reinforcements arrive at once (-100% reinforcement time): on the ally in
 --- "relief_column_bundle", where we are its reinforcement, and on our army in "side_by_side_bundle", where the ally is ours.
 local ALLY_TEST_REINFORCEMENT_BUNDLE = "land_enc_effect_ally_test_reinforcement_time"
---- How far off our lord is moved in the relief column test, in hexes.
-local ALLY_TEST_RELIEF_DISTANCE = 6
+--- How far off our lord is moved in a relief column, in hexes.
+local RELIEF_DISTANCE = 6
+--- svr key telling the battle script how to run a relief column: "scripted" calls our army in once the enemy reaches the ally, "charge_only"
+--- leaves our arrival to the game. Mirrored in script/battle/mod.
+local RELIEF_COLUMN_SVR_KEY = "land_enc_relief_column"
+--- The relief column mode each allied-army test runs.
+local RELIEF_TEST_MODES = { relief_column = "scripted", relief_column_bundle = "charge_only" }
 --- svr key the battle script reads its notice names from, shared with the tower and the battle spots. Mirrored in script/battle/mod.
 local BATTLE_NOTICES_SVR_KEY = "land_enc_tower_battle_buffs"
 
@@ -431,7 +436,20 @@ local InvasionBattleManager = {
     ally_timer_bundle = nil,
     --- The running allied-army test, { mode, player_cqi }, or nil. Set by the battle spot delegate from configs/debug.lua `ally_test`.
     ally_test = nil,
+    --- Unit keys of the allied army's surviving regular units, read as the last battle completed.
+    ally_survivors = nil,
 }
+
+--- Starts every unit of a force but the characters at a share of its full strength.
+--- @param force military_force The force.
+--- @param strength number The share of full strength (0-1).
+local function set_force_strength(force, strength)
+    local units = force:unit_list()
+    for i = 0, units:num_items() - 1 do
+        local unit = units:item_at(i)
+        if unit:unit_class() ~= "com" then cm:set_unit_hp_to_unary_of_maximum(unit, strength) end
+    end
+end
 
 --- Logs the allied army's units and bundle for the allied-army test, after starting them at 50% strength with War Rites. The
 --- "relief_column_bundle" test also gives the ally the reinforcement-time bundle.
@@ -443,16 +461,13 @@ local function prepare_ally_test_force(ally_force_cqi, mode)
         out("LEAPOI: ally test: no allied force for cqi " .. tostring(ally_force_cqi))
         return
     end
-    local units = force:unit_list()
-    for i = 0, units:num_items() - 1 do
-        local unit = units:item_at(i)
-        if not unit:unit_key():find("_cha_") then cm:set_unit_hp_to_unary_of_maximum(unit, 0.5) end
-    end
+    set_force_strength(force, 0.5)
     cm:apply_effect_bundle_to_force(ALLY_TEST_BUNDLE, ally_force_cqi, 1)
     if mode == "relief_column_bundle" then
         cm:apply_effect_bundle_to_force(ALLY_TEST_REINFORCEMENT_BUNDLE, ally_force_cqi, 1)
         out("LEAPOI: ally test: " .. ALLY_TEST_REINFORCEMENT_BUNDLE .. " on the ally")
     end
+    local units = force:unit_list()
     cm:callback(function()
         local parts = {}
         for i = 0, units:num_items() - 1 do
@@ -506,6 +521,30 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Class methods
+
+--- How the battle script runs a relief column in the pending battle: "scripted", "charge_only" (the "relief_column_bundle" test), or nil
+--- when the battle is not one.
+--- @returns string|nil The mode.
+function InvasionBattleManager:relief_mode()
+    if self.ally_test then return RELIEF_TEST_MODES[self.ally_test.mode] end
+    local ally = self.event_army.reinforcing_ally_armies[1]
+    return ally and ally.relief and "scripted" or nil
+end
+
+--- Lists the allied army's surviving regular units by key: none when there was no ally or it was destroyed.
+--- @returns table The unit keys.
+function InvasionBattleManager:surviving_ally_units()
+    local survivors = {}
+    if not self.event_army or not self.event_army:has_ally_reinforcements() or not self.ally_force_cqi then return survivors end
+    local force = cm:get_military_force_by_cqi(self.ally_force_cqi)
+    if not force or force:is_null_interface() then return survivors end
+    local units = force:unit_list()
+    for i = 0, units:num_items() - 1 do
+        local unit = units:item_at(i)
+        if unit:unit_class() ~= "com" then survivors[#survivors + 1] = unit:unit_key() end
+    end
+    return survivors
+end
 
 --- True if a valid spawn location exists for the offensive army near the spot.
 --- @param offensive_army Army The attacking Army instance.
@@ -610,8 +649,14 @@ function InvasionBattleManager:create_allied_reinforcements_before_attack(player
     local invasion = self:setup_invasion(reinforcing_army, enemy_character, invader_force, {x, y})
     invasion:start_invasion(
         function(invasion_force)
-            self.ally_force_cqi = invasion_force:get_general():military_force():command_queue_index()
-            if self.ally_test then prepare_ally_test_force(self.ally_force_cqi, self.ally_test.mode) end
+            local ally_force = invasion_force:get_general():military_force()
+            self.ally_force_cqi = ally_force:command_queue_index()
+            if self.ally_test then
+                prepare_ally_test_force(self.ally_force_cqi, self.ally_test.mode)
+            elseif reinforcing_army.start_strength and reinforcing_army.start_strength < 1 then
+                set_force_strength(ally_force, reinforcing_army.start_strength)
+                out("LEAPOI: the allied army starts at " .. reinforcing_army.start_strength * 100 .. "% strength")
+            end
             --- Force war with the enemy reinforcement armies.
             self:ally_reinforcement_declares_war_to_enemy_reinforcements_if_available(reinforcing_army.faction)
             self:main_attacker_attacks_player_and_allies(player_character, player_faction_name, force_cqi, spot_coordinates)
@@ -703,10 +748,12 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
 
                 local faction_being_declared_war_to = declaring_faction_name
                 if faction_being_declared_war_to == self.event_army.faction then
-                    --- The allied-army test leaves the ally to the game's own reinforcement rules, which is what it checks.
-                    if self.event_army:has_ally_reinforcements() and not self.ally_test then cut_ally_timer(self, player_force_cqi) end
+                    local relief = self:relief_mode()
+                    --- The allied-army test leaves the ally to the game's own reinforcement rules, which is what it checks. In a relief column we
+                    --- are the reinforcement, and the battle script (or for "charge_only" the game) brings us in.
+                    if self.event_army:has_ally_reinforcements() and not self.ally_test and not relief then cut_ally_timer(self, player_force_cqi) end
                     local enemy_force_cqi = invasion_force:get_general():military_force():command_queue_index()
-                    local relief = self.ally_test ~= nil and (self.ally_test.mode == "relief_column" or self.ally_test.mode == "relief_column_bundle")
+                    if relief then self.core:svr_save_string(RELIEF_COLUMN_SVR_KEY, relief) end
                     if self.ally_test and (self.ally_test.mode == "side_by_side_bundle" or self.ally_test.mode == "ambush_ally") then
                         cm:apply_effect_bundle_to_force(ALLY_TEST_REINFORCEMENT_BUNDLE, player_force_cqi, 1)
                         out("LEAPOI: ally test: " .. ALLY_TEST_REINFORCEMENT_BUNDLE .. " on our army " .. player_force_cqi)
@@ -724,13 +771,12 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                         out("LEAPOI: ally test: ambush: the enemy " .. enemy_force_cqi .. " ambushes our army " .. player_force_cqi .. ", ally " .. tostring(self.ally_force_cqi)
                             .. " beside us")
                         cm:force_attack_of_opportunity(enemy_force_cqi, player_force_cqi, true)
-                    elseif self.ally_test and relief and self.ally_force_cqi then
+                    elseif relief then
                         --- Our lord steps back so the ally starts the fight and we are only close enough to join it.
-                        local lord = cm:get_character_by_cqi(self.ally_test.player_cqi)
-                        local x, y = cm:find_valid_spawn_location_for_character_from_position(lord:faction():name(), lord:logical_position_x(),
-                            lord:logical_position_y(), false, ALLY_TEST_RELIEF_DISTANCE)
-                        if x ~= -1 then cm:teleport_to(cm:char_lookup_str(lord), x, y) end
-                        out("LEAPOI: ally test: relief column: our lord moved to (" .. x .. ", " .. y .. "), the ally " .. self.ally_force_cqi
+                        local x, y = cm:find_valid_spawn_location_for_character_from_position(player_faction_name, player_character:logical_position_x(),
+                            player_character:logical_position_y(), false, RELIEF_DISTANCE)
+                        if x ~= -1 then cm:teleport_to(cm:char_lookup_str(player_character), x, y) end
+                        out("LEAPOI: relief column: our lord moved to (" .. x .. ", " .. y .. "), the ally " .. self.ally_force_cqi
                             .. " attacks the enemy " .. enemy_force_cqi)
                         cm:force_attack_of_opportunity(self.ally_force_cqi, enemy_force_cqi, false)
                     elseif self.event_army.intervention_type == AMBUSH_TYPE then
@@ -919,6 +965,9 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
         true,
         function(context)
             self.core:svr_save_string(ALLY_ARRIVES_NOW_SVR_KEY, "")
+            self.core:svr_save_string(RELIEF_COLUMN_SVR_KEY, "")
+            --- Read before the encounter's armies are removed below.
+            self.ally_survivors = self:surviving_ally_units()
             if self.ally_timer_bundle then
                 cm:remove_effect_bundle_from_force(self.ally_timer_bundle.key, self.ally_timer_bundle.force_cqi)
                 self.ally_timer_bundle = nil

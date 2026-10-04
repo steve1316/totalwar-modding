@@ -73,3 +73,7 @@ id	incident_key	payload_key	value	target_key
 7017900666	land_enc_incident_battle_won_surprise_neutral	TREASURY	AMOUNT[1750]	default
 7017900667	land_enc_incident_battle_won_surprise_neutral	EFFECT_BUNDLE	KEY[land_enc_effect_battle_won_surprise_neutral];DURATION[10]	default
 7017900668	land_enc_incident_battle_won_battlefield_neutral	TREASURY	AMOUNT[2500]	default
+7018200024	land_enc_incident_battle_won_ally_beset	TREASURY	AMOUNT[2000]	default
+7018200025	land_enc_incident_battle_won_turn_the_tables	TREASURY	AMOUNT[1000]	default
+7018200026	land_enc_incident_battle_won_relief_column	TREASURY	AMOUNT[2500]	default
+7018200027	land_enc_incident_battle_avoided_ally	EFFECT_BUNDLE	KEY[land_enc_effect_battle_avoided_battlefield];DURATION[10]	default

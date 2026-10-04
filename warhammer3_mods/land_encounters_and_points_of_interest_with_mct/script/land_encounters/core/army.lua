@@ -57,6 +57,10 @@ local Army = {
     --- Reinforcement armies
     reinforcing_ally_armies = {},
     reinforcing_enemy_armies = {},
+    --- An Ally in Peril ally only: true when it is a relief column, which holds the field until we arrive.
+    relief = false,
+    --- An Ally in Peril ally only: the share of full strength it starts at, or nil for full strength.
+    start_strength = nil,
     heroes = {},
     skill_overrides = {},
 }
@@ -216,6 +220,13 @@ function Army:new_from_event(event, player_subculture)
         for i=1, #force_data.reinforcing_enemy_armies do
             table.insert(reinforcing_enemy_armies, Army:create_from(force_data.reinforcing_enemy_armies[i]))
         end
+    end
+
+    --- An Ally in Peril ally knows its part: a relief column, and the share of strength it starts at.
+    local ally = reinforcing_ally_armies[1]
+    if ally and event.ally then
+        ally.relief = event.ally.mode == "relief"
+        ally.start_strength = event.ally_strength
     end
 
     local army = Army:create_from(force_data)

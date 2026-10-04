@@ -15,6 +15,7 @@ local Army = require("script/land_encounters/core/army")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_offers = require("script/land_encounters/features/tower_offers")
 local offer_effects = require("script/land_encounters/core/offer_effects")
+local army_generator = require("script/land_encounters/core/army_generator")
 local launch_dilemma = require("script/land_encounters/core/dilemmas").launch
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_lords = require("script/land_encounters/features/tower_lords")
@@ -595,8 +596,7 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     local ally_options = nil
     if type(next_floor.ally) == "table" then
         local units = random_number(next_floor.ally[2], next_floor.ally[1]) - 1
-        local per_unit = offers_data.ally_gold_per_unit
-        ally_options = { no_heroes = true, unit_count = units, budget_range = { units * per_unit[1], units * per_unit[2] } }
+        ally_options = army_generator.ally_options(units)
         log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units")
     end
     local army = Army:new_from_event({

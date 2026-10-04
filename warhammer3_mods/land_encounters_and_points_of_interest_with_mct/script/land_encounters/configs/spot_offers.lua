@@ -181,8 +181,6 @@ M.avoid_choice_key = "LEAPOI_SPT_AVOID"
 --- Choice key of Fight, the vanilla FIRST key the battle dilemmas already use.
 M.fight_choice_key = "FIRST"
 
---- Gold per unit of a hired allied army, { min, max }, as the tower's allies use.
-M.ally_gold_per_unit = { 700, 1000 }
 
 --- Realm target kinds, measured from the spot:
 ---   own_region       Your nearest region.

@@ -144,6 +144,18 @@ scripted_objectives_localised_text_land_enc_tower_buff_ally_relief	[[col:yellow]
 scripted_objectives_localised_description_land_enc_tower_buff_ally_relief		false
 scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_message	Relief Column: the enemy falls on our allies! They hold at half strength until we arrive.	false
 scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_50	[[col:yellow]]Relief Column: the enemy falls on our allies, who start at 50% strength. Reach them before they break![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_50		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_50_message	Relief Column: the enemy falls on our allies, who start at 50% strength. Reach them before they break!	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_50_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_75	[[col:yellow]]Relief Column: the enemy falls on our allies, who start at 75% strength. Reach them before they break![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_75		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_75_message	Relief Column: the enemy falls on our allies, who start at 75% strength. Reach them before they break!	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_75_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_100	[[col:yellow]]Relief Column: the enemy falls on our allies. Reach them before they break![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_100		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_100_message	Relief Column: the enemy falls on our allies. Reach them before they break!	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_100_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain	Spare the Captain: keep the enemy lord alive	false
 scripted_objectives_localised_description_land_enc_tower_buff_spare_the_captain		false
 scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain_message	Spare the Captain: win with the enemy lord still alive.	false

@@ -261,7 +261,7 @@ end
 --- @param a string The first faction key.
 --- @param b string The second faction key.
 --- @param amount number The bonus, e.g. 3 or -3.
-local function change_relations(a, b, amount)
+function M.change_relations(a, b, amount)
     cm:apply_dilemma_diplomatic_bonus(a, b, amount)
     log("realm: relations " .. a .. " / " .. b .. " " .. (amount > 0 and "+" or "") .. amount)
 end
@@ -336,11 +336,11 @@ function M.apply(offer, target, faction_name)
     end
     if offer.relations then
         if offer.realm == "rival_pair" then
-            change_relations(target.factions[1], target.factions[2], offer.relations)
+            M.change_relations(target.factions[1], target.factions[2], offer.relations)
         elseif offer.realm == "enemy_friends" then
-            for i = 2, #target.factions do change_relations(target.factions[1], target.factions[i], offer.relations) end
+            for i = 2, #target.factions do M.change_relations(target.factions[1], target.factions[i], offer.relations) end
         else
-            for _, other in ipairs(target.factions) do change_relations(faction_name, other, offer.relations) end
+            for _, other in ipairs(target.factions) do M.change_relations(faction_name, other, offer.relations) end
         end
     end
 end

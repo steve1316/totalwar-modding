@@ -61,6 +61,10 @@ land_enc_incident_smithy_tribute	false	faction	false	Event		false		0.0000	false
 land_enc_incident_battle_won_incursion_neutral	false	faction	false	Event		false		0.0000	false
 land_enc_incident_battle_won_surprise_neutral	false	faction	false	Event		false		0.0000	false
 land_enc_incident_battle_won_battlefield_neutral	false	faction	false	Event		false		0.0000	false
+land_enc_incident_battle_won_ally_beset	false	faction	false	Event		false		0.0000	false
+land_enc_incident_battle_won_turn_the_tables	false	faction	false	Event		false		0.0000	false
+land_enc_incident_battle_won_relief_column	false	faction	false	Event		false		0.0000	false
+land_enc_incident_battle_avoided_ally	false	faction	false	Event		false		0.0000	false
 land_enc_incident_spot_cast_the_lots_won	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_cast_the_lots_lost	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_drink_from_the_spring_won	false	wh2_sea_encounters_1	false	Event		false		0.0000	false

@@ -114,6 +114,14 @@ incidents_localised_title_land_enc_incident_battle_won_surprise_neutral	Ambush T
 incidents_localised_description_land_enc_incident_battle_won_surprise_neutral	We turned their ambush against them and broke them on their own ground. The soldiers are in high spirits after the fight.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_neutral	A Battle to Remember	false
 incidents_localised_description_land_enc_incident_battle_won_battlefield_neutral	The enemy army lies broken across the field. Among the spoils we find weapons and relics worth carrying into the wars to come.	false
+incidents_localised_title_land_enc_incident_battle_won_ally_beset	Shoulder to Shoulder	false
+incidents_localised_description_land_enc_incident_battle_won_ally_beset	The enemy breaks between our two armies and flees the field. Our allies salute us as they march away, and word of what we did here will reach their kin.	false
+incidents_localised_title_land_enc_incident_battle_won_turn_the_tables	The Hunters Hunted	false
+incidents_localised_description_land_enc_incident_battle_won_turn_the_tables	The ambush is broken before it could close. Our escort thanks us, and among the enemy's packs we find something worth keeping.	false
+incidents_localised_title_land_enc_incident_battle_won_relief_column	Relief at Last	false
+incidents_localised_description_land_enc_incident_battle_won_relief_column	We reached them in time. The enemy lies broken around our allies' last line, and their survivors hail us as saviours.	false
+incidents_localised_title_land_enc_incident_battle_avoided_ally	Left to Their Fate	false
+incidents_localised_description_land_enc_incident_battle_avoided_ally	We turned away and left our allies to face the enemy alone. We will never know how it ended for them, but our own army lives to fight another day.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_won	Cast the Lots	false
 incidents_localised_description_land_enc_incident_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_lost	Cast the Lots	false

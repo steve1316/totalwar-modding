@@ -6,11 +6,13 @@ require("script/land_encounters/core/managers")
 
 local complex_continuity_events = require("script/land_encounters/configs/events").complex_continuity
 local item_pool = require("script/land_encounters/core/item_pool")
-local hard_legendary_chance = require("script/land_encounters/configs/battle_categories").hard_legendary_chance
+local battle_categories = require("script/land_encounters/configs/battle_categories")
+local offer_effects = require("script/land_encounters/core/offer_effects")
+local realm_effects = require("script/land_encounters/core/realm_effects")
 
 local battle_picker = require("script/land_encounters/core/battle_picker")
 local debug_config = require("script/land_encounters/configs/debug")
-local ally_gold_per_unit = require("script/land_encounters/configs/spot_offers").ally_gold_per_unit
+local army_generator = require("script/land_encounters/core/army_generator")
 local spot_battles = require("script/land_encounters/features/spot_battles")
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local spoils_site = require("script/land_encounters/configs/spot_offers").spoils
@@ -100,10 +102,9 @@ end
 --- @param mode string "side_by_side" or "relief_column".
 function BattleEventDelegate:start_ally_test(character, spot_info, mode)
     self.cached_player_character = character
-    self.cached_event = battle_picker.pick()
+    self.cached_event = battle_picker.pick(nil, { no_allies = true })
     self.cached_event.intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE
-    self.cached_event.ally_options = { no_heroes = true, unit_count = ALLY_TEST_UNITS,
-        budget_range = { ALLY_TEST_UNITS * ally_gold_per_unit[1], ALLY_TEST_UNITS * ally_gold_per_unit[2] } }
+    self.cached_event.ally_options = army_generator.ally_options(ALLY_TEST_UNITS)
     self.invasion_battle_manager.ally_test = { mode = mode, player_cqi = character:command_queue_index() }
     log("ally test: " .. mode .. " with a " .. self.cached_event.category .. " battle for lord " .. character:command_queue_index() .. " at ("
         .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
@@ -144,6 +145,9 @@ function BattleEventDelegate:start_battle(spot_info)
         return
     end
     self.is_triggered = true
+    --- Kept on the event, so the ally's culture is known after a load, when the army is built again with another ally.
+    local ally = offensive_army.reinforcing_ally_armies[1]
+    self.cached_event.ally_faction = ally and ally.faction or nil
     spot_battles.prepare_battle(self.cached_event, self.cached_player_character:command_queue_index())
     self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
     --- Handed over once the army is generated, since Night terrors and the missions pick targets from its units.
@@ -159,7 +163,7 @@ end
 --- @param difficulty string|nil The battle's difficulty, or nil for the current one.
 function BattleEventDelegate:start_guardian_battle(character, spot_info, difficulty)
     self.cached_player_character = character
-    self.cached_event = battle_picker.pick(difficulty)
+    self.cached_event = battle_picker.pick(difficulty, { no_allies = true })
     self.cached_event.intervention = INTERCEPTION_TYPE
     log("spot: the guardian wakes and attacks lord " .. character:command_queue_index() .. " with a " .. self.cached_event.category .. " battle at ("
         .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
@@ -205,6 +209,7 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
 
     trigger_incident(self.cached_event.victory_incident, self.cached_event.victory_targets, spot_info, self.cached_player_character)
     self:grant_victory_items(self.cached_player_character:faction())
+    self:grant_ally_rewards(self.cached_player_character, spot_info)
     --- The spoils pick (features/spot_offers.lua) follows the victory reward when its roll hits.
     if self.cached_player_character:faction():is_human() and spot_battles.roll_spoils() then
         spot_offers.open_site(self.cached_player_character, self.cached_player_character:faction(), spoils_site, self.cached_event)
@@ -228,11 +233,56 @@ function BattleEventDelegate:grant_victory_items(faction)
     if victory_items then
         rewards = item_pool.pick_items(faction:name(), victory_items.rarities, victory_items.count)
     end
-    if self.cached_event.difficulty == "hard" and random_chance(hard_legendary_chance) then
+    if self.cached_event.difficulty == "hard" and random_chance(battle_categories.hard_legendary_chance) then
         table.insert(rewards, item_pool.pick_legendary_item(faction:name()))
     end
     for _, ancillary in ipairs(rewards) do
         cm:add_ancillary_to_faction(faction, ancillary, false)
+    end
+end
+
+--- Finds the nearest real faction of the Ally in Peril battle's ally culture that is not at war with us. The ally itself fights under a
+--- stand-in faction that only exists for the battle.
+--- @param faction faction Our faction.
+--- @param spot_info table A spot_info record for the battle's spot.
+--- @returns faction|nil The faction, or nil when the ally is unknown or none is found.
+function BattleEventDelegate:ally_kin(faction, spot_info)
+    local stand_in = self.cached_event.ally_faction and cm:get_faction(self.cached_event.ally_faction)
+    if not stand_in or stand_in:is_null_interface() then return nil end
+    local culture = stand_in:culture()
+    return realm_effects.nearest_factions(faction, spot_info.coordinates[1], spot_info.coordinates[2], 1,
+        function(other) return other:culture() == culture and not other:at_war_with(faction) end)[1]
+end
+
+--- Rewards an Ally in Peril win: `ally.relations` with the ally's kin (gold when there is none), and for `ally.gift_unit` a random surviving
+--- allied unit, when our army has room. A battle whose ally never spawned rewards nothing extra.
+--- @param character character Our lord.
+--- @param spot_info table A spot_info record for the battle's spot.
+function BattleEventDelegate:grant_ally_rewards(character, spot_info)
+    local ally = self.cached_event.ally
+    if not ally or not self.cached_event.ally_faction then return end
+    local faction = character:faction()
+    if ally.relations then
+        local kin = self:ally_kin(faction, spot_info)
+        if kin then
+            realm_effects.change_relations(faction:name(), kin:name(), ally.relations)
+        else
+            local gold = ally.relations * battle_categories.ally_relations_gold
+            cm:treasury_mod(faction:name(), gold)
+            log("spot battle: no kin of the ally " .. self.cached_event.ally_faction .. " is near and at peace, " .. gold .. " gold instead")
+        end
+    end
+    if ally.gift_unit then
+        local survivors = self.invasion_battle_manager.ally_survivors or {}
+        if #survivors == 0 then
+            log("spot battle: no allied unit survived to join us")
+        elseif not offer_effects.has_room(character:command_queue_index(), 1) then
+            log("spot battle: our army has no room for an allied unit")
+        else
+            local unit = survivors[random_number(#survivors)]
+            cm:grant_unit_to_character(cm:char_lookup_str(character), unit)
+            log("spot battle: the surviving ally " .. unit .. " joins our army")
+        end
     end
 end
 

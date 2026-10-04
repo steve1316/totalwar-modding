@@ -11,6 +11,7 @@ local offers_data = require("script/land_encounters/configs/spot_offers")
 local steps = require("script/land_encounters/utils/steps")
 local debug_config = require("script/land_encounters/configs/debug")
 local offer_effects = require("script/land_encounters/core/offer_effects")
+local army_generator = require("script/land_encounters/core/army_generator")
 local item_pool = require("script/land_encounters/core/item_pool")
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_army = require("script/land_encounters/features/tower_army")
@@ -250,9 +251,8 @@ local function apply_to_event(fields, event)
     if fields.own_strength then event.own_strength = fields.own_strength end
     if fields.allies then
         local units = random_number(fields.allies[2], fields.allies[1]) - 1
-        local per_unit = offers_data.ally_gold_per_unit
         event.intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE
-        event.ally_options = { no_heroes = true, unit_count = units, budget_range = { units * per_unit[1], units * per_unit[2] } }
+        event.ally_options = army_generator.ally_options(units)
         log("spot battle: the hired allied army fields its lord and " .. units .. " units")
     end
 end
@@ -365,6 +365,7 @@ function M.hand_to_battle(event, army)
             for _ = 1, row.count or 1 do event.enemy_units[#event.enemy_units + 1] = row.id end
         end
         event.trophy = tower_army.most_expensive(event.enemy_units, 1)[1]
+        if event.ally_strength and army.reinforcing_ally_armies[1] then add_notice(event, "ally_relief_" .. math.floor(event.ally_strength * 100 + 0.5)) end
     end
     local names, targets, terrors = {}, {}, {}
     for _, bundle in ipairs(event.battle_bundles or {}) do names[#names + 1] = bundle:sub(#TOWER_BUNDLE_PREFIX + 1) end

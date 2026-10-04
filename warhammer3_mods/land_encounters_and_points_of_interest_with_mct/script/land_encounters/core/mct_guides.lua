@@ -135,7 +135,11 @@ function M.battle_spots_text()
                 .. math.floor(category.budget_multiplier * 100 + 0.5) .. "% of the difficulty's gold budget.",
         }
         if category.min_difficulty then facts[#facts + 1] = "Always at least " .. category.min_difficulty .. " difficulty." end
-        if category.intervention then facts[#facts + 1] = "Fought as " .. BATTLE_TYPE_NAMES[category.intervention] .. " when that is enabled." end
+        if category.ally then
+            facts[#facts + 1] = "Only appears while " .. BATTLE_TYPE_NAMES[category.intervention] .. " battles are enabled."
+        elseif category.intervention then
+            facts[#facts + 1] = "Fought as " .. BATTLE_TYPE_NAMES[category.intervention] .. " when that is enabled."
+        end
         if category.victory_items then
             facts[#facts + 1] = "Winning adds " .. items_phrase(category.victory_items.count, category.victory_items.rarities) .. "."
         end

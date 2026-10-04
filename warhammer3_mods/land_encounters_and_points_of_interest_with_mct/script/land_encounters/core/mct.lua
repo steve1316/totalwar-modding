@@ -331,21 +331,25 @@ function get_faction_mapping()
     return faction_mapping
 end
 
+--- True when the MCT allows a battle type.
+--- @param type_tag string A battle-type tag from common.lua.
+--- @returns boolean True when the type is enabled.
+function is_intervention_type_enabled(type_tag)
+    for _, enabled_tag in ipairs(mct_settings.enabled_intervention_types or {}) do
+        if enabled_tag == type_tag then return true end
+    end
+    return false
+end
+
 --- Picks the battle type for an encounter from the user's MCT toggles. A `preferred_type` that is enabled wins, then Interception when it is
 --- enabled, then a random enabled type. An empty list (save-load race or MCT bypass) falls back to Interception.
 --- @param preferred_type number An optional battle-type tag a battle category asks for.
 --- @returns number One of AMBUSH_TYPE, INTERCEPTION_TYPE, or ALLIED_REINFORCEMENTS_PERMITTED_TYPE.
 function pick_intervention_type(preferred_type)
     local enabled = mct_settings.enabled_intervention_types or {}
-    local function is_enabled(type_tag)
-        for _, enabled_tag in ipairs(enabled) do
-            if enabled_tag == type_tag then return true end
-        end
-        return false
-    end
     if preferred_type ~= nil then
-        if is_enabled(preferred_type) then return preferred_type end
-        if is_enabled(INTERCEPTION_TYPE) then return INTERCEPTION_TYPE end
+        if is_intervention_type_enabled(preferred_type) then return preferred_type end
+        if is_intervention_type_enabled(INTERCEPTION_TYPE) then return INTERCEPTION_TYPE end
     end
     if #enabled == 0 then
         return INTERCEPTION_TYPE

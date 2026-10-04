@@ -53,6 +53,9 @@ land_enc_dilemma_tower_deeper_floor_1	false			wh2_skaven_underworld	false	Event	
 land_enc_dilemma_tower_deeper_floor_2	false			vc_puzzle_2_background	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tower_deeper_floor_3	false			story_panels/chd_pet_curse	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tower_deeper_floor_4	false			nag_nagash_foreshadow	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_ally_beset	false			chaos_stirs	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_turn_the_tables	false			lizardmen_invasion	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_relief_column	false			carnage_charge	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_hidden_tomb	false			books_of_nagash	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_abandoned_camp	false			wh2_rogue_army_encountered	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_buried_relics	false			wh2_sea_encounters_2	false	Event	UI_CAM_EVENT_Dilemma			false

@@ -7,6 +7,7 @@ require("script/land_encounters/core/mct")
 
 local factions_data = require("script/land_encounters/configs/factions_data")
 local archetypes = require("script/land_encounters/configs/archetypes")
+local ally_gold_per_unit = require("script/land_encounters/configs/shared_offers").ally_gold_per_unit
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -431,6 +432,13 @@ function M.pick_units(faction_shorthand_key, tiers, unit_types, count, options)
     if #pool == 0 then return picked end
     for i = 1, count do picked[i] = pool[random_number(#pool)] end
     return picked
+end
+
+--- Generator options for a sized allied army: its lord, `units` regular units and no heroes, with gold to buy them all.
+--- @param units number The regular units.
+--- @returns table The options, see `M.generate`.
+function M.ally_options(units)
+    return { no_heroes = true, unit_count = units, budget_range = { units * ally_gold_per_unit[1], units * ally_gold_per_unit[2] } }
 end
 
 return M
