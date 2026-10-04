@@ -15,7 +15,9 @@ import os
 import re
 import subprocess
 from collections import defaultdict
-from typing import Dict, List, Tuple
+from typing import Dict, List, Pattern, Tuple
+
+from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
 TABLE_FILE = "land_encounters_and_points_of_interest.tsv"
@@ -57,8 +59,11 @@ STRINGS_LOC = LOC_PREFIX + "spot_strings.loc.tsv"
 # Key prefix of the spot offers' own effect bundles.
 SPOT_BUNDLE = "land_enc_effect_spot_"
 
-# Offer fields that put a bundle on something: { bundle, turns }.
-BUNDLE_FIELDS = ("army_bundle", "faction_bundle", "province_bundle", "region_bundle", "target_faction_bundle")
+# Key prefix of the tower's effect bundles. The name after it is a one-battle bundle's notice.
+TOWER_BUNDLE = "land_enc_effect_tower_"
+
+# Offer fields that put a bundle on something: { bundle, turns }, or for the battle offers and the tower the bundle key alone.
+BUNDLE_FIELDS = ("army_bundle", "faction_bundle", "province_bundle", "region_bundle", "target_faction_bundle", "battle_bundle", "enemy_bundle", "effect_bundle")
 
 
 def stat(value: str, icon: str, name: str, colour: str = "green") -> str:
@@ -185,30 +190,40 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "point_them_at_each_other": ("Point Them at Each Other", PAY + "set rivals against each other: the two biggest factions near us have [[col:green]]-{relations} relations[[/col]] with each other."),
     "sell_their_secrets": ("Sell Their Secrets", "Sell their secrets: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest enemy has [[col:red]]+{relations} relations[[/col]] with our other enemies."),
 
-    "bribe_a_scout": ("Bribe a Scout", PAY + "bribe one of their scouts: the enemy army is [[col:green]]25% weaker[[/col]]."),
-    "thin_their_ranks": ("Thin Their Ranks", PAY + "thin their ranks: the enemy army fields [[col:green]]3 fewer units[[/col]]."),
-    "poison_their_stores": ("Poison Their Stores", PAY + "poison their stores: enemy units start at [[col:green]]75% strength[[/col]]."),
+    "bribe_the_guards": ("Bribe the Guards", PAY + "bribe their guards: the enemy army is [[col:green]]{weaker}% weaker[[/col]]."),
+    "thin_the_ranks": ("Thin the Ranks", PAY + "thin their ranks: the enemy army fields [[col:green]]{fewer_units} fewer units[[/col]]."),
+    "poison_the_stores": ("Poison the Stores", PAY + "poison their stores: enemy units start at [[col:green]]{strength}% strength[[/col]]."),
     "kill_the_captain": ("Kill the Captain", PAY + "kill their captain: the enemy army has [[col:green]]no heroes[[/col]]."),
-    "keep_the_veterans_away": ("Keep the Veterans Away", PAY + "keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]]."),
-    "spread_dread": ("Spread Dread", PAY + "spread dread through their camp: enemy units have " + stat("-15", *LEADERSHIP) + "."),
-    "turn_a_traitor": ("Turn a Traitor", PAY + "turn a traitor: [[col:green]]a random unit[[/col]] of the enemy's kind joins our army now, and the enemy fields one unit fewer."),
-    "hold_war_rites": ("Hold War Rites", PAY + "hold war rites: [[col:green]]+10[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, "
-                       "[[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership in this battle."),
-    "hone_the_blades": ("Hone the Blades", PAY + "hone every blade: [[col:green]]+15%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength and "
-                        "[[col:green]]+15[[/col]] [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]] armour-piercing damage in this battle."),
-    "paint_warding_sigils": ("Paint Warding Sigils", PAY + "paint warding sigils: [[col:green]]+10% ward save[[/col]] in this battle."),
+    "lower_tiers_only": ("Keep the Veterans Away", PAY + "keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]]."),
+    "break_their_spirit": ("Break Their Spirit", PAY + "spread dread through their camp: enemy units have [[col:green]]-{e0}[[/col]] "
+                           "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership."),
+    "curse_their_blades": ("Curse Their Blades", PAY + "curse their weapons: enemy units have [[col:green]]-{e0}[[/col]] "
+                           "[[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack."),
+    "turn_a_traitor": ("Turn a Traitor", PAY + "turn a traitor: [[col:green]]a tier {tiers} unit[[/col]] of the enemy's kind joins our army now, and the enemy fields one unit fewer."),
+    "war_rites": ("War Rites", PAY + "hold war rites: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, "
+                  "[[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership in this battle."),
+    "whetstones_and_oil": ("Whetstones and Oil", PAY + "hone every blade: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength and "
+                           "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]] armour-piercing damage in this battle."),
+    "warding_sigils": ("Warding Sigils", PAY + "paint warding sigils: [[col:green]]+{e0}% ward save[[/col]] in this battle."),
     "fire_kissed_blades": ("Fire-Kissed Blades", PAY + "pass our blades through the braziers: [[col:green]]flaming attacks[[/col]] for every unit in this battle."),
-    "steel_our_resolve": ("Steel Our Resolve", PAY + "steel our resolve: " + stat("+20", *LEADERSHIP) + " and [[col:green]]immunity to fear and terror[[/col]] in this battle."),
-    "call_the_winds": ("Call the Winds", PAY + "call the winds: [[col:green]]+30 Winds of Magic[[/col]] reserve in this battle."),
-    "raid_the_quartermaster": ("Raid the Quartermaster", PAY + "raid the quartermaster's stores: [[col:green]]+50%[[/col]] [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] ammunition "
-                               "and [[col:green]]20%[[/col]] [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]] faster reloads in this battle."),
-    "hire_local_allies": ("Hire Local Allies", PAY + "hire local allies: [[col:green]]a small allied army[[/col]] of 5 to 7 units joins us in this battle."),
-    "night_raid": ("Night Raid", "Raid their camp by night: a 50/50 chance the enemy army is [[col:green]]25% weaker[[/col]] or our units start at [[col:red]]90% strength[[/col]]."),
+    "iron_resolve": ("Iron Resolve", PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership and "
+                     "[[col:green]]immunity to fear and terror[[/col]] in this battle."),
+    "drill_sergeant": ("Drill Sergeant", PAY + "drill the army hard: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed and "
+                       "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]] charge bonus in this battle."),
+    "call_the_winds": ("Call the Winds", PAY + "call the winds: [[col:green]]+{e0} Winds of Magic[[/col]] reserve in this battle."),
+    "quartermasters_cache": ("Quartermaster's Cache", PAY + "raid the quartermaster's stores: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] "
+                             "ammunition and [[col:green]]{e1}%[[/col]] [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]] faster reloads in this battle."),
+    "tower_artillery": ("Call a Barrage", PAY + "hire a battery: gain the [[col:green]]Zhufbar 42 Pounders[[/col]] artillery barrage army ability in this battle."),
+    "allies_in_the_dark_small": ("Allies in the Dark (Small)", PAY + "hire allies: [[col:green]]a small allied army[[/col]] of {ally_min} to {ally_max} units joins us in this battle."),
+    "allies_in_the_dark_medium": ("Allies in the Dark (Medium)", PAY + "hire allies: [[col:green]]a medium allied army[[/col]] of {ally_min} to {ally_max} units joins us in this battle."),
+    "allies_in_the_dark_large": ("Allies in the Dark (Large)", PAY + "hire allies: [[col:green]]a large allied army[[/col]] of {ally_min} to {ally_max} units joins us in this battle."),
+    "night_raid": ("Night Raid", "Raid their camp by night: a 50/50 chance the enemy army is [[col:green]]25% weaker[[/col]] or our units start at "
+                   "[[col:red]]{lost_strength}% strength[[/col]]."),
 
     "bottomless_quivers": ("Bottomless Quivers", PAY + "fill bottomless quivers: our missile units [[col:green]]never run out of ammunition[[/col]] in this battle."),
     "oath_of_no_retreat": ("Oath of No Retreat", PAY + "swear an oath of no retreat: our units [[col:green]]cannot rout[[/col]] in this battle."),
-    "divine_shield": ("Divine Shield", PAY + "raise a divine shield: our lord [[col:green]]cannot be harmed for the first 5 minutes[[/col]] of this battle."),
-    "night_terrors": ("Night Terrors", PAY + "send night terrors: the enemy's [[col:green]]2 most expensive units flee[[/col]] after 1 minute of this battle."),
+    "divine_shield": ("Divine Shield", PAY + "raise a divine shield: our lord [[col:green]]cannot be harmed for the first {minutes} minutes[[/col]] of this battle."),
+    "night_terrors": ("Night Terrors", PAY + "send night terrors: the enemy's [[col:green]]{targets}[[/col]] after 1 minute of this battle."),
     "assassinate": ("Assassinate", PAY + "send an assassin: the enemy [[col:green]]lord is slain as the battle starts[[/col]]."),
 
     "headhunt": ("Headhunt", MISSION + "kill the enemy lord within [[col:yellow]]6 minutes[[/col]] for [[col:green]]a random rare item[[/col]]."),
@@ -223,6 +238,8 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "duelists_challenge": ("Duellist's Challenge", MISSION + "challenge the enemy lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a unique item[[/col]]."),
     "spare_the_captain": ("Spare the Captain", MISSION + "win with the [[col:yellow]]enemy lord still alive[[/col]], and ransom them for [[col:green]]+{gold} gold[[/col]]."),
     "flawless_victory": ("Flawless Victory", MISSION + "win [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "untouchable": ("Untouchable", MISSION + "keep our lord [[col:yellow]]above half health[[/col]] to the end of the battle for [[col:green]]+{lord_xp} experience[[/col]] "
+                    "for our lord."),
     "strip_the_dead": ("Strip the Dead", "Strip the dead: [[col:green]]+{per_unit} gold[[/col]] to our treasury for each unit in the army we beat."),
     "ransom_the_captain": ("Ransom the Captain", "Ransom their captain: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest faction of their kind has [[col:red]]-{relations} relations[[/col]] with us."),
     "tribute_from_the_locals": ("Tribute from the Locals", "Accept tribute from the grateful locals: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for 5 turns."),
@@ -263,16 +280,18 @@ ICONS = {
     "recruit_a_captive": "slaves.png", "press_on": "campaign_movement.png",
     "victory_feast": "effect_rite.png", "trophy_of_war": "wh3_cp1_unit_reward.png", "chase_the_routers": "cotw_track_army.png", 
     "dark_offering": "bloodreaper.png",
-    "bribe_a_scout": "subterfuge.png", "thin_their_ranks": "attrition.png", "poison_their_stores": "phase_posion.png",
-    "kill_the_captain": "dlc10_assassination_targets.png", "keep_the_veterans_away": "peasant.png", "spread_dread": "discouraged.png",
-    "turn_a_traitor": "khainite_assassin.png", "hold_war_rites": "effect_rite.png", "hone_the_blades": "weapon_damage.png",
-    "paint_warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "steel_our_resolve": "attribute_immune_to_psychology.png",
-    "call_the_winds": "wh3_dlc24_wind_blast.png", "raid_the_quartermaster": "ammo.png", "hire_local_allies": "trade_agreement.png", "night_raid": "dlc10_death_night.png",
+    "bribe_the_guards": "subterfuge.png", "thin_the_ranks": "attrition.png", "poison_the_stores": "phase_posion.png",
+    "kill_the_captain": "dlc10_assassination_targets.png", "lower_tiers_only": "peasant.png", "break_their_spirit": "discouraged.png",
+    "turn_a_traitor": "khainite_assassin.png", "war_rites": "effect_rite.png", "whetstones_and_oil": "weapon_damage.png",
+    "warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "iron_resolve": "attribute_immune_to_psychology.png",
+    "call_the_winds": "wh3_dlc24_wind_blast.png", "quartermasters_cache": "ammo.png", "night_raid": "dlc10_death_night.png",
     "bottomless_quivers": "ammo_character.png", "oath_of_no_retreat": "morale.png", "divine_shield": "lileaths_blessing.png",
     "night_terrors": "dlc10_death_night.png", "assassinate": "assassin.png", "headhunt": "dlc10_assassination_targets.png", "blood_tally": "casualties.png",
     "hold_the_line": "siege_defence.png", "swift_victory": "vigour.png", "guard_the_standard": "vow_knights_positive.png",
     "break_them": "attribute_causes_terror.png", "trophy_hunt": "wh3_cp1_unit_reward.png", "silence_the_guns": "artillery.png",
-    "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
+    "curse_their_blades": "hex_1.png", "drill_sergeant": "charge.png", "tower_artillery": "siege_attack.png",
+    "allies_in_the_dark_small": "trade_agreement.png", "allies_in_the_dark_medium": "trade_agreement.png", "allies_in_the_dark_large": "trade_agreement.png",
+    "untouchable": "health_character.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
 }
 
 # Line on a mission already taken on the open battle dilemma: (icon, text).
@@ -313,6 +332,9 @@ MISSION_MESSAGES = {
     "spare_the_captain": ("Spare the Captain",
         "Their lord was taken alive, just as we planned. The ransom has been paid, and the gold is ours.",
         "Their lord fell in the fighting, so there is no one left to ransom."),
+    "untouchable": ("Untouchable",
+        "Our lord came through the fighting barely scratched, and the army will not stop talking about it. The experience will not be forgotten.",
+        "Our lord took too many wounds for the vow to hold."),
     "flawless_victory": ("Flawless Victory",
         "Not a single unit of ours was lost. Songs of the flawless victory spread far, and a unique item is ours.",
         "We lost a unit, and the victory was not flawless."),
@@ -327,18 +349,9 @@ MISSION_OBJECTIVES = {
 # Battle notice name -> (colour, text) the battle script shows for a pre-battle offer: red for what weakens the enemy, green for our help,
 # yellow for a cost to our army, as the tower's notices do. A one-battle bundle uses the tower's own notice.
 NOTICES = {
-    "bribe_a_scout": ("red", "Bribe a Scout: the enemy army is 25% weaker."),
-    "thin_their_ranks": ("red", "Thin Their Ranks: the enemy fields 3 fewer units."),
-    "poison_their_stores": ("red", "Poison Their Stores: enemy units start at 75% strength."),
-    "keep_the_veterans_away": ("red", "Keep the Veterans Away: the enemy has tier 1-2 units only."),
-    "spread_dread": ("red", "Spread Dread: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]]."),
-    "hire_local_allies": ("green", "Hire Local Allies: an allied army joins the battle."),
     "night_raid_won": ("red", "Night Raid: the enemy army is 25% weaker."),
-    "night_raid_lost": ("yellow", "Night Raid: our units start at 90% strength."),
+    "night_raid_lost": ("yellow", "Night Raid: our units start at {lost_strength}% strength."),
 }
-
-# Pre-battle offers that share a key and an effect with a tower offer, so the battle script shows the tower's notice for them.
-TOWER_NOTICES = {"kill_the_captain", "turn_a_traitor"}
 
 # Notice -> the offer whose line icon it shows.
 NOTICE_ICONS = {"night_raid_won": "night_raid", "night_raid_lost": "night_raid"}
@@ -430,6 +443,7 @@ RESULT_LINES = {
     "sell_their_secrets": ("yellow", "Our enemies think better of each other."),
     "ransom_the_captain": ("yellow", "Their captain's kin think worse of us."),
     "mission_guard_the_standard_met": ("green", "The marked unit gains 3 ranks."),
+    "mission_untouchable_met": ("green", "Our lord gains experience."),
     "missions_untracked": ("yellow", "No mission was counted. Any wager comes back to our treasury."),
 }
 WOUND_PAID_LINE = ("red", "Our lord is wounded for {turns} turns.")
@@ -521,10 +535,25 @@ TRAITS = {
 LUA_DUMP = r"""
 package.path = arg[1] .. "?.lua;" .. package.path
 local data = require("script/land_encounters/configs/spot_offers")
-local at = {}
-for _, difficulty in ipairs(require("script/land_encounters/utils/steps").DIFFICULTIES) do
-    at[difficulty] = {}
+local tower = require("script/land_encounters/configs/tower_offers")
+local steps = require("script/land_encounters/utils/steps")
+local at, tower_at = {}, {}
+for _, difficulty in ipairs(steps.DIFFICULTIES) do
+    at[difficulty], tower_at[difficulty] = {}, {}
     for _, offer in ipairs(data.all_at(difficulty)) do at[difficulty][offer.key] = offer end
+    for _, offer in ipairs(tower.offers) do tower_at[difficulty][offer.key] = tower.at(offer.key, difficulty) end
+end
+--- Which offers and notices differ by difficulty, as the scripts decide it: a tower offer's line, and a notice (spot gamble outcomes too).
+local tower_varies, notice_varies = {}, {}
+for _, offer in ipairs(tower.offers) do
+    tower_varies[offer.key] = steps.varies(offer)
+    notice_varies[offer.key] = steps.notice(offer.key, offer, "easy") ~= offer.key
+end
+for _, offer in ipairs(data.offers) do
+    for _, outcome in ipairs(offer.gamble or {}) do
+        local name = offer.key .. "_" .. outcome[2]
+        notice_varies[name] = steps.notice(name, outcome, "easy") ~= name
+    end
 end
 local battle_dilemmas = {}
 for key in pairs(require("script/land_encounters/configs/battle_categories").dilemma_keys) do battle_dilemmas[#battle_dilemmas + 1] = key end
@@ -545,6 +574,8 @@ local function encode(v)
     return "{" .. table.concat(parts, ",") .. "}"
 end
 io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.all_at("easy"), at = at, dividends_bundle_prefix = data.dividends_bundle_prefix,
+    tower_offers = tower.offers, tower_at = tower_at, tower_varies = tower_varies, notice_varies = notice_varies,
+    tower_unaffordable_suffix = tower.unaffordable_suffix, tower_line_prefix = tower.line_prefix,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
     result_incident_prefix = data.result_incident_prefix, result_place_context = data.result_place_context, battle_pools = data.battle_pools,
@@ -559,7 +590,8 @@ def load_config() -> Dict:
 
     Returns:
         Dict: The sites, offers and naming constants. `offers` lists the offers at Easy, in config order, for their keys, pools and the other
-        fields that never vary. `at` maps each difficulty to its offers by key.
+        fields that never vary. `at` maps each difficulty to its offers by key, and `tower_at` the tower's. `tower_varies` says which tower
+        offers differ by difficulty, and `notice_varies` which notices (tower offers and spot gamble outcomes) do.
 
     Raises:
         subprocess.CalledProcessError: When Lua cannot load the config.
@@ -597,8 +629,8 @@ def tiers_text(tiers: List[int]) -> str:
 
 
 def expand_bundles(config: Dict) -> Dict[str, Tuple]:
-    """Lists every spot bundle by its full key: a tiered bundle as one bundle per difficulty, named as `steps.tiered` names them, and one
-    dividends bundle per gold amount the config pays each turn.
+    """Lists every bundle this script writes by its full key: the spot's, a tiered bundle as one bundle per difficulty (named as
+    `steps.tiered` names them), the tower's tiered battle bundles, and one dividends bundle per gold amount either feature pays each turn.
 
     Args:
         config (Dict): The loaded config.
@@ -607,54 +639,98 @@ def expand_bundles(config: Dict) -> Dict[str, Tuple]:
         Dict[str, Tuple]: Bundle key -> (target, icon, title, description, [(effect, scope, value)]).
     """
     flat = {}
-    for suffix, (target, icon, title, description, effects) in BUNDLES.items():
-        if not any(isinstance(value, tuple) for _, _, value in effects):
-            flat[SPOT_BUNDLE + suffix] = (target, icon, title, description, effects)
-            continue
-        for i, difficulty in enumerate(DIFFICULTIES):
-            stepped = [(effect, scope, value[i] if isinstance(value, tuple) else value) for effect, scope, value in effects]
-            flat[f"{SPOT_BUNDLE}{suffix}_{difficulty}"] = (target, icon, title, description, stepped)
+    tower = {name: entry[:5] for name, entry in TOWER_BUNDLES.items()}
+    for prefix, table in ((SPOT_BUNDLE, BUNDLES), (TOWER_BUNDLE, tower)):
+        for suffix, (target, icon, title, description, effects) in table.items():
+            if not any(isinstance(value, tuple) for _, _, value in effects):
+                flat[prefix + suffix] = (target, icon, title, description, effects)
+                continue
+            for i, difficulty in enumerate(DIFFICULTIES):
+                stepped = [(effect, scope, value[i] if isinstance(value, tuple) else value) for effect, scope, value in effects]
+                flat[f"{prefix}{suffix}_{difficulty}"] = (target, icon, title, description, stepped)
     target, icon, title, description, effect, scope = DIVIDENDS
     amounts = {offer["dividends"]["per_turn"] for offers in config["at"].values() for offer in offers.values() if "dividends" in offer}
+    amounts |= {offer["per_turn"] for offers in config["tower_at"].values() for offer in offers.values() if "per_turn" in offer}
     for amount in sorted(amounts):
         flat[config["dividends_bundle_prefix"] + str(amount)] = (target, icon, title, description, [(effect, scope, amount)])
     return flat
 
 
+def plural(count: int, word: str) -> str:
+    """Writes a count with its word, e.g. "1 rank" or "2 ranks".
+
+    Args:
+        count (int): The count.
+        word (str): The singular word.
+
+    Returns:
+        str: The count and word.
+    """
+    return f"{count} {word}" if count == 1 else f"{count} {word}s"
+
+
 def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
-    """Works out the values an offer's line names, from the offer at one difficulty. Every number on the offer is there under its own name,
-    e.g. {cost} or {hero_rank}, and any placeholder the offer has no value for reads as empty.
+    """Works out the values an offer's line or notice names, from the offer at one difficulty (a spot or a tower offer). Every number on the
+    offer is there under its own name, e.g. {cost} or {hero_rank}, and any placeholder the offer has no value for reads as empty.
 
     Args:
         offer (Dict): The offer record at one difficulty.
-        bundles (Dict[str, Tuple]): Every spot bundle, from `expand_bundles`.
+        bundles (Dict[str, Tuple]): Every bundle the generator writes, from `expand_bundles`.
 
     Returns:
-        Dict[str, str]: Placeholder -> value. Besides the offer's numbers: {won_gold}, {lost_gold}, {lost_turns}, {turns}, {per_turn},
-        {per_unit}, {tiers}, {relations} (in tens), {daemon_armies} and {e0}, {e1}... for the spot bundle's effects, signs dropped.
+        Dict[str, str]: Placeholder -> value. Besides the offer's numbers: {won_gold}, {lost_gold}, {lost_turns}, {lost_strength}, {turns},
+        {per_turn}, {per_unit}, {tiers}, {relations} (in tens), {daemon_armies}, {armies}, {heal}, {stronger}, {weaker}, {strength},
+        {ranks}, {targets}, {minutes} (of a battle value in seconds), {ally_min}, {ally_max} and {e0}, {e1}... for the effects of the bundle it
+        gives, signs dropped.
     """
     values = defaultdict(str, {key: str(value) for key, value in offer.items() if isinstance(value, int) and not isinstance(value, bool)})
     for outcome in offer.get("gamble", []):
+        if not isinstance(outcome, dict):
+            continue
         if "gold" in outcome:
             values[outcome["2"] + "_gold"] = str(abs(outcome["gold"]))
         if "army_bundle" in outcome:
             values[outcome["2"] + "_turns"] = str(outcome["army_bundle"][1])
+        if "own_strength" in outcome:
+            values[outcome["2"] + "_strength"] = str(round(outcome["own_strength"] * 100))
     for field in BUNDLE_FIELDS:
-        if field in offer:
+        if field not in offer:
+            continue
+        bundle = offer[field] if isinstance(offer[field], str) else offer[field][0]
+        if not isinstance(offer[field], str):
             values["turns"] = str(offer[field][1])
-            for i, (_, _, value) in enumerate(bundles.get(offer[field][0], ("", "", "", "", []))[4]):
-                values[f"e{i}"] = str(abs(value))
+        for i, (_, _, value) in enumerate(bundles.get(bundle, ("", "", "", "", []))[4]):
+            values[f"e{i}"] = str(abs(value))
     if "dividends" in offer:
         values["per_turn"] = str(offer["dividends"]["per_turn"])
     if "gold_per_enemy_unit" in offer:
         values["per_unit"] = str(offer["gold_per_enemy_unit"])
-    if "recruit" in offer:
-        values["tiers"] = tiers_text(offer["recruit"]["tiers"])
+    tiers = offer.get("tiers") or offer.get("recruit", {}).get("tiers") or offer.get("traitor", {}).get("tiers")
+    if tiers:
+        values["tiers"] = tiers_text(tiers)
     if "relations" in offer:
         values["relations"] = str(abs(offer["relations"]) * 10)
-    if "daemon_armies" in offer:
-        count = offer["daemon_armies"]
-        values["daemon_armies"] = "a hard Chaos army marches" if count == 1 else f"{count} hard Chaos armies march"
+    armies = offer.get("daemon_armies", offer.get("armies"))
+    if armies:
+        values["daemon_armies"] = values["armies"] = "a hard Chaos army marches" if armies == 1 else f"{armies} hard Chaos armies march"
+    if "heal_share" in offer:
+        values["heal"] = str(round(offer["heal_share"] * 100))
+    budget = offer.get("budget", offer.get("next_budget"))
+    if budget:
+        values["stronger"] = str(round((budget - 1) * 100))
+        values["weaker"] = str(round((1 - budget) * 100))
+    if "enemy_strength" in offer:
+        values["strength"] = str(round(offer["enemy_strength"] * 100))
+    if "ranks" in offer:
+        values["ranks"] = plural(offer["ranks"], "rank")
+    if isinstance(offer.get("battle_value"), int) and offer["battle_value"] >= 60:
+        values["minutes"] = str(offer["battle_value"] // 60)
+    if "targets" in offer:
+        count = offer["targets"]
+        values["targets"] = "most expensive unit flees" if count == 1 else f"{count} most expensive units flee"
+    allies = offer.get("allies", offer.get("ally_units"))
+    if allies:
+        values["ally_min"], values["ally_max"] = str(allies[0]), str(allies[1])
     return values
 
 
@@ -737,7 +813,28 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         label(dilemma, config["avoid_choice_key"], avoid_labels[dilemma])
     add(table("cdir_events_dilemma_choices_tables"), config["avoid_choice_key"], AVOID_ORDER)
     for notice, (colour, text) in NOTICES.items():
-        objective(notice, ICONS[NOTICE_ICONS.get(notice, notice)], f"[[col:{colour}]]{text}[[/col]]", text)
+        offer_key = notice.rsplit("_", 1)[0]
+        for difficulty, name in notice_names(notice, config):
+            shown = text.format_map(line_values(config["at"][difficulty][offer_key], bundles))
+            objective(name, ICONS[NOTICE_ICONS.get(notice, notice)], f"[[col:{colour}]]{shown}[[/col]]", shown)
+    for name, (_, _, _, _, _, notice) in TOWER_BUNDLES.items():
+        if notice:
+            for difficulty in DIFFICULTIES:
+                shown = notice[1].format_map(line_values({"effect_bundle": f"{TOWER_BUNDLE}{name}_{difficulty}"}, bundles))
+                objective(f"{name}_{difficulty}", tower_icon(name), f"[[col:{notice[0]}]]{shown}[[/col]]", shown)
+    for key, (colour, text) in TOWER_NOTICE_TEXT.items():
+        for difficulty, name in notice_names(key, config):
+            shown = text.format_map(line_values(config["tower_at"][difficulty][key], bundles))
+            objective(name, tower_icon(key), f"[[col:{colour}]]{shown}[[/col]]", shown)
+    for key in tower_line_keys(config):
+        line_text, broke_text = TOWER_LINES[key]
+        for difficulty in DIFFICULTIES:
+            offer = config["tower_at"][difficulty][key]
+            values = line_values(offer, bundles)
+            component = f"{config['tower_line_prefix']}{key}_{difficulty}"
+            line(component, tower_icon(key), line_text.format_map(values))
+            if broke_text and "cost" in offer:
+                line(component + config["tower_unaffordable_suffix"], tower_icon(key), broke_text.format_map(values))
 
     for i, (choice, key) in enumerate(choice_keys):
         add(table("cdir_events_dilemma_choices_tables"), choice, WALK_AWAY_ORDER if key == "walk_away" else FIRST_CHOICE_ORDER + i)
@@ -824,7 +921,7 @@ def result_icon(result: str) -> str:
     """Picks the icon of a result's effect line: its offer's or mission's icon, or the treasury or wound icon.
 
     Args:
-        result (str): The result name, e.g. "roll_the_bones_won" or "mission_headhunt_failed".
+        result (str): The result name, e.g. "cast_the_lots_won" or "mission_headhunt_failed".
 
     Returns:
         str: The icon file under the effect bundle icons.
@@ -885,27 +982,83 @@ def hook_battle_descriptions(config: Dict, dry_run: bool) -> None:
         open(path, "wb").write("".join(lines).encode("utf-8"))
 
 
-def owned(line: str) -> bool:
+def tower_icon(key: str) -> str:
+    """Picks a tower line's or notice's icon: its own, or the spot offer's of the same key.
+
+    Args:
+        key (str): The offer key.
+
+    Returns:
+        str: The icon file, or an empty string when neither has one.
+    """
+    return TOWER_ICONS.get(key) or ICONS.get(key, "")
+
+
+def notice_names(notice: str, config: Dict) -> List[Tuple[str, str]]:
+    """Lists a notice's names: one per difficulty when its effect differs by it, else its own name once, shown with the Easy numbers.
+
+    Args:
+        notice (str): The notice's base name, e.g. "thin_the_ranks" or "night_raid_lost".
+        config (Dict): The loaded config.
+
+    Returns:
+        List[Tuple[str, str]]: (difficulty, notice name) pairs.
+    """
+    if config["notice_varies"].get(notice):
+        return [(difficulty, f"{notice}_{difficulty}") for difficulty in DIFFICULTIES]
+    return [("easy", notice)]
+
+
+def tower_line_keys(config: Dict) -> List[str]:
+    """Lists the tower offers whose lines this script writes: those that differ by difficulty.
+
+    Args:
+        config (Dict): The loaded config.
+
+    Returns:
+        List[str]: Offer keys in config order.
+    """
+    return [offer["key"] for offer in config["tower_offers"] if config["tower_varies"].get(offer["key"])]
+
+
+def owned_patterns(config: Dict) -> List[Pattern]:
+    """Builds the patterns of the tower rows this script owns, by the key a row starts with (a loc key ends with it): the lines of the tower
+    offers that differ by difficulty, the tiered tower bundles, and the notices of both, with or without a difficulty.
+
+    Args:
+        config (Dict): The loaded config.
+
+    Returns:
+        List[Pattern]: One pattern per kind of row.
+    """
+    tower_notices = [key for key in TOWER_NOTICE_TEXT if config["notice_varies"].get(key)]
+    bundle_notices = [name for name, entry in TOWER_BUNDLES.items() if entry[5]]
+    difficulty = f"(?:_(?:{'|'.join(DIFFICULTIES)}))?"
+    kinds = [(config["tower_line_prefix"], tower_line_keys(config), "(?:_unaffordable)?"), (TOWER_BUNDLE, list(TOWER_BUNDLES), ""),
+             (NOTICE_PREFIX, tower_notices + bundle_notices + list(NOTICES) + list(MISSION_OBJECTIVES), "(?:_message)?")]
+    return [re.compile(f"(?:^|_){prefix}(?:{'|'.join(names)}){difficulty}{tail}$") for prefix, names, tail in kinds]
+
+
+def owned(line: str, patterns: List[Pattern]) -> bool:
     """True when a row belongs to this script, so a run replaces it.
 
     Args:
         line (str): The row.
+        patterns (List[Pattern]): The owned tower row patterns, from `owned_patterns`.
 
     Returns:
-        bool: True for spot offer rows, including the FIRST choice rows on site dilemmas.
+        bool: True for spot offer rows, including the FIRST choice rows on site dilemmas, and the tower rows in `patterns`.
     """
     key = line.split("\t", 1)[0]
-    names = list(NOTICES) + list(MISSION_OBJECTIVES)
-    notice = key.startswith(NOTICE_PREFIX) and key[len(NOTICE_PREFIX):].replace("_message", "") in names
-    loc_notice = key.startswith("scripted_objectives_localised_") and any(key.endswith(NOTICE_PREFIX + n + s) for n in names for s in ("", "_message"))
-    return any(marker in line for marker in OWNED_MARKERS) or line.startswith("70181") or notice or loc_notice
+    return any(marker in line for marker in OWNED_MARKERS) or line.startswith("70181") or any(p.search(key) for p in patterns)
 
 
-def write_rows(rows: Dict[str, List[str]], dry_run: bool) -> None:
+def write_rows(rows: Dict[str, List[str]], patterns: List[Pattern], dry_run: bool) -> None:
     """Replaces this script's rows in each file, keeping every other row and the file's header as they are.
 
     Args:
         rows (Dict[str, List[str]]): File path -> rows from `build_rows`.
+        patterns (List[Pattern]): The owned tower row patterns, from `owned_patterns`.
         dry_run (bool): True to only print what would change.
     """
     for path, new_rows in sorted(rows.items()):
@@ -914,7 +1067,7 @@ def write_rows(rows: Dict[str, List[str]], dry_run: bool) -> None:
             name = path.split("/")[-1].replace(".tsv", "")
             open(full, "wb").write(f"key\ttext\ttooltip\r\n#Loc;1;text/db/{name}\t\t\r\n".encode("utf-8"))
         lines = open(full, "rb").read().decode("utf-8").splitlines(keepends=True)
-        kept = lines[:2] + [line for line in lines[2:] if not owned(line)]
+        kept = lines[:2] + [line for line in lines[2:] if not owned(line, patterns)]
         if kept and not kept[-1].endswith("\n"):
             kept[-1] += "\r\n"
         print(f"{path}: -{len(lines) - len(kept)} +{len(new_rows)}")
@@ -937,8 +1090,12 @@ def check_text(config: Dict) -> None:
     problems += [f"no icon for {key}" for key in OFFERS if key not in ICONS]
     problems += [f"no notice for {o['key']}" for o in config["offers"]
                  if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and "trick" not in o and o["key"] not in NOTICES
-                 and o["key"] not in TOWER_NOTICES]
+                 and o["key"] not in config["tower_at"]["easy"]]
     problems += [f"no messages for mission {o['key']}" for o in config["offers"] if o["pool"] == "mission" and o["key"] not in MISSION_MESSAGES]
+    problems += [f"no tower line for {key}" for key in tower_line_keys(config) if key not in TOWER_LINES or not tower_icon(key)]
+    problems += [f"no tower notice for {key}" for key, varies in config["notice_varies"].items()
+                 if varies and key not in TOWER_NOTICE_TEXT and key in config["tower_at"]["easy"]
+                 and (config["tower_at"]["easy"][key].get("trick") or config["tower_at"]["easy"][key]["guide_section"] == "sabotage")]
     problems += [f"no result for line {key}" for key in RESULT_LINES if key not in MESSAGES and not key.startswith("mission")]
     bundles = expand_bundles(config)
     problems += [f"no bundle {bundle} for {key}" for offers in config["at"].values() for key, offer in offers.items()
@@ -960,7 +1117,7 @@ def main() -> None:
         raise SystemExit(f"Mod folder not found at {MOD_ROOT}. Run from helper_scripts/.")
     config = load_config()
     check_text(config)
-    write_rows(build_rows(config), args.dry_run)
+    write_rows(build_rows(config), owned_patterns(config), args.dry_run)
     hook_battle_descriptions(config, args.dry_run)
 
 

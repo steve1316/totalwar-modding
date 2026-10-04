@@ -218,6 +218,10 @@ incidents_localised_title_land_enc_incident_spot_mission_spare_the_captain_met	S
 incidents_localised_description_land_enc_incident_spot_mission_spare_the_captain_met	Their lord was taken alive, just as we planned. The ransom has been paid, and the gold is ours.	false
 incidents_localised_title_land_enc_incident_spot_mission_spare_the_captain_failed	Spare the Captain	false
 incidents_localised_description_land_enc_incident_spot_mission_spare_the_captain_failed	Their lord fell in the fighting, so there is no one left to ransom.	false
+incidents_localised_title_land_enc_incident_spot_mission_untouchable_met	Untouchable	false
+incidents_localised_description_land_enc_incident_spot_mission_untouchable_met	Our lord came through the fighting barely scratched, and the army will not stop talking about it. The experience will not be forgotten.	false
+incidents_localised_title_land_enc_incident_spot_mission_untouchable_failed	Untouchable	false
+incidents_localised_description_land_enc_incident_spot_mission_untouchable_failed	Our lord took too many wounds for the vow to hold.	false
 incidents_localised_title_land_enc_incident_spot_mission_flawless_victory_met	Flawless Victory	false
 incidents_localised_description_land_enc_incident_spot_mission_flawless_victory_met	Not a single unit of ours was lost. Songs of the flawless victory spread far, and a unique item is ours.	false
 incidents_localised_title_land_enc_incident_spot_mission_flawless_victory_failed	Flawless Victory	false

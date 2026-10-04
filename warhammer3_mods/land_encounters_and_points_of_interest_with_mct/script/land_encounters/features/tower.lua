@@ -586,9 +586,8 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     local tower = self:tower_in_zone(delve.zone_name)
     local general = cm:get_character_by_cqi(delve.general_cqi)
     local next_floor = delve.next_floor or {}
-    local floor = next_floor.record or tower_data.floors[floor_number]
     --- The debug overrides (configs/debug.lua) replace the difficulty and budget for in-game testing.
-    local difficulty = debug_config.floor_difficulty[floor_number] or floor.difficulty
+    local floor, difficulty = tower_data.floor_difficulty(next_floor, floor_number, debug_config)
     local budget = #debug_config.floor_budget == 2 and debug_config.floor_budget or tower_data.budget_by_difficulty[difficulty]
     local budget_multiplier = next_floor.budget or 1
     local sabotage = tower_offers.sabotage_options(next_floor)
@@ -880,7 +879,8 @@ function TowerEventDelegate:end_delve(faction_name, outcome, in_battle_sequence)
     --- After the freed hero, who comes from the faction just beaten.
     self:reroll_faction(tower)
     --- Sent last, so a failed spawn cannot leave the delve half-ended.
-    if delve.daemons_deal then self:send_daemon_army(faction_name) end
+    --- An older save holds true for one army.
+    if delve.daemons_deal then self:send_daemon_army(faction_name, delve.daemons_deal == true and 1 or delve.daemons_deal) end
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -149,6 +149,19 @@ function M.remove_unit(general_cqi, entry)
     end
 end
 
+--- Gives a lord experience points.
+--- @param general_cqi number The lord's command queue index.
+--- @param xp number The experience.
+function M.add_lord_xp(general_cqi, xp)
+    local general = tower_army.character(general_cqi)
+    if not general then
+        log("offer: no lord " .. tostring(general_cqi) .. " to give " .. xp .. " experience")
+        return
+    end
+    cm:add_agent_experience(cm:char_lookup_str(general), xp)
+    log("offer: lord " .. general_cqi .. " gains " .. xp .. " experience")
+end
+
 --- Gives `offer.ranks` ranks to `offer.count` random units that can take them.
 --- @param general_cqi number The lord's command queue index.
 --- @param offer table The offer record: `count`, `ranks` and `max_rank`.

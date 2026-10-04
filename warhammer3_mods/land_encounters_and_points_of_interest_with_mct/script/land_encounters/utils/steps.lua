@@ -32,16 +32,55 @@ function M.tiered(key)
     return M.of(key .. "_easy", key .. "_medium", key .. "_hard")
 end
 
---- A value at one difficulty, with every stepped value inside it picked for that difficulty. Tables are copied.
+--- True when a value or anything inside it differs by difficulty.
+--- @param value any The value.
+--- @param skip string|nil A field of a table value to leave out, e.g. "cost".
+--- @returns boolean True when it holds a stepped value.
+function M.varies(value, skip)
+    if type(value) ~= "table" then return false end
+    if value.steps then return true end
+    for key, inner in pairs(value) do
+        if key ~= skip and M.varies(inner) then return true end
+    end
+    return false
+end
+
+--- An offer's battle notice name: its key, with the difficulty added when the offer's effect (not just its cost) differs by difficulty, e.g.
+--- thin_the_ranks_medium. Each such notice has one scripted objective per difficulty with that difficulty's numbers.
+--- @param key string The notice's base name, usually the offer key.
+--- @param record table The offer record as configured, before it is resolved.
+--- @param difficulty string "easy", "medium" or "hard".
+--- @returns string The notice name.
+function M.notice(key, record, difficulty)
+    return M.varies(record, "cost") and key .. "_" .. difficulty or key
+end
+
+--- Splits a notice name into its base name and difficulty, e.g. "thin_the_ranks_medium" into "thin_the_ranks" and "medium".
+--- @param name string The notice name.
+--- @returns string The base name.
+--- @returns string|nil The difficulty, or nil when the name has none.
+function M.split(name)
+    for _, difficulty in ipairs(M.DIFFICULTIES) do
+        local base = name:match("^(.+)_" .. difficulty .. "$")
+        if base then return base, difficulty end
+    end
+    return name, nil
+end
+
+--- A value at one difficulty, with every stepped value inside it picked for that difficulty. A table holding steps is copied, and any other
+--- value is returned as it is.
 --- @param value any The value.
 --- @param index number The difficulty's step index.
 --- @returns any The value for that difficulty.
 local function pick(value, index)
     if type(value) ~= "table" then return value end
     if value.steps then return value.steps[index] end
-    local copy = {}
-    for key, inner in pairs(value) do copy[key] = pick(inner, index) end
-    return copy
+    local copy, changed = {}, false
+    for key, inner in pairs(value) do
+        copy[key] = pick(inner, index)
+        changed = changed or copy[key] ~= inner
+    end
+    return changed and copy or value
 end
 
 --- An offer record at one difficulty. The copy is made once and kept, so the same record and difficulty always give the same table.

@@ -8,6 +8,7 @@
 require("script/land_encounters/utils/random")
 
 local offers_data = require("script/land_encounters/configs/spot_offers")
+local steps = require("script/land_encounters/utils/steps")
 local debug_config = require("script/land_encounters/configs/debug")
 local offer_effects = require("script/land_encounters/core/offer_effects")
 local item_pool = require("script/land_encounters/core/item_pool")
@@ -88,15 +89,31 @@ local function eligible(offer, ctx)
     return true
 end
 
---- Draws `count` eligible offers from a pool with `random_number`, eligible offers in the debug `force_spot_offers` list first.
+--- Draws `count` eligible offers from a pool with `random_number`, eligible offers in the debug `force_spot_offers` list first. Offers that
+--- share a `group` (the allied army sizes) go in as one, picked at random as the tower draws them, or the group's forced offer.
 --- @param pool_name string "pre_battle" or "mission".
 --- @param count number How many to draw.
 --- @param ctx table The draw context, see `eligible`.
 --- @returns table Offer keys in popup order.
 local function draw_pool(pool_name, count, ctx)
-    local pool = {}
+    local pool, groups, group_names = {}, {}, {}
     for _, offer in ipairs(offers_data.all_at(ctx.event.difficulty)) do
-        if offer.pool == pool_name and eligible(offer, ctx) then pool[#pool + 1] = offer.key end
+        if offer.pool == pool_name and eligible(offer, ctx) then
+            if offer.group and not groups[offer.group] then
+                groups[offer.group] = {}
+                group_names[#group_names + 1] = offer.group
+            end
+            table.insert(offer.group and groups[offer.group] or pool, offer.key)
+        end
+    end
+    local forced_keys = {}
+    for _, key in ipairs(debug_config.force_spot_offers) do forced_keys[key] = true end
+    for _, name in ipairs(group_names) do
+        local picked = groups[name][random_number(#groups[name])]
+        for _, key in ipairs(groups[name]) do
+            if forced_keys[key] then picked = key end
+        end
+        pool[#pool + 1] = picked
     end
     local keys, forced = {}, 0
     for _, forced_key in ipairs(debug_config.force_spot_offers) do
@@ -306,11 +323,18 @@ function M.take(faction_name, choice_key, event)
         local outcome = spot_offers.roll_outcome(offer.gamble)
         log("spot battle: " .. offer.key .. " rolls " .. outcome[2])
         apply_to_event(outcome, event)
-        add_notice(event, offer.key .. "_" .. outcome[2])
+        local raw_outcome = nil
+        for _, entry in ipairs(offers_data.by_key[offer.key].gamble) do
+            if entry[2] == outcome[2] then
+                raw_outcome = entry
+                break
+            end
+        end
+        add_notice(event, steps.notice(offer.key .. "_" .. outcome[2], raw_outcome, pending.difficulty))
     elseif not offer.battle_bundle then
         --- A one-battle bundle is announced under its tower name, so only the other offers need their own notice. A trick's notice is its
         --- tower name too, which tells the battle script to play it.
-        add_notice(event, offer.key)
+        add_notice(event, steps.notice(offer.notice or offer.key, offers_data.by_key[offer.key], pending.difficulty))
     end
     log("spot battle: " .. faction_name .. " took " .. offer.key .. ", treasury " .. before .. " -> " .. offer_effects.treasury(faction_name)
         .. ", event budget x" .. tostring(event.budget_multiplier) .. ", fewer units " .. tostring(event.fewer_units) .. ", no heroes "
@@ -347,11 +371,18 @@ function M.hand_to_battle(event, army)
             for _ = 1, row.count or 1 do event.enemy_units[#event.enemy_units + 1] = row.id end
         end
         event.trophy = tower_army.most_expensive(event.enemy_units, 1)[1]
-        event.night_terrors_targets = tower_army.most_expensive(event.enemy_units, offers_data.night_terrors_targets)
     end
-    local names, targets = {}, {}
+    local names, targets, terrors = {}, {}, {}
     for _, bundle in ipairs(event.battle_bundles or {}) do names[#names + 1] = bundle:sub(#TOWER_BUNDLE_PREFIX + 1) end
-    for _, notice in ipairs(event.notices or {}) do names[#names + 1] = notice end
+    for _, notice in ipairs(event.notices or {}) do
+        names[#names + 1] = notice
+        local trick = offers_data.at(steps.split(notice), event.difficulty)
+        if trick and trick.targets then
+            event.night_terrors_targets = event.night_terrors_targets or tower_army.most_expensive(event.enemy_units or {}, trick.targets)
+            terrors = event.night_terrors_targets
+        end
+        if trick and trick.trick and trick.battle_value then targets[#targets + 1] = trick.key .. "=" .. trick.battle_value end
+    end
     for _, key in ipairs(event.missions or {}) do
         names[#names + 1] = key
         local offer = offers_data.at(key, event.difficulty)
@@ -359,10 +390,6 @@ function M.hand_to_battle(event, army)
         if offer.trophy then value = event.trophy end
         if offer.unit_ranks and event.standard then value = event.standard.key .. "#" .. event.standard.nth end
         if value then targets[#targets + 1] = key .. "=" .. value end
-    end
-    local terrors = {}
-    for _, notice in ipairs(event.notices or {}) do
-        if notice == "night_terrors" then terrors = event.night_terrors_targets or {} end
     end
     log("spot battle: battle names: " .. (#names > 0 and table.concat(names, ", ") or "none") .. ", mission targets: " .. table.concat(targets, ", ")
         .. ", night terrors: " .. table.concat(terrors, ", "))
@@ -373,7 +400,7 @@ function M.hand_to_battle(event, army)
 end
 
 --- Works out one mission met's rewards: gold, items, or a copy of the enemy's most expensive unit, which its result grants. Ranks for the
---- marked unit are given here.
+--- marked unit and our lord's experience are given here.
 --- @param offer table The mission's offer record at the battle's difficulty.
 --- @param event table The battle event.
 --- @param faction_name string Our faction key.
@@ -389,6 +416,7 @@ local function pay_mission(offer, event, faction_name, general_cqi)
         local entry = event.standard and tower_missions.standard_unit({ general_cqi = general_cqi }, event.standard)
         if entry then cm:add_experience_to_unit(entry.unit, offer.unit_ranks) else log("spot battle: guard the standard found no marked unit") end
     end
+    if offer.lord_xp then offer_effects.add_lord_xp(general_cqi, offer.lord_xp) end
     local units = offer.trophy and event.trophy and { event.trophy } or {}
     log("spot battle: mission " .. offer.key .. " pays" .. (gold and " " .. gold .. " gold" or "") .. (#items > 0 and ", items " .. table.concat(items, ", ") or "")
         .. (#units > 0 and ", trophy " .. units[1] or ""))

@@ -63,7 +63,7 @@ end
 --- when it has one. If the incident cannot be built, the rewards are granted in script and the result's old event message shows instead,
 --- so nothing is lost.
 --- @param faction_name string The faction the result is for.
---- @param result string The result name, e.g. "roll_the_bones_won".
+--- @param result string The result name, e.g. "cast_the_lots_won".
 --- @param rewards table { gold, items, units, character }: gold to add or take, item keys, and unit keys to join the lord `character`'s army.
 --- @param position table The { x, y } map position of the fallback message.
 --- @param subtitle string|nil A loc key for the fallback message's subtitle. A realm result's incident names it in its text.
@@ -366,10 +366,7 @@ local function apply_fields(fields, offer, state, rolled)
         cm:add_agent_experience(cm:char_lookup_str(general), fields.lord_ranks, true)
         log("spot: lord " .. general_cqi .. " gains " .. fields.lord_ranks .. " ranks")
     end
-    if fields.lord_xp and general then
-        cm:add_agent_experience(cm:char_lookup_str(general), fields.lord_xp)
-        log("spot: lord " .. general_cqi .. " gains " .. fields.lord_xp .. " experience")
-    end
+    if fields.lord_xp then offer_effects.add_lord_xp(general_cqi, fields.lord_xp) end
     if fields.heal then tower_army.heal_army(general_cqi, 1) end
     if fields.sacrifice then
         offer_effects.remove_unit(general_cqi, tower_army.weakest_regular_unit(general_cqi))

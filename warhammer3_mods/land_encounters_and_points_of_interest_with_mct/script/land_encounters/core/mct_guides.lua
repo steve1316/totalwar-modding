@@ -13,8 +13,8 @@ local archetypes = require("script/land_encounters/configs/archetypes")
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constants
 
---- Loc key prefix of a tower offer's choice description.
-local OFFER_DESCRIPTION_PREFIX = "campaign_payload_ui_details_description_dummy_land_enc_tower_"
+--- Loc key prefix of an offer line's text. The line key follows.
+local LINE_LOC_PREFIX = "campaign_payload_ui_details_description_"
 
 --- Loc key prefix of a tower offer's choice name on the floor 1 go-deeper dilemma. The offer's upper-case key follows it. Every offer has a
 --- choice on that dilemma.
@@ -112,7 +112,7 @@ function M.tower_offer_sections()
     local lines_by_section = {}
     for _, offer in ipairs(tower_offers.offers) do
         local lines = lines_by_section[offer.guide_section] or {}
-        lines[#lines + 1] = guide_line(loc(OFFER_NAME_PREFIX .. offer.key:upper()), loc(OFFER_DESCRIPTION_PREFIX .. offer.key .. (offer.per_floor and "_1" or "")))
+        lines[#lines + 1] = guide_line(loc(OFFER_NAME_PREFIX .. offer.key:upper()), loc(LINE_LOC_PREFIX .. tower_offers.line(offer.key, "easy", 1)))
         lines_by_section[offer.guide_section] = lines
     end
     local sections = {}
@@ -170,7 +170,7 @@ function M.spot_offer_sections()
     local lines_by_pool = {}
     for _, offer in ipairs(spot_offers.offers) do
         local lines = lines_by_pool[offer.pool] or {}
-        lines[#lines + 1] = guide_line(spot_offer_name(offer), loc("campaign_payload_ui_details_description_" .. spot_offers.line_prefix .. offer.key .. "_easy"))
+        lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
         lines_by_pool[offer.pool] = lines
     end
     local sections = {}

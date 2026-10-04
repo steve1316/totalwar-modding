@@ -30,8 +30,10 @@ local MESSAGE_MS = 6000
 local FADE_MS = 1000
 --- How often Bottomless quivers tops up ammunition, in ms.
 local QUIVERS_REFILL_MS = 5000
---- How long Divine shield keeps our lord from harm, in ms. The notice text says 5 minutes.
-local DIVINE_SHIELD_MS = 300000
+--- How long Divine shield keeps our lord from harm when the campaign hands over no value, in seconds.
+local DIVINE_SHIELD_SECONDS = 300
+--- Difficulties a buff name may end with, e.g. "night_terrors_hard". Mirrored from utils/steps.lua in the campaign scripts.
+local DIFFICULTIES = { "easy", "medium", "hard" }
 --- How long Night terrors waits before the enemy units flee, in ms. The notice text says 1 minute.
 local NIGHT_TERRORS_MS = 60000
 --- How often the missions and the rival kill count are checked, in ms. Mission time limits count these ticks as seconds.
@@ -58,6 +60,25 @@ local function svr_list(key)
         list[#list + 1] = name
     end
     return list
+end
+
+--- Strips the difficulty a buff name may end with, e.g. "divine_shield_medium" to "divine_shield".
+--- @param name string The buff name.
+--- @returns string The base name.
+local function base_name(name)
+    for _, difficulty in ipairs(DIFFICULTIES) do
+        local base = name:match("^(.+)_" .. difficulty .. "$")
+        if base then return base end
+    end
+    return name
+end
+
+--- Reads the mission targets and trick values the campaign handed over.
+--- @returns table Key -> value, a number where it reads as one.
+local function load_targets()
+    local targets = {}
+    for key, value in (core:svr_load_string(MISSION_TARGETS_SVR_KEY) or ""):gmatch("([%w_]+)=([^,]*)") do targets[key] = tonumber(value) or value end
+    return targets
 end
 
 --- Wraps the units of an alliance's armies in script units, army by army.
@@ -136,8 +157,8 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Tricks
 
---- What each in-battle trick does once the battle starts, given our script units and the enemy's. Control is handed back after each change to
---- our units, so the player can still command them.
+--- What each in-battle trick does once the battle starts, given our script units, the enemy's and the value the campaign handed over for it.
+--- Control is handed back after each change to our units, so the player can still command them.
 local TRICKS = {
     --- Our units cannot rout.
     oath_of_no_retreat = function(ours)
@@ -159,7 +180,8 @@ local TRICKS = {
         log("Bottomless quivers: " .. #shooters .. " units never run out of ammo")
     end,
     --- Our lord cannot be harmed for the opening minutes.
-    divine_shield = function(ours)
+    divine_shield = function(ours, _, seconds)
+        local shield_ms = (seconds or DIVINE_SHIELD_SECONDS) * 1000
         local lord = lord_of(ours)
         if not lord then
             log("Divine shield: no lord found")
@@ -171,8 +193,8 @@ local TRICKS = {
             lord:set_invincible(false)
             lord:release_control()
             log("Divine shield: the lord can be harmed again")
-        end, DIVINE_SHIELD_MS, "land_enc_tower_divine_shield")
-        log("Divine shield: the lord " .. lord.unit:type() .. " cannot be harmed for " .. DIVINE_SHIELD_MS / 1000 .. " s")
+        end, shield_ms, "land_enc_tower_divine_shield")
+        log("Divine shield: the lord " .. lord.unit:type() .. " cannot be harmed for " .. shield_ms / 1000 .. " s")
     end,
     --- After a while, the enemy units the campaign picked flee. Each target key routs one unit of that type that is not already fleeing.
     night_terrors = function(_, theirs)
@@ -359,12 +381,11 @@ end
 --- @param ours table Our script units.
 --- @param theirs table The enemy's script units.
 local function track_missions(names, ours, theirs)
-    local targets = {}
-    for key, value in (core:svr_load_string(MISSION_TARGETS_SVR_KEY) or ""):gmatch("([%w_]+)=([^,]*)") do targets[key] = value end
+    local targets = load_targets()
     local missions, rival = {}, false
     for _, name in ipairs(names) do
         if MISSIONS[name] then
-            missions[#missions + 1] = { key = name, value = tonumber(targets[name]) or targets[name], state = "open", spec = MISSIONS[name] }
+            missions[#missions + 1] = { key = name, value = targets[name], state = "open", spec = MISSIONS[name] }
         end
         rival = rival or name == "rival_delvers"
     end
@@ -434,10 +455,12 @@ if #buffs > 0 then
     bm:register_phase_change_callback("Deployed", function()
         local ours = script_units_of(bm:get_player_alliance(), function(army) return army:is_player_controlled() end)
         local theirs = script_units_of(bm:get_non_player_alliance())
+        local targets = load_targets()
         for _, name in ipairs(buffs) do
             bm:set_objective(OBJECTIVE_PREFIX .. name)
             bm:queue_help_message(OBJECTIVE_PREFIX .. name .. MESSAGE_SUFFIX, MESSAGE_MS, FADE_MS)
-            if TRICKS[name] then TRICKS[name](ours, theirs) end
+            local trick = base_name(name)
+            if TRICKS[trick] then TRICKS[trick](ours, theirs, targets[trick]) end
         end
         track_missions(buffs, ours, theirs)
     end)

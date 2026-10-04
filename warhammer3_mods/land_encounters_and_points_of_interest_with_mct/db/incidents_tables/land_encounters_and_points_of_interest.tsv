@@ -113,6 +113,8 @@ land_enc_incident_spot_mission_duelists_challenge_met	false	land_victory	false	E
 land_enc_incident_spot_mission_duelists_challenge_failed	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_spare_the_captain_met	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_spare_the_captain_failed	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_untouchable_met	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_untouchable_failed	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_flawless_victory_met	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_flawless_victory_failed	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_missions_untracked	false	land_victory	false	Event		false		0.0000	false

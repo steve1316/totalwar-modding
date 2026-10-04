@@ -7,7 +7,7 @@ campaign_localised_strings_string_land_enc_tower_result_tower_vault	[[col:yellow
 campaign_localised_strings_string_land_enc_tower_result_tower_dividends	[[col:yellow]]Tower Dividends:[[/col]] [[col:green]]+%s gold[[/col]] will reach our treasury each turn for the next %s turns.	false
 campaign_localised_strings_string_land_enc_tower_result_strip_the_dead	[[col:yellow]]Strip the Dead:[[/col]] [[col:green]]+%s gold[[/col]] joins the haul. The haul now holds [[col:yellow]]%s gold[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_tithe	[[col:yellow]]Tithe:[[/col]] %s gold from our treasury becomes [[col:green]]%s gold[[/col]] in the haul.	false
-campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_rites	[[col:yellow]]Roll the Bones:[[/col]] [[col:green]]war rites![[/col]] The army fights the next floor with +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, [[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership.	false
+campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_rites	[[col:yellow]]Roll the Bones:[[/col]] [[col:green]]war rites![[/col]] The army fights the next floor with War Rites on it.	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_gold	[[col:yellow]]Roll the Bones:[[/col]] [[col:green]]+%s gold[[/col]] joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_foe	[[col:yellow]]Roll the Bones:[[/col]] [[col:red]]the next army is 20%% stronger.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_bleed	[[col:yellow]]Roll the Bones:[[/col]] [[col:red]]every unit loses %s strength.[[/col]]	false
@@ -26,7 +26,7 @@ campaign_localised_strings_string_land_enc_tower_result_mission_met_guard_the_st
 campaign_localised_strings_string_land_enc_tower_result_mission_met_break_them	[[col:green]]Break Them met:[[/col]] +%s gold joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_trophy_hunt	[[col:green]]Trophy Hunt met:[[/col]] a copy of the trophy joins as a sworn unit.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_silence_the_guns	[[col:green]]Silence the Guns met:[[/col]] a rare item joins the haul.	false
-campaign_localised_strings_string_land_enc_tower_result_mission_met_untouchable	[[col:green]]Untouchable met:[[/col]] our lord gains a rank.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_untouchable	[[col:green]]Untouchable met:[[/col]] our lord gains +2000 experience.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_bloodbath_wager	[[col:green]]Bloodbath Wager won:[[/col]] +%s gold joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_duelists_challenge	[[col:green]]Duellist's Challenge met:[[/col]] a unique item joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_rival_won	[[col:red]]Rival Delvers:[[/col]] the rivals out-killed us %s to %s and took %s gold and %s items.	false
@@ -57,7 +57,7 @@ campaign_localised_strings_string_land_enc_tower_result_mission_untracked_silenc
 campaign_localised_strings_string_land_enc_tower_result_mission_set_silence_the_guns	[[col:yellow]]Silence the Guns (Mission):[[/col]] destroy every enemy [[col:yellow]]missile and artillery unit within 5 minutes[[/col]] for [[col:green]]a rare item[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_untouchable	[[col:red]]Untouchable failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_untouchable	[[col:yellow]]Untouchable was not counted:[[/col]] the battle was auto-resolved.	false
-campaign_localised_strings_string_land_enc_tower_result_mission_set_untouchable	[[col:yellow]]Untouchable (Mission):[[/col]] keep our lord [[col:yellow]]above half health[[/col]] to the end of the battle for [[col:green]]a rank[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_untouchable	[[col:yellow]]Untouchable (Mission):[[/col]] keep our lord [[col:yellow]]above half health[[/col]] to the end of the battle for [[col:green]]+2000 experience[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_bloodbath_wager	[[col:red]]Bloodbath Wager failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_bloodbath_wager	[[col:yellow]]Bloodbath Wager was not counted:[[/col]] the battle was auto-resolved, so the wager is back in the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_set_bloodbath_wager	[[col:yellow]]Bloodbath Wager (Mission):[[/col]] wager [[col:yellow]]1000 gold[[/col]] from the haul and kill [[col:yellow]]80%%[[/col]] of the next army's soldiers for [[col:green]]+3000 gold[[/col]].	false
@@ -76,3 +76,11 @@ campaign_localised_strings_string_land_enc_tower_climb_difficulty_easy	easy	fals
 campaign_localised_strings_string_land_enc_tower_climb_difficulty_medium	medium	false
 campaign_localised_strings_string_land_enc_tower_climb_difficulty_hard	hard	false
 campaign_localised_strings_string_land_enc_tower_epithet	the Towerbreaker	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_spare_the_captain	[[col:green]]Spare the Captain met:[[/col]] the ransom brings +%s gold to the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_spare_the_captain	[[col:red]]Spare the Captain failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_spare_the_captain	[[col:yellow]]Spare the Captain was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_spare_the_captain	[[col:yellow]]Spare the Captain (Mission):[[/col]] win with the [[col:yellow]]next floor's lord still alive[[/col]] for [[col:green]]a ransom[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_flawless_victory	[[col:green]]Flawless Victory met:[[/col]] a unique item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_flawless_victory	[[col:red]]Flawless Victory failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_flawless_victory	[[col:yellow]]Flawless Victory was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_flawless_victory	[[col:yellow]]Flawless Victory (Mission):[[/col]] win the next floor [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]].	false

@@ -72,6 +72,18 @@ function M.gold_text(gold)
     return tostring(math.floor(gold))
 end
 
+--- The floor record a floor is fought with and its difficulty: an offer's replacement record when the delve has one, and the debug floor
+--- difficulty (configs/debug.lua) over the record's own.
+--- @param next_floor table|nil The delve's next-floor changes.
+--- @param floor_number number The floor.
+--- @param debug_config table The debug switches.
+--- @returns table The floor record.
+--- @returns string Its difficulty.
+function M.floor_difficulty(next_floor, floor_number, debug_config)
+    local record = next_floor and next_floor.record or M.floors[floor_number] or M.floors[#M.floors]
+    return record, debug_config.floor_difficulty[floor_number] or record.difficulty
+end
+
 --- Adds items to a haul, skipping any it already holds.
 --- @param haul table The delve's haul.
 --- @param items table Ancillary keys to add.
