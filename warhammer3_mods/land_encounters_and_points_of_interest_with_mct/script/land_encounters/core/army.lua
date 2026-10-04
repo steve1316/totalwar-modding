@@ -61,8 +61,8 @@ local Army = {
     relief = false,
     --- An Ally in Peril ally only: the share of full strength it starts at, or nil for full strength.
     start_strength = nil,
-    --- An allied army only: a bundle on it for the battle (Arm the Allies), or nil.
-    ally_bundle = nil,
+    --- An allied army only: bundles on it for the battle (Arm the Allies, battle modifiers), or nil.
+    ally_bundles = nil,
     --- An allied army only: ranks its regular units gain (Lend Them Veterans), or nil.
     ally_ranks = nil,
     heroes = {},
@@ -232,7 +232,7 @@ function Army:new_from_event(event, player_subculture)
     if ally then
         ally.relief = event.ally ~= nil and event.ally.mode == "relief"
         ally.start_strength = event.ally_strength
-        ally.ally_bundle = event.ally_bundle
+        ally.ally_bundles = event.ally_bundles
         ally.ally_ranks = event.ally_ranks
     end
 

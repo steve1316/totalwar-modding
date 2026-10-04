@@ -8,6 +8,7 @@ require("script/land_encounters/core/mct")
 local battle_categories = require("script/land_encounters/configs/battle_categories")
 local debug_config = require("script/land_encounters/configs/debug")
 local army_generator = require("script/land_encounters/core/army_generator")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +73,8 @@ end
 --- @param faction_keys table The enabled faction shorthands, for the neutral faction roll.
 --- @param difficulty string The current difficulty key.
 --- @returns table The event record: category, dilemma, incidents and targets, faction, difficulty, archetype_keys, budget_multiplier, intervention,
---- and for an Ally in Peril battle `ally`, `ally_options` and `ally_strength`.
+--- and for an Ally in Peril battle `ally`, `ally_options` and `ally_strength`, then the battle `modifiers` with their `enemy_bundles` and
+--- `ally_bundles`.
 local function build_event(category, entries, faction_keys, difficulty)
     local minimum = category.min_difficulty
     local event = {
@@ -102,6 +104,10 @@ local function build_event(category, entries, faction_keys, difficulty)
         log("battle_picker: debug force_battle_faction makes the enemy " .. event.faction)
     end
     if category.ally then add_ally(event, category.ally) end
+    --- Battle modifiers: the enemy's and the allies' bundles go on with the sabotage and the ally, ours when the battle starts.
+    event.modifiers = battle_modifiers.roll()
+    event.enemy_bundles = battle_modifiers.bundles(event.modifiers, "enemy")
+    event.ally_bundles = battle_modifiers.bundles(event.modifiers, "allies")
     out("DEBUG - battle_picker picked " .. event.category .. " (" .. event.dilemma .. ") for faction " .. tostring(event.faction) .. " on " .. event.difficulty)
     return event
 end

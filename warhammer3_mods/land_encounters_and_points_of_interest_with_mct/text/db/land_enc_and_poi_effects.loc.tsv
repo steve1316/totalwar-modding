@@ -10,3 +10,11 @@ effects_description_land_enc_diplomatic_relations_cult_of_pleasure	Diplomatic re
 effects_description_land_enc_effect_tower_dividends_income	Tower dividends: %+n gold each turn	false
 effects_description_land_enc_effect_tower_dark_bargain_owed	Dark bargain: our lord is wounded for %n turns at the start of the turn after the delve	false
 effects_description_land_enc_effect_spot_wound_owed	Our lord is wounded for %n turns at the start of our next turn	false
+effects_description_land_enc_effect_ability_enable_regeneration_all_units	Passive ability: "Regeneration" for all units	false
+effects_description_land_enc_effect_ability_enable_deathblow_all_units	Passive ability: "Deathblow" for all units	false
+effects_description_land_enc_effect_ability_enable_strength_in_numbers_all_units	Passive ability: "Strength in Numbers" for all units	false
+effects_description_land_enc_effect_ability_enable_cloud_of_flies_all_units	Passive ability: "Cloud of Flies" for all units	false
+effects_description_land_enc_effect_ability_enable_aura_of_immolation_all_units	Passive ability: "Aura of Immolation" for all units	false
+effects_description_land_enc_effect_ability_enable_too_horrible_to_die_all_units	Passive ability: "Too Horrible to Die" for all units	false
+effects_description_land_enc_effect_ability_enable_gorefeast_all_units	Passive ability: "Gorefeast" for all units	false
+effects_description_land_enc_effect_ability_enable_unholy_vigour_all_units	Passive ability: "Unholy Vigour" for all units	false

@@ -18,6 +18,7 @@ from collections import defaultdict
 from typing import Dict, List, Pattern, Tuple
 
 from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
+from generators import leapoi_battle_modifiers as battle_modifiers
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
 TABLE_FILE = "land_encounters_and_points_of_interest.tsv"
@@ -43,7 +44,11 @@ NOTICE_PREFIX = "land_enc_tower_buff_"
 
 # Line markers that make a row this script's own, so a run replaces it.
 OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_",
-                 "string_land_enc_spot_", "land_enc_incident_spot_")
+                 "string_land_enc_spot_", "land_enc_incident_spot_", "land_enc_tower_buff_modifier_", "land_enc_effect_ability_enable_",
+                 "land_enc_ability_enable_")
+
+# Generated Lua table of each battle victory incident's gold, which battle modifiers scale.
+VICTORY_GOLD_LUA = "script/land_encounters/configs/victory_gold.lua"
 
 # Picture of a result's incident: missions show a victory, everything else a found treasure.
 RESULT_IMAGE = "wh2_sea_encounters_1"
@@ -345,7 +350,7 @@ ICONS = {
     "lame_their_mounts": "attrition.png", "hunters_snares": "discouraged.png", "sacred_ground": "lileaths_blessing.png",
     "cripple_their_champion": "blood_kiss.png", "spike_the_guns": "ammo.png", "bait_and_switch": "trickster_cult.png", "last_ditch_oath": "attribute_unbreakable.png",
     "lords_glory": "rampage_savage.png", "monster_slayer": "hellforged.png", "steadfast": "morale.png", "decapitate": "nemesis_crown_sealed.png",
-    "against_the_odds": "vigour.png", "rout_the_riders": "cotw_track_army.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
+    "against_the_odds": "vigour.png", "rout_the_riders": "mount.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
 }
 
 # Line on a mission already taken on the open battle dilemma: (icon, text).
@@ -421,7 +426,7 @@ MISSION_OBJECTIVES = {
     "steadfast": ("Steadfast: keep every unit of ours from routing", "Steadfast: no unit of ours may rout."),
     "decapitate": ("Decapitate: enemy lord and heroes left", "Decapitate: kill the enemy lord and every hero."),
     "against_the_odds": ("Against the Odds: win while outnumbered", "Against the Odds: win while the enemy outnumbers us."),
-    "rout_the_riders": ("Rout the Riders: enemy riders left", "Rout the Riders: rout every enemy cavalry unit within 6 minutes."),
+    "rout_the_riders": ("Rout the Riders: enemy cavalry and chariots still fighting", "Rout the Riders: rout every enemy cavalry unit within 6 minutes."),
 }
 
 # Battle notice name -> (colour, text) the battle script shows for a pre-battle offer: red for what weakens the enemy, green for our help,
@@ -669,6 +674,9 @@ for _, offer in ipairs(data.offers) do
 end
 local battle_dilemmas = {}
 for key in pairs(require("script/land_encounters/configs/battle_categories").dilemma_keys) do battle_dilemmas[#battle_dilemmas + 1] = key end
+local modifier_data = require("script/land_encounters/configs/battle_modifiers")
+local battle_modifiers = { list = modifier_data.list, bundle_prefix = modifier_data.bundle_prefix, notice_prefix = modifier_data.notice_prefix,
+    line_prefix = modifier_data.line_prefix }
 table.sort(battle_dilemmas)
 local function encode(v)
     local t = type(v)
@@ -693,7 +701,8 @@ io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.all_at
     result_incident_prefix = data.result_incident_prefix, result_place_context = data.result_place_context, battle_pools = data.battle_pools,
     avoid_choice_key = data.avoid_choice_key,
     unaffordable_line = data.unaffordable_line, taken_line = data.taken_line, missions_context = data.missions_context,
-    mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas, result_detail_context = data.result_detail_context }))
+    mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas, result_detail_context = data.result_detail_context,
+    battle_modifiers = battle_modifiers }))
 """
 
 
@@ -760,6 +769,10 @@ def expand_bundles(config: Dict) -> Dict[str, Tuple]:
             for i, difficulty in enumerate(DIFFICULTIES):
                 stepped = [(effect, scope, value[i] if isinstance(value, tuple) else value) for effect, scope, value in effects]
                 flat[f"{prefix}{suffix}_{difficulty}"] = (target, icon, title, description, stepped)
+    modifiers = config["battle_modifiers"]
+    for modifier in modifiers["list"]:
+        for side in modifier["sides"] if modifier.get("bundle") else []:
+            flat[modifiers["bundle_prefix"] + modifier["key"] + "_" + side] = battle_modifiers.bundle(modifier["key"], side)
     target, icon, title, description, effect, scope = DIVIDENDS
     amounts = {offer["dividends"]["per_turn"] for offers in config["at"].values() for offer in offers.values() if "dividends" in offer}
     amounts |= {offer["per_turn"] for offers in config["tower_at"].values() for offer in offers.values() if "per_turn" in offer}
@@ -968,6 +981,22 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             if offer["pool"] == "mission":
                 taken = text.format_map(values).replace(MISSION, f"[[col:yellow]]{title_case(OFFERS[key][0])} (Mission):[[/col]] ", 1)
                 add(STRINGS_LOC, config["mission_set_loc_prefix"] + key + "_" + difficulty, taken, "false")
+
+    modifiers = config["battle_modifiers"]
+    for modifier in modifiers["list"]:
+        key, harm = modifier["key"], modifier["harm"]
+        add(STRINGS_LOC, modifiers["line_prefix"] + key, battle_modifiers.line_text(key), "false")
+        shown = battle_modifiers.notice_text(key)
+        objective(modifiers["notice_prefix"] + key, battle_modifiers.MODIFIERS[key][2], f"[[col:{battle_modifiers.HARM_COLOUR[harm]}]]{shown}[[/col]]", shown)
+    # The spot effects table also holds the wound owed by a gamble, which this script owns by its name.
+    add(table("effects_tables"), "land_enc_effect_spot_wound_owed", "chaos_gifts.png", 2, "chaos_gifts.png", "campaign", "false")
+    add(LOC_PREFIX + "effects.loc.tsv", "effects_description_land_enc_effect_spot_wound_owed", "Our lord is wounded for %n turns at the start of our next turn",
+        "false")
+    for effect, (junction, ability, name) in battle_modifiers.ABILITY_EFFECTS.items():
+        add(table("effects_tables"), effect, "general_ability.png", 310, "general_ability.png", "battle", "true")
+        add(LOC_PREFIX + "effects.loc.tsv", "effects_description_" + effect, f'Passive ability: "{name}" for all units', "false")
+        add(table("unit_set_unit_ability_junctions_tables"), junction, ability, "all_units")
+        add(table("effect_bonus_value_unit_set_unit_ability_junctions_tables"), "enable", effect, junction)
 
     for key, (target, icon, title, description, effects) in bundles.items():
         add(table("effect_bundles_tables"), key, "", "", target, 1, icon, "true" if target == "faction" else "false", "false", "true")
@@ -1223,6 +1252,27 @@ def write_rows(rows: Dict[str, List[str]], patterns: List[Pattern], dry_run: boo
                 f.write(("".join(kept) + "".join(row + "\r\n" for row in new_rows)).encode("utf-8"))
 
 
+def write_victory_gold(dry_run: bool) -> None:
+    """Writes the Lua table of each battle victory incident's treasury gold, read from the incidents' payload rows.
+
+    Args:
+        dry_run (bool): True to only print what would be written.
+    """
+    rows = open(MOD_ROOT + "db/cdir_events_incident_payloads_tables/" + TABLE_FILE, encoding="utf-8").read().splitlines()[2:]
+    gold = {}
+    for row in rows:
+        fields = row.split("\t")
+        if len(fields) > 3 and fields[1].startswith("land_enc_incident_battle_won") and fields[2] == "TREASURY":
+            gold[fields[1]] = int(fields[3].split("[")[1].rstrip("]"))
+    body = "".join(f'    ["{key}"] = {amount},\n' for key, amount in sorted(gold.items()))
+    text = ("--- Each battle victory incident's treasury gold, which battle modifiers scale. Generated by\n"
+            "--- helper_scripts/generators/update_leapoi_spot_offers.py from the incidents' payload rows: do not edit by hand.\n\n"
+            "return {\n" + body + "}\n")
+    print(f"{VICTORY_GOLD_LUA}: {len(gold)} incidents")
+    if not dry_run:
+        open(MOD_ROOT + VICTORY_GOLD_LUA, "w", encoding="utf-8", newline="\n").write(text)
+
+
 def check_text(config: Dict) -> None:
     """Stops when an offer or site has no text or icon, a paid offer has no not-enough-gold line, or any text writes gold with a separator.
 
@@ -1233,6 +1283,9 @@ def check_text(config: Dict) -> None:
         SystemExit: Naming every problem found.
     """
     problems = [f"no text for {o['key']}" for o in config["offers"] if o["key"] not in OFFERS]
+    modifier_keys = {m["key"] for m in config["battle_modifiers"]["list"]}
+    problems += [f"no text for battle modifier {key}" for key in sorted(modifier_keys - set(battle_modifiers.MODIFIERS))]
+    problems += [f"text for unknown battle modifier {key}" for key in sorted(set(battle_modifiers.MODIFIERS) - modifier_keys)]
     problems += [f"no text for site {s['key']}" for s in config["sites"] + [config["spoils"]] if s["key"] not in SITES]
     problems += [f"no icon for {key}" for key in OFFERS if key not in ICONS]
     problems += [f"no notice for {o['key']}" for o in config["offers"]
@@ -1265,6 +1318,7 @@ def main() -> None:
     config = load_config()
     check_text(config)
     write_rows(build_rows(config), owned_patterns(config), args.dry_run)
+    write_victory_gold(args.dry_run)
     hook_battle_descriptions(config, args.dry_run)
 
 

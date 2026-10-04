@@ -18,6 +18,7 @@ local tower_army = require("script/land_encounters/features/tower_army")
 local tower_missions = require("script/land_encounters/features/tower_missions")
 local tower_offers = require("script/land_encounters/features/tower_offers")
 local spot_offers = require("script/land_encounters/features/spot_offers")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 
 --- svr keys the battle script reads the buff, notice, trick and mission names, Night terrors' targets and the mission targets from, and the
 --- prefix it strips from a one-battle bundle to find its notice. The tower owns them, since the battle script plays both under its names.
@@ -74,9 +75,10 @@ end
 
 --- True when a pre-battle offer or mission would do something for this battle. A traitor's units are picked here and kept on `ctx.cards`.
 --- @param offer table The offer record at the battle's difficulty.
---- @param ctx table { faction_name, general_cqi, event, cards }.
+--- @param ctx table { faction_name, general_cqi, event, cards, keeps_out }. `keeps_out` holds the offers the battle's modifiers keep out.
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
+    if ctx.keeps_out[offer.key] then return false end
     if offer.allies and ctx.event.intervention == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then return false end
     if offer.for_ally then
         if ctx.event.intervention ~= ALLIED_REINFORCEMENTS_PERMITTED_TYPE then return false end
@@ -151,15 +153,16 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Dilemma
 
---- Lists the missions taken on the open dilemma at the top of its description, one line each with a blank line after them, as the tower
---- lists a floor's results. No missions taken clears it.
+--- Lists the battle's modifiers, then the missions taken, at the top of the open dilemma's description, one line each with a blank line after
+--- each block, as the tower lists a floor's results. Neither clears it.
 --- @param pending table The open dilemma.
 function M.show_missions(pending)
     local lines = {}
     for _, key in ipairs(pending.battle.missions) do
         lines[#lines + 1] = common.get_localised_string(offers_data.mission_set_loc_prefix .. key .. "_" .. pending.difficulty)
     end
-    common.set_context_value(offers_data.missions_context, #lines > 0 and table.concat(lines, "\n") .. "\n\n" or "")
+    common.set_context_value(offers_data.missions_context,
+        battle_modifiers.lines(pending.modifiers) .. (#lines > 0 and table.concat(lines, "\n") .. "\n\n" or ""))
 end
 
 --- Shows a faction's open pre-battle dilemma: Fight, the offers, the missions, then Avoid. Fight and every offer that can be bought end with
@@ -205,11 +208,12 @@ end
 --- @param with_offers boolean True to draw pre-battle offers and missions, see `M.roll`.
 function M.open(event, character, faction, with_offers)
     local faction_name = faction:name()
-    local ctx = { faction_name = faction_name, general_cqi = character:command_queue_index(), event = event, cards = {}, shown_units = {} }
+    local ctx = { faction_name = faction_name, general_cqi = character:command_queue_index(), event = event, cards = {}, shown_units = {},
+        keeps_out = battle_modifiers.keeps_out(event.modifiers) }
     local offers, missions = {}, {}
     if with_offers then offers, missions = M.draw(ctx) end
     M.pending_by_faction[faction_name] = { dilemma = event.dilemma, offers = offers, missions = missions, general_cqi = ctx.general_cqi,
-        difficulty = event.difficulty, cards = ctx.cards, taken = {}, battle = { general_cqi = ctx.general_cqi, missions = {} } }
+        difficulty = event.difficulty, cards = ctx.cards, taken = {}, battle = { general_cqi = ctx.general_cqi, missions = {} }, modifiers = event.modifiers }
     log("spot battle: " .. faction_name .. " opens " .. event.dilemma .. (with_offers and " with offers" or " plain") .. ", lord " .. ctx.general_cqi
         .. ", treasury " .. offer_effects.treasury(faction_name))
     M.launch(faction_name)
@@ -254,7 +258,10 @@ local function apply_to_event(fields, event)
         event.battle_bundles[#event.battle_bundles + 1] = fields.battle_bundle
     end
     if fields.own_strength then event.own_strength = fields.own_strength end
-    if fields.ally_bundle then event.ally_bundle = fields.ally_bundle end
+    if fields.ally_bundle then
+        event.ally_bundles = event.ally_bundles or {}
+        event.ally_bundles[#event.ally_bundles + 1] = fields.ally_bundle
+    end
     if fields.ally_ranks then event.ally_ranks = fields.ally_ranks end
     if fields.extra_ally_units then event.ally_options = army_generator.ally_options(event.ally_options.unit_count + fields.extra_ally_units) end
     if fields.ally_budget then
@@ -358,6 +365,7 @@ end
 --- @param general_cqi number Our lord's command queue index.
 function M.prepare_battle(event, general_cqi)
     for _, bundle in ipairs(event.battle_bundles or {}) do tower_army.apply_bundle(general_cqi, bundle) end
+    for _, bundle in ipairs(battle_modifiers.bundles(event.modifiers, "ours")) do tower_army.apply_bundle(general_cqi, bundle) end
     if event.own_strength then
         for _, entry in ipairs(tower_army.unit_strengths(general_cqi)) do tower_army.set_strength(entry.unit, entry.strength * event.own_strength) end
         log("spot battle: our units start at " .. math.floor(event.own_strength * 100 + 0.5) .. "% of their strength")
@@ -398,6 +406,7 @@ function M.hand_to_battle(event, army)
         if offer.unit_ranks and event.standard then value = event.standard.key .. "#" .. event.standard.nth end
         if value then targets[#targets + 1] = key .. "=" .. value end
     end
+    for _, name in ipairs(battle_modifiers.notices(event.modifiers)) do names[#names + 1] = name end
     log("spot battle: battle names: " .. (#names > 0 and table.concat(names, ", ") or "none") .. ", mission targets: " .. table.concat(targets, ", ")
         .. ", night terrors: " .. table.concat(terrors, ", "))
     tower_missions.clear_reports()
@@ -471,7 +480,9 @@ function M.end_battle(event, general_cqi)
     core:svr_save_string(MISSION_TARGETS_SVR_KEY, "")
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, "")
     tower_missions.clear_reports()
-    local bundles = event.battle_bundles or {}
+    local bundles = {}
+    for _, bundle in ipairs(event.battle_bundles or {}) do bundles[#bundles + 1] = bundle end
+    for _, bundle in ipairs(battle_modifiers.bundles(event.modifiers, "ours")) do bundles[#bundles + 1] = bundle end
     if #bundles > 0 then log("spot battle: removing one-battle bundles: " .. table.concat(bundles, ", ")) end
     if general_cqi then
         for _, bundle in ipairs(bundles) do tower_army.remove_bundle(general_cqi, bundle) end

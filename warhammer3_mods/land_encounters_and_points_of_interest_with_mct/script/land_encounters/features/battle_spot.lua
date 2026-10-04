@@ -15,6 +15,8 @@ local debug_config = require("script/land_encounters/configs/debug")
 local army_generator = require("script/land_encounters/core/army_generator")
 local spot_battles = require("script/land_encounters/features/spot_battles")
 local spot_offers = require("script/land_encounters/features/spot_offers")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
+local victory_gold = require("script/land_encounters/configs/victory_gold")
 local spoils_site = require("script/land_encounters/configs/spot_offers").spoils
 
 local Army = require("script/land_encounters/core/army")
@@ -215,6 +217,7 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
     end
     self:grant_victory_items(self.cached_player_character:faction())
     self:grant_ally_rewards(self.cached_player_character, spot_info)
+    self:pay_modifier_gold(self.cached_player_character:faction())
     --- The spoils pick (features/spot_offers.lua) follows the victory reward when its roll hits.
     if self.cached_player_character:faction():is_human() and spot_battles.roll_spoils() then
         spot_offers.open_site(self.cached_player_character, self.cached_player_character:faction(), spoils_site, self.cached_event)
@@ -300,6 +303,17 @@ function BattleEventDelegate:trigger_victory_with_gift(character, gift, spot_inf
     log("spot battle: " .. event.victory_incident .. " could not be built (" .. tostring(err) .. "), the ally " .. gift .. " joins in script")
     trigger_incident(event.victory_incident, event.victory_targets, spot_info, character)
     cm:grant_unit_to_character(cm:char_lookup_str(character), gift)
+end
+
+--- Pays the change the battle's modifiers make to its victory gold: more for harmful ones, less for helpful ones, rounded to 50.
+--- @param faction faction Our faction.
+function BattleEventDelegate:pay_modifier_gold(faction)
+    local modifiers = self.cached_event.modifiers
+    if not modifiers or #modifiers == 0 then return end
+    local base = victory_gold[self.cached_event.victory_incident] or 0
+    local change = math.floor(base * (battle_modifiers.gold_multiplier(modifiers) - 1) / 50 + 0.5) * 50
+    if change ~= 0 then cm:treasury_mod(faction:name(), change) end
+    log("spot battle: modifiers " .. table.concat(modifiers, ", ") .. " change the victory gold " .. base .. " by " .. change)
 end
 
 --- Rewards an Ally in Peril win with `ally.relations` with the ally's kin, or gold when there is none. A battle whose ally never spawned

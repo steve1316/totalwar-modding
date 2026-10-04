@@ -57,3 +57,28 @@ campaign_localised_strings_string_land_enc_spot_mission_set_against_the_odds_har
 campaign_localised_strings_string_land_enc_spot_mission_set_rout_the_riders_easy	[[col:yellow]]Rout the Riders (Mission):[[/col]] rout every enemy [[col:yellow]]cavalry unit within 6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false
 campaign_localised_strings_string_land_enc_spot_mission_set_rout_the_riders_medium	[[col:yellow]]Rout the Riders (Mission):[[/col]] rout every enemy [[col:yellow]]cavalry unit within 6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false
 campaign_localised_strings_string_land_enc_spot_mission_set_rout_the_riders_hard	[[col:yellow]]Rout the Riders (Mission):[[/col]] rout every enemy [[col:yellow]]cavalry unit within 6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false
+campaign_localised_strings_string_land_enc_spot_modifier_hallowed	[[col:yellow]]Modifier:[[/col]] Hallowed Ground - Our units +10 leadership.	false
+campaign_localised_strings_string_land_enc_spot_modifier_cursed_earth	[[col:yellow]]Modifier:[[/col]] Cursed Earth - Our units -10 leadership.	false
+campaign_localised_strings_string_land_enc_spot_modifier_blood_moon	[[col:yellow]]Modifier:[[/col]] Blood Moon - Every unit on the field +10 melee attack.	false
+campaign_localised_strings_string_land_enc_spot_modifier_iron_hides	[[col:yellow]]Modifier:[[/col]] Iron Hides - Every unit on the field +5% physical resistance.	false
+campaign_localised_strings_string_land_enc_spot_modifier_swift_winds	[[col:yellow]]Modifier:[[/col]] Tailwind - Every unit on the field +20% speed.	false
+campaign_localised_strings_string_land_enc_spot_modifier_heavy_ground	[[col:yellow]]Modifier:[[/col]] Heavy Ground - Every unit on the field -10% speed.	false
+campaign_localised_strings_string_land_enc_spot_modifier_thunder_charge	[[col:yellow]]Modifier:[[/col]] Thunderous Charge - Every unit on the field +20 charge bonus.	false
+campaign_localised_strings_string_land_enc_spot_modifier_brittle	[[col:yellow]]Modifier:[[/col]] Brittle Blades - Enemy units -10% weapon strength.	false
+campaign_localised_strings_string_land_enc_spot_modifier_wards	[[col:yellow]]Modifier:[[/col]] Wards of the Old Ones - Enemy units +5% ward save.	false
+campaign_localised_strings_string_land_enc_spot_modifier_gale	[[col:yellow]]Modifier:[[/col]] Howling Gale - Every missile unit on the field -25% range.	false
+campaign_localised_strings_string_land_enc_spot_modifier_winds_surge	[[col:yellow]]Modifier:[[/col]] Surge of the Winds - Every army starts with +30 Winds of Magic reserve.	false
+campaign_localised_strings_string_land_enc_spot_modifier_exhausting	[[col:yellow]]Modifier:[[/col]] Sweltering Heat - Every unit on the field tires 10% faster.	false
+campaign_localised_strings_string_land_enc_spot_modifier_frenzy	[[col:yellow]]Modifier:[[/col]] Blood Frenzy - Every enemy unit gains Frenzy.	false
+campaign_localised_strings_string_land_enc_spot_modifier_berserkers	[[col:yellow]]Modifier:[[/col]] Berserkers - Our units gain Berserk.	false
+campaign_localised_strings_string_land_enc_spot_modifier_regen_enemy	[[col:yellow]]Modifier:[[/col]] Flesh That Knits - Every enemy unit gains Regeneration.	false
+campaign_localised_strings_string_land_enc_spot_modifier_regen_ours	[[col:yellow]]Modifier:[[/col]] Troll Blood - Every unit of ours gains Regeneration.	false
+campaign_localised_strings_string_land_enc_spot_modifier_killing_blow	[[col:yellow]]Modifier:[[/col]] Executioners' Edge - Every unit of ours gains Deathblow.	false
+campaign_localised_strings_string_land_enc_spot_modifier_strength_numbers	[[col:yellow]]Modifier:[[/col]] Strength in Numbers - Every enemy unit gains Strength in Numbers.	false
+campaign_localised_strings_string_land_enc_spot_modifier_feasting	[[col:yellow]]Modifier:[[/col]] Feasting on Fear - Our units gain Feasting on Fear.	false
+campaign_localised_strings_string_land_enc_spot_modifier_flies	[[col:yellow]]Modifier:[[/col]] Cloud of Flies - Every unit on the field gains Cloud of Flies.	false
+campaign_localised_strings_string_land_enc_spot_modifier_immolation	[[col:yellow]]Modifier:[[/col]] Aura of Immolation - Every enemy unit gains Aura of Immolation.	false
+campaign_localised_strings_string_land_enc_spot_modifier_too_horrible	[[col:yellow]]Modifier:[[/col]] Too Horrible to Die - Every enemy unit gains Too Horrible to Die.	false
+campaign_localised_strings_string_land_enc_spot_modifier_pleasure_pain	[[col:yellow]]Modifier:[[/col]] Pleasure Through Pain - Every unit on the field gains Pleasure Through Pain.	false
+campaign_localised_strings_string_land_enc_spot_modifier_gorefeast	[[col:yellow]]Modifier:[[/col]] Gorefeast - Every enemy unit gains Gorefeast.	false
+campaign_localised_strings_string_land_enc_spot_modifier_unholy_vigour	[[col:yellow]]Modifier:[[/col]] Unholy Vigour - Our units gain Unholy Vigour.	false

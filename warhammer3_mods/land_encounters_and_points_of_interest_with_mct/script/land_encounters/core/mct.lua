@@ -27,6 +27,8 @@ local mct_settings = {
     pre_battle_chance = 30,
     --- Percent chance a won battle spot opens the spoils pick.
     spoils_chance = 30,
+    --- Percent chance a fight (a battle spot or a tower floor) carries battle modifiers.
+    battle_modifier_chance = 7,
     --- Default to interception only - matches the pre-MCT-toggle behavior the user established.
     enabled_intervention_types = { INTERCEPTION_TYPE },
     enabled_encounter_skin_ids = {},
@@ -369,6 +371,7 @@ function set_mct_settings(mct_mod)
     mct_settings.battle_chance = mct_mod:get_option_by_key("battle_chance"):get_finalized_setting()
     mct_settings.pre_battle_chance = mct_mod:get_option_by_key("pre_battle_chance"):get_finalized_setting()
     mct_settings.spoils_chance = mct_mod:get_option_by_key("spoils_chance"):get_finalized_setting()
+    mct_settings.battle_modifier_chance = mct_mod:get_option_by_key("battle_modifier_chance"):get_finalized_setting()
 
     --- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
     --- at-least-one via set_locked, so this list should never be empty, but `pick_intervention_type`

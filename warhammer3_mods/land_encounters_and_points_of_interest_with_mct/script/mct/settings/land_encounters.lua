@@ -265,6 +265,10 @@ add_slider("pre_battle_chance", "battle_events_section", "Pre-battle event chanc
 add_slider("spoils_chance", "battle_events_section", "Spoils event chance %",
     "Chance that winning an encounter battle opens a pick of spoils. Default is " .. get_mct_settings().spoils_chance .. ".", { 0, 100, 5, 0 },
     get_mct_settings().spoils_chance)
+add_slider("battle_modifier_chance", "battle_events_section", "Battle modifier chance %",
+    "Chance that a fight (a battle spot or a Tower floor) carries 1 to 3 battle modifiers, shown on its dilemma. Harmful ones raise the "
+    .. "victory gold, helpful ones lower it. Default is " .. get_mct_settings().battle_modifier_chance .. ".", { 0, 25, 1, 0 },
+    get_mct_settings().battle_modifier_chance)
 
 add_guide_section("battle_spots", "Guide: Battle Spots", encounters_page, mct_guides.battle_spots_text(), false)
 add_guide_section("treasure_spots", "Guide: Treasure Sites", encounters_page, mct_guides.treasure_spots_text(), false)

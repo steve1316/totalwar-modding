@@ -14,6 +14,7 @@ local TowerSpot = require("script/land_encounters/core/spot").TowerSpot
 local Army = require("script/land_encounters/core/army")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_offers = require("script/land_encounters/features/tower_offers")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local offer_effects = require("script/land_encounters/core/offer_effects")
 local army_generator = require("script/land_encounters/core/army_generator")
 local launch_dilemma = require("script/land_encounters/core/dilemmas").launch
@@ -569,6 +570,8 @@ function TowerEventDelegate:launch_floor(faction_name)
     log("tower: floor " .. delve.floor .. " army has " .. delve.floor_army_size .. " units: " .. table.concat(delve.floor_units, ", "))
     --- Handed over once the units are known, since Night terrors picks its targets from them.
     tower_missions.clear_reports()
+    delve.modifier_bundles = battle_modifiers.bundles(delve.modifiers, "ours")
+    for _, bundle in ipairs(delve.modifier_bundles) do tower_army.apply_bundle(delve.general_cqi, bundle) end
     tower_offers.hand_buffs_to_battle(delve)
     ibm:mark_battle_forces_for_removal(army)
     ibm:reset_state_post_battle(self, "TowerSpot", nil, army)
@@ -613,8 +616,13 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         min_tier = sabotage.min_tier,
         lord_subtype = sabotage.lord_subtype,
         ally_options = ally_options,
+        ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
     }, general:faction():subculture())
-    --- The battle manager puts these on the floor army once it spawns.
+    --- The battle manager puts these on the floor army once it spawns, with the battle modifiers' enemy bundles.
+    for _, bundle in ipairs(battle_modifiers.bundles(delve.modifiers, "enemy")) do
+        sabotage.enemy_bundles = sabotage.enemy_bundles or {}
+        sabotage.enemy_bundles[#sabotage.enemy_bundles + 1] = bundle
+    end
     army.sabotage = sabotage
     if next_floor.mirror then
         army.units_pool, delve.mirror_copied = tower_offers.mirror_units(delve)
@@ -648,7 +656,7 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local floor = next_floor.record or tower_data.floors[delve.floor]
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0
-    local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1)
+    local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1) * battle_modifiers.gold_multiplier(delve.modifiers)
     if next_floor.double_or_nothing then
         gold_multiplier = gold_multiplier * (loss < next_floor.double_or_nothing and 2 or 0)
     end
@@ -740,6 +748,8 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         launch_dilemma(EVENT_CLAIM, { claim }, faction_name)
         return
     end
+    --- The next floor's battle modifiers, rolled before its offers so they can keep some out.
+    delve.modifiers = battle_modifiers.roll()
     delve.offers = tower_offers.draw(delve, faction_name, self:tower_in_zone(delve.zone_name))
     delve.results = results
     self:launch_deeper(faction_name)

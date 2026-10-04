@@ -25,6 +25,9 @@ M.spot_kind = {}
 --- Battle category keys drawn first on every battle spot while they can fire, e.g. { "bandits" }.
 M.force_battle_categories = {}
 
+--- Battle modifier keys (configs/battle_modifiers.lua) every fight carries instead of rolling its own, e.g. { "blood_moon" }.
+M.force_battle_modifiers = {}
+
 --- Faction shorthand every battle spot's enemy is instead of its own, e.g. { "brt" } for an army with plenty of cavalry.
 M.force_battle_faction = {}
 

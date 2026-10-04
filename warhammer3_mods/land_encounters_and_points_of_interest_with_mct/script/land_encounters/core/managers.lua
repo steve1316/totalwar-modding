@@ -454,7 +454,7 @@ local function set_force_strength(force, strength)
     end
 end
 
---- Readies a spawned allied army: its starting strength, its bundle and its units' ranks, as its Army record says.
+--- Readies a spawned allied army: its starting strength, its bundles and its units' ranks, as its Army record says.
 --- @param force military_force The allied force.
 --- @param ally Army The allied Army record.
 local function prepare_ally_force(force, ally)
@@ -462,9 +462,9 @@ local function prepare_ally_force(force, ally)
         set_force_strength(force, ally.start_strength)
         out("LEAPOI: the allied army starts at " .. ally.start_strength * 100 .. "% strength")
     end
-    if ally.ally_bundle then
-        cm:apply_effect_bundle_to_force(ally.ally_bundle, force:command_queue_index(), 1)
-        out("LEAPOI: the allied army has " .. ally.ally_bundle)
+    for _, bundle in ipairs(ally.ally_bundles or {}) do
+        cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 1)
+        out("LEAPOI: the allied army has " .. bundle)
     end
     if ally.ally_ranks then
         local units = tower_army.rankable_units(force:general_character():command_queue_index(), ally.ally_ranks, ALLY_MAX_RANK)

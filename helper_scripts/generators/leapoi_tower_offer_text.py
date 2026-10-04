@@ -196,7 +196,7 @@ NOTICES = {
     "poison_the_stores": ("red", "Poison the Stores: enemy units start at {strength}% strength."),
     "break_their_spirit": ("red", "Break Their Spirit: enemy units have -{e0} " + icon("icon_stat_morale") + "."),
     "curse_their_blades": ("red", "Curse Their Blades: enemy units have -{e0} " + icon("icon_stat_attack") + "."),
-    "turn_a_traitor": ("red", "Turn a Traitor: one of the enemy's units fights for us."),
+    "turn_a_traitor": ("green", "Turn a Traitor: one of the enemy's units fights for us."),
     "night_terrors": ("green", "Night Terrors: the enemy's {targets} after 1 minute."),
     "divine_shield": ("green", "Divine Shield: our lord cannot be harmed for the first {minutes} minutes."),
     "sacred_ground": ("green", "Sacred Ground: after 3 minutes, our units regain {battle_value}% of their strength."),

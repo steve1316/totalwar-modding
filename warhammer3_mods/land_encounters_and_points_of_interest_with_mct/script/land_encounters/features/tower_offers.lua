@@ -10,6 +10,7 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_champions = require("script/land_encounters/configs/tower_champions")
 local offer_effects = require("script/land_encounters/core/offer_effects")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
@@ -711,6 +712,7 @@ local HANDLERS = {
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
     if spent(offer, ctx.delve) then return false end
+    if ctx.keeps_out[offer.key] then return false end
     if not offer_effects.army_fits(offer, ctx.tower and ctx.tower.faction, ctx.delve.general_cqi) then return false end
     local handler = HANDLERS[offer.key]
     return not (handler and handler.eligible) or handler.eligible(ctx, offer)
@@ -735,7 +737,7 @@ end
 --- @param tower TowerState|nil The delve's tower. Offers about the tower itself are not drawn without it.
 --- @returns table Offer keys in popup order.
 function M.draw(delve, faction_name, tower)
-    local ctx = { delve = delve, faction_name = faction_name, tower = tower }
+    local ctx = { delve = delve, faction_name = faction_name, tower = tower, keeps_out = battle_modifiers.keeps_out(delve.modifiers) }
     delve.offer_difficulty = next_floor_difficulty(delve)
     local pool = {}
     local groups = {}
@@ -888,12 +890,13 @@ local function set_floor_context(key, floor, value)
     common.set_context_value(key .. "_floor_" .. floor, value)
 end
 
---- Shows the floor's results at the top of its go-deeper description, one line each in the order they came, then a blank line before the
---- description. No results clears it.
---- @param delve table The delve record. `delve.results` holds this floor's result lines.
+--- Shows the next floor's battle modifiers, then the floor's results, at the top of its go-deeper description, one line each in the order they
+--- came, with a blank line after each block. Neither clears it.
+--- @param delve table The delve record. `delve.results` holds this floor's result lines and `delve.modifiers` the next floor's modifiers.
 function M.show_results(delve)
     local results = delve.results
-    set_floor_context(RESULT_CONTEXT_KEY, delve.floor, #results > 0 and table.concat(results, "\n") .. "\n\n" or "")
+    set_floor_context(RESULT_CONTEXT_KEY, delve.floor,
+        battle_modifiers.lines(delve.modifiers) .. (#results > 0 and table.concat(results, "\n") .. "\n\n" or ""))
 end
 
 --- Shows the climb list in the per-floor go-deeper descriptions: each floor so far as cleared or skipped at the difficulty it had, any hidden
@@ -1027,6 +1030,7 @@ function M.hand_buffs_to_battle(delve)
     end
     for _, key in ipairs(delve.missions or {}) do names[#names + 1] = key end
     for _, key in ipairs(delve.enemy_notices or {}) do names[#names + 1] = key end
+    for _, name in ipairs(battle_modifiers.notices(delve.modifiers)) do names[#names + 1] = name end
     tower_missions.hand_to_battle(delve, values)
     log("tower: battle notices for the next floor: " .. (#names > 0 and table.concat(names, ", ") or "none"))
     if #targets > 0 then log("tower: night terrors will rout " .. table.concat(targets, ", ")) end
@@ -1043,7 +1047,8 @@ function M.end_battle_effects(delve)
     delve.battle_tricks = nil
     tower_missions.end_battle(delve)
     local bundles = delve.battle_bundles or {}
-    delve.battle_bundles = nil
+    for _, bundle in ipairs(delve.modifier_bundles or {}) do bundles[#bundles + 1] = bundle end
+    delve.battle_bundles, delve.modifier_bundles = nil, nil
     if #bundles > 0 then log("tower: removing one-battle bundles: " .. table.concat(bundles, ", ")) end
     for _, bundle in ipairs(bundles) do tower_army.remove_bundle(delve.general_cqi, bundle) end
 end
