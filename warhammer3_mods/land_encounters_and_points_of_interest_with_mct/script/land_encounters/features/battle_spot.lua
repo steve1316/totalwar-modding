@@ -152,13 +152,14 @@ function BattleEventDelegate:start_battle(spot_info)
     self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
 end
 
---- Starts Wake the guardian's battle at a treasure site (features/spot_offers.lua): a battle picked as for a battle spot, whose army attacks
+--- Starts a guardian battle at a treasure site (features/spot_offers.lua: Wake the Guardian, Oath at the Altar): a battle picked as for a battle spot, whose army attacks
 --- the lord at once. Its result is a battle spot's: the victory reward and the spoils roll.
---- @param character character The lord who woke the guardian.
+--- @param character character The lord the guardian attacks.
 --- @param spot_info table A spot_info record with the site's coordinates.
-function BattleEventDelegate:start_guardian_battle(character, spot_info)
+--- @param difficulty string|nil The battle's difficulty, or nil for the current one.
+function BattleEventDelegate:start_guardian_battle(character, spot_info, difficulty)
     self.cached_player_character = character
-    self.cached_event = battle_picker.pick()
+    self.cached_event = battle_picker.pick(difficulty)
     self.cached_event.intervention = INTERCEPTION_TYPE
     log("spot: the guardian wakes and attacks lord " .. character:command_queue_index() .. " with a " .. self.cached_event.category .. " battle at ("
         .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")

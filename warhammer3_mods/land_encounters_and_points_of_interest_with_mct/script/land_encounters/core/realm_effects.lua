@@ -4,6 +4,8 @@
 
 require("script/land_encounters/utils/common")
 
+local tower_army = require("script/land_encounters/features/tower_army")
+
 --- How many of the nearest factions a `rival_pair` target is picked from.
 local RIVAL_POOL = 6
 
@@ -264,6 +266,14 @@ local function change_relations(a, b, amount)
     log("realm: relations " .. a .. " / " .. b .. " " .. (amount > 0 and "+" or "") .. amount)
 end
 
+--- A region's garrison army.
+--- @param region region The region.
+--- @returns military_force|nil Its garrison, or nil when it has none.
+local function garrison_army(region)
+    local army = region:garrison_residence():army()
+    return army and not army:is_null_interface() and army or nil
+end
+
 --- Applies the parts of a realm offer that act on one target region.
 --- @param offer table The offer record from `configs/spot_offers.lua`.
 --- @param region region The target region.
@@ -286,6 +296,15 @@ local function apply_to_region(offer, region, faction_name)
         cm:heal_garrison(region:cqi())
         log("realm: garrison of " .. region_key .. " healed")
     end
+    local garrison = offer.garrison_strength and garrison_army(region)
+    if garrison then
+        local units = garrison:unit_list()
+        for i = 0, units:num_items() - 1 do
+            local unit = units:item_at(i)
+            tower_army.set_strength(unit, unit:percentage_proportion_of_full_strength() * offer.garrison_strength)
+        end
+        log("realm: the garrison of " .. region_key .. " (" .. units:num_items() .. " units) drops to " .. offer.garrison_strength * 100 .. "% of its strength")
+    end
     if offer.realm == "raise_region" then
         local level = settlement_level(region)
         if level then
@@ -293,7 +312,7 @@ local function apply_to_region(offer, region, faction_name)
             log("realm: " .. region_key .. " main building " .. level .. " -> " .. tostring(settlement_level(region)))
         end
     end
-    if offer.realm == "enemy_capital" then
+    if offer.reveal_turns then
         cm:make_region_visible_in_shroud(faction_name, region_key)
         log("realm: shroud lifted over " .. region_key .. " for " .. faction_name)
     end
@@ -324,6 +343,28 @@ function M.apply(offer, target, faction_name)
             for _, other in ipairs(target.factions) do change_relations(faction_name, other, offer.relations) end
         end
     end
+end
+
+--- Lists a region's garrison for a result's text, e.g. "8 units: 3 Spearmen, 2 Crossbowmen, 1 Bolt Thrower, ...".
+--- @param region_key string The region key.
+--- @returns string The garrison, or "no garrison" when it has none.
+function M.garrison_summary(region_key)
+    local region = cm:get_region(region_key)
+    local garrison = region and not region:is_null_interface() and garrison_army(region)
+    local units = garrison and garrison:unit_list()
+    if not units or units:num_items() == 0 then return "no garrison" end
+    local counts, order = {}, {}
+    for i = 0, units:num_items() - 1 do
+        local key = units:item_at(i):unit_key()
+        if not counts[key] then order[#order + 1] = key end
+        counts[key] = (counts[key] or 0) + 1
+    end
+    local parts = {}
+    for _, key in ipairs(order) do
+        local name = common.get_localised_string("land_units_onscreen_name_" .. key)
+        parts[#parts + 1] = counts[key] .. " " .. (name ~= "" and name or key)
+    end
+    return units:num_items() .. " units: " .. table.concat(parts, ", ")
 end
 
 --- Returns where a realm offer's message points: the first target region's settlement, or else the first target faction's capital.

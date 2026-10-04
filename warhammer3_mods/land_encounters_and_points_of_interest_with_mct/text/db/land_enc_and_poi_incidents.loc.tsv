@@ -1,22 +1,22 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_incidents.loc		
 incidents_localised_title_land_enc_incident_tomb_robbing	Hidden Tomb	false
-incidents_localised_description_land_enc_incident_tomb_robbing	While traversing the uninhabited wilderness, one of your soldiers falls through a crack in the ground. As others are sent down to rescue him, the soldiers below get excited: it's a big underground tomb! More soldiers go down to take whatever is still useful for the benefit of our people.	false
+incidents_localised_description_land_enc_incident_tomb_robbing	One of our soldiers falls through a crack in the earth and lands in a great buried tomb. More are sent down with torches, and they come back laden with grave goods. Our lord takes the pick of them, and learns much from the carvings on the walls.	false
 incidents_localised_title_land_enc_incident_abandoned_camp	Abandoned Camp	false
-incidents_localised_description_land_enc_incident_abandoned_camp	After a long march in the middle of the night, the army vanguard finds an abandoned camp hidden between some mountains. The camp is already set up, with plenty of supplies and comfortable bedrolls laid out. You have some soldiers taste the supplies and check the camp for traps, but there seems to be no problem whatsoever. Your army prepares for a relaxing and welcome rest.	false
+incidents_localised_description_land_enc_incident_abandoned_camp	Our vanguard finds an abandoned camp hidden between the hills, its tents still pitched and its stores still full. We check it for traps and find none, so the army rests and resupplies before moving on.	false
 incidents_localised_title_land_enc_incident_buried_relics	Buried Relics	false
-incidents_localised_description_land_enc_incident_buried_relics	A strange chittering noise is heard by the soldiers while passing the administrative building in an abandoned village. Upon further inspection an underground passage is discovered beneath the floor of the central building. A small team inspect the passage, finding a cache of goods hidden in a small room. They say the tunnels descend further, but the lord believes that to search further is unnecessary, as the sudden silence is too revealing. There are secrets better left alone…	false
+incidents_localised_description_land_enc_incident_buried_relics	A strange noise draws our scouts to a ruined village, where a passage opens beneath the old meeting hall. Inside lies a forgotten cache, and among the dust and bones is one prize worth the taking.	false
 incidents_localised_title_land_enc_incident_hidden_temple	Hidden Temple	false
-incidents_localised_description_land_enc_incident_hidden_temple	While traversing the ruins of an old city, the army finds a temple of their god, that seems to be untouched by time. The lord and his retinue enter to pray for a night and day. After they leave the holy site, a blessed sensation fills the army with renewed vigor.	false
+incidents_localised_description_land_enc_incident_hidden_temple	Deep in the ruins of an old city stands a temple untouched by time. Our lord keeps vigil there for a night and a day, and leaves with a quiet sense of protection that settles over the whole army.	false
 incidents_localised_title_land_enc_incident_caravan_remnants	Caravan Remnants	false
-incidents_localised_description_land_enc_incident_caravan_remnants	A cloud of smoke can be seen not far from the army encampment. A group of soldiers is quickly sent to find the cause of the fire. They find a caravan that was recently attacked but not completely sacked. Beastmen and Cathayan bodies are littered across the plain. There are no survivors. Whatever can be salvaged is brought back to the quartermaster for the army's use.	false
+incidents_localised_description_land_enc_incident_caravan_remnants	Smoke rises not far from our camp. Our scouts find a caravan attacked but not fully sacked, its guards dead and its raiders long gone, and what they left behind is ours now.	false
 incidents_localised_title_land_enc_incident_legendary_bard	Legendary Bard Rescued	false
-incidents_localised_description_land_enc_incident_legendary_bard	While marching along the road, a desperate horseman begs the army to follow him and protect his small village from a slaver raid. The army arrives in time, and as the slavers are put to the sword and the prisoners freed, one of them offers a song to the lord. Enchanting and extremely talented, the bard is recognized by most of the soldiers as a famous musician of the realm. The bard goes on their merry way with thanks, promising your lord that a new song about your army will join their repertoire.	false
-incidents_localised_title_land_enc_incident_whispers_of_the_gods	Whispers Of Our God	false
-incidents_localised_description_land_enc_incident_whispers_of_the_gods	While traversing the land, the lord suddenly feels weary of the road and decides that the army must camp for the night. The lord's dream becomes vivid, and their god materializes in it, inspiring the lord with words of courage and power. The lord shares this with the men, making them feel that they can beat anyone and anything in their path.	false
+incidents_localised_description_land_enc_incident_legendary_bard	A desperate rider begs us to save their village from a slaver raid. We arrive in time, and among the freed captives is a famous bard, who promises to sing of our deeds in every hall and market across the land.	false
+incidents_localised_title_land_enc_incident_whispers_of_the_gods	Whispers of Our God	false
+incidents_localised_description_land_enc_incident_whispers_of_the_gods	Our lord's sleep is broken by a dream more vivid than any waking hour. A voice speaks of strength and of trials to come, and by morning the whole army fights as if nothing in the world could break it.	false
 incidents_localised_title_land_enc_incident_battle_won_skirmish	Challenge Won	false
-incidents_localised_title_land_enc_incident_the_explorer	The Explorer	false
-incidents_localised_description_land_enc_incident_the_explorer	A regiment of explorers from Tilea approaches us with a clear request for help: from here on the path becomes more dangerous, and they would rather travel under the protection of our weapons. They are willing to accompany us for a few days on our journey until we reach their destination. They seem quite useful, since so few of them have managed to survive in clearly hostile and dangerous territory. You decide to take them with you.	false
+incidents_localised_title_land_enc_incident_the_explorer	The Explorers	false
+incidents_localised_description_land_enc_incident_the_explorer	A band of explorers asks to travel under the protection of our weapons until the road grows safer. In return they share their maps and their hard-won knowledge of the land, and our march grows swifter and surer.	false
 incidents_localised_description_land_enc_incident_battle_won_skirmish	The rival army yields the field, bruised and humbled. Their general salutes our strength before withdrawing, and word of the victory spreads through the ranks.	false
 incidents_localised_title_land_enc_incident_battle_avoided_skirmish	Challenge Declined	false
 incidents_localised_description_land_enc_incident_battle_avoided_skirmish	The rival general laughs and leads their army away, calling us cowards. Let us hope the insult is the worst that comes of it.	false
@@ -115,65 +115,69 @@ incidents_localised_description_land_enc_incident_battle_won_surprise_neutral	We
 incidents_localised_title_land_enc_incident_battle_won_battlefield_neutral	A Battle to Remember	false
 incidents_localised_description_land_enc_incident_battle_won_battlefield_neutral	The enemy army lies broken across the field. Among the spoils we find weapons and relics worth carrying into the wars to come.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_won	Cast the Lots	false
-incidents_localised_description_land_enc_incident_spot_cast_the_lots_won	The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours.	false
+incidents_localised_description_land_enc_incident_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_lost	Cast the Lots	false
-incidents_localised_description_land_enc_incident_spot_cast_the_lots_lost	The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue.	false
+incidents_localised_description_land_enc_incident_spot_cast_the_lots_lost	The lots fall against us, as they so often do for strangers. The stranger sweeps up our stake with a crooked grin and is gone before anyone thinks to argue.	false
 incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_won	Drink from the Spring	false
-incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_won	The water runs cold and clear. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
+incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_won	The water runs cold and clear from the rock. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
 incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_lost	Drink from the Spring	false
-incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_lost	The water tastes of rot. Within hours sickness spreads through the camp, and it will be some turns before the army is itself again.	false
+incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_lost	The water tastes of rot and old iron. Within hours sickness spreads through the camp, and the army will march weaker for some time.	false
 incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_won	Open the Sealed Door	false
 incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours.	false
 incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_lost	Open the Sealed Door	false
-incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns.	false
+incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast and carried from the chamber, badly wounded.	false
+incidents_localised_title_land_enc_incident_spot_double_or_nothing_won	Double or Nothing	false
+incidents_localised_description_land_enc_incident_spot_double_or_nothing_won	The bet is called and the throw comes up in our favour. Our stake returns to the treasury doubled, and the house is not pleased about it.	false
+incidents_localised_title_land_enc_incident_spot_double_or_nothing_lost	Double or Nothing	false
+incidents_localised_description_land_enc_incident_spot_double_or_nothing_lost	The bet is called and the throw turns against us. Our stake is gone, and the house thanks us warmly for our custom.	false
 incidents_localised_title_land_enc_incident_spot_wake_the_guardian_won	Wake the Guardian	false
 incidents_localised_description_land_enc_incident_spot_wake_the_guardian_won	The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
 incidents_localised_title_land_enc_incident_spot_wake_the_guardian_lost	Wake the Guardian	false
 incidents_localised_description_land_enc_incident_spot_wake_the_guardian_lost	The ground shakes as the guardian of this place rises from its slumber. It sees intruders in its lair and charges, and our army must stand and fight!	false
 incidents_localised_title_land_enc_incident_spot_touch_the_relic_blessed	Touch the Relic	false
-incidents_localised_description_land_enc_incident_spot_touch_the_relic_blessed	Warmth spreads from the relic into the hands that hold it. A blessing settles over our army and will stay with it for 5 turns.	false
+incidents_localised_description_land_enc_incident_spot_touch_the_relic_blessed	Warmth spreads from the relic into the hands that hold it. A blessing settles over the army, and the soldiers march a little taller for it.	false
 incidents_localised_title_land_enc_incident_spot_touch_the_relic_cursed	Touch the Relic	false
-incidents_localised_description_land_enc_incident_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 3 turns.	false
+incidents_localised_description_land_enc_incident_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over the army, though it should not last long.	false
 incidents_localised_title_land_enc_incident_spot_gamble_with_the_hermit_won	Gamble with the Hermit	false
 incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_won	The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands.	false
 incidents_localised_title_land_enc_incident_spot_gamble_with_the_hermit_lost	Gamble with the Hermit	false
 incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_lost	The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone.	false
 incidents_localised_title_land_enc_incident_spot_endow_the_province	Endow the Province	false
-incidents_localised_description_land_enc_incident_spot_endow_the_province	Our gold builds up [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
-incidents_localised_title_land_enc_incident_spot_shore_up_the_walls	Shore Up the Walls	false
-incidents_localised_description_land_enc_incident_spot_shore_up_the_walls	The garrison of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] is healed and its walls are shored up.	false
+incidents_localised_description_land_enc_incident_spot_endow_the_province	Our gold builds roads, walls and storehouses across [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. The region grows stronger and richer, and its people will remember who paid for it.	false
+incidents_localised_title_land_enc_incident_spot_garrison_drill	Garrison Drill	false
+incidents_localised_description_land_enc_incident_spot_garrison_drill	Fresh supplies reach the garrison of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and its officers drill the defenders from dawn to dusk. Its walls are manned by harder soldiers now.	false
 incidents_localised_title_land_enc_incident_spot_raise_the_settlement	Raise the Settlement	false
-incidents_localised_description_land_enc_incident_spot_raise_the_settlement	[[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] grows, its main building raised a level.	false
+incidents_localised_description_land_enc_incident_spot_raise_the_settlement	Builders swarm over [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], raising new halls and stronger walls. In a matter of days its heart stands a level higher than before.	false
 incidents_localised_title_land_enc_incident_spot_quell_the_unrest	Quell the Unrest	false
-incidents_localised_description_land_enc_incident_spot_quell_the_unrest	Order returns to [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_quell_the_unrest	Our soldiers walk the streets of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and the loudest troublemakers fall quiet. Order returns, for now.	false
 incidents_localised_title_land_enc_incident_spot_bountiful_harvest	Bountiful Harvest	false
-incidents_localised_description_land_enc_incident_spot_bountiful_harvest	[[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] prospers with a bountiful harvest.	false
+incidents_localised_description_land_enc_incident_spot_bountiful_harvest	The fields around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] groan under a bountiful harvest. The stores fill, the markets swell, and the people prosper.	false
 incidents_localised_title_land_enc_incident_spot_stir_their_rebels	Stir Their Rebels	false
-incidents_localised_description_land_enc_incident_spot_stir_their_rebels	Unrest spreads through the enemy's lands around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_stir_their_rebels	Our agents spread grievances and weapons among the malcontents of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Unrest spreads through the enemy's lands.	false
 incidents_localised_title_land_enc_incident_spot_poison_their_wells	Poison Their Wells	false
-incidents_localised_description_land_enc_incident_spot_poison_their_wells	The wells of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] are fouled.	false
-incidents_localised_title_land_enc_incident_spot_undermine_their_walls	Undermine Their Walls	false
-incidents_localised_description_land_enc_incident_spot_undermine_their_walls	The walls of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] are undermined.	false
+incidents_localised_description_land_enc_incident_spot_poison_their_wells	Under cover of night, our agents foul the wells of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Sickness spreads through its people, and any army camped there will suffer for it.	false
+incidents_localised_title_land_enc_incident_spot_sap_their_garrison	Sap Their Garrison	false
+incidents_localised_description_land_enc_incident_spot_sap_their_garrison	Our saboteurs slip into [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], spoiling stores, cutting ropes and spreading sickness through the barracks. Its garrison is weakened and shaken.	false
 incidents_localised_title_land_enc_incident_spot_spread_the_plague	Spread the Plague	false
-incidents_localised_description_land_enc_incident_spot_spread_the_plague	Plague spreads through the enemy's lands around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. The plague spreads, though our own army does not escape it entirely.	false
 incidents_localised_title_land_enc_incident_spot_send_gifts	Send Gifts	false
-incidents_localised_description_land_enc_incident_spot_send_gifts	Our gifts are well received at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_send_gifts	Our gifts are well received at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their rulers speak of us more warmly now, and remember who remembered them.	false
 incidents_localised_title_land_enc_incident_spot_spy_on_their_capital	Spy on Their Capital	false
-incidents_localised_description_land_enc_incident_spot_spy_on_their_capital	Our spies have mapped the enemy's capital, [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_spy_on_their_capital	Our spies slip into [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] and map every wall and gate, and we will see its streets for some time yet. They count its garrison: [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_detail").StringValue}}[[/col]].	false
 incidents_localised_title_land_enc_incident_spot_curse_a_distant_king	Curse a Distant King	false
-incidents_localised_description_land_enc_incident_spot_curse_a_distant_king	A curse falls on the coffers of the king at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_curse_a_distant_king	A curse falls on the treasury of the court at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their wealth dwindles, and they will never know why.	false
 incidents_localised_title_land_enc_incident_spot_share_the_find	Share the Find	false
-incidents_localised_description_land_enc_incident_spot_share_the_find	Our neighbours at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] learn from what we found, and think better of us.	false
+incidents_localised_description_land_enc_incident_spot_share_the_find	We share what we found with our neighbours, starting at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their scholars are grateful, and think better of us for it.	false
 incidents_localised_title_land_enc_incident_spot_point_them_at_each_other	Point Them at Each Other	false
-incidents_localised_description_land_enc_incident_spot_point_them_at_each_other	Rumours spread from [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and two rivals now eye each other with suspicion.	false
+incidents_localised_description_land_enc_incident_spot_point_them_at_each_other	Rumours spread from [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], carefully planted by our agents. Two rivals now eye each other with suspicion.	false
 incidents_localised_title_land_enc_incident_spot_sell_their_secrets	Sell Their Secrets	false
-incidents_localised_description_land_enc_incident_spot_sell_their_secrets	The secrets are sold at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and our enemies grow closer.	false
+incidents_localised_description_land_enc_incident_spot_sell_their_secrets	The secrets fetch a fine price at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. But word travels, and our enemies grow closer to one another.	false
 incidents_localised_title_land_enc_incident_spot_ransom_the_captain	Ransom the Captain	false
-incidents_localised_description_land_enc_incident_spot_ransom_the_captain	Their captain is ransomed to [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and their kin will not forget it.	false
+incidents_localised_description_land_enc_incident_spot_ransom_the_captain	Their captain is ransomed back to [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and the price is paid in full. Their kin will not forget the humiliation.	false
 incidents_localised_title_land_enc_incident_spot_chase_the_routers_won	Chase the Routers	false
 incidents_localised_description_land_enc_incident_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours.	false
 incidents_localised_title_land_enc_incident_spot_chase_the_routers_lost	Chase the Routers	false
-incidents_localised_description_land_enc_incident_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns.	false
+incidents_localised_description_land_enc_incident_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for a time.	false
 incidents_localised_title_land_enc_incident_spot_mission_headhunt_met	Headhunt	false
 incidents_localised_description_land_enc_incident_spot_mission_headhunt_met	The enemy lord fell in time, just as we vowed. Their finest possession, a rare item, now belongs to us.	false
 incidents_localised_title_land_enc_incident_spot_mission_headhunt_failed	Headhunt	false

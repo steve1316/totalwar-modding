@@ -69,7 +69,7 @@ M.flawless_victory = { battle_value = 0 }
 M.bloodbath_wager = { cost = 1000, battle_value = 0.75, gold = 2000 }
 
 --- Treasure, units and the realm.
-M.holy_water = { cost = M.STANDARD }
+M.stoneskin = { cost = M.STANDARD }
 M.enchanted_steel = { cost = M.STANDARD }
 M.plague_bearer = { gold = S(4000, 5000, 6000), turns = S(5, 6, 7), bundle = TOWER_BUNDLE .. "plague_bearer" }
 M.daemons_deal = { unique = S(2, 2, 3), armies = S(1, 1, 2) }

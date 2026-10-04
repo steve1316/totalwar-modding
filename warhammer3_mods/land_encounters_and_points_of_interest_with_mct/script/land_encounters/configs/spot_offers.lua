@@ -21,7 +21,8 @@
 ---   heal            True: every unit is healed to full.
 ---   sacrifice       { ranks }: the weakest regular unit is removed and every other unit gains that many ranks.
 ---   daemon_armies   How many hard Chaos armies march on the faction's capital.
----   guardian        True (a gamble outcome): a battle starts at the site, against an army that attacks the lord at once.
+---   guardian        A battle starts at the site, against an army that attacks the lord at once: true at the current difficulty, or a
+---                   difficulty key, e.g. "hard". On an offer or a gamble outcome.
 ---   dividends       { per_turn, turns }: gold each turn start, shown by the `dividends_bundle_prefix` bundle for that amount.
 ---   incident        A site's old incident, fired as the signature reward.
 ---   gamble          A list of outcomes { weight, name, ...fields }. One is rolled when the offer is taken, and its fields apply.
@@ -31,6 +32,8 @@
 ---                   10 relations in the offer text.
 ---   points          Development points for the realm target.
 ---   heal_garrison   True: the realm target's garrison is healed to full.
+---   garrison_strength  Each unit of the realm target's garrison drops to this share of its strength.
+---   reveal_turns    The realm target's region stays revealed through the shroud for this many turns, and the result lists its garrison.
 ---   count           How many realm targets.
 ---
 --- Pre-battle offer fields (pool "pre_battle"). Taking one pays its cost and the battle starts with it:
@@ -49,6 +52,7 @@
 ---   trick           True: the battle script does it in this battle, under the offer's key (the tower's trick names).
 ---   targets         Night terrors: how many of the enemy's most expensive units flee.
 ---   shoots          True: only drawn when our army has missile units or artillery.
+---   caster          True: only drawn when our army has a spellcaster.
 ---
 --- A battle notice whose effect differs by difficulty carries the difficulty in its name, e.g. thin_the_ranks_medium (see `steps.notice`).
 ---
@@ -134,6 +138,9 @@ M.result_incident_prefix = "land_enc_incident_spot_"
 --- Context value read by a realm result's incident text: the name of the region or faction it touched.
 M.result_place_context = "land_enc_spot_result_place"
 
+--- Context value read by a result's incident text for what it found, e.g. the garrison Spy on Their Capital saw.
+M.result_detail_context = "land_enc_spot_result_detail"
+
 --- Event feed message prefix after `land_enc_`, e.g. spot_cast_the_lots_won. A result falls back to its message if its incident cannot be
 --- built.
 M.message_prefix = "spot_"
@@ -204,7 +211,7 @@ M.sites = {
     { key = "whispers_of_our_god", tags = { "blessing", "curse" }, signature = "whispers_of_the_gods", ui_image = "winds_of_magic_change" },
     { key = "the_explorer", tags = { "lore", "realm" }, signature = "the_explorer", ui_image = "minor_cult" },
     { key = "legendary_bard", tags = { "realm", "deal" }, signature = "legendary_bard", ui_image = "wulfhart_hunters" },
-    { key = "ruined_shrine", tags = { "blessing", "curse" }, signature = "holy_water", ui_image = "old_ones_temples_down" },
+    { key = "ruined_shrine", tags = { "blessing", "curse" }, signature = "stoneskin", ui_image = "old_ones_temples_down" },
     { key = "smugglers_cache", tags = { "deal", "realm_others" }, signature = "recruitment_cache", ui_image = "wh2_sea_encounters_1" },
     { key = "beast_lair", tags = { "recruit", "gamble" }, signature = "tame_the_beast", ui_image = "attrition_swamp" },
     { key = "old_battlefield", tags = { "recruit", "loot" }, signature = "salvage_a_war_machine", ui_image = "carnage_weapons" },
@@ -256,7 +263,7 @@ M.offers = {
     --- Blessings come at the low step for 5 turns, curses last 3 turns.
     { key = "touch_the_relic", pool = "treasure", tags = { "gamble", "blessing", "curse" }, gamble = {
         { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "bless_the_banners_easy", 5 } },
-        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "holy_water_easy", 5 } },
+        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "stoneskin_easy", 5 } },
         { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "ancient_tactics", 5 } },
         { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 3 } },
         { 1, "cursed", army_bundle = { PLAGUE, 3 } },
@@ -266,6 +273,11 @@ M.offers = {
         { 3, "won", items = { rarities = { "rare" }, count = 1 } },
         { 2, "lost", guardian = true },
     } },
+    --- The stake comes back doubled, or not at all.
+    { key = "double_or_nothing", pool = "treasure", tags = { "gamble", "deal" }, cost = STANDARD, gamble = {
+        { 1, "won", gold = S(3000, 4000, 5000) },
+        { 1, "lost" },
+    } },
     { key = "gamble_with_the_hermit", pool = "treasure", tags = { "gamble" }, cost = STRONG, gamble = {
         { 1, "won", unique = 1 },
         { 2, "lost" },
@@ -274,8 +286,9 @@ M.offers = {
     --- Treasure: blessings.
     { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "leave_an_offering"), 5 } },
     { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "bless_the_banners"), 5 } },
-    { key = "holy_water", pool = "treasure", tags = { "blessing" }, cost = shared.holy_water.cost, army_bundle = { tiered(SPOT_BUNDLE .. "holy_water"), 5 } },
-    { key = "oath_at_the_altar", pool = "treasure", tags = { "blessing" }, trait = "land_enc_trait_spot_shrine_sworn" },
+    { key = "stoneskin", pool = "treasure", tags = { "blessing" }, cost = shared.stoneskin.cost, army_bundle = { tiered(SPOT_BUNDLE .. "stoneskin"), 5 } },
+    --- The oath's price is the altar's keepers: a hard battle starts here.
+    { key = "oath_at_the_altar", pool = "treasure", tags = { "blessing" }, trait = "land_enc_trait_spot_shrine_sworn", guardian = "hard" },
     --- Magical attacks are yes or no, so the price buys turns.
     { key = "enchanted_steel", pool = "treasure", tags = { "blessing" }, cost = shared.enchanted_steel.cost,
         army_bundle = { SPOT_BUNDLE .. "enchanted_steel", S(5, 6, 7) } },
@@ -312,7 +325,8 @@ M.offers = {
 
     --- Realm: your own lands.
     { key = "endow_the_province", pool = "realm", tags = { "realm" }, cost = PREMIUM, realm = "own_region", points = S(50, 75, 100) },
-    { key = "shore_up_the_walls", pool = "realm", tags = { "realm" }, cost = 1500, realm = "own_region", heal_garrison = true, region_bundle = { SPOT_BUNDLE .. "shore_up_the_walls", 5 } },
+    { key = "garrison_drill", pool = "realm", tags = { "realm" }, cost = 1500, realm = "own_region", heal_garrison = true,
+        region_bundle = { SPOT_BUNDLE .. "garrison_drill", 5 } },
     { key = "raise_the_settlement", pool = "realm", tags = { "realm" }, cost = STRUCTURAL, realm = "raise_region" },
     { key = "quell_the_unrest", pool = "realm", tags = { "realm" }, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "quell_the_unrest", 5 } },
     { key = "bountiful_harvest", pool = "realm", tags = { "realm" }, cost = STANDARD, realm = "own_province", province_bundle = { tiered(SPOT_BUNDLE .. "bountiful_harvest"), 5 } },
@@ -322,12 +336,12 @@ M.offers = {
         province_bundle = { tiered(SPOT_BUNDLE .. "stir_their_rebels"), 5 } },
     { key = "poison_their_wells", pool = "realm", tags = { "realm_others" }, cost = STANDARD, realm = "enemy_region",
         region_bundle = { tiered(SPOT_BUNDLE .. "poison_their_wells"), 5 } },
-    { key = "undermine_their_walls", pool = "realm", tags = { "realm_others" }, cost = 1500, realm = "enemy_region",
-        region_bundle = { SPOT_BUNDLE .. "undermine_their_walls", 5 } },
+    { key = "sap_their_garrison", pool = "realm", tags = { "realm_others" }, cost = 1500, realm = "enemy_region", garrison_strength = 0.7,
+        region_bundle = { SPOT_BUNDLE .. "sap_their_garrison", 5 } },
     { key = "spread_the_plague", pool = "realm", tags = { "realm_others", "curse" }, realm = "enemy_regions", count = 3,
         region_bundle = { SPOT_BUNDLE .. "spread_the_plague", 5 }, army_bundle = { PLAGUE, 3 } },
     { key = "send_gifts", pool = "realm", tags = { "realm_others", "deal" }, cost = STANDARD, realm = "friend", relations = S(1, 2, 3) },
-    { key = "spy_on_their_capital", pool = "realm", tags = { "realm_others", "lore" }, cost = 1500, realm = "enemy_capital" },
+    { key = "spy_on_their_capital", pool = "realm", tags = { "realm_others", "lore" }, cost = 1500, realm = "enemy_capital", reveal_turns = 5 },
 
     --- Realm: far-off factions.
     { key = "curse_a_distant_king", pool = "realm", tags = { "realm_others", "curse" }, cost = STRONG, realm = "biggest_faction",
@@ -358,7 +372,8 @@ M.offers = {
     { key = "fire_kissed_blades", pool = "pre_battle", tags = { "buff" }, cost = shared.fire_kissed_blades.cost, battle_bundle = shared.fire_kissed_blades.bundle },
     { key = "iron_resolve", pool = "pre_battle", tags = { "buff" }, cost = shared.iron_resolve.cost, battle_bundle = shared.iron_resolve.bundle },
     { key = "drill_sergeant", pool = "pre_battle", tags = { "buff" }, cost = shared.drill_sergeant.cost, battle_bundle = shared.drill_sergeant.bundle },
-    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, cost = shared.call_the_winds.cost, battle_bundle = shared.call_the_winds.bundle },
+    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, cost = shared.call_the_winds.cost, battle_bundle = shared.call_the_winds.bundle,
+        caster = true },
     { key = "quartermasters_cache", pool = "pre_battle", tags = { "buff" }, cost = shared.quartermasters_cache.cost,
         battle_bundle = shared.quartermasters_cache.bundle, shoots = true },
     { key = "tower_artillery", pool = "pre_battle", tags = { "buff" }, cost = shared.tower_artillery.cost, battle_bundle = shared.tower_artillery.bundle },

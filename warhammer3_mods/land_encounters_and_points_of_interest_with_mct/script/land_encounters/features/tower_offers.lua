@@ -487,7 +487,7 @@ local HANDLERS = {
     },
     guard_the_standard = { eligible = function(ctx) return tower_missions.has_standard(ctx.delve) end },
     tower_artillery = { apply = battle_buff },
-    call_the_winds = { apply = battle_buff },
+    call_the_winds = { eligible = function(ctx) return offer_effects.army_has_caster(ctx.delve.general_cqi) end, apply = battle_buff },
     vortex_scroll = {
         apply = function(offer, ctx)
             add_battle_bundle(ctx.delve, offer.effect_bundles[random_number(#offer.effect_bundles)])

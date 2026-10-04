@@ -269,22 +269,28 @@ event_feed_strings_text_subtitle_event_land_enc_tower_dark_bargain_paid	The Dark
 event_feed_strings_text_description_event_land_enc_tower_dark_bargain_paid	What we bargained with in the tower has taken its due. Our lord is [[col:red]]wounded for 5 turns[[/col]], but keeps the Daemon's mark.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
-event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_lost	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_lost	Fortune Frowns	false
-event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_lost	The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue.	false
+event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_lost	The lots fall against us, as they so often do for strangers. The stranger sweeps up our stake with a crooked grin and is gone before anyone thinks to argue.	false
 event_feed_strings_text_title_event_land_enc_spot_drink_from_the_spring_won	Drink from the Spring	false
 event_feed_strings_text_subtitle_event_land_enc_spot_drink_from_the_spring_won	Healing Waters	false
-event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_won	The water runs cold and clear. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
+event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_won	The water runs cold and clear from the rock. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
 event_feed_strings_text_title_event_land_enc_spot_drink_from_the_spring_lost	Drink from the Spring	false
 event_feed_strings_text_subtitle_event_land_enc_spot_drink_from_the_spring_lost	Foul Waters	false
-event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_lost	The water tastes of rot. Within hours sickness spreads through the camp, and it will be some turns before the army is itself again.	false
+event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_lost	The water tastes of rot and old iron. Within hours sickness spreads through the camp, and the army will march weaker for some time.	false
 event_feed_strings_text_title_event_land_enc_spot_open_the_sealed_door_won	Open the Sealed Door	false
 event_feed_strings_text_subtitle_event_land_enc_spot_open_the_sealed_door_won	A Treasure Within	false
 event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours.	false
 event_feed_strings_text_title_event_land_enc_spot_open_the_sealed_door_lost	Open the Sealed Door	false
 event_feed_strings_text_subtitle_event_land_enc_spot_open_the_sealed_door_lost	A Trap Sprung	false
-event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns.	false
+event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast and carried from the chamber, badly wounded.	false
+event_feed_strings_text_title_event_land_enc_spot_double_or_nothing_won	Double or Nothing	false
+event_feed_strings_text_subtitle_event_land_enc_spot_double_or_nothing_won	The Stake Doubles	false
+event_feed_strings_text_description_event_land_enc_spot_double_or_nothing_won	The bet is called and the throw comes up in our favour. Our stake returns to the treasury doubled, and the house is not pleased about it.	false
+event_feed_strings_text_title_event_land_enc_spot_double_or_nothing_lost	Double or Nothing	false
+event_feed_strings_text_subtitle_event_land_enc_spot_double_or_nothing_lost	The Stake Is Lost	false
+event_feed_strings_text_description_event_land_enc_spot_double_or_nothing_lost	The bet is called and the throw turns against us. Our stake is gone, and the house thanks us warmly for our custom.	false
 event_feed_strings_text_title_event_land_enc_spot_wake_the_guardian_won	Wake the Guardian	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wake_the_guardian_won	It Sleeps on	false
 event_feed_strings_text_description_event_land_enc_spot_wake_the_guardian_won	The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
@@ -293,10 +299,10 @@ event_feed_strings_text_subtitle_event_land_enc_spot_wake_the_guardian_lost	It W
 event_feed_strings_text_description_event_land_enc_spot_wake_the_guardian_lost	The ground shakes as the guardian of this place rises from its slumber. It sees intruders in its lair and charges, and our army must stand and fight!	false
 event_feed_strings_text_title_event_land_enc_spot_touch_the_relic_blessed	Touch the Relic	false
 event_feed_strings_text_subtitle_event_land_enc_spot_touch_the_relic_blessed	A Blessing	false
-event_feed_strings_text_description_event_land_enc_spot_touch_the_relic_blessed	Warmth spreads from the relic into the hands that hold it. A blessing settles over our army and will stay with it for 5 turns.	false
+event_feed_strings_text_description_event_land_enc_spot_touch_the_relic_blessed	Warmth spreads from the relic into the hands that hold it. A blessing settles over the army, and the soldiers march a little taller for it.	false
 event_feed_strings_text_title_event_land_enc_spot_touch_the_relic_cursed	Touch the Relic	false
 event_feed_strings_text_subtitle_event_land_enc_spot_touch_the_relic_cursed	A Curse	false
-event_feed_strings_text_description_event_land_enc_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 3 turns.	false
+event_feed_strings_text_description_event_land_enc_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over the army, though it should not last long.	false
 event_feed_strings_text_title_event_land_enc_spot_gamble_with_the_hermit_won	Gamble with the Hermit	false
 event_feed_strings_text_subtitle_event_land_enc_spot_gamble_with_the_hermit_won	A Lucky Throw	false
 event_feed_strings_text_description_event_land_enc_spot_gamble_with_the_hermit_won	The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands.	false
@@ -305,58 +311,58 @@ event_feed_strings_text_subtitle_event_land_enc_spot_gamble_with_the_hermit_lost
 event_feed_strings_text_description_event_land_enc_spot_gamble_with_the_hermit_lost	The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone.	false
 event_feed_strings_text_title_event_land_enc_spot_endow_the_province	Endow the Province	false
 event_feed_strings_text_subtitle_event_land_enc_spot_endow_the_province	Endow the Province	false
-event_feed_strings_text_description_event_land_enc_spot_endow_the_province	Our gold builds up the place named above.	false
-event_feed_strings_text_title_event_land_enc_spot_shore_up_the_walls	Shore Up the Walls	false
-event_feed_strings_text_subtitle_event_land_enc_spot_shore_up_the_walls	Shore Up the Walls	false
-event_feed_strings_text_description_event_land_enc_spot_shore_up_the_walls	The garrison of the place named above is healed and its walls are shored up.	false
+event_feed_strings_text_description_event_land_enc_spot_endow_the_province	Our gold builds roads, walls and storehouses across the place named above. The region grows stronger and richer, and its people will remember who paid for it.	false
+event_feed_strings_text_title_event_land_enc_spot_garrison_drill	Garrison Drill	false
+event_feed_strings_text_subtitle_event_land_enc_spot_garrison_drill	Garrison Drill	false
+event_feed_strings_text_description_event_land_enc_spot_garrison_drill	Fresh supplies reach the garrison of the place named above, and its officers drill the defenders from dawn to dusk. Its walls are manned by harder soldiers now.	false
 event_feed_strings_text_title_event_land_enc_spot_raise_the_settlement	Raise the Settlement	false
 event_feed_strings_text_subtitle_event_land_enc_spot_raise_the_settlement	Raise the Settlement	false
-event_feed_strings_text_description_event_land_enc_spot_raise_the_settlement	The place named above grows, its main building raised a level.	false
+event_feed_strings_text_description_event_land_enc_spot_raise_the_settlement	Builders swarm over the place named above, raising new halls and stronger walls. In a matter of days its heart stands a level higher than before.	false
 event_feed_strings_text_title_event_land_enc_spot_quell_the_unrest	Quell the Unrest	false
 event_feed_strings_text_subtitle_event_land_enc_spot_quell_the_unrest	Quell the Unrest	false
-event_feed_strings_text_description_event_land_enc_spot_quell_the_unrest	Order returns to the place named above.	false
+event_feed_strings_text_description_event_land_enc_spot_quell_the_unrest	Our soldiers walk the streets of the place named above, and the loudest troublemakers fall quiet. Order returns, for now.	false
 event_feed_strings_text_title_event_land_enc_spot_bountiful_harvest	Bountiful Harvest	false
 event_feed_strings_text_subtitle_event_land_enc_spot_bountiful_harvest	Bountiful Harvest	false
-event_feed_strings_text_description_event_land_enc_spot_bountiful_harvest	The place named above prospers with a bountiful harvest.	false
+event_feed_strings_text_description_event_land_enc_spot_bountiful_harvest	The fields around the place named above groan under a bountiful harvest. The stores fill, the markets swell, and the people prosper.	false
 event_feed_strings_text_title_event_land_enc_spot_stir_their_rebels	Stir Their Rebels	false
 event_feed_strings_text_subtitle_event_land_enc_spot_stir_their_rebels	Stir Their Rebels	false
-event_feed_strings_text_description_event_land_enc_spot_stir_their_rebels	Unrest spreads through the enemy's lands around the place named above.	false
+event_feed_strings_text_description_event_land_enc_spot_stir_their_rebels	Our agents spread grievances and weapons among the malcontents of the place named above. Unrest spreads through the enemy's lands.	false
 event_feed_strings_text_title_event_land_enc_spot_poison_their_wells	Poison Their Wells	false
 event_feed_strings_text_subtitle_event_land_enc_spot_poison_their_wells	Poison Their Wells	false
-event_feed_strings_text_description_event_land_enc_spot_poison_their_wells	The wells of the place named above are fouled.	false
-event_feed_strings_text_title_event_land_enc_spot_undermine_their_walls	Undermine Their Walls	false
-event_feed_strings_text_subtitle_event_land_enc_spot_undermine_their_walls	Undermine Their Walls	false
-event_feed_strings_text_description_event_land_enc_spot_undermine_their_walls	The walls of the place named above are undermined.	false
+event_feed_strings_text_description_event_land_enc_spot_poison_their_wells	Under cover of night, our agents foul the wells of the place named above. Sickness spreads through its people, and any army camped there will suffer for it.	false
+event_feed_strings_text_title_event_land_enc_spot_sap_their_garrison	Sap Their Garrison	false
+event_feed_strings_text_subtitle_event_land_enc_spot_sap_their_garrison	Sap Their Garrison	false
+event_feed_strings_text_description_event_land_enc_spot_sap_their_garrison	Our saboteurs slip into the place named above, spoiling stores, cutting ropes and spreading sickness through the barracks. Its garrison is weakened and shaken.	false
 event_feed_strings_text_title_event_land_enc_spot_spread_the_plague	Spread the Plague	false
 event_feed_strings_text_subtitle_event_land_enc_spot_spread_the_plague	Spread the Plague	false
-event_feed_strings_text_description_event_land_enc_spot_spread_the_plague	Plague spreads through the enemy's lands around the place named above.	false
+event_feed_strings_text_description_event_land_enc_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around the place named above. The plague spreads, though our own army does not escape it entirely.	false
 event_feed_strings_text_title_event_land_enc_spot_send_gifts	Send Gifts	false
 event_feed_strings_text_subtitle_event_land_enc_spot_send_gifts	Send Gifts	false
-event_feed_strings_text_description_event_land_enc_spot_send_gifts	Our gifts are well received at the place named above.	false
+event_feed_strings_text_description_event_land_enc_spot_send_gifts	Our gifts are well received at the place named above. Their rulers speak of us more warmly now, and remember who remembered them.	false
 event_feed_strings_text_title_event_land_enc_spot_spy_on_their_capital	Spy on Their Capital	false
 event_feed_strings_text_subtitle_event_land_enc_spot_spy_on_their_capital	Spy on Their Capital	false
-event_feed_strings_text_description_event_land_enc_spot_spy_on_their_capital	Our spies have mapped the enemy's capital, the place named above.	false
+event_feed_strings_text_description_event_land_enc_spot_spy_on_their_capital	Our spies slip into the place named above and map every wall and gate, and we will see its streets for some time yet. They count its garrison.	false
 event_feed_strings_text_title_event_land_enc_spot_curse_a_distant_king	Curse a Distant King	false
 event_feed_strings_text_subtitle_event_land_enc_spot_curse_a_distant_king	Curse a Distant King	false
-event_feed_strings_text_description_event_land_enc_spot_curse_a_distant_king	A curse falls on the coffers of the king at the place named above.	false
+event_feed_strings_text_description_event_land_enc_spot_curse_a_distant_king	A curse falls on the treasury of the court at the place named above. Their wealth dwindles, and they will never know why.	false
 event_feed_strings_text_title_event_land_enc_spot_share_the_find	Share the Find	false
 event_feed_strings_text_subtitle_event_land_enc_spot_share_the_find	Share the Find	false
-event_feed_strings_text_description_event_land_enc_spot_share_the_find	Our neighbours at the place named above learn from what we found, and think better of us.	false
+event_feed_strings_text_description_event_land_enc_spot_share_the_find	We share what we found with our neighbours, starting at the place named above. Their scholars are grateful, and think better of us for it.	false
 event_feed_strings_text_title_event_land_enc_spot_point_them_at_each_other	Point Them at Each Other	false
 event_feed_strings_text_subtitle_event_land_enc_spot_point_them_at_each_other	Point Them at Each Other	false
-event_feed_strings_text_description_event_land_enc_spot_point_them_at_each_other	Rumours spread from the place named above, and two rivals now eye each other with suspicion.	false
+event_feed_strings_text_description_event_land_enc_spot_point_them_at_each_other	Rumours spread from the place named above, carefully planted by our agents. Two rivals now eye each other with suspicion.	false
 event_feed_strings_text_title_event_land_enc_spot_sell_their_secrets	Sell Their Secrets	false
 event_feed_strings_text_subtitle_event_land_enc_spot_sell_their_secrets	Sell Their Secrets	false
-event_feed_strings_text_description_event_land_enc_spot_sell_their_secrets	The secrets are sold at the place named above, and our enemies grow closer.	false
+event_feed_strings_text_description_event_land_enc_spot_sell_their_secrets	The secrets fetch a fine price at the place named above. But word travels, and our enemies grow closer to one another.	false
 event_feed_strings_text_title_event_land_enc_spot_ransom_the_captain	Ransom the Captain	false
 event_feed_strings_text_subtitle_event_land_enc_spot_ransom_the_captain	Ransom the Captain	false
-event_feed_strings_text_description_event_land_enc_spot_ransom_the_captain	Their captain is ransomed to the place named above, and their kin will not forget it.	false
+event_feed_strings_text_description_event_land_enc_spot_ransom_the_captain	Their captain is ransomed back to the place named above, and the price is paid in full. Their kin will not forget the humiliation.	false
 event_feed_strings_text_title_event_land_enc_spot_chase_the_routers_won	Chase the Routers	false
 event_feed_strings_text_subtitle_event_land_enc_spot_chase_the_routers_won	A Rich Catch	false
 event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours.	false
 event_feed_strings_text_title_event_land_enc_spot_chase_the_routers_lost	Chase the Routers	false
 event_feed_strings_text_subtitle_event_land_enc_spot_chase_the_routers_lost	Ambushed	false
-event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns.	false
+event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for a time.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_headhunt_met	Headhunt	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_headhunt_met	Mission Met	false
 event_feed_strings_text_description_event_land_enc_spot_mission_headhunt_met	The enemy lord fell in time, just as we vowed. Their finest possession, a rare item, now belongs to us.	false

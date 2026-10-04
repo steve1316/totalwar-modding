@@ -149,6 +149,19 @@ function M.remove_unit(general_cqi, entry)
     end
 end
 
+--- True when an army has a spellcaster: its lord or one of the heroes in it.
+--- @param general_cqi number The army's lord's command queue index.
+--- @returns boolean True when one of its characters is a caster.
+function M.army_has_caster(general_cqi)
+    local force = tower_army.delving_force(general_cqi)
+    if not force then return false end
+    local characters = force:character_list()
+    for i = 0, characters:num_items() - 1 do
+        if characters:item_at(i):is_caster() then return true end
+    end
+    return false
+end
+
 --- Gives a lord experience points.
 --- @param general_cqi number The lord's command queue index.
 --- @param xp number The experience.

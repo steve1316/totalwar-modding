@@ -58,13 +58,13 @@ M.offers = {
     { key = "quartermasters_cache", guide_section = "battle_buffs", cost = shared.quartermasters_cache.cost, effect_bundle = shared.quartermasters_cache.bundle },
     { key = "drill_sergeant", guide_section = "battle_buffs", cost = shared.drill_sergeant.cost, effect_bundle = shared.drill_sergeant.bundle },
     { key = "iron_resolve", guide_section = "battle_buffs", cost = shared.iron_resolve.cost, effect_bundle = shared.iron_resolve.bundle },
-    --- Holy Water, as the spots name it. The key stays for saves.
-    { key = "stoneskin", guide_section = "battle_buffs", cost = shared.holy_water.cost, effect_bundle = tiered("land_enc_effect_tower_stoneskin") },
+    { key = "stoneskin", guide_section = "battle_buffs", cost = shared.stoneskin.cost, effect_bundle = tiered("land_enc_effect_tower_stoneskin") },
     { key = "scaling_blessing", guide_section = "battle_buffs", cost_share_by_floor = { 0.25, 0.25, 0.5, 0.5 }, per_floor = true, effect_bundle = "land_enc_effect_tower_scaling_blessing" },
     --- In-battle tricks act in the next floor's battle only. An `effect_bundle` grants a vanilla army ability or more winds of magic, and
     --- `effect_bundles` picks one of several at random. A `trick` is done by the battle script (script/battle/mod/land_enc_tower_buffs.lua),
     --- which holds its timings. Night terrors routs the floor army's `targets` most expensive units.
     { key = "tower_artillery", guide_section = "spells", cost = shared.tower_artillery.cost, effect_bundle = shared.tower_artillery.bundle },
+    --- Only drawn when the army has a spellcaster.
     { key = "call_the_winds", guide_section = "spells", cost = shared.call_the_winds.cost, effect_bundle = shared.call_the_winds.bundle },
     { key = "vortex_scroll", guide_section = "spells", cost = 1500, effect_bundles = { "land_enc_effect_tower_vortex_scroll_storm_of_fire", "land_enc_effect_tower_vortex_scroll_wraith_storm",
         "land_enc_effect_tower_vortex_scroll_soul_storm" } },

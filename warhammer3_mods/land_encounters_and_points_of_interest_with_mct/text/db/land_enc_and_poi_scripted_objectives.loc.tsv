@@ -240,17 +240,17 @@ scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_hard	[[col:g
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_hard_message	Iron Resolve: +30 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_hard_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy	[[col:green]]Holy Water: +5% physical resistance.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy	[[col:green]]Stoneskin: +5% physical resistance.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_easy		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy_message	Holy Water: +5% physical resistance.	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy_message	Stoneskin: +5% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_easy_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium	[[col:green]]Holy Water: +10% physical resistance.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium	[[col:green]]Stoneskin: +10% physical resistance.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_medium		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium_message	Holy Water: +10% physical resistance.	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium_message	Stoneskin: +10% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_medium_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard	[[col:green]]Holy Water: +15% physical resistance.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard	[[col:green]]Stoneskin: +15% physical resistance.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_hard		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard_message	Holy Water: +15% physical resistance.	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard_message	Stoneskin: +15% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_easy	[[col:green]]Call the Winds: +20 Winds of Magic in reserve.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_easy		false
