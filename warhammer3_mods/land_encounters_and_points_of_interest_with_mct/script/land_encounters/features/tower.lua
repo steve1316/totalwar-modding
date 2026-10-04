@@ -615,8 +615,7 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         ally_options = ally_options,
     }, general:faction():subculture())
     --- The battle manager puts these on the floor army once it spawns.
-    army.enemy_strength = sabotage.enemy_strength
-    army.enemy_bundles = sabotage.enemy_bundles
+    army.sabotage = sabotage
     if next_floor.mirror then
         army.units_pool, delve.mirror_copied = tower_offers.mirror_units(delve)
         log("tower: the floor " .. floor_number .. " army mirrors " .. delve.mirror_copied .. " of our units")

@@ -110,6 +110,21 @@ local function lord_of(sunits)
     return nil
 end
 
+--- Makes our lord unable to die until told otherwise.
+--- @param ours table Our script units.
+--- @param label string The trick's name, for the log.
+--- @returns table|nil The lord's script unit, nil when there is none.
+local function make_lord_invincible(ours, label)
+    local lord = lord_of(ours)
+    if not lord then
+        log(label .. ": no lord found")
+        return nil
+    end
+    lord:set_invincible(true)
+    lord:release_control()
+    return lord
+end
+
 --- Marks a mission's unit for the whole battle: a ping icon above it and a pulsing unit card, so the player can tell which it is. UI only, so a
 --- failure is logged and the mission goes on.
 --- @param sunit table The script unit.
@@ -209,13 +224,8 @@ local TRICKS = {
     --- Our lord cannot be harmed for the opening minutes.
     divine_shield = function(ours, _, seconds)
         local shield_ms = (seconds or DIVINE_SHIELD_SECONDS) * 1000
-        local lord = lord_of(ours)
-        if not lord then
-            log("Divine shield: no lord found")
-            return
-        end
-        lord:set_invincible(true)
-        lord:release_control()
+        local lord = make_lord_invincible(ours, "Divine shield")
+        if not lord then return end
         bm:callback(function()
             lord:set_invincible(false)
             lord:release_control()
@@ -240,6 +250,12 @@ local TRICKS = {
             end
         end, NIGHT_TERRORS_MS, "land_enc_tower_night_terrors")
         log("Night terrors: " .. table.concat(targets, ", ") .. " will flee after " .. NIGHT_TERRORS_MS / 1000 .. " s")
+    end,
+    --- Last ditch oath: our lord cannot die for the whole battle.
+    last_ditch_oath = function(ours)
+        local lord = make_lord_invincible(ours, "Last ditch oath")
+        if not lord then return end
+        log("Last ditch oath: the lord " .. lord.unit:type() .. " cannot die this battle")
     end,
     --- The enemy lord is slain as the battle starts.
     assassinate = function(_, theirs)

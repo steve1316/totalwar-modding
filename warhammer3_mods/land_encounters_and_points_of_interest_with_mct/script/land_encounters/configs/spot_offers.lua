@@ -42,6 +42,7 @@
 ---   no_heroes       True: the enemy army has no heroes.
 ---   max_tier        The enemy army's units are at most this tier.
 ---   enemy_strength  The enemy's units start at this share of full strength.
+---   champion_strength  The enemy's most expensive unit starts at this share of full strength.
 ---   enemy_bundle    A bundle on the enemy army for the battle.
 ---   traitor         { count, tiers }: units of the enemy's faction join our army, and the enemy fields that many fewer.
 ---   battle_bundle   A bundle on our army for this battle only, taken off when it ends. Its notice is the tower's for that bundle.
@@ -367,6 +368,13 @@ M.offers = {
     { key = "turn_a_traitor", pool = "pre_battle", tags = { "sabotage" }, cost = shared.turn_a_traitor.cost,
         traitor = { count = 1, tiers = shared.turn_a_traitor.tiers } },
 
+    { key = "cripple_their_champion", pool = "pre_battle", tags = { "sabotage" }, cost = shared.cripple_their_champion.cost,
+        champion_strength = shared.cripple_their_champion.champion_strength },
+    { key = "spike_the_guns", pool = "pre_battle", tags = { "sabotage" }, cost = shared.spike_the_guns.cost, enemy_bundle = shared.spike_the_guns.enemy_bundle,
+        roster = shared.spike_the_guns.roster },
+    { key = "bait_and_switch", pool = "pre_battle", tags = { "sabotage" }, cost = shared.bait_and_switch.cost, budget = shared.bait_and_switch.budget,
+        enemy_strength = shared.bait_and_switch.enemy_strength },
+
     --- Pre-battle: buffs on our army for this battle.
     { key = "war_rites", pool = "pre_battle", tags = { "buff" }, cost = shared.war_rites.cost, battle_bundle = shared.war_rites.bundle },
     { key = "whetstones_and_oil", pool = "pre_battle", tags = { "buff" }, cost = shared.whetstones_and_oil.cost, battle_bundle = shared.whetstones_and_oil.bundle },
@@ -379,6 +387,8 @@ M.offers = {
     { key = "quartermasters_cache", pool = "pre_battle", tags = { "buff" }, cost = shared.quartermasters_cache.cost,
         battle_bundle = shared.quartermasters_cache.bundle, shoots = true },
     { key = "tower_artillery", pool = "pre_battle", tags = { "buff" }, cost = shared.tower_artillery.cost, battle_bundle = shared.tower_artillery.bundle },
+
+    { key = "last_ditch_oath", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.last_ditch_oath.bundle },
 
     --- Pre-battle: allies by size, and a gamble.
     { key = "allies_in_the_dark_small", pool = "pre_battle", tags = { "allies" }, cost = shared.allies_in_the_dark_small.cost,

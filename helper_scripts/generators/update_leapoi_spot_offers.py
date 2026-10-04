@@ -221,6 +221,14 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                            "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership."),
     "curse_their_blades": ("Curse Their Blades", PAY + "curse their weapons: enemy units have [[col:green]]-{e0}[[/col]] "
                            "[[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack."),
+    "cripple_their_champion": ("Cripple Their Champion", PAY + "cripple their champion: the enemy's [[col:green]]most expensive unit[[/col]] starts at "
+                               "[[col:green]]{champion}% strength[[/col]]."),
+    "spike_the_guns": ("Spike the Guns", PAY + "spike their guns and spoil their arrows: enemy shooters have [[col:green]]-{e0}%[[/col]] "
+                       "[[img:ui/skins/default/icon_stat_ammo.png]][[/img]] ammunition."),
+    "bait_and_switch": ("Bait and Switch", PAY + "lure them into a false muster: the enemy army is [[col:red]]{stronger}% bigger[[/col]], but every unit starts "
+                        "at [[col:green]]{strength}% strength[[/col]]."),
+    "last_ditch_oath": ("Last Ditch Oath", "Swear a last ditch oath: our lord [[col:green]]cannot die[[/col]] in this battle, but our army has "
+                        + stat("-{e0}", *LEADERSHIP, colour="red") + "."),
     "turn_a_traitor": ("Turn a Traitor", PAY + "turn a traitor: [[col:green]]a tier {tiers} unit[[/col]] of the enemy's kind joins our army now, and the enemy fields one unit fewer."),
     "war_rites": ("War Rites", PAY + "hold war rites: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, "
                   "[[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership in this battle."),
@@ -320,6 +328,7 @@ ICONS = {
     "curse_their_blades": "hex_1.png", "drill_sergeant": "charge.png", "tower_artillery": "siege_attack.png",
     "allies_in_the_dark_small": "trade_agreement.png", "allies_in_the_dark_medium": "trade_agreement.png", "allies_in_the_dark_large": "trade_agreement.png",
     "untouchable": "health_character.png",
+    "cripple_their_champion": "blood_kiss.png", "spike_the_guns": "ammo.png", "bait_and_switch": "trickster_cult.png", "last_ditch_oath": "attribute_unbreakable.png",
     "lords_glory": "rampage_savage.png", "monster_slayer": "hellforged.png", "steadfast": "morale.png", "decapitate": "nemesis_crown_sealed.png",
     "against_the_odds": "vigour.png", "rout_the_riders": "cotw_track_army.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
 }
@@ -759,7 +768,7 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
 
     Returns:
         Dict[str, str]: Placeholder -> value. Besides the offer's numbers: {won_gold}, {lost_gold}, {lost_turns}, {lost_strength}, {turns},
-        {per_turn}, {per_unit}, {tiers}, {relations} (in tens), {daemon_armies}, {armies}, {heal}, {stronger}, {weaker}, {strength},
+        {per_turn}, {per_unit}, {tiers}, {relations} (in tens), {daemon_armies}, {armies}, {heal}, {stronger}, {weaker}, {strength}, {champion},
         {ranks}, {targets}, {minutes} (of a battle value in seconds), {garrison} (as a percent), {ally_min}, {ally_max} and {e0}, {e1}... for the
         effects of the bundle it gives, signs dropped.
     """
@@ -803,6 +812,8 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
         values["weaker"] = str(round((1 - budget) * 100))
     if "enemy_strength" in offer:
         values["strength"] = str(round(offer["enemy_strength"] * 100))
+    if "champion_strength" in offer:
+        values["champion"] = str(round(offer["champion_strength"] * 100))
     if "ranks" in offer:
         values["ranks"] = plural(offer["ranks"], "rank")
     if isinstance(offer.get("battle_value"), int) and offer["battle_value"] >= 60:
@@ -899,21 +910,21 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         for difficulty, name in notice_names(notice, config):
             shown = text.format_map(line_values(config["at"][difficulty][offer_key], bundles))
             objective(name, ICONS[NOTICE_ICONS.get(notice, notice)], f"[[col:{colour}]]{shown}[[/col]]", shown)
-    for name, (_, _, _, _, _, notice) in TOWER_BUNDLES.items():
+    for name, (_, _, _, _, effects, notice) in TOWER_BUNDLES.items():
         if notice:
-            for difficulty in DIFFICULTIES:
-                shown = notice[1].format_map(line_values({"effect_bundle": f"{TOWER_BUNDLE}{name}_{difficulty}"}, bundles))
-                objective(f"{name}_{difficulty}", tower_icon(name), f"[[col:{notice[0]}]]{shown}[[/col]]", shown)
+            for _, bundle_name in stepped_names(name, any(isinstance(value, tuple) for _, _, value in effects)):
+                shown = notice[1].format_map(line_values({"effect_bundle": TOWER_BUNDLE + bundle_name}, bundles))
+                objective(bundle_name, tower_icon(name), f"[[col:{notice[0]}]]{shown}[[/col]]", shown)
     for key, (colour, text) in TOWER_NOTICE_TEXT.items():
         for difficulty, name in notice_names(key, config):
             shown = text.format_map(line_values(config["tower_at"][difficulty][key], bundles))
             objective(name, tower_icon(key), f"[[col:{colour}]]{shown}[[/col]]", shown)
     for key in tower_line_keys(config):
         line_text, broke_text = TOWER_LINES[key]
-        for difficulty in DIFFICULTIES:
+        for difficulty, name in stepped_names(key, config["tower_varies"].get(key)):
             offer = config["tower_at"][difficulty][key]
             values = line_values(offer, bundles)
-            component = f"{config['tower_line_prefix']}{key}_{difficulty}"
+            component = config["tower_line_prefix"] + name
             line(component, tower_icon(key), line_text.format_map(values))
             if broke_text and "cost" in offer:
                 line(component + config["tower_unaffordable_suffix"], tower_icon(key), broke_text.format_map(values))
@@ -1102,13 +1113,26 @@ def notice_names(notice: str, config: Dict) -> List[Tuple[str, str]]:
     Returns:
         List[Tuple[str, str]]: (difficulty, notice name) pairs.
     """
-    if config["notice_varies"].get(notice):
-        return [(difficulty, f"{notice}_{difficulty}") for difficulty in DIFFICULTIES]
-    return [("easy", notice)]
+    return stepped_names(notice, config["notice_varies"].get(notice))
+
+
+def stepped_names(base: str, stepped: bool) -> List[Tuple[str, str]]:
+    """Names a row that may differ by difficulty: one name per difficulty when it does, else the base name once, shown with the Easy numbers.
+
+    Args:
+        base (str): The base name.
+        stepped (bool): True when the row differs by difficulty.
+
+    Returns:
+        List[Tuple[str, str]]: (difficulty, name) pairs.
+    """
+    if stepped:
+        return [(difficulty, f"{base}_{difficulty}") for difficulty in DIFFICULTIES]
+    return [(DIFFICULTIES[0], base)]
 
 
 def tower_line_keys(config: Dict) -> List[str]:
-    """Lists the tower offers whose lines this script writes: those that differ by difficulty.
+    """Lists the tower offers whose lines this script writes: those that differ by difficulty, and those with text in `TOWER_LINES`.
 
     Args:
         config (Dict): The loaded config.
@@ -1116,7 +1140,7 @@ def tower_line_keys(config: Dict) -> List[str]:
     Returns:
         List[str]: Offer keys in config order.
     """
-    return [offer["key"] for offer in config["tower_offers"] if config["tower_varies"].get(offer["key"])]
+    return [offer["key"] for offer in config["tower_offers"] if config["tower_varies"].get(offer["key"]) or offer["key"] in TOWER_LINES]
 
 
 def owned_patterns(config: Dict) -> List[Pattern]:
@@ -1129,7 +1153,7 @@ def owned_patterns(config: Dict) -> List[Pattern]:
     Returns:
         List[Pattern]: One pattern per kind of row.
     """
-    tower_notices = [key for key in TOWER_NOTICE_TEXT if config["notice_varies"].get(key)]
+    tower_notices = list(TOWER_NOTICE_TEXT)
     bundle_notices = [name for name, entry in TOWER_BUNDLES.items() if entry[5]]
     difficulty = f"(?:_(?:{'|'.join(DIFFICULTIES)}))?"
     kinds = [(config["tower_line_prefix"], tower_line_keys(config), "(?:_unaffordable)?"), (TOWER_BUNDLE, list(TOWER_BUNDLES), ""),

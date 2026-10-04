@@ -786,19 +786,29 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
     )
 end
 
---- Puts the event army's sabotage on its spawned force: each of `enemy_bundles`, and every unit but the characters at `enemy_strength` of full
---- strength. Armies without them are left alone.
+--- Puts the event army's `sabotage` on its spawned force: each of `enemy_bundles`, every unit but the characters at `enemy_strength` of full
+--- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone.
 --- @param force military_force The spawned invasion force.
 function InvasionBattleManager:weaken_invasion_force(force)
-    local army = self.event_army
-    for _, bundle in ipairs(army.enemy_bundles or {}) do
+    local sabotage = self.event_army.sabotage or {}
+    for _, bundle in ipairs(sabotage.enemy_bundles or {}) do
         cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
     end
-    if not army.enemy_strength then return end
+    local want_champion = sabotage.champion_strength and sabotage.champion_strength < (sabotage.enemy_strength or 1)
+    if not sabotage.enemy_strength and not want_champion then return end
     local units = force:unit_list()
+    local champion, champion_price = nil, -1
     for i = 0, units:num_items() - 1 do
         local unit = units:item_at(i)
-        if unit:unit_class() ~= "com" then cm:set_unit_hp_to_unary_of_maximum(unit, army.enemy_strength) end
+        if unit:unit_class() ~= "com" then
+            if sabotage.enemy_strength then cm:set_unit_hp_to_unary_of_maximum(unit, sabotage.enemy_strength) end
+            local price = want_champion and army_generator.unit_price_by_key(unit:unit_key()) or -1
+            if price > champion_price then champion, champion_price = unit, price end
+        end
+    end
+    if champion then
+        cm:set_unit_hp_to_unary_of_maximum(champion, sabotage.champion_strength)
+        out("LEAPOI: the enemy's champion " .. champion:unit_key() .. " starts at " .. sabotage.champion_strength * 100 .. "% strength")
     end
 end
 

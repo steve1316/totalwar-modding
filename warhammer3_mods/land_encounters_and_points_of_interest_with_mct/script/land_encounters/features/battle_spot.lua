@@ -351,8 +351,7 @@ function BattleEventDelegate:get_offensive_army()
     end
     local army = Army:new_from_event(self.cached_event, player_subculture)
     --- The battle manager puts the pre-battle offers' sabotage on the army once it spawns.
-    army.enemy_strength = self.cached_event.enemy_strength
-    army.enemy_bundles = self.cached_event.enemy_bundles
+    army.sabotage = self.cached_event
     return army
 end
 

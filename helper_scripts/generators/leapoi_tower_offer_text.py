@@ -83,6 +83,14 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "curse_their_blades": (PAY + "curse the next floor's weapons: its units have [[col:green]]-{e0}[[/col]] " + icon("icon_stat_attack") + " melee attack.",
                            broke("their blades stay sharp")),
     "assassinate": (PAY + "send an assassin up the stairs: the next floor's [[col:green]]lord is slain as the battle starts[[/col]].", broke("no assassin climbs the stairs")),
+    "cripple_their_champion": (PAY + "cripple the next floor's champion: its [[col:green]]most expensive unit[[/col]] starts at [[col:green]]{champion}% strength[[/col]].",
+                               broke("their champion stands ready")),
+    "spike_the_guns": (PAY + "spike the next floor's guns: its shooters have [[col:green]]-{e0}%[[/col]] " + icon("icon_stat_ammo") + " ammunition.",
+                       broke("their guns stay loaded")),
+    "bait_and_switch": (PAY + "lure the next floor into a false muster: its army is [[col:red]]{stronger}% bigger[[/col]], but every unit starts at "
+                        "[[col:green]]{strength}% strength[[/col]].", broke("no bait is laid")),
+    "last_ditch_oath": ("Swear a last ditch oath: our lord [[col:green]]cannot die[[/col]] in the next battle, but our army has [[col:red]]-{e0}[[/col]] "
+                        + icon("icon_stat_morale") + " leadership.", None),
     "turn_a_traitor": (PAY + "turn a traitor: [[col:green]]a tier {tiers} unit[[/col]] of the next floor's army joins ours now, and that army fields one unit fewer.",
                        broke("no one turns")),
     "tower_dividends": (PAY + "buy a share of the tower's vaults: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for {turns} turns, kept even if the "
@@ -155,6 +163,11 @@ TOWER_BUNDLES = {
                            [("wh_main_effect_force_stat_leadership", "force_to_force_own", (-10, -15, -20))], None),
     "curse_their_blades": ("force", "icon_effects_fortify.png", "Cursed Blades", "A curse dulls every blade in this army.",
                            [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (-5, -10, -15))], None),
+    "spike_the_guns": ("force", "icon_effects_fortify.png", "Spiked Guns", "Spiked guns and spoiled arrows leave this army short of shot.",
+                       [("wh_main_effect_force_stat_ammunition", "force_to_force_own", (-30, -40, -50))], None),
+    "last_ditch_oath": ("force", "icon_effects_fortify.png", "Last Ditch Oath", "Our lord swore to stand to the last, and the army knows what it may cost.",
+                        [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10)],
+                        ("yellow", "Last Ditch Oath: our lord cannot die, but our army has -{e0} " + icon("icon_stat_morale") + ".")),
     "towers_favour": ("faction", "income.png", "Tower's Favour", "The tower's masters speak well of us. Trade flows a little easier.",
                       [("wh_main_effect_economy_gdp_mod_all", "faction_to_region_own", (5, 10, 15))], None),
 }
@@ -170,4 +183,7 @@ NOTICES = {
     "turn_a_traitor": ("red", "Turn a Traitor: one of the enemy's units fights for us."),
     "night_terrors": ("green", "Night Terrors: the enemy's {targets} after 1 minute."),
     "divine_shield": ("green", "Divine Shield: our lord cannot be harmed for the first {minutes} minutes."),
+    "cripple_their_champion": ("red", "Cripple Their Champion: the enemy's finest unit starts at {champion}% strength."),
+    "spike_the_guns": ("red", "Spike the Guns: enemy shooters have -{e0}% " + icon("icon_stat_ammo") + "."),
+    "bait_and_switch": ("red", "Bait and Switch: the enemy army is {stronger}% bigger, but every unit starts at {strength}% strength."),
 }

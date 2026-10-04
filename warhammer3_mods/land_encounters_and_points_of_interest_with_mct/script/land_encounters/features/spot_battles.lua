@@ -241,15 +241,8 @@ end
 --- @param event table The battle event.
 local function apply_to_event(fields, event)
     if fields.budget then event.budget_multiplier = (event.budget_multiplier or 1) * fields.budget end
-    if fields.fewer_units then event.fewer_units = (event.fewer_units or 0) + fields.fewer_units end
+    offer_effects.merge_sabotage(event, fields)
     if fields.traitor then event.fewer_units = (event.fewer_units or 0) + fields.traitor.count end
-    if fields.no_heroes then event.no_heroes = true end
-    if fields.max_tier then event.max_tier = math.min(event.max_tier or fields.max_tier, fields.max_tier) end
-    if fields.enemy_strength then event.enemy_strength = math.min(event.enemy_strength or 1, fields.enemy_strength) end
-    if fields.enemy_bundle then
-        event.enemy_bundles = event.enemy_bundles or {}
-        event.enemy_bundles[#event.enemy_bundles + 1] = fields.enemy_bundle
-    end
     if fields.battle_bundle then
         event.battle_bundles = event.battle_bundles or {}
         event.battle_bundles[#event.battle_bundles + 1] = fields.battle_bundle
@@ -339,6 +332,7 @@ function M.take(faction_name, choice_key, event)
     log("spot battle: " .. faction_name .. " took " .. offer.key .. ", treasury " .. before .. " -> " .. offer_effects.treasury(faction_name)
         .. ", event budget x" .. tostring(event.budget_multiplier) .. ", fewer units " .. tostring(event.fewer_units) .. ", no heroes "
         .. tostring(event.no_heroes) .. ", max tier " .. tostring(event.max_tier) .. ", enemy strength " .. tostring(event.enemy_strength)
+        .. ", champion strength " .. tostring(event.champion_strength) .. ", enemy bundles " .. table.concat(event.enemy_bundles or {}, ", ")
         .. ", missions " .. table.concat(event.missions, ", "))
     return "fight"
 end

@@ -114,6 +114,10 @@ land_enc_effect_tower_break_their_spirit_hard			force	1	icon_effects_fortify.png
 land_enc_effect_tower_curse_their_blades_easy			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_curse_their_blades_medium			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_curse_their_blades_hard			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_spike_the_guns_easy			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_spike_the_guns_medium			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_spike_the_guns_hard			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_last_ditch_oath			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_towers_favour_easy			faction	1	income.png	true	false	true
 land_enc_effect_tower_towers_favour_medium			faction	1	income.png	true	false	true
 land_enc_effect_tower_towers_favour_hard			faction	1	income.png	true	false	true

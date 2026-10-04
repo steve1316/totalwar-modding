@@ -288,6 +288,10 @@ scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_hard	[[col
 scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_hard_message	Call the Winds: +40 Winds of Magic in reserve.	false
 scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_last_ditch_oath	[[col:yellow]]Last Ditch Oath: our lord cannot die, but our army has -10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_last_ditch_oath		false
+scripted_objectives_localised_text_land_enc_tower_buff_last_ditch_oath_message	Last Ditch Oath: our lord cannot die, but our army has -10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_last_ditch_oath_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_easy	[[col:red]]Bribe the Guards: the enemy army is 15% weaker.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_bribe_the_guards_easy		false
 scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_easy_message	Bribe the Guards: the enemy army is 15% weaker.	false
@@ -384,3 +388,23 @@ scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_hard	[[col:
 scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_hard_message	Divine Shield: our lord cannot be harmed for the first 10 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_cripple_their_champion	[[col:red]]Cripple Their Champion: the enemy's finest unit starts at 50% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_cripple_their_champion		false
+scripted_objectives_localised_text_land_enc_tower_buff_cripple_their_champion_message	Cripple Their Champion: the enemy's finest unit starts at 50% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_cripple_their_champion_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_easy	[[col:red]]Spike the Guns: enemy shooters have -30% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_easy_message	Spike the Guns: enemy shooters have -30% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_medium	[[col:red]]Spike the Guns: enemy shooters have -40% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_medium_message	Spike the Guns: enemy shooters have -40% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_hard	[[col:red]]Spike the Guns: enemy shooters have -50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_hard_message	Spike the Guns: enemy shooters have -50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bait_and_switch	[[col:red]]Bait and Switch: the enemy army is 25% bigger, but every unit starts at 75% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_bait_and_switch		false
+scripted_objectives_localised_text_land_enc_tower_buff_bait_and_switch_message	Bait and Switch: the enemy army is 25% bigger, but every unit starts at 75% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bait_and_switch_message		false

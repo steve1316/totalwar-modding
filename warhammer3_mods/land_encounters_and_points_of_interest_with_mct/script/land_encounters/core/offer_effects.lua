@@ -220,6 +220,23 @@ function M.dark_bargain(general_cqi, offer)
     tower_army.apply_bundle(general_cqi, offer.effect_bundle)
 end
 
+--- Folds one offer's sabotage into what the enemy army is built and weakened with: `no_heroes`, `fewer_units` (added up), `max_tier` (the
+--- lowest), `min_tier` (the highest), `enemy_strength` and `champion_strength` (the lowest) and `enemy_bundles` (each `enemy_bundle`).
+--- @param into table The battle event or sabotage options to fold into.
+--- @param offer table The offer record or gamble outcome.
+function M.merge_sabotage(into, offer)
+    if offer.no_heroes then into.no_heroes = true end
+    if offer.fewer_units then into.fewer_units = (into.fewer_units or 0) + offer.fewer_units end
+    if offer.max_tier then into.max_tier = math.min(into.max_tier or offer.max_tier, offer.max_tier) end
+    if offer.min_tier then into.min_tier = math.max(into.min_tier or offer.min_tier, offer.min_tier) end
+    if offer.enemy_strength then into.enemy_strength = math.min(into.enemy_strength or 1, offer.enemy_strength) end
+    if offer.champion_strength then into.champion_strength = math.min(into.champion_strength or 1, offer.champion_strength) end
+    if offer.enemy_bundle then
+        into.enemy_bundles = into.enemy_bundles or {}
+        into.enemy_bundles[#into.enemy_bundles + 1] = offer.enemy_bundle
+    end
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Faction changes

@@ -189,12 +189,12 @@ local function allies(offer, ctx)
     battle_trick(offer, ctx)
 end
 
---- Applies a sabotage offer: the next floor's army is built and marked with it, see `M.sabotage_options`. It is kept under its notice name,
---- which carries the difficulty when its effect differs by it.
+--- Applies a sabotage offer: the next floor's army is built and marked with it, see `M.sabotage_options`, and its budget multiplied by any
+--- `next_budget`. It is kept under its notice name, which carries the difficulty when its effect differs by it.
 --- @param offer table The offer record at the delve's offer difficulty.
 --- @param ctx table The offer context.
 local function sabotage(offer, ctx)
-    change_next_floor(ctx.delve, { sabotage = steps.notice(offer.key, find(offer.key), offer_difficulty(ctx.delve)) })
+    change_next_floor(ctx.delve, { sabotage = steps.notice(offer.key, find(offer.key), offer_difficulty(ctx.delve)), budget = offer.next_budget })
 end
 
 --- An offer's gold cost from the haul: its fixed `cost`, or its `cost_share` of the haul's gold.
@@ -435,6 +435,10 @@ local HANDLERS = {
     lower_tiers_only = { apply = sabotage },
     break_their_spirit = { apply = sabotage },
     curse_their_blades = { apply = sabotage },
+    cripple_their_champion = { apply = sabotage },
+    spike_the_guns = { apply = sabotage },
+    bait_and_switch = { apply = sabotage },
+    last_ditch_oath = { apply = battle_buff },
     assassinate = { eligible = function(ctx) return not (ctx.delve.next_floor and ctx.delve.next_floor.champion) end, apply = sabotage },
     turn_a_traitor = { eligible = recruit, apply = sabotage },
     freed_prisoner = {
@@ -916,24 +920,15 @@ function M.grey_out_taken(delve, dilemma_key)
     dilemmas.grey_out(dilemma_key, taken)
 end
 
---- Turns the sabotage taken for the next floor into what its army needs: generator options (`no_heroes`, `fewer_units`, `max_tier`) and what is
---- put on it once it spawns (`enemy_strength`, the lowest taken, and `enemy_bundles`).
+--- Turns the sabotage taken for the next floor into what its army needs: generator options (`no_heroes`, `fewer_units`, `max_tier`, `min_tier`)
+--- and what is put on it once it spawns (`enemy_strength`, `champion_strength` and `enemy_bundles`), see `offer_effects.merge_sabotage`.
 --- @param next_floor table|nil The delve's next-floor changes.
 --- @returns table The options, with `enemy_bundles` nil when no bundle was taken.
 function M.sabotage_options(next_floor)
     local options = {}
     for _, name in ipairs(next_floor and next_floor.sabotage or {}) do
         local key, difficulty = steps.split(name)
-        local offer = offers_data.at(key, difficulty or "easy")
-        options.no_heroes = options.no_heroes or offer.no_heroes
-        options.fewer_units = offer.fewer_units and (options.fewer_units or 0) + offer.fewer_units or options.fewer_units
-        options.max_tier = offer.max_tier and math.min(options.max_tier or offer.max_tier, offer.max_tier) or options.max_tier
-        options.min_tier = offer.min_tier and math.max(options.min_tier or offer.min_tier, offer.min_tier) or options.min_tier
-        options.enemy_strength = offer.enemy_strength and math.min(options.enemy_strength or 1, offer.enemy_strength) or options.enemy_strength
-        if offer.enemy_bundle then
-            options.enemy_bundles = options.enemy_bundles or {}
-            options.enemy_bundles[#options.enemy_bundles + 1] = offer.enemy_bundle
-        end
+        offer_effects.merge_sabotage(options, offers_data.at(key, difficulty or "easy"))
     end
     options.lord_subtype = next_floor and next_floor.champion
     return options

@@ -75,13 +75,21 @@ M.offers = {
     --- The next floor's army budget is multiplied by `next_budget`.
     { key = "bribe_the_guards", guide_section = "sabotage", cost = shared.bribe_the_guards.cost, next_budget = shared.bribe_the_guards.budget },
     --- Sabotage weakens the next floor's army. `no_heroes`, `fewer_units` (off its unit cap) and `max_tier` (its highest unit tier) shape how it
-    --- is built. `enemy_strength` (each unit's starting strength) and `enemy_bundle` are put on it once it spawns.
+    --- is built. `enemy_strength` (each unit's starting strength), `champion_strength` (its most expensive unit's) and `enemy_bundle` are put
+    --- on it once it spawns. `next_budget` multiplies its budget.
     { key = "poison_the_stores", guide_section = "sabotage", cost = shared.poison_the_stores.cost, enemy_strength = shared.poison_the_stores.enemy_strength },
     { key = "kill_the_captain", guide_section = "sabotage", cost = shared.kill_the_captain.cost, no_heroes = true },
     { key = "thin_the_ranks", guide_section = "sabotage", cost = shared.thin_the_ranks.cost, fewer_units = shared.thin_the_ranks.fewer_units },
     { key = "lower_tiers_only", guide_section = "sabotage", cost = shared.lower_tiers_only.cost, max_tier = shared.lower_tiers_only.max_tier },
     { key = "break_their_spirit", guide_section = "sabotage", cost = shared.break_their_spirit.cost, enemy_bundle = shared.break_their_spirit.enemy_bundle },
     { key = "curse_their_blades", guide_section = "sabotage", cost = shared.curse_their_blades.cost, enemy_bundle = shared.curse_their_blades.enemy_bundle },
+    { key = "cripple_their_champion", guide_section = "sabotage", cost = shared.cripple_their_champion.cost,
+        champion_strength = shared.cripple_their_champion.champion_strength },
+    { key = "spike_the_guns", guide_section = "sabotage", cost = shared.spike_the_guns.cost, enemy_bundle = shared.spike_the_guns.enemy_bundle,
+        roster = shared.spike_the_guns.roster },
+    { key = "bait_and_switch", guide_section = "sabotage", cost = shared.bait_and_switch.cost, next_budget = shared.bait_and_switch.budget,
+        enemy_strength = shared.bait_and_switch.enemy_strength },
+    { key = "last_ditch_oath", guide_section = "battle_buffs", effect_bundle = shared.last_ditch_oath.bundle },
     --- The battle script slays the enemy lord as the battle starts. Not offered against a Tower champion.
     { key = "assassinate", guide_section = "tricks", cost = shared.assassinate.cost },
     --- A unit of `tiers` from the tower's faction turns: it joins the army now, and the next floor's army fields `fewer_units` fewer.

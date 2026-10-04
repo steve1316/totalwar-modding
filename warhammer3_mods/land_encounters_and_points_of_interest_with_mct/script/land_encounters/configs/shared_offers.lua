@@ -49,6 +49,14 @@ M.lower_tiers_only = { cost = M.PREMIUM, max_tier = 2 }
 M.break_their_spirit = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "break_their_spirit") }
 M.curse_their_blades = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "curse_their_blades") }
 M.turn_a_traitor = { cost = M.STRONG, tiers = S({ 2, 3 }, { 3, 4 }, { 4, 5 }) }
+M.cripple_their_champion = { cost = M.STRONG, champion_strength = 0.5 }
+M.spike_the_guns = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "spike_the_guns"), roster = { "missile_infantry", "missile_cavalry", "warmachine" } }
+--- The enemy army gets `budget` times its gold to spend, but every unit starts at `enemy_strength`.
+M.bait_and_switch = { cost = M.STANDARD, budget = 1.25, enemy_strength = 0.75 }
+
+--- A free buff with a price: our lord cannot die in the battle (the battle script plays it under the bundle's name), and the bundle costs us
+--- leadership.
+M.last_ditch_oath = { bundle = TOWER_BUNDLE .. "last_ditch_oath" }
 
 --- Tricks the battle script plays. A `battle_value` is handed to the battle with the mission targets: Divine shield's seconds.
 M.bottomless_quivers = { cost = M.STANDARD }
