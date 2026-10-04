@@ -378,6 +378,10 @@ M.offers = {
         roster = shared.spike_the_guns.roster },
     { key = "bait_and_switch", pool = "pre_battle", tags = { "sabotage" }, cost = shared.bait_and_switch.cost, budget = shared.bait_and_switch.budget,
         enemy_strength = shared.bait_and_switch.enemy_strength },
+    { key = "lame_their_mounts", pool = "pre_battle", tags = { "sabotage" }, cost = shared.lame_their_mounts.cost,
+        enemy_bundle = shared.lame_their_mounts.enemy_bundle, roster = shared.lame_their_mounts.roster },
+    { key = "hunters_snares", pool = "pre_battle", tags = { "sabotage" }, cost = shared.hunters_snares.cost, enemy_bundle = shared.hunters_snares.enemy_bundle,
+        roster = shared.hunters_snares.roster },
 
     --- Pre-battle: buffs on our army for this battle.
     { key = "war_rites", pool = "pre_battle", tags = { "buff" }, cost = shared.war_rites.cost, battle_bundle = shared.war_rites.bundle },
@@ -419,6 +423,7 @@ M.offers = {
     { key = "oath_of_no_retreat", pool = "pre_battle", tags = { "trick" }, cost = shared.oath_of_no_retreat.cost, trick = true },
     { key = "divine_shield", pool = "pre_battle", tags = { "trick" }, cost = shared.divine_shield.cost, trick = true, battle_value = shared.divine_shield.battle_value },
     { key = "night_terrors", pool = "pre_battle", tags = { "trick" }, cost = shared.night_terrors.cost, trick = true, targets = shared.night_terrors.targets },
+    { key = "sacred_ground", pool = "pre_battle", tags = { "trick" }, cost = shared.sacred_ground.cost, trick = true, battle_value = shared.sacred_ground.battle_value },
     { key = "assassinate", pool = "pre_battle", tags = { "trick" }, cost = shared.assassinate.cost, trick = true },
 
     --- Spoils, picked after a won battle spot.

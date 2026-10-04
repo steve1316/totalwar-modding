@@ -437,6 +437,8 @@ local HANDLERS = {
     curse_their_blades = { apply = sabotage },
     cripple_their_champion = { apply = sabotage },
     spike_the_guns = { apply = sabotage },
+    lame_their_mounts = { apply = sabotage },
+    hunters_snares = { apply = sabotage },
     bait_and_switch = { apply = sabotage },
     last_ditch_oath = { apply = battle_buff },
     assassinate = { eligible = function(ctx) return not (ctx.delve.next_floor and ctx.delve.next_floor.champion) end, apply = sabotage },
@@ -500,6 +502,7 @@ local HANDLERS = {
     bottomless_quivers = { apply = battle_trick },
     oath_of_no_retreat = { apply = battle_trick },
     divine_shield = { apply = battle_trick },
+    sacred_ground = { apply = battle_trick },
     night_terrors = { apply = battle_trick },
     regiment_of_renown = { eligible = regiment_of_renown },
     veterans_oath = {

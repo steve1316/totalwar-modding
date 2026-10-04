@@ -118,6 +118,12 @@ land_enc_effect_tower_spike_the_guns_easy			force	1	icon_effects_fortify.png	fal
 land_enc_effect_tower_spike_the_guns_medium			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_spike_the_guns_hard			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_last_ditch_oath			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_lame_their_mounts_easy			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_lame_their_mounts_medium			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_lame_their_mounts_hard			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_hunters_snares_easy			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_hunters_snares_medium			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_tower_hunters_snares_hard			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_tower_towers_favour_easy			faction	1	income.png	true	false	true
 land_enc_effect_tower_towers_favour_medium			faction	1	income.png	true	false	true
 land_enc_effect_tower_towers_favour_hard			faction	1	income.png	true	false	true

@@ -51,6 +51,10 @@ M.curse_their_blades = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .
 M.turn_a_traitor = { cost = M.STRONG, tiers = S({ 2, 3 }, { 3, 4 }, { 4, 5 }) }
 M.cripple_their_champion = { cost = M.STRONG, champion_strength = 0.5 }
 M.spike_the_guns = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "spike_the_guns"), roster = { "missile_infantry", "missile_cavalry", "warmachine" } }
+--- Both hit the enemy's cavalry and chariots, so they are drawn against a faction that fields any.
+M.lame_their_mounts = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "lame_their_mounts"),
+    roster = { "melee_cavalry", "missile_cavalry", "chariot", "monstrous_cavalry" } }
+M.hunters_snares = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "hunters_snares"), roster = M.lame_their_mounts.roster }
 --- The enemy army gets `budget` times its gold to spend, but every unit starts at `enemy_strength`.
 M.bait_and_switch = { cost = M.STANDARD, budget = 1.25, enemy_strength = 0.75 }
 
@@ -58,10 +62,13 @@ M.bait_and_switch = { cost = M.STANDARD, budget = 1.25, enemy_strength = 0.75 }
 --- leadership.
 M.last_ditch_oath = { bundle = TOWER_BUNDLE .. "last_ditch_oath" }
 
---- Tricks the battle script plays. A `battle_value` is handed to the battle with the mission targets: Divine shield's seconds.
+--- Tricks the battle script plays. A `battle_value` is handed to the battle with the mission targets: Divine shield's seconds, Sacred
+--- ground's percent.
 M.bottomless_quivers = { cost = M.STANDARD }
 M.oath_of_no_retreat = { cost = M.STANDARD }
 M.divine_shield = { cost = M.STANDARD, battle_value = S(300, 420, 600) }
+--- Sacred ground's `battle_value` is the percent of strength our units regain.
+M.sacred_ground = { cost = M.STANDARD, battle_value = S(10, 15, 20) }
 M.night_terrors = { cost = M.STRONG, targets = S(1, 2, 3) }
 M.assassinate = { cost = M.PREMIUM }
 

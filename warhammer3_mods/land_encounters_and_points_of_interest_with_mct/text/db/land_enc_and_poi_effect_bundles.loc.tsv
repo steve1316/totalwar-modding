@@ -236,6 +236,18 @@ effect_bundles_localised_title_land_enc_effect_tower_spike_the_guns_hard	Spiked 
 effect_bundles_localised_description_land_enc_effect_tower_spike_the_guns_hard	Spiked guns and spoiled arrows leave this army short of shot.	false
 effect_bundles_localised_title_land_enc_effect_tower_last_ditch_oath	Last Ditch Oath	false
 effect_bundles_localised_description_land_enc_effect_tower_last_ditch_oath	Our lord swore to stand to the last, and the army knows what it may cost.	false
+effect_bundles_localised_title_land_enc_effect_tower_lame_their_mounts_easy	Lamed Mounts	false
+effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_easy	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_title_land_enc_effect_tower_lame_their_mounts_medium	Lamed Mounts	false
+effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_medium	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_title_land_enc_effect_tower_lame_their_mounts_hard	Lamed Mounts	false
+effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_hard	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_title_land_enc_effect_tower_hunters_snares_easy	Snared Charges	false
+effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_easy	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_title_land_enc_effect_tower_hunters_snares_medium	Snared Charges	false
+effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_medium	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_title_land_enc_effect_tower_hunters_snares_hard	Snared Charges	false
+effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_hard	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
 effect_bundles_localised_title_land_enc_effect_tower_towers_favour_easy	Tower's Favour	false
 effect_bundles_localised_description_land_enc_effect_tower_towers_favour_easy	The tower's masters speak well of us. Trade flows a little easier.	false
 effect_bundles_localised_title_land_enc_effect_tower_towers_favour_medium	Tower's Favour	false

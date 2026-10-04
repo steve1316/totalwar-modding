@@ -25,6 +25,9 @@ M.spot_kind = {}
 --- Battle category keys drawn first on every battle spot while they can fire, e.g. { "bandits" }.
 M.force_battle_categories = {}
 
+--- Faction shorthand every battle spot's enemy is instead of its own, e.g. { "brt" } for an army with plenty of cavalry.
+M.force_battle_faction = {}
+
 --- Difficulty key every battle spot uses instead of the current one, e.g. { "hard" }.
 M.battle_difficulty = {}
 

@@ -70,6 +70,7 @@ M.offers = {
     { key = "oath_of_no_retreat", guide_section = "tricks", cost = shared.oath_of_no_retreat.cost, trick = true },
     { key = "divine_shield", guide_section = "tricks", cost = shared.divine_shield.cost, trick = true, battle_value = shared.divine_shield.battle_value },
     { key = "night_terrors", guide_section = "tricks", cost = shared.night_terrors.cost, trick = true, targets = shared.night_terrors.targets },
+    { key = "sacred_ground", guide_section = "tricks", cost = shared.sacred_ground.cost, trick = true, battle_value = shared.sacred_ground.battle_value },
     --- The next floor's army budget is multiplied by `next_budget`.
     { key = "bribe_the_guards", guide_section = "sabotage", cost = shared.bribe_the_guards.cost, next_budget = shared.bribe_the_guards.budget },
     --- Sabotage weakens the next floor's army. `no_heroes`, `fewer_units` (off its unit cap) and `max_tier` (its highest unit tier) shape how it
@@ -87,6 +88,10 @@ M.offers = {
         roster = shared.spike_the_guns.roster },
     { key = "bait_and_switch", guide_section = "sabotage", cost = shared.bait_and_switch.cost, next_budget = shared.bait_and_switch.budget,
         enemy_strength = shared.bait_and_switch.enemy_strength },
+    { key = "lame_their_mounts", guide_section = "sabotage", cost = shared.lame_their_mounts.cost, enemy_bundle = shared.lame_their_mounts.enemy_bundle,
+        roster = shared.lame_their_mounts.roster },
+    { key = "hunters_snares", guide_section = "sabotage", cost = shared.hunters_snares.cost, enemy_bundle = shared.hunters_snares.enemy_bundle,
+        roster = shared.hunters_snares.roster },
     { key = "last_ditch_oath", guide_section = "battle_buffs", effect_bundle = shared.last_ditch_oath.bundle },
     --- The battle script slays the enemy lord as the battle starts. Not offered against a Tower champion.
     { key = "assassinate", guide_section = "tricks", cost = shared.assassinate.cost },

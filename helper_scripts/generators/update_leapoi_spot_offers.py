@@ -230,6 +230,8 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                         "at [[col:green]]{strength}% strength[[/col]]."),
     "last_ditch_oath": ("Last Ditch Oath", "Swear a last ditch oath: our lord [[col:green]]cannot die[[/col]] in this battle, but our army has "
                         + stat("-{e0}", *LEADERSHIP, colour="red") + "."),
+    "lame_their_mounts": ("Lame Their Mounts", PAY + "lame their mounts: enemy cavalry and chariots have " + stat("-{e0}%", *SPEED) + " in this battle."),
+    "hunters_snares": ("Hunter's Snares", PAY + "lay hunter's snares: enemy cavalry and chariots have " + stat("-{e0}", *CHARGE) + " in this battle."),
     "turn_a_traitor": ("Turn a Traitor", PAY + "turn a traitor: [[col:green]]a tier {tiers} unit[[/col]] of the enemy's kind joins our army now, and the enemy fields one unit fewer."),
     "war_rites": ("War Rites", PAY + "hold war rites: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, "
                   "[[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership in this battle."),
@@ -260,6 +262,8 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "lend_them_veterans": ("Lend Them Veterans", PAY + "lend them veterans: the allied units start [[col:green]]{ally_ranks} ranks higher[[/col]]."),
     "reinforce_the_ally_escort": ("Reinforce the Ally", PAY + "reinforce the ally: the allied escort fields [[col:green]]{extra_ally_units} more units[[/col]]."),
     "reinforce_the_ally_army": ("Reinforce the Ally", PAY + "reinforce the ally: the allied army has [[col:green]]{ally_stronger}% more gold[[/col]] to muster with."),
+    "sacred_ground": ("Sacred Ground", PAY + "fight on sacred ground: after 3 minutes of this battle, our units regain [[col:green]]{battle_value}%[[/col]] of their "
+                      "strength."),
     "divine_shield": ("Divine Shield", PAY + "raise a divine shield: our lord [[col:green]]cannot be harmed for the first {minutes} minutes[[/col]] of this battle."),
     "night_terrors": ("Night Terrors", PAY + "send night terrors: the enemy's [[col:green]]{targets}[[/col]] after 1 minute of this battle."),
     "assassinate": ("Assassinate", PAY + "send an assassin: the enemy [[col:green]]lord is slain as the battle starts[[/col]]."),
@@ -338,6 +342,7 @@ ICONS = {
     "curse_their_blades": "hex_1.png", "drill_sergeant": "charge.png", "tower_artillery": "siege_attack.png",
     "allies_in_the_dark_small": "trade_agreement.png", "allies_in_the_dark_medium": "trade_agreement.png", "allies_in_the_dark_large": "trade_agreement.png",
     "untouchable": "health_character.png",
+    "lame_their_mounts": "attrition.png", "hunters_snares": "discouraged.png", "sacred_ground": "lileaths_blessing.png",
     "cripple_their_champion": "blood_kiss.png", "spike_the_guns": "ammo.png", "bait_and_switch": "trickster_cult.png", "last_ditch_oath": "attribute_unbreakable.png",
     "lords_glory": "rampage_savage.png", "monster_slayer": "hellforged.png", "steadfast": "morale.png", "decapitate": "nemesis_crown_sealed.png",
     "against_the_odds": "vigour.png", "rout_the_riders": "cotw_track_army.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
@@ -422,6 +427,7 @@ MISSION_OBJECTIVES = {
 # Battle notice name -> (colour, text) the battle script shows for a pre-battle offer: red for what weakens the enemy, green for our help,
 # yellow for a cost to our army, as the tower's notices do. A one-battle bundle uses the tower's own notice.
 NOTICES = {
+    "sacred_ground_now": ("green", "Sacred Ground takes hold: our units regain {battle_value}% of their strength!"),
     "arm_the_allies": ("green", "Arm the Allies: our allies have +{e0} [[img:ui/skins/default/icon_stat_attack.png]][[/img]]"
                        "[[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]]."),
     "rally_their_line": ("green", "Rally Their Line: our allies cannot rout."),
@@ -433,7 +439,7 @@ NOTICES = {
 }
 
 # Notice -> its offer, for a notice not named after its offer. The notice shows that offer's numbers and line icon.
-NOTICE_OFFERS = {"night_raid_won": "night_raid", "night_raid_lost": "night_raid"}
+NOTICE_OFFERS = {"night_raid_won": "night_raid", "night_raid_lost": "night_raid", "sacred_ground_now": "sacred_ground"}
 
 # Second line under Avoid on every battle dilemma, since avoiding fires the category's avoidance incident.
 AVOID_CONSEQUENCES = ("avoid_consequences", "random_recipe.png", "[[col:yellow]]This may have unforeseen consequences.[[/col]]")
@@ -926,7 +932,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     add(table("cdir_events_dilemma_choices_tables"), config["avoid_choice_key"], AVOID_ORDER)
     for notice, (colour, text) in NOTICES.items():
         offer_key = NOTICE_OFFERS.get(notice, notice)
-        for difficulty, name in notice_names(notice, config):
+        for difficulty, name in stepped_names(notice, config["notice_varies"].get(notice, config["notice_varies"].get(offer_key))):
             shown = text.format_map(line_values(config["at"][difficulty][offer_key], bundles))
             objective(name, ICONS[offer_key], f"[[col:{colour}]]{shown}[[/col]]", shown)
     for name, (_, _, _, _, effects, notice) in TOWER_BUNDLES.items():

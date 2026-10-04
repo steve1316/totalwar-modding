@@ -97,6 +97,10 @@ local function build_event(category, entries, faction_keys, difficulty)
         event.dilemma = category.neutral.dilemma
         event.faction = faction_keys[random_number(#faction_keys)]
     end
+    if debug_config.force_battle_faction[1] then
+        event.faction = debug_config.force_battle_faction[1]
+        log("battle_picker: debug force_battle_faction makes the enemy " .. event.faction)
+    end
     if category.ally then add_ally(event, category.ally) end
     out("DEBUG - battle_picker picked " .. event.category .. " (" .. event.dilemma .. ") for faction " .. tostring(event.faction) .. " on " .. event.difficulty)
     return event

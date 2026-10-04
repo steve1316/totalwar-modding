@@ -188,6 +188,18 @@ scripted_objectives_localised_text_land_enc_tower_buff_rout_the_riders	Rout the 
 scripted_objectives_localised_description_land_enc_tower_buff_rout_the_riders		false
 scripted_objectives_localised_text_land_enc_tower_buff_rout_the_riders_message	Rout the Riders: rout every enemy cavalry unit within 6 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_rout_the_riders_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_easy	[[col:green]]Sacred Ground takes hold: our units regain 10% of their strength![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_easy_message	Sacred Ground takes hold: our units regain 10% of their strength!	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_medium	[[col:green]]Sacred Ground takes hold: our units regain 15% of their strength![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_medium_message	Sacred Ground takes hold: our units regain 15% of their strength!	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_hard	[[col:green]]Sacred Ground takes hold: our units regain 20% of their strength![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_hard_message	Sacred Ground takes hold: our units regain 20% of their strength!	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_easy	[[col:green]]Arm the Allies: our allies have +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_easy		false
 scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_easy_message	Arm the Allies: our allies have +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
@@ -380,17 +392,17 @@ scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_hard	[
 scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_hard_message	Break Their Spirit: enemy units have -20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_hard_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_easy	[[col:red]]Curse Their Blades: enemy units have -5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_easy	[[col:red]]Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_easy		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_easy_message	Curse Their Blades: enemy units have -5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_easy_message	Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_easy_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_medium	[[col:red]]Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_medium	[[col:red]]Curse Their Blades: enemy units have -15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_medium		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_medium_message	Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_medium_message	Curse Their Blades: enemy units have -15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_medium_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_hard	[[col:red]]Curse Their Blades: enemy units have -15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_hard	[[col:red]]Curse Their Blades: enemy units have -20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_hard		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_hard_message	Curse Their Blades: enemy units have -15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_hard_message	Curse Their Blades: enemy units have -20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_easy	[[col:red]]Turn a Traitor: one of the enemy's units fights for us.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_easy		false
@@ -428,6 +440,42 @@ scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_hard	[[col:
 scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_hard_message	Divine Shield: our lord cannot be harmed for the first 10 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_easy	[[col:green]]Sacred Ground: after 3 minutes, our units regain 10% of their strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_easy_message	Sacred Ground: after 3 minutes, our units regain 10% of their strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_medium	[[col:green]]Sacred Ground: after 3 minutes, our units regain 15% of their strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_medium_message	Sacred Ground: after 3 minutes, our units regain 15% of their strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_hard	[[col:green]]Sacred Ground: after 3 minutes, our units regain 20% of their strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_hard_message	Sacred Ground: after 3 minutes, our units regain 20% of their strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_easy	[[col:red]]Lame Their Mounts: enemy cavalry and chariots have -15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_easy_message	Lame Their Mounts: enemy cavalry and chariots have -15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_medium	[[col:red]]Lame Their Mounts: enemy cavalry and chariots have -20% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_medium_message	Lame Their Mounts: enemy cavalry and chariots have -20% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_hard	[[col:red]]Lame Their Mounts: enemy cavalry and chariots have -25% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_hard_message	Lame Their Mounts: enemy cavalry and chariots have -25% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_easy	[[col:red]]Hunter's Snares: enemy cavalry and chariots have -15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_easy_message	Hunter's Snares: enemy cavalry and chariots have -15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_medium	[[col:red]]Hunter's Snares: enemy cavalry and chariots have -20 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_medium_message	Hunter's Snares: enemy cavalry and chariots have -20 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_hard	[[col:red]]Hunter's Snares: enemy cavalry and chariots have -25 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_hard_message	Hunter's Snares: enemy cavalry and chariots have -25 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_cripple_their_champion	[[col:red]]Cripple Their Champion: the enemy's finest unit starts at 50% strength.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_cripple_their_champion		false
 scripted_objectives_localised_text_land_enc_tower_buff_cripple_their_champion_message	Cripple Their Champion: the enemy's finest unit starts at 50% strength.	false

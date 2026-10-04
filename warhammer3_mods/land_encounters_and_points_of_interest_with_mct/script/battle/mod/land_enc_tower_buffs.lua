@@ -32,6 +32,10 @@ local FADE_MS = 1000
 local QUIVERS_REFILL_MS = 5000
 --- How long Divine shield keeps our lord from harm when the campaign hands over no value, in seconds.
 local DIVINE_SHIELD_SECONDS = 300
+--- How long Sacred ground waits before our units regain strength, in ms, and the share they regain when the campaign hands none over, in
+--- percent. The notice text says 3 minutes.
+local SACRED_GROUND_MS = 180000
+local SACRED_GROUND_PERCENT = 10
 --- Difficulties a buff name may end with, e.g. "night_terrors_hard". Mirrored from utils/steps.lua in the campaign scripts.
 local DIFFICULTIES = { "easy", "medium", "hard" }
 --- How long Night terrors waits before the enemy units flee, in ms. The notice text says 1 minute.
@@ -241,6 +245,36 @@ local TRICKS = {
             log("Divine shield: the lord can be harmed again")
         end, shield_ms, "land_enc_tower_divine_shield")
         log("Divine shield: the lord " .. lord.unit:type() .. " cannot be harmed for " .. shield_ms / 1000 .. " s")
+    end,
+    --- Lame their mounts: the slow is a bundle on the enemy army. This logs each enemy rider's run speed, to check it landed.
+    lame_their_mounts = function(_, theirs)
+        for _, sunit in ipairs(theirs) do
+            if sunit.unit:is_cavalry() or sunit.unit:is_chariot() then
+                log("Lame their mounts: " .. sunit.unit:type() .. " runs at " .. string.format("%.1f", sunit.unit:fast_speed()) .. " m/s")
+            end
+        end
+    end,
+    --- Sacred ground: after `SACRED_GROUND_MS`, each of our units still fighting and below full strength regains `percent` of its full strength,
+    --- fallen men included.
+    sacred_ground = function(ours, _, percent, name)
+        local share = (tonumber(percent) or SACRED_GROUND_PERCENT) / 100
+        bm:callback(function()
+            local healed = 0
+            for _, sunit in ipairs(ours) do
+                local before = sunit.unit:unary_hitpoints()
+                if not sunit.unit:is_routing() and not is_lost(sunit) and before < 1 then
+                    --- The call heals a unit to a share of its full strength, so the target is the unit's strength plus the share.
+                    sunit.unit:heal_hitpoints_unary(math.min(1, before + share), true)
+                    log("Sacred ground: " .. sunit.unit:type() .. " " .. math.floor(before * 100 + 0.5) .. "% -> "
+                        .. math.floor(sunit.unit:unary_hitpoints() * 100 + 0.5) .. "%")
+                    healed = healed + 1
+                end
+            end
+            log("Sacred ground: " .. healed .. " units regain " .. share * 100 .. "% of their strength")
+            --- The objective ticks off, and a banner says the blessing took hold, under the notice's difficulty.
+            bm:complete_objective(OBJECTIVE_PREFIX .. name)
+            bm:queue_help_message(OBJECTIVE_PREFIX .. "sacred_ground_now" .. name:sub(#"sacred_ground" + 1) .. MESSAGE_SUFFIX, MESSAGE_MS, FADE_MS)
+        end, SACRED_GROUND_MS, "land_enc_tower_sacred_ground")
     end,
     --- After a while, the enemy units the campaign picked flee. Each target key routs one unit of that type that is not already fleeing.
     night_terrors = function(_, theirs)
@@ -537,7 +571,7 @@ if #buffs > 0 then
             bm:set_objective(OBJECTIVE_PREFIX .. name)
             bm:queue_help_message(OBJECTIVE_PREFIX .. name .. MESSAGE_SUFFIX, MESSAGE_MS, FADE_MS)
             local trick = base_name(name)
-            if TRICKS[trick] then TRICKS[trick](ours, theirs, targets[trick]) end
+            if TRICKS[trick] then TRICKS[trick](ours, theirs, targets[trick], name) end
         end
         track_missions(buffs, ours, theirs)
     end)
