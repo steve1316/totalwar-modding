@@ -55,7 +55,8 @@ M.offers = {
     { key = "warding_sigils", guide_section = "battle_buffs", cost = shared.warding_sigils.cost, effect_bundle = shared.warding_sigils.bundle },
     { key = "fire_kissed_blades", guide_section = "battle_buffs", cost = shared.fire_kissed_blades.cost, effect_bundle = shared.fire_kissed_blades.bundle },
     { key = "enchanted_steel", guide_section = "battle_buffs", cost = shared.enchanted_steel.cost, effect_bundle = "land_enc_effect_tower_enchanted_steel" },
-    { key = "quartermasters_cache", guide_section = "battle_buffs", cost = shared.quartermasters_cache.cost, effect_bundle = shared.quartermasters_cache.bundle },
+    { key = "quartermasters_cache", guide_section = "battle_buffs", cost = shared.quartermasters_cache.cost, effect_bundle = shared.quartermasters_cache.bundle,
+        shoots = true },
     { key = "drill_sergeant", guide_section = "battle_buffs", cost = shared.drill_sergeant.cost, effect_bundle = shared.drill_sergeant.bundle },
     { key = "iron_resolve", guide_section = "battle_buffs", cost = shared.iron_resolve.cost, effect_bundle = shared.iron_resolve.bundle },
     { key = "stoneskin", guide_section = "battle_buffs", cost = shared.stoneskin.cost, effect_bundle = tiered("land_enc_effect_tower_stoneskin") },
@@ -64,11 +65,10 @@ M.offers = {
     --- `effect_bundles` picks one of several at random. A `trick` is done by the battle script (script/battle/mod/land_enc_tower_buffs.lua),
     --- which holds its timings. Night terrors routs the floor army's `targets` most expensive units.
     { key = "tower_artillery", guide_section = "spells", cost = shared.tower_artillery.cost, effect_bundle = shared.tower_artillery.bundle },
-    --- Only drawn when the army has a spellcaster.
-    { key = "call_the_winds", guide_section = "spells", cost = shared.call_the_winds.cost, effect_bundle = shared.call_the_winds.bundle },
+    { key = "call_the_winds", guide_section = "spells", cost = shared.call_the_winds.cost, effect_bundle = shared.call_the_winds.bundle, caster = true },
     { key = "vortex_scroll", guide_section = "spells", cost = 1500, effect_bundles = { "land_enc_effect_tower_vortex_scroll_storm_of_fire", "land_enc_effect_tower_vortex_scroll_wraith_storm",
         "land_enc_effect_tower_vortex_scroll_soul_storm" } },
-    { key = "bottomless_quivers", guide_section = "tricks", cost = shared.bottomless_quivers.cost, trick = true },
+    { key = "bottomless_quivers", guide_section = "tricks", cost = shared.bottomless_quivers.cost, trick = true, shoots = true },
     { key = "oath_of_no_retreat", guide_section = "tricks", cost = shared.oath_of_no_retreat.cost, trick = true },
     { key = "divine_shield", guide_section = "tricks", cost = shared.divine_shield.cost, trick = true, battle_value = shared.divine_shield.battle_value },
     { key = "night_terrors", guide_section = "tricks", cost = shared.night_terrors.cost, trick = true, targets = shared.night_terrors.targets },
@@ -193,6 +193,7 @@ M.offers = {
     --- In-battle missions are free stay offers that stack, tracked by the battle script. `battle_value` is handed to the battle as the mission's
     --- target. Meeting the goal on a won floor pays the reward: `gold`, `gold_share` of the floor's gold, an item of `item_rarity` (or of the
     --- floor's own rarities with `floor_item`), `unit_ranks` for the guarded unit, `lord_xp` for our lord, or a sworn copy of the trophy unit.
+    --- `shoots`, `caster`, `roster` and `max_units` limit when an offer is drawn, as in configs/spot_offers.lua.
     { key = "blood_tally", guide_section = "missions", stay = true, mission = true, battle_value = 0.4, gold_share = 0.5 },
     { key = "headhunt", guide_section = "missions", stay = true, mission = true, battle_value = 360, item_rarity = "rare" },
     { key = "hold_the_line", guide_section = "missions", stay = true, mission = true, battle_value = 2, gold_share = 0.5 },
@@ -206,6 +207,13 @@ M.offers = {
         battle_value = shared.bloodbath_wager.battle_value, gold = shared.bloodbath_wager.gold },
     { key = "spare_the_captain", guide_section = "missions", stay = true, mission = true, gold = shared.spare_the_captain.gold },
     { key = "flawless_victory", guide_section = "missions", stay = true, mission = true, battle_value = shared.flawless_victory.battle_value, item_rarity = "legendary" },
+    { key = "lords_glory", guide_section = "missions", stay = true, mission = true, battle_value = shared.lords_glory.battle_value, item_rarity = "rare" },
+    { key = "monster_slayer", guide_section = "missions", stay = true, mission = true, roster = shared.monster_slayer.roster, gold_share = 0.5 },
+    { key = "steadfast", guide_section = "missions", stay = true, mission = true, gold_share = 0.5 },
+    { key = "decapitate", guide_section = "missions", stay = true, mission = true, item_rarity = "legendary" },
+    { key = "against_the_odds", guide_section = "missions", stay = true, mission = true, max_units = shared.against_the_odds.max_units, gold_share = 1 },
+    { key = "rout_the_riders", guide_section = "missions", stay = true, mission = true, battle_value = shared.rout_the_riders.battle_value,
+        roster = shared.rout_the_riders.roster, item_rarity = "rare" },
     --- A mission that climbs: killing the enemy lord adds a unique item.
     { key = "duelists_challenge", guide_section = "missions", mission = true, item_rarity = "legendary" },
 }

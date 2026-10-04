@@ -102,6 +102,8 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "plague_bearer": ("Carry the tower's plague out: [[col:green]]+{gold} gold[[/col]] in the haul, but our army suffers [[col:red]]attrition for {turns} turns[[/col]].", None),
     "daemons_deal": ("Deal with a daemon: [[col:green]]{items} unique items[[/col]] join the haul now, but [[col:red]]when the delve ends, {armies} on our capital[[/col]].",
                      None),
+    "lords_glory": (MISSION + "our lord kills [[col:yellow]]{battle_value} soldiers[[/col]] on the next floor for [[col:green]]a random rare item[[/col]] in the haul.",
+                    None),
     "spare_the_captain": (MISSION + "win with the [[col:yellow]]enemy lord still alive[[/col]], and ransom them for [[col:green]]+{gold} gold[[/col]] in the haul.", None),
 }
 

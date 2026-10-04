@@ -84,3 +84,28 @@ campaign_localised_strings_string_land_enc_tower_result_mission_met_flawless_vic
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_flawless_victory	[[col:red]]Flawless Victory failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_flawless_victory	[[col:yellow]]Flawless Victory was not counted:[[/col]] the battle was auto-resolved.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_set_flawless_victory	[[col:yellow]]Flawless Victory (Mission):[[/col]] win the next floor [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]].	false
+
+campaign_localised_strings_string_land_enc_tower_result_mission_met_lords_glory	[[col:green]]Lord's Glory met:[[/col]] a rare item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_lords_glory	[[col:red]]Lord's Glory failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_lords_glory	[[col:yellow]]Lord's Glory was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_lords_glory	[[col:yellow]]Lord's Glory (Mission):[[/col]] our lord kills [[col:yellow]]enough soldiers[[/col]] on the next floor for [[col:green]]a random rare item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_monster_slayer	[[col:green]]Monster Slayer met:[[/col]] +%s gold joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_monster_slayer	[[col:red]]Monster Slayer failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_monster_slayer	[[col:yellow]]Monster Slayer was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_monster_slayer	[[col:yellow]]Monster Slayer (Mission):[[/col]] destroy [[col:yellow]]every monster[[/col]] on the next floor for [[col:green]]+50%% of the floor's gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_steadfast	[[col:green]]Steadfast met:[[/col]] +%s gold joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_steadfast	[[col:red]]Steadfast failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_steadfast	[[col:yellow]]Steadfast was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_steadfast	[[col:yellow]]Steadfast (Mission):[[/col]] let [[col:yellow]]no unit of ours rout[[/col]] on the next floor for [[col:green]]+50%% of the floor's gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_decapitate	[[col:green]]Decapitate met:[[/col]] a unique item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_decapitate	[[col:red]]Decapitate failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_decapitate	[[col:yellow]]Decapitate was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_decapitate	[[col:yellow]]Decapitate (Mission):[[/col]] kill [[col:yellow]]the next floor's lord and every hero[[/col]] for [[col:green]]a unique item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_against_the_odds	[[col:green]]Against the Odds met:[[/col]] +%s gold joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_against_the_odds	[[col:red]]Against the Odds failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_against_the_odds	[[col:yellow]]Against the Odds was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_against_the_odds	[[col:yellow]]Against the Odds (Mission):[[/col]] win the next floor [[col:yellow]]while it outnumbers us[[/col]] for [[col:green]]double the floor's gold[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_rout_the_riders	[[col:green]]Rout the Riders met:[[/col]] a rare item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_failed_rout_the_riders	[[col:red]]Rout the Riders failed.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_mission_untracked_rout_the_riders	[[col:yellow]]Rout the Riders was not counted:[[/col]] the battle was auto-resolved.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_rout_the_riders	[[col:yellow]]Rout the Riders (Mission):[[/col]] rout every [[col:yellow]]rider on the next floor within 6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false

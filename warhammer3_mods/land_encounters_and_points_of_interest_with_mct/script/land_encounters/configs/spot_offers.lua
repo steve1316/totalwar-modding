@@ -65,6 +65,8 @@
 ---   battle_item     True: 1 item of the battle's own victory rarities.
 ---   unit_ranks      Ranks for the unit Guard the standard marks.
 ---   lord_xp         Experience for our lord.
+---   roster          Only drawn against a faction that fields one of these unit types.
+---   max_units       Only drawn when our army has at most this many regular units.
 ---   trophy          True: a copy of the enemy's most expensive unit joins our army.
 ---
 --- Spoils fields (pool "spoils", drawn on the spoils pick after a won battle spot, which also draws realm offers and offers marked `spoils`):
@@ -415,8 +417,8 @@ M.offers = {
 
     --- Missions, tracked by the battle script under the tower's names.
     { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },
-    { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = S(1500, 2250, 3000) },
-    { key = "hold_the_line", pool = "mission", tags = {}, battle_value = 2, gold = S(1500, 2250, 3000) },
+    { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = S(1500, 2000, 2500) },
+    { key = "hold_the_line", pool = "mission", tags = {}, battle_value = 2, gold = S(1500, 2000, 2500) },
     { key = "swift_victory", pool = "mission", tags = {}, battle_value = 480, battle_item = true },
     { key = "guard_the_standard", pool = "mission", tags = {}, unit_ranks = 3 },
     { key = "break_them", pool = "mission", tags = {}, battle_value = 6, gold = S(1000, 1500, 2000) },
@@ -428,6 +430,13 @@ M.offers = {
     { key = "spare_the_captain", pool = "mission", tags = {}, gold = shared.spare_the_captain.gold },
     { key = "flawless_victory", pool = "mission", tags = {}, battle_value = shared.flawless_victory.battle_value, unique = 1 },
     { key = "untouchable", pool = "mission", tags = {}, battle_value = shared.untouchable.battle_value, lord_xp = shared.untouchable.lord_xp },
+    { key = "lords_glory", pool = "mission", tags = {}, battle_value = shared.lords_glory.battle_value, items = { rarities = { "rare" }, count = 1 } },
+    { key = "monster_slayer", pool = "mission", tags = {}, roster = shared.monster_slayer.roster, gold = S(1500, 2000, 2500) },
+    { key = "steadfast", pool = "mission", tags = {}, gold = S(1500, 2000, 2500) },
+    { key = "decapitate", pool = "mission", tags = {}, unique = 1 },
+    { key = "against_the_odds", pool = "mission", tags = {}, max_units = shared.against_the_odds.max_units, gold = S(2000, 2500, 3000) },
+    { key = "rout_the_riders", pool = "mission", tags = {}, battle_value = shared.rout_the_riders.battle_value, roster = shared.rout_the_riders.roster,
+        items = { rarities = { "rare" }, count = 1 } },
 }
 
 --- Offer key -> offer record.

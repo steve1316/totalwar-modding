@@ -260,6 +260,12 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "duelists_challenge": ("Duellist's Challenge", MISSION + "challenge the enemy lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a unique item[[/col]]."),
     "spare_the_captain": ("Spare the Captain", MISSION + "win with the [[col:yellow]]enemy lord still alive[[/col]], and ransom them for [[col:green]]+{gold} gold[[/col]]."),
     "flawless_victory": ("Flawless Victory", MISSION + "win [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "lords_glory": ("Lord's Glory", MISSION + "our lord kills [[col:yellow]]{battle_value} enemy soldiers[[/col]] for [[col:green]]a random rare item[[/col]]."),
+    "monster_slayer": ("Monster Slayer", MISSION + "destroy [[col:yellow]]every enemy monster[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
+    "steadfast": ("Steadfast", MISSION + "let [[col:yellow]]no unit of ours rout[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
+    "decapitate": ("Decapitate", MISSION + "kill [[col:yellow]]the enemy lord and every hero[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "against_the_odds": ("Against the Odds", MISSION + "win [[col:yellow]]while the enemy outnumbers us[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
+    "rout_the_riders": ("Rout the Riders", MISSION + "rout every enemy [[col:yellow]]cavalry unit within {minutes} minutes[[/col]] for [[col:green]]a random rare item[[/col]]."),
     "untouchable": ("Untouchable", MISSION + "keep our lord [[col:yellow]]above half health[[/col]] to the end of the battle for [[col:green]]+{lord_xp} experience[[/col]] "
                     "for our lord."),
     "strip_the_dead": ("Strip the Dead", "Strip the dead: [[col:green]]+{per_unit} gold[[/col]] to our treasury for each unit in the army we beat."),
@@ -313,7 +319,9 @@ ICONS = {
     "break_them": "attribute_causes_terror.png", "trophy_hunt": "wh3_cp1_unit_reward.png", "silence_the_guns": "artillery.png",
     "curse_their_blades": "hex_1.png", "drill_sergeant": "charge.png", "tower_artillery": "siege_attack.png",
     "allies_in_the_dark_small": "trade_agreement.png", "allies_in_the_dark_medium": "trade_agreement.png", "allies_in_the_dark_large": "trade_agreement.png",
-    "untouchable": "health_character.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
+    "untouchable": "health_character.png",
+    "lords_glory": "rampage_savage.png", "monster_slayer": "hellforged.png", "steadfast": "morale.png", "decapitate": "nemesis_crown_sealed.png",
+    "against_the_odds": "vigour.png", "rout_the_riders": "cotw_track_army.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
 }
 
 # Line on a mission already taken on the open battle dilemma: (icon, text).
@@ -354,6 +362,24 @@ MISSION_MESSAGES = {
     "spare_the_captain": ("Spare the Captain",
         "Their lord was taken alive, just as we planned. The ransom has been paid, and the gold is ours.",
         "Their lord fell in the fighting, so there is no one left to ransom."),
+    "lords_glory": ("Lord's Glory",
+        "Our lord carved through the enemy ranks, and the tally of the slain is sung around every fire. A rare item is taken from the field.",
+        "Our lord fought well, but not well enough for the songs."),
+    "monster_slayer": ("Monster Slayer",
+        "Every beast they brought lies dead on the field. The gold we were promised is ours.",
+        "Some of their beasts still live, and the hunt is unfinished."),
+    "steadfast": ("Steadfast",
+        "Not one of our units broke, however hard the enemy pressed. The gold we were promised is ours.",
+        "One of our units broke and ran, and the vow broke with it."),
+    "decapitate": ("Decapitate",
+        "Their lord and every one of their heroes lie dead. Among their gear is a unique item, and it is ours.",
+        "Some of their leaders escaped the slaughter."),
+    "against_the_odds": ("Against the Odds",
+        "Outnumbered, we fought and won all the same. The gold we were promised is ours, and it is well earned.",
+        "We did not face the odds we swore to beat."),
+    "rout_the_riders": ("Rout the Riders",
+        "Their riders scattered before us in time. Among the abandoned saddles we find a rare item.",
+        "Their riders held their nerve for too long."),
     "untouchable": ("Untouchable",
         "Our lord came through the fighting barely scratched, and the army will not stop talking about it. The experience will not be forgotten.",
         "Our lord took too many wounds for the vow to hold."),
@@ -362,10 +388,16 @@ MISSION_MESSAGES = {
         "We lost a unit, and the victory was not flawless."),
 }
 
-# Battle objectives for the missions the tower does not have: name -> (panel text, banner).
+# Battle objectives this script owns, for the missions added after the tower's hand-written ones: name -> (panel text, banner).
 MISSION_OBJECTIVES = {
     "spare_the_captain": ("Spare the Captain: keep the enemy lord alive", "Spare the Captain: win with the enemy lord still alive."),
     "flawless_victory": ("Flawless Victory: our units lost", "Flawless Victory: win without losing a single unit."),
+    "lords_glory": ("Lord's Glory: enemy soldiers our lord has slain", "Lord's Glory: our lord must slay enough of the enemy."),
+    "monster_slayer": ("Monster Slayer: enemy monsters left", "Monster Slayer: destroy every enemy monster."),
+    "steadfast": ("Steadfast: keep every unit of ours from routing", "Steadfast: no unit of ours may rout."),
+    "decapitate": ("Decapitate: enemy lord and heroes left", "Decapitate: kill the enemy lord and every hero."),
+    "against_the_odds": ("Against the Odds: win while outnumbered", "Against the Odds: win while the enemy outnumbers us."),
+    "rout_the_riders": ("Rout the Riders: enemy riders left", "Rout the Riders: rout every enemy cavalry unit within 6 minutes."),
 }
 
 # Battle notice name -> (colour, text) the battle script shows for a pre-battle offer: red for what weakens the enemy, green for our help,

@@ -78,8 +78,7 @@ end
 local function eligible(offer, ctx)
     if offer.allies and ctx.event.intervention == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then return false end
     if offer.no_heroes and ctx.event.no_heroes then return false end
-    if offer.shoots and not offer_effects.army_shoots(ctx.general_cqi) then return false end
-    if offer.caster and not offer_effects.army_has_caster(ctx.general_cqi) then return false end
+    if not offer_effects.army_fits(offer, ctx.event.faction, ctx.general_cqi) then return false end
     if offer.unit_ranks and #tower_army.regular_units(ctx.general_cqi) == 0 then return false end
     if offer.traitor then
         local units = offer_effects.pick_recruits(ctx.general_cqi, ctx.event.faction, offer.traitor, ctx.shown_units)
@@ -446,12 +445,14 @@ function M.settle_missions(event, faction_name, general_cqi)
     end
     for _, mission in ipairs(outcomes.missions) do
         local offer = offers_data.at(mission.key, event.difficulty)
-        log("spot battle: mission " .. mission.key .. " " .. (mission.met and "met" or "failed"))
-        local rewards = mission.met and pay_mission(offer, event, faction_name, general_cqi) or { items = {} }
-        rewards.character = general
-        rewards.difficulty = event.difficulty
-        spot_offers.show_result(faction_name, "mission_" .. mission.key .. (mission.met and "_met" or "_failed"), rewards, position,
-            rewards.items[1] and "ancillaries_onscreen_name_" .. rewards.items[1] or nil)
+        log("spot battle: mission " .. mission.key .. " " .. (mission.void and "void" or mission.met and "met" or "failed"))
+        if not mission.void then
+            local rewards = mission.met and pay_mission(offer, event, faction_name, general_cqi) or { items = {} }
+            rewards.character = general
+            rewards.difficulty = event.difficulty
+            spot_offers.show_result(faction_name, "mission_" .. mission.key .. (mission.met and "_met" or "_failed"), rewards, position,
+                rewards.items[1] and "ancillaries_onscreen_name_" .. rewards.items[1] or nil)
+        end
     end
 end
 

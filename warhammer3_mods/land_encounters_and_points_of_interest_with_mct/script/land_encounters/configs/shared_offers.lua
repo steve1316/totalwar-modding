@@ -63,8 +63,12 @@ M.allies_in_the_dark_medium = { cost = 7500, ally_units = { 11, 15 } }
 M.allies_in_the_dark_large = { cost = 10000, ally_units = { 17, 20 } }
 
 --- Missions.
+M.lords_glory = { battle_value = S(100, 150, 200) }
+M.monster_slayer = { roster = { "monster", "monstrous_infantry" } }
+M.rout_the_riders = { battle_value = 360, roster = { "melee_cavalry", "missile_cavalry", "chariot", "monstrous_cavalry" } }
+M.against_the_odds = { max_units = 14 }
 M.untouchable = { battle_value = 0.5, lord_xp = 2000 }
-M.spare_the_captain = { gold = S(2500, 3750, 5000) }
+M.spare_the_captain = { gold = S(2500, 3000, 3500) }
 M.flawless_victory = { battle_value = 0 }
 M.bloodbath_wager = { cost = 1000, battle_value = 0.75, gold = 2000 }
 

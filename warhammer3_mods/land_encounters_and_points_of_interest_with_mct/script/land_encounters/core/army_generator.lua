@@ -90,6 +90,14 @@ local function unit_price(unit)
     return unit.multiplayer_cost or 0
 end
 
+--- True when the generator can field a unit: it has a price and comes from an origin the MCT settings allow.
+--- @param unit table A factions_data unit record.
+--- @param origins table The allowed-origin set from `enabled_origins`.
+--- @returns boolean True when it can be bought.
+local function buyable(unit, origins)
+    return unit_price(unit) > 0 and origins[unit.origin] ~= nil
+end
+
 --- Builds per-role pools of the faction's buyable units across the tiers from `min_tier` to `max_tier`. Each unit appears once, from its first
 --- enabled listing. Tiers and unit types are walked in a fixed order so every multiplayer client builds identical pools.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
@@ -356,6 +364,25 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     return { lord = lord, heroes = heroes, units = army.units, archetype = archetype.key, budget = budget, spent = spent }
 end
 
+--- True when a faction can field a buyable unit of one of the given types, at any tier.
+--- @param faction_shorthand_key string|nil A 3-letter faction shorthand.
+--- @param unit_types table Unit-type buckets, e.g. { "monster", "monstrous_infantry" }.
+--- @returns boolean True when the generator could buy one.
+function M.can_field(faction_shorthand_key, unit_types)
+    local data = faction_shorthand_key and factions_data[faction_shorthand_key]
+    if data == nil then return false end
+    local origins = enabled_origins()
+    for _, tier_name in ipairs(TIER_NAMES) do
+        local units = data.units[tier_name] or {}
+        for _, unit_type in ipairs(unit_types) do
+            for _, unit in ipairs(units[unit_type] or {}) do
+                if buyable(unit, origins) then return true end
+            end
+        end
+    end
+    return false
+end
+
 --- The price of any unit in factions_data, by its key. A unit listed by several factions takes its highest price, so every client agrees.
 --- @param unit_key string The land unit key.
 --- @returns number The unit's price, or 0 when factions_data does not list it.
@@ -394,8 +421,7 @@ function M.pick_units(faction_shorthand_key, tiers, unit_types, count, options)
         local units = data.units["tier_" .. tier] or {}
         for _, unit_type in ipairs(unit_types or UNIT_TYPES) do
             for _, unit in ipairs(units[unit_type] or {}) do
-                if unit_price(unit) > 0 and origins[unit.origin] and is_renown(unit) == (options.renown == true) and not exclude[unit.land_unit]
-                    and not seen[unit.land_unit] then
+                if buyable(unit, origins) and is_renown(unit) == (options.renown == true) and not exclude[unit.land_unit] and not seen[unit.land_unit] then
                     seen[unit.land_unit] = true
                     pool[#pool + 1] = unit.land_unit
                 end

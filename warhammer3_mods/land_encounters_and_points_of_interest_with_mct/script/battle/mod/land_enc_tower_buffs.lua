@@ -146,6 +146,33 @@ local function kills(unit)
     return unit:number_of_enemies_killed()
 end
 
+--- A mission spec that hunts every enemy unit a test picks: met once each is lost (or, with `routing_counts`, has routed), and failed
+--- once `value` seconds pass when the mission has a time limit, or at the start when there is nothing to hunt. A routed unit stays beaten
+--- even if it rallies.
+--- @param hunted function Takes a battle unit and returns true for one to hunt.
+--- @param routing_counts boolean True when a routing unit counts as beaten.
+--- @returns table The mission spec.
+local function hunt(hunted, routing_counts)
+    return {
+        start = function(m, ctx)
+            m.hunted, m.beaten = {}, {}
+            for _, sunit in ipairs(ctx.theirs) do
+                if hunted(sunit.unit) then m.hunted[#m.hunted + 1] = sunit end
+            end
+            if #m.hunted == 0 then m.state = "failed" end
+        end,
+        tick = function(m, ctx)
+            local left = 0
+            for _, sunit in ipairs(m.hunted) do
+                if is_lost(sunit) or (routing_counts and sunit.unit:is_routing()) then m.beaten[sunit] = true end
+                if not m.beaten[sunit] then left = left + 1 end
+            end
+            if left == 0 then m.state = "met" elseif type(m.value) == "number" and ctx.elapsed > m.value then m.state = "failed" end
+            return left
+        end,
+    }
+end
+
 --- Soldiers of the enemy army killed so far.
 --- @param theirs table The enemy's script units.
 --- @returns number The soldiers dead.
@@ -231,8 +258,9 @@ local TRICKS = {
 --- Missions
 
 --- How each mission is tracked. `start` runs once the battle starts, `tick` once a second until the battle is decided, and `finish` when it
---- is. Each gets the mission (`state` "open", "met" or "failed", `value` its target from the campaign) and the battle context (`ours`, `theirs`,
---- `elapsed` seconds). `tick` may settle the mission and returns the objective's counters. `finish` settles a mission still open.
+--- is. Each gets the mission (`state` "open", "met", "failed" or "void" for one that cannot apply, `value` its target from the campaign) and the battle context (`ours`, `theirs`,
+--- `elapsed` seconds). `tick` may settle the mission and returns the objective's counters. `finish` settles a mission still open. Each hook
+--- is optional.
 local MISSIONS = {
     blood_tally = {
         start = function(m, ctx) m.target = math.ceil(m.value * sum(ctx.theirs, function(unit) return unit:initial_number_of_men() end)) end,
@@ -309,20 +337,42 @@ local MISSIONS = {
             if is_lost(m.unit) then m.state = "met" end
         end,
     },
-    silence_the_guns = {
-        start = function(m, ctx)
-            m.guns = {}
-            for _, sunit in ipairs(ctx.theirs) do
-                if not sunit.unit:is_commanding_unit() and sunit.unit:starting_ammo() > 0 then m.guns[#m.guns + 1] = sunit end
-            end
-            if #m.guns == 0 then m.state = "failed" end
-        end,
+    --- Every enemy unit that shoots is destroyed within the time limit.
+    silence_the_guns = hunt(function(unit) return not unit:is_commanding_unit() and unit:starting_ammo() > 0 end, false),
+    --- Every enemy monster is destroyed.
+    monster_slayer = hunt(function(unit) return unit:unit_class() == "mon" or unit:unit_class() == "minf" end, false),
+    --- The enemy lord and every hero fall.
+    decapitate = hunt(function(unit) return unit:is_commanding_unit() or unit:unit_class() == "com" end, false),
+    --- Every enemy rider (cavalry, chariots and monstrous cavalry) routs or falls within the time limit.
+    rout_the_riders = hunt(function(unit)
+        return not unit:is_commanding_unit() and (unit:is_cavalry() or unit:is_chariot() or unit:unit_class() == "mcav")
+    end, true),
+    --- Our lord kills the given number of enemy soldiers.
+    lords_glory = {
         tick = function(m, ctx)
-            local left = 0
-            for _, sunit in ipairs(m.guns) do if not is_lost(sunit) then left = left + 1 end end
-            if left == 0 then m.state = "met" elseif ctx.elapsed > m.value then m.state = "failed" end
-            return left
+            local slain = ctx.our_lord and kills(ctx.our_lord.unit) or 0
+            if slain >= m.value then m.state = "met" end
+            return slain, m.value
         end,
+    },
+    --- No unit of ours routs.
+    steadfast = {
+        tick = function(m, ctx)
+            for _, sunit in ipairs(ctx.ours) do
+                if sunit.unit:is_routing() then
+                    m.state = "failed"
+                    return
+                end
+            end
+        end,
+        finish = function(m) m.state = "met" end,
+    },
+    --- We win while the enemy fielded more units than us when the battle started. When it did not, the mission is void: no reward, no failure.
+    against_the_odds = {
+        start = function(m, ctx)
+            if #ctx.ours >= #ctx.theirs then m.state = "void" end
+        end,
+        finish = function(m) m.state = "met" end,
     },
     untouchable = {
         tick = function(_, ctx)
@@ -369,6 +419,8 @@ end
 local function show_settled(m)
     if m.state == "met" then
         bm:complete_objective(OBJECTIVE_PREFIX .. m.key)
+    elseif m.state == "void" then
+        bm:remove_objective(OBJECTIVE_PREFIX .. m.key)
     else
         bm:fail_objective(OBJECTIVE_PREFIX .. m.key)
     end
@@ -408,7 +460,7 @@ local function track_missions(names, ours, theirs)
         ctx.elapsed = ctx.elapsed + MISSION_TICK_MS / 1000
         local changed = false
         for _, m in ipairs(missions) do
-            if m.state == "open" then
+            if m.state == "open" and m.spec.tick then
                 local a, b = step(m, m.spec.tick, ctx)
                 if m.state ~= "open" then
                     show_settled(m)

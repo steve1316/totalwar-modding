@@ -149,13 +149,13 @@ end
 --- Reads what the battle reported for the delve's missions and Rival delvers. Call it before the battle's values are cleared.
 --- @param delve table The delve record.
 --- An auto-resolved battle runs no battle script, so it reports nothing and its missions and kills are `untracked`.
---- @returns table { missions = { { key, met } } in the order taken, rival = { ours, theirs } or nil, untracked, standard, trophy }.
+--- @returns table { missions = { { key, met, void } } in the order taken, rival = { ours, theirs } or nil, untracked, standard, trophy }.
 function M.read_outcomes(delve)
     local results = load_pairs(RESULTS_SVR_KEY)
     local outcomes = { missions = {}, standard = delve.standard, trophy = delve.trophy, untracked = (core:svr_load_string(RESULTS_SVR_KEY) or "") == ""
         and (core:svr_load_string(RIVAL_SVR_KEY) or "") == "" }
     for _, key in ipairs(delve.missions or {}) do
-        outcomes.missions[#outcomes.missions + 1] = { key = key, met = results[key] == "met" }
+        outcomes.missions[#outcomes.missions + 1] = { key = key, met = results[key] == "met", void = results[key] == "void" }
     end
     if delve.rival then
         local ours, theirs = (core:svr_load_string(RIVAL_SVR_KEY) or ""):match("^(%d+),(%d+)$")
@@ -180,6 +180,8 @@ function M.settle(delve, faction_name, outcomes, floor)
         if outcomes.untracked then
             delve.haul.gold = delve.haul.gold + (offer.cost or 0)
             line = result_line("mission_untracked_" .. offer.key)
+        elseif mission.void then
+            log("tower: mission " .. offer.key .. " did not apply to the battle and is void")
         elseif not mission.met then
             line = result_line("mission_failed_" .. offer.key)
         elseif offer.gold_share or offer.gold then

@@ -43,6 +43,20 @@ function M.army_shoots(general_cqi)
     return false
 end
 
+--- True when an offer fits the army it would affect: `shoots` and `caster` need our army to have a shooter or a spellcaster, `roster` needs
+--- the enemy faction to field one of those unit types, and `max_units` needs our army at or under that many regular units.
+--- @param offer table The offer record.
+--- @param enemy_faction string|nil The enemy faction's shorthand, when known.
+--- @param general_cqi number Our lord's command queue index.
+--- @returns boolean True when every condition the offer sets holds.
+function M.army_fits(offer, enemy_faction, general_cqi)
+    if offer.shoots and not M.army_shoots(general_cqi) then return false end
+    if offer.caster and not M.army_has_caster(general_cqi) then return false end
+    if offer.roster and not army_generator.can_field(enemy_faction, offer.roster) then return false end
+    if offer.max_units and #tower_army.regular_units(general_cqi) > offer.max_units then return false end
+    return true
+end
+
 --- The regular units that can still take `ranks` more ranks without passing `max_rank`.
 --- @param general_cqi number The lord's command queue index.
 --- @param ranks number The ranks an offer adds.

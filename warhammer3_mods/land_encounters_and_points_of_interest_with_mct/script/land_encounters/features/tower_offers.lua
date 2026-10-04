@@ -487,13 +487,13 @@ local HANDLERS = {
     },
     guard_the_standard = { eligible = function(ctx) return tower_missions.has_standard(ctx.delve) end },
     tower_artillery = { apply = battle_buff },
-    call_the_winds = { eligible = function(ctx) return offer_effects.army_has_caster(ctx.delve.general_cqi) end, apply = battle_buff },
+    call_the_winds = { apply = battle_buff },
     vortex_scroll = {
         apply = function(offer, ctx)
             add_battle_bundle(ctx.delve, offer.effect_bundles[random_number(#offer.effect_bundles)])
         end,
     },
-    bottomless_quivers = { eligible = function(ctx) return offer_effects.army_shoots(ctx.delve.general_cqi) end, apply = battle_trick },
+    bottomless_quivers = { apply = battle_trick },
     oath_of_no_retreat = { apply = battle_trick },
     divine_shield = { apply = battle_trick },
     night_terrors = { apply = battle_trick },
@@ -697,12 +697,14 @@ local HANDLERS = {
     },
 }
 
---- True when an offer can be drawn: not already taken this delve (unless repeatable) and its condition holds.
+--- True when an offer can be drawn: not already taken this delve (unless repeatable), it fits the army (`offer_effects.army_fits`), and its
+--- condition holds.
 --- @param offer table The offer record at the delve's offer difficulty.
 --- @param ctx table The offer context.
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
     if spent(offer, ctx.delve) then return false end
+    if not offer_effects.army_fits(offer, ctx.tower and ctx.tower.faction, ctx.delve.general_cqi) then return false end
     local handler = HANDLERS[offer.key]
     return not (handler and handler.eligible) or handler.eligible(ctx, offer)
 end
