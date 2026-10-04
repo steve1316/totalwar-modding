@@ -1,10 +1,12 @@
 --- Spot offers: the treasure sites a treasure spot rolls and the offers their dilemmas draw. Pure data. features/spot_offers.lua reads it,
 --- and helper_scripts/generators/update_leapoi_spot_offers.py writes the DB rows and loc for every site and offer listed here.
 ---
+--- Any field may differ by difficulty, written as `S(easy, medium, hard)` (utils/steps.lua). `tiered(key)` names a bundle with one version per
+--- difficulty, e.g. land_enc_effect_spot_leave_an_offering_medium. Paid offers price on one of the cost bands below.
+---
 --- Offer fields, all optional apart from `key`, `pool` and `tags`:
----   cost            Gold paid from the treasury (Easy value, scaled by difficulty). An offer the treasury cannot pay is not drawn.
----   gold            Gold gained (Easy value, scaled). A negative value inside a gamble outcome is a loss.
----   fixed_gold      True when `cost` and `gold` do not scale with difficulty.
+---   cost            Gold paid from the treasury. An offer the treasury cannot pay is not drawn.
+---   gold            Gold gained. A negative value inside a gamble outcome is a loss.
 ---   items           { rarities, count }: random items of those rarities.
 ---   unique          How many legendary items.
 ---   recruit         { count, tiers, unit_types }: units of the lord's culture join the army.
@@ -14,18 +16,19 @@
 ---   army_bundle     { bundle, turns } on the lord's army.
 ---   faction_bundle  { bundle, turns } on the lord's faction.
 ---   trait           A trait the lord gains for good. Not drawn when the lord has it.
----   wound           The lord is wounded for this many turns at the faction's next turn start.
+---   wound           The lord is wounded for this many turns, at once.
 ---   camp            True: the army cannot move again this turn.
 ---   heal            True: every unit is healed to full.
 ---   sacrifice       { ranks }: the weakest regular unit is removed and every other unit gains that many ranks.
----   daemon_army     True: a hard Chaos army marches on the faction's capital.
+---   daemon_armies   How many hard Chaos armies march on the faction's capital.
 ---   guardian        True (a gamble outcome): a battle starts at the site, against an army that attacks the lord at once.
----   dividends       { per_turn, turns, effect_bundle }: gold each turn start.
+---   dividends       { per_turn, turns }: gold each turn start, shown by the `dividends_bundle_prefix` bundle for that amount.
 ---   incident        A site's old incident, fired as the signature reward.
 ---   gamble          A list of outcomes { weight, name, ...fields }. One is rolled when the offer is taken, and its fields apply.
 ---   realm           The realm target kind, see `M.realm_kinds`. The offer is not drawn when it has no target.
 ---   region_bundle, province_bundle, target_faction_bundle  { bundle, turns } on the realm target.
----   relations       Relations change for the realm target (see `M.realm_kinds`).
+---   relations       Relations change for the realm target (see `M.realm_kinds`), in the game's dilemma steps (-6 to 6). Each step reads as
+---                   10 relations in the offer text.
 ---   points          Development points for the realm target.
 ---   heal_garrison   True: the realm target's garrison is healed to full.
 ---   count           How many realm targets.
@@ -62,20 +65,30 @@
 ---   ransom               True: worse relations (`relations`) with the nearest faction of the beaten army's culture.
 ---   trait_points         A trait the lord gains a point of each time, growing through its levels.
 ---   lord_ranks           Ranks the lord gains.
+---   lord_xp              Experience the lord gains.
+
+local steps = require("script/land_encounters/utils/steps")
+
+--- A value per difficulty, see utils/steps.lua.
+local S = steps.of
+
+--- A bundle with one version per difficulty.
+local tiered = steps.tiered
 
 --- Key prefix of the spot offers' own effect bundles.
 local SPOT_BUNDLE = "land_enc_effect_spot_"
 
---- The tower's attrition bundle for 3 turns, shared by the plague offers.
-local PLAGUE = { "land_enc_effect_tower_plague_bearer", 3 }
+--- The tower's attrition bundle, shared by the plague offers.
+local PLAGUE = "land_enc_effect_tower_plague_bearer"
+
+--- Cost bands (Easy, Medium, Hard) every paid offer prices on.
+local STANDARD = S(1500, 2000, 2500)
+local STRONG = S(2000, 2500, 3000)
+local PREMIUM = S(2500, 3000, 3500)
+local STRUCTURAL = S(3000, 4000, 5000)
+local UNIQUE = S(2000, 3000, 4000)
 
 local M = {}
-
---- Gold multiplier by difficulty, for `cost` and `gold`.
-M.gold_multiplier = { easy = 1, medium = 1.5, hard = 2 }
-
---- Scaled gold is rounded to this step.
-M.gold_step = 50
 
 --- Offers drawn on top of a site's signature offer.
 M.extras_per_site = 2
@@ -95,8 +108,8 @@ M.signature_choice_key = "FIRST"
 --- Bundle on an army that cannot move until its next turn, after Search every corner.
 M.camp_bundle = "land_enc_effect_spot_camping"
 
---- Bundle prefix, followed by the turns, showing on an army that its lord will be wounded at the next turn start, e.g. ..._wound_owed_5.
-M.wound_bundle_prefix = "land_enc_effect_spot_wound_owed_"
+--- Bundle prefix, followed by the gold, showing a faction's dividends each turn, e.g. land_enc_effect_spot_dividends_250.
+M.dividends_bundle_prefix = "land_enc_effect_spot_dividends_"
 
 --- Dilemma key prefix of a site, e.g. land_enc_dilemma_site_hidden_tomb.
 M.dilemma_prefix = "land_enc_dilemma_site_"
@@ -188,13 +201,13 @@ M.sites = {
     { key = "the_explorer", tags = { "lore", "realm" }, signature = "the_explorer", ui_image = "minor_cult" },
     { key = "legendary_bard", tags = { "realm", "deal" }, signature = "legendary_bard", ui_image = "wulfhart_hunters" },
     { key = "ruined_shrine", tags = { "blessing", "curse" }, signature = "holy_water", ui_image = "old_ones_temples_down" },
-    { key = "smugglers_cache", tags = { "deal", "realm_others" }, signature = "pay_the_smugglers", ui_image = "wh2_sea_encounters_1" },
+    { key = "smugglers_cache", tags = { "deal", "realm_others" }, signature = "recruitment_cache", ui_image = "wh2_sea_encounters_1" },
     { key = "beast_lair", tags = { "recruit", "gamble" }, signature = "tame_the_beast", ui_image = "attrition_swamp" },
     { key = "old_battlefield", tags = { "recruit", "loot" }, signature = "salvage_a_war_machine", ui_image = "carnage_weapons" },
-    { key = "witchs_hut", tags = { "gamble", "curse" }, signature = "dark_pact", ui_image = "ai_wins_soul" },
+    { key = "witchs_hut", tags = { "gamble", "curse" }, signature = "dark_bargain", ui_image = "ai_wins_soul" },
     { key = "collapsed_mine", tags = { "loot", "gamble" }, signature = "search_every_corner", ui_image = "under_empire_discovered" },
     { key = "merchants_wagon", tags = { "deal" }, signature = "buy_from_the_trader", ui_image = "imperial_supplies" },
-    { key = "sunken_library", tags = { "lore", "realm" }, signature = "read_the_scrolls", ui_image = "story_panels/chd_drill_machinations" },
+    { key = "sunken_library", tags = { "lore", "realm" }, signature = "research_scrolls", ui_image = "story_panels/chd_drill_machinations" },
 }
 
 --- The spoils pick after a won battle spot: a site with no signature that draws from its own pools. The picture is culture-aware, so each
@@ -217,172 +230,166 @@ M.offers = {
     { key = "legendary_bard", pool = "signature", tags = {}, incident = "land_enc_incident_legendary_bard" },
 
     --- Treasure: loot.
-    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = 1500, spoils = true },
-    { key = "strip_the_valuables", pool = "treasure", tags = { "loot", "curse" }, gold = 3000, army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 5 } },
+    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = S(1000, 1500, 2000), spoils = true },
+    { key = "strip_the_valuables", pool = "treasure", tags = { "loot", "curse" }, gold = S(1000, 2000, 3000), army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 3 } },
     { key = "pry_open_the_reliquary", pool = "treasure", tags = { "loot", "curse" }, items = { rarities = { "rare" }, count = 1 }, wound = 2 },
     { key = "search_every_corner", pool = "treasure", tags = { "loot" }, items = { rarities = { "common", "uncommon", "rare" }, count = 2 }, camp = true },
-    { key = "the_hidden_vault", pool = "treasure", tags = { "loot" }, cost = 2500, unique = 1 },
+    { key = "the_hidden_vault", pool = "treasure", tags = { "loot" }, cost = UNIQUE, unique = 1 },
 
     --- Treasure: gambles.
-    { key = "roll_the_bones", pool = "treasure", tags = { "gamble" }, gamble = {
+    { key = "cast_the_lots", pool = "treasure", tags = { "gamble" }, gamble = {
         { 1, "won", items = { rarities = { "rare" }, count = 1 } },
-        { 1, "lost", gold = -1000 },
+        { 1, "lost", gold = S(-1000, -1500, -2000) },
     } },
     { key = "drink_from_the_spring", pool = "treasure", tags = { "gamble", "recovery" }, gamble = {
         { 1, "won", heal = true },
-        { 1, "lost", army_bundle = PLAGUE },
+        { 1, "lost", army_bundle = { PLAGUE, S(3, 4, 5) } },
     } },
     { key = "open_the_sealed_door", pool = "treasure", tags = { "gamble" }, gamble = {
         { 1, "won", unique = 1 },
         { 1, "lost", wound = 3 },
     } },
-    { key = "stake_the_treasury", pool = "treasure", tags = { "gamble", "deal" }, cost = 1000, gamble = {
-        { 1, "won", gold = 2500 },
-        { 1, "lost" },
-    } },
+    --- Blessings come at the low step for 5 turns, curses last 3 turns.
     { key = "touch_the_relic", pool = "treasure", tags = { "gamble", "blessing", "curse" }, gamble = {
-        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "bless_the_banners", 5 } },
-        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "holy_water", 5 } },
+        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "bless_the_banners_easy", 5 } },
+        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "holy_water_easy", 5 } },
         { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "ancient_tactics", 5 } },
-        { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 5 } },
-        { 1, "cursed", army_bundle = { PLAGUE[1], 5 } },
-        { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "touch_the_relic_frailty", 5 } },
+        { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 3 } },
+        { 1, "cursed", army_bundle = { PLAGUE, 3 } },
+        { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "touch_the_relic_frailty", 3 } },
     } },
     { key = "wake_the_guardian", pool = "treasure", tags = { "gamble" }, gamble = {
         { 3, "won", items = { rarities = { "rare" }, count = 1 } },
         { 2, "lost", guardian = true },
     } },
-    { key = "gamble_with_the_hermit", pool = "treasure", tags = { "gamble" }, cost = 500, gamble = {
+    { key = "gamble_with_the_hermit", pool = "treasure", tags = { "gamble" }, cost = STRONG, gamble = {
         { 1, "won", unique = 1 },
         { 2, "lost" },
     } },
 
     --- Treasure: blessings.
-    { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, cost = 500, army_bundle = { SPOT_BUNDLE .. "leave_an_offering", 5 } },
-    { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = 1000, army_bundle = { SPOT_BUNDLE .. "bless_the_banners", 8 } },
-    { key = "holy_water", pool = "treasure", tags = { "blessing" }, cost = 1000, army_bundle = { SPOT_BUNDLE .. "holy_water", 5 } },
+    { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "leave_an_offering"), 5 } },
+    { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "bless_the_banners"), 5 } },
+    { key = "holy_water", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "holy_water"), 5 } },
     { key = "oath_at_the_altar", pool = "treasure", tags = { "blessing" }, trait = "land_enc_trait_spot_shrine_sworn" },
-    { key = "sanctified_weapons", pool = "treasure", tags = { "blessing" }, cost = 1000, army_bundle = { SPOT_BUNDLE .. "sanctified_weapons", 5 } },
+    --- Magical attacks are yes or no, so the price buys turns.
+    { key = "enchanted_steel", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { SPOT_BUNDLE .. "enchanted_steel", S(5, 6, 7) } },
 
     --- Treasure: curses and pacts.
-    { key = "dark_pact", pool = "treasure", tags = { "curse" }, trait = "land_enc_trait_spot_pact_bound", wound = 5 },
-    { key = "cursed_hoard", pool = "treasure", tags = { "curse", "loot" }, gold = 4000, army_bundle = PLAGUE },
+    { key = "dark_bargain", pool = "treasure", tags = { "curse" }, trait = "land_enc_trait_tower_daemon_marked", wound = 5 },
+    { key = "plague_bearer", pool = "treasure", tags = { "curse", "loot" }, gold = S(4000, 5000, 6000), army_bundle = { PLAGUE, S(5, 6, 7) } },
     { key = "bloodstained_blades", pool = "treasure", tags = { "curse" }, army_bundle = { SPOT_BUNDLE .. "bloodstained_blades", 5 } },
     { key = "feed_the_shadows", pool = "treasure", tags = { "curse" }, sacrifice = { ranks = 1 } },
-    { key = "daemons_bargain", pool = "treasure", tags = { "curse", "gamble" }, unique = 2, daemon_army = true },
+    { key = "daemons_deal", pool = "treasure", tags = { "curse", "gamble" }, unique = S(2, 2, 3), daemon_armies = S(1, 1, 2) },
 
     --- Treasure: recruits.
-    { key = "recruit_the_survivors", pool = "treasure", tags = { "recruit" }, recruit = { count = 2, tiers = { 1, 2 } } },
-    { key = "hire_sellswords", pool = "treasure", tags = { "recruit", "deal" }, cost = 2000, recruit = { count = 1, tiers = { 3, 4 } } },
-    { key = "free_the_prisoner", pool = "treasure", tags = { "recruit" }, hero_rank = 5 },
+    { key = "conscripts", pool = "treasure", tags = { "recruit" }, recruit = { count = 2, tiers = { 1, 2 } } },
+    { key = "hire_sellswords", pool = "treasure", tags = { "recruit", "deal" }, cost = STANDARD, recruit = { count = 1, tiers = S({ 3, 4 }, { 4 }, { 4, 5 }) } },
+    { key = "free_the_prisoner", pool = "treasure", tags = { "recruit" }, hero_rank = S(1, 3, 5) },
     { key = "tame_the_beast", pool = "treasure", tags = { "recruit", "gamble" },
-        recruit = { count = 1, tiers = { 1, 2, 3, 4, 5 }, unit_types = { "monster", "war_beast", "monstrous_infantry", "monstrous_cavalry" } } },
-    { key = "hire_a_regiment_of_renown", pool = "treasure", tags = { "recruit", "deal" }, cost = 3000, renown = 1 },
-    { key = "salvage_a_war_machine", pool = "treasure", tags = { "recruit", "loot" }, cost = 1500, recruit = { count = 1, tiers = { 1, 2, 3, 4, 5 }, unit_types = { "warmachine" } } },
+        recruit = { count = 1, tiers = S({ 1, 2, 3 }, { 2, 3, 4 }, { 3, 4, 5 }), unit_types = { "monster", "war_beast", "monstrous_infantry", "monstrous_cavalry" } } },
+    { key = "regiment_of_renown", pool = "treasure", tags = { "recruit", "deal" }, cost = STRONG, renown = 1 },
+    { key = "salvage_a_war_machine", pool = "treasure", tags = { "recruit", "loot" }, cost = STANDARD,
+        recruit = { count = 1, tiers = S({ 1, 2, 3 }, { 2, 3, 4 }, { 3, 4, 5 }), unit_types = { "warmachine" } } },
 
     --- Treasure: deals.
-    { key = "buy_from_the_trader", pool = "treasure", tags = { "deal", "loot" }, cost = 2000, items = { rarities = { "rare" }, count = 1 } },
-    { key = "pay_the_smugglers", pool = "treasure", tags = { "deal" }, cost = 1000, faction_bundle = { "land_enc_effect_tower_recruitment_cache", 5 } },
-    { key = "invest_in_the_caravan", pool = "treasure", tags = { "deal" }, cost = 1500, fixed_gold = true,
-        dividends = { per_turn = 250, turns = 10, effect_bundle = "land_enc_effect_tower_dividends" } },
-    { key = "hire_guides", pool = "treasure", tags = { "deal", "lore" }, cost = 500, army_bundle = { SPOT_BUNDLE .. "hire_guides", 5 } },
-    { key = "buy_supplies", pool = "treasure", tags = { "deal", "recovery" }, cost = 800, army_bundle = { SPOT_BUNDLE .. "buy_supplies", 5 } },
+    { key = "buy_from_the_trader", pool = "treasure", tags = { "deal", "loot" }, cost = STRONG, items = { rarities = { "rare" }, count = 1 } },
+    { key = "recruitment_cache", pool = "treasure", tags = { "deal" }, cost = STANDARD, faction_bundle = { tiered(SPOT_BUNDLE .. "recruitment_cache"), 5 } },
+    { key = "tower_dividends", pool = "treasure", tags = { "deal" }, cost = STANDARD, dividends = { per_turn = S(250, 350, 450), turns = 10 } },
+    --- Our army ignoring attrition is yes or no, so the price buys turns.
+    { key = "buy_supplies", pool = "treasure", tags = { "deal", "recovery" }, cost = STANDARD, army_bundle = { SPOT_BUNDLE .. "buy_supplies", S(5, 6, 7) } },
 
     --- Treasure: lore.
-    { key = "read_the_scrolls", pool = "treasure", tags = { "lore" }, faction_bundle = { SPOT_BUNDLE .. "read_the_scrolls", 5 } },
-    { key = "map_the_passes", pool = "treasure", tags = { "lore" }, army_bundle = { SPOT_BUNDLE .. "map_the_passes", 10 } },
+    { key = "research_scrolls", pool = "treasure", tags = { "lore" }, faction_bundle = { "land_enc_effect_tower_research_scrolls", 5 } },
     { key = "ancient_tactics", pool = "treasure", tags = { "lore" }, army_bundle = { SPOT_BUNDLE .. "ancient_tactics", 5 } },
 
     --- Realm: your own lands.
-    { key = "endow_the_province", pool = "realm", tags = { "realm" }, cost = 2000, realm = "own_region", points = 50 },
-    { key = "shore_up_the_walls", pool = "realm", tags = { "realm" }, cost = 1500, realm = "own_region", heal_garrison = true, region_bundle = { SPOT_BUNDLE .. "shore_up_the_walls", 10 } },
-    { key = "raise_the_settlement", pool = "realm", tags = { "realm" }, cost = 5000, realm = "raise_region" },
-    { key = "quell_the_unrest", pool = "realm", tags = { "realm" }, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "quell_the_unrest", 10 } },
-    { key = "bountiful_harvest", pool = "realm", tags = { "realm" }, cost = 1000, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "bountiful_harvest", 10 } },
-    { key = "hidden_mint", pool = "realm", tags = { "realm", "loot" }, faction_bundle = { SPOT_BUNDLE .. "hidden_mint", 10 } },
+    { key = "endow_the_province", pool = "realm", tags = { "realm" }, cost = PREMIUM, realm = "own_region", points = S(50, 75, 100) },
+    { key = "shore_up_the_walls", pool = "realm", tags = { "realm" }, cost = 1500, realm = "own_region", heal_garrison = true, region_bundle = { SPOT_BUNDLE .. "shore_up_the_walls", 5 } },
+    { key = "raise_the_settlement", pool = "realm", tags = { "realm" }, cost = STRUCTURAL, realm = "raise_region" },
+    { key = "quell_the_unrest", pool = "realm", tags = { "realm" }, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "quell_the_unrest", 5 } },
+    { key = "bountiful_harvest", pool = "realm", tags = { "realm" }, cost = STANDARD, realm = "own_province", province_bundle = { tiered(SPOT_BUNDLE .. "bountiful_harvest"), 5 } },
 
     --- Realm: rivals nearby.
-    { key = "stir_their_rebels", pool = "realm", tags = { "realm_others" }, cost = 1500, realm = "enemy_province", province_bundle = { SPOT_BUNDLE .. "stir_their_rebels", 5 } },
-    { key = "poison_their_wells", pool = "realm", tags = { "realm_others" }, cost = 2000, realm = "enemy_region", region_bundle = { SPOT_BUNDLE .. "poison_their_wells", 5 } },
+    { key = "stir_their_rebels", pool = "realm", tags = { "realm_others" }, cost = STANDARD, realm = "enemy_province",
+        province_bundle = { tiered(SPOT_BUNDLE .. "stir_their_rebels"), 5 } },
+    { key = "poison_their_wells", pool = "realm", tags = { "realm_others" }, cost = STANDARD, realm = "enemy_region",
+        region_bundle = { tiered(SPOT_BUNDLE .. "poison_their_wells"), 5 } },
     { key = "undermine_their_walls", pool = "realm", tags = { "realm_others" }, cost = 1500, realm = "enemy_region",
         region_bundle = { SPOT_BUNDLE .. "undermine_their_walls", 5 } },
     { key = "spread_the_plague", pool = "realm", tags = { "realm_others", "curse" }, realm = "enemy_regions", count = 3,
-        region_bundle = { SPOT_BUNDLE .. "spread_the_plague", 5 }, army_bundle = { PLAGUE[1], 2 } },
-    { key = "send_gifts", pool = "realm", tags = { "realm_others", "deal" }, cost = 1000, realm = "friend", relations = 3 },
-    { key = "spy_on_their_capital", pool = "realm", tags = { "realm_others", "lore" }, cost = 500, realm = "enemy_capital" },
+        region_bundle = { SPOT_BUNDLE .. "spread_the_plague", 5 }, army_bundle = { PLAGUE, 3 } },
+    { key = "send_gifts", pool = "realm", tags = { "realm_others", "deal" }, cost = STANDARD, realm = "friend", relations = S(1, 2, 3) },
+    { key = "spy_on_their_capital", pool = "realm", tags = { "realm_others", "lore" }, cost = 1500, realm = "enemy_capital" },
 
     --- Realm: far-off factions.
-    { key = "curse_a_distant_king", pool = "realm", tags = { "realm_others", "curse" }, cost = 1500, realm = "biggest_faction",
-        target_faction_bundle = { SPOT_BUNDLE .. "curse_a_distant_king", 10 } },
-    { key = "share_the_find", pool = "realm", tags = { "realm_others", "lore" }, realm = "neighbours", relations = 2,
+    { key = "curse_a_distant_king", pool = "realm", tags = { "realm_others", "curse" }, cost = STRONG, realm = "biggest_faction",
+        target_faction_bundle = { tiered(SPOT_BUNDLE .. "curse_a_distant_king"), 5 } },
+    { key = "share_the_find", pool = "realm", tags = { "realm_others", "lore" }, realm = "neighbours", relations = 1,
         faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 }, target_faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 } },
-    { key = "point_them_at_each_other", pool = "realm", tags = { "realm_others" }, cost = 2000, realm = "rival_pair", relations = -3 },
-    { key = "sell_their_secrets", pool = "realm", tags = { "realm_others", "deal" }, gold = 2000, realm = "enemy_friends", relations = 2 },
+    { key = "point_them_at_each_other", pool = "realm", tags = { "realm_others" }, cost = PREMIUM, realm = "rival_pair", relations = -5 },
+    { key = "sell_their_secrets", pool = "realm", tags = { "realm_others", "deal" }, gold = S(2000, 2500, 3000), realm = "enemy_friends", relations = 5 },
 
     --- Pre-battle: sabotage on the enemy army.
-    { key = "bribe_a_scout", pool = "pre_battle", tags = { "sabotage" }, cost = 1500, budget = 0.75 },
-    { key = "thin_their_ranks", pool = "pre_battle", tags = { "sabotage" }, cost = 1000, fewer_units = 3 },
-    { key = "poison_their_stores", pool = "pre_battle", tags = { "sabotage" }, cost = 1000, enemy_strength = 0.75 },
-    { key = "kill_the_captain", pool = "pre_battle", tags = { "sabotage" }, cost = 1500, no_heroes = true },
-    { key = "keep_the_veterans_away", pool = "pre_battle", tags = { "sabotage" }, cost = 1000, max_tier = 2 },
-    { key = "spread_dread", pool = "pre_battle", tags = { "sabotage" }, cost = 1500, enemy_bundle = "land_enc_effect_tower_break_their_spirit" },
-    { key = "turn_a_traitor", pool = "pre_battle", tags = { "sabotage" }, cost = 2000, traitor = { count = 1, tiers = { 2, 3, 4 } } },
+    { key = "bribe_a_scout", pool = "pre_battle", tags = { "sabotage" }, cost = S(1500, 2250, 3000), budget = 0.75 },
+    { key = "thin_their_ranks", pool = "pre_battle", tags = { "sabotage" }, cost = S(1000, 1500, 2000), fewer_units = 3 },
+    { key = "poison_their_stores", pool = "pre_battle", tags = { "sabotage" }, cost = S(1000, 1500, 2000), enemy_strength = 0.75 },
+    { key = "kill_the_captain", pool = "pre_battle", tags = { "sabotage" }, cost = S(1500, 2250, 3000), no_heroes = true },
+    { key = "keep_the_veterans_away", pool = "pre_battle", tags = { "sabotage" }, cost = S(1000, 1500, 2000), max_tier = 2 },
+    { key = "spread_dread", pool = "pre_battle", tags = { "sabotage" }, cost = S(1500, 2250, 3000), enemy_bundle = "land_enc_effect_tower_break_their_spirit" },
+    { key = "turn_a_traitor", pool = "pre_battle", tags = { "sabotage" }, cost = S(2000, 3000, 4000), traitor = { count = 1, tiers = { 2, 3, 4 } } },
 
     --- Pre-battle: buffs on our army for this battle.
-    { key = "hold_war_rites", pool = "pre_battle", tags = { "buff" }, cost = 1500, battle_bundle = "land_enc_effect_tower_war_rites" },
-    { key = "hone_the_blades", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_whetstones_and_oil" },
-    { key = "paint_warding_sigils", pool = "pre_battle", tags = { "buff" }, cost = 1500, battle_bundle = "land_enc_effect_tower_warding_sigils" },
-    { key = "fire_kissed_blades", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_fire_kissed_blades" },
-    { key = "steel_our_resolve", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_iron_resolve" },
-    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_call_the_winds" },
-    { key = "raid_the_quartermaster", pool = "pre_battle", tags = { "buff" }, cost = 1000, battle_bundle = "land_enc_effect_tower_quartermasters_cache" },
+    { key = "hold_war_rites", pool = "pre_battle", tags = { "buff" }, cost = S(1500, 2250, 3000), battle_bundle = "land_enc_effect_tower_war_rites" },
+    { key = "hone_the_blades", pool = "pre_battle", tags = { "buff" }, cost = S(1000, 1500, 2000), battle_bundle = "land_enc_effect_tower_whetstones_and_oil" },
+    { key = "paint_warding_sigils", pool = "pre_battle", tags = { "buff" }, cost = S(1500, 2250, 3000), battle_bundle = "land_enc_effect_tower_warding_sigils" },
+    { key = "fire_kissed_blades", pool = "pre_battle", tags = { "buff" }, cost = S(1000, 1500, 2000), battle_bundle = "land_enc_effect_tower_fire_kissed_blades" },
+    { key = "steel_our_resolve", pool = "pre_battle", tags = { "buff" }, cost = S(1000, 1500, 2000), battle_bundle = "land_enc_effect_tower_iron_resolve" },
+    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, cost = S(1000, 1500, 2000), battle_bundle = "land_enc_effect_tower_call_the_winds" },
+    { key = "raid_the_quartermaster", pool = "pre_battle", tags = { "buff" }, cost = S(1000, 1500, 2000), battle_bundle = "land_enc_effect_tower_quartermasters_cache" },
 
     --- Pre-battle: allies and gambles.
-    { key = "hire_local_allies", pool = "pre_battle", tags = { "allies" }, cost = 3000, allies = { 5, 7 } },
+    { key = "hire_local_allies", pool = "pre_battle", tags = { "allies" }, cost = S(3000, 4500, 6000), allies = { 5, 7 } },
     { key = "night_raid", pool = "pre_battle", tags = { "gamble" }, gamble = {
         { 1, "won", budget = 0.75 },
         { 1, "lost", own_strength = 0.9 },
     } },
 
     --- Pre-battle: tricks the battle script plays, under the tower's names.
-    { key = "bottomless_quivers", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true, shoots = true },
-    { key = "oath_of_no_retreat", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true },
-    { key = "divine_shield", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true },
-    { key = "night_terrors", pool = "pre_battle", tags = { "trick" }, cost = 1500, trick = true },
-    { key = "assassinate", pool = "pre_battle", tags = { "trick" }, cost = 2500, trick = true },
+    { key = "bottomless_quivers", pool = "pre_battle", tags = { "trick" }, cost = S(2500, 3750, 5000), trick = true, shoots = true },
+    { key = "oath_of_no_retreat", pool = "pre_battle", tags = { "trick" }, cost = S(2500, 3750, 5000), trick = true },
+    { key = "divine_shield", pool = "pre_battle", tags = { "trick" }, cost = S(2500, 3750, 5000), trick = true },
+    { key = "night_terrors", pool = "pre_battle", tags = { "trick" }, cost = S(1500, 2250, 3000), trick = true },
+    { key = "assassinate", pool = "pre_battle", tags = { "trick" }, cost = S(2500, 3750, 5000), trick = true },
 
     --- Spoils, picked after a won battle spot.
-    { key = "strip_the_dead", pool = "spoils", tags = { "loot" }, gold_per_enemy_unit = 100 },
-    { key = "ransom_the_captain", pool = "spoils", tags = { "loot", "deal" }, gold = 2500, ransom = true, relations = -2 },
-    { key = "tribute_from_the_locals", pool = "spoils", tags = { "deal" }, fixed_gold = true,
-        dividends = { per_turn = 250, turns = 5, effect_bundle = "land_enc_effect_tower_dividends" } },
+    { key = "strip_the_dead", pool = "spoils", tags = { "loot" }, gold_per_enemy_unit = 250 },
+    { key = "ransom_the_captain", pool = "spoils", tags = { "loot", "deal" }, gold = S(2500, 3000, 3500), ransom = true, relations = -5 },
+    { key = "tribute_from_the_locals", pool = "spoils", tags = { "deal" }, dividends = { per_turn = 500, turns = 5 } },
     { key = "loot_the_baggage", pool = "spoils", tags = { "loot" }, battle_item = true },
     { key = "recruit_a_captive", pool = "spoils", tags = { "recruit" }, captive = true },
-    { key = "freed_captives", pool = "spoils", tags = { "recruit" }, recruit = { count = 2, tiers = { 1, 2 } } },
-    { key = "bury_the_dead", pool = "spoils", tags = { "recovery" }, army_bundle = { SPOT_BUNDLE .. "bury_the_dead", 5 } },
     { key = "press_on", pool = "spoils", tags = { "recovery" }, army_bundle = { SPOT_BUNDLE .. "press_on", 1 } },
-    { key = "victory_feast", pool = "spoils", tags = { "recovery" }, cost = 500, army_bundle = { SPOT_BUNDLE .. "victory_feast", 5 } },
+    { key = "victory_feast", pool = "spoils", tags = { "recovery" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "victory_feast"), 5 } },
     { key = "trophy_of_war", pool = "spoils", tags = { "loot" }, trait_points = "land_enc_trait_spot_trophy_hunter" },
     { key = "chase_the_routers", pool = "spoils", tags = { "gamble" }, gamble = {
         { 1, "won", items = { rarities = { "rare" }, count = 1 } },
         { 1, "lost", wound = 2 },
     } },
-    { key = "cursed_trophy", pool = "spoils", tags = { "curse", "loot" }, gold = 3000, army_bundle = PLAGUE },
-    { key = "dark_offering", pool = "spoils", tags = { "curse" }, sacrifice = { ranks = 0 }, lord_ranks = 2,
+    { key = "dark_offering", pool = "spoils", tags = { "curse" }, sacrifice = { ranks = 0 }, lord_ranks = 1,
         army_bundle = { SPOT_BUNDLE .. "dark_offering", 5 } },
 
     --- Missions, tracked by the battle script under the tower's names, plus two of their own.
     { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },
-    { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = 1500 },
-    { key = "hold_the_line", pool = "mission", tags = {}, battle_value = 2, gold = 1500 },
+    { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = S(1500, 2250, 3000) },
+    { key = "hold_the_line", pool = "mission", tags = {}, battle_value = 2, gold = S(1500, 2250, 3000) },
     { key = "swift_victory", pool = "mission", tags = {}, battle_value = 480, battle_item = true },
     { key = "guard_the_standard", pool = "mission", tags = {}, unit_ranks = 3 },
-    { key = "break_them", pool = "mission", tags = {}, battle_value = 6, gold = 1000 },
+    { key = "break_them", pool = "mission", tags = {}, battle_value = 6, gold = S(1000, 1500, 2000) },
     { key = "trophy_hunt", pool = "mission", tags = {}, trophy = true },
     { key = "silence_the_guns", pool = "mission", tags = {}, battle_value = 300, items = { rarities = { "rare" }, count = 1 } },
-    { key = "bloodbath_wager", pool = "mission", tags = {}, cost = 1000, battle_value = 0.75, gold = 2000 },
+    { key = "bloodbath_wager", pool = "mission", tags = {}, cost = S(1000, 1500, 2000), battle_value = 0.75, gold = S(2000, 3000, 4000) },
     { key = "duelists_challenge", pool = "mission", tags = {}, unique = 1 },
-    { key = "spare_the_captain", pool = "mission", tags = {}, gold = 2500 },
+    { key = "spare_the_captain", pool = "mission", tags = {}, gold = S(2500, 3750, 5000) },
     { key = "flawless_victory", pool = "mission", tags = {}, battle_value = 0, unique = 1 },
 }
 
@@ -390,6 +397,24 @@ M.offers = {
 M.by_key = {}
 for _, offer in ipairs(M.offers) do
     M.by_key[offer.key] = offer
+end
+
+--- An offer at one difficulty, with every stepped field picked for it.
+--- @param key string The offer key.
+--- @param difficulty string "easy", "medium" or "hard".
+--- @returns table|nil The offer record for that difficulty, or nil for an unknown key.
+function M.at(key, difficulty)
+    local offer = M.by_key[key]
+    return offer and steps.resolve(offer, difficulty)
+end
+
+--- Every offer at one difficulty, in config order.
+--- @param difficulty string "easy", "medium" or "hard".
+--- @returns table The offer records for that difficulty.
+function M.all_at(difficulty)
+    local offers = {}
+    for i, offer in ipairs(M.offers) do offers[i] = steps.resolve(offer, difficulty) end
+    return offers
 end
 
 --- Site key -> site record, the spoils pick included.

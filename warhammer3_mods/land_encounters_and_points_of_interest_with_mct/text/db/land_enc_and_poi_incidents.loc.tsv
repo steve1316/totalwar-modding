@@ -114,22 +114,18 @@ incidents_localised_title_land_enc_incident_battle_won_surprise_neutral	Ambush T
 incidents_localised_description_land_enc_incident_battle_won_surprise_neutral	We turned their ambush against them and broke them on their own ground. The soldiers are in high spirits after the fight.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_neutral	A Battle to Remember	false
 incidents_localised_description_land_enc_incident_battle_won_battlefield_neutral	The enemy army lies broken across the field. Among the spoils we find weapons and relics worth carrying into the wars to come.	false
-incidents_localised_title_land_enc_incident_spot_roll_the_bones_won	Roll the Bones	false
-incidents_localised_description_land_enc_incident_spot_roll_the_bones_won	The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours.	false
-incidents_localised_title_land_enc_incident_spot_roll_the_bones_lost	Roll the Bones	false
-incidents_localised_description_land_enc_incident_spot_roll_the_bones_lost	The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue.	false
+incidents_localised_title_land_enc_incident_spot_cast_the_lots_won	Cast the Lots	false
+incidents_localised_description_land_enc_incident_spot_cast_the_lots_won	The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours.	false
+incidents_localised_title_land_enc_incident_spot_cast_the_lots_lost	Cast the Lots	false
+incidents_localised_description_land_enc_incident_spot_cast_the_lots_lost	The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue.	false
 incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_won	Drink from the Spring	false
 incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_won	The water runs cold and clear. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
 incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_lost	Drink from the Spring	false
-incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_lost	The water tastes of rot. Within hours sickness spreads through the camp, and it will be 3 turns before the army is itself again.	false
+incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_lost	The water tastes of rot. Within hours sickness spreads through the camp, and it will be some turns before the army is itself again.	false
 incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_won	Open the Sealed Door	false
 incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours.	false
 incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_lost	Open the Sealed Door	false
-incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns at the start of our next turn.	false
-incidents_localised_title_land_enc_incident_spot_stake_the_treasury_won	Stake the Treasury	false
-incidents_localised_description_land_enc_incident_spot_stake_the_treasury_won	The venture pays off handsomely. Our stake comes back to the treasury with a healthy profit on top.	false
-incidents_localised_title_land_enc_incident_spot_stake_the_treasury_lost	Stake the Treasury	false
-incidents_localised_description_land_enc_incident_spot_stake_the_treasury_lost	The venture collapses, and the merchants we backed are nowhere to be found. Our stake is gone.	false
+incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns.	false
 incidents_localised_title_land_enc_incident_spot_wake_the_guardian_won	Wake the Guardian	false
 incidents_localised_description_land_enc_incident_spot_wake_the_guardian_won	The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
 incidents_localised_title_land_enc_incident_spot_wake_the_guardian_lost	Wake the Guardian	false
@@ -137,13 +133,13 @@ incidents_localised_description_land_enc_incident_spot_wake_the_guardian_lost	Th
 incidents_localised_title_land_enc_incident_spot_touch_the_relic_blessed	Touch the Relic	false
 incidents_localised_description_land_enc_incident_spot_touch_the_relic_blessed	Warmth spreads from the relic into the hands that hold it. A blessing settles over our army and will stay with it for 5 turns.	false
 incidents_localised_title_land_enc_incident_spot_touch_the_relic_cursed	Touch the Relic	false
-incidents_localised_description_land_enc_incident_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 5 turns.	false
+incidents_localised_description_land_enc_incident_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 3 turns.	false
 incidents_localised_title_land_enc_incident_spot_gamble_with_the_hermit_won	Gamble with the Hermit	false
 incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_won	The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands.	false
 incidents_localised_title_land_enc_incident_spot_gamble_with_the_hermit_lost	Gamble with the Hermit	false
 incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_lost	The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone.	false
 incidents_localised_title_land_enc_incident_spot_endow_the_province	Endow the Province	false
-incidents_localised_description_land_enc_incident_spot_endow_the_province	Our gold builds up [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]: [[col:green]]+50 development points[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_endow_the_province	Our gold builds up [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]].	false
 incidents_localised_title_land_enc_incident_spot_shore_up_the_walls	Shore Up the Walls	false
 incidents_localised_description_land_enc_incident_spot_shore_up_the_walls	The garrison of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] is healed and its walls are shored up.	false
 incidents_localised_title_land_enc_incident_spot_raise_the_settlement	Raise the Settlement	false
@@ -177,7 +173,7 @@ incidents_localised_description_land_enc_incident_spot_ransom_the_captain	Their 
 incidents_localised_title_land_enc_incident_spot_chase_the_routers_won	Chase the Routers	false
 incidents_localised_description_land_enc_incident_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours.	false
 incidents_localised_title_land_enc_incident_spot_chase_the_routers_lost	Chase the Routers	false
-incidents_localised_description_land_enc_incident_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns at the start of our next turn.	false
+incidents_localised_description_land_enc_incident_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns.	false
 incidents_localised_title_land_enc_incident_spot_mission_headhunt_met	Headhunt	false
 incidents_localised_description_land_enc_incident_spot_mission_headhunt_met	The enemy lord fell in time, just as we vowed. Their finest possession, a rare item, now belongs to us.	false
 incidents_localised_title_land_enc_incident_spot_mission_headhunt_failed	Headhunt	false
@@ -229,8 +225,8 @@ incidents_localised_description_land_enc_incident_spot_mission_flawless_victory_
 incidents_localised_title_land_enc_incident_spot_missions_untracked	Missions	false
 incidents_localised_description_land_enc_incident_spot_missions_untracked	The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.	false
 incidents_localised_title_land_enc_incident_spot_wound_paid_2	The Price Is Paid	false
-incidents_localised_description_land_enc_incident_spot_wound_paid_2	The price of what we took has come due. Our lord is struck down by a wound that will take 2 turns to heal.	false
+incidents_localised_description_land_enc_incident_spot_wound_paid_2	The price of what we took comes due at once. Our lord is struck down by a wound that will take 2 turns to heal.	false
 incidents_localised_title_land_enc_incident_spot_wound_paid_3	The Price Is Paid	false
-incidents_localised_description_land_enc_incident_spot_wound_paid_3	The price of what we took has come due. Our lord is struck down by a wound that will take 3 turns to heal.	false
+incidents_localised_description_land_enc_incident_spot_wound_paid_3	The price of what we took comes due at once. Our lord is struck down by a wound that will take 3 turns to heal.	false
 incidents_localised_title_land_enc_incident_spot_wound_paid_5	The Price Is Paid	false
-incidents_localised_description_land_enc_incident_spot_wound_paid_5	The price of what we took has come due. Our lord is struck down by a wound that will take 5 turns to heal.	false
+incidents_localised_description_land_enc_incident_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false

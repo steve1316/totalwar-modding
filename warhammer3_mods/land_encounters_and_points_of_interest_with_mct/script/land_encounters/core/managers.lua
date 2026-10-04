@@ -1269,8 +1269,8 @@ function PointOfInterestEventManager:new(mission_manager, invasion_battle_manage
         tower_event_delegate = TowerEventDelegate:new(invasion_battle_manager),
     }
     --- A treasure site's Daemon's bargain sends the same army as the tower's Daemon's deal.
-    require("script/land_encounters/features/spot_offers").send_daemon_army = function(faction_name)
-        t.tower_event_delegate:send_daemon_army(faction_name)
+    require("script/land_encounters/features/spot_offers").send_daemon_army = function(faction_name, count)
+        t.tower_event_delegate:send_daemon_army(faction_name, count)
     end
     setmetatable(t, self)
     self.__index = self

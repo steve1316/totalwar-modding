@@ -71,7 +71,7 @@ function M.roll_spoils()
 end
 
 --- True when a pre-battle offer or mission would do something for this battle. A traitor's units are picked here and kept on `ctx.cards`.
---- @param offer table The offer record.
+--- @param offer table The offer record at the battle's difficulty.
 --- @param ctx table { faction_name, general_cqi, event, cards }.
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
@@ -95,7 +95,7 @@ end
 --- @returns table Offer keys in popup order.
 local function draw_pool(pool_name, count, ctx)
     local pool = {}
-    for _, offer in ipairs(offers_data.offers) do
+    for _, offer in ipairs(offers_data.all_at(ctx.event.difficulty)) do
         if offer.pool == pool_name and eligible(offer, ctx) then pool[#pool + 1] = offer.key end
     end
     local keys, forced = {}, 0
@@ -149,9 +149,9 @@ function M.launch(faction_name)
     pending.shown_affordable = {}
     local choices = { { key = offers_data.fight_choice_key, lines = { FIGHT_LINE } } }
     for _, key in ipairs(pending.offers) do
-        local offer = offers_data.by_key[key]
+        local offer = offers_data.at(key, pending.difficulty)
         local line = offers_data.line_prefix .. key .. "_" .. pending.difficulty
-        local can_pay = spot_offers.affordable(offer, pending, faction_name)
+        local can_pay = spot_offers.affordable(offer, faction_name)
         pending.shown_affordable[key] = can_pay
         local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line } }
         local cards = pending.cards[key]
@@ -163,7 +163,7 @@ function M.launch(faction_name)
         local line = offers_data.line_prefix .. key .. "_" .. pending.difficulty
         local lines = { offers_data.taken_line }
         if not pending.taken[key] then
-            local can_pay = spot_offers.affordable(offers_data.by_key[key], pending, faction_name)
+            local can_pay = spot_offers.affordable(offers_data.at(key, pending.difficulty), faction_name)
             pending.shown_affordable[key] = can_pay
             lines = can_pay and { line, offers_data.returns_line } or { line, offers_data.unaffordable_line }
         end
@@ -251,12 +251,12 @@ end
 --- A mission already taken or shown as unaffordable just reopens it.
 --- @param faction_name string The faction key.
 --- @param pending table The open dilemma.
---- @param offer table The mission's offer record.
+--- @param offer table The mission's offer record at the battle's difficulty.
 local function take_mission(faction_name, pending, offer)
     if pending.taken[offer.key] or pending.shown_affordable[offer.key] == false then
         log("spot battle: mission " .. offer.key .. " is taken or was shown as unaffordable, nothing happens")
     else
-        if offer.cost then cm:treasury_mod(faction_name, -spot_offers.offer_cost(offer, pending.difficulty)) end
+        if offer.cost then cm:treasury_mod(faction_name, -spot_offers.offer_cost(offer)) end
         pending.taken[offer.key] = true
         tower_missions.take(offer, pending.battle)
         log("spot battle: " .. faction_name .. " takes mission " .. offer.key .. ", treasury " .. offer_effects.treasury(faction_name))
@@ -276,7 +276,7 @@ function M.take(faction_name, choice_key, event)
     if pending == nil then return nil end
     for _, key in ipairs(pending.missions or {}) do
         if spot_offers.choice_key(key) == choice_key then
-            take_mission(faction_name, pending, offers_data.by_key[key])
+            take_mission(faction_name, pending, offers_data.at(key, pending.difficulty))
             return "reopen"
         end
     end
@@ -289,7 +289,7 @@ function M.take(faction_name, choice_key, event)
     event.standard = (pending.battle or {}).standard
     local offer = nil
     for _, key in ipairs(pending.offers) do
-        if spot_offers.choice_key(key) == choice_key then offer = offers_data.by_key[key] end
+        if spot_offers.choice_key(key) == choice_key then offer = offers_data.at(key, pending.difficulty) end
     end
     if offer == nil then
         log("spot battle: " .. faction_name .. " fights " .. pending.dilemma .. " as it is, missions " .. table.concat(event.missions, ", "))
@@ -300,7 +300,7 @@ function M.take(faction_name, choice_key, event)
         return "fight"
     end
     local before = offer_effects.treasury(faction_name)
-    if offer.cost then cm:treasury_mod(faction_name, -spot_offers.offer_cost(offer, pending.difficulty)) end
+    if offer.cost then cm:treasury_mod(faction_name, -spot_offers.offer_cost(offer)) end
     apply_to_event(offer, event)
     if offer.gamble then
         local outcome = spot_offers.roll_outcome(offer.gamble)
@@ -354,7 +354,7 @@ function M.hand_to_battle(event, army)
     for _, notice in ipairs(event.notices or {}) do names[#names + 1] = notice end
     for _, key in ipairs(event.missions or {}) do
         names[#names + 1] = key
-        local offer = offers_data.by_key[key]
+        local offer = offers_data.at(key, event.difficulty)
         local value = offer.battle_value
         if offer.trophy then value = event.trophy end
         if offer.unit_ranks and event.standard then value = event.standard.key .. "#" .. event.standard.nth end
@@ -374,13 +374,13 @@ end
 
 --- Works out one mission met's rewards: gold, items, or a copy of the enemy's most expensive unit, which its result grants. Ranks for the
 --- marked unit are given here.
---- @param offer table The mission's offer record.
+--- @param offer table The mission's offer record at the battle's difficulty.
 --- @param event table The battle event.
 --- @param faction_name string Our faction key.
 --- @param general_cqi number Our lord's command queue index.
 --- @returns table The rewards { gold, items, units } for the mission's result.
 local function pay_mission(offer, event, faction_name, general_cqi)
-    local gold = offer.gold and spot_offers.scale_gold(offer.gold, event.difficulty, offer) or nil
+    local gold = offer.gold
     local items = {}
     if offer.items then items = item_pool.pick_items(faction_name, offer.items.rarities, offer.items.count) end
     if offer.unique then items = offer_effects.pick_unique_items(faction_name, offer.unique) end
@@ -408,15 +408,15 @@ function M.settle_missions(event, faction_name, general_cqi)
     if outcomes.untracked then
         local refund = 0
         for _, key in ipairs(event.missions) do
-            local offer = offers_data.by_key[key]
-            if offer.cost then refund = refund + spot_offers.offer_cost(offer, event.difficulty) end
+            local offer = offers_data.at(key, event.difficulty)
+            if offer.cost then refund = refund + spot_offers.offer_cost(offer) end
         end
         log("spot battle: the battle was auto-resolved, so no mission was counted and " .. refund .. " gold of stakes comes back")
         spot_offers.show_result(faction_name, "missions_untracked", { gold = refund, character = general }, position)
         return
     end
     for _, mission in ipairs(outcomes.missions) do
-        local offer = offers_data.by_key[mission.key]
+        local offer = offers_data.at(mission.key, event.difficulty)
         log("spot battle: mission " .. mission.key .. " " .. (mission.met and "met" or "failed"))
         local rewards = mission.met and pay_mission(offer, event, faction_name, general_cqi) or { items = {} }
         rewards.character = general

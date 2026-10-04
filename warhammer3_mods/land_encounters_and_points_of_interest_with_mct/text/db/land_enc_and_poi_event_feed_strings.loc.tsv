@@ -267,30 +267,24 @@ event_feed_strings_text_description_event_land_enc_tower_ready	The tower's gates
 event_feed_strings_text_title_event_land_enc_tower_dark_bargain_paid	Ancient Tower	false
 event_feed_strings_text_subtitle_event_land_enc_tower_dark_bargain_paid	The Dark Bargain Is Paid	false
 event_feed_strings_text_description_event_land_enc_tower_dark_bargain_paid	What we bargained with in the tower has taken its due. Our lord is [[col:red]]wounded for 5 turns[[/col]], but keeps the Daemon's mark.	false
-event_feed_strings_text_title_event_land_enc_spot_roll_the_bones_won	Roll the Bones	false
-event_feed_strings_text_subtitle_event_land_enc_spot_roll_the_bones_won	Fortune Smiles	false
-event_feed_strings_text_description_event_land_enc_spot_roll_the_bones_won	The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours.	false
-event_feed_strings_text_title_event_land_enc_spot_roll_the_bones_lost	Roll the Bones	false
-event_feed_strings_text_subtitle_event_land_enc_spot_roll_the_bones_lost	Fortune Frowns	false
-event_feed_strings_text_description_event_land_enc_spot_roll_the_bones_lost	The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue.	false
+event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
+event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
+event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours.	false
+event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_lost	Cast the Lots	false
+event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_lost	Fortune Frowns	false
+event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_lost	The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue.	false
 event_feed_strings_text_title_event_land_enc_spot_drink_from_the_spring_won	Drink from the Spring	false
 event_feed_strings_text_subtitle_event_land_enc_spot_drink_from_the_spring_won	Healing Waters	false
 event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_won	The water runs cold and clear. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
 event_feed_strings_text_title_event_land_enc_spot_drink_from_the_spring_lost	Drink from the Spring	false
 event_feed_strings_text_subtitle_event_land_enc_spot_drink_from_the_spring_lost	Foul Waters	false
-event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_lost	The water tastes of rot. Within hours sickness spreads through the camp, and it will be 3 turns before the army is itself again.	false
+event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_lost	The water tastes of rot. Within hours sickness spreads through the camp, and it will be some turns before the army is itself again.	false
 event_feed_strings_text_title_event_land_enc_spot_open_the_sealed_door_won	Open the Sealed Door	false
 event_feed_strings_text_subtitle_event_land_enc_spot_open_the_sealed_door_won	A Treasure Within	false
 event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours.	false
 event_feed_strings_text_title_event_land_enc_spot_open_the_sealed_door_lost	Open the Sealed Door	false
 event_feed_strings_text_subtitle_event_land_enc_spot_open_the_sealed_door_lost	A Trap Sprung	false
-event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns at the start of our next turn.	false
-event_feed_strings_text_title_event_land_enc_spot_stake_the_treasury_won	Stake the Treasury	false
-event_feed_strings_text_subtitle_event_land_enc_spot_stake_the_treasury_won	The Stake Pays	false
-event_feed_strings_text_description_event_land_enc_spot_stake_the_treasury_won	The venture pays off handsomely. Our stake comes back to the treasury with a healthy profit on top.	false
-event_feed_strings_text_title_event_land_enc_spot_stake_the_treasury_lost	Stake the Treasury	false
-event_feed_strings_text_subtitle_event_land_enc_spot_stake_the_treasury_lost	The Stake Is Lost	false
-event_feed_strings_text_description_event_land_enc_spot_stake_the_treasury_lost	The venture collapses, and the merchants we backed are nowhere to be found. Our stake is gone.	false
+event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns.	false
 event_feed_strings_text_title_event_land_enc_spot_wake_the_guardian_won	Wake the Guardian	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wake_the_guardian_won	It Sleeps on	false
 event_feed_strings_text_description_event_land_enc_spot_wake_the_guardian_won	The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
@@ -302,7 +296,7 @@ event_feed_strings_text_subtitle_event_land_enc_spot_touch_the_relic_blessed	A B
 event_feed_strings_text_description_event_land_enc_spot_touch_the_relic_blessed	Warmth spreads from the relic into the hands that hold it. A blessing settles over our army and will stay with it for 5 turns.	false
 event_feed_strings_text_title_event_land_enc_spot_touch_the_relic_cursed	Touch the Relic	false
 event_feed_strings_text_subtitle_event_land_enc_spot_touch_the_relic_cursed	A Curse	false
-event_feed_strings_text_description_event_land_enc_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 5 turns.	false
+event_feed_strings_text_description_event_land_enc_spot_touch_the_relic_cursed	The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 3 turns.	false
 event_feed_strings_text_title_event_land_enc_spot_gamble_with_the_hermit_won	Gamble with the Hermit	false
 event_feed_strings_text_subtitle_event_land_enc_spot_gamble_with_the_hermit_won	A Lucky Throw	false
 event_feed_strings_text_description_event_land_enc_spot_gamble_with_the_hermit_won	The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands.	false
@@ -311,7 +305,7 @@ event_feed_strings_text_subtitle_event_land_enc_spot_gamble_with_the_hermit_lost
 event_feed_strings_text_description_event_land_enc_spot_gamble_with_the_hermit_lost	The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone.	false
 event_feed_strings_text_title_event_land_enc_spot_endow_the_province	Endow the Province	false
 event_feed_strings_text_subtitle_event_land_enc_spot_endow_the_province	Endow the Province	false
-event_feed_strings_text_description_event_land_enc_spot_endow_the_province	Our gold builds up the place named above: [[col:green]]+50 development points[[/col]].	false
+event_feed_strings_text_description_event_land_enc_spot_endow_the_province	Our gold builds up the place named above.	false
 event_feed_strings_text_title_event_land_enc_spot_shore_up_the_walls	Shore Up the Walls	false
 event_feed_strings_text_subtitle_event_land_enc_spot_shore_up_the_walls	Shore Up the Walls	false
 event_feed_strings_text_description_event_land_enc_spot_shore_up_the_walls	The garrison of the place named above is healed and its walls are shored up.	false
@@ -362,7 +356,7 @@ event_feed_strings_text_subtitle_event_land_enc_spot_chase_the_routers_won	A Ric
 event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours.	false
 event_feed_strings_text_title_event_land_enc_spot_chase_the_routers_lost	Chase the Routers	false
 event_feed_strings_text_subtitle_event_land_enc_spot_chase_the_routers_lost	Ambushed	false
-event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns at the start of our next turn.	false
+event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_headhunt_met	Headhunt	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_headhunt_met	Mission Met	false
 event_feed_strings_text_description_event_land_enc_spot_mission_headhunt_met	The enemy lord fell in time, just as we vowed. Their finest possession, a rare item, now belongs to us.	false
@@ -440,10 +434,10 @@ event_feed_strings_text_subtitle_event_land_enc_spot_missions_untracked	Not Coun
 event_feed_strings_text_description_event_land_enc_spot_missions_untracked	The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.	false
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_2	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_2	Our Lord Is Wounded	false
-event_feed_strings_text_description_event_land_enc_spot_wound_paid_2	The price of what we took has come due. Our lord is struck down by a wound that will take 2 turns to heal.	false
+event_feed_strings_text_description_event_land_enc_spot_wound_paid_2	The price of what we took comes due at once. Our lord is struck down by a wound that will take 2 turns to heal.	false
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_3	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_3	Our Lord Is Wounded	false
-event_feed_strings_text_description_event_land_enc_spot_wound_paid_3	The price of what we took has come due. Our lord is struck down by a wound that will take 3 turns to heal.	false
+event_feed_strings_text_description_event_land_enc_spot_wound_paid_3	The price of what we took comes due at once. Our lord is struck down by a wound that will take 3 turns to heal.	false
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_5	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_5	Our Lord Is Wounded	false
-event_feed_strings_text_description_event_land_enc_spot_wound_paid_5	The price of what we took has come due. Our lord is struck down by a wound that will take 5 turns to heal.	false
+event_feed_strings_text_description_event_land_enc_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false

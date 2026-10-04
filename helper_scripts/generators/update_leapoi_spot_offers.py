@@ -14,6 +14,7 @@ import json
 import os
 import re
 import subprocess
+from collections import defaultdict
 from typing import Dict, List, Tuple
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
@@ -52,6 +53,12 @@ STRINGS_LOC = LOC_PREFIX + "spot_strings.loc.tsv"
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Text helpers
+
+# Key prefix of the spot offers' own effect bundles.
+SPOT_BUNDLE = "land_enc_effect_spot_"
+
+# Offer fields that put a bundle on something: { bundle, turns }.
+BUNDLE_FIELDS = ("army_bundle", "faction_bundle", "province_bundle", "region_bundle", "target_faction_bundle")
 
 
 def stat(value: str, icon: str, name: str, colour: str = "green") -> str:
@@ -114,71 +121,69 @@ SITE_FOOTER = "\\\\n\\\\n[[col:yellow]]Choose one, or walk away.[[/col]]"
 
 # Offer key -> (choice label, line). A line may use {cost}, {gold}, {won_gold}, {lost_gold} and {per_turn}, filled per difficulty.
 OFFERS: Dict[str, Tuple[str, str]] = {
-    "tomb_robbing": ("Rob the Tomb", "Rob the tomb: [[col:green]]+1500 gold[[/col]] to our treasury, a random item and experience for our lord."),
-    "abandoned_camp": ("Rest at the Camp", "Rest at the camp: [[col:green]]+8% replenishment[[/col]] and [[col:green]]+8% movement range[[/col]] for 8 turns, and our lord gains experience each turn."),
-    "buried_relics": ("Dig Up the Relics", "Dig up the relics: [[col:green]]2 random items[[/col]] and the [[col:green]]Talisman of Preservation[[/col]]."),
-    "hidden_temple": ("Pray at the Temple", "Pray at the temple: [[col:green]]+8% unit health[[/col]] and [[col:green]]+4% ward save[[/col]] for 5 turns, and our lord gains experience each turn."),
-    "caravan_remnants": ("Salvage the Caravan", "Salvage the caravan: [[col:green]]+5000 gold[[/col]] to our treasury, a random item and experience for our lord."),
-    "whispers_of_the_gods": ("Heed the Whisper", "Heed the whisper: our army is [[col:green]]unbreakable[[/col]] and [[col:green]]never tires[[/col]] for 4 turns, and our lord gains experience each turn."),
-    "the_explorer": ("Hear the Explorers Out", "Hear the explorers out: [[col:green]]+16% movement range[[/col]], [[col:green]]+16% ambush defence[[/col]] and [[col:green]]no attrition[[/col]] for 10 turns."),
-    "legendary_bard": ("Free the Bard", "Free the bard: [[col:green]]+10% income[[/col]] and [[col:green]]-30% construction cost[[/col]] in our provinces for 10 turns."),
+    "tomb_robbing": ("Rob the Tomb", "Rob the tomb: [[col:green]]a random item[[/col]] and [[col:green]]+2000 experience[[/col]] for our lord."),
+    "abandoned_camp": ("Rest at the Camp", "Rest at the camp: [[col:green]]+5% replenishment[[/col]] for 3 turns."),
+    "buried_relics": ("Dig Up the Relics", "Dig up the relics: [[col:green]]a random item[[/col]]."),
+    "hidden_temple": ("Pray at the Temple", "Pray at the temple: [[col:green]]+5% ward save[[/col]] for 5 turns, and our lord gains [[col:green]]+250 experience[[/col]] each turn."),
+    "caravan_remnants": ("Salvage the Caravan", "Salvage the caravan: [[col:green]]+2500 gold[[/col]] to our treasury, [[col:green]]a random item[[/col]] and [[col:green]]+500 experience[[/col]] for our lord."),
+    "whispers_of_the_gods": ("Heed the Whisper", "Heed the whisper: our army is [[col:green]]unbreakable[[/col]] and [[col:green]]never tires[[/col]] for 3 turns, and our lord gains [[col:green]]+250 experience[[/col]] each turn."),
+    "the_explorer": ("Hear the Explorers Out", "Hear the explorers out: [[col:green]]+15% movement range[[/col]] and [[col:green]]+15% ambush defence[[/col]] for 5 turns."),
+    "legendary_bard": ("Free the Bard", "Free the bard: [[col:green]]+5% income[[/col]] and [[col:green]]-25% construction cost[[/col]] in our provinces for 5 turns."),
 
     "take_the_gold": ("Take the Gold", "Take the gold: [[col:green]]+{gold} gold[[/col]] to our treasury."),
     "strip_the_valuables": ("Strip the Valuables", "Strip everything of value: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army is weighed down: "
-                            + stat("-10", *LEADERSHIP, colour="red") + " for 5 turns."),
-    "pry_open_the_reliquary": ("Pry Open the Reliquary", "Pry open the reliquary: [[col:green]]a random rare item[[/col]], but our lord is [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn."),
+                            + stat("-15", *LEADERSHIP, colour="red") + " and " + stat("-10%", *SPEED, colour="red") + " for 3 turns."),
+    "pry_open_the_reliquary": ("Pry Open the Reliquary", "Pry open the reliquary: [[col:green]]a random rare item[[/col]], but our lord is [[col:red]]wounded for 2 turns[[/col]]."),
     "search_every_corner": ("Search Every Corner", "Search every corner: [[col:green]]2 random items[[/col]], but our army [[col:red]]cannot move again this turn[[/col]]."),
     "the_hidden_vault": ("Open the Hidden Vault", PAY + "open the hidden vault: [[col:green]]1 unique item[[/col]]."),
-    "roll_the_bones": ("Roll the Bones", "Roll the bones: a 50/50 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]losing {lost_gold} gold[[/col]]."),
-    "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
-    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]] at the start of our next turn."),
-    "stake_the_treasury": ("Stake the Treasury", "Stake [[col:yellow]]{cost} gold[[/col]] from our treasury: a 50/50 chance it comes back as [[col:green]]{won_gold} gold[[/col]] or is [[col:red]]lost[[/col]]."),
+    "cast_the_lots": ("Cast the Lots", "Cast the lots: a 50/50 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]losing {lost_gold} gold[[/col]]."),
+    "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for {lost_turns} turns[[/col]]."),
+    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]]."),
     "wake_the_guardian": ("Wake the Guardian", "Wake the guardian: a 60/40 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]it attacks[[/col]] and a battle starts here."),
-    "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing[[/col]] or [[col:red]]curse[[/col]] for 5 turns."),
+    "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing for 5 turns[[/col]] or [[col:red]]curse for 3 turns[[/col]]."),
     "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 unique item[[/col]]."),
-    "leave_an_offering": ("Leave an Offering", PAY + "leave an offering: [[col:green]]+10% ward save[[/col]] for our army for 5 turns."),
-    "bless_the_banners": ("Bless the Banners", PAY + "bless our banners: [[col:green]]+10[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack and "
-                          "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for 8 turns."),
-    "holy_water": ("Holy Water", PAY + "buy holy water: [[col:green]]+15% physical resistance[[/col]] for our army for 5 turns."),
+    "leave_an_offering": ("Leave an Offering", PAY + "leave an offering: [[col:green]]+{e0}% ward save[[/col]] for our army for 5 turns."),
+    "bless_the_banners": ("Bless the Banners", PAY + "bless our banners: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack and "
+                          "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for 5 turns."),
+    "holy_water": ("Holy Water", PAY + "buy holy water: [[col:green]]+{e0}% physical resistance[[/col]] for our army for 5 turns."),
     "oath_at_the_altar": ("Oath at the Altar", "Swear an oath at the altar: our lord is [[col:green]]Shrine-Sworn[[/col]] for good (" + stat("+5", *LEADERSHIP) + " for our army)."),
-    "sanctified_weapons": ("Sanctify the Weapons", PAY + "sanctify our weapons: [[col:green]]magical attacks[[/col]] for every unit for 5 turns."),
-    "dark_pact": ("Make a Dark Pact", "Make a dark pact: our lord is [[col:green]]Pact-Bound[[/col]] for good (" + stat("+10", *ATTACK) + "), but is [[col:red]]wounded for 5 turns[[/col]] at the start of our next turn."),
-    "cursed_hoard": ("Take the Cursed Hoard", "Take the cursed hoard: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
+    "enchanted_steel": ("Enchanted Steel", PAY + "enchant our steel: [[col:green]]magical attacks[[/col]] for every unit for {turns} turns."),
+    "dark_bargain": ("Strike a Dark Bargain", "Strike a dark bargain: our lord is [[col:green]]Daemon-Marked[[/col]] for good (" + stat("+10", *ATTACK)
+                     + ", [[col:green]]+10%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength and " + stat("+10%", *SPEED)
+                     + "), but is [[col:red]]wounded for 5 turns[[/col]]."),
+    "plague_bearer": ("Take the Cursed Hoard", "Take the cursed hoard: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for {turns} turns[[/col]]."),
     "bloodstained_blades": ("Take the Bloodstained Blades", "Take up the bloodstained blades: " + stat("+20", *ATTACK) + ", but " + stat("-20", *DEFENCE, colour="red") + " for 5 turns."),
     "feed_the_shadows": ("Feed the Shadows", "Feed the shadows: sacrifice our [[col:red]]weakest unit[[/col]], and every other unit [[col:green]]gains 1 rank[[/col]]."),
-    "daemons_bargain": ("Strike a Daemon's Bargain", "Strike a daemon's bargain: [[col:green]]2 unique items[[/col]] now, but [[col:red]]a hard Chaos army marches on our capital[[/col]]."),
-    "recruit_the_survivors": ("Recruit the Survivors", "Recruit the survivors: [[col:green]]2 random units[[/col]] of our own kind join our army now."),
-    "hire_sellswords": ("Hire Sellswords", PAY + "hire sellswords: [[col:green]]a random elite unit[[/col]] of our own kind joins our army now."),
-    "free_the_prisoner": ("Free the Prisoner", "Free the prisoner: [[col:green]]a rank 5 hero[[/col]] joins our army."),
-    "tame_the_beast": ("Tame the Beast", "Tame the beast: [[col:green]]a random monster[[/col]] of our own kind joins our army now."),
-    "hire_a_regiment_of_renown": ("Hire a Regiment of Renown", PAY + "hire a [[col:green]]Regiment of Renown[[/col]] of our own kind: it joins our army now."),
-    "salvage_a_war_machine": ("Salvage a War Machine", PAY + "salvage a war machine: [[col:green]]a random war machine[[/col]] of our own kind joins our army now."),
+    "daemons_deal": ("Strike a Daemon's Deal", "Strike a daemon's deal: [[col:green]]{unique} unique items[[/col]] now, but [[col:red]]{daemon_armies}[[/col]] on our capital."),
+    "conscripts": ("Recruit the Survivors", "Recruit the survivors: [[col:green]]2 random tier 1-2 units[[/col]] of our own kind join our army now."),
+    "hire_sellswords": ("Hire Sellswords", PAY + "hire sellswords: [[col:green]]a random tier {tiers} unit[[/col]] of our own kind joins our army now."),
+    "free_the_prisoner": ("Free the Prisoner", "Free the prisoner: [[col:green]]a rank {hero_rank} hero[[/col]] joins our army."),
+    "tame_the_beast": ("Tame the Beast", "Tame the beast: [[col:green]]a random tier {tiers} monster[[/col]] of our own kind joins our army now."),
+    "regiment_of_renown": ("Hire a Regiment of Renown", PAY + "hire a [[col:green]]Regiment of Renown[[/col]] of our own kind: it joins our army now."),
+    "salvage_a_war_machine": ("Salvage a War Machine", PAY + "salvage a war machine: [[col:green]]a random tier {tiers} war machine[[/col]] of our own kind joins our army now."),
     "buy_from_the_trader": ("Buy from the Trader", PAY + "buy from the trader: [[col:green]]a random rare item[[/col]]."),
-    "pay_the_smugglers": ("Pay the Smugglers", PAY + "pay the smugglers: [[col:green]]-25% recruitment cost[[/col]] for 5 turns."),
-    "invest_in_the_caravan": ("Invest in the Caravan", PAY + "invest in the caravan: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for 10 turns."),
-    "hire_guides": ("Hire Guides", PAY + "hire guides: [[col:green]]+25% movement range[[/col]] for 5 turns."),
-    "buy_supplies": ("Buy Supplies", PAY + "buy supplies: our army [[col:green]]ignores attrition[[/col]] for 5 turns."),
-    "read_the_scrolls": ("Read the Scrolls", "Read the scrolls: [[col:green]]+20% research rate[[/col]] for 5 turns."),
-    "map_the_passes": ("Map the Passes", "Map the passes: [[col:green]]+20% movement range[[/col]] and [[col:green]]+20% ambush defence[[/col]] for 10 turns."),
-    "ancient_tactics": ("Study the Ancient Tactics", "Study the ancient tactics: " + stat("+10", *CHARGE) + " and " + stat("+10%", *SPEED) + " for 5 turns."),
+    "recruitment_cache": ("Pay the Smugglers", PAY + "pay the smugglers: [[col:green]]-{e0}% recruitment cost[[/col]] for 5 turns."),
+    "tower_dividends": ("Invest in the Caravan", PAY + "invest in the caravan: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for 10 turns."),
+    "buy_supplies": ("Buy Supplies", PAY + "buy supplies: our army [[col:green]]ignores attrition[[/col]] for {turns} turns."),
+    "research_scrolls": ("Read the Scrolls", "Read the scrolls: [[col:green]]+25% research rate[[/col]] for 5 turns."),
+    "ancient_tactics": ("Study the Ancient Tactics", "Study the ancient tactics: " + stat("+5", *CHARGE) + " and " + stat("+5%", *SPEED) + " for 5 turns."),
 
-    "endow_the_province": ("Endow the Province", PAY + "endow our nearest region: [[col:green]]+50 development points[[/col]]."),
+    "endow_the_province": ("Endow the Province", PAY + "endow our nearest region: [[col:green]]+{points} development points[[/col]]."),
     "shore_up_the_walls": ("Shore Up the Walls", PAY + "shore up our nearest settlement: its garrison is [[col:green]]healed to full[[/col]], and its defenders take "
-                           "[[col:green]]50% less attrition under siege[[/col]] for 10 turns."),
+                           "[[col:green]]50% less attrition under siege[[/col]] for 5 turns."),
     "raise_the_settlement": ("Raise the Settlement", PAY + "raise our nearest settlement: its [[col:green]]main building goes up one level[[/col]]."),
-    "quell_the_unrest": ("Quell the Unrest", "Quell the unrest: [[col:green]]+10 public order[[/col]] in our nearest province for 10 turns."),
-    "bountiful_harvest": ("Bountiful Harvest", PAY + "sow a bountiful harvest: [[col:green]]+30 growth[[/col]] and [[col:green]]+10% income[[/col]] in our nearest province for 10 turns."),
-    "hidden_mint": ("Seize the Hidden Mint", "Seize the hidden mint: [[col:green]]+5% income[[/col]] from all buildings for 10 turns."),
-    "stir_their_rebels": ("Stir Their Rebels", PAY + "stir up rebels: the nearest enemy province has [[col:green]]-15 public order[[/col]] for 5 turns."),
-    "poison_their_wells": ("Poison Their Wells", PAY + "poison their wells: the nearest enemy region has [[col:green]]-20 growth[[/col]], and its armies suffer [[col:green]]attrition[[/col]] for 5 turns."),
+    "quell_the_unrest": ("Quell the Unrest", "Quell the unrest: [[col:green]]+5 public order[[/col]] in our nearest province for 5 turns."),
+    "bountiful_harvest": ("Bountiful Harvest", PAY + "sow a bountiful harvest: [[col:green]]+{e0} growth[[/col]] and [[col:green]]+{e1}% income[[/col]] in our nearest province for 5 turns."),
+    "stir_their_rebels": ("Stir Their Rebels", PAY + "stir up rebels: the nearest enemy province has [[col:green]]-{e0} public order[[/col]] for 5 turns."),
+    "poison_their_wells": ("Poison Their Wells", PAY + "poison their wells: the nearest enemy region has [[col:green]]-{e0} growth[[/col]], and its armies suffer [[col:green]]attrition[[/col]] for 5 turns."),
     "undermine_their_walls": ("Undermine Their Walls", PAY + "undermine their walls: the nearest enemy settlement's defenders take [[col:green]]50% more attrition under siege[[/col]] for 5 turns."),
-    "spread_the_plague": ("Spread the Plague", "Spread the plague: the 3 nearest enemy regions have [[col:green]]-5 public order[[/col]] and [[col:green]]-20 growth[[/col]] for 5 turns, but our army suffers [[col:red]]attrition for 2 turns[[/col]]."),
-    "send_gifts": ("Send Gifts", PAY + "send gifts: [[col:green]]better relations[[/col]] with the nearest faction we are not at war with."),
+    "spread_the_plague": ("Spread the Plague", "Spread the plague: the 3 nearest enemy regions have [[col:green]]-5 public order[[/col]] and [[col:green]]-10 growth[[/col]] for 5 turns, but our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
+    "send_gifts": ("Send Gifts", PAY + "send gifts: [[col:green]]+{relations} relations[[/col]] with the nearest faction we are not at war with."),
     "spy_on_their_capital": ("Spy on Their Capital", PAY + "spy on their capital: [[col:green]]the shroud lifts[[/col]] over the nearest enemy capital."),
-    "curse_a_distant_king": ("Curse a Distant King", PAY + "curse a distant king: the faction with the most regions has [[col:green]]-10% income[[/col]] for 10 turns."),
-    "share_the_find": ("Share the Find", "Share the find: [[col:green]]+10% research rate[[/col]] for 5 turns, for us and every neighbour at peace with us, who think [[col:green]]better of us[[/col]] for it."),
-    "point_them_at_each_other": ("Point Them at Each Other", PAY + "set rivals against each other: the two biggest factions near us have [[col:green]]worse relations[[/col]] with each other."),
-    "sell_their_secrets": ("Sell Their Secrets", "Sell their secrets: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest enemy has [[col:red]]better relations[[/col]] with our other enemies."),
+    "curse_a_distant_king": ("Curse a Distant King", PAY + "curse a distant king: the faction with the most regions has [[col:green]]-{e0}% income[[/col]] for 5 turns."),
+    "share_the_find": ("Share the Find", "Share the find: [[col:green]]+15% research rate[[/col]] for 5 turns, for us and every neighbour at peace with us, and [[col:green]]+{relations} relations[[/col]] with each of them."),
+    "point_them_at_each_other": ("Point Them at Each Other", PAY + "set rivals against each other: the two biggest factions near us have [[col:green]]-{relations} relations[[/col]] with each other."),
+    "sell_their_secrets": ("Sell Their Secrets", "Sell their secrets: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest enemy has [[col:red]]+{relations} relations[[/col]] with our other enemies."),
 
     "bribe_a_scout": ("Bribe a Scout", PAY + "bribe one of their scouts: the enemy army is [[col:green]]25% weaker[[/col]]."),
     "thin_their_ranks": ("Thin Their Ranks", PAY + "thin their ranks: the enemy army fields [[col:green]]3 fewer units[[/col]]."),
@@ -219,18 +224,16 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "spare_the_captain": ("Spare the Captain", MISSION + "win with the [[col:yellow]]enemy lord still alive[[/col]], and ransom them for [[col:green]]+{gold} gold[[/col]]."),
     "flawless_victory": ("Flawless Victory", MISSION + "win [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]]."),
     "strip_the_dead": ("Strip the Dead", "Strip the dead: [[col:green]]+{per_unit} gold[[/col]] to our treasury for each unit in the army we beat."),
-    "ransom_the_captain": ("Ransom the Captain", "Ransom their captain: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest faction of their kind has [[col:red]]worse relations[[/col]] with us."),
+    "ransom_the_captain": ("Ransom the Captain", "Ransom their captain: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest faction of their kind has [[col:red]]-{relations} relations[[/col]] with us."),
     "tribute_from_the_locals": ("Tribute from the Locals", "Accept tribute from the grateful locals: [[col:green]]+{per_turn} gold[[/col]] to our treasury each turn for 5 turns."),
     "loot_the_baggage": ("Loot the Baggage", "Loot their baggage train: [[col:green]]a random item[[/col]] of the battle's rarity."),
     "recruit_a_captive": ("Recruit a Captive", "Recruit a captive: [[col:green]]a random unit[[/col]] of the army we beat joins our army now."),
-    "freed_captives": ("Free the Captives", "Free their captives: [[col:green]]2 random units[[/col]] of our own kind join our army now."),
-    "bury_the_dead": ("Bury the Dead", "Bury our dead with honour: " + stat("+10", *LEADERSHIP) + " for 5 turns."),
-    "press_on": ("Press On", "Press on while they flee: [[col:green]]+25% movement range[[/col]] next turn."),
-    "victory_feast": ("Victory Feast", PAY + "hold a victory feast: " + stat("+10", *LEADERSHIP) + " and " + stat("+5", *ATTACK) + " for 5 turns."),
+    "press_on": ("Press On", "Press on while they flee: [[col:green]]+50% movement range[[/col]] next turn."),
+    "victory_feast": ("Victory Feast", PAY + "hold a victory feast: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership and "
+                      "[[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack for 5 turns."),
     "trophy_of_war": ("Trophy of War", "Take a trophy of war: our lord grows as a [[col:green]]Trophy Hunter[[/col]], a trait that rises with every trophy taken."),
-    "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]] at the start of our next turn."),
-    "cursed_trophy": ("Take the Cursed Trophy", "Take the cursed trophy: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
-    "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]2 ranks[[/col]] and [[col:green]]+10% ward save[[/col]] for our army for 5 turns."),
+    "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]]."),
+    "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]1 rank[[/col]] and our army [[col:green]]+5% ward save[[/col]] for 5 turns."),
     "walk_away": ("Walk Away", "Leave this place be."),
 }
 
@@ -240,25 +243,25 @@ ICONS = {
     "hidden_temple": "temples_of_the_old_ones.png", "caravan_remnants": "convoy_icon.png", "whispers_of_the_gods": "lileaths_blessing.png",
     "the_explorer": "vision.png", "legendary_bard": "income.png", "take_the_gold": "treasury.png", "strip_the_valuables": "nor_spoils.png",
     "pry_open_the_reliquary": "hex_1.png", "search_every_corner": "cotw_track_army.png", "the_hidden_vault": "resource_gold_idols_large.png",
-    "roll_the_bones": "random_recipe.png", "drink_from_the_spring": "stat_healing_received.png", "open_the_sealed_door": "concealment.png",
-    "stake_the_treasury": "trickster_cult.png", "wake_the_guardian": "hellforged.png", "touch_the_relic": "fractured_mind.png", "gamble_with_the_hermit": "random_recipe.png",
+    "cast_the_lots": "random_recipe.png", "drink_from_the_spring": "stat_healing_received.png", "open_the_sealed_door": "concealment.png",
+    "wake_the_guardian": "hellforged.png", "touch_the_relic": "fractured_mind.png", "gamble_with_the_hermit": "random_recipe.png",
     "leave_an_offering": "resistance_ward_save.png", "bless_the_banners": "effect_rite.png", "holy_water": "resistance_physical.png",
-    "oath_at_the_altar": "champions_rift.png", "sanctified_weapons": "magical_attacks_force.png", "dark_pact": "chaos_gifts.png",
-    "cursed_hoard": "plague.png", "bloodstained_blades": "rampage_savage.png", "feed_the_shadows": "bloodreaper.png",
-    "daemons_bargain": "daemonic_gift.png", "recruit_the_survivors": "edict_levy_conscripts.png", "hire_sellswords": "merc_contract.png",
-    "free_the_prisoner": "noble.png", "tame_the_beast": "attribute_causes_terror.png", "hire_a_regiment_of_renown": "champions_essence.png",
-    "salvage_a_war_machine": "artillery.png", "buy_from_the_trader": "trade_agreement.png", "pay_the_smugglers": "military_spending.png",
-    "invest_in_the_caravan": "income.png", "hire_guides": "campaign_movement.png", "buy_supplies": "attrition.png",
-    "read_the_scrolls": "technology.png", "map_the_passes": "vision.png", "ancient_tactics": "charge.png",
+    "oath_at_the_altar": "champions_rift.png", "enchanted_steel": "magical_attacks_force.png", "dark_bargain": "chaos_gifts.png",
+    "plague_bearer": "plague.png", "bloodstained_blades": "rampage_savage.png", "feed_the_shadows": "bloodreaper.png",
+    "daemons_deal": "daemonic_gift.png", "conscripts": "edict_levy_conscripts.png", "hire_sellswords": "merc_contract.png",
+    "free_the_prisoner": "noble.png", "tame_the_beast": "attribute_causes_terror.png", "regiment_of_renown": "champions_essence.png",
+    "salvage_a_war_machine": "artillery.png", "buy_from_the_trader": "trade_agreement.png", "recruitment_cache": "military_spending.png",
+    "tower_dividends": "income.png", "buy_supplies": "attrition.png",
+    "research_scrolls": "technology.png", "ancient_tactics": "charge.png",
     "endow_the_province": "edict_imperial_taxation.png", "shore_up_the_walls": "siege_defence.png", "raise_the_settlement": "exalted_hero.png",
-    "quell_the_unrest": "army_morale.png", "bountiful_harvest": "income.png", "hidden_mint": "resource_gold_idols_large.png",
+    "quell_the_unrest": "army_morale.png", "bountiful_harvest": "income.png", 
     "stir_their_rebels": "discouraged.png", "poison_their_wells": "phase_posion.png", "undermine_their_walls": "siege_attack.png",
     "spread_the_plague": "plague.png", "send_gifts": "trade_agreement.png", "spy_on_their_capital": "cotw_reveal_shroud.png",
     "curse_a_distant_king": "hex_1.png", "share_the_find": "technology.png", "point_them_at_each_other": "subterfuge.png",
     "sell_their_secrets": "assassin.png", "walk_away": "campaign_movement.png",
     "strip_the_dead": "nor_spoils.png", "ransom_the_captain": "noble.png", "tribute_from_the_locals": "income.png", "loot_the_baggage": "treasure_map.png",
-    "recruit_a_captive": "slaves.png", "freed_captives": "edict_levy_conscripts.png", "bury_the_dead": "army_morale.png", "press_on": "campaign_movement.png",
-    "victory_feast": "effect_rite.png", "trophy_of_war": "wh3_cp1_unit_reward.png", "chase_the_routers": "cotw_track_army.png", "cursed_trophy": "plague.png",
+    "recruit_a_captive": "slaves.png", "press_on": "campaign_movement.png",
+    "victory_feast": "effect_rite.png", "trophy_of_war": "wh3_cp1_unit_reward.png", "chase_the_routers": "cotw_track_army.png", 
     "dark_offering": "bloodreaper.png",
     "bribe_a_scout": "subterfuge.png", "thin_their_ranks": "attrition.png", "poison_their_stores": "phase_posion.png",
     "kill_the_captain": "dlc10_assassination_targets.png", "keep_the_veterans_away": "peasant.png", "spread_dread": "discouraged.png",
@@ -349,22 +352,18 @@ AVOID_CONSEQUENCES = ("avoid_consequences", "random_recipe.png", "[[col:yellow]]
 # or the target faction's when it holds no region. Each is also a result incident, which shows only the title and description, with the
 # place highlighted.
 MESSAGES = {
-    "roll_the_bones_won": ("Roll the Bones", "Fortune Smiles",
+    "cast_the_lots_won": ("Cast the Lots", "Fortune Smiles",
         "The old bones clatter across the stone and land in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare item is ours."),
-    "roll_the_bones_lost": ("Roll the Bones", "Fortune Frowns",
+    "cast_the_lots_lost": ("Cast the Lots", "Fortune Frowns",
         "The bones tumble and settle against us. The stranger sweeps up our gold with a crooked grin and is gone before anyone thinks to argue."),
     "drink_from_the_spring_won": ("Drink from the Spring", "Healing Waters",
         "The water runs cold and clear. Wounds close and tired limbs grow strong again as the whole army drinks its fill."),
     "drink_from_the_spring_lost": ("Drink from the Spring", "Foul Waters",
-        "The water tastes of rot. Within hours sickness spreads through the camp, and it will be 3 turns before the army is itself again."),
+        "The water tastes of rot. Within hours sickness spreads through the camp, and it will be some turns before the army is itself again."),
     "open_the_sealed_door_won": ("Open the Sealed Door", "A Treasure Within",
         "The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours."),
     "open_the_sealed_door_lost": ("Open the Sealed Door", "A Trap Sprung",
-        "The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns at the start of our next turn."),
-    "stake_the_treasury_won": ("Stake the Treasury", "The Stake Pays",
-        "The venture pays off handsomely. Our stake comes back to the treasury with a healthy profit on top."),
-    "stake_the_treasury_lost": ("Stake the Treasury", "The Stake Is Lost",
-        "The venture collapses, and the merchants we backed are nowhere to be found. Our stake is gone."),
+        "The seal breaks, and so does the trap behind it. Our lord is caught in the blast, and the wound will lay them low for 3 turns."),
     "wake_the_guardian_won": ("Wake the Guardian", "It Sleeps On",
         "The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard."),
     "wake_the_guardian_lost": ("Wake the Guardian", "It Wakes!",
@@ -372,12 +371,12 @@ MESSAGES = {
     "touch_the_relic_blessed": ("Touch the Relic", "A Blessing",
         "Warmth spreads from the relic into the hands that hold it. A blessing settles over our army and will stay with it for 5 turns."),
     "touch_the_relic_cursed": ("Touch the Relic", "A Curse",
-        "The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 5 turns."),
+        "The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over our army for 3 turns."),
     "gamble_with_the_hermit_won": ("Gamble with the Hermit", "A Lucky Throw",
         "The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands."),
     "gamble_with_the_hermit_lost": ("Gamble with the Hermit", "The Hermit Wins",
         "The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone."),
-    "endow_the_province": ("Endow the Province", "", "Our gold builds up {place}: [[col:green]]+50 development points[[/col]]."),
+    "endow_the_province": ("Endow the Province", "", "Our gold builds up {place}."),
     "shore_up_the_walls": ("Shore Up the Walls", "", "The garrison of {place} is healed and its walls are shored up."),
     "raise_the_settlement": ("Raise the Settlement", "", "{place} grows, its main building raised a level."),
     "quell_the_unrest": ("Quell the Unrest", "", "Order returns to {place}."),
@@ -396,28 +395,25 @@ MESSAGES = {
     "chase_the_routers_won": ("Chase the Routers", "A Rich Catch",
         "Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours."),
     "chase_the_routers_lost": ("Chase the Routers", "Ambushed",
-        "The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns at the start of our next turn."),
+        "The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for 2 turns."),
 }
 
-# Shown when a wound an offer owed lands, by its turns. The bundle title for the owed wound is the same for every length.
-WOUND_PAID = ("The Price Is Paid", "Our Lord Is Wounded", "The price of what we took has come due. Our lord is struck down by a wound that will take {turns} turns to heal.")
-WOUND_OWED = ("A Price Owed", "What we took will take its due when our next turn starts.")
-WOUND_OWED_EFFECT = "Our lord is wounded for %n turns at the start of our next turn"
+# Shown when an offer's price is a wound, by its turns.
+WOUND_PAID = ("The Price Is Paid", "Our Lord Is Wounded", "The price of what we took comes due at once. Our lord is struck down by a wound that will take {turns} turns to heal.")
 
 # Result -> (colour, text) of the effect line under a result's incident, for results whose payload shows no gold, item or unit card.
 # Every mission failed gets its own line, and every wound paid one built from WOUND_PAID_LINE.
 RESULT_LINES = {
-    "roll_the_bones_lost": ("red", "The gold we staked is lost."),
+    "cast_the_lots_lost": ("red", "The gold we staked is lost."),
     "drink_from_the_spring_won": ("green", "Every unit in our army is healed."),
-    "drink_from_the_spring_lost": ("red", "Our army is sick for 3 turns."),
-    "open_the_sealed_door_lost": ("red", "Our lord is wounded for 3 turns at the start of our next turn."),
-    "stake_the_treasury_lost": ("red", "The gold we staked is lost."),
+    "drink_from_the_spring_lost": ("red", "Our army suffers attrition."),
+    "open_the_sealed_door_lost": ("red", "Our lord is wounded for 3 turns."),
     "wake_the_guardian_lost": ("red", "The guardian attacks our army!"),
     "touch_the_relic_blessed": ("green", "A blessing settles on our army for 5 turns."),
-    "touch_the_relic_cursed": ("red", "A curse settles on our army for 5 turns."),
+    "touch_the_relic_cursed": ("red", "A curse settles on our army for 3 turns."),
     "gamble_with_the_hermit_lost": ("red", "The hermit keeps our gold."),
-    "chase_the_routers_lost": ("red", "Our lord is wounded for 2 turns at the start of our next turn."),
-    "endow_the_province": ("green", "+50 development points in the region."),
+    "chase_the_routers_lost": ("red", "Our lord is wounded for 2 turns."),
+    "endow_the_province": ("green", "The region gains development points."),
     "shore_up_the_walls": ("green", "The garrison is healed and the walls are shored up."),
     "raise_the_settlement": ("green", "The settlement's main building is raised a level."),
     "quell_the_unrest": ("green", "Order returns to the province."),
@@ -438,7 +434,8 @@ RESULT_LINES = {
 }
 WOUND_PAID_LINE = ("red", "Our lord is wounded for {turns} turns.")
 
-# Bundle key suffix after `land_enc_effect_spot_` -> (target, icon, title, description, [(effect, scope, value)]).
+# Bundle key suffix after `land_enc_effect_spot_` -> (target, icon, title, description, [(effect, scope, value)]). A value written as
+# (easy, medium, hard) makes a tiered bundle, one per difficulty named with it, e.g. land_enc_effect_spot_holy_water_medium.
 BUNDLES = {
     "reinforcement_time_25": ("force", "military.png", "Swift Reinforcements", "Reinforcements for this army arrive sooner.",
                               [("wh3_main_effect_own_reinforcement_time_percentage_mod", "force_to_force_own", -25)]),
@@ -449,69 +446,63 @@ BUNDLES = {
     "camping": ("force", "icon_effects_fortify.png", "Searching Every Corner", "Our army searches every corner and cannot march until our next turn.",
                 [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", -100)]),
     "strip_the_valuables": ("force", "icon_effects_fortify.png", "Weighed Down", "Our army carries heavy loot.",
-                            [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10)]),
+                            [("wh_main_effect_force_stat_leadership", "force_to_force_own", -15), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
     "bless_the_banners": ("force", "icon_effects_fortify.png", "Blessed Banners", "Our banners were blessed at a shrine.",
-                          [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", 10), ("wh_main_effect_force_stat_leadership", "force_to_force_own", 10)]),
+                          [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15)),
+                           ("wh_main_effect_force_stat_leadership", "force_to_force_own", (5, 10, 15))]),
     "holy_water": ("force", "icon_effects_fortify.png", "Holy Water", "Our army was anointed with holy water.",
-                   [("wh_main_effect_force_stat_physical_resistance", "force_to_force_own", 15)]),
+                   [("wh_main_effect_force_stat_physical_resistance", "force_to_force_own", (5, 10, 15))]),
     "ancient_tactics": ("force", "icon_effects_fortify.png", "Ancient Tactics", "Our army drills in tactics from an older age.",
-                        [("wh2_dlc14_effect_force_charge_bonus_add", "force_to_force_own", 10), ("wh_main_effect_force_stat_speed", "force_to_force_own", 10)]),
+                        [("wh2_dlc14_effect_force_charge_bonus_add", "force_to_force_own", 5), ("wh_main_effect_force_stat_speed", "force_to_force_own", 5)]),
     "touch_the_relic_frailty": ("force", "icon_effects_fortify.png", "Relic's Frailty", "A relic's curse saps our army's guard.",
                                 [("wh_main_effect_force_stat_melee_defence", "force_to_force_own", -10), ("wh_main_effect_force_stat_armour", "force_to_force_own", -10)]),
     "leave_an_offering": ("force", "icon_effects_fortify.png", "Offering Made", "An offering at a shrine wards our army.",
-                          [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 10)]),
-    "sanctified_weapons": ("force", "icon_effects_fortify.png", "Sanctified Weapons", "Our army's weapons were sanctified.",
-                           [("wh_main_effect_force_stat_enable_magic_attacks", "force_to_force_own", 1)]),
+                          [("wh_main_effect_force_stat_ward_save", "force_to_force_own", (5, 10, 15))]),
+    "enchanted_steel": ("force", "icon_effects_fortify.png", "Enchanted Steel", "Our army's weapons were enchanted.",
+                        [("wh_main_effect_force_stat_enable_magic_attacks", "force_to_force_own", 1)]),
     "bloodstained_blades": ("force", "icon_effects_fortify.png", "Bloodstained Blades", "Our army fights with cursed blades.",
                             [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", 20), ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", -20)]),
-    "hire_guides": ("force", "icon_effects_fortify.png", "Local Guides", "Hired guides lead our army by hidden paths.",
-                    [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 25)]),
     "buy_supplies": ("force", "icon_effects_fortify.png", "Well Supplied", "Our army carries plenty of supplies.",
                      [("wh_main_effect_force_army_campaign_attrition_all_immunity", "force_to_force_own", 1)]),
-    "map_the_passes": ("force", "icon_effects_fortify.png", "Mapped Passes", "Our army knows the land's passes.",
-                       [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 20),
-                        ("wh_main_effect_force_army_campaign_ambush_defence_success_chance", "force_to_force_own", 20)]),
-    "read_the_scrolls": ("faction", "technology.png", "Ancient Scrolls", "Scrolls from a lost library speed our research.",
-                         [("wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", 20)]),
-    "hidden_mint": ("faction", "income.png", "Hidden Mint", "A hidden mint fills our coffers.",
-                    [("wh_main_effect_economy_gdp_mod_all", "faction_to_region_own", 5)]),
+    "recruitment_cache": ("faction", "military_spending.png", "Smugglers' Cache", "Smuggled arms and supplies make our recruits cheaper.",
+                          [("wh_main_effect_force_all_campaign_recruitment_cost_all", "faction_to_force_own", (-10, -20, -30))]),
     "share_the_find": ("faction", "technology.png", "Shared Knowledge", "Knowledge shared between neighbours.",
-                       [("wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", 10)]),
+                       [("wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", 15)]),
     "curse_a_distant_king": ("faction", "chaos_gifts.png", "Cursed Coffers", "A curse drains this king's coffers.",
-                             [("wh_main_effect_economy_gdp_mod_all", "faction_to_region_own", -10)]),
+                             [("wh_main_effect_economy_gdp_mod_all", "faction_to_region_own", (-5, -10, -15))]),
     "shore_up_the_walls": ("region", "income.png", "Shored-Up Walls", "The walls are shored up and the stores filled.",
                            [("wh_main_effect_force_army_campaign_siege_defend_attrition", "region_to_force_own", -50)]),
     "poison_their_wells": ("region", "chaos_gifts.png", "Poisoned Wells", "The wells here are fouled.",
-                           [("wh_main_effect_province_growth_events", "region_to_province_own", -20), ("wh_main_effect_campaign_enable_attrition", "region_to_force_own", 1)]),
+                           [("wh_main_effect_province_growth_events", "region_to_province_own", (-10, -20, -30)),
+                            ("wh_main_effect_campaign_enable_attrition", "region_to_force_own", 1)]),
     "undermine_their_walls": ("region", "chaos_gifts.png", "Undermined Walls", "The walls here are undermined.",
                               [("wh_main_effect_force_army_campaign_siege_defend_attrition", "region_to_force_own", 50)]),
     "spread_the_plague": ("region", "chaos_gifts.png", "Plague", "Plague spreads through the region.",
-                          [("wh_main_effect_public_order_events", "region_to_province_own", -5), ("wh_main_effect_province_growth_events", "region_to_province_own", -20)]),
+                          [("wh_main_effect_public_order_events", "region_to_province_own", -5), ("wh_main_effect_province_growth_events", "region_to_province_own", -10)]),
     "quell_the_unrest": ("province", "income.png", "Order Restored", "Order is restored in the province.",
-                         [("wh_main_effect_public_order_events", "province_to_province_own", 10)]),
+                         [("wh_main_effect_public_order_events", "province_to_province_own", 5)]),
     "bountiful_harvest": ("province", "income.png", "Bountiful Harvest", "A bountiful harvest across the province.",
-                          [("wh_main_effect_province_growth_events", "province_to_province_own", 30), ("wh_main_effect_economy_gdp_mod_all", "province_to_region_own", 10)]),
+                          [("wh_main_effect_province_growth_events", "province_to_province_own", (10, 20, 30)),
+                           ("wh_main_effect_economy_gdp_mod_all", "province_to_region_own", (5, 10, 15))]),
     "stir_their_rebels": ("province", "chaos_gifts.png", "Stirred Rebels", "Rebels stir in the province.",
-                          [("wh_main_effect_public_order_events", "province_to_province_own", -15)]),
-    "bury_the_dead": ("force", "icon_effects_fortify.png", "Honoured Dead", "Our dead were buried with honour.",
-                      [("wh_main_effect_force_stat_leadership", "force_to_force_own", 10)]),
+                          [("wh_main_effect_public_order_events", "province_to_province_own", (-5, -10, -15))]),
     "press_on": ("force", "icon_effects_fortify.png", "Pressing On", "Our army presses on while the enemy flees.",
-                 [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 25)]),
+                 [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 50)]),
     "victory_feast": ("force", "icon_effects_fortify.png", "Victory Feast", "Our army feasted on its victory.",
-                      [("wh_main_effect_force_stat_leadership", "force_to_force_own", 10), ("wh_main_effect_force_stat_melee_attack", "force_to_force_own", 5)]),
+                      [("wh_main_effect_force_stat_leadership", "force_to_force_own", (5, 10, 15)),
+                       ("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15))]),
     "dark_offering": ("force", "icon_effects_fortify.png", "Dark Offering", "A dark offering wards our army.",
-                      [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 10)]),
+                      [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 5)]),
 }
+
+# Dividends bundle: shows a faction's gold each turn through the tower's dividends effect, one bundle per amount the config pays.
+DIVIDENDS = ("faction", "treasury.png", "Dividends", "Gold flows into our treasury each turn.", "land_enc_effect_tower_dividends_income", "faction_to_faction_own")
 
 # Trait key -> (icon, [(points needed, name, flavour, what earned it, [(effect, scope, value)])] one per level).
 TRAITS = {
     "land_enc_trait_spot_shrine_sworn": ("trait_good", [
         (1, "Shrine-Sworn", "Swore an oath at a ruined altar, and the army believes it.", "Swore an oath at a ruined shrine",
          [("wh_main_effect_force_stat_leadership", "character_to_force_own", 5)]),
-    ]),
-    "land_enc_trait_spot_pact_bound": ("chaos", [
-        (1, "Pact-Bound", "The power is real, and so is the price.", "Struck a dark pact in a witch's hut",
-         [("wh_main_effect_character_stat_melee_attack", "character_to_character_own", 10)]),
     ]),
     "land_enc_trait_spot_trophy_hunter": ("trait_good", [
         (1, "Trophy Hunter", "Keeps a trophy from every field won.", "Took a trophy of war",
@@ -530,6 +521,11 @@ TRAITS = {
 LUA_DUMP = r"""
 package.path = arg[1] .. "?.lua;" .. package.path
 local data = require("script/land_encounters/configs/spot_offers")
+local at = {}
+for _, difficulty in ipairs(require("script/land_encounters/utils/steps").DIFFICULTIES) do
+    at[difficulty] = {}
+    for _, offer in ipairs(data.all_at(difficulty)) do at[difficulty][offer.key] = offer end
+end
 local battle_dilemmas = {}
 for key in pairs(require("script/land_encounters/configs/battle_categories").dilemma_keys) do battle_dilemmas[#battle_dilemmas + 1] = key end
 table.sort(battle_dilemmas)
@@ -548,11 +544,11 @@ local function encode(v)
     for k, value in pairs(v) do parts[#parts + 1] = string.format("%q", tostring(k)) .. ":" .. encode(value) end
     return "{" .. table.concat(parts, ",") .. "}"
 end
-io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.offers, gold_multiplier = data.gold_multiplier, gold_step = data.gold_step,
+io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.all_at("easy"), at = at, dividends_bundle_prefix = data.dividends_bundle_prefix,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
     result_incident_prefix = data.result_incident_prefix, result_place_context = data.result_place_context, battle_pools = data.battle_pools,
-    wound_bundle_prefix = data.wound_bundle_prefix, avoid_choice_key = data.avoid_choice_key,
+    avoid_choice_key = data.avoid_choice_key,
     unaffordable_line = data.unaffordable_line, taken_line = data.taken_line, missions_context = data.missions_context,
     mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas }))
 """
@@ -562,7 +558,8 @@ def load_config() -> Dict:
     """Reads `configs/spot_offers.lua` through the `lua` executable.
 
     Returns:
-        Dict: The sites, offers and naming constants.
+        Dict: The sites, offers and naming constants. `offers` lists the offers at Easy, in config order, for their keys, pools and the other
+        fields that never vary. `at` maps each difficulty to its offers by key.
 
     Raises:
         subprocess.CalledProcessError: When Lua cannot load the config.
@@ -587,64 +584,82 @@ def title_case(text: str) -> str:
     return " ".join(words)
 
 
-def gold_text(amount: int) -> str:
-    """Writes gold as a whole number with no thousands separator, the way vanilla and the tower write it.
+def tiers_text(tiers: List[int]) -> str:
+    """Writes a tier list as a range, e.g. [3, 4] as "3-4" and [4] as "4".
 
     Args:
-        amount (int): The gold.
+        tiers (List[int]): The tiers, in order.
 
     Returns:
-        str: E.g. "1500".
+        str: The range.
     """
-    return str(amount)
+    return str(tiers[0]) if len(tiers) == 1 else f"{tiers[0]}-{tiers[-1]}"
 
 
-def scale(amount: int, difficulty: str, offer: Dict, config: Dict) -> int:
-    """Scales gold the way `features/spot_offers.lua` does.
+def expand_bundles(config: Dict) -> Dict[str, Tuple]:
+    """Lists every spot bundle by its full key: a tiered bundle as one bundle per difficulty, named as `steps.tiered` names them, and one
+    dividends bundle per gold amount the config pays each turn.
 
     Args:
-        amount (int): The Easy amount.
-        difficulty (str): The difficulty key.
-        offer (Dict): The offer record. `fixed_gold` keeps the amount.
         config (Dict): The loaded config.
 
     Returns:
-        int: The scaled amount, rounded to the gold step.
+        Dict[str, Tuple]: Bundle key -> (target, icon, title, description, [(effect, scope, value)]).
     """
-    if offer.get("fixed_gold"):
-        return amount
-    step = config["gold_step"]
-    return int(amount * config["gold_multiplier"][difficulty] / step + 0.5) * step
+    flat = {}
+    for suffix, (target, icon, title, description, effects) in BUNDLES.items():
+        if not any(isinstance(value, tuple) for _, _, value in effects):
+            flat[SPOT_BUNDLE + suffix] = (target, icon, title, description, effects)
+            continue
+        for i, difficulty in enumerate(DIFFICULTIES):
+            stepped = [(effect, scope, value[i] if isinstance(value, tuple) else value) for effect, scope, value in effects]
+            flat[f"{SPOT_BUNDLE}{suffix}_{difficulty}"] = (target, icon, title, description, stepped)
+    target, icon, title, description, effect, scope = DIVIDENDS
+    amounts = {offer["dividends"]["per_turn"] for offers in config["at"].values() for offer in offers.values() if "dividends" in offer}
+    for amount in sorted(amounts):
+        flat[config["dividends_bundle_prefix"] + str(amount)] = (target, icon, title, description, [(effect, scope, amount)])
+    return flat
 
 
-def line_values(offer: Dict, difficulty: str, config: Dict) -> Dict[str, str]:
-    """Works out the gold an offer's lines name at a difficulty.
+def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
+    """Works out the values an offer's line names, from the offer at one difficulty. Every number on the offer is there under its own name,
+    e.g. {cost} or {hero_rank}, and any placeholder the offer has no value for reads as empty.
 
     Args:
-        offer (Dict): The offer record.
-        difficulty (str): The difficulty key.
-        config (Dict): The loaded config.
+        offer (Dict): The offer record at one difficulty.
+        bundles (Dict[str, Tuple]): Every spot bundle, from `expand_bundles`.
 
     Returns:
-        Dict[str, str]: Values for {cost}, {gold}, {won_gold}, {lost_gold}, {per_turn} and {per_unit}.
+        Dict[str, str]: Placeholder -> value. Besides the offer's numbers: {won_gold}, {lost_gold}, {lost_turns}, {turns}, {per_turn},
+        {per_unit}, {tiers}, {relations} (in tens), {daemon_armies} and {e0}, {e1}... for the spot bundle's effects, signs dropped.
     """
-    values = {"cost": "", "gold": "", "won_gold": "", "lost_gold": "", "per_turn": "", "per_unit": ""}
-    if "cost" in offer:
-        values["cost"] = gold_text(scale(offer["cost"], difficulty, offer, config))
-    if "gold" in offer:
-        values["gold"] = gold_text(scale(offer["gold"], difficulty, offer, config))
+    values = defaultdict(str, {key: str(value) for key, value in offer.items() if isinstance(value, int) and not isinstance(value, bool)})
     for outcome in offer.get("gamble", []):
         if "gold" in outcome:
-            values[outcome["2"] + "_gold"] = gold_text(abs(scale(outcome["gold"], difficulty, offer, config)))
+            values[outcome["2"] + "_gold"] = str(abs(outcome["gold"]))
+        if "army_bundle" in outcome:
+            values[outcome["2"] + "_turns"] = str(outcome["army_bundle"][1])
+    for field in BUNDLE_FIELDS:
+        if field in offer:
+            values["turns"] = str(offer[field][1])
+            for i, (_, _, value) in enumerate(bundles.get(offer[field][0], ("", "", "", "", []))[4]):
+                values[f"e{i}"] = str(abs(value))
     if "dividends" in offer:
-        values["per_turn"] = gold_text(scale(offer["dividends"]["per_turn"], difficulty, offer, config))
+        values["per_turn"] = str(offer["dividends"]["per_turn"])
     if "gold_per_enemy_unit" in offer:
-        values["per_unit"] = gold_text(scale(offer["gold_per_enemy_unit"], difficulty, offer, config))
+        values["per_unit"] = str(offer["gold_per_enemy_unit"])
+    if "recruit" in offer:
+        values["tiers"] = tiers_text(offer["recruit"]["tiers"])
+    if "relations" in offer:
+        values["relations"] = str(abs(offer["relations"]) * 10)
+    if "daemon_armies" in offer:
+        count = offer["daemon_armies"]
+        values["daemon_armies"] = "a hard Chaos army marches" if count == 1 else f"{count} hard Chaos armies march"
     return values
 
 
 def wound_turns(config: Dict) -> List[int]:
-    """Lists every wound length an offer or gamble outcome can owe.
+    """Lists every wound length an offer or gamble outcome can give, at any difficulty.
 
     Args:
         config (Dict): The loaded config.
@@ -652,12 +667,8 @@ def wound_turns(config: Dict) -> List[int]:
     Returns:
         List[int]: The distinct turns, sorted.
     """
-    turns = set()
-    for offer in config["offers"]:
-        for fields in [offer] + offer.get("gamble", []):
-            if "wound" in fields:
-                turns.add(fields["wound"])
-    return sorted(turns)
+    return sorted({fields["wound"] for offers in config["at"].values() for offer in offers.values() for fields in [offer] + offer.get("gamble", [])
+                   if "wound" in fields})
 
 
 def build_rows(config: Dict) -> Dict[str, List[str]]:
@@ -693,6 +704,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             add(LOC_PREFIX + "scripted_objectives.loc.tsv", "scripted_objectives_localised_description_" + NOTICE_PREFIX + name + suffix, "", "false")
 
     by_key = {o["key"]: o for o in config["offers"]}
+    bundles = expand_bundles(config)
     choice_keys = [(config["choice_key_prefix"] + o["key"].upper(), o["key"]) for o in config["offers"]] + [(config["walk_away_choice_key"], "walk_away")]
     site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] not in config["battle_pools"]]
     battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] in config["battle_pools"]]
@@ -735,15 +747,14 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             continue
         offer = by_key[key]
         for difficulty in DIFFICULTIES:
-            values = line_values(offer, difficulty, config)
+            values = line_values(config["at"][difficulty][key], bundles)
             component = config["line_prefix"] + key + "_" + difficulty
-            line(component, ICONS[key], text.format(**values))
+            line(component, ICONS[key], text.format_map(values))
             if offer["pool"] == "mission":
-                taken = text.format(**values).replace(MISSION, f"[[col:yellow]]{title_case(OFFERS[key][0])} (Mission):[[/col]] ", 1)
+                taken = text.format_map(values).replace(MISSION, f"[[col:yellow]]{title_case(OFFERS[key][0])} (Mission):[[/col]] ", 1)
                 add(STRINGS_LOC, config["mission_set_loc_prefix"] + key + "_" + difficulty, taken, "false")
 
-    for suffix, (target, icon, title, description, effects) in BUNDLES.items():
-        key = "land_enc_effect_spot_" + suffix
+    for key, (target, icon, title, description, effects) in bundles.items():
         add(table("effect_bundles_tables"), key, "", "", target, 1, icon, "true" if target == "faction" else "false", "false", "true")
         for effect, scope, value in effects:
             add(table("effect_bundles_to_effects_junctions_tables"), key, effect, scope, f"{value:.4f}", "start_turn_completed")
@@ -756,15 +767,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         messages["mission_" + key + "_failed"] = (title, "Mission Failed", failed)
     messages["missions_untracked"] = ("Missions", "Not Counted",
                                       "The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.")
-    owed_effect = config["wound_bundle_prefix"].rstrip("_")
-    add(table("effects_tables"), owed_effect, "chaos_gifts.png", 2, "chaos_gifts.png", "campaign", "false")
-    add(LOC_PREFIX + "effects.loc.tsv", "effects_description_" + owed_effect, WOUND_OWED_EFFECT, "false")
     for turns in wound_turns(config):
-        key = config["wound_bundle_prefix"] + str(turns)
-        add(table("effect_bundles_tables"), key, "", "", "force", 1, "chaos_gifts.png", "false", "false", "true")
-        add(table("effect_bundles_to_effects_junctions_tables"), key, owed_effect, "force_to_force_own", f"{turns:.4f}", "start_turn_completed")
-        add(LOC_PREFIX + "effect_bundles.loc.tsv", "effect_bundles_localised_title_" + key, title_case(WOUND_OWED[0]), "false")
-        add(LOC_PREFIX + "effect_bundles.loc.tsv", "effect_bundles_localised_description_" + key, WOUND_OWED[1], "false")
         messages["wound_paid_" + str(turns)] = (WOUND_PAID[0], WOUND_PAID[1], WOUND_PAID[2].format(turns=turns))
 
     for key, (icon, levels) in TRAITS.items():
@@ -937,6 +940,10 @@ def check_text(config: Dict) -> None:
                  and o["key"] not in TOWER_NOTICES]
     problems += [f"no messages for mission {o['key']}" for o in config["offers"] if o["pool"] == "mission" and o["key"] not in MISSION_MESSAGES]
     problems += [f"no result for line {key}" for key in RESULT_LINES if key not in MESSAGES and not key.startswith("mission")]
+    bundles = expand_bundles(config)
+    problems += [f"no bundle {bundle} for {key}" for offers in config["at"].values() for key, offer in offers.items()
+                 for fields in [offer] + offer.get("gamble", []) for field in BUNDLE_FIELDS
+                 for bundle in [fields.get(field, [""])[0] if isinstance(fields, dict) else ""] if bundle.startswith(SPOT_BUNDLE) and bundle not in bundles]
     every = [t for entry in OFFERS.values() for t in entry if t] + [t for entry in MESSAGES.values() for t in entry] + [d for _, d in SITES.values()]
     every += [t for _, t in RESULT_LINES.values()]
     problems += [f"gold with a separator: {t}" for t in every if re.search(r"\d,\d{3}", t)]

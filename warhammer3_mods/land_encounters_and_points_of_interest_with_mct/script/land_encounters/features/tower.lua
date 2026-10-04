@@ -773,7 +773,15 @@ end
 --- Sends a Daemon's deal army at the delving faction's capital: an army of a random Chaos faction from the `daemons_deal` offer, spawned
 --- somewhere in the capital's province as a lasting invasion that stays until beaten. A faction with no capital is spared.
 --- @param faction_name string The delving faction.
-function TowerEventDelegate:send_daemon_army(faction_name)
+--- @param count number|nil How many armies to send, each under its own invasion name. nil sends one.
+function TowerEventDelegate:send_daemon_army(faction_name, count)
+    for index = 1, count or 1 do self:send_one_daemon_army(faction_name, index) end
+end
+
+--- Sends one Daemon's deal army, see `send_daemon_army`.
+--- @param faction_name string The delving faction.
+--- @param index number Which of this turn's armies it is. The second and later add it to their invasion names.
+function TowerEventDelegate:send_one_daemon_army(faction_name, index)
     local faction = cm:get_faction(faction_name)
     local region = faction and faction:home_region()
     if not region or region:is_null_interface() then
@@ -781,6 +789,7 @@ function TowerEventDelegate:send_daemon_army(faction_name)
         return
     end
     local deal = offers_data.by_key.daemons_deal
+    local suffix = index > 1 and "_" .. index or ""
     local shorthand = deal.factions[random_number(#deal.factions)]
     local army = Army:new_from_event({
         dilemma = "tower",
@@ -788,8 +797,8 @@ function TowerEventDelegate:send_daemon_army(faction_name)
         difficulty = deal.difficulty,
         budget_range = tower_data.budget_by_difficulty[deal.difficulty],
         intervention = INTERCEPTION_TYPE,
-        force_identifier = "tower_daemon_force_" .. faction_name,
-        invasion_identifier = "tower_daemon_" .. faction_name .. "_" .. cm:turn_number(),
+        force_identifier = "tower_daemon_force_" .. faction_name .. suffix,
+        invasion_identifier = "tower_daemon_" .. faction_name .. "_" .. cm:turn_number() .. suffix,
     }, faction:subculture())
     local x, y, landing = province_spawn_point(army.faction, region, deal.spawn_distance)
     if x == -1 then
