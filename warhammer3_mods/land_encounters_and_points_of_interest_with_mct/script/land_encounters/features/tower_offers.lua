@@ -503,7 +503,7 @@ local HANDLERS = {
     night_terrors = { apply = battle_trick },
     regiment_of_renown = { eligible = regiment_of_renown },
     veterans_oath = {
-        eligible = function(ctx, offer) return #offer_effects.rankable_units(ctx.delve.general_cqi, offer.ranks, offer.max_rank) >= offer.count end,
+        eligible = function(ctx, offer) return #tower_army.rankable_units(ctx.delve.general_cqi, offer.ranks, offer.max_rank) >= offer.count end,
         apply = function(offer, ctx) offer_effects.add_ranks(ctx.delve.general_cqi, offer) end,
     },
     swap_the_chaff = {

@@ -61,6 +61,10 @@ local Army = {
     relief = false,
     --- An Ally in Peril ally only: the share of full strength it starts at, or nil for full strength.
     start_strength = nil,
+    --- An allied army only: a bundle on it for the battle (Arm the Allies), or nil.
+    ally_bundle = nil,
+    --- An allied army only: ranks its regular units gain (Lend Them Veterans), or nil.
+    ally_ranks = nil,
     heroes = {},
     skill_overrides = {},
 }
@@ -222,11 +226,14 @@ function Army:new_from_event(event, player_subculture)
         end
     end
 
-    --- An Ally in Peril ally knows its part: a relief column, and the share of strength it starts at.
+    --- The ally knows its part: an Ally in Peril relief column and the share of strength it starts at, and the pre-battle offers' bundle
+    --- and ranks.
     local ally = reinforcing_ally_armies[1]
-    if ally and event.ally then
-        ally.relief = event.ally.mode == "relief"
+    if ally then
+        ally.relief = event.ally ~= nil and event.ally.mode == "relief"
         ally.start_strength = event.ally_strength
+        ally.ally_bundle = event.ally_bundle
+        ally.ally_ranks = event.ally_ranks
     end
 
     local army = Army:create_from(force_data)

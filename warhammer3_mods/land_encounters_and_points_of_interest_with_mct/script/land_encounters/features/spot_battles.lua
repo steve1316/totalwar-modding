@@ -78,6 +78,11 @@ end
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
     if offer.allies and ctx.event.intervention == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then return false end
+    if offer.for_ally then
+        if ctx.event.intervention ~= ALLIED_REINFORCEMENTS_PERMITTED_TYPE then return false end
+        local sized = ctx.event.ally_options ~= nil and ctx.event.ally_options.unit_count ~= nil
+        if offer.for_ally ~= true and (offer.for_ally == "sized") ~= sized then return false end
+    end
     if offer.no_heroes and ctx.event.no_heroes then return false end
     if not offer_effects.army_fits(offer, ctx.event.faction, ctx.general_cqi) then return false end
     if offer.unit_ranks and #tower_army.regular_units(ctx.general_cqi) == 0 then return false end
@@ -249,6 +254,13 @@ local function apply_to_event(fields, event)
         event.battle_bundles[#event.battle_bundles + 1] = fields.battle_bundle
     end
     if fields.own_strength then event.own_strength = fields.own_strength end
+    if fields.ally_bundle then event.ally_bundle = fields.ally_bundle end
+    if fields.ally_ranks then event.ally_ranks = fields.ally_ranks end
+    if fields.extra_ally_units then event.ally_options = army_generator.ally_options(event.ally_options.unit_count + fields.extra_ally_units) end
+    if fields.ally_budget then
+        event.ally_options = event.ally_options or {}
+        event.ally_options.budget_multiplier = (event.ally_options.budget_multiplier or 1) * fields.ally_budget
+    end
     if fields.allies then
         local units = random_number(fields.allies[2], fields.allies[1]) - 1
         event.intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE

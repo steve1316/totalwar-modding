@@ -57,19 +57,6 @@ function M.army_fits(offer, enemy_faction, general_cqi)
     return true
 end
 
---- The regular units that can still take `ranks` more ranks without passing `max_rank`.
---- @param general_cqi number The lord's command queue index.
---- @param ranks number The ranks an offer adds.
---- @param max_rank number The highest rank a unit may reach.
---- @returns table The `tower_army.regular_units` entries at or below `max_rank - ranks`.
-function M.rankable_units(general_cqi, ranks, max_rank)
-    local list = {}
-    for _, entry in ipairs(tower_army.regular_units(general_cqi)) do
-        if entry.unit:experience_level() <= max_rank - ranks then list[#list + 1] = entry end
-    end
-    return list
-end
-
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Unit picks
@@ -193,7 +180,7 @@ end
 --- @param general_cqi number The lord's command queue index.
 --- @param offer table The offer record: `count`, `ranks` and `max_rank`.
 function M.add_ranks(general_cqi, offer)
-    local pool = M.rankable_units(general_cqi, offer.ranks, offer.max_rank)
+    local pool = tower_army.rankable_units(general_cqi, offer.ranks, offer.max_rank)
     for _ = 1, math.min(offer.count, #pool) do
         local entry = table.remove(pool, random_number(#pool))
         log("offer: +" .. offer.ranks .. " ranks to " .. entry.unit:unit_key() .. " at " .. entry.index)

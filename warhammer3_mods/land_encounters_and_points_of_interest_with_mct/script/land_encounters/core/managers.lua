@@ -6,6 +6,7 @@ require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
 
 local army_generator = require("script/land_encounters/core/army_generator")
+local tower_army = require("script/land_encounters/features/tower_army")
 local debug_config = require("script/land_encounters/configs/debug")
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
@@ -412,6 +413,8 @@ local ALLY_TEST_BUNDLE = "land_enc_effect_ally_test_war_rites"
 --- Bundle the "_bundle" tests put on the main army so its reinforcements arrive at once (-100% reinforcement time): on the ally in
 --- "relief_column_bundle", where we are its reinforcement, and on our army in "side_by_side_bundle", where the ally is ours.
 local ALLY_TEST_REINFORCEMENT_BUNDLE = "land_enc_effect_ally_test_reinforcement_time"
+--- Highest rank Lend Them Veterans raises an allied unit to, as Veterans' Oath caps our own.
+local ALLY_MAX_RANK = 9
 --- How far off our lord is moved in a relief column, in hexes.
 local RELIEF_DISTANCE = 6
 --- svr key telling the battle script how to run a relief column: "scripted" calls our army in once the enemy reaches the ally, "charge_only"
@@ -448,6 +451,25 @@ local function set_force_strength(force, strength)
     for i = 0, units:num_items() - 1 do
         local unit = units:item_at(i)
         if unit:unit_class() ~= "com" then cm:set_unit_hp_to_unary_of_maximum(unit, strength) end
+    end
+end
+
+--- Readies a spawned allied army: its starting strength, its bundle and its units' ranks, as its Army record says.
+--- @param force military_force The allied force.
+--- @param ally Army The allied Army record.
+local function prepare_ally_force(force, ally)
+    if ally.start_strength and ally.start_strength < 1 then
+        set_force_strength(force, ally.start_strength)
+        out("LEAPOI: the allied army starts at " .. ally.start_strength * 100 .. "% strength")
+    end
+    if ally.ally_bundle then
+        cm:apply_effect_bundle_to_force(ally.ally_bundle, force:command_queue_index(), 1)
+        out("LEAPOI: the allied army has " .. ally.ally_bundle)
+    end
+    if ally.ally_ranks then
+        local units = tower_army.rankable_units(force:general_character():command_queue_index(), ally.ally_ranks, ALLY_MAX_RANK)
+        for _, entry in ipairs(units) do cm:add_experience_to_unit(entry.unit, ally.ally_ranks) end
+        out("LEAPOI: " .. #units .. " allied units gain " .. ally.ally_ranks .. " ranks")
     end
 end
 
@@ -659,9 +681,8 @@ function InvasionBattleManager:create_allied_reinforcements_before_attack(player
             self.ally_force_cqi = ally_force:command_queue_index()
             if self.ally_test then
                 prepare_ally_test_force(self.ally_force_cqi, self.ally_test.mode)
-            elseif reinforcing_army.start_strength and reinforcing_army.start_strength < 1 then
-                set_force_strength(ally_force, reinforcing_army.start_strength)
-                out("LEAPOI: the allied army starts at " .. reinforcing_army.start_strength * 100 .. "% strength")
+            else
+                prepare_ally_force(ally_force, reinforcing_army)
             end
             --- Force war with the enemy reinforcement armies.
             self:ally_reinforcement_declares_war_to_enemy_reinforcements_if_available(reinforcing_army.faction)

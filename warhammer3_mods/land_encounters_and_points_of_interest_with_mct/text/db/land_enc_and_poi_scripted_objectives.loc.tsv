@@ -188,6 +188,34 @@ scripted_objectives_localised_text_land_enc_tower_buff_rout_the_riders	Rout the 
 scripted_objectives_localised_description_land_enc_tower_buff_rout_the_riders		false
 scripted_objectives_localised_text_land_enc_tower_buff_rout_the_riders_message	Rout the Riders: rout every enemy cavalry unit within 6 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_rout_the_riders_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_easy	[[col:green]]Arm the Allies: our allies have +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_easy_message	Arm the Allies: our allies have +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_medium	[[col:green]]Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_medium_message	Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_hard	[[col:green]]Arm the Allies: our allies have +15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_hard_message	Arm the Allies: our allies have +15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_rally_their_line	[[col:green]]Rally Their Line: our allies cannot rout.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_rally_their_line		false
+scripted_objectives_localised_text_land_enc_tower_buff_rally_their_line_message	Rally Their Line: our allies cannot rout.	false
+scripted_objectives_localised_description_land_enc_tower_buff_rally_their_line_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lend_them_veterans	[[col:green]]Lend Them Veterans: our allies start 2 ranks higher.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lend_them_veterans		false
+scripted_objectives_localised_text_land_enc_tower_buff_lend_them_veterans_message	Lend Them Veterans: our allies start 2 ranks higher.	false
+scripted_objectives_localised_description_land_enc_tower_buff_lend_them_veterans_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_escort	[[col:green]]Reinforce the Ally: our allied escort fields 3 more units.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_escort		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_escort_message	Reinforce the Ally: our allied escort fields 3 more units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_escort_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_army	[[col:green]]Reinforce the Ally: our allies mustered with 30% more gold.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_army		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_army_message	Reinforce the Ally: our allies mustered with 30% more gold.	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_army_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_night_raid_won	[[col:red]]Night Raid: the enemy army is 25% weaker.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_night_raid_won		false
 scripted_objectives_localised_text_land_enc_tower_buff_night_raid_won_message	Night Raid: the enemy army is 25% weaker.	false

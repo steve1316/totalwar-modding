@@ -125,6 +125,17 @@ local function make_lord_invincible(ours, label)
     return lord
 end
 
+--- Holds units in the fight: they cannot rout.
+--- @param sunits table The script units.
+--- @param label string The trick's name, for the log.
+local function make_fearless(sunits, label)
+    for _, sunit in ipairs(sunits) do
+        sunit:morale_behavior_fearless()
+        sunit:release_control()
+    end
+    log(label .. ": " .. #sunits .. " units cannot rout")
+end
+
 --- Marks a mission's unit for the whole battle: a ping icon above it and a pulsing unit card, so the player can tell which it is. UI only, so a
 --- failure is logged and the mission goes on.
 --- @param sunit table The script unit.
@@ -203,12 +214,10 @@ end
 --- Control is handed back after each change to our units, so the player can still command them.
 local TRICKS = {
     --- Our units cannot rout.
-    oath_of_no_retreat = function(ours)
-        for _, sunit in ipairs(ours) do
-            sunit:morale_behavior_fearless()
-            sunit:release_control()
-        end
-        log("Oath of no retreat: " .. #ours .. " units cannot rout")
+    oath_of_no_retreat = function(ours) make_fearless(ours, "Oath of no retreat") end,
+    --- Rally their line: the allied units cannot rout.
+    rally_their_line = function()
+        make_fearless(script_units_of(bm:get_player_alliance(), function(army) return not army:is_player_controlled() end), "Rally their line")
     end,
     --- Our units that carry ammunition are topped up for the whole battle.
     bottomless_quivers = function(ours)

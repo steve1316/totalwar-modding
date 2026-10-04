@@ -54,6 +54,12 @@
 ---   targets         Night terrors: how many of the enemy's most expensive units flee.
 ---   shoots          True: only drawn when our army has missile units or artillery.
 ---   caster          True: only drawn when our army has a spellcaster.
+---   for_ally        Only drawn for a battle with an allied army (Ally in Peril, or an allied Battlefield): true for any ally, "sized" for a
+---                   sized one (Turn the Tables' escort), "full" for a full army.
+---   ally_bundle     A bundle on the allied army for the battle.
+---   ally_ranks      The allied army's regular units gain this many ranks.
+---   extra_ally_units  A sized allied army fields this many more units.
+---   ally_budget     Multiplies a full allied army's gold budget.
 ---
 --- A battle notice whose effect differs by difficulty carries the difficulty in its name, e.g. thin_the_ranks_medium (see `steps.notice`).
 ---
@@ -399,6 +405,14 @@ M.offers = {
         { 1, "won", budget = 0.75 },
         { 1, "lost", own_strength = S(0.85, 0.8, 0.75) },
     } },
+
+    --- Pre-battle: help for the allied army, drawn only when one fights beside us. Both Reinforce the Ally versions read the same; only the
+    --- one that fits the ally can be drawn.
+    { key = "arm_the_allies", pool = "pre_battle", tags = { "ally" }, cost = STANDARD, for_ally = true, ally_bundle = shared.war_rites.bundle },
+    { key = "rally_their_line", pool = "pre_battle", tags = { "ally" }, cost = STANDARD, for_ally = true, trick = true },
+    { key = "lend_them_veterans", pool = "pre_battle", tags = { "ally" }, cost = STANDARD, for_ally = true, ally_ranks = 2 },
+    { key = "reinforce_the_ally_escort", pool = "pre_battle", tags = { "ally" }, cost = STRONG, for_ally = "sized", extra_ally_units = 3 },
+    { key = "reinforce_the_ally_army", pool = "pre_battle", tags = { "ally" }, cost = STRONG, for_ally = "full", ally_budget = 1.3 },
 
     --- Pre-battle: tricks the battle script plays, under the tower's names.
     { key = "bottomless_quivers", pool = "pre_battle", tags = { "trick" }, cost = shared.bottomless_quivers.cost, trick = true, shoots = true },
