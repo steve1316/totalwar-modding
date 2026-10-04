@@ -77,6 +77,17 @@ MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
                       [("wh3_dlc27_effect_ability_enable_pleasure_through_pain_all_units", 1)]),
     "gorefeast": ("Gorefeast", "Every enemy unit gains Gorefeast.", "blood_kiss.png", [("land_enc_effect_ability_enable_gorefeast_all_units", 1)]),
     "unholy_vigour": ("Unholy Vigour", "Our units gain Unholy Vigour.", "vigour.png", [("land_enc_effect_ability_enable_unholy_vigour_all_units", 1)]),
+    "bleeding_field": ("Bleeding Field", "Every unit on the field loses 1% of its strength every 15 seconds.", "casualties.png", []),
+    "miasma": ("Plague Miasma", "Every enemy unit loses 1% of its strength every 15 seconds.", "phase_posion.png", []),
+    "rot": ("Rot of Nurgle", "Every unit of ours loses 1% of its strength every 15 seconds.", "phase_posion.png", []),
+    "second_wind": ("Second Wind", "Our units regain 5% of their strength at 2 and 4 minutes.", "lileaths_blessing.png", []),
+    "lord_vigil": ("Lord's Vigil", "Our lord regains 1% of their strength every 30 seconds.", "lileaths_blessing.png", []),
+    "short_shot": ("Short of Shot", "Every missile unit on the field starts with half its ammunition.", "ammo.png", []),
+    "plenty_shot": ("Endless Quivers", "Every missile unit on the field never runs out of ammunition.", "ammo_character.png", []),
+    "panic": ("Panic", "At 2:00 the enemy's two weakest units rout.", "dlc10_death_night.png", []),
+    "cowards": ("Cowards' Ground", "At 1:30 our weakest unit routs.", "discouraged.png", []),
+    "duel_lords": ("Fated Lords", "Both lords cannot be harmed for the first 2 minutes.", "nemesis_crown_sealed.png", []),
+    "hold_fast": ("Hold Fast", "No unit on the field can rout for the first 2 minutes.", "morale.png", []),
 }
 
 # Flavour text of each modifier's bundle, which the tooltip shows above its effects.

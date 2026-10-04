@@ -619,10 +619,7 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
     }, general:faction():subculture())
     --- The battle manager puts these on the floor army once it spawns, with the battle modifiers' enemy bundles.
-    for _, bundle in ipairs(battle_modifiers.bundles(delve.modifiers, "enemy")) do
-        sabotage.enemy_bundles = sabotage.enemy_bundles or {}
-        sabotage.enemy_bundles[#sabotage.enemy_bundles + 1] = bundle
-    end
+    for _, bundle in ipairs(battle_modifiers.bundles(delve.modifiers, "enemy")) do offer_effects.merge_sabotage(sabotage, { enemy_bundle = bundle }) end
     army.sabotage = sabotage
     if next_floor.mirror then
         army.units_pool, delve.mirror_copied = tower_offers.mirror_units(delve)

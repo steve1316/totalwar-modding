@@ -674,9 +674,7 @@ for _, offer in ipairs(data.offers) do
 end
 local battle_dilemmas = {}
 for key in pairs(require("script/land_encounters/configs/battle_categories").dilemma_keys) do battle_dilemmas[#battle_dilemmas + 1] = key end
-local modifier_data = require("script/land_encounters/configs/battle_modifiers")
-local battle_modifiers = { list = modifier_data.list, bundle_prefix = modifier_data.bundle_prefix, notice_prefix = modifier_data.notice_prefix,
-    line_prefix = modifier_data.line_prefix }
+local battle_modifiers = require("script/land_encounters/configs/battle_modifiers")
 table.sort(battle_dilemmas)
 local function encode(v)
     local t = type(v)
@@ -771,7 +769,9 @@ def expand_bundles(config: Dict) -> Dict[str, Tuple]:
                 flat[f"{prefix}{suffix}_{difficulty}"] = (target, icon, title, description, stepped)
     modifiers = config["battle_modifiers"]
     for modifier in modifiers["list"]:
-        for side in modifier["sides"] if modifier.get("bundle") else []:
+        if not modifier.get("bundle"):
+            continue
+        for side in modifier["sides"]:
             flat[modifiers["bundle_prefix"] + modifier["key"] + "_" + side] = battle_modifiers.bundle(modifier["key"], side)
     target, icon, title, description, effect, scope = DIVIDENDS
     amounts = {offer["dividends"]["per_turn"] for offers in config["at"].values() for offer in offers.values() if "dividends" in offer}
@@ -987,11 +987,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         key, harm = modifier["key"], modifier["harm"]
         add(STRINGS_LOC, modifiers["line_prefix"] + key, battle_modifiers.line_text(key), "false")
         shown = battle_modifiers.notice_text(key)
-        objective(modifiers["notice_prefix"] + key, battle_modifiers.MODIFIERS[key][2], f"[[col:{battle_modifiers.HARM_COLOUR[harm]}]]{shown}[[/col]]", shown)
-    # The spot effects table also holds the wound owed by a gamble, which this script owns by its name.
-    add(table("effects_tables"), "land_enc_effect_spot_wound_owed", "chaos_gifts.png", 2, "chaos_gifts.png", "campaign", "false")
-    add(LOC_PREFIX + "effects.loc.tsv", "effects_description_land_enc_effect_spot_wound_owed", "Our lord is wounded for %n turns at the start of our next turn",
-        "false")
+        _, _, icon, _ = battle_modifiers.MODIFIERS[key]
+        objective(modifiers["notice_prefix"] + key, icon, f"[[col:{battle_modifiers.HARM_COLOUR[harm]}]]{shown}[[/col]]", shown)
     for effect, (junction, ability, name) in battle_modifiers.ABILITY_EFFECTS.items():
         add(table("effects_tables"), effect, "general_ability.png", 310, "general_ability.png", "battle", "true")
         add(LOC_PREFIX + "effects.loc.tsv", "effects_description_" + effect, f'Passive ability: "{name}" for all units', "false")

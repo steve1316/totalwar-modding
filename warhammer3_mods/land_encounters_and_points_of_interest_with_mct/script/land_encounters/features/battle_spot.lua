@@ -17,6 +17,7 @@ local spot_battles = require("script/land_encounters/features/spot_battles")
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local victory_gold = require("script/land_encounters/configs/victory_gold")
+local round_gold = require("script/land_encounters/configs/tower_data").round_gold
 local spoils_site = require("script/land_encounters/configs/spot_offers").spoils
 
 local Army = require("script/land_encounters/core/army")
@@ -280,8 +281,8 @@ function BattleEventDelegate:pick_ally_gift(character)
     return survivors[random_number(#survivors)]
 end
 
---- Fires the victory incident built in script, so the allied unit joining us shows as a card beside the gold (`ally.victory_gold`). When it
---- cannot be built, the plain incident fires and the unit joins in script.
+--- Fires the victory incident built in script, so the allied unit joining us shows as a card beside the incident's own gold. When it cannot
+--- be built, the plain incident fires and the unit joins in script.
 --- @param character character Our lord.
 --- @param gift string The joining unit's key.
 --- @param spot_info table A spot_info record for the battle's spot.
@@ -290,7 +291,7 @@ function BattleEventDelegate:trigger_victory_with_gift(character, gift, spot_inf
     local ok, err = pcall(function()
         local builder = cm:create_incident_builder(event.victory_incident)
         local payload = cm:create_payload()
-        payload:treasury_adjustment(event.ally.victory_gold)
+        payload:treasury_adjustment(victory_gold[event.victory_incident] or 0)
         payload:add_unit(character:military_force(), gift, 1, 0)
         builder:set_payload(payload)
         builder:add_target("default", character)
@@ -311,7 +312,7 @@ function BattleEventDelegate:pay_modifier_gold(faction)
     local modifiers = self.cached_event.modifiers
     if not modifiers or #modifiers == 0 then return end
     local base = victory_gold[self.cached_event.victory_incident] or 0
-    local change = math.floor(base * (battle_modifiers.gold_multiplier(modifiers) - 1) / 50 + 0.5) * 50
+    local change = round_gold(base * (battle_modifiers.gold_multiplier(modifiers) - 1))
     if change ~= 0 then cm:treasury_mod(faction:name(), change) end
     log("spot battle: modifiers " .. table.concat(modifiers, ", ") .. " change the victory gold " .. base .. " by " .. change)
 end

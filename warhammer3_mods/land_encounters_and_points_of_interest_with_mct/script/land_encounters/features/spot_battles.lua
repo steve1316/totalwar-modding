@@ -154,15 +154,14 @@ end
 --- Dilemma
 
 --- Lists the battle's modifiers, then the missions taken, at the top of the open dilemma's description, one line each with a blank line after
---- each block, as the tower lists a floor's results. Neither clears it.
+--- each block, as the tower lists a floor's results. Empty when there are neither.
 --- @param pending table The open dilemma.
 function M.show_missions(pending)
     local lines = {}
     for _, key in ipairs(pending.battle.missions) do
         lines[#lines + 1] = common.get_localised_string(offers_data.mission_set_loc_prefix .. key .. "_" .. pending.difficulty)
     end
-    common.set_context_value(offers_data.missions_context,
-        battle_modifiers.lines(pending.modifiers) .. (#lines > 0 and table.concat(lines, "\n") .. "\n\n" or ""))
+    common.set_context_value(offers_data.missions_context, text_block(battle_modifiers.lines(pending.modifiers)) .. text_block(lines))
 end
 
 --- Shows a faction's open pre-battle dilemma: Fight, the offers, the missions, then Avoid. Fight and every offer that can be bought end with
@@ -373,9 +372,9 @@ function M.prepare_battle(event, general_cqi)
     offer_effects.log_army_change(general_cqi, "spot battle")
 end
 
---- Hands the battle to the battle script: the one-battle bundles under their tower names, each offer's notice or trick, and the missions,
---- with Night terrors' and the missions' targets. The enemy's units are read from the spawned army the first time and kept on the event, so
---- a battle re-armed after a load hands over the same targets.
+--- Hands the battle to the battle script: the one-battle bundles under their tower names, each offer's notice or trick, the missions and
+--- the battle modifiers, with Night terrors' and the missions' targets. The enemy's units are read from the spawned army the first time
+--- and kept on the event, so a battle re-armed after a load hands over the same targets.
 --- @param event table The battle event.
 --- @param army table|nil The spawned enemy Army, or nil when re-arming after a load.
 function M.hand_to_battle(event, army)

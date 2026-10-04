@@ -82,3 +82,14 @@ campaign_localised_strings_string_land_enc_spot_modifier_too_horrible	[[col:yell
 campaign_localised_strings_string_land_enc_spot_modifier_pleasure_pain	[[col:yellow]]Modifier:[[/col]] Pleasure Through Pain - Every unit on the field gains Pleasure Through Pain.	false
 campaign_localised_strings_string_land_enc_spot_modifier_gorefeast	[[col:yellow]]Modifier:[[/col]] Gorefeast - Every enemy unit gains Gorefeast.	false
 campaign_localised_strings_string_land_enc_spot_modifier_unholy_vigour	[[col:yellow]]Modifier:[[/col]] Unholy Vigour - Our units gain Unholy Vigour.	false
+campaign_localised_strings_string_land_enc_spot_modifier_bleeding_field	[[col:yellow]]Modifier:[[/col]] Bleeding Field - Every unit on the field loses 1% of its strength every 15 seconds.	false
+campaign_localised_strings_string_land_enc_spot_modifier_miasma	[[col:yellow]]Modifier:[[/col]] Plague Miasma - Every enemy unit loses 1% of its strength every 15 seconds.	false
+campaign_localised_strings_string_land_enc_spot_modifier_rot	[[col:yellow]]Modifier:[[/col]] Rot of Nurgle - Every unit of ours loses 1% of its strength every 15 seconds.	false
+campaign_localised_strings_string_land_enc_spot_modifier_second_wind	[[col:yellow]]Modifier:[[/col]] Second Wind - Our units regain 5% of their strength at 2 and 4 minutes.	false
+campaign_localised_strings_string_land_enc_spot_modifier_lord_vigil	[[col:yellow]]Modifier:[[/col]] Lord's Vigil - Our lord regains 1% of their strength every 30 seconds.	false
+campaign_localised_strings_string_land_enc_spot_modifier_short_shot	[[col:yellow]]Modifier:[[/col]] Short of Shot - Every missile unit on the field starts with half its ammunition.	false
+campaign_localised_strings_string_land_enc_spot_modifier_plenty_shot	[[col:yellow]]Modifier:[[/col]] Endless Quivers - Every missile unit on the field never runs out of ammunition.	false
+campaign_localised_strings_string_land_enc_spot_modifier_panic	[[col:yellow]]Modifier:[[/col]] Panic - At 2:00 the enemy's two weakest units rout.	false
+campaign_localised_strings_string_land_enc_spot_modifier_cowards	[[col:yellow]]Modifier:[[/col]] Cowards' Ground - At 1:30 our weakest unit routs.	false
+campaign_localised_strings_string_land_enc_spot_modifier_duel_lords	[[col:yellow]]Modifier:[[/col]] Fated Lords - Both lords cannot be harmed for the first 2 minutes.	false
+campaign_localised_strings_string_land_enc_spot_modifier_hold_fast	[[col:yellow]]Modifier:[[/col]] Hold Fast - No unit on the field can rout for the first 2 minutes.	false

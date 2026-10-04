@@ -2,7 +2,8 @@
 --- buff in the objectives panel for the rest of the battle. It also does the in-battle tricks bought between floors, tracks the missions taken
 --- for the floor, and counts kills against Rival delvers, reporting both back to the campaign. The campaign saves the buff list under
 --- `land_enc_tower_battle_buffs` just before a floor battle and clears it once the floor resolves, so other battles see an empty list. A
---- battle spot hands over its pre-battle offers, tricks and missions the same way.
+--- battle spot hands over its pre-battle offers, tricks and missions the same way. It also plays the battle modifiers a fight rolled
+--- (script/land_encounters/configs/battle_modifiers.lua), handed over as "modifier_<key>" notices.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,6 +45,27 @@ local NIGHT_TERRORS_MS = 60000
 local MISSION_TICK_MS = 1000
 --- Name of the repeating mission check, so it can be stopped when the battle is decided.
 local MISSION_PROCESS = "land_enc_tower_missions"
+--- Prefix of a battle modifier's notice name. Mirrored in script/land_encounters/configs/battle_modifiers.lua.
+local MODIFIER_PREFIX = "modifier_"
+--- How often a draining modifier takes its share, in ms, and the share of full strength it takes.
+local DRAIN_EVERY_MS = 15000
+local DRAIN_SHARE = 0.01
+--- When Second Wind heals our units, in ms after the battle starts, and the share of full strength each regains.
+local SECOND_WIND_AT_MS = { 120000, 240000 }
+local SECOND_WIND_SHARE = 0.05
+--- How often Lord's Vigil heals our lord, in ms, and the share of full strength each time.
+local LORD_VIGIL_EVERY_MS = 30000
+local LORD_VIGIL_SHARE = 0.01
+--- The ammunition every missile unit starts with under Short of Shot, as a share of its own.
+local SHORT_SHOT_AMMO = 0.5
+--- When Panic routs the enemy's weakest units, in ms after the battle starts, and how many.
+local PANIC_AT_MS = 120000
+local PANIC_UNITS = 2
+--- When Cowards' Ground routs our weakest unit, in ms after the battle starts.
+local COWARDS_AT_MS = 90000
+--- How long Fated Lords keeps both lords invincible, and Hold Fast every unit from routing, in ms.
+local FATED_LORDS_MS = 120000
+local HOLD_FAST_MS = 120000
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,6 +232,89 @@ local function enemy_dead(theirs)
     return sum(theirs, function(unit) return unit:initial_number_of_men() - unit:number_of_men_alive() end)
 end
 
+--- True while a unit is still in the fight: not routing and not lost.
+--- @param sunit table The script unit.
+--- @returns boolean True when it still fights.
+local function fighting(sunit)
+    return not sunit.unit:is_routing() and not is_lost(sunit)
+end
+
+--- Lists the units still fighting, without the lords unless `with_lords` is set.
+--- @param sunits table Script units.
+--- @param with_lords boolean|nil True to keep the commanding units.
+--- @returns table The script units.
+local function fighters(sunits, with_lords)
+    local kept = {}
+    for _, sunit in ipairs(sunits) do
+        if fighting(sunit) and (with_lords or not sunit.unit:is_commanding_unit()) then kept[#kept + 1] = sunit end
+    end
+    return kept
+end
+
+--- Lists the units that carry ammunition.
+--- @param sunits table Script units.
+--- @returns table The script units.
+local function shooters(sunits)
+    local kept = {}
+    for _, sunit in ipairs(sunits) do
+        if sunit.unit:starting_ammo() > 0 then kept[#kept + 1] = sunit end
+    end
+    return kept
+end
+
+--- The `count` weakest units of a list by the game's strategic value, weakest first.
+--- @param sunits table Script units.
+--- @param count number How many.
+--- @returns table The script units.
+local function weakest(sunits, count)
+    local sorted = {}
+    for i, sunit in ipairs(sunits) do sorted[i] = { sunit = sunit, value = sunit.unit:strategic_value(), index = i } end
+    table.sort(sorted, function(a, b) return a.value < b.value or (a.value == b.value and a.index < b.index) end)
+    local picked = {}
+    for i = 1, math.min(count, #sorted) do picked[i] = sorted[i].sunit end
+    return picked
+end
+
+--- Heals each unit still fighting and below full strength by `share` of its full strength, fallen men included. The game's call heals a
+--- unit to a level, so the target is the unit's strength plus the share. The heal lands a moment later, so the log shows the target.
+--- @param sunits table Script units.
+--- @param share number The share of full strength.
+--- @param label string The trick or modifier's name, for the log.
+--- @returns number How many units were healed.
+local function heal_by(sunits, share, label)
+    local healed = 0
+    for _, sunit in ipairs(sunits) do
+        local before = sunit.unit:unary_hitpoints()
+        if fighting(sunit) and before < 1 then
+            local target = math.min(1, before + share)
+            sunit.unit:heal_hitpoints_unary(target, true)
+            log(label .. ": " .. sunit.unit:type() .. " " .. math.floor(before * 100 + 0.5) .. "% -> " .. math.floor(target * 100 + 0.5) .. "%")
+            healed = healed + 1
+        end
+    end
+    return healed
+end
+
+--- Takes `DRAIN_SHARE` of full strength from each unit still fighting every `DRAIN_EVERY_MS`, for the whole battle. The first tick logs
+--- each unit's strength before the drain, which lands a moment later, so the next ticks show it falling.
+--- @param sunits table Script units.
+--- @param label string The modifier's name, for the log and the callback.
+local function drain(sunits, label)
+    local ticks = 0
+    bm:repeat_callback(function()
+        ticks = ticks + 1
+        local drained = 0
+        for _, sunit in ipairs(sunits) do
+            if fighting(sunit) then
+                if ticks == 1 then log(string.format("%s: %s at %.3f", label, sunit.unit:type(), sunit.unit:unary_hitpoints())) end
+                sunit.unit:reduce_hitpoints_unary(DRAIN_SHARE)
+                drained = drained + 1
+            end
+        end
+        log(label .. ": tick " .. ticks .. " drained " .. drained .. " units")
+    end, DRAIN_EVERY_MS, "land_enc_modifier_" .. label)
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Tricks
@@ -225,14 +330,11 @@ local TRICKS = {
     end,
     --- Our units that carry ammunition are topped up for the whole battle.
     bottomless_quivers = function(ours)
-        local shooters = {}
-        for _, sunit in ipairs(ours) do
-            if sunit.unit:starting_ammo() > 0 then shooters[#shooters + 1] = sunit.unit end
-        end
+        local refilled = shooters(ours)
         bm:repeat_callback(function()
-            for _, unit in ipairs(shooters) do unit:set_current_ammo_unary(1) end
+            for _, sunit in ipairs(refilled) do sunit.unit:set_current_ammo_unary(1) end
         end, QUIVERS_REFILL_MS, "land_enc_tower_bottomless_quivers")
-        log("Bottomless quivers: " .. #shooters .. " units never run out of ammo")
+        log("Bottomless quivers: " .. #refilled .. " units never run out of ammo")
     end,
     --- Our lord cannot be harmed for the opening minutes.
     divine_shield = function(ours, _, seconds)
@@ -259,17 +361,7 @@ local TRICKS = {
     sacred_ground = function(ours, _, percent, name)
         local share = (tonumber(percent) or SACRED_GROUND_PERCENT) / 100
         bm:callback(function()
-            local healed = 0
-            for _, sunit in ipairs(ours) do
-                local before = sunit.unit:unary_hitpoints()
-                if not sunit.unit:is_routing() and not is_lost(sunit) and before < 1 then
-                    --- The call heals a unit to a share of its full strength, so the target is the unit's strength plus the share.
-                    sunit.unit:heal_hitpoints_unary(math.min(1, before + share), true)
-                    log("Sacred ground: " .. sunit.unit:type() .. " " .. math.floor(before * 100 + 0.5) .. "% -> "
-                        .. math.floor(sunit.unit:unary_hitpoints() * 100 + 0.5) .. "%")
-                    healed = healed + 1
-                end
-            end
+            local healed = heal_by(ours, share, "Sacred ground")
             log("Sacred ground: " .. healed .. " units regain " .. share * 100 .. "% of their strength")
             --- The objective ticks off, and a banner says the blessing took hold, under the notice's difficulty.
             bm:complete_objective(OBJECTIVE_PREFIX .. name)
@@ -311,6 +403,99 @@ local TRICKS = {
         log("Assassinate: the enemy lord " .. lord.unit:type() .. " is slain")
     end,
 }
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Modifiers
+
+--- What each battle modifier does, by its key. Each gets the script units of every side: `ours`, `theirs`, `allies` and `all`.
+local MODIFIERS = {
+    bleeding_field = function(ctx) drain(ctx.all, "Bleeding field") end,
+    miasma = function(ctx) drain(ctx.theirs, "Plague miasma") end,
+    rot = function(ctx) drain(ctx.ours, "Rot of Nurgle") end,
+    second_wind = function(ctx)
+        for _, at_ms in ipairs(SECOND_WIND_AT_MS) do bm:callback(function() heal_by(ctx.ours, SECOND_WIND_SHARE, "Second wind") end, at_ms) end
+    end,
+    lord_vigil = function(ctx)
+        local lord = lord_of(ctx.ours)
+        if not lord then
+            log("Lord's vigil: no lord found")
+            return
+        end
+        bm:repeat_callback(function() heal_by({ lord }, LORD_VIGIL_SHARE, "Lord's vigil") end, LORD_VIGIL_EVERY_MS, "land_enc_modifier_lord_vigil")
+    end,
+    short_shot = function(ctx)
+        local list = shooters(ctx.all)
+        for _, sunit in ipairs(list) do sunit.unit:set_current_ammo_unary(SHORT_SHOT_AMMO) end
+        log("Short of shot: " .. #list .. " missile units start at " .. SHORT_SHOT_AMMO * 100 .. "% ammunition")
+    end,
+    plenty_shot = function(ctx)
+        local list = shooters(ctx.all)
+        for _, sunit in ipairs(list) do sunit:grant_infinite_ammo() end
+        log("Endless quivers: " .. #list .. " missile units never run out")
+    end,
+    panic = function(ctx)
+        bm:callback(function()
+            for _, sunit in ipairs(weakest(fighters(ctx.theirs), PANIC_UNITS)) do
+                sunit:morale_behavior_rout()
+                log("Panic: the enemy's " .. sunit.unit:type() .. " routs")
+            end
+        end, PANIC_AT_MS)
+    end,
+    cowards = function(ctx)
+        bm:callback(function()
+            local sunit = weakest(fighters(ctx.ours), 1)[1]
+            if not sunit then return end
+            sunit:morale_behavior_rout()
+            log("Cowards' ground: our " .. sunit.unit:type() .. " routs")
+        end, COWARDS_AT_MS)
+    end,
+    duel_lords = function(ctx)
+        local lords = {}
+        for _, side in ipairs({ ctx.ours, ctx.theirs }) do lords[#lords + 1] = make_lord_invincible(side, "Fated lords") end
+        log("Fated lords: " .. #lords .. " lords cannot be harmed for " .. FATED_LORDS_MS / 1000 .. " s")
+        bm:callback(function()
+            for _, lord in ipairs(lords) do
+                lord:set_invincible(false)
+                lord:release_control()
+            end
+            log("Fated lords: the lords can be harmed again")
+        end, FATED_LORDS_MS)
+    end,
+    hold_fast = function(ctx)
+        make_fearless(ctx.all, "Hold fast")
+        bm:callback(function()
+            for _, sunit in ipairs(ctx.all) do
+                sunit:morale_behavior_default()
+                sunit:release_control()
+            end
+            log("Hold fast: units can rout again")
+        end, HOLD_FAST_MS)
+    end,
+}
+
+--- Plays the battle modifiers among the notice names. A failing one is logged and the battle carries on with the others.
+--- @param names table The notice names handed to the battle.
+--- @param ours table Our script units.
+--- @param theirs table The enemy's script units.
+local function play_modifiers(names, ours, theirs)
+    local keys = {}
+    for _, name in ipairs(names) do
+        local key = name:match("^" .. MODIFIER_PREFIX .. "(.+)$")
+        if key and MODIFIERS[key] then keys[#keys + 1] = key end
+    end
+    if #keys == 0 then return end
+    local allies = script_units_of(bm:get_player_alliance(), function(army) return not army:is_player_controlled() end)
+    local ctx = { ours = ours, theirs = theirs, allies = allies, all = {} }
+    for _, side in ipairs({ ours, allies, theirs }) do
+        for _, sunit in ipairs(side) do ctx.all[#ctx.all + 1] = sunit end
+    end
+    log("battle modifiers: " .. table.concat(keys, ", "))
+    for _, key in ipairs(keys) do
+        local ok, err = pcall(MODIFIERS[key], ctx)
+        if not ok then log(key .. " failed: " .. tostring(err)) end
+    end
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -573,6 +758,7 @@ if #buffs > 0 then
             local trick = base_name(name)
             if TRICKS[trick] then TRICKS[trick](ours, theirs, targets[trick], name) end
         end
+        play_modifiers(buffs, ours, theirs)
         track_missions(buffs, ours, theirs)
     end)
 end

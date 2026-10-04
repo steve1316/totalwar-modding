@@ -596,3 +596,47 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_unholy_vigour	[[
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_unholy_vigour		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_unholy_vigour_message	Unholy Vigour: our units gain Unholy Vigour.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_unholy_vigour_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_bleeding_field	[[col:yellow]]Bleeding Field: every unit on the field loses 1% of its strength every 15 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_bleeding_field		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_bleeding_field_message	Bleeding Field: every unit on the field loses 1% of its strength every 15 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_bleeding_field_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_miasma	[[col:green]]Plague Miasma: every enemy unit loses 1% of its strength every 15 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_miasma		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_miasma_message	Plague Miasma: every enemy unit loses 1% of its strength every 15 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_miasma_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_rot	[[col:red]]Rot of Nurgle: every unit of ours loses 1% of its strength every 15 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_rot		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_rot_message	Rot of Nurgle: every unit of ours loses 1% of its strength every 15 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_rot_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_second_wind	[[col:green]]Second Wind: our units regain 5% of their strength at 2 and 4 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_second_wind		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_second_wind_message	Second Wind: our units regain 5% of their strength at 2 and 4 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_second_wind_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lord_vigil	[[col:green]]Lord's Vigil: our lord regains 1% of their strength every 30 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lord_vigil		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lord_vigil_message	Lord's Vigil: our lord regains 1% of their strength every 30 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lord_vigil_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_short_shot	[[col:yellow]]Short of Shot: every missile unit on the field starts with half its ammunition.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_short_shot		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_short_shot_message	Short of Shot: every missile unit on the field starts with half its ammunition.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_short_shot_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_plenty_shot	[[col:yellow]]Endless Quivers: every missile unit on the field never runs out of ammunition.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_plenty_shot		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_plenty_shot_message	Endless Quivers: every missile unit on the field never runs out of ammunition.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_plenty_shot_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic	[[col:green]]Panic: at 2:00 the enemy's two weakest units rout.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_panic		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic_message	Panic: at 2:00 the enemy's two weakest units rout.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_panic_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards	[[col:red]]Cowards' Ground: at 1:30 our weakest unit routs.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_cowards		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards_message	Cowards' Ground: at 1:30 our weakest unit routs.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_cowards_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords	[[col:yellow]]Fated Lords: both lords cannot be harmed for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_duel_lords		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords_message	Fated Lords: both lords cannot be harmed for the first 2 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_duel_lords_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast	[[col:yellow]]Hold Fast: no unit on the field can rout for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast_message	Hold Fast: no unit on the field can rout for the first 2 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast_message		false

@@ -38,13 +38,13 @@ function M.roll()
     return picked
 end
 
---- The dilemma lines of a fight's modifiers, one per line, ending in a blank line, or "" for none.
+--- The dilemma lines of a fight's modifiers.
 --- @param keys table|nil The modifier keys.
---- @returns string The text.
+--- @returns table The lines.
 function M.lines(keys)
     local lines = {}
     for _, key in ipairs(keys or {}) do lines[#lines + 1] = common.get_localised_string(data.line_prefix .. key) end
-    return #lines > 0 and table.concat(lines, "\n") .. "\n\n" or ""
+    return lines
 end
 
 --- The offers a fight's modifiers keep out of its draw.
@@ -66,11 +66,7 @@ function M.bundles(keys, side)
     local bundles = {}
     for _, key in ipairs(keys or {}) do
         local modifier = data.by_key[key]
-        if modifier.bundle then
-            for _, hit in ipairs(modifier.sides) do
-                if hit == side then bundles[#bundles + 1] = data.bundle_prefix .. key .. "_" .. side end
-            end
-        end
+        if modifier.bundle and modifier.hits[side] then bundles[#bundles + 1] = data.bundle_prefix .. key .. "_" .. side end
     end
     return bundles
 end

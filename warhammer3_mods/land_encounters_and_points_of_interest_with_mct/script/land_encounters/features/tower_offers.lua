@@ -891,12 +891,11 @@ local function set_floor_context(key, floor, value)
 end
 
 --- Shows the next floor's battle modifiers, then the floor's results, at the top of its go-deeper description, one line each in the order they
---- came, with a blank line after each block. Neither clears it.
+--- came, with a blank line after each block. Empty when there are neither.
 --- @param delve table The delve record. `delve.results` holds this floor's result lines and `delve.modifiers` the next floor's modifiers.
 function M.show_results(delve)
     local results = delve.results
-    set_floor_context(RESULT_CONTEXT_KEY, delve.floor,
-        battle_modifiers.lines(delve.modifiers) .. (#results > 0 and table.concat(results, "\n") .. "\n\n" or ""))
+    set_floor_context(RESULT_CONTEXT_KEY, delve.floor, text_block(battle_modifiers.lines(delve.modifiers)) .. text_block(results))
 end
 
 --- Shows the climb list in the per-floor go-deeper descriptions: each floor so far as cleared or skipped at the difficulty it had, any hidden
@@ -1001,8 +1000,8 @@ end
 
 
 --- Hands the buffs on the delving army to the next battle's script, which announces them: the one-battle buffs, the Hellforge pact, Drained,
---- then the in-battle tricks, the missions, then the sabotage on the enemy. The list is comma-separated bundle names without `BUNDLE_PREFIX`,
---- then trick, mission and sabotage offer keys. Night terrors' and the missions' targets go under their own keys.
+--- then the in-battle tricks, the missions, the sabotage on the enemy, then the battle modifiers. The list is comma-separated bundle names
+--- without `BUNDLE_PREFIX`, then trick, mission, sabotage and modifier notice keys. Night terrors' and the missions' targets go under their own keys.
 --- @param delve table The delve record.
 function M.hand_buffs_to_battle(delve)
     local names, seen = {}, {}

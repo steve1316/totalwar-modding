@@ -47,8 +47,8 @@ Fields of each category:
   `mode` "beside" (we attack and the ally marches in to join us) or "relief" (the ally holds the field, the enemy charges it and we march in as
   its reinforcement), `units` (the ally's units, its lord included, or nil for a full army), `strengths` (the share of full strength the ally
   starts at, one picked at random), `relations` (dilemma steps of relations, 10 each, with the nearest real faction of the ally's culture on
-  a win) and `gift_unit` (a random surviving allied unit joins us on a win, shown on a victory incident built in script that pays
-  `victory_gold`, the same gold as its DB payload, which the plain incident pays when it cannot be built).
+  a win) and `gift_unit` (a random surviving allied unit joins us on a win, shown on a victory incident built in script that pays the same
+  gold as its DB payload, which the plain incident pays when it cannot be built).
 - neutral: the faction-free dilemma, or nil when the category only has flavoured dilemmas.
 - flavoured: dilemmas written for one faction (3-letter shorthand).
 --]]
@@ -248,7 +248,7 @@ M.list = {
         budget_multiplier = 1.0,
         min_difficulty = nil,
         intervention = "allied",
-        ally = { mode = "relief", strengths = { 0.5, 0.75, 1 }, gift_unit = true, victory_gold = 2500 },
+        ally = { mode = "relief", strengths = { 0.5, 0.75, 1 }, gift_unit = true },
         victory_incident = "land_enc_incident_battle_won_relief_column",
         avoidance_incident = "land_enc_incident_battle_avoided_ally",
         victory_targets = { character = true, force = false, faction = false, region = false },

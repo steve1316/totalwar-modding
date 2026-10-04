@@ -4,6 +4,9 @@
 
 local M = {}
 
+--- Every army in the battle: ours, the enemy and any allies.
+local ALL = { "ours", "enemy", "allies" }
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Rolling
@@ -34,9 +37,6 @@ M.line_prefix = "campaign_localised_strings_string_land_enc_spot_modifier_"
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Modifiers
 
---- Every army in the battle: ours, the enemy and any allies.
-local ALL = { "ours", "enemy", "allies" }
-
 --[[
 Fields of each modifier:
 - key: its name, shared with its text and bundles in the generator.
@@ -44,7 +44,9 @@ Fields of each modifier:
 - sides: the armies it hits, any of "ours", "enemy" and "allies".
 - group: modifiers sharing a group (opposites) never roll together, or nil.
 - keeps_out: offer keys (spot and tower) not drawn for the battle, as they would do the same or cancel it out, or nil.
-- bundle: true when it is a bundle on each of its sides for the battle, named `bundle_prefix` .. key .. "_" .. side.
+- bundle: true when it is a bundle on each of its sides for the battle, named `bundle_prefix` .. key .. "_" .. side. Without it the
+  battle script (script/battle/mod/land_enc_tower_buffs.lua) plays it under its key, and its numbers live there.
+- hits: its sides as a set, built from `sides`.
 --]]
 M.list = {
     --- Stat changes.
@@ -75,6 +77,21 @@ M.list = {
     { key = "pleasure_pain", harm = "~", sides = ALL, bundle = true },
     { key = "gorefeast", harm = "-", sides = { "enemy" }, bundle = true },
     { key = "unholy_vigour", harm = "+", sides = { "ours" }, bundle = true },
+
+    --- Over time in battle.
+    { key = "bleeding_field", harm = "~", sides = ALL, group = "drain" },
+    { key = "miasma", harm = "+", sides = { "enemy" }, group = "drain" },
+    { key = "rot", harm = "-", sides = { "ours" }, group = "drain" },
+    { key = "second_wind", harm = "+", sides = { "ours" }, keeps_out = { "sacred_ground" } },
+    { key = "lord_vigil", harm = "+", sides = { "ours" } },
+    { key = "short_shot", harm = "~", sides = ALL, group = "ammo", keeps_out = { "quartermasters_cache" } },
+    { key = "plenty_shot", harm = "~", sides = ALL, group = "ammo", keeps_out = { "bottomless_quivers" } },
+
+    --- Morale and control.
+    { key = "panic", harm = "+", sides = { "enemy" }, keeps_out = { "night_terrors" } },
+    { key = "cowards", harm = "-", sides = { "ours" } },
+    { key = "duel_lords", harm = "~", sides = ALL, keeps_out = { "divine_shield", "last_ditch_oath" } },
+    { key = "hold_fast", harm = "~", sides = ALL, keeps_out = { "oath_of_no_retreat" } },
 }
 
 --- Each modifier by its key, built from `list`.
@@ -82,6 +99,8 @@ M.by_key = {}
 
 for _, modifier in ipairs(M.list) do
     M.by_key[modifier.key] = modifier
+    modifier.hits = {}
+    for _, side in ipairs(modifier.sides) do modifier.hits[side] = true end
 end
 
 return M

@@ -9,7 +9,6 @@ effects_description_land_enc_diplomatic_relations_seducers_of_slaanesh	Diplomati
 effects_description_land_enc_diplomatic_relations_cult_of_pleasure	Diplomatic relations: %+n with Cult of Pleasure	false
 effects_description_land_enc_effect_tower_dividends_income	Tower dividends: %+n gold each turn	false
 effects_description_land_enc_effect_tower_dark_bargain_owed	Dark bargain: our lord is wounded for %n turns at the start of the turn after the delve	false
-effects_description_land_enc_effect_spot_wound_owed	Our lord is wounded for %n turns at the start of our next turn	false
 effects_description_land_enc_effect_ability_enable_regeneration_all_units	Passive ability: "Regeneration" for all units	false
 effects_description_land_enc_effect_ability_enable_deathblow_all_units	Passive ability: "Deathblow" for all units	false
 effects_description_land_enc_effect_ability_enable_strength_in_numbers_all_units	Passive ability: "Strength in Numbers" for all units	false
