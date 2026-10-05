@@ -49,7 +49,10 @@ svg#map { display: block; width: 100%; height: auto; cursor: crosshair; backgrou
 svg#map.drag { cursor: grabbing; }
 /* Hollow rings (trimmed, disabled, provinces with no spot) have no fill; "all" makes their inside hoverable and clickable too. */
 svg#map circle { pointer-events: all; }
-.mapbar { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; }
+.mapbar { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; align-items: center; }
+/* Live in-game (logical) coordinates under the pointer. */
+.coord { font-family: var(--mono); font-size: .85rem; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 5px;
+  padding: 3px 8px; min-width: 11ch; text-align: center; }
 .btn { font: inherit; font-size: .9rem; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 5px; padding: 3px 10px; cursor: pointer; }
 .btn.primary { background: var(--kept); color: var(--panel); border-color: var(--kept); font-weight: 700; }
 .btn:disabled { opacity: .5; cursor: default; }
@@ -159,6 +162,7 @@ ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-s
     <section class="mapbox" aria-label="Map">
       <svg id="map" role="img" aria-label="Campaign minimap with encounter spots"></svg>
       <div class="mapbar">
+        <span class="coord" id="coord" aria-live="off" title="In-game coordinates under the pointer">x -, y -</span>
         <button type="button" class="btn" id="zin" aria-label="Zoom in">+</button>
         <button type="button" class="btn" id="zout" aria-label="Zoom out">-</button>
         <button type="button" class="btn" id="zreset">Reset</button>
@@ -886,7 +890,10 @@ svg.addEventListener('pointerdown', e => {
   const entity = d.spot !== undefined || d.poi !== undefined || d.add !== undefined ? e.target : null;
   drag = { p: toSvg(e), tx, ty, moved: false, target: e.target, entity };
 });
+const coordOut = document.getElementById('coord');
 svg.addEventListener('pointermove', e => {
+  const at = toLogical(e);
+  coordOut.textContent = at ? `x ${at[0]}, y ${at[1]}` : 'x -, y -';
   if (drag) {
     const p = toSvg(e), dx = p[0] - drag.p[0], dy = p[1] - drag.p[1];
     if (Math.hypot(dx, dy) > 4 * W / svg.getBoundingClientRect().width) drag.moved = true;
@@ -909,7 +916,7 @@ svg.addEventListener('pointerup', e => {
   drag = null; svg.classList.remove('drag');
 });
 svg.addEventListener('pointercancel', () => { drag = null; svg.classList.remove('drag'); });
-svg.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
+svg.addEventListener('pointerleave', () => { tip.style.display = 'none'; coordOut.textContent = 'x -, y -'; });
 document.getElementById('zin').addEventListener('click', () => zoomAt(1.5, W / 2, H / 2));
 document.getElementById('zout').addEventListener('click', () => zoomAt(1 / 1.5, W / 2, H / 2));
 document.getElementById('zreset').addEventListener('click', () => { z = 1; tx = 0; ty = 0; apply(); });
