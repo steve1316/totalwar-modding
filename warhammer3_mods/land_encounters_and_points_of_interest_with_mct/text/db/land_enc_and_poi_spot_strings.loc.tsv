@@ -93,3 +93,29 @@ campaign_localised_strings_string_land_enc_spot_modifier_panic	[[col:yellow]]Mod
 campaign_localised_strings_string_land_enc_spot_modifier_cowards	[[col:yellow]]Modifier:[[/col]] Cowards' Ground - At 1:30 our weakest unit routs.	false
 campaign_localised_strings_string_land_enc_spot_modifier_duel_lords	[[col:yellow]]Modifier:[[/col]] Fated Lords - Both lords cannot be harmed for the first 2 minutes.	false
 campaign_localised_strings_string_land_enc_spot_modifier_hold_fast	[[col:yellow]]Modifier:[[/col]] Hold Fast - No unit on the field can rout for the first 2 minutes.	false
+campaign_localised_strings_string_land_enc_spot_modifier_terror_field	[[col:yellow]]Modifier:[[/col]] Field of Dread - Every enemy unit causes terror.	false
+campaign_localised_strings_string_land_enc_spot_modifier_grim_resolve	[[col:yellow]]Modifier:[[/col]] Grim Resolve - Our units cannot break for the first 2 minutes.	false
+campaign_localised_strings_string_land_enc_spot_modifier_ambush_country	[[col:yellow]]Modifier:[[/col]] Ambush Country - Every unit can hide in forests and stays hidden while it moves.	false
+campaign_localised_strings_string_land_enc_spot_modifier_silence_enemy	[[col:yellow]]Modifier:[[/col]] Silence the Casters - Enemy spellcasters are Silenced and cannot cast spells.	false
+campaign_localised_strings_string_land_enc_spot_modifier_silence_all	[[col:yellow]]Modifier:[[/col]] Dead Winds - Every spellcaster on the field is Silenced and cannot cast spells.	false
+campaign_localised_strings_string_land_enc_spot_modifier_mud	[[col:yellow]]Modifier:[[/col]] Sucking Mud - No unit on the field can run.	false
+campaign_localised_strings_string_land_enc_spot_modifier_fire_moving	[[col:yellow]]Modifier:[[/col]] Skirmish Drill - Our missile units can fire while moving.	false
+campaign_localised_strings_string_land_enc_spot_modifier_strider	[[col:yellow]]Modifier:[[/col]] Sure Footing - Our units ignore difficult ground.	false
+campaign_localised_strings_string_land_enc_spot_modifier_disarmed	[[col:yellow]]Modifier:[[/col]] Wet Powder - Enemy missile units cannot shoot for the first 2 minutes.	false
+campaign_localised_strings_string_land_enc_spot_modifier_glorious	[[col:yellow]]Modifier:[[/col]] Glorious Charge - Our cavalry and chariots gain Glorious Charge.	false
+campaign_localised_strings_string_land_enc_spot_modifier_expendable	[[col:yellow]]Modifier:[[/col]] Callous Ranks - Enemy units are Expendable: one routing does not shake the rest of their army.	false
+campaign_localised_strings_string_land_enc_spot_modifier_tireless_enemy	[[col:yellow]]Modifier:[[/col]] Tireless Foe - Enemy units never tire.	false
+campaign_localised_strings_string_land_enc_spot_modifier_run_amok	[[col:yellow]]Modifier:[[/col]] Maddened Beasts - Monsters and war beasts on both sides may run amok.	false
+campaign_localised_strings_string_land_enc_spot_modifier_grim_presence	[[col:yellow]]Modifier:[[/col]] Grim Presence - Enemy units within 25 m of our lord lose 0.5% of their strength every second.	false
+campaign_localised_strings_string_land_enc_spot_modifier_storm_magic	[[col:yellow]]Modifier:[[/col]] Storm of Magic - Every army gains 20 Winds of Magic every 60 seconds.	false
+campaign_localised_strings_string_land_enc_spot_modifier_winds_drained	[[col:yellow]]Modifier:[[/col]] Drained Winds - The enemy's Winds of Magic are drained to nothing at the start.	false
+campaign_localised_strings_string_land_enc_spot_modifier_warp_shift	[[col:yellow]]Modifier:[[/col]] Warp Shift - Every 60 seconds a random unit of any side is flung to a nearby spot.	false
+campaign_localised_strings_string_land_enc_spot_modifier_jest	[[col:yellow]]Modifier:[[/col]] Tzeentch's Jest - Every 90 seconds a random enemy unit and a random unit of ours swap places.	false
+campaign_localised_strings_string_land_enc_spot_modifier_blink	[[col:yellow]]Modifier:[[/col]] Blink Strike - At 1:00 our cavalry and chariots are flung behind the enemy line.	false
+campaign_localised_strings_string_land_enc_spot_modifier_lost_warp	[[col:yellow]]Modifier:[[/col]] Lost in the Warp - At 1:30 a random unit of ours vanishes for 30 seconds, then reappears nearby.	false
+campaign_localised_strings_string_land_enc_spot_modifier_scatter	[[col:yellow]]Modifier:[[/col]] Scattered Ranks - The enemy's units start the battle scattered around their centre.	false
+campaign_localised_strings_string_land_enc_spot_modifier_revealed	[[col:yellow]]Modifier:[[/col]] Naked Plain - Every unit is always visible: no hiding for anyone.	false
+campaign_localised_strings_string_land_enc_spot_modifier_wild_winds	[[col:yellow]]Modifier:[[/col]] Wild Winds - Every 3 minutes a magical storm spawns near a random unit of any side.	false
+campaign_localised_strings_string_land_enc_spot_modifier_enemy_last_stand	[[col:yellow]]Modifier:[[/col]] Last Stand - Enemy units cannot rout until they fall below half strength.	false
+campaign_localised_strings_string_land_enc_spot_modifier_dead_rise	[[col:yellow]]Modifier:[[/col]] The Dead Rise - At 3:00 our destroyed units return where they started, at half strength.	false
+campaign_localised_strings_string_land_enc_spot_modifier_undying	[[col:yellow]]Modifier:[[/col]] Undying Foe - At 3:00 two destroyed enemy units return where they started, at half strength.	false

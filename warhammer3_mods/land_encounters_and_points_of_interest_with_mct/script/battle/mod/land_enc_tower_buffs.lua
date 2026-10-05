@@ -25,8 +25,8 @@ local ALLY_SVR_KEY = "land_enc_ally_arrives_now"
 local OBJECTIVE_PREFIX = "land_enc_tower_buff_"
 --- Suffix of each buff's banner line, a plain version of its panel entry that reads well on the red banner.
 local MESSAGE_SUFFIX = "_message"
---- How long each banner stays on screen, in ms.
-local MESSAGE_MS = 6000
+--- How long each banner stays on screen, in ms. Kept short since a battle with several offers and modifiers queues one after another.
+local MESSAGE_MS = 2000
 --- How long each banner takes to fade in and out, in ms.
 local FADE_MS = 1000
 --- How often Bottomless quivers tops up ammunition, in ms.
@@ -66,6 +66,58 @@ local COWARDS_AT_MS = 90000
 --- How long Fated Lords keeps both lords invincible, and Hold Fast every unit from routing, in ms.
 local FATED_LORDS_MS = 120000
 local HOLD_FAST_MS = 120000
+--- When Grim Resolve's unbreakable and Wet Powder's empty quivers end, in ms after the battle starts.
+local GRIM_RESOLVE_MS = 120000
+local WET_POWDER_MS = 120000
+--- Grim Presence: how close to our lord an enemy unit must be, in m, how often it bites, in ms, and the share of full strength each bite takes.
+local GRIM_PRESENCE_RANGE = 25
+local GRIM_PRESENCE_EVERY_MS = 1000
+local GRIM_PRESENCE_SHARE = 0.005
+--- How often Storm of Magic gives every army Winds of Magic, in ms, and how much.
+local STORM_MAGIC_EVERY_MS = 60000
+local STORM_MAGIC_WINDS = 20
+--- When Drained Winds empties the enemy's Winds of Magic, in ms after the battle starts so their pool is set up first, and how much it takes.
+local WINDS_DRAINED_AT_MS = 2000
+local WINDS_DRAINED_AMOUNT = 1000
+--- How often Warp Shift flings a unit, in ms, and how far, in m.
+local WARP_SHIFT_EVERY_MS = 60000
+local WARP_SHIFT_RANGE = { 30, 80 }
+--- How often Tzeentch's Jest swaps two units, in ms.
+local JEST_EVERY_MS = 90000
+--- How far a swapped unit lands from the other unit's spot, back toward its own army, in m, so it has room to move.
+local JEST_PUSH_BACK = { 15, 30 }
+--- How long a teleported unit stays hidden before it shows at its new spot, and how long its ping marker shows after, in ms.
+local WARP_HIDDEN_MS = 1000
+local WARP_PING_MS = 3000
+--- Units Warp Shift and Tzeentch's Jest moved this round, by battle unit. Each unit is moved once before any is again.
+local warped = {}
+--- Units no teleport may move, by battle unit: those a mission marks (Guard the Standard, Trophy Hunt), so the player can find them, and
+--- one Lost in the Warp holds while it is gone.
+local marked = {}
+--- Names of the repeating modifier timers started this battle, stopped once the battle is decided.
+local processes = {}
+--- Blink Strike: when our riders are flung, in ms after the battle starts, how far behind the enemy's centre they land, and how far apart, in m.
+local BLINK_AT_MS = 60000
+local BLINK_BEHIND = 80
+local BLINK_SPREAD = 40
+--- Lost in the Warp: when one of our units vanishes, in ms after the battle starts, for how long, and how far from where it vanished it returns.
+local LOST_WARP_AT_MS = 90000
+local LOST_WARP_MS = 30000
+local LOST_WARP_RANGE = { 30, 80 }
+--- How far from the enemy's centre Scattered Ranks flings each enemy unit, in m.
+local SCATTER_RANGE = { 20, 150 }
+--- How often Wild Winds spawns a vortex, in ms, and how far from its unit, in m, so it lands near the fighting rather than on top of a unit.
+local WILD_WINDS_EVERY_MS = 180000
+local WILD_WINDS_RANGE = { 60, 120 }
+--- The vortexes Wild Winds picks from. The spawn call takes the Storm of Magic vortex keys (as in CA's benchmarks), not the spell vortex keys.
+local WILD_WINDS_VORTEXES = { "tornado_base", "supernova_base" }
+--- The strength below which Last Stand lets an enemy unit rout, and how often it checks, in ms.
+local LAST_STAND_SHARE = 0.5
+local LAST_STAND_POLL_MS = 1000
+--- When The Dead Rise and Undying Foe bring units back, in ms after the battle starts, the strength they return at, and how many enemy units return.
+local RISE_AT_MS = 180000
+local RISE_STRENGTH = 0.5
+local UNDYING_UNITS = 2
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +127,37 @@ local HOLD_FAST_MS = 120000
 --- @param text string The line.
 local function log(text)
     bm:out("[LEAPOI] " .. text)
+end
+
+--- Wraps a timed step so an error is logged and the battle carries on.
+--- @param label string The modifier's name, for the log.
+--- @param fn function The step.
+--- @returns function The wrapped step.
+local function safe(label, fn)
+    return function()
+        local ok, err = pcall(fn)
+        if not ok then log(label .. " failed: " .. tostring(err)) end
+    end
+end
+
+--- Runs a step once after a delay. An error is logged and the battle carries on.
+--- @param label string The modifier's name, for the log.
+--- @param ms number The delay, in ms.
+--- @param fn function The step.
+local function after(label, ms, fn)
+    bm:callback(safe(label, fn), ms)
+end
+
+--- Runs a step every `ms` until the battle is decided. An error is logged and the battle carries on.
+--- @param label string The modifier's name, for the log and the timer's name.
+--- @param ms number How often, in ms.
+--- @param fn function The step.
+--- @returns string The timer's name, to stop it early with `bm:remove_process`.
+local function every(label, ms, fn)
+    local process = "land_enc_modifier_" .. label
+    processes[#processes + 1] = process
+    bm:repeat_callback(safe(label, fn), ms, process)
+    return process
 end
 
 --- Splits a comma-separated svr string.
@@ -107,15 +190,25 @@ local function load_targets()
     return targets
 end
 
+--- Lists the armies of one or more alliances.
+--- @param ... userdata The battle alliances.
+--- @returns table The battle armies.
+local function armies_of(...)
+    local list = {}
+    for _, alliance in ipairs({ ... }) do
+        local armies = alliance:armies()
+        for a = 1, armies:count() do list[#list + 1] = armies:item(a) end
+    end
+    return list
+end
+
 --- Wraps the units of an alliance's armies in script units, army by army.
 --- @param alliance userdata The battle alliance.
 --- @param keep function|nil Takes a battle army and returns true to include it. nil includes every army.
 --- @returns table The script units.
 local function script_units_of(alliance, keep)
     local sunits = {}
-    local armies = alliance:armies()
-    for a = 1, armies:count() do
-        local army = armies:item(a)
+    for _, army in ipairs(armies_of(alliance)) do
         if not keep or keep(army) then
             local units = army:units()
             for u = 1, units:count() do
@@ -167,6 +260,7 @@ end
 --- @param sunit table The script unit.
 --- @param why string What the unit is, for the log.
 local function mark_unit(sunit, why)
+    marked[sunit.unit] = true
     local ok, err = pcall(function()
         sunit:add_ping_icon()
         sunit:highlight_unit_card(true, nil, true)
@@ -251,15 +345,30 @@ local function fighters(sunits, with_lords)
     return kept
 end
 
+--- Lists the units whose battle unit passes a test.
+--- @param sunits table Script units.
+--- @param test function Takes a battle unit and returns true to keep it.
+--- @returns table The script units.
+local function units_where(sunits, test)
+    local kept = {}
+    for _, sunit in ipairs(sunits) do
+        if test(sunit.unit) then kept[#kept + 1] = sunit end
+    end
+    return kept
+end
+
 --- Lists the units that carry ammunition.
 --- @param sunits table Script units.
 --- @returns table The script units.
 local function shooters(sunits)
-    local kept = {}
-    for _, sunit in ipairs(sunits) do
-        if sunit.unit:starting_ammo() > 0 then kept[#kept + 1] = sunit end
-    end
-    return kept
+    return units_where(sunits, function(unit) return unit:starting_ammo() > 0 end)
+end
+
+--- Lists the cavalry and chariots.
+--- @param sunits table Script units.
+--- @returns table The script units.
+local function riders(sunits)
+    return units_where(sunits, function(unit) return unit:is_cavalry() or unit:is_chariot() end)
 end
 
 --- The `count` weakest units of a list by the game's strategic value, weakest first.
@@ -301,7 +410,7 @@ end
 --- @param label string The modifier's name, for the log and the callback.
 local function drain(sunits, label)
     local ticks = 0
-    bm:repeat_callback(function()
+    every(label, DRAIN_EVERY_MS, function()
         ticks = ticks + 1
         local drained = 0
         for _, sunit in ipairs(sunits) do
@@ -312,7 +421,163 @@ local function drain(sunits, label)
             end
         end
         log(label .. ": tick " .. ticks .. " drained " .. drained .. " units")
-    end, DRAIN_EVERY_MS, "land_enc_modifier_" .. label)
+    end)
+end
+
+--- Picks a random entry of a list.
+--- @param list table The list.
+--- @returns any A random entry, nil when the list is empty.
+local function pick(list)
+    if #list == 0 then return nil end
+    return list[bm:random_number(#list)]
+end
+
+--- Lists the units a teleport may move: all but those a mission marks.
+--- @param sunits table Script units.
+--- @returns table The script units.
+local function teleportable(sunits)
+    return units_where(sunits, function(unit) return not marked[unit] end)
+end
+
+--- Picks a random unit of a list for Warp Shift or Tzeentch's Jest: one a teleport may move and that has not been moved this round. Once
+--- every such unit has been, the round starts over for them.
+--- @param sunits table Script units.
+--- @returns table|nil The script unit, nil when none may move.
+local function pick_fresh(sunits)
+    sunits = teleportable(sunits)
+    local fresh = {}
+    for _, sunit in ipairs(sunits) do
+        if not warped[sunit.unit] then fresh[#fresh + 1] = sunit end
+    end
+    if #fresh == 0 then
+        for _, sunit in ipairs(sunits) do warped[sunit.unit] = nil end
+        fresh = sunits
+    end
+    local picked = pick(fresh)
+    if picked then warped[picked.unit] = true end
+    return picked
+end
+
+--- Switches an attribute on for each unit that lacks it. Reading it back straight after says no, as the change lands a moment later,
+--- so the log only counts the units.
+--- @param sunits table Script units.
+--- @param key string The attribute key.
+--- @param label string The modifier's name, for the log.
+--- @returns table The units it was switched on for, to switch it off again later.
+local function grant_attribute(sunits, key, label)
+    local granted = {}
+    for _, sunit in ipairs(sunits) do
+        if not sunit.unit:has_attribute(key) then
+            sunit:set_stat_attribute(key, true)
+            granted[#granted + 1] = sunit
+        end
+    end
+    log(label .. ": " .. key .. " set on " .. #granted .. " units")
+    return granted
+end
+
+--- Switches an attribute off again.
+--- @param sunits table Script units, as `grant_attribute` returned them.
+--- @param key string The attribute key.
+--- @param label string The modifier's name, for the log.
+local function revoke_attribute(sunits, key, label)
+    for _, sunit in ipairs(sunits) do sunit:set_stat_attribute(key, false) end
+    log(label .. ": " .. key .. " taken off " .. #sunits .. " units")
+end
+
+--- Writes a position for the log.
+--- @param pos userdata The battle vector.
+--- @returns string The x and z.
+local function at_text(pos)
+    return string.format("%.0f, %.0f", pos:get_x(), pos:get_z())
+end
+
+--- Moves a unit to a position facing a bearing, and hands control back so the player can still command it. It vanishes, then shows at
+--- its new spot after `WARP_HIDDEN_MS` under a ping marker, so the jump reads as a blink rather than a snap.
+--- @param sunit table The script unit.
+--- @param pos userdata Where it lands.
+--- @param bearing number The bearing it faces, in degrees.
+--- @param label string The modifier's name, for the log.
+local function warp(sunit, pos, bearing, label)
+    local from = sunit.unit:position()
+    sunit:set_invisible_to_all(true, false)
+    sunit:teleport_to_location(pos, bearing, sunit.unit:ordered_width())
+    sunit:release_control()
+    after(label, WARP_HIDDEN_MS, function()
+        sunit:set_invisible_to_all(false, false)
+        --- The marker is UI only, so a failure leaves the teleport alone.
+        pcall(function() sunit:add_ping_icon(nil, WARP_PING_MS) end)
+    end)
+    log(label .. ": " .. sunit.unit:type() .. " flung from " .. at_text(from) .. " to " .. at_text(pos))
+end
+
+--- Finds a random spot within a range of a position that a unit can reach.
+--- @param sunit table The script unit.
+--- @param pos userdata The position.
+--- @param range table The { least, most } distance, in m.
+--- @returns userdata|nil The spot, nil when a few tries find none.
+local function spot_near(sunit, pos, range)
+    for _ = 1, 5 do
+        local spot = get_position_near_target(pos, range[1], range[2])
+        if sunit.unit:can_reach_position(spot) then return spot end
+    end
+    return nil
+end
+
+--- The centre of the units of a list still fighting, lords included.
+--- @param sunits table Script units.
+--- @returns userdata|nil The centre, nil when none fight.
+local function centre_of(sunits)
+    local list = fighters(sunits, true)
+    if #list == 0 then return nil end
+    return centre_point_table(list)
+end
+
+--- An army's Winds of Magic for the log.
+--- @param army userdata The battle army.
+--- @returns string The current winds, or "?" when the game will not say.
+local function winds_text(army)
+    local ok, current = pcall(function() return army:winds_of_magic_current() end)
+    return ok and tostring(current) or "?"
+end
+
+--- True when a unit is out of the battle for good: no men left, or routed or shattered off the field. The game's own respawn checks the same.
+--- @param sunit table The script unit.
+--- @returns boolean True when it is gone.
+local function gone(sunit)
+    local unit = sunit.unit
+    return unit:number_of_men_alive() == 0 or ((unit:is_routing() or unit:is_shattered()) and not unit:is_valid_target())
+end
+
+--- Notes where each unit but the lord stands as the battle starts, for `raise`.
+--- @param sunits table Script units.
+--- @returns table Each unit's { sunit, pos, bearing, width }.
+local function starts_of(sunits)
+    local starts = {}
+    for _, sunit in ipairs(sunits) do
+        if not sunit.unit:is_commanding_unit() then
+            starts[#starts + 1] = { sunit = sunit, pos = sunit.unit:position(), bearing = sunit.unit:bearing(), width = sunit.unit:ordered_width() }
+        end
+    end
+    return starts
+end
+
+--- Brings up to `count` gone units back where they stood as the battle started, at `RISE_STRENGTH`.
+--- @param starts table The units' starts, from `starts_of`.
+--- @param count number How many may return.
+--- @param label string The modifier's name, for the log.
+local function raise(starts, count, label)
+    local raised = 0
+    for _, start in ipairs(starts) do
+        if raised < count and gone(start.sunit) then
+            start.sunit.unit:respawn(start.pos, start.bearing, start.width)
+            start.sunit.unit:reduce_hitpoints_unary(1 - RISE_STRENGTH)
+            start.sunit:release_control()
+            raised = raised + 1
+            log(label .. ": " .. start.sunit.unit:type() .. " returns at " .. at_text(start.pos))
+        end
+    end
+    log(label .. ": " .. raised .. " units return")
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -350,10 +615,8 @@ local TRICKS = {
     end,
     --- Lame their mounts: the slow is a bundle on the enemy army. This logs each enemy rider's run speed, to check it landed.
     lame_their_mounts = function(_, theirs)
-        for _, sunit in ipairs(theirs) do
-            if sunit.unit:is_cavalry() or sunit.unit:is_chariot() then
-                log("Lame their mounts: " .. sunit.unit:type() .. " runs at " .. string.format("%.1f", sunit.unit:fast_speed()) .. " m/s")
-            end
+        for _, sunit in ipairs(riders(theirs)) do
+            log("Lame their mounts: " .. sunit.unit:type() .. " runs at " .. string.format("%.1f", sunit.unit:fast_speed()) .. " m/s")
         end
     end,
     --- Sacred ground: after `SACRED_GROUND_MS`, each of our units still fighting and below full strength regains `percent` of its full strength,
@@ -414,7 +677,7 @@ local MODIFIERS = {
     miasma = function(ctx) drain(ctx.theirs, "Plague miasma") end,
     rot = function(ctx) drain(ctx.ours, "Rot of Nurgle") end,
     second_wind = function(ctx)
-        for _, at_ms in ipairs(SECOND_WIND_AT_MS) do bm:callback(function() heal_by(ctx.ours, SECOND_WIND_SHARE, "Second wind") end, at_ms) end
+        for _, at_ms in ipairs(SECOND_WIND_AT_MS) do after("Second wind", at_ms, function() heal_by(ctx.ours, SECOND_WIND_SHARE, "Second wind") end) end
     end,
     lord_vigil = function(ctx)
         local lord = lord_of(ctx.ours)
@@ -422,7 +685,7 @@ local MODIFIERS = {
             log("Lord's vigil: no lord found")
             return
         end
-        bm:repeat_callback(function() heal_by({ lord }, LORD_VIGIL_SHARE, "Lord's vigil") end, LORD_VIGIL_EVERY_MS, "land_enc_modifier_lord_vigil")
+        every("Lord's vigil", LORD_VIGIL_EVERY_MS, function() heal_by({ lord }, LORD_VIGIL_SHARE, "Lord's vigil") end)
     end,
     short_shot = function(ctx)
         local list = shooters(ctx.all)
@@ -435,42 +698,229 @@ local MODIFIERS = {
         log("Endless quivers: " .. #list .. " missile units never run out")
     end,
     panic = function(ctx)
-        bm:callback(function()
+        after("Panic", PANIC_AT_MS, function()
             for _, sunit in ipairs(weakest(fighters(ctx.theirs), PANIC_UNITS)) do
                 sunit:morale_behavior_rout()
                 log("Panic: the enemy's " .. sunit.unit:type() .. " routs")
             end
-        end, PANIC_AT_MS)
+        end)
     end,
     cowards = function(ctx)
-        bm:callback(function()
+        after("Cowards' ground", COWARDS_AT_MS, function()
             local sunit = weakest(fighters(ctx.ours), 1)[1]
             if not sunit then return end
             sunit:morale_behavior_rout()
             log("Cowards' ground: our " .. sunit.unit:type() .. " routs")
-        end, COWARDS_AT_MS)
+        end)
     end,
     duel_lords = function(ctx)
         local lords = {}
         for _, side in ipairs({ ctx.ours, ctx.theirs }) do lords[#lords + 1] = make_lord_invincible(side, "Fated lords") end
         log("Fated lords: " .. #lords .. " lords cannot be harmed for " .. FATED_LORDS_MS / 1000 .. " s")
-        bm:callback(function()
+        after("Fated lords", FATED_LORDS_MS, function()
             for _, lord in ipairs(lords) do
                 lord:set_invincible(false)
                 lord:release_control()
             end
             log("Fated lords: the lords can be harmed again")
-        end, FATED_LORDS_MS)
+        end)
     end,
     hold_fast = function(ctx)
         make_fearless(ctx.all, "Hold fast")
-        bm:callback(function()
+        after("Hold fast", HOLD_FAST_MS, function()
             for _, sunit in ipairs(ctx.all) do
                 sunit:morale_behavior_default()
                 sunit:release_control()
             end
             log("Hold fast: units can rout again")
-        end, HOLD_FAST_MS)
+        end)
+    end,
+
+    --- Attributes.
+    terror_field = function(ctx) grant_attribute(ctx.theirs, "causes_terror", "Field of dread") end,
+    grim_resolve = function(ctx)
+        local granted = grant_attribute(ctx.ours, "unbreakable", "Grim resolve")
+        after("Grim resolve", GRIM_RESOLVE_MS, function() revoke_attribute(granted, "unbreakable", "Grim resolve") end)
+    end,
+    ambush_country = function(ctx)
+        grant_attribute(ctx.all, "stalk", "Ambush country")
+        grant_attribute(ctx.all, "hide_forest", "Ambush country")
+    end,
+    mud = function(ctx) grant_attribute(ctx.all, "cant_run", "Sucking mud") end,
+    fire_moving = function(ctx) grant_attribute(shooters(ctx.ours), "mounted_fire_move", "Skirmish drill") end,
+    strider = function(ctx) grant_attribute(ctx.ours, "strider", "Sure footing") end,
+    disarmed = function(ctx)
+        local list, saved = shooters(ctx.theirs), {}
+        for i, sunit in ipairs(list) do
+            saved[i] = sunit.unit:ammo_left() / sunit.unit:starting_ammo()
+            sunit.unit:set_current_ammo_unary(0)
+        end
+        log("Wet powder: " .. #list .. " enemy missile units cannot shoot for " .. WET_POWDER_MS / 1000 .. " s")
+        after("Wet powder", WET_POWDER_MS, function()
+            for i, sunit in ipairs(list) do sunit.unit:set_current_ammo_unary(saved[i]) end
+            log("Wet powder: the enemy's ammunition is back")
+        end)
+    end,
+    expendable = function(ctx) grant_attribute(ctx.theirs, "expendable", "Callous ranks") end,
+    tireless_enemy = function(ctx) grant_attribute(ctx.theirs, "fatigue_immune", "Tireless foe") end,
+    run_amok = function(ctx) grant_attribute(units_where(ctx.all, function(unit) return unit:is_war_beasts() end), "rampage", "Maddened beasts") end,
+
+    --- Over time.
+    grim_presence = function(ctx)
+        local lord = lord_of(ctx.ours)
+        if not lord then
+            log("Grim presence: no lord found")
+            return
+        end
+        local bites, logged, process = 0, 0, nil
+        process = every("Grim presence", GRIM_PRESENCE_EVERY_MS, function()
+            if is_lost(lord) then
+                log("Grim presence: our lord has fallen after " .. bites .. " bites")
+                bm:remove_process(process)
+                return
+            end
+            if lord.unit:is_routing() then return end
+            local centre = lord.unit:position()
+            --- Distance first, so only the few units near the lord are checked further.
+            for _, sunit in ipairs(ctx.theirs) do
+                if sunit.unit:position():distance(centre) < GRIM_PRESENCE_RANGE and fighting(sunit) then
+                    sunit.unit:reduce_hitpoints_unary(GRIM_PRESENCE_SHARE)
+                    bites = bites + 1
+                end
+            end
+            if bites - logged >= 15 then
+                log("Grim presence: " .. bites .. " bites on enemy units so far")
+                logged = bites
+            end
+        end)
+    end,
+    storm_magic = function()
+        local armies = armies_of(bm:get_player_alliance(), bm:get_non_player_alliance())
+        every("Storm of magic", STORM_MAGIC_EVERY_MS, function()
+            local now = {}
+            for _, army in ipairs(armies) do
+                army:modify_winds_of_magic_current(STORM_MAGIC_WINDS, true)
+                now[#now + 1] = winds_text(army)
+            end
+            log("Storm of magic: " .. #armies .. " armies gain " .. STORM_MAGIC_WINDS .. " winds, now " .. table.concat(now, ", "))
+        end)
+    end,
+    winds_drained = function()
+        after("Drained winds", WINDS_DRAINED_AT_MS, function()
+            for _, army in ipairs(armies_of(bm:get_non_player_alliance())) do
+                local before = winds_text(army)
+                army:modify_winds_of_magic_current(-WINDS_DRAINED_AMOUNT, true)
+                army:modify_winds_of_magic_reserve(-WINDS_DRAINED_AMOUNT)
+                log("Drained winds: the enemy's winds " .. before .. " -> " .. winds_text(army))
+            end
+        end)
+    end,
+
+    --- Tzeentchian chaos.
+    warp_shift = function(ctx)
+        every("Warp shift", WARP_SHIFT_EVERY_MS, function()
+            local sunit = pick_fresh(fighters(ctx.all, true))
+            if not sunit then return end
+            local spot = spot_near(sunit, sunit.unit:position(), WARP_SHIFT_RANGE)
+            if spot then warp(sunit, spot, sunit.unit:bearing(), "Warp shift") else log("Warp shift: no spot near " .. sunit.unit:type()) end
+        end)
+    end,
+    jest = function(ctx)
+        every("Tzeentch's jest", JEST_EVERY_MS, function()
+            local theirs, ours = pick_fresh(fighters(ctx.theirs)), pick_fresh(fighters(ctx.ours))
+            if not (theirs and ours) then return end
+            local their_centre, our_centre = centre_of(ctx.theirs), centre_of(ctx.ours)
+            --- Each lands on the other's spot, pushed back toward its own army, and faces the other army.
+            local least, most = JEST_PUSH_BACK[1], JEST_PUSH_BACK[2]
+            local their_spot = position_along_line(ours.unit:position(), their_centre, bm:random_number(least, most), true)
+            local our_spot = position_along_line(theirs.unit:position(), our_centre, bm:random_number(least, most), true)
+            warp(theirs, their_spot, r_to_d(get_bearing(their_spot, our_centre)), "Tzeentch's jest")
+            warp(ours, our_spot, r_to_d(get_bearing(our_spot, their_centre)), "Tzeentch's jest")
+        end)
+    end,
+    blink = function(ctx)
+        after("Blink strike", BLINK_AT_MS, function()
+            local list = riders(teleportable(fighters(ctx.ours)))
+            local their_centre, our_centre = centre_of(ctx.theirs), centre_of(ctx.ours)
+            if #list == 0 or not their_centre or not our_centre then
+                log("Blink strike: no riders, or no enemy to get behind")
+                return
+            end
+            local behind = position_along_line(their_centre, our_centre, -BLINK_BEHIND, true)
+            for _, sunit in ipairs(list) do
+                local spot = spot_near(sunit, behind, { 0, BLINK_SPREAD })
+                if spot then warp(sunit, spot, r_to_d(get_bearing(spot, their_centre)), "Blink strike") else log("Blink strike: no spot for " .. sunit.unit:type()) end
+            end
+        end)
+    end,
+    lost_warp = function(ctx)
+        after("Lost in the warp", LOST_WARP_AT_MS, function()
+            local sunit = pick(teleportable(fighters(ctx.ours)))
+            if not sunit then return end
+            local from = sunit.unit:position()
+            --- Held out of the other teleports while it is gone.
+            marked[sunit.unit] = true
+            sunit:set_enabled(false)
+            log("Lost in the warp: our " .. sunit.unit:type() .. " vanishes")
+            after("Lost in the warp", LOST_WARP_MS, function()
+                marked[sunit.unit] = nil
+                sunit:set_enabled(true)
+                warp(sunit, spot_near(sunit, from, LOST_WARP_RANGE) or from, sunit.unit:bearing(), "Lost in the warp")
+            end)
+        end)
+    end,
+    scatter = function(ctx)
+        local centre = centre_of(ctx.theirs)
+        if not centre then return end
+        for _, sunit in ipairs(teleportable(ctx.theirs)) do
+            local spot = spot_near(sunit, centre, SCATTER_RANGE)
+            if spot then warp(sunit, spot, bm:random_number(360), "Scattered ranks") end
+        end
+    end,
+    revealed = function(ctx)
+        for _, sunit in ipairs(ctx.all) do sunit:set_always_visible(true) end
+        log("Naked plain: " .. #ctx.all .. " units are always visible")
+    end,
+
+    --- Free spells.
+    wild_winds = function(ctx)
+        every("Wild winds", WILD_WINDS_EVERY_MS, function()
+            local sunit = pick(fighters(ctx.all, true))
+            if not sunit then return end
+            local spot = get_position_near_target(sunit.unit:position(), WILD_WINDS_RANGE[1], WILD_WINDS_RANGE[2])
+            local key, angle = pick(WILD_WINDS_VORTEXES), math.rad(bm:random_number(360))
+            bm:spawn_vortex(key, spot, v(math.cos(angle), 0, math.sin(angle)))
+            log("Wild winds: " .. key .. " spawns near " .. sunit.unit:type() .. " at " .. at_text(spot))
+        end)
+    end,
+
+    --- Morale and respawns.
+    enemy_last_stand = function(ctx)
+        local holding = {}
+        for i, sunit in ipairs(ctx.theirs) do holding[i] = sunit end
+        make_fearless(holding, "Last stand")
+        local process
+        process = every("Last stand", LAST_STAND_POLL_MS, function()
+            --- Backward, so a unit can be taken out of the list in place.
+            for i = #holding, 1, -1 do
+                local sunit = holding[i]
+                if sunit.unit:unary_hitpoints() < LAST_STAND_SHARE then
+                    sunit:morale_behavior_default()
+                    sunit:release_control()
+                    table.remove(holding, i)
+                    log("Last stand: the enemy's " .. sunit.unit:type() .. " can rout now")
+                end
+            end
+            if #holding == 0 then bm:remove_process(process) end
+        end)
+    end,
+    dead_rise = function(ctx)
+        local starts = starts_of(ctx.ours)
+        after("The dead rise", RISE_AT_MS, function() raise(starts, #starts, "The dead rise") end)
+    end,
+    undying = function(ctx)
+        local starts = starts_of(ctx.theirs)
+        after("Undying foe", RISE_AT_MS, function() raise(starts, UNDYING_UNITS, "Undying foe") end)
     end,
 }
 
@@ -491,10 +941,11 @@ local function play_modifiers(names, ours, theirs)
         for _, sunit in ipairs(side) do ctx.all[#ctx.all + 1] = sunit end
     end
     log("battle modifiers: " .. table.concat(keys, ", "))
-    for _, key in ipairs(keys) do
-        local ok, err = pcall(MODIFIERS[key], ctx)
-        if not ok then log(key .. " failed: " .. tostring(err)) end
-    end
+    for _, key in ipairs(keys) do safe(key, function() MODIFIERS[key](ctx) end)() end
+    --- Nothing teleports, drains or spawns during the victory countdown.
+    bm:register_phase_change_callback("VictoryCountdown", function()
+        for _, process in ipairs(processes) do bm:remove_process(process) end
+    end)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -758,7 +1209,8 @@ if #buffs > 0 then
             local trick = base_name(name)
             if TRICKS[trick] then TRICKS[trick](ours, theirs, targets[trick], name) end
         end
-        play_modifiers(buffs, ours, theirs)
+        --- The missions mark their units first, so a modifier that teleports at the start (Scattered Ranks) leaves them alone.
         track_missions(buffs, ours, theirs)
+        play_modifiers(buffs, ours, theirs)
     end)
 end

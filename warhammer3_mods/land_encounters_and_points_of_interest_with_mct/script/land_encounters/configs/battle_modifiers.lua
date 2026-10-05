@@ -41,7 +41,8 @@ M.line_prefix = "campaign_localised_strings_string_land_enc_spot_modifier_"
 Fields of each modifier:
 - key: its name, shared with its text and bundles in the generator.
 - harm: "-" hurts us, "+" helps us, "~" cuts both ways. See `harm_gold`.
-- sides: the armies it hits, any of "ours", "enemy" and "allies".
+- sides: the armies it hits, any of "ours", "enemy" and "allies". A bundle modifier puts a bundle on each. For a script modifier it only
+  describes them, since the battle script picks its own units.
 - group: modifiers sharing a group (opposites) never roll together, or nil.
 - keeps_out: offer keys (spot and tower) not drawn for the battle, as they would do the same or cancel it out, or nil.
 - bundle: true when it is a bundle on each of its sides for the battle, named `bundle_prefix` .. key .. "_" .. side. Without it the
@@ -60,7 +61,7 @@ M.list = {
     { key = "brittle", harm = "+", sides = { "enemy" }, bundle = true },
     { key = "wards", harm = "-", sides = { "enemy" }, bundle = true },
     { key = "gale", harm = "~", sides = ALL, bundle = true },
-    { key = "winds_surge", harm = "~", sides = ALL, keeps_out = { "call_the_winds" }, bundle = true },
+    { key = "winds_surge", harm = "~", sides = ALL, group = "winds", keeps_out = { "call_the_winds" }, bundle = true },
     { key = "exhausting", harm = "~", sides = ALL, bundle = true },
 
     --- Abilities granted for the battle.
@@ -91,7 +92,43 @@ M.list = {
     { key = "panic", harm = "+", sides = { "enemy" }, keeps_out = { "night_terrors" } },
     { key = "cowards", harm = "-", sides = { "ours" } },
     { key = "duel_lords", harm = "~", sides = ALL, keeps_out = { "divine_shield", "last_ditch_oath" } },
-    { key = "hold_fast", harm = "~", sides = ALL, keeps_out = { "oath_of_no_retreat" } },
+    { key = "hold_fast", harm = "~", sides = ALL, group = "rout_lock", keeps_out = { "oath_of_no_retreat" } },
+
+    --- Attributes switched on for the battle.
+    { key = "terror_field", harm = "-", sides = { "enemy" } },
+    { key = "grim_resolve", harm = "+", sides = { "ours" }, group = "rout_lock", keeps_out = { "oath_of_no_retreat" } },
+    { key = "ambush_country", harm = "~", sides = ALL, group = "sight" },
+    { key = "silence_enemy", harm = "+", sides = { "enemy" }, group = "winds", bundle = true },
+    { key = "silence_all", harm = "~", sides = ALL, group = "winds", keeps_out = { "call_the_winds" }, bundle = true },
+    { key = "mud", harm = "~", sides = ALL, group = "speed" },
+    { key = "fire_moving", harm = "+", sides = { "ours" } },
+    { key = "strider", harm = "+", sides = { "ours" } },
+    { key = "disarmed", harm = "+", sides = { "enemy" }, group = "ammo" },
+    { key = "glorious", harm = "+", sides = { "ours" }, bundle = true },
+    { key = "expendable", harm = "-", sides = { "enemy" } },
+    { key = "tireless_enemy", harm = "-", sides = { "enemy" } },
+    { key = "run_amok", harm = "~", sides = ALL },
+
+    --- Over time in battle, continued.
+    { key = "grim_presence", harm = "+", sides = { "enemy" } },
+    { key = "storm_magic", harm = "~", sides = ALL, group = "winds", keeps_out = { "call_the_winds" } },
+    { key = "winds_drained", harm = "+", sides = { "enemy" }, group = "winds" },
+
+    --- Tzeentchian chaos.
+    { key = "warp_shift", harm = "~", sides = ALL, group = "teleport" },
+    { key = "jest", harm = "~", sides = ALL, group = "teleport" },
+    { key = "blink", harm = "+", sides = { "ours" }, group = "teleport" },
+    { key = "lost_warp", harm = "-", sides = { "ours" }, group = "teleport" },
+    { key = "scatter", harm = "+", sides = { "enemy" }, group = "teleport" },
+    { key = "revealed", harm = "~", sides = ALL, group = "sight" },
+
+    --- Free spells, which belong to no army.
+    { key = "wild_winds", harm = "~", sides = ALL },
+
+    --- Morale and respawns, continued.
+    { key = "enemy_last_stand", harm = "-", sides = { "enemy" }, group = "rout_lock" },
+    { key = "dead_rise", harm = "+", sides = { "ours" } },
+    { key = "undying", harm = "-", sides = { "enemy" } },
 }
 
 --- Each modifier by its key, built from `list`.

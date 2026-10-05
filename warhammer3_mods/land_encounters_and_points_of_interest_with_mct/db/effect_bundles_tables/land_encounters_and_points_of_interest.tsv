@@ -172,6 +172,11 @@ land_enc_effect_spot_modifier_pleasure_pain_enemy			force	1	icon_effects_fortify
 land_enc_effect_spot_modifier_pleasure_pain_allies			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_modifier_gorefeast_enemy			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_modifier_unholy_vigour_ours			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_modifier_silence_enemy_enemy			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_modifier_silence_all_ours			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_modifier_silence_all_enemy			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_modifier_silence_all_allies			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_modifier_glorious_ours			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_dividends_250			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_350			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_450			faction	1	treasury.png	true	false	true

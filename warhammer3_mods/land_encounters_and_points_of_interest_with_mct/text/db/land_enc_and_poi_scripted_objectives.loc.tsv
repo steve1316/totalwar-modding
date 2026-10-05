@@ -640,3 +640,107 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast	[[col:
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast_message	Hold Fast: no unit on the field can rout for the first 2 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_terror_field	[[col:red]]Field of Dread: every enemy unit causes terror.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_terror_field		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_terror_field_message	Field of Dread: every enemy unit causes terror.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_terror_field_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve	[[col:green]]Grim Resolve: our units cannot break for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_resolve		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve_message	Grim Resolve: our units cannot break for the first 2 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_resolve_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_ambush_country	[[col:yellow]]Ambush Country: every unit can hide in forests and stays hidden while it moves.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_ambush_country		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_ambush_country_message	Ambush Country: every unit can hide in forests and stays hidden while it moves.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_ambush_country_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_enemy	[[col:green]]Silence the Casters: enemy spellcasters are Silenced and cannot cast spells.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_enemy		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_enemy_message	Silence the Casters: enemy spellcasters are Silenced and cannot cast spells.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_enemy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_all	[[col:yellow]]Dead Winds: every spellcaster on the field is Silenced and cannot cast spells.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_all		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_all_message	Dead Winds: every spellcaster on the field is Silenced and cannot cast spells.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_all_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_mud	[[col:yellow]]Sucking Mud: no unit on the field can run.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_mud		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_mud_message	Sucking Mud: no unit on the field can run.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_mud_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_fire_moving	[[col:green]]Skirmish Drill: our missile units can fire while moving.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_fire_moving		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_fire_moving_message	Skirmish Drill: our missile units can fire while moving.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_fire_moving_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_strider	[[col:green]]Sure Footing: our units ignore difficult ground.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_strider		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_strider_message	Sure Footing: our units ignore difficult ground.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_strider_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed	[[col:green]]Wet Powder: enemy missile units cannot shoot for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_disarmed		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed_message	Wet Powder: enemy missile units cannot shoot for the first 2 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_disarmed_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_glorious	[[col:green]]Glorious Charge: our cavalry and chariots gain Glorious Charge.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_glorious		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_glorious_message	Glorious Charge: our cavalry and chariots gain Glorious Charge.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_glorious_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable	[[col:red]]Callous Ranks: enemy units are Expendable: one routing does not shake the rest of their army.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_expendable		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable_message	Callous Ranks: enemy units are Expendable: one routing does not shake the rest of their army.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_expendable_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_tireless_enemy	[[col:red]]Tireless Foe: enemy units never tire.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_tireless_enemy		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_tireless_enemy_message	Tireless Foe: enemy units never tire.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_tireless_enemy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_run_amok	[[col:yellow]]Maddened Beasts: monsters and war beasts on both sides may run amok.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_run_amok		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_run_amok_message	Maddened Beasts: monsters and war beasts on both sides may run amok.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_run_amok_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence	[[col:green]]Grim Presence: enemy units within 25 m of our lord lose 0.5% of their strength every second.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_presence		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence_message	Grim Presence: enemy units within 25 m of our lord lose 0.5% of their strength every second.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_presence_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic	[[col:yellow]]Storm of Magic: every army gains 20 Winds of Magic every 60 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_storm_magic		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic_message	Storm of Magic: every army gains 20 Winds of Magic every 60 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_storm_magic_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_drained	[[col:green]]Drained Winds: the enemy's Winds of Magic are drained to nothing at the start.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_drained		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_drained_message	Drained Winds: the enemy's Winds of Magic are drained to nothing at the start.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_drained_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift	[[col:yellow]]Warp Shift: every 60 seconds a random unit of any side is flung to a nearby spot.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_warp_shift		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift_message	Warp Shift: every 60 seconds a random unit of any side is flung to a nearby spot.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_warp_shift_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest	[[col:yellow]]Tzeentch's Jest: every 90 seconds a random enemy unit and a random unit of ours swap places.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_jest		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest_message	Tzeentch's Jest: every 90 seconds a random enemy unit and a random unit of ours swap places.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_jest_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink	[[col:green]]Blink Strike: at 1:00 our cavalry and chariots are flung behind the enemy line.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_blink		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink_message	Blink Strike: at 1:00 our cavalry and chariots are flung behind the enemy line.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_blink_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp	[[col:red]]Lost in the Warp: at 1:30 a random unit of ours vanishes for 30 seconds, then reappears nearby.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lost_warp		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp_message	Lost in the Warp: at 1:30 a random unit of ours vanishes for 30 seconds, then reappears nearby.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lost_warp_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_scatter	[[col:green]]Scattered Ranks: the enemy's units start the battle scattered around their centre.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_scatter		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_scatter_message	Scattered Ranks: the enemy's units start the battle scattered around their centre.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_scatter_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed	[[col:yellow]]Naked Plain: every unit is always visible: no hiding for anyone.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_revealed		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed_message	Naked Plain: every unit is always visible: no hiding for anyone.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_revealed_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_wild_winds	[[col:yellow]]Wild Winds: every 3 minutes a magical storm spawns near a random unit of any side.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_wild_winds		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_wild_winds_message	Wild Winds: every 3 minutes a magical storm spawns near a random unit of any side.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_wild_winds_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_enemy_last_stand	[[col:red]]Last Stand: enemy units cannot rout until they fall below half strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_enemy_last_stand		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_enemy_last_stand_message	Last Stand: enemy units cannot rout until they fall below half strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_enemy_last_stand_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise	[[col:green]]The Dead Rise: at 3:00 our destroyed units return where they started, at half strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_dead_rise		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise_message	The Dead Rise: at 3:00 our destroyed units return where they started, at half strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_dead_rise_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying	[[col:red]]Undying Foe: at 3:00 two destroyed enemy units return where they started, at half strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_undying		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying_message	Undying Foe: at 3:00 two destroyed enemy units return where they started, at half strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_undying_message		false
