@@ -301,18 +301,22 @@ function TowerEventDelegate:initialize(zones, saved)
         local spots = zone_by_name[name].spot_delegate.spots
         local record = saved_by_zone[name]
         if record and spots[record.spot_index] then
+            --- A saved tower stays where it stands, even on a spot disabled since, so the save keeps its tower.
             self.towers[#self.towers + 1] = TowerState:new(name, record.spot_index, spots[record.spot_index].coordinates, record.faction, record.cooldown, record.echoes,
                 record.last_delver)
             taken[record.faction] = true
-        elseif #spots > 0 then
+        elseif #zone_by_name[name].spot_delegate.enabled_indexes > 0 then
             pending[#pending + 1] = name
         end
     end
 
     local next_faction = faction_picker(taken)
     for _, name in ipairs(pending) do
-        local spots = zone_by_name[name].spot_delegate.spots
-        local spot_index = random_number(#spots)
+        local delegate = zone_by_name[name].spot_delegate
+        local spots = delegate.spots
+        --- A spot planted as a tower site wins over the random pick.
+        local candidates = #delegate.tower_sites > 0 and delegate.tower_sites or delegate.enabled_indexes
+        local spot_index = candidates[random_number(#candidates)]
         self.towers[#self.towers + 1] = TowerState:new(name, spot_index, spots[spot_index].coordinates, next_faction())
         log("Placed a tower in " .. name .. " at spot " .. spot_index .. " held by " .. tostring(self.towers[#self.towers].faction))
     end
@@ -323,7 +327,8 @@ function TowerEventDelegate:initialize(zones, saved)
     end
     self.battlefield_spots = {}
     for _, name in ipairs(names) do
-        for _, zone_spot in ipairs(zone_by_name[name].spot_delegate.spots) do self.battlefield_spots[#self.battlefield_spots + 1] = zone_spot.coordinates end
+        local delegate = zone_by_name[name].spot_delegate
+        for _, i in ipairs(delegate.enabled_indexes) do self.battlefield_spots[#self.battlefield_spots + 1] = delegate.spots[i].coordinates end
     end
     self.delves = saved.delves or {}
     for faction_name, delve in pairs(self.delves) do

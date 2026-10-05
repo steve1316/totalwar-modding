@@ -36,7 +36,12 @@ local Spot = {
     is_active = false,
     --- Spot disappears automatically after this many turns.
     automatic_deactivation_countdown = 0,
-    marker_id = ""
+    marker_id = "",
+    --- True when the coordinate entry is marked `disabled = true`. A disabled spot keeps its index (towers and marker ids use it) but never
+    --- becomes an encounter or a new tower.
+    disabled = false,
+    --- True when the coordinate entry is marked `tower = true`: the zone's new tower stands here instead of on a random spot.
+    tower_site = false
 }
 
 --- Returns the class identifier. The base Spot intentionally returns a warning string - subclasses override this.
@@ -53,6 +58,8 @@ function Spot:initialize_from_coordinates(index, lat_lng)
     self.coordinates = lat_lng
     self.is_active = false
     self.automatic_deactivation_countdown = 0
+    self.disabled = lat_lng.disabled == true
+    self.tower_site = lat_lng.tower == true
 end
 
 --- Activates this spot. Picks a random encounter-marker skin from the user's MCT-enabled set
@@ -436,6 +443,10 @@ local SpotDelegate = {
     prohibited_spots = {},
     --- Spot indexes held by a tower. They never activate as encounters. Rebuilt from tower state on every load, so not saved here.
     reserved_spots = {},
+    --- Indexes of the zone's spots that are not marked `disabled = true`, in order. Encounters, towers and tower battlefields only use these.
+    enabled_indexes = {},
+    --- The enabled spots marked `tower = true`, in order. A new tower picks among these when there are any.
+    tower_sites = {},
 
     max_active_spots_count = 0
 }
@@ -448,10 +459,13 @@ function SpotDelegate:can_add_land_encounters()
     return self.max_active_spots_count > Count_keys(self.active_spots)
 end
 
---- Walks the zone's spots in random order and activates inactive ones until the active cap is hit.
+--- Walks the zone's enabled spots in random order and activates inactive ones until the active cap is hit.
 --- @param zone_name string The region key used to build marker ids.
 function SpotDelegate:try_add_land_encounters(zone_name)
-    local disordered_indexes = randomic_length_shuffle(#self.spots)
+    --- The shuffle works in place, so it gets a copy.
+    local disordered_indexes = {}
+    for i, index in ipairs(self.enabled_indexes) do disordered_indexes[i] = index end
+    randomic_shuffle(disordered_indexes)
     for i= 1, #disordered_indexes do
         --- Stop once the active-spot cap is reached.
         if not self:can_add_land_encounters() then
@@ -540,6 +554,17 @@ function SpotDelegate:reinstate_from_previous_state(zone_name, previous_state)
 
             self.active_spots[i] = previous_state[flattened_key .. "_active_spot_flag"]
             self.prohibited_spots[i] = previous_state[flattened_key .. "_prohibited_spot_flag"]
+            --- A spot disabled since this save was made loses its encounter and marker.
+            if self.spots[i].disabled and self.active_spots[i] and self.spots[i].deactivate then
+                log("Removing the encounter on disabled spot " .. zone_name .. "[" .. i .. "]")
+                self:deactivate_spot_in_zone(zone_name, i)
+            end
+        end
+        --- Spot state is saved by coordinates, so a spot moved in coordinates.lua since the save starts fresh. Its old marker, saved by the
+        --- game under the spot's index, would stay at the old position, so every spot that is not active loses its marker. Towers and
+        --- smithies use their own marker ids.
+        if not self.active_spots[i] then
+            cm:remove_interactable_campaign_marker("land_enc_marker_" .. zone_name .. "_" .. i)
         end
     end
 end
@@ -547,15 +572,19 @@ end
 
 --- Builds a SpotDelegate over the given zone coordinates. `active_spot_percentage` caps how
 --- many of the zone's spots can be active at once.
---- @param zone_coordinates table An array of {x, y} coordinate pairs.
---- @param active_spot_percentage number Fraction (0..1) of spots that may be active at once.
+--- @param zone_coordinates table An array of {x, y} coordinate pairs, some marked `disabled = true`.
+--- @param active_spot_percentage number Fraction (0..1) of the zone's enabled spots that may be active at once.
 --- @returns SpotDelegate A new delegate with one Spot per coordinate.
 function SpotDelegate:new(zone_coordinates, active_spot_percentage)
-    local zone_spots = {}
+    local zone_spots, enabled_indexes, tower_sites = {}, {}, {}
     for i = 1, #zone_coordinates do
         local spot = Spot:new()
         spot:initialize_from_coordinates(i, zone_coordinates[i])
         table.insert(zone_spots, spot)
+        if not spot.disabled then
+            enabled_indexes[#enabled_indexes + 1] = i
+            if spot.tower_site then tower_sites[#tower_sites + 1] = i end
+        end
     end
 
     local t = {
@@ -563,7 +592,9 @@ function SpotDelegate:new(zone_coordinates, active_spot_percentage)
         active_spots = {},
         prohibited_spots = {},
         reserved_spots = {},
-        max_active_spots_count = active_spot_percentage * #zone_coordinates
+        enabled_indexes = enabled_indexes,
+        tower_sites = tower_sites,
+        max_active_spots_count = active_spot_percentage * #enabled_indexes
     }
     setmetatable(t, self)
     self.__index = self

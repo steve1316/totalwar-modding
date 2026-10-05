@@ -112,7 +112,9 @@ local SmithyState = {
     --- Turns the current owner has held the smithy.
     turns_under_control = 0,
     --- Turns left before the next free pick.
-    visit_cooldown = 0
+    visit_cooldown = 0,
+    --- True when its coordinates.lua entry is marked `disabled = true`: no marker and no per-turn upkeep. Read from the config on every load.
+    disabled = false
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -789,8 +791,9 @@ end
 
 --- Shows every smithy marker at its forge level when smithies are enabled in MCT, and removes them when they are removed. Runs on every
 --- load, so changing the setting takes effect the next time a save is loaded. The debug `smithy_level` switch (configs/debug.lua) sets every
---- smithy to that level first.
-function SmithyEventDelegate:sync_markers()
+--- smithy to that level first. A smithy whose config entry is marked `disabled = true` loses its marker; it keeps its index and save record.
+--- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
+function SmithyEventDelegate:sync_markers(points_of_interest)
     local enabled = not get_mct_settings().disable_smithies
     local forced_level = debug_config.smithy_level[1]
     for _, smithy in ipairs(self.smithies_state) do
@@ -798,7 +801,11 @@ function SmithyEventDelegate:sync_markers()
             log("smithy: debug smithy_level sets the " .. smithy.zone_name .. " smithy from level " .. smithy.level .. " to " .. forced_level)
             smithy.level = forced_level
         end
-        if enabled then
+        local zone = points_of_interest[smithy.zone_name]
+        local entry = zone and zone.smithies and zone.smithies[smithy.index_in_zone]
+        smithy.disabled = entry ~= nil and entry.disabled == true
+        if smithy.disabled then log("smithy: " .. smithy.zone_name .. " smithy " .. smithy.index_in_zone .. " is disabled in coordinates.lua") end
+        if enabled and not smithy.disabled then
             SmithySpot.replace_marker(smithy.zone_name, smithy.index_in_zone, smithy.coordinates, smithy.level)
         else
             cm:remove_interactable_campaign_marker(SmithySpot.marker_id(smithy.zone_name, smithy.index_in_zone))
@@ -809,7 +816,7 @@ end
 --- Ticks every SmithyState. The FactionTurnStart listener calls this once per round.
 function SmithyEventDelegate:update_state_given_turn_passing()
     for i = 1, #self.smithies_state do
-        self.smithies_state[i]:update_state_given_turn_passing(self.mission_manager)
+        if not self.smithies_state[i].disabled then self.smithies_state[i]:update_state_given_turn_passing(self.mission_manager) end
     end
 end
 
