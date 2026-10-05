@@ -99,6 +99,19 @@ function M.regular_units(general_cqi)
     return list
 end
 
+--- The regular units that can still take `ranks` more ranks without passing `max_rank`.
+--- @param general_cqi number The lord's command queue index.
+--- @param ranks number The ranks to add.
+--- @param max_rank number The highest rank a unit may reach.
+--- @returns table The `regular_units` entries at or below `max_rank - ranks`.
+function M.rankable_units(general_cqi, ranks, max_rank)
+    local list = {}
+    for _, entry in ipairs(M.regular_units(general_cqi)) do
+        if entry.unit:experience_level() <= max_rank - ranks then list[#list + 1] = entry end
+    end
+    return list
+end
+
 --- Finds the delving army's weakest regular unit, the first one on a tie.
 --- @param general_cqi number The delving lord's command queue index.
 --- @returns table|nil Its `unit_strengths` entry, or nil when the army has no regular unit.

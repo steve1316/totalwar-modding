@@ -1,17 +1,5 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_scripted_objectives.loc		
-scripted_objectives_localised_text_land_enc_tower_buff_war_rites	[[col:green]]War Rites: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_war_rites		false
-scripted_objectives_localised_text_land_enc_tower_buff_war_rites_message	War Rites: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_war_rites_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil	[[col:green]]Whetstones and Oil: +15% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +15 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil		false
-scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_message	Whetstones and Oil: +15% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +15 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils	[[col:green]]Warding Sigils: +10% ward save.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_message	Warding Sigils: +10% ward save.	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_fire_kissed_blades	[[col:green]]Fire-Kissed Blades: flaming attacks.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_fire_kissed_blades		false
 scripted_objectives_localised_text_land_enc_tower_buff_fire_kissed_blades_message	Fire-Kissed Blades: flaming attacks.	false
@@ -20,30 +8,10 @@ scripted_objectives_localised_text_land_enc_tower_buff_enchanted_steel	[[col:gre
 scripted_objectives_localised_description_land_enc_tower_buff_enchanted_steel		false
 scripted_objectives_localised_text_land_enc_tower_buff_enchanted_steel_message	Enchanted Steel: magical attacks.	false
 scripted_objectives_localised_description_land_enc_tower_buff_enchanted_steel_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache	[[col:green]]Quartermaster's Cache: +50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 20% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache		false
-scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_message	Quartermaster's Cache: +50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 20% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant	[[col:green]]Drill Sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_message	Drill Sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve	[[col:green]]Iron Resolve: +20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve		false
-scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_message	Iron Resolve: +20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
-scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin	[[col:green]]Stoneskin: +15% physical resistance.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_stoneskin		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_message	Stoneskin: +15% physical resistance.	false
-scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_glass_cannon	[[col:green]]Glass Cannon: +20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]] and +20% [[img:ui/skins/default/icon_stat_damage.png]][[/img]], -20 [[img:ui/skins/default/icon_stat_defence.png]][[/img]] and -20 [[img:ui/skins/default/icon_stat_armour.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_glass_cannon		false
 scripted_objectives_localised_text_land_enc_tower_buff_glass_cannon_message	Glass Cannon: +20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]] and +20% [[img:ui/skins/default/icon_stat_damage.png]][[/img]], -20 [[img:ui/skins/default/icon_stat_defence.png]][[/img]] and -20 [[img:ui/skins/default/icon_stat_armour.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_glass_cannon_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_rousing_speech	[[col:green]]Rousing Speech: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]] and +5% [[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_rousing_speech		false
-scripted_objectives_localised_text_land_enc_tower_buff_rousing_speech_message	Rousing Speech: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]] and +5% [[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_rousing_speech_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_1	[[col:green]]Scaling Blessing: +8 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_scaling_blessing_1		false
 scripted_objectives_localised_text_land_enc_tower_buff_scaling_blessing_1_message	Scaling Blessing: +8 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
@@ -64,10 +32,6 @@ scripted_objectives_localised_text_land_enc_tower_buff_tower_artillery	[[col:gre
 scripted_objectives_localised_description_land_enc_tower_buff_tower_artillery		false
 scripted_objectives_localised_text_land_enc_tower_buff_tower_artillery_message	Tower Artillery: Zhufbar 42 Pounders army ability.	false
 scripted_objectives_localised_description_land_enc_tower_buff_tower_artillery_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds	[[col:green]]Call the Winds: +30 Winds of Magic in reserve.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds		false
-scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_message	Call the Winds: +30 Winds of Magic in reserve.	false
-scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_storm_of_fire	[[col:green]]Vortex Scroll: Storm of Fire army ability.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_vortex_scroll_storm_of_fire		false
 scripted_objectives_localised_text_land_enc_tower_buff_vortex_scroll_storm_of_fire_message	Vortex Scroll: Storm of Fire army ability.	false
@@ -88,14 +52,6 @@ scripted_objectives_localised_text_land_enc_tower_buff_oath_of_no_retreat	[[col:
 scripted_objectives_localised_description_land_enc_tower_buff_oath_of_no_retreat		false
 scripted_objectives_localised_text_land_enc_tower_buff_oath_of_no_retreat_message	Oath of No Retreat: our units cannot rout.	false
 scripted_objectives_localised_description_land_enc_tower_buff_oath_of_no_retreat_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_divine_shield	[[col:green]]Divine Shield: our lord cannot be harmed for the first 5 minutes.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_divine_shield		false
-scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_message	Divine Shield: our lord cannot be harmed for the first 5 minutes.	false
-scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_night_terrors	[[col:green]]Night Terrors: the enemy's 2 most expensive units flee after 1 minute.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_night_terrors		false
-scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_message	Night Terrors: the enemy's 2 most expensive units flee after 1 minute.	false
-scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_allies_in_the_dark	[[col:green]]Allies in the Dark: an allied army joins the battle.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_allies_in_the_dark		false
 scripted_objectives_localised_text_land_enc_tower_buff_allies_in_the_dark_message	Allies in the Dark: an allied army joins the battle.	false
@@ -120,38 +76,18 @@ scripted_objectives_localised_text_land_enc_tower_buff_tower_champion	[[col:red]
 scripted_objectives_localised_description_land_enc_tower_buff_tower_champion		false
 scripted_objectives_localised_text_land_enc_tower_buff_tower_champion_message	Tower Champion: a legendary lord leads the enemy.	false
 scripted_objectives_localised_description_land_enc_tower_buff_tower_champion_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores	[[col:red]]Poison the Stores: enemy units start at 75% strength.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores		false
-scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_message	Poison the Stores: enemy units start at 75% strength.	false
-scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain	[[col:red]]Kill the Captain: the enemy has no heroes.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain		false
 scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain_message	Kill the Captain: the enemy has no heroes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks	[[col:red]]Thin the Ranks: the enemy fields 4 fewer units.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks		false
-scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_message	Thin the Ranks: the enemy fields 4 fewer units.	false
-scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only	[[col:red]]Lower Tiers Only: the enemy has tier 1-2 units only.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_lower_tiers_only		false
 scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only_message	Lower Tiers Only: the enemy has tier 1-2 units only.	false
 scripted_objectives_localised_description_land_enc_tower_buff_lower_tiers_only_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit	[[col:red]]Break Their Spirit: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit		false
-scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_message	Break Their Spirit: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades	[[col:red]]Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades		false
-scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_message	Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_assassinate	[[col:red]]Assassinate: the enemy lord is slain as the battle starts.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_assassinate		false
 scripted_objectives_localised_text_land_enc_tower_buff_assassinate_message	Assassinate: the enemy lord is slain as the battle starts.	false
 scripted_objectives_localised_description_land_enc_tower_buff_assassinate_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor	[[col:red]]Turn a Traitor: one of the enemy's units fights for us.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor		false
-scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_message	Turn a Traitor: one of the enemy's units fights for us.	false
-scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_blood_tally	Blood Tally: soldiers killed	false
 scripted_objectives_localised_description_land_enc_tower_buff_blood_tally		false
 scripted_objectives_localised_text_land_enc_tower_buff_blood_tally_message	Blood Tally: kill 40% of the enemy's soldiers.	false
@@ -200,3 +136,823 @@ scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers	Rival Delve
 scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers		false
 scripted_objectives_localised_text_land_enc_tower_buff_rival_delvers_message	Rival Delvers: out-kill the rival army, or it takes half the floor's spoils.	false
 scripted_objectives_localised_description_land_enc_tower_buff_rival_delvers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_war_rites	[[col:green]]Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_war_rites		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_war_rites_message	Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_war_rites_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief	[[col:yellow]]Relief Column: the enemy falls on our allies! They hold at half strength until we arrive.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_message	Relief Column: the enemy falls on our allies! They hold at half strength until we arrive.	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_50	[[col:yellow]]Relief Column: the enemy falls on our allies, who start at 50% strength. Reach them before they break![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_50		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_50_message	Relief Column: the enemy falls on our allies, who start at 50% strength. Reach them before they break!	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_50_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_75	[[col:yellow]]Relief Column: the enemy falls on our allies, who start at 75% strength. Reach them before they break![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_75		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_75_message	Relief Column: the enemy falls on our allies, who start at 75% strength. Reach them before they break!	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_75_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_100	[[col:yellow]]Relief Column: the enemy falls on our allies. Reach them before they break![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_100		false
+scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_100_message	Relief Column: the enemy falls on our allies. Reach them before they break!	false
+scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_100_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain	Spare the Captain: keep the enemy lord alive	false
+scripted_objectives_localised_description_land_enc_tower_buff_spare_the_captain		false
+scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain_message	Spare the Captain: win with the enemy lord still alive.	false
+scripted_objectives_localised_description_land_enc_tower_buff_spare_the_captain_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_flawless_victory	Flawless Victory: our units lost	false
+scripted_objectives_localised_description_land_enc_tower_buff_flawless_victory		false
+scripted_objectives_localised_text_land_enc_tower_buff_flawless_victory_message	Flawless Victory: win without losing a single unit.	false
+scripted_objectives_localised_description_land_enc_tower_buff_flawless_victory_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lords_glory	Lord's Glory: enemy soldiers our lord has slain	false
+scripted_objectives_localised_description_land_enc_tower_buff_lords_glory		false
+scripted_objectives_localised_text_land_enc_tower_buff_lords_glory_message	Lord's Glory: our lord must slay enough of the enemy.	false
+scripted_objectives_localised_description_land_enc_tower_buff_lords_glory_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_monster_slayer	Monster Slayer: enemy monsters left	false
+scripted_objectives_localised_description_land_enc_tower_buff_monster_slayer		false
+scripted_objectives_localised_text_land_enc_tower_buff_monster_slayer_message	Monster Slayer: destroy every enemy monster.	false
+scripted_objectives_localised_description_land_enc_tower_buff_monster_slayer_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_steadfast	Steadfast: keep every unit of ours from routing	false
+scripted_objectives_localised_description_land_enc_tower_buff_steadfast		false
+scripted_objectives_localised_text_land_enc_tower_buff_steadfast_message	Steadfast: no unit of ours may rout.	false
+scripted_objectives_localised_description_land_enc_tower_buff_steadfast_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_decapitate	Decapitate: enemy lord and heroes left	false
+scripted_objectives_localised_description_land_enc_tower_buff_decapitate		false
+scripted_objectives_localised_text_land_enc_tower_buff_decapitate_message	Decapitate: kill the enemy lord and every hero.	false
+scripted_objectives_localised_description_land_enc_tower_buff_decapitate_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_against_the_odds	Against the Odds: win while outnumbered	false
+scripted_objectives_localised_description_land_enc_tower_buff_against_the_odds		false
+scripted_objectives_localised_text_land_enc_tower_buff_against_the_odds_message	Against the Odds: win while the enemy outnumbers us.	false
+scripted_objectives_localised_description_land_enc_tower_buff_against_the_odds_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_rout_the_riders	Rout the Riders: enemy cavalry and chariots still fighting	false
+scripted_objectives_localised_description_land_enc_tower_buff_rout_the_riders		false
+scripted_objectives_localised_text_land_enc_tower_buff_rout_the_riders_message	Rout the Riders: rout every enemy cavalry unit within 6 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_rout_the_riders_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_easy	[[col:green]]Sacred Ground takes hold: our units regain 10% of their strength![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_easy_message	Sacred Ground takes hold: our units regain 10% of their strength!	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_medium	[[col:green]]Sacred Ground takes hold: our units regain 15% of their strength![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_medium_message	Sacred Ground takes hold: our units regain 15% of their strength!	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_hard	[[col:green]]Sacred Ground takes hold: our units regain 20% of their strength![[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_now_hard_message	Sacred Ground takes hold: our units regain 20% of their strength!	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_now_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_easy	[[col:green]]Arm the Allies: our allies have +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_easy_message	Arm the Allies: our allies have +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_medium	[[col:green]]Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_medium_message	Arm the Allies: our allies have +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_hard	[[col:green]]Arm the Allies: our allies have +15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_arm_the_allies_hard_message	Arm the Allies: our allies have +15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_arm_the_allies_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_rally_their_line	[[col:green]]Rally Their Line: our allies cannot rout.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_rally_their_line		false
+scripted_objectives_localised_text_land_enc_tower_buff_rally_their_line_message	Rally Their Line: our allies cannot rout.	false
+scripted_objectives_localised_description_land_enc_tower_buff_rally_their_line_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lend_them_veterans	[[col:green]]Lend Them Veterans: our allies start 2 ranks higher.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lend_them_veterans		false
+scripted_objectives_localised_text_land_enc_tower_buff_lend_them_veterans_message	Lend Them Veterans: our allies start 2 ranks higher.	false
+scripted_objectives_localised_description_land_enc_tower_buff_lend_them_veterans_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_escort	[[col:green]]Reinforce the Ally: our allied escort fields 3 more units.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_escort		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_escort_message	Reinforce the Ally: our allied escort fields 3 more units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_escort_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_army	[[col:green]]Reinforce the Ally: our allies mustered with 30% more gold.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_army		false
+scripted_objectives_localised_text_land_enc_tower_buff_reinforce_the_ally_army_message	Reinforce the Ally: our allies mustered with 30% more gold.	false
+scripted_objectives_localised_description_land_enc_tower_buff_reinforce_the_ally_army_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_won	[[col:red]]Night Raid: the enemy army is 25% weaker.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_won		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_won_message	Night Raid: the enemy army is 25% weaker.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_won_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_easy	[[col:yellow]]Night Raid: our units start at 85% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_easy_message	Night Raid: our units start at 85% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_medium	[[col:yellow]]Night Raid: our units start at 80% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_medium_message	Night Raid: our units start at 80% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_hard	[[col:yellow]]Night Raid: our units start at 75% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_hard_message	Night Raid: our units start at 75% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites_easy	[[col:green]]War Rites: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_war_rites_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites_easy_message	War Rites: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_war_rites_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites_medium	[[col:green]]War Rites: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_war_rites_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites_medium_message	War Rites: +10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_war_rites_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites_hard	[[col:green]]War Rites: +15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_war_rites_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_war_rites_hard_message	War Rites: +15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_war_rites_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_easy	[[col:green]]Whetstones and Oil: +5% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +5 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_easy_message	Whetstones and Oil: +5% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +5 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_medium	[[col:green]]Whetstones and Oil: +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +10 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_medium_message	Whetstones and Oil: +10% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +10 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_hard	[[col:green]]Whetstones and Oil: +15% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +15 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_hard_message	Whetstones and Oil: +15% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +15 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_easy	[[col:green]]Warding Sigils: +5% ward save.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_easy_message	Warding Sigils: +5% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_medium	[[col:green]]Warding Sigils: +10% ward save.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_medium_message	Warding Sigils: +10% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_hard	[[col:green]]Warding Sigils: +15% ward save.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_hard_message	Warding Sigils: +15% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_easy	[[col:green]]Quartermaster's Cache: +25% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 15% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_easy_message	Quartermaster's Cache: +25% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 15% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_medium	[[col:green]]Quartermaster's Cache: +50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 25% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_medium_message	Quartermaster's Cache: +50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 25% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_hard	[[col:green]]Quartermaster's Cache: +75% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 35% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_hard_message	Quartermaster's Cache: +75% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 35% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy	[[col:green]]Drill Sergeant: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy_message	Drill Sergeant: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium	[[col:green]]Drill Sergeant: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium_message	Drill Sergeant: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard	[[col:green]]Drill Sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard_message	Drill Sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_easy	[[col:green]]Iron Resolve: +10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_easy_message	Iron Resolve: +10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
+scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_medium	[[col:green]]Iron Resolve: +20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_medium_message	Iron Resolve: +20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
+scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_hard	[[col:green]]Iron Resolve: +30 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_hard_message	Iron Resolve: +30 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
+scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy	[[col:green]]Stoneskin: +5% physical resistance.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy_message	Stoneskin: +5% physical resistance.	false
+scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium	[[col:green]]Stoneskin: +10% physical resistance.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium_message	Stoneskin: +10% physical resistance.	false
+scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard	[[col:green]]Stoneskin: +15% physical resistance.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard_message	Stoneskin: +15% physical resistance.	false
+scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_easy	[[col:green]]Call the Winds: +20 Winds of Magic in reserve.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_easy_message	Call the Winds: +20 Winds of Magic in reserve.	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_medium	[[col:green]]Call the Winds: +30 Winds of Magic in reserve.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_medium_message	Call the Winds: +30 Winds of Magic in reserve.	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_hard	[[col:green]]Call the Winds: +40 Winds of Magic in reserve.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_hard_message	Call the Winds: +40 Winds of Magic in reserve.	false
+scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_last_ditch_oath	[[col:yellow]]Last Ditch Oath: our lord cannot die, but our army has -10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_last_ditch_oath		false
+scripted_objectives_localised_text_land_enc_tower_buff_last_ditch_oath_message	Last Ditch Oath: our lord cannot die, but our army has -10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_last_ditch_oath_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_easy	[[col:red]]Bribe the Guards: the enemy army is 15% weaker.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_the_guards_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_easy_message	Bribe the Guards: the enemy army is 15% weaker.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_the_guards_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_medium	[[col:red]]Bribe the Guards: the enemy army is 25% weaker.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_the_guards_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_medium_message	Bribe the Guards: the enemy army is 25% weaker.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_the_guards_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_hard	[[col:red]]Bribe the Guards: the enemy army is 35% weaker.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_the_guards_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_bribe_the_guards_hard_message	Bribe the Guards: the enemy army is 35% weaker.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bribe_the_guards_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_easy	[[col:red]]Thin the Ranks: the enemy fields 2 fewer units.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_easy_message	Thin the Ranks: the enemy fields 2 fewer units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_medium	[[col:red]]Thin the Ranks: the enemy fields 3 fewer units.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_medium_message	Thin the Ranks: the enemy fields 3 fewer units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_hard	[[col:red]]Thin the Ranks: the enemy fields 4 fewer units.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_thin_the_ranks_hard_message	Thin the Ranks: the enemy fields 4 fewer units.	false
+scripted_objectives_localised_description_land_enc_tower_buff_thin_the_ranks_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_monsters	[[col:red]]Cull the Beasts: the enemy fields no monsters or war beasts.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_monsters		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_monsters_message	Cull the Beasts: the enemy fields no monsters or war beasts.	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_monsters_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_cavalry	[[col:red]]Scatter the Herds: the enemy fields no cavalry or chariots.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_cavalry		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_cavalry_message	Scatter the Herds: the enemy fields no cavalry or chariots.	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_cavalry_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_missile	[[col:red]]Burn the Quivers: the enemy fields no missile infantry.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_missile		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_missile_message	Burn the Quivers: the enemy fields no missile infantry.	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_missile_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_artillery	[[col:red]]Wreck the Engines: the enemy fields no artillery.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_artillery		false
+scripted_objectives_localised_text_land_enc_tower_buff_strip_artillery_message	Wreck the Engines: the enemy fields no artillery.	false
+scripted_objectives_localised_description_land_enc_tower_buff_strip_artillery_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_easy	[[col:red]]Poison the Stores: enemy units start at 85% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_easy_message	Poison the Stores: enemy units start at 85% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_medium	[[col:red]]Poison the Stores: enemy units start at 75% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_medium_message	Poison the Stores: enemy units start at 75% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_hard	[[col:red]]Poison the Stores: enemy units start at 65% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_poison_the_stores_hard_message	Poison the Stores: enemy units start at 65% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_poison_the_stores_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_easy	[[col:red]]Break Their Spirit: enemy units have -10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_easy_message	Break Their Spirit: enemy units have -10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_medium	[[col:red]]Break Their Spirit: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_medium_message	Break Their Spirit: enemy units have -15 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_hard	[[col:red]]Break Their Spirit: enemy units have -20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_break_their_spirit_hard_message	Break Their Spirit: enemy units have -20 [[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_break_their_spirit_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_easy	[[col:red]]Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_easy_message	Curse Their Blades: enemy units have -10 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_medium	[[col:red]]Curse Their Blades: enemy units have -15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_medium_message	Curse Their Blades: enemy units have -15 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_hard	[[col:red]]Curse Their Blades: enemy units have -20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_curse_their_blades_hard_message	Curse Their Blades: enemy units have -20 [[img:ui/skins/default/icon_stat_attack.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_curse_their_blades_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_easy	[[col:green]]Turn a Traitor: one of the enemy's units fights for us.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_easy_message	Turn a Traitor: one of the enemy's units fights for us.	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_medium	[[col:green]]Turn a Traitor: one of the enemy's units fights for us.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_medium_message	Turn a Traitor: one of the enemy's units fights for us.	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_hard	[[col:green]]Turn a Traitor: one of the enemy's units fights for us.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_turn_a_traitor_hard_message	Turn a Traitor: one of the enemy's units fights for us.	false
+scripted_objectives_localised_description_land_enc_tower_buff_turn_a_traitor_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_easy	[[col:green]]Night Terrors: the enemy's most expensive unit flees after 1 minute.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_easy_message	Night Terrors: the enemy's most expensive unit flees after 1 minute.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_medium	[[col:green]]Night Terrors: the enemy's 2 most expensive units flee after 1 minute.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_medium_message	Night Terrors: the enemy's 2 most expensive units flee after 1 minute.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_hard	[[col:green]]Night Terrors: the enemy's 3 most expensive units flee after 1 minute.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_night_terrors_hard_message	Night Terrors: the enemy's 3 most expensive units flee after 1 minute.	false
+scripted_objectives_localised_description_land_enc_tower_buff_night_terrors_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_easy	[[col:green]]Divine Shield: our lord cannot be harmed for the first 5 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_easy_message	Divine Shield: our lord cannot be harmed for the first 5 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_medium	[[col:green]]Divine Shield: our lord cannot be harmed for the first 7 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_medium_message	Divine Shield: our lord cannot be harmed for the first 7 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_hard	[[col:green]]Divine Shield: our lord cannot be harmed for the first 10 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_divine_shield_hard_message	Divine Shield: our lord cannot be harmed for the first 10 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_divine_shield_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_easy	[[col:green]]Sacred Ground: after 3 minutes, our units regain 10% of their strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_easy_message	Sacred Ground: after 3 minutes, our units regain 10% of their strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_medium	[[col:green]]Sacred Ground: after 3 minutes, our units regain 15% of their strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_medium_message	Sacred Ground: after 3 minutes, our units regain 15% of their strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_hard	[[col:green]]Sacred Ground: after 3 minutes, our units regain 20% of their strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_sacred_ground_hard_message	Sacred Ground: after 3 minutes, our units regain 20% of their strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_sacred_ground_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_easy	[[col:red]]Lame Their Mounts: enemy cavalry and chariots have -15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_easy_message	Lame Their Mounts: enemy cavalry and chariots have -15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_medium	[[col:red]]Lame Their Mounts: enemy cavalry and chariots have -20% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_medium_message	Lame Their Mounts: enemy cavalry and chariots have -20% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_hard	[[col:red]]Lame Their Mounts: enemy cavalry and chariots have -25% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_lame_their_mounts_hard_message	Lame Their Mounts: enemy cavalry and chariots have -25% [[img:ui/skins/default/icon_stat_speed.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_lame_their_mounts_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_easy	[[col:red]]Hunter's Snares: enemy cavalry and chariots have -15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_easy_message	Hunter's Snares: enemy cavalry and chariots have -15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_medium	[[col:red]]Hunter's Snares: enemy cavalry and chariots have -20 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_medium_message	Hunter's Snares: enemy cavalry and chariots have -20 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_hard	[[col:red]]Hunter's Snares: enemy cavalry and chariots have -25 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_hunters_snares_hard_message	Hunter's Snares: enemy cavalry and chariots have -25 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_hunters_snares_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_cripple_their_champion	[[col:red]]Cripple Their Champion: the enemy's finest unit starts at 50% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_cripple_their_champion		false
+scripted_objectives_localised_text_land_enc_tower_buff_cripple_their_champion_message	Cripple Their Champion: the enemy's finest unit starts at 50% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_cripple_their_champion_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_easy	[[col:red]]Spike the Guns: enemy shooters have -30% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_easy_message	Spike the Guns: enemy shooters have -30% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_medium	[[col:red]]Spike the Guns: enemy shooters have -40% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_medium_message	Spike the Guns: enemy shooters have -40% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_hard	[[col:red]]Spike the Guns: enemy shooters have -50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_spike_the_guns_hard_message	Spike the Guns: enemy shooters have -50% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_spike_the_guns_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_bait_and_switch	[[col:red]]Bait and Switch: the enemy army is 25% bigger, but every unit starts at 75% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_bait_and_switch		false
+scripted_objectives_localised_text_land_enc_tower_buff_bait_and_switch_message	Bait and Switch: the enemy army is 25% bigger, but every unit starts at 75% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_bait_and_switch_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hallowed	[[col:green]]Hallowed Ground: our units +10 leadership.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_hallowed		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hallowed_message	Hallowed Ground: our units +10 leadership.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_hallowed_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cursed_earth	[[col:red]]Cursed Earth: our units -10 leadership.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_cursed_earth		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cursed_earth_message	Cursed Earth: our units -10 leadership.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_cursed_earth_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blood_moon	[[col:yellow]]Blood Moon: every unit on the field +10 melee attack.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_blood_moon		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blood_moon_message	Blood Moon: every unit on the field +10 melee attack.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_blood_moon_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_iron_hides	[[col:yellow]]Iron Hides: every unit on the field +5% physical resistance.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_iron_hides		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_iron_hides_message	Iron Hides: every unit on the field +5% physical resistance.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_iron_hides_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_swift_winds	[[col:yellow]]Tailwind: every unit on the field +20% speed.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_swift_winds		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_swift_winds_message	Tailwind: every unit on the field +20% speed.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_swift_winds_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_heavy_ground	[[col:yellow]]Heavy Ground: every unit on the field -10% speed.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_heavy_ground		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_heavy_ground_message	Heavy Ground: every unit on the field -10% speed.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_heavy_ground_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_thunder_charge	[[col:yellow]]Thunderous Charge: every unit on the field +25 charge bonus.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_thunder_charge		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_thunder_charge_message	Thunderous Charge: every unit on the field +25 charge bonus.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_thunder_charge_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_brittle	[[col:green]]Brittle Blades: enemy units -10% weapon strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_brittle		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_brittle_message	Brittle Blades: enemy units -10% weapon strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_brittle_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_wards	[[col:red]]Wards of the Old Ones: enemy units +5% ward save.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_wards		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_wards_message	Wards of the Old Ones: enemy units +5% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_wards_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_gale	[[col:yellow]]Howling Gale: every missile unit on the field -25% range.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_gale		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_gale_message	Howling Gale: every missile unit on the field -25% range.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_gale_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_surge	[[col:yellow]]Surge of the Winds: every army starts with +30 Winds of Magic reserve.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_surge		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_surge_message	Surge of the Winds: every army starts with +30 Winds of Magic reserve.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_surge_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_exhausting	[[col:yellow]]Sweltering Heat: every unit on the field tires 10% faster.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_exhausting		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_exhausting_message	Sweltering Heat: every unit on the field tires 10% faster.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_exhausting_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_frenzy	[[col:red]]Blood Frenzy: every enemy unit gains Frenzy.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_frenzy		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_frenzy_message	Blood Frenzy: every enemy unit gains Frenzy.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_frenzy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_berserkers	[[col:yellow]]Berserkers: our units gain Berserk.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_berserkers		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_berserkers_message	Berserkers: our units gain Berserk.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_berserkers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_regen_enemy	[[col:red]]Flesh That Knits: every enemy unit gains Regeneration.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_regen_enemy		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_regen_enemy_message	Flesh That Knits: every enemy unit gains Regeneration.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_regen_enemy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_regen_ours	[[col:green]]Troll Blood: every unit of ours gains Regeneration.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_regen_ours		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_regen_ours_message	Troll Blood: every unit of ours gains Regeneration.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_regen_ours_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_killing_blow	[[col:green]]Executioners' Edge: every unit of ours gains Deathblow.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_killing_blow		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_killing_blow_message	Executioners' Edge: every unit of ours gains Deathblow.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_killing_blow_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_strength_numbers	[[col:red]]Strength in Numbers: every enemy unit gains Strength in Numbers.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_strength_numbers		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_strength_numbers_message	Strength in Numbers: every enemy unit gains Strength in Numbers.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_strength_numbers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_feasting	[[col:green]]Feasting on Fear: our units gain Feasting on Fear.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_feasting		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_feasting_message	Feasting on Fear: our units gain Feasting on Fear.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_feasting_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_flies	[[col:yellow]]Cloud of Flies: every unit on the field gains Cloud of Flies.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_flies		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_flies_message	Cloud of Flies: every unit on the field gains Cloud of Flies.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_flies_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_immolation	[[col:red]]Aura of Immolation: every enemy unit gains Aura of Immolation.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_immolation		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_immolation_message	Aura of Immolation: every enemy unit gains Aura of Immolation.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_immolation_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_too_horrible	[[col:red]]Too Horrible to Die: every enemy unit gains Too Horrible to Die.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_too_horrible		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_too_horrible_message	Too Horrible to Die: every enemy unit gains Too Horrible to Die.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_too_horrible_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_pleasure_pain	[[col:yellow]]Pleasure Through Pain: every unit on the field gains Pleasure Through Pain.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_pleasure_pain		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_pleasure_pain_message	Pleasure Through Pain: every unit on the field gains Pleasure Through Pain.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_pleasure_pain_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_gorefeast	[[col:red]]Gorefeast: every enemy unit gains Gorefeast.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_gorefeast		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_gorefeast_message	Gorefeast: every enemy unit gains Gorefeast.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_gorefeast_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_unholy_vigour	[[col:green]]Unholy Vigour: our units gain Unholy Vigour.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_unholy_vigour		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_unholy_vigour_message	Unholy Vigour: our units gain Unholy Vigour.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_unholy_vigour_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_bleeding_field	[[col:yellow]]Bleeding Field: every unit on the field loses 1% of its strength every 15 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_bleeding_field		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_bleeding_field_message	Bleeding Field: every unit on the field loses 1% of its strength every 15 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_bleeding_field_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_miasma	[[col:green]]Plague Miasma: every enemy unit loses 1% of its strength every 15 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_miasma		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_miasma_message	Plague Miasma: every enemy unit loses 1% of its strength every 15 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_miasma_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_rot	[[col:red]]Rot of Nurgle: every unit of ours loses 1% of its strength every 15 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_rot		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_rot_message	Rot of Nurgle: every unit of ours loses 1% of its strength every 15 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_rot_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_second_wind	[[col:green]]Second Wind: our units regain 5% of their strength at 2 and 4 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_second_wind		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_second_wind_message	Second Wind: our units regain 5% of their strength at 2 and 4 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_second_wind_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lord_vigil	[[col:green]]Lord's Vigil: our lord regains 1% of their strength every 30 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lord_vigil		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lord_vigil_message	Lord's Vigil: our lord regains 1% of their strength every 30 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lord_vigil_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_short_shot	[[col:yellow]]Short of Shot: every missile unit on the field starts with half its ammunition.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_short_shot		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_short_shot_message	Short of Shot: every missile unit on the field starts with half its ammunition.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_short_shot_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_plenty_shot	[[col:yellow]]Endless Quivers: every missile unit on the field never runs out of ammunition.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_plenty_shot		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_plenty_shot_message	Endless Quivers: every missile unit on the field never runs out of ammunition.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_plenty_shot_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic	[[col:green]]Panic: at 3:00 the enemy's two weakest units rout.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_panic		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic_message	Panic: at 3:00 the enemy's two weakest units rout.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_panic_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards	[[col:red]]Cowards' Ground: at 3:00 our weakest unit routs.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_cowards		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards_message	Cowards' Ground: at 3:00 our weakest unit routs.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_cowards_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords	[[col:yellow]]Fated Lords: both lords cannot be harmed for the first 3 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_duel_lords		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords_message	Fated Lords: both lords cannot be harmed for the first 3 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_duel_lords_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast	[[col:yellow]]Hold Fast: no unit on the field can rout for the first 3 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast_message	Hold Fast: no unit on the field can rout for the first 3 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_terror_field	[[col:red]]Field of Dread: every enemy unit causes terror.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_terror_field		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_terror_field_message	Field of Dread: every enemy unit causes terror.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_terror_field_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve	[[col:green]]Grim Resolve: our units cannot break for the first 3 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_resolve		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve_message	Grim Resolve: our units cannot break for the first 3 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_resolve_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_ambush_country	[[col:yellow]]Ambush Country: every unit can hide in forests and stays hidden while it moves.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_ambush_country		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_ambush_country_message	Ambush Country: every unit can hide in forests and stays hidden while it moves.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_ambush_country_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_enemy	[[col:green]]Silence the Casters: enemy spellcasters are Silenced and cannot cast spells.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_enemy		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_enemy_message	Silence the Casters: enemy spellcasters are Silenced and cannot cast spells.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_enemy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_all	[[col:yellow]]Dead Winds: every spellcaster on the field is Silenced and cannot cast spells.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_all		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_silence_all_message	Dead Winds: every spellcaster on the field is Silenced and cannot cast spells.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_silence_all_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_mud	[[col:yellow]]Sucking Mud: no unit on the field can run.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_mud		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_mud_message	Sucking Mud: no unit on the field can run.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_mud_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_fire_moving	[[col:green]]Skirmish Drill: our missile units can fire while moving.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_fire_moving		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_fire_moving_message	Skirmish Drill: our missile units can fire while moving.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_fire_moving_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_strider	[[col:green]]Sure Footing: our units ignore difficult ground.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_strider		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_strider_message	Sure Footing: our units ignore difficult ground.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_strider_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed	[[col:green]]Wet Powder: enemy missile units cannot shoot for the first 3 minutes.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_disarmed		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed_message	Wet Powder: enemy missile units cannot shoot for the first 3 minutes.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_disarmed_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_glorious	[[col:green]]Glorious Charge: our cavalry and chariots gain Glorious Charge.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_glorious		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_glorious_message	Glorious Charge: our cavalry and chariots gain Glorious Charge.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_glorious_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable	[[col:red]]Callous Ranks: enemy units have Expendable and routing does not shake the rest of their army.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_expendable		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable_message	Callous Ranks: enemy units have Expendable and routing does not shake the rest of their army.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_expendable_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_tireless_enemy	[[col:red]]Tireless Foe: enemy units never tire.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_tireless_enemy		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_tireless_enemy_message	Tireless Foe: enemy units never tire.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_tireless_enemy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_run_amok	[[col:yellow]]Maddened Beasts: monsters and war beasts on both sides may run amok.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_run_amok		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_run_amok_message	Maddened Beasts: monsters and war beasts on both sides may run amok.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_run_amok_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence	[[col:green]]Grim Presence: enemy units within 25m of our lord lose 0.5% of their strength every 10 seconds.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_presence		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence_message	Grim Presence: enemy units within 25m of our lord lose 0.5% of their strength every 10 seconds.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_presence_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic	[[col:yellow]]Storm of Magic: every army gains 20 Winds of Magic every minute.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_storm_magic		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic_message	Storm of Magic: every army gains 20 Winds of Magic every minute.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_storm_magic_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_drained	[[col:green]]Drained Winds: the enemy's Winds of Magic are drained to nothing at the start.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_drained		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_drained_message	Drained Winds: the enemy's Winds of Magic are drained to nothing at the start.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_drained_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift	[[col:yellow]]Warp Shift: every 2 minutes a random unit of any side is flung to a nearby spot.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_warp_shift		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift_message	Warp Shift: every 2 minutes a random unit of any side is flung to a nearby spot.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_warp_shift_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest	[[col:yellow]]Tzeentch's Jest: every 2 minutes a random enemy unit and a random unit of ours swap places.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_jest		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest_message	Tzeentch's Jest: every 2 minutes a random enemy unit and a random unit of ours swap places.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_jest_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink	[[col:green]]Blink Strike: at 2:00 our cavalry and chariots are flung behind the enemy line.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_blink		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink_message	Blink Strike: at 2:00 our cavalry and chariots are flung behind the enemy line.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_blink_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp	[[col:red]]Lost in the Warp: at 2:00 a random unit of ours vanishes for 30 seconds, then reappears nearby.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lost_warp		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp_message	Lost in the Warp: at 2:00 a random unit of ours vanishes for 30 seconds, then reappears nearby.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lost_warp_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_scatter	[[col:green]]Scattered Ranks: the enemy's units start the battle scattered around their centre.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_scatter		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_scatter_message	Scattered Ranks: the enemy's units start the battle scattered around their centre.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_scatter_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed	[[col:yellow]]Naked Plain: every unit is always visible, no hiding for anyone.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_revealed		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed_message	Naked Plain: every unit is always visible, no hiding for anyone.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_revealed_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_wild_winds	[[col:yellow]]Wild Winds: every 3 minutes a magical storm spawns near a random unit of any side.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_wild_winds		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_wild_winds_message	Wild Winds: every 3 minutes a magical storm spawns near a random unit of any side.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_wild_winds_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_enemy_last_stand	[[col:red]]Last Stand: enemy units cannot rout until they fall below half strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_enemy_last_stand		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_enemy_last_stand_message	Last Stand: enemy units cannot rout until they fall below half strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_enemy_last_stand_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise	[[col:green]]The Dead Rise: at 5:00 our destroyed units return where they started, at 25% strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_dead_rise		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise_message	The Dead Rise: at 5:00 our destroyed units return where they started, at 25% strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_dead_rise_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying	[[col:red]]Undying Foe: at 5:00 two destroyed enemy units return where they started, at half strength.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_undying		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying_message	Undying Foe: at 5:00 two destroyed enemy units return where they started, at half strength.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_undying_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_monsters	[[col:red]]Monster Horde: the enemy army is mostly monsters and war beasts.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_monsters		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_monsters_message	Monster Horde: the enemy army is mostly monsters and war beasts.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_monsters_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_riders	[[col:yellow]]Riders' Host: the enemy army is mostly cavalry and chariots.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_riders		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_riders_message	Riders' Host: the enemy army is mostly cavalry and chariots.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_riders_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_shieldwall	[[col:yellow]]Shield Wall: the enemy army is infantry only.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_shieldwall		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_shieldwall_message	Shield Wall: the enemy army is infantry only.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_shieldwall_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_gunline	[[col:yellow]]Gunline: the enemy army is mostly missile infantry and artillery.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_gunline		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_gunline_message	Gunline: the enemy army is mostly missile infantry and artillery.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_gunline_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_pestilens	[[col:red]]Plague Procession: the enemy army is a plague procession of plague monks, censer bearers and the pox-cauldrons of Clan Pestilens.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_pestilens		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_pestilens_message	Plague Procession: the enemy army is a plague procession of plague monks, censer bearers and the pox-cauldrons of Clan Pestilens.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_pestilens_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_skryre	[[col:red]]Skryre Arsenal: the enemy army is a Skryre arsenal of weapon teams, stormfiends and warp-lightning engines.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_skryre		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_skryre_message	Skryre Arsenal: the enemy army is a Skryre arsenal of weapon teams, stormfiends and warp-lightning engines.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_skryre_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_moulder	[[col:red]]Moulder Menagerie: the enemy army is a Moulder menagerie of packmasters driving rat ogres, wolf rats and hell pit horrors.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_moulder		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_moulder_message	Moulder Menagerie: the enemy army is a Moulder menagerie of packmasters driving rat ogres, wolf rats and hell pit horrors.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_moulder_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_chariots	[[col:red]]Chariot Legion: the enemy army is a chariot legion of ranks of skeletal chariots and horsemen of Nehekhara.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_chariots		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_chariots_message	Chariot Legion: the enemy army is a chariot legion of ranks of skeletal chariots and horsemen of Nehekhara.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_chariots_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_constructs	[[col:red]]Mortuary Constructs: the enemy army is a host of constructs of ushabti, sphinxes and bone titans raised by the Mortuary Cult.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_constructs		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_constructs_message	Mortuary Constructs: the enemy army is a host of constructs of ushabti, sphinxes and bone titans raised by the Mortuary Cult.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_constructs_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_khaine	[[col:red]]Khainite Cult: the enemy army is a Khainite cult of witch elves, executioners and the blood-soaked shrines of Khaine.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_khaine		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_khaine_message	Khainite Cult: the enemy army is a Khainite cult of witch elves, executioners and the blood-soaked shrines of Khaine.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_khaine_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_corsairs	[[col:red]]Black Ark Corsairs: the enemy army is a black ark raiding party of corsairs, shades and the beasts of the deep.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_corsairs		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_corsairs_message	Black Ark Corsairs: the enemy army is a black ark raiding party of corsairs, shades and the beasts of the deep.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_corsairs_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_slayers	[[col:red]]Slayer Host: the enemy army is a slayer host of doomed dwarfs seeking a glorious death.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_slayers		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_slayers_message	Slayer Host: the enemy army is a slayer host of doomed dwarfs seeking a glorious death.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_slayers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_underway	[[col:red]]Underway Guard: the enemy army is an underway guard of miners, ironbreakers and irondrakes from the deep tunnels.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_underway		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_underway_message	Underway Guard: the enemy army is an underway guard of miners, ironbreakers and irondrakes from the deep tunnels.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_underway_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_lothern	[[col:red]]Lothern Fleet: the enemy army is a Lothern fleet of sea guard, ship crews and the creatures of the sea.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_lothern		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_lothern_message	Lothern Fleet: the enemy army is a Lothern fleet of sea guard, ship crews and the creatures of the sea.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_lothern_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_caledor	[[col:red]]Dragon Host: the enemy army is a Caledorian host of dragon princes and the great dragons themselves.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_caledor		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_caledor_message	Dragon Host: the enemy army is a Caledorian host of dragon princes and the great dragons themselves.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_caledor_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_avelorn	[[col:red]]Avelorn Court: the enemy army is the Avelorn court of the Everqueen's maidens with dryads and treemen of the forest.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_avelorn		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_avelorn_message	Avelorn Court: the enemy army is the Avelorn court of the Everqueen's maidens with dryads and treemen of the forest.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_avelorn_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_saurus	[[col:red]]Saurus Warhost: the enemy army is a saurus warhost of cold-blooded warriors of the temple-cities.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_saurus		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_saurus_message	Saurus Warhost: the enemy army is a saurus warhost of cold-blooded warriors of the temple-cities.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_saurus_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_skinks	[[col:red]]Skink Swarm: the enemy army is a skink swarm of cohorts, chameleons and the beasts they ride and herd.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_skinks		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_skinks_message	Skink Swarm: the enemy army is a skink swarm of cohorts, chameleons and the beasts they ride and herd.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_skinks_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nor_werekin	[[col:red]]Werekin Pack: the enemy army is a werekin pack of berserkers, bearmen and skinwolves that hunt as beasts.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nor_werekin		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nor_werekin_message	Werekin Pack: the enemy army is a werekin pack of berserkers, bearmen and skinwolves that hunt as beasts.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nor_werekin_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_boarding	[[col:red]]Boarding Party: the enemy army is a motley boarding party of deckhands, gunnery mobs and deck droppers spilling off the ships.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_boarding		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_boarding_message	Boarding Party: the enemy army is a motley boarding party of deckhands, gunnery mobs and deck droppers spilling off the ships.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_boarding_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_drowned	[[col:red]]Drowned Host: the enemy army is a drowned host of depth guards, syreens and rotting horrors dragged up from the sea floor.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_drowned		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_drowned_message	Drowned Host: the enemy army is a drowned host of depth guards, syreens and rotting horrors dragged up from the sea floor.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_drowned_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_grave	[[col:red]]Grave Horde: the enemy army is a grave horde of zombies, skeletons and the restless dead.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_grave		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_grave_message	Grave Horde: the enemy army is a grave horde of zombies, skeletons and the restless dead.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_grave_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_lahmia	[[col:red]]Lahmian Court: the enemy army is a Lahmian court of handmaidens, mortal retainers and the coven throne of the sisterhood.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_lahmia		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_lahmia_message	Lahmian Court: the enemy army is a Lahmian court of handmaidens, mortal retainers and the coven throne of the sisterhood.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_lahmia_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_state	[[col:red]]State Troops: the enemy army is a muster of state troops consisting of halberds, handguns and those of the Imperial Gunnery School.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_state		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_state_message	State Troops: the enemy army is a muster of state troops consisting of halberds, handguns and those of the Imperial Gunnery School.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_state_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_knights	[[col:red]]Knightly Orders: the enemy army is a host of the knightly orders of the Reiksguard, Blazing Sun, Black Rose and demigryph knights.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_knights		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_knights_message	Knightly Orders: the enemy army is a host of the knightly orders of the Reiksguard, Blazing Sun, Black Rose and demigryph knights.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_knights_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_ulric	[[col:red]]Wolves of Ulric: the enemy army is a host of Ulric wolf kin, Teutogen guard and the knights of the White Wolf.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_ulric		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_ulric_message	Wolves of Ulric: the enemy army is a host of Ulric wolf kin, Teutogen guard and the knights of the White Wolf.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_ulric_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_knights	[[col:red]]Knightly Order: the enemy army is a knightly order made up of knights of every vow with a few men-at-arms behind them.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_knights		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_knights_message	Knightly Order: the enemy army is a knightly order made up of knights of every vow with a few men-at-arms behind them.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_knights_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_grail	[[col:red]]Grail Pilgrimage: the enemy army is a gathering of zealous pilgrims and reliquaries following the grail knights on their grail pilgrimage.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_grail		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_grail_message	Grail Pilgrimage: the enemy army is a gathering of zealous pilgrims and reliquaries following the grail knights on their grail pilgrimage.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_grail_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_nightgobs	[[col:red]]Night Goblin Horde: the enemy army is a night goblin horde of fanatics, squigs and archers boiling up from the caves.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_nightgobs		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_nightgobs_message	Night Goblin Horde: the enemy army is a night goblin horde of fanatics, squigs and archers boiling up from the caves.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_nightgobs_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_savage	[[col:red]]Savage Orc Warband: the enemy army is a savage orc warband of painted boyz, boar riders and the idol they worship.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_savage		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_savage_message	Savage Orc Warband: the enemy army is a savage orc warband of painted boyz, boar riders and the idol they worship.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_savage_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_spiders	[[col:red]]Spider Tribe: the enemy army is a spider tribe of forest goblins riding their giant spider mounts, led by a great arachnarok.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_spiders		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_spiders_message	Spider Tribe: the enemy army is a spider tribe of forest goblins riding their giant spider mounts, led by a great arachnarok.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_spiders_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_wildhunt	[[col:red]]Wild Hunt: the enemy army is the Wild Hunt made up of wild riders, wardancers and great stags at full gallop.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_wildhunt		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_wildhunt_message	Wild Hunt: the enemy army is the Wild Hunt made up of wild riders, wardancers and great stags at full gallop.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_wildhunt_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_forest	[[col:red]]Wrath of the Forest: the enemy army is the wrath of the forest made manifest through dryads, treekin and treemen roused from the deep woods.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_forest		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_forest_message	Wrath of the Forest: the enemy army is the wrath of the forest made manifest through dryads, treekin and treemen roused from the deep woods.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_forest_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_brayherd	[[col:red]]Brayherd: the enemy army is a brayherd of gors, ungors and bestigors with their hounds and chariots.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_brayherd		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_brayherd_message	Brayherd: the enemy army is a brayherd of gors, ungors and bestigors with their hounds and chariots.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_brayherd_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_warherd	[[col:red]]Warherd: the enemy army is a warherd of minotaurs, cygors and ghorgons hungry for flesh.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_warherd		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_warherd_message	Warherd: the enemy army is a warherd of minotaurs, cygors and ghorgons hungry for flesh.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_warherd_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cth_dragonguard	[[col:red]]Celestial Guard: the enemy army is the Celestial Guard consisting of dragon guards, jade lancers and terracotta sentinels of the Emperor.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cth_dragonguard		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cth_dragonguard_message	Celestial Guard: the enemy army is the Celestial Guard consisting of dragon guards, jade lancers and terracotta sentinels of the Emperor.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cth_dragonguard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_horrors	[[col:red]]Flux of Horrors: the enemy army is a flux of daemons made up of pink and blue horrors, flamers and screamers of Tzeentch.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_horrors		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_horrors_message	Flux of Horrors: the enemy army is a flux of daemons made up of pink and blue horrors, flamers and screamers of Tzeentch.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_horrors_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_arcanites	[[col:red]]Arcanite Cult: the enemy army is an arcanite cult of tzaangors, mutants and doom knights who serve the Changer of Ways.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_arcanites		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_arcanites_message	Arcanite Cult: the enemy army is an arcanite cult of tzaangors, mutants and doom knights who serve the Changer of Ways.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_arcanites_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_everchosen	[[col:red]]Everchosen Host: the enemy army is an Everchosen host of chaos warriors, chosen and knights in black iron.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_everchosen		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_everchosen_message	Everchosen Host: the enemy army is an Everchosen host of chaos warriors, chosen and knights in black iron.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_everchosen_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_rotbringers	[[col:red]]Rotbringers: the enemy army is a Rotbringer warband of blightkings and plague-marked warriors of Nurgle.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_rotbringers		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_rotbringers_message	Rotbringers: the enemy army is a Rotbringer warband of blightkings and plague-marked warriors of Nurgle.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_rotbringers_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_bloodbound	[[col:red]]Bloodbound: the enemy army is a bloodbound warband of Khorne-marked marauders, chosen and knights of the Blood God.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_bloodbound		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_bloodbound_message	Bloodbound: the enemy army is a bloodbound warband of Khorne-marked marauders, chosen and knights of the Blood God.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_bloodbound_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_tallyband	[[col:red]]Plague Tallyband: the enemy army is a tallyband of plaguebearers, nurglings and buzzing plague drones serving Grandfather Nurgle.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_tallyband		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_tallyband_message	Plague Tallyband: the enemy army is a tallyband of plaguebearers, nurglings and buzzing plague drones serving Grandfather Nurgle.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_tallyband_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_maggoth	[[col:red]]Maggot Horde: the enemy army is a maggot horde of pestigors, bile trolls and plague ogres following the Maggot Lord.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_maggoth		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_maggoth_message	Maggot Horde: the enemy army is a maggot horde of pestigors, bile trolls and plague ogres following the Maggot Lord.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_maggoth_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_sla_devotees	[[col:red]]Cult of Excess: the enemy army is a cult of excess comprising of devotees, slaangors and hellstriders who serve the Dark Prince.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_sla_devotees		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_sla_devotees_message	Cult of Excess: the enemy army is a cult of excess comprising of devotees, slaangors and hellstriders who serve the Dark Prince.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_sla_devotees_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chd_daemonsmith	[[col:red]]Daemonsmith Foundry: the enemy army is a daemonsmith foundry of the infernal guard and daemon-bound war engines of Hashut.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chd_daemonsmith		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chd_daemonsmith_message	Daemonsmith Foundry: the enemy army is a daemonsmith foundry of the infernal guard and daemon-bound war engines of Hashut.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chd_daemonsmith_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_icecourt	[[col:red]]Ice Court: the enemy army is a muster of the Ice Court made up of the ice guard, tzar guard and the beasts of the frozen north.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_icecourt		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_icecourt_message	Ice Court: the enemy army is a muster of the Ice Court made up of the ice guard, tzar guard and the beasts of the frozen north.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_icecourt_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_witchwood	[[col:red]]Witchwood Folk: the enemy army is a band of witchwood folk of Kislevite warriors, akshina ambushers and the things in the woods.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_witchwood		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_witchwood_message	Witchwood Folk: the enemy army is a band of witchwood folk of Kislevite warriors, akshina ambushers and the things in the woods.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_witchwood_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_maneaters	[[col:red]]Maneater Company: the enemy army is a maneater company of veteran ogre mercenaries with leadbelchers and gnoblar hirelings.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_maneaters		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_maneaters_message	Maneater Company: the enemy army is a maneater company of veteran ogre mercenaries with leadbelchers and gnoblar hirelings.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_maneaters_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_beastriders	[[col:red]]Beastrider Lodge: the enemy army is a beastrider lodge of mournfangs, stonehorns and thundertusks of the Mountains of Mourn.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_beastriders		false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_beastriders_message	Beastrider Lodge: the enemy army is a beastrider lodge of mournfangs, stonehorns and thundertusks of the Mountains of Mourn.	false
+scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_beastriders_message		false

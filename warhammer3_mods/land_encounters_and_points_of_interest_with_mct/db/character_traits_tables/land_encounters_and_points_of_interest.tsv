@@ -54,3 +54,5 @@ land_encounters_trait_daemonic_gifts_mor_def	0	false	999	tomb_kings	1		false
 land_enc_trait_tower_climber	0	false	999	trait_good	1		false
 land_enc_trait_tower_daemon_marked	0	false	999	chaos	1		false
 land_enc_trait_tower_towerbreaker	0	false	999	trait_good	1		false
+land_enc_trait_spot_shrine_sworn	0	false	999	trait_good	1		false
+land_enc_trait_spot_trophy_hunter	0	false	999	trait_good	1		false

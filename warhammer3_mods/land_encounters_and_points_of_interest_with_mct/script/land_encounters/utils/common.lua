@@ -145,7 +145,7 @@ ALLIED_REINFORCEMENTS_PERMITTED_TYPE = 3
 
 
 --- Encounter difficulty keys from easiest to hardest.
-DIFFICULTY_KEYS = { "easy", "medium", "hard" }
+DIFFICULTY_KEYS = require("script/land_encounters/utils/steps").DIFFICULTIES
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,6 +164,27 @@ function pick_weighted(entries)
         if roll <= acc then return entry[1] end
     end
     return entries[#entries][1]
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Text
+
+--- Joins lines into a block of a dilemma description: one per line with a blank line after, or "" for none.
+--- @param lines table The lines.
+--- @returns string The block.
+function text_block(lines)
+    return #lines > 0 and table.concat(lines, "\n") .. "\n\n" or ""
+end
+
+--- Lists a set's keys in order, e.g. for a log line.
+--- @param set table A key -> true set.
+--- @returns table The keys, sorted.
+function sorted_keys(set)
+    local keys = {}
+    for key in pairs(set) do keys[#keys + 1] = key end
+    table.sort(keys)
+    return keys
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

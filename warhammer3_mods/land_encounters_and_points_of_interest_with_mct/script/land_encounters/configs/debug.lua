@@ -22,11 +22,14 @@ M.floor_kill_units = {}
 --- Spot kind every encounter spot becomes instead of rolling the MCT battle chance, either { "battle" } or { "treasure" }.
 M.spot_kind = {}
 
---- Treasure incident keys drawn first on every treasure spot, e.g. { "land_enc_incident_hidden_temple" }.
-M.force_treasure_events = {}
-
 --- Battle category keys drawn first on every battle spot while they can fire, e.g. { "bandits" }.
 M.force_battle_categories = {}
+
+--- Battle modifier keys (configs/battle_modifiers.lua) every fight carries instead of rolling its own, e.g. { "blood_moon" }.
+M.force_battle_modifiers = {}
+
+--- Faction shorthand every battle spot's enemy is instead of its own, e.g. { "brt" } for an army with plenty of cavalry.
+M.force_battle_faction = {}
 
 --- Difficulty key every battle spot uses instead of the current one, e.g. { "hard" }.
 M.battle_difficulty = {}
@@ -36,5 +39,28 @@ M.smithy_cooldown = {}
 
 --- Forge level every Smithy acts as instead of its own, e.g. { 3 }.
 M.smithy_level = {}
+
+--- Spot offer keys drawn first on every treasure site after its signature offer, while they are eligible, e.g. { "send_gifts", "roll_the_bones" }.
+M.force_spot_offers = {}
+
+--- Treasure site key every treasure spot opens instead of a random one, e.g. { "witchs_hut" }.
+M.force_treasure_site = {}
+
+--- Battle spot event rolls that always hit, e.g. { "before" } for the pre-battle offers.
+M.battle_event_rolls = {}
+
+--- Gold every paid site and battle offer costs instead of its own, e.g. { 10000 } to see them unaffordable. Their lines still name their own cost.
+M.spot_cost = {}
+
+--- Allied-army test battle every battle spot starts instead of its dilemma, with results in the script log, e.g. { "relief_column" }.
+--- "side_by_side": we attack, and the allied army spawned beside us is not called onto the field early, to see whether it deploys with us or
+--- marches in from the map edge. "relief_column": the allied army attacks the enemy while our lord stands a few hexes off, to see whether we
+--- get the battle and where each army starts. Both start the ally at 50% strength with War Rites on it, to see whether ally changes carry over.
+--- "relief_column_bundle": the relief column with a reinforcement-time bundle (-100%) on the ally instead of the scripted arrival call.
+--- "side_by_side_bundle": side by side with the same bundle on our army, so the ally arrives at once without the scripted call.
+--- "ambush_ally": the enemy ambushes us with the allied escort beside us and the same bundle on our army, to see whether an ally joins a
+--- battle we defend.
+--- Listed modes take turns, one per battle spot entered. The turns start over each time the game loads.
+M.ally_test = {}
 
 return M

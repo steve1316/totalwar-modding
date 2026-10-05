@@ -6,9 +6,19 @@ require("script/land_encounters/core/managers")
 
 local complex_continuity_events = require("script/land_encounters/configs/events").complex_continuity
 local item_pool = require("script/land_encounters/core/item_pool")
-local hard_legendary_chance = require("script/land_encounters/configs/battle_categories").hard_legendary_chance
+local battle_categories = require("script/land_encounters/configs/battle_categories")
+local offer_effects = require("script/land_encounters/core/offer_effects")
+local realm_effects = require("script/land_encounters/core/realm_effects")
 
 local battle_picker = require("script/land_encounters/core/battle_picker")
+local debug_config = require("script/land_encounters/configs/debug")
+local army_generator = require("script/land_encounters/core/army_generator")
+local spot_battles = require("script/land_encounters/features/spot_battles")
+local spot_offers = require("script/land_encounters/features/spot_offers")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
+local victory_gold = require("script/land_encounters/configs/victory_gold")
+local round_gold = require("script/land_encounters/configs/tower_data").round_gold
+local spoils_site = require("script/land_encounters/configs/spot_offers").spoils
 
 local Army = require("script/land_encounters/core/army")
 
@@ -22,6 +32,9 @@ local BattleEventDelegate = {
 }
 
 local FIRST_OPTION = 0
+
+--- Units in the allied army of an allied-army test battle.
+local ALLY_TEST_UNITS = 8
 local ERROR_BATTLE_CLEAN_UP_EVENT = {
     incident = "land_enc_incident_battle_clean_up_event",
     targets = {
@@ -39,7 +52,8 @@ function BattleEventDelegate:get_cached_player_character()
 end
 
 --- Routes a freshly entered battle spot to the right code path: human-general -> dilemma, AI ->
---- silent loot, human-non-general -> show-only event-feed message. Returns whether the spot should be removed.
+--- silent loot, human-non-general -> show-only event-feed message. Returns whether the spot should be removed. A human general's dilemma
+--- is built in script (features/spot_battles.lua), with pre-battle offers when the pre-battle roll hits, else as plain Fight or Avoid.
 --- @param area_and_character_info table The AreaEntered context with area_key and family_member.
 --- @param spot_info table A spot_info record for the spot being entered.
 --- @returns boolean True when the spot should be deactivated after dispatch.
@@ -49,8 +63,14 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
     local triggering_faction_name = triggering_faction:name()
 
     if is_human_and_it_is_its_turn(triggering_faction) and self:character_is_general_and_can_trigger_dilemma(self.cached_player_character) then
+        if debug_config.ally_test[1] then
+            --- Listed modes take turns, one per battle spot entered.
+            self.ally_test_runs = (self.ally_test_runs or 0) + 1
+            self:start_ally_test(self.cached_player_character, spot_info, debug_config.ally_test[(self.ally_test_runs - 1) % #debug_config.ally_test + 1])
+            return true
+        end
         self.cached_event = battle_picker.pick()
-        cm:trigger_dilemma(triggering_faction_name, self.cached_event.dilemma)
+        spot_battles.open(self.cached_event, self.cached_player_character, triggering_faction, spot_battles.roll())
         return true
     elseif not triggering_faction:is_human() then
         --- AI: silently grants a small loot.
@@ -78,36 +98,80 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
     end
 end
 
+--- Starts an allied-army test battle (configs/debug.lua `ally_test`) instead of the spot's dilemma: the encounter gets an allied army of
+--- `ALLY_TEST_UNITS` units, and the invasion manager runs the test's setup when it spawns the armies. Results go to the script log.
+--- @param character character The lord who entered the spot.
+--- @param spot_info table A spot_info record for the spot.
+--- @param mode string "side_by_side" or "relief_column".
+function BattleEventDelegate:start_ally_test(character, spot_info, mode)
+    self.cached_player_character = character
+    self.cached_event = battle_picker.pick(nil, { no_allies = true })
+    self.cached_event.intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE
+    self.cached_event.ally_options = army_generator.ally_options(ALLY_TEST_UNITS)
+    self.invasion_battle_manager.ally_test = { mode = mode, player_cqi = character:command_queue_index() }
+    log("ally test: " .. mode .. " with a " .. self.cached_event.category .. " battle for lord " .. character:command_queue_index() .. " at ("
+        .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
+    self:start_battle(spot_info)
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Dilemmas
 
---- Handles the player's dilemma choice: option 0 spawns + fires the battle, anything else triggers the avoidance incident.
+--- Handles the player's dilemma choice: Fight spawns + fires the battle, anything else triggers the avoidance incident. A dilemma with
+--- pre-battle offers is routed by choice key, and a taken offer fights with its changes on the battle event.
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, spot_info)
     local choice = dilemma_choice_and_faction_info:choice()
-    if choice == FIRST_OPTION then
+    local action = spot_battles.take(dilemma_choice_and_faction_info:faction():name(), dilemma_choice_and_faction_info:choice_key(), self.cached_event)
+    --- A mission was taken: the same dilemma is already open again.
+    if action == "reopen" then return end
+    if action == "fight" or (action == nil and choice == FIRST_OPTION) then
         out("DEBUG - trigger_dilemma_event_given_choice dilemma: " .. dilemma_choice_and_faction_info:dilemma())
         out("DEBUG - trigger_dilemma_event_given_choice choice: " .. dilemma_choice_and_faction_info:choice())
-        --- Generate the army and confirm a spawn location exists before firing the battle.
-        local offensive_army = self:get_offensive_army()
-        out("DEBUG - offensive_army generated")
-        if self.invasion_battle_manager:can_generate_battle(offensive_army, spot_info.coordinates) then
-            self.is_triggered = true
-
-            self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
-            self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
-            self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
-        else
-            --- No valid spawn location, so we trigger the default removal incident.
-            self:trigger_battle_removal_incident(spot_info)
-        end
+        self:start_battle(spot_info)
     else
         self:trigger_battle_avoidance_incident(spot_info)
     end
 end
 
+
+--- Starts the battle the cached event describes at a spot: generates the army, readies ours with any pre-battle offers, fires the battle and
+--- routes its result. With no valid spawn location the default removal incident fires instead.
+--- @param spot_info table A spot_info record with the battle's coordinates.
+function BattleEventDelegate:start_battle(spot_info)
+    local offensive_army = self:get_offensive_army()
+    out("DEBUG - offensive_army generated")
+    if not self.invasion_battle_manager:can_generate_battle(offensive_army, spot_info.coordinates) then
+        self:trigger_battle_removal_incident(spot_info)
+        return
+    end
+    self.is_triggered = true
+    --- Kept on the event, so the ally's culture is known after a load, when the army is built again with another ally.
+    local ally = offensive_army.reinforcing_ally_armies[1]
+    self.cached_event.ally_faction = ally and ally.faction or nil
+    spot_battles.prepare_battle(self.cached_event, self.cached_player_character:command_queue_index())
+    self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
+    --- Handed over once the army is generated, since Night terrors and the missions pick targets from its units.
+    spot_battles.hand_to_battle(self.cached_event, offensive_army)
+    self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
+    self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
+end
+
+--- Starts a guardian battle at a treasure site (features/spot_offers.lua: Wake the Guardian, Oath at the Altar): a battle picked as for a battle spot, whose army attacks
+--- the lord at once. Its result is a battle spot's: the victory reward and the spoils roll.
+--- @param character character The lord the guardian attacks.
+--- @param spot_info table A spot_info record with the site's coordinates.
+--- @param difficulty string|nil The battle's difficulty, or nil for the current one.
+function BattleEventDelegate:start_guardian_battle(character, spot_info, difficulty)
+    self.cached_player_character = character
+    self.cached_event = battle_picker.pick(difficulty, { no_allies = true })
+    self.cached_event.intervention = INTERCEPTION_TYPE
+    log("spot: the guardian wakes and attacks lord " .. character:command_queue_index() .. " with a " .. self.cached_event.category .. " battle at ("
+        .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
+    self:start_battle(spot_info)
+end
 
 --- Fires the generic clean-up incident when a battle could not be spawned (no valid spawn location).
 --- @param spot_info table A spot_info record for the triggering spot.
@@ -122,10 +186,15 @@ function BattleEventDelegate:trigger_battle_avoidance_incident(spot_info)
     trigger_incident(self.cached_event.avoidance_incident, self.cached_event.avoidance_targets, spot_info, self.cached_player_character)
 end
 
---- Called by InvasionBattleManager after BattleCompleted. On player win, fires the victory incident.
+--- Called by InvasionBattleManager after BattleCompleted. On player win, pays the missions met and fires the victory incident. Either way
+--- the pre-battle offers' one-battle bundles come off and everything handed to the battle script is cleared.
 --- @param player_won_battle boolean True when the player was victorious.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
+    local character = self.cached_player_character
+    local general_cqi = character and character.command_queue_index and character:command_queue_index() or nil
+    if player_won_battle and general_cqi then spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi) end
+    spot_battles.end_battle(self.cached_event, general_cqi)
     if player_won_battle then
         self:trigger_victory_incident(spot_info)
     end
@@ -133,7 +202,7 @@ function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle
 end
 
 
---- Fires the victory incident, then runs any continuity follow-up and AI balancing.
+--- Fires the victory incident, grants the victory items, may open the spoils pick, then runs any continuity follow-up and AI balancing.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_victory_incident(spot_info)
     --- The cached player can be cleared by a battle reload, so resolve it here too.
@@ -141,8 +210,19 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
         self.cached_player_character = get_player_faction_character_closest_to_spot(spot_info)
     end
 
-    trigger_incident(self.cached_event.victory_incident, self.cached_event.victory_targets, spot_info, self.cached_player_character)
+    local gift = self:pick_ally_gift(self.cached_player_character)
+    if gift then
+        self:trigger_victory_with_gift(self.cached_player_character, gift, spot_info)
+    else
+        trigger_incident(self.cached_event.victory_incident, self.cached_event.victory_targets, spot_info, self.cached_player_character)
+    end
     self:grant_victory_items(self.cached_player_character:faction())
+    self:grant_ally_rewards(self.cached_player_character, spot_info)
+    self:pay_modifier_gold(self.cached_player_character:faction())
+    --- The spoils pick (features/spot_offers.lua) follows the victory reward when its roll hits.
+    if self.cached_player_character:faction():is_human() and spot_battles.roll_spoils() then
+        spot_offers.open_site(self.cached_player_character, self.cached_player_character:faction(), spoils_site, self.cached_event)
+    end
     --- Complex events trigger a balancing act on enemy AI factions.
     local continuity = self:check_if_incident_has_continuity(self.cached_event.victory_incident, self.cached_player_character:faction())
     if continuity ~= nil then
@@ -162,11 +242,98 @@ function BattleEventDelegate:grant_victory_items(faction)
     if victory_items then
         rewards = item_pool.pick_items(faction:name(), victory_items.rarities, victory_items.count)
     end
-    if self.cached_event.difficulty == "hard" and random_chance(hard_legendary_chance) then
+    if self.cached_event.difficulty == "hard" and random_chance(battle_categories.hard_legendary_chance) then
         table.insert(rewards, item_pool.pick_legendary_item(faction:name()))
     end
     for _, ancillary in ipairs(rewards) do
         cm:add_ancillary_to_faction(faction, ancillary, false)
+    end
+end
+
+--- Finds the nearest real faction of the Ally in Peril battle's ally culture that is not at war with us. The ally itself fights under a
+--- stand-in faction that only exists for the battle.
+--- @param faction faction Our faction.
+--- @param spot_info table A spot_info record for the battle's spot.
+--- @returns faction|nil The faction, or nil when the ally is unknown or none is found.
+function BattleEventDelegate:ally_kin(faction, spot_info)
+    local stand_in = self.cached_event.ally_faction and cm:get_faction(self.cached_event.ally_faction)
+    if not stand_in or stand_in:is_null_interface() then return nil end
+    local culture = stand_in:culture()
+    return realm_effects.nearest_factions(faction, spot_info.coordinates[1], spot_info.coordinates[2], 1,
+        function(other) return other:culture() == culture and not other:at_war_with(faction) end)[1]
+end
+
+--- Picks the surviving allied unit that joins us on an `ally.gift_unit` win, when our army has room.
+--- @param character character Our lord.
+--- @returns string|nil The unit key, or nil for none.
+function BattleEventDelegate:pick_ally_gift(character)
+    local ally = self.cached_event.ally
+    if not ally or not ally.gift_unit or not self.cached_event.ally_faction then return nil end
+    local survivors = self.invasion_battle_manager.ally_survivors or {}
+    if #survivors == 0 then
+        log("spot battle: no allied unit survived to join us")
+        return nil
+    end
+    if not offer_effects.has_room(character:command_queue_index(), 1) then
+        log("spot battle: our army has no room for an allied unit")
+        return nil
+    end
+    return survivors[random_number(#survivors)]
+end
+
+--- Fires the victory incident built in script, so the allied unit joining us shows as a card beside the incident's own gold. When it cannot
+--- be built, the plain incident fires and the unit joins in script.
+--- @param character character Our lord.
+--- @param gift string The joining unit's key.
+--- @param spot_info table A spot_info record for the battle's spot.
+function BattleEventDelegate:trigger_victory_with_gift(character, gift, spot_info)
+    local event = self.cached_event
+    local ok, err = pcall(function()
+        local builder = cm:create_incident_builder(event.victory_incident)
+        local payload = cm:create_payload()
+        payload:treasury_adjustment(victory_gold[event.victory_incident] or 0)
+        payload:add_unit(character:military_force(), gift, 1, 0)
+        builder:set_payload(payload)
+        builder:add_target("default", character)
+        cm:launch_custom_incident_from_builder(builder, character:faction())
+    end)
+    if ok then
+        log("spot battle: the surviving ally " .. gift .. " joins our army, shown on " .. event.victory_incident)
+        return
+    end
+    log("spot battle: " .. event.victory_incident .. " could not be built (" .. tostring(err) .. "), the ally " .. gift .. " joins in script")
+    trigger_incident(event.victory_incident, event.victory_targets, spot_info, character)
+    cm:grant_unit_to_character(cm:char_lookup_str(character), gift)
+end
+
+--- Pays the change the battle's modifiers make to its victory gold: more for harmful ones, less for helpful ones, rounded to 50.
+--- @param faction faction Our faction.
+function BattleEventDelegate:pay_modifier_gold(faction)
+    local modifiers = self.cached_event.modifiers
+    if not modifiers or #modifiers == 0 then return end
+    local base = victory_gold[self.cached_event.victory_incident] or 0
+    local change = round_gold(base * (battle_modifiers.gold_multiplier(modifiers) - 1))
+    if change ~= 0 then cm:treasury_mod(faction:name(), change) end
+    log("spot battle: modifiers " .. table.concat(modifiers, ", ") .. " change the victory gold " .. base .. " by " .. change)
+end
+
+--- Rewards an Ally in Peril win with `ally.relations` with the ally's kin, or gold when there is none. A battle whose ally never spawned
+--- rewards nothing extra.
+--- @param character character Our lord.
+--- @param spot_info table A spot_info record for the battle's spot.
+function BattleEventDelegate:grant_ally_rewards(character, spot_info)
+    local ally = self.cached_event.ally
+    if not ally or not self.cached_event.ally_faction then return end
+    local faction = character:faction()
+    if ally.relations then
+        local kin = self:ally_kin(faction, spot_info)
+        if kin then
+            realm_effects.change_relations(faction:name(), kin:name(), ally.relations)
+        else
+            local gold = ally.relations * battle_categories.ally_relations_gold
+            cm:treasury_mod(faction:name(), gold)
+            log("spot battle: no kin of the ally " .. self.cached_event.ally_faction .. " is near and at peace, " .. gold .. " gold instead")
+        end
     end
 end
 
@@ -274,7 +441,8 @@ function BattleEventDelegate:add_ancillary_to_feuding_factions(feuding_factions,
     end
 end
 
---- Builds the encounter Army from the cached battle event. Allies are picked from the triggering player's subculture when it is known.
+--- Builds the encounter Army from the cached battle event, with any pre-battle sabotage taken. Allies are picked from the triggering
+--- player's subculture when it is known.
 --- @returns Army A new Army instance built from the cached event.
 function BattleEventDelegate:get_offensive_army()
     out("DEBUG - get_offensive_army Beginning process to generate the encounter force.")
@@ -282,7 +450,10 @@ function BattleEventDelegate:get_offensive_army()
     if self.cached_player_character and self.cached_player_character.faction then
         player_subculture = self.cached_player_character:faction():subculture()
     end
-    return Army:new_from_event(self.cached_event, player_subculture)
+    local army = Army:new_from_event(self.cached_event, player_subculture)
+    --- The battle manager puts the pre-battle offers' sabotage on the army once it spawns.
+    army.sabotage = self.cached_event
+    return army
 end
 
 
@@ -318,6 +489,8 @@ function BattleEventDelegate:reinstate_event_if_able(previous_state)
         self.invasion_battle_manager:set_auxiliary_army_for_reset(offensive_army)
         self.invasion_battle_manager:mark_battle_forces_for_removal(offensive_army)
         self.invasion_battle_manager:reset_state_post_battle(self, "BattleSpot", spot_info, offensive_army)
+        --- What the battle script was handed is not in the save, so it is handed over again.
+        spot_battles.hand_to_battle(self.cached_event, nil)
     end
 end
 

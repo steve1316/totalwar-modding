@@ -51,12 +51,24 @@ local Army = {
     units_pool = {},
     units = {},
     unit_experience_amount = 0,
+    --- A lore army's lore unit keys, as a set, or nil for any other army.
+    lore_units = nil,
+    --- The extra ranks a lore army's lore units get once it spawns.
+    lore_ranks = 0,
     --- Lord pool / resolved lord
     lord_pool = {},
     lord = {},
     --- Reinforcement armies
     reinforcing_ally_armies = {},
     reinforcing_enemy_armies = {},
+    --- An Ally in Peril ally only: true when it is a relief column, which holds the field until we arrive.
+    relief = false,
+    --- An Ally in Peril ally only: the share of full strength it starts at, or nil for full strength.
+    start_strength = nil,
+    --- An allied army only: bundles on it for the battle (Arm the Allies, battle modifiers), or nil.
+    ally_bundles = nil,
+    --- An allied army only: ranks its regular units gain (Lend Them Veterans), or nil.
+    ally_ranks = nil,
     heroes = {},
     skill_overrides = {},
 }
@@ -187,7 +199,8 @@ function Army:new_from_event(event, player_subculture)
     local intervention_type = event.intervention
     local ally_force_data = nil
     if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
-        local ally_faction = pick_ally_faction(player_subculture, faction)
+        --- A hired allied army that rolled its theme (Allies in the Dark) already has its faction.
+        local ally_faction = event.ally_options and event.ally_options.faction or pick_ally_faction(player_subculture, faction)
         if ally_faction == nil then
             out("DEBUG - Allied intervention picked but no ally faction available; demoting to INTERCEPTION_TYPE.")
             intervention_type = INTERCEPTION_TYPE
@@ -218,6 +231,16 @@ function Army:new_from_event(event, player_subculture)
         end
     end
 
+    --- The ally knows its part: an Ally in Peril relief column and the share of strength it starts at, and the pre-battle offers' bundle
+    --- and ranks.
+    local ally = reinforcing_ally_armies[1]
+    if ally then
+        ally.relief = event.ally ~= nil and event.ally.mode == "relief"
+        ally.start_strength = event.ally_strength
+        ally.ally_bundles = event.ally_bundles
+        ally.ally_ranks = event.ally_ranks
+    end
+
     local army = Army:create_from(force_data)
     army.reinforcing_ally_armies = reinforcing_ally_armies
     army.reinforcing_enemy_armies = reinforcing_enemy_armies
@@ -241,6 +264,8 @@ function Army:create_from(force)
         units_pool = force.units,
         units = {},
         unit_experience_amount = force.unit_experience_amount,
+        lore_units = force.lore_units,
+        lore_ranks = force.lore_ranks or 0,
         lord_pool = force.lord,
         --- Lord fields are populated later by randomize_lord (subtype + level). The name and
         --- equipment fields are kept at empty defaults so downstream consumers can read them

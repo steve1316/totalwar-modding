@@ -1,6 +1,5 @@
---- Registers every core:add_listener used by the mod: FactionTurnStart, AreaEntered, the two
---- DilemmaChoiceMadeEvent listeners (battle + POI), and the MctInitialized hook. Manager
---- instances are populated by the entry point's pre_first_tick_callback.
+--- Registers every core:add_listener used by the mod: FactionTurnStart, AreaEntered, the DilemmaChoiceMadeEvent listeners (battle, smithy,
+--- treasure site and tower), and the MctInitialized hook. Manager instances are populated by the entry point's pre_first_tick_callback.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/core/mct")
@@ -10,6 +9,8 @@ local IS_PERSISTENT_LISTENER = true
 local events = require("script/land_encounters/configs/events")
 local battle_dilemma_keys = require("script/land_encounters/configs/battle_categories").dilemma_keys
 local smithy_events = events.smithy
+local spot_offers = require("script/land_encounters/features/spot_offers")
+local spot_battles = require("script/land_encounters/features/spot_battles")
 
 --- Tower dilemma key -> true, for the tower choice listener.
 local tower_dilemma_keys = {}
@@ -47,6 +48,7 @@ function M.register()
                 M.point_of_interest_event_manager:update_state_given_turn_passing()
             end
             M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
+            spot_offers.on_faction_turn_start(context:faction():name())
         end,
         IS_PERSISTENT_LISTENER
     )
@@ -128,6 +130,20 @@ function M.register()
     )
 
 
+    --- Treasure site dilemma choice (an offer or Walk away).
+    core:add_listener(
+        "land_enc_site_dilemma_choice",
+        "DilemmaChoiceMadeEvent",
+        function(dilemma_choice_and_faction_info)
+            return spot_offers.is_site_dilemma(dilemma_choice_and_faction_info:dilemma())
+        end,
+        function(dilemma_choice_and_faction_info)
+            spot_offers.take(dilemma_choice_and_faction_info:faction():name(), dilemma_choice_and_faction_info:choice_key())
+        end,
+        IS_PERSISTENT_LISTENER
+    )
+
+
     --- Tower dilemma choice (enter, go deeper or leave).
     core:add_listener(
         "land_enc_tower_dilemma_choice",
@@ -142,14 +158,19 @@ function M.register()
     )
 
 
-    --- Tower offers taken on the open go-deeper dilemma get greyed-out buttons once the dilemma panel has built them. The panel is the local
-    --- player's, so this UI-only step reads the local faction.
+    --- Tower offers taken on the open go-deeper dilemma, and site or battle offers the treasury cannot pay, get greyed-out buttons once the
+    --- dilemma panel has built them. The panel is the local player's, so this UI-only step reads the local faction.
     core:add_listener(
         "land_enc_tower_grey_out_taken",
         "PanelOpenedCampaign",
         function(context) return context.string == "events" end,
         function()
-            cm:callback(function() M.point_of_interest_event_manager:grey_out_taken_tower_offers(cm:get_local_faction_name(true)) end, 0.1)
+            cm:callback(function()
+                local faction_name = cm:get_local_faction_name(true)
+                M.point_of_interest_event_manager:grey_out_taken_tower_offers(faction_name)
+                spot_offers.grey_out_unaffordable(faction_name)
+                spot_battles.grey_out_unaffordable(faction_name)
+            end, 0.1)
         end,
         IS_PERSISTENT_LISTENER
     )

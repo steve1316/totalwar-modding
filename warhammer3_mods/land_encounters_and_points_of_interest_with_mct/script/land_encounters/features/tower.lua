@@ -14,6 +14,10 @@ local TowerSpot = require("script/land_encounters/core/spot").TowerSpot
 local Army = require("script/land_encounters/core/army")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_offers = require("script/land_encounters/features/tower_offers")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
+local offer_effects = require("script/land_encounters/core/offer_effects")
+local army_generator = require("script/land_encounters/core/army_generator")
+local launch_dilemma = require("script/land_encounters/core/dilemmas").launch
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
@@ -131,42 +135,6 @@ local function faction_picker(taken)
         next_index = next_index + 1
         return queue[next_index - 1]
     end
-end
-
---- Launches a custom dilemma. Each choice shows text lines and can pay gold, items and units when chosen.
---- @param key string The dilemma key.
---- @param choices table An array of { key = "FIRST", lines = { `dummy_` keys }, gold = number or nil, items = { ancillary keys } or nil,
---- units = { force = military force, keys = { unit keys } } or nil }. Units show as cards and join that army.
---- @param faction_name string The faction to show the dilemma to.
-local function launch_dilemma(key, choices, faction_name)
-    local faction = cm:get_faction(faction_name)
-    local builder = cm:create_dilemma_builder(key)
-    local payload = cm:create_payload()
-    for _, choice in ipairs(choices) do
-        if choice.gold and choice.gold > 0 then
-            payload:treasury_adjustment(choice.gold)
-        end
-        for _, item in ipairs(choice.items or {}) do
-            payload:faction_ancillary_gain(faction, item)
-        end
-        if choice.units then
-            --- One card per unit key, with the number of copies, in the order the units were sworn.
-            local counts, order = {}, {}
-            for _, unit in ipairs(choice.units.keys) do
-                if not counts[unit] then order[#order + 1] = unit end
-                counts[unit] = (counts[unit] or 0) + 1
-            end
-            for _, unit in ipairs(order) do
-                payload:add_unit(choice.units.force, unit, counts[unit], 0)
-            end
-        end
-        for _, line in ipairs(choice.lines or {}) do
-            payload:text_display(line)
-        end
-        builder:add_choice_payload(choice.key, payload)
-        payload:clear()
-    end
-    cm:launch_custom_dilemma_from_builder(builder, faction)
 end
 
 --- Picks the gold multiplier for the share of the army lost on a floor.
@@ -602,6 +570,8 @@ function TowerEventDelegate:launch_floor(faction_name)
     log("tower: floor " .. delve.floor .. " army has " .. delve.floor_army_size .. " units: " .. table.concat(delve.floor_units, ", "))
     --- Handed over once the units are known, since Night terrors picks its targets from them.
     tower_missions.clear_reports()
+    delve.modifier_bundles = battle_modifiers.bundles(delve.modifiers, "ours")
+    for _, bundle in ipairs(delve.modifier_bundles) do tower_army.apply_bundle(delve.general_cqi, bundle) end
     tower_offers.hand_buffs_to_battle(delve)
     ibm:mark_battle_forces_for_removal(army)
     ibm:reset_state_post_battle(self, "TowerSpot", nil, army)
@@ -620,9 +590,8 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     local tower = self:tower_in_zone(delve.zone_name)
     local general = cm:get_character_by_cqi(delve.general_cqi)
     local next_floor = delve.next_floor or {}
-    local floor = next_floor.record or tower_data.floors[floor_number]
     --- The debug overrides (configs/debug.lua) replace the difficulty and budget for in-game testing.
-    local difficulty = debug_config.floor_difficulty[floor_number] or floor.difficulty
+    local floor, difficulty = tower_data.floor_difficulty(next_floor, floor_number, debug_config)
     local budget = #debug_config.floor_budget == 2 and debug_config.floor_budget or tower_data.budget_by_difficulty[difficulty]
     local budget_multiplier = next_floor.budget or 1
     local sabotage = tower_offers.sabotage_options(next_floor)
@@ -630,9 +599,8 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     local ally_options = nil
     if type(next_floor.ally) == "table" then
         local units = random_number(next_floor.ally[2], next_floor.ally[1]) - 1
-        local per_unit = offers_data.ally_gold_per_unit
-        ally_options = { no_heroes = true, unit_count = units, budget_range = { units * per_unit[1], units * per_unit[2] } }
-        log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units")
+        ally_options = battle_modifiers.ally_options(units, next_floor.ally_theme)
+        log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units" .. battle_modifiers.ally_theme_log(next_floor.ally_theme))
     end
     local army = Army:new_from_event({
         dilemma = "tower",
@@ -646,12 +614,15 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         fewer_units = sabotage.fewer_units,
         max_tier = sabotage.max_tier,
         min_tier = sabotage.min_tier,
+        strip_types = sabotage.strip_types,
         lord_subtype = sabotage.lord_subtype,
         ally_options = ally_options,
+        ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
+        composition = battle_modifiers.composition(delve.modifiers),
     }, general:faction():subculture())
-    --- The battle manager puts these on the floor army once it spawns.
-    army.enemy_strength = sabotage.enemy_strength
-    army.enemy_bundles = sabotage.enemy_bundles
+    --- The battle manager puts these on the floor army once it spawns, with the battle modifiers' enemy bundles.
+    for _, bundle in ipairs(battle_modifiers.bundles(delve.modifiers, "enemy")) do offer_effects.merge_sabotage(sabotage, { enemy_bundle = bundle }) end
+    army.sabotage = sabotage
     if next_floor.mirror then
         army.units_pool, delve.mirror_copied = tower_offers.mirror_units(delve)
         log("tower: the floor " .. floor_number .. " army mirrors " .. delve.mirror_copied .. " of our units")
@@ -684,7 +655,7 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local floor = next_floor.record or tower_data.floors[delve.floor]
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0
-    local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1)
+    local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1) * battle_modifiers.gold_multiplier(delve.modifiers)
     if next_floor.double_or_nothing then
         gold_multiplier = gold_multiplier * (loss < next_floor.double_or_nothing and 2 or 0)
     end
@@ -776,6 +747,8 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         launch_dilemma(EVENT_CLAIM, { claim }, faction_name)
         return
     end
+    --- The next floor's battle modifiers, rolled before its offers so they can keep some out.
+    delve.modifiers = battle_modifiers.roll({ faction = self:tower_in_zone(delve.zone_name).faction, difficulty = tower_offers.next_floor_difficulty(delve) })
     delve.offers = tower_offers.draw(delve, faction_name, self:tower_in_zone(delve.zone_name))
     delve.results = results
     self:launch_deeper(faction_name)
@@ -807,7 +780,15 @@ end
 --- Sends a Daemon's deal army at the delving faction's capital: an army of a random Chaos faction from the `daemons_deal` offer, spawned
 --- somewhere in the capital's province as a lasting invasion that stays until beaten. A faction with no capital is spared.
 --- @param faction_name string The delving faction.
-function TowerEventDelegate:send_daemon_army(faction_name)
+--- @param count number|nil How many armies to send, each under its own invasion name. nil sends one.
+function TowerEventDelegate:send_daemon_army(faction_name, count)
+    for index = 1, count or 1 do self:send_one_daemon_army(faction_name, index) end
+end
+
+--- Sends one Daemon's deal army, see `send_daemon_army`.
+--- @param faction_name string The delving faction.
+--- @param index number Which of this turn's armies it is. The second and later add it to their invasion names.
+function TowerEventDelegate:send_one_daemon_army(faction_name, index)
     local faction = cm:get_faction(faction_name)
     local region = faction and faction:home_region()
     if not region or region:is_null_interface() then
@@ -815,6 +796,7 @@ function TowerEventDelegate:send_daemon_army(faction_name)
         return
     end
     local deal = offers_data.by_key.daemons_deal
+    local suffix = index > 1 and "_" .. index or ""
     local shorthand = deal.factions[random_number(#deal.factions)]
     local army = Army:new_from_event({
         dilemma = "tower",
@@ -822,8 +804,8 @@ function TowerEventDelegate:send_daemon_army(faction_name)
         difficulty = deal.difficulty,
         budget_range = tower_data.budget_by_difficulty[deal.difficulty],
         intervention = INTERCEPTION_TYPE,
-        force_identifier = "tower_daemon_force_" .. faction_name,
-        invasion_identifier = "tower_daemon_" .. faction_name .. "_" .. cm:turn_number(),
+        force_identifier = "tower_daemon_force_" .. faction_name .. suffix,
+        invasion_identifier = "tower_daemon_" .. faction_name .. "_" .. cm:turn_number() .. suffix,
     }, faction:subculture())
     local x, y, landing = province_spawn_point(army.faction, region, deal.spawn_distance)
     if x == -1 then
@@ -894,7 +876,7 @@ function TowerEventDelegate:end_delve(faction_name, outcome, in_battle_sequence)
     tower:show_message(faction_name, outcome)
     if outcome == "tower_cleared" then
         local rank = tower_data.floors[#tower_data.floors].freed_hero_rank
-        if rank then tower_lords.free_hero(delve.general_cqi, faction_name, { tower.faction, tower_offers.culture_shorthand(faction_name) }, rank) end
+        if rank then tower_lords.free_hero(delve.general_cqi, faction_name, { tower.faction, offer_effects.culture_shorthand(faction_name) }, rank) end
         if delve.epithet then
             local epithet = offers_data.by_key.epithet
             tower_lords.add_trait(delve.general_cqi, epithet.trait, 1, true)
@@ -905,7 +887,8 @@ function TowerEventDelegate:end_delve(faction_name, outcome, in_battle_sequence)
     --- After the freed hero, who comes from the faction just beaten.
     self:reroll_faction(tower)
     --- Sent last, so a failed spawn cannot leave the delve half-ended.
-    if delve.daemons_deal then self:send_daemon_army(faction_name) end
+    --- An older save holds true for one army.
+    if delve.daemons_deal then self:send_daemon_army(faction_name, delve.daemons_deal == true and 1 or delve.daemons_deal) end
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

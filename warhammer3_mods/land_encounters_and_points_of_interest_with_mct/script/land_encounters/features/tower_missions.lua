@@ -7,6 +7,7 @@ local offers_data = require("script/land_encounters/configs/tower_offers")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local tower_army = require("script/land_encounters/features/tower_army")
 local item_pool = require("script/land_encounters/core/item_pool")
+local offer_effects = require("script/land_encounters/core/offer_effects")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,17 +22,21 @@ local RIVAL_SVR_KEY = "land_enc_tower_rival_kills"
 --- Prefix of the loc keys holding the mission and rival result lines.
 local RESULT_LOC_PREFIX = "campaign_localised_strings_string_land_enc_tower_result_"
 
-local M = {}
+local M = {
+    --- svr key of the mission targets, shared with the battle spot missions.
+    TARGETS_SVR_KEY = TARGETS_SVR_KEY,
+}
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
 
---- Finds an offer record by its key.
+--- Finds a mission at the difficulty the delve's offers were drawn at.
 --- @param key string The offer key.
---- @returns table|nil The offer record.
-local function find(key)
-    return offers_data.by_key[key]
+--- @param delve table The delve record.
+--- @returns table|nil The offer record for that difficulty.
+local function find(key, delve)
+    return offers_data.at(key, delve.offer_difficulty or "easy")
 end
 
 --- Fills a result line template from the tower results loc. The offers' result lines use it too.
@@ -55,8 +60,8 @@ local function load_pairs(key)
     return map
 end
 
---- Finds the guarded unit in the delving army: the `nth` regular unit with its key.
---- @param delve table The delve record.
+--- Finds the guarded unit in the delving army: the `nth` regular unit with its key. Shared with the battle spot missions.
+--- @param delve table The delve record, or any record with the lord's `general_cqi`.
 --- @param standard table { key, nth }.
 --- @returns table|nil Its `tower_army.unit_strengths` entry.
 local function standard_unit(delve, standard)
@@ -69,6 +74,7 @@ local function standard_unit(delve, standard)
     end
     return nil
 end
+M.standard_unit = standard_unit
 
 --- Picks one item for a mission reward.
 --- @param faction_name string The delving faction.
@@ -109,15 +115,18 @@ function M.has_standard(delve)
     return #tower_army.regular_units(delve.general_cqi) > 0
 end
 
---- Saves each mission's target for the next battle. Trophy hunt targets the floor army's most expensive unit, which `delve.trophy` keeps for
---- the reward. The battle's reports are left alone, since the game reloads the campaign after a battle and re-arms it before they are read.
+--- Saves each mission's target for the next battle, after any trick values. Trophy hunt targets the floor army's most expensive unit, which
+--- `delve.trophy` keeps for the reward. The battle's reports are left alone, since the game reloads the campaign after a battle and re-arms it
+--- before they are read.
 --- @param delve table|nil The delve record. nil clears everything.
-function M.hand_to_battle(delve)
+--- @param values table|nil "key=value" pairs of the tricks taken, e.g. "divine_shield=420".
+function M.hand_to_battle(delve, values)
     local targets = {}
+    for _, value in ipairs(values or {}) do targets[#targets + 1] = value end
     delve = delve or {}
     delve.trophy = nil
     for _, key in ipairs(delve.missions or {}) do
-        local offer = find(key)
+        local offer = find(key, delve)
         local value = offer.battle_value
         if key == "trophy_hunt" then
             delve.trophy = tower_army.most_expensive(delve.floor_units or {}, 1)[1]
@@ -140,13 +149,13 @@ end
 --- Reads what the battle reported for the delve's missions and Rival delvers. Call it before the battle's values are cleared.
 --- @param delve table The delve record.
 --- An auto-resolved battle runs no battle script, so it reports nothing and its missions and kills are `untracked`.
---- @returns table { missions = { { key, met } } in the order taken, rival = { ours, theirs } or nil, untracked, standard, trophy }.
+--- @returns table { missions = { { key, met, void } } in the order taken, rival = { ours, theirs } or nil, untracked, standard, trophy }.
 function M.read_outcomes(delve)
     local results = load_pairs(RESULTS_SVR_KEY)
     local outcomes = { missions = {}, standard = delve.standard, trophy = delve.trophy, untracked = (core:svr_load_string(RESULTS_SVR_KEY) or "") == ""
         and (core:svr_load_string(RIVAL_SVR_KEY) or "") == "" }
     for _, key in ipairs(delve.missions or {}) do
-        outcomes.missions[#outcomes.missions + 1] = { key = key, met = results[key] == "met" }
+        outcomes.missions[#outcomes.missions + 1] = { key = key, met = results[key] == "met", void = results[key] == "void" }
     end
     if delve.rival then
         local ours, theirs = (core:svr_load_string(RIVAL_SVR_KEY) or ""):match("^(%d+),(%d+)$")
@@ -166,11 +175,13 @@ end
 function M.settle(delve, faction_name, outcomes, floor)
     local lines = {}
     for _, mission in ipairs(outcomes.missions) do
-        local offer = find(mission.key)
+        local offer = find(mission.key, delve)
         local line = nil
         if outcomes.untracked then
             delve.haul.gold = delve.haul.gold + (offer.cost or 0)
             line = result_line("mission_untracked_" .. offer.key)
+        elseif mission.void then
+            log("tower: mission " .. offer.key .. " did not apply to the battle and is void")
         elseif not mission.met then
             line = result_line("mission_failed_" .. offer.key)
         elseif offer.gold_share or offer.gold then
@@ -202,9 +213,8 @@ function M.settle(delve, faction_name, outcomes, floor)
                 log("tower: guard the standard found no marked unit to rank")
             end
             line = result_line("mission_met_" .. offer.key)
-        elseif offer.lord_ranks then
-            local general = tower_army.character(delve.general_cqi)
-            if general then cm:add_agent_experience(cm:char_lookup_str(general), offer.lord_ranks, true) end
+        elseif offer.lord_xp then
+            offer_effects.add_lord_xp(delve.general_cqi, offer.lord_xp)
             line = result_line("mission_met_" .. offer.key)
         elseif offer.sworn_copy and outcomes.trophy then
             delve.haul.units[#delve.haul.units + 1] = outcomes.trophy
@@ -219,7 +229,7 @@ function M.settle(delve, faction_name, outcomes, floor)
         lines[#lines + 1] = result_line("rival_untracked")
         log("tower: the rival battle was auto-resolved, no kills were counted")
     elseif rival then
-        local share = find("rival_delvers").rival_share
+        local share = find("rival_delvers", delve).rival_share
         if rival.theirs > rival.ours then
             local gold = math.min(delve.haul.gold, math.ceil(floor.gold * share))
             local taken = math.ceil(#floor.items * share)
