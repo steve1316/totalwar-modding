@@ -862,16 +862,16 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
     )
 end
 
---- Gives a lore army's lore units their extra ranks once it spawns (battle modifiers: the gold its 20 units could not spend).
+--- Gives a lore army's lore units their extra ranks once it spawns (battle modifiers: the gold its 20 units could not spend), never past
+--- `ALLY_MAX_RANK`.
 --- @param force military_force The spawned invasion force.
 function InvasionBattleManager:rank_up_lore_units(force)
-    local ranks, lore_units = self.event_army.lore_ranks or 0, self.event_army.lore_units
-    if ranks <= 0 or not lore_units then return end
-    local units, ranked = force:unit_list(), 0
-    for i = 0, units:num_items() - 1 do
-        local unit = units:item_at(i)
-        if lore_units[unit:unit_key()] then
-            cm:add_experience_to_unit(unit, ranks)
+    local ranks = self.event_army.lore_ranks
+    if ranks <= 0 then return end
+    local ranked = 0
+    for _, entry in ipairs(tower_army.rankable_units(force:general_character():command_queue_index(), ranks, ALLY_MAX_RANK)) do
+        if self.event_army.lore_units[entry.unit:unit_key()] then
+            cm:add_experience_to_unit(entry.unit, ranks)
             ranked = ranked + 1
         end
     end

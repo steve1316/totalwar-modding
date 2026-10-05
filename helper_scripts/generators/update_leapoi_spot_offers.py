@@ -45,7 +45,7 @@ NOTICE_PREFIX = "land_enc_tower_buff_"
 # Line markers that make a row this script's own, so a run replaces it.
 OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_",
                  "string_land_enc_spot_", "land_enc_incident_spot_", "land_enc_tower_buff_modifier_", "land_enc_effect_ability_enable_",
-                 "land_enc_ability_enable_", "_comp_")
+                 "land_enc_ability_enable_", "dummy_land_enc_tower_allies_in_the_dark_")
 
 # The Allies in the Dark offers, whose lines also come in a version naming the theme their allied army rolled.
 ALLY_OFFERS = ("allies_in_the_dark_small", "allies_in_the_dark_medium", "allies_in_the_dark_large")
@@ -724,7 +724,9 @@ def load_config() -> Dict:
         subprocess.CalledProcessError: When Lua cannot load the config.
     """
     output = subprocess.run(["lua", "-", MOD_ROOT], input=LUA_DUMP, capture_output=True, text=True, check=True).stdout
-    return json.loads(output)
+    config = json.loads(output)
+    battle_modifiers.add_lore(config["battle_modifiers"]["list"])
+    return config
 
 
 def title_case(text: str) -> str:
@@ -977,15 +979,16 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     # Allies in the Dark names the theme its allied army rolled: a line per size and generic army composition, per difficulty for spots.
     for key in ALLY_OFFERS:
         tower_line, tower_broke = TOWER_LINES[key]
-        tower_values = line_values(config["tower_at"]["easy"][key], bundles)
         for theme in battle_modifiers.ALLY_THEMES:
             ending = " " + battle_modifiers.ally_theme_text(theme)
             for difficulty in DIFFICULTIES:
                 text = OFFERS[key][1].format_map(line_values(config["at"][difficulty][key], bundles))
                 line(config["line_prefix"] + key + "_" + difficulty + "_" + theme, ICONS[key], text + ending)
-            component = config["tower_line_prefix"] + key + "_" + theme
-            line(component, tower_icon(key), tower_line.format_map(tower_values) + ending)
-            line(component + config["tower_unaffordable_suffix"], tower_icon(key), tower_broke.format_map(tower_values))
+            for difficulty, name in stepped_names(key, config["tower_varies"].get(key)):
+                values = line_values(config["tower_at"][difficulty][key], bundles)
+                component = config["tower_line_prefix"] + name + "_" + theme
+                line(component, tower_icon(key), tower_line.format_map(values) + ending)
+                line(component + config["tower_unaffordable_suffix"], tower_icon(key), tower_broke.format_map(values))
 
     for i, (choice, key) in enumerate(choice_keys):
         add(table("cdir_events_dilemma_choices_tables"), choice, WALK_AWAY_ORDER if key == "walk_away" else FIRST_CHOICE_ORDER + i)
@@ -1301,7 +1304,7 @@ def check_text(config: Dict) -> None:
     """
     problems = [f"no text for {o['key']}" for o in config["offers"] if o["key"] not in OFFERS]
     modifier_keys = {m["key"] for m in config["battle_modifiers"]["list"]}
-    generic = {m["key"] for m in config["battle_modifiers"]["list"] if "army" in m and "faction" not in m["army"]}
+    generic = {m["key"] for m in config["battle_modifiers"]["list"] if "army" in m and "faction" not in m}
     problems += [f"no allied theme text for {key}" for key in sorted(generic ^ set(battle_modifiers.ALLY_THEMES))]
     problems += [f"no text for battle modifier {key}" for key in sorted(modifier_keys - set(battle_modifiers.MODIFIERS))]
     problems += [f"text for unknown battle modifier {key}" for key in sorted(set(battle_modifiers.MODIFIERS) - modifier_keys)]
@@ -1335,7 +1338,6 @@ def main() -> None:
     if not os.path.isdir(MOD_ROOT):
         raise SystemExit(f"Mod folder not found at {MOD_ROOT}. Run from helper_scripts/.")
     config = load_config()
-    battle_modifiers.add_lore(config["battle_modifiers"]["list"])
     check_text(config)
     write_rows(build_rows(config), owned_patterns(config), args.dry_run)
     write_victory_gold(args.dry_run)

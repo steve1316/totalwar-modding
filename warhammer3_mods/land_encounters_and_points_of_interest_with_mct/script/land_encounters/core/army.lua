@@ -200,7 +200,7 @@ function Army:new_from_event(event, player_subculture)
     local ally_force_data = nil
     if intervention_type == ALLIED_REINFORCEMENTS_PERMITTED_TYPE then
         --- A hired allied army that rolled its theme (Allies in the Dark) already has its faction.
-        local ally_faction = event.ally_shorthand or pick_ally_faction(player_subculture, faction)
+        local ally_faction = event.ally_options and event.ally_options.faction or pick_ally_faction(player_subculture, faction)
         if ally_faction == nil then
             out("DEBUG - Allied intervention picked but no ally faction available; demoting to INTERCEPTION_TYPE.")
             intervention_type = INTERCEPTION_TYPE

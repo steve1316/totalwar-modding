@@ -7,8 +7,8 @@ local M = {}
 --- Every army in the battle: ours, the enemy and any allies.
 local ALL = { "ours", "enemy", "allies" }
 
---- Offers an army composition keeps out, as they replace the enemy army it describes (a mirror of ours, a hidden floor's other faction). A
---- generic theme also keeps out the strip offer that would take away its own units.
+--- Offers every army composition keeps out, as they replace the enemy army it describes (a mirror of ours, a hidden floor's other faction).
+--- A generic theme also lists the strip offers that would take away its own units.
 local COMPOSITION_KEEPS_OUT = { "mirror_curse", "hidden_floor" }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,8 +67,10 @@ Fields of each modifier:
 - bundle: true when it is a bundle on each of its sides for the battle, named `bundle_prefix` .. key .. "_" .. side. Without it the
   battle script (script/battle/mod/land_enc_tower_buffs.lua) plays it under its key, and its numbers live there.
 - army: for an army composition, the theme the enemy army is built from instead of a random archetype, with the archetype fields of
-  configs/archetypes.lua (`shares`, `price_mode`, `requires`, `requires_count`). It only rolls when the enemy faction can field it. A lore
-  army's also has `faction` (the only faction it rolls for) and `units` (its lore units), and the record carries its `name` and `effect`.
+  configs/archetypes.lua (`shares`, `price_mode`, `requires`, `requires_count`) and its modifier `key`. It only rolls when the enemy faction
+  can field it. A lore army's also has `units`, the set of its lore unit keys.
+- faction, difficulties: the only enemy faction (3-letter shorthand) and difficulties (a set) the modifier rolls for, or nil for any. A lore
+  army has both, and carries its `name` and `effect`.
 - hits: its sides as a set, built from `sides`.
 --]]
 M.list = {
@@ -153,22 +155,23 @@ M.list = {
     { key = "undying", harm = "-", sides = { "enemy" } },
 
     --- Army compositions.
-    { key = "comp_monsters", harm = "-", sides = { "enemy" }, group = "composition", keeps_out = { "mirror_curse", "hidden_floor", "strip_monsters" },
+    { key = "comp_monsters", harm = "-", sides = { "enemy" }, group = "composition", keeps_out = { "strip_monsters" },
       army = { shares = { monsters = 65, cavalry = 15, frontline = 20 }, price_mode = "normal", requires = "monsters", requires_count = 3 } },
-    { key = "comp_riders", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = { "mirror_curse", "hidden_floor", "strip_cavalry" },
+    { key = "comp_riders", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = { "strip_cavalry" },
       army = { shares = { cavalry = 80, frontline = 20 }, price_mode = "normal", requires = "cavalry", requires_count = 3 } },
-    { key = "comp_shieldwall", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
+    { key = "comp_shieldwall", harm = "~", sides = { "enemy" }, group = "composition",
       army = { shares = { frontline = 75, missile = 25 }, price_mode = "normal" } },
-    { key = "comp_gunline", harm = "~", sides = { "enemy" }, group = "composition",
-      keeps_out = { "mirror_curse", "hidden_floor", "strip_missile", "strip_artillery" },
+    { key = "comp_gunline", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = { "strip_missile", "strip_artillery" },
       army = { shares = { missile = 55, artillery = 30, frontline = 15 }, price_mode = "normal", requires = "missile", requires_count = 3 } },
 }
 
 --- The lore armies join the list as army compositions.
 for _, lore in ipairs(require("script/land_encounters/configs/lore_armies")) do
     --- With its bigger budget a lore army is always the harder fight, so it pays like any harmful modifier.
-    M.list[#M.list + 1] = { key = lore.key, harm = "-", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
-        name = lore.name, effect = lore.effect, army = { faction = lore.faction, shares = lore.shares, units = lore.units, price_mode = "normal" } }
+    local units = {}
+    for _, unit_key in ipairs(lore.units) do units[unit_key] = true end
+    M.list[#M.list + 1] = { key = lore.key, harm = "-", sides = { "enemy" }, group = "composition", faction = lore.faction, difficulties = M.lore_difficulties,
+        name = lore.name, effect = lore.effect, army = { shares = lore.shares, units = units, price_mode = "normal" } }
 end
 
 --- Each modifier by its key, built from `list`.
@@ -178,6 +181,14 @@ for _, modifier in ipairs(M.list) do
     M.by_key[modifier.key] = modifier
     modifier.hits = {}
     for _, side in ipairs(modifier.sides) do modifier.hits[side] = true end
+    if modifier.army then
+        modifier.army.key = modifier.key
+        local keeps_out = {}
+        for _, list in ipairs({ COMPOSITION_KEEPS_OUT, modifier.keeps_out or {} }) do
+            for _, offer_key in ipairs(list) do keeps_out[#keeps_out + 1] = offer_key end
+        end
+        modifier.keeps_out = keeps_out
+    end
 end
 
 return M

@@ -599,10 +599,8 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     local ally_options = nil
     if type(next_floor.ally) == "table" then
         local units = random_number(next_floor.ally[2], next_floor.ally[1]) - 1
-        ally_options = army_generator.ally_options(units)
-        if next_floor.ally_theme then ally_options.composition = battle_modifiers.composition({ next_floor.ally_theme.key }) end
-        log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units"
-            .. (next_floor.ally_theme and ", " .. next_floor.ally_theme.faction .. " as " .. next_floor.ally_theme.key or ""))
+        ally_options = battle_modifiers.ally_options(units, next_floor.ally_theme)
+        log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units" .. battle_modifiers.ally_theme_log(next_floor.ally_theme))
     end
     local army = Army:new_from_event({
         dilemma = "tower",
@@ -619,7 +617,6 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         strip_types = sabotage.strip_types,
         lord_subtype = sabotage.lord_subtype,
         ally_options = ally_options,
-        ally_shorthand = next_floor.ally_theme and next_floor.ally_theme.faction,
         ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
         composition = battle_modifiers.composition(delve.modifiers),
     }, general:faction():subculture())
@@ -751,8 +748,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         return
     end
     --- The next floor's battle modifiers, rolled before its offers so they can keep some out.
-    local _, next_difficulty = tower_data.floor_difficulty(nil, delve.floor + 1, debug_config)
-    delve.modifiers = battle_modifiers.roll({ faction = self:tower_in_zone(delve.zone_name).faction, difficulty = next_difficulty })
+    delve.modifiers = battle_modifiers.roll({ faction = self:tower_in_zone(delve.zone_name).faction, difficulty = tower_offers.next_floor_difficulty(delve) })
     delve.offers = tower_offers.draw(delve, faction_name, self:tower_in_zone(delve.zone_name))
     delve.results = results
     self:launch_deeper(faction_name)

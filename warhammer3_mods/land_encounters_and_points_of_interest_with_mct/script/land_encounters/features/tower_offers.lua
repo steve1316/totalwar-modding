@@ -82,6 +82,7 @@ local function next_floor_difficulty(delve)
     local _, difficulty = tower_data.floor_difficulty(delve.next_floor, delve.floor + 1, debug_config)
     return difficulty
 end
+M.next_floor_difficulty = next_floor_difficulty
 
 --- The difficulty a delve's offers were drawn at, Easy for a delve saved before offers had steps.
 --- @param delve table The delve record.
@@ -783,7 +784,10 @@ function M.draw(delve, faction_name, tower)
     --- Allies in the dark names the theme its allied army marches as, so it is rolled once the offer is drawn.
     delve.ally_theme = nil
     for _, key in ipairs(keys) do
-        if offers_data.by_key[key].ally_units then delve.ally_theme = battle_modifiers.roll_ally_theme(cm:get_faction(faction_name):subculture(), tower and tower.faction) end
+        if offers_data.by_key[key].ally_units then
+            delve.ally_theme = battle_modifiers.roll_ally_theme(cm:get_faction(faction_name):subculture(), tower and tower.faction)
+            break
+        end
     end
     return keys
 end
@@ -792,9 +796,7 @@ end
 --- @param next_floor table|nil The delve's next-floor changes.
 --- @returns string The changes in key order, "{}" for none.
 function M.describe_next_floor(next_floor)
-    local keys = {}
-    for key in pairs(next_floor or {}) do keys[#keys + 1] = key end
-    table.sort(keys)
+    local keys = sorted_keys(next_floor or {})
     local parts = {}
     for _, key in ipairs(keys) do
         local value = next_floor[key]
@@ -821,7 +823,7 @@ function M.choice(offer_key, delve, next_floor)
     local offer = at(offer_key, delve)
     if spent(offer, delve) then return { key = M.choice_key(offer), lines = { TAKEN_LINE } } end
     local affordable = delve.haul.gold >= offer_cost(offer, delve)
-    local line = offers_data.line(offer.key, offer_difficulty(delve), delve.floor) .. (offer.ally_units and delve.ally_theme and "_" .. delve.ally_theme.key or "")
+    local line = battle_modifiers.ally_line(offers_data.line(offer.key, offer_difficulty(delve), delve.floor), offer.ally_units and delve.ally_theme)
     local lines = { line .. (affordable and "" or offers_data.unaffordable_suffix) }
     if offer.stay then
         lines[2] = RETURNS_HERE_LINE

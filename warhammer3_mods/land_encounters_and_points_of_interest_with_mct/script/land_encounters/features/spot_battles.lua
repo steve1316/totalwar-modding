@@ -175,7 +175,7 @@ function M.launch(faction_name)
     local choices = { { key = offers_data.fight_choice_key, lines = { FIGHT_LINE } } }
     for _, key in ipairs(pending.offers) do
         local offer = offers_data.at(key, pending.difficulty)
-        local line = offers_data.line_prefix .. key .. "_" .. pending.difficulty .. (offer.allies and pending.ally_theme and "_" .. pending.ally_theme.key or "")
+        local line = battle_modifiers.ally_line(offers_data.line_prefix .. key .. "_" .. pending.difficulty, offer.allies and pending.ally_theme)
         local can_pay = spot_offers.affordable(offer, faction_name)
         pending.shown_affordable[key] = can_pay
         local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line } }
@@ -275,13 +275,8 @@ local function apply_to_event(fields, event)
     if fields.allies then
         local units = random_number(fields.allies[2], fields.allies[1]) - 1
         event.intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE
-        event.ally_options = army_generator.ally_options(units)
-        if event.ally_theme then
-            event.ally_options.composition = battle_modifiers.composition({ event.ally_theme.key })
-            event.ally_shorthand = event.ally_theme.faction
-        end
-        log("spot battle: the hired allied army fields its lord and " .. units .. " units"
-            .. (event.ally_theme and ", " .. event.ally_theme.faction .. " as " .. event.ally_theme.key or ""))
+        event.ally_options = battle_modifiers.ally_options(units, event.ally_theme)
+        log("spot battle: the hired allied army fields its lord and " .. units .. " units" .. battle_modifiers.ally_theme_log(event.ally_theme))
     end
 end
 

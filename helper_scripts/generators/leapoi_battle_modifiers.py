@@ -42,6 +42,14 @@ DISCLAIMER = "\\\\n\\\\nThe units listed below come from your own roster, but on
 # Notice colour by harm: what helps us is green, what hurts us red, what cuts both ways yellow.
 HARM_COLOUR = {"+": "green", "-": "red", "~": "yellow"}
 
+# What the army fields under each generic army composition: its modifier line, and the Allies in the Dark lines that name it.
+ALLY_THEMES: Dict[str, str] = {
+    "comp_monsters": "mostly monsters and war beasts",
+    "comp_riders": "mostly cavalry and chariots",
+    "comp_shieldwall": "infantry only",
+    "comp_gunline": "mostly missile infantry and artillery",
+}
+
 # Modifier key -> (name, what it does, objective icon under ui/campaign ui/effect_bundles/, [(effect, value)]). The text reads after
 # "Modifier: <name> - " on the dilemma and after "<name>:" in the battle notice.
 MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
@@ -116,19 +124,11 @@ MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
     "wild_winds": ("Wild Winds", "Every 3 minutes a magical storm spawns near a random unit of any side.", "wh3_dlc24_wind_blast.png", []),
     "enemy_last_stand": ("Last Stand", "Enemy units cannot rout until they fall below half strength.", "attribute_unyielding_assault.png", []),
     "dead_rise": ("The Dead Rise", "At 3:00 our destroyed units return where they started, at half strength.", "attribute_undead.png", []),
-    "comp_monsters": ("Monster Horde", "The enemy army is mostly monsters and war beasts.", "rampage_cataclysmic.png", []),
-    "comp_riders": ("Riders' Host", "The enemy army is mostly cavalry and chariots.", "charge.png", []),
-    "comp_shieldwall": ("Shield Wall", "The enemy army is infantry only.", "icon_effects_fortify.png", []),
-    "comp_gunline": ("Gunline", "The enemy army is mostly missile infantry and artillery.", "artillery.png", []),
+    "comp_monsters": ("Monster Horde", f"The enemy army is {ALLY_THEMES['comp_monsters']}.", "rampage_cataclysmic.png", []),
+    "comp_riders": ("Riders' Host", f"The enemy army is {ALLY_THEMES['comp_riders']}.", "charge.png", []),
+    "comp_shieldwall": ("Shield Wall", f"The enemy army is {ALLY_THEMES['comp_shieldwall']}.", "icon_effects_fortify.png", []),
+    "comp_gunline": ("Gunline", f"The enemy army is {ALLY_THEMES['comp_gunline']}.", "artillery.png", []),
     "undying": ("Undying Foe", "At 3:00 two destroyed enemy units return where they started, at half strength.", "icon_necromantic_power.png", []),
-}
-
-# What a hired allied army fields under each generic army composition, for the Allies in the Dark lines that name its theme.
-ALLY_THEMES: Dict[str, str] = {
-    "comp_monsters": "mostly monsters and war beasts",
-    "comp_riders": "mostly cavalry and chariots",
-    "comp_shieldwall": "infantry only",
-    "comp_gunline": "mostly missile infantry and artillery",
 }
 
 # Icon of every lore army composition's notice.
@@ -174,7 +174,7 @@ def add_lore(modifiers: List[Dict]) -> None:
         modifiers (List[Dict]): The config's modifier records.
     """
     for modifier in modifiers:
-        if "name" in modifier:
+        if "faction" in modifier:
             MODIFIERS[modifier["key"]] = (modifier["name"], modifier["effect"], LORE_ICON, [])
 
 
