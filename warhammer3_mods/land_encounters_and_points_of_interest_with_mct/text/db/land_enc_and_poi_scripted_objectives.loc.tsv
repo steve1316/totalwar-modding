@@ -536,9 +536,9 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_heavy_ground	[[c
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_heavy_ground		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_heavy_ground_message	Heavy Ground: every unit on the field -10% speed.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_heavy_ground_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_thunder_charge	[[col:yellow]]Thunderous Charge: every unit on the field +20 charge bonus.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_thunder_charge	[[col:yellow]]Thunderous Charge: every unit on the field +25 charge bonus.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_thunder_charge		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_thunder_charge_message	Thunderous Charge: every unit on the field +20 charge bonus.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_thunder_charge_message	Thunderous Charge: every unit on the field +25 charge bonus.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_thunder_charge_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_brittle	[[col:green]]Brittle Blades: enemy units -10% weapon strength.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_brittle		false
@@ -640,29 +640,29 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_plenty_shot	[[co
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_plenty_shot		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_plenty_shot_message	Endless Quivers: every missile unit on the field never runs out of ammunition.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_plenty_shot_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic	[[col:green]]Panic: at 2:00 the enemy's two weakest units rout.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic	[[col:green]]Panic: at 3:00 the enemy's two weakest units rout.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_panic		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic_message	Panic: at 2:00 the enemy's two weakest units rout.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_panic_message	Panic: at 3:00 the enemy's two weakest units rout.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_panic_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards	[[col:red]]Cowards' Ground: at 1:30 our weakest unit routs.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards	[[col:red]]Cowards' Ground: at 3:00 our weakest unit routs.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_cowards		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards_message	Cowards' Ground: at 1:30 our weakest unit routs.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_cowards_message	Cowards' Ground: at 3:00 our weakest unit routs.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_cowards_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords	[[col:yellow]]Fated Lords: both lords cannot be harmed for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords	[[col:yellow]]Fated Lords: both lords cannot be harmed for the first 3 minutes.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_duel_lords		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords_message	Fated Lords: both lords cannot be harmed for the first 2 minutes.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_duel_lords_message	Fated Lords: both lords cannot be harmed for the first 3 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_duel_lords_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast	[[col:yellow]]Hold Fast: no unit on the field can rout for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast	[[col:yellow]]Hold Fast: no unit on the field can rout for the first 3 minutes.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast_message	Hold Fast: no unit on the field can rout for the first 2 minutes.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_hold_fast_message	Hold Fast: no unit on the field can rout for the first 3 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_hold_fast_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_terror_field	[[col:red]]Field of Dread: every enemy unit causes terror.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_terror_field		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_terror_field_message	Field of Dread: every enemy unit causes terror.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_terror_field_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve	[[col:green]]Grim Resolve: our units cannot break for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve	[[col:green]]Grim Resolve: our units cannot break for the first 3 minutes.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_resolve		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve_message	Grim Resolve: our units cannot break for the first 2 minutes.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_resolve_message	Grim Resolve: our units cannot break for the first 3 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_resolve_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_ambush_country	[[col:yellow]]Ambush Country: every unit can hide in forests and stays hidden while it moves.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_ambush_country		false
@@ -688,17 +688,17 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_strider	[[col:gr
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_strider		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_strider_message	Sure Footing: our units ignore difficult ground.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_strider_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed	[[col:green]]Wet Powder: enemy missile units cannot shoot for the first 2 minutes.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed	[[col:green]]Wet Powder: enemy missile units cannot shoot for the first 3 minutes.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_disarmed		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed_message	Wet Powder: enemy missile units cannot shoot for the first 2 minutes.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_disarmed_message	Wet Powder: enemy missile units cannot shoot for the first 3 minutes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_disarmed_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_glorious	[[col:green]]Glorious Charge: our cavalry and chariots gain Glorious Charge.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_glorious		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_glorious_message	Glorious Charge: our cavalry and chariots gain Glorious Charge.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_glorious_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable	[[col:red]]Callous Ranks: enemy units are Expendable: one routing does not shake the rest of their army.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable	[[col:red]]Callous Ranks: enemy units have Expendable and routing does not shake the rest of their army.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_expendable		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable_message	Callous Ranks: enemy units are Expendable: one routing does not shake the rest of their army.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_expendable_message	Callous Ranks: enemy units have Expendable and routing does not shake the rest of their army.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_expendable_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_tireless_enemy	[[col:red]]Tireless Foe: enemy units never tire.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_tireless_enemy		false
@@ -708,41 +708,41 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_run_amok	[[col:y
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_run_amok		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_run_amok_message	Maddened Beasts: monsters and war beasts on both sides may run amok.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_run_amok_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence	[[col:green]]Grim Presence: enemy units within 25 m of our lord lose 0.5% of their strength every second.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence	[[col:green]]Grim Presence: enemy units within 25m of our lord lose 0.5% of their strength every 10 seconds.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_presence		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence_message	Grim Presence: enemy units within 25 m of our lord lose 0.5% of their strength every second.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_grim_presence_message	Grim Presence: enemy units within 25m of our lord lose 0.5% of their strength every 10 seconds.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_grim_presence_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic	[[col:yellow]]Storm of Magic: every army gains 20 Winds of Magic every 60 seconds.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic	[[col:yellow]]Storm of Magic: every army gains 20 Winds of Magic every minute.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_storm_magic		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic_message	Storm of Magic: every army gains 20 Winds of Magic every 60 seconds.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_storm_magic_message	Storm of Magic: every army gains 20 Winds of Magic every minute.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_storm_magic_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_drained	[[col:green]]Drained Winds: the enemy's Winds of Magic are drained to nothing at the start.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_drained		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_winds_drained_message	Drained Winds: the enemy's Winds of Magic are drained to nothing at the start.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_winds_drained_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift	[[col:yellow]]Warp Shift: every 60 seconds a random unit of any side is flung to a nearby spot.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift	[[col:yellow]]Warp Shift: every 2 minutes a random unit of any side is flung to a nearby spot.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_warp_shift		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift_message	Warp Shift: every 60 seconds a random unit of any side is flung to a nearby spot.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_warp_shift_message	Warp Shift: every 2 minutes a random unit of any side is flung to a nearby spot.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_warp_shift_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest	[[col:yellow]]Tzeentch's Jest: every 90 seconds a random enemy unit and a random unit of ours swap places.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest	[[col:yellow]]Tzeentch's Jest: every 2 minutes a random enemy unit and a random unit of ours swap places.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_jest		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest_message	Tzeentch's Jest: every 90 seconds a random enemy unit and a random unit of ours swap places.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_jest_message	Tzeentch's Jest: every 2 minutes a random enemy unit and a random unit of ours swap places.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_jest_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink	[[col:green]]Blink Strike: at 1:00 our cavalry and chariots are flung behind the enemy line.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink	[[col:green]]Blink Strike: at 2:00 our cavalry and chariots are flung behind the enemy line.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_blink		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink_message	Blink Strike: at 1:00 our cavalry and chariots are flung behind the enemy line.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_blink_message	Blink Strike: at 2:00 our cavalry and chariots are flung behind the enemy line.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_blink_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp	[[col:red]]Lost in the Warp: at 1:30 a random unit of ours vanishes for 30 seconds, then reappears nearby.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp	[[col:red]]Lost in the Warp: at 2:00 a random unit of ours vanishes for 30 seconds, then reappears nearby.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lost_warp		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp_message	Lost in the Warp: at 1:30 a random unit of ours vanishes for 30 seconds, then reappears nearby.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lost_warp_message	Lost in the Warp: at 2:00 a random unit of ours vanishes for 30 seconds, then reappears nearby.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lost_warp_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_scatter	[[col:green]]Scattered Ranks: the enemy's units start the battle scattered around their centre.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_scatter		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_scatter_message	Scattered Ranks: the enemy's units start the battle scattered around their centre.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_scatter_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed	[[col:yellow]]Naked Plain: every unit is always visible: no hiding for anyone.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed	[[col:yellow]]Naked Plain: every unit is always visible, no hiding for anyone.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_revealed		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed_message	Naked Plain: every unit is always visible: no hiding for anyone.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_revealed_message	Naked Plain: every unit is always visible, no hiding for anyone.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_revealed_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_wild_winds	[[col:yellow]]Wild Winds: every 3 minutes a magical storm spawns near a random unit of any side.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_wild_winds		false
@@ -752,13 +752,13 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_enemy_last_stand
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_enemy_last_stand		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_enemy_last_stand_message	Last Stand: enemy units cannot rout until they fall below half strength.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_enemy_last_stand_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise	[[col:green]]The Dead Rise: at 3:00 our destroyed units return where they started, at half strength.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise	[[col:green]]The Dead Rise: at 5:00 our destroyed units return where they started, at 25% strength.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_dead_rise		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise_message	The Dead Rise: at 3:00 our destroyed units return where they started, at half strength.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_dead_rise_message	The Dead Rise: at 5:00 our destroyed units return where they started, at 25% strength.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_dead_rise_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying	[[col:red]]Undying Foe: at 3:00 two destroyed enemy units return where they started, at half strength.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying	[[col:red]]Undying Foe: at 5:00 two destroyed enemy units return where they started, at half strength.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_undying		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying_message	Undying Foe: at 3:00 two destroyed enemy units return where they started, at half strength.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_undying_message	Undying Foe: at 5:00 two destroyed enemy units return where they started, at half strength.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_undying_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_monsters	[[col:red]]Monster Horde: the enemy army is mostly monsters and war beasts.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_monsters		false
@@ -776,183 +776,183 @@ scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_gunline	[[c
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_gunline		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_comp_gunline_message	Gunline: the enemy army is mostly missile infantry and artillery.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_comp_gunline_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_pestilens	[[col:red]]Plague Procession: the enemy army is a plague procession: plague monks, censer bearers and the pox-cauldrons of Clan Pestilens.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_pestilens	[[col:red]]Plague Procession: the enemy army is a plague procession of plague monks, censer bearers and the pox-cauldrons of Clan Pestilens.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_pestilens		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_pestilens_message	Plague Procession: the enemy army is a plague procession: plague monks, censer bearers and the pox-cauldrons of Clan Pestilens.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_pestilens_message	Plague Procession: the enemy army is a plague procession of plague monks, censer bearers and the pox-cauldrons of Clan Pestilens.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_pestilens_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_skryre	[[col:red]]Skryre Arsenal: the enemy army is a Skryre arsenal: weapon teams, stormfiends and warp-lightning engines.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_skryre	[[col:red]]Skryre Arsenal: the enemy army is a Skryre arsenal of weapon teams, stormfiends and warp-lightning engines.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_skryre		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_skryre_message	Skryre Arsenal: the enemy army is a Skryre arsenal: weapon teams, stormfiends and warp-lightning engines.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_skryre_message	Skryre Arsenal: the enemy army is a Skryre arsenal of weapon teams, stormfiends and warp-lightning engines.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_skryre_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_moulder	[[col:red]]Moulder Menagerie: the enemy army is a Moulder menagerie: packmasters driving rat ogres, wolf rats and hell pit horrors.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_moulder	[[col:red]]Moulder Menagerie: the enemy army is a Moulder menagerie of packmasters driving rat ogres, wolf rats and hell pit horrors.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_moulder		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_moulder_message	Moulder Menagerie: the enemy army is a Moulder menagerie: packmasters driving rat ogres, wolf rats and hell pit horrors.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_skv_moulder_message	Moulder Menagerie: the enemy army is a Moulder menagerie of packmasters driving rat ogres, wolf rats and hell pit horrors.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_skv_moulder_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_chariots	[[col:red]]Chariot Legion: the enemy army is a chariot legion: ranks of skeletal chariots and horsemen of Nehekhara.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_chariots	[[col:red]]Chariot Legion: the enemy army is a chariot legion of ranks of skeletal chariots and horsemen of Nehekhara.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_chariots		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_chariots_message	Chariot Legion: the enemy army is a chariot legion: ranks of skeletal chariots and horsemen of Nehekhara.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_chariots_message	Chariot Legion: the enemy army is a chariot legion of ranks of skeletal chariots and horsemen of Nehekhara.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_chariots_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_constructs	[[col:red]]Mortuary Constructs: the enemy army is a host of constructs: ushabti, sphinxes and bone titans raised by the Mortuary Cult.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_constructs	[[col:red]]Mortuary Constructs: the enemy army is a host of constructs of ushabti, sphinxes and bone titans raised by the Mortuary Cult.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_constructs		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_constructs_message	Mortuary Constructs: the enemy army is a host of constructs: ushabti, sphinxes and bone titans raised by the Mortuary Cult.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tmb_constructs_message	Mortuary Constructs: the enemy army is a host of constructs of ushabti, sphinxes and bone titans raised by the Mortuary Cult.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tmb_constructs_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_khaine	[[col:red]]Khainite Cult: the enemy army is a Khainite cult: witch elves, executioners and the blood-soaked shrines of Khaine.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_khaine	[[col:red]]Khainite Cult: the enemy army is a Khainite cult of witch elves, executioners and the blood-soaked shrines of Khaine.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_khaine		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_khaine_message	Khainite Cult: the enemy army is a Khainite cult: witch elves, executioners and the blood-soaked shrines of Khaine.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_khaine_message	Khainite Cult: the enemy army is a Khainite cult of witch elves, executioners and the blood-soaked shrines of Khaine.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_khaine_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_corsairs	[[col:red]]Black Ark Corsairs: the enemy army is a black ark raiding party: corsairs, shades and the beasts of the deep.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_corsairs	[[col:red]]Black Ark Corsairs: the enemy army is a black ark raiding party of corsairs, shades and the beasts of the deep.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_corsairs		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_corsairs_message	Black Ark Corsairs: the enemy army is a black ark raiding party: corsairs, shades and the beasts of the deep.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_def_corsairs_message	Black Ark Corsairs: the enemy army is a black ark raiding party of corsairs, shades and the beasts of the deep.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_def_corsairs_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_slayers	[[col:red]]Slayer Host: the enemy army is a slayer host: doomed dwarfs seeking a glorious death.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_slayers	[[col:red]]Slayer Host: the enemy army is a slayer host of doomed dwarfs seeking a glorious death.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_slayers		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_slayers_message	Slayer Host: the enemy army is a slayer host: doomed dwarfs seeking a glorious death.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_slayers_message	Slayer Host: the enemy army is a slayer host of doomed dwarfs seeking a glorious death.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_slayers_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_underway	[[col:red]]Underway Guard: the enemy army is an underway guard: miners, ironbreakers and irondrakes from the deep tunnels.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_underway	[[col:red]]Underway Guard: the enemy army is an underway guard of miners, ironbreakers and irondrakes from the deep tunnels.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_underway		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_underway_message	Underway Guard: the enemy army is an underway guard: miners, ironbreakers and irondrakes from the deep tunnels.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_dwf_underway_message	Underway Guard: the enemy army is an underway guard of miners, ironbreakers and irondrakes from the deep tunnels.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_dwf_underway_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_lothern	[[col:red]]Lothern Fleet: the enemy army is a Lothern fleet: sea guard, ship crews and the creatures of the sea.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_lothern	[[col:red]]Lothern Fleet: the enemy army is a Lothern fleet of sea guard, ship crews and the creatures of the sea.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_lothern		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_lothern_message	Lothern Fleet: the enemy army is a Lothern fleet: sea guard, ship crews and the creatures of the sea.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_lothern_message	Lothern Fleet: the enemy army is a Lothern fleet of sea guard, ship crews and the creatures of the sea.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_lothern_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_caledor	[[col:red]]Dragon Host: the enemy army is a dragon host of Caledor: dragon princes and the great dragons themselves.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_caledor	[[col:red]]Dragon Host: the enemy army is a Caledorian host of dragon princes and the great dragons themselves.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_caledor		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_caledor_message	Dragon Host: the enemy army is a dragon host of Caledor: dragon princes and the great dragons themselves.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_caledor_message	Dragon Host: the enemy army is a Caledorian host of dragon princes and the great dragons themselves.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_caledor_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_avelorn	[[col:red]]Avelorn Court: the enemy army is the court of Avelorn: the Everqueen's maidens with dryads and treemen of the forest.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_avelorn	[[col:red]]Avelorn Court: the enemy army is the Avelorn court of the Everqueen's maidens with dryads and treemen of the forest.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_avelorn		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_avelorn_message	Avelorn Court: the enemy army is the court of Avelorn: the Everqueen's maidens with dryads and treemen of the forest.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_hef_avelorn_message	Avelorn Court: the enemy army is the Avelorn court of the Everqueen's maidens with dryads and treemen of the forest.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_hef_avelorn_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_saurus	[[col:red]]Saurus Warhost: the enemy army is a saurus warhost: cold-blooded warriors of the temple-cities.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_saurus	[[col:red]]Saurus Warhost: the enemy army is a saurus warhost of cold-blooded warriors of the temple-cities.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_saurus		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_saurus_message	Saurus Warhost: the enemy army is a saurus warhost: cold-blooded warriors of the temple-cities.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_saurus_message	Saurus Warhost: the enemy army is a saurus warhost of cold-blooded warriors of the temple-cities.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_saurus_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_skinks	[[col:red]]Skink Swarm: the enemy army is a skink swarm: skink cohorts, chameleons and the beasts they ride and herd.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_skinks	[[col:red]]Skink Swarm: the enemy army is a skink swarm of cohorts, chameleons and the beasts they ride and herd.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_skinks		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_skinks_message	Skink Swarm: the enemy army is a skink swarm: skink cohorts, chameleons and the beasts they ride and herd.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_lzd_skinks_message	Skink Swarm: the enemy army is a skink swarm of cohorts, chameleons and the beasts they ride and herd.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_lzd_skinks_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nor_werekin	[[col:red]]Werekin Pack: the enemy army is a werekin pack: berserkers, bearmen and skinwolves that hunt as beasts.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nor_werekin	[[col:red]]Werekin Pack: the enemy army is a werekin pack of berserkers, bearmen and skinwolves that hunt as beasts.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nor_werekin		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nor_werekin_message	Werekin Pack: the enemy army is a werekin pack: berserkers, bearmen and skinwolves that hunt as beasts.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nor_werekin_message	Werekin Pack: the enemy army is a werekin pack of berserkers, bearmen and skinwolves that hunt as beasts.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nor_werekin_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_boarding	[[col:red]]Boarding Party: the enemy army is a boarding party: deckhands, gunnery mobs and deck droppers spilling off the ships.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_boarding	[[col:red]]Boarding Party: the enemy army is a motley boarding party of deckhands, gunnery mobs and deck droppers spilling off the ships.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_boarding		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_boarding_message	Boarding Party: the enemy army is a boarding party: deckhands, gunnery mobs and deck droppers spilling off the ships.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_boarding_message	Boarding Party: the enemy army is a motley boarding party of deckhands, gunnery mobs and deck droppers spilling off the ships.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_boarding_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_drowned	[[col:red]]Drowned Host: the enemy army is a drowned host: depth guard, syreens and rotting horrors dragged up from the sea floor.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_drowned	[[col:red]]Drowned Host: the enemy army is a drowned host of depth guards, syreens and rotting horrors dragged up from the sea floor.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_drowned		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_drowned_message	Drowned Host: the enemy army is a drowned host: depth guard, syreens and rotting horrors dragged up from the sea floor.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cst_drowned_message	Drowned Host: the enemy army is a drowned host of depth guards, syreens and rotting horrors dragged up from the sea floor.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cst_drowned_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_grave	[[col:red]]Grave Horde: the enemy army is a grave horde: zombies, skeletons and the restless dead.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_grave	[[col:red]]Grave Horde: the enemy army is a grave horde of zombies, skeletons and the restless dead.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_grave		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_grave_message	Grave Horde: the enemy army is a grave horde: zombies, skeletons and the restless dead.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_grave_message	Grave Horde: the enemy army is a grave horde of zombies, skeletons and the restless dead.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_grave_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_lahmia	[[col:red]]Lahmian Court: the enemy army is a Lahmian court: handmaidens, mortal retainers and the coven throne of the sisterhood.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_lahmia	[[col:red]]Lahmian Court: the enemy army is a Lahmian court of handmaidens, mortal retainers and the coven throne of the sisterhood.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_lahmia		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_lahmia_message	Lahmian Court: the enemy army is a Lahmian court: handmaidens, mortal retainers and the coven throne of the sisterhood.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_vmp_lahmia_message	Lahmian Court: the enemy army is a Lahmian court of handmaidens, mortal retainers and the coven throne of the sisterhood.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_vmp_lahmia_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_state	[[col:red]]State Troops: the enemy army is a muster of state troops: halberds, handguns and the guns of the Imperial Gunnery School.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_state	[[col:red]]State Troops: the enemy army is a muster of state troops consisting of halberds, handguns and those of the Imperial Gunnery School.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_state		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_state_message	State Troops: the enemy army is a muster of state troops: halberds, handguns and the guns of the Imperial Gunnery School.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_state_message	State Troops: the enemy army is a muster of state troops consisting of halberds, handguns and those of the Imperial Gunnery School.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_state_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_knights	[[col:red]]Knightly Orders: the enemy army is a host of the knightly orders: Reiksguard, Blazing Sun, Black Rose and demigryph knights.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_knights	[[col:red]]Knightly Orders: the enemy army is a host of the knightly orders of the Reiksguard, Blazing Sun, Black Rose and demigryph knights.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_knights		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_knights_message	Knightly Orders: the enemy army is a host of the knightly orders: Reiksguard, Blazing Sun, Black Rose and demigryph knights.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_knights_message	Knightly Orders: the enemy army is a host of the knightly orders of the Reiksguard, Blazing Sun, Black Rose and demigryph knights.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_knights_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_ulric	[[col:red]]Wolves of Ulric: the enemy army is a host of Ulric: wolf kin, Teutogen guard and the knights of the White Wolf.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_ulric	[[col:red]]Wolves of Ulric: the enemy army is a host of Ulric wolf kin, Teutogen guard and the knights of the White Wolf.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_ulric		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_ulric_message	Wolves of Ulric: the enemy army is a host of Ulric: wolf kin, Teutogen guard and the knights of the White Wolf.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_emp_ulric_message	Wolves of Ulric: the enemy army is a host of Ulric wolf kin, Teutogen guard and the knights of the White Wolf.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_emp_ulric_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_knights	[[col:red]]Knightly Order: the enemy army is a knightly order: knights of every vow with a few men-at-arms behind them.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_knights	[[col:red]]Knightly Order: the enemy army is a knightly order made up of knights of every vow with a few men-at-arms behind them.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_knights		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_knights_message	Knightly Order: the enemy army is a knightly order: knights of every vow with a few men-at-arms behind them.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_knights_message	Knightly Order: the enemy army is a knightly order made up of knights of every vow with a few men-at-arms behind them.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_knights_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_grail	[[col:red]]Grail Pilgrimage: the enemy army is a grail pilgrimage: zealous pilgrims and reliquaries following the grail knights.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_grail	[[col:red]]Grail Pilgrimage: the enemy army is a gathering of zealous pilgrims and reliquaries following the grail knights on their grail pilgrimage.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_grail		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_grail_message	Grail Pilgrimage: the enemy army is a grail pilgrimage: zealous pilgrims and reliquaries following the grail knights.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_brt_grail_message	Grail Pilgrimage: the enemy army is a gathering of zealous pilgrims and reliquaries following the grail knights on their grail pilgrimage.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_brt_grail_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_nightgobs	[[col:red]]Night Goblin Horde: the enemy army is a night goblin horde: fanatics, squigs and archers boiling up from the caves.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_nightgobs	[[col:red]]Night Goblin Horde: the enemy army is a night goblin horde of fanatics, squigs and archers boiling up from the caves.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_nightgobs		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_nightgobs_message	Night Goblin Horde: the enemy army is a night goblin horde: fanatics, squigs and archers boiling up from the caves.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_nightgobs_message	Night Goblin Horde: the enemy army is a night goblin horde of fanatics, squigs and archers boiling up from the caves.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_nightgobs_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_savage	[[col:red]]Savage Orc Warband: the enemy army is a savage orc warband: painted boyz, boar riders and the idol they worship.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_savage	[[col:red]]Savage Orc Warband: the enemy army is a savage orc warband of painted boyz, boar riders and the idol they worship.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_savage		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_savage_message	Savage Orc Warband: the enemy army is a savage orc warband: painted boyz, boar riders and the idol they worship.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_savage_message	Savage Orc Warband: the enemy army is a savage orc warband of painted boyz, boar riders and the idol they worship.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_savage_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_spiders	[[col:red]]Spider Tribe: the enemy army is a spider tribe: forest goblins riding giant spiders, led by a great arachnarok.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_spiders	[[col:red]]Spider Tribe: the enemy army is a spider tribe of forest goblins riding their giant spider mounts, led by a great arachnarok.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_spiders		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_spiders_message	Spider Tribe: the enemy army is a spider tribe: forest goblins riding giant spiders, led by a great arachnarok.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_grn_spiders_message	Spider Tribe: the enemy army is a spider tribe of forest goblins riding their giant spider mounts, led by a great arachnarok.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_grn_spiders_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_wildhunt	[[col:red]]Wild Hunt: the enemy army is the Wild Hunt: wild riders, wardancers and great stags at full gallop.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_wildhunt	[[col:red]]Wild Hunt: the enemy army is the Wild Hunt made up of wild riders, wardancers and great stags at full gallop.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_wildhunt		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_wildhunt_message	Wild Hunt: the enemy army is the Wild Hunt: wild riders, wardancers and great stags at full gallop.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_wildhunt_message	Wild Hunt: the enemy army is the Wild Hunt made up of wild riders, wardancers and great stags at full gallop.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_wildhunt_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_forest	[[col:red]]Wrath of the Forest: the enemy army is the wrath of the forest: dryads, treekin and treemen roused from the deep woods.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_forest	[[col:red]]Wrath of the Forest: the enemy army is the wrath of the forest made manifest through dryads, treekin and treemen roused from the deep woods.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_forest		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_forest_message	Wrath of the Forest: the enemy army is the wrath of the forest: dryads, treekin and treemen roused from the deep woods.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_wef_forest_message	Wrath of the Forest: the enemy army is the wrath of the forest made manifest through dryads, treekin and treemen roused from the deep woods.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_wef_forest_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_brayherd	[[col:red]]Brayherd: the enemy army is a brayherd: gors, ungors and bestigors with their hounds and chariots.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_brayherd	[[col:red]]Brayherd: the enemy army is a brayherd of gors, ungors and bestigors with their hounds and chariots.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_brayherd		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_brayherd_message	Brayherd: the enemy army is a brayherd: gors, ungors and bestigors with their hounds and chariots.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_brayherd_message	Brayherd: the enemy army is a brayherd of gors, ungors and bestigors with their hounds and chariots.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_brayherd_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_warherd	[[col:red]]Warherd: the enemy army is a warherd: minotaurs, cygors and ghorgons hungry for flesh.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_warherd	[[col:red]]Warherd: the enemy army is a warherd of minotaurs, cygors and ghorgons hungry for flesh.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_warherd		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_warherd_message	Warherd: the enemy army is a warherd: minotaurs, cygors and ghorgons hungry for flesh.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_bst_warherd_message	Warherd: the enemy army is a warherd of minotaurs, cygors and ghorgons hungry for flesh.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_bst_warherd_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cth_dragonguard	[[col:red]]Celestial Guard: the enemy army is the Celestial Guard: dragon guard, jade lancers and terracotta sentinels of the Emperor.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cth_dragonguard	[[col:red]]Celestial Guard: the enemy army is the Celestial Guard consisting of dragon guards, jade lancers and terracotta sentinels of the Emperor.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cth_dragonguard		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cth_dragonguard_message	Celestial Guard: the enemy army is the Celestial Guard: dragon guard, jade lancers and terracotta sentinels of the Emperor.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_cth_dragonguard_message	Celestial Guard: the enemy army is the Celestial Guard consisting of dragon guards, jade lancers and terracotta sentinels of the Emperor.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_cth_dragonguard_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_horrors	[[col:red]]Flux of Horrors: the enemy army is a flux of daemons: pink and blue horrors, flamers and screamers of Tzeentch.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_horrors	[[col:red]]Flux of Horrors: the enemy army is a flux of daemons made up of pink and blue horrors, flamers and screamers of Tzeentch.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_horrors		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_horrors_message	Flux of Horrors: the enemy army is a flux of daemons: pink and blue horrors, flamers and screamers of Tzeentch.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_horrors_message	Flux of Horrors: the enemy army is a flux of daemons made up of pink and blue horrors, flamers and screamers of Tzeentch.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_horrors_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_arcanites	[[col:red]]Arcanite Cult: the enemy army is an arcanite cult: tzaangors, mutants and doom knights who serve the Changer.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_arcanites	[[col:red]]Arcanite Cult: the enemy army is an arcanite cult of tzaangors, mutants and doom knights who serve the Changer of Ways.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_arcanites		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_arcanites_message	Arcanite Cult: the enemy army is an arcanite cult: tzaangors, mutants and doom knights who serve the Changer.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_tze_arcanites_message	Arcanite Cult: the enemy army is an arcanite cult of tzaangors, mutants and doom knights who serve the Changer of Ways.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_tze_arcanites_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_everchosen	[[col:red]]Everchosen Host: the enemy army is an Everchosen host: chaos warriors, chosen and knights in black iron.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_everchosen	[[col:red]]Everchosen Host: the enemy army is an Everchosen host of chaos warriors, chosen and knights in black iron.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_everchosen		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_everchosen_message	Everchosen Host: the enemy army is an Everchosen host: chaos warriors, chosen and knights in black iron.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_everchosen_message	Everchosen Host: the enemy army is an Everchosen host of chaos warriors, chosen and knights in black iron.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_everchosen_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_rotbringers	[[col:red]]Rotbringers: the enemy army is a Rotbringer warband: blightkings and plague-marked warriors of Nurgle.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_rotbringers	[[col:red]]Rotbringers: the enemy army is a Rotbringer warband of blightkings and plague-marked warriors of Nurgle.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_rotbringers		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_rotbringers_message	Rotbringers: the enemy army is a Rotbringer warband: blightkings and plague-marked warriors of Nurgle.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_rotbringers_message	Rotbringers: the enemy army is a Rotbringer warband of blightkings and plague-marked warriors of Nurgle.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_rotbringers_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_bloodbound	[[col:red]]Bloodbound: the enemy army is a bloodbound warband: Khorne-marked marauders, chosen and skull-hunting knights.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_bloodbound	[[col:red]]Bloodbound: the enemy army is a bloodbound warband of Khorne-marked marauders, chosen and knights of the Blood God.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_bloodbound		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_bloodbound_message	Bloodbound: the enemy army is a bloodbound warband: Khorne-marked marauders, chosen and skull-hunting knights.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chs_bloodbound_message	Bloodbound: the enemy army is a bloodbound warband of Khorne-marked marauders, chosen and knights of the Blood God.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chs_bloodbound_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_tallyband	[[col:red]]Plague Tallyband: the enemy army is a tallyband of Nurgle: plaguebearers, nurglings and buzzing plague drones.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_tallyband	[[col:red]]Plague Tallyband: the enemy army is a tallyband of plaguebearers, nurglings and buzzing plague drones serving Grandfather Nurgle.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_tallyband		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_tallyband_message	Plague Tallyband: the enemy army is a tallyband of Nurgle: plaguebearers, nurglings and buzzing plague drones.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_tallyband_message	Plague Tallyband: the enemy army is a tallyband of plaguebearers, nurglings and buzzing plague drones serving Grandfather Nurgle.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_tallyband_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_maggoth	[[col:red]]Maggot Horde: the enemy army is a maggot horde: pestigors, bile trolls and plague ogres following the Maggot Lord.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_maggoth	[[col:red]]Maggot Horde: the enemy army is a maggot horde of pestigors, bile trolls and plague ogres following the Maggot Lord.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_maggoth		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_maggoth_message	Maggot Horde: the enemy army is a maggot horde: pestigors, bile trolls and plague ogres following the Maggot Lord.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_nur_maggoth_message	Maggot Horde: the enemy army is a maggot horde of pestigors, bile trolls and plague ogres following the Maggot Lord.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_nur_maggoth_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_sla_devotees	[[col:red]]Cult of Excess: the enemy army is a cult of excess: devotees, slaangors and hellstriders who serve the Dark Prince.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_sla_devotees	[[col:red]]Cult of Excess: the enemy army is a cult of excess comprising of devotees, slaangors and hellstriders who serve the Dark Prince.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_sla_devotees		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_sla_devotees_message	Cult of Excess: the enemy army is a cult of excess: devotees, slaangors and hellstriders who serve the Dark Prince.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_sla_devotees_message	Cult of Excess: the enemy army is a cult of excess comprising of devotees, slaangors and hellstriders who serve the Dark Prince.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_sla_devotees_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chd_daemonsmith	[[col:red]]Daemonsmith Foundry: the enemy army is a daemonsmith foundry: infernal guard and daemon-bound war engines of Hashut.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chd_daemonsmith	[[col:red]]Daemonsmith Foundry: the enemy army is a daemonsmith foundry of the infernal guard and daemon-bound war engines of Hashut.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chd_daemonsmith		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chd_daemonsmith_message	Daemonsmith Foundry: the enemy army is a daemonsmith foundry: infernal guard and daemon-bound war engines of Hashut.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_chd_daemonsmith_message	Daemonsmith Foundry: the enemy army is a daemonsmith foundry of the infernal guard and daemon-bound war engines of Hashut.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_chd_daemonsmith_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_icecourt	[[col:red]]Ice Court: the enemy army is a muster of the Ice Court: ice guard, tzar guard and the beasts of the frozen north.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_icecourt	[[col:red]]Ice Court: the enemy army is a muster of the Ice Court made up of the ice guard, tzar guard and the beasts of the frozen north.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_icecourt		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_icecourt_message	Ice Court: the enemy army is a muster of the Ice Court: ice guard, tzar guard and the beasts of the frozen north.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_icecourt_message	Ice Court: the enemy army is a muster of the Ice Court made up of the ice guard, tzar guard and the beasts of the frozen north.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_icecourt_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_witchwood	[[col:red]]Witchwood Folk: the enemy army is a band of witchwood folk: Kislevite warriors, akshina ambushers and the things in the woods.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_witchwood	[[col:red]]Witchwood Folk: the enemy army is a band of witchwood folk of Kislevite warriors, akshina ambushers and the things in the woods.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_witchwood		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_witchwood_message	Witchwood Folk: the enemy army is a band of witchwood folk: Kislevite warriors, akshina ambushers and the things in the woods.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ksl_witchwood_message	Witchwood Folk: the enemy army is a band of witchwood folk of Kislevite warriors, akshina ambushers and the things in the woods.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ksl_witchwood_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_maneaters	[[col:red]]Maneater Company: the enemy army is a maneater company: veteran ogre mercenaries with leadbelchers and gnoblar hirelings.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_maneaters	[[col:red]]Maneater Company: the enemy army is a maneater company of veteran ogre mercenaries with leadbelchers and gnoblar hirelings.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_maneaters		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_maneaters_message	Maneater Company: the enemy army is a maneater company: veteran ogre mercenaries with leadbelchers and gnoblar hirelings.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_maneaters_message	Maneater Company: the enemy army is a maneater company of veteran ogre mercenaries with leadbelchers and gnoblar hirelings.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_maneaters_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_beastriders	[[col:red]]Beastrider Lodge: the enemy army is a beastrider lodge: mournfangs, stonehorns and thundertusks of the Mountains of Mourn.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_beastriders	[[col:red]]Beastrider Lodge: the enemy army is a beastrider lodge of mournfangs, stonehorns and thundertusks of the Mountains of Mourn.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_beastriders		false
-scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_beastriders_message	Beastrider Lodge: the enemy army is a beastrider lodge: mournfangs, stonehorns and thundertusks of the Mountains of Mourn.	false
+scripted_objectives_localised_text_land_enc_tower_buff_modifier_lore_ogr_beastriders_message	Beastrider Lodge: the enemy army is a beastrider lodge of mournfangs, stonehorns and thundertusks of the Mountains of Mourn.	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_lore_ogr_beastriders_message		false

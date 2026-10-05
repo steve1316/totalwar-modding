@@ -59,19 +59,19 @@ local LORD_VIGIL_SHARE = 0.01
 --- The ammunition every missile unit starts with under Short of Shot, as a share of its own.
 local SHORT_SHOT_AMMO = 0.5
 --- When Panic routs the enemy's weakest units, in ms after the battle starts, and how many.
-local PANIC_AT_MS = 120000
+local PANIC_AT_MS = 180000
 local PANIC_UNITS = 2
 --- When Cowards' Ground routs our weakest unit, in ms after the battle starts.
-local COWARDS_AT_MS = 90000
+local COWARDS_AT_MS = 180000
 --- How long Fated Lords keeps both lords invincible, and Hold Fast every unit from routing, in ms.
-local FATED_LORDS_MS = 120000
-local HOLD_FAST_MS = 120000
+local FATED_LORDS_MS = 180000
+local HOLD_FAST_MS = 180000
 --- When Grim Resolve's unbreakable and Wet Powder's empty quivers end, in ms after the battle starts.
-local GRIM_RESOLVE_MS = 120000
-local WET_POWDER_MS = 120000
+local GRIM_RESOLVE_MS = 180000
+local WET_POWDER_MS = 180000
 --- Grim Presence: how close to our lord an enemy unit must be, in m, how often it bites, in ms, and the share of full strength each bite takes.
 local GRIM_PRESENCE_RANGE = 25
-local GRIM_PRESENCE_EVERY_MS = 1000
+local GRIM_PRESENCE_EVERY_MS = 10000
 local GRIM_PRESENCE_SHARE = 0.005
 --- How often Storm of Magic gives every army Winds of Magic, in ms, and how much.
 local STORM_MAGIC_EVERY_MS = 60000
@@ -80,10 +80,10 @@ local STORM_MAGIC_WINDS = 20
 local WINDS_DRAINED_AT_MS = 2000
 local WINDS_DRAINED_AMOUNT = 1000
 --- How often Warp Shift flings a unit, in ms, and how far, in m.
-local WARP_SHIFT_EVERY_MS = 60000
+local WARP_SHIFT_EVERY_MS = 120000
 local WARP_SHIFT_RANGE = { 30, 80 }
 --- How often Tzeentch's Jest swaps two units, in ms.
-local JEST_EVERY_MS = 90000
+local JEST_EVERY_MS = 120000
 --- How far a swapped unit lands from the other unit's spot, back toward its own army, in m, so it has room to move.
 local JEST_PUSH_BACK = { 15, 30 }
 --- How long a teleported unit stays hidden before it shows at its new spot, and how long its ping marker shows after, in ms.
@@ -97,11 +97,11 @@ local marked = {}
 --- Names of the repeating modifier timers started this battle, stopped once the battle is decided.
 local processes = {}
 --- Blink Strike: when our riders are flung, in ms after the battle starts, how far behind the enemy's centre they land, and how far apart, in m.
-local BLINK_AT_MS = 60000
+local BLINK_AT_MS = 120000
 local BLINK_BEHIND = 80
 local BLINK_SPREAD = 40
 --- Lost in the Warp: when one of our units vanishes, in ms after the battle starts, for how long, and how far from where it vanished it returns.
-local LOST_WARP_AT_MS = 90000
+local LOST_WARP_AT_MS = 120000
 local LOST_WARP_MS = 30000
 local LOST_WARP_RANGE = { 30, 80 }
 --- How far from the enemy's centre Scattered Ranks flings each enemy unit, in m.
@@ -114,9 +114,11 @@ local WILD_WINDS_VORTEXES = { "tornado_base", "supernova_base" }
 --- The strength below which Last Stand lets an enemy unit rout, and how often it checks, in ms.
 local LAST_STAND_SHARE = 0.5
 local LAST_STAND_POLL_MS = 1000
---- When The Dead Rise and Undying Foe bring units back, in ms after the battle starts, the strength they return at, and how many enemy units return.
-local RISE_AT_MS = 180000
-local RISE_STRENGTH = 0.5
+--- When The Dead Rise and Undying Foe bring units back, in ms after the battle starts, the strength each one's units return at, and how many
+--- enemy units Undying Foe brings back.
+local RISE_AT_MS = 300000
+local DEAD_RISE_STRENGTH = 0.25
+local UNDYING_STRENGTH = 0.5
 local UNDYING_UNITS = 2
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -562,16 +564,17 @@ local function starts_of(sunits)
     return starts
 end
 
---- Brings up to `count` gone units back where they stood as the battle started, at `RISE_STRENGTH`.
+--- Brings up to `count` gone units back where they stood as the battle started, at a share of their full strength.
 --- @param starts table The units' starts, from `starts_of`.
 --- @param count number How many may return.
+--- @param strength number The share of full strength they return at.
 --- @param label string The modifier's name, for the log.
-local function raise(starts, count, label)
+local function raise(starts, count, strength, label)
     local raised = 0
     for _, start in ipairs(starts) do
         if raised < count and gone(start.sunit) then
             start.sunit.unit:respawn(start.pos, start.bearing, start.width)
-            start.sunit.unit:reduce_hitpoints_unary(1 - RISE_STRENGTH)
+            start.sunit.unit:reduce_hitpoints_unary(1 - strength)
             start.sunit:release_control()
             raised = raised + 1
             log(label .. ": " .. start.sunit.unit:type() .. " returns at " .. at_text(start.pos))
@@ -916,11 +919,11 @@ local MODIFIERS = {
     end,
     dead_rise = function(ctx)
         local starts = starts_of(ctx.ours)
-        after("The dead rise", RISE_AT_MS, function() raise(starts, #starts, "The dead rise") end)
+        after("The dead rise", RISE_AT_MS, function() raise(starts, #starts, DEAD_RISE_STRENGTH, "The dead rise") end)
     end,
     undying = function(ctx)
         local starts = starts_of(ctx.theirs)
-        after("Undying foe", RISE_AT_MS, function() raise(starts, UNDYING_UNITS, "Undying foe") end)
+        after("Undying foe", RISE_AT_MS, function() raise(starts, UNDYING_UNITS, UNDYING_STRENGTH, "Undying foe") end)
     end,
 }
 

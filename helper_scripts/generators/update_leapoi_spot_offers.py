@@ -227,9 +227,9 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "kill_the_captain": ("Kill the Captain", PAY + "kill their captain: the enemy army has [[col:green]]no heroes[[/col]]."),
     "lower_tiers_only": ("Keep the Veterans Away", PAY + "keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]]."),
     "strip_monsters": ("Cull the Beasts", PAY + "cull their beasts: the enemy army fields [[col:green]]no monsters or war beasts[[/col]]."),
-    "strip_cavalry": ("Scatter the Herds", PAY + "scatter their herds: the enemy army fields [[col:green]]no cavalry or chariots[[/col]]."),
+    "strip_cavalry": ("Scatter the Herds", PAY + "scatter their riders: the enemy army fields [[col:green]]no cavalry or chariots[[/col]]."),
     "strip_missile": ("Burn the Quivers", PAY + "burn their quivers: the enemy army fields [[col:green]]no missile infantry[[/col]]."),
-    "strip_artillery": ("Wreck the Engines", PAY + "wreck their engines: the enemy army fields [[col:green]]no artillery[[/col]]."),
+    "strip_artillery": ("Wreck the Engines", PAY + "wreck their war engines: the enemy army fields [[col:green]]no artillery[[/col]]."),
     "break_their_spirit": ("Break Their Spirit", PAY + "spread dread through their camp: enemy units have [[col:green]]-{e0}[[/col]] "
                            "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership."),
     "curse_their_blades": ("Curse Their Blades", PAY + "curse their weapons: enemy units have [[col:green]]-{e0}[[/col]] "

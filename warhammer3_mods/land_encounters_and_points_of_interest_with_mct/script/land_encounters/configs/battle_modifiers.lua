@@ -156,7 +156,7 @@ M.list = {
 
     --- Army compositions.
     { key = "comp_monsters", harm = "-", sides = { "enemy" }, group = "composition", keeps_out = { "strip_monsters" },
-      army = { shares = { monsters = 65, cavalry = 15, frontline = 20 }, price_mode = "normal", requires = "monsters", requires_count = 3 } },
+      army = { shares = { monsters = 70, cavalry = 15, frontline = 15 }, price_mode = "normal", requires = "monsters", requires_count = 3 } },
     { key = "comp_riders", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = { "strip_cavalry" },
       army = { shares = { cavalry = 80, frontline = 20 }, price_mode = "normal", requires = "cavalry", requires_count = 3 } },
     { key = "comp_shieldwall", harm = "~", sides = { "enemy" }, group = "composition",

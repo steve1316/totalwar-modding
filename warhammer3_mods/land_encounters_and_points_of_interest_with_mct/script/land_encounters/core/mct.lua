@@ -28,7 +28,7 @@ local mct_settings = {
     --- Percent chance a won battle spot opens the spoils pick.
     spoils_chance = 30,
     --- Percent chance a fight (a battle spot or a tower floor) carries battle modifiers.
-    battle_modifier_chance = 7,
+    battle_modifier_chance = 5,
     --- Default to interception only - matches the pre-MCT-toggle behavior the user established.
     enabled_intervention_types = { INTERCEPTION_TYPE },
     enabled_encounter_skin_ids = {},
