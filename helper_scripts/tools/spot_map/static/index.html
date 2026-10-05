@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encounter Spot Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@500;700&family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a survey sheet. Campaign and trim rule on top, the campaign's own minimap as the working surface, then pending changes and counts. */
+:root {
+  --bg: #eef1f2; --panel: #f8fafa; --ink: #1d2a30; --muted: #5d6c73; --line: #c9d3d6; --land: #dfe6e5;
+  --kept: #1f7a72; --cut: #b5452b; --add: #2b62cf; --del: #a8237a; --off: #7b878c; --forge: #a87512; --gap: #6a4fb3; --settle: #4b5a60;
+  --edge: var(--panel); --tower: #5b3fa8; --tavern: #2f7f3f; --manual: #b8860b;
+  --display: "Alegreya Sans SC", "Trebuchet MS", sans-serif; --body: "Alegreya Sans", "Segoe UI", sans-serif; --mono: "IBM Plex Mono", Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #121a1e; --panel: #182227; --ink: #e2eaec; --muted: #93a3a9; --line: #2c3a40; --land: #1c282d;
+    --kept: #4cc0b3; --cut: #e0765c; --add: #6f9cff; --del: #e66bb8; --off: #8d999e; --forge: #e2ac45; --gap: #a58cf0; --settle: #c3cfd3; color-scheme: dark; }
+}
+/* Map palettes for the parchment minimap. Bright and Neon trade subtlety for contrast and outline filled spots in near-black. */
+body[data-palette="bright"] { --kept: #00c9b7; --cut: #ff4422; --add: #2f7bff; --del: #ff2fbd; --off: #56606a; --forge: #ffc400; --gap: #8f4dff;
+  --settle: #20282c; --edge: #0d1418; --tower: #a35cff; --tavern: #28d35c; --manual: #ff9500; }
+body[data-palette="neon"] { --kept: #39ff14; --cut: #ff1744; --add: #00e5ff; --del: #ff00e6; --off: #d0d4d6; --forge: #ffea00; --gap: #d500f9;
+  --settle: #000000; --edge: #000000; --tower: #b388ff; --tavern: #76ff03; --manual: #ffffff; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; }
+.wrap { max-width: 1400px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 16px; }
+h1 { font-family: var(--display); font-weight: 700; font-size: 1.7rem; margin: 0; letter-spacing: .02em; }
+h2 { font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin: 0 0 8px; letter-spacing: .04em; }
+.lede { margin: 4px 0 0; color: var(--muted); max-width: 90ch; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; }
+.controls label { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.controls input[type=range] { width: min(200px, 45vw); accent-color: var(--kept); }
+.val { font-family: var(--mono); min-width: 2.5ch; display: inline-block; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { font: inherit; border: 0; background: transparent; color: var(--ink); padding: 4px 10px; cursor: pointer; }
+.seg button[aria-pressed=true] { background: var(--kept); color: var(--panel); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--gap); outline-offset: 2px; }
+.totals { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--mono); font-size: .92rem; }
+.totals b { font-weight: 500; }
+.k { color: var(--kept); } .c { color: var(--cut); } .a { color: var(--add); } .d { color: var(--del); }
+/* The map takes the full width; the cards sit below it, side by side when there is room. */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.mapbox { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; touch-action: none; }
+svg#map { display: block; width: 100%; height: auto; cursor: crosshair; background: var(--land); }
+svg#map.drag { cursor: grabbing; }
+/* Hollow rings (trimmed, disabled, provinces with no spot) have no fill; "all" makes their inside hoverable and clickable too. */
+svg#map circle { pointer-events: all; }
+.mapbar { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; }
+.btn { font: inherit; font-size: .9rem; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 5px; padding: 3px 10px; cursor: pointer; }
+.btn.primary { background: var(--kept); color: var(--panel); border-color: var(--kept); font-weight: 700; }
+.btn:disabled { opacity: .5; cursor: default; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; flex-basis: 100%; }
+.filters .hint { color: var(--muted); font-size: .85rem; margin-left: 6px; }
+.chip { font: inherit; font-size: .88rem; display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid var(--line);
+  border-radius: 14px; background: var(--bg); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed=false] { opacity: .45; text-decoration: line-through; }
+.sw { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+/* A filter chip switched off hides its category on the map, labels included. */
+svg#map.hide-kept .cat-kept, svg#map.hide-trimmed .cat-trimmed, svg#map.hide-added .cat-added, svg#map.hide-deleted .cat-deleted,
+svg#map.hide-disabled .cat-disabled, svg#map.hide-smithy .cat-smithy, svg#map.hide-settlement .cat-settlement,
+svg#map.hide-gap .cat-gap, svg#map.hide-manual .cat-manual, svg#map.hide-tower .cat-tower, svg#map.hide-tavern .cat-tavern, svg#map.hide-poi .cat-poi { display: none; }
+td .fields { display: grid; gap: 3px; }
+td .fields label { display: grid; grid-template-columns: 7.5em 1fr; align-items: center; gap: 4px; font-size: .8rem; color: var(--muted); }
+#tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: .82rem; padding: 6px 8px; border-radius: 5px; max-width: 280px; display: none; z-index: 2; }
+.side { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; align-items: start; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.tbl { overflow: auto; max-height: 420px; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: .88rem; }
+th, td { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { font-family: var(--display); font-weight: 500; letter-spacing: .04em; color: var(--muted); position: sticky; top: 0; background: var(--panel); }
+td.n { text-align: right; font-family: var(--mono); white-space: nowrap; }
+td select, td input { font: inherit; font-size: .85rem; width: 100%; min-width: 0; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 1px 4px; }
+.x { border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 1rem; }
+.pill { font-family: var(--mono); font-size: .78rem; padding: 0 6px; border-radius: 9px; color: var(--panel); }
+.pill.add { background: var(--add); } .pill.del { background: var(--del); } .pill.on { background: var(--kept); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.msg { font-size: .88rem; margin: 8px 0 0; }
+.msg.err { color: var(--cut); }
+ul.plain { margin: 0; padding-left: 18px; }
+.note { color: var(--muted); font-size: .88rem; margin: 6px 0 0; }
+.bar { height: 6px; border-radius: 3px; background: var(--line); position: relative; min-width: 50px; }
+.bar i { position: absolute; inset: 0 auto 0 0; background: var(--kept); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Encounter Spot Map</h1>
+    <p class="lede">LEAPOI encounter spots over each campaign's own minimap. Click empty ground to plant, click an entry to mark it for deletion
+      (click a dashed disabled entry to switch it back on), or drag it to move it. New and moved entries stay pending until exported, then become manual; neither is touched by
+      the spacing trim unless you tick "Trim manual spots too". The trim is a preview unless you include it in the export.</p>
+    <p class="lede" id="campNote"></p>
+  </header>
+
+  <section class="controls" aria-label="Campaign and trim rule">
+    <span class="seg" role="group" aria-label="Campaign" id="camps"></span>
+    <span class="seg" role="group" aria-label="Mode" id="modes">
+      <button type="button" data-mode="edit" aria-pressed="true">Edit existing</button>
+      <button type="button" data-mode="slate" aria-pressed="false">Clean slate</button>
+    </span>
+    <label for="spacing">Minimum spacing <input id="spacing" type="range" min="0" max="60" step="1" value="30"> <span class="val" id="spacingVal">30</span></label>
+    <span>Too close when
+      <span class="seg" role="group" aria-label="Distance rule">
+        <button type="button" id="mBox" aria-pressed="true">within it on both x and y</button>
+        <button type="button" id="mCircle" aria-pressed="false">within it in a straight line</button>
+      </span>
+    </span>
+    <span>Click plants <span class="seg" role="group" aria-label="What a click on the map plants" id="plant"></span></span>
+    <label for="smithy"><input id="smithy" type="checkbox"> Smithies count as spots</label>
+    <label for="trimManual"><input id="trimManual" type="checkbox"> Trim manual spots too</label>
+    <label for="mapOn"><input id="mapOn" type="checkbox" checked> Game map</label>
+    <label for="mapFade">Map opacity <input id="mapFade" type="range" min="10" max="100" step="5" value="50"></label>
+    <span>Colours
+      <span class="seg" role="group" aria-label="Spot colours" id="palettes">
+        <button type="button" data-palette="classic" aria-pressed="true">Classic</button>
+        <button type="button" data-palette="bright" aria-pressed="false">Bright</button>
+        <button type="button" data-palette="neon" aria-pressed="false">Neon</button>
+      </span>
+    </span>
+    <label for="dotSize">Dot size <input id="dotSize" type="range" min="0.6" max="2.5" step="0.1" value="1"> <span class="val" id="dotSizeVal">1.0</span></label>
+    <div class="filters" role="group" aria-label="Show on the map">
+      <button type="button" class="chip" data-cat="kept" aria-pressed="true"><i class="sw" style="background:var(--kept)"></i>kept</button>
+      <button type="button" class="chip" data-cat="trimmed" aria-pressed="true"><i class="sw" style="border:2px solid var(--cut)"></i>trimmed by spacing</button>
+      <button type="button" class="chip" data-cat="added" aria-pressed="true"><i class="sw" style="background:var(--add)"></i>pending</button>
+      <button type="button" class="chip" data-cat="manual" aria-pressed="true"><i class="sw" style="background:var(--kept);border:2px solid var(--manual)"></i>manual</button>
+      <button type="button" class="chip" data-cat="deleted" aria-pressed="true"><i class="sw" style="background:var(--del)"></i>marked for deletion</button>
+      <button type="button" class="chip" data-cat="disabled" aria-pressed="true"><i class="sw" style="border:2px dashed var(--off)"></i>disabled in file</button>
+      <button type="button" class="chip" data-cat="tower" aria-pressed="true">
+        <i class="sw" style="background:var(--tower);border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)"></i>tower site</button>
+      <button type="button" class="chip" data-cat="smithy" aria-pressed="true"><i class="sw" style="background:var(--forge);border-radius:2px"></i>smithy</button>
+      <button type="button" class="chip" data-cat="tavern" aria-pressed="true"><i class="sw" style="background:var(--tavern);border-radius:0;transform:rotate(45deg) scale(.8)"></i>tavern</button>
+      <button type="button" class="chip" data-cat="settlement" aria-pressed="true"><i class="sw" style="background:var(--settle);width:6px;height:6px"></i>settlement</button>
+      <button type="button" class="chip" data-cat="gap" aria-pressed="true"><i class="sw" style="border:2px solid var(--gap)"></i>province with no spot</button>
+      <span class="hint">Click a chip to show or hide it. Scroll to zoom, drag to pan.</span>
+    </div>
+    <div class="totals" aria-live="polite">
+      <span>kept <b class="k" id="tKept">-</b></span>
+      <span>trimmed <b class="c" id="tCut">-</b></span>
+      <span>pending <b class="a" id="tAdd">-</b></span>
+      <span>manual <b id="tManual">-</b></span>
+      <span>deleted <b class="d" id="tDel">-</b></span>
+      <span id="tProvWrap">provinces with a spot <b id="tProv">-</b></span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <section class="mapbox" aria-label="Map">
+      <svg id="map" role="img" aria-label="Campaign minimap with encounter spots"></svg>
+      <div class="mapbar">
+        <button type="button" class="btn" id="zin" aria-label="Zoom in">+</button>
+        <button type="button" class="btn" id="zout" aria-label="Zoom out">-</button>
+        <button type="button" class="btn" id="zreset">Reset</button>
+      </div>
+      <div id="tip"></div>
+    </section>
+
+    <div class="side">
+      <section class="card">
+        <h2 id="queueTitle">Pending changes</h2>
+        <div class="tbl"><table id="pending"><thead><tr><th></th><th>Zone</th><th>Details</th><th>At</th><th></th></tr></thead><tbody></tbody></table></div>
+        <datalist id="owners"></datalist>
+        <p class="note" id="pendingNone">Nothing yet. Pick what to plant in the toolbar and click the map, click a spot, smithy or tavern to mark it, or drag one to move it.</p>
+        <div class="row" style="margin-top:10px" id="trimRow">
+          <label for="withTrim"><input id="withTrim" type="checkbox"> Include spacing trim in export</label>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <button type="button" class="btn primary" id="exportBtn">Export to coordinates.lua</button>
+          <button type="button" class="btn" id="clearBtn">Clear</button>
+          <button type="button" class="btn" id="reloadBtn">Reload</button>
+        </div>
+        <p class="msg" id="msg"></p>
+      </section>
+      <section class="card">
+        <h2 id="lostTitle">Provinces that would lose every spot</h2>
+        <ul class="plain" id="lost"></ul>
+        <p class="note" id="lostNote"></p>
+      </section>
+      <section class="card">
+        <h2 id="groupTitle">Per zone</h2>
+        <div class="tbl"><table id="zones"><thead><tr><th id="groupCol">Zone</th><th>Spots</th><th>Kept</th><th></th></tr></thead><tbody></tbody></table></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('map');
+const tip = document.getElementById('tip');
+const msg = document.getElementById('msg');
+const ctl = { camp: null, spacing: 30, metric: 'box', smithy: false, plant: 'spot', trimManual: false, mode: 'edit' };
+// Clean-slate queues by campaign: the layout from disk as `add`, with nothing to delete or move in existing data.
+const slate = {};
+let layoutSave = null;
+let STATE = null, C = null, W = 1, H = 1, view, bg, gLabels, gSpots, gAdds;
+let spots = [], pois = [], settlements = [];
+let pending = {};
+let z = 1, tx = 0, ty = 0;
+
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+const sx = x => x * W / C.LW;
+const sy = y => H - y * H / C.LH;
+const spotKey = s => `s|${s.lua}|${s.zone}|${s.index}`;
+const poiKey = f => `p|${f.lua}|${f.zone}|${f.kind}|${f.index}`;
+// Shape and colour per planted type; a type added in campaigns.py SPOT_TYPES without an entry here is drawn as a grey circle.
+const TYPE_LOOK = { spot: ['circle', 'var(--kept)'], tower: ['triangle', 'var(--tower)'], smithy: ['square', 'var(--forge)'], tavern: ['diamond', 'var(--tavern)'] };
+const typeOf = key => STATE.types.find(t => t.key === key);
+const typeOfList = list => STATE.types.find(t => t.list === list);
+const look = key => TYPE_LOOK[key] || ['circle', 'var(--off)'];
+
+// Draws a marker of the given shape centred on (cx, cy), radius r.
+function shape(kind, cx, cy, r, attrs, parent) {
+  if (kind === 'circle') return el('circle', { cx, cy, r, ...attrs }, parent);
+  if (kind === 'square') return el('rect', { x: cx - r, y: cy - r, width: 2 * r, height: 2 * r, rx: r / 4, ...attrs }, parent);
+  const pts = kind === 'triangle' ? [[0, -1.25], [1.1, 0.8], [-1.1, 0.8]] : [[0, -1.3], [1.3, 0], [0, 1.3], [-1.3, 0]];
+  return el('polygon', { points: pts.map(([a, b]) => `${cx + a * r},${cy + b * r}`).join(' '), ...attrs }, parent);
+}
+const label = p => p.replace(/^wh\d_\w+?_combi_province_|^wh\d_\w+?_chaos_province_/, '').replace(/_/g, ' ');
+
+function loadPending() {
+  try { pending = JSON.parse(localStorage.getItem('spotmap.pending.v2') || '{}'); } catch (e) { pending = {}; }
+}
+function savePending() {
+  if (ctl.mode === 'slate') {
+    // The layout is saved to disk half a second after the last change.
+    const camp = ctl.camp, entries = P().add;
+    clearTimeout(layoutSave);
+    layoutSave = setTimeout(() => {
+      fetch('/api/layout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ campaign: camp, entries }) })
+        .then(r => { if (!r.ok) throw new Error(r.statusText); })
+        .catch(err => { msg.className = 'msg err'; msg.textContent = `Saving the layout failed: ${err.message}`; });
+    }, 500);
+    return;
+  }
+  try { localStorage.setItem('spotmap.pending.v2', JSON.stringify(pending)); } catch (e) { /* storage blocked: pending stays in memory */ }
+}
+const emptyPending = () => ({ add: [], disable: [], enable: [], move: {} });
+// The open queue: pending changes of the campaign in Edit existing, its layout in Clean slate. `move` maps an entry key to its new {x, y}.
+const P = () => {
+  if (ctl.mode === 'slate') return slate[ctl.camp] || (slate[ctl.camp] = { add: C.layout.map(e => ({ ...e })), disable: [], enable: [], move: {} });
+  const p = pending[ctl.camp] || (pending[ctl.camp] = emptyPending());
+  p.move = p.move || {};
+  return p;
+};
+
+function nearest(list, x, y) {
+  let best = null, bd = Infinity;
+  for (const s of list) { const d = (s.x - x) ** 2 + (s.y - y) ** 2; if (d < bd) { bd = d; best = s; } }
+  return best;
+}
+
+async function fetchState() {
+  const r = await fetch('/api/state');
+  STATE = await r.json();
+}
+
+function buildCampaignButtons() {
+  const el2 = document.getElementById('camps');
+  el2.innerHTML = '';
+  for (const c of STATE.campaigns) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = c.label; b.dataset.camp = c.key;
+    b.setAttribute('aria-pressed', c.key === ctl.camp);
+    b.addEventListener('click', () => { ctl.camp = c.key; el2.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.dataset.camp === c.key)); build(true); });
+    el2.appendChild(b);
+  }
+}
+
+function buildPlantButtons() {
+  const box = document.getElementById('plant');
+  box.innerHTML = '';
+  for (const t of STATE.types) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = t.label; b.dataset.plant = t.key;
+    b.setAttribute('aria-pressed', t.key === ctl.plant);
+    b.addEventListener('click', () => { ctl.plant = t.key; box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.dataset.plant === t.key)); });
+    box.appendChild(b);
+  }
+}
+
+function build(resetView) {
+  C = STATE.campaigns.find(c => c.key === ctl.camp);
+  W = C.W; H = C.H;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.style.aspectRatio = `${W} / ${H}`;
+  svg.innerHTML = '';
+  view = el('g', {}, svg);
+  bg = el('image', { href: `/map/${C.key}.png`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none', opacity: document.getElementById('mapFade').value / 100 }, view);
+  bg.style.display = document.getElementById('mapOn').checked ? '' : 'none';
+  const gSettle = el('g', {}, view); gLabels = el('g', {}, view);
+  const gForge = el('g', {}, view); gSpots = el('g', {}, view); gAdds = el('g', {}, view);
+  const slateMode = ctl.mode === 'slate';
+  spots = slateMode ? [] : C.spots.map(s => ({ ...s }));
+  pois = slateMode ? [] : C.pois; settlements = C.settlements;
+  // Dots keep the same on-screen size whatever the minimap's width; per-area grouping for campaigns without real zones.
+  C.r0 = W / 1440 * viewOpts.dot;
+  C.byArea = !C.zones.length || C.seeded;
+  const r0 = C.r0;
+  for (const s of spots) { const n = nearest(settlements, s.x, s.y); s.near = n; s.province = n ? n.province : ''; }
+  // Gap rings are set in render, since they follow pending and clean-slate entries too.
+  for (const s of settlements) {
+    s.el = el('circle', { class: 'cat-settlement', cx: sx(s.x), cy: sy(s.y), r: (s.capital ? 2.4 : 1.6) * r0, fill: 'var(--settle)' }, gSettle);
+    s.ring = el('circle', { class: 'cat-gap', cx: sx(s.x), cy: sy(s.y), r: 4.5 * r0, fill: 'none', stroke: 'var(--gap)', 'stroke-width': 1.6 }, gSettle);
+    s.label = el('text', { x: sx(s.x) + 4, y: sy(s.y) - 4, 'font-size': 7 * r0, 'font-family': 'Alegreya Sans, sans-serif' }, gLabels);
+    s.label.textContent = s.name;
+  }
+  pois.forEach((f, i) => {
+    const t = typeOfList(f.kind);
+    f.type = t ? t.key : 'poi';
+    f.cat = t && ['smithy', 'tavern'].includes(t.key) ? 'cat-' + t.key : 'cat-poi';
+    f.el = shape(look(f.type)[0], sx(f.x), sy(f.y), 3.6 * r0, {}, gForge);
+    f.el.dataset.poi = i;
+  });
+  spots.forEach((s, i) => {
+    s.tower = (s.flags || []).includes('tower');
+    s.el = shape(s.tower ? 'triangle' : 'circle', sx(s.x), sy(s.y), (s.tower ? 4.2 : 3.6) * r0, {}, gSpots);
+    s.el.dataset.spot = i;
+  });
+  document.getElementById('queueTitle').textContent = slateMode ? 'Clean slate layout' : 'Pending changes';
+  document.getElementById('lostTitle').textContent = slateMode ? 'Provinces with no spot in the layout' : 'Provinces that would lose every spot';
+  document.getElementById('trimRow').hidden = slateMode;
+  document.getElementById('exportBtn').textContent = slateMode ? 'Export draft block' : 'Export to coordinates.lua';
+  document.getElementById('campNote').textContent = slateMode
+    ? `${C.label}, clean slate: existing spots are hidden. The layout is saved to tools/spot_map/data/layouts/${C.key}.json as you go; Export writes it ` +
+      `to coordinates.lua as ${C.zones.map(z2 => z2.lua).filter((v, i, a) => a.indexOf(v) === i).map(l => 'M.' + l + '_draft').join(' and ')}, which LEAPOI ignores.`
+    : C.seeded
+    ? `${C.label}: ${spots.length} draft spots. LEAPOI does not load this campaign yet; the first export creates its block in coordinates.lua.`
+    : `${C.label}: ${spots.length} spots (${spots.filter(s => s.disabled).length} disabled, ${spots.filter(s => s.tower).length} tower sites), ` +
+      `${pois.filter(f => f.kind === 'smithies').length} smithies and ${pois.filter(f => f.kind === 'taverns').length} taverns from coordinates.lua, ` +
+      `${settlements.length} settlements from the F4 dump.`;
+  document.getElementById('tProvWrap').hidden = !settlements.length;
+  document.getElementById('groupTitle').textContent = C.byArea ? 'Per area' : 'Per zone';
+  document.getElementById('groupCol').textContent = C.byArea ? 'Area' : 'Zone';
+  document.getElementById('smithy').disabled = !pois.some(f => f.kind === 'smithies');
+  if (resetView) { z = 1; tx = 0; ty = 0; }
+  apply();
+  render();
+}
+
+function close(a, b, t) {
+  const dx = Math.abs(a.x - b.x), dy = Math.abs(a.y - b.y);
+  return ctl.metric === 'box' ? (dx < t && dy < t) : Math.hypot(dx, dy) < t;
+}
+function compute() {
+  const p = P();
+  const deleted = new Set(p.disable), enabled = new Set(p.enable);  // spot and point-of-interest keys
+  const live = spots.map(s => (!s.disabled || enabled.has(spotKey(s))) && !deleted.has(spotKey(s)));
+  // Pending spots (moved or switched back on) and manual spots (`manual = true`, unless "Trim manual spots too" is ticked) are never trimmed,
+  // but they still hold their space: together with pending planted spots they push out neighbours that are too close.
+  const exempt = spots.map((s, i) => live[i] && ((!ctl.trimManual && (s.flags || []).includes('manual')) || !!p.move[spotKey(s)] || enabled.has(spotKey(s))));
+  const t = ctl.spacing, idx = spots.map((_, i) => i).filter(i => live[i] && !exempt[i]);
+  const n = {};
+  for (const i of idx) { let c = 0; for (const j of idx) if (j !== i && close(spots[i], spots[j], t)) c++; n[i] = c; }
+  idx.sort((a, b) => n[a] - n[b] || spots[a].zone.localeCompare(spots[b].zone) || spots[a].index - spots[b].index);
+  const kept = [], keep = new Array(spots.length).fill(false);
+  const fixed = (ctl.smithy ? pois.filter(f => f.kind === 'smithies' && !f.disabled && !deleted.has(poiKey(f))) : [])
+    .concat(spots.filter((s, i) => exempt[i]).map(s => p.move[spotKey(s)] || s))
+    .concat(p.add.filter(a => (typeOf(a.type) || {}).storage !== 'poi'));
+  for (const i of idx) {
+    if (t > 0 && (kept.some(k => close(spots[i], spots[k], t)) || fixed.some(f => close(spots[i], f, t)))) continue;
+    keep[i] = true; kept.push(i);
+  }
+  exempt.forEach((e, i) => { if (e) keep[i] = true; });
+  return { live, keep, deleted, enabled, exempt };
+}
+
+function render() {
+  const { live, keep, deleted, enabled, exempt } = compute();
+  const p = P(), byArea = C.byArea;
+  let kc = 0, trimmed = 0, manual = 0;
+  const groups = {}, provBefore = new Set(), provAfter = new Set();
+  gAdds.innerHTML = '';
+  // Shifts a drawn entry to its pending position and draws a dashed line back to where it was.
+  const place = (item, el2, key) => {
+    const m = p.move[key];
+    const ox = m ? sx(m.x) - sx(item.x) : 0, oy = m ? sy(m.y) - sy(item.y) : 0;
+    el2.dataset.ox = ox; el2.dataset.oy = oy;
+    if (m) {
+      el2.setAttribute('transform', `translate(${ox} ${oy})`);
+      el2.classList.add('cat-added');
+      el('line', { class: 'cat-added', x1: sx(item.x), y1: sy(item.y), x2: sx(m.x), y2: sy(m.y), stroke: 'var(--add)', 'stroke-width': 1 * viewOpts.dot,
+        'stroke-dasharray': '3 2', 'pointer-events': 'none' }, gAdds);
+    } else el2.removeAttribute('transform');
+    return m ? `<br>moving to {${m.x}, ${m.y}} (pending)` : '';
+  };
+  spots.forEach((s, i) => {
+    const key = spotKey(s), c = s.el;
+    let fill, stroke, width = 0.9, dash = '', state, cat;
+    if (deleted.has(key)) { fill = 'var(--del)'; stroke = 'var(--edge)'; state = 'marked for deletion'; cat = 'deleted'; }
+    else if (s.disabled && !enabled.has(key)) { fill = 'none'; stroke = 'var(--off)'; width = 1.4; dash = '2 1.5'; state = 'disabled in file'; cat = 'disabled'; }
+    else if (keep[i]) {
+      const back = enabled.has(key), isManual = (s.flags || []).includes('manual');
+      fill = back ? 'var(--add)' : 'var(--kept)'; stroke = isManual ? 'var(--manual)' : 'var(--edge)'; kc++;
+      if (isManual) { width = 1.8; manual++; }
+      state = back ? 'switching back on' : isManual ? (exempt[i] ? 'manual, kept outside the trim' : 'manual, kept by the trim') : 'kept';
+      cat = back ? 'added' : isManual ? 'manual' : 'kept';
+    }
+    else { fill = 'none'; stroke = 'var(--cut)'; width = 1.8; state = 'trimmed by spacing'; cat = 'trimmed'; trimmed++; }
+    c.setAttribute('class', 'cat-' + cat + (s.tower ? ' cat-tower' : ''));
+    c.setAttribute('fill', fill); c.setAttribute('stroke', stroke); c.setAttribute('stroke-width', width * viewOpts.dot); c.setAttribute('stroke-dasharray', dash);
+    const g = groups[byArea ? (s.area || '-') : s.zone] || (groups[byArea ? (s.area || '-') : s.zone] = { total: 0, kept: 0 });
+    g.total++; if (keep[i]) g.kept++;
+    if (!s.disabled) provBefore.add(s.province);
+    if (keep[i]) provAfter.add(s.province);
+    const moved = place(s, c, key);
+    const near = s.near ? `<br>near ${s.near.name} (${label(s.province)})` : '';
+    c.dataset.tip = `<b>${s.tower ? 'Tower site' : 'Spot'} ${s.zone} ${s.index}</b>${s.area ? ' - ' + s.area : ''}${near}<br>{${s.x}, ${s.y}} - ${state}${moved}`;
+  });
+  for (const f of pois) {
+    const key = poiKey(f), c = f.el, color = look(f.type)[1];
+    const isManual = (f.flags || []).includes('manual');
+    let fill = color, stroke = isManual ? 'var(--manual)' : 'var(--edge)', dash = '', state = isManual ? 'manual' : 'active';
+    if (deleted.has(key)) { fill = 'var(--del)'; state = 'marked for deletion'; }
+    else if (f.disabled && !enabled.has(key)) { fill = 'none'; stroke = 'var(--off)'; dash = '2 1.5'; state = 'disabled in file'; }
+    else if (enabled.has(key)) { state = 'switching back on'; }
+    c.setAttribute('class', f.cat + (deleted.has(key) ? ' cat-deleted' : f.disabled && !enabled.has(key) ? ' cat-disabled' : isManual ? ' cat-manual' : ''));
+    c.setAttribute('fill', fill); c.setAttribute('stroke', stroke); c.setAttribute('stroke-width', (isManual ? 1.8 : 1.1) * viewOpts.dot); c.setAttribute('stroke-dasharray', dash);
+    const fields = Object.entries(f.fields || {}).filter(([, v]) => v).map(([k, v]) => `${k.replace(/_/g, ' ')}: ${v}`).join('<br>');
+    const moved = place(f, c, key);
+    c.dataset.tip = `<b>${(typeOf(f.type) || { label: f.kind }).label} ${f.zone} ${f.index}</b><br>${fields}<br>{${f.x}, ${f.y}} - ${state}${moved}`;
+  }
+  p.add.forEach((a, i) => {
+    const t = typeOf(a.type) || typeOf('spot');
+    const c = shape(look(t.key)[0], sx(a.x), sy(a.y), 4.2 * C.r0, { class: 'cat-added', fill: 'var(--add)', stroke: look(t.key)[1], 'stroke-width': 1.6 * viewOpts.dot }, gAdds);
+    c.dataset.add = i; c.dataset.ox = 0; c.dataset.oy = 0;
+    const n = nearest(settlements, a.x, a.y);
+    c.dataset.tip = `<b>Pending ${t.label.toLowerCase()}</b> (outside the trim) in ${a.zone}${a.area ? ' - ' + a.area : ''}${n ? '<br>near ' + n.name : ''}<br>{${a.x}, ${a.y}} - click to remove`;
+    if (n && t.storage === 'spot') provAfter.add(n.province);
+  });
+  // Coverage: enabled existing spots plus planted spots in Edit existing, the layout's spots in Clean slate.
+  const covered = new Set(spots.filter(s => !s.disabled).map(s => s.province));
+  for (const a of p.add) {
+    const n = (typeOf(a.type) || {}).storage !== 'poi' && nearest(settlements, a.x, a.y);
+    if (n) covered.add(n.province);
+  }
+  // The settlement dot always shows; the ring marks a province with no spot. Labels name province capitals, purple for a province with no spot.
+  for (const s of settlements) {
+    const gap = !covered.has(s.province);
+    const tipText = `<b>${s.name}</b><br>${label(s.province)}${s.capital ? ' (capital)' : ''}${gap ? '<br>no spot in this province' : ''}<br>{${s.x}, ${s.y}}`;
+    s.el.dataset.tip = tipText;
+    s.ring.dataset.tip = tipText;
+    s.ring.style.display = gap ? '' : 'none';
+    s.label.setAttribute('class', 'cat-settlement');
+    s.label.setAttribute('fill', gap ? 'var(--gap)' : 'var(--ink)');
+    s.label.style.display = s.capital ? '' : 'none';
+  }
+  document.getElementById('tKept').textContent = kc + p.add.filter(a => (typeOf(a.type) || {}).storage !== 'poi').length;
+  document.getElementById('tCut').textContent = trimmed;
+  document.getElementById('tManual').textContent = manual + pois.filter(f => (f.flags || []).includes('manual') && !f.disabled).length;
+  document.getElementById('tAdd').textContent = p.add.length + p.enable.length + Object.keys(p.move).length;
+  document.getElementById('tDel').textContent = p.disable.length;
+  const allProv = new Set(settlements.map(s => s.province));
+  document.getElementById('tProv').textContent = `${[...provAfter].filter(x => allProv.has(x)).length} of ${allProv.size}`;
+  const tb = document.querySelector('#zones tbody');
+  tb.innerHTML = '';
+  Object.keys(groups).sort().forEach(name => {
+    const g = groups[name], tr = document.createElement('tr');
+    tr.innerHTML = `<td>${name}</td><td class="n">${g.total}</td><td class="n k">${g.kept}</td><td><div class="bar"><i style="width:${(100 * g.kept / g.total).toFixed(0)}%"></i></div></td>`;
+    tb.appendChild(tr);
+  });
+  const ul = document.getElementById('lost');
+  if (!settlements.length) { ul.innerHTML = '<li>Needs an F4 dump in this campaign.</li>'; document.getElementById('lostNote').textContent = ''; }
+  else if (ctl.mode === 'slate') {
+    const gaps = [...new Set(settlements.map(x => x.province))].filter(x => !covered.has(x)).sort();
+    ul.innerHTML = gaps.length ? gaps.map(x => `<li>${label(x)}</li>`).join('') : '<li>None</li>';
+    document.getElementById('lostNote').textContent = `${gaps.length} provinces have no spot in the layout yet. Provinces are matched by nearest settlement.`;
+  }
+  else {
+    const lost = [...provBefore].filter(x => x && !provAfter.has(x)).sort();
+    ul.innerHTML = lost.length ? lost.map(x => `<li>${label(x)}</li>`).join('') : '<li>None</li>';
+    document.getElementById('lostNote').textContent = `${lost.length} of the ${provBefore.size} provinces that have spots today would have none. Provinces are matched by nearest settlement.`;
+  }
+  renderPending();
+}
+
+function renderPending() {
+  const p = P(), tb = document.querySelector('#pending tbody');
+  const owners = [...new Set(settlements.map(x => x.owner).filter(Boolean))].sort();
+  document.getElementById('owners').innerHTML = owners.map(o => `<option value="${o}"></option>`).join('');
+  tb.innerHTML = '';
+  const zoneOpts = C.zones.map(z2 => `<option value="${z2.lua}|${z2.zone}">${z2.zone}${C.zones.some(o => o.lua !== z2.lua) ? ' (' + z2.lua + ')' : ''}</option>`).join('');
+  const esc = v => String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const cultureOpts = ['<option value="">neutral</option>'].concat(STATE.cultures.map(c2 => `<option value="${c2}">${c2}</option>`)).join('');
+  p.add.forEach((a, i) => {
+    const t = typeOf(a.type) || typeOf('spot');
+    let details = `<input data-i="${i}" data-f="area" class="asel" aria-label="Area" value="${esc(a.area)}">`;
+    if (t.storage === 'poi') {
+      details = '<div class="fields">' + Object.entries(t.fields).filter(([, hint]) => hint === 'owner' || hint === 'culture').map(([name, hint]) => {
+        const input = hint === 'culture' ? `<select data-i="${i}" data-f="${name}" class="fsel">${cultureOpts}</select>`
+          : `<input data-i="${i}" data-f="${name}" class="fsel" list="owners" value="${esc(a.fields[name])}">`;
+        return `<label>${name.replace(/_/g, ' ')} ${input}</label>`;
+      }).join('') + '</div>';
+    }
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><span class="pill add">${t.label.toLowerCase()}</span></td><td><select data-i="${i}" class="zsel" aria-label="Zone">${zoneOpts}</select></td>` +
+      `<td>${details}</td><td class="n">${a.x}, ${a.y}</td><td><button type="button" class="x" data-kind="add" data-i="${i}" aria-label="Remove">&times;</button></td>`;
+    tb.appendChild(tr);
+    tr.querySelector('.zsel').value = `${a.lua}|${a.zone}`;
+    tr.querySelectorAll('select.fsel').forEach(sel => { sel.value = a.fields[sel.dataset.f] || ''; });
+  });
+  for (const [kind, list] of [['disable', p.disable], ['enable', p.enable]]) {
+    list.forEach((key, i) => {
+      const s = spots.find(x => spotKey(x) === key), f = !s && pois.find(x => poiKey(x) === key);
+      if (!s && !f) return;
+      const what = s ? `${s.tower ? 'tower site' : 'spot'} ${s.zone} ${s.index}` : `${(typeOf(f.type) || { label: f.kind }).label.toLowerCase()} ${f.zone} ${f.index}`;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td><span class="pill ${kind === 'disable' ? 'del' : 'on'}">${kind === 'disable' ? 'delete' : 'enable'}</span></td><td>${what}</td>` +
+        `<td>${s ? esc(s.area) : esc(f.fields.initial_owner)}</td><td class="n">${(s || f).x}, ${(s || f).y}</td>` +
+        `<td><button type="button" class="x" data-kind="${kind}" data-i="${i}" aria-label="Remove">&times;</button></td>`;
+      tb.appendChild(tr);
+    });
+  }
+  for (const [key, m] of Object.entries(p.move)) {
+    const s = spots.find(x => spotKey(x) === key), f = !s && pois.find(x => poiKey(x) === key);
+    if (!s && !f) continue;
+    const item = s || f;
+    const what = s ? `${s.tower ? 'tower site' : 'spot'} ${s.zone} ${s.index}` : `${(typeOf(f.type) || { label: f.kind }).label.toLowerCase()} ${f.zone} ${f.index}`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><span class="pill add">move</span></td><td>${what}</td><td>from ${item.x}, ${item.y}</td><td class="n">${m.x}, ${m.y}</td>` +
+      `<td><button type="button" class="x" data-move="${esc(key)}" aria-label="Remove">&times;</button></td>`;
+    tb.appendChild(tr);
+  }
+  document.getElementById('pendingNone').hidden = !!(p.add.length || p.disable.length || p.enable.length || Object.keys(p.move).length);
+  tb.querySelectorAll('.zsel').forEach(sel => sel.addEventListener('change', () => {
+    const [lua, zone] = sel.value.split('|'); Object.assign(P().add[+sel.dataset.i], { lua, zone }); savePending(); render();
+  }));
+  tb.querySelectorAll('.asel').forEach(inp => inp.addEventListener('change', () => { P().add[+inp.dataset.i].area = inp.value.trim(); savePending(); render(); }));
+  tb.querySelectorAll('.fsel').forEach(inp => inp.addEventListener('change', () => { P().add[+inp.dataset.i].fields[inp.dataset.f] = inp.value.trim(); savePending(); }));
+  tb.querySelectorAll('.x').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.move) delete P().move[b.dataset.move]; else P()[b.dataset.kind].splice(+b.dataset.i, 1);
+    savePending(); render();
+  }));
+}
+
+// Converts a pointer position to logical map coordinates, or null when it is off the map.
+function toLogical(e) {
+  const [vx, vy] = toSvg(e);
+  const px = (vx - tx) / z, py = (vy - ty) / z;
+  if (px < 0 || py < 0 || px > W || py > H) return null;
+  return [Math.round(px * C.LW / W), Math.round((H - py) * C.LH / H)];
+}
+
+// Records a dragged entry's drop: a pending entry takes the new place, an existing one gets a pending move.
+function dropAt(e, target) {
+  const at = toLogical(e);
+  if (!at) { render(); return; }
+  const p = P();
+  if (target.dataset.add !== undefined) { Object.assign(p.add[+target.dataset.add], { x: at[0], y: at[1] }); }
+  else {
+    const item = target.dataset.spot !== undefined ? spots[+target.dataset.spot] : pois[+target.dataset.poi];
+    const key = target.dataset.spot !== undefined ? spotKey(item) : poiKey(item);
+    if (item.x === at[0] && item.y === at[1]) delete p.move[key]; else p.move[key] = { x: at[0], y: at[1] };
+  }
+  savePending();
+  render();
+}
+
+function clickAt(e) {
+  const p = P();
+  const t = e.target;
+  if (t.dataset && t.dataset.add !== undefined) { p.add.splice(+t.dataset.add, 1); }
+  else if (t.dataset && (t.dataset.spot !== undefined || t.dataset.poi !== undefined)) {
+    // A disabled entry toggles a switch-back-on; any other entry toggles a deletion.
+    const item = t.dataset.spot !== undefined ? spots[+t.dataset.spot] : pois[+t.dataset.poi];
+    const key = t.dataset.spot !== undefined ? spotKey(item) : poiKey(item), list = item.disabled ? p.enable : p.disable;
+    const i = list.indexOf(key);
+    if (i >= 0) list.splice(i, 1); else list.push(key);
+  } else {
+    const at = toLogical(e);
+    if (!at) return;
+    const [x, y] = at;
+    const near = nearest(C.spots, x, y);
+    const fallback = C.zones[0] || { lua: C.key, zone: 'draft' };
+    const type = typeOf(ctl.plant) || typeOf('spot'), owner = (nearest(settlements, x, y) || {}).owner || '';
+    const fields = {};
+    for (const [name, hint] of Object.entries(type.fields || {})) if (hint === 'owner' || hint === 'culture') fields[name] = hint === 'owner' ? owner : '';
+    p.add.push({ type: type.key, lua: near ? near.lua : fallback.lua, zone: near ? near.zone : fallback.zone, area: near ? near.area : '', x, y, fields });
+  }
+  savePending();
+  render();
+}
+
+async function exportDraft() {
+  const btn = document.getElementById('exportBtn');
+  btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Exporting the draft...';
+  clearTimeout(layoutSave);
+  try {
+    await fetch('/api/layout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ campaign: ctl.camp, entries: P().add }) });
+    const r = await fetch('/api/export-draft', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ campaign: ctl.camp }) });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || r.statusText);
+    STATE = data.state;
+    const parts = Object.entries(data.result.blocks).map(([key, s2]) => `M.${key}: ${s2.spots} spots, ${s2.pois} points of interest${s2.replaced ? ' (replaced)' : ''}`);
+    msg.textContent = `Exported. ${parts.join('; ')}. Backup: ${data.result.backup}`;
+    build(false);
+  } catch (err) {
+    msg.className = 'msg err'; msg.textContent = `Export failed: ${err.message}`;
+  } finally { btn.disabled = false; }
+}
+
+async function doExport() {
+  if (ctl.mode === 'slate') return exportDraft();
+  const p = P();
+  const { keep, live } = compute();
+  const disable = [...p.disable];
+  if (document.getElementById('withTrim').checked) spots.forEach((s, i) => { if (live[i] && !keep[i] && !disable.includes(spotKey(s))) disable.push(spotKey(s)); });
+  const ref = key => {
+    const parts = key.split('|');
+    return parts[0] === 's' ? { target: 'spot', lua: parts[1], zone: parts[2], index: +parts[3] } : { target: 'poi', lua: parts[1], zone: parts[2], kind: parts[3], index: +parts[4] };
+  };
+  const body = { campaign: C.key, add: p.add.map(a => ({ type: a.type || 'spot', lua: a.lua, zone: a.zone, area: a.area, x: a.x, y: a.y, fields: a.fields || {} })),
+    disable: disable.map(ref), enable: p.enable.map(ref), move: Object.entries(p.move).map(([key, m]) => ({ ...ref(key), x: m.x, y: m.y })) };
+  if (!body.add.length && !body.disable.length && !body.enable.length && !body.move.length) { msg.className = 'msg'; msg.textContent = 'Nothing to export.'; return; }
+  const btn = document.getElementById('exportBtn');
+  btn.disabled = true; msg.className = 'msg'; msg.textContent = 'Exporting...';
+  try {
+    const r = await fetch('/api/export', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || r.statusText);
+    pending[ctl.camp] = emptyPending();
+    savePending();
+    STATE = data.state;
+    const parts = Object.entries(data.result.blocks).map(([lua, s]) =>
+      `${lua}: ${s.added} added, ${s.moved} moved, ${s.disabled} disabled, ${s.enabled} enabled${s.created ? ' (block created)' : ''}`);
+    msg.textContent = `Exported. ${parts.join('; ')}. Backup: ${data.result.backup}`;
+    build(false);
+  } catch (err) {
+    msg.className = 'msg err'; msg.textContent = `Export failed: ${err.message}`;
+  } finally { btn.disabled = false; }
+}
+
+// Colours and dot size, remembered in this browser only.
+const viewOpts = (() => {
+  try { return Object.assign({ palette: 'bright', dot: 1 }, JSON.parse(localStorage.getItem('spotmap.view') || '{}')); } catch (e) { return { palette: 'bright', dot: 1 }; }
+})();
+function saveView() { try { localStorage.setItem('spotmap.view', JSON.stringify(viewOpts)); } catch (e) { /* storage blocked: applies this visit only */ } }
+function applyPalette() {
+  document.body.dataset.palette = viewOpts.palette;
+  document.querySelectorAll('#palettes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.palette === viewOpts.palette));
+}
+document.querySelectorAll('#palettes button').forEach(b => b.addEventListener('click', () => { viewOpts.palette = b.dataset.palette; saveView(); applyPalette(); }));
+const dotSize = document.getElementById('dotSize');
+dotSize.value = viewOpts.dot;
+document.getElementById('dotSizeVal').textContent = (+viewOpts.dot).toFixed(1);
+dotSize.addEventListener('change', () => { viewOpts.dot = +dotSize.value; saveView(); if (C) build(false); });
+dotSize.addEventListener('input', () => { document.getElementById('dotSizeVal').textContent = (+dotSize.value).toFixed(1); });
+applyPalette();
+
+// Filter chips: each hides one category on the map. Remembered in this browser only.
+const hidden = new Set((() => { try { return JSON.parse(localStorage.getItem('spotmap.hidden') || '[]'); } catch (e) { return []; } })());
+function applyFilters() {
+  document.querySelectorAll('.chip').forEach(chip => {
+    const cat = chip.dataset.cat;
+    chip.setAttribute('aria-pressed', !hidden.has(cat));
+    svg.classList.toggle('hide-' + cat, hidden.has(cat));
+  });
+}
+document.querySelectorAll('.chip').forEach(chip => chip.addEventListener('click', () => {
+  const cat = chip.dataset.cat;
+  if (hidden.has(cat)) hidden.delete(cat); else hidden.add(cat);
+  try { localStorage.setItem('spotmap.hidden', JSON.stringify([...hidden])); } catch (e) { /* storage blocked: the filter still works this visit */ }
+  applyFilters();
+}));
+applyFilters();
+
+// Controls.
+const range = document.getElementById('spacing');
+// Dragging the slider fires many input events; render at most once per frame.
+let renderQueued = false;
+range.addEventListener('input', () => {
+  ctl.spacing = +range.value; document.getElementById('spacingVal').textContent = range.value;
+  if (!renderQueued) { renderQueued = true; requestAnimationFrame(() => { renderQueued = false; render(); }); }
+});
+const mBox = document.getElementById('mBox'), mCircle = document.getElementById('mCircle');
+function setMetric(m) { ctl.metric = m; mBox.setAttribute('aria-pressed', m === 'box'); mCircle.setAttribute('aria-pressed', m === 'circle'); render(); }
+mBox.addEventListener('click', () => setMetric('box'));
+mCircle.addEventListener('click', () => setMetric('circle'));
+document.getElementById('smithy').addEventListener('change', e => { ctl.smithy = e.target.checked; render(); });
+document.getElementById('trimManual').addEventListener('change', e => { ctl.trimManual = e.target.checked; render(); });
+document.getElementById('mapOn').addEventListener('change', e => { bg.style.display = e.target.checked ? '' : 'none'; });
+document.getElementById('mapFade').addEventListener('input', e => { bg.setAttribute('opacity', e.target.value / 100); });
+document.getElementById('exportBtn').addEventListener('click', doExport);
+let clearArmed = false;
+document.getElementById('clearBtn').addEventListener('click', e => {
+  if (ctl.mode === 'slate' && P().add.length && !clearArmed) {
+    clearArmed = true; e.target.textContent = 'Click again to clear the layout';
+    setTimeout(() => { clearArmed = false; e.target.textContent = 'Clear'; }, 3000);
+    return;
+  }
+  clearArmed = false; e.target.textContent = 'Clear';
+  if (ctl.mode === 'slate') P().add.length = 0; else pending[ctl.camp] = emptyPending();
+  savePending(); render();
+});
+document.querySelectorAll('#modes button').forEach(b => b.addEventListener('click', () => {
+  ctl.mode = b.dataset.mode;
+  document.querySelectorAll('#modes button').forEach(x => x.setAttribute('aria-pressed', x.dataset.mode === ctl.mode));
+  build(false);
+}));
+document.getElementById('reloadBtn').addEventListener('click', async () => {
+  await fetchState();
+  for (const key in slate) delete slate[key];
+  buildCampaignButtons(); build(false);
+  msg.className = 'msg'; msg.textContent = 'Reloaded from coordinates.lua, the saved layouts and the latest F4 dump.';
+});
+
+// Pan, zoom and click.
+function apply() {
+  view.setAttribute('transform', `translate(${tx} ${ty}) scale(${z})`);
+  gLabels.style.display = z >= 1.8 ? '' : 'none';
+}
+function zoomAt(f, px, py) {
+  const nz = Math.min(16, Math.max(1, z * f));
+  tx = px - (px - tx) * (nz / z); ty = py - (py - ty) * (nz / z); z = nz;
+  if (z === 1) { tx = 0; ty = 0; }
+  apply();
+}
+function toSvg(e) {
+  const r = svg.getBoundingClientRect();
+  return [(e.clientX - r.left) * W / r.width, (e.clientY - r.top) * H / r.height];
+}
+svg.addEventListener('wheel', e => { e.preventDefault(); const [px, py] = toSvg(e); zoomAt(e.deltaY < 0 ? 1.25 : 0.8, px, py); }, { passive: false });
+let drag = null;
+svg.addEventListener('pointerdown', e => {
+  svg.setPointerCapture(e.pointerId);
+  const d = e.target.dataset || {};
+  const entity = d.spot !== undefined || d.poi !== undefined || d.add !== undefined ? e.target : null;
+  drag = { p: toSvg(e), tx, ty, moved: false, target: e.target, entity };
+});
+svg.addEventListener('pointermove', e => {
+  if (drag) {
+    const p = toSvg(e), dx = p[0] - drag.p[0], dy = p[1] - drag.p[1];
+    if (Math.hypot(dx, dy) > 4 * W / svg.getBoundingClientRect().width) drag.moved = true;
+    if (drag.moved && drag.entity) {
+      const ox = +drag.entity.dataset.ox + dx / z, oy = +drag.entity.dataset.oy + dy / z;
+      drag.entity.setAttribute('transform', `translate(${ox} ${oy})`);
+    } else if (drag.moved) { svg.classList.add('drag'); tx = drag.tx + dx; ty = drag.ty + dy; apply(); }
+  }
+  const t = e.target.dataset && e.target.dataset.tip;
+  if (t && !(drag && drag.moved)) {
+    const r = svg.parentElement.getBoundingClientRect();
+    tip.innerHTML = t; tip.style.display = 'block';
+    tip.style.left = Math.min(e.clientX - r.left + 12, r.width - 290) + 'px';
+    tip.style.top = (e.clientY - r.top + 12) + 'px';
+  } else tip.style.display = 'none';
+});
+svg.addEventListener('pointerup', e => {
+  if (drag && !drag.moved) clickAt({ clientX: e.clientX, clientY: e.clientY, target: drag.target });
+  else if (drag && drag.entity) dropAt(e, drag.entity);
+  drag = null; svg.classList.remove('drag');
+});
+svg.addEventListener('pointercancel', () => { drag = null; svg.classList.remove('drag'); });
+svg.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
+document.getElementById('zin').addEventListener('click', () => zoomAt(1.5, W / 2, H / 2));
+document.getElementById('zout').addEventListener('click', () => zoomAt(1 / 1.5, W / 2, H / 2));
+document.getElementById('zreset').addEventListener('click', () => { z = 1; tx = 0; ty = 0; apply(); });
+
+(async () => {
+  loadPending();
+  await fetchState();
+  ctl.camp = STATE.campaigns[0] && STATE.campaigns[0].key;
+  if (!ctl.camp) { document.getElementById('campNote').textContent = 'No campaign maps found. Check the pack paths in tools/spot_map/campaigns.py.'; return; }
+  buildCampaignButtons();
+  buildPlantButtons();
+  build(true);
+})();
+</script>
+</body>
+</html>
