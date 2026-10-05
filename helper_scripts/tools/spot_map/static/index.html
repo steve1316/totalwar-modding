@@ -85,6 +85,9 @@ td select, td input { font: inherit; font-size: .85rem; width: 100%; min-width: 
 ul.plain { margin: 0; padding-left: 18px; }
 .note { color: var(--muted); font-size: .88rem; margin: 6px 0 0; }
 .bar { height: 6px; border-radius: 3px; background: var(--line); position: relative; min-width: 50px; }
+ul.hist { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: .88rem; }
+ul.hist summary { cursor: pointer; }
+ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-size: .8rem; }
 .bar i { position: absolute; inset: 0 auto 0 0; background: var(--kept); border-radius: 3px; }
 </style>
 </head>
@@ -178,6 +181,11 @@ ul.plain { margin: 0; padding-left: 18px; }
           <button type="button" class="btn" id="reloadBtn">Reload</button>
         </div>
         <p class="msg" id="msg"></p>
+      </section>
+      <section class="card">
+        <h2>Export history</h2>
+        <ul class="hist" id="history"></ul>
+        <p class="note" id="historyNone">No exports of this campaign yet. Each export to coordinates.lua is logged in _diag/spot_map/history.jsonl.</p>
       </section>
       <section class="card" id="sugCard">
         <h2>Suggestions</h2>
@@ -396,10 +404,20 @@ function build(resetView) {
   document.getElementById('groupTitle').textContent = C.byArea ? 'Per area' : 'Per zone';
   document.getElementById('groupCol').textContent = C.byArea ? 'Area' : 'Zone';
   document.getElementById('smithy').disabled = !pois.some(f => f.kind === 'smithies');
+  renderHistory();
   undoLog();
   if (resetView) { z = 1; tx = 0; ty = 0; }
   apply();
   render();
+}
+
+// Past exports of the open campaign, newest first, each with its changes and backup.
+function renderHistory() {
+  const list = C.history || [];
+  document.getElementById('historyNone').hidden = !!list.length;
+  document.getElementById('history').innerHTML = list.map(r => `<li><details><summary>${esc(r.time.replace('T', ' '))} - ${r.kind === 'draft' ? 'draft: ' : ''}` +
+    `${esc(r.summary)}</summary><ul>${r.changes.map(c => `<li>${esc(c)}</li>`).join('')}</ul><p class="note">Written to ${esc(r.file)}. Backup: ${esc(r.backup)}</p>` +
+    '</details></li>').join('');
 }
 
 function close(a, b, t) {
@@ -721,8 +739,7 @@ async function exportDraft() {
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || r.statusText);
     STATE = data.state;
-    const parts = Object.entries(data.result.blocks).map(([key, s2]) => `M.${key}: ${s2.spots} spots, ${s2.pois} points of interest${s2.replaced ? ' (replaced)' : ''}`);
-    msg.textContent = `Exported. ${parts.join('; ')}. Backup: ${data.result.backup}`;
+    msg.textContent = `Exported. ${data.result.summary}. Backup: ${data.result.backup}`;
     build(false);
   } catch (err) {
     msg.className = 'msg err'; msg.textContent = `Export failed: ${err.message}`;
@@ -753,9 +770,7 @@ async function doExport() {
     persist();
     delete hist[qid()];
     STATE = data.state;
-    const parts = Object.entries(data.result.blocks).map(([lua, s]) =>
-      `${lua}: ${s.added} added, ${s.moved} moved, ${s.disabled} disabled, ${s.enabled} enabled${s.created ? ' (block created)' : ''}`);
-    msg.textContent = `Exported. ${parts.join('; ')}. Backup: ${data.result.backup}`;
+    msg.textContent = `Exported. ${data.result.summary}. Backup: ${data.result.backup}`;
     build(false);
   } catch (err) {
     msg.className = 'msg err'; msg.textContent = `Export failed: ${err.message}`;

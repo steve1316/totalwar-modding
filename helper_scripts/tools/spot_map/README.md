@@ -60,6 +60,10 @@ Immortal Empires' settlements until it has its own dump. Spots and new points ar
 - **Undo / redo:** **Undo** and **Redo**, or Ctrl+Z and Ctrl+Y / Ctrl+Shift+Z, step through every change to the open queue, including
   Clear. Edit existing and Clean slate keep a separate history per campaign. The history lasts for the browser session, and an export or a
   Reload starts it over.
+- **Export history:** every export to `coordinates.lua`, pending changes or a draft block, adds one line to `_diag/spot_map/history.jsonl`.
+  That line holds the time, the campaign, the counts, one line per change and the backup taken before the export. The Export history card
+  lists the open campaign's last 50, newest first. To roll an export back, copy its backup over `coordinates.lua`.
+
 ## Clean slate
 
 Switch the toolbar from **Edit existing** to **Clean slate** to build a layout from scratch: existing spots and points of interest are hidden,

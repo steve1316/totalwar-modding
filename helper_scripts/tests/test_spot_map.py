@@ -7,6 +7,7 @@ import subprocess
 import pytest
 
 from tools.spot_map import coordinates_io as cio
+from tools.spot_map import campaigns as spot_campaigns
 from tools.spot_map import suggest
 
 FIXTURE = """--- Coordinates for testing.
@@ -293,3 +294,17 @@ def test_saved_suggestions_match_the_real_file(key):
     assert checked and not [s["problem"] for s in checked if s["problem"]]
     zones = {s["zone"] for s in checked}
     assert all(sum(1 for s in checked if s["zone"] == z and (s.get("fields") or {}).get("culture")) == 1 for z in zones)
+
+
+def test_export_log_describes_changes_and_lists_newest_first(tmp_path, monkeypatch):
+    monkeypatch.setattr(spot_campaigns, "HISTORY_PATH", str(tmp_path / "history.jsonl"))
+    changes = {"add": [{"type": "tavern", "zone": "a", "x": 1, "y": 2, "fields": {"culture": "def"}}],
+               "disable": [{"target": "spot", "zone": "a", "index": 3}], "enable": [{"target": "poi", "kind": "smithies", "zone": "b", "index": 1}],
+               "move": [{"target": "spot", "zone": "a", "index": 4, "x": 5, "y": 6}]}
+    lines = spot_campaigns.describe_changes(changes)
+    assert lines == ["add tavern in a at {1, 2} (def)", "delete spot a 3", "switch on smithies b 1", "move spot a 4 to {5, 6}"]
+    spot_campaigns.log_export("ie", "export", "b1.lua", "first", lines)
+    spot_campaigns.log_export("roc", "export", "b2.lua", "other campaign", [])
+    spot_campaigns.log_export("ie", "draft", "b3.lua", "second", ["add spot in x at {1, 1}"])
+    history = spot_campaigns.export_history()
+    assert [r["summary"] for r in history["ie"]] == ["second", "first"] and [r["summary"] for r in history["roc"]] == ["other campaign"]

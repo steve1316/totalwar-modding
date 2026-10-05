@@ -7,6 +7,7 @@ import logging
 import os
 import re
 import struct
+from datetime import datetime
 from typing import Dict, List, Optional
 
 from core.extract_cache import cached_pack_extract
@@ -19,6 +20,10 @@ SETTLEMENT_DUMP = os.path.join(os.path.dirname(GAME_DATA_FOLDER), "debug_settlem
 COORDINATES_PATH = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/script/land_encounters/configs/coordinates.lua"
 CACHE_DIR = "./_diag/spot_map"
 BACKUP_DIR = "./_diag/spot_map/backups"
+#: One JSON line per export to coordinates.lua, oldest first. Local only, like the backups it points at.
+HISTORY_PATH = "./_diag/spot_map/history.jsonl"
+#: How many past exports the page lists per campaign.
+HISTORY_SHOWN = 50
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 #: Clean-slate layouts, one JSON file per campaign, saved as the page changes them.
 LAYOUT_DIR = os.path.join(DATA_DIR, "layouts")
@@ -85,6 +90,62 @@ def type_of_spot(flags) -> str:
         The flagged type's key, or "spot".
     """
     return next((t["key"] for t in SPOT_TYPES if t.get("flag") and t["flag"] in flags), "spot")
+
+
+def log_export(key: str, kind: str, backup: str, summary: str, changes: List[str]):
+    """Appends one export to the history log.
+
+    Args:
+        key (str): A `CAMPAIGNS` key.
+        kind (str): "export" for pending changes, "draft" for a clean-slate draft.
+        backup (str): Path of the backup taken before the export.
+        summary (str): One line of counts.
+        changes (List[str]): One line per change.
+    """
+    record = {"time": datetime.now().isoformat(timespec="seconds"), "campaign": key, "kind": kind, "summary": summary,
+              "changes": changes, "backup": os.path.abspath(backup), "file": os.path.abspath(COORDINATES_PATH)}
+    os.makedirs(os.path.dirname(HISTORY_PATH), exist_ok=True)
+    with open(HISTORY_PATH, "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+
+def export_history() -> Dict[str, List[dict]]:
+    """Reads the history log once and groups it by campaign.
+
+    Returns:
+        Up to `HISTORY_SHOWN` records per campaign key, newest first.
+    """
+    by_campaign: Dict[str, List[dict]] = {}
+    if not os.path.isfile(HISTORY_PATH):
+        return by_campaign
+    with open(HISTORY_PATH, encoding="utf-8") as f:
+        records = [json.loads(line) for line in f if line.strip()]
+    for record in reversed(records):
+        shown = by_campaign.setdefault(record["campaign"], [])
+        if len(shown) < HISTORY_SHOWN:
+            shown.append(record)
+    return by_campaign
+
+
+def describe_changes(changes: dict) -> List[str]:
+    """Writes one plain line per change of an export, for the history log.
+
+    Args:
+        changes (dict): The export body, as `export` takes it.
+
+    Returns:
+        Lines such as "add tavern in badlands at {765, 474} (grn)" or "delete spot badlands 29".
+    """
+    def ref(c):
+        return f"{'spot' if c.get('target') == 'spot' else c.get('kind')} {c['zone']} {c['index']}"
+    lines = []
+    for c in changes.get("add", []):
+        culture = (c.get("fields") or {}).get("culture")
+        lines.append(f"add {c.get('type', 'spot')} in {c['zone']} at {{{c['x']}, {c['y']}}}" + (f" ({culture})" if culture else ""))
+    lines += [f"delete {ref(c)}" for c in changes.get("disable", [])]
+    lines += [f"switch on {ref(c)}" for c in changes.get("enable", [])]
+    lines += [f"move {ref(c)} to {{{c['x']}, {c['y']}}}" for c in changes.get("move", [])]
+    return lines
 
 
 def png_size(path: str) -> tuple:
@@ -280,7 +341,9 @@ def export_draft(body: dict) -> dict:
         replaced = coordinates_io.write_block(COORDINATES_PATH, lua + DRAFT_SUFFIX, note, spots, pois)
         summaries[lua + DRAFT_SUFFIX] = {"spots": len(spots), "pois": len(pois), "replaced": replaced}
     logging.info(f"Exported the {campaign['label']} clean-slate draft: {summaries} (backup {backup})")
-    return {"backup": os.path.abspath(backup), "blocks": summaries}
+    summary = "; ".join(f"M.{key}: {s['spots']} spots, {s['pois']} points of interest{' (replaced)' if s['replaced'] else ''}" for key, s in summaries.items())
+    log_export(campaign["key"], "draft", backup, summary, describe_changes({"add": entries}))
+    return {"backup": os.path.abspath(backup), "blocks": summaries, "summary": summary}
 
 
 def campaign_entries(campaign: dict, blocks: Dict[str, coordinates_io.Campaign]) -> dict:
@@ -316,6 +379,7 @@ def state() -> dict:
         {"campaigns": [...]} with each campaign's map size, spots, points of interest, settlements and zones.
     """
     blocks = coordinates_io.parse(coordinates_io.read_lines(COORDINATES_PATH)[0])
+    history = export_history()
     out = []
     for campaign in CAMPAIGNS:
         files = map_files(campaign)
@@ -324,7 +388,8 @@ def state() -> dict:
         width, height = png_size(files["minimap"])
         logical_width, logical_height = png_size(files["prebattle"])
         out.append({"key": campaign["key"], "label": campaign["label"], "W": width, "H": height, "LW": logical_width, "LH": logical_height,
-                    **campaign_entries(campaign, blocks), "settlements": settlements_for(campaign), "layout": load_layout(campaign, blocks)})
+                    **campaign_entries(campaign, blocks), "settlements": settlements_for(campaign), "layout": load_layout(campaign, blocks),
+                    "history": history.get(campaign["key"], [])})
     return {"campaigns": out, "types": SPOT_TYPES, "cultures": CULTURES}
 
 
@@ -380,4 +445,7 @@ def export(changes: dict) -> dict:
         if add or disable or enable or move:
             summaries[lua] = coordinates_io.apply_edits(COORDINATES_PATH, lua, add, disable, enable, seed=seed, note=campaign.get("seed_note", ""), move=move)
     logging.info(f"Exported {campaign['label']}: {summaries} (backup {backup})")
-    return {"backup": os.path.abspath(backup), "blocks": summaries}
+    summary = "; ".join(f"{lua}: {s['added']} added, {s['moved']} moved, {s['disabled']} disabled, {s['enabled']} enabled"
+                        f"{' (block created)' if s.get('created') else ''}" for lua, s in summaries.items())
+    log_export(campaign["key"], "export", backup, summary, describe_changes(changes))
+    return {"backup": os.path.abspath(backup), "blocks": summaries, "summary": summary}
