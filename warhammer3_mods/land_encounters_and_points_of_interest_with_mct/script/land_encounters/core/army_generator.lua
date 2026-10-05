@@ -275,16 +275,16 @@ local function spend_shares(army, pools, recipe, gold, slots)
     return allowances
 end
 
---- Narrows role pools to a set of units, keeping each pool's order and working out its median price again.
+--- Narrows role pools to the units a test keeps, keeping each pool's order and working out its median price again.
 --- @param pools table Role pools, as `build_role_pools` makes them.
---- @param keys table A set of land unit keys to keep.
+--- @param keep function Takes a pool entry and returns true to keep it.
 --- @returns table The narrowed pools.
-local function only_units(pools, keys)
+local function filter_pools(pools, keep)
     local kept = {}
     for _, role in ipairs(ROLES) do
         local list = {}
         for _, unit in ipairs(pools[role]) do
-            if keys[unit.land_unit] then list[#list + 1] = unit end
+            if keep(unit) then list[#list + 1] = unit end
         end
         list.median = #list > 0 and list[math.ceil(#list / 2)].price or 0
         kept[role] = list
@@ -331,7 +331,8 @@ end
 --- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget), the tower's
 --- sabotage and champion (`no_heroes`, `fewer_units` taken off the unit cap, `max_tier` and `min_tier` for the unit tiers, and `lord_subtype`
 --- for the lord), `unit_count` (an exact number of regular units, for a sized allied army) and `budget_range` ({min, max} gold that replaces the
---- difficulty's MCT range), and `composition` (a battle modifier's army theme, an archetype-like record with `key`, `shares` and `price_mode`,
+--- difficulty's MCT range), `strip_types` (a set of unit types the army fields none of, e.g. { war_beast = true }), and `composition` (a
+--- battle modifier's army theme, an archetype-like record with `key`, `shares` and `price_mode`,
 --- which replaces the rolled archetype, or for a lore army with `units`, `share` and `budget`, which fills `share` of the army's unit slots
 --- with those units on a budget multiplied by `budget`, and the spine and other slots from the rolled archetype. Each `rank_share` of the
 --- budget it leaves unspent gives its lore units a rank, up to `max_ranks`).
@@ -346,6 +347,8 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     if options.no_heroes then heroes = {} end
     if options.lord_subtype then lord = { agent_subtype = options.lord_subtype, legendary = true } end
     local pools = build_role_pools(faction_shorthand_key, origins, options.max_tier, options.min_tier)
+    --- A stripped unit type buys nothing. A role it empties gives its share to the other roles, as for a role the faction cannot field.
+    if options.strip_types then pools = filter_pools(pools, function(unit) return not options.strip_types[unit.unit_type] end) end
     local composition = options.composition
     local lore = composition and composition.units and composition or nil
     local archetype = (composition and not lore) and composition or pick_archetype(pools, options.archetype_keys)
@@ -379,7 +382,7 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
 
     --- A lore army fills its share of the unit slots with its lore units first, with gold in proportion to the slots, and spends any gold
     --- left at the end on them too, so they stay its bulk.
-    local lore_pools = lore and only_units(pools, lore.units)
+    local lore_pools = lore and filter_pools(pools, function(unit) return lore.units[unit.land_unit] end)
     local lore_allowances = nil
     if lore then
         local lore_slots = math.min(army.slots_left, math.floor(unit_slots * lore.share + 0.5))

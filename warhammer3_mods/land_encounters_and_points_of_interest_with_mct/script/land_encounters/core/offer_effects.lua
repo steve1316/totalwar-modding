@@ -208,7 +208,8 @@ function M.dark_bargain(general_cqi, offer)
 end
 
 --- Folds one offer's sabotage into what the enemy army is built and weakened with: `no_heroes`, `fewer_units` (added up), `max_tier` (the
---- lowest), `min_tier` (the highest), `enemy_strength` and `champion_strength` (the lowest) and `enemy_bundles` (each `enemy_bundle`).
+--- lowest), `min_tier` (the highest), `enemy_strength` and `champion_strength` (the lowest), `enemy_bundles` (each `enemy_bundle`) and
+--- `strip_types` (each offer's `strip_types`, as one set).
 --- @param into table The battle event or sabotage options to fold into.
 --- @param offer table The offer record or gamble outcome.
 function M.merge_sabotage(into, offer)
@@ -221,6 +222,10 @@ function M.merge_sabotage(into, offer)
     if offer.enemy_bundle then
         into.enemy_bundles = into.enemy_bundles or {}
         into.enemy_bundles[#into.enemy_bundles + 1] = offer.enemy_bundle
+    end
+    if offer.strip_types then
+        into.strip_types = into.strip_types or {}
+        for _, unit_type in ipairs(offer.strip_types) do into.strip_types[unit_type] = true end
     end
 end
 

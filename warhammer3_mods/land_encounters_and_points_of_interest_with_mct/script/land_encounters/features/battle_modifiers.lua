@@ -8,6 +8,7 @@ require("script/land_encounters/core/mct")
 local data = require("script/land_encounters/configs/battle_modifiers")
 local debug_config = require("script/land_encounters/configs/debug")
 local army_generator = require("script/land_encounters/core/army_generator")
+local alliances = require("script/land_encounters/configs/alliances")
 
 local M = {}
 
@@ -117,6 +118,25 @@ function M.composition(keys)
         end
     end
     return nil
+end
+
+--- Rolls the theme a hired allied army (Allies in the Dark) marches as: an ally faction for our subculture, never the enemy's, and one of
+--- the generic army compositions it can field. Its choice names the theme, so it is rolled when the offer is drawn.
+--- @param player_subculture string Our subculture key.
+--- @param enemy_faction string|nil The enemy's 3-letter faction shorthand.
+--- @returns table|nil { faction = the ally's shorthand, key = the composition key }, or nil when no ally or theme fits.
+function M.roll_ally_theme(player_subculture, enemy_faction)
+    local ally = alliances.pick_for_subculture(player_subculture, enemy_faction)
+    if not ally then return nil end
+    local themes = {}
+    for _, modifier in ipairs(data.list) do
+        local army = modifier.army
+        if army and not army.faction and army_generator.can_field_theme(ally, army) then themes[#themes + 1] = modifier.key end
+    end
+    if #themes == 0 then return nil end
+    local theme = { faction = ally, key = themes[random_number(#themes)] }
+    log("battle modifiers: the hired allies would be " .. ally .. " as " .. theme.key)
+    return theme
 end
 
 --- What a fight's modifiers multiply its victory gold by: each harmful one adds, each helpful one takes away, by `harm_gold`.

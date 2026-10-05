@@ -45,7 +45,10 @@ NOTICE_PREFIX = "land_enc_tower_buff_"
 # Line markers that make a row this script's own, so a run replaces it.
 OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_",
                  "string_land_enc_spot_", "land_enc_incident_spot_", "land_enc_tower_buff_modifier_", "land_enc_effect_ability_enable_",
-                 "land_enc_ability_enable_")
+                 "land_enc_ability_enable_", "_comp_")
+
+# The Allies in the Dark offers, whose lines also come in a version naming the theme their allied army rolled.
+ALLY_OFFERS = ("allies_in_the_dark_small", "allies_in_the_dark_medium", "allies_in_the_dark_large")
 
 # Generated Lua table of each battle victory incident's gold, which battle modifiers scale.
 VICTORY_GOLD_LUA = "script/land_encounters/configs/victory_gold.lua"
@@ -223,6 +226,10 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "poison_the_stores": ("Poison the Stores", PAY + "poison their stores: enemy units start at [[col:green]]{strength}% strength[[/col]]."),
     "kill_the_captain": ("Kill the Captain", PAY + "kill their captain: the enemy army has [[col:green]]no heroes[[/col]]."),
     "lower_tiers_only": ("Keep the Veterans Away", PAY + "keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]]."),
+    "strip_monsters": ("Cull the Beasts", PAY + "cull their beasts: the enemy army fields [[col:green]]no monsters or war beasts[[/col]]."),
+    "strip_cavalry": ("Scatter the Herds", PAY + "scatter their herds: the enemy army fields [[col:green]]no cavalry or chariots[[/col]]."),
+    "strip_missile": ("Burn the Quivers", PAY + "burn their quivers: the enemy army fields [[col:green]]no missile infantry[[/col]]."),
+    "strip_artillery": ("Wreck the Engines", PAY + "wreck their engines: the enemy army fields [[col:green]]no artillery[[/col]]."),
     "break_their_spirit": ("Break Their Spirit", PAY + "spread dread through their camp: enemy units have [[col:green]]-{e0}[[/col]] "
                            "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership."),
     "curse_their_blades": ("Curse Their Blades", PAY + "curse their weapons: enemy units have [[col:green]]-{e0}[[/col]] "
@@ -335,6 +342,7 @@ ICONS = {
     "dark_offering": "bloodreaper.png",
     "bribe_the_guards": "subterfuge.png", "thin_the_ranks": "attrition.png", "poison_the_stores": "phase_posion.png",
     "kill_the_captain": "dlc10_assassination_targets.png", "lower_tiers_only": "peasant.png", "break_their_spirit": "discouraged.png",
+    "strip_monsters": "rampage_harsh.png", "strip_cavalry": "charge.png", "strip_missile": "ammo.png", "strip_artillery": "artillery.png",
     "turn_a_traitor": "khainite_assassin.png", "war_rites": "effect_rite.png", "whetstones_and_oil": "weapon_damage.png",
     "warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "iron_resolve": "attribute_immune_to_psychology.png",
     "call_the_winds": "wh3_dlc24_wind_blast.png", "quartermasters_cache": "ammo.png", "night_raid": "dlc10_death_night.png",
@@ -966,6 +974,18 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             line(component, tower_icon(key), line_text.format_map(values))
             if broke_text and "cost" in offer:
                 line(component + config["tower_unaffordable_suffix"], tower_icon(key), broke_text.format_map(values))
+    # Allies in the Dark names the theme its allied army rolled: a line per size and generic army composition, per difficulty for spots.
+    for key in ALLY_OFFERS:
+        tower_line, tower_broke = TOWER_LINES[key]
+        tower_values = line_values(config["tower_at"]["easy"][key], bundles)
+        for theme in battle_modifiers.ALLY_THEMES:
+            ending = " " + battle_modifiers.ally_theme_text(theme)
+            for difficulty in DIFFICULTIES:
+                text = OFFERS[key][1].format_map(line_values(config["at"][difficulty][key], bundles))
+                line(config["line_prefix"] + key + "_" + difficulty + "_" + theme, ICONS[key], text + ending)
+            component = config["tower_line_prefix"] + key + "_" + theme
+            line(component, tower_icon(key), tower_line.format_map(tower_values) + ending)
+            line(component + config["tower_unaffordable_suffix"], tower_icon(key), tower_broke.format_map(tower_values))
 
     for i, (choice, key) in enumerate(choice_keys):
         add(table("cdir_events_dilemma_choices_tables"), choice, WALK_AWAY_ORDER if key == "walk_away" else FIRST_CHOICE_ORDER + i)
@@ -1281,6 +1301,8 @@ def check_text(config: Dict) -> None:
     """
     problems = [f"no text for {o['key']}" for o in config["offers"] if o["key"] not in OFFERS]
     modifier_keys = {m["key"] for m in config["battle_modifiers"]["list"]}
+    generic = {m["key"] for m in config["battle_modifiers"]["list"] if "army" in m and "faction" not in m["army"]}
+    problems += [f"no allied theme text for {key}" for key in sorted(generic ^ set(battle_modifiers.ALLY_THEMES))]
     problems += [f"no text for battle modifier {key}" for key in sorted(modifier_keys - set(battle_modifiers.MODIFIERS))]
     problems += [f"text for unknown battle modifier {key}" for key in sorted(set(battle_modifiers.MODIFIERS) - modifier_keys)]
     problems += [f"no text for site {s['key']}" for s in config["sites"] + [config["spoils"]] if s["key"] not in SITES]

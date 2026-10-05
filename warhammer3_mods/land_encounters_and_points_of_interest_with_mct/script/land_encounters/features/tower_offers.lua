@@ -186,7 +186,7 @@ end
 --- @param offer table The offer record.
 --- @param ctx table The offer context.
 local function allies(offer, ctx)
-    change_next_floor(ctx.delve, { ally = offer.ally_units })
+    change_next_floor(ctx.delve, { ally = offer.ally_units, ally_theme = ctx.delve.ally_theme })
     battle_trick(offer, ctx)
 end
 
@@ -433,6 +433,10 @@ local HANDLERS = {
     poison_the_stores = { apply = sabotage },
     kill_the_captain = { apply = sabotage },
     thin_the_ranks = { apply = sabotage },
+    strip_monsters = { apply = sabotage },
+    strip_cavalry = { apply = sabotage },
+    strip_missile = { apply = sabotage },
+    strip_artillery = { apply = sabotage },
     lower_tiers_only = { apply = sabotage },
     break_their_spirit = { apply = sabotage },
     curse_their_blades = { apply = sabotage },
@@ -776,6 +780,11 @@ function M.draw(delve, faction_name, tower)
     end
     log("tower: drew for " .. faction_name .. " on floor " .. delve.floor .. " at " .. delve.offer_difficulty .. ": " .. table.concat(keys, ", ") .. " ("
         .. #keys + #pool .. " eligible, " .. count .. " forced)")
+    --- Allies in the dark names the theme its allied army marches as, so it is rolled once the offer is drawn.
+    delve.ally_theme = nil
+    for _, key in ipairs(keys) do
+        if offers_data.by_key[key].ally_units then delve.ally_theme = battle_modifiers.roll_ally_theme(cm:get_faction(faction_name):subculture(), tower and tower.faction) end
+    end
     return keys
 end
 
@@ -812,7 +821,7 @@ function M.choice(offer_key, delve, next_floor)
     local offer = at(offer_key, delve)
     if spent(offer, delve) then return { key = M.choice_key(offer), lines = { TAKEN_LINE } } end
     local affordable = delve.haul.gold >= offer_cost(offer, delve)
-    local line = offers_data.line(offer.key, offer_difficulty(delve), delve.floor)
+    local line = offers_data.line(offer.key, offer_difficulty(delve), delve.floor) .. (offer.ally_units and delve.ally_theme and "_" .. delve.ally_theme.key or "")
     local lines = { line .. (affordable and "" or offers_data.unaffordable_suffix) }
     if offer.stay then
         lines[2] = RETURNS_HERE_LINE
@@ -925,7 +934,8 @@ function M.grey_out_taken(delve, dilemma_key)
     dilemmas.grey_out(dilemma_key, taken)
 end
 
---- Turns the sabotage taken for the next floor into what its army needs: generator options (`no_heroes`, `fewer_units`, `max_tier`, `min_tier`)
+--- Turns the sabotage taken for the next floor into what its army needs: generator options (`no_heroes`, `fewer_units`, `max_tier`, `min_tier`,
+--- `strip_types`)
 --- and what is put on it once it spawns (`enemy_strength`, `champion_strength` and `enemy_bundles`), see `offer_effects.merge_sabotage`.
 --- @param next_floor table|nil The delve's next-floor changes.
 --- @returns table The options, with `enemy_bundles` nil when no bundle was taken.

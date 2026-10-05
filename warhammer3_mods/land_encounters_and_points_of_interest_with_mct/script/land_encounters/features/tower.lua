@@ -600,7 +600,9 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     if type(next_floor.ally) == "table" then
         local units = random_number(next_floor.ally[2], next_floor.ally[1]) - 1
         ally_options = army_generator.ally_options(units)
-        log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units")
+        if next_floor.ally_theme then ally_options.composition = battle_modifiers.composition({ next_floor.ally_theme.key }) end
+        log("tower: the floor " .. floor_number .. " allied army fields its lord and " .. units .. " units"
+            .. (next_floor.ally_theme and ", " .. next_floor.ally_theme.faction .. " as " .. next_floor.ally_theme.key or ""))
     end
     local army = Army:new_from_event({
         dilemma = "tower",
@@ -614,8 +616,10 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         fewer_units = sabotage.fewer_units,
         max_tier = sabotage.max_tier,
         min_tier = sabotage.min_tier,
+        strip_types = sabotage.strip_types,
         lord_subtype = sabotage.lord_subtype,
         ally_options = ally_options,
+        ally_shorthand = next_floor.ally_theme and next_floor.ally_theme.faction,
         ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
         composition = battle_modifiers.composition(delve.modifiers),
     }, general:faction():subculture())

@@ -7,7 +7,8 @@ local M = {}
 --- Every army in the battle: ours, the enemy and any allies.
 local ALL = { "ours", "enemy", "allies" }
 
---- Offers an army composition keeps out, as they replace the enemy army it describes (a mirror of ours, a hidden floor's other faction).
+--- Offers an army composition keeps out, as they replace the enemy army it describes (a mirror of ours, a hidden floor's other faction). A
+--- generic theme also keeps out the strip offer that would take away its own units.
 local COMPOSITION_KEEPS_OUT = { "mirror_curse", "hidden_floor" }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,13 +153,14 @@ M.list = {
     { key = "undying", harm = "-", sides = { "enemy" } },
 
     --- Army compositions.
-    { key = "comp_monsters", harm = "-", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
+    { key = "comp_monsters", harm = "-", sides = { "enemy" }, group = "composition", keeps_out = { "mirror_curse", "hidden_floor", "strip_monsters" },
       army = { shares = { monsters = 65, cavalry = 15, frontline = 20 }, price_mode = "normal", requires = "monsters", requires_count = 3 } },
-    { key = "comp_riders", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
+    { key = "comp_riders", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = { "mirror_curse", "hidden_floor", "strip_cavalry" },
       army = { shares = { cavalry = 80, frontline = 20 }, price_mode = "normal", requires = "cavalry", requires_count = 3 } },
     { key = "comp_shieldwall", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
       army = { shares = { frontline = 75, missile = 25 }, price_mode = "normal" } },
-    { key = "comp_gunline", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
+    { key = "comp_gunline", harm = "~", sides = { "enemy" }, group = "composition",
+      keeps_out = { "mirror_curse", "hidden_floor", "strip_missile", "strip_artillery" },
       army = { shares = { missile = 55, artillery = 30, frontline = 15 }, price_mode = "normal", requires = "missile", requires_count = 3 } },
 }
 

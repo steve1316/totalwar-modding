@@ -177,6 +177,16 @@ function text_block(lines)
     return #lines > 0 and table.concat(lines, "\n") .. "\n\n" or ""
 end
 
+--- Lists a set's keys in order, e.g. for a log line.
+--- @param set table A key -> true set.
+--- @returns table The keys, sorted.
+function sorted_keys(set)
+    local keys = {}
+    for key in pairs(set) do keys[#keys + 1] = key end
+    table.sort(keys)
+    return keys
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Located messages

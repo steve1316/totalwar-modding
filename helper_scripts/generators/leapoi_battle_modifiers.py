@@ -123,6 +123,14 @@ MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
     "undying": ("Undying Foe", "At 3:00 two destroyed enemy units return where they started, at half strength.", "icon_necromantic_power.png", []),
 }
 
+# What a hired allied army fields under each generic army composition, for the Allies in the Dark lines that name its theme.
+ALLY_THEMES: Dict[str, str] = {
+    "comp_monsters": "mostly monsters and war beasts",
+    "comp_riders": "mostly cavalry and chariots",
+    "comp_shieldwall": "infantry only",
+    "comp_gunline": "mostly missile infantry and artillery",
+}
+
 # Icon of every lore army composition's notice.
 LORE_ICON = "attribute_encourages.png"
 
@@ -168,6 +176,18 @@ def add_lore(modifiers: List[Dict]) -> None:
     for modifier in modifiers:
         if "name" in modifier:
             MODIFIERS[modifier["key"]] = (modifier["name"], modifier["effect"], LORE_ICON, [])
+
+
+def ally_theme_text(key: str) -> str:
+    """The sentence an Allies in the Dark line ends with, naming the theme its allied army rolled.
+
+    Args:
+        key (str): The generic army composition key.
+
+    Returns:
+        str: The loc text.
+    """
+    return f"They march as a [[col:yellow]]{MODIFIERS[key][0]}[[/col]]: {ALLY_THEMES[key]}."
 
 
 def line_text(key: str) -> str:

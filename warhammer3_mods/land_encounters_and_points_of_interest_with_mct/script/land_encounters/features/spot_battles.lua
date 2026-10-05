@@ -175,7 +175,7 @@ function M.launch(faction_name)
     local choices = { { key = offers_data.fight_choice_key, lines = { FIGHT_LINE } } }
     for _, key in ipairs(pending.offers) do
         local offer = offers_data.at(key, pending.difficulty)
-        local line = offers_data.line_prefix .. key .. "_" .. pending.difficulty
+        local line = offers_data.line_prefix .. key .. "_" .. pending.difficulty .. (offer.allies and pending.ally_theme and "_" .. pending.ally_theme.key or "")
         local can_pay = spot_offers.affordable(offer, faction_name)
         pending.shown_affordable[key] = can_pay
         local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line } }
@@ -211,8 +211,13 @@ function M.open(event, character, faction, with_offers)
         keeps_out = battle_modifiers.keeps_out(event.modifiers) }
     local offers, missions = {}, {}
     if with_offers then offers, missions = M.draw(ctx) end
+    --- Allies in the Dark names the theme its allied army marches as, so it is rolled once the offer is drawn.
+    for _, key in ipairs(offers) do
+        if offers_data.by_key[key].allies and not event.ally_theme then event.ally_theme = battle_modifiers.roll_ally_theme(faction:subculture(), event.faction) end
+    end
     M.pending_by_faction[faction_name] = { dilemma = event.dilemma, offers = offers, missions = missions, general_cqi = ctx.general_cqi,
-        difficulty = event.difficulty, cards = ctx.cards, taken = {}, battle = { general_cqi = ctx.general_cqi, missions = {} }, modifiers = event.modifiers }
+        difficulty = event.difficulty, cards = ctx.cards, taken = {}, battle = { general_cqi = ctx.general_cqi, missions = {} }, modifiers = event.modifiers,
+        ally_theme = event.ally_theme }
     log("spot battle: " .. faction_name .. " opens " .. event.dilemma .. (with_offers and " with offers" or " plain") .. ", lord " .. ctx.general_cqi
         .. ", treasury " .. offer_effects.treasury(faction_name))
     M.launch(faction_name)
@@ -271,7 +276,12 @@ local function apply_to_event(fields, event)
         local units = random_number(fields.allies[2], fields.allies[1]) - 1
         event.intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE
         event.ally_options = army_generator.ally_options(units)
-        log("spot battle: the hired allied army fields its lord and " .. units .. " units")
+        if event.ally_theme then
+            event.ally_options.composition = battle_modifiers.composition({ event.ally_theme.key })
+            event.ally_shorthand = event.ally_theme.faction
+        end
+        log("spot battle: the hired allied army fields its lord and " .. units .. " units"
+            .. (event.ally_theme and ", " .. event.ally_theme.faction .. " as " .. event.ally_theme.key or ""))
     end
 end
 
@@ -351,7 +361,7 @@ function M.take(faction_name, choice_key, event)
         .. ", event budget x" .. tostring(event.budget_multiplier) .. ", fewer units " .. tostring(event.fewer_units) .. ", no heroes "
         .. tostring(event.no_heroes) .. ", max tier " .. tostring(event.max_tier) .. ", enemy strength " .. tostring(event.enemy_strength)
         .. ", champion strength " .. tostring(event.champion_strength) .. ", enemy bundles " .. table.concat(event.enemy_bundles or {}, ", ")
-        .. ", missions " .. table.concat(event.missions, ", "))
+        .. ", stripped types " .. table.concat(sorted_keys(event.strip_types or {}), ", ") .. ", missions " .. table.concat(event.missions, ", "))
     return "fight"
 end
 

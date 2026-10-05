@@ -46,6 +46,11 @@ M.thin_the_ranks = { cost = M.STRONG, fewer_units = S(2, 3, 4) }
 M.poison_the_stores = { cost = M.STRONG, enemy_strength = S(0.85, 0.75, 0.65) }
 M.kill_the_captain = { cost = 2000, no_heroes = true }
 M.lower_tiers_only = { cost = M.PREMIUM, max_tier = 2 }
+--- Strip the enemy: its army fields none of these unit types, offered only when its faction fields any.
+M.strip_monsters = { cost = M.STRONG, strip_types = { "monster", "monstrous_cavalry", "war_beast" } }
+M.strip_cavalry = { cost = M.STRONG, strip_types = { "melee_cavalry", "missile_cavalry", "chariot" } }
+M.strip_missile = { cost = M.STRONG, strip_types = { "missile_infantry" } }
+M.strip_artillery = { cost = M.STRONG, strip_types = { "warmachine" } }
 M.break_their_spirit = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "break_their_spirit") }
 M.curse_their_blades = { cost = M.STANDARD, enemy_bundle = tiered(TOWER_BUNDLE .. "curse_their_blades") }
 M.turn_a_traitor = { cost = M.STRONG, tiers = S({ 2, 3 }, { 3, 4 }, { 4, 5 }) }

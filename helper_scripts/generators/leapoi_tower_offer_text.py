@@ -83,7 +83,17 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "bribe_the_guards": (PAY + "bribe the guards: the next army is [[col:green]]{weaker}% weaker[[/col]].", broke("the guards stay loyal")),
     "poison_the_stores": (PAY + "poison the next floor's stores: its units start at [[col:green]]{strength}% strength[[/col]].", broke("the stores stay clean")),
     "thin_the_ranks": (PAY + "thin the next floor's ranks: its army fields [[col:green]]{fewer_units} fewer units[[/col]].", broke("the ranks stay full")),
+    "allies_in_the_dark_small": (PAY + "call allies from the dark: [[col:green]]a small allied army[[/col]] of {ally_min} to {ally_max} units joins us in "
+                                 "the next battle.", broke("no allies answer")),
+    "allies_in_the_dark_medium": (PAY + "call allies from the dark: [[col:green]]a medium allied army[[/col]] of {ally_min} to {ally_max} units joins us "
+                                  "in the next battle.", broke("no allies answer")),
+    "allies_in_the_dark_large": (PAY + "call allies from the dark: [[col:green]]a large allied army[[/col]] of {ally_min} to {ally_max} units joins us in "
+                                 "the next battle.", broke("no allies answer")),
     "lower_tiers_only": (PAY + "keep the next floor's veterans away: its army has [[col:green]]tier 1-2 units only[[/col]].", broke("the veterans stand ready")),
+    "strip_monsters": (PAY + "cull the next floor's beasts: its army fields [[col:green]]no monsters or war beasts[[/col]].", broke("the beasts stay hungry")),
+    "strip_cavalry": (PAY + "scatter the next floor's herds: its army fields [[col:green]]no cavalry or chariots[[/col]].", broke("the herds stay penned")),
+    "strip_missile": (PAY + "burn the next floor's quivers: its army fields [[col:green]]no missile infantry[[/col]].", broke("the quivers stay full")),
+    "strip_artillery": (PAY + "wreck the next floor's engines: its army fields [[col:green]]no artillery[[/col]].", broke("the engines stay whole")),
     "break_their_spirit": (PAY + "spread dread through the next floor: its units have [[col:green]]-{e0}[[/col]] " + icon("icon_stat_morale") + " leadership.",
                            broke("their spirit holds")),
     "curse_their_blades": (PAY + "curse the next floor's weapons: its units have [[col:green]]-{e0}[[/col]] " + icon("icon_stat_attack") + " melee attack.",
@@ -193,6 +203,10 @@ TOWER_BUNDLES = {
 NOTICES = {
     "bribe_the_guards": ("red", "Bribe the Guards: the enemy army is {weaker}% weaker."),
     "thin_the_ranks": ("red", "Thin the Ranks: the enemy fields {fewer_units} fewer units."),
+    "strip_monsters": ("red", "Cull the Beasts: the enemy fields no monsters or war beasts."),
+    "strip_cavalry": ("red", "Scatter the Herds: the enemy fields no cavalry or chariots."),
+    "strip_missile": ("red", "Burn the Quivers: the enemy fields no missile infantry."),
+    "strip_artillery": ("red", "Wreck the Engines: the enemy fields no artillery."),
     "poison_the_stores": ("red", "Poison the Stores: enemy units start at {strength}% strength."),
     "break_their_spirit": ("red", "Break Their Spirit: enemy units have -{e0} " + icon("icon_stat_morale") + "."),
     "curse_their_blades": ("red", "Curse Their Blades: enemy units have -{e0} " + icon("icon_stat_attack") + "."),
