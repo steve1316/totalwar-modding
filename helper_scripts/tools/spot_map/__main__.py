@@ -16,9 +16,21 @@ import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 from core.utilities import setup_script_logging
-from tools.spot_map import campaigns
+from tools.spot_map import campaigns, suggest
 
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+
+
+def page_state() -> dict:
+    """Builds the page state with each campaign's suggestions attached, checked against its spots.
+
+    Returns:
+        `campaigns.state()` with a "suggestions" list on every campaign.
+    """
+    data = campaigns.state()
+    for campaign in data["campaigns"]:
+        campaign["suggestions"] = suggest.check(suggest.load(campaigns.CAMPAIGN_BY_KEY[campaign["key"]]), campaign["spots"], campaign["pois"])
+    return data
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -55,7 +67,7 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, open(os.path.join(STATIC_DIR, "index.html"), "rb").read(), "text/html; charset=utf-8")
         elif self.path == "/api/state":
             campaigns.import_settlement_dump()
-            self._json(200, campaigns.state())
+            self._json(200, page_state())
         elif self.path.startswith("/map/") and self.path.endswith(".png"):
             key = self.path[len("/map/"):-len(".png")]
             campaign = campaigns.CAMPAIGN_BY_KEY.get(key)
@@ -77,7 +89,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))).decode("utf-8"))
             result = routes[self.path](body)
-            self._json(200, {"result": result} if self.path == "/api/layout" else {"result": result, "state": campaigns.state()})
+            self._json(200, {"result": result} if self.path == "/api/layout" else {"result": result, "state": page_state()})
         except (ValueError, KeyError) as e:
             logging.error(f"Export failed: {e}")
             self._json(400, {"error": str(e)})

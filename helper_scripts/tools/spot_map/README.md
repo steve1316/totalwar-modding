@@ -64,6 +64,27 @@ in Edit existing, but on a separate queue: the campaign's layout in `data/layout
 belong to), replacing the previous draft. LEAPOI never reads draft blocks. When a campaign has no layout file but has a draft block, the
 layout starts from that block. Promoting a draft to the live block is a separate step, not done by the tool yet.
 
+## Suggestions
+
+An LLM can propose where to put taverns, smithies or tower sites. The script gathers the facts and the LLM makes the picks. There is no API
+key: you ask Claude Code in a session.
+
+1. `python -m tools.spot_map.suggest brief --campaign ie` writes `_diag/spot_map/brief_ie.md`. For each zone it lists the zone's cultures
+   (settlements belong to the zone of their nearest spot) and its points of interest. Each enabled spot also gets its nearest settlement,
+   the cultures of the 3 nearest settlements, how crowded it is and how far it is to the nearest smithy.
+2. The LLM reads the brief and writes `data/suggestions/<block>.json`, one file per coordinates.lua block (e.g. `immortal_empires.json`):
+   `{"suggestions": [{"type", "lua", "zone", "spot", "fields", "reason"}]}`. A suggestion always takes over an existing enabled spot, which is known to be reachable land, so it never lands in the sea.
+3. `python -m tools.spot_map.suggest check --campaign ie` reports a missing or disabled spot, a spot named twice, an unknown type or an
+   unknown culture.
+
+The page draws suggestions as dashed outlines of their type (the **suggested** chip) and lists them with their reasons in the Suggestions
+card. Click one, or **Accept** it in the card, to queue it:
+- the new entry goes on the spot's coordinates, with its owners taken from the nearest settlement;
+- the spot itself is marked for deletion, so it leaves the encounter pool.
+
+Removing the pending entry undoes both. Once exported, a suggestion shows as "placed". A campaign shows the suggestions of every block it
+draws, so IE Expanded shows IE's.
+
 ## What LEAPOI does with it
 
 - `disabled = true` spots never become encounters, new towers or tower battlefields; an encounter active on one in a save is removed on load.

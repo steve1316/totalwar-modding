@@ -62,7 +62,9 @@ svg#map circle { pointer-events: all; }
 /* A filter chip switched off hides its category on the map, labels included. */
 svg#map.hide-kept .cat-kept, svg#map.hide-trimmed .cat-trimmed, svg#map.hide-added .cat-added, svg#map.hide-deleted .cat-deleted,
 svg#map.hide-disabled .cat-disabled, svg#map.hide-smithy .cat-smithy, svg#map.hide-settlement .cat-settlement,
-svg#map.hide-gap .cat-gap, svg#map.hide-manual .cat-manual, svg#map.hide-tower .cat-tower, svg#map.hide-tavern .cat-tavern, svg#map.hide-poi .cat-poi { display: none; }
+svg#map.hide-gap .cat-gap, svg#map.hide-manual .cat-manual, svg#map.hide-tower .cat-tower, svg#map.hide-tavern .cat-tavern, svg#map.hide-poi .cat-poi,
+svg#map.hide-suggested .cat-suggested { display: none; }
+td.why { font-size: .82rem; color: var(--muted); }
 td .fields { display: grid; gap: 3px; }
 td .fields label { display: grid; grid-template-columns: 7.5em 1fr; align-items: center; gap: 4px; font-size: .8rem; color: var(--muted); }
 #tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: .82rem; padding: 6px 8px; border-radius: 5px; max-width: 280px; display: none; z-index: 2; }
@@ -134,6 +136,7 @@ ul.plain { margin: 0; padding-left: 18px; }
       <button type="button" class="chip" data-cat="smithy" aria-pressed="true"><i class="sw" style="background:var(--forge);border-radius:2px"></i>smithy</button>
       <button type="button" class="chip" data-cat="tavern" aria-pressed="true"><i class="sw" style="background:var(--tavern);border-radius:0;transform:rotate(45deg) scale(.8)"></i>tavern</button>
       <button type="button" class="chip" data-cat="settlement" aria-pressed="true"><i class="sw" style="background:var(--settle);width:6px;height:6px"></i>settlement</button>
+      <button type="button" class="chip" data-cat="suggested" aria-pressed="true"><i class="sw" style="border:2px dashed var(--ink)"></i>suggested</button>
       <button type="button" class="chip" data-cat="gap" aria-pressed="true"><i class="sw" style="border:2px solid var(--gap)"></i>province with no spot</button>
       <span class="hint">Click a chip to show or hide it. Scroll to zoom, drag to pan.</span>
     </div>
@@ -174,6 +177,12 @@ ul.plain { margin: 0; padding-left: 18px; }
         </div>
         <p class="msg" id="msg"></p>
       </section>
+      <section class="card" id="sugCard">
+        <h2>Suggestions</h2>
+        <p class="note" id="sugNote"></p>
+        <div class="tbl"><table id="sugs"><thead><tr><th>Zone</th><th>What</th><th>Spot</th><th>Why</th><th></th></tr></thead><tbody></tbody></table></div>
+        <div class="row" style="margin-top:8px"><button type="button" class="btn" id="sugAll">Accept all shown</button></div>
+      </section>
       <section class="card">
         <h2 id="lostTitle">Provinces that would lose every spot</h2>
         <ul class="plain" id="lost"></ul>
@@ -196,7 +205,7 @@ const ctl = { camp: null, spacing: 30, metric: 'box', smithy: false, plant: 'spo
 // Clean-slate queues by campaign: the layout from disk as `add`, with nothing to delete or move in existing data.
 const slate = {};
 let layoutSave = null;
-let STATE = null, C = null, W = 1, H = 1, view, bg, gLabels, gSpots, gAdds;
+let STATE = null, C = null, W = 1, H = 1, view, bg, gLabels, gSpots, gAdds, gSug;
 let spots = [], pois = [], settlements = [];
 let pending = {};
 let z = 1, tx = 0, ty = 0;
@@ -211,6 +220,8 @@ const sx = x => x * W / C.LW;
 const sy = y => H - y * H / C.LH;
 const spotKey = s => `s|${s.lua}|${s.zone}|${s.index}`;
 const poiKey = f => `p|${f.lua}|${f.zone}|${f.kind}|${f.index}`;
+// Escapes text from files (suggestion reasons, area names) for innerHTML and attributes.
+const esc = v => String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 // Shape and colour per planted type; a type added in campaigns.py SPOT_TYPES without an entry here is drawn as a grey circle.
 const TYPE_LOOK = { spot: ['circle', 'var(--kept)'], tower: ['triangle', 'var(--tower)'], smithy: ['square', 'var(--forge)'], tavern: ['diamond', 'var(--tavern)'] };
 const typeOf = key => STATE.types.find(t => t.key === key);
@@ -297,7 +308,7 @@ function build(resetView) {
   bg = el('image', { href: `/map/${C.key}.png`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none', opacity: document.getElementById('mapFade').value / 100 }, view);
   bg.style.display = document.getElementById('mapOn').checked ? '' : 'none';
   const gSettle = el('g', {}, view); gLabels = el('g', {}, view);
-  const gForge = el('g', {}, view); gSpots = el('g', {}, view); gAdds = el('g', {}, view);
+  const gForge = el('g', {}, view); gSpots = el('g', {}, view); gAdds = el('g', {}, view); gSug = el('g', {}, view);
   const slateMode = ctl.mode === 'slate';
   spots = slateMode ? [] : C.spots.map(s => ({ ...s }));
   pois = slateMode ? [] : C.pois; settlements = C.settlements;
@@ -479,7 +490,68 @@ function render() {
     ul.innerHTML = lost.length ? lost.map(x => `<li>${label(x)}</li>`).join('') : '<li>None</li>';
     document.getElementById('lostNote').textContent = `${lost.length} of the ${provBefore.size} provinces that have spots today would have none. Provinces are matched by nearest settlement.`;
   }
+  renderSuggestions();
   renderPending();
+}
+
+// Suggestions not yet accepted, drawn as dashed outlines of their type over the spot they take over, and listed in their card.
+function renderSuggestions() {
+  const p = P(), list = ctl.mode === 'slate' ? [] : (C.suggestions || []);
+  const accepted = new Set(p.add.map(a => a.sug).filter(v => v !== undefined));
+  gSug.innerHTML = '';
+  document.getElementById('sugCard').hidden = !list.length;
+  const tb = document.querySelector('#sugs tbody');
+  tb.innerHTML = '';
+  let open = 0;
+  for (const s of list) {
+    const t = typeOf(s.type) || typeOf('spot'), culture = (s.fields || {}).culture;
+    const what = `${t.label}${t.key === 'tavern' ? (culture ? ' (' + culture + ')' : ' (neutral)') : ''}`;
+    const done = accepted.has(s.id) || s.placed;
+    if (!s.problem && !done) {
+      open++;
+      const c = shape(look(t.key)[0], sx(s.x), sy(s.y), 5.6 * C.r0, { class: 'cat-suggested', fill: look(t.key)[1], 'fill-opacity': 0.35, stroke: 'var(--ink)',
+        'stroke-width': 1.4 * viewOpts.dot, 'stroke-dasharray': '3 2' }, gSug);
+      c.dataset.sug = s.id;
+      c.dataset.tip = `<b>Suggested ${what.toLowerCase()}</b> on spot ${esc(s.zone)} ${s.spot}${s.area ? ' - ' + esc(s.area) : ''}<br>${esc(s.reason)}<br>{${s.x}, ${s.y}} - click to accept`;
+    }
+    const tr = document.createElement('tr');
+    const action = s.problem ? `<span class="d">${esc(s.problem)}</span>` : s.placed ? 'placed' : done ? 'accepted' : `<button type="button" class="btn" data-sug="${s.id}">Accept</button>`;
+    tr.innerHTML = `<td>${esc(s.zone)}</td><td>${what}</td><td class="n">${s.spot}</td><td class="why">${esc(s.reason)}</td><td>${action}</td>`;
+    tb.appendChild(tr);
+  }
+  document.getElementById('sugNote').textContent = `${list.length} suggestions from tools/spot_map/data/suggestions/ (one file per coordinates.lua block), ${open} not accepted yet. ` +
+    'Accepting one queues the new entry on its spot and deletes the spot, so it leaves the encounter pool. Remove the pending entry to undo both.';
+  tb.querySelectorAll('button[data-sug]').forEach(b => b.addEventListener('click', () => accept([+b.dataset.sug])));
+}
+
+// A new pending entry of a type. Its owner fields take the nearest settlement's owner and its culture is neutral, unless `given` names them.
+function newEntry(type, lua, zone, area, x, y, given = {}) {
+  const owner = (nearest(settlements, x, y) || {}).owner || '';
+  const fields = {};
+  for (const [name, hint] of Object.entries(type.fields || {})) if (hint === 'owner' || hint === 'culture') fields[name] = given[name] || (hint === 'owner' ? owner : '');
+  return { type: type.key, lua, zone, area, x, y, fields };
+}
+
+// Queues a suggestion: its entry on the spot it names, and that spot's deletion.
+function acceptSuggestion(id) {
+  const s = (C.suggestions || []).find(x => x.id === id), p = P();
+  if (!s || s.problem || s.placed || p.add.some(a => a.sug === id)) return;
+  const key = spotKey({ lua: s.lua, zone: s.zone, index: s.spot });
+  p.add.push({ ...newEntry(typeOf(s.type), s.lua, s.zone, s.area, s.x, s.y, s.fields || {}), sug: id, replaces: key });
+  if (!p.disable.includes(key)) p.disable.push(key);
+}
+
+// Accepts suggestions by id and redraws.
+function accept(ids) {
+  ids.forEach(acceptSuggestion);
+  savePending();
+  render();
+}
+
+// Removes a pending entry, and the deletion of the spot it took over when it came from a suggestion.
+function removeAdd(i) {
+  const p = P(), [a] = p.add.splice(i, 1);
+  if (a && a.replaces) p.disable = p.disable.filter(k => k !== a.replaces);
 }
 
 function renderPending() {
@@ -488,7 +560,6 @@ function renderPending() {
   document.getElementById('owners').innerHTML = owners.map(o => `<option value="${o}"></option>`).join('');
   tb.innerHTML = '';
   const zoneOpts = C.zones.map(z2 => `<option value="${z2.lua}|${z2.zone}">${z2.zone}${C.zones.some(o => o.lua !== z2.lua) ? ' (' + z2.lua + ')' : ''}</option>`).join('');
-  const esc = v => String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   const cultureOpts = ['<option value="">neutral</option>'].concat(STATE.cultures.map(c2 => `<option value="${c2}">${c2}</option>`)).join('');
   p.add.forEach((a, i) => {
     const t = typeOf(a.type) || typeOf('spot');
@@ -536,7 +607,7 @@ function renderPending() {
   tb.querySelectorAll('.asel').forEach(inp => inp.addEventListener('change', () => { P().add[+inp.dataset.i].area = inp.value.trim(); savePending(); render(); }));
   tb.querySelectorAll('.fsel').forEach(inp => inp.addEventListener('change', () => { P().add[+inp.dataset.i].fields[inp.dataset.f] = inp.value.trim(); savePending(); }));
   tb.querySelectorAll('.x').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.move) delete P().move[b.dataset.move]; else P()[b.dataset.kind].splice(+b.dataset.i, 1);
+    if (b.dataset.move) delete P().move[b.dataset.move]; else if (b.dataset.kind === 'add') removeAdd(+b.dataset.i); else P()[b.dataset.kind].splice(+b.dataset.i, 1);
     savePending(); render();
   }));
 }
@@ -567,7 +638,8 @@ function dropAt(e, target) {
 function clickAt(e) {
   const p = P();
   const t = e.target;
-  if (t.dataset && t.dataset.add !== undefined) { p.add.splice(+t.dataset.add, 1); }
+  if (t.dataset && t.dataset.sug !== undefined) { acceptSuggestion(+t.dataset.sug); }
+  else if (t.dataset && t.dataset.add !== undefined) { removeAdd(+t.dataset.add); }
   else if (t.dataset && (t.dataset.spot !== undefined || t.dataset.poi !== undefined)) {
     // A disabled entry toggles a switch-back-on; any other entry toggles a deletion.
     const item = t.dataset.spot !== undefined ? spots[+t.dataset.spot] : pois[+t.dataset.poi];
@@ -580,10 +652,7 @@ function clickAt(e) {
     const [x, y] = at;
     const near = nearest(C.spots, x, y);
     const fallback = C.zones[0] || { lua: C.key, zone: 'draft' };
-    const type = typeOf(ctl.plant) || typeOf('spot'), owner = (nearest(settlements, x, y) || {}).owner || '';
-    const fields = {};
-    for (const [name, hint] of Object.entries(type.fields || {})) if (hint === 'owner' || hint === 'culture') fields[name] = hint === 'owner' ? owner : '';
-    p.add.push({ type: type.key, lua: near ? near.lua : fallback.lua, zone: near ? near.zone : fallback.zone, area: near ? near.area : '', x, y, fields });
+    p.add.push(newEntry(typeOf(ctl.plant) || typeOf('spot'), near ? near.lua : fallback.lua, near ? near.zone : fallback.zone, near ? near.area : '', x, y));
   }
   savePending();
   render();
@@ -689,6 +758,7 @@ document.getElementById('trimManual').addEventListener('change', e => { ctl.trim
 document.getElementById('mapOn').addEventListener('change', e => { bg.style.display = e.target.checked ? '' : 'none'; });
 document.getElementById('mapFade').addEventListener('input', e => { bg.setAttribute('opacity', e.target.value / 100); });
 document.getElementById('exportBtn').addEventListener('click', doExport);
+document.getElementById('sugAll').addEventListener('click', () => accept((C.suggestions || []).map(s => s.id)));
 let clearArmed = false;
 document.getElementById('clearBtn').addEventListener('click', e => {
   if (ctl.mode === 'slate' && P().add.length && !clearArmed) {

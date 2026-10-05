@@ -7,6 +7,7 @@ import subprocess
 import pytest
 
 from tools.spot_map import coordinates_io as cio
+from tools.spot_map import suggest
 
 FIXTURE = """--- Coordinates for testing.
 
@@ -258,3 +259,37 @@ def test_real_file_parses_every_spot_and_smithy():
     assert sum(1 for p in campaigns["immortal_empires"].pois if p.kind == "smithies") == 54
     assert all(z.close_line > 0 for c in campaigns.values() for z in c.zones.values())
     assert all(c.spots_close_line > 0 and c.pois_close_line > 0 for c in campaigns.values())
+
+
+def test_culture_of_reads_the_shorthand_from_a_faction_key():
+    assert suggest.culture_of("wh2_main_def_naggarond") == "def"
+    assert suggest.culture_of("wh_main_teb_estalia") == "emp"
+    assert suggest.culture_of("wh2_main_rogue_hung_warband") is None
+    assert suggest.culture_of("") is None
+
+
+def test_check_places_suggestions_and_flags_problems():
+    spots = [{"lua": "ie", "zone": "a", "index": 1, "x": 10, "y": 20, "area": "Hills", "disabled": False, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 2, "x": 30, "y": 40, "area": "Marsh", "disabled": True, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 3, "x": 50, "y": 60, "area": "", "disabled": True, "flags": []}]
+    pois = [{"lua": "ie", "zone": "a", "kind": "taverns", "index": 1, "x": 50, "y": 60, "fields": {}, "disabled": False}]
+    tavern = {"type": "tavern", "lua": "ie", "zone": "a", "fields": {}}
+    out = suggest.check([{**tavern, "spot": 1, "fields": {"culture": "def"}}, {**tavern, "spot": 2}, {**tavern, "spot": 9},
+                               {**tavern, "spot": 1}, {**tavern, "spot": 3}, {**tavern, "spot": 1, "fields": {"culture": "xyz"}},
+                               {**tavern, "type": "inn", "spot": 1}], spots, pois)
+    assert (out[0]["x"], out[0]["y"], out[0]["area"], out[0]["problem"], out[0]["placed"]) == (10, 20, "Hills", None, False)
+    assert "disabled" in out[1]["problem"]
+    assert "no spot" in out[2]["problem"]
+    assert "also suggestion 1" in out[3]["problem"]
+    assert out[4]["placed"] and out[4]["problem"] is None
+    assert "unknown culture" in out[5]["problem"]
+    assert "unknown type" in out[6]["problem"]
+
+
+@pytest.mark.parametrize("key", ["ie", "iee", "roc"])
+def test_saved_suggestions_match_the_real_file(key):
+    facts = suggest.campaign_facts(key)
+    checked = suggest.check(suggest.load(facts["campaign"]), facts["spots"], facts["pois"])
+    assert checked and not [s["problem"] for s in checked if s["problem"]]
+    zones = {s["zone"] for s in checked}
+    assert all(sum(1 for s in checked if s["zone"] == z and (s.get("fields") or {}).get("culture")) == 1 for z in zones)

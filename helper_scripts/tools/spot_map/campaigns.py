@@ -63,6 +63,30 @@ _maps: Dict[str, Optional[Dict[str, str]]] = {}
 _listings: Dict[str, str] = {}
 
 
+def type_of_list(kind: str) -> Optional[str]:
+    """The `SPOT_TYPES` key stored in a points-of-interest list, e.g. "taverns" -> "tavern".
+
+    Args:
+        kind (str): The list name.
+
+    Returns:
+        The type key, or None for a list no type plants (e.g. "resources").
+    """
+    return next((t["key"] for t in SPOT_TYPES if t.get("list") == kind), None)
+
+
+def type_of_spot(flags) -> str:
+    """The `SPOT_TYPES` key of a spot entry from its flags, e.g. {"tower"} -> "tower".
+
+    Args:
+        flags (Iterable[str]): The spot's flags.
+
+    Returns:
+        The flagged type's key, or "spot".
+    """
+    return next((t["key"] for t in SPOT_TYPES if t.get("flag") and t["flag"] in flags), "spot")
+
+
 def png_size(path: str) -> tuple:
     """Reads a PNG's width and height from its header.
 
@@ -196,10 +220,10 @@ def load_layout(campaign: dict, blocks: Dict[str, coordinates_io.Campaign]) -> L
         if block is None:
             continue
         for zone in block.zones.values():
-            entries += [{"type": "tower" if "tower" in s.flags else "spot", "lua": lua, "zone": s.zone, "area": s.area, "x": s.x, "y": s.y, "fields": {}}
+            entries += [{"type": type_of_spot(s.flags), "lua": lua, "zone": s.zone, "area": s.area, "x": s.x, "y": s.y, "fields": {}}
                         for s in zone.spots]
         for p in block.pois:
-            kind = next((t["key"] for t in SPOT_TYPES if t.get("list") == p.kind), None)
+            kind = type_of_list(p.kind)
             if kind:
                 entries.append({"type": kind, "lua": lua, "zone": p.zone, "area": "", "x": p.x, "y": p.y, "fields": dict(p.fields)})
     return entries
@@ -259,6 +283,32 @@ def export_draft(body: dict) -> dict:
     return {"backup": os.path.abspath(backup), "blocks": summaries}
 
 
+def campaign_entries(campaign: dict, blocks: Dict[str, coordinates_io.Campaign]) -> dict:
+    """Flattens a campaign's coordinates.lua blocks into the spot and point-of-interest records the page and the suggestions use. A campaign
+    without its block yet gets its seed spots.
+
+    Args:
+        campaign (dict): One `CAMPAIGNS` entry.
+        blocks (Dict[str, coordinates_io.Campaign]): The parsed coordinates.lua.
+
+    Returns:
+        {"spots", "pois", "zones", "seeded"}. Each record carries its "lua" block, and its "flags" as a sorted list without "disabled".
+    """
+    spots, pois, zones, seeded = [], [], [], False
+    for lua in campaign["lua"]:
+        block = blocks.get(lua)
+        if block is None:
+            block = coordinates_io.parse(coordinates_io.campaign_block(lua, "", seed_spots(campaign)))[lua]
+            seeded = True
+        for zone in block.zones.values():
+            zones.append({"lua": lua, "zone": zone.name})
+            spots += [{"lua": lua, "zone": s.zone, "index": s.index, "x": s.x, "y": s.y, "area": s.area, "disabled": s.disabled,
+                       "flags": sorted(s.flags - {"disabled"})} for s in zone.spots]
+        pois += [{"lua": lua, "zone": p.zone, "kind": p.kind, "index": p.index, "x": p.x, "y": p.y, "fields": p.fields, "disabled": p.disabled,
+                  "flags": sorted(p.flags - {"disabled"})} for p in block.pois]
+    return {"spots": spots, "pois": pois, "zones": zones, "seeded": seeded}
+
+
 def state() -> dict:
     """Builds everything the page draws, for every campaign whose map could be found. A campaign without its block yet shows its seed.
 
@@ -273,21 +323,8 @@ def state() -> dict:
             continue
         width, height = png_size(files["minimap"])
         logical_width, logical_height = png_size(files["prebattle"])
-        spots, pois, zones, seeded = [], [], [], False
-        for lua in campaign["lua"]:
-            block = blocks.get(lua)
-            if block is None:
-                block = coordinates_io.parse(coordinates_io.campaign_block(lua, "", seed_spots(campaign)))[lua]
-                seeded = True
-            for zone in block.zones.values():
-                zones.append({"lua": lua, "zone": zone.name})
-                spots += [{"lua": lua, "zone": s.zone, "index": s.index, "x": s.x, "y": s.y, "area": s.area, "disabled": s.disabled,
-                           "flags": sorted(s.flags - {"disabled"})} for s in zone.spots]
-            pois += [{"lua": lua, "zone": p.zone, "kind": p.kind, "index": p.index, "x": p.x, "y": p.y, "fields": p.fields, "disabled": p.disabled,
-                      "flags": sorted(p.flags - {"disabled"})} for p in block.pois]
         out.append({"key": campaign["key"], "label": campaign["label"], "W": width, "H": height, "LW": logical_width, "LH": logical_height,
-                    "spots": spots, "pois": pois, "zones": zones, "settlements": settlements_for(campaign), "seeded": seeded,
-                    "layout": load_layout(campaign, blocks)})
+                    **campaign_entries(campaign, blocks), "settlements": settlements_for(campaign), "layout": load_layout(campaign, blocks)})
     return {"campaigns": out, "types": SPOT_TYPES, "cultures": CULTURES}
 
 
