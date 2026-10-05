@@ -172,6 +172,8 @@ ul.plain { margin: 0; padding-left: 18px; }
         </div>
         <div class="row" style="margin-top:8px">
           <button type="button" class="btn primary" id="exportBtn">Export to coordinates.lua</button>
+          <button type="button" class="btn" id="undoBtn" title="Ctrl+Z">Undo</button>
+          <button type="button" class="btn" id="redoBtn" title="Ctrl+Y or Ctrl+Shift+Z">Redo</button>
           <button type="button" class="btn" id="clearBtn">Clear</button>
           <button type="button" class="btn" id="reloadBtn">Reload</button>
         </div>
@@ -240,10 +242,23 @@ const label = p => p.replace(/^wh\d_\w+?_combi_province_|^wh\d_\w+?_chaos_provin
 function loadPending() {
   try { pending = JSON.parse(localStorage.getItem('spotmap.pending.v2') || '{}'); } catch (e) { pending = {}; }
 }
+// Saves the open queue and records the change as an undo step.
 function savePending() {
+  order(P());
+  const h = undoLog(), now = JSON.stringify(P());
+  if (now !== h.base) {
+    h.undo.push(h.base);
+    if (h.undo.length > 200) h.undo.shift();
+    h.redo = [];
+    h.base = now;
+  }
+  persist();
+}
+// Writes the open queue: the layout to disk in Clean slate, the pending changes to this browser in Edit existing.
+function persist() {
   if (ctl.mode === 'slate') {
     // The layout is saved to disk half a second after the last change.
-    const camp = ctl.camp, entries = P().add;
+    const camp = ctl.camp, entries = P().add.map(({ seq, ...e }) => e);
     clearTimeout(layoutSave);
     layoutSave = setTimeout(() => {
       fetch('/api/layout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ campaign: camp, entries }) })
@@ -254,7 +269,36 @@ function savePending() {
   }
   try { localStorage.setItem('spotmap.pending.v2', JSON.stringify(pending)); } catch (e) { /* storage blocked: pending stays in memory */ }
 }
-const emptyPending = () => ({ add: [], disable: [], enable: [], move: {} });
+const emptyPending = () => ({ add: [], disable: [], enable: [], move: {}, seq: {} });
+// Every change gets a rising number so the queue can list the newest first: added entries carry `seq`, and `p.seq` maps "kind|key" to it for
+// deletions, switch-ons and moves.
+let lastSeq = 0;
+const nextSeq = () => (lastSeq = Math.max(Date.now(), lastSeq + 1));
+// Numbers every change that has no number yet and drops the numbers of removed changes. Runs on every save.
+function order(p) {
+  const seq = p.seq || (p.seq = {}), live = new Set();
+  for (const a of p.add) if (!a.seq) a.seq = nextSeq();
+  for (const [kind, keys] of [['disable', p.disable], ['enable', p.enable], ['move', Object.keys(p.move)]]) {
+    for (const key of keys) { live.add(kind + '|' + key); if (!seq[kind + '|' + key]) seq[kind + '|' + key] = nextSeq(); }
+  }
+  for (const k of Object.keys(seq)) if (!live.has(k)) delete seq[k];
+}
+
+// Undo history per queue (mode and campaign), this session only. `base` is the queue as last saved, so every save that changes it is one step.
+const hist = {};
+const qid = () => `${ctl.mode}|${ctl.camp}`;
+const undoLog = () => hist[qid()] || (hist[qid()] = { base: JSON.stringify(P()), undo: [], redo: [] });
+function setQueue(q) { if (ctl.mode === 'slate') slate[ctl.camp] = q; else pending[ctl.camp] = q; }
+// Moves one step back or forward through the open queue's history.
+function stepHistory(back) {
+  const h = undoLog(), from = back ? h.undo : h.redo, to = back ? h.redo : h.undo;
+  if (!from.length) return;
+  to.push(h.base);
+  h.base = from.pop();
+  setQueue(JSON.parse(h.base));
+  persist();
+  render();
+}
 // The open queue: pending changes of the campaign in Edit existing, its layout in Clean slate. `move` maps an entry key to its new {x, y}.
 const P = () => {
   if (ctl.mode === 'slate') return slate[ctl.camp] || (slate[ctl.camp] = { add: C.layout.map(e => ({ ...e })), disable: [], enable: [], move: {} });
@@ -352,6 +396,7 @@ function build(resetView) {
   document.getElementById('groupTitle').textContent = C.byArea ? 'Per area' : 'Per zone';
   document.getElementById('groupCol').textContent = C.byArea ? 'Area' : 'Zone';
   document.getElementById('smithy').disabled = !pois.some(f => f.kind === 'smithies');
+  undoLog();
   if (resetView) { z = 1; tx = 0; ty = 0; }
   apply();
   render();
@@ -561,6 +606,8 @@ function renderPending() {
   tb.innerHTML = '';
   const zoneOpts = C.zones.map(z2 => `<option value="${z2.lua}|${z2.zone}">${z2.zone}${C.zones.some(o => o.lua !== z2.lua) ? ' (' + z2.lua + ')' : ''}</option>`).join('');
   const cultureOpts = ['<option value="">neutral</option>'].concat(STATE.cultures.map(c2 => `<option value="${c2}">${c2}</option>`)).join('');
+  // Rows are collected with their change number and listed newest first. Entries saved before numbering keep their order at the bottom.
+  const rows = [], seq = p.seq || {};
   p.add.forEach((a, i) => {
     const t = typeOf(a.type) || typeOf('spot');
     let details = `<input data-i="${i}" data-f="area" class="asel" aria-label="Area" value="${esc(a.area)}">`;
@@ -574,7 +621,7 @@ function renderPending() {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td><span class="pill add">${t.label.toLowerCase()}</span></td><td><select data-i="${i}" class="zsel" aria-label="Zone">${zoneOpts}</select></td>` +
       `<td>${details}</td><td class="n">${a.x}, ${a.y}</td><td><button type="button" class="x" data-kind="add" data-i="${i}" aria-label="Remove">&times;</button></td>`;
-    tb.appendChild(tr);
+    rows.push({ seq: a.seq || i, tr });
     tr.querySelector('.zsel').value = `${a.lua}|${a.zone}`;
     tr.querySelectorAll('select.fsel').forEach(sel => { sel.value = a.fields[sel.dataset.f] || ''; });
   });
@@ -587,7 +634,7 @@ function renderPending() {
       tr.innerHTML = `<td><span class="pill ${kind === 'disable' ? 'del' : 'on'}">${kind === 'disable' ? 'delete' : 'enable'}</span></td><td>${what}</td>` +
         `<td>${s ? esc(s.area) : esc(f.fields.initial_owner)}</td><td class="n">${(s || f).x}, ${(s || f).y}</td>` +
         `<td><button type="button" class="x" data-kind="${kind}" data-i="${i}" aria-label="Remove">&times;</button></td>`;
-      tb.appendChild(tr);
+      rows.push({ seq: seq[kind + '|' + key] || 0, tr });
     });
   }
   for (const [key, m] of Object.entries(p.move)) {
@@ -598,8 +645,12 @@ function renderPending() {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td><span class="pill add">move</span></td><td>${what}</td><td>from ${item.x}, ${item.y}</td><td class="n">${m.x}, ${m.y}</td>` +
       `<td><button type="button" class="x" data-move="${esc(key)}" aria-label="Remove">&times;</button></td>`;
-    tb.appendChild(tr);
+    rows.push({ seq: seq['move|' + key] || 0, tr });
   }
+  rows.sort((a, b) => b.seq - a.seq).forEach(r => tb.appendChild(r.tr));
+  const h = undoLog();
+  document.getElementById('undoBtn').disabled = !h.undo.length;
+  document.getElementById('redoBtn').disabled = !h.redo.length;
   document.getElementById('pendingNone').hidden = !!(p.add.length || p.disable.length || p.enable.length || Object.keys(p.move).length);
   tb.querySelectorAll('.zsel').forEach(sel => sel.addEventListener('change', () => {
     const [lua, zone] = sel.value.split('|'); Object.assign(P().add[+sel.dataset.i], { lua, zone }); savePending(); render();
@@ -629,6 +680,8 @@ function dropAt(e, target) {
   else {
     const item = target.dataset.spot !== undefined ? spots[+target.dataset.spot] : pois[+target.dataset.poi];
     const key = target.dataset.spot !== undefined ? spotKey(item) : poiKey(item);
+    // Moving an entry again is a newer change, so it loses its old number.
+    delete (p.seq || {})['move|' + key];
     if (item.x === at[0] && item.y === at[1]) delete p.move[key]; else p.move[key] = { x: at[0], y: at[1] };
   }
   savePending();
@@ -695,8 +748,10 @@ async function doExport() {
     const r = await fetch('/api/export', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || r.statusText);
-    pending[ctl.camp] = emptyPending();
-    savePending();
+    // An export starts the queue and its undo history over.
+    setQueue(emptyPending());
+    persist();
+    delete hist[qid()];
     STATE = data.state;
     const parts = Object.entries(data.result.blocks).map(([lua, s]) =>
       `${lua}: ${s.added} added, ${s.moved} moved, ${s.disabled} disabled, ${s.enabled} enabled${s.created ? ' (block created)' : ''}`);
@@ -758,6 +813,14 @@ document.getElementById('trimManual').addEventListener('change', e => { ctl.trim
 document.getElementById('mapOn').addEventListener('change', e => { bg.style.display = e.target.checked ? '' : 'none'; });
 document.getElementById('mapFade').addEventListener('input', e => { bg.setAttribute('opacity', e.target.value / 100); });
 document.getElementById('exportBtn').addEventListener('click', doExport);
+document.getElementById('undoBtn').addEventListener('click', () => stepHistory(true));
+document.getElementById('redoBtn').addEventListener('click', () => stepHistory(false));
+// Ctrl+Z undoes, Ctrl+Y or Ctrl+Shift+Z redoes, except while typing in a field.
+document.addEventListener('keydown', e => {
+  if (!(e.ctrlKey || e.metaKey) || /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+  const k = e.key.toLowerCase();
+  if (k === 'z' || k === 'y') { e.preventDefault(); stepHistory(k === 'z' && !e.shiftKey); }
+});
 document.getElementById('sugAll').addEventListener('click', () => accept((C.suggestions || []).map(s => s.id)));
 let clearArmed = false;
 document.getElementById('clearBtn').addEventListener('click', e => {
@@ -778,6 +841,7 @@ document.querySelectorAll('#modes button').forEach(b => b.addEventListener('clic
 document.getElementById('reloadBtn').addEventListener('click', async () => {
   await fetchState();
   for (const key in slate) delete slate[key];
+  for (const key in hist) if (key.startsWith('slate|')) delete hist[key];
   buildCampaignButtons(); build(false);
   msg.className = 'msg'; msg.textContent = 'Reloaded from coordinates.lua, the saved layouts and the latest F4 dump.';
 });

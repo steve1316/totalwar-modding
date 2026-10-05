@@ -54,6 +54,12 @@ Immortal Empires' settlements until it has its own dump. Spots and new points ar
   - tick **Include spacing trim in export** to also disable every spot the trim removes.
 - Try exports on a copy with `--coordinates path/to/copy.lua`.
 
+## History
+
+- **Queue order:** the pending list shows the newest change on top, and moving an entry again brings it back to the top.
+- **Undo / redo:** **Undo** and **Redo**, or Ctrl+Z and Ctrl+Y / Ctrl+Shift+Z, step through every change to the open queue, including
+  Clear. Edit existing and Clean slate keep a separate history per campaign. The history lasts for the browser session, and an export or a
+  Reload starts it over.
 ## Clean slate
 
 Switch the toolbar from **Edit existing** to **Clean slate** to build a layout from scratch: existing spots and points of interest are hidden,
