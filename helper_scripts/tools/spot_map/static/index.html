@@ -69,6 +69,8 @@ td .fields { display: grid; gap: 3px; }
 td .fields label { display: grid; grid-template-columns: 7.5em 1fr; align-items: center; gap: 4px; font-size: .8rem; color: var(--muted); }
 #tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: .82rem; padding: 6px 8px; border-radius: 5px; max-width: 280px; display: none; z-index: 2; }
 .side { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; align-items: start; min-width: 0; }
+/* The pending changes card spans the map's full width; the other cards sit side by side below it. */
+.side > .wide { grid-column: 1 / -1; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
 .tbl { overflow: auto; max-height: 420px; }
 table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: .88rem; }
@@ -165,7 +167,7 @@ ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-s
     </section>
 
     <div class="side">
-      <section class="card">
+      <section class="card wide">
         <h2 id="queueTitle">Pending changes</h2>
         <div class="tbl"><table id="pending"><thead><tr><th></th><th>Zone</th><th>Details</th><th>At</th><th></th></tr></thead><tbody></tbody></table></div>
         <datalist id="owners"></datalist>
