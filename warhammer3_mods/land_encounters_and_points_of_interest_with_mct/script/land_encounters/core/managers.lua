@@ -1283,9 +1283,11 @@ function PointOfInterestEventManager:initialize_towers(zones)
 end
 
 
---- Shows or removes the smithy markers to match the Remove Smithies setting. Runs at first tick once the smithy states exist.
-function PointOfInterestEventManager:sync_smithy_markers()
-    self.smithy_event_delegate:sync_markers()
+--- Shows or removes the smithy markers to match the Remove Smithies setting and disabled config entries. Runs at first tick once the
+--- smithy states exist.
+--- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
+function PointOfInterestEventManager:sync_smithy_markers(points_of_interest)
+    self.smithy_event_delegate:sync_markers(points_of_interest)
 end
 
 

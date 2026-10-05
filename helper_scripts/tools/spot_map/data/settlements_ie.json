@@ -1,0 +1,5153 @@
+{
+ "campaign": "main_warhammer",
+ "settlements": [
+  {
+   "region": "wh3_main_combi_region_zlatlan",
+   "name": "Zlatlan",
+   "x": 610,
+   "y": 123,
+   "province": "wh3_main_combi_province_southern_jungles",
+   "owner": "wh2_main_lzd_zlatan",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_floating_village",
+   "name": "Floating Village",
+   "x": 683,
+   "y": 372,
+   "province": "wh3_main_combi_province_marshes_of_madness",
+   "owner": "wh3_main_ie_vmp_sires_of_mourkain",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shrine_of_khaine",
+   "name": "Shrine of Khaine",
+   "x": 258,
+   "y": 663,
+   "province": "wh3_main_combi_province_nagarythe",
+   "owner": "wh2_main_def_scourge_of_khaine",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mordheim",
+   "name": "Mordheim",
+   "x": 675,
+   "y": 661,
+   "province": "wh3_main_combi_province_ostermark",
+   "owner": "wh2_dlc15_skv_clan_kreepus",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zoishenk",
+   "name": "Zoishenk",
+   "x": 645,
+   "y": 794,
+   "province": "wh3_main_combi_province_troll_country",
+   "owner": "wh3_main_ksl_ungol_kindred",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_black_pyramid_of_nagash",
+   "name": "Black Pyramid of Nagash",
+   "x": 579,
+   "y": 283,
+   "province": "wh3_main_combi_province_great_mortis_delta",
+   "owner": "wh3_dlc29_nag_host_of_nagash",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_hanyu_port",
+   "name": "Hanyu Port",
+   "x": 1127,
+   "y": 494,
+   "province": "wh3_main_combi_province_wastelands_of_jinshen",
+   "owner": "wh3_main_cth_dissenter_lords_of_jinshen",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tor_yvresse",
+   "name": "Tor Yvresse",
+   "x": 316,
+   "y": 574,
+   "province": "wh3_main_combi_province_northern_yvresse",
+   "owner": "wh2_main_hef_yvresse",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_aquitaine",
+   "name": "Aquitaine",
+   "x": 421,
+   "y": 569,
+   "province": "wh3_main_combi_province_river_brienne",
+   "owner": "wh3_main_brt_aquitaine",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_monolith_of_katam",
+   "name": "The Monolith of Katam",
+   "x": 451,
+   "y": 864,
+   "province": "wh3_main_combi_province_helspire_mountains",
+   "owner": "wh_dlc08_nor_helspire_tribe",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_helmgart",
+   "name": "Helmgart",
+   "x": 487,
+   "y": 603,
+   "province": "wh3_main_combi_province_axe_bite_pass",
+   "owner": "wh_main_emp_empire",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_beichai",
+   "name": "Beichai",
+   "x": 1356,
+   "y": 554,
+   "province": "wh3_main_combi_province_jade_river_delta",
+   "owner": "wh3_dlc21_cst_dead_flag_fleet",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_lashiek",
+   "name": "Lashiek",
+   "x": 448,
+   "y": 315,
+   "province": "wh3_main_combi_province_land_of_assassins",
+   "owner": "wh2_main_brt_knights_of_the_flame",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_steingart",
+   "name": "Steingart",
+   "x": 620,
+   "y": 565,
+   "province": "wh3_main_combi_province_solland",
+   "owner": "wh_main_grn_black_venom",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_floating_mountain",
+   "name": "Floating Mountain",
+   "x": 1025,
+   "y": 790,
+   "province": "wh3_main_combi_province_chimera_plateau",
+   "owner": "wh3_dlc27_the_narj",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shrine_of_ladrielle",
+   "name": "Shrine of Ladrielle",
+   "x": 224,
+   "y": 777,
+   "province": "wh3_main_combi_province_granite_hills",
+   "owner": "wh2_main_def_karond_kar",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_quatar",
+   "name": "Quatar",
+   "x": 678,
+   "y": 277,
+   "province": "wh3_main_combi_province_land_of_the_dead",
+   "owner": "wh2_dlc09_tmb_numas",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ancient_city_of_quintex",
+   "name": "Ancient City of Quintex",
+   "x": 73,
+   "y": 592,
+   "province": "wh3_main_combi_province_titan_peaks",
+   "owner": "wh2_main_def_cult_of_pleasure",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_southern_outpost",
+   "name": "Southern Outpost",
+   "x": 1280,
+   "y": 328,
+   "province": "wh3_main_combi_province_cathayan_hinterlands",
+   "owner": "wh3_dlc26_grn_cluster_eye_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_black_iron_mine",
+   "name": "Black Iron Mine",
+   "x": 797,
+   "y": 481,
+   "province": "wh3_main_combi_province_southern_worlds_edge_mountains",
+   "owner": "wh_main_dwf_karak_azul",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_vulture_mountain",
+   "name": "Vulture Mountain",
+   "x": 454,
+   "y": 289,
+   "province": "wh3_main_combi_province_atalan_mountains",
+   "owner": "wh2_main_dwf_greybeards_prospectors",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_dragons_crossroad",
+   "name": "Dragon's Crossroad",
+   "x": 1221,
+   "y": 684,
+   "province": "wh3_main_combi_province_eastern_steppes",
+   "owner": "wh3_main_cth_imperial_wardens",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_niedling",
+   "name": "Niedling",
+   "x": 653,
+   "y": 640,
+   "province": "wh3_main_combi_province_stirland",
+   "owner": "wh_main_emp_stirland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_bleak_hold_fortress",
+   "name": "Bleak Hold Fortress",
+   "x": 89,
+   "y": 618,
+   "province": "wh3_main_combi_province_the_bleak_coast",
+   "owner": "wh3_dlc24_ksl_daughters_of_the_forest",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dargoth",
+   "name": "Dargoth",
+   "x": 249,
+   "y": 858,
+   "province": "wh3_main_combi_province_deadwood",
+   "owner": "wh3_main_grn_da_cage_breakaz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_nagenhof",
+   "name": "Nagenhof",
+   "x": 717,
+   "y": 682,
+   "province": "wh3_main_combi_province_ostermark",
+   "owner": "wh_main_emp_ostermark",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_copper_landing",
+   "name": "The Copper Landing",
+   "x": 113,
+   "y": 172,
+   "province": "wh3_main_combi_province_copper_desert",
+   "owner": "wh3_main_tmb_deserters_of_khatep",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_surpindar",
+   "name": "Tor Surpindar",
+   "x": 612,
+   "y": 77,
+   "province": "wh3_main_combi_province_dawns_landing",
+   "owner": "wh3_main_tze_sarthoraels_watchers",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_pools_of_despair",
+   "name": "Pools of Despair",
+   "x": 523,
+   "y": 304,
+   "province": "wh3_main_combi_province_the_cracked_land",
+   "owner": "wh2_main_brt_knights_of_origo",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_angazhar",
+   "name": "Karak Angazhar",
+   "x": 629,
+   "y": 531,
+   "province": "wh3_main_combi_province_eastern_border_princes",
+   "owner": "wh3_main_ogr_disciples_of_the_maw",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_black_pillar",
+   "name": "The Black Pillar",
+   "x": 214,
+   "y": 849,
+   "province": "wh3_main_combi_province_the_road_of_skulls",
+   "owner": "wh3_main_grn_da_cage_breakaz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_temple_avenue_of_gold",
+   "name": "Temple Avenue of Gold",
+   "x": 718,
+   "y": 120,
+   "province": "wh3_main_combi_province_the_jungles_of_the_gods",
+   "owner": "wh3_main_skv_clan_morbidus",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_massif_orcal",
+   "name": "Massif Orcal",
+   "x": 458,
+   "y": 567,
+   "province": "wh3_main_combi_province_barrows_of_cuileux",
+   "owner": "wh2_dlc15_grn_broken_axe",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_white_tower_of_hoeth",
+   "name": "White Tower of Hoeth",
+   "x": 295,
+   "y": 562,
+   "province": "wh3_main_combi_province_saphery",
+   "owner": "wh2_main_hef_saphery",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_winter_pyre",
+   "name": "Winter Pyre",
+   "x": 678,
+   "y": 866,
+   "province": "wh3_main_combi_province_mountains_of_hel",
+   "owner": "wh_main_nor_aesling",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_swamp_town",
+   "name": "Swamp Town",
+   "x": 91,
+   "y": 459,
+   "province": "wh3_main_combi_province_jungles_of_pahualaxa",
+   "owner": "wh2_main_emp_new_world_colonies",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_kemperbad",
+   "name": "Kemperbad",
+   "x": 565,
+   "y": 637,
+   "province": "wh3_main_combi_province_talabecland",
+   "owner": "wh_main_emp_talabecland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shrine_of_loec",
+   "name": "Shrine of Loec",
+   "x": 311,
+   "y": 511,
+   "province": "wh3_main_combi_province_southern_yvresse",
+   "owner": "wh2_dlc15_grn_skull_crag",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_eight_peaks",
+   "name": "Karak Eight Peaks",
+   "x": 761,
+   "y": 459,
+   "province": "wh3_main_combi_province_eight_peaks",
+   "owner": "wh_main_grn_necksnappers",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_palace_of_ruin",
+   "name": "The Palace of Ruin",
+   "x": 230,
+   "y": 904,
+   "province": "wh3_dlc20_combi_province_frigid_wasteland",
+   "owner": "rebels",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_barag_dawazbag",
+   "name": "Barag Dawazbag",
+   "x": 709,
+   "y": 509,
+   "province": "wh3_main_combi_province_blood_river_valley",
+   "owner": "wh_main_grn_scabby_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_nahuontl",
+   "name": "Nahuontl",
+   "x": 562,
+   "y": 146,
+   "province": "wh3_main_combi_province_central_jungles",
+   "owner": "wh2_dlc12_grn_leaf_cutterz_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_deff_gorge",
+   "name": "Deff Gorge",
+   "x": 717,
+   "y": 354,
+   "province": "wh3_main_combi_province_barrier_idols",
+   "owner": "wh3_main_kho_exiles_of_khorne",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_wei_jin",
+   "name": "Wei-Jin",
+   "x": 1276,
+   "y": 649,
+   "province": "wh3_main_combi_province_imperial_road",
+   "owner": "wh3_main_cth_celestial_loyalists",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_griffon_gate",
+   "name": "Griffon Gate",
+   "x": 196,
+   "y": 594,
+   "province": "wh3_main_combi_province_griffon_gate",
+   "owner": "wh2_main_hef_tiranoc",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_shattered_cove",
+   "name": "Shattered Stone Bay",
+   "x": 999,
+   "y": 417,
+   "province": "wh3_main_combi_province_the_dragon_isles",
+   "owner": "wh3_main_lzd_tepoks_spawn",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_wurtbad",
+   "name": "Wurtbad",
+   "x": 607,
+   "y": 634,
+   "province": "wh3_main_combi_province_stirland",
+   "owner": "wh_main_emp_stirland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_shard_bastion",
+   "name": "Shard Bastion",
+   "x": 314,
+   "y": 900,
+   "province": "wh3_main_combi_province_the_shard_lands",
+   "owner": "wh2_main_nor_aghol",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_isle_of_wights",
+   "name": "Isle of Wights",
+   "x": 351,
+   "y": 723,
+   "province": "wh3_main_combi_province_albion",
+   "owner": "wh_dlc08_nor_vanaheimlings",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ghrond",
+   "name": "Ghrond",
+   "x": 157,
+   "y": 841,
+   "province": "wh3_main_combi_province_spiteful_peaks",
+   "owner": "wh2_main_def_ghrond",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_skavenblight",
+   "name": "Skavenblight",
+   "x": 465,
+   "y": 461,
+   "province": "wh3_main_combi_province_the_blighted_marshes",
+   "owner": "wh2_main_skv_clan_skryre",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_caverns_of_sotek",
+   "name": "Caverns of Sotek",
+   "x": 673,
+   "y": 106,
+   "province": "wh3_main_combi_province_the_jungles_of_the_gods",
+   "owner": "wh3_main_skv_clan_morbidus",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_oakenhammer",
+   "name": "Oakenhammer",
+   "x": 715,
+   "y": 590,
+   "province": "wh3_main_combi_province_black_water",
+   "owner": "wh_main_dwf_zhufbar",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_dranil",
+   "name": "Tor Dranil",
+   "x": 198,
+   "y": 627,
+   "province": "wh3_main_combi_province_nagarythe",
+   "owner": "wh2_main_def_scourge_of_khaine",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_black_forests",
+   "name": "The Black Forests",
+   "x": 207,
+   "y": 725,
+   "province": "wh3_main_combi_province_the_clawed_coast",
+   "owner": "wh2_main_def_the_forgebound",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_stormvrack_mount",
+   "name": "Stormvrack Mount",
+   "x": 809,
+   "y": 828,
+   "province": "wh3_main_combi_province_the_skull_road",
+   "owner": "wh3_dlc26_kho_arbaal",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_terracotta_graveyard",
+   "name": "Terracotta Graveyard",
+   "x": 1200,
+   "y": 631,
+   "province": "wh3_main_combi_province_lands_of_stone_and_steel",
+   "owner": "wh3_main_cth_rebel_lords_of_nan_yang",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_awakening",
+   "name": "The Awakening",
+   "x": 276,
+   "y": 262,
+   "province": "wh3_main_combi_province_vampire_coast",
+   "owner": "wh2_dlc11_cst_vampire_coast",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_palace_of_princes",
+   "name": "Palace of Princes",
+   "x": 404,
+   "y": 893,
+   "province": "wh3_main_combi_province_the_cold_mires",
+   "owner": "wh3_main_sla_subtle_torture",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_xahutec",
+   "name": "Xahutec",
+   "x": 204,
+   "y": 307,
+   "province": "wh3_main_combi_province_scorpion_coast",
+   "owner": "wh2_main_lzd_tlaxtlan",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_writhing_fortress",
+   "name": "The Writhing Fortress",
+   "x": 915,
+   "y": 887,
+   "province": "wh3_main_combi_province_the_blood_marshes",
+   "owner": "wh3_main_sla_exquisite_pain",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_elisia",
+   "name": "Elisia",
+   "x": 299,
+   "y": 640,
+   "province": "wh3_main_combi_province_chrace",
+   "owner": "wh2_main_hef_chrace",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mount_silverspear",
+   "name": "Mount Silverspear",
+   "x": 831,
+   "y": 541,
+   "province": "wh3_main_combi_province_the_desolation_of_azgorh",
+   "owner": "wh3_main_grn_moon_howlerz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_wellsprings_of_eternity",
+   "name": "Wellsprings of Eternity",
+   "x": 71,
+   "y": 357,
+   "province": "wh3_main_combi_province_jungles_of_green_mist",
+   "owner": "wh2_main_def_blood_hall_coven",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tower_of_gorgoth",
+   "name": "Tower of Gorgoth",
+   "x": 904,
+   "y": 527,
+   "province": "wh3_main_combi_province_the_wolf_lands",
+   "owner": "wh3_dlc23_chd_minor_faction",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_sarl_encampment",
+   "name": "Sarl Encampment",
+   "x": 586,
+   "y": 846,
+   "province": "wh3_main_combi_province_trollheim_mountains",
+   "owner": "wh_main_nor_sarl",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fort_jakova",
+   "name": "Fort Jakova",
+   "x": 740,
+   "y": 702,
+   "province": "wh3_main_combi_province_southern_oblast",
+   "owner": "wh_main_nor_baersonling",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_miragliano",
+   "name": "Miragliano",
+   "x": 497,
+   "y": 456,
+   "province": "wh3_main_combi_province_tilea",
+   "owner": "wh_main_teb_tilea",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_nuja",
+   "name": "Nuja",
+   "x": 381,
+   "y": 426,
+   "province": "wh3_main_combi_province_estalia",
+   "owner": "wh_main_teb_estalia",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_longship_graveyard",
+   "name": "Longship Graveyard",
+   "x": 543,
+   "y": 789,
+   "province": "wh3_main_combi_province_ice_tooth_mountains",
+   "owner": "wh_main_nor_skaeling",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_macu_peaks",
+   "name": "Macu Peaks",
+   "x": 53,
+   "y": 457,
+   "province": "wh3_main_combi_province_isthmus_of_lustria",
+   "owner": "wh3_dlc20_sla_keepers_of_bliss",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_norden",
+   "name": "Norden",
+   "x": 594,
+   "y": 770,
+   "province": "wh3_main_combi_province_ostland",
+   "owner": "wh_main_emp_nordland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_altar_of_spawns",
+   "name": "Altar of Spawns",
+   "x": 650,
+   "y": 871,
+   "province": "wh3_main_combi_province_mountains_of_hel",
+   "owner": "wh_main_nor_aesling",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tribeslaughter",
+   "name": "Tribeslaughter",
+   "x": 847,
+   "y": 782,
+   "province": "wh3_main_combi_province_the_skull_road",
+   "owner": "wh3_main_ogr_lazarghs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_sump_pit",
+   "name": "Death Pit",
+   "x": 806,
+   "y": 433,
+   "province": "wh3_main_combi_province_southern_worlds_edge_mountains",
+   "owner": "wh_main_dwf_karak_azul",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_grenzstadt",
+   "name": "Grenzstadt",
+   "x": 648,
+   "y": 573,
+   "province": "wh3_main_combi_province_averland",
+   "owner": "wh_main_emp_averland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_dust_gate",
+   "name": "The Dust Gate",
+   "x": 140,
+   "y": 156,
+   "province": "wh3_main_combi_province_copper_desert",
+   "owner": "wh3_main_tmb_deserters_of_khatep",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_kappelburg",
+   "name": "Kappelburg",
+   "x": 653,
+   "y": 708,
+   "province": "wh3_main_combi_province_talabecland",
+   "owner": "wh_main_emp_talabecland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_nan_gau",
+   "name": "Nan-Gau",
+   "x": 1138,
+   "y": 656,
+   "province": "wh3_main_combi_province_gunpowder_road",
+   "owner": "wh3_main_cth_the_northern_provinces",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_numas",
+   "name": "Numas",
+   "x": 651,
+   "y": 297,
+   "province": "wh3_main_combi_province_land_of_the_dead",
+   "owner": "wh2_dlc09_tmb_numas",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_lyonesse",
+   "name": "Lyonesse",
+   "x": 362,
+   "y": 631,
+   "province": "wh3_main_combi_province_coast_of_lyonesse",
+   "owner": "wh_main_brt_lyonesse",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_lybaras",
+   "name": "Lybaras",
+   "x": 825,
+   "y": 317,
+   "province": "wh3_main_combi_province_crater_of_the_waking_dead",
+   "owner": "wh2_dlc09_tmb_lybaras",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_bleeding_spire",
+   "name": "The Bleeding Spire",
+   "x": 923,
+   "y": 837,
+   "province": "wh3_main_combi_province_the_blood_marshes",
+   "owner": "wh3_dlc20_nor_kul",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_copher",
+   "name": "Copher",
+   "x": 473,
+   "y": 341,
+   "province": "wh3_main_combi_province_coast_of_araby",
+   "owner": "wh2_dlc14_brt_chevaliers_de_lyonesse",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_nagashizzar",
+   "name": "Nagashizzar",
+   "x": 848,
+   "y": 405,
+   "province": "wh3_main_combi_province_broken_teeth",
+   "owner": "wh3_main_skv_clan_carrion",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_sunken_khernarch",
+   "name": "Sunken Khernarch",
+   "x": 647,
+   "y": 362,
+   "province": "wh3_main_combi_province_marshes_of_madness",
+   "owner": "wh3_main_ie_vmp_sires_of_mourkain",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mangrove_coast",
+   "name": "Mangrove Coast",
+   "x": 263,
+   "y": 137,
+   "province": "wh3_main_combi_province_culchan_plains",
+   "owner": "wh2_main_lzd_southern_sentinels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_grimtop",
+   "name": "Grimtop",
+   "x": 1050,
+   "y": 489,
+   "province": "wh3_main_combi_province_ivory_road",
+   "owner": "wh3_main_ogr_crossed_clubs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_moon_shard",
+   "name": "The Moon Shard",
+   "x": 134,
+   "y": 567,
+   "province": "wh3_main_combi_province_the_bleak_coast",
+   "owner": "wh2_main_def_bleak_holds",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_flayed_rock",
+   "name": "Flayed Rock",
+   "x": 992,
+   "y": 471,
+   "province": "wh3_main_combi_province_gnoblar_country",
+   "owner": "wh3_main_skv_clan_treecherik",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_eldar_spire",
+   "name": "Eldar Spire",
+   "x": 15,
+   "y": 815,
+   "province": "wh3_main_combi_province_iron_coast",
+   "owner": "wh2_main_skv_clan_septik",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_city_of_the_shugengan",
+   "name": "City of the Shugengan",
+   "x": 1295,
+   "y": 614,
+   "province": "wh3_main_combi_province_imperial_road",
+   "owner": "wh3_main_cth_celestial_loyalists",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_laurelorn_forest",
+   "name": "Laurelorn Forest",
+   "x": 527,
+   "y": 730,
+   "province": "wh3_main_combi_province_the_witchs_wood",
+   "owner": "wh3_main_wef_laurelorn",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_monument_of_izzatal",
+   "name": "Monument of Izzatal",
+   "x": 105,
+   "y": 352,
+   "province": "wh3_main_combi_province_the_creeping_jungle",
+   "owner": "wh2_dlc12_skv_clan_mange",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karaz_a_karak",
+   "name": "Karaz-a-Karak",
+   "x": 736,
+   "y": 549,
+   "province": "wh3_main_combi_province_the_silver_road",
+   "owner": "wh_main_dwf_dwarfs",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_dread_rock",
+   "name": "Dread Rock",
+   "x": 972,
+   "y": 399,
+   "province": "wh3_main_combi_province_the_dragon_isles",
+   "owner": "wh3_main_lzd_tepoks_spawn",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_village_of_the_moon",
+   "name": "Village of the Moon",
+   "x": 1251,
+   "y": 551,
+   "province": "wh3_main_combi_province_forests_of_the_moon",
+   "owner": "wh3_main_grn_dimned_sun",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fu_hung",
+   "name": "Fu Hung",
+   "x": 1230,
+   "y": 376,
+   "province": "wh3_main_combi_province_broken_lands_of_tian_li",
+   "owner": "wh3_main_cth_burning_wind_nomads",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_great_desert_of_araby",
+   "name": "Great Desert of Araby",
+   "x": 487,
+   "y": 267,
+   "province": "wh3_main_combi_province_great_desert_of_araby",
+   "owner": "wh3_main_ogre_the_famished",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tlaqua",
+   "name": "Tlaqua",
+   "x": 544,
+   "y": 203,
+   "province": "wh3_main_combi_province_western_jungles",
+   "owner": "wh2_main_lzd_tlaqua",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_skrap_towers",
+   "name": "Skrap Towers",
+   "x": 1014,
+   "y": 449,
+   "province": "wh3_main_combi_province_gnoblar_country",
+   "owner": "wh3_main_skv_clan_treecherik",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fort_oberstyre",
+   "name": "Fort Oberstyre",
+   "x": 668,
+   "y": 621,
+   "province": "wh3_main_combi_province_northern_sylvania",
+   "owner": "wh_main_vmp_rival_sylvanian_vamps",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_rackdo_gorge",
+   "name": "Rackdo Gorge",
+   "x": 55,
+   "y": 812,
+   "province": "wh3_main_combi_province_iron_mountains",
+   "owner": "wh2_main_skv_clan_septik",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_troll_fjord",
+   "name": "Troll Fjord",
+   "x": 386,
+   "y": 795,
+   "province": "wh3_main_combi_province_vanaheim_mountains",
+   "owner": "wh_dlc08_nor_norsca",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zandri",
+   "name": "Zandri",
+   "x": 541,
+   "y": 325,
+   "province": "wh3_main_combi_province_the_cracked_land",
+   "owner": "wh2_main_brt_knights_of_origo",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zanbaijin",
+   "name": "Zanbaijin",
+   "x": 1002,
+   "y": 838,
+   "province": "wh3_main_combi_province_kdatha",
+   "owner": "wh3_dlc25_nur_tamurkhan",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_kunlan",
+   "name": "Kunlan",
+   "x": 1251,
+   "y": 587,
+   "province": "wh3_main_combi_province_forests_of_the_moon",
+   "owner": "wh3_main_grn_dimned_sun",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_monolith_of_borkill_the_bloody_handed",
+   "name": "Monolith of Borkill the Bloody-Handed",
+   "x": 450,
+   "y": 801,
+   "province": "wh3_main_combi_province_vanaheim_mountains",
+   "owner": "wh_main_nor_bjornling",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_venom_glade",
+   "name": "Venom Glade",
+   "x": 142,
+   "y": 709,
+   "province": "wh3_main_combi_province_obsidian_peaks",
+   "owner": "wh2_main_def_clar_karond",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_xhotl",
+   "name": "Xhotl",
+   "x": 133,
+   "y": 238,
+   "province": "wh3_main_combi_province_river_qurveza",
+   "owner": "wh3_dlc20_nur_pallid_nurslings",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_lost_plateau",
+   "name": "Lost Plateau",
+   "x": 704,
+   "y": 243,
+   "province": "wh3_main_combi_province_southlands_worlds_edge_mountains",
+   "owner": "wh2_main_grn_arachnos",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_elessaeli",
+   "name": "Elessaeli",
+   "x": 317,
+   "y": 532,
+   "province": "wh3_main_combi_province_southern_yvresse",
+   "owner": "wh2_dlc15_grn_skull_crag",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_spitepeak",
+   "name": "Spitepeak",
+   "x": 789,
+   "y": 417,
+   "province": "wh3_main_combi_province_eastern_badlands",
+   "owner": "wh_main_dwf_karak_azul",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_gallows_tree",
+   "name": "The Gallows Tree",
+   "x": 975,
+   "y": 819,
+   "province": "wh3_main_combi_province_kdatha",
+   "owner": "wh3_dlc27_the_narj",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_castle_carcassonne",
+   "name": "Castle Carcassonne",
+   "x": 465,
+   "y": 503,
+   "province": "wh3_main_combi_province_carcassonne",
+   "owner": "wh_main_brt_carcassonne",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_shrine_of_sotek",
+   "name": "Shrine of Sotek",
+   "x": 47,
+   "y": 427,
+   "province": "wh3_main_combi_province_jungles_of_pahualaxa",
+   "owner": "wh2_main_grn_blue_vipers",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tower_of_the_sun",
+   "name": "Tower of the Sun",
+   "x": 981,
+   "y": 133,
+   "province": "wh3_main_combi_province_eastern_colonies",
+   "owner": "wh3_dlc27_hef_aislinn",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_fateweavers_crevasse",
+   "name": "Fateweaver's Crevasse",
+   "x": 510,
+   "y": 27,
+   "province": "wh3_main_combi_province_the_abyssal_glacier",
+   "owner": "wh3_main_tze_oracles_of_tzeentch",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_godless_crater",
+   "name": "The Godless Crater",
+   "x": 235,
+   "y": 22,
+   "province": "wh3_main_combi_province_the_ice_fire_plains",
+   "owner": "wh2_dlc17_lzd_oxyotl",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_stonemine_tower",
+   "name": "Stonemine Tower",
+   "x": 626,
+   "y": 482,
+   "province": "wh3_main_combi_province_western_badlands",
+   "owner": "wh3_main_skv_clan_verms",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zavastra",
+   "name": "Zavastra",
+   "x": 674,
+   "y": 736,
+   "province": "wh3_main_combi_province_southern_oblast",
+   "owner": "wh3_main_ksl_the_ice_court",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_rothkar_spire",
+   "name": "Rothkar Spire",
+   "x": 13,
+   "y": 733,
+   "province": "wh3_main_combi_province_red_desert",
+   "owner": "wh2_dlc16_grn_naggaroth_orcs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_daemons_stump",
+   "name": "The Daemon's Stump",
+   "x": 969,
+   "y": 546,
+   "province": "wh3_main_combi_province_the_wolf_lands",
+   "owner": "wh3_dlc23_chd_minor_faction",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_xen_wu",
+   "name": "Xen Wu",
+   "x": 1123,
+   "y": 525,
+   "province": "wh3_main_combi_province_wastelands_of_jinshen",
+   "owner": "wh3_main_skv_clan_krizzor",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shagrath",
+   "name": "Shagrath",
+   "x": 319,
+   "y": 853,
+   "province": "wh3_main_combi_province_the_shard_lands",
+   "owner": "wh2_main_def_deadwood_sentinels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_clarak_spire",
+   "name": "Clarak Spire",
+   "x": 16,
+   "y": 650,
+   "province": "wh3_main_combi_province_red_desert",
+   "owner": "wh2_dlc09_tmb_exiles_of_nehek",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_martek",
+   "name": "Martek",
+   "x": 489,
+   "y": 317,
+   "province": "wh3_main_combi_province_atalan_mountains",
+   "owner": "wh2_main_brt_thegans_crusaders",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ka_sabar",
+   "name": "Ka-Sabar",
+   "x": 642,
+   "y": 247,
+   "province": "wh3_main_combi_province_shifting_sands",
+   "owner": "wh_main_vmp_vampire_counts",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_gateway_to_khuresh",
+   "name": "Gateway to Khuresh",
+   "x": 1257,
+   "y": 349,
+   "province": "wh3_main_combi_province_cathayan_hinterlands",
+   "owner": "wh3_dlc26_grn_cluster_eye_tribe",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_cairn_thel",
+   "name": "Cairn Thel",
+   "x": 285,
+   "y": 517,
+   "province": "wh3_main_combi_province_southern_yvresse",
+   "owner": "wh2_dlc15_grn_skull_crag",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_folly_of_malofex",
+   "name": "The Folly of Malofex",
+   "x": 470,
+   "y": 908,
+   "province": "wh3_main_combi_province_the_cold_mires",
+   "owner": "wh3_main_sla_subtle_torture",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karond_kar",
+   "name": "Karond Kar",
+   "x": 277,
+   "y": 797,
+   "province": "wh3_main_combi_province_the_broken_lands",
+   "owner": "wh2_main_def_karond_kar",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_dok_karaz",
+   "name": "Dok Karaz",
+   "x": 668,
+   "y": 497,
+   "province": "wh3_main_combi_province_blood_river_valley",
+   "owner": "wh_main_grn_scabby_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_argalis",
+   "name": "Argalis",
+   "x": 538,
+   "y": 417,
+   "province": "wh3_main_combi_province_western_border_princes",
+   "owner": "wh_main_teb_border_princes",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_storag_kor",
+   "name": "Storag Kor",
+   "x": 72,
+   "y": 727,
+   "province": "wh3_main_combi_province_obsidian_peaks",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_middenheim",
+   "name": "Middenheim",
+   "x": 554,
+   "y": 706,
+   "province": "wh3_main_combi_province_middenland",
+   "owner": "wh_main_emp_middenland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_languille",
+   "name": "L'Anguille",
+   "x": 384,
+   "y": 661,
+   "province": "wh3_main_combi_province_marches_of_couronne",
+   "owner": "wh_main_vmp_mousillon",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_azorn",
+   "name": "Karak Azorn",
+   "x": 996,
+   "y": 567,
+   "province": "wh3_main_combi_province_mountains_of_mourn",
+   "owner": "wh3_main_dwf_karak_azorn",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_black_tower_of_arkhan",
+   "name": "Black Tower of Arkhan",
+   "x": 550,
+   "y": 294,
+   "province": "wh3_main_combi_province_the_cracked_land",
+   "owner": "wh2_dlc09_tmb_rakaph_dynasty",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_pillar_of_skulls",
+   "name": "Pillar of Skulls",
+   "x": 876,
+   "y": 802,
+   "province": "wh3_main_combi_province_the_skull_road",
+   "owner": "wh3_main_ogr_lazarghs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_desolation_of_nagash",
+   "name": "Desolation of Nagash",
+   "x": 819,
+   "y": 411,
+   "province": "wh3_main_combi_province_broken_teeth",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_blackstone_post",
+   "name": "Blackstone Post",
+   "x": 457,
+   "y": 623,
+   "province": "wh3_main_combi_province_northern_grey_mountains",
+   "owner": "wh2_dlc11_vmp_the_barrow_legion",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_fortress_of_vorag",
+   "name": "The Fortress of Vorag",
+   "x": 889,
+   "y": 438,
+   "province": "wh3_main_combi_province_the_plain_of_bones",
+   "owner": "wh2_dlc15_hef_imrik",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_dark_tower",
+   "name": "Dark Tower",
+   "x": 1272,
+   "y": 725,
+   "province": "wh3_main_combi_province_mountains_end",
+   "owner": "wh3_dlc27_nor_sayl",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_gor_gazan",
+   "name": "Gor Gazan",
+   "x": 589,
+   "y": 333,
+   "province": "wh3_main_combi_province_barrier_idols",
+   "owner": "wh_main_grn_top_knotz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_pillars_of_unseen_constellations",
+   "name": "Pillars of Unseen Constellations",
+   "x": 59,
+   "y": 332,
+   "province": "wh3_main_combi_province_jungles_of_green_mist",
+   "owner": "wh2_main_def_blood_hall_coven",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_marks_of_the_old_ones",
+   "name": "Marks of the Old Ones",
+   "x": 225,
+   "y": 184,
+   "province": "wh3_main_combi_province_headhunters_jungle",
+   "owner": "wh2_main_skv_clan_spittel",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_hirn",
+   "name": "Karak Hirn",
+   "x": 590,
+   "y": 536,
+   "province": "wh3_main_combi_province_black_mountains",
+   "owner": "wh_main_dwf_karak_hirn",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_raziak",
+   "name": "Karak Raziak",
+   "x": 759,
+   "y": 669,
+   "province": "wh3_main_combi_province_northern_worlds_edge_mountains",
+   "owner": "wh3_main_ogr_rock_skulls",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zhufbar",
+   "name": "Zhufbar",
+   "x": 737,
+   "y": 595,
+   "province": "wh3_main_combi_province_black_water",
+   "owner": "wh_main_dwf_zhufbar",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_izor",
+   "name": "Karak Izor",
+   "x": 559,
+   "y": 505,
+   "province": "wh3_main_combi_province_the_vaults",
+   "owner": "wh_main_grn_broken_nose",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tai_tzu",
+   "name": "Tai Tzu",
+   "x": 1175,
+   "y": 554,
+   "province": "wh3_main_combi_province_warpstone_desert",
+   "owner": "wh3_main_cth_dissenter_lords_of_jinshen",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_wolfenburg",
+   "name": "Wolfenburg",
+   "x": 624,
+   "y": 727,
+   "province": "wh3_main_combi_province_ostland",
+   "owner": "wh_main_emp_ostland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_weng_chang",
+   "name": "Weng Chang",
+   "x": 1172,
+   "y": 609,
+   "province": "wh3_main_combi_province_lands_of_stone_and_steel",
+   "owner": "wh3_main_cth_rebel_lords_of_nan_yang",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_hergig",
+   "name": "Hergig",
+   "x": 601,
+   "y": 702,
+   "province": "wh3_main_combi_province_hochland",
+   "owner": "wh_main_emp_hochland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_fallen_gates",
+   "name": "Fallen Gates",
+   "x": 44,
+   "y": 510,
+   "province": "wh3_main_combi_province_isthmus_of_lustria",
+   "owner": "wh3_dlc20_sla_keepers_of_bliss",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tobaro",
+   "name": "Tobaro",
+   "x": 467,
+   "y": 443,
+   "province": "wh3_main_combi_province_estalia",
+   "owner": "wh_main_teb_estalia",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_qiang",
+   "name": "Qiang",
+   "x": 1112,
+   "y": 468,
+   "province": "wh3_main_combi_province_wastelands_of_jinshen",
+   "owner": "wh3_main_cth_the_western_provinces",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_cuexotl",
+   "name": "Cuexotl",
+   "x": 640,
+   "y": 169,
+   "province": "wh3_main_combi_province_central_jungles",
+   "owner": "wh_main_grn_orcs_of_the_bloody_hand",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_great_skull_lakes",
+   "name": "Great Skull Lakes",
+   "x": 853,
+   "y": 692,
+   "province": "wh3_main_combi_province_zorn_uzkul",
+   "owner": "wh3_main_grn_slaves_of_zharr",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_swartzhafen",
+   "name": "Swartzhafen",
+   "x": 674,
+   "y": 593,
+   "province": "wh3_main_combi_province_southern_sylvania",
+   "owner": "wh_main_vmp_schwartzhafen",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_desolation_ridge",
+   "name": "Desolation Ridge",
+   "x": 1196,
+   "y": 730,
+   "province": "wh3_main_combi_province_mountains_end",
+   "owner": "wh3_dlc27_nor_avags",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_eye_of_the_panther",
+   "name": "Eye of the Panther",
+   "x": 481,
+   "y": 307,
+   "province": "wh3_main_combi_province_atalan_mountains",
+   "owner": "wh2_main_dwf_greybeards_prospectors",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fortress_of_the_damned",
+   "name": "Fortress of the Damned",
+   "x": 375,
+   "y": 870,
+   "province": "wh3_main_combi_province_the_shard_lands",
+   "owner": "wh2_main_def_deadwood_sentinels",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_yuatek",
+   "name": "Yuatek",
+   "x": 602,
+   "y": 101,
+   "province": "wh3_main_combi_province_southern_jungles",
+   "owner": "wh2_main_lzd_zlatan",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_blood_swamps",
+   "name": "The Blood Swamps",
+   "x": 239,
+   "y": 235,
+   "province": "wh3_main_combi_province_mosquito_swamps",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_red_fortress",
+   "name": "Red Fortress",
+   "x": 1317,
+   "y": 663,
+   "province": "wh3_main_combi_province_the_red_wastes",
+   "owner": "wh3_main_cth_imperial_wardens",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_desolation_of_drakenmoor",
+   "name": "Desolation of Drakenmoor",
+   "x": 833,
+   "y": 611,
+   "province": "wh3_main_combi_province_the_blasted_wastes",
+   "owner": "wh3_main_grn_drippin_fangs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_finu",
+   "name": "Tor Finu",
+   "x": 299,
+   "y": 585,
+   "province": "wh3_main_combi_province_saphery",
+   "owner": "wh2_main_hef_saphery",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_grimhold",
+   "name": "Grimhold",
+   "x": 546,
+   "y": 530,
+   "province": "wh3_main_combi_province_southern_grey_mountains",
+   "owner": "wh_main_dwf_karak_norn",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_galleons_graveyard",
+   "name": "The Galleon's Graveyard",
+   "x": 257,
+   "y": 448,
+   "province": "wh3_main_combi_province_the_great_ocean",
+   "owner": "wh2_dlc11_cst_noctilus",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_sartosa",
+   "name": "Sartosa",
+   "x": 492,
+   "y": 390,
+   "province": "wh3_main_combi_province_pirates_current",
+   "owner": "wh2_dlc11_cst_pirates_of_sartosa",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_hag_hall",
+   "name": "Hag Hall",
+   "x": 106,
+   "y": 644,
+   "province": "wh3_main_combi_province_doom_glades",
+   "owner": "wh2_main_def_drackla_coven",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_montfort",
+   "name": "Montfort",
+   "x": 474,
+   "y": 593,
+   "province": "wh3_main_combi_province_bastonne",
+   "owner": "wh_main_brt_bastonne",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_essen",
+   "name": "Essen",
+   "x": 693,
+   "y": 662,
+   "province": "wh3_main_combi_province_ostermark",
+   "owner": "wh_main_emp_ostermark",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fort_soll",
+   "name": "Fort Soll",
+   "x": 582,
+   "y": 542,
+   "province": "wh3_main_combi_province_winters_teeth_pass",
+   "owner": "wh_main_grn_black_venom",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_bechafen",
+   "name": "Bechafen",
+   "x": 677,
+   "y": 716,
+   "province": "wh3_main_combi_province_ostermark",
+   "owner": "wh_main_emp_ostermark",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_krugenheim",
+   "name": "Krugenheim",
+   "x": 634,
+   "y": 654,
+   "province": "wh3_main_combi_province_talabecland",
+   "owner": "wh_main_emp_talabecland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mahrak",
+   "name": "Mahrak",
+   "x": 772,
+   "y": 320,
+   "province": "wh3_main_combi_province_devils_backbone",
+   "owner": "wh2_main_vmp_the_silver_host",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_daemons_gate",
+   "name": "Daemon's Gate",
+   "x": 463,
+   "y": 57,
+   "province": "wh3_main_combi_province_the_southern_wastes",
+   "owner": "wh3_main_tze_flaming_scribes",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_mine_of_the_bearded_skulls",
+   "name": "Mine of the Bearded Skulls",
+   "x": 120,
+   "y": 217,
+   "province": "wh3_main_combi_province_spine_of_sotek",
+   "owner": "wh2_main_dwf_spine_of_sotek_dwarfs",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tor_koruali",
+   "name": "Tor Koruali",
+   "x": 331,
+   "y": 606,
+   "province": "wh3_main_combi_province_cothique",
+   "owner": "wh2_main_hef_cothique",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_hell_pit",
+   "name": "Hell Pit",
+   "x": 705,
+   "y": 807,
+   "province": "wh3_main_combi_province_black_blood_pass",
+   "owner": "wh2_main_skv_clan_moulder",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_mighdal_vongalbarak",
+   "name": "Mighdal Vongalbarak",
+   "x": 650,
+   "y": 554,
+   "province": "wh3_main_combi_province_black_mountains",
+   "owner": "wh_main_dwf_karak_hirn",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fortress_of_eyes",
+   "name": "Fortress of Eyes",
+   "x": 1163,
+   "y": 704,
+   "province": "wh3_main_combi_province_stonesky_foothills",
+   "owner": "wh3_main_chs_khazag",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mousillon",
+   "name": "Mousillon",
+   "x": 382,
+   "y": 605,
+   "province": "wh3_main_combi_province_coast_of_lyonesse",
+   "owner": "wh_main_vmp_mousillon",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mistnar",
+   "name": "Mistnar",
+   "x": 331,
+   "y": 634,
+   "province": "wh3_main_combi_province_cothique",
+   "owner": "wh2_main_hef_cothique",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_burning_monolith",
+   "name": "The Burning Monolith",
+   "x": 848,
+   "y": 896,
+   "province": "wh3_main_combi_province_bloodfire_falls",
+   "owner": "wh3_main_kho_bloody_sword",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_soteks_trail",
+   "name": "Sotek's Trail",
+   "x": 710,
+   "y": 163,
+   "province": "wh3_main_combi_province_the_jungles_of_the_gods",
+   "owner": "wh3_main_skv_clan_morbidus",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_temple_of_elemental_winds",
+   "name": "Temple of Elemental Winds",
+   "x": 1156,
+   "y": 441,
+   "province": "wh3_main_combi_province_broken_lands_of_tian_li",
+   "owner": "wh3_main_cth_burning_wind_nomads",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_kraka_drak",
+   "name": "Kraka Drak",
+   "x": 709,
+   "y": 841,
+   "province": "wh3_main_combi_province_gianthome_mountains",
+   "owner": "wh3_dlc25_dwf_malakai",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tor_elasor",
+   "name": "Tor Elasor",
+   "x": 911,
+   "y": 78,
+   "province": "wh3_main_combi_province_eastern_colonies",
+   "owner": "wh3_dlc27_hef_aislinn_confederation_owner",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_elyr",
+   "name": "Tor Elyr",
+   "x": 206,
+   "y": 558,
+   "province": "wh3_main_combi_province_ellyrion",
+   "owner": "wh2_main_hef_ellyrion",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_vlag",
+   "name": "Karak Vlag",
+   "x": 817,
+   "y": 756,
+   "province": "wh3_main_combi_province_goromadny_mountains",
+   "owner": "wh_dlc08_nor_goromadny_tribe",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_vrag",
+   "name": "Karak Vrag",
+   "x": 1010,
+   "y": 656,
+   "province": "wh3_main_combi_province_gash_kadrak",
+   "owner": "wh3_main_ogr_fulg",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_cursed_jungle",
+   "name": "The Cursed Jungle",
+   "x": 744,
+   "y": 215,
+   "province": "wh3_main_combi_province_kingdom_of_beasts",
+   "owner": "wh2_main_skv_clan_mordkin",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karag_dromar",
+   "name": "Karag Dromar",
+   "x": 675,
+   "y": 562,
+   "province": "wh3_main_combi_province_black_water",
+   "owner": "wh3_dlc29_skv_clan_scruten",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_erengrad",
+   "name": "Erengrad",
+   "x": 634,
+   "y": 770,
+   "province": "wh3_main_combi_province_river_lynsk",
+   "owner": "wh3_main_ksl_the_great_orthodoxy",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_frozen_landing",
+   "name": "Frozen Landing",
+   "x": 761,
+   "y": 820,
+   "province": "wh3_main_combi_province_goromadny_mountains",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fort_straghov",
+   "name": "Fort Straghov",
+   "x": 670,
+   "y": 806,
+   "province": "wh3_main_combi_province_troll_country",
+   "owner": "wh3_main_ksl_druzhina_enclave",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_monolith_of_festerlung",
+   "name": "Monolith of Festerlung",
+   "x": 820,
+   "y": 868,
+   "province": "wh3_main_combi_province_bloodfire_falls",
+   "owner": "wh3_main_kho_bloody_sword",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_clar_karond",
+   "name": "Clar Karond",
+   "x": 117,
+   "y": 726,
+   "province": "wh3_main_combi_province_obsidian_peaks",
+   "owner": "wh2_main_def_clar_karond",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_agrul_migdhal",
+   "name": "Agrul Migdhal",
+   "x": 653,
+   "y": 331,
+   "province": "wh3_main_combi_province_barrier_idols",
+   "owner": "wh_main_grn_top_knotz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_falls_of_doom",
+   "name": "The Falls of Doom",
+   "x": 910,
+   "y": 652,
+   "province": "wh3_main_combi_province_the_plain_of_zharr",
+   "owner": "wh3_dlc23_chd_conclave",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_castle_artois",
+   "name": "Castle Artois",
+   "x": 410,
+   "y": 639,
+   "province": "wh3_main_combi_province_forest_of_arden",
+   "owner": "wh_main_brt_artois",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tower_of_the_stars",
+   "name": "Tower of the Stars",
+   "x": 936,
+   "y": 173,
+   "province": "wh3_main_combi_province_eastern_colonies",
+   "owner": "wh3_dlc27_hef_aislinn_confederation_owner",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_chupayotl",
+   "name": "Chupayotl",
+   "x": 251,
+   "y": 163,
+   "province": "wh3_main_combi_province_culchan_plains",
+   "owner": "wh2_main_lzd_southern_sentinels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_azul",
+   "name": "Karak Azul",
+   "x": 799,
+   "y": 452,
+   "province": "wh3_main_combi_province_southern_worlds_edge_mountains",
+   "owner": "wh_main_dwf_karak_azul",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_brionne",
+   "name": "Brionne",
+   "x": 420,
+   "y": 527,
+   "province": "wh3_main_combi_province_carcassonne",
+   "owner": "wh2_dlc14_grn_red_cloud",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_wizard_caliphs_palace",
+   "name": "Wizard Caliph's Palace",
+   "x": 437,
+   "y": 269,
+   "province": "wh3_main_combi_province_land_of_assassins",
+   "owner": "wh2_dlc09_tmb_followers_of_nagash",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_frozen_city",
+   "name": "The Frozen City",
+   "x": 284,
+   "y": 872,
+   "province": "wh3_main_combi_province_deadwood",
+   "owner": "wh2_main_def_deadwood_sentinels",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_ruins_end",
+   "name": "Ruin's End",
+   "x": 947,
+   "y": 427,
+   "province": "wh3_main_combi_province_mouth_of_ruin",
+   "owner": "wh3_main_ogr_thunderguts",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_high_sentinel",
+   "name": "The High Sentinel",
+   "x": 120,
+   "y": 404,
+   "province": "wh3_main_combi_province_aymara_swamps",
+   "owner": "wh2_main_grn_blue_vipers",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_black_creek_spire",
+   "name": "Black Creek Spire",
+   "x": 269,
+   "y": 768,
+   "province": "wh3_main_combi_province_the_broken_lands",
+   "owner": "wh2_main_def_karond_kar",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shattered_stone_isle",
+   "name": "Shattered Stone Isle",
+   "x": 999,
+   "y": 384,
+   "province": "wh3_main_combi_province_the_dragon_isles",
+   "owner": "wh3_main_lzd_tepoks_spawn",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_khemri",
+   "name": "Khemri",
+   "x": 612,
+   "y": 289,
+   "province": "wh3_main_combi_province_land_of_the_dead",
+   "owner": "wh2_dlc09_tmb_khemri",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_zorn",
+   "name": "Karak Zorn",
+   "x": 682,
+   "y": 221,
+   "province": "wh3_main_combi_province_southlands_worlds_edge_mountains",
+   "owner": "wh2_dlc17_dwf_thorek_ironbrow",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_black_pit",
+   "name": "The Black Pit",
+   "x": 510,
+   "y": 705,
+   "province": "wh3_main_combi_province_the_misty_hills",
+   "owner": "wh_dlc03_grn_black_pit",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_pillars_of_grungni",
+   "name": "The Pillars of Grungni",
+   "x": 762,
+   "y": 547,
+   "province": "wh3_main_combi_province_the_silver_road",
+   "owner": "wh_main_grn_bloody_spearz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_temple_of_addaioth",
+   "name": "Temple of Addaioth",
+   "x": 76,
+   "y": 689,
+   "province": "wh3_main_combi_province_doom_glades",
+   "owner": "wh2_main_def_drackla_coven",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shrine_of_kurnous",
+   "name": "Shrine of Kurnous",
+   "x": 267,
+   "y": 642,
+   "province": "wh3_main_combi_province_chrace",
+   "owner": "wh3_main_sla_seducers_of_slaanesh",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_deaths_head_monoliths",
+   "name": "Dead-Head Monoliths",
+   "x": 497,
+   "y": 200,
+   "province": "wh3_main_combi_province_western_jungles",
+   "owner": "wh2_dlc12_grn_leaf_cutterz_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_kauark",
+   "name": "Kauark",
+   "x": 202,
+   "y": 872,
+   "province": "wh3_main_combi_province_the_road_of_skulls",
+   "owner": "wh3_main_grn_da_cage_breakaz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_howling_rock",
+   "name": "Howling Rock",
+   "x": 869,
+   "y": 592,
+   "province": "wh3_main_combi_province_the_blasted_wastes",
+   "owner": "wh3_main_grn_drippin_fangs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_darkhold",
+   "name": "Darkhold",
+   "x": 899,
+   "y": 478,
+   "province": "wh3_main_combi_province_the_howling_wastes",
+   "owner": "wh3_main_grn_dark_land_orcs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tlax",
+   "name": "Tlax",
+   "x": 259,
+   "y": 289,
+   "province": "wh3_main_combi_province_vampire_coast",
+   "owner": "wh2_dlc11_cst_vampire_coast_rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zhanshi",
+   "name": "Zhanshi",
+   "x": 1275,
+   "y": 519,
+   "province": "wh3_main_combi_province_celestial_lake",
+   "owner": "wh3_main_cth_the_jade_custodians",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_temple_of_khaine",
+   "name": "Temple of Khaine",
+   "x": 89,
+   "y": 788,
+   "province": "wh3_main_combi_province_the_black_flood",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_star_tower",
+   "name": "The Star Tower",
+   "x": 280,
+   "y": 214,
+   "province": "wh3_main_combi_province_volcanic_islands",
+   "owner": "wh2_main_skv_clan_spittel",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_hualotal",
+   "name": "Hualotal",
+   "x": 99,
+   "y": 309,
+   "province": "wh3_main_combi_province_the_gwangee_valley",
+   "owner": "wh3_dlc26_kho_skulltaker",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_norn",
+   "name": "Karak Norn",
+   "x": 534,
+   "y": 571,
+   "province": "wh3_main_combi_province_southern_grey_mountains",
+   "owner": "wh_main_dwf_karak_norn",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_lost_palace",
+   "name": "The Lost Palace",
+   "x": 570,
+   "y": 19,
+   "province": "wh3_main_combi_province_the_abyssal_glacier",
+   "owner": "wh3_main_nur_bubonic_swarm",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_whitefire_tor",
+   "name": "Whitefire Tor",
+   "x": 219,
+   "y": 582,
+   "province": "wh3_main_combi_province_ellyrion",
+   "owner": "wh2_main_hef_ellyrion",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_gristle_valley",
+   "name": "Gristle Valley",
+   "x": 561,
+   "y": 548,
+   "province": "wh3_main_combi_province_southern_grey_mountains",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_riffraffa",
+   "name": "Riffraffa",
+   "x": 519,
+   "y": 435,
+   "province": "wh3_main_combi_province_tilea",
+   "owner": "wh_main_teb_tilea",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shrine_of_the_alchemist",
+   "name": "Shrine of the Alchemist",
+   "x": 1124,
+   "y": 599,
+   "province": "wh3_main_combi_province_warpstone_desert",
+   "owner": "wh3_main_cth_dissenter_lords_of_jinshen",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc20_combi_region_glacier_encampment",
+   "name": "Glacier Encampment",
+   "x": 79,
+   "y": 903,
+   "province": "wh3_main_combi_province_ironfrost_glacier",
+   "owner": "wh2_main_nor_mung",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_crucible_of_delights",
+   "name": "Crucible of Delights",
+   "x": 772,
+   "y": 16,
+   "province": "wh3_main_combi_province_the_daemonium_hills",
+   "owner": "wh3_main_sla_rapturous_excess",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_phoenix_gate",
+   "name": "Phoenix Gate",
+   "x": 245,
+   "y": 619,
+   "province": "wh3_main_combi_province_phoenix_gate",
+   "owner": "wh2_main_def_scourge_of_khaine",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_vale_of_titans",
+   "name": "Vale of Titans",
+   "x": 1060,
+   "y": 560,
+   "province": "wh3_main_combi_province_bone_road",
+   "owner": "wh3_cp1_cth_tiger_warriors",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_igerov",
+   "name": "Igerov",
+   "x": 751,
+   "y": 729,
+   "province": "wh3_main_combi_province_southern_oblast",
+   "owner": "wh_main_nor_baersonling",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_blood_mountain",
+   "name": "Blood Mountain",
+   "x": 420,
+   "y": 923,
+   "province": "wh3_main_combi_province_northern_wastes",
+   "owner": "wh3_main_kho_crimson_skull",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_blood_hall",
+   "name": "The Blood Hall",
+   "x": 26,
+   "y": 332,
+   "province": "wh3_main_combi_province_jungles_of_green_mist",
+   "owner": "wh3_dlc27_sla_masque_of_slaanesh",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_volcanos_heart",
+   "name": "Volcano's Heart",
+   "x": 697,
+   "y": 941,
+   "province": "wh3_main_combi_province_plain_of_illusions",
+   "owner": "wh3_main_tze_all_seeing_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_altar_of_the_crimson_harvest",
+   "name": "Altar of the Crimson Harvest",
+   "x": 503,
+   "y": 783,
+   "province": "wh3_main_combi_province_ice_tooth_mountains",
+   "owner": "wh_main_nor_skaeling",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_salzenmund",
+   "name": "Salzenmund",
+   "x": 557,
+   "y": 757,
+   "province": "wh3_main_combi_province_nordland",
+   "owner": "wh_main_emp_nordland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_sjoktraken",
+   "name": "Sjoktraken",
+   "x": 726,
+   "y": 828,
+   "province": "wh3_main_combi_province_gianthome_mountains",
+   "owner": "wh3_main_nur_maggoth_kin",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dringorackaz",
+   "name": "Dringorackaz",
+   "x": 756,
+   "y": 416,
+   "province": "wh3_main_combi_province_eastern_badlands",
+   "owner": "wh_main_dwf_karak_azul",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_granite_massif",
+   "name": "Granite Massif",
+   "x": 755,
+   "y": 306,
+   "province": "wh3_main_combi_province_devils_backbone",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_chimai",
+   "name": "Chimai",
+   "x": 1313,
+   "y": 521,
+   "province": "wh3_main_combi_province_jade_river_delta",
+   "owner": "wh3_dlc21_cst_dead_flag_fleet",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_okkams_forever_maze",
+   "name": "Okkam's Forever Maze",
+   "x": 709,
+   "y": 28,
+   "province": "wh3_main_combi_province_the_daemonium_hills",
+   "owner": "wh3_main_sla_rapturous_excess",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_sorcerers_islands",
+   "name": "Sorcerers' Islands",
+   "x": 420,
+   "y": 309,
+   "province": "wh3_main_combi_province_land_of_assassins",
+   "owner": "wh2_dlc09_tmb_followers_of_nagash",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_southern_sentinels",
+   "name": "The Southern Sentinels",
+   "x": 224,
+   "y": 133,
+   "province": "wh3_main_combi_province_culchan_plains",
+   "owner": "wh2_main_lzd_southern_sentinels",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_chamber_of_visions",
+   "name": "Chamber of Visions",
+   "x": 71,
+   "y": 273,
+   "province": "wh3_main_combi_province_the_turtle_isles",
+   "owner": "wh2_main_lzd_sentinels_of_xeti",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_oak_of_ages",
+   "name": "The Oak of Ages",
+   "x": 513,
+   "y": 531,
+   "province": "wh3_main_combi_province_yn_edri_eternos",
+   "owner": "wh_dlc05_wef_wood_elves",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_grey_rock_point",
+   "name": "Grey Rock Point",
+   "x": 106,
+   "y": 543,
+   "province": "wh3_main_combi_province_titan_peaks",
+   "owner": "wh2_main_def_ssildra_tor",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_broken_mount",
+   "name": "Broken Mount",
+   "x": 1234,
+   "y": 742,
+   "province": "wh3_main_combi_province_mountains_end",
+   "owner": "wh3_dlc27_nor_avags",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_vauls_anvil_naggaroth",
+   "name": "Vaul's Anvil",
+   "x": 126,
+   "y": 670,
+   "province": "wh3_main_combi_province_doom_glades",
+   "owner": "wh2_main_def_drackla_coven",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_never_ending_chasm",
+   "name": "The Never-ending Chasm",
+   "x": 281,
+   "y": 18,
+   "province": "wh3_main_combi_province_the_ice_fire_plains",
+   "owner": "wh3_main_kho_brazen_throne",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_waterfall_palace",
+   "name": "Waterfall Palace",
+   "x": 515,
+   "y": 566,
+   "province": "wh3_main_combi_province_argwylon",
+   "owner": "wh_dlc05_wef_argwylon",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_fort_bergbres",
+   "name": "Fort Bergbres",
+   "x": 449,
+   "y": 636,
+   "province": "wh3_main_combi_province_gisoreux_gap",
+   "owner": "wh_main_emp_marienburg",
+   "capital": true
+  },
+  {
+   "region": "wh3_dlc20_combi_region_glacial_gardens",
+   "name": "The Glacial Gardens",
+   "x": 173,
+   "y": 892,
+   "province": "wh3_dlc20_combi_province_frigid_wasteland",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_serpent_jetty",
+   "name": "Serpent Jetty",
+   "x": 416,
+   "y": 848,
+   "province": "wh3_main_combi_province_helspire_mountains",
+   "owner": "wh_dlc08_nor_helspire_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_chill_road",
+   "name": "The Chill Road",
+   "x": 130,
+   "y": 833,
+   "province": "wh3_main_combi_province_spiteful_peaks",
+   "owner": "wh2_main_def_ghrond",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc20_combi_region_dragons_death",
+   "name": "Dragon's Death",
+   "x": 1035,
+   "y": 756,
+   "province": "wh3_main_combi_province_chimera_plateau",
+   "owner": "wh3_dlc27_the_narj",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_graeling_moot",
+   "name": "Graeling Moot",
+   "x": 479,
+   "y": 829,
+   "province": "wh3_main_combi_province_mountains_of_naglfari",
+   "owner": "wh_main_nor_skaeling",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_li_zhu",
+   "name": "Li Zhu",
+   "x": 1367,
+   "y": 470,
+   "province": "wh3_main_combi_province_mount_li",
+   "owner": "wh3_main_cth_eastern_river_lords",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_snake_gate",
+   "name": "Snake Gate",
+   "x": 1175,
+   "y": 665,
+   "province": "wh3_main_combi_province_western_great_bastion",
+   "owner": "wh3_main_cth_imperial_wardens",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_port_elistor",
+   "name": "Port Elistor",
+   "x": 284,
+   "y": 541,
+   "province": "wh3_main_combi_province_saphery",
+   "owner": "wh2_main_hef_saphery",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_eilhart",
+   "name": "Eilhart",
+   "x": 482,
+   "y": 639,
+   "province": "wh3_main_combi_province_reikland",
+   "owner": "wh_main_emp_empire",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_black_rock",
+   "name": "Black Rock",
+   "x": 583,
+   "y": 938,
+   "province": "wh3_main_combi_province_the_eternal_lagoon",
+   "owner": "wh3_main_tze_broken_wheel",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_grom_peak",
+   "name": "Grom Peak",
+   "x": 768,
+   "y": 589,
+   "province": "wh3_main_combi_province_rib_peaks",
+   "owner": "wh_main_grn_red_eye",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_valley_of_horns",
+   "name": "Valley of Horns",
+   "x": 1000,
+   "y": 523,
+   "province": "wh3_main_combi_province_mountains_of_mourn",
+   "owner": "wh3_main_ogr_sons_of_the_mountain",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_celestial_monastery",
+   "name": "Celestial Monastery",
+   "x": 1234,
+   "y": 533,
+   "province": "wh3_main_combi_province_celestial_lake",
+   "owner": "wh3_main_cth_the_jade_custodians",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zvorak",
+   "name": "Zvorak",
+   "x": 581,
+   "y": 490,
+   "province": "wh3_main_combi_province_western_border_princes",
+   "owner": "wh_main_teb_border_princes",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dragon_gate",
+   "name": "Dragon Gate",
+   "x": 1209,
+   "y": 666,
+   "province": "wh3_main_combi_province_central_great_bastion",
+   "owner": "wh3_main_cth_imperial_wardens",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_xlanhuapec",
+   "name": "Xlanhuapec",
+   "x": 215,
+   "y": 264,
+   "province": "wh3_main_combi_province_mosquito_swamps",
+   "owner": "wh2_main_lzd_xlanhuapec",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_slavers_point",
+   "name": "Slaver's Point",
+   "x": 238,
+   "y": 753,
+   "province": "wh3_main_combi_province_the_broken_lands",
+   "owner": "wh2_main_def_karond_kar",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_kislev",
+   "name": "Kislev",
+   "x": 719,
+   "y": 736,
+   "province": "wh3_main_combi_province_river_urskoy",
+   "owner": "wh3_main_ksl_the_ice_court",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_flensburg",
+   "name": "Flensburg",
+   "x": 587,
+   "y": 618,
+   "province": "wh3_main_combi_province_stirland",
+   "owner": "wh_main_emp_stirland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dragonhorn_mines",
+   "name": "Dragonhorn Mines",
+   "x": 647,
+   "y": 424,
+   "province": "wh3_main_combi_province_western_badlands",
+   "owner": "wh3_main_skv_clan_verms",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_vauls_anvil_loren",
+   "name": "Vaul's Anvil",
+   "x": 502,
+   "y": 551,
+   "province": "wh3_main_combi_province_torgovann",
+   "owner": "wh_dlc05_wef_torgovann",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_varenka_hills",
+   "name": "Varenka Hills",
+   "x": 702,
+   "y": 529,
+   "province": "wh3_main_combi_province_blood_river_valley",
+   "owner": "wh_main_dwf_barak_varr",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_jade_wind_mountain",
+   "name": "Jade Wind Mountain",
+   "x": 1284,
+   "y": 558,
+   "province": "wh3_main_combi_province_forests_of_the_moon",
+   "owner": "wh3_main_grn_dimned_sun",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_kadrin",
+   "name": "Karak Kadrin",
+   "x": 748,
+   "y": 644,
+   "province": "wh3_main_combi_province_peak_pass",
+   "owner": "wh_main_dwf_karak_kadrin",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_granite_spikes",
+   "name": "Granite Spikes",
+   "x": 1076,
+   "y": 703,
+   "province": "wh3_main_combi_province_stonesky_foothills",
+   "owner": "wh3_dlc23_chd_zhatan",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_xlanzec",
+   "name": "Xlanzec",
+   "x": 241,
+   "y": 109,
+   "province": "wh3_main_combi_province_the_night_forest_road",
+   "owner": "wh2_dlc12_lzd_cult_of_sotek",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_bloodwind_keep",
+   "name": "Bloodwind Keep",
+   "x": 1244,
+   "y": 719,
+   "province": "wh3_main_combi_province_eastern_steppes",
+   "owner": "wh3_main_chs_khazag",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_dotternbach",
+   "name": "Dotternbach",
+   "x": 546,
+   "y": 583,
+   "province": "wh3_main_combi_province_wissenland",
+   "owner": "wh3_dlc25_vmp_the_court_of_night",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dietershafen",
+   "name": "Dietershafen",
+   "x": 526,
+   "y": 762,
+   "province": "wh3_main_combi_province_nordland",
+   "owner": "wh_main_emp_nordland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_nuln",
+   "name": "Nuln",
+   "x": 553,
+   "y": 607,
+   "province": "wh3_main_combi_province_wissenland",
+   "owner": "wh_main_emp_wissenland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_krakaten",
+   "name": "Karak Krakaten",
+   "x": 1003,
+   "y": 491,
+   "province": "wh3_main_combi_province_ivory_road",
+   "owner": "wh3_main_ogr_goldtooth",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mountain_pass",
+   "name": "Mountain Pass",
+   "x": 1322,
+   "y": 335,
+   "province": "wh3_main_combi_province_cathayan_hinterlands",
+   "owner": "wh3_dlc26_grn_cluster_eye_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_citadel_of_lead",
+   "name": "Citadel of Lead",
+   "x": 355,
+   "y": 763,
+   "province": "wh3_main_combi_province_albion",
+   "owner": "wh3_dlc20_tze_the_sightless",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_gnobbly_gorge",
+   "name": "Gnobbly Gorge",
+   "x": 1072,
+   "y": 436,
+   "province": "wh3_main_combi_province_gnoblar_country",
+   "owner": "wh3_main_skv_clan_treecherik",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_bitterstone_mine",
+   "name": "Bitterstone Mine",
+   "x": 660,
+   "y": 451,
+   "province": "wh3_main_combi_province_western_badlands",
+   "owner": "wh_main_grn_teef_snatchaz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_quetza",
+   "name": "Quetza",
+   "x": 186,
+   "y": 219,
+   "province": "wh3_main_combi_province_river_qurveza",
+   "owner": "wh3_dlc20_nur_pallid_nurslings",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_haichai",
+   "name": "Haichai",
+   "x": 1352,
+   "y": 622,
+   "province": "wh3_main_combi_province_plains_of_xen",
+   "owner": "wh2_dlc11_def_the_blessed_dread",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_oyxl",
+   "name": "Oyxl",
+   "x": 183,
+   "y": 187,
+   "province": "wh3_main_combi_province_the_lost_valley",
+   "owner": "wh2_main_skv_clan_pestilens",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_avethir",
+   "name": "Avethir",
+   "x": 187,
+   "y": 546,
+   "province": "wh3_main_combi_province_tiranoc",
+   "owner": "wh2_main_hef_tiranoc",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_akendorf",
+   "name": "Akendorf",
+   "x": 678,
+   "y": 540,
+   "province": "wh3_main_combi_province_eastern_border_princes",
+   "owner": "wh_main_teb_border_princes",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_khymerica_spire",
+   "name": "Khymerica Spire",
+   "x": 29,
+   "y": 705,
+   "province": "wh3_main_combi_province_red_desert",
+   "owner": "wh2_dlc16_grn_naggaroth_orcs",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc23_combi_region_gash_kadrak",
+   "name": "Vale of Woe",
+   "x": 943,
+   "y": 601,
+   "province": "wh3_main_combi_province_the_plain_of_zharr",
+   "owner": "wh3_dlc23_chd_conclave",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_castle_alexandronov",
+   "name": "Castle Alexandronov",
+   "x": 613,
+   "y": 792,
+   "province": "wh3_main_combi_province_troll_country",
+   "owner": "wh3_main_ksl_the_great_orthodoxy",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_eagle_gate",
+   "name": "Eagle Gate",
+   "x": 189,
+   "y": 572,
+   "province": "wh3_main_combi_province_eagle_gate",
+   "owner": "wh2_main_hef_ellyrion",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_spite_reach",
+   "name": "Spite Reach",
+   "x": 190,
+   "y": 845,
+   "province": "wh3_main_combi_province_the_road_of_skulls",
+   "owner": "wh3_main_grn_da_cage_breakaz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_zharr_naggrund",
+   "name": "Zharr-Naggrund",
+   "x": 943,
+   "y": 628,
+   "province": "wh3_main_combi_province_the_plain_of_zharr",
+   "owner": "wh3_dlc23_chd_conclave",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_eschen",
+   "name": "Eschen",
+   "x": 714,
+   "y": 635,
+   "province": "wh3_main_combi_province_southern_sylvania",
+   "owner": "wh_main_vmp_rival_sylvanian_vamps",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_montenas",
+   "name": "Montenas",
+   "x": 414,
+   "y": 454,
+   "province": "wh3_main_combi_province_irrana_mountains",
+   "owner": "wh_main_teb_estalia",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_al_haikk",
+   "name": "Al Haikk",
+   "x": 511,
+   "y": 332,
+   "province": "wh3_main_combi_province_coast_of_araby",
+   "owner": "wh2_main_vmp_strygos_empire",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_drackla_spire",
+   "name": "Drackla Spire",
+   "x": 21,
+   "y": 781,
+   "province": "wh3_main_combi_province_iron_coast",
+   "owner": "wh3_main_dwf_the_ancestral_throng",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_turtle_gate",
+   "name": "Turtle Gate",
+   "x": 1246,
+   "y": 665,
+   "province": "wh3_main_combi_province_eastern_great_bastion",
+   "owner": "wh3_main_cth_imperial_wardens",
+   "capital": true
+  },
+  {
+   "region": "wh3_dlc20_combi_region_krudenwald",
+   "name": "Krudenwald",
+   "x": 574,
+   "y": 716,
+   "province": "wh3_main_combi_province_hochland",
+   "owner": "wh_main_emp_hochland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_achare",
+   "name": "Tor Achare",
+   "x": 295,
+   "y": 619,
+   "province": "wh3_main_combi_province_chrace",
+   "owner": "wh2_main_hef_chrace",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_quittax",
+   "name": "Qu'ittax",
+   "x": 142,
+   "y": 301,
+   "province": "wh3_main_combi_province_the_gwangee_valley",
+   "owner": "wh3_dlc20_tze_apostles_of_change",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc23_combi_region_uzkulak_port",
+   "name": "Fort Dwarrslav",
+   "x": 859,
+   "y": 740,
+   "province": "wh3_main_combi_province_goromadny_mountains",
+   "owner": "wh_dlc08_nor_goromadny_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_ungor",
+   "name": "Karak Ungor",
+   "x": 772,
+   "y": 694,
+   "province": "wh3_main_combi_province_northern_worlds_edge_mountains",
+   "owner": "wh3_main_ogr_rock_skulls",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_bitter_bay",
+   "name": "Bitter Bay",
+   "x": 884,
+   "y": 404,
+   "province": "wh3_main_combi_province_broken_teeth",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_altdorf",
+   "name": "Altdorf",
+   "x": 527,
+   "y": 648,
+   "province": "wh3_main_combi_province_reikland",
+   "owner": "wh_main_emp_empire",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_altar_of_facades",
+   "name": "Altar of Facades",
+   "x": 826,
+   "y": 30,
+   "province": "wh3_main_combi_province_the_daemonium_hills",
+   "owner": "wh3_main_sla_rapturous_excess",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_sacred_pools",
+   "name": "The Sacred Pools",
+   "x": 153,
+   "y": 261,
+   "province": "wh3_main_combi_province_the_sacred_pools",
+   "owner": "wh2_dlc16_lzd_wardens_of_the_living_pools",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_skull_carvers_abode",
+   "name": "The Skull-Carver's Abode",
+   "x": 664,
+   "y": 12,
+   "province": "wh3_main_combi_province_the_abyssal_glacier",
+   "owner": "wh3_main_nur_bubonic_swarm",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_haunted_forest",
+   "name": "The Haunted Forest",
+   "x": 1066,
+   "y": 418,
+   "province": "wh3_main_combi_province_the_haunted_forest",
+   "owner": "wh3_main_vmp_caravan_of_blue_roses",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_temple_of_skulls",
+   "name": "Temple of Skulls",
+   "x": 771,
+   "y": 248,
+   "province": "wh3_main_combi_province_kingdom_of_beasts",
+   "owner": "wh2_main_skv_clan_mordkin",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_dusk_peaks",
+   "name": "Dusk Peaks",
+   "x": 281,
+   "y": 105,
+   "province": "wh3_main_combi_province_the_capes",
+   "owner": "wh2_main_hef_citadel_of_dusk",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_yetchitch",
+   "name": "Yetchitch",
+   "x": 742,
+   "y": 798,
+   "province": "wh3_main_combi_province_eastern_oblast",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_itza",
+   "name": "Itza",
+   "x": 168,
+   "y": 239,
+   "province": "wh3_main_combi_province_river_qurveza",
+   "owner": "wh2_main_lzd_itza",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_grung_zint",
+   "name": "Grung Zint",
+   "x": 434,
+   "y": 650,
+   "province": "wh3_main_combi_province_northern_grey_mountains",
+   "owner": "wh_main_grn_skullsmasherz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_bhagar",
+   "name": "Bhagar",
+   "x": 598,
+   "y": 246,
+   "province": "wh3_main_combi_province_shifting_sands",
+   "owner": "wh2_dlc09_tmb_dune_kingdoms",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_crag_halls_of_findol",
+   "name": "Crag Halls of Findol",
+   "x": 528,
+   "y": 544,
+   "province": "wh3_main_combi_province_wydrioth",
+   "owner": "wh_dlc05_wef_wydrioth",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_el_kalabad",
+   "name": "El-Kalabad",
+   "x": 532,
+   "y": 273,
+   "province": "wh3_main_combi_province_the_cracked_land",
+   "owner": "wh2_dlc09_tmb_rakaph_dynasty",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_thrice_cursed_peak",
+   "name": "Thrice-cursed Peak",
+   "x": 151,
+   "y": 172,
+   "province": "wh3_main_combi_province_spine_of_sotek",
+   "owner": "wh2_main_dwf_spine_of_sotek_dwarfs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_cragroth_deep",
+   "name": "Cragroth Deep",
+   "x": 103,
+   "y": 766,
+   "province": "wh3_main_combi_province_the_black_flood",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_citadel_of_dusk",
+   "name": "Citadel of Dusk",
+   "x": 302,
+   "y": 89,
+   "province": "wh3_main_combi_province_the_capes",
+   "owner": "wh2_main_hef_citadel_of_dusk",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_crookback_mountain",
+   "name": "Crookback Mountain",
+   "x": 844,
+   "y": 520,
+   "province": "wh3_main_combi_province_the_desolation_of_azgorh",
+   "owner": "wh2_dlc09_skv_clan_rictus",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_volksgrad",
+   "name": "Volksgrad",
+   "x": 749,
+   "y": 778,
+   "province": "wh3_main_combi_province_eastern_oblast",
+   "owner": "wh3_main_ksl_ropsmenn_clan",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_hoteks_column",
+   "name": "Hotek's Column",
+   "x": 173,
+   "y": 718,
+   "province": "wh3_main_combi_province_the_clawed_coast",
+   "owner": "wh2_main_def_the_forgebound",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_crystal_spires",
+   "name": "The Crystal Spires",
+   "x": 749,
+   "y": 926,
+   "province": "wh3_main_combi_province_plain_of_illusions",
+   "owner": "wh3_main_tze_all_seeing_eye",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_ming_zhu",
+   "name": "Ming Zhu",
+   "x": 1242,
+   "y": 612,
+   "province": "wh3_main_combi_province_imperial_road",
+   "owner": "wh3_main_cth_celestial_loyalists",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_parravon",
+   "name": "Parravon",
+   "x": 483,
+   "y": 575,
+   "province": "wh3_main_combi_province_forest_of_chalons",
+   "owner": "wh_main_brt_parravon",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_barak_varr",
+   "name": "Barak Varr",
+   "x": 672,
+   "y": 512,
+   "province": "wh3_main_combi_province_blood_river_valley",
+   "owner": "wh_main_dwf_barak_varr",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_gaean_vale",
+   "name": "Gaean Vale",
+   "x": 256,
+   "y": 579,
+   "province": "wh3_main_combi_province_avelorn",
+   "owner": "wh2_main_hef_avelorn",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_fuming_serpent",
+   "name": "Fuming Serpent",
+   "x": 286,
+   "y": 232,
+   "province": "wh3_main_combi_province_volcanic_islands",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_village_of_the_tigermen",
+   "name": "Village of the Tigermen",
+   "x": 1189,
+   "y": 414,
+   "province": "wh3_main_combi_province_broken_lands_of_tian_li",
+   "owner": "wh3_main_cth_burning_wind_nomads",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_castle_bastonne",
+   "name": "Castle Bastonne",
+   "x": 428,
+   "y": 602,
+   "province": "wh3_main_combi_province_bastonne",
+   "owner": "wh_main_brt_bastonne",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_amblepeak",
+   "name": "Amblepeak",
+   "x": 1027,
+   "y": 546,
+   "province": "wh3_main_combi_province_mountains_of_mourn",
+   "owner": "wh3_main_ogr_sons_of_the_mountain",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_har_kaldra",
+   "name": "Har Kaldra",
+   "x": 81,
+   "y": 847,
+   "province": "wh3_main_combi_province_iron_foothills",
+   "owner": "wh2_main_skv_clan_septik",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_gisoreux",
+   "name": "Gisoreux",
+   "x": 438,
+   "y": 627,
+   "province": "wh3_main_combi_province_forest_of_arden",
+   "owner": "wh_main_brt_artois",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_li_temple",
+   "name": "Li Temple",
+   "x": 1339,
+   "y": 449,
+   "province": "wh3_main_combi_province_mount_li",
+   "owner": "wh3_main_cth_eastern_river_lords",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_foundry_of_bones",
+   "name": "Foundry of Bones",
+   "x": 1295,
+   "y": 697,
+   "province": "wh3_main_combi_province_the_red_wastes",
+   "owner": "wh3_dlc20_nor_yusak",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_black_fang",
+   "name": "Black Fang",
+   "x": 976,
+   "y": 639,
+   "province": "wh3_main_combi_province_gash_kadrak",
+   "owner": "wh3_main_ogr_fulg",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_aarnau",
+   "name": "Aarnau",
+   "x": 459,
+   "y": 724,
+   "province": "wh3_main_combi_province_the_wasteland",
+   "owner": "wh_main_emp_marienburg",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_eagle_eyries",
+   "name": "Eagle Eyries",
+   "x": 962,
+   "y": 665,
+   "province": "wh3_main_combi_province_gash_kadrak",
+   "owner": "wh_main_grn_greenskins",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_gryphon_wood",
+   "name": "Gryphon Wood",
+   "x": 669,
+   "y": 682,
+   "province": "wh3_main_combi_province_gryphon_wood",
+   "owner": "wh2_dlc16_wef_drycha",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_carroburg",
+   "name": "Carroburg",
+   "x": 509,
+   "y": 656,
+   "province": "wh3_main_combi_province_middenland",
+   "owner": "wh_main_emp_middenland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_xing_po",
+   "name": "Xing Po",
+   "x": 1200,
+   "y": 571,
+   "province": "wh3_main_combi_province_forests_of_the_moon",
+   "owner": "wh2_main_skv_clan_eshin",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_praag",
+   "name": "Praag",
+   "x": 723,
+   "y": 770,
+   "province": "wh3_main_combi_province_the_cursed_city",
+   "owner": "wh3_main_ksl_ropsmenn_clan",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tower_of_lysean",
+   "name": "Tower of Lysean",
+   "x": 228,
+   "y": 526,
+   "province": "wh3_main_combi_province_eataine",
+   "owner": "wh2_main_def_cult_of_excess",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_naggarond",
+   "name": "Naggarond",
+   "x": 112,
+   "y": 813,
+   "province": "wh3_main_combi_province_iron_foothills",
+   "owner": "wh2_main_def_naggarond",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_great_hall_of_greasus",
+   "name": "Great Hall of Greasus",
+   "x": 1030,
+   "y": 503,
+   "province": "wh3_main_combi_province_ivory_road",
+   "owner": "wh3_main_ogr_goldtooth",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_blighted_grove",
+   "name": "The Blighted Grove",
+   "x": 560,
+   "y": 953,
+   "province": "wh3_main_combi_province_the_eternal_lagoon",
+   "owner": "wh3_main_tze_broken_wheel",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_talabheim",
+   "name": "Talabheim",
+   "x": 604,
+   "y": 690,
+   "province": "wh3_main_combi_province_talabecland",
+   "owner": "wh_main_emp_talabecland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_rasetra",
+   "name": "Rasetra",
+   "x": 766,
+   "y": 287,
+   "province": "wh3_main_combi_province_crater_of_the_waking_dead",
+   "owner": "wh2_main_vmp_the_silver_host",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_twisted_towers",
+   "name": "The Twisted Towers",
+   "x": 485,
+   "y": 939,
+   "province": "wh3_main_combi_province_the_cold_mires",
+   "owner": "wh3_main_sla_subtle_torture",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_bone_gulch",
+   "name": "The Bone Gulch",
+   "x": 841,
+   "y": 423,
+   "province": "wh3_main_combi_province_the_plain_of_bones",
+   "owner": "wh2_dlc15_dwf_clan_helhein",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tlaxtlan",
+   "name": "Tlaxtlan",
+   "x": 164,
+   "y": 324,
+   "province": "wh3_main_combi_province_scorpion_coast",
+   "owner": "wh2_main_lzd_tlaxtlan",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_sentinel_of_time",
+   "name": "The Sentinel of Time",
+   "x": 190,
+   "y": 152,
+   "province": "wh3_main_combi_province_the_lost_valley",
+   "owner": "wh2_main_lzd_southern_sentinels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ubersreik",
+   "name": "Ubersreik",
+   "x": 505,
+   "y": 614,
+   "province": "wh3_main_combi_province_reikland",
+   "owner": "wh_main_emp_empire",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fort_ostrosk",
+   "name": "Fort Ostrosk",
+   "x": 680,
+   "y": 786,
+   "province": "wh3_main_combi_province_troll_country",
+   "owner": "wh3_main_ksl_druzhina_enclave",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_plain_of_tuskers",
+   "name": "Plain of Tuskers",
+   "x": 560,
+   "y": 229,
+   "province": "wh3_main_combi_province_land_of_the_dervishes",
+   "owner": "wh2_dlc09_tmb_dune_kingdoms",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_volulltrax",
+   "name": "Volulltrax",
+   "x": 630,
+   "y": 24,
+   "province": "wh3_main_combi_province_the_abyssal_glacier",
+   "owner": "wh3_main_nur_bubonic_swarm",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_gronti_mingol",
+   "name": "Gronti Mingol",
+   "x": 585,
+   "y": 413,
+   "province": "wh3_main_combi_province_southern_badlands",
+   "owner": "wh_main_grn_top_knotz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_yhetee_peak",
+   "name": "Yhetee Peak",
+   "x": 1071,
+   "y": 619,
+   "province": "wh3_main_combi_province_ancient_giant_lands",
+   "owner": "wh3_main_ogr_mountaineaters",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_bay_of_blades",
+   "name": "Bay of Blades",
+   "x": 582,
+   "y": 814,
+   "province": "wh3_main_combi_province_trollheim_mountains",
+   "owner": "wh3_main_ksl_brotherhood_of_the_bear",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ironspike",
+   "name": "Ironspike",
+   "x": 43,
+   "y": 547,
+   "province": "wh3_main_combi_province_ashen_coast",
+   "owner": "wh2_main_def_ssildra_tor",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_teotiqua",
+   "name": "Teotiqua",
+   "x": 740,
+   "y": 187,
+   "province": "wh3_main_combi_province_the_golden_pass",
+   "owner": "wh2_main_skv_clan_mordkin",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_unicorn_gate",
+   "name": "Unicorn Gate",
+   "x": 216,
+   "y": 611,
+   "province": "wh3_main_combi_province_unicorn_gate",
+   "owner": "wh2_main_hef_ellyrion",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_shang_wu",
+   "name": "Shang-Wu",
+   "x": 1164,
+   "y": 479,
+   "province": "wh3_main_combi_province_celestial_riverlands",
+   "owner": "wh3_dlc21_vmp_jiangshi_rebels",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_plain_of_spiders",
+   "name": "Plain of Spiders",
+   "x": 40,
+   "y": 677,
+   "province": "wh3_main_combi_province_red_desert",
+   "owner": "wh2_dlc16_grn_naggaroth_orcs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_bloodpeak",
+   "name": "Bloodpeak",
+   "x": 1043,
+   "y": 600,
+   "province": "wh3_main_combi_province_bone_road",
+   "owner": "wh3_main_ogr_blood_guzzlers",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_weismund",
+   "name": "Weismund",
+   "x": 529,
+   "y": 681,
+   "province": "wh3_main_combi_province_middenland",
+   "owner": "wh2_main_skv_clan_gnaw",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_gnashraks_lair",
+   "name": "Gnashrak's Lair",
+   "x": 792,
+   "y": 643,
+   "province": "wh3_main_combi_province_peak_pass",
+   "owner": "wh_main_grn_red_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_evershale",
+   "name": "Evershale",
+   "x": 240,
+   "y": 595,
+   "province": "wh3_main_combi_province_avelorn",
+   "owner": "wh2_main_def_scourge_of_khaine",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_scarpels_lair",
+   "name": "Scarpel's Lair",
+   "x": 15,
+   "y": 600,
+   "province": "wh3_main_combi_province_ashen_coast",
+   "owner": "wh2_dlc16_skv_clan_gritus",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shroktak_mount",
+   "name": "Shroktak Mount",
+   "x": 57,
+   "y": 768,
+   "province": "wh3_main_combi_province_iron_mountains",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ssildra_tor",
+   "name": "Ss'ildra Tor",
+   "x": 64,
+   "y": 535,
+   "province": "wh3_main_combi_province_titan_peaks",
+   "owner": "wh2_main_def_ssildra_tor",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_naglfari_plain",
+   "name": "Naglfari Plain",
+   "x": 552,
+   "y": 838,
+   "province": "wh3_main_combi_province_mountains_of_naglfari",
+   "owner": "wh_dlc08_nor_naglfarlings",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_saroir",
+   "name": "Tor Saroir",
+   "x": 270,
+   "y": 601,
+   "province": "wh3_main_combi_province_avelorn",
+   "owner": "wh2_main_def_scourge_of_khaine",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dai_cheng",
+   "name": "Dai Cheng",
+   "x": 1371,
+   "y": 381,
+   "province": "wh3_main_combi_province_serpent_estuary",
+   "owner": "wh3_dlc21_nor_wyrmkins",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ice_rock_gorge",
+   "name": "Ice Rock Gorge",
+   "x": 74,
+   "y": 645,
+   "province": "wh3_main_combi_province_ironsand_desert",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_bridge_of_heaven",
+   "name": "Bridge of Heaven",
+   "x": 1231,
+   "y": 497,
+   "province": "wh3_main_combi_province_celestial_riverlands",
+   "owner": "wh3_dlc21_vmp_jiangshi_rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_marienburg",
+   "name": "Marienburg",
+   "x": 452,
+   "y": 657,
+   "province": "wh3_main_combi_province_the_wasteland",
+   "owner": "wh_main_emp_marienburg",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_ash_ridge_mountains",
+   "name": "Ash Ridge Mountains",
+   "x": 862,
+   "y": 459,
+   "province": "wh3_main_combi_province_the_plain_of_bones",
+   "owner": "wh2_dlc15_dwf_clan_helhein",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_quenelles",
+   "name": "Quenelles",
+   "x": 481,
+   "y": 540,
+   "province": "wh3_main_combi_province_forest_of_chalons",
+   "owner": "wh_main_brt_parravon",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_axlotl",
+   "name": "Axlotl",
+   "x": 207,
+   "y": 231,
+   "province": "wh3_main_combi_province_mosquito_swamps",
+   "owner": "wh2_main_lzd_xlanhuapec",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_plesk",
+   "name": "Plesk",
+   "x": 765,
+   "y": 754,
+   "province": "wh3_main_combi_province_eastern_oblast",
+   "owner": "wh3_main_ksl_ropsmenn_clan",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_witchwood",
+   "name": "The Witchwood",
+   "x": 66,
+   "y": 660,
+   "province": "wh3_main_combi_province_the_witchwood",
+   "owner": "wh2_dlc16_wef_sisters_of_twilight",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_jungles_of_chian",
+   "name": "Jungles of Chi'an",
+   "x": 1303,
+   "y": 386,
+   "province": "wh3_main_combi_province_jungles_of_chian",
+   "owner": "wh3_dlc21_wef_spirits_of_shanlin",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_golden_ziggurat",
+   "name": "Golden Ziggurat",
+   "x": 37,
+   "y": 282,
+   "province": "wh3_main_combi_province_the_turtle_isles",
+   "owner": "wh2_main_lzd_sentinels_of_xeti",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_skeggi",
+   "name": "Skeggi",
+   "x": 126,
+   "y": 513,
+   "province": "wh3_main_combi_province_the_isthmus_coast",
+   "owner": "wh2_main_nor_skeggi",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_moot",
+   "name": "The Moot",
+   "x": 648,
+   "y": 601,
+   "province": "wh3_main_combi_province_mootland",
+   "owner": "wh_main_emp_stirland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_har_ganeth",
+   "name": "Har Ganeth",
+   "x": 212,
+   "y": 827,
+   "province": "wh3_main_combi_province_the_road_of_skulls",
+   "owner": "wh2_main_def_har_ganeth",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karag_orrud",
+   "name": "Karag Orrud",
+   "x": 720,
+   "y": 309,
+   "province": "wh3_main_combi_province_devils_backbone",
+   "owner": "wh2_main_grn_arachnos",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_mount_athull",
+   "name": "Mount Athull",
+   "x": 299,
+   "y": 36,
+   "province": "wh3_main_combi_province_the_ice_fire_plains",
+   "owner": "wh3_main_kho_brazen_throne",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_worlds_edge_archway",
+   "name": "World's Edge Archway",
+   "x": 819,
+   "y": 563,
+   "province": "wh3_main_combi_province_deadrock_gap",
+   "owner": "wh_main_grn_bloody_spearz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_black_fortress",
+   "name": "Black Fortress",
+   "x": 950,
+   "y": 479,
+   "province": "wh3_main_combi_province_the_howling_wastes",
+   "owner": "wh3_dlc23_chd_legion_of_azgorh",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_port_reaver",
+   "name": "Port Reaver",
+   "x": 98,
+   "y": 481,
+   "province": "wh3_main_combi_province_the_isthmus_coast",
+   "owner": "wh2_main_emp_new_world_colonies",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_chaqua",
+   "name": "Chaqua",
+   "x": 174,
+   "y": 273,
+   "province": "wh3_main_combi_province_the_gwangee_valley",
+   "owner": "wh3_dlc20_tze_apostles_of_change",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_vitevo",
+   "name": "Vitevo",
+   "x": 709,
+   "y": 711,
+   "province": "wh3_main_combi_province_southern_oblast",
+   "owner": "wh_main_nor_baersonling",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_morgheim",
+   "name": "Morgheim",
+   "x": 685,
+   "y": 409,
+   "province": "wh3_main_combi_province_marshes_of_madness",
+   "owner": "wh3_main_ie_vmp_sires_of_mourkain",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_kradtommen",
+   "name": "Kradtommen",
+   "x": 747,
+   "y": 392,
+   "province": "wh3_main_combi_province_blightwater",
+   "owner": "wh_main_grn_red_fangs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ekrund",
+   "name": "Ekrund",
+   "x": 634,
+   "y": 444,
+   "province": "wh3_main_combi_province_western_badlands",
+   "owner": "wh_main_grn_teef_snatchaz",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_khazid_bordkarag",
+   "name": "Lair of the Troll King",
+   "x": 687,
+   "y": 823,
+   "province": "wh3_main_combi_province_gianthome_mountains",
+   "owner": "wh3_main_nur_maggoth_kin",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shang_yang",
+   "name": "Shang-Yang",
+   "x": 1127,
+   "y": 554,
+   "province": "wh3_main_combi_province_warpstone_desert",
+   "owner": "wh3_main_cth_dissenter_lords_of_jinshen",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_blacklight_tower",
+   "name": "Blacklight Tower",
+   "x": 210,
+   "y": 793,
+   "province": "wh3_main_combi_province_granite_hills",
+   "owner": "wh2_main_def_karond_kar",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_howling_citadel",
+   "name": "The Howling Citadel",
+   "x": 790,
+   "y": 913,
+   "province": "wh3_main_combi_province_bloodfire_falls",
+   "owner": "wh3_main_kho_bloody_sword",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_monolith_of_bubonicus",
+   "name": "Monolith of Bubonicus",
+   "x": 853,
+   "y": 848,
+   "province": "wh3_main_combi_province_the_blood_marshes",
+   "owner": "wh3_main_sla_exquisite_pain",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_statues_of_the_gods",
+   "name": "Statues of the Gods",
+   "x": 545,
+   "y": 175,
+   "province": "wh3_main_combi_province_western_jungles",
+   "owner": "wh2_dlc12_grn_leaf_cutterz_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_infernius",
+   "name": "Infernius",
+   "x": 430,
+   "y": 946,
+   "province": "wh3_main_combi_province_northern_wastes",
+   "owner": "wh3_main_kho_crimson_skull",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_subatuun",
+   "name": "Subatuun",
+   "x": 146,
+   "y": 201,
+   "province": "wh3_main_combi_province_the_lost_valley",
+   "owner": "wh2_main_skv_clan_pestilens",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_novchozy",
+   "name": "Novchozy",
+   "x": 782,
+   "y": 768,
+   "province": "wh3_main_combi_province_eastern_oblast",
+   "owner": "wh3_main_ksl_ropsmenn_clan",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_gorssel",
+   "name": "Gorssel",
+   "x": 460,
+   "y": 681,
+   "province": "wh3_main_combi_province_the_wasteland",
+   "owner": "wh_main_emp_marienburg",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_po_mei",
+   "name": "Po Mei",
+   "x": 1228,
+   "y": 649,
+   "province": "wh3_main_combi_province_lands_of_stone_and_steel",
+   "owner": "wh3_main_cth_rebel_lords_of_nan_yang",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_pahuax",
+   "name": "Pahuax",
+   "x": 92,
+   "y": 430,
+   "province": "wh3_main_combi_province_jungles_of_pahualaxa",
+   "owner": "wh2_main_grn_blue_vipers",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_azgaraz",
+   "name": "Karak Azgaraz",
+   "x": 505,
+   "y": 592,
+   "province": "wh3_main_combi_province_southern_grey_mountains",
+   "owner": "rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_vauls_anvil_ulthuan",
+   "name": "Vaul's Anvil",
+   "x": 204,
+   "y": 511,
+   "province": "wh3_main_combi_province_caledor",
+   "owner": "wh2_main_hef_caledor",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_gates_of_zharr",
+   "name": "The Gates of Zharr",
+   "x": 916,
+   "y": 564,
+   "province": "wh3_main_combi_province_the_wolf_lands",
+   "owner": "wh3_dlc23_chd_minor_faction",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ziggurat_of_dawn",
+   "name": "Ziggurat of Dawn",
+   "x": 92,
+   "y": 517,
+   "province": "wh3_main_combi_province_the_isthmus_coast",
+   "owner": "wh2_main_nor_skeggi",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_bhufdar",
+   "name": "Karak Bhufdar",
+   "x": 529,
+   "y": 499,
+   "province": "wh3_main_combi_province_the_vaults",
+   "owner": "wh_main_grn_broken_nose",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_rotten_stone",
+   "name": "Rotten Stone",
+   "x": 1164,
+   "y": 733,
+   "province": "wh3_main_combi_province_mountains_end",
+   "owner": "wh3_dlc27_nor_avags",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_nonchang",
+   "name": "Nongchang",
+   "x": 1271,
+   "y": 493,
+   "province": "wh3_main_combi_province_nongchang_basin",
+   "owner": "wh3_main_cth_the_jade_custodians",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_wissenburg",
+   "name": "Wissenburg",
+   "x": 577,
+   "y": 586,
+   "province": "wh3_main_combi_province_wissenland",
+   "owner": "wh3_dlc25_vmp_the_court_of_night",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fortress_of_dawn",
+   "name": "Fortress of Dawn",
+   "x": 545,
+   "y": 68,
+   "province": "wh3_main_combi_province_dawns_landing",
+   "owner": "wh2_main_hef_order_of_loremasters",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_fyrus",
+   "name": "Fyrus",
+   "x": 495,
+   "y": 350,
+   "province": "wh3_main_combi_province_coast_of_araby",
+   "owner": "wh2_main_vmp_strygos_empire",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_volary",
+   "name": "The Volary",
+   "x": 1111,
+   "y": 716,
+   "province": "wh3_main_combi_province_stonesky_foothills",
+   "owner": "wh3_dlc23_chd_zhatan",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_altar_of_the_horned_rat",
+   "name": "Altar of the Horned Rat",
+   "x": 245,
+   "y": 206,
+   "province": "wh3_main_combi_province_headhunters_jungle",
+   "owner": "wh2_main_skv_clan_spittel",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_cliff_of_beasts",
+   "name": "Cliff of Beasts",
+   "x": 527,
+   "y": 933,
+   "province": "wh3_main_combi_province_the_eternal_lagoon",
+   "owner": "wh3_main_tze_broken_wheel",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fallen_king_mountain",
+   "name": "Fallen King Mountain",
+   "x": 788,
+   "y": 627,
+   "province": "wh3_main_combi_province_rib_peaks",
+   "owner": "wh_main_grn_red_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_forest_of_gloom",
+   "name": "Forest of Gloom",
+   "x": 703,
+   "y": 549,
+   "province": "wh3_main_combi_province_forest_of_gloom",
+   "owner": "wh2_dlc16_grn_creeping_death",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_bilious_cliffs",
+   "name": "Bilious Cliffs",
+   "x": 608,
+   "y": 922,
+   "province": "wh3_main_combi_province_the_noisome_tumour",
+   "owner": "wh3_dlc25_nur_epidemius",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_baleful_hills",
+   "name": "Baleful Hills",
+   "x": 1190,
+   "y": 503,
+   "province": "wh3_main_combi_province_celestial_riverlands",
+   "owner": "wh3_dlc21_vmp_jiangshi_rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_silvered_tower_of_sorcerers",
+   "name": "The Silvered Tower of Sorcerers",
+   "x": 377,
+   "y": 937,
+   "province": "wh3_main_combi_province_northern_wastes",
+   "owner": "wh3_main_kho_crimson_skull",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_silver_pinnacle",
+   "name": "Silver Pinnacle",
+   "x": 824,
+   "y": 660,
+   "province": "wh3_main_combi_province_the_blasted_wastes",
+   "owner": "wh3_dlc29_vmp_neferata",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_konquata",
+   "name": "Konquata",
+   "x": 345,
+   "y": 745,
+   "province": "wh3_main_combi_province_albion",
+   "owner": "wh3_dlc20_tze_the_sightless",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_castle_drakenhof",
+   "name": "Castle Drakenhof",
+   "x": 716,
+   "y": 612,
+   "province": "wh3_main_combi_province_southern_sylvania",
+   "owner": "wh_main_vmp_schwartzhafen",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_hidden_landing",
+   "name": "Hidden Landing",
+   "x": 1373,
+   "y": 325,
+   "province": "wh3_main_combi_province_cathayan_hinterlands",
+   "owner": "wh3_dlc27_sla_the_tormentors",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_sabre_mountain",
+   "name": "Sabre Mountain",
+   "x": 935,
+   "y": 700,
+   "province": "wh3_main_combi_province_path_to_the_east",
+   "owner": "wh3_main_ogr_sabreskin",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_bamboo_crossing",
+   "name": "Bamboo Crossing",
+   "x": 1262,
+   "y": 431,
+   "province": "wh3_main_combi_province_the_great_canal",
+   "owner": "wh3_main_cth_burning_wind_nomads",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_bilbali",
+   "name": "Bilbali",
+   "x": 399,
+   "y": 480,
+   "province": "wh3_main_combi_province_irrana_mountains",
+   "owner": "wh_main_teb_estalia",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_pox_marsh",
+   "name": "Pox Marsh",
+   "x": 298,
+   "y": 283,
+   "province": "wh3_main_combi_province_vampire_coast",
+   "owner": "wh2_dlc11_cst_vampire_coast_rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc29_combi_region_great_drakes_rest",
+   "name": "Great Drake's Rest",
+   "x": 502,
+   "y": 862,
+   "province": "wh3_dlc29_combi_province_kraken_coast",
+   "owner": "wh_dlc08_nor_naglfarlings",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_floating_pyramid",
+   "name": "Floating Pyramid",
+   "x": 104,
+   "y": 394,
+   "province": "wh3_main_combi_province_aymara_swamps",
+   "owner": "wh3_dlc24_cth_the_celestial_court",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_forest_of_arnheim",
+   "name": "Forest of Arnheim",
+   "x": 110,
+   "y": 601,
+   "province": "wh3_main_combi_province_the_bleak_coast",
+   "owner": "wh2_main_def_bleak_holds",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_kings_glade",
+   "name": "King's Glade",
+   "x": 512,
+   "y": 519,
+   "province": "wh3_main_combi_province_talsyn",
+   "owner": "wh_dlc05_wef_wood_elves",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_waili_village",
+   "name": "Wai-Li Village",
+   "x": 1267,
+   "y": 383,
+   "province": "wh3_main_combi_province_the_great_canal",
+   "owner": "wh3_main_cth_burning_wind_nomads",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_antoch",
+   "name": "Antoch",
+   "x": 604,
+   "y": 219,
+   "province": "wh3_main_combi_province_shifting_sands",
+   "owner": "wh2_dlc09_tmb_dune_kingdoms",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_doom_glade",
+   "name": "Doom Glade",
+   "x": 809,
+   "y": 282,
+   "province": "wh3_main_combi_province_crater_of_the_waking_dead",
+   "owner": "wh2_main_vmp_the_silver_host",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_valayas_sorrow",
+   "name": "Valaya's Sorrow",
+   "x": 737,
+   "y": 446,
+   "province": "wh3_main_combi_province_eight_peaks",
+   "owner": "wh_main_grn_necksnappers",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_forbidden_citadel",
+   "name": "The Forbidden Citadel",
+   "x": 619,
+   "y": 849,
+   "province": "wh3_main_combi_province_mountains_of_hel",
+   "owner": "wh_main_nor_aesling",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_shi_wu",
+   "name": "Shi-Wu",
+   "x": 1365,
+   "y": 417,
+   "province": "wh3_main_combi_province_mount_li",
+   "owner": "wh3_main_cth_eastern_river_lords",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karak_dum",
+   "name": "Karak Dum",
+   "x": 887,
+   "y": 764,
+   "province": "wh3_main_combi_province_the_skull_road",
+   "owner": "wh3_main_ogr_lazarghs",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_springs_of_eternal_life",
+   "name": "Springs of Eternal Life",
+   "x": 628,
+   "y": 268,
+   "province": "wh3_main_combi_province_land_of_the_dead",
+   "owner": "wh2_main_vmp_necrarch_brotherhood",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_spektazuma",
+   "name": "Spektazuma",
+   "x": 87,
+   "y": 378,
+   "province": "wh3_main_combi_province_the_creeping_jungle",
+   "owner": "wh2_dlc12_skv_clan_mange",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_plain_of_dogs",
+   "name": "Plain of Dogs",
+   "x": 40,
+   "y": 633,
+   "province": "wh3_main_combi_province_ironsand_desert",
+   "owner": "wh2_dlc16_skv_clan_gritus",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_bordeleaux",
+   "name": "Bordeleaux",
+   "x": 393,
+   "y": 580,
+   "province": "wh3_main_combi_province_river_brienne",
+   "owner": "wh3_main_brt_aquitaine",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_lothern",
+   "name": "Lothern",
+   "x": 254,
+   "y": 513,
+   "province": "wh3_main_combi_province_eataine",
+   "owner": "wh2_main_hef_eataine",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tower_of_ashung",
+   "name": "Tower of Ashung",
+   "x": 1330,
+   "y": 366,
+   "province": "wh3_main_combi_province_serpent_estuary",
+   "owner": "wh3_dlc21_nor_wyrmkins",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_titans_notch",
+   "name": "Titan's Notch",
+   "x": 1047,
+   "y": 635,
+   "province": "wh3_main_combi_province_ancient_giant_lands",
+   "owner": "wh3_main_ogr_mountaineaters",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_averheim",
+   "name": "Averheim",
+   "x": 615,
+   "y": 599,
+   "province": "wh3_main_combi_province_averland",
+   "owner": "wh_main_emp_averland",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_temple_of_tlencan",
+   "name": "Bregonne",
+   "x": 215,
+   "y": 335,
+   "province": "wh3_main_combi_province_scorpion_coast",
+   "owner": "wh_main_brt_bordeleaux",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dragon_fang_mount",
+   "name": "Dragon Fang Mount",
+   "x": 970,
+   "y": 350,
+   "province": "wh3_main_combi_province_the_dragon_isles",
+   "owner": "wh3_main_nur_poxmakers_of_nurgle",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_azgal",
+   "name": "Karak Azgal",
+   "x": 714,
+   "y": 395,
+   "province": "wh3_main_combi_province_blightwater",
+   "owner": "wh_main_grn_red_fangs",
+   "capital": true
+  },
+  {
+   "region": "wh3_dlc29_combi_region_krakens_cove",
+   "name": "Kraken's Cove",
+   "x": 557,
+   "y": 882,
+   "province": "wh3_dlc29_combi_province_kraken_coast",
+   "owner": "wh_main_nor_varg",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tlanxla",
+   "name": "Tlanxla",
+   "x": 125,
+   "y": 331,
+   "province": "wh3_main_combi_province_scorpion_coast",
+   "owner": "wh2_main_lzd_tlaxtlan",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_lahmia",
+   "name": "Lahmia",
+   "x": 798,
+   "y": 347,
+   "province": "wh3_main_combi_province_crater_of_the_waking_dead",
+   "owner": "wh2_main_vmp_the_silver_host",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_misty_mountain",
+   "name": "Misty Mountain",
+   "x": 782,
+   "y": 385,
+   "province": "wh3_main_combi_province_blightwater",
+   "owner": "wh2_main_skv_clan_mors",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tralinia",
+   "name": "Tralinia",
+   "x": 344,
+   "y": 562,
+   "province": "wh3_main_combi_province_northern_yvresse",
+   "owner": "wh2_dlc15_grn_skull_crag",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_khazid_irkulaz",
+   "name": "Khazid Irkulaz",
+   "x": 800,
+   "y": 676,
+   "province": "wh3_main_combi_province_northern_worlds_edge_mountains",
+   "owner": "wh2_dlc15_grn_bonerattlaz",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_sun_tree_glades",
+   "name": "Sun-Tree Glades",
+   "x": 609,
+   "y": 180,
+   "province": "wh3_main_combi_province_central_jungles",
+   "owner": "wh2_dlc12_grn_leaf_cutterz_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_hag_graef",
+   "name": "Hag Graef",
+   "x": 139,
+   "y": 787,
+   "province": "wh3_main_combi_province_the_black_flood",
+   "owner": "wh2_main_def_naggarond",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_arnheim",
+   "name": "Arnheim",
+   "x": 147,
+   "y": 588,
+   "province": "wh3_main_combi_province_the_bleak_coast",
+   "owner": "wh2_main_def_bleak_holds",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_tower_of_khrakk",
+   "name": "The Tower of Khrakk",
+   "x": 632,
+   "y": 821,
+   "province": "wh3_main_combi_province_trollheim_mountains",
+   "owner": "wh3_main_ksl_brotherhood_of_the_bear",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_mount_arachnos",
+   "name": "Mount Arachnos",
+   "x": 713,
+   "y": 267,
+   "province": "wh3_main_combi_province_southlands_worlds_edge_mountains",
+   "owner": "wh2_main_grn_arachnos",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_sentinels",
+   "name": "The Sentinels",
+   "x": 947,
+   "y": 510,
+   "province": "wh3_main_combi_province_the_howling_wastes",
+   "owner": "wh3_main_grn_dark_land_orcs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_oreons_camp",
+   "name": "Oreon's Camp",
+   "x": 641,
+   "y": 216,
+   "province": "wh3_main_combi_province_heart_of_the_jungle",
+   "owner": "wh2_main_wef_bowmen_of_oreon",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tor_anroc",
+   "name": "Tor Anroc",
+   "x": 178,
+   "y": 593,
+   "province": "wh3_main_combi_province_tiranoc",
+   "owner": "wh2_main_hef_tiranoc",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_nan_li",
+   "name": "Nan-Li",
+   "x": 1143,
+   "y": 626,
+   "province": "wh3_main_combi_province_gunpowder_road",
+   "owner": "wh3_main_cth_rebel_lords_of_nan_yang",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_whitepeak",
+   "name": "Whitepeak",
+   "x": 171,
+   "y": 571,
+   "province": "wh3_main_combi_province_tiranoc",
+   "owner": "wh2_main_hef_tiranoc",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_couronne",
+   "name": "Couronne",
+   "x": 410,
+   "y": 675,
+   "province": "wh3_main_combi_province_marches_of_couronne",
+   "owner": "wh_main_brt_bretonnia",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_mount_thug",
+   "name": "Shambletown",
+   "x": 1053,
+   "y": 461,
+   "province": "wh3_main_combi_province_gnoblar_country",
+   "owner": "wh3_main_skv_clan_treecherik",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_challenge_stone",
+   "name": "The Challenge Stone",
+   "x": 1021,
+   "y": 726,
+   "province": "wh3_main_combi_province_chimera_plateau",
+   "owner": "wh3_main_ogr_fleshgreeders",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_petrified_forest",
+   "name": "Petrified Forest",
+   "x": 77,
+   "y": 557,
+   "province": "wh3_main_combi_province_titan_peaks",
+   "owner": "wh2_main_def_ssildra_tor",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_ashrak",
+   "name": "Ashrak",
+   "x": 135,
+   "y": 862,
+   "province": "wh3_main_combi_province_spiteful_peaks",
+   "owner": "wh2_main_def_ghrond",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_mount_squighorn",
+   "name": "Mount Squighorn",
+   "x": 779,
+   "y": 535,
+   "province": "wh3_main_combi_province_the_silver_road",
+   "owner": "wh_main_grn_bloody_spearz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_monolith_of_flesh",
+   "name": "The Monolith of Flesh",
+   "x": 600,
+   "y": 894,
+   "province": "wh3_main_combi_province_mountains_of_hel",
+   "owner": "wh_dlc08_nor_wintertooth",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_karak_ziflin",
+   "name": "Karak Ziflin",
+   "x": 476,
+   "y": 608,
+   "province": "wh3_main_combi_province_northern_grey_mountains",
+   "owner": "wh_main_dwf_karak_ziflin",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dawns_light",
+   "name": "Dawn's Light",
+   "x": 584,
+   "y": 57,
+   "province": "wh3_main_combi_province_dawns_landing",
+   "owner": "wh3_main_tze_sarthoraels_watchers",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_myrmidens",
+   "name": "Myrmidens",
+   "x": 572,
+   "y": 434,
+   "province": "wh3_main_combi_province_western_border_princes",
+   "owner": "wh_main_teb_border_princes",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_kaiax",
+   "name": "Kaiax",
+   "x": 191,
+   "y": 118,
+   "province": "wh3_main_combi_province_the_night_forest_road",
+   "owner": "wh3_main_skv_clan_skrat",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_mount_gunbad",
+   "name": "Mount Gunbad",
+   "x": 809,
+   "y": 588,
+   "province": "wh3_main_combi_province_deadrock_gap",
+   "owner": "wh_main_grn_crooked_moon",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_castle_von_rauken",
+   "name": "Castle von Rauken",
+   "x": 646,
+   "y": 752,
+   "province": "wh3_main_combi_province_ostland",
+   "owner": "wh_main_emp_ostland",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_temple_of_heimkel",
+   "name": "Temple of Heimkel",
+   "x": 788,
+   "y": 791,
+   "province": "wh3_main_combi_province_goromadny_mountains",
+   "owner": "wh_dlc08_nor_goromadny_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_isle_of_the_crimson_skull",
+   "name": "Isle of the Crimson Skull",
+   "x": 62,
+   "y": 407,
+   "province": "wh3_main_combi_province_aymara_swamps",
+   "owner": "wh3_dlc24_cth_the_celestial_court",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_port_of_secrets",
+   "name": "Port of Secrets",
+   "x": 718,
+   "y": 900,
+   "province": "wh3_main_combi_province_plain_of_illusions",
+   "owner": "wh3_main_tze_all_seeing_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_galbaraz",
+   "name": "Galbaraz",
+   "x": 624,
+   "y": 377,
+   "province": "wh3_main_combi_province_southern_badlands",
+   "owner": "wh_main_grn_top_knotz",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_tower_of_flies",
+   "name": "The Tower of Flies",
+   "x": 684,
+   "y": 921,
+   "province": "wh3_main_combi_province_the_noisome_tumour",
+   "owner": "wh3_main_tze_all_seeing_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_forest_of_decay",
+   "name": "The Forest of Decay",
+   "x": 640,
+   "y": 939,
+   "province": "wh3_main_combi_province_the_noisome_tumour",
+   "owner": "wh3_dlc25_nur_epidemius",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_monument_of_the_moon",
+   "name": "Monument of the Moon",
+   "x": 145,
+   "y": 455,
+   "province": "wh3_main_combi_province_jungles_of_pahualaxa",
+   "owner": "wh2_main_emp_new_world_colonies",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_magritta",
+   "name": "Magritta",
+   "x": 417,
+   "y": 428,
+   "province": "wh3_main_combi_province_estalia",
+   "owner": "wh_main_teb_estalia",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_zarakzil",
+   "name": "Zarakzil",
+   "x": 539,
+   "y": 451,
+   "province": "wh3_main_combi_province_the_vaults",
+   "owner": "wh_main_dwf_karak_izor",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_serpent_coast",
+   "name": "Serpent Coast",
+   "x": 795,
+   "y": 219,
+   "province": "wh3_main_combi_province_kingdom_of_beasts",
+   "owner": "wh2_main_skv_clan_mordkin",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_golden_colossus",
+   "name": "The Golden Colossus",
+   "x": 86,
+   "y": 211,
+   "province": "wh3_main_combi_province_copper_desert",
+   "owner": "wh3_main_tmb_deserters_of_khatep",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_icespewer",
+   "name": "Icespewer",
+   "x": 969,
+   "y": 713,
+   "province": "wh3_main_combi_province_path_to_the_east",
+   "owner": "wh3_main_grn_tusked_sunz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_waldenhof",
+   "name": "Waldenhof",
+   "x": 720,
+   "y": 648,
+   "province": "wh3_main_combi_province_northern_sylvania",
+   "owner": "wh_main_vmp_rival_sylvanian_vamps",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_altar_of_ultimate_darkness",
+   "name": "Altar of Ultimate Darkness",
+   "x": 44,
+   "y": 842,
+   "province": "wh3_main_combi_province_iron_coast",
+   "owner": "wh2_main_skv_clan_septik",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_stormhenge",
+   "name": "Stormhenge",
+   "x": 568,
+   "y": 354,
+   "province": "wh3_main_combi_province_southern_badlands",
+   "owner": "wh_main_grn_top_knotz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_anlec",
+   "name": "Tor Anlec",
+   "x": 234,
+   "y": 650,
+   "province": "wh3_main_combi_province_nagarythe",
+   "owner": "wh2_main_def_scourge_of_khaine",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_fire_mouth",
+   "name": "Fire Mouth",
+   "x": 1007,
+   "y": 596,
+   "province": "wh3_main_combi_province_bone_road",
+   "owner": "wh3_main_ogr_blood_guzzlers",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_blizzardpeak",
+   "name": "Blizzardpeak",
+   "x": 1016,
+   "y": 699,
+   "province": "wh3_main_combi_province_path_to_the_east",
+   "owner": "wh3_main_grn_tusked_sunz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_iron_rock",
+   "name": "Iron Rock",
+   "x": 728,
+   "y": 491,
+   "province": "wh3_main_combi_province_death_pass",
+   "owner": "wh_main_grn_scabby_eye",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_pigbarter",
+   "name": "Pigbarter",
+   "x": 971,
+   "y": 458,
+   "province": "wh3_main_combi_province_mouth_of_ruin",
+   "owner": "wh3_main_ogr_thunderguts",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_maw_gate",
+   "name": "The Maw Gate",
+   "x": 1065,
+   "y": 514,
+   "province": "wh3_main_combi_province_ivory_road",
+   "owner": "wh3_main_ogr_crossed_clubs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_temple_of_kara",
+   "name": "Temple of Kara",
+   "x": 152,
+   "y": 366,
+   "province": "wh3_main_combi_province_the_creeping_jungle",
+   "owner": "wh2_dlc13_emp_the_huntmarshals_expedition",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc23_combi_region_fort_dorznye_vort",
+   "name": "Fort Dorznye-vort",
+   "x": 885,
+   "y": 692,
+   "province": "wh3_main_combi_province_zorn_uzkul",
+   "owner": "wh3_main_grn_slaves_of_zharr",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_sentinels_of_xeti",
+   "name": "Sentinels of Xeti",
+   "x": 77,
+   "y": 243,
+   "province": "wh3_main_combi_province_the_turtle_isles",
+   "owner": "wh2_main_lzd_sentinels_of_xeti",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_verdanos",
+   "name": "Verdanos",
+   "x": 557,
+   "y": 451,
+   "province": "wh3_main_combi_province_western_border_princes",
+   "owner": "wh_main_teb_border_princes",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_pfeildorf",
+   "name": "Pfeildorf",
+   "x": 588,
+   "y": 571,
+   "province": "wh3_main_combi_province_solland",
+   "owner": "wh3_dlc25_vmp_the_court_of_night",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_matorca",
+   "name": "Matorca",
+   "x": 632,
+   "y": 505,
+   "province": "wh3_main_combi_province_eastern_border_princes",
+   "owner": "wh_main_teb_border_princes",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shrine_of_asuryan",
+   "name": "Shrine of Asuryan",
+   "x": 258,
+   "y": 540,
+   "province": "wh3_main_combi_province_eataine",
+   "owner": "wh2_main_def_cult_of_excess",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_iron_storm",
+   "name": "Iron Storm",
+   "x": 1198,
+   "y": 710,
+   "province": "wh3_main_combi_province_eastern_steppes",
+   "owner": "wh3_main_chs_khazag",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_nagrar",
+   "name": "Nagrar",
+   "x": 271,
+   "y": 836,
+   "province": "wh3_main_combi_province_deadwood",
+   "owner": "wh3_main_grn_da_cage_breakaz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_hexoatl",
+   "name": "Hexoatl",
+   "x": 69,
+   "y": 489,
+   "province": "wh3_main_combi_province_isthmus_of_lustria",
+   "owner": "wh2_main_lzd_hexoatl",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_great_arena",
+   "name": "The Great Arena",
+   "x": 155,
+   "y": 816,
+   "province": "wh3_main_combi_province_spiteful_peaks",
+   "owner": "wh2_main_def_ghrond",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_castle_of_splendour",
+   "name": "Castle of Splendour",
+   "x": 754,
+   "y": 48,
+   "province": "wh3_main_combi_province_the_daemonium_hills",
+   "owner": "wh3_main_sla_rapturous_excess",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shiyamas_rest",
+   "name": "Shiyama's Rest",
+   "x": 1269,
+   "y": 460,
+   "province": "wh3_main_combi_province_nongchang_basin",
+   "owner": "wh3_main_cth_the_jade_custodians",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_tor_sethai",
+   "name": "Tor Sethai",
+   "x": 206,
+   "y": 530,
+   "province": "wh3_main_combi_province_caledor",
+   "owner": "wh2_main_hef_caledor",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_grotrilexs_glare_lighthouse",
+   "name": "Grotrilex's Glare Lighthouse",
+   "x": 412,
+   "y": 51,
+   "province": "wh3_main_combi_province_the_southern_wastes",
+   "owner": "wh3_main_tze_flaming_scribes",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_castle_templehof",
+   "name": "Castle Templehof",
+   "x": 686,
+   "y": 628,
+   "province": "wh3_main_combi_province_northern_sylvania",
+   "owner": "wh_main_vmp_rival_sylvanian_vamps",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_luccini",
+   "name": "Luccini",
+   "x": 505,
+   "y": 410,
+   "province": "wh3_main_combi_province_tilea",
+   "owner": "wh_main_teb_tilea",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_grunburg",
+   "name": "Grunburg",
+   "x": 548,
+   "y": 623,
+   "province": "wh3_main_combi_province_reikland",
+   "owner": "wh_main_emp_empire",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_brass_keep",
+   "name": "Brass Keep",
+   "x": 592,
+   "y": 737,
+   "province": "wh3_dlc20_combi_province_middle_mountains",
+   "owner": "wh3_dlc20_chs_festus",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_tyrant_peak",
+   "name": "Tyrant Peak",
+   "x": 21,
+   "y": 573,
+   "province": "wh3_main_combi_province_ashen_coast",
+   "owner": "wh2_dlc16_skv_clan_gritus",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_pack_ice_bay",
+   "name": "Pack Ice Bay",
+   "x": 452,
+   "y": 759,
+   "province": "wh3_main_combi_province_ice_tooth_mountains",
+   "owner": "wh_main_nor_skaeling",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc29_combi_region_helspire_bay",
+   "name": "Helspire Bay",
+   "x": 403,
+   "y": 821,
+   "province": "wh3_main_combi_province_helspire_mountains",
+   "owner": "wh_dlc08_nor_helspire_tribe",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_sulpharets",
+   "name": "Sulpharets",
+   "x": 22,
+   "y": 532,
+   "province": "wh3_main_combi_province_ashen_coast",
+   "owner": "wh2_dlc16_skv_clan_gritus",
+   "capital": false
+  },
+  {
+   "region": "wh3_dlc23_combi_region_blasted_expanse",
+   "name": "The Blasted Expanse",
+   "x": 858,
+   "y": 634,
+   "province": "wh3_main_combi_province_the_blasted_wastes",
+   "owner": "wh3_main_grn_drippin_fangs",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_angerrial",
+   "name": "Angerrial",
+   "x": 269,
+   "y": 529,
+   "province": "wh3_main_combi_province_eataine",
+   "owner": "wh2_main_def_cult_of_excess",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_dagraks_end",
+   "name": "Dagrak's End",
+   "x": 128,
+   "y": 909,
+   "province": "wh3_main_combi_province_ironfrost_glacier",
+   "owner": "wh2_main_def_ghrond",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_mount_grey_hag",
+   "name": "Mount Grey Hag",
+   "x": 879,
+   "y": 515,
+   "province": "wh3_main_combi_province_the_desolation_of_azgorh",
+   "owner": "wh3_main_grn_moon_howlerz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_wreckers_point",
+   "name": "Wrecker's Point",
+   "x": 474,
+   "y": 748,
+   "province": "wh3_main_combi_province_the_misty_hills",
+   "owner": "wh_dlc03_grn_black_pit",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_sudenburg",
+   "name": "Sudenburg",
+   "x": 550,
+   "y": 254,
+   "province": "wh3_main_combi_province_land_of_the_dervishes",
+   "owner": "wh3_main_emp_cult_of_sigmar",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_middenstag",
+   "name": "Middenstag",
+   "x": 568,
+   "y": 690,
+   "province": "wh3_main_combi_province_middenland",
+   "owner": "wh2_main_skv_clan_gnaw",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_crooked_fang_fort",
+   "name": "Crooked Fang Fort",
+   "x": 731,
+   "y": 416,
+   "province": "wh3_main_combi_province_eastern_badlands",
+   "owner": "wh_main_grn_red_fangs",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_zhizhu",
+   "name": "Zhi-Zhu",
+   "x": 1321,
+   "y": 584,
+   "province": "wh3_main_combi_province_plains_of_xen",
+   "owner": "wh3_dlc21_cst_dead_flag_fleet",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_sinhall_monolith",
+   "name": "The Sinhall Monolith",
+   "x": 369,
+   "y": 37,
+   "province": "wh3_main_combi_province_the_southern_wastes",
+   "owner": "wh3_main_tze_flaming_scribes",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_uzkulak",
+   "name": "Uzkulak",
+   "x": 854,
+   "y": 723,
+   "province": "wh3_main_combi_province_zorn_uzkul",
+   "owner": "wh3_dlc23_chd_astragoth",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_gorger_rock",
+   "name": "Gorger Rock",
+   "x": 997,
+   "y": 678,
+   "province": "wh3_main_combi_province_gash_kadrak",
+   "owner": "wh3_main_ogr_fulg",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_fu_chow",
+   "name": "Fu-Chow",
+   "x": 1354,
+   "y": 504,
+   "province": "wh3_main_combi_province_jade_river_delta",
+   "owner": "wh3_dlc21_cst_dead_flag_fleet",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_golden_tower",
+   "name": "The Golden Tower",
+   "x": 680,
+   "y": 198,
+   "province": "wh3_main_combi_province_the_golden_pass",
+   "owner": "wh2_main_lzd_last_defenders",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_shi_long",
+   "name": "Shi Long",
+   "x": 1239,
+   "y": 460,
+   "province": "wh3_main_combi_province_celestial_riverlands",
+   "owner": "wh3_dlc21_vmp_jiangshi_rebels",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_high_place",
+   "name": "The High Place",
+   "x": 795,
+   "y": 550,
+   "province": "wh3_main_combi_province_deadrock_gap",
+   "owner": "wh_main_grn_bloody_spearz",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_doomkeep",
+   "name": "Doomkeep",
+   "x": 514,
+   "y": 836,
+   "province": "wh3_main_combi_province_mountains_of_naglfari",
+   "owner": "wh_dlc08_nor_naglfarlings",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_fetid_catacombs",
+   "name": "The Foetid Catacombs",
+   "x": 441,
+   "y": 896,
+   "province": "wh3_main_combi_province_the_cold_mires",
+   "owner": "wh3_main_sla_subtle_torture",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_varg_camp",
+   "name": "Varg Camp",
+   "x": 515,
+   "y": 878,
+   "province": "wh3_dlc29_combi_province_kraken_coast",
+   "owner": "wh_main_nor_varg",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_circle_of_destruction",
+   "name": "Circle of Destruction",
+   "x": 159,
+   "y": 757,
+   "province": "wh3_main_combi_province_obsidian_peaks",
+   "owner": "wh2_main_def_clar_karond",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_twisted_glade",
+   "name": "The Twisted Glade",
+   "x": 208,
+   "y": 692,
+   "province": "wh3_main_combi_province_the_clawed_coast",
+   "owner": "wh2_dlc11_cst_the_drowned",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_ironfrost",
+   "name": "Ironfrost",
+   "x": 40,
+   "y": 878,
+   "province": "wh3_main_combi_province_ironfrost_glacier",
+   "owner": "wh2_main_nor_mung",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_the_tower_of_torment",
+   "name": "The Tower of Torment",
+   "x": 760,
+   "y": 858,
+   "province": "wh3_main_combi_province_bloodfire_falls",
+   "owner": "wh3_main_kho_bloody_sword",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_black_crag",
+   "name": "Black Crag",
+   "x": 753,
+   "y": 483,
+   "province": "wh3_main_combi_province_death_pass",
+   "owner": "wh3_dlc26_grn_gorbad_ironclaw",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_karag_dron",
+   "name": "Karag Dron",
+   "x": 752,
+   "y": 517,
+   "province": "wh3_main_combi_province_death_pass",
+   "owner": "wh3_dlc26_grn_gorbad_ironclaw",
+   "capital": false
+  },
+  {
+   "region": "wh3_main_combi_region_great_turtle_isle",
+   "name": "Great Turtle Isle",
+   "x": 31,
+   "y": 250,
+   "province": "wh3_main_combi_province_the_turtle_isles",
+   "owner": "wh2_twa03_def_rakarth",
+   "capital": true
+  },
+  {
+   "region": "wh3_main_combi_region_the_monoliths",
+   "name": "The Monoliths",
+   "x": 203,
+   "y": 755,
+   "province": "wh3_main_combi_province_granite_hills",
+   "owner": "wh2_main_hef_nagarythe",
+   "capital": false
+  }
+ ]
+}

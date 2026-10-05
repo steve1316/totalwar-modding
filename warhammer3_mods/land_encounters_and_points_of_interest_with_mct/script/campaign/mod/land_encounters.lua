@@ -143,25 +143,28 @@ end
 --- Detects the active campaign at first_tick and bootstraps the land encounters + POI managers with that campaign's coordinate set.
 cm:add_first_tick_callback(
     function()
+        local points_of_interest = {}
         if is_mod_enabled("!cr_immortal_empires_expanded") then
             out("DEBUG - Current Campaign is Immortal Empires Expanded.")
             local ieee_combined_coordinates = concatenate_encounters(ie_land_encounters, ieee_land_encounters)
-            local ieee_combined_points_of_interest = concatenate_encounters(ie_points_of_interest, ieee_points_of_interest)
+            points_of_interest = concatenate_encounters(ie_points_of_interest, ieee_points_of_interest)
 
-            initialize_land_encounters_state(ieee_combined_coordinates, ieee_combined_points_of_interest)
-            initialize_poi_event_manager_state(ieee_combined_points_of_interest)
+            initialize_land_encounters_state(ieee_combined_coordinates, points_of_interest)
+            initialize_poi_event_manager_state(points_of_interest)
         elseif cm:get_campaign_name() == "wh3_main_chaos" then
             out("DEBUG - Current Campaign is Realm of Chaos.")
-            initialize_land_encounters_state(roc_encounters, roc_points_of_interest)
-            initialize_poi_event_manager_state(roc_points_of_interest)
+            points_of_interest = roc_points_of_interest
+            initialize_land_encounters_state(roc_encounters, points_of_interest)
+            initialize_poi_event_manager_state(points_of_interest)
         elseif cm:get_campaign_name() == "main_warhammer" then
             out("DEBUG - Current Campaign is Immortal Empires.")
-            initialize_land_encounters_state(ie_land_encounters, ie_points_of_interest)
-            initialize_poi_event_manager_state(ie_points_of_interest)
+            points_of_interest = ie_points_of_interest
+            initialize_land_encounters_state(ie_land_encounters, points_of_interest)
+            initialize_poi_event_manager_state(points_of_interest)
         end
         --- Towers stand on encounter spots, so they are placed or restored after the zones exist.
         listeners.point_of_interest_event_manager:initialize_towers(listeners.land_manager.zones)
-        listeners.point_of_interest_event_manager:sync_smithy_markers()
+        listeners.point_of_interest_event_manager:sync_smithy_markers(points_of_interest)
         initialize_spot_event_manager_state()
     end
 )
