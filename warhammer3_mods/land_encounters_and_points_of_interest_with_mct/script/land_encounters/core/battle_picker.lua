@@ -105,7 +105,7 @@ local function build_event(category, entries, faction_keys, difficulty)
     end
     if category.ally then add_ally(event, category.ally) end
     --- Battle modifiers: the enemy's and the allies' bundles go on with the sabotage and the ally, ours when the battle starts.
-    event.modifiers = battle_modifiers.roll({ faction = event.faction })
+    event.modifiers = battle_modifiers.roll({ faction = event.faction, difficulty = event.difficulty })
     event.composition = battle_modifiers.composition(event.modifiers)
     event.enemy_bundles = battle_modifiers.bundles(event.modifiers, "enemy")
     event.ally_bundles = battle_modifiers.bundles(event.modifiers, "allies")

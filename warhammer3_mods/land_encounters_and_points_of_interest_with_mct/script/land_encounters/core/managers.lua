@@ -254,6 +254,8 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         },
         heroes = {},
         unit_experience_amount = random_range(difficulties[difficulty].unit_experience_amount[1], difficulties[difficulty].unit_experience_amount[2]),
+        lore_units = force_makeup.lore_units,
+        lore_ranks = force_makeup.lore_ranks,
         units = {},
         reinforcing_ally_armies = false,
         reinforcing_enemy_armies = false,
@@ -771,6 +773,7 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     end
                 end
 
+                self:rank_up_lore_units(invasion_general:military_force())
                 self:weaken_invasion_force(invasion_general:military_force())
 
                 local faction_being_declared_war_to = declaring_faction_name
@@ -857,6 +860,22 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
         false,
         false
     )
+end
+
+--- Gives a lore army's lore units their extra ranks once it spawns (battle modifiers: the gold its 20 units could not spend).
+--- @param force military_force The spawned invasion force.
+function InvasionBattleManager:rank_up_lore_units(force)
+    local ranks, lore_units = self.event_army.lore_ranks or 0, self.event_army.lore_units
+    if ranks <= 0 or not lore_units then return end
+    local units, ranked = force:unit_list(), 0
+    for i = 0, units:num_items() - 1 do
+        local unit = units:item_at(i)
+        if lore_units[unit:unit_key()] then
+            cm:add_experience_to_unit(unit, ranks)
+            ranked = ranked + 1
+        end
+    end
+    out("LEAPOI: " .. ranked .. " lore units of the enemy army gain " .. ranks .. " ranks")
 end
 
 --- Puts the event army's `sabotage` on its spawned force: each of `enemy_bundles`, every unit but the characters at `enemy_strength` of full

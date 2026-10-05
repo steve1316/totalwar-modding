@@ -1313,6 +1313,7 @@ def main() -> None:
     if not os.path.isdir(MOD_ROOT):
         raise SystemExit(f"Mod folder not found at {MOD_ROOT}. Run from helper_scripts/.")
     config = load_config()
+    battle_modifiers.add_lore(config["battle_modifiers"]["list"])
     check_text(config)
     write_rows(build_rows(config), owned_patterns(config), args.dry_run)
     write_victory_gold(args.dry_run)

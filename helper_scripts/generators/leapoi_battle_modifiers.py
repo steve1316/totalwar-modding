@@ -123,6 +123,9 @@ MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
     "undying": ("Undying Foe", "At 3:00 two destroyed enemy units return where they started, at half strength.", "icon_necromantic_power.png", []),
 }
 
+# Icon of every lore army composition's notice.
+LORE_ICON = "attribute_encourages.png"
+
 # Flavour text of each modifier's bundle, which the tooltip shows above its effects.
 FLAVOUR: Dict[str, str] = {
     "hallowed": "Old blessings linger on this ground, and our warriors feel them.",
@@ -154,6 +157,17 @@ FLAVOUR: Dict[str, str] = {
     "silence_all": "The Winds of Magic have died away over this field, and no caster can call them.",
     "glorious": "Our riders burn to charge home, and nothing will turn them aside.",
 }
+
+
+def add_lore(modifiers: List[Dict]) -> None:
+    """Adds the lore army compositions to `MODIFIERS`. Their name and line live in configs/lore_armies.lua, so the config carries them.
+
+    Args:
+        modifiers (List[Dict]): The config's modifier records.
+    """
+    for modifier in modifiers:
+        if "name" in modifier:
+            MODIFIERS[modifier["key"]] = (modifier["name"], modifier["effect"], LORE_ICON, [])
 
 
 def line_text(key: str) -> str:

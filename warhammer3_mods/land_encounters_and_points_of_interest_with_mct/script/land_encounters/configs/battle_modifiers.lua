@@ -20,6 +20,21 @@ M.chance_setting = "battle_modifier_chance"
 --- How many modifiers a fight that rolls gets, as { count, weight }.
 M.count_weights = { { 1, 80 }, { 2, 15 }, { 3, 5 } }
 
+--- The share of the enemy army's unit slots a lore army fills with its lore units (configs/lore_armies.lua). The spine and the other slots
+--- come from the whole roster.
+M.lore_share = 0.7
+
+--- What a lore army's gold budget is multiplied by.
+M.lore_budget = 1.5
+
+--- A lore army often fills its 20 units before it spends its budget. Each share of the budget it leaves unspent gives its lore units one
+--- extra rank, up to `lore_max_ranks`.
+M.lore_rank_share = 0.1
+M.lore_max_ranks = 4
+
+--- The difficulties a lore army can roll on.
+M.lore_difficulties = { medium = true, hard = true }
+
 --- Victory gold change per modifier by its harm: "-" hurts us, "+" helps us, "~" cuts both ways.
 M.harm_gold = { ["-"] = 0.25, ["+"] = -0.15, ["~"] = 0 }
 
@@ -51,7 +66,8 @@ Fields of each modifier:
 - bundle: true when it is a bundle on each of its sides for the battle, named `bundle_prefix` .. key .. "_" .. side. Without it the
   battle script (script/battle/mod/land_enc_tower_buffs.lua) plays it under its key, and its numbers live there.
 - army: for an army composition, the theme the enemy army is built from instead of a random archetype, with the archetype fields of
-  configs/archetypes.lua (`shares`, `price_mode`, `requires`, `requires_count`). It only rolls when the enemy faction can field it.
+  configs/archetypes.lua (`shares`, `price_mode`, `requires`, `requires_count`). It only rolls when the enemy faction can field it. A lore
+  army's also has `faction` (the only faction it rolls for) and `units` (its lore units), and the record carries its `name` and `effect`.
 - hits: its sides as a set, built from `sides`.
 --]]
 M.list = {
@@ -145,6 +161,13 @@ M.list = {
     { key = "comp_gunline", harm = "~", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
       army = { shares = { missile = 55, artillery = 30, frontline = 15 }, price_mode = "normal", requires = "missile", requires_count = 3 } },
 }
+
+--- The lore armies join the list as army compositions.
+for _, lore in ipairs(require("script/land_encounters/configs/lore_armies")) do
+    --- With its bigger budget a lore army is always the harder fight, so it pays like any harmful modifier.
+    M.list[#M.list + 1] = { key = lore.key, harm = "-", sides = { "enemy" }, group = "composition", keeps_out = COMPOSITION_KEEPS_OUT,
+        name = lore.name, effect = lore.effect, army = { faction = lore.faction, shares = lore.shares, units = lore.units, price_mode = "normal" } }
+end
 
 --- Each modifier by its key, built from `list`.
 M.by_key = {}

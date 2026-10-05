@@ -747,7 +747,8 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         return
     end
     --- The next floor's battle modifiers, rolled before its offers so they can keep some out.
-    delve.modifiers = battle_modifiers.roll({ faction = self:tower_in_zone(delve.zone_name).faction })
+    local _, next_difficulty = tower_data.floor_difficulty(nil, delve.floor + 1, debug_config)
+    delve.modifiers = battle_modifiers.roll({ faction = self:tower_in_zone(delve.zone_name).faction, difficulty = next_difficulty })
     delve.offers = tower_offers.draw(delve, faction_name, self:tower_in_zone(delve.zone_name))
     delve.results = results
     self:launch_deeper(faction_name)

@@ -240,6 +240,58 @@ local function buy_from(army, candidates, spend_limit, max_count, preferred_unit
     return add_unit(army, unit, copies), copies
 end
 
+--- Spends gold and slots on a recipe's roles: splits them by its shares, giving the share of any role the pools cannot field to the
+--- others, then fills each role within its gold and slot quota, biggest first. A slot quota per role stops a role full of cheap units from
+--- filling the army before the others buy anything.
+--- @param army table The army being built. Mutated.
+--- @param pools table Role pools, as `build_role_pools` makes them.
+--- @param recipe table An archetype-like record with `shares`, `price_mode` and an optional `preferred_unit_type`.
+--- @param gold number The gold to spend.
+--- @param slots number The slots to fill.
+--- @returns table The role allowances, with what is left of each.
+local function spend_shares(army, pools, recipe, gold, slots)
+    local total_share = 0
+    for role, share in pairs(recipe.shares) do
+        if #pools[role] > 0 then total_share = total_share + share end
+    end
+    local allowances = {}
+    for _, role in ipairs(ROLES) do
+        local share = recipe.shares[role]
+        if share and #pools[role] > 0 then
+            table.insert(allowances, { role = role, gold = gold * share / total_share, slots = math.floor(slots * share / total_share + 0.5) })
+        end
+    end
+    table.sort(allowances, function(a, b) return a.gold > b.gold end)
+    for _, allowance in ipairs(allowances) do
+        while allowance.slots > 0 and army.slots_left > 0 do
+            local spend_limit = math.min(allowance.gold, army.budget_left)
+            local candidates = buyable_units(pools[allowance.role], army, spend_limit, recipe.price_mode, allowance.gold / allowance.slots)
+            if #candidates == 0 then break end
+            local cost, count = buy_from(army, candidates, spend_limit, math.min(allowance.slots, army.slots_left), recipe.preferred_unit_type)
+            allowance.gold = allowance.gold - cost
+            allowance.slots = allowance.slots - count
+        end
+    end
+    return allowances
+end
+
+--- Narrows role pools to a set of units, keeping each pool's order and working out its median price again.
+--- @param pools table Role pools, as `build_role_pools` makes them.
+--- @param keys table A set of land unit keys to keep.
+--- @returns table The narrowed pools.
+local function only_units(pools, keys)
+    local kept = {}
+    for _, role in ipairs(ROLES) do
+        local list = {}
+        for _, unit in ipairs(pools[role]) do
+            if keys[unit.land_unit] then list[#list + 1] = unit end
+        end
+        list.median = #list > 0 and list[math.ceil(#list / 2)].price or 0
+        kept[role] = list
+    end
+    return kept
+end
+
 --- Picks an enabled-origin lord (else a random vanilla one) and a random number of enabled-origin heroes. Only rolls on filtered
 --- copies, so the shared lord and hero lists in factions_data keep their order.
 --- @param difficulty_key string The difficulty key.
@@ -280,8 +332,11 @@ end
 --- sabotage and champion (`no_heroes`, `fewer_units` taken off the unit cap, `max_tier` and `min_tier` for the unit tiers, and `lord_subtype`
 --- for the lord), `unit_count` (an exact number of regular units, for a sized allied army) and `budget_range` ({min, max} gold that replaces the
 --- difficulty's MCT range), and `composition` (a battle modifier's army theme, an archetype-like record with `key`, `shares` and `price_mode`,
---- which replaces the rolled archetype).
---- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields.
+--- which replaces the rolled archetype, or for a lore army with `units`, `share` and `budget`, which fills `share` of the army's unit slots
+--- with those units on a budget multiplied by `budget`, and the spine and other slots from the rolled archetype. Each `rank_share` of the
+--- budget it leaves unspent gives its lore units a rank, up to `max_ranks`).
+--- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields, and for a
+--- lore army `lore_units` (its lore unit set) and `lore_ranks` (the extra ranks they get).
 function M.generate(difficulty_key, faction_shorthand_key, options)
     options = options or {}
     local settings = get_mct_settings()
@@ -291,8 +346,10 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     if options.no_heroes then heroes = {} end
     if options.lord_subtype then lord = { agent_subtype = options.lord_subtype, legendary = true } end
     local pools = build_role_pools(faction_shorthand_key, origins, options.max_tier, options.min_tier)
-    local archetype = options.composition or pick_archetype(pools, options.archetype_keys)
-    local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1))
+    local composition = options.composition
+    local lore = composition and composition.units and composition or nil
+    local archetype = (composition and not lore) and composition or pick_archetype(pools, options.archetype_keys)
+    local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1) * (lore and lore.budget or 1))
 
     local unit_slots = options.unit_count or (ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0))
     local army = { units = {}, copies = {}, budget_left = budget_roll, slots_left = unit_slots }
@@ -320,39 +377,23 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
         end
     end
 
-    --- Split the remaining gold and slots by the archetype's shares, giving the share of any role the faction cannot field to the others.
-    --- A slot quota per role stops a role full of cheap units from filling the army before the others buy anything.
-    local total_share = 0
-    for role, share in pairs(archetype.shares) do
-        if #pools[role] > 0 then total_share = total_share + share end
+    --- A lore army fills its share of the unit slots with its lore units first, with gold in proportion to the slots, and spends any gold
+    --- left at the end on them too, so they stay its bulk.
+    local lore_pools = lore and only_units(pools, lore.units)
+    local lore_allowances = nil
+    if lore then
+        local lore_slots = math.min(army.slots_left, math.floor(unit_slots * lore.share + 0.5))
+        lore_allowances = spend_shares(army, lore_pools, lore, army.budget_left * lore_slots / math.max(army.slots_left, 1), lore_slots)
     end
-    local allowances = {}
-    for _, role in ipairs(ROLES) do
-        local share = archetype.shares[role]
-        if share and #pools[role] > 0 then
-            table.insert(allowances, { role = role, gold = army.budget_left * share / total_share, slots = math.floor(army.slots_left * share / total_share + 0.5) })
-        end
-    end
-    table.sort(allowances, function(a, b) return a.gold > b.gold end)
+    local allowances = spend_shares(army, pools, archetype, army.budget_left, army.slots_left)
 
-    --- Fill each role within its gold and slot quota, biggest first.
-    for _, allowance in ipairs(allowances) do
-        while allowance.slots > 0 and army.slots_left > 0 do
-            local spend_limit = math.min(allowance.gold, army.budget_left)
-            local candidates = buyable_units(pools[allowance.role], army, spend_limit, archetype.price_mode, allowance.gold / allowance.slots)
-            if #candidates == 0 then break end
-            local cost, count = buy_from(army, candidates, spend_limit, math.min(allowance.slots, army.slots_left), archetype.preferred_unit_type)
-            allowance.gold = allowance.gold - cost
-            allowance.slots = allowance.slots - count
-        end
-    end
-
-    --- Spend any leftover gold on the archetype's roles until nothing is affordable or the army is full.
+    --- Spend any leftover gold on the archetype's roles (a lore army's lore roles) until nothing is affordable or the army is full.
+    local leftover_pools, leftover_allowances = lore_pools or pools, lore_allowances or allowances
     while army.slots_left > 0 do
         local target_price = army.budget_left / army.slots_left
         local candidates = {}
-        for _, allowance in ipairs(allowances) do
-            for _, unit in ipairs(buyable_units(pools[allowance.role], army, army.budget_left, archetype.price_mode, target_price)) do
+        for _, allowance in ipairs(leftover_allowances) do
+            for _, unit in ipairs(buyable_units(leftover_pools[allowance.role], army, army.budget_left, archetype.price_mode, target_price)) do
                 table.insert(candidates, unit)
             end
         end
@@ -362,8 +403,15 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
 
     local spent = budget - army.budget_left
     local bought = unit_slots - army.slots_left
-    out("INFO - Generated a " .. archetype.key .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. bought .. " units.")
-    return { lord = lord, heroes = heroes, units = army.units, archetype = archetype.key, budget = budget, spent = spent }
+    local kind = lore and (lore.key .. " (with " .. archetype.key .. ")") or archetype.key
+    out("INFO - Generated a " .. kind .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. bought .. " units.")
+    local makeup = { lord = lord, heroes = heroes, units = army.units, archetype = lore and lore.key or archetype.key, budget = budget, spent = spent }
+    if lore then
+        makeup.lore_units = lore.units
+        makeup.lore_ranks = math.min(lore.max_ranks, math.floor(army.budget_left / (budget * lore.rank_share)))
+        out("INFO - The " .. lore.key .. " army's lore units get " .. makeup.lore_ranks .. " extra ranks for " .. army.budget_left .. " gold left unspent.")
+    end
+    return makeup
 end
 
 --- True when a faction can field a buyable unit of one of the given types, at any tier.

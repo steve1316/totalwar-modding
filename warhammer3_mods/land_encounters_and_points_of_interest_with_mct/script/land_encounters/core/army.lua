@@ -51,6 +51,10 @@ local Army = {
     units_pool = {},
     units = {},
     unit_experience_amount = 0,
+    --- A lore army's lore unit keys, as a set, or nil for any other army.
+    lore_units = nil,
+    --- The extra ranks a lore army's lore units get once it spawns.
+    lore_ranks = 0,
     --- Lord pool / resolved lord
     lord_pool = {},
     lord = {},
@@ -259,6 +263,8 @@ function Army:create_from(force)
         units_pool = force.units,
         units = {},
         unit_experience_amount = force.unit_experience_amount,
+        lore_units = force.lore_units,
+        lore_ranks = force.lore_ranks or 0,
         lord_pool = force.lord,
         --- Lord fields are populated later by randomize_lord (subtype + level). The name and
         --- equipment fields are kept at empty defaults so downstream consumers can read them

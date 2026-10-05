@@ -11,18 +11,23 @@ local army_generator = require("script/land_encounters/core/army_generator")
 
 local M = {}
 
---- True when a modifier can roll for a fight. An army composition needs an enemy faction that can field its theme.
+--- True when a modifier can roll for a fight. An army composition needs an enemy faction that can field its theme, and a lore army
+--- its own faction on a difficulty in `lore_difficulties`.
 --- @param modifier table The modifier record.
---- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand.
+--- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand, and `difficulty`.
 --- @returns boolean True when it can roll.
 local function eligible(modifier, fight)
-    if not modifier.army then return true end
-    return fight ~= nil and fight.faction ~= nil and army_generator.can_field_theme(fight.faction, modifier.army)
+    local army = modifier.army
+    if not army then return true end
+    if fight == nil or fight.faction == nil then return false end
+    if army.faction then return army.faction == fight.faction and data.lore_difficulties[fight.difficulty] == true end
+    return army_generator.can_field_theme(fight.faction, army)
 end
 
 --- Rolls a fight's modifiers: none unless the MCT chance hits (no random number is drawn at 0), else 1-3 by `count_weights`, never one
 --- twice, never two of one group, and only those `eligible` for the fight. The debug `force_battle_modifiers` switch picks them instead.
---- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand. Without it no army composition rolls.
+--- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand, and `difficulty`. Without it no army composition
+--- rolls.
 --- @returns table The modifier keys, possibly empty.
 function M.roll(fight)
     if debug_config.force_battle_modifiers[1] then
@@ -95,11 +100,21 @@ end
 
 --- The army theme a fight's modifiers build the enemy army from, for the army generator's `composition` option.
 --- @param keys table|nil The modifier keys.
---- @returns table|nil The theme with its modifier key as `key`, or nil when no composition rolled.
+--- @returns table|nil The theme with its modifier key as `key`, or nil when no composition rolled. A lore army's also has `units` (a set of
+--- its lore unit keys), `share` (the share of the army's unit slots they fill), `budget` (its budget multiplier), and `rank_share` and
+--- `max_ranks` (the extra ranks its unspent gold buys its lore units).
 function M.composition(keys)
     for _, key in ipairs(keys or {}) do
         local army = data.by_key[key].army
-        if army then return { key = key, shares = army.shares, price_mode = army.price_mode } end
+        if army then
+            local theme = { key = key, shares = army.shares, price_mode = army.price_mode }
+            if army.units then
+                theme.units, theme.share, theme.budget = {}, data.lore_share, data.lore_budget
+                theme.rank_share, theme.max_ranks = data.lore_rank_share, data.lore_max_ranks
+                for _, unit_key in ipairs(army.units) do theme.units[unit_key] = true end
+            end
+            return theme
+        end
     end
     return nil
 end
