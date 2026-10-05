@@ -617,6 +617,7 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         lord_subtype = sabotage.lord_subtype,
         ally_options = ally_options,
         ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
+        composition = battle_modifiers.composition(delve.modifiers),
     }, general:faction():subculture())
     --- The battle manager puts these on the floor army once it spawns, with the battle modifiers' enemy bundles.
     for _, bundle in ipairs(battle_modifiers.bundles(delve.modifiers, "enemy")) do offer_effects.merge_sabotage(sabotage, { enemy_bundle = bundle }) end
@@ -746,7 +747,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         return
     end
     --- The next floor's battle modifiers, rolled before its offers so they can keep some out.
-    delve.modifiers = battle_modifiers.roll()
+    delve.modifiers = battle_modifiers.roll({ faction = self:tower_in_zone(delve.zone_name).faction })
     delve.offers = tower_offers.draw(delve, faction_name, self:tower_in_zone(delve.zone_name))
     delve.results = results
     self:launch_deeper(faction_name)

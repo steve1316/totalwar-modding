@@ -7,13 +7,24 @@ require("script/land_encounters/core/mct")
 
 local data = require("script/land_encounters/configs/battle_modifiers")
 local debug_config = require("script/land_encounters/configs/debug")
+local army_generator = require("script/land_encounters/core/army_generator")
 
 local M = {}
 
+--- True when a modifier can roll for a fight. An army composition needs an enemy faction that can field its theme.
+--- @param modifier table The modifier record.
+--- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand.
+--- @returns boolean True when it can roll.
+local function eligible(modifier, fight)
+    if not modifier.army then return true end
+    return fight ~= nil and fight.faction ~= nil and army_generator.can_field_theme(fight.faction, modifier.army)
+end
+
 --- Rolls a fight's modifiers: none unless the MCT chance hits (no random number is drawn at 0), else 1-3 by `count_weights`, never one
---- twice and never two of one group. The debug `force_battle_modifiers` switch picks them instead.
+--- twice, never two of one group, and only those `eligible` for the fight. The debug `force_battle_modifiers` switch picks them instead.
+--- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand. Without it no army composition rolls.
 --- @returns table The modifier keys, possibly empty.
-function M.roll()
+function M.roll(fight)
     if debug_config.force_battle_modifiers[1] then
         local forced = {}
         for _, key in ipairs(debug_config.force_battle_modifiers) do
@@ -26,7 +37,9 @@ function M.roll()
     if chance <= 0 or not random_chance(chance) then return {} end
     local count = pick_weighted(data.count_weights)
     local pool, picked, groups = {}, {}, {}
-    for _, modifier in ipairs(data.list) do pool[#pool + 1] = modifier end
+    for _, modifier in ipairs(data.list) do
+        if eligible(modifier, fight) then pool[#pool + 1] = modifier end
+    end
     while #picked < count and #pool > 0 do
         local modifier = table.remove(pool, random_number(#pool))
         if not (modifier.group and groups[modifier.group]) then
@@ -78,6 +91,17 @@ function M.notices(keys)
     local names = {}
     for _, key in ipairs(keys or {}) do names[#names + 1] = data.notice_prefix .. key end
     return names
+end
+
+--- The army theme a fight's modifiers build the enemy army from, for the army generator's `composition` option.
+--- @param keys table|nil The modifier keys.
+--- @returns table|nil The theme with its modifier key as `key`, or nil when no composition rolled.
+function M.composition(keys)
+    for _, key in ipairs(keys or {}) do
+        local army = data.by_key[key].army
+        if army then return { key = key, shares = army.shares, price_mode = army.price_mode } end
+    end
+    return nil
 end
 
 --- What a fight's modifiers multiply its victory gold by: each harmful one adds, each helpful one takes away, by `harm_gold`.

@@ -116,6 +116,10 @@ MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
     "wild_winds": ("Wild Winds", "Every 3 minutes a magical storm spawns near a random unit of any side.", "wh3_dlc24_wind_blast.png", []),
     "enemy_last_stand": ("Last Stand", "Enemy units cannot rout until they fall below half strength.", "attribute_unyielding_assault.png", []),
     "dead_rise": ("The Dead Rise", "At 3:00 our destroyed units return where they started, at half strength.", "attribute_undead.png", []),
+    "comp_monsters": ("Monster Horde", "The enemy army is mostly monsters and war beasts.", "rampage_cataclysmic.png", []),
+    "comp_riders": ("Riders' Host", "The enemy army is mostly cavalry and chariots.", "charge.png", []),
+    "comp_shieldwall": ("Shield Wall", "The enemy army is infantry only.", "icon_effects_fortify.png", []),
+    "comp_gunline": ("Gunline", "The enemy army is mostly missile infantry and artillery.", "artillery.png", []),
     "undying": ("Undying Foe", "At 3:00 two destroyed enemy units return where they started, at half strength.", "icon_necromantic_power.png", []),
 }
 

@@ -279,7 +279,8 @@ end
 --- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget), the tower's
 --- sabotage and champion (`no_heroes`, `fewer_units` taken off the unit cap, `max_tier` and `min_tier` for the unit tiers, and `lord_subtype`
 --- for the lord), `unit_count` (an exact number of regular units, for a sized allied army) and `budget_range` ({min, max} gold that replaces the
---- difficulty's MCT range).
+--- difficulty's MCT range), and `composition` (a battle modifier's army theme, an archetype-like record with `key`, `shares` and `price_mode`,
+--- which replaces the rolled archetype).
 --- @returns table A force_makeup with lord, heroes, units (unit_type -> array of unit keys), archetype, budget and spent fields.
 function M.generate(difficulty_key, faction_shorthand_key, options)
     options = options or {}
@@ -290,7 +291,7 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     if options.no_heroes then heroes = {} end
     if options.lord_subtype then lord = { agent_subtype = options.lord_subtype, legendary = true } end
     local pools = build_role_pools(faction_shorthand_key, origins, options.max_tier, options.min_tier)
-    local archetype = pick_archetype(pools, options.archetype_keys)
+    local archetype = options.composition or pick_archetype(pools, options.archetype_keys)
     local budget_roll = math.floor(random_range(budget_range[1], budget_range[2]) * (options.budget_multiplier or 1))
 
     local unit_slots = options.unit_count or (ARMY_UNIT_CAP - 1 - #heroes - (options.fewer_units or 0))
@@ -382,6 +383,17 @@ function M.can_field(faction_shorthand_key, unit_types)
         end
     end
     return false
+end
+
+--- True when a faction can field an army theme: it has at least `requires_count` distinct buyable units of the `requires` role, or the
+--- theme requires nothing.
+--- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param theme table An archetype-like record with optional `requires` and `requires_count`.
+--- @returns boolean True when the faction can field it.
+function M.can_field_theme(faction_shorthand_key, theme)
+    if factions_data[faction_shorthand_key] == nil then return false end
+    if theme.requires == nil then return true end
+    return #build_role_pools(faction_shorthand_key, enabled_origins())[theme.requires] >= theme.requires_count
 end
 
 --- The price of any unit in factions_data, by its key. A unit listed by several factions takes its highest price, so every client agrees.

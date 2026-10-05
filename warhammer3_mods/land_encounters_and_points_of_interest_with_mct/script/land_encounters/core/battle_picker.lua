@@ -73,8 +73,8 @@ end
 --- @param faction_keys table The enabled faction shorthands, for the neutral faction roll.
 --- @param difficulty string The current difficulty key.
 --- @returns table The event record: category, dilemma, incidents and targets, faction, difficulty, archetype_keys, budget_multiplier, intervention,
---- and for an Ally in Peril battle `ally`, `ally_options` and `ally_strength`, then the battle `modifiers` with their `enemy_bundles` and
---- `ally_bundles`.
+--- and for an Ally in Peril battle `ally`, `ally_options` and `ally_strength`, then the battle `modifiers` with their `composition`,
+--- `enemy_bundles` and `ally_bundles`.
 local function build_event(category, entries, faction_keys, difficulty)
     local minimum = category.min_difficulty
     local event = {
@@ -105,7 +105,8 @@ local function build_event(category, entries, faction_keys, difficulty)
     end
     if category.ally then add_ally(event, category.ally) end
     --- Battle modifiers: the enemy's and the allies' bundles go on with the sabotage and the ally, ours when the battle starts.
-    event.modifiers = battle_modifiers.roll()
+    event.modifiers = battle_modifiers.roll({ faction = event.faction })
+    event.composition = battle_modifiers.composition(event.modifiers)
     event.enemy_bundles = battle_modifiers.bundles(event.modifiers, "enemy")
     event.ally_bundles = battle_modifiers.bundles(event.modifiers, "allies")
     out("DEBUG - battle_picker picked " .. event.category .. " (" .. event.dilemma .. ") for faction " .. tostring(event.faction) .. " on " .. event.difficulty)

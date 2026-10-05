@@ -119,3 +119,7 @@ campaign_localised_strings_string_land_enc_spot_modifier_wild_winds	[[col:yellow
 campaign_localised_strings_string_land_enc_spot_modifier_enemy_last_stand	[[col:yellow]]Modifier:[[/col]] Last Stand - Enemy units cannot rout until they fall below half strength.	false
 campaign_localised_strings_string_land_enc_spot_modifier_dead_rise	[[col:yellow]]Modifier:[[/col]] The Dead Rise - At 3:00 our destroyed units return where they started, at half strength.	false
 campaign_localised_strings_string_land_enc_spot_modifier_undying	[[col:yellow]]Modifier:[[/col]] Undying Foe - At 3:00 two destroyed enemy units return where they started, at half strength.	false
+campaign_localised_strings_string_land_enc_spot_modifier_comp_monsters	[[col:yellow]]Modifier:[[/col]] Monster Horde - The enemy army is mostly monsters and war beasts.	false
+campaign_localised_strings_string_land_enc_spot_modifier_comp_riders	[[col:yellow]]Modifier:[[/col]] Riders' Host - The enemy army is mostly cavalry and chariots.	false
+campaign_localised_strings_string_land_enc_spot_modifier_comp_shieldwall	[[col:yellow]]Modifier:[[/col]] Shield Wall - The enemy army is infantry only.	false
+campaign_localised_strings_string_land_enc_spot_modifier_comp_gunline	[[col:yellow]]Modifier:[[/col]] Gunline - The enemy army is mostly missile infantry and artillery.	false
