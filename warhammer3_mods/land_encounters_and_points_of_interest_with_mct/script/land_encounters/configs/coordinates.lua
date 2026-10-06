@@ -821,8 +821,8 @@ M.immortal_empires = {
     points_of_interest = {
         ["southernchaoswastes"] = {
             ["smithies"] = {
-                { coordinates = {332, 28}, initial_owner = "wh3_main_tze_oracles_of_tzeentch", owner_if_player = "wh3_main_nur_bubonic_swarm", region = "" },
-                { coordinates = {553, 36}, initial_owner = "wh2_dlc17_lzd_oxyotl", owner_if_player = "wh3_main_tze_flaming_scribes", region = "" }
+                { coordinates = {334, 26}, initial_owner = "wh3_main_tze_oracles_of_tzeentch", owner_if_player = "wh3_main_nur_bubonic_swarm", region = "", manual = true },
+                { coordinates = {562, 38}, initial_owner = "wh2_dlc17_lzd_oxyotl", owner_if_player = "wh3_main_tze_flaming_scribes", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -831,8 +831,8 @@ M.immortal_empires = {
          },
          ["southlands"] = {
             ["smithies"] = {
-                { coordinates = {647, 98}, initial_owner = "wh2_main_hef_order_of_loremasters", owner_if_player = "wh3_main_tze_oracles_of_tzeentch", region = "" },
-                { coordinates = {553, 217}, initial_owner = "wh2_main_lzd_tlaqua", owner_if_player = "wh3_main_emp_cult_of_sigmar", region = "" }
+                { coordinates = {648, 92}, initial_owner = "wh2_main_hef_order_of_loremasters", owner_if_player = "wh3_main_tze_oracles_of_tzeentch", region = "", manual = true },
+                { coordinates = {552, 213}, initial_owner = "wh2_main_lzd_tlaqua", owner_if_player = "wh3_main_emp_cult_of_sigmar", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -841,9 +841,9 @@ M.immortal_empires = {
          },
          ["nehekara"] = {
             ["smithies"] = {
-                { coordinates = {634, 259}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh_main_vmp_vampire_counts", region = "" },
-                { coordinates = {469, 325}, initial_owner = "wh2_dlc09_tmb_followers_of_nagash", owner_if_player = "wh2_main_brt_thegans_crusaders", region = "" },
-                { coordinates = {793, 265}, initial_owner = "wh2_dlc09_tmb_lybaras", owner_if_player = "wh2_main_vmp_the_silver_host", region = "" }
+                { coordinates = {638, 263}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh_main_vmp_vampire_counts", region = "", manual = true },
+                { coordinates = {467, 331}, initial_owner = "wh2_dlc09_tmb_followers_of_nagash", owner_if_player = "wh2_main_brt_thegans_crusaders", region = "", manual = true },
+                { coordinates = {789, 268}, initial_owner = "wh2_dlc09_tmb_lybaras", owner_if_player = "wh2_main_vmp_the_silver_host", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -852,10 +852,10 @@ M.immortal_empires = {
          },
          ["badlands"] = {
             ["smithies"] = {
-                { coordinates = {602, 316}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh3_main_kho_exiles_of_khorne", region = "" },
-                { coordinates = {620, 421}, initial_owner = "wh_main_grn_orcs_of_the_bloody_hand", owner_if_player = "wh3_main_ogr_disciples_of_the_maw", region = "" },
-                { coordinates = {800, 363}, initial_owner = "wh2_main_skv_clan_mors", owner_if_player = "wh2_dlc09_tmb_lybaras", region = "" },
-                { coordinates = {710, 533}, initial_owner = "wh_main_dwf_dwarfs", owner_if_player = "wh_main_teb_border_princes", region = "" },
+                { coordinates = {606, 321}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh3_main_kho_exiles_of_khorne", region = "", manual = true },
+                { coordinates = {629, 417}, initial_owner = "wh_main_grn_orcs_of_the_bloody_hand", owner_if_player = "wh3_main_ogr_disciples_of_the_maw", region = "", manual = true },
+                { coordinates = {809, 364}, initial_owner = "wh2_main_skv_clan_mors", owner_if_player = "wh2_dlc09_tmb_lybaras", region = "", manual = true },
+                { coordinates = {717, 521}, initial_owner = "wh_main_dwf_dwarfs", owner_if_player = "wh_main_teb_border_princes", region = "", manual = true },
                 { coordinates = {691, 390}, initial_owner = "wh3_main_ie_vmp_sires_of_mourkain", owner_if_player = "wh3_main_ie_vmp_sires_of_mourkain", region = "" }
             },
 
@@ -865,11 +865,11 @@ M.immortal_empires = {
          },
          ["lustria"] = {
             ["smithies"] = {
-                { coordinates = {82, 438}, initial_owner = "wh2_main_lzd_hexoatl", owner_if_player = "wh2_dlc13_emp_the_huntmarshals_expedition", region = "" },
-                { coordinates = {72, 313}, initial_owner = "wh2_dlc13_emp_the_huntmarshals_expedition", owner_if_player = "wh2_main_def_blood_hall_coven", region = "" },
-                { coordinates = {237, 298}, initial_owner = "wh2_dlc11_cst_vampire_coast", owner_if_player = "wh_main_brt_bordeleaux", region = "" },
-                { coordinates = {220, 235}, initial_owner = "wh2_main_lzd_itza", owner_if_player = "wh2_dlc11_cst_vampire_coast", region = "" },
-                { coordinates = {197, 140}, initial_owner = "wh2_main_skv_clan_pestilens", owner_if_player = "wh2_dlc12_lzd_cult_of_sotek", region = "" }
+                { coordinates = {87, 438}, initial_owner = "wh2_main_lzd_hexoatl", owner_if_player = "wh2_dlc13_emp_the_huntmarshals_expedition", region = "", manual = true },
+                { coordinates = {77, 317}, initial_owner = "wh2_dlc13_emp_the_huntmarshals_expedition", owner_if_player = "wh2_main_def_blood_hall_coven", region = "", manual = true },
+                { coordinates = {248, 300}, initial_owner = "wh2_dlc11_cst_vampire_coast", owner_if_player = "wh_main_brt_bordeleaux", region = "", manual = true },
+                { coordinates = {220, 230}, initial_owner = "wh2_main_lzd_itza", owner_if_player = "wh2_dlc11_cst_vampire_coast", region = "", manual = true },
+                { coordinates = {205, 155}, initial_owner = "wh2_main_skv_clan_pestilens", owner_if_player = "wh2_dlc12_lzd_cult_of_sotek", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -879,19 +879,22 @@ M.immortal_empires = {
          ["cathay"] = {
             ["smithies"] = {
                 {
-                    coordinates = {1211, 647},
+                    coordinates = {1214, 644},
+                    manual = true,
                     initial_owner = "wh3_main_cth_the_northern_provinces",
                     owner_if_player = "wh3_dlc20_chs_vilitch",
                     region = ""
                 },
                 {
-                    coordinates = {1348, 607},
+                    coordinates = {1337, 608},
+                    manual = true,
                     initial_owner = "wh2_dlc11_def_the_blessed_dread",
                     owner_if_player = "wh3_main_cth_celestial_loyalists",
                     region = ""
                 },
                 {
-                    coordinates = {1308, 369},
+                    coordinates = {1310, 364},
+                    manual = true,
                     initial_owner = "wh2_dlc13_lzd_spirits_of_the_jungle",
                     owner_if_player = "wh3_dlc21_wef_spirits_of_shanlin",
                     region = ""
@@ -904,7 +907,7 @@ M.immortal_empires = {
          },
          ["mountainsofmourn"] = {
             ["smithies"] = {
-                { coordinates = {1103, 567}, initial_owner = "wh3_main_cth_the_northern_provinces", owner_if_player = "wh3_main_cth_dissenter_lords_of_jinshen", region = "" }
+                { coordinates = {1093, 565}, initial_owner = "wh3_main_cth_the_northern_provinces", owner_if_player = "wh3_main_cth_dissenter_lords_of_jinshen", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -913,11 +916,11 @@ M.immortal_empires = {
          },
          ["darklands"] = {
             ["smithies"] = {
-                { coordinates = {892, 651}, initial_owner = "wh3_main_vmp_lahmian_sisterhood", owner_if_player = "wh3_main_vmp_lahmian_sisterhood", region = "" },
-                { coordinates = {934, 551}, initial_owner = "wh2_dlc09_skv_clan_rictus", owner_if_player = "wh3_main_grn_dark_land_orcs", region = "" },
+                { coordinates = {899, 649}, initial_owner = "wh3_main_vmp_lahmian_sisterhood", owner_if_player = "wh3_main_vmp_lahmian_sisterhood", region = "", manual = true },
+                { coordinates = {935, 558}, initial_owner = "wh2_dlc09_skv_clan_rictus", owner_if_player = "wh3_main_grn_dark_land_orcs", region = "", manual = true },
                 { coordinates = {1012, 461}, initial_owner = "wh3_main_ogr_goldtooth", owner_if_player = "wh3_main_ogr_lazarghs", region = "" },
-                { coordinates = {873, 430}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh3_main_ogr_thunderguts", region = "" },
-                { coordinates = {1105, 453}, initial_owner = "wh3_main_vmp_caravan_of_blue_roses", owner_if_player = "wh3_main_cth_the_western_provinces", region = "" }
+                { coordinates = {875, 435}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh3_main_ogr_thunderguts", region = "", manual = true },
+                { coordinates = {1113, 450}, initial_owner = "wh3_main_vmp_caravan_of_blue_roses", owner_if_player = "wh3_main_cth_the_western_provinces", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -927,9 +930,9 @@ M.immortal_empires = {
          },
          ["worldsedgemountains"] = {
             ["smithies"] = {
-                { coordinates = {832, 554}, initial_owner = "wh3_dlc23_chd_legion_of_azgorh", owner_if_player = "wh_main_dwf_karak_azul", region = "" },
-                { coordinates = {837, 449}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh_main_dwf_karak_azul", region = "" },
-                { coordinates = {727, 460}, initial_owner = "wh_main_grn_crooked_moon", owner_if_player = "wh_main_grn_scabby_eye", region = "" }
+                { coordinates = {844, 555}, initial_owner = "wh3_dlc23_chd_legion_of_azgorh", owner_if_player = "wh_main_dwf_karak_azul", region = "", manual = true },
+                { coordinates = {836, 443}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh_main_dwf_karak_azul", region = "", manual = true },
+                { coordinates = {723, 459}, initial_owner = "wh_main_grn_crooked_moon", owner_if_player = "wh_main_grn_scabby_eye", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -938,10 +941,10 @@ M.immortal_empires = {
          },
          ["empire"] = {
             ["smithies"] = {
-                { coordinates = {540, 765}, initial_owner = "wh_dlc03_bst_beastmen", owner_if_player = "wh_main_emp_nordland", region = "" },
-                { coordinates = {585, 715}, initial_owner = "wh3_dlc20_chs_festus", owner_if_player = "wh_main_emp_empire", region = "" },
-                { coordinates = {658, 627}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_stirland", region = "" },
-                { coordinates = {710, 658}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_ostland", region = "" }
+                { coordinates = {545, 768}, initial_owner = "wh_dlc03_bst_beastmen", owner_if_player = "wh_main_emp_nordland", region = "", manual = true },
+                { coordinates = {589, 718}, initial_owner = "wh3_dlc20_chs_festus", owner_if_player = "wh_main_emp_empire", region = "", manual = true },
+                { coordinates = {657, 622}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_stirland", region = "", manual = true },
+                { coordinates = {709, 661}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_ostland", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -951,8 +954,8 @@ M.immortal_empires = {
          },
          ["kislev"] = {
             ["smithies"] = {
-                { coordinates = {726, 695}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "" },
-                { coordinates = {611, 797}, initial_owner = "wh3_main_ksl_the_great_orthodoxy", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "" }
+                { coordinates = {723, 697}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "", manual = true },
+                { coordinates = {612, 798}, initial_owner = "wh3_main_ksl_the_great_orthodoxy", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -962,9 +965,9 @@ M.immortal_empires = {
          },
          ["norsca"] = {
             ["smithies"] = {
-                { coordinates = {678, 825}, initial_owner = "wh2_main_skv_clan_moulder", owner_if_player = "wh_main_dwf_kraka_drak", region = "" },
-                { coordinates = {808, 773}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "" },
-                { coordinates = {433, 859}, initial_owner = "wh_dlc08_nor_norsca", owner_if_player = "wh_main_nor_varg", region = "" }
+                { coordinates = {677, 817}, initial_owner = "wh2_main_skv_clan_moulder", owner_if_player = "wh_main_dwf_kraka_drak", region = "", manual = true },
+                { coordinates = {812, 776}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "", manual = true },
+                { coordinates = {433, 855}, initial_owner = "wh_dlc08_nor_norsca", owner_if_player = "wh_main_nor_varg", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -974,8 +977,8 @@ M.immortal_empires = {
          },
          ["borderprinces"] = {
             ["smithies"] = {
-                { coordinates = {435, 439}, initial_owner = "wh2_main_skv_clan_skryre", owner_if_player = "wh_main_teb_estalia", region = "" },
-                { coordinates = {675, 549}, initial_owner = "wh_main_teb_border_princes", owner_if_player = "wh_main_teb_border_princes", region = "" }
+                { coordinates = {427, 441}, initial_owner = "wh2_main_skv_clan_skryre", owner_if_player = "wh_main_teb_estalia", region = "", manual = true },
+                { coordinates = {664, 537}, initial_owner = "wh_main_teb_border_princes", owner_if_player = "wh_main_teb_border_princes", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -991,7 +994,7 @@ M.immortal_empires = {
          },
          ["bretonnia"] = {
             ["smithies"] = {
-                { coordinates = {491, 511}, initial_owner = "wh_dlc05_wef_wood_elves", owner_if_player = "wh_main_brt_carcassonne", region = "" },
+                { coordinates = {484, 502}, initial_owner = "wh_dlc05_wef_wood_elves", owner_if_player = "wh_main_brt_carcassonne", region = "", manual = true },
                 { coordinates = {459, 599}, initial_owner = "wh2_dlc15_grn_broken_axe", owner_if_player = "wh2_dlc11_vmp_the_barrow_legion", region = "" },
                 { coordinates = {426, 674}, initial_owner = "wh_main_brt_bretonnia", owner_if_player = "wh_main_emp_marienburg", region = "" }
             },
@@ -1002,8 +1005,8 @@ M.immortal_empires = {
          },
          ["ulthuan"] = {
             ["smithies"] = {
-                { coordinates = {216, 630}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_def_scourge_of_khaine", region = "" },
-                { coordinates = {326, 593}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_hef_yvresse", region = "" }
+                { coordinates = {214, 635}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_def_scourge_of_khaine", region = "", manual = true },
+                { coordinates = {331, 595}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_hef_yvresse", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -1012,10 +1015,10 @@ M.immortal_empires = {
          },
          ["naggarond"] = {
             ["smithies"] = {
-                { coordinates = {89, 873}, initial_owner = "wh2_main_def_naggarond", owner_if_player = "wh3_dlc20_chs_valkia", region = "" },
-                { coordinates = {296, 866}, initial_owner = "wh2_main_def_har_ganeth", owner_if_player = "wh3_main_grn_da_cage_breakaz", region = "" },
-                { coordinates = {206, 744}, initial_owner = "wh2_dlc11_cst_the_drowned", owner_if_player = "wh2_main_hef_nagarythe", region = "" },
-                { coordinates = {62, 519}, initial_owner = "wh2_main_def_cult_of_pleasure", owner_if_player = "wh2_main_def_ssildra_tor", region = "" }
+                { coordinates = {98, 877}, initial_owner = "wh2_main_def_naggarond", owner_if_player = "wh3_dlc20_chs_valkia", region = "", manual = true },
+                { coordinates = {293, 859}, initial_owner = "wh2_main_def_har_ganeth", owner_if_player = "wh3_main_grn_da_cage_breakaz", region = "", manual = true },
+                { coordinates = {212, 743}, initial_owner = "wh2_dlc11_cst_the_drowned", owner_if_player = "wh2_main_hef_nagarythe", region = "", manual = true },
+                { coordinates = {72, 526}, initial_owner = "wh2_main_def_cult_of_pleasure", owner_if_player = "wh2_main_def_ssildra_tor", region = "", manual = true }
             },
 
             ["taverns"] = {},
@@ -1025,31 +1028,36 @@ M.immortal_empires = {
          ["northernchaoswastes"] = {
             ["smithies"] = {
                 {
-                    coordinates = {554, 935},
+                    coordinates = {558, 939},
+                    manual = true,
                     initial_owner = "wh2_main_def_hag_graef",
                     owner_if_player = "wh3_main_tze_broken_wheel",
                     region = ""
                 },
                 {
-                    coordinates = {837, 882},
+                    coordinates = {842, 878},
+                    manual = true,
                     initial_owner = "wh3_main_ksl_ursun_revivalists",
                     owner_if_player = "wh_main_chs_chaos",
                     region = ""
                 },
                 {
-                    coordinates = {843, 751},
+                    coordinates = {847, 758},
+                    manual = true,
                     initial_owner = "wh_main_grn_greenskins",
                     owner_if_player = "wh3_main_grn_slaves_of_zharr",
                     region = ""
                 },
                 {
-                    coordinates = {1097, 704},
+                    coordinates = {1089, 710},
+                    manual = true,
                     initial_owner = "wh3_dlc20_chs_kholek",
                     owner_if_player = "wh3_main_ogr_fleshgreeders",
                     region = ""
                 },
                 {
-                    coordinates = {1221, 692},
+                    coordinates = {1216, 695},
+                    manual = true,
                     initial_owner = "wh3_dlc20_chs_vilitch",
                     owner_if_player = "wh3_main_cth_imperial_wardens",
                     region = ""
