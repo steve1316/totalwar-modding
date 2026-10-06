@@ -358,19 +358,12 @@ function TavernState:resolve_capture_choice(choice, invasion_battle_manager)
     if invasion_battle_manager:can_generate_battle(defender_army, self.coordinates) then
         log("tavern: capture battle at level " .. self.level .. " difficulty against " .. self.controlling_faction_name)
         invasion_battle_manager:generate_battle(defender_army, self.visiting_enemy_character, self.coordinates)
-        self:await_capture_battle(invasion_battle_manager, defender_army)
+        invasion_battle_manager:await_battle(self, "TavernSpot", nil, defender_army)
     else
         --- No spawn point for the defenders, so the Tavern is taken without a fight.
         log("tavern: no room for the defenders, so the Tavern is taken without a battle")
         self:trigger_event_given_battle_result(true)
     end
-end
-
---- Marks the defenders for removal after the battle and waits for its result. Used when the battle starts and again after a load.
---- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
---- @param defender_army Army The Tavern's defending army.
-function TavernState:await_capture_battle(invasion_battle_manager, defender_army)
-    invasion_battle_manager:await_battle(self, "TavernSpot", nil, defender_army)
 end
 
 --- Resolves a capture battle: the player takes the Tavern on a win, and is repelled on a loss.
@@ -554,7 +547,7 @@ function TavernEventDelegate:initialize(points_of_interest, saved)
             if tavern.is_capture_triggered then
                 local defensive_army = tavern:get_defensive_army()
                 self.invasion_battle_manager:set_auxiliary_army_for_reset(defensive_army)
-                tavern:await_capture_battle(self.invasion_battle_manager, defensive_army)
+                self.invasion_battle_manager:await_battle(tavern, "TavernSpot", nil, defensive_army)
             end
         end
     end

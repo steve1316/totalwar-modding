@@ -64,10 +64,9 @@ local MARK_PREFIX = "leapoi_tavern_mark_"
 --- Marker infos of a marked spot in order: the one shown until the last turns, then the countdown, one marker per turn.
 local MARK_INFOS = { "invasion_marker_5", "invasion_marker_3", "invasion_marker_2", "invasion_marker_1" }
 
---- Events a marked spot's markers fire when they run out. CA's marker manager needs one to spawn the next marker. Nothing listens for them:
+--- Event a marked spot's markers fire when they run out, which CA's marker manager needs to spawn the next marker. Nothing listens for it:
 --- the mission's own deadline fails the contract.
 local MARK_COUNTDOWN_EVENT = "ScriptEventLeapoiTavernMarkCountdown"
-local MARK_EXPIRED_EVENT = "ScriptEventLeapoiTavernMarkExpired"
 
 --- Payload text prefix of a contract, followed by its kind and the Tavern's level, e.g. dummy_land_enc_tavern_contract_cull_2.
 local LINE_PREFIX = "dummy_land_enc_tavern_contract_"
@@ -99,27 +98,27 @@ local LINE_BACK = offers_data.line_prefix .. offers_data.tavern.leave_line
 --- @param tavern TavernState The Tavern.
 --- @returns table { turn, offers = { kind, ... }, taken = { [place] = faction key } }.
 function M.roll_board(tavern)
-    if #debug_config.tavern_board > 0 then
-        log("tavern: debug tavern_board posts " .. table.concat(debug_config.tavern_board, ", ") .. " at the " .. tavern:describe())
-        local offers = {}
-        for i, kind in ipairs(debug_config.tavern_board) do offers[i] = kind end
-        return { turn = cm:turn_number(), offers = offers, taken = {} }
-    end
     local board = { turn = cm:turn_number(), offers = {}, taken = {} }
-    for i = 1, tavern_data.contracts.board_size do board.offers[i] = KINDS[random_number(#KINDS)] end
-    if tavern_data.levels[tavern.level].contracts.chain then board.offers[#board.offers + 1] = "chain" end
-    log("tavern: the board of the " .. tavern:describe() .. " posts " .. table.concat(board.offers, ", "))
+    local forced = #debug_config.tavern_board > 0
+    if forced then
+        for i, kind in ipairs(debug_config.tavern_board) do board.offers[i] = kind end
+    else
+        for i = 1, tavern_data.contracts.board_size do board.offers[i] = KINDS[random_number(#KINDS)] end
+        if tavern_data.levels[tavern.level].contracts.chain then board.offers[#board.offers + 1] = "chain" end
+    end
+    log("tavern: the board of the " .. tavern:describe() .. " posts " .. table.concat(board.offers, ", ") .. (forced and " (debug tavern_board)" or ""))
     return board
 end
 
 --- Rolls the board again when there is none yet or `restock_turns` have passed since it was rolled. Rewards follow the Tavern's level when
---- the board opens, so a level-up needs no new roll.
+--- the board opens, so a level-up needs no new roll. A board saved before taken contracts stayed on it gets an empty `taken`.
 --- @param tavern TavernState The Tavern.
 function M.ensure_board(tavern)
     local board = tavern.board
     if board == nil or cm:turn_number() >= board.turn + tavern_data.contracts.restock_turns then
         tavern.board = M.roll_board(tavern)
     end
+    tavern.board.taken = tavern.board.taken or {}
 end
 
 --- The contracts a faction holds. Read only: a faction that holds none gets a new empty list, not one kept in the save.
@@ -152,7 +151,7 @@ function M.open(tavern, faction, general_cqi)
         local slot = { choice = CHOICE_PREFIX .. i, index = i, kind = kind, deposit = tavern:charge(base, faction_name),
             target = kind == "cull" and enemy and enemy:name() or nil }
         local choice = { key = slot.choice, lines = { LINE_PREFIX .. kind .. "_" .. tavern.level } }
-        if (tavern.board.taken or {})[i] then
+        if tavern.board.taken[i] then
             choice.lines[2] = LINE_TAKEN
         elseif full then
             choice.lines[2] = LINE_HELD_FULL
@@ -364,8 +363,10 @@ end
 --- Removes a contract's marked spot markers, their marker types and the listeners CA's marker manager set up for them, when it has any.
 --- CA's own `clear_marker_type` counts a marker's instances with `#` on a keyed table, so it never despawns them (`despawn_all` does first),
 --- and it leaves the listeners behind, which a later contract on the same mission slot would hear twice.
---- @param mark string The marked spot's key.
-local function clear_mark(mark)
+--- @param faction_name string The faction that holds the contract.
+--- @param key string The contract's mission key.
+local function clear_mark(faction_name, key)
+    local mark = mark_of(faction_name, key)
     for i = 1, #MARK_INFOS do
         local key = mark .. "_" .. i
         local marker = Interactive_Marker_Manager:get_marker(key)
@@ -389,13 +390,13 @@ end
 local function start_marked(tavern, faction_name, contract, turns)
     local x, y, region_key = spawn_point(tavern, faction_name)
     if x == nil then return false end
+    clear_mark(faction_name, contract.key)
     local mark = mark_of(faction_name, contract.key)
-    clear_mark(mark)
     local first = nil
     for i, info in ipairs(MARK_INFOS) do
         local duration = i == 1 and math.max(1, turns - #MARK_INFOS + 1) or 1
         local marker = Interactive_Marker_Manager:new_marker_type(mark .. "_" .. i, info, duration, 1, faction_name)
-        if i < #MARK_INFOS then marker:add_timeout_event(MARK_COUNTDOWN_EVENT, mark .. "_" .. (i + 1)) else marker:add_timeout_event(MARK_EXPIRED_EVENT) end
+        if i < #MARK_INFOS then marker:add_timeout_event(MARK_COUNTDOWN_EVENT, mark .. "_" .. (i + 1)) end
         marker:add_interaction_event(M.MARK_ENTERED_EVENT)
         marker:despawn_on_interaction(false)
         first = first or marker
@@ -455,7 +456,6 @@ local function take(tavern, faction_name, slot, general_cqi, invasion_battle_man
     end
     M.held_by_faction[faction_name] = M.held_by_faction[faction_name] or {}
     table.insert(M.held_by_faction[faction_name], contract)
-    tavern.board.taken = tavern.board.taken or {}
     tavern.board.taken[slot.index] = faction_name
 end
 
@@ -553,7 +553,7 @@ function M.on_mark_battle(delegate, faction_name, key, won)
         if tavern then tavern:show_message(faction_name, "tavern_mark_repelled") end
         return
     end
-    clear_mark(mark_of(faction_name, key))
+    clear_mark(faction_name, key)
     cm:complete_scripted_mission_objective(faction_name, key, key, true)
 end
 
@@ -625,11 +625,20 @@ end
 local function advance_chain(delegate, faction_name, contract, tavern)
     contract.step = contract.step + 1
     if tavern and start(tavern, faction_name, contract, delegate.invasion_battle_manager) then
-        show_located_message(faction_name, "tavern_chain_next", tavern.coordinates)
+        tavern:show_message(faction_name, "tavern_chain_next")
         return true
     end
     void(faction_name, contract, tavern)
     return false
+end
+
+--- Takes a contract's hunted lord's army and marked spot markers off the map, when it has them.
+--- @param delegate TavernEventDelegate The Tavern delegate.
+--- @param faction_name string The faction that holds it.
+--- @param contract table The contract.
+local function clear_from_map(delegate, faction_name, contract)
+    if contract.invasion then delegate.invasion_battle_manager:remove_invasion_force_by_identifier(contract.invasion) end
+    clear_mark(faction_name, contract.key)
 end
 
 --- Settles a contract whose mission ended. The mission's payload already paid its reward on success. A chain that is not finished moves to
@@ -644,13 +653,13 @@ function M.on_mission_ended(delegate, faction_name, key, outcome)
     local contract, i = find_contract(faction_name, key)
     if contract == nil then return end
     log("tavern: " .. faction_name .. "'s contract " .. key .. " " .. outcome .. " (deposit " .. contract.deposit .. ")")
-    if contract.invasion then delegate.invasion_battle_manager:remove_invasion_force_by_identifier(contract.invasion) end
-    clear_mark(mark_of(faction_name, key))
+    clear_from_map(delegate, faction_name, contract)
     local tavern = delegate:find(contract.zone, contract.index)
-    local chain_goes_on = outcome == "succeeded" and contract.kind == "chain" and contract.step < #tavern_data.contracts.chain.steps
-    if chain_goes_on and advance_chain(delegate, faction_name, contract, tavern) then return end
+    if outcome == "succeeded" and contract.kind == "chain" and contract.step < #tavern_data.contracts.chain.steps then
+        if not advance_chain(delegate, faction_name, contract, tavern) then table.remove(M.held(faction_name), i) end
+        return
+    end
     table.remove(M.held(faction_name), i)
-    if chain_goes_on then return end
     if outcome == "succeeded" then
         if contract.hero_reward then
             tower_lords.free_hero(contract.general_cqi, faction_name, { offer_effects.culture_shorthand(faction_name) }, tavern_data.contracts.chain.hero_rank)
@@ -669,19 +678,19 @@ end
 --- @param faction_name string The faction whose turn starts.
 function M.on_faction_turn_start(delegate, faction_name)
     local held = M.held(faction_name)
+    local faction = #held > 0 and cm:get_faction(faction_name)
     for i = #held, 1, -1 do
         local contract = held[i]
         --- A marked spot battle the lord backed out of last turn no longer blocks the mark.
         contract.battle_event = nil
         --- A contract whose mission the game never issued (or lost) can never end, so it is void as well.
-        local issued = cm:mission_is_active_for_faction(cm:get_faction(faction_name), contract.key)
+        local issued = cm:mission_is_active_for_faction(faction, contract.key)
         if is_void(contract) or not issued then
             --- The contract leaves the held list before its mission is cancelled, so the cancellation event finds nothing to settle and does not
             --- take the deposit that `void` returns.
             table.remove(held, i)
             log("tavern: " .. faction_name .. "'s contract " .. contract.key .. (issued and " can no longer be met" or " has no active mission"))
-            if contract.invasion then delegate.invasion_battle_manager:remove_invasion_force_by_identifier(contract.invasion) end
-            clear_mark(mark_of(faction_name, contract.key))
+            clear_from_map(delegate, faction_name, contract)
             void(faction_name, contract, delegate:find(contract.zone, contract.index))
             cm:cancel_custom_mission(faction_name, contract.key)
         elseif contract.force_cqi then
