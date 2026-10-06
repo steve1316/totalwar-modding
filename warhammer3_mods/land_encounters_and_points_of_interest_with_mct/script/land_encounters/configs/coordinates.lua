@@ -1161,14 +1161,14 @@ M.realm_of_chaos = {
               {319, 169},
               {280, 180},
               --- River Lynsk: Erengrad
-              {238, 145},
+              {238, 145, disabled = true},
               {282, 137},
               --- Black Blood Pass
               {367, 218},
               --- The Cursed City: Praag
               {435, 196},
               --- River Urskoy: Kislev
-              {439, 135},
+              {439, 135, disabled = true},
               --- Eastern Oblast
               {518, 135},
               {463, 175},
@@ -1204,7 +1204,7 @@ M.realm_of_chaos = {
               {823, 32},
               {881, 36},
               --- The Howling Wastes
-              {873, 161},
+              {873, 161, disabled = true},
               {866, 218},
               {933, 166},
               {941, 188},
@@ -1224,7 +1224,7 @@ M.realm_of_chaos = {
          },
          ["worldsedgemountains"] = {
               --- The High Pass
-              {692, 224},
+              {692, 224, disabled = true},
               {603, 228},
               --- Worlds Edge Mountains
               {590, 133},
@@ -1238,7 +1238,7 @@ M.realm_of_chaos = {
               --- The Witch's Wood
               {98, 182},
               --- Wasteland
-              {86, 126},
+              {86, 126, disabled = true},
               {60, 140},
               {69, 97},
               {93, 77},
@@ -1268,7 +1268,7 @@ M.realm_of_chaos = {
               {346, 55},
               --- Ostland
               {327, 137},
-              {309, 113},
+              {309, 113, disabled = true},
               {360, 107},
               {337, 88},
               --- Ostermark
@@ -1330,14 +1330,14 @@ M.realm_of_chaos = {
               {800, 304},
               {820, 338},
               --- Mountains of Mourn
-              {879, 338},
+              {879, 338, disabled = true},
               --- Mist Gorge
               {945, 326},
               --- Wyrm Pass
               {1010, 330},
               {988, 281},
               --- Bone Road
-              {863, 465},
+              {863, 465, disabled = true},
               --- Ivory Road
               --- Ice Pass
               --- Ancient Giant Lands
@@ -1401,7 +1401,7 @@ M.realm_of_chaos = {
               {329, 471},
               --- Bloodfire Falls
               {274, 442},
-              {303, 440},
+              {303, 440, disabled = true},
               {338, 442},
               {273, 398},
               --- The Cold Mires
@@ -1448,7 +1448,7 @@ M.realm_of_chaos = {
               {851, 517},
               {850, 572},
               --- The Red Wastes
-              {888, 589},
+              {888, 589, disabled = true},
               {862, 612},
               {895, 618},
               {894, 646},
@@ -1469,7 +1469,10 @@ M.realm_of_chaos = {
                 { coordinates = {229, 203}, initial_owner = "wh3_main_ksl_the_great_orthodoxy", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "wh3_main_chaos_region_castle_alexandronov" } --wh_main_nor_varg
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {238, 145}, manual = true },
+                { coordinates = {439, 135}, culture = "ksl", manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1481,7 +1484,10 @@ M.realm_of_chaos = {
                 { coordinates = {832, 148}, initial_owner = "wh2_dlc09_skv_clan_rictus", owner_if_player = "wh3_main_lzd_tepoks_spawn", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {740, 135}, manual = true },
+                { coordinates = {873, 161}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1491,7 +1497,9 @@ M.realm_of_chaos = {
                 { coordinates = {663, 178}, initial_owner = "wh2_dlc16_vmp_lahmian_sisterhood", owner_if_player = "wh2_dlc16_vmp_lahmian_sisterhood", region = "" },
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {692, 224}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1502,7 +1510,10 @@ M.realm_of_chaos = {
                 { coordinates = {485, 54}, initial_owner = "wh_main_vmp_waldenhof", owner_if_player = "wh_main_vmp_waldenhof", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {86, 126}, manual = true },
+                { coordinates = {309, 113}, culture = "emp", manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1512,7 +1523,9 @@ M.realm_of_chaos = {
                 { coordinates = {168, 275}, initial_owner = "wh2_dlc13_wef_laurelorn_forest", owner_if_player = "wh2_dlc13_wef_laurelorn_forest", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {425, 284}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1522,7 +1535,10 @@ M.realm_of_chaos = {
                 { coordinates = {873, 235}, initial_owner = "wh3_main_dwf_karak_azorn", owner_if_player = "wh3_main_dwf_karak_azorn", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {879, 338}, culture = "ogr", manual = true },
+                { coordinates = {863, 465}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1533,7 +1549,10 @@ M.realm_of_chaos = {
                 { coordinates = {913, 621}, initial_owner = "wh3_main_chs_dreaded_wo", owner_if_player = "wh3_main_chs_dreaded_wo", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {1016, 486}, manual = true },
+                { coordinates = {1018, 595}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1546,7 +1565,14 @@ M.realm_of_chaos = {
                 { coordinates = {781, 431}, initial_owner = "wh3_main_ogr_mountaineaters", owner_if_player = "wh3_main_ogr_mountaineaters", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {303, 440}, manual = true },
+                { coordinates = {209, 573}, manual = true },
+                { coordinates = {447, 377}, manual = true },
+                { coordinates = {653, 458}, manual = true },
+                { coordinates = {888, 589}, culture = "chs", manual = true },
+                { coordinates = {608, 356}, manual = true },
+            },
 
             ["resources"] = {}
         }
