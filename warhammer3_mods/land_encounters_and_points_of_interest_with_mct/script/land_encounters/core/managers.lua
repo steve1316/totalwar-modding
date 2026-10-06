@@ -1270,7 +1270,7 @@ local PointOfInterestEventManager = {
 --- @param points_of_interest_by_zone table Region-keyed table of POI coordinate data.
 function PointOfInterestEventManager:generate_points_of_interests_states(points_of_interest_by_zone)
     for zone_name, coordinates in pairs(points_of_interest_by_zone) do
-        self.smithy_event_delegate:generate_states(zone_name, coordinates["smithies"])
+        self.smithy_event_delegate:generate_states(zone_name, coordinates["smithies"] or {})
     end
 end
 
