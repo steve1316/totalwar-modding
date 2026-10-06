@@ -4,6 +4,7 @@ settlements), an LLM picks the places and writes `data/suggestions/<block>.json`
 Usage:
     cd helper_scripts
     python -m tools.spot_map.suggest brief --campaign ie     # writes _diag/spot_map/brief_ie.md for the LLM to read
+    python -m tools.spot_map.suggest sheets --campaign ie    # writes contact sheets of every spot on the detailed map, for a review by eye
     python -m tools.spot_map.suggest check --campaign ie     # checks the campaign's suggestion files against coordinates.lua
 
 Suggestions only stand on existing enabled spots, which are known to be reachable land, so a suggestion never lands in the sea.
@@ -22,6 +23,13 @@ from core.utilities import setup_script_logging
 from tools.spot_map import campaigns, coordinates_io
 
 SUGGESTION_DIR = os.path.join(campaigns.DATA_DIR, "suggestions")
+#: Spots flagged by a review of the contact sheets, one file per coordinates.lua block.
+REVIEW_DIR = os.path.join(campaigns.DATA_DIR, "reviews")
+SHEET_DIR = os.path.join(campaigns.CACHE_DIR, "sheets")
+#: Contact sheets: each tile shows this many logical units around its spot, drawn at TILE_PX square, COLS x ROWS tiles per sheet.
+SHEET_RADIUS = 10
+TILE_PX = 200
+COLS, ROWS = 6, 6
 #: Spots closer than this on both x and y count as crowding a candidate.
 CROWD_RANGE = 30
 #: Faction key tokens that are not a LEAPOI culture shorthand but belong to one.
@@ -193,19 +201,112 @@ def check(suggestions: List[dict], spots: List[dict], pois: List[dict]) -> List[
     return out
 
 
+def write_sheets(key: str) -> List[str]:
+    """Cuts every enabled spot, then every enabled point of interest (smithies, taverns), out of the detailed campaign map into labelled tiles
+    on contact sheets, for an LLM to review by eye (e.g. for entries lying on a road). Each tile is centred on its entry, which gets a
+    crosshair and a ring one unit wide. Points of interest are labelled with their list, e.g. "smithies badlands 2".
+
+    Args:
+        key (str): A `campaigns.CAMPAIGNS` key.
+
+    Raises:
+        ValueError: When the campaign has no detailed map or Pillow is missing.
+
+    Returns:
+        The paths of the sheets.
+    """
+    from PIL import Image, ImageDraw, ImageFont
+    facts = campaign_facts(key)
+    campaign = facts["campaign"]
+    jpeg = campaigns.detail_map(campaign)
+    if not jpeg:
+        raise ValueError(f"{campaign['label']} has no detailed map (or Pillow is missing)")
+    image = Image.open(jpeg)
+    logical_width, logical_height = campaigns.png_size(campaigns.map_files(campaign)["prebattle"])
+    scale_x, scale_y = image.width / logical_width, image.height / logical_height
+    font = ImageFont.load_default(size=15)
+    live = [s for s in facts["spots"] if not s["disabled"]] + [p for p in facts["pois"] if not p["disabled"]]
+    os.makedirs(SHEET_DIR, exist_ok=True)
+    paths = []
+    per_sheet = COLS * ROWS
+    for n in range(0, len(live), per_sheet):
+        sheet = Image.new("RGB", (COLS * TILE_PX, ROWS * TILE_PX), "white")
+        for i, s in enumerate(live[n:n + per_sheet]):
+            px, py = s["x"] * scale_x, image.height - s["y"] * scale_y
+            box = (px - SHEET_RADIUS * scale_x, py - SHEET_RADIUS * scale_y, px + SHEET_RADIUS * scale_x, py + SHEET_RADIUS * scale_y)
+            tile = image.crop(tuple(int(v) for v in box)).resize((TILE_PX, TILE_PX))
+            draw = ImageDraw.Draw(tile)
+            c, ring = TILE_PX / 2, TILE_PX / (2 * SHEET_RADIUS)
+            draw.ellipse((c - ring, c - ring, c + ring, c + ring), outline=(255, 0, 0), width=2)
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                draw.line((c + dx * ring * 1.6, c + dy * ring * 1.6, c + dx * ring * 3, c + dy * ring * 3), fill=(255, 0, 0), width=2)
+            label = f"{s['kind'] + ' ' if 'kind' in s else ''}{s['zone']} {s['index']}"
+            draw.rectangle((0, 0, draw.textlength(label, font=font) + 6, 19), fill=(255, 255, 255))
+            draw.text((3, 1), label, fill=(0, 0, 0), font=font)
+            draw.rectangle((0, 0, TILE_PX - 1, TILE_PX - 1), outline=(80, 80, 80))
+            sheet.paste(tile, ((i % COLS) * TILE_PX, (i // COLS) * TILE_PX))
+        path = os.path.join(SHEET_DIR, f"{key}_{n // per_sheet + 1:02d}.png")
+        sheet.save(path)
+        paths.append(path)
+    return paths
+
+
+def load_reviews(campaign: dict) -> List[dict]:
+    """Loads the review flags of every coordinates.lua block a campaign draws.
+
+    Args:
+        campaign (dict): One `campaigns.CAMPAIGNS` entry.
+
+    Returns:
+        Flags as {"lua", "zone", "spot", "x", "y", "issue", "note"}, where x, y are where the spot stood when it was flagged.
+    """
+    out = []
+    for lua in campaign["lua"]:
+        path = os.path.join(REVIEW_DIR, f"{lua}.json")
+        if os.path.isfile(path):
+            out += json.load(open(path, encoding="utf-8"))["flags"]
+    return out
+
+
+def check_reviews(flags: List[dict], spots: List[dict], pois: List[dict]) -> List[dict]:
+    """Marks review flags as fixed once their entry has moved or been disabled since it was flagged. A flag on a point of interest names its
+    list as "kind" (e.g. "smithies") and its index in that list as "spot".
+
+    Args:
+        flags (List[dict]): Flags from `load_reviews`.
+        spots (List[dict]): The campaign's spots, as `campaigns.campaign_entries` builds them.
+        pois (List[dict]): The campaign's points of interest, likewise.
+
+    Returns:
+        The flags, each with "fixed" and "problem" (None when the entry exists).
+    """
+    by_ref = {(s["lua"], s["zone"], None, s["index"]): s for s in spots}
+    by_ref.update({(p["lua"], p["zone"], p["kind"], p["index"]): p for p in pois})
+    out = []
+    for flag in flags:
+        spot = by_ref.get((flag.get("lua"), flag.get("zone"), flag.get("kind"), flag.get("spot")))
+        fixed = bool(spot) and (spot["disabled"] or (spot["x"], spot["y"]) != (flag.get("x"), flag.get("y")))
+        out.append({**flag, "fixed": fixed, "problem": None if spot else f"no spot {flag.get('zone')} {flag.get('spot')}"})
+    return out
+
+
 def main() -> int:
-    """Runs the brief or check command.
+    """Runs the brief, sheets or check command.
 
     Returns:
         int: Process exit code, 1 when a check finds problems.
     """
     setup_script_logging()
     parser = argparse.ArgumentParser(description="Spot map placement suggestions")
-    parser.add_argument("command", choices=["brief", "check"])
+    parser.add_argument("command", choices=["brief", "sheets", "check"])
     parser.add_argument("--campaign", required=True, choices=list(campaigns.CAMPAIGN_BY_KEY))
     args = parser.parse_args()
     if args.command == "brief":
         logging.info(f"Wrote {write_brief(args.campaign)}")
+        return 0
+    if args.command == "sheets":
+        paths = write_sheets(args.campaign)
+        logging.info(f"Wrote {len(paths)} contact sheets to {SHEET_DIR}")
         return 0
     facts = campaign_facts(args.campaign)
     checked = check(load(facts["campaign"]), facts["spots"], facts["pois"])

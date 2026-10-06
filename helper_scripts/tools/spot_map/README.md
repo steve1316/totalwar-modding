@@ -96,6 +96,23 @@ card. Click one, or **Accept** it in the card, to queue it:
 Removing the pending entry undoes both. Once exported, a suggestion shows as "placed". A campaign shows the suggestions of every block it
 draws, so IE Expanded shows IE's.
 
+## Review
+
+The page draws each campaign's detailed map (`<map>.dds` next to the minimap, four times its size) when Pillow is installed. Roads show on
+it as thin double lines, region borders as thin single black lines and rivers as wide dark bands. It is converted to a JPEG in `_diag/spot_map/` once.
+
+To review every spot by eye, for example for spots lying on roads:
+
+1. `python -m tools.spot_map.suggest sheets --campaign ie` cuts every enabled spot, then every smithy and tavern, out of the detailed map
+   into labelled tiles on contact sheets in `_diag/spot_map/sheets/` (36 per sheet, 10 units around each entry, a ring one unit wide on it).
+2. An LLM (or you) goes through the sheets and writes `data/reviews/<block>.json`: `{"flags": [{"lua", "zone", "spot", "x", "y", "issue",
+   "note"}]}`, where x, y are the entry's coordinates when it was flagged. A flag on a smithy or tavern adds `"kind"` (its list, e.g.
+   `"smithies"`) and gives its index in that list as `"spot"`.
+
+The **Review** card lists the flags with their issue. **Zoom** centres the map on one, and **Next open spot** walks the open ones in order.
+Flagged spots get a dashed ring (the **flagged for review** chip). Drag the spot somewhere better or click it to delete it. A flag shows as
+pending while the move or deletion is queued, and as fixed once it is exported.
+
 ## What LEAPOI does with it
 
 - `disabled = true` spots never become encounters, new towers or tower battlefields; an encounter active on one in a save is removed on load.

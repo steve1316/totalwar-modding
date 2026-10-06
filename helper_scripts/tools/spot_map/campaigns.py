@@ -188,14 +188,41 @@ def map_files(campaign: dict) -> Optional[Dict[str, str]]:
         return None
     folder = f"campaign_maps/{campaign['maps']}{versions[-1]}"
     dest = os.path.join(CACHE_DIR, key)
-    for name in (campaign["minimap"], "prebattle_map.png"):
+    detail = campaign["minimap"][:-len("_minimap.png")] + ".dds"
+    for name in (campaign["minimap"], "prebattle_map.png", detail):
         cached_pack_extract(pack, f"{folder}/{name}", dest, source_kind="file", tables_as_tsv=False, capture_output=True)
     files = {"minimap": os.path.join(dest, folder, campaign["minimap"]), "prebattle": os.path.join(dest, folder, "prebattle_map.png")}
-    if not all(os.path.isfile(f) for f in files.values()):
+    if os.path.isfile(os.path.join(dest, folder, detail)):
+        files["detail_dds"] = os.path.join(dest, folder, detail)
+    if not all(os.path.isfile(files[k]) for k in ("minimap", "prebattle")):
         logging.warning(f"{campaign['label']}: extracting {folder} failed")
         return None
     _maps[key] = files
     return files
+
+
+def detail_map(campaign: dict) -> Optional[str]:
+    """Converts the campaign's detailed map texture to a JPEG once, for the page background and the review sheets. Needs Pillow.
+
+    Args:
+        campaign (dict): One `CAMPAIGNS` entry.
+
+    Returns:
+        The JPEG's path, or None when the campaign has no detailed map or Pillow is missing.
+    """
+    files = map_files(campaign)
+    if not files or "detail_dds" not in files:
+        return None
+    jpeg = files["detail_dds"][:-len(".dds")] + "_detail.jpg"
+    if not os.path.isfile(jpeg) or os.path.getmtime(jpeg) < os.path.getmtime(files["detail_dds"]):
+        try:
+            from PIL import Image
+        except ImportError:
+            logging.warning("Pillow is not installed, so the page uses the minimap. pip install Pillow for the detailed map.")
+            return None
+        Image.open(files["detail_dds"]).convert("RGB").save(jpeg, quality=88)
+        logging.info(f"{campaign['label']}: converted the detailed map to {jpeg}")
+    return jpeg
 
 
 def import_settlement_dump() -> Optional[str]:
@@ -388,6 +415,7 @@ def state() -> dict:
         width, height = png_size(files["minimap"])
         logical_width, logical_height = png_size(files["prebattle"])
         out.append({"key": campaign["key"], "label": campaign["label"], "W": width, "H": height, "LW": logical_width, "LH": logical_height,
+                    "detail": "detail_dds" in files,
                     **campaign_entries(campaign, blocks), "settlements": settlements_for(campaign), "layout": load_layout(campaign, blocks),
                     "history": history.get(campaign["key"], [])})
     return {"campaigns": out, "types": SPOT_TYPES, "cultures": CULTURES}

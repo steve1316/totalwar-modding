@@ -49,6 +49,8 @@ svg#map { display: block; width: 100%; height: auto; cursor: crosshair; backgrou
 svg#map.drag { cursor: grabbing; }
 /* Hollow rings (trimmed, disabled, provinces with no spot) have no fill; "all" makes their inside hoverable and clickable too. */
 svg#map circle { pointer-events: all; }
+/* Review rings are only a marker: clicks and drags go through to the spots under them. */
+svg#map circle.cat-flagged { pointer-events: none; }
 .mapbar { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; align-items: center; }
 /* Live in-game (logical) coordinates under the pointer. */
 .coord { font-family: var(--mono); font-size: .85rem; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 5px;
@@ -66,7 +68,8 @@ svg#map circle { pointer-events: all; }
 svg#map.hide-kept .cat-kept, svg#map.hide-trimmed .cat-trimmed, svg#map.hide-added .cat-added, svg#map.hide-deleted .cat-deleted,
 svg#map.hide-disabled .cat-disabled, svg#map.hide-smithy .cat-smithy, svg#map.hide-settlement .cat-settlement,
 svg#map.hide-gap .cat-gap, svg#map.hide-manual .cat-manual, svg#map.hide-tower .cat-tower, svg#map.hide-tavern .cat-tavern, svg#map.hide-poi .cat-poi,
-svg#map.hide-suggested .cat-suggested { display: none; }
+svg#map.hide-suggested .cat-suggested, svg#map.hide-flagged .cat-flagged { display: none; }
+tr.open-flag td:first-child { font-weight: 700; }
 td.why { font-size: .82rem; color: var(--muted); }
 td .fields { display: grid; gap: 3px; }
 td .fields label { display: grid; grid-template-columns: 7.5em 1fr; align-items: center; gap: 4px; font-size: .8rem; color: var(--muted); }
@@ -144,6 +147,7 @@ ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-s
       <button type="button" class="chip" data-cat="smithy" aria-pressed="true"><i class="sw" style="background:var(--forge);border-radius:2px"></i>smithy</button>
       <button type="button" class="chip" data-cat="tavern" aria-pressed="true"><i class="sw" style="background:var(--tavern);border-radius:0;transform:rotate(45deg) scale(.8)"></i>tavern</button>
       <button type="button" class="chip" data-cat="settlement" aria-pressed="true"><i class="sw" style="background:var(--settle);width:6px;height:6px"></i>settlement</button>
+      <button type="button" class="chip" data-cat="flagged" aria-pressed="true"><i class="sw" style="border:2px dashed var(--del)"></i>flagged for review</button>
       <button type="button" class="chip" data-cat="suggested" aria-pressed="true"><i class="sw" style="border:2px dashed var(--ink)"></i>suggested</button>
       <button type="button" class="chip" data-cat="gap" aria-pressed="true"><i class="sw" style="border:2px solid var(--gap)"></i>province with no spot</button>
       <span class="hint">Click a chip to show or hide it. Scroll to zoom, drag to pan.</span>
@@ -193,6 +197,12 @@ ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-s
         <ul class="hist" id="history"></ul>
         <p class="note" id="historyNone">No exports of this campaign yet. Each export to coordinates.lua is logged in _diag/spot_map/history.jsonl.</p>
       </section>
+      <section class="card wide" id="reviewCard">
+        <h2>Review</h2>
+        <p class="note" id="reviewNote"></p>
+        <div class="row" style="margin:6px 0 8px"><button type="button" class="btn primary" id="reviewNext">Next open spot</button></div>
+        <div class="tbl"><table id="reviews"><thead><tr><th>Zone</th><th>Spot</th><th>Issue</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+      </section>
       <section class="card" id="sugCard">
         <h2>Suggestions</h2>
         <p class="note" id="sugNote"></p>
@@ -221,7 +231,11 @@ const ctl = { camp: null, spacing: 30, metric: 'box', smithy: false, plant: 'spo
 // Clean-slate queues by campaign: the layout from disk as `add`, with nothing to delete or move in existing data.
 const slate = {};
 let layoutSave = null;
-let STATE = null, C = null, W = 1, H = 1, view, bg, gLabels, gSpots, gAdds, gSug;
+let STATE = null, C = null, W = 1, H = 1, view, bg, gLabels, gSpots, gAdds, gSug, gFlags;
+// The flagged spot the Review card zoomed to last, so "Next open spot" walks the list in order.
+let reviewAt = -1;
+// Indexes of flags hidden because the spacing trim removes their spot or a suggestion takes it over.
+let reviewHidden = new Set();
 let spots = [], pois = [], settlements = [];
 let pending = {};
 let z = 1, tx = 0, ty = 0;
@@ -363,10 +377,11 @@ function build(resetView) {
   svg.style.aspectRatio = `${W} / ${H}`;
   svg.innerHTML = '';
   view = el('g', {}, svg);
-  bg = el('image', { href: `/map/${C.key}.png`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none', opacity: document.getElementById('mapFade').value / 100 }, view);
+  // The detailed map (roads drawn as double lines) when the campaign has one, else the minimap.
+  bg = el('image', { href: C.detail ? `/map/${C.key}-detail.jpg` : `/map/${C.key}.png`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none', opacity: document.getElementById('mapFade').value / 100 }, view);
   bg.style.display = document.getElementById('mapOn').checked ? '' : 'none';
   const gSettle = el('g', {}, view); gLabels = el('g', {}, view);
-  const gForge = el('g', {}, view); gSpots = el('g', {}, view); gAdds = el('g', {}, view); gSug = el('g', {}, view);
+  const gForge = el('g', {}, view); gSpots = el('g', {}, view); gAdds = el('g', {}, view); gSug = el('g', {}, view); gFlags = el('g', {}, view);
   const slateMode = ctl.mode === 'slate';
   spots = slateMode ? [] : C.spots.map(s => ({ ...s }));
   pois = slateMode ? [] : C.pois; settlements = C.settlements;
@@ -560,7 +575,70 @@ function render() {
     document.getElementById('lostNote').textContent = `${lost.length} of the ${provBefore.size} provinces that have spots today would have none. Provinces are matched by nearest settlement.`;
   }
   renderSuggestions();
+  renderReviews(new Set(spots.filter((s, i) => live[i] && !keep[i]).map(spotKey)));
   renderPending();
+}
+
+// The pending-queue key of a flagged entry: a spot, or a point of interest when the flag names its list as `kind`.
+const flagKey = f => f.kind ? poiKey({ lua: f.lua, zone: f.zone, kind: f.kind, index: f.spot }) : spotKey({ lua: f.lua, zone: f.zone, index: f.spot });
+
+// Status of a flagged entry: fixed once its coordinates differ from those it was flagged at, moving or deleting while that change is pending.
+function reviewStatus(f) {
+  const p = P(), key = flagKey(f);
+  if (f.problem) return f.problem;
+  if (f.fixed) return 'fixed';
+  if (p.move[key]) return 'moving (pending)';
+  if (p.disable.includes(key)) return 'deleting (pending)';
+  return 'open';
+}
+
+// Spots flagged by a review, ringed on the map and listed with their issue. Each row zooms to its spot. The rings let clicks and drags through
+// to whatever is under them, so the flag shows in the spot's own tooltip instead. Flags are hidden on spots the spacing trim removes and on
+// spots a suggestion takes over, since those spots leave the encounter pool either way.
+function renderReviews(trimmed) {
+  const list = ctl.mode === 'slate' ? [] : (C.reviews || []);
+  const entryByKey = new Map(spots.map(s => [spotKey(s), s]).concat(pois.map(f => [poiKey(f), f])));
+  gFlags.innerHTML = '';
+  document.getElementById('reviewCard').hidden = !list.length;
+  const tb = document.querySelector('#reviews tbody');
+  tb.innerHTML = '';
+  reviewHidden = new Set();
+  const suggested = new Set((C.suggestions || []).filter(x => !x.problem).map(x => spotKey({ lua: x.lua, zone: x.zone, index: x.spot })));
+  let open = 0, byTrim = 0, bySuggestion = 0;
+  list.forEach((f, i) => {
+    const key = flagKey(f);
+    if (suggested.has(key)) { reviewHidden.add(i); bySuggestion++; return; }
+    if (trimmed.has(key)) { reviewHidden.add(i); byTrim++; return; }
+    const status = reviewStatus(f);
+    if (status === 'open') open++;
+    if (f.x !== null && status !== 'fixed') {
+      el('circle', { class: 'cat-flagged', cx: sx(f.x), cy: sy(f.y), r: 7 * C.r0, fill: 'none', stroke: 'var(--del)', 'stroke-width': 1.6 * viewOpts.dot,
+        'stroke-dasharray': '3 2' }, gFlags);
+      const entry = entryByKey.get(key);
+      if (entry) entry.el.dataset.tip += `<br><b>Flagged: ${esc(f.issue)}</b> - ${esc(f.note)} (${status})`;
+    }
+    const tr = document.createElement('tr');
+    if (status === 'open') tr.className = 'open-flag';
+    const what = f.kind ? `${esc((typeOfList(f.kind) || { label: f.kind }).label.toLowerCase())} ${f.spot}` : f.spot;
+    tr.innerHTML = `<td>${esc(f.zone)}</td><td class="n">${what}</td><td>${esc(f.issue)}${f.note ? ': ' + esc(f.note) : ''}</td><td>${esc(status)}</td>` +
+      `<td><button type="button" class="btn" data-zoom="${i}">Zoom</button></td>`;
+    tb.appendChild(tr);
+  });
+  const hidden = [byTrim && `${byTrim} on spots the spacing trim removes`, bySuggestion && `${bySuggestion} on spots a suggestion takes over`].filter(Boolean);
+  const hiddenNote = hidden.length ? ` Hidden: ${hidden.join(', ')}.` : '';
+  document.getElementById('reviewNote').textContent = `${list.length - reviewHidden.size} spots flagged in tools/spot_map/data/reviews/, ${open} still open.${hiddenNote} Zoom to one and drag it ` +
+    'somewhere better (or click it to delete it); it counts as fixed once the move is exported.';
+  tb.querySelectorAll('button[data-zoom]').forEach(b => b.addEventListener('click', () => zoomToFlag(+b.dataset.zoom)));
+}
+
+// Centres the map on a flagged spot, zoomed in, and scrolls the map into view.
+function zoomToFlag(i) {
+  const f = (C.reviews || [])[i];
+  if (!f || f.x === null) return;
+  reviewAt = i;
+  z = 8; tx = W / 2 - sx(f.x) * z; ty = H / 2 - sy(f.y) * z;
+  apply();
+  document.querySelector('.mapbox').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 // Suggestions not yet accepted, drawn as dashed outlines of their type over the spot they take over, and listed in their card.
@@ -843,6 +921,14 @@ document.addEventListener('keydown', e => {
   if (!(e.ctrlKey || e.metaKey) || /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
   const k = e.key.toLowerCase();
   if (k === 'z' || k === 'y') { e.preventDefault(); stepHistory(k === 'z' && !e.shiftKey); }
+});
+document.getElementById('reviewNext').addEventListener('click', () => {
+  const list = C.reviews || [];
+  for (let step = 1; step <= list.length; step++) {
+    const i = (reviewAt + step) % list.length;
+    if (!reviewHidden.has(i) && reviewStatus(list[i]) === 'open') { zoomToFlag(i); return; }
+  }
+  msg.className = 'msg'; msg.textContent = 'No open flagged spots left.';
 });
 document.getElementById('sugAll').addEventListener('click', () => accept((C.suggestions || []).map(s => s.id)));
 let clearArmed = false;

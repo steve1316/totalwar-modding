@@ -29,7 +29,9 @@ def page_state() -> dict:
     """
     data = campaigns.state()
     for campaign in data["campaigns"]:
-        campaign["suggestions"] = suggest.check(suggest.load(campaigns.CAMPAIGN_BY_KEY[campaign["key"]]), campaign["spots"], campaign["pois"])
+        source = campaigns.CAMPAIGN_BY_KEY[campaign["key"]]
+        campaign["suggestions"] = suggest.check(suggest.load(source), campaign["spots"], campaign["pois"])
+        campaign["reviews"] = suggest.check_reviews(suggest.load_reviews(source), campaign["spots"], campaign["pois"])
     return data
 
 
@@ -62,12 +64,19 @@ class Handler(BaseHTTPRequestHandler):
         self._send(code, json.dumps(data, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
 
     def do_GET(self):
-        """Serves `/`, `/api/state` and `/map/<campaign>.png`."""
+        """Serves `/`, `/api/state`, `/map/<campaign>.png` (minimap) and `/map/<campaign>-detail.jpg` (detailed map)."""
         if self.path in ("/", "/index.html"):
             self._send(200, open(os.path.join(STATIC_DIR, "index.html"), "rb").read(), "text/html; charset=utf-8")
         elif self.path == "/api/state":
             campaigns.import_settlement_dump()
             self._json(200, page_state())
+        elif self.path.startswith("/map/") and self.path.endswith("-detail.jpg"):
+            campaign = campaigns.CAMPAIGN_BY_KEY.get(self.path[len("/map/"):-len("-detail.jpg")])
+            jpeg = campaign and campaigns.detail_map(campaign)
+            if not jpeg:
+                self._json(404, {"error": "no detailed map"})
+                return
+            self._send(200, open(jpeg, "rb").read(), "image/jpeg", cache="max-age=86400")
         elif self.path.startswith("/map/") and self.path.endswith(".png"):
             key = self.path[len("/map/"):-len(".png")]
             campaign = campaigns.CAMPAIGN_BY_KEY.get(key)

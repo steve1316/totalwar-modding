@@ -311,3 +311,22 @@ def test_export_log_describes_changes_and_lists_newest_first(tmp_path, monkeypat
     spot_campaigns.log_export("ie", "draft", "b3.lua", "second", ["add spot in x at {1, 1}"])
     history = spot_campaigns.export_history()
     assert [r["summary"] for r in history["ie"]] == ["second", "first"] and [r["summary"] for r in history["roc"]] == ["other campaign"]
+
+
+def test_review_flags_count_as_fixed_once_the_spot_moves_or_is_disabled():
+    spots = [{"lua": "ie", "zone": "a", "index": 1, "x": 10, "y": 20, "disabled": False, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 2, "x": 31, "y": 40, "disabled": False, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 3, "x": 50, "y": 60, "disabled": True, "flags": []}]
+    flag = {"lua": "ie", "zone": "a", "issue": "road", "note": ""}
+    out = suggest.check_reviews([{**flag, "spot": 1, "x": 10, "y": 20}, {**flag, "spot": 2, "x": 30, "y": 40}, {**flag, "spot": 3, "x": 50, "y": 60},
+                                 {**flag, "spot": 9, "x": 0, "y": 0}, {**flag, "kind": "smithies", "spot": 1, "x": 70, "y": 80}], spots,
+                                [{"lua": "ie", "zone": "a", "kind": "smithies", "index": 1, "x": 70, "y": 80, "disabled": False}])
+    assert [f["fixed"] for f in out] == [False, True, True, False, False] and not out[4]["problem"]
+    assert out[3]["problem"] and not out[0]["problem"]
+
+
+@pytest.mark.parametrize("key", ["ie", "roc"])
+def test_saved_review_flags_match_the_real_file(key):
+    facts = suggest.campaign_facts(key)
+    flags = suggest.check_reviews(suggest.load_reviews(facts["campaign"]), facts["spots"], facts["pois"])
+    assert flags and not [f["problem"] for f in flags if f["problem"]]
