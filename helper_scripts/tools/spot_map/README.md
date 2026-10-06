@@ -84,6 +84,7 @@ key: you ask Claude Code in a session.
    the cultures of the 3 nearest settlements, how crowded it is and how far it is to the nearest smithy.
 2. The LLM reads the brief and writes `data/suggestions/<block>.json`, one file per coordinates.lua block (e.g. `immortal_empires.json`):
    `{"suggestions": [{"type", "lua", "zone", "spot", "fields", "reason"}]}`. A suggestion always takes over an existing enabled spot, which is known to be reachable land, so it never lands in the sea.
+   When that spot lies on a road, an optional `"at": [x, y]` puts the entry a few units beside it, off the road.
 3. `python -m tools.spot_map.suggest check --campaign ie` reports a missing or disabled spot, a spot named twice, an unknown type or an
    unknown culture.
 

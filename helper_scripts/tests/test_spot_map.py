@@ -285,6 +285,9 @@ def test_check_places_suggestions_and_flags_problems():
     assert out[4]["placed"] and out[4]["problem"] is None
     assert "unknown culture" in out[5]["problem"]
     assert "unknown type" in out[6]["problem"]
+    taverns = [{"lua": "ie", "zone": "a", "kind": "taverns", "index": 2, "x": 12, "y": 23, "fields": {}, "disabled": False}]
+    moved = suggest.check([{**tavern, "spot": 1, "at": [12, 23]}], spots, pois + taverns)
+    assert (moved[0]["x"], moved[0]["y"], moved[0]["placed"]) == (12, 23, True)
 
 
 @pytest.mark.parametrize("key", ["ie", "iee", "roc"])

@@ -581,7 +581,7 @@ function renderSuggestions() {
       const c = shape(look(t.key)[0], sx(s.x), sy(s.y), 5.6 * C.r0, { class: 'cat-suggested', fill: look(t.key)[1], 'fill-opacity': 0.35, stroke: 'var(--ink)',
         'stroke-width': 1.4 * viewOpts.dot, 'stroke-dasharray': '3 2' }, gSug);
       c.dataset.sug = s.id;
-      c.dataset.tip = `<b>Suggested ${what.toLowerCase()}</b> on spot ${esc(s.zone)} ${s.spot}${s.area ? ' - ' + esc(s.area) : ''}<br>${esc(s.reason)}<br>{${s.x}, ${s.y}} - click to accept`;
+      c.dataset.tip = `<b>Suggested ${what.toLowerCase()}</b> ${s.at ? 'beside' : 'on'} spot ${esc(s.zone)} ${s.spot}${s.area ? ' - ' + esc(s.area) : ''}<br>${esc(s.reason)}<br>{${s.x}, ${s.y}} - click to accept`;
     }
     const tr = document.createElement('tr');
     const action = s.problem ? `<span class="d">${esc(s.problem)}</span>` : s.placed ? 'placed' : done ? 'accepted' : `<button type="button" class="btn" data-sug="${s.id}">Accept</button>`;
@@ -589,7 +589,8 @@ function renderSuggestions() {
     tb.appendChild(tr);
   }
   document.getElementById('sugNote').textContent = `${list.length} suggestions from tools/spot_map/data/suggestions/ (one file per coordinates.lua block), ${open} not accepted yet. ` +
-    'Accepting one queues the new entry on its spot and deletes the spot, so it leaves the encounter pool. Remove the pending entry to undo both.';
+    'Accepting one queues the new entry on its spot (or beside it, off the road) and deletes the spot, so it leaves the encounter pool. ' +
+    'Remove the pending entry to undo both.';
   tb.querySelectorAll('button[data-sug]').forEach(b => b.addEventListener('click', () => accept([+b.dataset.sug])));
 }
 

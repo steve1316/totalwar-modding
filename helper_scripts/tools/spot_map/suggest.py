@@ -153,11 +153,12 @@ def load(campaign: dict) -> List[dict]:
 
 def check(suggestions: List[dict], spots: List[dict], pois: List[dict]) -> List[dict]:
     """Checks suggestions against coordinates.lua and fills in where each one stands. A suggestion names the spot it takes over by its
-    "lua", "zone" and "spot" index; it gets that spot's x, y and area. It is "placed" once an entry of its type stands on those coordinates
-    (after an export), and gets a "problem" when the spot is missing, disabled without being placed, or named twice.
+    "lua", "zone" and "spot" index; it stands on that spot's x, y, or at its "at" [x, y] when the spot itself lies on a road. It is "placed"
+    once an entry of its type stands there (after an export), and gets a "problem" when the spot is missing, disabled without being placed,
+    or named twice.
 
     Args:
-        suggestions (List[dict]): Entries as {"type", "lua", "zone", "spot", "fields", "reason"}.
+        suggestions (List[dict]): Entries as {"type", "lua", "zone", "spot", "at" (optional), "fields", "reason"}.
         spots (List[dict]): The campaign's spots, as `campaigns.campaign_entries` builds them.
         pois (List[dict]): The campaign's points of interest, likewise.
 
@@ -174,7 +175,8 @@ def check(suggestions: List[dict], spots: List[dict], pois: List[dict]) -> List[
         ref = (sug.get("lua"), sug.get("zone"), sug.get("spot"))
         spot = by_ref.get(ref)
         culture = (sug.get("fields") or {}).get("culture")
-        placed = bool(spot) and sug.get("type") != "spot" and (sug.get("type"), spot["lua"], spot["x"], spot["y"]) in standing
+        x, y = sug["at"] if sug.get("at") else (spot["x"], spot["y"]) if spot else (None, None)
+        placed = bool(spot) and sug.get("type") != "spot" and (sug.get("type"), spot["lua"], x, y) in standing
         problem = None
         if sug.get("type") not in campaigns.TYPE_BY_KEY:
             problem = f"unknown type {sug.get('type')}"
@@ -187,8 +189,7 @@ def check(suggestions: List[dict], spots: List[dict], pois: List[dict]) -> List[
         elif ref in taken:
             problem = f"spot {spot['zone']} {spot['index']} is also suggestion {taken[ref] + 1}"
         taken.setdefault(ref, i)
-        where = {k: spot[k] for k in ("x", "y", "area")} if spot else {"x": None, "y": None, "area": ""}
-        out.append({**sug, **where, "id": i, "placed": placed, "problem": problem})
+        out.append({**sug, "x": x, "y": y, "area": spot["area"] if spot else "", "id": i, "placed": placed, "problem": problem})
     return out
 
 
