@@ -1,1070 +1,1070 @@
 {
- "note": "Steve's 2025 draft of The Old World encounter spots, by area. Seeds M.old_world until coordinates.lua has that block.",
+ "note": "Steve's 2025 draft of The Old World encounter spots, by area, zoned by realm from the F4 dump (2026-10-05). Seeds M.old_world until coordinates.lua has that block.",
  "spots": [
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Lakeland",
    "x": 101,
    "y": 1395
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Lakeland",
    "x": 151,
    "y": 1407
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Plain of Battles",
    "x": 187,
    "y": 1401
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Plain of Battles",
    "x": 167,
    "y": 1372
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Neuland",
    "x": 164,
    "y": 1329
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Neuland",
    "x": 221,
    "y": 1332
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Neuland",
    "x": 175,
    "y": 1297
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "The Lost Road",
    "x": 120,
    "y": 1314
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "The Lost Road",
    "x": 102,
    "y": 1296
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Whale Coast",
    "x": 74,
    "y": 1328
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Muddy Point",
    "x": 89,
    "y": 1296
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Muddy Point",
    "x": 60,
    "y": 1285
   },
   {
-   "zone": "draft",
+   "zone": "norsca",
    "area": "Muddy Point",
    "x": 37,
    "y": 1264
   },
   {
-   "zone": "draft",
+   "zone": "maelstrom",
    "area": "Mathlann's Locker",
    "x": 95,
    "y": 701
   },
   {
-   "zone": "draft",
+   "zone": "maelstrom",
    "area": "Mathlann's Locker",
    "x": 59,
    "y": 731
   },
   {
-   "zone": "draft",
+   "zone": "maelstrom",
    "area": "Mathlann's Locker",
    "x": 42,
    "y": 703
   },
   {
-   "zone": "draft",
+   "zone": "maelstrom",
    "area": "Varr-a-Uzkul",
    "x": 142,
    "y": 580
   },
   {
-   "zone": "draft",
+   "zone": "maelstrom",
    "area": "Varr-a-Uzkul",
    "x": 154,
    "y": 564
   },
   {
-   "zone": "draft",
+   "zone": "maelstrom",
    "area": "Varr-a-Uzkul",
    "x": 238,
    "y": 611
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Thieves' Coast",
    "x": 28,
    "y": 461
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Thieves' Coast",
    "x": 51,
    "y": 428
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Thieves' Coast",
    "x": 73,
    "y": 407
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Plains of Haytin",
    "x": 75,
    "y": 376
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Plains of Haytin",
    "x": 100,
    "y": 357
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Plains of Haytin",
    "x": 121,
    "y": 397
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Horn of Araby",
    "x": 120,
    "y": 428
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Horn of Araby",
    "x": 142,
    "y": 462
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Horn of Araby",
    "x": 157,
    "y": 407
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Pirate Coast",
    "x": 212,
    "y": 390
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Pirate Coast",
    "x": 251,
    "y": 391
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Pirate Coast",
    "x": 246,
    "y": 365
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Sahra Desert",
    "x": 246,
    "y": 306
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Sahra Desert",
    "x": 210,
    "y": 294
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Sahra Desert",
    "x": 286,
    "y": 316
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Harmattan Gap",
    "x": 386,
    "y": 323
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Raiders' Dune",
    "x": 347,
    "y": 327
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Raiders' Dune",
    "x": 324,
    "y": 368
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Raiders' Dune",
    "x": 288,
    "y": 399
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Fleetport of Terror",
    "x": 401,
    "y": 363
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Fleetport of Terror",
    "x": 423,
    "y": 317
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "City of Dust",
    "x": 372,
    "y": 222
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "City of Dust",
    "x": 316,
    "y": 207
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Dust Road",
    "x": 441,
    "y": 198
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Dust Road",
    "x": 394,
    "y": 258
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Bitter Winds",
    "x": 453,
    "y": 124
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Bitter Winds",
    "x": 399,
    "y": 85
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Shifting Sands",
    "x": 375,
    "y": 56
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "West Barrier Idols",
    "x": 462,
    "y": 233
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Necropolois of Zandri",
    "x": 462,
    "y": 233
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Necropolois of Zandri",
    "x": 456,
    "y": 281
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Lower River Mortis",
    "x": 571,
    "y": 268
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Lower River Mortis",
    "x": 584,
    "y": 228
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Pools of Despair",
    "x": 532,
    "y": 174
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Pools of Despair",
    "x": 554,
    "y": 126
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Western Nehekhara",
    "x": 591,
    "y": 104
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "The Cracked Lands",
    "x": 560,
    "y": 64
   },
   {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 198,
-   "y": 188
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 183,
-   "y": 165
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 143,
-   "y": 229
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 104,
-   "y": 171
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 131,
-   "y": 190
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 65,
-   "y": 247
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 62,
-   "y": 176
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 66,
-   "y": 157
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 75,
-   "y": 86
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 108,
-   "y": 106
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 65,
-   "y": 51
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 172,
-   "y": 66
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 154,
-   "y": 29
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 205,
-   "y": 68
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 244,
-   "y": 60
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 268,
-   "y": 107
-  },
-  {
-   "zone": "draft",
-   "area": "Realm of the Sorcerer",
-   "x": 195,
-   "y": 142
-  },
-  {
-   "zone": "draft",
-   "area": "Badlands Coast",
-   "x": 600,
-   "y": 390
-  },
-  {
-   "zone": "draft",
-   "area": "Badlands Coast",
-   "x": 636,
-   "y": 371
-  },
-  {
-   "zone": "draft",
-   "area": "Western Badlands",
-   "x": 668,
-   "y": 480
-  },
-  {
-   "zone": "draft",
-   "area": "Western Badlands",
-   "x": 623,
-   "y": 486
-  },
-  {
-   "zone": "draft",
-   "area": "Western Badlands",
-   "x": 649,
-   "y": 417
-  },
-  {
-   "zone": "draft",
-   "area": "Marg-Beh-Mard",
-   "x": 631,
-   "y": 320
-  },
-  {
-   "zone": "draft",
-   "area": "Zandri Road",
-   "x": 661,
-   "y": 541
-  },
-  {
-   "zone": "draft",
-   "area": "Zandri Road",
-   "x": 743,
-   "y": 590
-  },
-  {
-   "zone": "draft",
-   "area": "Dragonback Mountains",
-   "x": 785,
-   "y": 673
-  },
-  {
-   "zone": "draft",
-   "area": "Myrmidia's Coast",
-   "x": 816,
-   "y": 709
-  },
-  {
-   "zone": "draft",
-   "area": "Myrmidia's Coast",
-   "x": 893,
-   "y": 780
-  },
-  {
-   "zone": "draft",
-   "area": "Varenka Hills",
-   "x": 953,
-   "y": 788
-  },
-  {
-   "zone": "draft",
-   "area": "Howling River Valley",
-   "x": 994,
-   "y": 828
-  },
-  {
-   "zone": "draft",
-   "area": "Howling River Valley",
-   "x": 1047,
-   "y": 842
-  },
-  {
-   "zone": "draft",
-   "area": "Howling River Valley",
-   "x": 1071,
-   "y": 883
-  },
-  {
-   "zone": "draft",
-   "area": "Blood River Valley",
-   "x": 1049,
-   "y": 825
-  },
-  {
-   "zone": "draft",
-   "area": "Grim Kadrin",
-   "x": 1031,
-   "y": 789
-  },
-  {
-   "zone": "draft",
-   "area": "Grim Kadrin",
-   "x": 1016,
-   "y": 742
-  },
-  {
-   "zone": "draft",
-   "area": "Northern Badlands",
-   "x": 936,
-   "y": 772
-  },
-  {
-   "zone": "draft",
-   "area": "The Blight",
-   "x": 919,
-   "y": 716
-  },
-  {
-   "zone": "draft",
-   "area": "The Blight",
-   "x": 930,
-   "y": 686
-  },
-  {
-   "zone": "draft",
-   "area": "Stinklands",
-   "x": 876,
-   "y": 665
-  },
-  {
-   "zone": "draft",
-   "area": "Mount Bloodhorn",
-   "x": 829,
-   "y": 628
-  },
-  {
-   "zone": "draft",
-   "area": "Mount Bloodhorn",
-   "x": 802,
-   "y": 538
-  },
-  {
-   "zone": "draft",
-   "area": "North Badland Hills",
-   "x": 765,
-   "y": 529
-  },
-  {
-   "zone": "draft",
-   "area": "North Badland Hills",
-   "x": 715,
-   "y": 530
-  },
-  {
-   "zone": "draft",
-   "area": "North Badland Hills",
-   "x": 680,
-   "y": 524
-  },
-  {
-   "zone": "draft",
-   "area": "South Badland Hills",
-   "x": 734,
-   "y": 442
-  },
-  {
-   "zone": "draft",
-   "area": "South Badland Hills",
-   "x": 714,
-   "y": 387
-  },
-  {
-   "zone": "draft",
-   "area": "North Barrier Idols",
-   "x": 714,
-   "y": 353
-  },
-  {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Khemrian Desert",
    "x": 724,
    "y": 298
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Khemrian Desert",
    "x": 721,
    "y": 241
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Khemrian Desert",
    "x": 791,
    "y": 239
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "City of Kings",
    "x": 750,
    "y": 215
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "City of Kings",
    "x": 684,
    "y": 229
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Road of Kings",
    "x": 644,
    "y": 307
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Lower Ash River",
    "x": 862,
    "y": 175
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Lower Ash River",
    "x": 833,
    "y": 157
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Land of the Dead",
    "x": 779,
    "y": 118
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Land of the Dead",
    "x": 862,
    "y": 147
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Necropolis of Quatar",
    "x": 826,
    "y": 75
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "City of Corpses",
    "x": 964,
    "y": 58
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Quatari Desert",
    "x": 987,
    "y": 112
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Quatari Desert",
    "x": 907,
    "y": 133
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Upper Ash River",
    "x": 964,
    "y": 152
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Upper Ash River",
    "x": 1011,
    "y": 190
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Fallow Fields",
    "x": 986,
    "y": 221
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Fallow Fields",
    "x": 896,
    "y": 212
   },
   {
-   "zone": "draft",
-   "area": "Upper River Mortis",
-   "x": 988,
-   "y": 276
-  },
-  {
-   "zone": "draft",
-   "area": "The Scarab City",
-   "x": 948,
-   "y": 295
-  },
-  {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "The Scarab City",
    "x": 872,
    "y": 250
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Necropolis of Numas",
    "x": 802,
    "y": 300
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "East Barrier Idols",
    "x": 816,
    "y": 348
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "East Barrier Idols",
    "x": 888,
    "y": 350
   },
   {
-   "zone": "draft",
-   "area": "Marshes of Madness",
-   "x": 860,
-   "y": 404
-  },
-  {
-   "zone": "draft",
-   "area": "Marshes of Madness",
-   "x": 835,
-   "y": 442
-  },
-  {
-   "zone": "draft",
-   "area": "Sunken Khernarch",
-   "x": 778,
-   "y": 460
-  },
-  {
-   "zone": "draft",
-   "area": "Sunken Khernarch",
-   "x": 820,
-   "y": 498
-  },
-  {
-   "zone": "draft",
-   "area": "Silver Bank",
-   "x": 841,
-   "y": 581
-  },
-  {
-   "zone": "draft",
-   "area": "Sharpthorn Forest",
-   "x": 896,
-   "y": 575
-  },
-  {
-   "zone": "draft",
-   "area": "Old Strygos",
-   "x": 870,
-   "y": 509
-  },
-  {
-   "zone": "draft",
-   "area": "Old Strygos",
-   "x": 886,
-   "y": 468
-  },
-  {
-   "zone": "draft",
-   "area": "Blightwater",
-   "x": 971,
-   "y": 432
-  },
-  {
-   "zone": "draft",
-   "area": "Worlds Edge Foothills",
-   "x": 935,
-   "y": 470
-  },
-  {
-   "zone": "draft",
-   "area": "Worlds Edge Foothills",
-   "x": 981,
-   "y": 503
-  },
-  {
-   "zone": "draft",
-   "area": "Eastern Badlands",
-   "x": 967,
-   "y": 536
-  },
-  {
-   "zone": "draft",
-   "area": "Eastern Badlands",
-   "x": 971,
-   "y": 566
-  },
-  {
-   "zone": "draft",
-   "area": "Blind River",
-   "x": 965,
-   "y": 617
-  },
-  {
-   "zone": "draft",
-   "area": "Blind River",
-   "x": 1027,
-   "y": 591
-  },
-  {
-   "zone": "draft",
-   "area": "The Cauldron",
-   "x": 995,
-   "y": 687
-  },
-  {
-   "zone": "draft",
-   "area": "The Cauldron",
-   "x": 998,
-   "y": 733
-  },
-  {
-   "zone": "draft",
-   "area": "Sour Crags",
-   "x": 1069,
-   "y": 496
-  },
-  {
-   "zone": "draft",
-   "area": "Sour Crags",
-   "x": 1090,
-   "y": 460
-  },
-  {
-   "zone": "draft",
-   "area": "Red Cloud Mountains",
-   "x": 1090,
-   "y": 405
-  },
-  {
-   "zone": "draft",
-   "area": "Red Cloud Mountains",
-   "x": 1045,
-   "y": 342
-  },
-  {
-   "zone": "draft",
-   "area": "Mountains of Dawn",
-   "x": 1140,
-   "y": 441
-  },
-  {
-   "zone": "draft",
-   "area": "Mountains of Dawn",
-   "x": 1227,
-   "y": 402
-  },
-  {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Cursed Way",
    "x": 1257,
    "y": 343
   },
   {
-   "zone": "draft",
-   "area": "Southern Worlds Edge",
-   "x": 1148,
-   "y": 202
-  },
-  {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Charnel Highlands",
    "x": 1266,
    "y": 16
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "City of Decay",
    "x": 1303,
    "y": 44
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "City of Decay",
    "x": 1303,
    "y": 129
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Mahraki Desert",
    "x": 1282,
    "y": 163
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Mahraki Desert",
    "x": 1338,
    "y": 209
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Golden Plain",
    "x": 1327,
    "y": 262
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Golden Plain",
    "x": 1358,
    "y": 270
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Eastern Nehekhara",
    "x": 1410,
    "y": 205
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Eastern Nehekhara",
    "x": 1373,
    "y": 117
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Crystal Coast",
    "x": 1440,
    "y": 196
   },
   {
-   "zone": "draft",
+   "zone": "nehekara",
    "area": "Crystal Coast",
    "x": 1476,
    "y": 132
   },
   {
-   "zone": "draft",
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 198,
+   "y": 188
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 183,
+   "y": 165
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 143,
+   "y": 229
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 104,
+   "y": 171
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 131,
+   "y": 190
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 65,
+   "y": 247
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 62,
+   "y": 176
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 66,
+   "y": 157
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 75,
+   "y": 86
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 108,
+   "y": 106
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 65,
+   "y": 51
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 172,
+   "y": 66
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 154,
+   "y": 29
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 205,
+   "y": 68
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 244,
+   "y": 60
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 268,
+   "y": 107
+  },
+  {
+   "zone": "realmoftzeentch",
+   "area": "Realm of the Sorcerer",
+   "x": 195,
+   "y": 142
+  },
+  {
+   "zone": "badlands",
+   "area": "Badlands Coast",
+   "x": 600,
+   "y": 390
+  },
+  {
+   "zone": "badlands",
+   "area": "Badlands Coast",
+   "x": 636,
+   "y": 371
+  },
+  {
+   "zone": "badlands",
+   "area": "Western Badlands",
+   "x": 668,
+   "y": 480
+  },
+  {
+   "zone": "badlands",
+   "area": "Western Badlands",
+   "x": 623,
+   "y": 486
+  },
+  {
+   "zone": "badlands",
+   "area": "Western Badlands",
+   "x": 649,
+   "y": 417
+  },
+  {
+   "zone": "badlands",
+   "area": "Marg-Beh-Mard",
+   "x": 631,
+   "y": 320
+  },
+  {
+   "zone": "badlands",
+   "area": "Zandri Road",
+   "x": 661,
+   "y": 541
+  },
+  {
+   "zone": "badlands",
+   "area": "Zandri Road",
+   "x": 743,
+   "y": 590
+  },
+  {
+   "zone": "badlands",
+   "area": "Varenka Hills",
+   "x": 953,
+   "y": 788
+  },
+  {
+   "zone": "badlands",
+   "area": "Howling River Valley",
+   "x": 994,
+   "y": 828
+  },
+  {
+   "zone": "badlands",
+   "area": "Howling River Valley",
+   "x": 1047,
+   "y": 842
+  },
+  {
+   "zone": "badlands",
+   "area": "Blood River Valley",
+   "x": 1049,
+   "y": 825
+  },
+  {
+   "zone": "badlands",
+   "area": "Northern Badlands",
+   "x": 936,
+   "y": 772
+  },
+  {
+   "zone": "badlands",
+   "area": "The Blight",
+   "x": 919,
+   "y": 716
+  },
+  {
+   "zone": "badlands",
+   "area": "The Blight",
+   "x": 930,
+   "y": 686
+  },
+  {
+   "zone": "badlands",
+   "area": "Mount Bloodhorn",
+   "x": 829,
+   "y": 628
+  },
+  {
+   "zone": "badlands",
+   "area": "Mount Bloodhorn",
+   "x": 802,
+   "y": 538
+  },
+  {
+   "zone": "badlands",
+   "area": "North Badland Hills",
+   "x": 765,
+   "y": 529
+  },
+  {
+   "zone": "badlands",
+   "area": "North Badland Hills",
+   "x": 715,
+   "y": 530
+  },
+  {
+   "zone": "badlands",
+   "area": "North Badland Hills",
+   "x": 680,
+   "y": 524
+  },
+  {
+   "zone": "badlands",
+   "area": "South Badland Hills",
+   "x": 734,
+   "y": 442
+  },
+  {
+   "zone": "badlands",
+   "area": "South Badland Hills",
+   "x": 714,
+   "y": 387
+  },
+  {
+   "zone": "badlands",
+   "area": "North Barrier Idols",
+   "x": 714,
+   "y": 353
+  },
+  {
+   "zone": "badlands",
+   "area": "Upper River Mortis",
+   "x": 988,
+   "y": 276
+  },
+  {
+   "zone": "badlands",
+   "area": "The Scarab City",
+   "x": 948,
+   "y": 295
+  },
+  {
+   "zone": "badlands",
+   "area": "Marshes of Madness",
+   "x": 860,
+   "y": 404
+  },
+  {
+   "zone": "badlands",
+   "area": "Marshes of Madness",
+   "x": 835,
+   "y": 442
+  },
+  {
+   "zone": "badlands",
+   "area": "Sunken Khernarch",
+   "x": 778,
+   "y": 460
+  },
+  {
+   "zone": "badlands",
+   "area": "Sunken Khernarch",
+   "x": 820,
+   "y": 498
+  },
+  {
+   "zone": "badlands",
+   "area": "Silver Bank",
+   "x": 841,
+   "y": 581
+  },
+  {
+   "zone": "badlands",
+   "area": "Sharpthorn Forest",
+   "x": 896,
+   "y": 575
+  },
+  {
+   "zone": "badlands",
+   "area": "Old Strygos",
+   "x": 870,
+   "y": 509
+  },
+  {
+   "zone": "badlands",
+   "area": "Old Strygos",
+   "x": 886,
+   "y": 468
+  },
+  {
+   "zone": "badlands",
+   "area": "Blightwater",
+   "x": 971,
+   "y": 432
+  },
+  {
+   "zone": "badlands",
+   "area": "Worlds Edge Foothills",
+   "x": 935,
+   "y": 470
+  },
+  {
+   "zone": "badlands",
+   "area": "Worlds Edge Foothills",
+   "x": 981,
+   "y": 503
+  },
+  {
+   "zone": "badlands",
+   "area": "Eastern Badlands",
+   "x": 967,
+   "y": 536
+  },
+  {
+   "zone": "badlands",
+   "area": "Eastern Badlands",
+   "x": 971,
+   "y": 566
+  },
+  {
+   "zone": "badlands",
+   "area": "Blind River",
+   "x": 965,
+   "y": 617
+  },
+  {
+   "zone": "badlands",
+   "area": "Blind River",
+   "x": 1027,
+   "y": 591
+  },
+  {
+   "zone": "badlands",
+   "area": "The Cauldron",
+   "x": 995,
+   "y": 687
+  },
+  {
+   "zone": "badlands",
+   "area": "The Cauldron",
+   "x": 998,
+   "y": 733
+  },
+  {
+   "zone": "badlands",
+   "area": "Sour Crags",
+   "x": 1069,
+   "y": 496
+  },
+  {
+   "zone": "badlands",
+   "area": "Sour Crags",
+   "x": 1090,
+   "y": 460
+  },
+  {
+   "zone": "badlands",
+   "area": "Red Cloud Mountains",
+   "x": 1090,
+   "y": 405
+  },
+  {
+   "zone": "badlands",
+   "area": "Red Cloud Mountains",
+   "x": 1045,
+   "y": 342
+  },
+  {
+   "zone": "borderprinces",
+   "area": "Dragonback Mountains",
+   "x": 785,
+   "y": 673
+  },
+  {
+   "zone": "borderprinces",
+   "area": "Myrmidia's Coast",
+   "x": 816,
+   "y": 709
+  },
+  {
+   "zone": "borderprinces",
+   "area": "Myrmidia's Coast",
+   "x": 893,
+   "y": 780
+  },
+  {
+   "zone": "borderprinces",
+   "area": "Howling River Valley",
+   "x": 1071,
+   "y": 883
+  },
+  {
+   "zone": "borderprinces",
+   "area": "Stinklands",
+   "x": 876,
+   "y": 665
+  },
+  {
+   "zone": "worldsedgemountains",
+   "area": "Grim Kadrin",
+   "x": 1031,
+   "y": 789
+  },
+  {
+   "zone": "worldsedgemountains",
+   "area": "Grim Kadrin",
+   "x": 1016,
+   "y": 742
+  },
+  {
+   "zone": "worldsedgemountains",
+   "area": "Mountains of Dawn",
+   "x": 1140,
+   "y": 441
+  },
+  {
+   "zone": "worldsedgemountains",
+   "area": "Mountains of Dawn",
+   "x": 1227,
+   "y": 402
+  },
+  {
+   "zone": "worldsedgemountains",
+   "area": "Southern Worlds Edge",
+   "x": 1148,
+   "y": 202
+  },
+  {
+   "zone": "southlands",
    "area": "Cursed Jungle",
    "x": 1481,
    "y": 35
   },
   {
-   "zone": "draft",
+   "zone": "southlands",
    "area": "Cursed Jungle",
    "x": 1543,
    "y": 49
   },
   {
-   "zone": "draft",
+   "zone": "southlands",
    "area": "Soul of the Jungle",
    "x": 1566,
    "y": 39
   },
   {
-   "zone": "draft",
+   "zone": "southlands",
    "area": "Kingdom of Beasts",
    "x": 1629,
    "y": 48
   },
   {
-   "zone": "draft",
+   "zone": "southlands",
    "area": "Kingdom of Beasts",
    "x": 1585,
    "y": 68
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1813,
    "y": 44
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1818,
    "y": 73
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1859,
    "y": 46
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1889,
    "y": 98
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1871,
    "y": 141
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1927,
    "y": 187
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1958,
    "y": 198
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 2001,
    "y": 215
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1962,
    "y": 129
   },
   {
-   "zone": "draft",
+   "zone": "realmofnurgle",
    "area": "Land of the Plaguelord",
    "x": 1951,
    "y": 76
