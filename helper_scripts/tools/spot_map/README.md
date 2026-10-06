@@ -93,7 +93,8 @@ card. Click one, or **Accept** it in the card, to queue it:
 - the new entry goes on the spot's coordinates, with its owners taken from the nearest settlement;
 - the spot itself is marked for deletion, so it leaves the encounter pool.
 
-Removing the pending entry undoes both. Once exported, a suggestion shows as "placed". A campaign shows the suggestions of every block it
+Removing the pending entry undoes both. Taverns never take part in the spacing trim: the spot a tavern takes over keeps counting as it did,
+pending or exported, so accepting one never changes which neighbours are kept or trimmed. Once exported, a suggestion shows as "placed". A campaign shows the suggestions of every block it
 draws, so IE Expanded shows IE's.
 
 ## Review

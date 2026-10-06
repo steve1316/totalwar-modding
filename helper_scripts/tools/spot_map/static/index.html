@@ -463,22 +463,29 @@ function compute() {
   const p = P();
   const deleted = new Set(p.disable), enabled = new Set(p.enable);  // spot and point-of-interest keys
   const live = spots.map(s => (!s.disabled || enabled.has(spotKey(s))) && !deleted.has(spotKey(s)));
+  // A spot a tavern (or another point of interest) takes over still counts in the trim as it did before, pending or exported, so placing one
+  // never changes which neighbours are kept or trimmed. The spot itself is never kept.
+  const isPoi = type => (typeOf(type) || {}).storage === 'poi';
+  const takenOver = new Set(p.add.filter(a => a.replaces && isPoi(a.type)).map(a => a.replaces)
+    .concat((C.suggestions || []).filter(x => x.placed && isPoi(x.type)).map(x => spotKey({ lua: x.lua, zone: x.zone, index: x.spot }))));
+  const inTrim = spots.map((s, i) => live[i] || takenOver.has(spotKey(s)));
   // Pending spots (moved or switched back on) and manual spots (`manual = true`, unless "Trim manual spots too" is ticked) are never trimmed,
   // but they still hold their space: together with pending planted spots they push out neighbours that are too close.
   const exempt = spots.map((s, i) => live[i] && ((!ctl.trimManual && (s.flags || []).includes('manual')) || !!p.move[spotKey(s)] || enabled.has(spotKey(s))));
-  const t = ctl.spacing, idx = spots.map((_, i) => i).filter(i => live[i] && !exempt[i]);
+  const t = ctl.spacing, idx = spots.map((_, i) => i).filter(i => inTrim[i] && !exempt[i]);
   const n = {};
   for (const i of idx) { let c = 0; for (const j of idx) if (j !== i && close(spots[i], spots[j], t)) c++; n[i] = c; }
   idx.sort((a, b) => n[a] - n[b] || spots[a].zone.localeCompare(spots[b].zone) || spots[a].index - spots[b].index);
   const kept = [], keep = new Array(spots.length).fill(false);
   const fixed = (ctl.smithy ? pois.filter(f => f.kind === 'smithies' && !f.disabled && !deleted.has(poiKey(f))) : [])
     .concat(spots.filter((s, i) => exempt[i]).map(s => p.move[spotKey(s)] || s))
-    .concat(p.add.filter(a => (typeOf(a.type) || {}).storage !== 'poi'));
+    .concat(p.add.filter(a => !isPoi(a.type)));
   for (const i of idx) {
     if (t > 0 && (kept.some(k => close(spots[i], spots[k], t)) || fixed.some(f => close(spots[i], f, t)))) continue;
     keep[i] = true; kept.push(i);
   }
   exempt.forEach((e, i) => { if (e) keep[i] = true; });
+  live.forEach((l, i) => { if (!l) keep[i] = false; });
   return { live, keep, deleted, enabled, exempt };
 }
 
