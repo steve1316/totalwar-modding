@@ -15,14 +15,14 @@ M.immortal_empires = {
               --- The Daemonium Hills
               {808, 44},
               {785, 32},
-              {731, 33},
+              {738, 42, manual = true},
               --- The Abyssal Glacier
               {693, 32},
               {642, 22},
-              {609, 24},
+              {595, 31, manual = true},
               --- The Southern Wastes
               {535, 27},
-              {490, 33},
+              {490, 33, disabled = true},
               {473, 71},
               {457, 36},
               {436, 53},
@@ -47,12 +47,12 @@ M.immortal_empires = {
               {637, 120},
               {634, 142},
               --- Kingdom of Beasts
-              {768, 229},
+              {756, 235, manual = true},
               {801, 229},
               --- The Golden Pass
               {704, 195},
               {732, 167},
-              {751, 193},
+              {764, 198, manual = true},
               --- Heart of the Jungle
               {655, 210},
               --- Central Jungles
@@ -63,7 +63,7 @@ M.immortal_empires = {
               --- Western Jungles
               {524, 218},
               {530, 196},
-              {575, 165},
+              {567, 174, manual = true},
          },
          ["nehekara"] = {
               --- Shifting Sands
@@ -91,7 +91,7 @@ M.immortal_empires = {
               {815, 331},
               --- Devil's Backbone
               {693, 314},
-              {765, 309},
+              {775, 308, manual = true},
               --- Land of the Dead
               {630, 288},
               {676, 294},
@@ -111,13 +111,13 @@ M.immortal_empires = {
               --- The Barrier Idols
               {662, 319},
               {685, 327},
-              {721, 325},
+              {704, 327, manual = true},
               {640, 345},
-              {672, 348},
+              {681, 341, manual = true},
               {720, 365},
               --- Blightwater
-              {764, 380},
-              {731, 393},
+              {778, 380, manual = true},
+              {726, 388, manual = true},
               {761, 397},
               --- Marshes of Madness
               {668, 358},
@@ -136,9 +136,9 @@ M.immortal_empires = {
               {712, 438},
               {765, 428},
               --- Western Badlands
-              {685, 422},
+              {676, 413, manual = true},
               {647, 435},
-              {669, 452},
+              {665, 437, manual = true},
               {701, 460},
               {649, 471},
               --- Death Pass
@@ -153,7 +153,7 @@ M.immortal_empires = {
          },
          ["lustria"] = {
               --- The Capes
-              {292, 98},
+              {285, 116, manual = true},
               --- Culchan Plains
               {262, 131},
               {219, 145},
@@ -161,10 +161,10 @@ M.immortal_empires = {
               {238, 169},
               --- The Night Forest Road
               {267, 102},
-              {234, 105},
+              {250, 101, manual = true},
               {209, 117},
               {183, 127},
-              {167, 144},
+              {168, 137, manual = true},
               --- Headhunter's Jungle
               {222, 181},
               {218, 215},
@@ -175,8 +175,8 @@ M.immortal_empires = {
               {194, 196},
               {165, 198},
               --- Spine of Sotek
-              {169, 169},
-              {142, 190},
+              {169, 169, disabled = true},
+              {120, 182, manual = true},
               {111, 204},
               --- Copper Desert
               {135, 155},
@@ -186,7 +186,7 @@ M.immortal_empires = {
               {242, 290},
               --- Mosquito Swamps
               {214, 229},
-              {200, 238},
+              {203, 240, manual = true},
               {250, 256},
               {215, 281},
               --- River Qurveza
@@ -228,22 +228,22 @@ M.immortal_empires = {
               {47, 438},
               {127, 441},
               {81, 456},
-              {130, 456},
+              {121, 451, manual = true},
               --- The Isthmus Coast
               {87, 480},
               {106, 504},
               {100, 529},
               --- Isthmus of Lustria
               {57, 452},
-              {49, 471},
+              {47, 483, manual = true},
               {51, 495},
               {82, 494},
          },
          ["cathay"] = {
               --- Broken Lands of Tian Li
               {1245, 404},
-              {1202, 396},
-              {1216, 414},
+              {1202, 396, disabled = true},
+              {1192, 422, manual = true},
               {1171, 431},
               {1144, 455},
               {1210, 464},
@@ -258,8 +258,8 @@ M.immortal_empires = {
               {1352, 404},
               --- Mount Li
               {1379, 420},
-              {1306, 443},
-              {1370, 453},
+              {1295, 464, manual = true},
+              {1382, 447, manual = true},
               --- Nongchang Basin
               {1264, 473},
               {1299, 455},
@@ -277,19 +277,19 @@ M.immortal_empires = {
               {1135, 500},
               {1154, 517},
               --- Jade River Delta
-              {1350, 496},
-              {1354, 526},
+              {1350, 496, disabled = true},
+              {1354, 526, disabled = true},
               {1307, 518},
-              {1345, 555},
+              {1332, 546, manual = true},
               --- Forest of the Moon
-              {1244, 543},
-              {1297, 546},
+              {1246, 533, manual = true},
+              {1308, 544, manual = true},
               {1318, 556},
-              {1252, 567},
+              {1232, 567, manual = true},
               {1234, 592},
               --- Warpstone Desert
               {1160, 551},
-              {1201, 559},
+              {1195, 558, manual = true},
               {1128, 576},
               {1152, 584},
               {1124, 607},
@@ -298,19 +298,19 @@ M.immortal_empires = {
               {1335, 585},
               {1331, 622},
               --- Imperial Road
-              {1291, 605},
+              {1296, 607, manual = true},
               {1268, 601},
-              {1223, 607},
+              {1229, 607, manual = true},
               {1291, 626},
               --- Lands of Stone and Steel
-              {1168, 603},
+              {1163, 604, manual = true},
               {1210, 626},
               {1177, 635},
               {1252, 639},
               {1196, 647},
               --- Gunpowder Road
               {1143, 618},
-              {1137, 638},
+              {1135, 635, manual = true},
               {1161, 644},
          },
          ["mountainsofmourn"] = {
@@ -325,7 +325,7 @@ M.immortal_empires = {
               {1000, 532},
               --- Mountains of Mourn
               {1032, 546},
-              {1093, 569},
+              {1093, 569, disabled = true},
               {1012, 577},
               --- Bone Road
               {972, 588},
@@ -358,18 +358,18 @@ M.immortal_empires = {
               {1011, 425},
               {992, 444},
               {1033, 442},
-              {1091, 442},
+              {1084, 438, manual = true},
               --- Mouth of Ruin
               {941, 443},
               {903, 419},
               --- The Plain of Bones
-              {856, 436},
-              {906, 456},
+              {860, 437, manual = true},
+              {902, 449, manual = true},
               {852, 461},
               --- The Howling Wastes
               {955, 463},
-              {964, 490},
-              {959, 525},
+              {941, 495, manual = true},
+              {956, 536, manual = true},
               --- The Desolation of Azgorh
               {849, 483},
               {893, 489},
@@ -399,7 +399,7 @@ M.immortal_empires = {
               --- Southlands Worlds Edge Mountains
               {697, 235},
               {709, 258},
-              {739, 296},
+              {739, 296, disabled = true},
               --- Broken Teeth
               {830, 395},
               {872, 396},
@@ -411,7 +411,7 @@ M.immortal_empires = {
               {816, 443},
               {796, 459},
               --- The Silver Road
-              {793, 527},
+              {793, 527, disabled = true},
               {730, 540},
               {774, 545},
               --- Deadrock Gap
@@ -437,7 +437,7 @@ M.immortal_empires = {
               {711, 628},
               --- Northern Sylvania
               {686, 637},
-              {730, 658},
+              {727, 664, manual = true},
               --- Mootland
               {653, 616},
               --- Solland
@@ -475,7 +475,7 @@ M.immortal_empires = {
               --- Middenland
               {539, 677},
               {565, 704},
-              {553, 720},
+              {551, 717, manual = true},
               --- Wasteland
               {439, 668},
               {476, 679},
@@ -484,7 +484,7 @@ M.immortal_empires = {
               {473, 721},
               --- Ostland
               {656, 736},
-              {610, 771},
+              {606, 765, manual = true},
               {654, 757},
               --- Nordland
               {562, 744},
@@ -498,7 +498,7 @@ M.immortal_empires = {
               --- Eastern Oblast
               {755, 768},
               {779, 775},
-              {748, 789},
+              {739, 785, manual = true},
               --- The Cursed City
               {710, 764},
               {729, 783},
@@ -527,11 +527,11 @@ M.immortal_empires = {
               {741, 820},
               --- Gianthome Mountains
               {738, 842},
-              {701, 859},
+              {704, 861, manual = true},
               --- Mountains of Hel
-              {609, 855},
-              {671, 848},
-              {658, 869},
+              {614, 859, manual = true},
+              {671, 848, disabled = true},
+              {659, 870, manual = true},
               {592, 879},
               --- Trollheim Mountains
               {586, 829},
@@ -541,12 +541,12 @@ M.immortal_empires = {
               {495, 820},
               {547, 844},
               --- Helspire Mountains
-              {410, 837},
-              {524, 881},
+              {403, 835, manual = true},
+              {525, 875, manual = true},
               {570, 887},
               --- Ice Tooth Mountains
               {445, 764},
-              {549, 795},
+              {542, 796, manual = true},
               --- Vanaheim Mountains
               {386, 790},
               {466, 812},
@@ -571,7 +571,7 @@ M.immortal_empires = {
               {507, 445},
               {507, 470},
               --- Estalia
-              {428, 425},
+              {428, 425, disabled = true},
               {392, 438},
               --- Irrana Mountains
               {391, 459},
@@ -583,8 +583,8 @@ M.immortal_empires = {
               {608, 537},
               {635, 544},
               --- The Vaults
-              {524, 478},
-              {578, 532},
+              {512, 477, manual = true},
+              {578, 532, disabled = true},
               --- Southern Grey Mountains
               {516, 584},
          },
@@ -595,10 +595,10 @@ M.immortal_empires = {
               --- Carcassone
               {444, 488},
               {440, 517},
-              {481, 530},
+              {481, 525, manual = true},
               {413, 547},
               --- Bastonne
-              {455, 584},
+              {456, 590, manual = true},
               {425, 612},
               {448, 612},
               --- River Brienne
@@ -626,25 +626,25 @@ M.immortal_empires = {
               {221, 509},
               --- Northern Yvresse
               {345, 574},
-              {324, 584},
+              {333, 586, manual = true},
               --- Saphery
               {292, 551},
               {294, 573},
               --- Averlorn
               {275, 591},
-              {254, 605},
+              {258, 599, manual = true},
               --- Ellyrion
               {203, 567},
-              {226, 592},
+              {220, 592, manual = true},
               --- Tiranoc
-              {190, 536},
+              {177, 550, manual = true},
               {178, 562},
               {177, 585},
               --- Cothique
               {318, 614},
               --- Chrace
-              {269, 635},
-              {291, 633},
+              {253, 645, manual = true},
+              {302, 632, manual = true},
               --- Nagarythe
               {186, 617},
               {215, 624},
@@ -653,20 +653,20 @@ M.immortal_empires = {
          ["naggarond"] = {
               --- Deadwood
               {260, 832},
-              {238, 846},
+              {246, 843, manual = true},
               {263, 858},
               --- The Road of Skulls
               {206, 836},
               {201, 860},
               {207, 883},
               --- Spiteful Peaks
-              {167, 815},
+              {169, 828, manual = true},
               {181, 827},
               {152, 832},
-              {137, 869},
+              {145, 878, manual = true},
               --- Iron Foothills
               {99, 834},
-              {83, 860},
+              {77, 856, manual = true},
               --- The Black Flood
               {147, 767},
               {91, 767},
@@ -679,13 +679,13 @@ M.immortal_empires = {
               {58, 825},
               --- Iron Coast
               {21, 769},
-              {20, 802},
+              {16, 804, manual = true},
               {17, 842},
               {34, 851},
               --- Doom Glades
               {102, 650},
               {130, 675},
-              {100, 682},
+              {90, 681, manual = true},
               --- The Bleak Coast
               {114, 565},
               {124, 588},
@@ -723,7 +723,7 @@ M.immortal_empires = {
               {46, 699},
               {74, 712},
               {159, 710},
-              {92, 729},
+              {88, 732, manual = true},
               {153, 734},
               {72, 747},
               --- Red Desert
@@ -735,13 +735,13 @@ M.immortal_empires = {
          },
          ["northernchaoswastes"] = {
               --- The Red Wastes
-              {1349, 658},
+              {1349, 658, disabled = true},
               {1267, 668},
-              {1305, 671},
-              {1168, 678},
+              {1302, 676, manual = true},
+              {1175, 686, manual = true},
               {1237, 684},
               --- Eastern Steppes
-              {1280, 701},
+              {1273, 703, manual = true},
               {1232, 702},
               {1189, 707},
               --- Stonesky Foothills
@@ -757,16 +757,16 @@ M.immortal_empires = {
               --- K'datha
               {959, 810},
               {980, 830},
-              {1014, 823},
+              {1014, 823, disabled = true},
               --- The Skull Road
               {852, 758},
-              {883, 775},
+              {874, 773, manual = true},
               {839, 800},
               {868, 808},
               {798, 820},
               --- The Blood Marshes
               {938, 829},
-              {872, 838},
+              {866, 834, manual = true},
               {925, 850},
               {827, 856},
               {904, 871},
@@ -774,32 +774,32 @@ M.immortal_empires = {
               {775, 857},
               {806, 868},
               {838, 893},
-              {807, 902},
+              {804, 900, manual = true},
               --- Plain of Illusions
-              {738, 898},
+              {728, 906, manual = true},
               {734, 920},
-              {765, 923},
-              {677, 943},
-              {722, 937},
+              {770, 924, manual = true},
+              {676, 937, manual = true},
+              {705, 927, manual = true},
               --- The N. Tumour
               {695, 913},
               {630, 921},
               {605, 937},
-              {645, 940},
+              {640, 916, manual = true},
               --- The Eternal Lagoon
-              {514, 927},
+              {528, 924, manual = true},
               {591, 931},
               {521, 953},
               --- The Cold Mires
-              {458, 903},
+              {458, 899, manual = true},
               {400, 899},
               {467, 925},
-              {495, 951},
+              {487, 951, manual = true},
               --- Northern Wastes
-              {423, 911},
+              {411, 913, manual = true},
               {406, 926},
               {364, 924},
-              {452, 943},
+              {456, 936, manual = true},
               --- The Shard Lands
               {331, 856},
               {380, 882},
@@ -810,11 +810,11 @@ M.immortal_empires = {
               {250, 896},
               {160, 896},
               {206, 901},
-              {287, 903},
+              {284, 909, manual = true},
               --- Ironfrost Glacier
-              {70, 892},
+              {69, 888, manual = true},
               {139, 891},
-              {43, 892},
+              {39, 897, manual = true},
               {99, 896},
          },
     },
