@@ -624,7 +624,7 @@ function renderReviews(trimmed) {
   const tb = document.querySelector('#reviews tbody');
   tb.innerHTML = '';
   reviewHidden = new Set();
-  const suggested = new Set((C.suggestions || []).filter(x => !x.problem).map(x => spotKey({ lua: x.lua, zone: x.zone, index: x.spot })));
+  const suggested = new Set((C.suggestions || []).filter(x => !x.problem && x.spot !== undefined).map(x => spotKey({ lua: x.lua, zone: x.zone, index: x.spot })));
   let open = 0, byTrim = 0, bySuggestion = 0;
   list.forEach((f, i) => {
     const key = flagKey(f);
@@ -680,16 +680,17 @@ function renderSuggestions() {
       const c = shape(look(t.key)[0], sx(s.x), sy(s.y), 5.6 * C.r0, { class: 'cat-suggested', fill: look(t.key)[1], 'fill-opacity': 0.35, stroke: 'var(--ink)',
         'stroke-width': 1.4 * viewOpts.dot, 'stroke-dasharray': '3 2' }, gSug);
       c.dataset.sug = s.id;
-      c.dataset.tip = `<b>Suggested ${what.toLowerCase()}</b> ${s.at ? 'beside' : 'on'} spot ${esc(s.zone)} ${s.spot}${s.area ? ' - ' + esc(s.area) : ''}<br>${esc(s.reason)}<br>{${s.x}, ${s.y}} - click to accept`;
+      const where = s.spot === undefined ? `new in ${esc(s.zone)}` : `${s.at ? 'beside' : 'on'} spot ${esc(s.zone)} ${s.spot}`;
+      c.dataset.tip = `<b>Suggested ${what.toLowerCase()}</b> ${where}${s.area ? ' - ' + esc(s.area) : ''}<br>${esc(s.reason)}<br>{${s.x}, ${s.y}} - click to accept`;
     }
     const tr = document.createElement('tr');
     const action = s.problem ? `<span class="d">${esc(s.problem)}</span>` : s.placed ? 'placed' : done ? 'accepted' : `<button type="button" class="btn" data-sug="${s.id}">Accept</button>`;
-    tr.innerHTML = `<td>${esc(s.zone)}</td><td>${what}</td><td class="n">${s.spot}</td><td class="why">${esc(s.reason)}</td><td>${action}</td>`;
+    tr.innerHTML = `<td>${esc(s.zone)}</td><td>${what}</td><td class="n">${s.spot === undefined ? 'new' : s.spot}</td><td class="why">${esc(s.reason)}</td><td>${action}</td>`;
     tb.appendChild(tr);
   }
   document.getElementById('sugNote').textContent = `${list.length} suggestions from tools/spot_map/data/suggestions/ (one file per coordinates.lua block), ${open} not accepted yet. ` +
     'Accepting one queues the new entry on its spot (or beside it, off the road) and deletes the spot, so it leaves the encounter pool. ' +
-    'Remove the pending entry to undo both.';
+    'Remove the pending entry to undo both. Suggestions marked "new" add an entry without replacing a spot.';
   tb.querySelectorAll('button[data-sug]').forEach(b => b.addEventListener('click', () => accept([+b.dataset.sug])));
 }
 
@@ -705,6 +706,8 @@ function newEntry(type, lua, zone, area, x, y, given = {}) {
 function acceptSuggestion(id) {
   const s = (C.suggestions || []).find(x => x.id === id), p = P();
   if (!s || s.problem || s.placed || p.add.some(a => a.sug === id)) return;
+  // A new entry only adds itself. One that takes over a spot also deletes that spot.
+  if (s.spot === undefined) { p.add.push({ ...newEntry(typeOf(s.type), s.lua, s.zone, s.area, s.x, s.y, s.fields || {}), sug: id, seq: nextSeq() }); return; }
   const key = spotKey({ lua: s.lua, zone: s.zone, index: s.spot });
   // Numbered here rather than on save, so "Accept all" keeps each suggestion's entry beside its spot's deletion in the queue.
   if (!p.disable.includes(key)) { p.disable.push(key); (p.seq || (p.seq = {}))['disable|' + key] = nextSeq(); }
@@ -973,7 +976,14 @@ document.getElementById('reviewNext').addEventListener('click', () => {
   }
   msg.className = 'msg'; msg.textContent = 'No open flagged spots left.';
 });
-document.getElementById('sugAll').addEventListener('click', () => accept((C.suggestions || []).map(s => s.id)));
+// Accepts every open suggestion, and says so when some could not be (a problem shown in their row).
+document.getElementById('sugAll').addEventListener('click', () => {
+  const list = C.suggestions || [], before = P().add.length;
+  accept(list.map(s => s.id));
+  const added = P().add.length - before, broken = list.filter(s => s.problem).length;
+  msg.className = broken ? 'msg err' : 'msg';
+  msg.textContent = `Accepted ${added} suggestions.${broken ? ` ${broken} have a problem and were skipped (see their rows); restart the server if the code changed.` : ''}`;
+});
 let clearArmed = false;
 document.getElementById('clearBtn').addEventListener('click', e => {
   if (ctl.mode === 'slate' && P().add.length && !clearArmed) {

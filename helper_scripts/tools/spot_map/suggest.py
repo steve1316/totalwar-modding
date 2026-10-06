@@ -26,6 +26,8 @@ SUGGESTION_DIR = os.path.join(campaigns.DATA_DIR, "suggestions")
 #: Spots flagged by a review of the contact sheets, one file per coordinates.lua block.
 REVIEW_DIR = os.path.join(campaigns.DATA_DIR, "reviews")
 SHEET_DIR = os.path.join(campaigns.CACHE_DIR, "sheets")
+#: An entry of a suggestion's type this close (logical units) to it counts as the suggestion placed, e.g. after a drag before export.
+PLACED_RANGE = 15
 #: Contact sheets: each tile shows this many logical units around its spot, drawn at TILE_PX square, COLS x ROWS tiles per sheet.
 SHEET_RADIUS = 10
 TILE_PX = 200
@@ -160,13 +162,13 @@ def load(campaign: dict) -> List[dict]:
 
 
 def check(suggestions: List[dict], spots: List[dict], pois: List[dict]) -> List[dict]:
-    """Checks suggestions against coordinates.lua and fills in where each one stands. A suggestion names the spot it takes over by its
-    "lua", "zone" and "spot" index; it stands on that spot's x, y, or at its "at" [x, y] when the spot itself lies on a road. It is "placed"
-    once an entry of its type stands there (after an export), and gets a "problem" when the spot is missing, disabled without being placed,
-    or named twice.
+    """Checks suggestions against coordinates.lua and fills in where each one stands. A suggestion either takes over an existing spot, named
+    by its "lua", "zone" and "spot" index, and stands on that spot's x, y (or at its "at" [x, y] when the spot itself lies on a road), or is
+    a new entry with no "spot", standing at its "at" in its "zone" and "area". It is "placed" once an entry of its type stands there (after
+    an export), and gets a "problem" when its spot is missing, disabled without being placed, or named twice.
 
     Args:
-        suggestions (List[dict]): Entries as {"type", "lua", "zone", "spot", "at" (optional), "fields", "reason"}.
+        suggestions (List[dict]): Entries as {"type", "lua", "zone", "spot" (or "area" for a new entry), "at", "fields", "reason"}.
         spots (List[dict]): The campaign's spots, as `campaigns.campaign_entries` builds them.
         pois (List[dict]): The campaign's points of interest, likewise.
 
@@ -177,27 +179,35 @@ def check(suggestions: List[dict], spots: List[dict], pois: List[dict]) -> List[
     # Where each type already stands: (type, lua, x, y). Plain spots stand everywhere, so they never count as placed.
     standing = {(campaigns.type_of_list(p["kind"]), p["lua"], p["x"], p["y"]) for p in pois if not p["disabled"]}
     standing |= {(campaigns.type_of_spot(s["flags"]), s["lua"], s["x"], s["y"]) for s in spots if not s["disabled"] and s["flags"]}
+    # A new plain spot is placed once any enabled spot stands on its coordinates.
+    standing |= {("spot", s["lua"], s["x"], s["y"]) for s in spots if not s["disabled"]}
     taken: Dict[tuple, int] = {}
     out = []
     for i, sug in enumerate(suggestions):
-        ref = (sug.get("lua"), sug.get("zone"), sug.get("spot"))
+        new = "spot" not in sug
+        ref = ("at", sug.get("lua"), *sug["at"]) if new and sug.get("at") else (sug.get("lua"), sug.get("zone"), sug.get("spot"))
         spot = by_ref.get(ref)
         culture = (sug.get("fields") or {}).get("culture")
         x, y = sug["at"] if sug.get("at") else (spot["x"], spot["y"]) if spot else (None, None)
-        placed = bool(spot) and sug.get("type") != "spot" and (sug.get("type"), spot["lua"], x, y) in standing
+        # Placed once an entry of its type stands at or near its position. One that takes over a spot is placed on that spot's position too
+        # (accepted before it got its "at"). A plain spot that takes over a spot is never placed.
+        near = lambda px, py: any(t == sug.get("type") and lua == sug.get("lua") and math.dist((px, py), (sx, sy)) <= PLACED_RANGE for t, lua, sx, sy in standing)
+        placed = (new or bool(spot) and sug.get("type") != "spot") and (x is not None and near(x, y) or bool(spot) and near(spot["x"], spot["y"]))
         problem = None
         if sug.get("type") not in campaigns.TYPE_BY_KEY:
             problem = f"unknown type {sug.get('type')}"
-        elif spot is None:
+        elif new and not (sug.get("at") and sug.get("zone")):
+            problem = "a new entry needs an at and a zone"
+        elif not new and spot is None:
             problem = f"no spot {sug.get('zone')} {sug.get('spot')} in M.{sug.get('lua')}"
-        elif spot["disabled"] and not placed:
+        elif not new and spot["disabled"] and not placed:
             problem = f"spot {spot['zone']} {spot['index']} is disabled"
         elif culture and culture not in campaigns.CULTURES:
             problem = f"unknown culture {culture}"
         elif ref in taken:
-            problem = f"spot {spot['zone']} {spot['index']} is also suggestion {taken[ref] + 1}"
+            problem = f"{'the same place' if new else 'spot ' + spot['zone'] + ' ' + str(spot['index'])} is also suggestion {taken[ref] + 1}"
         taken.setdefault(ref, i)
-        out.append({**sug, "x": x, "y": y, "area": spot["area"] if spot else "", "id": i, "placed": placed, "problem": problem})
+        out.append({**sug, "x": x, "y": y, "area": spot["area"] if spot else sug.get("area", ""), "id": i, "placed": placed, "problem": problem})
     return out
 
 

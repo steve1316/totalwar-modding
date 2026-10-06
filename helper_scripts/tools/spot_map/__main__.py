@@ -31,6 +31,9 @@ def page_state() -> dict:
     for campaign in data["campaigns"]:
         source = campaigns.CAMPAIGN_BY_KEY[campaign["key"]]
         campaign["suggestions"] = suggest.check(suggest.load(source), campaign["spots"], campaign["pois"])
+        # Zones only new suggestions use still need a place in the pending list's zone picker.
+        known = {(z["lua"], z["zone"]) for z in campaign["zones"]}
+        campaign["zones"] += [{"lua": lua, "zone": zone} for lua, zone in dict.fromkeys((s["lua"], s["zone"]) for s in campaign["suggestions"]) if (lua, zone) not in known]
         campaign["reviews"] = suggest.check_reviews(suggest.load_reviews(source), campaign["spots"], campaign["pois"])
     return data
 
