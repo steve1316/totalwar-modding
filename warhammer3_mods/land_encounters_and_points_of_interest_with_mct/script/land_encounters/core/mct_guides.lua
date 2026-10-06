@@ -200,13 +200,19 @@ function M.smithy_text()
     return table.concat(lines, "\n")
 end
 
---- Builds the Taverns page guide: the intro, then what each level costs to reach.
+--- Builds the Taverns page guide: the intro, what each level costs to reach, then the name and level 1 line of every bar offer.
 --- @returns string The guide text.
 function M.taverns_text()
     local lines = { guides.tavern_intro, "" }
     for number, level in ipairs(tavern_data.levels) do
         local fact = level.upgrade_price and ("upgrades to level " .. (number + 1) .. " for " .. level.upgrade_price .. " gold.") or "the top level."
         lines[#lines + 1] = guide_line("Level " .. number, fact)
+    end
+    lines[#lines + 1] = ""
+    for _, offer in ipairs(spot_offers.offers) do
+        if offer.pool == "tavern" then
+            lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
+        end
     end
     return table.concat(lines, "\n")
 end

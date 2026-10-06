@@ -19,6 +19,7 @@
 ---   wound           The lord is wounded for this many turns, at once.
 ---   camp            True: the army cannot move again this turn.
 ---   heal            True: every unit is healed to full.
+---   heal_share      Every unit regains this share of its missing strength.
 ---   sacrifice       { ranks }: the weakest regular unit is removed and every other unit gains that many ranks.
 ---   daemon_armies   How many hard Chaos armies march on the faction's capital.
 ---   guardian        A battle starts at the site, against an army that attacks the lord at once: true at the current difficulty, or a
@@ -36,6 +37,12 @@
 ---   reveal_turns    The realm target's region stays revealed through the shroud for this many turns, and the result lists its garrison.
 ---   count           How many realm targets.
 ---
+--- Tavern bar fields (pool "tavern", drawn only on the bar of a Tavern). A bar offer's `cost` steps with the campaign difficulty and is shown
+--- as a treasury card, while every other stepped field steps with the Tavern's level (Easy for level 1 up to Hard for level 3):
+---   shoots          True: only drawn when our army has missile units or artillery.
+---   stake_multiplier  A gamble outcome that pays back the gold paid for the offer this many times over.
+---   lord_health     A gamble outcome that leaves our lord's own unit at this share of its current strength.
+---   army_report     The result lists the enemy armies within this map distance of the Tavern, instead of a garrison.
 --- Pre-battle offer fields (pool "pre_battle"). Taking one pays its cost and the battle starts with it:
 ---   budget          Multiplies the enemy army's gold budget, e.g. 0.75.
 ---   fewer_units     The enemy army fields this many fewer units.
@@ -97,6 +104,9 @@ local tiered = steps.tiered
 
 --- Key prefix of the spot offers' own effect bundles.
 local SPOT_BUNDLE = "land_enc_effect_spot_"
+
+--- Key prefix of the Tavern bar's drinks.
+local TAVERN_BUNDLE = SPOT_BUNDLE .. "tavern_"
 
 --- The tower's attrition bundle, shared by the plague offers.
 local PLAGUE = shared.plague_bearer.bundle
@@ -201,8 +211,9 @@ M.fight_choice_key = "FIRST"
 ---   neighbours       Every faction at peace with you that owns a region next to one of yours.
 ---   rival_pair       The two biggest of the 6 nearest factions, set against each other.
 ---   enemy_friends    The nearest enemy, made friendlier with your other enemies.
+---   nearby_regions   The `count` nearest regions that are not yours.
 M.realm_kinds = { "own_region", "raise_region", "own_province", "enemy_region", "enemy_regions", "enemy_province", "enemy_capital", "friend",
-    "biggest_faction", "neighbours", "rival_pair", "enemy_friends" }
+    "biggest_faction", "neighbours", "rival_pair", "enemy_friends", "nearby_regions" }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,6 +242,11 @@ M.sites = {
 --- The spoils pick after a won battle spot: a site with no signature that draws from its own pools. The picture is culture-aware, so each
 --- player sees their own culture's victory.
 M.spoils = { key = "spoils_of_war", tags = { "loot", "recovery" }, pools = { "spoils", "realm" }, ui_image = "land_victory" }
+
+--- A Tavern's bar: a site with no signature that draws only drinks and games, and is never rolled for a treasure spot. Its last choice goes
+--- back to the Tavern's hub instead of walking away, and each price shows as a treasury card that the payload charges. The picture is
+--- culture-aware.
+M.tavern = { key = "tavern_bar", tags = {}, pools = { "tavern" }, ui_image = "generic", leave_line = "tavern_back", price_as_card = true }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -446,6 +462,27 @@ M.offers = {
     { key = "dark_offering", pool = "spoils", tags = { "curse" }, sacrifice = { ranks = 0 }, lord_ranks = 1,
         army_bundle = { SPOT_BUNDLE .. "dark_offering", 5 } },
 
+    --- The Tavern bar. Drinks last 5 turns and grow stronger with the Tavern's level, and a hangover lasts 3 turns.
+    { key = "fighting_spirits", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "fighting_spirits"), 5 } },
+    { key = "shieldbrew", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "shieldbrew"), 5 } },
+    { key = "firewater", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "firewater"), 5 } },
+    { key = "marksmans_draught", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "marksmans_draught"), 5 }, shoots = true },
+    { key = "mystery_brew", pool = "tavern", tags = {}, cost = S(500, 750, 1000), gamble = {
+        { 1, "won", army_bundle = { tiered(TAVERN_BUNDLE .. "mystery_brew"), 5 } },
+        { 1, "lost", army_bundle = { TAVERN_BUNDLE .. "hangover", 3 } },
+    } },
+    { key = "feast_for_the_army", pool = "tavern", tags = {}, cost = STANDARD, heal_share = S(0.5, 0.75, 1), army_bundle = { SPOT_BUNDLE .. "buy_supplies", 1 } },
+    { key = "dice_with_strangers", pool = "tavern", tags = {}, cost = STANDARD, gamble = {
+        { 1, "won", stake_multiplier = 2 },
+        { 1, "lost" },
+    } },
+    { key = "arm_wrestle_the_champion", pool = "tavern", tags = {}, gamble = {
+        { 1, "won", lord_xp = S(1000, 2000, 3000) },
+        { 1, "lost", lord_health = 0.5 },
+    } },
+    { key = "buy_rumours", pool = "tavern", tags = {}, cost = S(1000, 1500, 2000), realm = "nearby_regions", count = S(3, 5, 7), reveal_turns = 5,
+        army_report = 150 },
+
     --- Missions, tracked by the battle script under the tower's names.
     { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },
     { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = S(1500, 2000, 2500) },
@@ -494,8 +531,8 @@ function M.all_at(difficulty)
     return offers
 end
 
---- Site key -> site record, the spoils pick included.
-M.site_by_key = { [M.spoils.key] = M.spoils }
+--- Site key -> site record, the spoils pick and the Tavern bar included.
+M.site_by_key = { [M.spoils.key] = M.spoils, [M.tavern.key] = M.tavern }
 for _, site in ipairs(M.sites) do
     M.site_by_key[site.key] = site
 end

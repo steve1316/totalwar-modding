@@ -88,6 +88,13 @@ land_enc_incident_spot_stir_their_rebels	false	wh2_sea_encounters_1	false	Event	
 land_enc_incident_spot_poison_their_wells	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_sap_their_garrison	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_spread_the_plague	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_mystery_brew_won	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_mystery_brew_lost	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_dice_with_strangers_won	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_dice_with_strangers_lost	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_arm_wrestle_the_champion_won	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_arm_wrestle_the_champion_lost	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_buy_rumours	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_send_gifts	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_spy_on_their_capital	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_curse_a_distant_king	false	wh2_sea_encounters_1	false	Event		false		0.0000	false

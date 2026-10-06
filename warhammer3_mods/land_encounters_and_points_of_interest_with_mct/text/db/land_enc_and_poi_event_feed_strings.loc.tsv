@@ -267,6 +267,24 @@ event_feed_strings_text_description_event_land_enc_tower_ready	The tower's gates
 event_feed_strings_text_title_event_land_enc_tower_dark_bargain_paid	Ancient Tower	false
 event_feed_strings_text_subtitle_event_land_enc_tower_dark_bargain_paid	The Dark Bargain Is Paid	false
 event_feed_strings_text_description_event_land_enc_tower_dark_bargain_paid	What we bargained with in the tower has taken its due. Our lord is [[col:red]]wounded for 5 turns[[/col]], but keeps the Daemon's mark.	false
+event_feed_strings_text_title_event_land_enc_tavern_claimed	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_claimed	Tavern Claimed	false
+event_feed_strings_text_description_event_land_enc_tavern_claimed	We have claimed this unowned tavern and put our own keeper behind the bar. Walk a lord in again to open it.	false
+event_feed_strings_text_title_event_land_enc_tavern_encountered	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_encountered	Enemy Tavern	false
+event_feed_strings_text_description_event_land_enc_tavern_encountered	This tavern is held by our enemies. A lord at the head of an army can try to take it.	false
+event_feed_strings_text_title_event_land_enc_tavern_captured	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_captured	Tavern Taken	false
+event_feed_strings_text_description_event_land_enc_tavern_captured	We have driven out its guards and taken the tavern. Walk a lord in again to open it.	false
+event_feed_strings_text_title_event_land_enc_tavern_capture_repelled	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_capture_repelled	Attack Repelled	false
+event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains in enemy hands.	false
+event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_2	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_2	Tavern Improved	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	The tavern has grown to level 2. Its guards are tougher, and its rooms will offer more once they open.	false
+event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_3	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_3	Tavern Improved	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms will offer the most once they open.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
 event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
@@ -336,6 +354,27 @@ event_feed_strings_text_description_event_land_enc_spot_sap_their_garrison	Our s
 event_feed_strings_text_title_event_land_enc_spot_spread_the_plague	Spread the Plague	false
 event_feed_strings_text_subtitle_event_land_enc_spot_spread_the_plague	Spread the Plague	false
 event_feed_strings_text_description_event_land_enc_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around the place named above. The plague spreads, though our own army does not escape it entirely.	false
+event_feed_strings_text_title_event_land_enc_spot_mystery_brew_won	Mystery Brew	false
+event_feed_strings_text_subtitle_event_land_enc_spot_mystery_brew_won	A Fine Brew	false
+event_feed_strings_text_description_event_land_enc_spot_mystery_brew_won	The brew goes down like liquid fire and comes back up as courage. The whole army stands a little taller, and fights a little harder.	false
+event_feed_strings_text_title_event_land_enc_spot_mystery_brew_lost	Mystery Brew	false
+event_feed_strings_text_subtitle_event_land_enc_spot_mystery_brew_lost	A Foul Brew	false
+event_feed_strings_text_description_event_land_enc_spot_mystery_brew_lost	Whatever was in that barrel, it was not meant for drinking. The army wakes with sore heads and slow feet, and the keeper will not say what it was.	false
+event_feed_strings_text_title_event_land_enc_spot_dice_with_strangers_won	Dice with Strangers	false
+event_feed_strings_text_subtitle_event_land_enc_spot_dice_with_strangers_won	The Dice Are Kind	false
+event_feed_strings_text_description_event_land_enc_spot_dice_with_strangers_won	The dice land in our favour, again and again. The strangers pay up with sour faces, and our stake comes back doubled.	false
+event_feed_strings_text_title_event_land_enc_spot_dice_with_strangers_lost	Dice with Strangers	false
+event_feed_strings_text_subtitle_event_land_enc_spot_dice_with_strangers_lost	Loaded Dice	false
+event_feed_strings_text_description_event_land_enc_spot_dice_with_strangers_lost	The dice turn against us, and the strangers sweep our stake from the table. Only later does anyone wonder whose dice they were.	false
+event_feed_strings_text_title_event_land_enc_spot_arm_wrestle_the_champion_won	Arm-Wrestle the Champion	false
+event_feed_strings_text_subtitle_event_land_enc_spot_arm_wrestle_the_champion_won	Champion Beaten	false
+event_feed_strings_text_description_event_land_enc_spot_arm_wrestle_the_champion_won	The table groans and the crowd roars as the champion's arm slams down. Our lord walks out a legend of the common room.	false
+event_feed_strings_text_title_event_land_enc_spot_arm_wrestle_the_champion_lost	Arm-Wrestle the Champion	false
+event_feed_strings_text_subtitle_event_land_enc_spot_arm_wrestle_the_champion_lost	Arm Broken	false
+event_feed_strings_text_description_event_land_enc_spot_arm_wrestle_the_champion_lost	The champion grins, leans in, and something in our lord's arm gives way with a crack. Our lord leaves the table hurt, and the crowd cheers the champion.	false
+event_feed_strings_text_title_event_land_enc_spot_buy_rumours	Buy Rumours	false
+event_feed_strings_text_subtitle_event_land_enc_spot_buy_rumours	Buy Rumours	false
+event_feed_strings_text_description_event_land_enc_spot_buy_rumours	The keeper leans close and talks of the roads around the place named above and beyond, and we will see those lands for some time yet. Of the enemy nearby.	false
 event_feed_strings_text_title_event_land_enc_spot_send_gifts	Send Gifts	false
 event_feed_strings_text_subtitle_event_land_enc_spot_send_gifts	Send Gifts	false
 event_feed_strings_text_description_event_land_enc_spot_send_gifts	Our gifts are well received at the place named above. Their rulers speak of us more warmly now, and remember who remembered them.	false
@@ -489,21 +528,3 @@ event_feed_strings_text_description_event_land_enc_spot_wound_paid_3	The price o
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_5	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_5	Our Lord Is Wounded	false
 event_feed_strings_text_description_event_land_enc_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
-event_feed_strings_text_title_event_land_enc_tavern_claimed	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_claimed	Tavern Claimed	false
-event_feed_strings_text_description_event_land_enc_tavern_claimed	We have claimed this unowned tavern and put our own keeper behind the bar. Walk a lord in again to open it.	false
-event_feed_strings_text_title_event_land_enc_tavern_encountered	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_encountered	Enemy Tavern	false
-event_feed_strings_text_description_event_land_enc_tavern_encountered	This tavern is held by our enemies. A lord at the head of an army can try to take it.	false
-event_feed_strings_text_title_event_land_enc_tavern_captured	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_captured	Tavern Taken	false
-event_feed_strings_text_description_event_land_enc_tavern_captured	We have driven out its guards and taken the tavern. Walk a lord in again to open it.	false
-event_feed_strings_text_title_event_land_enc_tavern_capture_repelled	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_capture_repelled	Attack Repelled	false
-event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains in enemy hands.	false
-event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_2	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_2	Tavern Improved	false
-event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	The tavern has grown to level 2. Its guards are tougher, and its rooms will offer more once they open.	false
-event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_3	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_3	Tavern Improved	false
-event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms will offer the most once they open.	false

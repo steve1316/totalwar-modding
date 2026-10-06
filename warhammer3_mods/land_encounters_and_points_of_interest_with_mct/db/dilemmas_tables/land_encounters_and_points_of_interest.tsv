@@ -56,6 +56,10 @@ land_enc_dilemma_tower_deeper_floor_4	false			nag_nagash_foreshadow	false	Event	
 land_enc_dilemma_ally_beset	false			chaos_stirs	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_turn_the_tables	false			lizardmen_invasion	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_relief_column	false			carnage_charge	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tavern_hub_level_1	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tavern_hub_level_2	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tavern_hub_level_3	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tavern_capture	false			wh2_rogue_army_encountered	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_hidden_tomb	false			books_of_nagash	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_abandoned_camp	false			wh2_rogue_army_encountered	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_buried_relics	false			wh2_sea_encounters_2	false	Event	UI_CAM_EVENT_Dilemma			false
@@ -73,7 +77,4 @@ land_enc_dilemma_site_collapsed_mine	false			under_empire_discovered	false	Event
 land_enc_dilemma_site_merchants_wagon	false			imperial_supplies	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_sunken_library	false			story_panels/chd_drill_machinations	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_spoils_of_war	false			land_victory	false	Event	UI_CAM_EVENT_Dilemma			false
-land_enc_dilemma_tavern_hub_level_1	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
-land_enc_dilemma_tavern_hub_level_2	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
-land_enc_dilemma_tavern_hub_level_3	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
-land_enc_dilemma_tavern_capture	false			wh2_rogue_army_encountered	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_site_tavern_bar	false			generic	false	Event	UI_CAM_EVENT_Dilemma			false

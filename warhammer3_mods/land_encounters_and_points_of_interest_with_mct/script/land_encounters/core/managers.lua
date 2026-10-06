@@ -1399,7 +1399,7 @@ end
 --- @param mission_manager table The CA mission_manager handle.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns PointOfInterestEventManager A new manager with the smithy, tower and Tavern delegates wired in, and the tower's Daemon's deal army
---- handed to spot offers.
+--- and the Tavern bar's return to the hub handed to spot offers.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
     TowerEventDelegate = TowerEventDelegate or require("script/land_encounters/features/tower")
@@ -1410,8 +1410,12 @@ function PointOfInterestEventManager:new(mission_manager, invasion_battle_manage
         tavern_event_delegate = TavernEventDelegate:new(invasion_battle_manager),
     }
     --- A treasure site's Daemon's bargain sends the same army as the tower's Daemon's deal.
-    require("script/land_encounters/features/spot_offers").send_daemon_army = function(faction_name, count)
+    local spot_offers = require("script/land_encounters/features/spot_offers")
+    spot_offers.send_daemon_army = function(faction_name, count)
         t.tower_event_delegate:send_daemon_army(faction_name, count)
+    end
+    spot_offers.on_tavern_bar_closed = function(faction_name, site, took)
+        t.tavern_event_delegate:bar_closed(faction_name, site, took)
     end
     setmetatable(t, self)
     self.__index = self

@@ -27,8 +27,10 @@ M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, and onto you
 --- Intro of the Taverns page guide. The per-level lines follow it.
 M.tavern_intro = "Each map zone has a racial Tavern, run by one race, and a neutral one open to all. Walk a lord onto an unclaimed Tavern "
     .. "to claim it, onto your own to open its hub, and onto one held by an ally or a neutral faction to visit it as a guest. A Tavern held by "
-    .. "a faction at war with you can be taken in battle, harder at higher levels. Only the owner can upgrade it. The hub's rooms (the "
-    .. "mercenary hall, the contract board and the bar) open in later updates."
+    .. "a faction at war with you can be taken in battle, harder at higher levels. Only the owner can upgrade it. At the bar, 3 of the drinks "
+    .. "and games below are on offer each visit, for gold that rises with the campaign's difficulty, and a higher level makes each drink "
+    .. "stronger. The owner pays a quarter less. Taking one closes the bar to that faction for a few turns. The mercenary hall and the "
+    .. "contract board open in later updates."
 
 --- Encounters page spot offer sections in page order, one per offer pool in configs/spot_offers.lua.
 M.spot_offer_sections = {

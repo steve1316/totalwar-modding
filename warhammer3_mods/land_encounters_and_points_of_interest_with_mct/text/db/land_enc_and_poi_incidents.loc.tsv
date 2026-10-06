@@ -168,6 +168,20 @@ incidents_localised_title_land_enc_incident_spot_sap_their_garrison	Sap Their Ga
 incidents_localised_description_land_enc_incident_spot_sap_their_garrison	Our saboteurs slip into [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], spoiling stores, cutting ropes and spreading sickness through the barracks. Its garrison is weakened and shaken.	false
 incidents_localised_title_land_enc_incident_spot_spread_the_plague	Spread the Plague	false
 incidents_localised_description_land_enc_incident_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. The plague spreads, though our own army does not escape it entirely.	false
+incidents_localised_title_land_enc_incident_spot_mystery_brew_won	Mystery Brew	false
+incidents_localised_description_land_enc_incident_spot_mystery_brew_won	The brew goes down like liquid fire and comes back up as courage. The whole army stands a little taller, and fights a little harder.	false
+incidents_localised_title_land_enc_incident_spot_mystery_brew_lost	Mystery Brew	false
+incidents_localised_description_land_enc_incident_spot_mystery_brew_lost	Whatever was in that barrel, it was not meant for drinking. The army wakes with sore heads and slow feet, and the keeper will not say what it was.	false
+incidents_localised_title_land_enc_incident_spot_dice_with_strangers_won	Dice with Strangers	false
+incidents_localised_description_land_enc_incident_spot_dice_with_strangers_won	The dice land in our favour, again and again. The strangers pay up with sour faces, and our stake comes back doubled.	false
+incidents_localised_title_land_enc_incident_spot_dice_with_strangers_lost	Dice with Strangers	false
+incidents_localised_description_land_enc_incident_spot_dice_with_strangers_lost	The dice turn against us, and the strangers sweep our stake from the table. Only later does anyone wonder whose dice they were.	false
+incidents_localised_title_land_enc_incident_spot_arm_wrestle_the_champion_won	Arm-Wrestle the Champion	false
+incidents_localised_description_land_enc_incident_spot_arm_wrestle_the_champion_won	The table groans and the crowd roars as the champion's arm slams down. Our lord walks out a legend of the common room.	false
+incidents_localised_title_land_enc_incident_spot_arm_wrestle_the_champion_lost	Arm-Wrestle the Champion	false
+incidents_localised_description_land_enc_incident_spot_arm_wrestle_the_champion_lost	The champion grins, leans in, and something in our lord's arm gives way with a crack. Our lord leaves the table hurt, and the crowd cheers the champion.	false
+incidents_localised_title_land_enc_incident_spot_buy_rumours	Buy Rumours	false
+incidents_localised_description_land_enc_incident_spot_buy_rumours	The keeper leans close and talks of the roads around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] and beyond, and we will see those lands for some time yet. Of the enemy nearby: [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_detail").StringValue}}[[/col]].	false
 incidents_localised_title_land_enc_incident_spot_send_gifts	Send Gifts	false
 incidents_localised_description_land_enc_incident_spot_send_gifts	Our gifts are well received at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their rulers speak of us more warmly now, and remember who remembered them.	false
 incidents_localised_title_land_enc_incident_spot_spy_on_their_capital	Spy on Their Capital	false
