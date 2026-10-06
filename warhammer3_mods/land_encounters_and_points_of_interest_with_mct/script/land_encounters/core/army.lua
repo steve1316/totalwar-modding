@@ -1,5 +1,5 @@
 --- Army class. Represents an encounter or smithy army built from the randomization pipeline. Holds the unit pool, lord pool, and
---- reinforcement armies, and exposes the constructors new_from_event (for spot battles) and new_from_subculture_and_level (for smithy
+--- reinforcement armies, and exposes the constructors new_from_event (for spot battles) and new_from_subculture_and_level (for smithy and tavern
 --- capture armies and garrisons).
 
 --- TODO: Pass an is_player flag in the constructor to double check units and pass alternatives in case they are needed.
@@ -303,15 +303,18 @@ function Army.faction_shorthand_for_subculture(subculture)
     return shorthand
 end
 
---- Builds a smithy capture-battle Army through the same pipeline as battle spots. The army matches the smithy owner's subculture when it has
---- army data (else a random faction), the smithy level sets the difficulty, and the battle type is never Allied Reinforcements.
+--- Builds a point-of-interest capture-battle Army (a Smithy or a Tavern) through the same pipeline as battle spots. The army matches the
+--- owner's subculture when it has army data (else a random faction), the level sets the difficulty, and the battle type is never Allied
+--- Reinforcements.
 --- @param subculture string The controlling faction's subculture key (may be nil).
---- @param level number Smithy level (1, 2, or 3). Drives difficulty selection.
+--- @param level number Point-of-interest level (1, 2, or 3). Drives difficulty selection.
+--- @param kind string|nil What the army defends, used for its force and invasion ids: "smithy" (the default) or "tavern".
 --- @returns Army A new Army instance ready for randomize_units and randomize_lord.
-function Army:new_from_subculture_and_level(subculture, level)
+function Army:new_from_subculture_and_level(subculture, level, kind)
+    kind = kind or "smithy"
     local shorthand = Army.faction_shorthand_for_subculture(subculture)
     if shorthand == nil then
-        out("DEBUG - smithy: subculture '" .. tostring(subculture) .. "' has no army data; using random faction.")
+        out("DEBUG - " .. kind .. ": subculture '" .. tostring(subculture) .. "' has no army data; using random faction.")
         shorthand = get_random_faction()
     end
     local intervention = pick_intervention_type(INTERCEPTION_TYPE)
@@ -319,12 +322,12 @@ function Army:new_from_subculture_and_level(subculture, level)
         intervention = INTERCEPTION_TYPE
     end
     return Army:new_from_event({
-        dilemma = "smithy",
+        dilemma = kind,
         faction = shorthand,
         difficulty = DIFFICULTY_KEYS[level] or "easy",
         intervention = intervention,
-        force_identifier = "smithy_defender_force",
-        invasion_identifier = "smithy_defender_invasion",
+        force_identifier = kind .. "_defender_force",
+        invasion_identifier = kind .. "_defender_invasion",
     }, nil)
 end
 

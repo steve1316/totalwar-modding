@@ -6,17 +6,21 @@ local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
 local M = {}
 
+--- The choice keys of a dilemma in order, as the DB names them.
+M.CHOICE_KEYS = { "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH" }
+
 --- Launches a custom dilemma. Each choice shows text lines and can pay gold, items and units when chosen.
 --- @param key string The dilemma key.
---- @param choices table An array of { key = "FIRST", lines = { `dummy_` keys }, gold = number or nil, items = { ancillary keys } or nil,
---- units = { force = military force, keys = { unit keys } } or nil }. Units show as cards and join that army.
+--- @param choices table An array of { key = "FIRST", lines = { `dummy_` keys }, gold = number or nil (paid when positive, charged when
+--- negative), items = { ancillary keys } or nil, units = { force = military force, keys = { unit keys } } or nil }. Units show as cards and
+--- join that army.
 --- @param faction_name string The faction to show the dilemma to.
 function M.launch(key, choices, faction_name)
     local faction = cm:get_faction(faction_name)
     local builder = cm:create_dilemma_builder(key)
     local payload = cm:create_payload()
     for _, choice in ipairs(choices) do
-        if choice.gold and choice.gold > 0 then
+        if choice.gold and choice.gold ~= 0 then
             payload:treasury_adjustment(choice.gold)
         end
         for _, item in ipairs(choice.items or {}) do
