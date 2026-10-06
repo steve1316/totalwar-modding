@@ -27,7 +27,8 @@ body[data-palette="neon"] { --kept: #39ff14; --cut: #ff1744; --add: #00e5ff; --d
   --settle: #000000; --edge: #000000; --tower: #b388ff; --tavern: #76ff03; --manual: #ffffff; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; }
-.wrap { max-width: 1400px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 16px; }
+/* The page uses nearly the full window width so the map gets as much room as possible. */
+.wrap { margin: 0 auto; padding-inline: 60px; padding-block: 20px 40px; display: grid; gap: 16px; }
 h1 { font-family: var(--display); font-weight: 700; font-size: 1.7rem; margin: 0; letter-spacing: .02em; }
 h2 { font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin: 0 0 8px; letter-spacing: .04em; }
 .lede { margin: 4px 0 0; color: var(--muted); max-width: 90ch; }
@@ -42,8 +43,18 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px s
 .totals { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--mono); font-size: .92rem; }
 .totals b { font-weight: 500; }
 .k { color: var(--kept); } .c { color: var(--cut); } .a { color: var(--add); } .d { color: var(--del); }
-/* The map takes the full width; the cards sit below it, side by side when there is room. */
-.layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+/* The map with Pending changes and Review in a column beside it; the other cards sit below both. On narrow screens everything stacks. */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 14px var(--dock-w, 420px); column-gap: 2px; row-gap: 16px; align-items: start; }
+/* The drag bar between the map and the side column. */
+.splitter { align-self: stretch; display: flex; justify-content: center; cursor: col-resize; touch-action: none; }
+.splitter::before { content: ""; width: 4px; border-radius: 2px; background: var(--line); }
+.splitter:hover::before, .splitter.active::before, .splitter:focus-visible::before { background: var(--kept); }
+.splitter:focus-visible { outline: none; }
+.dock { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.dock .tbl { max-height: 300px; }
+.dock #reviewCard .tbl { max-height: 560px; }
+.layout > .side { grid-column: 1 / -1; }
+@media (max-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr); } .splitter { display: none; } }
 .mapbox { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; touch-action: none; }
 svg#map { display: block; width: 100%; height: auto; cursor: crosshair; background: var(--land); }
 svg#map.drag { cursor: grabbing; }
@@ -75,8 +86,6 @@ td .fields { display: grid; gap: 3px; }
 td .fields label { display: grid; grid-template-columns: 7.5em 1fr; align-items: center; gap: 4px; font-size: .8rem; color: var(--muted); }
 #tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: .82rem; padding: 6px 8px; border-radius: 5px; max-width: 280px; display: none; z-index: 2; }
 .side { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; align-items: start; min-width: 0; }
-/* The pending changes card spans the map's full width; the other cards sit side by side below it. */
-.side > .wide { grid-column: 1 / -1; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; min-width: 0; }
 .tbl { overflow: auto; max-height: 420px; }
 table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: .88rem; }
@@ -174,8 +183,10 @@ ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-s
       <div id="tip"></div>
     </section>
 
-    <div class="side">
-      <section class="card wide">
+    <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" aria-label="Map width" tabindex="0"
+      title="Drag to resize the map. Double-click to reset."></div>
+    <div class="dock">
+      <section class="card">
         <h2 id="queueTitle">Pending changes</h2>
         <div class="tbl"><table id="pending"><thead><tr><th></th><th>Zone</th><th>Details</th><th>At</th><th></th></tr></thead><tbody></tbody></table></div>
         <datalist id="owners"></datalist>
@@ -192,16 +203,19 @@ ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-s
         </div>
         <p class="msg" id="msg"></p>
       </section>
-      <section class="card">
-        <h2>Export history</h2>
-        <ul class="hist" id="history"></ul>
-        <p class="note" id="historyNone">No exports of this campaign yet. Each export to coordinates.lua is logged in _diag/spot_map/history.jsonl.</p>
-      </section>
-      <section class="card wide" id="reviewCard">
+      <section class="card" id="reviewCard">
         <h2>Review</h2>
         <p class="note" id="reviewNote"></p>
         <div class="row" style="margin:6px 0 8px"><button type="button" class="btn primary" id="reviewNext">Next open spot</button></div>
         <div class="tbl"><table id="reviews"><thead><tr><th>Zone</th><th>Spot</th><th>Issue</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+      </section>
+    </div>
+
+    <div class="side">
+      <section class="card">
+        <h2>Export history</h2>
+        <ul class="hist" id="history"></ul>
+        <p class="note" id="historyNone">No exports of this campaign yet. Each export to coordinates.lua is logged in _diag/spot_map/history.jsonl.</p>
       </section>
       <section class="card" id="sugCard">
         <h2>Suggestions</h2>
@@ -879,6 +893,28 @@ document.getElementById('dotSizeVal').textContent = (+viewOpts.dot).toFixed(1);
 dotSize.addEventListener('change', () => { viewOpts.dot = +dotSize.value; saveView(); if (C) build(false); });
 dotSize.addEventListener('input', () => { document.getElementById('dotSizeVal').textContent = (+dotSize.value).toFixed(1); });
 applyPalette();
+
+// Map width: drag the bar between the map and the side column, or focus it and use the arrow keys. Double-click resets it. Remembered in
+// this browser only.
+const layoutEl = document.querySelector('.layout'), splitter = document.getElementById('splitter');
+const DOCK_DEFAULT = 420, DOCK_MIN = 280, MAP_MIN = 400;
+function setDock(w) {
+  viewOpts.dock = Math.round(Math.max(DOCK_MIN, Math.min(layoutEl.clientWidth - MAP_MIN, w)));
+  layoutEl.style.setProperty('--dock-w', viewOpts.dock + 'px');
+}
+if (viewOpts.dock) setDock(viewOpts.dock);
+splitter.addEventListener('pointerdown', e => { splitter.setPointerCapture(e.pointerId); splitter.classList.add('active'); });
+splitter.addEventListener('pointermove', e => {
+  if (splitter.classList.contains('active')) setDock(layoutEl.getBoundingClientRect().right - e.clientX - splitter.offsetWidth / 2);
+});
+splitter.addEventListener('pointerup', () => { splitter.classList.remove('active'); saveView(); });
+splitter.addEventListener('dblclick', () => { setDock(DOCK_DEFAULT); saveView(); });
+splitter.addEventListener('keydown', e => {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  e.preventDefault();
+  setDock((viewOpts.dock || DOCK_DEFAULT) + (e.key === 'ArrowLeft' ? 20 : -20));
+  saveView();
+});
 
 // Filter chips: each hides one category on the map. Remembered in this browser only.
 const hidden = new Set((() => { try { return JSON.parse(localStorage.getItem('spotmap.hidden') || '[]'); } catch (e) { return []; } })());
