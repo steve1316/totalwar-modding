@@ -607,8 +607,9 @@ function acceptSuggestion(id) {
   const s = (C.suggestions || []).find(x => x.id === id), p = P();
   if (!s || s.problem || s.placed || p.add.some(a => a.sug === id)) return;
   const key = spotKey({ lua: s.lua, zone: s.zone, index: s.spot });
-  p.add.push({ ...newEntry(typeOf(s.type), s.lua, s.zone, s.area, s.x, s.y, s.fields || {}), sug: id, replaces: key });
-  if (!p.disable.includes(key)) p.disable.push(key);
+  // Numbered here rather than on save, so "Accept all" keeps each suggestion's entry beside its spot's deletion in the queue.
+  if (!p.disable.includes(key)) { p.disable.push(key); (p.seq || (p.seq = {}))['disable|' + key] = nextSeq(); }
+  p.add.push({ ...newEntry(typeOf(s.type), s.lua, s.zone, s.area, s.x, s.y, s.fields || {}), sug: id, replaces: key, seq: nextSeq() });
 }
 
 // Accepts suggestions by id and redraws.
