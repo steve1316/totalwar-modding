@@ -16,3 +16,6 @@ encounter_marker_smithy	smithy	false
 encounter_marker_smithy_level_2	smithy	false	
 encounter_marker_smithy_level_3	smithy	false	
 encounter_marker_tower	tower	false	
+encounter_marker_tavern	tavern	false	
+encounter_marker_tavern_level_2	tavern	false	
+encounter_marker_tavern_level_3	tavern	false	

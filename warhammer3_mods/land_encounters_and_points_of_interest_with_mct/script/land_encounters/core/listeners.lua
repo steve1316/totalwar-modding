@@ -1,5 +1,5 @@
 --- Registers every core:add_listener used by the mod: FactionTurnStart, AreaEntered, the DilemmaChoiceMadeEvent listeners (battle, smithy,
---- treasure site and tower), and the MctInitialized hook. Manager instances are populated by the entry point's pre_first_tick_callback.
+--- treasure site, tower and Tavern), and the MctInitialized hook. Manager instances are populated by the entry point's pre_first_tick_callback.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/core/mct")
@@ -11,6 +11,12 @@ local battle_dilemma_keys = require("script/land_encounters/configs/battle_categ
 local smithy_events = events.smithy
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local spot_battles = require("script/land_encounters/features/spot_battles")
+
+--- Tavern dilemma key -> true, for the Tavern choice listener.
+local tavern_dilemma_keys = {}
+for _, key in ipairs(events.tavern) do
+    tavern_dilemma_keys[key] = true
+end
 
 --- Tower dilemma key -> true, for the tower choice listener.
 local tower_dilemma_keys = {}
@@ -78,6 +84,9 @@ function M.register()
             elseif M.current_spot_info.spot_type == 2 then
                 --- Tower.
                 M.point_of_interest_event_manager:trigger_poi_event("TowerSpot", area_and_character_info, M.current_spot_info)
+            elseif M.current_spot_info.spot_type == 3 then
+                --- Tavern.
+                M.point_of_interest_event_manager:trigger_poi_event("TavernSpot", area_and_character_info, M.current_spot_info)
             end
 
             if can_delete_land_encounter then
@@ -91,7 +100,7 @@ function M.register()
     --- Battle-spot dilemma choice. Fires when the player picks an option on a battle-spot dilemma,
     --- e.g. wh2_dlc11_cst_vampire_coast_encounters. Context fields (dilemma, choice, faction, etc.)
     --- are documented at https://chadvandy.github.io/tw_modding_resources/WH3/scripting_doc.html#DilemmaChoiceMadeEvent.
-    --- TODO: future spot types (tavern, resource) will reuse this dispatcher.
+    --- TODO: a future resource spot type will reuse this dispatcher.
     core:add_listener(
         "land_enc_battle_dilemma_choice",
         "DilemmaChoiceMadeEvent",
@@ -158,7 +167,21 @@ function M.register()
     )
 
 
-    --- Tower offers taken on the open go-deeper dilemma, and site or battle offers the treasury cannot pay, get greyed-out buttons once the
+    --- Tavern dilemma choice (the hub or the capture dilemma).
+    core:add_listener(
+        "land_enc_tavern_dilemma_choice",
+        "DilemmaChoiceMadeEvent",
+        function(dilemma_choice_and_faction_info)
+            return tavern_dilemma_keys[dilemma_choice_and_faction_info:dilemma()] == true
+        end,
+        function(dilemma_choice_and_faction_info)
+            M.point_of_interest_event_manager:trigger_tavern_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+        end,
+        IS_PERSISTENT_LISTENER
+    )
+
+
+    --- Tower offers taken on the open go-deeper dilemma, Tavern hub choices that cannot be taken, and site or battle offers the treasury cannot pay, get greyed-out buttons once the
     --- dilemma panel has built them. The panel is the local player's, so this UI-only step reads the local faction.
     core:add_listener(
         "land_enc_tower_grey_out_taken",
@@ -168,6 +191,7 @@ function M.register()
             cm:callback(function()
                 local faction_name = cm:get_local_faction_name(true)
                 M.point_of_interest_event_manager:grey_out_taken_tower_offers(faction_name)
+                M.point_of_interest_event_manager:grey_out_closed_tavern_choices(faction_name)
                 spot_offers.grey_out_unaffordable(faction_name)
                 spot_battles.grey_out_unaffordable(faction_name)
             end, 0.1)

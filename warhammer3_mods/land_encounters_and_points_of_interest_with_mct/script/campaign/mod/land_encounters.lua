@@ -175,6 +175,7 @@ cm:add_first_tick_callback(
         --- Towers stand on encounter spots, so they are placed or restored after the zones exist.
         listeners.point_of_interest_event_manager:initialize_towers(listeners.land_manager.zones)
         listeners.point_of_interest_event_manager:sync_smithy_markers(points_of_interest)
+        listeners.point_of_interest_event_manager:initialize_taverns(points_of_interest)
         initialize_spot_event_manager_state()
     end
 )

@@ -1,7 +1,7 @@
 --- All spot classes for the mod: the abstract Spot base, EventSpot (random encounter),
 --- SmithySpot, TowerSpot, SpotDelegate, PointOfInterestDelegate, and the Zone aggregate. Also exports
---- six doc-only placeholder classes (EmitterSpot, DungeonSpot, InvasionSpot, ResourceSpot,
---- RiftSpot, TavernSpot) that the original mod never implemented.
+--- five doc-only placeholder classes (EmitterSpot, DungeonSpot, InvasionSpot, ResourceSpot,
+--- RiftSpot) that the original mod never implemented. TavernSpot holds the Tavern marker helpers.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
@@ -21,6 +21,23 @@ local TOWER_MARKER_KEY = "encounter_marker_tower"
 
 --- Interaction radius of tower markers, kept tight around the tower model.
 local TOWER_MARKER_RADIUS = 2.5
+
+--- Marker key per Tavern level (index = level). Each skin's tooltip states the level.
+local TAVERN_MARKER_KEY_BY_LEVEL = { "encounter_marker_tavern", "encounter_marker_tavern_level_2", "encounter_marker_tavern_level_3" }
+
+--- Interaction radius of a Tavern marker, the same as a Smithy's.
+local TAVERN_MARKER_RADIUS = 3
+
+--- Replaces a marker with the skin for a level, for points of interest whose marker changes with their level (Smithies and Taverns).
+--- @param marker_id string The marker id.
+--- @param keys_by_level table The marker key per level.
+--- @param coordinates table The {x, y} position.
+--- @param level number The level.
+--- @param radius number The interaction radius.
+local function replace_levelled_marker(marker_id, keys_by_level, coordinates, level, radius)
+    cm:remove_interactable_campaign_marker(marker_id)
+    cm:add_interactable_campaign_marker(marker_id, keys_by_level[level], coordinates[1], coordinates[2], radius, "", "")
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -317,9 +334,7 @@ end
 --- @param coordinates table The smithy's {x, y} position.
 --- @param level number The forge level (1-3).
 function SmithySpot.replace_marker(zone_name, index, coordinates, level)
-    local marker_id = SmithySpot.marker_id(zone_name, index)
-    cm:remove_interactable_campaign_marker(marker_id)
-    cm:add_interactable_campaign_marker(marker_id, SMITHY_MARKER_KEY_BY_LEVEL[level], coordinates[1], coordinates[2], SMITHY_MARKER_RADIUS, "", "")
+    replace_levelled_marker(SmithySpot.marker_id(zone_name, index), SMITHY_MARKER_KEY_BY_LEVEL, coordinates, level, SMITHY_MARKER_RADIUS)
 end
 
 --- Writes this smithy's data into the flat save-state table under a per-zone smithy key.
@@ -356,30 +371,34 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- TavernSpot
---- (from models/spots/tavern_spot.lua - file was a doc-only comment block)
 
---[[ Specification
-For the player only:
-- Story quests: the tavern emits quests chains for legendary characters or legendary factionwide buffs unlocked by the level.
-- Garrison upgraded by level.
-- Can recruit special unit types every X turn given level. Special units examples: For High Elves Eltharion units or Averlonian units. RORs in cases there are not special units.
-- 5 levels
+--- Marker helpers for Taverns. A Tavern's state lives in features/tavern.lua, keyed by its slot in its zone's `taverns` list, so its marker is
+--- keyed by that slot too.
+local TavernSpot = {}
 
-For the AI:
-- Every 20 turns spawn an army of the controlling faction if it can permit it with 0 upkeep for 100 turns.
-- The more time passes in the campaign the better the tavern armies spawned becomes.
-- Doomstack garrison
+--- Returns the marker id of a Tavern.
+--- @param zone_name string The region key for the zone the Tavern stands in.
+--- @param index number The 1-based Tavern slot in the zone.
+--- @returns string The marker id.
+function TavernSpot.marker_id(zone_name, index)
+    return "land_enc_marker_" .. zone_name .. "_tavern_" .. index
+end
 
+--- Replaces a Tavern's marker with the skin for its level.
+--- @param zone_name string The region key for the zone the Tavern stands in.
+--- @param index number The 1-based Tavern slot in the zone.
+--- @param coordinates table The Tavern's {x, y} position.
+--- @param level number The Tavern level (1-3).
+function TavernSpot.replace_marker(zone_name, index, coordinates, level)
+    replace_levelled_marker(TavernSpot.marker_id(zone_name, index), TAVERN_MARKER_KEY_BY_LEVEL, coordinates, level, TAVERN_MARKER_RADIUS)
+end
 
-For all
-- Corrupts the zone with the controlling faction
-- Serves as a patrol for the region like Oxyotl stuff
-
-- At least 1 racial tavern and 1 neutral tavern per logical zone.
-
-]]--
-
-local TavernSpot = nil
+--- Removes a Tavern's marker from the campaign map.
+--- @param zone_name string The region key for the zone the Tavern stands in.
+--- @param index number The 1-based Tavern slot in the zone.
+function TavernSpot.remove_marker(zone_name, index)
+    cm:remove_interactable_campaign_marker(TavernSpot.marker_id(zone_name, index))
+end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -611,14 +630,14 @@ local PointOfInterestDelegate = {
     points_of_interest = {},
 }
 
---- Initializes the POI table from the configs (smithies, taverns, resources). Smithy spots always exist, so a smithy marker left in a save
---- still resolves. Whether their markers show follows the Remove Smithies setting, see `SmithyEventDelegate:sync_markers`.
---- A zone, or a list in it, that coordinates.lua leaves out counts as empty: the spot map only writes the lists it fills.
+--- Initializes the POI table from the configs (smithies and resources). Taverns keep their state in features/tavern.lua, so this list holds
+--- smithies only and a smithy's marker index stays its slot. Smithy spots always exist, so a smithy marker left in a save still resolves.
+--- Whether their markers show follows the Remove Smithies setting, see `SmithyEventDelegate:sync_markers`. A zone, or a list in it, that
+--- coordinates.lua leaves out counts as empty: the spot map only writes the lists it fills.
 --- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays, or nil for a zone with none.
 function PointOfInterestDelegate:initialize(points_of_interest_data)
     local data = points_of_interest_data or {}
     self:initialize_smithies(data["smithies"] or {})
-    self:initialize_taverns(data["taverns"] or {})
     self:initialize_resources(data["resources"] or {})
 end
 
@@ -640,17 +659,6 @@ function PointOfInterestDelegate:initialize_smithies(smithies_data)
 
             local smithy = SmithySpot:new_from_coordinates(spot, i, initial_owner)
             table.insert(self.points_of_interest, smithy)
-        end
-    end
-end
-
-
---- Placeholder for future tavern POI initialization. TavernSpot is not implemented yet.
---- @param taverns_data table An array of tavern POI records. Currently iterated only as a no-op.
-function PointOfInterestDelegate:initialize_taverns(taverns_data)
-    if #taverns_data > 0 then
-        for i=1, #taverns_data do
-            --TODO table.insert(self.points_of_interest, TavernSpot:newFrom(taverns_data[i]))
         end
     end
 end

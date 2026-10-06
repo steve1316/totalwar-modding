@@ -39,6 +39,8 @@ M.smithy_cooldown = {}
 
 --- Forge level every Smithy acts as instead of its own, e.g. { 3 }.
 M.smithy_level = {}
+--- Level every Tavern is set to on load instead of its own, e.g. { 3 }.
+M.tavern_level = {}
 
 --- Spot offer keys drawn first on every treasure site after its signature offer, while they are eligible, e.g. { "send_gifts", "roll_the_bones" }.
 M.force_spot_offers = {}

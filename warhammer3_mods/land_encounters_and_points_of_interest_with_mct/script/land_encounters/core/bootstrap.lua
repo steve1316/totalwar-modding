@@ -127,17 +127,19 @@ end
 
 --- Resolves a marker id to its zone + spot index + spot type + coordinates. Returns an empty table when no match.
 --- @param marker_id string The marker key to resolve.
---- @returns table { zone Zone, spot_index number, spot_type number, coordinates table }, or empty table on miss.
+--- @returns table { zone Zone, spot_index number, spot_type number, coordinates table }, or empty table on miss. A tavern's coordinates are
+--- empty: the Tavern delegate finds the Tavern by zone and slot.
 function LandEncounterManager:find_spot_info(marker_id)
     local zone_name_and_spot_index = process_marker_id(marker_id)
     for i=1, #self.zones do
         if self.zones[i].name == zone_name_and_spot_index[1] then
             local spot_type = zone_name_and_spot_index[3]
             local coordinates = {}
-            --- Event spots (0) and towers (2) index the zone's encounter spots. Smithies (1) index its points of interest.
+            --- Event spots (0) and towers (2) index the zone's encounter spots. Smithies (1) index its points of interest. Taverns (3) index
+            --- the zone's taverns list, whose state and coordinates the Tavern delegate holds.
             if spot_type == 0 or spot_type == 2 then
                 coordinates = self.zones[i].spot_delegate.spots[zone_name_and_spot_index[2]].coordinates
-            else
+            elseif spot_type == 1 then
                 coordinates = self.zones[i].point_of_interest_delegate.points_of_interest[zone_name_and_spot_index[2]].coordinates
             end
             return {

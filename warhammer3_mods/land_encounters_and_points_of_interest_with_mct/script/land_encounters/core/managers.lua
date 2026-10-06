@@ -15,6 +15,7 @@ local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
 local TowerEventDelegate
+local TavernEventDelegate
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1000,8 +1001,8 @@ end
 
 
 --- Registers a one-off BattleCompleted listener that cleans up the invasion forces and routes the result to the delegate.
---- @param delegate table The delegate (BattleSpotEventDelegate or SmithyEventDelegate) that receives the battle outcome.
---- @param spot_type string "BattleSpot", "SmithySpot" or "TowerSpot" - controls how the result is forwarded.
+--- @param delegate table What receives the battle outcome: a BattleSpotEventDelegate, a SmithyState, a TowerEventDelegate or a TavernState.
+--- @param spot_type string "BattleSpot", "SmithySpot", "TowerSpot" or "TavernSpot" - controls how the result is forwarded.
 --- @param spot_info table A spot_info record for the spot that triggered the battle.
 --- @param army Army The encounter Army whose invasion forces will be cleaned up.
 function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot_info, army)
@@ -1049,7 +1050,7 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             if found_encounter_faction == true then
                 if spot_type == "BattleSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle, spot_info)
-                elseif spot_type == "SmithySpot" then
+                elseif spot_type == "SmithySpot" or spot_type == "TavernSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle)
                 elseif spot_type == "TowerSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle, battle_faction_name)
@@ -1262,6 +1263,10 @@ local PointOfInterestEventManager = {
     tower_event_delegate = {},
     --- Tower records from the save, held until the zones exist and `initialize_towers` runs.
     saved_towers = nil,
+    --- Builds, saves and ticks the Taverns.
+    tavern_event_delegate = {},
+    --- Tavern records from the save, held until `initialize_taverns` runs at first tick.
+    saved_taverns = nil,
 }
 
 
@@ -1283,6 +1288,15 @@ function PointOfInterestEventManager:initialize_towers(zones)
 end
 
 
+--- Builds or restores the Taverns from the campaign's points of interest and places their markers. Runs at first tick, for a new campaign
+--- and a loaded one alike.
+--- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
+function PointOfInterestEventManager:initialize_taverns(points_of_interest)
+    self.tavern_event_delegate:initialize(points_of_interest, self.saved_taverns)
+    self.saved_taverns = nil
+end
+
+
 --- Shows or removes the smithy markers to match the Remove Smithies setting and disabled config entries. Runs at first tick once the
 --- smithy states exist.
 --- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
@@ -1294,6 +1308,7 @@ end
 --- Forwards per-turn state updates to each POI delegate. Hidden smithies must not keep paying tributes or issuing missions.
 function PointOfInterestEventManager:update_state_given_turn_passing()
     self.tower_event_delegate:update_state_given_turn_passing()
+    self.tavern_event_delegate:update_state_given_turn_passing()
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
@@ -1312,7 +1327,7 @@ end
 --- Event management
 
 --- Dispatches a POI event to the matching delegate.
---- @param poi_type string The POI type tag ("SmithySpot" or "TowerSpot").
+--- @param poi_type string The POI type tag ("SmithySpot", "TowerSpot" or "TavernSpot").
 --- @param area_and_character_info table The AreaEntered context.
 --- @param spot_info table The spot_info record for the triggered POI.
 function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_character_info, spot_info)
@@ -1322,6 +1337,8 @@ function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_charac
         self.smithy_event_delegate:trigger_event(area_and_character_info, spot_info)
     elseif poi_type == "TowerSpot" then
         self.tower_event_delegate:trigger_event(area_and_character_info, spot_info)
+    elseif poi_type == "TavernSpot" then
+        self.tavern_event_delegate:trigger_event(area_and_character_info, spot_info)
     end
 end
 
@@ -1329,6 +1346,18 @@ end
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 function PointOfInterestEventManager:trigger_tower_dilemma_event_given_choice(dilemma_choice_and_faction_info)
     self.tower_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+end
+
+--- Forwards a Tavern dilemma choice to the Tavern delegate.
+--- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
+function PointOfInterestEventManager:trigger_tavern_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+    self.tavern_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+end
+
+--- Greys out the hub choices that cannot be taken on the local player's open Tavern hub.
+--- @param faction_name string The local player's faction.
+function PointOfInterestEventManager:grey_out_closed_tavern_choices(faction_name)
+    self.tavern_event_delegate:grey_out_closed_choices(faction_name)
 end
 
 --- Greys out the taken tower offers on the local player's open go-deeper dilemma.
@@ -1345,35 +1374,40 @@ function PointOfInterestEventManager:trigger_dilemma_event_given_choice(dilemma_
 end
 
 
---- Exports the smithy delegate's per-zone POI state for save/load.
+--- Exports the smithy, tower and Tavern delegates' state for save/load.
 --- @returns table A table keyed by POI type whose values are delegate-specific save records.
 function PointOfInterestEventManager:export_state_as_table()
     local points_of_interests_data = {}
     points_of_interests_data["smithies"] = self.smithy_event_delegate:export_state_as_table()
     points_of_interests_data["towers"] = self.tower_event_delegate:export_state_as_table()
+    points_of_interests_data["taverns"] = self.tavern_event_delegate:export_state_as_table()
     return points_of_interests_data
 end
 
 
---- Restores the smithy delegate's per-zone POI state from previously saved data, and keeps the saved towers for `initialize_towers`.
+--- Restores the smithy delegate's per-zone POI state from previously saved data, and keeps the saved towers and Taverns for
+--- `initialize_towers` and `initialize_taverns`.
 --- @param previous_state table The keyed save record previously produced by export_state_as_table.
 function PointOfInterestEventManager:reinstate_event_if_able(previous_state)
     self.smithy_event_delegate:reinstate_event_if_able(previous_state["smithies"])
     self.saved_towers = previous_state["towers"]
+    self.saved_taverns = previous_state["taverns"]
 end
 
 
---- Lazy-loads the smithy and tower delegate modules (avoiding the circular require) and builds the manager.
+--- Lazy-loads the smithy, tower and Tavern delegate modules (avoiding the circular require) and builds the manager.
 --- @param mission_manager table The CA mission_manager handle.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
---- @returns PointOfInterestEventManager A new manager with the smithy and tower delegates wired in, and the tower's Daemon's deal army
+--- @returns PointOfInterestEventManager A new manager with the smithy, tower and Tavern delegates wired in, and the tower's Daemon's deal army
 --- handed to spot offers.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
     TowerEventDelegate = TowerEventDelegate or require("script/land_encounters/features/tower")
+    TavernEventDelegate = TavernEventDelegate or require("script/land_encounters/features/tavern")
     local t = {
         smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager),
         tower_event_delegate = TowerEventDelegate:new(invasion_battle_manager),
+        tavern_event_delegate = TavernEventDelegate:new(invasion_battle_manager),
     }
     --- A treasure site's Daemon's bargain sends the same army as the tower's Daemon's deal.
     require("script/land_encounters/features/spot_offers").send_daemon_army = function(faction_name, count)

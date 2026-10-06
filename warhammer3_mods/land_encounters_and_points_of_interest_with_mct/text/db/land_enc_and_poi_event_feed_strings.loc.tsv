@@ -489,3 +489,21 @@ event_feed_strings_text_description_event_land_enc_spot_wound_paid_3	The price o
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_5	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_5	Our Lord Is Wounded	false
 event_feed_strings_text_description_event_land_enc_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
+event_feed_strings_text_title_event_land_enc_tavern_claimed	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_claimed	Tavern Claimed	false
+event_feed_strings_text_description_event_land_enc_tavern_claimed	We have claimed this unowned tavern and put our own keeper behind the bar. Walk a lord in again to open it.	false
+event_feed_strings_text_title_event_land_enc_tavern_encountered	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_encountered	Enemy Tavern	false
+event_feed_strings_text_description_event_land_enc_tavern_encountered	This tavern is held by our enemies. A lord at the head of an army can try to take it.	false
+event_feed_strings_text_title_event_land_enc_tavern_captured	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_captured	Tavern Taken	false
+event_feed_strings_text_description_event_land_enc_tavern_captured	We have driven out its guards and taken the tavern. Walk a lord in again to open it.	false
+event_feed_strings_text_title_event_land_enc_tavern_capture_repelled	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_capture_repelled	Attack Repelled	false
+event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains in enemy hands.	false
+event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_2	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_2	Tavern Improved	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	The tavern has grown to level 2. Its guards are tougher, and its rooms will offer more once they open.	false
+event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_3	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_3	Tavern Improved	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms will offer the most once they open.	false

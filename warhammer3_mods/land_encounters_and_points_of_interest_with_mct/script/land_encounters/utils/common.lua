@@ -44,12 +44,14 @@ end
 local LAND_ENCOUNTER_TYPE = 0
 local SMITHY_TYPE = 1
 local TOWER_TYPE = 2
+local TAVERN_TYPE = 3
 
 --- Parses a marker id of the form "land_enc_marker_<zone>_<index>" (16-char prefix) and returns {zone, index, type}.
---- A "_smithy_" infix marks the marker as a smithy POI and a "_tower_" infix as a tower, instead of a land encounter.
+--- A "_smithy_" infix marks the marker as a smithy POI, a "_tower_" infix as a tower and a "_tavern_" infix as a tavern, instead of a land
+--- encounter.
 --- @param marker_id string The full marker id to parse.
---- @returns table A 3-element array { zone_name string, spot_index number, type number } where type is LAND_ENCOUNTER_TYPE, SMITHY_TYPE or
---- TOWER_TYPE.
+--- @returns table A 3-element array { zone_name string, spot_index number, type number } where type is LAND_ENCOUNTER_TYPE, SMITHY_TYPE,
+--- TOWER_TYPE or TAVERN_TYPE.
 function process_marker_id(marker_id)
     --- Two-argument string.find only. A version using a plain-text find over a pairs() loop crashed the game when a lord entered a smithy.
     local infix_start, infix_end = string.find(marker_id, "_smithy_")
@@ -59,6 +61,10 @@ function process_marker_id(marker_id)
     infix_start, infix_end = string.find(marker_id, "_tower_")
     if infix_start ~= nil then
         return { string.sub(marker_id, 17, infix_start - 1), tonumber(string.sub(marker_id, infix_end + 1, #marker_id)), TOWER_TYPE }
+    end
+    infix_start, infix_end = string.find(marker_id, "_tavern_")
+    if infix_start ~= nil then
+        return { string.sub(marker_id, 17, infix_start - 1), tonumber(string.sub(marker_id, infix_end + 1, #marker_id)), TAVERN_TYPE }
     end
 
     --- The maximum number of points in a zone is <99, so look at the last 3 chars to find the trailing underscore.

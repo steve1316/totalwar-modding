@@ -1027,3 +1027,11 @@ dummy_land_enc_spot_result_wound_paid_3_hard	ui/campaign ui/effect_bundles/chaos
 dummy_land_enc_spot_result_wound_paid_5_easy	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
 dummy_land_enc_spot_result_wound_paid_5_medium	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
 dummy_land_enc_spot_result_wound_paid_5_hard	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
+dummy_land_enc_tavern_coming_soon	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_upgrade_1	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_upgrade_2	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_cannot_afford_upgrade_1	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_cannot_afford_upgrade_2	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_fully_upgraded	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_owner_only_upgrade	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_leave	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0

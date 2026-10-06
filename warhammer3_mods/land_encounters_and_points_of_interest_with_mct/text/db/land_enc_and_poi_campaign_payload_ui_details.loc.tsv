@@ -1027,3 +1027,11 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_3_
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_easy	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_medium	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_hard	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_coming_soon	This room opens in a later update.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_upgrade_1	The tavern grows to [[col:yellow]]level 2[[/col]], its defenders grow tougher, and its rooms will offer more once they open.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_upgrade_2	The tavern grows to [[col:yellow]]level 3[[/col]], its defenders grow tougher, and its rooms will offer the most once they open.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_cannot_afford_upgrade_1	Improving the tavern to level 2 costs [[col:yellow]]10000 gold[[/col]], more than our treasury holds.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_cannot_afford_upgrade_2	Improving the tavern to level 3 costs [[col:yellow]]20000 gold[[/col]], more than our treasury holds.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_fully_upgraded	The tavern is already at its highest level.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_owner_only_upgrade	Only the tavern's owner can improve it.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_leave	Leave the tavern.	false
