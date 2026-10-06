@@ -6,6 +6,7 @@ local tower_offers = require("script/land_encounters/configs/tower_offers")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local battle_categories = require("script/land_encounters/configs/battle_categories")
 local smithy_data = require("script/land_encounters/configs/smithy_data")
+local tavern_data = require("script/land_encounters/configs/tavern_data")
 local spot_offers = require("script/land_encounters/configs/spot_offers")
 local archetypes = require("script/land_encounters/configs/archetypes")
 
@@ -195,6 +196,17 @@ function M.smithy_text()
         if level.legendary_commission then facts[#facts + 1] = "a legendary item for " .. level.legendary_commission.price .. " gold" end
         if level.upgrade_price then facts[#facts + 1] = "upgrades for " .. level.upgrade_price .. " gold" end
         lines[#lines + 1] = guide_line("Level " .. number, join_words(facts, "and") .. ".")
+    end
+    return table.concat(lines, "\n")
+end
+
+--- Builds the Taverns page guide: the intro, then what each level costs to reach.
+--- @returns string The guide text.
+function M.taverns_text()
+    local lines = { guides.tavern_intro, "" }
+    for number, level in ipairs(tavern_data.levels) do
+        local fact = level.upgrade_price and ("upgrades to level " .. (number + 1) .. " for " .. level.upgrade_price .. " gold.") or "the top level."
+        lines[#lines + 1] = guide_line("Level " .. number, fact)
     end
     return table.concat(lines, "\n")
 end

@@ -206,6 +206,7 @@ local encounters_page = mct_mod:create_settings_page("Encounters", 1)
 local forces_page = mct_mod:create_settings_page("Enemy Forces", 2)
 local towers_page = mct_mod:create_settings_page("Towers", 1)
 local smithies_page = mct_mod:create_settings_page("Smithies", 1)
+local taverns_page = mct_mod:create_settings_page("Taverns", 1)
 if mct_default_page then
     mct_mod:set_default_settings_page(general_page)
     mct_default_page:remove()
@@ -438,6 +439,17 @@ add_slider("smithy_cooldown", "smithies_section", "Smithy cooldown (turns)",
     get_mct_settings().smithy_cooldown)
 
 add_guide_section("smithy", "Guide: The Smithy", smithies_page, mct_guides.smithy_text(), true)
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Taverns page
+
+add_section("taverns_section", "Taverns", taverns_page)
+
+add_checkbox("disable_taverns", "taverns_section", "Remove Taverns from the map",
+    "Removes every Tavern from the map and pauses their takeovers. Takes effect the next time a save is loaded.", false)
+
+add_guide_section("taverns", "Guide: The Tavern", taverns_page, mct_guides.taverns_text(), true)
 
 out("DEBUG - UI elements creation completed.")
 

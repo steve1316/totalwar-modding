@@ -24,6 +24,12 @@ M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, and onto you
     .. "cooldown, plus the extra turns of a lower forge level. Upgrade the forge for better items, a shorter cooldown and more frequent tribute. "
     .. "Enemies at war with you can besiege or retake it."
 
+--- Intro of the Taverns page guide. The per-level lines follow it.
+M.tavern_intro = "Each map zone has a racial Tavern, run by one race, and a neutral one open to all. Walk a lord onto an unclaimed Tavern "
+    .. "to claim it, onto your own to open its hub, and onto one held by an ally or a neutral faction to visit it as a guest. A Tavern held by "
+    .. "a faction at war with you can be taken in battle, harder at higher levels. Only the owner can upgrade it. The hub's rooms (the "
+    .. "mercenary hall, the contract board and the bar) open in later updates."
+
 --- Encounters page spot offer sections in page order, one per offer pool in configs/spot_offers.lua.
 M.spot_offer_sections = {
     { key = "signature", title = "Site Specials" },
