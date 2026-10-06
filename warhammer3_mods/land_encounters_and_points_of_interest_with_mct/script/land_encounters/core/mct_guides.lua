@@ -200,13 +200,21 @@ function M.smithy_text()
     return table.concat(lines, "\n")
 end
 
---- Builds the Taverns page guide: the intro, what each level costs to reach, then the name and level 1 line of every bar offer.
+--- Builds the Taverns page guide: the intro, each level's mercenary hall and what it costs to reach the next, then the name and level 1 line
+--- of every bar offer.
 --- @returns string The guide text.
 function M.taverns_text()
     local lines = { guides.tavern_intro, "" }
     for number, level in ipairs(tavern_data.levels) do
-        local fact = level.upgrade_price and ("upgrades to level " .. (number + 1) .. " for " .. level.upgrade_price .. " gold.") or "the top level."
-        lines[#lines + 1] = guide_line("Level " .. number, fact)
+        local hall = level.hall
+        local stock = { hall.units .. " units of tiers " .. hall.tiers[1] .. "-" .. hall.tiers[#hall.tiers] }
+        if hall.renown[2] > 0 then
+            stock[#stock + 1] = (hall.renown[1] == hall.renown[2] and hall.renown[1] or hall.renown[1] .. "-" .. hall.renown[2]) .. (hall.renown[2] == 1 and " famous regiment" or " famous regiments")
+        end
+        if hall.hero_rank then stock[#stock + 1] = "a rank " .. hall.hero_rank .. " hero" end
+        stock[#stock + 1] = hall.own .. " of your own kind"
+        local upgrade = level.upgrade_price and ("Upgrades to level " .. (number + 1) .. " for " .. level.upgrade_price .. " gold.") or "This is the top level."
+        lines[#lines + 1] = guide_line("Level " .. number, "the hall hires out " .. join_words(stock, "and") .. ". " .. upgrade)
     end
     lines[#lines + 1] = ""
     for _, offer in ipairs(spot_offers.offers) do

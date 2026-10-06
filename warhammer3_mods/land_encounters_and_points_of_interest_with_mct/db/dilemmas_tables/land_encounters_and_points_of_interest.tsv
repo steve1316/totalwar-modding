@@ -78,3 +78,4 @@ land_enc_dilemma_site_merchants_wagon	false			imperial_supplies	false	Event	UI_C
 land_enc_dilemma_site_sunken_library	false			story_panels/chd_drill_machinations	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_spoils_of_war	false			land_victory	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_tavern_bar	false			generic	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tavern_hall	false			wh2_twa05_ogre_camp_negotiation	false	Event	UI_CAM_EVENT_Dilemma			false

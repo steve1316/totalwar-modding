@@ -14,6 +14,7 @@ M.tavern = {
     "land_enc_dilemma_tavern_hub_level_2",
     "land_enc_dilemma_tavern_hub_level_3",
     "land_enc_dilemma_tavern_capture",
+    "land_enc_dilemma_tavern_hall",
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

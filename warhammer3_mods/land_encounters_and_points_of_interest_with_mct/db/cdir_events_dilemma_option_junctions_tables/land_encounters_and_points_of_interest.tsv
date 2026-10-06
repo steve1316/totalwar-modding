@@ -234,3 +234,6 @@ id	dilemma_key	option_key	value	target
 7018100068	land_enc_dilemma_site_tavern_bar	GEN_TARGET_NONE		default
 7018100069	land_enc_dilemma_site_tavern_bar	VAR_CHANCE	100	default
 7018100070	land_enc_dilemma_site_tavern_bar	VAR_FOLLOWUP_CHANCE	100	default
+7018200022	land_enc_dilemma_tavern_hall	GEN_TARGET_NONE		default
+7018200023	land_enc_dilemma_tavern_hall	VAR_CHANCE	100	default
+7018200024	land_enc_dilemma_tavern_hall	VAR_FOLLOWUP_CHANCE	100	default

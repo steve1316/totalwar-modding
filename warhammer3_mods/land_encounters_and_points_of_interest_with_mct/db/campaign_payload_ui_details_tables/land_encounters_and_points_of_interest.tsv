@@ -1087,3 +1087,15 @@ dummy_land_enc_spot_result_wound_paid_3_hard	ui/campaign ui/effect_bundles/chaos
 dummy_land_enc_spot_result_wound_paid_5_easy	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
 dummy_land_enc_spot_result_wound_paid_5_medium	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
 dummy_land_enc_spot_result_wound_paid_5_hard	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
+dummy_land_enc_tavern_hall_open	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_hall_unit	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_hall_renown	ui/campaign ui/effect_bundles/champions_essence.png	default	0
+dummy_land_enc_tavern_hall_hero_5	ui/campaign ui/effect_bundles/noble.png	default	0
+dummy_land_enc_tavern_hall_hero_10	ui/campaign ui/effect_bundles/noble.png	default	0
+dummy_land_enc_tavern_hall_own	ui/campaign ui/effect_bundles/edict_levy_conscripts.png	default	0
+dummy_land_enc_tavern_hall_no_room	ui/campaign ui/effect_bundles/military.png	default	0
+dummy_land_enc_tavern_hall_closed_1	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_hall_closed_2	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_hall_closed_3	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_hall_closed_4	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_hall_closed_5	ui/campaign ui/effect_bundles/merc_contract.png	default	0

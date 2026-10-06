@@ -510,6 +510,26 @@ function M.pick_units(faction_shorthand_key, tiers, unit_types, count, options)
     return picked
 end
 
+--- Picks up to `count` different units of a faction, one at a time, each left out of the picks after it. Takes the same options as
+--- `M.pick_units`, whose `exclude` set gains every unit picked.
+--- @param faction_shorthand_key string A 3-letter faction shorthand.
+--- @param tiers table Tier numbers to pick from, e.g. { 1, 2 }.
+--- @param count number How many units to pick at most.
+--- @param options table|nil { renown = true to pick only Regiments of Renown, exclude = a unit key -> true set to leave out }.
+--- @returns table Different unit keys, fewer than `count` when the faction runs out.
+function M.pick_distinct_units(faction_shorthand_key, tiers, count, options)
+    options = options or {}
+    options.exclude = options.exclude or {}
+    local picked = {}
+    for _ = 1, count do
+        local key = M.pick_units(faction_shorthand_key, tiers, nil, 1, options)[1]
+        if key == nil then break end
+        options.exclude[key] = true
+        picked[#picked + 1] = key
+    end
+    return picked
+end
+
 --- Generator options for a sized allied army: its lord, `units` regular units and no heroes, with gold to buy them all.
 --- @param units number The regular units.
 --- @returns table The options, see `M.generate`.

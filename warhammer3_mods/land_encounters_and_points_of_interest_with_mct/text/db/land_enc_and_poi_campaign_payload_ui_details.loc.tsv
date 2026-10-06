@@ -1087,3 +1087,15 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_3_
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_easy	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_medium	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_hard	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_open	Visit the mercenary hall: sellswords, famous regiments and heroes for hire, [[col:yellow]]up to 2 per visit[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_unit	Hire this company of sellswords.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_renown	Hire this famous regiment.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_hero_5	Hire a [[col:green]]rank 5 hero[[/col]] of the Tavern's people: they join our army, or wait beside it when it is full.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_hero_10	Hire a [[col:green]]rank 10 hero[[/col]] of the Tavern's people: they join our army, or wait beside it when it is full.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_own	Hire this company of our own kind, drinking far from home.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_no_room	[[col:red]]Our army has no room for another unit.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_1	[[col:red]]The hall will not deal with us again for 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_2	[[col:red]]The hall will not deal with us again for 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_3	[[col:red]]The hall will not deal with us again for 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_4	[[col:red]]The hall will not deal with us again for 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_5	[[col:red]]The hall will not deal with us again for 5 turns.[[/col]]	false
