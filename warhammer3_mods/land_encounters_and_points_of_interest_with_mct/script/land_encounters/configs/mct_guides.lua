@@ -32,7 +32,9 @@ M.tavern_intro = "Each map zone has a racial Tavern, run by one race, and a neut
     .. "gold over their recruitment cost. Its stock is shared by every visitor and changes every few turns. Hire up to 2 per visit, after which the hall "
     .. "closes to that faction for a few turns. At the bar, 3 of the drinks and games below are on offer each visit, for gold that rises with "
     .. "the campaign's difficulty, and a higher level makes each drink stronger. Taking one closes the bar to that faction for a few turns, and "
-    .. "the owner pays a quarter less there. The contract board opens in a later update."
+    .. "the owner pays a quarter less there. Every Tavern belongs to the Tavern Keepers' Guild, whose contract board posts bounties and culls for "
+    .. "a deposit, returned with a reward on success. You can hold 3 contracts at once across every Tavern, and drop one from the missions panel. "
+    .. "Fail or drop one and you lose its deposit, and every Guild Tavern charges you a quarter more for 10 turns."
 
 --- Encounters page spot offer sections in page order, one per offer pool in configs/spot_offers.lua.
 M.spot_offer_sections = {

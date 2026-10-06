@@ -11,6 +11,7 @@ local battle_dilemma_keys = require("script/land_encounters/configs/battle_categ
 local smithy_events = events.smithy
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local spot_battles = require("script/land_encounters/features/spot_battles")
+local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
 
 --- Tavern dilemma key -> true, for the Tavern choice listener.
 local tavern_dilemma_keys = {}
@@ -179,6 +180,22 @@ function M.register()
         end,
         IS_PERSISTENT_LISTENER
     )
+
+
+    --- Tavern contracts settle when their missions succeed, fail or are dropped from the missions panel.
+    for event, outcome in pairs({ MissionSucceeded = "succeeded", MissionFailed = "failed", MissionCancelled = "cancelled" }) do
+        core:add_listener(
+            "land_enc_tavern_contract_" .. outcome,
+            event,
+            function(context)
+                return tavern_contracts.is_contract_mission(context:mission():mission_record_key())
+            end,
+            function(context)
+                M.point_of_interest_event_manager:on_tavern_contract_ended(context:faction():name(), context:mission():mission_record_key(), outcome)
+            end,
+            IS_PERSISTENT_LISTENER
+        )
+    end
 
 
     --- Tower offers taken on the open go-deeper dilemma, Tavern hub choices that cannot be taken, and site or battle offers the treasury cannot pay, get greyed-out buttons once the

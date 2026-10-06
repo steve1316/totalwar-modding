@@ -1,7 +1,7 @@
 --- TavernState + TavernEventDelegate. A Tavern is a fixed place any lord can visit: its owner gets the full hub, an allied or neutral visitor
 --- the hub without the upgrade, and an enemy of the owner a capture battle. An unowned Tavern is claimed by the first player lord to walk in,
 --- and an AI army at war with an AI owner can take it. The AI never takes a player-owned Tavern. The mercenary hall lives in
---- features/tavern_hall.lua, and the bar is a spot offer site (features/spot_offers.lua). The contract board arrives in a later phase.
+--- features/tavern_hall.lua, the contract board in features/tavern_contracts.lua, and the bar is a spot offer site (features/spot_offers.lua).
 --- TavernEventDelegate builds the Taverns from configs/coordinates.lua and routes events to them.
 
 require("script/land_encounters/utils/common")
@@ -14,6 +14,7 @@ local spot_offers = require("script/land_encounters/features/spot_offers")
 local offers_data = require("script/land_encounters/configs/spot_offers")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tavern_hall = require("script/land_encounters/features/tavern_hall")
+local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
 local TavernSpot = require("script/land_encounters/core/spot").TavernSpot
 
 local Army = require("script/land_encounters/core/army")
@@ -32,7 +33,7 @@ local EVENT_CAPTURE = "land_enc_dilemma_tavern_capture"
 
 --- 1-based position of the mercenary hall choice.
 local HALL_CHOICE = 1
---- 1-based position of the contract board choice, which opens in a later phase.
+--- 1-based position of the contract board choice.
 local BOARD_CHOICE = 2
 --- 1-based position of the bar choice.
 local BAR_CHOICE = 3
@@ -41,8 +42,8 @@ local UPGRADE_CHOICE = 4
 --- 1-based position of the leave choice.
 local LEAVE_CHOICE = 5
 
---- Payload text (campaign_payload_ui_details key) of a room that has not opened yet.
-local PAYLOAD_TEXT_COMING_SOON = "dummy_land_enc_tavern_coming_soon"
+--- Payload text (campaign_payload_ui_details key) of the contract board.
+local PAYLOAD_TEXT_BOARD = "dummy_land_enc_tavern_board_open"
 --- Payload text of the mercenary hall.
 local PAYLOAD_TEXT_HALL = "dummy_land_enc_tavern_hall_open"
 --- Payload text prefix of the hall while it is closed to the visitor. The turns left are appended.
@@ -101,6 +102,11 @@ local TavernState = OwnedPoint.extend({
     hall_stock = nil,
     --- The open hall: the visiting lord's `general_cqi`, the visitor's `own` slots and the `slots` it showed. Nil when no hall is open.
     pending_hall = nil,
+    --- The contract board's posted contracts (see features/tavern_contracts.lua), or nil until the board first opens.
+    board = nil,
+    --- The open board: the visiting lord's `general_cqi` and the `slots` it showed. Nil when no board is open.
+    pending_board = nil,
+
 })
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +150,7 @@ function TavernState:trigger_event(area_and_character_info)
                 log("tavern: " .. visitor .. " is at war with " .. self.controlling_faction_name .. " and may attack the " .. self:describe())
                 self.visiting_enemy_character = visiting_character
                 self.visiting_enemy_faction_name = visitor
+                self:show_owner_in_dilemmas()
                 cm:trigger_dilemma(visitor, EVENT_CAPTURE)
                 return visitor
             end
@@ -173,19 +180,34 @@ local function turns_left(closed_until, faction_name)
     return math.max(0, (closed_until[faction_name] or 0) - cm:turn_number())
 end
 
---- Builds and opens the hub: the mercenary hall, the contract board (not open yet), the bar, the upgrade for the owner, and leaving. A hall
+--- What the Tavern's prices are multiplied by for a faction: 1, or more while the Guild still holds a failed or dropped contract against it.
+--- @param faction_name string The faction key.
+--- @returns number The multiplier.
+function TavernState:price_factor(faction_name)
+    return tavern_contracts.penalty_turns_left(faction_name) > 0 and 1 + tavern_data.contracts.standing_surcharge or 1
+end
+
+--- A price at this Tavern for a faction: the base price times `price_factor`, to the nearest gold.
+--- @param base number The price before any surcharge.
+--- @param faction_name string The faction paying.
+--- @returns number The gold it costs.
+function TavernState:charge(base, faction_name)
+    return math.floor(base * self:price_factor(faction_name) + 0.5)
+end
+
+--- Builds and opens the hub: the mercenary hall, the contract board, the bar, the upgrade for the owner, and leaving. A hall
 --- or bar closed to the visitor says for how long. An upgrade the owner cannot afford, or any upgrade for a guest, shows a text line and costs nothing.
 --- @param faction faction The visiting player faction.
 --- @param general_cqi number The visiting lord's command queue index.
 function TavernState:open_hub(faction, general_cqi)
-    self.pending_hall = nil
+    self.pending_hall, self.pending_board = nil, nil
     local is_owner = self:is_occupied_by_same_faction(faction:name())
     local price = tavern_data.levels[self.level].upgrade_price
     local treasury = faction:treasury()
     local choices = {}
     local hall_turns = turns_left(self.hall_closed_until, faction:name())
     choices[HALL_CHOICE] = { key = dilemmas.CHOICE_KEYS[HALL_CHOICE], lines = { hall_turns == 0 and PAYLOAD_TEXT_HALL or PAYLOAD_TEXT_HALL_CLOSED .. hall_turns } }
-    choices[BOARD_CHOICE] = { key = dilemmas.CHOICE_KEYS[BOARD_CHOICE], lines = { PAYLOAD_TEXT_COMING_SOON } }
+    choices[BOARD_CHOICE] = { key = dilemmas.CHOICE_KEYS[BOARD_CHOICE], lines = { PAYLOAD_TEXT_BOARD } }
     local bar_turns = turns_left(self.bar_closed_until, faction:name())
     choices[BAR_CHOICE] = { key = dilemmas.CHOICE_KEYS[BAR_CHOICE], lines = { bar_turns == 0 and PAYLOAD_TEXT_BAR_OPEN or PAYLOAD_TEXT_BAR_CLOSED .. bar_turns } }
     local upgrade = { key = dilemmas.CHOICE_KEYS[UPGRADE_CHOICE] }
@@ -205,24 +227,27 @@ function TavernState:open_hub(faction, general_cqi)
     log("tavern: hub of the " .. self:describe() .. " for " .. faction:name() .. " (owner " .. tostring(is_owner) .. ", treasury " .. treasury
         .. ", upgrade " .. (upgrade.gold and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
         .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ")")
+    self:show_owner_in_dilemmas()
     dilemmas.launch(EVENT_HUB_BY_LEVEL[self.level], choices, faction:name())
 end
 
---- The open dilemma's choices that cannot be taken: on the hall, hires without room or gold. On the hub, a hall or bar closed to the
---- visitor, the contract board and an upgrade that is not paid.
---- @returns string|nil, table The open dilemma's key and the choice keys to grey out, or nil when neither is open.
+--- The open dilemma's choices that cannot be taken: on the hall, hires without room or gold, and on the board, contracts that cannot be
+--- taken. On the hub, a hall or bar closed to the visitor and an upgrade that is not paid.
+--- @returns string|nil, table The open dilemma's key and the choice keys to grey out, or nil when none is open.
 function TavernState:closed_choices()
     if self.pending_hall then return tavern_hall.closed_choices(self) end
+    if self.pending_board then return tavern_contracts.closed_choices(self) end
     local offer = self.pending_hub
     if not offer then return nil end
-    local keys = { dilemmas.CHOICE_KEYS[BOARD_CHOICE] }
-    if not offer.hall then table.insert(keys, 1, dilemmas.CHOICE_KEYS[HALL_CHOICE]) end
+    local keys = {}
+    if not offer.hall then keys[#keys + 1] = dilemmas.CHOICE_KEYS[HALL_CHOICE] end
     if not offer.bar then keys[#keys + 1] = dilemmas.CHOICE_KEYS[BAR_CHOICE] end
     if not offer.upgrade then keys[#keys + 1] = dilemmas.CHOICE_KEYS[UPGRADE_CHOICE] end
     return EVENT_HUB_BY_LEVEL[offer.level], keys
 end
 
---- Opens the bar for a lord: 3 offers acting at the Tavern's level, priced at the campaign difficulty, a quarter less for the owner.
+--- Opens the bar for a lord: 3 offers acting at the Tavern's level, priced at the campaign difficulty, a quarter less for the owner, and
+--- more while the faction has failed one of the Tavern's contracts.
 --- @param faction_name string The visiting faction.
 --- @param general_cqi number The visiting lord's command queue index.
 --- @returns boolean True when the bar opened, false when the lord is gone.
@@ -232,14 +257,15 @@ function TavernState:open_bar(faction_name, general_cqi)
         log("tavern: lord " .. tostring(general_cqi) .. " of " .. faction_name .. " is gone, so the bar does not open")
         return false
     end
-    local share = self:is_occupied_by_same_faction(faction_name) and tavern_data.owner_price_share or 1
+    local share = (self:is_occupied_by_same_faction(faction_name) and tavern_data.owner_price_share or 1) * self:price_factor(faction_name)
     log("tavern: " .. faction_name .. " opens the bar of the " .. self:describe() .. " at price share " .. share)
     spot_offers.open_site(character, character:faction(), offers_data.tavern, nil, { zone = self.zone_name, index = self.index_in_zone,
         difficulty = DIFFICULTY_KEYS[self.level], price_difficulty = get_current_difficulty(), price_share = share })
     return true
 end
 
---- Applies a hub choice: the mercenary hall or the bar opens, or the upgrade raises the level, which the dilemma payload already charged.
+--- Applies a hub choice: the mercenary hall, the contract board or the bar opens, or the upgrade raises the level, which the dilemma payload
+--- already charged.
 --- @param choice number The 0-based choice index.
 --- @param faction_name string The faction that chose.
 function TavernState:resolve_hub_choice(choice, faction_name)
@@ -250,6 +276,8 @@ function TavernState:resolve_hub_choice(choice, faction_name)
     if not hub then return end
     if index == HALL_CHOICE and hub.hall then
         tavern_hall.open(self, cm:get_faction(faction_name), hub.general_cqi)
+    elseif index == BOARD_CHOICE then
+        tavern_contracts.open(self, cm:get_faction(faction_name), hub.general_cqi)
     elseif index == BAR_CHOICE and hub.bar then
         self:open_bar(faction_name, hub.general_cqi)
     elseif index == UPGRADE_CHOICE and hub.upgrade then
@@ -345,7 +373,7 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Dilemma choices
 
---- Routes a Tavern dilemma choice (hub, hall or capture).
+--- Routes a Tavern dilemma choice (hub, hall, board or capture).
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 function TavernState:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, invasion_battle_manager)
@@ -354,6 +382,8 @@ function TavernState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
         self:resolve_capture_choice(dilemma_choice_and_faction_info:choice(), invasion_battle_manager)
     elseif dilemma == tavern_hall.DILEMMA then
         tavern_hall.resolve(self, faction_name, dilemma_choice_and_faction_info:choice_key())
+    elseif dilemma == tavern_contracts.DILEMMA then
+        tavern_contracts.resolve(self, faction_name, dilemma_choice_and_faction_info:choice_key(), invasion_battle_manager)
     else
         self:resolve_hub_choice(dilemma_choice_and_faction_info:choice(), faction_name)
     end
@@ -397,6 +427,8 @@ function TavernState:export_state_as_table()
         hall_closed_until = self.hall_closed_until,
         hall_stock = self.hall_stock or false,
         pending_hall = self.pending_hall or false,
+        board = self.board or false,
+        pending_board = self.pending_board or false,
     }
 end
 
@@ -413,6 +445,8 @@ function TavernState:reinstate(previous_state)
     self.hall_closed_until = previous_state.hall_closed_until or {}
     self.hall_stock = previous_state.hall_stock or nil
     self.pending_hall = previous_state.pending_hall or nil
+    self.board = previous_state.board or nil
+    self.pending_board = previous_state.pending_board or nil
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -496,6 +530,7 @@ function TavernEventDelegate:initialize(points_of_interest, saved)
         end
     end
     self.pending_dilemma_by_faction = (saved and saved.pending_dilemma_by_faction) or {}
+    tavern_contracts.restore_state(saved and saved.contracts)
     log("tavern: " .. #self.taverns_state .. " Taverns in " .. #zone_names .. " zones (" .. restored .. " restored, "
         .. (#self.taverns_state - restored) .. " new)")
     self:sync_markers()
@@ -543,16 +578,16 @@ function TavernEventDelegate:trigger_event(area_and_character_info, spot_info)
     end
 end
 
---- Keeps routing a faction's Tavern dilemma choices to a Tavern while it has its hub or hall open, and stops once neither is.
+--- Keeps routing a faction's Tavern dilemma choices to a Tavern while it has its hub, hall or board open, and stops once none is.
 --- @param faction_name string The visiting faction.
 --- @param tavern TavernState The Tavern it visits.
 function TavernEventDelegate:keep_route(faction_name, tavern)
-    local open = tavern.pending_hub ~= nil or tavern.pending_hall ~= nil
+    local open = tavern.pending_hub ~= nil or tavern.pending_hall ~= nil or tavern.pending_board ~= nil
     self.pending_dilemma_by_faction[faction_name] = open and { zone = tavern.zone_name, index = tavern.index_in_zone } or nil
 end
 
 --- Dispatches a Tavern dilemma choice to the Tavern that opened the choosing faction's dilemma, and keeps routing to it while that Tavern
---- has the hub or the hall open again.
+--- has the hub, the hall or the board open again.
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 function TavernEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
     local faction_name = dilemma_choice_and_faction_info:faction():name()
@@ -593,14 +628,28 @@ function TavernEventDelegate:grey_out_closed_choices(faction_name)
     if dilemma_key then dilemmas.grey_out(dilemma_key, keys) end
 end
 
+--- Settles a faction's contract whose mission ended (see features/tavern_contracts.lua).
+--- @param faction_name string The faction whose mission ended.
+--- @param mission_key string The mission key.
+--- @param outcome string "succeeded", "failed" or "cancelled".
+function TavernEventDelegate:on_contract_ended(faction_name, mission_key, outcome)
+    tavern_contracts.on_mission_ended(self, faction_name, mission_key, outcome)
+end
+
+--- At a faction's turn start, voids its contracts that can no longer be met and keeps its bounty lords at war with it alone.
+--- @param faction_name string The faction whose turn starts.
+function TavernEventDelegate:on_faction_turn_start(faction_name)
+    tavern_contracts.on_faction_turn_start(self, faction_name)
+end
+
 --- Exports every Tavern plus the delegate's own state for the save/load callbacks.
---- @returns table A record with `taverns` (array of state records) and `pending_dilemma_by_faction`.
+--- @returns table A record with `taverns` (array of state records), `pending_dilemma_by_faction` and the `contracts` held.
 function TavernEventDelegate:export_state_as_table()
     local records = {}
     for _, tavern in ipairs(self.taverns_state) do
         records[#records + 1] = tavern:export_state_as_table()
     end
-    return { taverns = records, pending_dilemma_by_faction = self.pending_dilemma_by_faction }
+    return { taverns = records, pending_dilemma_by_faction = self.pending_dilemma_by_faction, contracts = tavern_contracts.export_state() }
 end
 
 --- Constructs a fresh TavernEventDelegate wired to the given InvasionBattleManager. Taverns are built by `initialize` at first tick.

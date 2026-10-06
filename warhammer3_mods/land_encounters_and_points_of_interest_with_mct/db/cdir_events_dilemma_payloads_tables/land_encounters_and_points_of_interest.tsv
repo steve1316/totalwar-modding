@@ -177,3 +177,6 @@ id	choice_key	dilemma_key	payload_key	value	target_key
 7018200044	LEAPOI_TVN_OWN_1	land_enc_dilemma_tavern_hall	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
 7018200045	LEAPOI_TVN_OWN_2	land_enc_dilemma_tavern_hall	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
 7018200046	LEAPOI_TVN_BACK	land_enc_dilemma_tavern_hall	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
+7018200047	LEAPOI_TVN_CONTRACT_1	land_enc_dilemma_tavern_board	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
+7018200048	LEAPOI_TVN_CONTRACT_2	land_enc_dilemma_tavern_board	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
+7018200049	LEAPOI_TVN_BACK	land_enc_dilemma_tavern_board	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default

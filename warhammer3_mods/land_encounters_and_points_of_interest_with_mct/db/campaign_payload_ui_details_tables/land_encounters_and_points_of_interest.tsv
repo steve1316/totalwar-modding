@@ -1099,3 +1099,12 @@ dummy_land_enc_tavern_hall_closed_2	ui/campaign ui/effect_bundles/merc_contract.
 dummy_land_enc_tavern_hall_closed_3	ui/campaign ui/effect_bundles/merc_contract.png	default	0
 dummy_land_enc_tavern_hall_closed_4	ui/campaign ui/effect_bundles/merc_contract.png	default	0
 dummy_land_enc_tavern_hall_closed_5	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_board_open	ui/campaign ui/effect_bundles/treasure_map.png	default	0
+dummy_land_enc_tavern_contract_bounty_1	ui/campaign ui/effect_bundles/dlc10_assassination_targets.png	default	0
+dummy_land_enc_tavern_contract_cull_1	ui/campaign ui/effect_bundles/casualties.png	default	0
+dummy_land_enc_tavern_contract_bounty_2	ui/campaign ui/effect_bundles/dlc10_assassination_targets.png	default	0
+dummy_land_enc_tavern_contract_cull_2	ui/campaign ui/effect_bundles/casualties.png	default	0
+dummy_land_enc_tavern_contract_bounty_3	ui/campaign ui/effect_bundles/dlc10_assassination_targets.png	default	0
+dummy_land_enc_tavern_contract_cull_3	ui/campaign ui/effect_bundles/casualties.png	default	0
+dummy_land_enc_tavern_contract_held_full	ui/campaign ui/effect_bundles/military.png	default	0
+dummy_land_enc_tavern_contract_no_target	ui/campaign ui/effect_bundles/military.png	default	0

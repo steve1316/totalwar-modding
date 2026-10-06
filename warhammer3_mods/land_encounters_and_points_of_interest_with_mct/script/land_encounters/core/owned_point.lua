@@ -16,6 +16,9 @@ local OwnedPoint = {
 --- Percent chance that an AI army at war with an AI owner takes the point by walking onto it.
 OwnedPoint.AI_TAKEOVER_CHANCE = 26
 
+--- Script context value a point's dilemma text reads its owner's name from.
+OwnedPoint.OWNER_CONTEXT = "land_enc_point_owner"
+
 --- Subcultures that never take a point: rogue armies, savage orcs and the Border Princes.
 OwnedPoint.PROHIBITED_SUBCULTURES = {
     ["wh2_main_rogue"] = true,
@@ -99,6 +102,13 @@ function OwnedPoint:character_can_trigger_dilemma(character)
     if not cm:char_is_general_with_army(character) then return false end
     local active_stance = character:military_force():active_stance()
     return active_stance == "MILITARY_FORCE_ACTIVE_STANCE_TYPE_DEFAULT" or active_stance == "MILITARY_FORCE_ACTIVE_STANCE_TYPE_CHANNELING" or active_stance == "MILITARY_FORCE_ACTIVE_STANCE_TYPE_AMBUSH"
+end
+
+--- Sets the owner's name for the point's next dilemma to show: its faction's screen name, or its key when it has none.
+function OwnedPoint:show_owner_in_dilemmas()
+    local key = self.controlling_faction_name
+    local name = key ~= "" and common.get_localised_string("factions_screen_name_" .. key) or ""
+    common.set_context_value(OwnedPoint.OWNER_CONTEXT, name ~= "" and name or key)
 end
 
 --- Shows one of the point's event-feed messages at its position.

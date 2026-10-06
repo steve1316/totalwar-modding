@@ -222,6 +222,7 @@ function SmithyState:trigger_event(area_and_character_info)
             if self:character_can_trigger_dilemma(visiting_character) then
                 self.visiting_enemy_character = visiting_character
                 self.visiting_enemy_faction_name = visiting_faction:name()
+                self:show_owner_in_dilemmas()
                 cm:trigger_dilemma(visiting_faction:name(), EVENT_RECLAMATION)
                 return true
             end
@@ -272,6 +273,7 @@ function SmithyState:open_forge(faction)
     local faction_key = faction:name()
     local treasury = faction:treasury()
     local can_afford_commission = treasury >= level.commission.price
+    self:show_owner_in_dilemmas()
     local builder = cm:create_dilemma_builder(EVENT_FORGE_BY_LEVEL[self.level])
     local payload = cm:create_payload()
     local offer = { free_picks = {}, upgrade = false }

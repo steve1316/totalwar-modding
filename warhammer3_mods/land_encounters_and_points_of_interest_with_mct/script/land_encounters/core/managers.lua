@@ -1098,15 +1098,16 @@ function InvasionBattleManager:build_unit_list(army)
 end
 
 
---- Sends an army at a region as a lasting invasion: it spawns beside the given position, marches on the region and stays until beaten. The
---- army is never marked for removal, unlike an encounter's.
+--- Starts a lasting invasion beside a position, at war with one faction only, and never marked for removal, unlike an encounter's army.
 --- @param army Army The army to send.
---- @param region_key string The region it marches on.
+--- @param target_type string The invasion manager's target type, e.g. "REGION" or "PATROL".
+--- @param target any The target, e.g. a region key or a list of patrol points.
 --- @param target_faction_name string The faction it declares war on.
 --- @param x number The position to spawn beside.
 --- @param y number The position to spawn beside.
+--- @param on_spawn function|nil Called with the army's force command queue index once it exists.
 --- @returns boolean True when a spawn location was found and the invasion started.
-function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name, x, y)
+function InvasionBattleManager:start_lasting_invasion(army, target_type, target, target_faction_name, x, y, on_spawn)
     local spawn_x, spawn_y = self:find_location_for_character_to_spawn(army.faction, { x, y })
     if spawn_x == -1 then return false end
     army:randomize_units(self.random_army_manager)
@@ -1115,16 +1116,40 @@ function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name,
         self.invasion_manager:remove_invasion(army.invasion_identifier)
     end
     local invasion = self.invasion_manager:new_invasion(army.invasion_identifier, army.faction, force, { spawn_x, spawn_y })
-    invasion:set_target("REGION", region_key, target_faction_name)
+    invasion:set_target(target_type, target, target_faction_name)
     invasion:create_general(false, army.lord.subtype, "", "", "", "")
     invasion:add_character_experience(army.lord.level, true)
     invasion:add_unit_experience(army.unit_experience_amount)
-    invasion:start_invasion(function()
+    invasion:start_invasion(function(started)
         if not cm:get_faction(army.faction):at_war_with(cm:get_faction(target_faction_name)) then
             cm:force_declare_war(army.faction, target_faction_name, false, false)
         end
+        if on_spawn then on_spawn(started.force_cqi) end
     end, false, false, false)
     return true
+end
+
+--- Sends an army at a region as a lasting invasion: it spawns beside the given position, marches on the region and stays until beaten.
+--- @param army Army The army to send.
+--- @param region_key string The region it marches on.
+--- @param target_faction_name string The faction it declares war on.
+--- @param x number The position to spawn beside.
+--- @param y number The position to spawn beside.
+--- @returns boolean True when a spawn location was found and the invasion started.
+function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name, x, y)
+    return self:start_lasting_invasion(army, "REGION", region_key, target_faction_name, x, y)
+end
+
+--- Spawns an army that patrols between where it spawns and a point, at war with one faction only. Used by Tavern bounties, whose lord must
+--- stay alive until that faction hunts it down.
+--- @param army Army The army to spawn.
+--- @param target_faction_name string The only faction it declares war on.
+--- @param x number The position to spawn beside.
+--- @param y number The position to spawn beside.
+--- @param on_spawn function Called with the army's force command queue index once it exists.
+--- @returns boolean True when a spawn location was found and the army is being created.
+function InvasionBattleManager:spawn_patrol(army, target_faction_name, x, y, on_spawn)
+    return self:start_lasting_invasion(army, "PATROL", { "start", { x = x, y = y } }, target_faction_name, x, y, on_spawn)
 end
 
 --- Finds a valid spawn location near `center_coordinates`. Walks outward in 2-meter steps up to 4 iterations,
@@ -1317,6 +1342,7 @@ end
 --- @param faction_name string The human faction whose turn is starting.
 function PointOfInterestEventManager:on_faction_turn_start(faction_name)
     self.tower_event_delegate:on_faction_turn_start(faction_name)
+    self.tavern_event_delegate:on_faction_turn_start(faction_name)
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:on_faction_turn_start(faction_name)
 end
@@ -1358,6 +1384,14 @@ end
 --- @param faction_name string The local player's faction.
 function PointOfInterestEventManager:grey_out_closed_tavern_choices(faction_name)
     self.tavern_event_delegate:grey_out_closed_choices(faction_name)
+end
+
+--- Settles a Tavern contract whose mission ended.
+--- @param faction_name string The faction whose mission ended.
+--- @param mission_key string The mission key.
+--- @param outcome string "succeeded", "failed" or "cancelled".
+function PointOfInterestEventManager:on_tavern_contract_ended(faction_name, mission_key, outcome)
+    self.tavern_event_delegate:on_contract_ended(faction_name, mission_key, outcome)
 end
 
 --- Greys out the taken tower offers on the local player's open go-deeper dilemma.

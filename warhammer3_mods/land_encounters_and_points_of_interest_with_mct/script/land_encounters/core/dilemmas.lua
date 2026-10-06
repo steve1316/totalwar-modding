@@ -46,6 +46,28 @@ function M.launch(key, choices, faction_name)
     cm:launch_custom_dilemma_from_builder(builder, faction)
 end
 
+--- Finds the slot a choice key belongs to, for a dilemma built from slots (records with a `choice` key and an `ok` flag).
+--- @param slots table The slots the dilemma showed.
+--- @param choice_key string The chosen choice key.
+--- @returns table|nil The slot, or nil when no slot has that key (Back, or a choice of another dilemma).
+function M.find_slot(slots, choice_key)
+    for _, slot in ipairs(slots) do
+        if slot.choice == choice_key then return slot end
+    end
+    return nil
+end
+
+--- The choice keys of the slots that cannot be taken (their `ok` flag is not set), in slot order.
+--- @param slots table The slots the dilemma showed.
+--- @returns table Choice keys to grey out.
+function M.closed_keys(slots)
+    local keys = {}
+    for _, slot in ipairs(slots) do
+        if not slot.ok then keys[#keys + 1] = slot.choice end
+    end
+    return keys
+end
+
 --- Greys out choice buttons on the open dilemma panel, so each keeps its slot but cannot be clicked. UI only: the local player's panel is
 --- changed, and a greyed choice clicked anyway still reaches the script.
 --- @param dilemma_key string The open dilemma's key.

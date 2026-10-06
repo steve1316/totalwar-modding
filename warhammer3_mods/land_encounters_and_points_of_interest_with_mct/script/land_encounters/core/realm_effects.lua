@@ -152,6 +152,16 @@ function M.nearest_factions(faction, x, y, count, filter)
     return found
 end
 
+--- Returns the nearest faction at war with a faction, among the owners of the nearest regions.
+--- @param faction faction The faction whose enemies are searched.
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param filter function|nil Called with each enemy, returns true to keep it.
+--- @returns faction|nil The nearest enemy, or nil when no enemy holds a region.
+function M.nearest_enemy(faction, x, y, filter)
+    return M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) and (filter == nil or filter(other)) end)[1]
+end
+
 --- Wraps one region and its owner as a target.
 --- @param region region The region, or nil.
 --- @param with_owner boolean True to list the region's owner as a target faction too.
@@ -191,7 +201,7 @@ local FINDERS = {
         return regions_target(x, y, function(_, owner) return owner:name() ~= self_name end, count)
     end,
     enemy_capital = function(faction, x, y)
-        local enemy = M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) and other:has_home_region() end)[1]
+        local enemy = M.nearest_enemy(faction, x, y, function(other) return other:has_home_region() end)
         return enemy and { regions = { enemy:home_region():name() }, factions = { enemy:name() } } or nil
     end,
     friend = function(faction, x, y)
@@ -233,7 +243,7 @@ local FINDERS = {
         return { regions = {}, factions = { pool[1]:name(), pool[2]:name() } }
     end,
     enemy_friends = function(faction, x, y)
-        local enemy = M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) end)[1]
+        local enemy = M.nearest_enemy(faction, x, y)
         if enemy == nil then return nil end
         local names = { enemy:name() }
         local enemies = faction:factions_at_war_with()

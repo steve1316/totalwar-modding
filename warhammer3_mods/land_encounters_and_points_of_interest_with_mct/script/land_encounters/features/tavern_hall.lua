@@ -99,13 +99,6 @@ function M.ensure_stock(tavern)
     end
 end
 
---- A hire's price: the base price plus the hall's markup.
---- @param base number The unit's recruitment cost, or the hero's base price.
---- @returns number The gold it costs.
-local function hire_price(base)
-    return base + tavern_data.hall.price_markup
-end
-
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- The hall dilemma
@@ -119,7 +112,7 @@ end
 --- @param hired number|nil Hires made on this visit so far, 0 when nil.
 function M.open(tavern, faction, general_cqi, own, hired)
     local faction_name = faction:name()
-    tavern.pending_hub = nil
+    tavern.pending_hub, tavern.pending_board = nil, nil
     if not tower_army.character(general_cqi) then
         log("tavern: lord " .. tostring(general_cqi) .. " of " .. faction_name .. " is gone, so the hall does not open")
         return
@@ -139,7 +132,7 @@ function M.open(tavern, faction, general_cqi, own, hired)
     local slots, choices = {}, {}
     --- Adds one slot and its choice. `key` is its unit, or nil for the hero.
     local function add(kind, number, key, base, line)
-        local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, price = hire_price(base) }
+        local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, price = tavern:charge(base + tavern_data.hall.price_markup, faction_name) }
         local choice = { key = slot.choice, lines = { line } }
         if key and room < 1 then
             choice.lines[2] = LINE_NO_ROOM
@@ -170,11 +163,7 @@ end
 --- @param tavern TavernState The Tavern.
 --- @returns string, table The hall's dilemma key and the choice keys to grey out.
 function M.closed_choices(tavern)
-    local keys = {}
-    for _, slot in ipairs(tavern.pending_hall.slots) do
-        if not slot.ok then keys[#keys + 1] = slot.choice end
-    end
-    return M.DILEMMA, keys
+    return M.DILEMMA, dilemmas.closed_keys(tavern.pending_hall.slots)
 end
 
 --- Applies a hall choice. A hire the payload granted and charged leaves the stock (a hero is freed here), and the first one of a visit closes
@@ -188,10 +177,7 @@ function M.resolve(tavern, faction_name, choice_key)
     tavern.pending_hall = nil
     if pending == nil then return end
     local faction = cm:get_faction(faction_name)
-    local slot = nil
-    for _, candidate in ipairs(pending.slots) do
-        if candidate.choice == choice_key then slot = candidate end
-    end
+    local slot = dilemmas.find_slot(pending.slots, choice_key)
     if slot == nil then
         log("tavern: " .. faction_name .. " goes back from the hall of the " .. tavern:describe())
         tavern:open_hub(faction, pending.general_cqi)

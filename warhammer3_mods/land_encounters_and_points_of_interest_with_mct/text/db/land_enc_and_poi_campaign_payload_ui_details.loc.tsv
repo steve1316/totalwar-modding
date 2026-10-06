@@ -2,14 +2,14 @@ key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_campaign_payload_ui_details.loc		
 campaign_payload_ui_details_description_dummy_land_enc_smithy_leave	Leave the forge as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_unconditional_surrender	We will lose control of the smithy to the enemy faction, and its forge will drop a level.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_1	A masterwork costs [[col:yellow]]5,000[[/col]] gold. We cannot afford it yet.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_2	A masterwork costs [[col:yellow]]10,000[[/col]] gold. We cannot afford it yet.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_3	A pair of masterworks costs [[col:yellow]]15,000[[/col]] gold. We cannot afford it yet.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_upgrade_1	Improving the forge to level 2 costs [[col:yellow]]10,000[[/col]] gold. We cannot afford it yet.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_upgrade_2	Improving the forge to level 3 costs [[col:yellow]]20,000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_1	A masterwork costs [[col:yellow]]5000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_2	A masterwork costs [[col:yellow]]10000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_commission_3	A pair of masterworks costs [[col:yellow]]15000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_upgrade_1	Improving the forge to level 2 costs [[col:yellow]]10000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_upgrade_2	Improving the forge to level 3 costs [[col:yellow]]20000[[/col]] gold. We cannot afford it yet.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_upgrade_1	The forge improves to [[col:yellow]]level 2[[/col]]: [[col:yellow]]uncommon or rare[[/col]] free pieces, ready again [[col:yellow]]7 turns[[/col]] after each piece, and tribute every [[col:yellow]]10 turns[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_upgrade_2	The forge improves to [[col:yellow]]level 3[[/col]]: [[col:yellow]]rare[[/col]] free pieces, ready again [[col:yellow]]5 turns[[/col]] after each piece, tribute every [[col:yellow]]5 turns[[/col]], [[col:yellow]]two masterworks[[/col]] per commission, and [[col:yellow]]unique commissions[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_legendary_3	A unique piece costs [[col:yellow]]20,000[[/col]] gold. We cannot afford it yet.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cannot_afford_legendary_3	A unique piece costs [[col:yellow]]20000[[/col]] gold. We cannot afford it yet.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_no_legendary	The master blacksmith has no unique piece our faction can wield right now. Nothing is charged.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_walk_away	Leave the tower for now.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_leave	Leave the tower and claim the haul.	false
@@ -1099,3 +1099,12 @@ campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_2	[[co
 campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_3	[[col:red]]The hall will not deal with us again for 3 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_4	[[col:red]]The hall will not deal with us again for 4 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_5	[[col:red]]The hall will not deal with us again for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_board_open	Read the contract board: bounties and culls for a deposit, [[col:yellow]]up to 3 held at once[[/col]] from any Tavern.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_1	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+2000 gold[[/col]] and [[col:green]]an uncommon item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_1	Cull: beat [[col:yellow]]2 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+1500 gold[[/col]] and [[col:green]]an uncommon item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_2	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+3500 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_2	Cull: beat [[col:yellow]]3 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+3000 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_3	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+5000 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_3	Cull: beat [[col:yellow]]4 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+4500 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_held_full	[[col:red]]We already hold 3 contracts. Finish or drop one first.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_no_target	[[col:red]]No enemy of ours holds land near enough to cull.[[/col]]	false
