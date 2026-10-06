@@ -1176,6 +1176,14 @@ M.realm_of_chaos = {
               {489, 198},
               {514, 178},
               {557, 221},
+              --- The Cursed City: Praag
+              {407, 164, manual = true},
+              --- Black Blood Pass
+              {372, 187, manual = true},
+              --- Eastern Oblast
+              {472, 180, manual = true},
+              --- Dukhlys Forest
+              {509, 214, manual = true},
          },
          ["darklands"] = {
               --- Zorn Uzkul
@@ -1203,6 +1211,16 @@ M.realm_of_chaos = {
               --- The Haunted Forest
               {956, 115},
               {1024, 162},
+              --- Zorn Uzkul
+              {744, 201, manual = true},
+              --- The Blasted Wastes
+              {753, 66, manual = true},
+              {770, 32, manual = true},
+              --- The Haunted Forest
+              {932, 69, manual = true},
+              --- The Howling Wastes
+              {918, 130, manual = true},
+              {902, 196, manual = true},
          },
          ["worldsedgemountains"] = {
               --- The High Pass
@@ -1214,6 +1232,7 @@ M.realm_of_chaos = {
               {641, 107},
               {595, 78},
               --- Black Water
+              {654, 155, manual = true},
          },
          ["empire"] = {
               --- The Witch's Wood
@@ -1265,6 +1284,17 @@ M.realm_of_chaos = {
               {457, 18},
               {499, 23},
               {517, 61},
+              --- Ostland
+              {383, 97, manual = true},
+              --- Ostermark
+              {429, 89, manual = true},
+              {483, 113, manual = true},
+              --- The Witch's Wood
+              {123, 219, manual = true},
+              {66, 177, manual = true},
+              {46, 209, manual = true},
+              --- Hochland
+              {289, 23, manual = true},
          },
          ["norsca"] = {
               --- Vanaheim Mountains
@@ -1343,6 +1373,15 @@ M.realm_of_chaos = {
               {1040, 456},
               --- Broken Lands of Tian Li
               {1059, 417},
+              --- Warpstone Desert
+              {930, 400, manual = true},
+              --- Broken Lands of Tian Li
+              {1021, 395, manual = true},
+              --- Wasteland of Jinshen
+              {1042, 512, manual = true},
+              --- Land of Stone and Steel
+              {934, 615, manual = true},
+              {974, 612, manual = true},
          },
          ["chaoswastes"] = {
               --- The Shard Lands
@@ -1413,6 +1452,14 @@ M.realm_of_chaos = {
               {862, 612},
               {895, 618},
               {894, 646},
+              --- Road to Damnation
+              {806, 499, manual = true},
+              --- Road of Skulls
+              {672, 422, manual = true},
+              --- The Eternal Lagoon
+              {364, 481, manual = true},
+              --- The Shard Lands
+              {171, 595, manual = true},
          },
     },
     points_of_interest = {
