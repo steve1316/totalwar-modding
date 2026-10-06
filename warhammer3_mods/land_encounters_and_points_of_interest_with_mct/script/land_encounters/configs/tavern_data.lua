@@ -6,11 +6,16 @@
 local M = {}
 
 --- The hub's opening scene, picked on each visit from text/db/land_enc_and_poi_tavern_strings.loc.tsv: one of `scenes_per_level` scenes for
---- the Tavern's level, a racial Tavern's touch for its race, and `moment_chance` percent of the time one of `moments` things happening tonight.
+--- the Tavern's level, and `moment_chance` percent of the time one of `moments` things happening tonight. The keeper then answers what was
+--- just described: tonight's moment when there is one, else one of `owner_greetings` lines for the owner, else the scene's own line.
+--- `clashes` lists, by scene, the moments that would repeat it, which that scene never shows.
 M.flavour = {
     scenes_per_level = 4,
     moments = 8,
     moment_chance = 35,
+    owner_greetings = 3,
+    --- The storyteller by the fire and the old veteran telling his tale.
+    clashes = { ["1_1"] = { [7] = true } },
 }
 
 --- Share of a bar offer's price the Tavern's owner pays. Guests pay the full price.
@@ -35,30 +40,49 @@ M.hall = {
 --- after they were last rolled, and taking one removes it for every visitor. A faction holds at most `max_held` contracts at once across
 --- every Tavern. Taking one pays its deposit. Success returns the deposit with the reward. Failing or dropping one (from the missions panel)
 --- loses the deposit, and every Guild Tavern then charges that faction `standing_surcharge` more for `standing_turns` turns. A bounty lord
---- spawns at most `bounty_regions_away` regions from the Tavern and patrols there.
+--- or a marked spot appears at most `spawn_regions_away` regions from the Tavern, as far as `spawn_distance` from that region's settlement as
+--- the land allows. A level 3 Tavern also posts a quest chain: its `steps` in
+--- order (a hunt, a marked spot, then a boss hunt), each against an enemy of its `difficulty`, paying its `gold` and an item of its
+--- `item_rarities`. The last step pays the deposit back with a legendary item, or frees a hero of `hero_rank` when none is left.
 M.contracts = {
     board_size = 2,
     restock_turns = 5,
     max_held = 3,
     standing_surcharge = 0.25,
     standing_turns = 10,
-    bounty_regions_away = 2,
+    spawn_regions_away = 1,
+    spawn_distance = 100,
     bounty_turns = 10,
     cull_turns = 15,
+    marked_turns = 10,
+    chain = {
+        deposit = 4000,
+        step_turns = 12,
+        hero_rank = 15,
+        steps = {
+            { kind = "bounty", difficulty = "medium", gold = 2000, item_rarities = { "rare" } },
+            { kind = "marked", difficulty = "hard", gold = 3500, item_rarities = { "rare" } },
+            { kind = "bounty", difficulty = "hard", gold = 6000 },
+        },
+    },
 }
 
 --- Each level (index 1-3). `upgrade_price` is the gold the owner pays to go from this level to the next, or nil at the top level. `hall` is
 --- the mercenary hall's stock: `units` regular units of `tiers`, `renown` Regiments of Renown as { min, max }, a hero of `hero_rank` for
 --- `hero_price` gold before the hall's markup (none when nil), and `own` slots of the visitor's own culture, rolled for each visit.
---- `contracts` is the board at this level: the `deposit`, an item of `item_rarities` with each reward, a bounty's `bounty_gold` reward, and a
---- cull's `cull_gold` reward for beating `cull_armies` armies. A bounty lord's army is as hard as a battle spot at the Tavern's level.
+--- `contracts` is the board at this level: the `deposit`, an item of `item_rarities` with each reward, a bounty's `bounty_gold` reward, a
+--- cull's `cull_gold` reward for beating `cull_armies` armies, a marked spot's `marked_gold` reward, and `chain` when it posts a quest chain.
+--- A bounty lord's army, and a marked spot's, is as hard as a battle spot at the Tavern's level.
 M.levels = {
     { upgrade_price = 10000, hall = { units = 4, tiers = { 1, 2 }, renown = { 0, 0 }, own = 1 },
-        contracts = { deposit = 1000, item_rarities = { "uncommon" }, bounty_gold = 2000, cull_gold = 1500, cull_armies = 2 } },
+        contracts = { deposit = 1000, item_rarities = { "uncommon" }, bounty_gold = 2000, cull_gold = 1500, cull_armies = 2,
+            marked_gold = 1500 } },
     { upgrade_price = 20000, hall = { units = 6, tiers = { 1, 2, 3 }, renown = { 1, 1 }, hero_rank = 5, hero_price = 2000, own = 1 },
-        contracts = { deposit = 2000, item_rarities = { "rare" }, bounty_gold = 3500, cull_gold = 3000, cull_armies = 3 } },
+        contracts = { deposit = 2000, item_rarities = { "rare" }, bounty_gold = 3500, cull_gold = 3000, cull_armies = 3,
+            marked_gold = 3000 } },
     { upgrade_price = nil, hall = { units = 8, tiers = { 1, 2, 3, 4 }, renown = { 1, 2 }, hero_rank = 10, hero_price = 3500, own = 2 },
-        contracts = { deposit = 3000, item_rarities = { "rare" }, bounty_gold = 5000, cull_gold = 4500, cull_armies = 4 } },
+        contracts = { deposit = 3000, item_rarities = { "rare" }, bounty_gold = 5000, cull_gold = 4500, cull_armies = 4,
+            marked_gold = 4500, chain = true } },
 }
 
 return M

@@ -148,8 +148,8 @@ SITES = {
     "sunken_library": ("Sunken Library", "A library has sunk into the marsh, its shelves rotting in black water. Some scrolls survive, sealed in wax and lead, "
                        "holding the secrets of other realms."),
     "spoils_of_war": ("Spoils of War", "The field is ours, and the enemy flees or lies still. Before we march on, there is more to take from this victory."),
-    "tavern_bar": ("The Bar", "The keeper leans on the bar beside barrels for every taste, while strangers roll dice at the tables and a hulking "
-                   "champion waits for anyone brave enough to lock arms with them. What will it be?"),
+    "tavern_bar": ("The Bar", "The keeper leans on the bar beside barrels for every taste. Over at the tables, strangers are rolling dice, and a "
+                   "hulking champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it be?\""),
 }
 
 # Shown under every site's description: the rules, said once, then the choice. Loc files store a line break as an escaped `\\n`.

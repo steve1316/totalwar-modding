@@ -1062,6 +1062,18 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
 end
 
 
+--- Marks an encounter's armies for removal at the next turn start and waits for its battle's result. Used when a battle starts and again
+--- after a load.
+--- @param delegate table What receives the battle outcome, see `reset_state_post_battle`.
+--- @param spot_type string How the result is forwarded, see `reset_state_post_battle`.
+--- @param spot_info table|nil A spot_info record for the spot that triggered the battle.
+--- @param army Army The encounter Army.
+function InvasionBattleManager:await_battle(delegate, spot_type, spot_info, army)
+    self:mark_battle_forces_for_removal(army)
+    self:reset_state_post_battle(delegate, spot_type, spot_info, army)
+end
+
+
 --- Kills the main encounter invasion force plus any enemy + ally reinforcement forces.
 --- @param army Army The encounter Army to clean up.
 function InvasionBattleManager:remove_invasion_forces(army)
@@ -1147,9 +1159,11 @@ end
 --- @param x number The position to spawn beside.
 --- @param y number The position to spawn beside.
 --- @param on_spawn function Called with the army's force command queue index once it exists.
+--- @param patrol table|nil The { x, y } point it patrols to and from its spawn, or nil to stay where it spawns.
 --- @returns boolean True when a spawn location was found and the army is being created.
-function InvasionBattleManager:spawn_patrol(army, target_faction_name, x, y, on_spawn)
-    return self:start_lasting_invasion(army, "PATROL", { "start", { x = x, y = y } }, target_faction_name, x, y, on_spawn)
+function InvasionBattleManager:spawn_patrol(army, target_faction_name, x, y, on_spawn, patrol)
+    local point = patrol and { x = patrol[1], y = patrol[2] } or { x = x, y = y }
+    return self:start_lasting_invasion(army, "PATROL", { "start", point }, target_faction_name, x, y, on_spawn)
 end
 
 --- Finds a valid spawn location near `center_coordinates`. Walks outward in 2-meter steps up to 4 iterations,
@@ -1384,6 +1398,14 @@ end
 --- @param faction_name string The local player's faction.
 function PointOfInterestEventManager:grey_out_closed_tavern_choices(faction_name)
     self.tavern_event_delegate:grey_out_closed_choices(faction_name)
+end
+
+--- Starts the battle at a Tavern contract's marked spot when a lord walks onto it.
+--- @param character character The lord.
+--- @param marker_ref string The marker type's key.
+--- @param instance_ref string The marker's instance.
+function PointOfInterestEventManager:on_tavern_mark_entered(character, marker_ref, instance_ref)
+    self.tavern_event_delegate:on_mark_entered(character, marker_ref, instance_ref)
 end
 
 --- Settles a Tavern contract whose mission ended.

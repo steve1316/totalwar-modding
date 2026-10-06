@@ -14,6 +14,7 @@ _G.script_error        = script_error
 _G.random_army_manager = random_army_manager
 _G.invasion_manager    = invasion_manager
 _G.mission_manager     = mission_manager
+_G.Interactive_Marker_Manager = Interactive_Marker_Manager
 _G.get_mct             = get_mct
 
 require("script/land_encounters/utils/common")

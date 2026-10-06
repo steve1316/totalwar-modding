@@ -41,6 +41,8 @@ M.smithy_cooldown = {}
 M.smithy_level = {}
 --- Level every Tavern is set to on load instead of its own, e.g. { 3 }.
 M.tavern_level = {}
+--- Contracts every Tavern board posts when it is next rolled, instead of random ones, e.g. { "marked", "chain" }.
+M.tavern_board = {}
 
 --- Spot offer keys drawn first on every treasure site after its signature offer, while they are eligible, e.g. { "send_gifts", "roll_the_bones" }.
 M.force_spot_offers = {}

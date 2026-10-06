@@ -1,45 +1,45 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_tavern_strings.loc		
-campaign_localised_strings_string_land_enc_tavern_scene_1_1	Smoke, song and the smell of spilled drink fill the common room. Sellswords trade rumours by the fire, a notice board sags under old contracts, and the keeper keeps the good barrels behind the bar.	false
-campaign_localised_strings_string_land_enc_tavern_scene_1_2	A low roof, a smoky fire and a keeper who counts every coin twice. The ale is thin, the stew is mostly turnip, and nobody asks where your sword has been.	false
-campaign_localised_strings_string_land_enc_tavern_scene_1_3	Rain drums on the shutters while a lone fiddler saws at a tune nobody asked for. Two sellswords argue over a game of knucklebones in the corner.	false
-campaign_localised_strings_string_land_enc_tavern_scene_1_4	The common room smells of wet dogs and old beer. A faded notice on the wall still promises a reward for a bandit who was hanged last spring.	false
-campaign_localised_strings_string_land_enc_tavern_scene_2_1	The tavern has grown: a second hall for the sellswords, more beds upstairs and a busier notice board. Word of it travels with every caravan that stops here.	false
-campaign_localised_strings_string_land_enc_tavern_scene_2_2	Every bench is taken. Caravan drivers swap road news with mercenary captains, and serving girls weave between them with trays of foaming tankards.	false
-campaign_localised_strings_string_land_enc_tavern_scene_2_3	A travelling bard has the whole room on its feet, stamping along to a song about a battle half of them claim to have fought in.	false
-campaign_localised_strings_string_land_enc_tavern_scene_2_4	Fresh rushes on the floor, a second hearth roaring, and a board crowded with Guild seals. Word of this place has spread.	false
-campaign_localised_strings_string_land_enc_tavern_scene_3_1	The tavern is known far and wide. Famous companies drink in its halls, its board carries the richest contracts in the land, and its cellars hold brews found nowhere else.	false
+campaign_localised_strings_string_land_enc_tavern_scene_1_1	The common room smells of woodsmoke and spilled ale. By the fire, a sellsword is telling a story that gets less true with every cup.	false
+campaign_localised_strings_string_land_enc_tavern_scene_1_2	It is a low, crooked place, kept by a man who counts every coin twice. Nobody here asks where your sword has been.	false
+campaign_localised_strings_string_land_enc_tavern_scene_1_3	Rain drums on the shutters while a lone fiddler saws at a tune nobody asked for.	false
+campaign_localised_strings_string_land_enc_tavern_scene_1_4	A faded notice by the door still offers a reward for a bandit who was hanged last spring. The keeper has never seen a reason to take it down.	false
+campaign_localised_strings_string_land_enc_tavern_scene_2_1	The tavern has grown. A second hall now houses the sellswords, and word of the place travels with every caravan that stops here.	false
+campaign_localised_strings_string_land_enc_tavern_scene_2_2	Every bench is taken tonight. Caravan drivers swap road news with mercenary captains over foaming tankards.	false
+campaign_localised_strings_string_land_enc_tavern_scene_2_3	A travelling bard has the whole room stamping along to a song about a battle half of them claim to have fought in.	false
+campaign_localised_strings_string_land_enc_tavern_scene_2_4	A second hearth roars at the far end of the hall, and the notice board is crowded with Guild seals now.	false
+campaign_localised_strings_string_land_enc_tavern_scene_3_1	The tavern is known far and wide. Famous companies drink in its halls, and its cellars hold brews found nowhere else.	false
 campaign_localised_strings_string_land_enc_tavern_scene_3_2	Banners of famous companies hang from the rafters, each one paid for in blood. Lords drink here under false names, and the keeper pretends not to know them.	false
-campaign_localised_strings_string_land_enc_tavern_scene_3_3	The cellars run deeper than the foundations of some keeps, and tonight the keeper is pouring from a barrel older than the Empire.	false
-campaign_localised_strings_string_land_enc_tavern_scene_3_4	Guild agents, foreign envoys and the costliest killers in the land share one long table, and somehow nobody has drawn steel. Yet.	false
-campaign_localised_strings_string_land_enc_tavern_race_emp	A portrait of the Emperor hangs crooked over the hearth, and the sausages are as heavy as the opinions.	false
-campaign_localised_strings_string_land_enc_tavern_race_brt	A knight in muddy armour is loudly composing a poem about his own valour, and the peasants are pretending to listen.	false
-campaign_localised_strings_string_land_enc_tavern_race_ksl	The vodka is poured by the bottle, the stove never goes out, and a bear sleeps by the door like a guard dog.	false
-campaign_localised_strings_string_land_enc_tavern_race_dwf	Every tankard bears a clan rune, the ale is strong enough to strip rust, and the keeper keeps a grudge-ledger behind the bar.	false
-campaign_localised_strings_string_land_enc_tavern_race_grn	The furniture has been rebuilt more times than the walls, mostly from other furniture.	false
-campaign_localised_strings_string_land_enc_tavern_race_vmp	The wine is very red, the windows are very shuttered, and the staff never seem to blink.	false
-campaign_localised_strings_string_land_enc_tavern_race_hef	Elegant cups of pale wine are served with quiet disdain, and the harpist plays as if the guests are not there.	false
-campaign_localised_strings_string_land_enc_tavern_race_def	The drinks are excellent, the knives are hidden, and every guest is careful to watch the others' hands.	false
-campaign_localised_strings_string_land_enc_tavern_race_wef	Roots grow through the floor, lanterns glow in the branches overhead, and the cider was pressed by hands older than the trees.	false
-campaign_localised_strings_string_land_enc_tavern_race_lzd	The air is thick and warm, the drinks are served in carved gourds, and a skink tallies every coin on a stone tablet.	false
-campaign_localised_strings_string_land_enc_tavern_race_skv	Everything is sticky, the ale glows faintly green, and something is always scratching inside the walls.	false
-campaign_localised_strings_string_land_enc_tavern_race_tmb	The bar is a sarcophagus, the keeper has been dead for some centuries, and the dust in the beer is older than the Empire.	false
-campaign_localised_strings_string_land_enc_tavern_race_cst	Fishing nets hang from the ceiling, the grog is mostly salt, and the band is made of drowned sailors who will not stop playing.	false
-campaign_localised_strings_string_land_enc_tavern_race_nor	Mead flows from horns as long as an arm, and every argument is settled by headbutt.	false
-campaign_localised_strings_string_land_enc_tavern_race_bst	The herd drinks from troughs, the music is drums and bellowing, and the guests are judged by how loudly they roar.	false
-campaign_localised_strings_string_land_enc_tavern_race_chs	The tables are scarred by blades, the patrons wear their Dark Gods' marks proudly, and the keeper counts skulls as well as coin.	false
-campaign_localised_strings_string_land_enc_tavern_race_kho	Brawls are the entertainment, the floor is sand to soak the blood, and the keeper pours only for those who win.	false
-campaign_localised_strings_string_land_enc_tavern_race_nur	The stew is green, the flies are friendly, and everyone is in far better spirits than they have any right to be.	false
-campaign_localised_strings_string_land_enc_tavern_race_sla	Silk drapes, sweet smoke and music that never quite ends. Guests come for one drink and wake three days later.	false
-campaign_localised_strings_string_land_enc_tavern_race_tze	The drinks change colour as they are poured, the stairs lead somewhere new each night, and the keeper answers questions before they are asked.	false
-campaign_localised_strings_string_land_enc_tavern_race_cth	Fine tea is served alongside rice wine, lanterns line the eaves, and a scholar is copying the gossip down for the Celestial Court.	false
-campaign_localised_strings_string_land_enc_tavern_race_ogr	The portions are enormous, the chairs are reinforced, and the keeper weighs every guest on the way in to set the price.	false
-campaign_localised_strings_string_land_enc_tavern_race_chd	The beer is brewed beside a forge, slaves carry the kegs, and the keeper's hat is taller than the doorway.	false
-campaign_localised_strings_string_land_enc_tavern_moment_1	Tonight a hooded stranger in the corner has bought the whole room a round, and nobody knows why.	false
-campaign_localised_strings_string_land_enc_tavern_moment_2	Tonight a wrestling match between two sellswords has spilled out into the yard, and the wagers are flying.	false
-campaign_localised_strings_string_land_enc_tavern_moment_3	Tonight the keeper is in a foul mood: someone has drunk the good barrel dry.	false
-campaign_localised_strings_string_land_enc_tavern_moment_4	Tonight a caravan has just come in from the road, its drivers full of news of armies on the move.	false
-campaign_localised_strings_string_land_enc_tavern_moment_5	Tonight a wedding party has taken over the long table, and the whole tavern is invited.	false
-campaign_localised_strings_string_land_enc_tavern_moment_6	Tonight a Guild inspector sits by the door, writing in a little book and frowning at the prices.	false
-campaign_localised_strings_string_land_enc_tavern_moment_7	Tonight an old veteran is telling the tale of a battle for the third time, and it has grown bigger every time.	false
-campaign_localised_strings_string_land_enc_tavern_moment_8	Tonight the roof leaks over the best table, so the most dangerous man in the room is sitting in a puddle and daring anyone to laugh.	false
+campaign_localised_strings_string_land_enc_tavern_scene_3_3	The cellars run deeper than the foundations of some keeps. Tonight the keeper is pouring from a barrel older than the Empire.	false
+campaign_localised_strings_string_land_enc_tavern_scene_3_4	Guild agents and foreign envoys share one long table with the costliest killers in the land. Somehow, nobody has drawn steel. Yet.	false
+campaign_localised_strings_string_land_enc_tavern_moment_1	The room is in high spirits tonight: a hooded stranger in the corner has bought everyone a round, and nobody knows why.	false
+campaign_localised_strings_string_land_enc_tavern_moment_2	It is a rowdy night. Out in the yard, two sellswords are wrestling, and half the room is shouting wagers at them.	false
+campaign_localised_strings_string_land_enc_tavern_moment_3	The mood is sour tonight, and the keeper's is worst of all: someone has drunk the good barrel dry.	false
+campaign_localised_strings_string_land_enc_tavern_moment_4	The room is buzzing tonight. A caravan has just come in off the road, and its drivers are full of news of armies on the move.	false
+campaign_localised_strings_string_land_enc_tavern_moment_5	The tavern is full to bursting tonight: a wedding party has taken over the long table, and everyone is invited.	false
+campaign_localised_strings_string_land_enc_tavern_moment_6	The room is on its best behaviour tonight. A Guild inspector sits by the door, scribbling in a little book and frowning at the prices.	false
+campaign_localised_strings_string_land_enc_tavern_moment_7	The room has heard this one before. An old veteran is telling the tale of his greatest battle for the third time tonight, and it grows with every telling.	false
+campaign_localised_strings_string_land_enc_tavern_moment_8	Water drips through the roof tonight, right over the best table, so the most dangerous man in the room is sitting in a puddle and daring anyone to laugh.	false
+campaign_localised_strings_string_land_enc_tavern_greeting_owner_1	The keeper straightens up as we come in: "Back already, boss? Your usual seat is free."	false
+campaign_localised_strings_string_land_enc_tavern_greeting_owner_2	The keeper nods to us as we come in: "Good to see you, boss. Business is steady."	false
+campaign_localised_strings_string_land_enc_tavern_greeting_owner_3	The keeper pours a cup before we even reach the bar: "On the house, boss. Always."	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_1	The keeper leans over with a grin: "Drinks are paid for tonight, thanks to our friend in the corner. What else do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_2	The keeper has to shout over the din: "Pay them no mind, it will be over soon enough. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_3	The keeper glares past us at the empty barrel: "If you came for the good stuff, you are too late. What else?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_4	The keeper lowers his voice: "Plenty of talk of armies tonight. Yours, by the look of you?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_5	The keeper hands us a cup of the wedding wine: "On the bride's father, apparently. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_6	The keeper speaks a little too politely: "Welcome, welcome. Everything here is in perfect order, as you can see."	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_7	The keeper rolls his eyes towards the old man: "Third time tonight. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_moment_8	The keeper keeps his face very straight: "Nobody laughs, nobody gets hurt. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_1_1	The keeper turns to us as the story by the fire reaches its loudest part: "Don't believe a word of it. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_1_2	The keeper finishes counting a stack of coins, then counts it again before looking up: "Well? What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_1_3	The keeper raises his voice over the fiddle: "Ignore him, he only knows the one tune. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_1_4	The keeper follows our eyes to the old notice: "He's long gone, but it keeps the riff-raff honest. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_2_1	The keeper waves us in: "Plenty of room since we built the second hall. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_2_2	The keeper clears a corner of the bar for us: "Packed tonight, but there is always room for coin. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_2_3	The keeper leans in so we can hear him over the singing: "He has been at it all night. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_2_4	The keeper nods at the crowded board: "Guild work has never been better. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_1	The keeper looks us over, as if weighing us against the famous companies in his halls: "Welcome. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_2	The keeper does not ask our names: "Nobody here has one. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_3	The keeper turns the tap of the ancient barrel with great care: "A cup of this costs more than a horse. What do you need?"	false
+campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_4	The keeper keeps one eye on the long table as he speaks: "Keep your hands where they can see them, and we will all get along. What do you need?"	false

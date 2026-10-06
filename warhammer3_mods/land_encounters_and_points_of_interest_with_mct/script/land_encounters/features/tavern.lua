@@ -60,9 +60,10 @@ local PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE = "dummy_land_enc_tavern_cannot_afford_
 local PAYLOAD_TEXT_FULLY_UPGRADED = "dummy_land_enc_tavern_fully_upgraded"
 --- Payload text for the upgrade shown to a visitor who does not own the Tavern.
 local PAYLOAD_TEXT_OWNER_ONLY = "dummy_land_enc_tavern_owner_only_upgrade"
---- Script context value the hub's description opens with: the scene picked for this visit.
+--- Script context values the hub's description opens with: the scene picked for this visit, then the keeper's greeting.
 local SCENE_CONTEXT = "land_enc_tavern_scene"
---- Loc key prefix of the hub's scenes, race touches and tonight's moments, e.g. ..scene_2_3, ..race_dwf, ..moment_5.
+local GREETING_CONTEXT = "land_enc_tavern_greeting"
+--- Loc key prefix of the hub's scenes, tonight's moments and the keeper's replies, e.g. ..scene_2_3, ..moment_5, ..greeting_owner_1.
 local FLAVOUR_PREFIX = "campaign_localised_strings_string_land_enc_tavern_"
 
 --- Payload text of the leave choice.
@@ -200,19 +201,27 @@ function TavernState:charge(base, faction_name)
     return math.floor(base * self:price_factor(faction_name) + 0.5)
 end
 
---- Picks the hub's opening scene for this visit (see `tavern_data.flavour`) and hands it to the description.
-function TavernState:show_scene()
+--- Picks the hub's opening scene and the keeper's greeting for this visit (see `tavern_data.flavour`) and hands them to the description. The
+--- keeper answers tonight's moment when there is one, greets the owner as the boss, and otherwise answers the scene, so the line never
+--- mentions anything the scene has not set up.
+--- @param is_owner boolean True when the visitor owns the Tavern.
+function TavernState:show_scene(is_owner)
     local flavour = tavern_data.flavour
-    local keys = { FLAVOUR_PREFIX .. "scene_" .. self.level .. "_" .. random_number(flavour.scenes_per_level) }
-    if self.culture ~= "" then keys[#keys + 1] = FLAVOUR_PREFIX .. "race_" .. self.culture end
-    if random_chance(flavour.moment_chance) then keys[#keys + 1] = FLAVOUR_PREFIX .. "moment_" .. random_number(flavour.moments) end
+    local scene = self.level .. "_" .. random_number(flavour.scenes_per_level)
+    local moment = random_chance(flavour.moment_chance) and random_number(flavour.moments) or nil
+    if moment and (flavour.clashes[scene] or {})[moment] then moment = nil end
+    local keys = { FLAVOUR_PREFIX .. "scene_" .. scene }
+    if moment then keys[#keys + 1] = FLAVOUR_PREFIX .. "moment_" .. moment end
     local parts = {}
     for _, key in ipairs(keys) do
         local text = common.get_localised_string(key)
         if text ~= "" then parts[#parts + 1] = text end
     end
     common.set_context_value(SCENE_CONTEXT, table.concat(parts, " "))
-    log("tavern: the hub of the " .. self:describe() .. " opens with " .. table.concat(keys, ", "))
+    local greeting = FLAVOUR_PREFIX .. "greeting_"
+        .. (moment and "moment_" .. moment or is_owner and "owner_" .. random_number(flavour.owner_greetings) or "scene_" .. scene)
+    common.set_context_value(GREETING_CONTEXT, common.get_localised_string(greeting))
+    log("tavern: the hub of the " .. self:describe() .. " opens with " .. table.concat(keys, ", ") .. ", then " .. greeting)
 end
 
 --- Builds and opens the hub: the mercenary hall, the contract board, the bar, the upgrade for the owner, and leaving. A hall
@@ -248,7 +257,7 @@ function TavernState:open_hub(faction, general_cqi)
         .. ", upgrade " .. (upgrade.gold and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
         .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ")")
     self:show_owner_in_dilemmas()
-    self:show_scene()
+    self:show_scene(is_owner)
     dilemmas.launch(EVENT_HUB_BY_LEVEL[self.level], choices, faction:name())
 end
 
@@ -361,8 +370,7 @@ end
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @param defender_army Army The Tavern's defending army.
 function TavernState:await_capture_battle(invasion_battle_manager, defender_army)
-    invasion_battle_manager:mark_battle_forces_for_removal(defender_army)
-    invasion_battle_manager:reset_state_post_battle(self, "TavernSpot", nil, defender_army)
+    invasion_battle_manager:await_battle(self, "TavernSpot", nil, defender_army)
 end
 
 --- Resolves a capture battle: the player takes the Tavern on a win, and is repelled on a loss.
@@ -552,6 +560,7 @@ function TavernEventDelegate:initialize(points_of_interest, saved)
     end
     self.pending_dilemma_by_faction = (saved and saved.pending_dilemma_by_faction) or {}
     tavern_contracts.restore_state(saved and saved.contracts)
+    tavern_contracts.rearm_battles(self)
     log("tavern: " .. #self.taverns_state .. " Taverns in " .. #zone_names .. " zones (" .. restored .. " restored, "
         .. (#self.taverns_state - restored) .. " new)")
     self:sync_markers()
@@ -655,6 +664,14 @@ end
 --- @param outcome string "succeeded", "failed" or "cancelled".
 function TavernEventDelegate:on_contract_ended(faction_name, mission_key, outcome)
     tavern_contracts.on_mission_ended(self, faction_name, mission_key, outcome)
+end
+
+--- A lord walked onto a marked spot's marker (see features/tavern_contracts.lua).
+--- @param character character The lord.
+--- @param marker_ref string The marker type's key.
+--- @param instance_ref string The marker's instance.
+function TavernEventDelegate:on_mark_entered(character, marker_ref, instance_ref)
+    tavern_contracts.on_mark_entered(self, character, marker_ref, instance_ref)
 end
 
 --- At a faction's turn start, voids its contracts that can no longer be met and keeps its bounty lords at war with it alone.

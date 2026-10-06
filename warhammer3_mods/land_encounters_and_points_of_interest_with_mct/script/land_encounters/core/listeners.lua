@@ -198,6 +198,18 @@ function M.register()
     end
 
 
+    --- A lord walks onto a Tavern contract's marked spot. CA's marker manager fires the event with the lord and the marker.
+    core:add_listener(
+        "land_enc_tavern_mark_entered",
+        tavern_contracts.MARK_ENTERED_EVENT,
+        true,
+        function(context)
+            M.point_of_interest_event_manager:on_tavern_mark_entered(context:character(), context.stored_table.marker_ref, context.stored_table.instance_ref)
+        end,
+        IS_PERSISTENT_LISTENER
+    )
+
+
     --- Tower offers taken on the open go-deeper dilemma, Tavern hub choices that cannot be taken, and site or battle offers the treasury cannot pay, get greyed-out buttons once the
     --- dilemma panel has built them. The panel is the local player's, so this UI-only step reads the local faction.
     core:add_listener(

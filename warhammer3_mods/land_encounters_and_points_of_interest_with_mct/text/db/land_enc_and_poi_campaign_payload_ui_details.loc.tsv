@@ -163,6 +163,32 @@ campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_2	[[col
 campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_3	[[col:red]]The keeper will not serve us again for 3 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_4	[[col:red]]The keeper will not serve us again for 4 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_5	[[col:red]]The keeper will not serve us again for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_open	Visit the mercenary hall, where sellswords wait for a lord with coin. [[col:yellow]]Up to 2 hires per visit.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_unit	Hire this company of sellswords.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_renown	Hire this famous regiment.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_hero_5	Hire a [[col:green]]rank 5 hero[[/col]] of the Tavern's people: they join our army, or wait beside it when it is full.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_hero_10	Hire a [[col:green]]rank 10 hero[[/col]] of the Tavern's people: they join our army, or wait beside it when it is full.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_own	Hire this company of our own kind, drinking far from home.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_no_room	[[col:red]]Our army has no room for another unit.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_1	[[col:red]]The hall will not deal with us again for 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_2	[[col:red]]The hall will not deal with us again for 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_3	[[col:red]]The hall will not deal with us again for 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_4	[[col:red]]The hall will not deal with us again for 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_5	[[col:red]]The hall will not deal with us again for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_board_open	Read the contract board: bounties and culls for a deposit, [[col:yellow]]up to 3 held at once[[/col]] from any Tavern.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_1	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+2000 gold[[/col]] and [[col:green]]an uncommon item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_1	Cull: beat [[col:yellow]]2 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+1500 gold[[/col]] and [[col:green]]an uncommon item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_2	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+3500 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_2	Cull: beat [[col:yellow]]3 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+3000 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_3	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+5000 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_3	Cull: beat [[col:yellow]]4 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+4500 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_held_full	[[col:red]]We already hold 3 contracts. Finish or drop one first.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_no_target	[[col:red]]No enemy of ours holds land near enough to cull.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_marked_1	Marked spot: the Guild marks a site within 2 regions of here, seen only by us. Win the battle there within 10 turns. Reward: our deposit back, [[col:green]]+1500 gold[[/col]] and [[col:green]]an uncommon item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_marked_2	Marked spot: the Guild marks a site within 2 regions of here, seen only by us. Win the battle there within 10 turns. Reward: our deposit back, [[col:green]]+3000 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_marked_3	Marked spot: the Guild marks a site within 2 regions of here, seen only by us. Win the battle there within 10 turns. Reward: our deposit back, [[col:green]]+4500 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_chain_3	Quest: hunt a lord, then clear their lair, then face the master who sent them. Each step has 12 turns, and the rewards grow as we go. The last pays [[col:green]]6000 gold[[/col]] with our deposit back, plus [[col:green]]a legendary item[[/col]] (or a hero, when none are left).	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_taken	[[col:red]]This contract has already been accepted.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_tavern_back	Go back to the common room.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_unaffordable	[[col:red]]We cannot afford this.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_taken	[[col:red]]Already taken.[[/col]]	false
@@ -1087,24 +1113,11 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_3_
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_easy	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_medium	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_hard	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_open	Visit the mercenary hall: sellswords, famous regiments and heroes for hire, [[col:yellow]]up to 2 per visit[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_unit	Hire this company of sellswords.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_renown	Hire this famous regiment.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_hero_5	Hire a [[col:green]]rank 5 hero[[/col]] of the Tavern's people: they join our army, or wait beside it when it is full.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_hero_10	Hire a [[col:green]]rank 10 hero[[/col]] of the Tavern's people: they join our army, or wait beside it when it is full.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_own	Hire this company of our own kind, drinking far from home.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_no_room	[[col:red]]Our army has no room for another unit.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_1	[[col:red]]The hall will not deal with us again for 1 turn.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_2	[[col:red]]The hall will not deal with us again for 2 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_3	[[col:red]]The hall will not deal with us again for 3 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_4	[[col:red]]The hall will not deal with us again for 4 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_5	[[col:red]]The hall will not deal with us again for 5 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_board_open	Read the contract board: bounties and culls for a deposit, [[col:yellow]]up to 3 held at once[[/col]] from any Tavern.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_1	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+2000 gold[[/col]] and [[col:green]]an uncommon item[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_1	Cull: beat [[col:yellow]]2 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+1500 gold[[/col]] and [[col:green]]an uncommon item[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_2	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+3500 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_2	Cull: beat [[col:yellow]]3 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+3000 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_bounty_3	Bounty: hunt down a lord seen within 2 regions of here and beat their army within 10 turns. Reward: our deposit back, [[col:green]]+5000 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_cull_3	Cull: beat [[col:yellow]]4 armies[[/col]] of our nearest enemy within 15 turns. Reward: our deposit back, [[col:green]]+4500 gold[[/col]] and [[col:green]]a rare item[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_held_full	[[col:red]]We already hold 3 contracts. Finish or drop one first.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_no_target	[[col:red]]No enemy of ours holds land near enough to cull.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_1000	Includes our deposit of [[col:yellow]]1000 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_1250	Includes our deposit of [[col:yellow]]1250 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_2000	Includes our deposit of [[col:yellow]]2000 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_2500	Includes our deposit of [[col:yellow]]2500 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_3000	Includes our deposit of [[col:yellow]]3000 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_3750	Includes our deposit of [[col:yellow]]3750 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_4000	Includes our deposit of [[col:yellow]]4000 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_5000	Includes our deposit of [[col:yellow]]5000 gold[[/col]] back.	false

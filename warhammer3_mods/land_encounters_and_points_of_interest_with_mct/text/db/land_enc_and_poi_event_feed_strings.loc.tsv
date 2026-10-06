@@ -285,6 +285,27 @@ event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	Th
 event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_3	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_3	Tavern Improved	false
 event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms will offer the most once they open.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_failed	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed	Contract Failed	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_failed	The deadline has passed and the work is not done. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_void	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_void	Contract Void	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_void	The contract can no longer be met, as our quarry is gone by other hands. The Guild returns our deposit.	false
+event_feed_strings_text_title_event_land_enc_tavern_bounty_sighted	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_bounty_sighted	Bounty Sighted	false
+event_feed_strings_text_description_event_land_enc_tavern_bounty_sighted	The lord we were paid to hunt has been seen here. Beat their army before the deadline to claim the bounty.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_dropped	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped	Contract Dropped	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_dropped	We have walked away from the contract. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
+event_feed_strings_text_title_event_land_enc_tavern_mark_spotted	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_mark_spotted	Site Marked	false
+event_feed_strings_text_description_event_land_enc_tavern_mark_spotted	The Guild has marked this site. March a lord onto it and win the battle there before the countdown runs out.	false
+event_feed_strings_text_title_event_land_enc_tavern_mark_repelled	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_mark_repelled	Driven Back	false
+event_feed_strings_text_description_event_land_enc_tavern_mark_repelled	We were beaten at the marked site, but the mark still stands. We can try again before the countdown runs out.	false
+event_feed_strings_text_title_event_land_enc_tavern_chain_next	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_chain_next	The Quest Goes On	false
+event_feed_strings_text_description_event_land_enc_tavern_chain_next	The Guild is pleased with our work, and the next step of its quest awaits us. Its reward is greater still.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
 event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
@@ -528,15 +549,3 @@ event_feed_strings_text_description_event_land_enc_spot_wound_paid_3	The price o
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_5	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_5	Our Lord Is Wounded	false
 event_feed_strings_text_description_event_land_enc_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
-event_feed_strings_text_title_event_land_enc_tavern_contract_failed	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed	Contract Failed	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_failed	The deadline has passed and the work is not done. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
-event_feed_strings_text_title_event_land_enc_tavern_contract_void	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_contract_void	Contract Void	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_void	The contract can no longer be met, as our quarry is gone by other hands. The Guild returns our deposit.	false
-event_feed_strings_text_title_event_land_enc_tavern_bounty_sighted	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_bounty_sighted	Bounty Sighted	false
-event_feed_strings_text_description_event_land_enc_tavern_bounty_sighted	The lord we were paid to hunt has been seen here. Beat their army before the deadline to claim the bounty.	false
-event_feed_strings_text_title_event_land_enc_tavern_contract_dropped	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped	Contract Dropped	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_dropped	We have walked away from the contract. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false

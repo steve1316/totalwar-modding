@@ -1,0 +1,4 @@
+key	text	tooltip
+#Loc;1;text/db/land_enc_and_poi_mission_text.loc		
+mission_text_text_land_enc_tavern_hunt	Hunt down and defeat the lord the Guild has put a price on	false
+mission_text_text_land_enc_tavern_mark	Win the battle at the site the Guild has marked	false

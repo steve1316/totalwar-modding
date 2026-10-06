@@ -12,3 +12,15 @@ land_enc_mission_tavern_bounty_3	SCRIPTED			emp/generic	rom_event_mission.png	fa
 land_enc_mission_tavern_cull_1	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
 land_enc_mission_tavern_cull_2	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
 land_enc_mission_tavern_cull_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_marked_1	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_1_1	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_2_1	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_3_1	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_marked_2	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_1_2	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_2_2	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_3_2	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_marked_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_1_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_2_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_tavern_chain_3_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
