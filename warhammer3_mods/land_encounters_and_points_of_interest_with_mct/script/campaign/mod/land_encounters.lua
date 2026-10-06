@@ -30,6 +30,10 @@ local roc_encounters = coordinates.realm_of_chaos.treasures_and_spots
 local roc_points_of_interest = coordinates.realm_of_chaos.points_of_interest
 local ieee_land_encounters = coordinates.immortal_empires_expanded.treasures_and_spots
 local ieee_points_of_interest = coordinates.immortal_empires_expanded.points_of_interest
+local old_world_encounters = coordinates.old_world.treasures_and_spots
+local old_world_points_of_interest = coordinates.old_world.points_of_interest
+--- Campaign key of The Old World campaign mod (!cr_oldworld_campaign, Workshop 3081800026).
+local OLD_WORLD_CAMPAIGN = "cr_oldworld"
 
 local LandEncounterManager = require("script/land_encounters/core/bootstrap")
 local managers = require("script/land_encounters/core/managers")
@@ -144,7 +148,13 @@ end
 cm:add_first_tick_callback(
     function()
         local points_of_interest = {}
-        if is_mod_enabled("!cr_immortal_empires_expanded") then
+        --- The Old World is checked first: IE Expanded can be enabled alongside it, and its spots belong to Immortal Empires only.
+        if cm:get_campaign_name() == OLD_WORLD_CAMPAIGN then
+            out("DEBUG - Current Campaign is The Old World.")
+            points_of_interest = old_world_points_of_interest
+            initialize_land_encounters_state(old_world_encounters, points_of_interest)
+            initialize_poi_event_manager_state(points_of_interest)
+        elseif is_mod_enabled("!cr_immortal_empires_expanded") then
             out("DEBUG - Current Campaign is Immortal Empires Expanded.")
             local ieee_combined_coordinates = concatenate_encounters(ie_land_encounters, ieee_land_encounters)
             points_of_interest = concatenate_encounters(ie_points_of_interest, ieee_points_of_interest)
