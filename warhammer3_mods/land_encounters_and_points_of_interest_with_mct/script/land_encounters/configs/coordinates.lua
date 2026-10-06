@@ -44,7 +44,7 @@ M.immortal_empires = {
               {707, 168},
               --- Southern Jungles
               {591, 103},
-              {637, 120},
+              {637, 120, disabled = true},
               {634, 142},
               --- Kingdom of Beasts
               {756, 235, manual = true},
@@ -82,7 +82,7 @@ M.immortal_empires = {
               {505, 280},
               --- Land of Assasins
               {440, 259},
-              {440, 304},
+              {440, 304, disabled = true},
               {457, 322},
               --- Crater of the Waking Dead
               {784, 286},
@@ -93,7 +93,7 @@ M.immortal_empires = {
               {693, 314},
               {775, 308, manual = true},
               --- Land of the Dead
-              {630, 288},
+              {630, 288, disabled = true},
               {676, 294},
               {615, 311},
               {646, 310},
@@ -143,11 +143,11 @@ M.immortal_empires = {
               {649, 471},
               --- Death Pass
               {741, 465},
-              {765, 474},
+              {765, 474, disabled = true},
               {711, 481},
               {784, 489},
               --- Blood River Valley
-              {650, 496},
+              {650, 496, disabled = true},
               {684, 493},
               {715, 516},
          },
@@ -195,7 +195,7 @@ M.immortal_empires = {
               {168, 226},
               {131, 225},
               {151, 246},
-              {184, 243},
+              {184, 243, disabled = true},
               --- The Turtle Isles
               {89, 228},
               {73, 237},
@@ -230,7 +230,7 @@ M.immortal_empires = {
               {81, 456},
               {121, 451, manual = true},
               --- The Isthmus Coast
-              {87, 480},
+              {87, 480, disabled = true},
               {106, 504},
               {100, 529},
               --- Isthmus of Lustria
@@ -273,7 +273,7 @@ M.immortal_empires = {
               {1207, 521},
               --- Wastelands of Jinshen
               {1140, 467},
-              {1113, 485},
+              {1113, 485, disabled = true},
               {1135, 500},
               {1154, 517},
               --- Jade River Delta
@@ -309,7 +309,7 @@ M.immortal_empires = {
               {1252, 639},
               {1196, 647},
               --- Gunpowder Road
-              {1143, 618},
+              {1143, 618, disabled = true},
               {1135, 635, manual = true},
               {1161, 644},
          },
@@ -407,7 +407,7 @@ M.immortal_empires = {
               {719, 450},
               {783, 461},
               --- Southern World's Edge Mountains
-              {793, 440},
+              {793, 440, disabled = true},
               {816, 443},
               {796, 459},
               --- The Silver Road
@@ -453,7 +453,7 @@ M.immortal_empires = {
               {663, 646},
               --- Wissenland
               {575, 578},
-              {551, 595},
+              {551, 595, disabled = true},
               {560, 615},
               --- Ostermark
               {679, 651},
@@ -503,7 +503,7 @@ M.immortal_empires = {
               {710, 764},
               {729, 783},
               --- River Urskoy
-              {707, 750},
+              {707, 750, disabled = true},
               --- Southern Oblast
               {727, 721},
               {693, 728},
@@ -515,7 +515,7 @@ M.immortal_empires = {
               {679, 779},
               {685, 799},
               --- River Lynsk
-              {643, 783},
+              {643, 783, disabled = true},
               --- Western Oblast
               {618, 806},
               {655, 812},
@@ -538,7 +538,7 @@ M.immortal_empires = {
               {572, 846},
               --- Mountains of Naglfari
               {508, 850},
-              {495, 820},
+              {495, 820, disabled = true},
               {547, 844},
               --- Helspire Mountains
               {403, 835, manual = true},
@@ -556,7 +556,7 @@ M.immortal_empires = {
          ["borderprinces"] = {
               --- E. Border Princes
               {623, 502},
-              {653, 518},
+              {653, 518, disabled = true},
               {604, 519},
               {692, 534},
               --- W. Border Princes
@@ -568,7 +568,7 @@ M.immortal_empires = {
               --- Tilea
               {516, 397},
               {527, 417},
-              {507, 445},
+              {507, 445, disabled = true},
               {507, 470},
               --- Estalia
               {428, 425, disabled = true},
@@ -580,7 +580,7 @@ M.immortal_empires = {
          },
          ["greymountains"] = {
               --- Black Mountains
-              {608, 537},
+              {608, 537, disabled = true},
               {635, 544},
               --- The Vaults
               {512, 477, manual = true},
@@ -593,13 +593,13 @@ M.immortal_empires = {
               {450, 549},
               {486, 564},
               --- Carcassone
-              {444, 488},
+              {444, 488, disabled = true},
               {440, 517},
               {481, 525, manual = true},
               {413, 547},
               --- Bastonne
               {456, 590, manual = true},
-              {425, 612},
+              {425, 612, disabled = true},
               {448, 612},
               --- River Brienne
               {415, 584},
@@ -619,7 +619,7 @@ M.immortal_empires = {
               {301, 529},
               {325, 549},
               --- Eataine
-              {264, 512},
+              {264, 512, disabled = true},
               {304, 522},
               {264, 544},
               --- Caledor
@@ -707,7 +707,7 @@ M.immortal_empires = {
               --- The Broken Lands
               {255, 766},
               {266, 782},
-              {265, 803},
+              {265, 803, disabled = true},
               --- Granite Hills
               {185, 758},
               {222, 763},
@@ -715,7 +715,7 @@ M.immortal_empires = {
               {228, 785},
               --- The Clawed Coast
               {215, 703},
-              {195, 707},
+              {195, 707, disabled = true},
               {172, 734},
               {213, 735},
               --- Obsidian Peaks
@@ -792,7 +792,7 @@ M.immortal_empires = {
               {521, 953},
               --- The Cold Mires
               {458, 899, manual = true},
-              {400, 899},
+              {400, 899, disabled = true},
               {467, 925},
               {487, 951, manual = true},
               --- Northern Wastes
@@ -825,7 +825,9 @@ M.immortal_empires = {
                 { coordinates = {562, 38}, initial_owner = "wh2_dlc17_lzd_oxyotl", owner_if_player = "wh3_main_tze_flaming_scribes", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {352, 41}, initial_owner = "wh3_main_tze_flaming_scribes", owner_if_player = "wh3_main_tze_flaming_scribes", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -835,7 +837,9 @@ M.immortal_empires = {
                 { coordinates = {552, 213}, initial_owner = "wh2_main_lzd_tlaqua", owner_if_player = "wh3_main_emp_cult_of_sigmar", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {637, 120}, culture = "lzd", initial_owner = "wh2_main_lzd_zlatan", owner_if_player = "wh2_main_lzd_zlatan", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -846,7 +850,10 @@ M.immortal_empires = {
                 { coordinates = {789, 268}, initial_owner = "wh2_dlc09_tmb_lybaras", owner_if_player = "wh2_main_vmp_the_silver_host", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {630, 288}, culture = "tmb", initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh2_dlc09_tmb_khemri", manual = true },
+                { coordinates = {440, 304}, initial_owner = "wh2_main_brt_knights_of_the_flame", owner_if_player = "wh2_main_brt_knights_of_the_flame", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -859,7 +866,10 @@ M.immortal_empires = {
                 { coordinates = {691, 390}, initial_owner = "wh3_main_ie_vmp_sires_of_mourkain", owner_if_player = "wh3_main_ie_vmp_sires_of_mourkain", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {650, 496}, initial_owner = "wh_main_grn_scabby_eye", owner_if_player = "wh_main_grn_scabby_eye", manual = true },
+                { coordinates = {765, 474}, culture = "grn", initial_owner = "wh3_dlc26_grn_gorbad_ironclaw", owner_if_player = "wh3_dlc26_grn_gorbad_ironclaw", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -872,7 +882,12 @@ M.immortal_empires = {
                 { coordinates = {205, 155}, initial_owner = "wh2_main_skv_clan_pestilens", owner_if_player = "wh2_dlc12_lzd_cult_of_sotek", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {87, 480}, initial_owner = "wh2_main_emp_new_world_colonies", owner_if_player = "wh2_main_emp_new_world_colonies", manual = true },
+                { coordinates = {184, 243}, culture = "lzd", initial_owner = "wh2_main_lzd_itza", owner_if_player = "wh2_main_lzd_itza", manual = true },
+                { coordinates = {245, 150}, initial_owner = "wh2_main_lzd_southern_sentinels", owner_if_player = "wh2_main_lzd_southern_sentinels", manual = true },
+                { coordinates = {126, 341}, initial_owner = "wh2_main_lzd_tlaxtlan", owner_if_player = "wh2_main_lzd_tlaxtlan", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -901,7 +916,12 @@ M.immortal_empires = {
                 }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {1113, 485}, initial_owner = "wh3_main_cth_dissenter_lords_of_jinshen", owner_if_player = "wh3_main_cth_dissenter_lords_of_jinshen", manual = true },
+                { coordinates = {1143, 618}, culture = "cth", initial_owner = "wh3_main_cth_rebel_lords_of_nan_yang", owner_if_player = "wh3_main_cth_rebel_lords_of_nan_yang", manual = true },
+                { coordinates = {1338, 576}, initial_owner = "wh3_dlc21_cst_dead_flag_fleet", owner_if_player = "wh3_dlc21_cst_dead_flag_fleet", manual = true },
+                { coordinates = {1234, 393}, initial_owner = "wh3_main_cth_burning_wind_nomads", owner_if_player = "wh3_main_cth_burning_wind_nomads", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -910,7 +930,10 @@ M.immortal_empires = {
                 { coordinates = {1093, 565}, initial_owner = "wh3_main_cth_the_northern_provinces", owner_if_player = "wh3_main_cth_dissenter_lords_of_jinshen", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {1016, 603}, initial_owner = "wh3_main_ogr_blood_guzzlers", owner_if_player = "wh3_main_ogr_blood_guzzlers", manual = true },
+                { coordinates = {1014, 501}, initial_owner = "wh3_main_ogr_goldtooth", owner_if_player = "wh3_main_ogr_goldtooth", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -923,7 +946,10 @@ M.immortal_empires = {
                 { coordinates = {1113, 450}, initial_owner = "wh3_main_vmp_caravan_of_blue_roses", owner_if_player = "wh3_main_cth_the_western_provinces", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {931, 477}, initial_owner = "wh3_dlc23_chd_legion_of_azgorh", owner_if_player = "wh3_dlc23_chd_legion_of_azgorh", manual = true },
+                { coordinates = {866, 612}, initial_owner = "wh3_main_grn_drippin_fangs", owner_if_player = "wh3_main_grn_drippin_fangs", manual = true },
+            },
 
             ["resources"] = {}
 
@@ -935,7 +961,9 @@ M.immortal_empires = {
                 { coordinates = {723, 459}, initial_owner = "wh_main_grn_crooked_moon", owner_if_player = "wh_main_grn_scabby_eye", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {793, 440}, culture = "dwf", initial_owner = "wh_main_dwf_karak_azul", owner_if_player = "wh_main_dwf_karak_azul", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -947,7 +975,11 @@ M.immortal_empires = {
                 { coordinates = {709, 661}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_ostland", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {558, 592}, culture = "emp", initial_owner = "wh_main_emp_wissenland", owner_if_player = "wh_main_emp_wissenland", manual = true },
+                { coordinates = {615, 657}, initial_owner = "wh_main_emp_talabecland", owner_if_player = "wh_main_emp_talabecland", manual = true },
+                { coordinates = {536, 661}, initial_owner = "wh_main_emp_empire", owner_if_player = "wh_main_emp_empire", manual = true },
+            },
 
             ["resources"] = {}
 
@@ -958,7 +990,10 @@ M.immortal_empires = {
                 { coordinates = {612, 798}, initial_owner = "wh3_main_ksl_the_great_orthodoxy", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {643, 783}, initial_owner = "wh3_main_ksl_ungol_kindred", owner_if_player = "wh3_main_ksl_ungol_kindred", manual = true },
+                { coordinates = {707, 750}, culture = "ksl", initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh3_main_ksl_the_ice_court", manual = true },
+            },
 
             ["resources"] = {}
 
@@ -970,7 +1005,9 @@ M.immortal_empires = {
                 { coordinates = {433, 855}, initial_owner = "wh_dlc08_nor_norsca", owner_if_player = "wh_main_nor_varg", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {495, 820}, culture = "nor", initial_owner = "wh_main_nor_skaeling", owner_if_player = "wh_main_nor_skaeling", manual = true },
+            },
 
             ["resources"] = {}
 
@@ -981,14 +1018,19 @@ M.immortal_empires = {
                 { coordinates = {664, 537}, initial_owner = "wh_main_teb_border_princes", owner_if_player = "wh_main_teb_border_princes", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {653, 518}, initial_owner = "wh_main_dwf_barak_varr", owner_if_player = "wh_main_dwf_barak_varr", manual = true },
+                { coordinates = {507, 445}, culture = "emp", initial_owner = "wh_main_teb_tilea", owner_if_player = "wh_main_teb_tilea", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["greymountains"] = {
             ["smithies"] = {},
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {608, 537}, culture = "dwf", initial_owner = "wh_main_dwf_karak_hirn", owner_if_player = "wh_main_dwf_karak_hirn", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -999,7 +1041,10 @@ M.immortal_empires = {
                 { coordinates = {426, 674}, initial_owner = "wh_main_brt_bretonnia", owner_if_player = "wh_main_emp_marienburg", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {425, 612}, culture = "brt", initial_owner = "wh_main_brt_bastonne", owner_if_player = "wh_main_brt_bastonne", manual = true },
+                { coordinates = {444, 488}, initial_owner = "wh_main_brt_carcassonne", owner_if_player = "wh_main_brt_carcassonne", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -1009,7 +1054,11 @@ M.immortal_empires = {
                 { coordinates = {331, 595}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_hef_yvresse", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {276, 591}, initial_owner = "wh2_main_hef_saphery", owner_if_player = "wh2_main_hef_saphery", manual = true },
+                { coordinates = {264, 512}, culture = "hef", initial_owner = "wh2_main_hef_eataine", owner_if_player = "wh2_main_hef_eataine", manual = true },
+                { coordinates = {279, 644}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh3_main_sla_seducers_of_slaanesh", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -1021,7 +1070,13 @@ M.immortal_empires = {
                 { coordinates = {72, 526}, initial_owner = "wh2_main_def_cult_of_pleasure", owner_if_player = "wh2_main_def_ssildra_tor", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {265, 803}, culture = "def", initial_owner = "wh2_main_def_karond_kar", owner_if_player = "wh2_main_def_karond_kar", manual = true },
+                { coordinates = {195, 707}, initial_owner = "wh2_dlc11_cst_the_drowned", owner_if_player = "wh2_dlc11_cst_the_drowned", manual = true },
+                { coordinates = {26, 626}, initial_owner = "wh2_dlc16_skv_clan_gritus", owner_if_player = "wh2_dlc16_skv_clan_gritus", manual = true },
+                { coordinates = {127, 609}, initial_owner = "wh2_main_def_bleak_holds", owner_if_player = "wh2_main_def_bleak_holds", manual = true },
+                { coordinates = {114, 795}, initial_owner = "wh2_main_def_naggarond", owner_if_player = "wh2_main_def_naggarond", manual = true },
+            },
 
             ["resources"] = {}
          },
@@ -1064,7 +1119,12 @@ M.immortal_empires = {
                 }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {400, 899}, initial_owner = "wh3_main_sla_subtle_torture", owner_if_player = "wh3_main_sla_subtle_torture", manual = true },
+                { coordinates = {703, 910}, initial_owner = "wh3_main_tze_all_seeing_eye", owner_if_player = "wh3_main_tze_all_seeing_eye", manual = true },
+                { coordinates = {1020, 741}, initial_owner = "wh3_main_ogr_fleshgreeders", owner_if_player = "wh3_main_ogr_fleshgreeders", manual = true },
+                { coordinates = {1171, 709}, initial_owner = "wh3_main_chs_khazag", owner_if_player = "wh3_main_chs_khazag", manual = true },
+            },
 
             ["resources"] = {}
          }
