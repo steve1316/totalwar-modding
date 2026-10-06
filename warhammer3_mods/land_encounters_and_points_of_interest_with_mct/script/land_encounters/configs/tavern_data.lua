@@ -5,6 +5,14 @@
 
 local M = {}
 
+--- The hub's opening scene, picked on each visit from text/db/land_enc_and_poi_tavern_strings.loc.tsv: one of `scenes_per_level` scenes for
+--- the Tavern's level, a racial Tavern's touch for its race, and `moment_chance` percent of the time one of `moments` things happening tonight.
+M.flavour = {
+    scenes_per_level = 4,
+    moments = 8,
+    moment_chance = 35,
+}
+
 --- Share of a bar offer's price the Tavern's owner pays. Guests pay the full price.
 M.owner_price_share = 0.75
 

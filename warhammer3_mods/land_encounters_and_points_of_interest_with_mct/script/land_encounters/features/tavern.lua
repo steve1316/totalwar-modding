@@ -60,6 +60,11 @@ local PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE = "dummy_land_enc_tavern_cannot_afford_
 local PAYLOAD_TEXT_FULLY_UPGRADED = "dummy_land_enc_tavern_fully_upgraded"
 --- Payload text for the upgrade shown to a visitor who does not own the Tavern.
 local PAYLOAD_TEXT_OWNER_ONLY = "dummy_land_enc_tavern_owner_only_upgrade"
+--- Script context value the hub's description opens with: the scene picked for this visit.
+local SCENE_CONTEXT = "land_enc_tavern_scene"
+--- Loc key prefix of the hub's scenes, race touches and tonight's moments, e.g. ..scene_2_3, ..race_dwf, ..moment_5.
+local FLAVOUR_PREFIX = "campaign_localised_strings_string_land_enc_tavern_"
+
 --- Payload text of the leave choice.
 local PAYLOAD_TEXT_LEAVE = "dummy_land_enc_tavern_leave"
 
@@ -195,6 +200,21 @@ function TavernState:charge(base, faction_name)
     return math.floor(base * self:price_factor(faction_name) + 0.5)
 end
 
+--- Picks the hub's opening scene for this visit (see `tavern_data.flavour`) and hands it to the description.
+function TavernState:show_scene()
+    local flavour = tavern_data.flavour
+    local keys = { FLAVOUR_PREFIX .. "scene_" .. self.level .. "_" .. random_number(flavour.scenes_per_level) }
+    if self.culture ~= "" then keys[#keys + 1] = FLAVOUR_PREFIX .. "race_" .. self.culture end
+    if random_chance(flavour.moment_chance) then keys[#keys + 1] = FLAVOUR_PREFIX .. "moment_" .. random_number(flavour.moments) end
+    local parts = {}
+    for _, key in ipairs(keys) do
+        local text = common.get_localised_string(key)
+        if text ~= "" then parts[#parts + 1] = text end
+    end
+    common.set_context_value(SCENE_CONTEXT, table.concat(parts, " "))
+    log("tavern: the hub of the " .. self:describe() .. " opens with " .. table.concat(keys, ", "))
+end
+
 --- Builds and opens the hub: the mercenary hall, the contract board, the bar, the upgrade for the owner, and leaving. A hall
 --- or bar closed to the visitor says for how long. An upgrade the owner cannot afford, or any upgrade for a guest, shows a text line and costs nothing.
 --- @param faction faction The visiting player faction.
@@ -228,6 +248,7 @@ function TavernState:open_hub(faction, general_cqi)
         .. ", upgrade " .. (upgrade.gold and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
         .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ")")
     self:show_owner_in_dilemmas()
+    self:show_scene()
     dilemmas.launch(EVENT_HUB_BY_LEVEL[self.level], choices, faction:name())
 end
 
