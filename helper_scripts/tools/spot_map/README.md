@@ -54,6 +54,16 @@ Immortal Empires' settlements until it has its own dump. Spots and new points ar
   - tick **Include spacing trim in export** to also disable every spot the trim removes.
 - Try exports on a copy with `--coordinates path/to/copy.lua`.
 
+## History
+
+- **Queue order:** the pending list shows the newest change on top, and moving an entry again brings it back to the top.
+- **Undo / redo:** **Undo** and **Redo**, or Ctrl+Z and Ctrl+Y / Ctrl+Shift+Z, step through every change to the open queue, including
+  Clear. Edit existing and Clean slate keep a separate history per campaign. The history lasts for the browser session, and an export or a
+  Reload starts it over.
+- **Export history:** every export to `coordinates.lua`, pending changes or a draft block, adds one line to `_diag/spot_map/history.jsonl`.
+  That line holds the time, the campaign, the counts, one line per change and the backup taken before the export. The Export history card
+  lists the open campaign's last 50, newest first. To roll an export back, copy its backup over `coordinates.lua`.
+
 ## Clean slate
 
 Switch the toolbar from **Edit existing** to **Clean slate** to build a layout from scratch: existing spots and points of interest are hidden,
@@ -63,6 +73,47 @@ in Edit existing, but on a separate queue: the campaign's layout in `data/layout
 **Export draft block** writes the layout to `coordinates.lua` as `M.<campaign>_draft` (for IE Expanded, one draft per block its entries
 belong to), replacing the previous draft. LEAPOI never reads draft blocks. When a campaign has no layout file but has a draft block, the
 layout starts from that block. Promoting a draft to the live block is a separate step, not done by the tool yet.
+
+## Suggestions
+
+An LLM can propose where to put taverns, smithies or tower sites. The script gathers the facts and the LLM makes the picks. There is no API
+key: you ask Claude Code in a session.
+
+1. `python -m tools.spot_map.suggest brief --campaign ie` writes `_diag/spot_map/brief_ie.md`. For each zone it lists the zone's cultures
+   (settlements belong to the zone of their nearest spot) and its points of interest. Each enabled spot also gets its nearest settlement,
+   the cultures of the 3 nearest settlements, how crowded it is and how far it is to the nearest smithy.
+2. The LLM reads the brief and writes `data/suggestions/<block>.json`, one file per coordinates.lua block (e.g. `immortal_empires.json`):
+   `{"suggestions": [{"type", "lua", "zone", "spot", "fields", "reason"}]}`. A suggestion always takes over an existing enabled spot, which is known to be reachable land, so it never lands in the sea.
+   When that spot lies on a road, an optional `"at": [x, y]` puts the entry a few units beside it, off the road. A suggestion with no
+   `"spot"` is a new entry instead: it stands at its `"at"` in its `"zone"` and `"area"` and replaces nothing (marked "new" in the card).
+3. `python -m tools.spot_map.suggest check --campaign ie` reports a missing or disabled spot, a spot named twice, an unknown type or an
+   unknown culture.
+
+The page draws suggestions as dashed outlines of their type (the **suggested** chip) and lists them with their reasons in the Suggestions
+card. Click one, or **Accept** it in the card, to queue it:
+- the new entry goes on the spot's coordinates, with its owners taken from the nearest settlement;
+- the spot itself is marked for deletion, so it leaves the encounter pool.
+
+Removing the pending entry undoes both. Taverns never take part in the spacing trim: the spot a tavern takes over keeps counting as it did,
+pending or exported, so accepting one never changes which neighbours are kept or trimmed. Once exported, a suggestion shows as "placed". A campaign shows the suggestions of every block it
+draws, so IE Expanded shows IE's.
+
+## Review
+
+The page draws each campaign's detailed map (`<map>.dds` next to the minimap, four times its size) when Pillow is installed. Roads show on
+it as thin double lines, region borders as thin single black lines and rivers as wide dark bands. It is converted to a JPEG in `_diag/spot_map/` once.
+
+To review every spot by eye, for example for spots lying on roads:
+
+1. `python -m tools.spot_map.suggest sheets --campaign ie` cuts every enabled spot, then every smithy and tavern, out of the detailed map
+   into labelled tiles on contact sheets in `_diag/spot_map/sheets/` (36 per sheet, 10 units around each entry, a ring one unit wide on it).
+2. An LLM (or you) goes through the sheets and writes `data/reviews/<block>.json`: `{"flags": [{"lua", "zone", "spot", "x", "y", "issue",
+   "note"}]}`, where x, y are the entry's coordinates when it was flagged. A flag on a smithy or tavern adds `"kind"` (its list, e.g.
+   `"smithies"`) and gives its index in that list as `"spot"`.
+
+The **Review** card lists the flags with their issue. **Zoom** centres the map on one, and **Next open spot** walks the open ones in order.
+Flagged spots get a dashed ring (the **flagged for review** chip). Drag the spot somewhere better or click it to delete it. A flag shows as
+pending while the move or deletion is queued, and as fixed once it is exported.
 
 ## What LEAPOI does with it
 

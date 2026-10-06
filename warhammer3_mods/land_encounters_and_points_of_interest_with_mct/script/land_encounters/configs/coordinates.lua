@@ -15,14 +15,14 @@ M.immortal_empires = {
               --- The Daemonium Hills
               {808, 44},
               {785, 32},
-              {731, 33},
+              {738, 42, manual = true},
               --- The Abyssal Glacier
               {693, 32},
               {642, 22},
-              {609, 24},
+              {595, 31, manual = true},
               --- The Southern Wastes
               {535, 27},
-              {490, 33},
+              {490, 33, disabled = true},
               {473, 71},
               {457, 36},
               {436, 53},
@@ -44,15 +44,15 @@ M.immortal_empires = {
               {707, 168},
               --- Southern Jungles
               {591, 103},
-              {637, 120},
+              {637, 120, disabled = true},
               {634, 142},
               --- Kingdom of Beasts
-              {768, 229},
+              {756, 235, manual = true},
               {801, 229},
               --- The Golden Pass
               {704, 195},
               {732, 167},
-              {751, 193},
+              {764, 198, manual = true},
               --- Heart of the Jungle
               {655, 210},
               --- Central Jungles
@@ -63,7 +63,7 @@ M.immortal_empires = {
               --- Western Jungles
               {524, 218},
               {530, 196},
-              {575, 165},
+              {567, 174, manual = true},
          },
          ["nehekara"] = {
               --- Shifting Sands
@@ -82,7 +82,7 @@ M.immortal_empires = {
               {505, 280},
               --- Land of Assasins
               {440, 259},
-              {440, 304},
+              {440, 304, disabled = true},
               {457, 322},
               --- Crater of the Waking Dead
               {784, 286},
@@ -91,9 +91,9 @@ M.immortal_empires = {
               {815, 331},
               --- Devil's Backbone
               {693, 314},
-              {765, 309},
+              {775, 308, manual = true},
               --- Land of the Dead
-              {630, 288},
+              {630, 288, disabled = true},
               {676, 294},
               {615, 311},
               {646, 310},
@@ -111,13 +111,13 @@ M.immortal_empires = {
               --- The Barrier Idols
               {662, 319},
               {685, 327},
-              {721, 325},
+              {704, 327, manual = true},
               {640, 345},
-              {672, 348},
+              {681, 341, manual = true},
               {720, 365},
               --- Blightwater
-              {764, 380},
-              {731, 393},
+              {778, 380, manual = true},
+              {726, 388, manual = true},
               {761, 397},
               --- Marshes of Madness
               {668, 358},
@@ -136,24 +136,24 @@ M.immortal_empires = {
               {712, 438},
               {765, 428},
               --- Western Badlands
-              {685, 422},
+              {676, 413, manual = true},
               {647, 435},
-              {669, 452},
+              {665, 437, manual = true},
               {701, 460},
               {649, 471},
               --- Death Pass
               {741, 465},
-              {765, 474},
+              {765, 474, disabled = true},
               {711, 481},
               {784, 489},
               --- Blood River Valley
-              {650, 496},
+              {650, 496, disabled = true},
               {684, 493},
               {715, 516},
          },
          ["lustria"] = {
               --- The Capes
-              {292, 98},
+              {285, 116, manual = true},
               --- Culchan Plains
               {262, 131},
               {219, 145},
@@ -161,10 +161,10 @@ M.immortal_empires = {
               {238, 169},
               --- The Night Forest Road
               {267, 102},
-              {234, 105},
+              {250, 101, manual = true},
               {209, 117},
               {183, 127},
-              {167, 144},
+              {168, 137, manual = true},
               --- Headhunter's Jungle
               {222, 181},
               {218, 215},
@@ -175,8 +175,8 @@ M.immortal_empires = {
               {194, 196},
               {165, 198},
               --- Spine of Sotek
-              {169, 169},
-              {142, 190},
+              {169, 169, disabled = true},
+              {120, 182, manual = true},
               {111, 204},
               --- Copper Desert
               {135, 155},
@@ -186,7 +186,7 @@ M.immortal_empires = {
               {242, 290},
               --- Mosquito Swamps
               {214, 229},
-              {200, 238},
+              {203, 240, manual = true},
               {250, 256},
               {215, 281},
               --- River Qurveza
@@ -195,7 +195,7 @@ M.immortal_empires = {
               {168, 226},
               {131, 225},
               {151, 246},
-              {184, 243},
+              {184, 243, disabled = true},
               --- The Turtle Isles
               {89, 228},
               {73, 237},
@@ -228,22 +228,22 @@ M.immortal_empires = {
               {47, 438},
               {127, 441},
               {81, 456},
-              {130, 456},
+              {121, 451, manual = true},
               --- The Isthmus Coast
-              {87, 480},
+              {87, 480, disabled = true},
               {106, 504},
               {100, 529},
               --- Isthmus of Lustria
               {57, 452},
-              {49, 471},
+              {47, 483, manual = true},
               {51, 495},
               {82, 494},
          },
          ["cathay"] = {
               --- Broken Lands of Tian Li
               {1245, 404},
-              {1202, 396},
-              {1216, 414},
+              {1202, 396, disabled = true},
+              {1192, 422, manual = true},
               {1171, 431},
               {1144, 455},
               {1210, 464},
@@ -258,8 +258,8 @@ M.immortal_empires = {
               {1352, 404},
               --- Mount Li
               {1379, 420},
-              {1306, 443},
-              {1370, 453},
+              {1295, 464, manual = true},
+              {1382, 447, manual = true},
               --- Nongchang Basin
               {1264, 473},
               {1299, 455},
@@ -273,23 +273,23 @@ M.immortal_empires = {
               {1207, 521},
               --- Wastelands of Jinshen
               {1140, 467},
-              {1113, 485},
+              {1113, 485, disabled = true},
               {1135, 500},
               {1154, 517},
               --- Jade River Delta
-              {1350, 496},
-              {1354, 526},
+              {1350, 496, disabled = true},
+              {1354, 526, disabled = true},
               {1307, 518},
-              {1345, 555},
+              {1332, 546, manual = true},
               --- Forest of the Moon
-              {1244, 543},
-              {1297, 546},
+              {1246, 533, manual = true},
+              {1308, 544, manual = true},
               {1318, 556},
-              {1252, 567},
+              {1232, 567, manual = true},
               {1234, 592},
               --- Warpstone Desert
               {1160, 551},
-              {1201, 559},
+              {1195, 558, manual = true},
               {1128, 576},
               {1152, 584},
               {1124, 607},
@@ -298,19 +298,19 @@ M.immortal_empires = {
               {1335, 585},
               {1331, 622},
               --- Imperial Road
-              {1291, 605},
+              {1296, 607, manual = true},
               {1268, 601},
-              {1223, 607},
+              {1229, 607, manual = true},
               {1291, 626},
               --- Lands of Stone and Steel
-              {1168, 603},
+              {1163, 604, manual = true},
               {1210, 626},
               {1177, 635},
               {1252, 639},
               {1196, 647},
               --- Gunpowder Road
-              {1143, 618},
-              {1137, 638},
+              {1143, 618, disabled = true},
+              {1135, 635, manual = true},
               {1161, 644},
          },
          ["mountainsofmourn"] = {
@@ -325,7 +325,7 @@ M.immortal_empires = {
               {1000, 532},
               --- Mountains of Mourn
               {1032, 546},
-              {1093, 569},
+              {1093, 569, disabled = true},
               {1012, 577},
               --- Bone Road
               {972, 588},
@@ -358,18 +358,18 @@ M.immortal_empires = {
               {1011, 425},
               {992, 444},
               {1033, 442},
-              {1091, 442},
+              {1084, 438, manual = true},
               --- Mouth of Ruin
               {941, 443},
               {903, 419},
               --- The Plain of Bones
-              {856, 436},
-              {906, 456},
+              {860, 437, manual = true},
+              {902, 449, manual = true},
               {852, 461},
               --- The Howling Wastes
               {955, 463},
-              {964, 490},
-              {959, 525},
+              {941, 495, manual = true},
+              {956, 536, manual = true},
               --- The Desolation of Azgorh
               {849, 483},
               {893, 489},
@@ -399,7 +399,7 @@ M.immortal_empires = {
               --- Southlands Worlds Edge Mountains
               {697, 235},
               {709, 258},
-              {739, 296},
+              {739, 296, disabled = true},
               --- Broken Teeth
               {830, 395},
               {872, 396},
@@ -407,11 +407,11 @@ M.immortal_empires = {
               {719, 450},
               {783, 461},
               --- Southern World's Edge Mountains
-              {793, 440},
+              {793, 440, disabled = true},
               {816, 443},
               {796, 459},
               --- The Silver Road
-              {793, 527},
+              {793, 527, disabled = true},
               {730, 540},
               {774, 545},
               --- Deadrock Gap
@@ -437,7 +437,7 @@ M.immortal_empires = {
               {711, 628},
               --- Northern Sylvania
               {686, 637},
-              {730, 658},
+              {727, 664, manual = true},
               --- Mootland
               {653, 616},
               --- Solland
@@ -453,7 +453,7 @@ M.immortal_empires = {
               {663, 646},
               --- Wissenland
               {575, 578},
-              {551, 595},
+              {551, 595, disabled = true},
               {560, 615},
               --- Ostermark
               {679, 651},
@@ -475,7 +475,7 @@ M.immortal_empires = {
               --- Middenland
               {539, 677},
               {565, 704},
-              {553, 720},
+              {551, 717, manual = true},
               --- Wasteland
               {439, 668},
               {476, 679},
@@ -484,7 +484,7 @@ M.immortal_empires = {
               {473, 721},
               --- Ostland
               {656, 736},
-              {610, 771},
+              {606, 765, manual = true},
               {654, 757},
               --- Nordland
               {562, 744},
@@ -498,12 +498,12 @@ M.immortal_empires = {
               --- Eastern Oblast
               {755, 768},
               {779, 775},
-              {748, 789},
+              {739, 785, manual = true},
               --- The Cursed City
               {710, 764},
               {729, 783},
               --- River Urskoy
-              {707, 750},
+              {707, 750, disabled = true},
               --- Southern Oblast
               {727, 721},
               {693, 728},
@@ -515,7 +515,7 @@ M.immortal_empires = {
               {679, 779},
               {685, 799},
               --- River Lynsk
-              {643, 783},
+              {643, 783, disabled = true},
               --- Western Oblast
               {618, 806},
               {655, 812},
@@ -527,26 +527,26 @@ M.immortal_empires = {
               {741, 820},
               --- Gianthome Mountains
               {738, 842},
-              {701, 859},
+              {704, 861, manual = true},
               --- Mountains of Hel
-              {609, 855},
-              {671, 848},
-              {658, 869},
+              {614, 859, manual = true},
+              {671, 848, disabled = true},
+              {659, 870, manual = true},
               {592, 879},
               --- Trollheim Mountains
               {586, 829},
               {572, 846},
               --- Mountains of Naglfari
               {508, 850},
-              {495, 820},
+              {495, 820, disabled = true},
               {547, 844},
               --- Helspire Mountains
-              {410, 837},
-              {524, 881},
+              {403, 835, manual = true},
+              {525, 875, manual = true},
               {570, 887},
               --- Ice Tooth Mountains
               {445, 764},
-              {549, 795},
+              {542, 796, manual = true},
               --- Vanaheim Mountains
               {386, 790},
               {466, 812},
@@ -556,7 +556,7 @@ M.immortal_empires = {
          ["borderprinces"] = {
               --- E. Border Princes
               {623, 502},
-              {653, 518},
+              {653, 518, disabled = true},
               {604, 519},
               {692, 534},
               --- W. Border Princes
@@ -568,10 +568,10 @@ M.immortal_empires = {
               --- Tilea
               {516, 397},
               {527, 417},
-              {507, 445},
+              {507, 445, disabled = true},
               {507, 470},
               --- Estalia
-              {428, 425},
+              {428, 425, disabled = true},
               {392, 438},
               --- Irrana Mountains
               {391, 459},
@@ -580,11 +580,11 @@ M.immortal_empires = {
          },
          ["greymountains"] = {
               --- Black Mountains
-              {608, 537},
+              {608, 537, disabled = true},
               {635, 544},
               --- The Vaults
-              {524, 478},
-              {578, 532},
+              {512, 477, manual = true},
+              {578, 532, disabled = true},
               --- Southern Grey Mountains
               {516, 584},
          },
@@ -593,13 +593,13 @@ M.immortal_empires = {
               {450, 549},
               {486, 564},
               --- Carcassone
-              {444, 488},
+              {444, 488, disabled = true},
               {440, 517},
-              {481, 530},
+              {481, 525, manual = true},
               {413, 547},
               --- Bastonne
-              {455, 584},
-              {425, 612},
+              {456, 590, manual = true},
+              {425, 612, disabled = true},
               {448, 612},
               --- River Brienne
               {415, 584},
@@ -619,32 +619,32 @@ M.immortal_empires = {
               {301, 529},
               {325, 549},
               --- Eataine
-              {264, 512},
+              {264, 512, disabled = true},
               {304, 522},
               {264, 544},
               --- Caledor
               {221, 509},
               --- Northern Yvresse
               {345, 574},
-              {324, 584},
+              {333, 586, manual = true},
               --- Saphery
               {292, 551},
               {294, 573},
               --- Averlorn
               {275, 591},
-              {254, 605},
+              {258, 599, manual = true},
               --- Ellyrion
               {203, 567},
-              {226, 592},
+              {220, 592, manual = true},
               --- Tiranoc
-              {190, 536},
+              {177, 550, manual = true},
               {178, 562},
               {177, 585},
               --- Cothique
               {318, 614},
               --- Chrace
-              {269, 635},
-              {291, 633},
+              {253, 645, manual = true},
+              {302, 632, manual = true},
               --- Nagarythe
               {186, 617},
               {215, 624},
@@ -653,20 +653,20 @@ M.immortal_empires = {
          ["naggarond"] = {
               --- Deadwood
               {260, 832},
-              {238, 846},
+              {246, 843, manual = true},
               {263, 858},
               --- The Road of Skulls
               {206, 836},
               {201, 860},
               {207, 883},
               --- Spiteful Peaks
-              {167, 815},
+              {169, 828, manual = true},
               {181, 827},
               {152, 832},
-              {137, 869},
+              {145, 878, manual = true},
               --- Iron Foothills
               {99, 834},
-              {83, 860},
+              {77, 856, manual = true},
               --- The Black Flood
               {147, 767},
               {91, 767},
@@ -679,13 +679,13 @@ M.immortal_empires = {
               {58, 825},
               --- Iron Coast
               {21, 769},
-              {20, 802},
+              {16, 804, manual = true},
               {17, 842},
               {34, 851},
               --- Doom Glades
               {102, 650},
               {130, 675},
-              {100, 682},
+              {90, 681, manual = true},
               --- The Bleak Coast
               {114, 565},
               {124, 588},
@@ -707,7 +707,7 @@ M.immortal_empires = {
               --- The Broken Lands
               {255, 766},
               {266, 782},
-              {265, 803},
+              {265, 803, disabled = true},
               --- Granite Hills
               {185, 758},
               {222, 763},
@@ -715,7 +715,7 @@ M.immortal_empires = {
               {228, 785},
               --- The Clawed Coast
               {215, 703},
-              {195, 707},
+              {195, 707, disabled = true},
               {172, 734},
               {213, 735},
               --- Obsidian Peaks
@@ -723,7 +723,7 @@ M.immortal_empires = {
               {46, 699},
               {74, 712},
               {159, 710},
-              {92, 729},
+              {88, 732, manual = true},
               {153, 734},
               {72, 747},
               --- Red Desert
@@ -735,13 +735,13 @@ M.immortal_empires = {
          },
          ["northernchaoswastes"] = {
               --- The Red Wastes
-              {1349, 658},
+              {1349, 658, disabled = true},
               {1267, 668},
-              {1305, 671},
-              {1168, 678},
+              {1302, 676, manual = true},
+              {1175, 686, manual = true},
               {1237, 684},
               --- Eastern Steppes
-              {1280, 701},
+              {1273, 703, manual = true},
               {1232, 702},
               {1189, 707},
               --- Stonesky Foothills
@@ -757,16 +757,16 @@ M.immortal_empires = {
               --- K'datha
               {959, 810},
               {980, 830},
-              {1014, 823},
+              {1014, 823, disabled = true},
               --- The Skull Road
               {852, 758},
-              {883, 775},
+              {874, 773, manual = true},
               {839, 800},
               {868, 808},
               {798, 820},
               --- The Blood Marshes
               {938, 829},
-              {872, 838},
+              {866, 834, manual = true},
               {925, 850},
               {827, 856},
               {904, 871},
@@ -774,32 +774,32 @@ M.immortal_empires = {
               {775, 857},
               {806, 868},
               {838, 893},
-              {807, 902},
+              {804, 900, manual = true},
               --- Plain of Illusions
-              {738, 898},
+              {728, 906, manual = true},
               {734, 920},
-              {765, 923},
-              {677, 943},
-              {722, 937},
+              {770, 924, manual = true},
+              {676, 937, manual = true},
+              {705, 927, manual = true},
               --- The N. Tumour
               {695, 913},
               {630, 921},
               {605, 937},
-              {645, 940},
+              {640, 916, manual = true},
               --- The Eternal Lagoon
-              {514, 927},
+              {528, 924, manual = true},
               {591, 931},
               {521, 953},
               --- The Cold Mires
-              {458, 903},
-              {400, 899},
+              {458, 899, manual = true},
+              {400, 899, disabled = true},
               {467, 925},
-              {495, 951},
+              {487, 951, manual = true},
               --- Northern Wastes
-              {423, 911},
+              {411, 913, manual = true},
               {406, 926},
               {364, 924},
-              {452, 943},
+              {456, 936, manual = true},
               --- The Shard Lands
               {331, 856},
               {380, 882},
@@ -810,253 +810,321 @@ M.immortal_empires = {
               {250, 896},
               {160, 896},
               {206, 901},
-              {287, 903},
+              {284, 909, manual = true},
               --- Ironfrost Glacier
-              {70, 892},
+              {69, 888, manual = true},
               {139, 891},
-              {43, 892},
+              {39, 897, manual = true},
               {99, 896},
          },
     },
     points_of_interest = {
         ["southernchaoswastes"] = {
             ["smithies"] = {
-                { coordinates = {332, 28}, initial_owner = "wh3_main_tze_oracles_of_tzeentch", owner_if_player = "wh3_main_nur_bubonic_swarm", region = "" },
-                { coordinates = {553, 36}, initial_owner = "wh2_dlc17_lzd_oxyotl", owner_if_player = "wh3_main_tze_flaming_scribes", region = "" }
+                { coordinates = {334, 26}, initial_owner = "wh3_main_tze_oracles_of_tzeentch", owner_if_player = "wh3_main_nur_bubonic_swarm", region = "", manual = true },
+                { coordinates = {562, 38}, initial_owner = "wh2_dlc17_lzd_oxyotl", owner_if_player = "wh3_main_tze_flaming_scribes", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {352, 41}, initial_owner = "wh3_main_tze_flaming_scribes", owner_if_player = "wh3_main_tze_flaming_scribes", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["southlands"] = {
             ["smithies"] = {
-                { coordinates = {647, 98}, initial_owner = "wh2_main_hef_order_of_loremasters", owner_if_player = "wh3_main_tze_oracles_of_tzeentch", region = "" },
-                { coordinates = {553, 217}, initial_owner = "wh2_main_lzd_tlaqua", owner_if_player = "wh3_main_emp_cult_of_sigmar", region = "" }
+                { coordinates = {648, 92}, initial_owner = "wh2_main_hef_order_of_loremasters", owner_if_player = "wh3_main_tze_oracles_of_tzeentch", region = "", manual = true },
+                { coordinates = {552, 213}, initial_owner = "wh2_main_lzd_tlaqua", owner_if_player = "wh3_main_emp_cult_of_sigmar", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {637, 120}, culture = "lzd", initial_owner = "wh2_main_lzd_zlatan", owner_if_player = "wh2_main_lzd_zlatan", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["nehekara"] = {
             ["smithies"] = {
-                { coordinates = {634, 259}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh_main_vmp_vampire_counts", region = "" },
-                { coordinates = {469, 325}, initial_owner = "wh2_dlc09_tmb_followers_of_nagash", owner_if_player = "wh2_main_brt_thegans_crusaders", region = "" },
-                { coordinates = {793, 265}, initial_owner = "wh2_dlc09_tmb_lybaras", owner_if_player = "wh2_main_vmp_the_silver_host", region = "" }
+                { coordinates = {638, 263}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh_main_vmp_vampire_counts", region = "", manual = true },
+                { coordinates = {467, 331}, initial_owner = "wh2_dlc09_tmb_followers_of_nagash", owner_if_player = "wh2_main_brt_thegans_crusaders", region = "", manual = true },
+                { coordinates = {789, 268}, initial_owner = "wh2_dlc09_tmb_lybaras", owner_if_player = "wh2_main_vmp_the_silver_host", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {630, 288}, culture = "tmb", initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh2_dlc09_tmb_khemri", manual = true },
+                { coordinates = {440, 304}, initial_owner = "wh2_main_brt_knights_of_the_flame", owner_if_player = "wh2_main_brt_knights_of_the_flame", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["badlands"] = {
             ["smithies"] = {
-                { coordinates = {602, 316}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh3_main_kho_exiles_of_khorne", region = "" },
-                { coordinates = {620, 421}, initial_owner = "wh_main_grn_orcs_of_the_bloody_hand", owner_if_player = "wh3_main_ogr_disciples_of_the_maw", region = "" },
-                { coordinates = {800, 363}, initial_owner = "wh2_main_skv_clan_mors", owner_if_player = "wh2_dlc09_tmb_lybaras", region = "" },
-                { coordinates = {710, 533}, initial_owner = "wh_main_dwf_dwarfs", owner_if_player = "wh_main_teb_border_princes", region = "" },
+                { coordinates = {606, 321}, initial_owner = "wh2_dlc09_tmb_khemri", owner_if_player = "wh3_main_kho_exiles_of_khorne", region = "", manual = true },
+                { coordinates = {629, 417}, initial_owner = "wh_main_grn_orcs_of_the_bloody_hand", owner_if_player = "wh3_main_ogr_disciples_of_the_maw", region = "", manual = true },
+                { coordinates = {809, 364}, initial_owner = "wh2_main_skv_clan_mors", owner_if_player = "wh2_dlc09_tmb_lybaras", region = "", manual = true },
+                { coordinates = {717, 521}, initial_owner = "wh_main_dwf_dwarfs", owner_if_player = "wh_main_teb_border_princes", region = "", manual = true },
                 { coordinates = {691, 390}, initial_owner = "wh3_main_ie_vmp_sires_of_mourkain", owner_if_player = "wh3_main_ie_vmp_sires_of_mourkain", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {650, 496}, initial_owner = "wh_main_grn_scabby_eye", owner_if_player = "wh_main_grn_scabby_eye", manual = true },
+                { coordinates = {765, 474}, culture = "grn", initial_owner = "wh3_dlc26_grn_gorbad_ironclaw", owner_if_player = "wh3_dlc26_grn_gorbad_ironclaw", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["lustria"] = {
             ["smithies"] = {
-                { coordinates = {82, 438}, initial_owner = "wh2_main_lzd_hexoatl", owner_if_player = "wh2_dlc13_emp_the_huntmarshals_expedition", region = "" },
-                { coordinates = {72, 313}, initial_owner = "wh2_dlc13_emp_the_huntmarshals_expedition", owner_if_player = "wh2_main_def_blood_hall_coven", region = "" },
-                { coordinates = {237, 298}, initial_owner = "wh2_dlc11_cst_vampire_coast", owner_if_player = "wh_main_brt_bordeleaux", region = "" },
-                { coordinates = {220, 235}, initial_owner = "wh2_main_lzd_itza", owner_if_player = "wh2_dlc11_cst_vampire_coast", region = "" },
-                { coordinates = {197, 140}, initial_owner = "wh2_main_skv_clan_pestilens", owner_if_player = "wh2_dlc12_lzd_cult_of_sotek", region = "" }
+                { coordinates = {87, 438}, initial_owner = "wh2_main_lzd_hexoatl", owner_if_player = "wh2_dlc13_emp_the_huntmarshals_expedition", region = "", manual = true },
+                { coordinates = {77, 317}, initial_owner = "wh2_dlc13_emp_the_huntmarshals_expedition", owner_if_player = "wh2_main_def_blood_hall_coven", region = "", manual = true },
+                { coordinates = {248, 300}, initial_owner = "wh2_dlc11_cst_vampire_coast", owner_if_player = "wh_main_brt_bordeleaux", region = "", manual = true },
+                { coordinates = {220, 230}, initial_owner = "wh2_main_lzd_itza", owner_if_player = "wh2_dlc11_cst_vampire_coast", region = "", manual = true },
+                { coordinates = {205, 155}, initial_owner = "wh2_main_skv_clan_pestilens", owner_if_player = "wh2_dlc12_lzd_cult_of_sotek", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {87, 480}, initial_owner = "wh2_main_emp_new_world_colonies", owner_if_player = "wh2_main_emp_new_world_colonies", manual = true },
+                { coordinates = {184, 243}, culture = "lzd", initial_owner = "wh2_main_lzd_itza", owner_if_player = "wh2_main_lzd_itza", manual = true },
+                { coordinates = {245, 150}, initial_owner = "wh2_main_lzd_southern_sentinels", owner_if_player = "wh2_main_lzd_southern_sentinels", manual = true },
+                { coordinates = {126, 341}, initial_owner = "wh2_main_lzd_tlaxtlan", owner_if_player = "wh2_main_lzd_tlaxtlan", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["cathay"] = {
             ["smithies"] = {
                 {
-                    coordinates = {1211, 647},
+                    coordinates = {1214, 644},
+                    manual = true,
                     initial_owner = "wh3_main_cth_the_northern_provinces",
                     owner_if_player = "wh3_dlc20_chs_vilitch",
                     region = ""
                 },
                 {
-                    coordinates = {1348, 607},
+                    coordinates = {1337, 608},
+                    manual = true,
                     initial_owner = "wh2_dlc11_def_the_blessed_dread",
                     owner_if_player = "wh3_main_cth_celestial_loyalists",
                     region = ""
                 },
                 {
-                    coordinates = {1308, 369},
+                    coordinates = {1310, 364},
+                    manual = true,
                     initial_owner = "wh2_dlc13_lzd_spirits_of_the_jungle",
                     owner_if_player = "wh3_dlc21_wef_spirits_of_shanlin",
                     region = ""
                 }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {1113, 485}, initial_owner = "wh3_main_cth_dissenter_lords_of_jinshen", owner_if_player = "wh3_main_cth_dissenter_lords_of_jinshen", manual = true },
+                { coordinates = {1143, 618}, culture = "cth", initial_owner = "wh3_main_cth_rebel_lords_of_nan_yang", owner_if_player = "wh3_main_cth_rebel_lords_of_nan_yang", manual = true },
+                { coordinates = {1338, 576}, initial_owner = "wh3_dlc21_cst_dead_flag_fleet", owner_if_player = "wh3_dlc21_cst_dead_flag_fleet", manual = true },
+                { coordinates = {1234, 393}, initial_owner = "wh3_main_cth_burning_wind_nomads", owner_if_player = "wh3_main_cth_burning_wind_nomads", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["mountainsofmourn"] = {
             ["smithies"] = {
-                { coordinates = {1103, 567}, initial_owner = "wh3_main_cth_the_northern_provinces", owner_if_player = "wh3_main_cth_dissenter_lords_of_jinshen", region = "" }
+                { coordinates = {1093, 565}, initial_owner = "wh3_main_cth_the_northern_provinces", owner_if_player = "wh3_main_cth_dissenter_lords_of_jinshen", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {1016, 603}, initial_owner = "wh3_main_ogr_blood_guzzlers", owner_if_player = "wh3_main_ogr_blood_guzzlers", manual = true },
+                { coordinates = {1014, 501}, initial_owner = "wh3_main_ogr_goldtooth", owner_if_player = "wh3_main_ogr_goldtooth", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["darklands"] = {
             ["smithies"] = {
-                { coordinates = {892, 651}, initial_owner = "wh3_main_vmp_lahmian_sisterhood", owner_if_player = "wh3_main_vmp_lahmian_sisterhood", region = "" },
-                { coordinates = {934, 551}, initial_owner = "wh2_dlc09_skv_clan_rictus", owner_if_player = "wh3_main_grn_dark_land_orcs", region = "" },
+                { coordinates = {899, 649}, initial_owner = "wh3_main_vmp_lahmian_sisterhood", owner_if_player = "wh3_main_vmp_lahmian_sisterhood", region = "", manual = true },
+                { coordinates = {935, 558}, initial_owner = "wh2_dlc09_skv_clan_rictus", owner_if_player = "wh3_main_grn_dark_land_orcs", region = "", manual = true },
                 { coordinates = {1012, 461}, initial_owner = "wh3_main_ogr_goldtooth", owner_if_player = "wh3_main_ogr_lazarghs", region = "" },
-                { coordinates = {873, 430}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh3_main_ogr_thunderguts", region = "" },
-                { coordinates = {1105, 453}, initial_owner = "wh3_main_vmp_caravan_of_blue_roses", owner_if_player = "wh3_main_cth_the_western_provinces", region = "" }
+                { coordinates = {875, 435}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh3_main_ogr_thunderguts", region = "", manual = true },
+                { coordinates = {1113, 450}, initial_owner = "wh3_main_vmp_caravan_of_blue_roses", owner_if_player = "wh3_main_cth_the_western_provinces", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {931, 477}, initial_owner = "wh3_dlc23_chd_legion_of_azgorh", owner_if_player = "wh3_dlc23_chd_legion_of_azgorh", manual = true },
+                { coordinates = {866, 612}, initial_owner = "wh3_main_grn_drippin_fangs", owner_if_player = "wh3_main_grn_drippin_fangs", manual = true },
+            },
 
             ["resources"] = {}
 
          },
          ["worldsedgemountains"] = {
             ["smithies"] = {
-                { coordinates = {832, 554}, initial_owner = "wh3_dlc23_chd_legion_of_azgorh", owner_if_player = "wh_main_dwf_karak_azul", region = "" },
-                { coordinates = {837, 449}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh_main_dwf_karak_azul", region = "" },
-                { coordinates = {727, 460}, initial_owner = "wh_main_grn_crooked_moon", owner_if_player = "wh_main_grn_scabby_eye", region = "" }
+                { coordinates = {844, 555}, initial_owner = "wh3_dlc23_chd_legion_of_azgorh", owner_if_player = "wh_main_dwf_karak_azul", region = "", manual = true },
+                { coordinates = {836, 443}, initial_owner = "wh2_dlc15_hef_imrik", owner_if_player = "wh_main_dwf_karak_azul", region = "", manual = true },
+                { coordinates = {723, 459}, initial_owner = "wh_main_grn_crooked_moon", owner_if_player = "wh_main_grn_scabby_eye", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {793, 440}, culture = "dwf", initial_owner = "wh_main_dwf_karak_azul", owner_if_player = "wh_main_dwf_karak_azul", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["empire"] = {
             ["smithies"] = {
-                { coordinates = {540, 765}, initial_owner = "wh_dlc03_bst_beastmen", owner_if_player = "wh_main_emp_nordland", region = "" },
-                { coordinates = {585, 715}, initial_owner = "wh3_dlc20_chs_festus", owner_if_player = "wh_main_emp_empire", region = "" },
-                { coordinates = {658, 627}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_stirland", region = "" },
-                { coordinates = {710, 658}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_ostland", region = "" }
+                { coordinates = {545, 768}, initial_owner = "wh_dlc03_bst_beastmen", owner_if_player = "wh_main_emp_nordland", region = "", manual = true },
+                { coordinates = {589, 718}, initial_owner = "wh3_dlc20_chs_festus", owner_if_player = "wh_main_emp_empire", region = "", manual = true },
+                { coordinates = {657, 622}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_stirland", region = "", manual = true },
+                { coordinates = {709, 661}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_emp_ostland", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {558, 592}, culture = "emp", initial_owner = "wh_main_emp_wissenland", owner_if_player = "wh_main_emp_wissenland", manual = true },
+                { coordinates = {615, 657}, initial_owner = "wh_main_emp_talabecland", owner_if_player = "wh_main_emp_talabecland", manual = true },
+                { coordinates = {536, 661}, initial_owner = "wh_main_emp_empire", owner_if_player = "wh_main_emp_empire", manual = true },
+            },
 
             ["resources"] = {}
 
          },
          ["kislev"] = {
             ["smithies"] = {
-                { coordinates = {726, 695}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "" },
-                { coordinates = {611, 797}, initial_owner = "wh3_main_ksl_the_great_orthodoxy", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "" }
+                { coordinates = {723, 697}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "", manual = true },
+                { coordinates = {612, 798}, initial_owner = "wh3_main_ksl_the_great_orthodoxy", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {643, 783}, initial_owner = "wh3_main_ksl_ungol_kindred", owner_if_player = "wh3_main_ksl_ungol_kindred", manual = true },
+                { coordinates = {707, 750}, culture = "ksl", initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh3_main_ksl_the_ice_court", manual = true },
+            },
 
             ["resources"] = {}
 
          },
          ["norsca"] = {
             ["smithies"] = {
-                { coordinates = {678, 825}, initial_owner = "wh2_main_skv_clan_moulder", owner_if_player = "wh_main_dwf_kraka_drak", region = "" },
-                { coordinates = {808, 773}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "" },
-                { coordinates = {433, 859}, initial_owner = "wh_dlc08_nor_norsca", owner_if_player = "wh_main_nor_varg", region = "" }
+                { coordinates = {677, 817}, initial_owner = "wh2_main_skv_clan_moulder", owner_if_player = "wh_main_dwf_kraka_drak", region = "", manual = true },
+                { coordinates = {812, 776}, initial_owner = "wh3_main_ksl_the_ice_court", owner_if_player = "wh_dlc08_nor_goromadny_tribe", region = "", manual = true },
+                { coordinates = {433, 855}, initial_owner = "wh_dlc08_nor_norsca", owner_if_player = "wh_main_nor_varg", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {495, 820}, culture = "nor", initial_owner = "wh_main_nor_skaeling", owner_if_player = "wh_main_nor_skaeling", manual = true },
+            },
 
             ["resources"] = {}
 
          },
          ["borderprinces"] = {
             ["smithies"] = {
-                { coordinates = {435, 439}, initial_owner = "wh2_main_skv_clan_skryre", owner_if_player = "wh_main_teb_estalia", region = "" },
-                { coordinates = {675, 549}, initial_owner = "wh_main_teb_border_princes", owner_if_player = "wh_main_teb_border_princes", region = "" }
+                { coordinates = {427, 441}, initial_owner = "wh2_main_skv_clan_skryre", owner_if_player = "wh_main_teb_estalia", region = "", manual = true },
+                { coordinates = {664, 537}, initial_owner = "wh_main_teb_border_princes", owner_if_player = "wh_main_teb_border_princes", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {653, 518}, initial_owner = "wh_main_dwf_barak_varr", owner_if_player = "wh_main_dwf_barak_varr", manual = true },
+                { coordinates = {507, 445}, culture = "emp", initial_owner = "wh_main_teb_tilea", owner_if_player = "wh_main_teb_tilea", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["greymountains"] = {
             ["smithies"] = {},
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {608, 537}, culture = "dwf", initial_owner = "wh_main_dwf_karak_hirn", owner_if_player = "wh_main_dwf_karak_hirn", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["bretonnia"] = {
             ["smithies"] = {
-                { coordinates = {491, 511}, initial_owner = "wh_dlc05_wef_wood_elves", owner_if_player = "wh_main_brt_carcassonne", region = "" },
+                { coordinates = {484, 502}, initial_owner = "wh_dlc05_wef_wood_elves", owner_if_player = "wh_main_brt_carcassonne", region = "", manual = true },
                 { coordinates = {459, 599}, initial_owner = "wh2_dlc15_grn_broken_axe", owner_if_player = "wh2_dlc11_vmp_the_barrow_legion", region = "" },
                 { coordinates = {426, 674}, initial_owner = "wh_main_brt_bretonnia", owner_if_player = "wh_main_emp_marienburg", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {425, 612}, culture = "brt", initial_owner = "wh_main_brt_bastonne", owner_if_player = "wh_main_brt_bastonne", manual = true },
+                { coordinates = {444, 488}, initial_owner = "wh_main_brt_carcassonne", owner_if_player = "wh_main_brt_carcassonne", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["ulthuan"] = {
             ["smithies"] = {
-                { coordinates = {216, 630}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_def_scourge_of_khaine", region = "" },
-                { coordinates = {326, 593}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_hef_yvresse", region = "" }
+                { coordinates = {214, 635}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_def_scourge_of_khaine", region = "", manual = true },
+                { coordinates = {331, 595}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh2_main_hef_yvresse", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {276, 591}, initial_owner = "wh2_main_hef_saphery", owner_if_player = "wh2_main_hef_saphery", manual = true },
+                { coordinates = {264, 512}, culture = "hef", initial_owner = "wh2_main_hef_eataine", owner_if_player = "wh2_main_hef_eataine", manual = true },
+                { coordinates = {279, 644}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh3_main_sla_seducers_of_slaanesh", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["naggarond"] = {
             ["smithies"] = {
-                { coordinates = {89, 873}, initial_owner = "wh2_main_def_naggarond", owner_if_player = "wh3_dlc20_chs_valkia", region = "" },
-                { coordinates = {296, 866}, initial_owner = "wh2_main_def_har_ganeth", owner_if_player = "wh3_main_grn_da_cage_breakaz", region = "" },
-                { coordinates = {206, 744}, initial_owner = "wh2_dlc11_cst_the_drowned", owner_if_player = "wh2_main_hef_nagarythe", region = "" },
-                { coordinates = {62, 519}, initial_owner = "wh2_main_def_cult_of_pleasure", owner_if_player = "wh2_main_def_ssildra_tor", region = "" }
+                { coordinates = {98, 877}, initial_owner = "wh2_main_def_naggarond", owner_if_player = "wh3_dlc20_chs_valkia", region = "", manual = true },
+                { coordinates = {293, 859}, initial_owner = "wh2_main_def_har_ganeth", owner_if_player = "wh3_main_grn_da_cage_breakaz", region = "", manual = true },
+                { coordinates = {212, 743}, initial_owner = "wh2_dlc11_cst_the_drowned", owner_if_player = "wh2_main_hef_nagarythe", region = "", manual = true },
+                { coordinates = {72, 526}, initial_owner = "wh2_main_def_cult_of_pleasure", owner_if_player = "wh2_main_def_ssildra_tor", region = "", manual = true }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {265, 803}, culture = "def", initial_owner = "wh2_main_def_karond_kar", owner_if_player = "wh2_main_def_karond_kar", manual = true },
+                { coordinates = {195, 707}, initial_owner = "wh2_dlc11_cst_the_drowned", owner_if_player = "wh2_dlc11_cst_the_drowned", manual = true },
+                { coordinates = {26, 626}, initial_owner = "wh2_dlc16_skv_clan_gritus", owner_if_player = "wh2_dlc16_skv_clan_gritus", manual = true },
+                { coordinates = {127, 609}, initial_owner = "wh2_main_def_bleak_holds", owner_if_player = "wh2_main_def_bleak_holds", manual = true },
+                { coordinates = {114, 795}, initial_owner = "wh2_main_def_naggarond", owner_if_player = "wh2_main_def_naggarond", manual = true },
+            },
 
             ["resources"] = {}
          },
          ["northernchaoswastes"] = {
             ["smithies"] = {
                 {
-                    coordinates = {554, 935},
+                    coordinates = {558, 939},
+                    manual = true,
                     initial_owner = "wh2_main_def_hag_graef",
                     owner_if_player = "wh3_main_tze_broken_wheel",
                     region = ""
                 },
                 {
-                    coordinates = {837, 882},
+                    coordinates = {842, 878},
+                    manual = true,
                     initial_owner = "wh3_main_ksl_ursun_revivalists",
                     owner_if_player = "wh_main_chs_chaos",
                     region = ""
                 },
                 {
-                    coordinates = {843, 751},
+                    coordinates = {847, 758},
+                    manual = true,
                     initial_owner = "wh_main_grn_greenskins",
                     owner_if_player = "wh3_main_grn_slaves_of_zharr",
                     region = ""
                 },
                 {
-                    coordinates = {1097, 704},
+                    coordinates = {1089, 710},
+                    manual = true,
                     initial_owner = "wh3_dlc20_chs_kholek",
                     owner_if_player = "wh3_main_ogr_fleshgreeders",
                     region = ""
                 },
                 {
-                    coordinates = {1221, 692},
+                    coordinates = {1216, 695},
+                    manual = true,
                     initial_owner = "wh3_dlc20_chs_vilitch",
                     owner_if_player = "wh3_main_cth_imperial_wardens",
                     region = ""
                 }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {400, 899}, initial_owner = "wh3_main_sla_subtle_torture", owner_if_player = "wh3_main_sla_subtle_torture", manual = true },
+                { coordinates = {703, 910}, initial_owner = "wh3_main_tze_all_seeing_eye", owner_if_player = "wh3_main_tze_all_seeing_eye", manual = true },
+                { coordinates = {1020, 741}, initial_owner = "wh3_main_ogr_fleshgreeders", owner_if_player = "wh3_main_ogr_fleshgreeders", manual = true },
+                { coordinates = {1171, 709}, initial_owner = "wh3_main_chs_khazag", owner_if_player = "wh3_main_chs_khazag", manual = true },
+            },
 
             ["resources"] = {}
          }
@@ -1093,14 +1161,14 @@ M.realm_of_chaos = {
               {319, 169},
               {280, 180},
               --- River Lynsk: Erengrad
-              {238, 145},
+              {238, 145, disabled = true},
               {282, 137},
               --- Black Blood Pass
               {367, 218},
               --- The Cursed City: Praag
               {435, 196},
               --- River Urskoy: Kislev
-              {439, 135},
+              {439, 135, disabled = true},
               --- Eastern Oblast
               {518, 135},
               {463, 175},
@@ -1108,6 +1176,14 @@ M.realm_of_chaos = {
               {489, 198},
               {514, 178},
               {557, 221},
+              --- The Cursed City: Praag
+              {407, 164, manual = true},
+              --- Black Blood Pass
+              {372, 187, manual = true},
+              --- Eastern Oblast
+              {472, 180, manual = true},
+              --- Dukhlys Forest
+              {509, 214, manual = true},
          },
          ["darklands"] = {
               --- Zorn Uzkul
@@ -1128,17 +1204,27 @@ M.realm_of_chaos = {
               {823, 32},
               {881, 36},
               --- The Howling Wastes
-              {873, 161},
+              {873, 161, disabled = true},
               {866, 218},
               {933, 166},
               {941, 188},
               --- The Haunted Forest
               {956, 115},
               {1024, 162},
+              --- Zorn Uzkul
+              {744, 201, manual = true},
+              --- The Blasted Wastes
+              {753, 66, manual = true},
+              {770, 32, manual = true},
+              --- The Haunted Forest
+              {932, 69, manual = true},
+              --- The Howling Wastes
+              {918, 130, manual = true},
+              {902, 196, manual = true},
          },
          ["worldsedgemountains"] = {
               --- The High Pass
-              {692, 224},
+              {692, 224, disabled = true},
               {603, 228},
               --- Worlds Edge Mountains
               {590, 133},
@@ -1146,12 +1232,13 @@ M.realm_of_chaos = {
               {641, 107},
               {595, 78},
               --- Black Water
+              {654, 155, manual = true},
          },
          ["empire"] = {
               --- The Witch's Wood
               {98, 182},
               --- Wasteland
-              {86, 126},
+              {86, 126, disabled = true},
               {60, 140},
               {69, 97},
               {93, 77},
@@ -1181,7 +1268,7 @@ M.realm_of_chaos = {
               {346, 55},
               --- Ostland
               {327, 137},
-              {309, 113},
+              {309, 113, disabled = true},
               {360, 107},
               {337, 88},
               --- Ostermark
@@ -1197,6 +1284,17 @@ M.realm_of_chaos = {
               {457, 18},
               {499, 23},
               {517, 61},
+              --- Ostland
+              {383, 97, manual = true},
+              --- Ostermark
+              {429, 89, manual = true},
+              {483, 113, manual = true},
+              --- The Witch's Wood
+              {123, 219, manual = true},
+              {66, 177, manual = true},
+              {46, 209, manual = true},
+              --- Hochland
+              {289, 23, manual = true},
          },
          ["norsca"] = {
               --- Vanaheim Mountains
@@ -1232,14 +1330,14 @@ M.realm_of_chaos = {
               {800, 304},
               {820, 338},
               --- Mountains of Mourn
-              {879, 338},
+              {879, 338, disabled = true},
               --- Mist Gorge
               {945, 326},
               --- Wyrm Pass
               {1010, 330},
               {988, 281},
               --- Bone Road
-              {863, 465},
+              {863, 465, disabled = true},
               --- Ivory Road
               --- Ice Pass
               --- Ancient Giant Lands
@@ -1275,6 +1373,15 @@ M.realm_of_chaos = {
               {1040, 456},
               --- Broken Lands of Tian Li
               {1059, 417},
+              --- Warpstone Desert
+              {930, 400, manual = true},
+              --- Broken Lands of Tian Li
+              {1021, 395, manual = true},
+              --- Wasteland of Jinshen
+              {1042, 512, manual = true},
+              --- Land of Stone and Steel
+              {934, 615, manual = true},
+              {974, 612, manual = true},
          },
          ["chaoswastes"] = {
               --- The Shard Lands
@@ -1294,7 +1401,7 @@ M.realm_of_chaos = {
               {329, 471},
               --- Bloodfire Falls
               {274, 442},
-              {303, 440},
+              {303, 440, disabled = true},
               {338, 442},
               {273, 398},
               --- The Cold Mires
@@ -1341,10 +1448,18 @@ M.realm_of_chaos = {
               {851, 517},
               {850, 572},
               --- The Red Wastes
-              {888, 589},
+              {888, 589, disabled = true},
               {862, 612},
               {895, 618},
               {894, 646},
+              --- Road to Damnation
+              {806, 499, manual = true},
+              --- Road of Skulls
+              {672, 422, manual = true},
+              --- The Eternal Lagoon
+              {364, 481, manual = true},
+              --- The Shard Lands
+              {171, 595, manual = true},
          },
     },
     points_of_interest = {
@@ -1354,7 +1469,10 @@ M.realm_of_chaos = {
                 { coordinates = {229, 203}, initial_owner = "wh3_main_ksl_the_great_orthodoxy", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "wh3_main_chaos_region_castle_alexandronov" } --wh_main_nor_varg
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {238, 145}, manual = true },
+                { coordinates = {439, 135}, culture = "ksl", manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1366,7 +1484,10 @@ M.realm_of_chaos = {
                 { coordinates = {832, 148}, initial_owner = "wh2_dlc09_skv_clan_rictus", owner_if_player = "wh3_main_lzd_tepoks_spawn", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {740, 135}, manual = true },
+                { coordinates = {873, 161}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1376,7 +1497,9 @@ M.realm_of_chaos = {
                 { coordinates = {663, 178}, initial_owner = "wh2_dlc16_vmp_lahmian_sisterhood", owner_if_player = "wh2_dlc16_vmp_lahmian_sisterhood", region = "" },
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {692, 224}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1387,7 +1510,10 @@ M.realm_of_chaos = {
                 { coordinates = {485, 54}, initial_owner = "wh_main_vmp_waldenhof", owner_if_player = "wh_main_vmp_waldenhof", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {86, 126}, manual = true },
+                { coordinates = {309, 113}, culture = "emp", manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1397,7 +1523,9 @@ M.realm_of_chaos = {
                 { coordinates = {168, 275}, initial_owner = "wh2_dlc13_wef_laurelorn_forest", owner_if_player = "wh2_dlc13_wef_laurelorn_forest", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {425, 284}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1407,7 +1535,10 @@ M.realm_of_chaos = {
                 { coordinates = {873, 235}, initial_owner = "wh3_main_dwf_karak_azorn", owner_if_player = "wh3_main_dwf_karak_azorn", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {879, 338}, culture = "ogr", manual = true },
+                { coordinates = {863, 465}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1418,7 +1549,10 @@ M.realm_of_chaos = {
                 { coordinates = {913, 621}, initial_owner = "wh3_main_chs_dreaded_wo", owner_if_player = "wh3_main_chs_dreaded_wo", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {1016, 486}, manual = true },
+                { coordinates = {1018, 595}, manual = true },
+            },
 
             ["resources"] = {}
         },
@@ -1431,7 +1565,14 @@ M.realm_of_chaos = {
                 { coordinates = {781, 431}, initial_owner = "wh3_main_ogr_mountaineaters", owner_if_player = "wh3_main_ogr_mountaineaters", region = "" }
             },
 
-            ["taverns"] = {},
+            ["taverns"] = {
+                { coordinates = {303, 440}, manual = true },
+                { coordinates = {209, 573}, manual = true },
+                { coordinates = {447, 377}, manual = true },
+                { coordinates = {653, 458}, manual = true },
+                { coordinates = {888, 589}, culture = "chs", manual = true },
+                { coordinates = {608, 356}, manual = true },
+            },
 
             ["resources"] = {}
         }
@@ -1555,6 +1696,1969 @@ M.immortal_empires_expanded = {
             ["taverns"] = {},
             ["resources"] = {}
          },
+    },
+}
+
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- old_world
+
+--- Draft spots for The Old World campaign (!cr_oldworld_campaign). LEAPOI does not load this campaign yet.
+M.old_world = {
+    treasures_and_spots = {
+         ["norsca"] = {
+              --- Lakeland
+              {101, 1395},
+              {151, 1407},
+              --- Plain of Battles
+              {187, 1401},
+              {167, 1372},
+              --- Neuland
+              {164, 1329},
+              {221, 1332},
+              {175, 1297},
+              --- The Lost Road
+              {120, 1314},
+              {102, 1296},
+              --- Whale Coast
+              {74, 1328},
+              --- Muddy Point
+              {89, 1296},
+              {60, 1285},
+              {37, 1264},
+              --- Drifting Castle
+              {142, 1474, manual = true, disabled = true},
+              --- Hell Pit Upper
+              {1238, 1454, manual = true, disabled = true},
+              --- Sherweald Forest
+              {124, 1344, manual = true, disabled = true},
+              --- Northern Worlds Edge
+              {1414, 1352, manual = true, disabled = true},
+              --- Goromadny Mountains
+              {1278, 1476, manual = true},
+              --- Mountains Of Thjazi
+              {466, 1512, manual = true, disabled = true},
+              --- Mountains Of Hel
+              {1052, 1590, manual = true, disabled = true},
+              --- High Pass
+              {1380, 1426, manual = true},
+              --- Ulfwrenar Mountains
+              {716, 1562, manual = true, disabled = true},
+              --- Helspire Mounts East
+              {644, 1578, manual = true, disabled = true},
+              --- West Gianthome Mountains
+              {1128, 1576, manual = true, disabled = true},
+              --- Belyerovota
+              {1486, 1400, manual = true},
+              --- Helspire Mounts West
+              {548, 1590, manual = true, disabled = true},
+              --- Forest Of Sighs
+              {502, 1556, manual = true, disabled = true},
+              --- Gianthome Mountains
+              {1204, 1528, manual = true},
+              --- Frozen Coast
+              {1288, 1532, manual = true},
+              --- Ice Tooth Mountains
+              {582, 1492, manual = true, disabled = true},
+              --- Norsveg Plain
+              {604, 1644, manual = true},
+              --- The Lost Valley
+              {218, 1372, manual = true},
+              --- Eagles Peak
+              {890, 1720, manual = true, disabled = true},
+              --- Black Blood Pass
+              {1070, 1514, manual = true, disabled = true},
+              --- Vanaheim Mountains
+              {380, 1486, manual = true},
+              --- Naglfari Mountains East
+              {752, 1664, manual = true, disabled = true},
+              --- Naglfari Mountains West
+              {718, 1616, manual = true, disabled = true},
+              --- Gloomwrack Coast
+              {320, 1554, manual = true},
+              --- Ejsgard
+              {986, 1682, manual = true},
+              --- Whale Coast
+              {70, 1364, manual = true},
+              --- Forest Of Knives
+              {826, 1596, manual = true, disabled = true},
+              --- Taldursfjord
+              {1174, 1658, manual = true},
+              --- North Cape
+              {934, 1744, manual = true},
+              --- North Norse Coast
+              {402, 1592, manual = true},
+              --- Eldagrimm Gulf
+              {460, 1438, manual = true},
+              --- Fjord Coast
+              {672, 1676, manual = true},
+              --- Kraken Coast
+              {1070, 1668, manual = true},
+              --- Skull Steppes
+              {1482, 1320, manual = true},
+              --- Helspire Coast
+              {481, 1645, manual = true, disabled = true},
+              --- Naglfari Coast
+              {836, 1686, manual = true},
+              --- Claw Coast
+              {538, 1434, manual = true},
+              --- Giants Coast
+              {1232, 1600, manual = true},
+              --- Cape Of Norsca
+              {306, 1467, manual = true},
+              --- Goromadny Mountains
+              {1350, 1460, manual = true, disabled = true},
+              --- Mountains Of Thjazi
+              {520, 1526, manual = true, disabled = true},
+              --- Mountains Of Hel
+              {1022, 1632, manual = true, disabled = true},
+              --- High Pass
+              {1412, 1416, manual = true},
+              --- Ulfwrenar Mountains
+              {716, 1500, manual = true},
+              --- Helspire Mounts East
+              {606, 1586, manual = true, disabled = true},
+              --- West Gianthome Mountains
+              {1096, 1578, manual = true, disabled = true},
+              --- Belyerovota
+              {1432, 1386, manual = true, disabled = true},
+              --- Helspire Mounts West
+              {472, 1558, manual = true, disabled = true},
+              --- Gianthome Mountains
+              {1172, 1592, manual = true, disabled = true},
+              --- Frozen Coast
+              {1238, 1528, manual = true},
+              --- Ice Tooth Mountains
+              {612, 1524, manual = true, disabled = true},
+              --- Norsveg Plain
+              {650, 1622, manual = true, disabled = true},
+              --- Eagles Peak
+              {876, 1666, manual = true, disabled = true},
+              --- Black Blood Pass
+              {1124, 1520, manual = true, disabled = true},
+              --- Vanaheim Mountains
+              {374, 1542, manual = true, disabled = true},
+              --- Naglfari Mountains East
+              {852, 1634, manual = true, disabled = true},
+              --- Naglfari Mountains West
+              {680, 1584, manual = true, disabled = true},
+              --- Gloomwrack Coast
+              {332, 1586, manual = true},
+              --- Ejsgard
+              {944, 1700, manual = true},
+              --- Taldursfjord
+              {1138, 1642, manual = true},
+              --- North Cape
+              {856, 1716, manual = true},
+              --- North Norse Coast
+              {404, 1626, manual = true},
+              --- Eldagrimm Gulf
+              {412, 1468, manual = true},
+              --- Fjord Coast
+              {632, 1692, manual = true},
+              --- Kraken Coast
+              {1030, 1664, manual = true},
+              --- Skull Steppes
+              {1512, 1308, manual = true},
+              --- Helspire Coast
+              {520, 1634, manual = true},
+              --- Naglfari Coast
+              {782, 1700, manual = true},
+              --- Claw Coast
+              {502, 1458, manual = true},
+              --- Giants Coast
+              {1268, 1572, manual = true},
+              --- Cape Of Norsca
+              {370, 1447, manual = true},
+              --- Plain of Battles
+              {188, 1433, manual = true},
+         },
+         ["maelstrom"] = {
+              --- Mathlann's Locker
+              {95, 701},
+              {59, 731},
+              {42, 703},
+              --- Varr-a-Uzkul
+              {145, 586, manual = true},
+              {154, 564},
+              {238, 611},
+              --- Isla De Estragon
+              {232, 764, manual = true, disabled = true},
+              --- The Maelstrom
+              {60, 646, manual = true, disabled = true},
+              --- Mermedus Isles
+              {58, 560, manual = true},
+              --- Volcano Belt
+              {176, 646, manual = true},
+              --- Galleons Graveyard
+              {170, 726, manual = true},
+              --- The Gauntlet
+              {83, 622, manual = true},
+              --- Mermedus Isles
+              {104, 560, manual = true},
+              --- Volcano Belt
+              {212, 642, manual = true},
+              --- Galleons Graveyard
+              {140, 678, manual = true},
+         },
+         ["nehekara"] = {
+              --- Thieves' Coast
+              {28, 461},
+              {51, 428},
+              {73, 407},
+              --- Plains of Haytin
+              {75, 376},
+              {100, 357},
+              {121, 397},
+              --- Horn of Araby
+              {120, 428},
+              {142, 462},
+              {157, 407},
+              --- Pirate Coast
+              {212, 390},
+              {251, 391},
+              {246, 365},
+              --- Sahra Desert
+              {246, 306},
+              {210, 294},
+              {286, 316},
+              --- Harmattan Gap
+              {386, 323},
+              --- Raiders' Dune
+              {347, 327},
+              {324, 368},
+              {288, 399},
+              --- Fleetport of Terror
+              {401, 363},
+              {423, 317},
+              --- City of Dust
+              {372, 222},
+              {316, 207},
+              --- Dust Road
+              {441, 198},
+              {394, 258},
+              --- Bitter Winds
+              {453, 124},
+              {399, 85},
+              --- Shifting Sands
+              {375, 56},
+              --- West Barrier Idols
+              {462, 233},
+              --- Necropolois of Zandri
+              {462, 233},
+              {456, 281},
+              --- Lower River Mortis
+              {571, 268},
+              {584, 228},
+              --- Pools of Despair
+              {532, 174},
+              {554, 126},
+              --- Western Nehekhara
+              {591, 104},
+              --- The Cracked Lands
+              {560, 64},
+              --- Khemrian Desert
+              {724, 298},
+              {721, 241},
+              {791, 239},
+              --- City of Kings
+              {750, 215},
+              {684, 229},
+              --- Road of Kings
+              {644, 307},
+              --- Lower Ash River
+              {862, 175},
+              {833, 157},
+              --- Land of the Dead
+              {779, 118},
+              {862, 147},
+              --- Necropolis of Quatar
+              {826, 75},
+              --- City of Corpses
+              {964, 58},
+              --- Quatari Desert
+              {987, 112},
+              {907, 133},
+              --- Upper Ash River
+              {964, 152},
+              {1011, 190},
+              --- Fallow Fields
+              {986, 221},
+              {896, 212},
+              --- The Scarab City
+              {872, 250},
+              --- Necropolis of Numas
+              {802, 300},
+              --- East Barrier Idols
+              {816, 348},
+              {888, 350},
+              --- Cursed Way
+              {1257, 343, disabled = true},
+              --- Charnel Highlands
+              {1266, 16},
+              --- City of Decay
+              {1303, 44},
+              {1303, 129},
+              --- Mahraki Desert
+              {1282, 163},
+              {1338, 209},
+              --- Golden Plain
+              {1327, 262},
+              {1358, 270},
+              --- Eastern Nehekhara
+              {1410, 205},
+              {1373, 117},
+              --- Crystal Coast
+              {1440, 196},
+              {1476, 132},
+              --- Black Pyramid Of Nagash
+              {660, 162, manual = true},
+              --- Charnel Valley
+              {1054, 16, manual = true},
+              --- The Great Erg
+              {152, 362, manual = true},
+              --- Devils Backbone
+              {1340, 44, manual = true},
+              --- Charnel Highlands
+              {1252, 74, manual = true},
+              --- Necropolis Of Khemri
+              {724, 148, manual = true},
+              --- The Cursed City
+              {1436, 288, manual = true},
+              --- Necropolis Of Numas
+              {852, 304, manual = true},
+              --- Cliffs Of Dawn
+              {1188, 282, manual = true, disabled = true},
+              --- Necropolis Of Quatar
+              {880, 52, manual = true},
+              --- City Of Corpses
+              {926, 20, manual = true},
+              --- City Of Scholars
+              {1412, 56, manual = true},
+              --- Necropolis Of Zandri
+              {512, 264, manual = true},
+              --- The Cracked Lands
+              {680, 34, manual = true, disabled = true},
+              --- Western Nehekhara
+              {507, 52, manual = true},
+              --- Shifting Sands
+              {411, 38, manual = true},
+              --- Brittle Peaks
+              {1084, 128, manual = true, disabled = true},
+              --- Canal Of Abundance
+              {740, 64, manual = true, disabled = true},
+              --- Charnel Valley
+              {1173, 8, manual = true},
+              --- Devils Backbone
+              {1336, 152, manual = true, disabled = true},
+              --- Necropolis Of Khemri
+              {690, 104, manual = true},
+              --- The Cursed City
+              {1378, 316, manual = true},
+              --- City Of Scholars
+              {1418, 104, manual = true},
+         },
+         ["realmoftzeentch"] = {
+              --- Realm of the Sorcerer
+              {198, 188},
+              {183, 165},
+              {143, 229},
+              {136, 189, manual = true},
+              {131, 190},
+              {65, 247},
+              {61, 180, manual = true},
+              {66, 157},
+              {75, 86},
+              {114, 119, manual = true},
+              {65, 51},
+              {172, 66},
+              {173, 35, manual = true},
+              {205, 68},
+              {244, 60},
+              {268, 107},
+              {195, 142},
+              --- Portal Of Twilight
+              {278, 212, manual = true},
+              --- Realm of the Sorcerer
+              {62, 149, manual = true},
+              {285, 56, manual = true},
+              {224, 122, manual = true},
+              {167, 94, manual = true},
+              {206, 140, manual = true},
+         },
+         ["badlands"] = {
+              --- Badlands Coast
+              {600, 390},
+              {636, 371, disabled = true},
+              --- Western Badlands
+              {668, 480},
+              {623, 486},
+              {649, 417},
+              --- Marg-Beh-Mard
+              {631, 320},
+              --- Zandri Road
+              {661, 541},
+              {743, 590},
+              --- Varenka Hills
+              {953, 788},
+              --- Howling River Valley
+              {994, 828},
+              {1047, 842},
+              --- Blood River Valley
+              {1049, 825},
+              --- Northern Badlands
+              {936, 772},
+              --- The Blight
+              {919, 716},
+              {930, 686},
+              --- Mount Bloodhorn
+              {829, 628, disabled = true},
+              {802, 538},
+              --- North Badland Hills
+              {765, 529},
+              {715, 530},
+              {680, 524},
+              --- South Badland Hills
+              {734, 442},
+              {714, 387},
+              --- North Barrier Idols
+              {714, 353},
+              --- Upper River Mortis
+              {988, 276},
+              --- The Scarab City
+              {948, 295},
+              --- Marshes of Madness
+              {860, 404},
+              {835, 442, disabled = true},
+              --- Sunken Khernarch
+              {778, 460},
+              {820, 498},
+              --- Silver Bank
+              {841, 581},
+              --- Sharpthorn Forest
+              {896, 575},
+              --- Old Strygos
+              {870, 509},
+              {886, 468},
+              --- Blightwater
+              {971, 432},
+              --- Worlds Edge Foothills
+              {935, 470},
+              {981, 503},
+              --- Eastern Badlands
+              {967, 536},
+              {971, 566},
+              --- Blind River
+              {965, 617},
+              {1027, 591},
+              --- The Cauldron
+              {995, 687},
+              {998, 733},
+              --- Sour Crags
+              {1069, 496},
+              {1090, 460},
+              --- Red Cloud Mountains
+              {1090, 405},
+              {1045, 342, disabled = true},
+              --- Fozzriks Crater
+              {900, 684, manual = true},
+              --- Silver Tarn
+              {1154, 702, manual = true, disabled = true},
+              --- Morzunds Wall
+              {1114, 644, manual = true, disabled = true},
+              --- East Gate
+              {1150, 670, manual = true, disabled = true},
+              --- West Gate
+              {1060, 676, manual = true},
+              --- Great Mortis Delta
+              {500, 376, manual = true, disabled = true},
+              --- Thunder Peaks
+              {1134, 792, manual = true, disabled = true},
+              --- Karak Azgal
+              {1038, 626, manual = true},
+              --- West Death Pass
+              {1094, 744, manual = true},
+              --- Karak Azul
+              {1270, 658, manual = true},
+              --- East Death Pass
+              {1230, 754, manual = true, disabled = true},
+              --- Swamp Of Terror
+              {568, 310, manual = true, disabled = true},
+              --- Shaded Way
+              {1096, 586, manual = true},
+              --- Varenka Hills
+              {998, 796, manual = true},
+              --- Upper River Mortis
+              {1102, 282, manual = true, disabled = true},
+              --- Blood River Valley
+              {1090, 810, manual = true},
+              --- Mount Bloodhorn
+              {803, 588, manual = true},
+              --- Blind River
+              {916, 630, manual = true},
+              --- Blight Water
+              {958, 360, manual = true},
+              --- West Barrier Idols
+              {770, 380, manual = true},
+              --- Northern Badlands
+              {950, 734, manual = true},
+              --- Marshes Of Madness
+              {814, 394, manual = true},
+              --- Great Mortis Delta
+              {538, 334, manual = true, disabled = true},
+              --- West Death Pass
+              {1190, 720, manual = true, disabled = true},
+              --- Karak Azul
+              {1174, 628, manual = true, disabled = true},
+              --- East Death Pass
+              {1296, 728, manual = true, disabled = true},
+              --- Shaded Way
+              {1106, 530, manual = true},
+         },
+         ["borderprinces"] = {
+              --- Dragonback Mountains
+              {785, 673},
+              --- Myrmidia's Coast
+              {816, 709},
+              {893, 780},
+              --- Howling River Valley
+              {1071, 883},
+              --- Stinklands
+              {876, 665},
+              --- Isla De Sangre
+              {244, 1062, manual = true, disabled = true},
+              --- Bone Island
+              {336, 546, manual = true, disabled = true},
+              --- Akarzans Deep
+              {470, 678, manual = true, disabled = true},
+              --- Fester Spike
+              {742, 838, manual = true, disabled = true},
+              --- Miramar Hills
+              {182, 886, manual = true, disabled = true},
+              --- Queekwell
+              {662, 742, manual = true, disabled = true},
+              --- Feroz Hills
+              {342, 994, manual = true},
+              --- Dark Maiden Pass
+              {658, 774, manual = true, disabled = true},
+              --- Spineport
+              {388, 730, manual = true, disabled = true},
+              --- Sartosa
+              {514, 612, manual = true, disabled = true},
+              --- Black Peninsula
+              {775, 758, manual = true},
+              --- Estalian Highlands
+              {244, 942, manual = true, disabled = true},
+              --- Sussurrio Wood
+              {582, 656, manual = true, disabled = true},
+              --- Pina Wood
+              {214, 956, manual = true},
+              --- Bone Hills
+              {432, 850, manual = true, disabled = true},
+              --- Apuccini Mountains
+              {688, 818, manual = true, disabled = true},
+              --- Middle Tilea
+              {601, 790, manual = true},
+              --- River Remo
+              {608, 752, manual = true, disabled = true},
+              --- Western Irrana Mountains
+              {378, 928, manual = true, disabled = true},
+              --- Forest Of Gloom
+              {1080, 932, manual = true},
+              --- Abasko Coast
+              {448, 758, manual = true, disabled = true},
+              --- River Luparno
+              {638, 654, manual = true},
+              --- Los Cabos
+              {110, 859, manual = true},
+              --- River Riati
+              {560, 700, manual = true},
+              --- Gredos Road
+              {188, 922, manual = true},
+              --- River Riaza
+              {348, 808, manual = true},
+              --- River Skiros
+              {818, 810, manual = true},
+              --- Estalian Plain
+              {288, 980, manual = true},
+              --- Trantine Hills
+              {610, 826, manual = true},
+              --- Plains Of Luccini
+              {532, 658, manual = true},
+              --- Kharnos Forest
+              {774, 826, manual = true},
+              --- Golfo De Bidouze
+              {446, 940, manual = true},
+              --- Cefiro Hills
+              {200, 1012, manual = true},
+              --- Lost Khypnia
+              {888, 848, manual = true},
+              --- Pavona Road
+              {732, 766, manual = true},
+              --- North Tilea
+              {594, 884, manual = true},
+              --- Old Dwarf Road
+              {1030, 904, manual = true},
+              --- River Eboro
+              {356, 872, manual = true},
+              --- Bay Of Quietude
+              {286, 892, manual = true},
+              --- Cantabrio Road
+              {302, 1024, manual = true},
+              --- River Treblecz
+              {942, 850, manual = true},
+              --- Alboran Road
+              {227, 867, manual = true},
+              --- Stinklands
+              {868, 716, manual = true},
+              --- Estalian Highlands
+              {336, 938, manual = true, disabled = true},
+              --- Bone Hills
+              {430, 816, manual = true, disabled = true},
+              --- Apuccini Mountains
+              {702, 854, manual = true, disabled = true},
+              --- Western Irrana Mountains
+              {408, 914, manual = true},
+              --- Abasko Coast
+              {474, 794, manual = true, disabled = true},
+              --- River Luparno
+              {604, 626, manual = true},
+              --- Los Cabos
+              {148, 852, manual = true},
+              --- River Riati
+              {560, 730, manual = true},
+              --- Gredos Road
+              {222, 912, manual = true},
+              --- River Riaza
+              {382, 804, manual = true},
+              --- River Skiros
+              {784, 786, manual = true},
+              --- Trantine Hills
+              {558, 824, manual = true},
+              --- Plains Of Luccini
+              {550, 622, manual = true},
+              --- Kharnos Forest
+              {838, 848, manual = true},
+              --- Golfo De Bidouze
+              {388, 996, manual = true},
+              --- Cefiro Hills
+              {232, 1008, manual = true},
+              --- Lost Khypnia
+              {904, 890, manual = true},
+              --- Pavona Road
+              {744, 798, manual = true},
+              --- North Tilea
+              {552, 878, manual = true},
+              --- Old Dwarf Road
+              {1126, 918, manual = true},
+              --- River Eboro
+              {356, 835, manual = true},
+              --- Bay Of Quietude
+              {329, 842, manual = true},
+              --- Cantabrio Road
+              {264, 1016, manual = true},
+              --- Alboran Road
+              {267, 865, manual = true},
+         },
+         ["worldsedgemountains"] = {
+              --- Grim Kadrin
+              {1031, 789},
+              {1016, 742},
+              --- Mountains of Dawn
+              {1140, 441, disabled = true},
+              {1227, 402, disabled = true},
+              --- Southern Worlds Edge
+              {1148, 202, disabled = true},
+              --- Karak Angkul
+              {1356, 1288, manual = true, disabled = true},
+              --- North Black Water
+              {1122, 1054, manual = true},
+              --- Cripple Peak
+              {1228, 506, manual = true, disabled = true},
+              --- Grom Ridge
+              {1198, 1084, manual = true, disabled = true},
+              --- Peak Pass
+              {1198, 1162, manual = true, disabled = true},
+              --- Blizzard Peaks
+              {1220, 888, manual = true, disabled = true},
+              --- Shining Mountains
+              {1246, 1014, manual = true},
+              --- Kislev Foothills
+              {1286, 1312, manual = true, disabled = true},
+              --- Silver Peaks
+              {1422, 1218, manual = true},
+              --- West Mad Dog Pass
+              {1138, 852, manual = true},
+              --- Agrildrin
+              {1158, 912, manual = true, disabled = true},
+              --- Draken Ridge
+              {1348, 1150, manual = true, disabled = true},
+              --- Delved Heights
+              {1270, 1210, manual = true, disabled = true},
+              --- Desolation Of Nagash
+              {1158, 540, manual = true},
+              --- Bitter Coast
+              {1592, 446, manual = true},
+              --- East Mad Dog Pass
+              {1328, 796, manual = true},
+              --- Desolation Of Drakenmoor
+              {1298, 1092, manual = true},
+              --- Steel Plains
+              {1486, 1188, manual = true},
+              --- Wolf Edge
+              {1400, 752, manual = true},
+              --- Broken Teeth
+              {1326, 424, manual = true},
+              --- Southern Worlds Edge
+              {1078, 208, manual = true, disabled = true},
+              --- Skull Cliffs
+              {1512, 1254, manual = true},
+              --- North Darklands
+              {1428, 1132, manual = true},
+              --- Karak Angkul
+              {1434, 1320, manual = true, disabled = true},
+              --- North Black Water
+              {1150, 988, manual = true, disabled = true},
+              --- Cripple Peak
+              {1192, 482, manual = true},
+              --- Grom Ridge
+              {1354, 1076, manual = true, disabled = true},
+              --- Peak Pass
+              {1136, 1136, manual = true, disabled = true},
+              --- Blizzard Peaks
+              {1222, 940, manual = true, disabled = true},
+              --- Shining Mountains
+              {1196, 982, manual = true, disabled = true},
+              --- Silver Peaks
+              {1340, 1202, manual = true, disabled = true},
+              --- West Mad Dog Pass
+              {1208, 848, manual = true},
+              --- Agrildrin
+              {1118, 940, manual = true},
+              --- Draken Ridge
+              {1250, 1164, manual = true, disabled = true},
+              --- Delved Heights
+              {1282, 1242, manual = true, disabled = true},
+              --- Bitter Coast
+              {1654, 482, manual = true},
+              --- East Mad Dog Pass
+              {1280, 804, manual = true},
+              --- Steel Plains
+              {1458, 1236, manual = true},
+              --- Broken Teeth
+              {1272, 434, manual = true},
+              --- North Darklands
+              {1392, 1176, manual = true},
+              {1457, 1089, manual = true},
+              --- Wolf Edge
+              {1420, 727, manual = true},
+         },
+         ["southlands"] = {
+              --- Cursed Jungle
+              {1481, 35},
+              {1543, 49},
+              --- Soul of the Jungle
+              {1566, 39},
+              --- Kingdom of Beasts
+              {1629, 48},
+              {1585, 68},
+         },
+         ["realmofnurgle"] = {
+              --- Land of the Plaguelord
+              {1813, 44},
+              {1818, 73, disabled = true},
+              {1859, 46},
+              {1889, 93, manual = true},
+              {1876, 153, manual = true},
+              {1926, 202, manual = true},
+              {1958, 198, disabled = true},
+              {2001, 215},
+              {1962, 129, disabled = true},
+              {1932, 69, manual = true},
+              --- Arghus The Plague Moon
+              {1988, 72, manual = true},
+              --- Garden Of Blight
+              {2002, 266, manual = true, disabled = true},
+              --- Island Of Lepers
+              {1993, 164, manual = true},
+              --- Titan Graveyards
+              {1902, 51, manual = true},
+              --- Fungus Lands
+              {1964, 228, manual = true},
+              --- Septic Isle
+              {2008, 112, manual = true, disabled = true},
+              --- Arnzipals Island
+              {1974, 49, manual = true},
+              --- Abyssal Sump
+              {1966, 164, manual = true},
+              --- Mansion Of The Plague Lord
+              {1940, 139, manual = true},
+              --- Fields Of Tooth And Bone
+              {1860, 192, manual = true},
+              --- Eternal Swamps
+              {1820, 128, manual = true},
+              --- Land of the Plaguelord
+              {1849, 103, manual = true},
+              {1939, 100, manual = true},
+              --- Eternal Swamps
+              {1835, 161, manual = true},
+         },
+         ["bretonnia"] = {
+              --- Yn Edri Eternos
+              {720, 966, manual = true, disabled = true},
+              --- Axe Bite Pass
+              {662, 1134, manual = true, disabled = true},
+              --- Ois Gap
+              {576, 1200, manual = true, disabled = true},
+              --- Cythral
+              {756, 928, manual = true, disabled = true},
+              --- Cavaroc
+              {708, 926, manual = true, disabled = true},
+              --- Crooked Corridor
+              {614, 1152, manual = true, disabled = true},
+              --- Forest Of The Arden
+              {464, 1197, manual = true, disabled = true},
+              --- Mondidier Pass
+              {790, 910, manual = true, disabled = true},
+              --- Montfort
+              {578, 1162, manual = true, disabled = true},
+              --- Atylwyth
+              {732, 932, manual = true, disabled = true},
+              --- Eastern Irrana Mountains
+              {558, 906, manual = true, disabled = true},
+              --- Modryn
+              {678, 946, manual = true, disabled = true},
+              --- Mousillon
+              {459, 1132, manual = true},
+              --- Talsyn
+              {742, 958, manual = true, disabled = true},
+              --- Artois
+              {428, 1200, manual = true},
+              --- River Grismerie
+              {584, 1124, manual = true},
+              --- Torgovann
+              {690, 976, manual = true},
+              --- Kleinland
+              {612, 1240, manual = true},
+              --- Massif Orcal
+              {620, 1046, manual = true},
+              --- Lyonesse Hills
+              {350, 1256, manual = true},
+              --- Aquitaine
+              {514, 1048, manual = true},
+              --- Brionne
+              {460, 1012, manual = true},
+              --- Old Mousillon
+              {372, 1168, manual = true},
+              --- River Brienne
+              {512, 956, manual = true},
+              --- Lyonesse
+              {380, 1216, manual = true},
+              --- Carcassonne
+              {568, 970, manual = true},
+              --- Bordeleaux
+              {442, 1082, manual = true},
+              --- Blighted Marshes
+              {513, 873, manual = true},
+              --- Bastonne
+              {530, 1110, manual = true},
+              --- Languille
+              {468, 1292, manual = true},
+              --- Grave Of Cuileux
+              {562, 1028, manual = true},
+              --- Crooked Corridor
+              {608, 1182, manual = true, disabled = true},
+              --- Eastern Irrana Mountains
+              {588, 920, manual = true, disabled = true},
+              --- Artois
+              {472, 1222, manual = true},
+              --- Massif Orcal
+              {572, 1090, manual = true},
+              --- Lyonesse Hills
+              {384, 1282, manual = true},
+              --- Aquitaine
+              {476, 1046, manual = true},
+              --- Brionne
+              {500, 1002, manual = true},
+              --- Old Mousillon
+              {416, 1156, manual = true},
+              --- River Brienne
+              {472, 972, manual = true},
+              --- Lyonesse
+              {348, 1200, manual = true},
+              --- Carcassonne
+              {558, 940, manual = true},
+              --- Bordeleaux
+              {492, 1108, manual = true},
+              --- Blighted Marshes
+              {468, 884, manual = true},
+              --- Bastonne
+              {528, 1078, manual = true},
+              --- Languille
+              {430, 1260, manual = true},
+              --- Grave Of Cuileux
+              {592, 1004, manual = true},
+         },
+         ["darklands"] = {
+              --- The Black Field
+              {1902, 358, manual = true, disabled = true},
+              --- Ash Ridge Mountains
+              {1402, 592, manual = true, disabled = true},
+              --- Grimfang
+              {1356, 918, manual = true},
+              --- Gnoblar Hills
+              {1792, 558, manual = true},
+              --- South Darklands
+              {1420, 466, manual = true},
+              --- River District
+              {1792, 1142, manual = true},
+              --- Ald Grungaz
+              {1712, 538, manual = true},
+              --- Market District
+              {1620, 1188, manual = true},
+              --- Blistering Peaks
+              {1288, 536, manual = true, disabled = true},
+              --- Falls District
+              {1686, 1228, manual = true},
+              --- Pits District
+              {1546, 1190, manual = true},
+              --- The Sentinels
+              {1900, 786, manual = true},
+              --- Manufactory District
+              {1690, 1128, manual = true},
+              --- Zorn Uzkul
+              {1566, 1400, manual = true},
+              --- Ivory Road
+              {1668, 874, manual = true},
+              --- Haunted Forest
+              {1890, 564, manual = true},
+              --- Scalded Delta
+              {1830, 474, manual = true, disabled = true},
+              --- Heart Of Zharrduk
+              {1716, 1180, manual = true},
+              --- Ruins End
+              {1718, 466, manual = true},
+              --- Mount Azgorh
+              {1598, 778, manual = true},
+              --- Zorn Dum
+              {1634, 1302, manual = true},
+              --- Skull Road
+              {1530, 1372, manual = true},
+              --- Cliffs Of Death
+              {1704, 1418, manual = true},
+              --- The Crossroads
+              {1618, 836, manual = true},
+              --- Foundry District
+              {1632, 1130, manual = true},
+              --- Silver Road
+              {1496, 928, manual = true},
+              --- Mount Grey Hag
+              {1492, 732, manual = true},
+              --- Dragon Isles
+              {1996, 356, manual = true},
+              --- Wheatlands
+              {1562, 1306, manual = true},
+              --- Deaths Side
+              {1618, 1364, manual = true},
+              --- Scalded Hinterland
+              {1889, 475, manual = true},
+              --- South Mountains Of Mourn
+              {2008, 892, manual = true},
+              --- Dragon Barrows
+              {1344, 582, manual = true},
+              --- Blasted District
+              {1528, 1126, manual = true},
+              --- Causeway Of Zharr
+              {1668, 974, manual = true},
+              --- Bury Bone Hills
+              {2010, 762, manual = true},
+              --- New Strygos
+              {1610, 548, manual = true},
+              --- Gate District
+              {1680, 1070, manual = true},
+              --- Ashen Plains
+              {1966, 826, manual = true},
+              --- Old Silk Road
+              {1370, 660, manual = true},
+              --- Road To Damnation
+              {1704, 1490, manual = true},
+              --- Dragons Landing
+              {1468, 408, manual = true},
+              --- Dragons Breath
+              {1558, 606, manual = true},
+              --- Gnoblar Country
+              {1896, 636, manual = true},
+              --- West Darklands
+              {1290, 870, manual = true},
+              --- Daemons Ruin
+              {1900, 892, manual = true},
+              --- River Ruin Lower
+              {1898, 712, manual = true},
+              --- Plains Of Grief
+              {1738, 646, manual = true},
+              --- Pigbarter Road
+              {1820, 676, manual = true},
+              --- Black Wastes
+              {1344, 1008, manual = true},
+              --- Howling Wastes South
+              {1762, 746, manual = true},
+              --- Wolf Lands
+              {1462, 818, manual = true},
+              --- Plain Of Bones
+              {1516, 500, manual = true},
+              --- Desolation Of Azgorh
+              {1646, 632, manual = true},
+              --- Howling Wastes North
+              {1814, 844, manual = true},
+              --- Blasted Wastes
+              {1586, 922, manual = true},
+              --- Ash Ridge Mountains
+              {1440, 606, manual = true, disabled = true},
+              --- Gnoblar Hills
+              {1844, 614, manual = true},
+              --- River District
+              {1770, 1182, manual = true},
+              --- Market District
+              {1650, 1214, manual = true},
+              --- Blistering Peaks
+              {1234, 580, manual = true, disabled = true},
+              --- Pits District
+              {1582, 1194, manual = true},
+              --- The Sentinels
+              {1876, 844, manual = true},
+              --- Manufactory District
+              {1732, 1122, manual = true},
+              --- Zorn Uzkul
+              {1514, 1454, manual = true},
+              --- Scalded Delta
+              {1842, 512, manual = true},
+              --- Heart Of Zharrduk
+              {1680, 1188, manual = true},
+              --- Ruins End
+              {1764, 484, manual = true},
+              --- Mount Azgorh
+              {1676, 754, manual = true},
+              --- Zorn Dum
+              {1664, 1320, manual = true},
+              --- Foundry District
+              {1600, 1158, manual = true},
+              --- Mount Grey Hag
+              {1522, 754, manual = true},
+              --- Dragon Isles
+              {2032, 466, manual = true},
+              --- Wheatlands
+              {1574, 1352, manual = true},
+              --- Deaths Side
+              {1672, 1394, manual = true, disabled = true},
+              --- Scalded Hinterland
+              {1848, 554, manual = true},
+              --- South Mountains Of Mourn
+              {1976, 936, manual = true},
+              --- Dragon Barrows
+              {1274, 600, manual = true},
+              --- Blasted District
+              {1570, 1126, manual = true},
+              --- Bury Bone Hills
+              {1952, 766, manual = true},
+              --- New Strygos
+              {1606, 498, manual = true},
+              --- Gate District
+              {1622, 1082, manual = true},
+              --- Ashen Plains
+              {2004, 846, manual = true},
+              --- Old Silk Road
+              {1376, 622, manual = true},
+              --- Road To Damnation
+              {1754, 1486, manual = true},
+              --- Dragons Landing
+              {1532, 446, manual = true},
+              --- Dragons Breath
+              {1662, 576, manual = true},
+              --- Gnoblar Country
+              {1926, 592, manual = true},
+              --- West Darklands
+              {1412, 938, manual = true},
+              --- Daemons Ruin
+              {1950, 892, manual = true},
+              --- River Ruin Lower
+              {1930, 672, manual = true},
+              --- Plains Of Grief
+              {1772, 694, manual = true},
+              --- Pigbarter Road
+              {1846, 724, manual = true},
+              --- Black Wastes
+              {1302, 956, manual = true},
+              --- Gate District
+              {1627, 1034, manual = true},
+              --- Silver Road
+              {1475, 998, manual = true},
+              --- Ivory Road
+              {1739, 914, manual = true},
+              --- Daemons Ruin
+              {1840, 922, manual = true},
+              --- Mount Grey Hag
+              {1487, 669, manual = true},
+              --- Mount Azgorh
+              {1665, 712, manual = true},
+              --- Ash Ridge Mountains
+              {1390, 550, manual = true},
+              --- South Darklands
+              {1430, 496, manual = true},
+              --- Dragon Isles
+              {2028, 390, manual = true},
+         },
+         ["empire"] = {
+              --- Grey Lady Pass
+              {726, 1078, manual = true, disabled = true},
+              --- Nuln
+              {826, 1070, manual = true, disabled = true},
+              --- Glimdwarrow
+              {714, 1208, manual = true},
+              --- Marienburg
+              {654, 1208, manual = true, disabled = true},
+              --- Haunted Ridge
+              {710, 1090, manual = true, disabled = true},
+              --- Black Fire Pass
+              {1020, 950, manual = true},
+              --- Altdorf
+              {764, 1156, manual = true, disabled = true},
+              --- Wissenland
+              {792, 1054, manual = true, disabled = true},
+              --- Dead Wood
+              {1048, 1134, manual = true},
+              --- Barren Hills
+              {819, 1154, manual = true},
+              --- Middle Mountains
+              {936, 1284, manual = true, disabled = true},
+              --- Ward Of Frost
+              {752, 1332, manual = true},
+              --- South Black Water
+              {1106, 978, manual = true, disabled = true},
+              --- Ward Of Rain
+              {696, 1318, manual = true},
+              --- Gryphon Wood
+              {1070, 1220, manual = true},
+              --- Grissenwald
+              {774, 1126, manual = true},
+              --- Vorbergland
+              {708, 1124, manual = true},
+              --- Laurelorn Forest
+              {720, 1360, manual = true},
+              --- River Talabec
+              {844, 1190, manual = true},
+              --- Hochland
+              {872, 1244, manual = true},
+              --- Upper Teufel
+              {780, 1090, manual = true},
+              --- Misty Hills
+              {726, 1242, manual = true},
+              --- Howling Hills
+              {874, 1204, manual = true},
+              --- Pale Sisters
+              {516, 1248, manual = true, disabled = true},
+              --- Reikwald Forest
+              {740, 1124, manual = true, disabled = true},
+              --- Verbogenwald
+              {1092, 1090, manual = true},
+              --- Ward Of Storm
+              {688, 1366, manual = true},
+              --- Drakwald
+              {754, 1276, manual = true},
+              --- Schadensumpf
+              {710, 1276, manual = true},
+              --- Bay Of Blades
+              {778, 1574, manual = true, disabled = true},
+              --- Forest Of Shadows
+              {888, 1336, manual = true},
+              --- Mirror Moors
+              {702, 1178, manual = true},
+              --- Nattern Forest
+              {880, 1074, manual = true},
+              --- Morrfen
+              {976, 1082, manual = true},
+              --- Middenland Proper
+              {820, 1284, manual = true},
+              --- Haunted Hills
+              {1024, 1066, manual = true},
+              --- Stir River
+              {898, 1106, manual = true},
+              --- Upper Reik River
+              {903, 1015, manual = true},
+              --- Old North Road
+              {670, 1260, manual = true},
+              --- Mootland
+              {950, 1044, manual = true},
+              --- The Auld Ryding
+              {1030, 1010, manual = true},
+              --- Tumble Downs
+              {642, 1308, manual = true},
+              --- Blue Reach
+              {960, 1000, manual = true},
+              --- Bleak Moors
+              {1082, 1158, manual = true},
+              --- Gisoreux
+              {530, 1176, manual = true},
+              --- Northern Marches
+              {954, 1331, manual = true},
+              --- Middenheim Road
+              {778, 1237, manual = true},
+              --- Kolsa Hills
+              {968, 1170, manual = true},
+              --- Farlic Hills
+              {884, 1160, manual = true, disabled = true},
+              --- River Aver
+              {894, 1044, manual = true},
+              --- East Nordland
+              {818, 1370, manual = true},
+              --- South Ostland
+              {1012, 1272, manual = true},
+              --- Stirhugel
+              {936, 1092, manual = true},
+              --- Ice Tooth Coast
+              {788, 1472, manual = true},
+              --- Marches Of Couronne
+              {568, 1296, manual = true},
+              --- East March
+              {1128, 1168, manual = true},
+              --- The Great Forest
+              {1002, 1200, manual = true},
+              --- The Veldt
+              {1144, 1210, manual = true},
+              --- Southern Oblast
+              {1202, 1230, manual = true},
+              --- Soll Valley
+              {878, 980, manual = true},
+              --- Mermedus Coast
+              {672, 1476, manual = true},
+              --- Couronne
+              {508, 1324, manual = true},
+              --- Middle Mountains
+              {898, 1280, manual = true, disabled = true},
+              --- South Black Water
+              {1068, 1004, manual = true},
+              --- Hochland
+              {910, 1222, manual = true},
+              --- Reikwald Forest
+              {650, 1176, manual = true},
+              --- Verbogenwald
+              {1130, 1092, manual = true, disabled = true},
+              --- Bay Of Blades
+              {856, 1520, manual = true},
+              --- Mirror Moors
+              {684, 1224, manual = true},
+              --- Morrfen
+              {1058, 1104, manual = true},
+              --- Middenland Proper
+              {784, 1278, manual = true},
+              --- Haunted Hills
+              {1070, 1060, manual = true},
+              --- Stir River
+              {856, 1114, manual = true},
+              --- Mootland
+              {988, 1040, manual = true},
+              --- Bleak Moors
+              {1032, 1172, manual = true},
+              --- Gisoreux
+              {498, 1163, manual = true},
+              --- Northern Marches
+              {930, 1346, manual = true},
+              --- Middenheim Road
+              {804, 1192, manual = true},
+              --- Kolsa Hills
+              {1000, 1150, manual = true},
+              --- Farlic Hills
+              {928, 1134, manual = true},
+              --- River Aver
+              {838, 1034, manual = true, disabled = true},
+              --- East Nordland
+              {856, 1340, manual = true},
+              --- South Ostland
+              {1000, 1240, manual = true},
+              --- Stirhugel
+              {982, 1120, manual = true},
+              --- Ice Tooth Coast
+              {758, 1500, manual = true},
+              --- Marches Of Couronne
+              {580, 1248, manual = true},
+              --- East March
+              {1090, 1188, manual = true},
+              --- The Great Forest
+              {966, 1206, manual = true},
+              --- The Veldt
+              {1164, 1172, manual = true},
+              --- Southern Oblast
+              {1172, 1248, manual = true},
+              --- Soll Valley
+              {920, 966, manual = true},
+              --- Mermedus Coast
+              {624, 1464, manual = true},
+              --- Couronne
+              {517, 1289, manual = true},
+         },
+         ["greymountains"] = {
+              --- Winterteeth Pass
+              {852, 904, manual = true, disabled = true},
+              --- Novalone Pass
+              {626, 912, manual = true, disabled = true},
+              --- River Of Echoes
+              {656, 874, manual = true, disabled = true},
+              --- Putrid Stump
+              {808, 926, manual = true, disabled = true},
+              --- Gristle Valley
+              {802, 966, manual = true, disabled = true},
+              --- North Grey Mountains
+              {774, 1024, manual = true, disabled = true},
+              --- Arranoc
+              {734, 1054, manual = true},
+              --- South Grey Mountains
+              {782, 932, manual = true, disabled = true},
+              --- Shattered Teeth
+              {748, 892, manual = true},
+              --- Tirsyth
+              {702, 1034, manual = true},
+              --- The Vaults
+              {704, 886, manual = true, disabled = true},
+              --- Parravon
+              {680, 1090, manual = true, disabled = true},
+              --- Black Mountains
+              {894, 934, manual = true, disabled = true},
+              --- Argwylon
+              {730, 1032, manual = true},
+              --- Fyr Darric
+              {740, 1002, manual = true},
+              --- Wydrioth
+              {772, 990, manual = true, disabled = true},
+              --- Vennland
+              {822, 1002, manual = true},
+              --- Anmyr
+              {672, 1016, manual = true},
+              --- Hvargir Forest
+              {950, 912, manual = true},
+              --- East Carcassonne
+              {624, 964, manual = true},
+              --- Quenelles
+              {630, 1006, manual = true},
+              --- River Starnek
+              {988, 896, manual = true},
+              --- Shattered Teeth
+              {820, 896, manual = true, disabled = true},
+              --- Black Mountains
+              {960, 968, manual = true},
+              --- Vennland
+              {842, 972, manual = true},
+              --- Quenelles
+              {666, 1054, manual = true},
+              --- River Starnek
+              {1000, 862, manual = true},
+         },
+         ["kislev"] = {
+              --- Hell Pit Middle
+              {1196, 1468, manual = true, disabled = true},
+              --- Staslav Forest
+              {1168, 1334, manual = true},
+              --- River Dypvann
+              {914, 1512, manual = true},
+              --- Shirokij Forest
+              {1136, 1256, manual = true},
+              --- Trollheim Mountains West
+              {864, 1586, manual = true, disabled = true},
+              --- Goromadny Coast
+              {1364, 1490, manual = true},
+              --- Trollheim Mountains East
+              {978, 1582, manual = true, disabled = true},
+              --- The Ropsals
+              {1322, 1412, manual = true},
+              --- Lesser Tobol
+              {1230, 1306, manual = true},
+              --- Gulf Of Kislev
+              {966, 1382, manual = true},
+              --- Troll Country
+              {978, 1462, manual = true},
+              --- Bile Lands
+              {880, 1476, manual = true},
+              --- Mazhorod
+              {1080, 1324, manual = true},
+              --- Dukhlys Forest
+              {1274, 1388, manual = true},
+              --- Sturen Ridge
+              {1020, 1496, manual = true},
+              --- The Golinyi
+              {1116, 1436, manual = true},
+              --- Ungol Steppes
+              {1024, 1408, manual = true},
+              --- River Tobol
+              {1096, 1474, manual = true},
+              --- River Lynsk
+              {1010, 1358, manual = true},
+              --- Western Oblast
+              {1072, 1280, manual = true},
+              --- Urskoy River
+              {1132, 1298, manual = true},
+              --- Eastern Oblast
+              {1198, 1392, manual = true},
+              --- North Lynsk
+              {1148, 1472, manual = true},
+              --- Northern Oblast
+              {1104, 1378, manual = true},
+              --- Hound Coast
+              {1460, 1490, manual = true},
+              --- River Dypvann
+              {920, 1564, manual = true, disabled = true},
+              --- Trollheim Mountains West
+              {936, 1614, manual = true, disabled = true},
+              --- Goromadny Coast
+              {1418, 1470, manual = true},
+              --- Trollheim Mountains East
+              {1030, 1532, manual = true, disabled = true},
+              --- The Ropsals
+              {1286, 1348, manual = true, disabled = true},
+              --- Troll Country
+              {950, 1494, manual = true},
+              --- Bile Lands
+              {934, 1450, manual = true},
+              --- Dukhlys Forest
+              {1278, 1422, manual = true},
+              --- Sturen Ridge
+              {1056, 1470, manual = true},
+              --- Ungol Steppes
+              {1018, 1454, manual = true},
+              --- River Tobol
+              {1076, 1436, manual = true},
+              --- River Lynsk
+              {1072, 1360, manual = true},
+              --- Western Oblast
+              {1053, 1309, manual = true},
+              --- Urskoy River
+              {1196, 1284, manual = true},
+              --- Eastern Oblast
+              {1228, 1416, manual = true},
+              --- North Lynsk
+              {1164, 1434, manual = true},
+              --- Northern Oblast
+              {1062, 1400, manual = true},
+              --- Hound Coast
+              {1398, 1560, manual = true},
+         },
+         ["mountainsofmourn"] = {
+              --- Woes End
+              {2034, 1256, manual = true, disabled = true},
+              --- North Mountains Of Mourn
+              {1968, 1342, manual = true},
+              --- Shardback Mountains
+              {1836, 1420, manual = true, disabled = true},
+              --- Cliffs Of Woe
+              {1740, 1248, manual = true, disabled = true},
+              --- Maneaterland
+              {1812, 1294, manual = true, disabled = true},
+              --- Middle Mountains Of Mourn
+              {1954, 1090, manual = true},
+              --- Gash Kadrak
+              {1880, 1200, manual = true},
+              --- Mountains Of Eyes
+              {2002, 1164, manual = true},
+              --- Path To The East
+              {1856, 1132, manual = true},
+              --- Grave Of Scythia
+              {1898, 1374, manual = true},
+              --- Haunted Jungle
+              {1972, 524, manual = true},
+              --- Graniteteeth
+              {1704, 1340, manual = true},
+              --- Shardback Foothills
+              {1776, 1444, manual = true},
+              --- Howling District
+              {1782, 1080, manual = true},
+              --- Eastern Steppes
+              {1962, 1428, manual = true},
+              --- Mourning Plateau
+              {1940, 978, manual = true},
+              --- Spice Route
+              {1966, 614, manual = true},
+              --- River Ruin Upper
+              {1860, 1020, manual = true},
+              --- Woes End
+              {1948, 1242, manual = true, disabled = true},
+              --- North Mountains Of Mourn
+              {1822, 1350, manual = true, disabled = true},
+              --- Cliffs Of Woe
+              {1898, 1264, manual = true, disabled = true},
+              --- Maneaterland
+              {1846, 1294, manual = true, disabled = true},
+              --- Middle Mountains Of Mourn
+              {1896, 1072, manual = true, disabled = true},
+              --- Gash Kadrak
+              {1824, 1192, manual = true},
+              --- Mountains Of Eyes
+              {2034, 1122, manual = true, disabled = true},
+              --- Path To The East
+              {1958, 1178, manual = true},
+              --- Haunted Jungle
+              {1934, 520, manual = true},
+              --- Shardback Foothills
+              {1766, 1392, manual = true},
+              --- Howling District
+              {1830, 1090, manual = true},
+              --- Eastern Steppes
+              {1892, 1472, manual = true},
+              --- Mourning Plateau
+              {2008, 996, manual = true, disabled = true},
+              --- Spice Route
+              {1996, 684, manual = true},
+              --- River Ruin Upper
+              {1888, 978, manual = true},
+              --- Howling District
+              {1789, 1033, manual = true},
+         },
+         ["northernchaoswastes"] = {
+              --- Kraken Landing
+              {1322, 1664, manual = true},
+              --- Dumak Ankor
+              {1540, 1516, manual = true},
+              --- Dolganyeir Forests
+              {1634, 1464, manual = true},
+              --- Forest Of Gallows
+              {1589, 1703, manual = true},
+              --- Blizzard Vale
+              {1936, 1296, manual = true},
+              --- Upper Shroudlands
+              {1224, 1744, manual = true},
+              --- Vale Of Nightmares
+              {1368, 1730, manual = true},
+              --- Fleshlands
+              {1520, 1736, manual = true},
+              --- River Of The Flux
+              {1438, 1736, manual = true},
+              --- Kdatha Plateau
+              {1700, 1580, manual = true},
+              --- Icecaid Pass
+              {1496, 1624, manual = true},
+              --- Green Wastes
+              {1630, 1542, manual = true},
+              --- Shadowlands
+              {1670, 1664, manual = true},
+              --- Broken Lands
+              {1558, 1622, manual = true},
+              --- Crossroads Of The World
+              {2034, 1324, manual = true},
+              --- Frozen Steppe
+              {1474, 1568, manual = true},
+              --- Twisted Expanse
+              {1768, 1536, manual = true, disabled = true},
+              --- Brown Wastes
+              {1642, 1610, manual = true},
+              --- Dumak Ankor
+              {1554, 1472, manual = true, disabled = true},
+              --- Upper Shroudlands
+              {1298, 1742, manual = true},
+              --- Vale Of Nightmares
+              {1308, 1704, manual = true},
+              --- Fleshlands
+              {1524, 1680, manual = true},
+              --- River Of The Flux
+              {1486, 1714, manual = true},
+              --- Kdatha Plateau
+              {1732, 1638, manual = true},
+              --- Icecaid Pass
+              {1430, 1640, manual = true},
+              --- Green Wastes
+              {1578, 1554, manual = true},
+              --- Shadowlands
+              {1620, 1732, manual = true},
+              --- Broken Lands
+              {1638, 1656, manual = true},
+              --- Crossroads Of The World
+              {2008, 1374, manual = true},
+              --- Frozen Steppe
+              {1530, 1568, manual = true},
+              --- Twisted Expanse
+              {1722, 1532, manual = true},
+              --- Brown Wastes
+              {1578, 1591, manual = true},
+         },
+         ["realmofkhorne"] = {
+              --- Bastion Stair
+              {1836, 1584, manual = true, disabled = true},
+              --- Shattered Causeway
+              {2006, 1640, manual = true},
+              --- Land Of The Forgotten
+              {1958, 1718, manual = true},
+              --- Island Of Endless Gore
+              {1820, 1664, manual = true},
+              --- Wrathgate
+              {1868, 1602, manual = true},
+              --- Blazing Rampart
+              {1818, 1622, manual = true},
+              --- Forge Of Souls
+              {1992, 1510, manual = true, disabled = true},
+              --- Tree Of Souls
+              {1956, 1578, manual = true},
+              --- Forge Of The Eight
+              {2002, 1596, manual = true},
+              --- Boiling Span
+              {1926, 1524, manual = true},
+              --- Eye Of Terror
+              {2006, 1718, manual = true},
+              --- Butchers Haunt
+              {1926, 1700, manual = true},
+              --- Slayer Forge
+              {1976, 1680, manual = true},
+              --- Hunting Fields
+              {1906, 1602, manual = true},
+              --- Skull Of The First
+              {1824, 1744, manual = true},
+              --- Foundry Of Rage
+              {2008, 1556, manual = true},
+              --- Cracked Land
+              {1942, 1632, manual = true},
+              --- Great Bulwark
+              {1880, 1567, manual = true},
+              --- Brass Citadel
+              {1870, 1652, manual = true},
+              --- Machina Daemonium
+              {1884, 1742, manual = true},
+              --- Ring Of Doom
+              {1748, 1720, manual = true},
+              --- Endless Steppes
+              {1834, 1492, manual = true},
+              {1808, 1534, manual = true},
+              --- Butchers Haunt
+              {1888, 1698, manual = true},
+         },
+         ["realmofslaanesh"] = {
+              --- Circle Of Indolency
+              {18, 1702, manual = true, disabled = true},
+              --- Circle Of Vainglory
+              {96, 1750, manual = true, disabled = true},
+              --- Palace Of Slaanesh
+              {40, 1756, manual = true, disabled = true},
+              --- Circle Of Paramountcy
+              {14, 1660, manual = true, disabled = true},
+              --- Causeway Of Secrets
+              {122, 1568, manual = true},
+              --- Circle Of Carnality
+              {152, 1760, manual = true, disabled = true},
+              --- Circle Of Gluttony
+              {132, 1722, manual = true, disabled = true},
+              --- Flats Of Frenzy
+              {235, 1646, manual = true},
+              --- Circle Of Avidity
+              {14, 1600, manual = true, disabled = true},
+              --- Slaanesh Marches
+              {278, 1716, manual = true},
+              --- Vermillion Caverns
+              {186, 1582, manual = true},
+              --- Vale Of Creatures
+              {69, 1547, manual = true},
+              --- Marcher Fortress
+              {255, 1740, manual = true},
+              --- Ecstasy Expanse
+              {154, 1650, manual = true},
+              --- Grove Of The Dark Maiden
+              {196, 1672, manual = true},
+              --- Tickling Tundra
+              {173, 1696, manual = true, disabled = true},
+              --- Lake Of Luxury
+              {82, 1632, manual = true, disabled = true},
+              --- Ecstasy Expanse
+              {150, 1614, manual = true},
+              --- Flats Of Frenzy
+              {199, 1632, manual = true},
+              --- Grove Of The Dark Maiden
+              {226, 1700, manual = true},
+         },
+    },
+    points_of_interest = {
+        ["badlands"] = {
+            ["taverns"] = {
+                { coordinates = {924, 767}, culture = "grn", initial_owner = "wh_main_grn_scabby_eye", owner_if_player = "wh_main_grn_scabby_eye", manual = true },
+                { coordinates = {869, 544}, initial_owner = "wh_main_grn_teef_snatchaz", owner_if_player = "wh_main_grn_teef_snatchaz", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {904, 718}, initial_owner = "wh_main_grn_scabby_eye", owner_if_player = "cr_def_the_dark_convent", region = "", manual = true },
+                { coordinates = {600, 272}, initial_owner = "cr_skv_clan_flem", owner_if_player = "cr_grn_spotted_skullz_tribe", region = "", manual = true, disabled = true },
+                { coordinates = {1082, 282}, initial_owner = "cr_skv_clan_klaw", owner_if_player = "cr_nur_tide_of_pestilence", region = "", manual = true, disabled = true },
+                { coordinates = {1282, 712}, initial_owner = "wh3_main_grn_moon_howlerz", owner_if_player = "wh3_main_ogr_mountaineaters", region = "", manual = true },
+                { coordinates = {804, 460}, initial_owner = "cr_dwf_clan_barruk", owner_if_player = "wh2_main_vmp_strygos_empire", region = "", manual = true },
+                { coordinates = {1090, 868}, initial_owner = "cr_teb_north_confederacy", owner_if_player = "wh2_main_skv_clan_gnaw", region = "", manual = true, disabled = true },
+                { coordinates = {1076, 564}, initial_owner = "wh2_dlc15_grn_skull_crag", owner_if_player = "wh_main_grn_teef_snatchaz", region = "", manual = true, disabled = true },
+                { coordinates = {594, 480}, initial_owner = "wh2_main_hef_yvresse", owner_if_player = "cr_grn_white_skullz", region = "", manual = true },
+                { coordinates = {734, 616}, initial_owner = "cr_ksl_order_of_the_winter_sun", owner_if_player = "wh3_main_skv_clan_treecherik", region = "", manual = true },
+                { coordinates = {1002, 426}, initial_owner = "wh3_main_nur_poxmakers_of_nurgle", owner_if_player = "cr_grn_rusty_daggaz_tribe", region = "", manual = true },
+            },
+        },
+        ["borderprinces"] = {
+            ["taverns"] = {
+                { coordinates = {589, 799}, culture = "emp", initial_owner = "cr_teb_remas", owner_if_player = "cr_teb_remas", manual = true },
+                { coordinates = {365, 856}, initial_owner = "cr_teb_gualcazar", owner_if_player = "cr_teb_gualcazar", manual = true },
+                { coordinates = {330, 964}, initial_owner = "wh3_main_ogre_flamegullets", owner_if_player = "wh3_main_ogre_flamegullets", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {386, 827}, initial_owner = "cr_teb_gualcazar", owner_if_player = "wh3_main_skv_clan_carrion", region = "", manual = true },
+                { coordinates = {1100, 944}, initial_owner = "cr_grn_black_spider_tribe", owner_if_player = "cr_teb_north_confederacy", region = "", manual = true, disabled = true },
+                { coordinates = {858, 631}, initial_owner = "cr_grn_bog_creepers_tribe", owner_if_player = "wh2_dlc15_dwf_clan_helhein", region = "", manual = true },
+                { coordinates = {102, 840}, initial_owner = "cr_teb_nuja", owner_if_player = "wh2_dlc11_def_the_blessed_dread", region = "", manual = true, disabled = true },
+                { coordinates = {692, 860}, initial_owner = "wh3_main_ogr_crossed_clubs", owner_if_player = "wh_main_grn_broken_nose", region = "", manual = true, disabled = true },
+                { coordinates = {581, 632}, initial_owner = "cr_teb_luccini", owner_if_player = "cr_wef_sussurrio_wood", region = "", manual = true },
+                { coordinates = {212, 1026}, initial_owner = "cr_cst_schmidts_renegades", owner_if_player = "cr_teb_bilbali", region = "", manual = true },
+                { coordinates = {914, 832}, initial_owner = "cr_grn_yellow_eye_tribe", owner_if_player = "cr_teb_central_confederacy", region = "", manual = true, disabled = true },
+                { coordinates = {396, 966}, initial_owner = "cr_teb_vizeaya", owner_if_player = "wh3_main_ogre_flamegullets", region = "", manual = true },
+                { coordinates = {605, 849}, initial_owner = "cr_teb_miragliano", owner_if_player = "wh3_main_skv_clan_skrat", region = "", manual = true },
+                { coordinates = {714, 700}, initial_owner = "cr_teb_south_confederacy", owner_if_player = "cr_grn_blue_face_tribe", region = "", manual = true, disabled = true },
+            },
+        },
+        ["bretonnia"] = {
+            ["taverns"] = {
+                { coordinates = {408, 1272}, culture = "brt", initial_owner = "mixer_brt_languille", owner_if_player = "mixer_brt_languille", manual = true },
+                { coordinates = {541, 1141}, initial_owner = "wh_main_brt_bastonne", owner_if_player = "wh_main_brt_bastonne", manual = true },
+                { coordinates = {570, 992}, initial_owner = "mixer_brt_quenelles", owner_if_player = "mixer_brt_quenelles", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {460, 1080}, initial_owner = "wh_main_brt_bordeleaux", owner_if_player = "wh3_main_nur_bubonic_swarm", region = "", manual = true },
+                { coordinates = {770, 928}, initial_owner = "cr_wef_cythral", owner_if_player = "wh2_main_skv_clan_spittel", region = "", manual = true, disabled = true },
+                { coordinates = {356, 1282}, initial_owner = "cr_nor_svengarlings", owner_if_player = "wh2_dlc11_cst_the_drowned", region = "", manual = true, disabled = true },
+                { coordinates = {634, 1198}, initial_owner = "wh3_dlc26_grn_cluster_eye_tribe", owner_if_player = "wh_main_emp_marienburg", region = "", manual = true },
+                { coordinates = {502, 895}, initial_owner = "wh2_main_skv_clan_skryre", owner_if_player = "cr_teb_tobaro", region = "", manual = true },
+                { coordinates = {604, 988}, initial_owner = "mixer_brt_quenelles", owner_if_player = "cr_vmp_ghosts_of_glanborielle", region = "", manual = true, disabled = true },
+                { coordinates = {397, 1163}, initial_owner = "wh_main_brt_artois", owner_if_player = "mixer_brt_languille", region = "", manual = true },
+                { coordinates = {560, 1120}, initial_owner = "wh_main_brt_bastonne", owner_if_player = "wh3_main_skv_clan_morbidus", region = "", manual = true },
+            },
+        },
+        ["darklands"] = {
+            ["taverns"] = {
+                { coordinates = {1302, 840}, culture = "grn", initial_owner = "wh3_main_grn_drippin_fangs", owner_if_player = "wh3_main_grn_drippin_fangs", manual = true },
+                { coordinates = {1618, 882}, initial_owner = "cr_cth_silver_bandits", owner_if_player = "cr_cth_silver_bandits", manual = true },
+                { coordinates = {1326, 521}, initial_owner = "wh3_dlc26_kho_arbaal", owner_if_player = "wh3_dlc26_kho_arbaal", manual = true },
+                { coordinates = {1681, 1163}, initial_owner = "cr_cth_slaves_of_zharr", owner_if_player = "cr_cth_slaves_of_zharr", manual = true },
+                { coordinates = {1449, 564}, initial_owner = "wh3_main_skv_clan_krizzor", owner_if_player = "wh3_main_skv_clan_krizzor", manual = true },
+                { coordinates = {1895, 668}, initial_owner = "wh3_main_grn_dark_land_orcs", owner_if_player = "wh3_main_grn_dark_land_orcs", manual = true },
+                { coordinates = {1287, 974}, initial_owner = "wh3_dlc20_kho_blood_keepers", owner_if_player = "wh3_dlc20_kho_blood_keepers", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1678, 1412}, initial_owner = "cr_ksl_rota_of_the_dawn", owner_if_player = "cr_chd_slaves_of_the_black_dwarf", region = "", manual = true },
+                { coordinates = {2020, 318}, initial_owner = "wh2_main_skv_clan_pestilens", owner_if_player = "wh2_dlc14_lzd_itz_itza_tribe", region = "", manual = true, disabled = true },
+                { coordinates = {1168, 610}, initial_owner = "wh3_main_skv_clan_verms", owner_if_player = "wh_main_dwf_karak_azul", region = "", manual = true, disabled = true },
+                { coordinates = {1994, 910}, initial_owner = "wh3_main_ogr_sons_of_the_mountain", owner_if_player = "cr_chd_horns_of_hashut", region = "", manual = true },
+                { coordinates = {1374, 1042}, initial_owner = "wh3_dlc20_kho_blood_keepers", owner_if_player = "cr_grn_ironskinz_tribe", region = "", manual = true },
+                { coordinates = {1614, 572}, initial_owner = "wh3_main_ie_vmp_sires_of_mourkain", owner_if_player = "wh2_dlc14_grn_red_cloud", region = "", manual = true },
+                { coordinates = {1622, 899}, initial_owner = "cr_cth_silver_bandits", owner_if_player = "wh3_dlc23_chd_zhatan", region = "", manual = true },
+                { coordinates = {1914, 608}, initial_owner = "cr_ogr_deathtoll", owner_if_player = "wh3_main_vmp_caravan_of_blue_roses", region = "", manual = true },
+                { coordinates = {1812, 1146}, initial_owner = "cr_dwf_slaves_of_zharr", owner_if_player = "wh3_dlc23_chd_minor_faction", region = "", manual = true },
+                { coordinates = {1572, 1192}, initial_owner = "cr_chd_house_of_azeros", owner_if_player = "cr_ksl_slaves_of_zharr", region = "", manual = true },
+                { coordinates = {1434, 760}, initial_owner = "cr_grn_grey_hag_tribe", owner_if_player = "wh3_main_grn_drippin_fangs", region = "", manual = true },
+                { coordinates = {1460, 475}, initial_owner = "cr_grn_stone_fangz_tribe", owner_if_player = "cr_chd_fists_of_hashut", region = "", manual = true },
+                { coordinates = {1752, 718}, initial_owner = "cr_chd_house_of_khorakk", owner_if_player = "wh3_dlc20_nur_pallid_nurslings", region = "", manual = true },
+                { coordinates = {1274, 858}, initial_owner = "wh3_main_grn_drippin_fangs", owner_if_player = "wh2_main_skv_clan_mordkin", region = "", manual = true },
+            },
+        },
+        ["empire"] = {
+            ["taverns"] = {
+                { coordinates = {808, 1314}, culture = "emp", initial_owner = "wh_main_emp_nordland", owner_if_player = "wh_main_emp_nordland", manual = true },
+                { coordinates = {843, 1130}, initial_owner = "cr_skv_clan_skaul", owner_if_player = "cr_skv_clan_skaul", manual = true },
+                { coordinates = {726, 1149}, initial_owner = "wh_main_emp_empire_separatists", owner_if_player = "wh_main_emp_empire_separatists", manual = true },
+                { coordinates = {1003, 1129}, initial_owner = "wh_main_emp_talabecland", owner_if_player = "wh_main_emp_talabecland", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {714, 1472}, initial_owner = "wh_main_nor_skaeling", owner_if_player = "cr_grn_reavaz_tribe", region = "", manual = true, disabled = true },
+                { coordinates = {1104, 1064}, initial_owner = "wh_main_vmp_schwartzhafen", owner_if_player = "wh_main_dwf_zhufbar", region = "", manual = true },
+                { coordinates = {750, 1090}, initial_owner = "wh_main_emp_empire_separatists", owner_if_player = "cr_grn_deff_grindaz_tribe", region = "", manual = true, disabled = true },
+                { coordinates = {501, 1258}, initial_owner = "wh_main_brt_bretonnia", owner_if_player = "wh_main_grn_skullsmasherz", region = "", manual = true },
+                { coordinates = {974, 1330}, initial_owner = "wh_main_emp_ostland", owner_if_player = "wh3_main_ksl_the_great_orthodoxy", region = "", manual = true },
+                { coordinates = {758, 1288}, initial_owner = "cr_grn_bloodfeather_tribe", owner_if_player = "wh_dlc03_grn_black_pit", region = "", manual = true },
+                { coordinates = {1162, 1240}, initial_owner = "cr_ksl_the_boyar_assembly", owner_if_player = "wh3_main_ksl_the_ice_court", region = "", manual = true },
+                { coordinates = {924, 1018}, initial_owner = "cr_tmb_legion_of_setep", owner_if_player = "wh_main_emp_averland", region = "", manual = true },
+                { coordinates = {862, 1540}, initial_owner = "wh_main_nor_sarl", owner_if_player = "wh2_dlc12_skv_clan_mange", region = "", manual = true, disabled = true },
+                { coordinates = {896, 1190}, initial_owner = "wh_main_emp_talabecland", owner_if_player = "wh_main_emp_hochland", region = "", manual = true },
+                { coordinates = {1042, 1200}, initial_owner = "wh2_dlc16_wef_drycha", owner_if_player = "wh_main_emp_talabecland", region = "", manual = true },
+                { coordinates = {620, 1268}, initial_owner = "wh3_dlc20_brt_march_of_couronne", owner_if_player = "wh_main_emp_marienburg", region = "", manual = true, disabled = true },
+                { coordinates = {650, 1142}, initial_owner = "wh3_dlc26_grn_cluster_eye_tribe", owner_if_player = "wh_main_dwf_karak_ziflin", region = "", manual = true, disabled = true },
+                { coordinates = {864, 1328}, initial_owner = "cr_vmp_the_everliving", owner_if_player = "wh_main_emp_nordland", region = "", manual = true },
+                { coordinates = {698, 1370}, initial_owner = "cr_def_corsairs_of_spite", owner_if_player = "wh3_main_wef_laurelorn", region = "", manual = true },
+                { coordinates = {1010, 1104}, initial_owner = "wh_main_vmp_rival_sylvanian_vamps", owner_if_player = "wh2_dlc15_skv_clan_kreepus", region = "", manual = true },
+            },
+        },
+        ["greymountains"] = {
+            ["taverns"] = {
+                { coordinates = {862, 940}, culture = "dwf", initial_owner = "wh_main_dwf_karak_hirn", owner_if_player = "wh_main_dwf_karak_hirn", manual = true },
+                { coordinates = {756, 982}, initial_owner = "wh_dlc05_wef_wydrioth", owner_if_player = "wh_dlc05_wef_wydrioth", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {606, 932}, initial_owner = "cr_vmp_ghosts_of_glanborielle", owner_if_player = "cr_grn_necksnappers_tribe", region = "", manual = true },
+                { coordinates = {1014, 888}, initial_owner = "cr_teb_north_confederacy", owner_if_player = "wh_main_grn_black_venom", region = "", manual = true },
+                { coordinates = {784, 990}, initial_owner = "wh_main_dwf_karak_norn", owner_if_player = "wh_dlc05_wef_wydrioth", region = "", manual = true, disabled = true },
+                { coordinates = {692, 1092}, initial_owner = "wh_main_brt_parravon", owner_if_player = "wh3_dlc26_grn_cluster_eye_tribe", region = "", manual = true, disabled = true },
+                { coordinates = {872, 886}, initial_owner = "wh_main_grn_black_venom", owner_if_player = "cr_teb_central_confederacy", region = "", manual = true },
+                { coordinates = {688, 996}, initial_owner = "cr_wef_anmyr", owner_if_player = "wh_dlc05_wef_torgovann", region = "", manual = true },
+            },
+        },
+        ["kislev"] = {
+            ["taverns"] = {
+                { coordinates = {1026, 1306}, culture = "ksl", initial_owner = "cr_ksl_tzaryovshchina", owner_if_player = "cr_ksl_tzaryovshchina", manual = true },
+                { coordinates = {1140, 1396}, initial_owner = "wh2_dlc15_grn_bonerattlaz", owner_if_player = "wh2_dlc15_grn_bonerattlaz", manual = true },
+                { coordinates = {983, 1583}, initial_owner = "cr_nor_brennuns", owner_if_player = "cr_nor_brennuns", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {954, 1430}, initial_owner = "cr_cst_spirits_of_norvard", owner_if_player = "wh_main_nor_sarl", region = "", manual = true },
+                { coordinates = {1502, 1532}, initial_owner = "cr_nor_schwarzvolf", owner_if_player = "wh3_dlc20_nor_kul", region = "", manual = true },
+                { coordinates = {1248, 1324}, initial_owner = "cr_grn_gloomfang_tribe", owner_if_player = "cr_dwf_clan_durazgrund", region = "", manual = true },
+                { coordinates = {1000, 1604}, initial_owner = "cr_nor_brennuns", owner_if_player = "wh3_main_nur_maggoth_kin", region = "", manual = true, disabled = true },
+                { coordinates = {1092, 1238}, initial_owner = "cr_ksl_the_boyar_assembly", owner_if_player = "wh_main_emp_ostermark", region = "", manual = true },
+                { coordinates = {1330, 1496}, initial_owner = "wh_main_nor_baersonling", owner_if_player = "cr_nor_ursfjordlings", region = "", manual = true, disabled = true },
+            },
+        },
+        ["maelstrom"] = {
+            ["taverns"] = {
+                { coordinates = {154, 696}, culture = "cst", initial_owner = "cr_cst_darkness_daughters", owner_if_player = "cr_cst_darkness_daughters", manual = true, disabled = true },
+                { coordinates = {96, 670}, initial_owner = "cr_hef_the_starguided", owner_if_player = "cr_hef_the_starguided", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {196, 582}, initial_owner = "cr_chd_warfleet_of_uzkulak", owner_if_player = "cr_cst_red_hand_fleet", region = "", manual = true },
+                { coordinates = {90, 732}, initial_owner = "wh3_dlc27_hef_aislinn_confederation_owner", owner_if_player = "wh3_dlc27_hef_aislinn", region = "", manual = true, disabled = true },
+            },
+        },
+        ["mountainsofmourn"] = {
+            ["taverns"] = {
+                { coordinates = {1852, 1246}, culture = "ogr", initial_owner = "cr_ogr_ironskins", owner_if_player = "cr_ogr_ironskins", manual = true, disabled = true },
+                { coordinates = {1886, 1004}, initial_owner = "cr_ogr_red_maw", owner_if_player = "cr_ogr_red_maw", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1946, 1442}, initial_owner = "wh3_dlc20_nor_kuj", owner_if_player = "wh3_dlc20_nor_yusak", region = "", manual = true, disabled = true },
+                { coordinates = {1936, 496}, initial_owner = "wh3_main_lzd_tepoks_spawn", owner_if_player = "wh3_main_vmp_caravan_of_blue_roses", region = "", manual = true },
+                { coordinates = {1874, 994}, initial_owner = "cr_ogr_red_maw", owner_if_player = "wh3_main_dwf_karak_azorn", region = "", manual = true },
+                { coordinates = {2034, 1182}, initial_owner = "cr_tze_soiree_of_sorcery", owner_if_player = "wh2_dlc17_dwf_thorek_ironbrow", region = "", manual = true, disabled = true },
+            },
+        },
+        ["nehekara"] = {
+            ["taverns"] = {
+                { coordinates = {486, 344}, culture = "tmb", initial_owner = "cr_tmb_zandri", owner_if_player = "cr_tmb_zandri", manual = true },
+                { coordinates = {758, 156}, initial_owner = "wh2_dlc09_tmb_rakaph_dynasty", owner_if_player = "wh2_dlc09_tmb_rakaph_dynasty", manual = true },
+                { coordinates = {313, 298}, initial_owner = "cr_vmp_cult_of_mordig", owner_if_player = "cr_vmp_cult_of_mordig", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {660, 78}, initial_owner = "wh2_dlc09_tmb_followers_of_nagash", owner_if_player = "cr_emp_archaeological_expedition", region = "", manual = true },
+                { coordinates = {1460, 152}, initial_owner = "cr_teb_estebans_caballeros", owner_if_player = "cr_def_harbingers_of_pain", region = "", manual = true },
+                { coordinates = {36, 470}, initial_owner = "wh2_main_brt_knights_of_origo", owner_if_player = "cr_sla_worshippers_of_the_worm", region = "", manual = true, disabled = true },
+                { coordinates = {1086, 14}, initial_owner = "cr_tmb_guardians_of_the_valley", owner_if_player = "cr_tmb_the_alabaster_army", region = "", manual = true },
+                { coordinates = {402, 236}, initial_owner = "cr_tze_cult_of_mirrors", owner_if_player = "cr_vmp_cult_of_mordig", region = "", manual = true },
+                { coordinates = {922, 348}, initial_owner = "cr_grn_stitched_skullz_tribe", owner_if_player = "wh3_main_ogr_blood_guzzlers", region = "", manual = true },
+                { coordinates = {1298, 342}, initial_owner = "cr_cth_agents_of_the_moon", owner_if_player = "wh2_main_vmp_the_silver_host", region = "", manual = true },
+                { coordinates = {592, 191}, initial_owner = "cr_emp_cult_of_morr", owner_if_player = "wh2_dlc11_cst_vampire_coast_rebels", region = "", manual = true },
+                { coordinates = {408, 14}, initial_owner = "wh2_dlc14_brt_chevaliers_de_lyonesse", owner_if_player = "wh3_main_ogre_the_famished", region = "", manual = true, disabled = true },
+                { coordinates = {880, 96}, initial_owner = "cr_ogr_black_maw", owner_if_player = "wh2_main_vmp_necrarch_brotherhood", region = "", manual = true },
+                { coordinates = {243, 360}, initial_owner = "cr_skv_clan_skully", owner_if_player = "wh2_main_brt_thegans_crusaders", region = "", manual = true },
+                { coordinates = {744, 258}, initial_owner = "cr_ogr_thunderhoof", owner_if_player = "cr_skv_clan_flem", region = "", manual = true },
+            },
+        },
+        ["norsca"] = {
+            ["taverns"] = {
+                { coordinates = {764, 1612}, culture = "nor", initial_owner = "wh_dlc08_nor_naglfarlings", owner_if_player = "wh_dlc08_nor_naglfarlings", manual = true, disabled = true },
+                { coordinates = {460, 1460}, initial_owner = "cr_teb_order_of_the_blazing_sun", owner_if_player = "cr_teb_order_of_the_blazing_sun", manual = true },
+                { coordinates = {167, 1381}, initial_owner = "cr_nor_losteriklings", owner_if_player = "cr_nor_losteriklings", manual = true },
+                { coordinates = {702, 1669}, initial_owner = "wh3_main_kho_karneths_sons", owner_if_player = "wh3_main_kho_karneths_sons", manual = true },
+                { coordinates = {1226, 1576}, initial_owner = "cr_tmb_settras_revenge", owner_if_player = "cr_tmb_settras_revenge", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1008, 1684}, initial_owner = "wh_main_nor_aesling", owner_if_player = "wh3_main_nur_maggoth_kin", region = "", manual = true },
+                { coordinates = {42, 1240}, initial_owner = "wh2_main_hef_nagarythe", owner_if_player = "wh3_dlc20_tze_the_sightless", region = "", manual = true, disabled = true },
+                { coordinates = {1482, 1336}, initial_owner = "cr_nor_river_dolgan", owner_if_player = "cr_grn_grag_a_mugar_clan", region = "", manual = true },
+                { coordinates = {460, 1638}, initial_owner = "wh_main_nor_graeling", owner_if_player = "cr_chs_the_scourgeborn", region = "", manual = true, disabled = true },
+                { coordinates = {1278, 1532}, initial_owner = "cr_nor_ursfjordlings", owner_if_player = "cr_sla_coveted_passion", region = "", manual = true, disabled = true },
+                { coordinates = {732, 1674}, initial_owner = "wh3_main_kho_karneths_sons", owner_if_player = "wh_dlc08_nor_naglfarlings", region = "", manual = true },
+                { coordinates = {190, 1387}, initial_owner = "wh2_main_lzd_last_defenders", owner_if_player = "cr_nor_losteriklings", region = "", manual = true },
+                { coordinates = {544, 1448}, initial_owner = "cr_chs_slayers_of_souls", owner_if_player = "wh_dlc08_nor_norsca", region = "", manual = true },
+                { coordinates = {1086, 1522}, initial_owner = "cr_dwf_kraka_ravensvake", owner_if_player = "wh3_main_kho_exiles_of_khorne", region = "", manual = true, disabled = true },
+                { coordinates = {365, 1563}, initial_owner = "wh_main_nor_bjornling", owner_if_player = "cr_chs_the_scourgeborn", region = "", manual = true },
+                { coordinates = {1158, 1654}, initial_owner = "cr_chs_steelfist_reavers", owner_if_player = "wh3_dlc20_sla_keepers_of_bliss", region = "", manual = true, disabled = true },
+            },
+        },
+        ["northernchaoswastes"] = {
+            ["taverns"] = {
+                { coordinates = {1350, 1704}, culture = "nor", initial_owner = "cr_nor_tahmaks", owner_if_player = "cr_nor_tahmaks", manual = true },
+                { coordinates = {1598, 1576}, initial_owner = "wh3_dlc27_the_narj", owner_if_player = "wh3_dlc27_the_narj", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1452, 1654}, initial_owner = "cr_ksl_dervingard_garrison", owner_if_player = "cr_chs_horde_of_kurnz", region = "", manual = true },
+                { coordinates = {2034, 1298}, initial_owner = "wh3_main_cth_the_western_provinces", owner_if_player = "wh3_main_chs_khazag", region = "", manual = true, disabled = true },
+                { coordinates = {1758, 1542}, initial_owner = "cr_grn_nag_rippers", owner_if_player = "cr_nor_tokmars", region = "", manual = true },
+                { coordinates = {1218, 1758}, initial_owner = "cr_nor_gharhar", owner_if_player = "cr_nor_tahmaks", region = "", manual = true, disabled = true },
+            },
+        },
+        ["realmofkhorne"] = {
+            ["taverns"] = {
+                { coordinates = {1886, 1602}, culture = "kho", initial_owner = "cr_kho_third_host_of_murder", owner_if_player = "cr_kho_third_host_of_murder", manual = true, disabled = true },
+                { coordinates = {1900, 1655}, initial_owner = "cr_tze_scheming_horrors", owner_if_player = "cr_tze_scheming_horrors", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1770, 1696}, initial_owner = "cr_nur_phlegmatic_humor", owner_if_player = "cr_kho_third_host_of_murder", region = "", manual = true, disabled = true },
+                { coordinates = {2004, 1510}, initial_owner = "cr_nur_phlegmatic_humor", owner_if_player = "wh3_main_sla_exquisite_pain", region = "", manual = true, disabled = true },
+                { coordinates = {1994, 1738}, initial_owner = "cr_nur_phlegmatic_humor", owner_if_player = "wh3_main_sla_exquisite_pain", region = "", manual = true, disabled = true },
+                { coordinates = {1818, 1518}, initial_owner = "cr_nor_tokmars", owner_if_player = "cr_kho_third_host_of_murder", region = "", manual = true, disabled = true },
+                { coordinates = {1867, 1632}, initial_owner = "cr_tze_scheming_horrors", owner_if_player = "cr_kho_third_host_of_murder", region = "", manual = true },
+                { coordinates = {1878, 1734}, initial_owner = "wh3_dlc26_kho_skulltaker", owner_if_player = "wh3_main_sla_subtle_torture", region = "", manual = true, disabled = true },
+            },
+        },
+        ["realmofnurgle"] = {
+            ["taverns"] = {
+                { coordinates = {1926, 32}, culture = "nur", initial_owner = "wh3_dlc25_nur_epidemius", owner_if_player = "wh3_dlc25_nur_epidemius", manual = true, disabled = true },
+                { coordinates = {1894, 114}, initial_owner = "cr_nur_festant_flux", owner_if_player = "cr_nur_festant_flux", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1866, 18}, initial_owner = "cr_tze_the_pearlescent", owner_if_player = "wh3_dlc25_nur_epidemius", region = "", manual = true, disabled = true },
+                { coordinates = {2024, 262}, initial_owner = "wh3_main_kho_brazen_throne", owner_if_player = "wh2_main_skv_clan_pestilens", region = "", manual = true, disabled = true },
+                { coordinates = {1930, 128}, initial_owner = "wh3_main_kho_brazen_throne", owner_if_player = "cr_nur_festant_flux", region = "", manual = true },
+                { coordinates = {2010, 102}, initial_owner = "cr_sla_serpents_harem", owner_if_player = "wh3_main_tze_all_seeing_eye", region = "", manual = true, disabled = true },
+                { coordinates = {1744, 26}, initial_owner = "cr_sla_serpents_harem", owner_if_player = "wh3_dlc21_nor_wyrmkins", region = "", manual = true, disabled = true },
+            },
+        },
+        ["realmofslaanesh"] = {
+            ["taverns"] = {
+                { coordinates = {138, 1534}, culture = "sla", initial_owner = "cr_sla_addled_minds", owner_if_player = "cr_sla_addled_minds", manual = true, disabled = true },
+                { coordinates = {132, 1632}, initial_owner = "wh3_main_sla_seducers_of_slaanesh", owner_if_player = "wh3_main_sla_seducers_of_slaanesh", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {98, 1732}, initial_owner = "cr_kho_unfettered_fury", owner_if_player = "cr_nur_gibbeting_decay", region = "", manual = true, disabled = true },
+                { coordinates = {52, 1520}, initial_owner = "cr_kho_unfettered_fury", owner_if_player = "wh3_main_chs_shadow_legion", region = "", manual = true, disabled = true },
+                { coordinates = {298, 1756}, initial_owner = "wh3_main_sla_subtle_torture", owner_if_player = "cr_kho_unfettered_fury", region = "", manual = true, disabled = true },
+                { coordinates = {128, 1656}, initial_owner = "cr_tze_aquiline_trickery", owner_if_player = "cr_sla_addled_minds", region = "", manual = true },
+            },
+        },
+        ["realmoftzeentch"] = {
+            ["taverns"] = {
+                { coordinates = {130, 112}, culture = "tze", initial_owner = "cr_tze_swords_of_change", owner_if_player = "cr_tze_swords_of_change", manual = true },
+                { coordinates = {130, 166}, initial_owner = "wh3_main_nur_septic_claw", owner_if_player = "wh3_main_nur_septic_claw", manual = true, disabled = true },
+            },
+            ["smithies"] = {
+                { coordinates = {268, 28}, initial_owner = "cr_tze_swords_of_change", owner_if_player = "cr_tze_the_pearlescent", region = "", manual = true, disabled = true },
+                { coordinates = {20, 226}, initial_owner = "cr_sla_addled_minds", owner_if_player = "wh3_main_tze_oracles_of_tzeentch", region = "", manual = true, disabled = true },
+                { coordinates = {90, 28}, initial_owner = "cr_kho_blood_sayters", owner_if_player = "cr_sla_obsessive_perfection", region = "", manual = true, disabled = true },
+                { coordinates = {212, 178}, initial_owner = "cr_tze_swords_of_change", owner_if_player = "cr_tze_cult_of_mirrors", region = "", manual = true, disabled = true },
+                { coordinates = {139, 144}, initial_owner = "cr_tze_swords_of_change", owner_if_player = "cr_tze_swords_of_change", region = "", manual = true },
+            },
+        },
+        ["southlands"] = {
+            ["taverns"] = {
+                { coordinates = {1608, 42}, culture = "lzd", initial_owner = "wh3_dlc21_nor_wyrmkins", owner_if_player = "wh3_dlc21_nor_wyrmkins", manual = true },
+                { coordinates = {1578, 14}, initial_owner = "wh2_main_wef_bowmen_of_oreon", owner_if_player = "wh2_main_wef_bowmen_of_oreon", manual = true, disabled = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1450, 46}, initial_owner = "cr_skv_clan_festerlingus", owner_if_player = "wh2_main_wef_bowmen_of_oreon", region = "", manual = true },
+            },
+        },
+        ["worldsedgemountains"] = {
+            ["taverns"] = {
+                { coordinates = {1246, 1198}, culture = "grn", initial_owner = "wh_main_grn_red_eye", owner_if_player = "wh_main_grn_red_eye", manual = true },
+                { coordinates = {1330, 834}, initial_owner = "wh2_dlc09_skv_clan_rictus", owner_if_player = "wh2_dlc09_skv_clan_rictus", manual = true },
+                { coordinates = {1448, 1343}, initial_owner = "cr_nor_river_dolgan", owner_if_player = "cr_nor_river_dolgan", manual = true },
+            },
+            ["smithies"] = {
+                { coordinates = {1378, 782}, initial_owner = "wh3_main_grn_drippin_fangs", owner_if_player = "wh3_main_ogr_mountaineaters", region = "", manual = true },
+                { coordinates = {1196, 216}, initial_owner = "cr_skv_clan_klaw", owner_if_player = "wh2_main_grn_arachnos", region = "", manual = true, disabled = true },
+                { coordinates = {1374, 1316}, initial_owner = "wh2_dlc16_skv_clan_gritus", owner_if_player = "wh3_main_kho_bloody_sword", region = "", manual = true, disabled = true },
+                { coordinates = {1638, 448}, initial_owner = "wh3_main_ogr_thunderguts", owner_if_player = "wh3_main_ie_vmp_sires_of_mourkain", region = "", manual = true },
+                { coordinates = {1128, 1116}, initial_owner = "wh_main_dwf_karak_kadrin", owner_if_player = "wh_main_vmp_waldenhof", region = "", manual = true },
+                { coordinates = {1184, 534}, initial_owner = "cr_vmp_keepers_of_the_mountain", owner_if_player = "cr_skv_clan_rikek", region = "", manual = true },
+            },
+        },
     },
 }
 

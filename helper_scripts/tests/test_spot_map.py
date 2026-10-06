@@ -7,6 +7,8 @@ import subprocess
 import pytest
 
 from tools.spot_map import coordinates_io as cio
+from tools.spot_map import campaigns as spot_campaigns
+from tools.spot_map import suggest
 
 FIXTURE = """--- Coordinates for testing.
 
@@ -258,3 +260,73 @@ def test_real_file_parses_every_spot_and_smithy():
     assert sum(1 for p in campaigns["immortal_empires"].pois if p.kind == "smithies") == 54
     assert all(z.close_line > 0 for c in campaigns.values() for z in c.zones.values())
     assert all(c.spots_close_line > 0 and c.pois_close_line > 0 for c in campaigns.values())
+
+
+def test_culture_of_reads_the_shorthand_from_a_faction_key():
+    assert suggest.culture_of("wh2_main_def_naggarond") == "def"
+    assert suggest.culture_of("wh_main_teb_estalia") == "emp"
+    assert suggest.culture_of("wh2_main_rogue_hung_warband") is None
+    assert suggest.culture_of("") is None
+
+
+def test_check_places_suggestions_and_flags_problems():
+    spots = [{"lua": "ie", "zone": "a", "index": 1, "x": 10, "y": 20, "area": "Hills", "disabled": False, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 2, "x": 30, "y": 40, "area": "Marsh", "disabled": True, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 3, "x": 50, "y": 60, "area": "", "disabled": True, "flags": []}]
+    pois = [{"lua": "ie", "zone": "a", "kind": "taverns", "index": 1, "x": 50, "y": 60, "fields": {}, "disabled": False}]
+    tavern = {"type": "tavern", "lua": "ie", "zone": "a", "fields": {}}
+    out = suggest.check([{**tavern, "spot": 1, "fields": {"culture": "def"}}, {**tavern, "spot": 2}, {**tavern, "spot": 9},
+                               {**tavern, "spot": 1}, {**tavern, "spot": 3}, {**tavern, "spot": 1, "fields": {"culture": "xyz"}},
+                               {**tavern, "type": "inn", "spot": 1}], spots, pois)
+    assert (out[0]["x"], out[0]["y"], out[0]["area"], out[0]["problem"], out[0]["placed"]) == (10, 20, "Hills", None, False)
+    assert "disabled" in out[1]["problem"]
+    assert "no spot" in out[2]["problem"]
+    assert "also suggestion 1" in out[3]["problem"]
+    assert out[4]["placed"] and out[4]["problem"] is None
+    assert "unknown culture" in out[5]["problem"]
+    assert "unknown type" in out[6]["problem"]
+    taverns = [{"lua": "ie", "zone": "a", "kind": "taverns", "index": 2, "x": 12, "y": 23, "fields": {}, "disabled": False}]
+    moved = suggest.check([{**tavern, "spot": 1, "at": [12, 23]}], spots, pois + taverns)
+    assert (moved[0]["x"], moved[0]["y"], moved[0]["placed"]) == (12, 23, True)
+
+
+@pytest.mark.parametrize("key", ["ie", "iee", "roc"])
+def test_saved_suggestions_match_the_real_file(key):
+    facts = suggest.campaign_facts(key)
+    checked = suggest.check(suggest.load(facts["campaign"]), facts["spots"], facts["pois"])
+    assert checked and not [s["problem"] for s in checked if s["problem"]]
+    zones = {s["zone"] for s in checked}
+    assert all(sum(1 for s in checked if s["zone"] == z and (s.get("fields") or {}).get("culture")) == 1 for z in zones)
+
+
+def test_export_log_describes_changes_and_lists_newest_first(tmp_path, monkeypatch):
+    monkeypatch.setattr(spot_campaigns, "HISTORY_PATH", str(tmp_path / "history.jsonl"))
+    changes = {"add": [{"type": "tavern", "zone": "a", "x": 1, "y": 2, "fields": {"culture": "def"}}],
+               "disable": [{"target": "spot", "zone": "a", "index": 3}], "enable": [{"target": "poi", "kind": "smithies", "zone": "b", "index": 1}],
+               "move": [{"target": "spot", "zone": "a", "index": 4, "x": 5, "y": 6}]}
+    lines = spot_campaigns.describe_changes(changes)
+    assert lines == ["add tavern in a at {1, 2} (def)", "delete spot a 3", "switch on smithies b 1", "move spot a 4 to {5, 6}"]
+    spot_campaigns.log_export("ie", "export", "b1.lua", "first", lines)
+    spot_campaigns.log_export("roc", "export", "b2.lua", "other campaign", [])
+    spot_campaigns.log_export("ie", "draft", "b3.lua", "second", ["add spot in x at {1, 1}"])
+    history = spot_campaigns.export_history()
+    assert [r["summary"] for r in history["ie"]] == ["second", "first"] and [r["summary"] for r in history["roc"]] == ["other campaign"]
+
+
+def test_review_flags_count_as_fixed_once_the_spot_moves_or_is_disabled():
+    spots = [{"lua": "ie", "zone": "a", "index": 1, "x": 10, "y": 20, "disabled": False, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 2, "x": 31, "y": 40, "disabled": False, "flags": []},
+             {"lua": "ie", "zone": "a", "index": 3, "x": 50, "y": 60, "disabled": True, "flags": []}]
+    flag = {"lua": "ie", "zone": "a", "issue": "road", "note": ""}
+    out = suggest.check_reviews([{**flag, "spot": 1, "x": 10, "y": 20}, {**flag, "spot": 2, "x": 30, "y": 40}, {**flag, "spot": 3, "x": 50, "y": 60},
+                                 {**flag, "spot": 9, "x": 0, "y": 0}, {**flag, "kind": "smithies", "spot": 1, "x": 70, "y": 80}], spots,
+                                [{"lua": "ie", "zone": "a", "kind": "smithies", "index": 1, "x": 70, "y": 80, "disabled": False}])
+    assert [f["fixed"] for f in out] == [False, True, True, False, False] and not out[4]["problem"]
+    assert out[3]["problem"] and not out[0]["problem"]
+
+
+@pytest.mark.parametrize("key", ["ie", "roc"])
+def test_saved_review_flags_match_the_real_file(key):
+    facts = suggest.campaign_facts(key)
+    flags = suggest.check_reviews(suggest.load_reviews(facts["campaign"]), facts["spots"], facts["pois"])
+    assert flags and not [f["problem"] for f in flags if f["problem"]]

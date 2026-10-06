@@ -27,7 +27,8 @@ body[data-palette="neon"] { --kept: #39ff14; --cut: #ff1744; --add: #00e5ff; --d
   --settle: #000000; --edge: #000000; --tower: #b388ff; --tavern: #76ff03; --manual: #ffffff; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; }
-.wrap { max-width: 1400px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 16px; }
+/* The page uses nearly the full window width so the map gets as much room as possible. */
+.wrap { margin: 0 auto; padding-inline: 60px; padding-block: 20px 40px; display: grid; gap: 16px; }
 h1 { font-family: var(--display); font-weight: 700; font-size: 1.7rem; margin: 0; letter-spacing: .02em; }
 h2 { font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin: 0 0 8px; letter-spacing: .04em; }
 .lede { margin: 4px 0 0; color: var(--muted); max-width: 90ch; }
@@ -42,14 +43,29 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px s
 .totals { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--mono); font-size: .92rem; }
 .totals b { font-weight: 500; }
 .k { color: var(--kept); } .c { color: var(--cut); } .a { color: var(--add); } .d { color: var(--del); }
-/* The map takes the full width; the cards sit below it, side by side when there is room. */
-.layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+/* The map with Pending changes and Review in a column beside it; the other cards sit below both. On narrow screens everything stacks. */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 14px var(--dock-w, 420px); column-gap: 2px; row-gap: 16px; align-items: start; }
+/* The drag bar between the map and the side column. */
+.splitter { align-self: stretch; display: flex; justify-content: center; cursor: col-resize; touch-action: none; }
+.splitter::before { content: ""; width: 4px; border-radius: 2px; background: var(--line); }
+.splitter:hover::before, .splitter.active::before, .splitter:focus-visible::before { background: var(--kept); }
+.splitter:focus-visible { outline: none; }
+.dock { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.dock .tbl { max-height: 300px; }
+.dock #reviewCard .tbl { max-height: 560px; }
+.layout > .side { grid-column: 1 / -1; }
+@media (max-width: 1100px) { .layout { grid-template-columns: minmax(0, 1fr); } .splitter { display: none; } }
 .mapbox { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; touch-action: none; }
 svg#map { display: block; width: 100%; height: auto; cursor: crosshair; background: var(--land); }
 svg#map.drag { cursor: grabbing; }
 /* Hollow rings (trimmed, disabled, provinces with no spot) have no fill; "all" makes their inside hoverable and clickable too. */
 svg#map circle { pointer-events: all; }
-.mapbar { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; }
+/* Review rings are only a marker: clicks and drags go through to the spots under them. */
+svg#map circle.cat-flagged { pointer-events: none; }
+.mapbar { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; align-items: center; }
+/* Live in-game (logical) coordinates under the pointer. */
+.coord { font-family: var(--mono); font-size: .85rem; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 5px;
+  padding: 3px 8px; min-width: 11ch; text-align: center; }
 .btn { font: inherit; font-size: .9rem; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 5px; padding: 3px 10px; cursor: pointer; }
 .btn.primary { background: var(--kept); color: var(--panel); border-color: var(--kept); font-weight: 700; }
 .btn:disabled { opacity: .5; cursor: default; }
@@ -62,7 +78,10 @@ svg#map circle { pointer-events: all; }
 /* A filter chip switched off hides its category on the map, labels included. */
 svg#map.hide-kept .cat-kept, svg#map.hide-trimmed .cat-trimmed, svg#map.hide-added .cat-added, svg#map.hide-deleted .cat-deleted,
 svg#map.hide-disabled .cat-disabled, svg#map.hide-smithy .cat-smithy, svg#map.hide-settlement .cat-settlement,
-svg#map.hide-gap .cat-gap, svg#map.hide-manual .cat-manual, svg#map.hide-tower .cat-tower, svg#map.hide-tavern .cat-tavern, svg#map.hide-poi .cat-poi { display: none; }
+svg#map.hide-gap .cat-gap, svg#map.hide-manual .cat-manual, svg#map.hide-tower .cat-tower, svg#map.hide-tavern .cat-tavern, svg#map.hide-poi .cat-poi,
+svg#map.hide-suggested .cat-suggested, svg#map.hide-flagged .cat-flagged { display: none; }
+tr.open-flag td:first-child { font-weight: 700; }
+td.why { font-size: .82rem; color: var(--muted); }
 td .fields { display: grid; gap: 3px; }
 td .fields label { display: grid; grid-template-columns: 7.5em 1fr; align-items: center; gap: 4px; font-size: .8rem; color: var(--muted); }
 #tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: .82rem; padding: 6px 8px; border-radius: 5px; max-width: 280px; display: none; z-index: 2; }
@@ -83,6 +102,9 @@ td select, td input { font: inherit; font-size: .85rem; width: 100%; min-width: 
 ul.plain { margin: 0; padding-left: 18px; }
 .note { color: var(--muted); font-size: .88rem; margin: 6px 0 0; }
 .bar { height: 6px; border-radius: 3px; background: var(--line); position: relative; min-width: 50px; }
+ul.hist { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: .88rem; }
+ul.hist summary { cursor: pointer; }
+ul.hist ul { margin: 4px 0; padding-left: 18px; font-family: var(--mono); font-size: .8rem; }
 .bar i { position: absolute; inset: 0 auto 0 0; background: var(--kept); border-radius: 3px; }
 </style>
 </head>
@@ -134,6 +156,8 @@ ul.plain { margin: 0; padding-left: 18px; }
       <button type="button" class="chip" data-cat="smithy" aria-pressed="true"><i class="sw" style="background:var(--forge);border-radius:2px"></i>smithy</button>
       <button type="button" class="chip" data-cat="tavern" aria-pressed="true"><i class="sw" style="background:var(--tavern);border-radius:0;transform:rotate(45deg) scale(.8)"></i>tavern</button>
       <button type="button" class="chip" data-cat="settlement" aria-pressed="true"><i class="sw" style="background:var(--settle);width:6px;height:6px"></i>settlement</button>
+      <button type="button" class="chip" data-cat="flagged" aria-pressed="true"><i class="sw" style="border:2px dashed var(--del)"></i>flagged for review</button>
+      <button type="button" class="chip" data-cat="suggested" aria-pressed="true"><i class="sw" style="border:2px dashed var(--ink)"></i>suggested</button>
       <button type="button" class="chip" data-cat="gap" aria-pressed="true"><i class="sw" style="border:2px solid var(--gap)"></i>province with no spot</button>
       <span class="hint">Click a chip to show or hide it. Scroll to zoom, drag to pan.</span>
     </div>
@@ -151,6 +175,7 @@ ul.plain { margin: 0; padding-left: 18px; }
     <section class="mapbox" aria-label="Map">
       <svg id="map" role="img" aria-label="Campaign minimap with encounter spots"></svg>
       <div class="mapbar">
+        <span class="coord" id="coord" aria-live="off" title="In-game coordinates under the pointer">x -, y -</span>
         <button type="button" class="btn" id="zin" aria-label="Zoom in">+</button>
         <button type="button" class="btn" id="zout" aria-label="Zoom out">-</button>
         <button type="button" class="btn" id="zreset">Reset</button>
@@ -158,7 +183,9 @@ ul.plain { margin: 0; padding-left: 18px; }
       <div id="tip"></div>
     </section>
 
-    <div class="side">
+    <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" aria-label="Map width" tabindex="0"
+      title="Drag to resize the map. Double-click to reset."></div>
+    <div class="dock">
       <section class="card">
         <h2 id="queueTitle">Pending changes</h2>
         <div class="tbl"><table id="pending"><thead><tr><th></th><th>Zone</th><th>Details</th><th>At</th><th></th></tr></thead><tbody></tbody></table></div>
@@ -169,10 +196,32 @@ ul.plain { margin: 0; padding-left: 18px; }
         </div>
         <div class="row" style="margin-top:8px">
           <button type="button" class="btn primary" id="exportBtn">Export to coordinates.lua</button>
+          <button type="button" class="btn" id="undoBtn" title="Ctrl+Z">Undo</button>
+          <button type="button" class="btn" id="redoBtn" title="Ctrl+Y or Ctrl+Shift+Z">Redo</button>
           <button type="button" class="btn" id="clearBtn">Clear</button>
           <button type="button" class="btn" id="reloadBtn">Reload</button>
         </div>
         <p class="msg" id="msg"></p>
+      </section>
+      <section class="card" id="reviewCard">
+        <h2>Review</h2>
+        <p class="note" id="reviewNote"></p>
+        <div class="row" style="margin:6px 0 8px"><button type="button" class="btn primary" id="reviewNext">Next open spot</button></div>
+        <div class="tbl"><table id="reviews"><thead><tr><th>Zone</th><th>Spot</th><th>Issue</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+      </section>
+    </div>
+
+    <div class="side">
+      <section class="card">
+        <h2>Export history</h2>
+        <ul class="hist" id="history"></ul>
+        <p class="note" id="historyNone">No exports of this campaign yet. Each export to coordinates.lua is logged in _diag/spot_map/history.jsonl.</p>
+      </section>
+      <section class="card" id="sugCard">
+        <h2>Suggestions</h2>
+        <p class="note" id="sugNote"></p>
+        <div class="tbl"><table id="sugs"><thead><tr><th>Zone</th><th>What</th><th>Spot</th><th>Why</th><th></th></tr></thead><tbody></tbody></table></div>
+        <div class="row" style="margin-top:8px"><button type="button" class="btn" id="sugAll">Accept all shown</button></div>
       </section>
       <section class="card">
         <h2 id="lostTitle">Provinces that would lose every spot</h2>
@@ -196,7 +245,11 @@ const ctl = { camp: null, spacing: 30, metric: 'box', smithy: false, plant: 'spo
 // Clean-slate queues by campaign: the layout from disk as `add`, with nothing to delete or move in existing data.
 const slate = {};
 let layoutSave = null;
-let STATE = null, C = null, W = 1, H = 1, view, bg, gLabels, gSpots, gAdds;
+let STATE = null, C = null, W = 1, H = 1, view, bg, gLabels, gSpots, gAdds, gSug, gFlags;
+// The flagged spot the Review card zoomed to last, so "Next open spot" walks the list in order.
+let reviewAt = -1;
+// Indexes of flags hidden because the spacing trim removes their spot or a suggestion takes it over.
+let reviewHidden = new Set();
 let spots = [], pois = [], settlements = [];
 let pending = {};
 let z = 1, tx = 0, ty = 0;
@@ -211,6 +264,8 @@ const sx = x => x * W / C.LW;
 const sy = y => H - y * H / C.LH;
 const spotKey = s => `s|${s.lua}|${s.zone}|${s.index}`;
 const poiKey = f => `p|${f.lua}|${f.zone}|${f.kind}|${f.index}`;
+// Escapes text from files (suggestion reasons, area names) for innerHTML and attributes.
+const esc = v => String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 // Shape and colour per planted type; a type added in campaigns.py SPOT_TYPES without an entry here is drawn as a grey circle.
 const TYPE_LOOK = { spot: ['circle', 'var(--kept)'], tower: ['triangle', 'var(--tower)'], smithy: ['square', 'var(--forge)'], tavern: ['diamond', 'var(--tavern)'] };
 const typeOf = key => STATE.types.find(t => t.key === key);
@@ -229,10 +284,23 @@ const label = p => p.replace(/^wh\d_\w+?_combi_province_|^wh\d_\w+?_chaos_provin
 function loadPending() {
   try { pending = JSON.parse(localStorage.getItem('spotmap.pending.v2') || '{}'); } catch (e) { pending = {}; }
 }
+// Saves the open queue and records the change as an undo step.
 function savePending() {
+  order(P());
+  const h = undoLog(), now = JSON.stringify(P());
+  if (now !== h.base) {
+    h.undo.push(h.base);
+    if (h.undo.length > 200) h.undo.shift();
+    h.redo = [];
+    h.base = now;
+  }
+  persist();
+}
+// Writes the open queue: the layout to disk in Clean slate, the pending changes to this browser in Edit existing.
+function persist() {
   if (ctl.mode === 'slate') {
     // The layout is saved to disk half a second after the last change.
-    const camp = ctl.camp, entries = P().add;
+    const camp = ctl.camp, entries = P().add.map(({ seq, ...e }) => e);
     clearTimeout(layoutSave);
     layoutSave = setTimeout(() => {
       fetch('/api/layout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ campaign: camp, entries }) })
@@ -243,7 +311,36 @@ function savePending() {
   }
   try { localStorage.setItem('spotmap.pending.v2', JSON.stringify(pending)); } catch (e) { /* storage blocked: pending stays in memory */ }
 }
-const emptyPending = () => ({ add: [], disable: [], enable: [], move: {} });
+const emptyPending = () => ({ add: [], disable: [], enable: [], move: {}, seq: {} });
+// Every change gets a rising number so the queue can list the newest first: added entries carry `seq`, and `p.seq` maps "kind|key" to it for
+// deletions, switch-ons and moves.
+let lastSeq = 0;
+const nextSeq = () => (lastSeq = Math.max(Date.now(), lastSeq + 1));
+// Numbers every change that has no number yet and drops the numbers of removed changes. Runs on every save.
+function order(p) {
+  const seq = p.seq || (p.seq = {}), live = new Set();
+  for (const a of p.add) if (!a.seq) a.seq = nextSeq();
+  for (const [kind, keys] of [['disable', p.disable], ['enable', p.enable], ['move', Object.keys(p.move)]]) {
+    for (const key of keys) { live.add(kind + '|' + key); if (!seq[kind + '|' + key]) seq[kind + '|' + key] = nextSeq(); }
+  }
+  for (const k of Object.keys(seq)) if (!live.has(k)) delete seq[k];
+}
+
+// Undo history per queue (mode and campaign), this session only. `base` is the queue as last saved, so every save that changes it is one step.
+const hist = {};
+const qid = () => `${ctl.mode}|${ctl.camp}`;
+const undoLog = () => hist[qid()] || (hist[qid()] = { base: JSON.stringify(P()), undo: [], redo: [] });
+function setQueue(q) { if (ctl.mode === 'slate') slate[ctl.camp] = q; else pending[ctl.camp] = q; }
+// Moves one step back or forward through the open queue's history.
+function stepHistory(back) {
+  const h = undoLog(), from = back ? h.undo : h.redo, to = back ? h.redo : h.undo;
+  if (!from.length) return;
+  to.push(h.base);
+  h.base = from.pop();
+  setQueue(JSON.parse(h.base));
+  persist();
+  render();
+}
 // The open queue: pending changes of the campaign in Edit existing, its layout in Clean slate. `move` maps an entry key to its new {x, y}.
 const P = () => {
   if (ctl.mode === 'slate') return slate[ctl.camp] || (slate[ctl.camp] = { add: C.layout.map(e => ({ ...e })), disable: [], enable: [], move: {} });
@@ -294,10 +391,11 @@ function build(resetView) {
   svg.style.aspectRatio = `${W} / ${H}`;
   svg.innerHTML = '';
   view = el('g', {}, svg);
-  bg = el('image', { href: `/map/${C.key}.png`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none', opacity: document.getElementById('mapFade').value / 100 }, view);
+  // The detailed map (roads drawn as double lines) when the campaign has one, else the minimap.
+  bg = el('image', { href: C.detail ? `/map/${C.key}-detail.jpg` : `/map/${C.key}.png`, x: 0, y: 0, width: W, height: H, preserveAspectRatio: 'none', opacity: document.getElementById('mapFade').value / 100 }, view);
   bg.style.display = document.getElementById('mapOn').checked ? '' : 'none';
   const gSettle = el('g', {}, view); gLabels = el('g', {}, view);
-  const gForge = el('g', {}, view); gSpots = el('g', {}, view); gAdds = el('g', {}, view);
+  const gForge = el('g', {}, view); gSpots = el('g', {}, view); gAdds = el('g', {}, view); gSug = el('g', {}, view); gFlags = el('g', {}, view);
   const slateMode = ctl.mode === 'slate';
   spots = slateMode ? [] : C.spots.map(s => ({ ...s }));
   pois = slateMode ? [] : C.pois; settlements = C.settlements;
@@ -341,9 +439,20 @@ function build(resetView) {
   document.getElementById('groupTitle').textContent = C.byArea ? 'Per area' : 'Per zone';
   document.getElementById('groupCol').textContent = C.byArea ? 'Area' : 'Zone';
   document.getElementById('smithy').disabled = !pois.some(f => f.kind === 'smithies');
+  renderHistory();
+  undoLog();
   if (resetView) { z = 1; tx = 0; ty = 0; }
   apply();
   render();
+}
+
+// Past exports of the open campaign, newest first, each with its changes and backup.
+function renderHistory() {
+  const list = C.history || [];
+  document.getElementById('historyNone').hidden = !!list.length;
+  document.getElementById('history').innerHTML = list.map(r => `<li><details><summary>${esc(r.time.replace('T', ' '))} - ${r.kind === 'draft' ? 'draft: ' : ''}` +
+    `${esc(r.summary)}</summary><ul>${r.changes.map(c => `<li>${esc(c)}</li>`).join('')}</ul><p class="note">Written to ${esc(r.file)}. Backup: ${esc(r.backup)}</p>` +
+    '</details></li>').join('');
 }
 
 function close(a, b, t) {
@@ -354,22 +463,29 @@ function compute() {
   const p = P();
   const deleted = new Set(p.disable), enabled = new Set(p.enable);  // spot and point-of-interest keys
   const live = spots.map(s => (!s.disabled || enabled.has(spotKey(s))) && !deleted.has(spotKey(s)));
+  // A spot a tavern (or another point of interest) takes over still counts in the trim as it did before, pending or exported, so placing one
+  // never changes which neighbours are kept or trimmed. The spot itself is never kept.
+  const isPoi = type => (typeOf(type) || {}).storage === 'poi';
+  const takenOver = new Set(p.add.filter(a => a.replaces && isPoi(a.type)).map(a => a.replaces)
+    .concat((C.suggestions || []).filter(x => x.placed && isPoi(x.type)).map(x => spotKey({ lua: x.lua, zone: x.zone, index: x.spot }))));
+  const inTrim = spots.map((s, i) => live[i] || takenOver.has(spotKey(s)));
   // Pending spots (moved or switched back on) and manual spots (`manual = true`, unless "Trim manual spots too" is ticked) are never trimmed,
   // but they still hold their space: together with pending planted spots they push out neighbours that are too close.
   const exempt = spots.map((s, i) => live[i] && ((!ctl.trimManual && (s.flags || []).includes('manual')) || !!p.move[spotKey(s)] || enabled.has(spotKey(s))));
-  const t = ctl.spacing, idx = spots.map((_, i) => i).filter(i => live[i] && !exempt[i]);
+  const t = ctl.spacing, idx = spots.map((_, i) => i).filter(i => inTrim[i] && !exempt[i]);
   const n = {};
   for (const i of idx) { let c = 0; for (const j of idx) if (j !== i && close(spots[i], spots[j], t)) c++; n[i] = c; }
   idx.sort((a, b) => n[a] - n[b] || spots[a].zone.localeCompare(spots[b].zone) || spots[a].index - spots[b].index);
   const kept = [], keep = new Array(spots.length).fill(false);
   const fixed = (ctl.smithy ? pois.filter(f => f.kind === 'smithies' && !f.disabled && !deleted.has(poiKey(f))) : [])
     .concat(spots.filter((s, i) => exempt[i]).map(s => p.move[spotKey(s)] || s))
-    .concat(p.add.filter(a => (typeOf(a.type) || {}).storage !== 'poi'));
+    .concat(p.add.filter(a => !isPoi(a.type)));
   for (const i of idx) {
     if (t > 0 && (kept.some(k => close(spots[i], spots[k], t)) || fixed.some(f => close(spots[i], f, t)))) continue;
     keep[i] = true; kept.push(i);
   }
   exempt.forEach((e, i) => { if (e) keep[i] = true; });
+  live.forEach((l, i) => { if (!l) keep[i] = false; });
   return { live, keep, deleted, enabled, exempt };
 }
 
@@ -479,7 +595,136 @@ function render() {
     ul.innerHTML = lost.length ? lost.map(x => `<li>${label(x)}</li>`).join('') : '<li>None</li>';
     document.getElementById('lostNote').textContent = `${lost.length} of the ${provBefore.size} provinces that have spots today would have none. Provinces are matched by nearest settlement.`;
   }
+  renderSuggestions();
+  renderReviews(new Set(spots.filter((s, i) => live[i] && !keep[i]).map(spotKey)));
   renderPending();
+}
+
+// The pending-queue key of a flagged entry: a spot, or a point of interest when the flag names its list as `kind`.
+const flagKey = f => f.kind ? poiKey({ lua: f.lua, zone: f.zone, kind: f.kind, index: f.spot }) : spotKey({ lua: f.lua, zone: f.zone, index: f.spot });
+
+// Status of a flagged entry: fixed once its coordinates differ from those it was flagged at, moving or deleting while that change is pending.
+function reviewStatus(f) {
+  const p = P(), key = flagKey(f);
+  if (f.problem) return f.problem;
+  if (f.fixed) return 'fixed';
+  if (p.move[key]) return 'moving (pending)';
+  if (p.disable.includes(key)) return 'deleting (pending)';
+  return 'open';
+}
+
+// Spots flagged by a review, ringed on the map and listed with their issue. Each row zooms to its spot. The rings let clicks and drags through
+// to whatever is under them, so the flag shows in the spot's own tooltip instead. Flags are hidden on spots the spacing trim removes and on
+// spots a suggestion takes over, since those spots leave the encounter pool either way.
+function renderReviews(trimmed) {
+  const list = ctl.mode === 'slate' ? [] : (C.reviews || []);
+  const entryByKey = new Map(spots.map(s => [spotKey(s), s]).concat(pois.map(f => [poiKey(f), f])));
+  gFlags.innerHTML = '';
+  document.getElementById('reviewCard').hidden = !list.length;
+  const tb = document.querySelector('#reviews tbody');
+  tb.innerHTML = '';
+  reviewHidden = new Set();
+  const suggested = new Set((C.suggestions || []).filter(x => !x.problem && x.spot !== undefined).map(x => spotKey({ lua: x.lua, zone: x.zone, index: x.spot })));
+  let open = 0, byTrim = 0, bySuggestion = 0;
+  list.forEach((f, i) => {
+    const key = flagKey(f);
+    if (suggested.has(key)) { reviewHidden.add(i); bySuggestion++; return; }
+    if (trimmed.has(key)) { reviewHidden.add(i); byTrim++; return; }
+    const status = reviewStatus(f);
+    if (status === 'open') open++;
+    if (f.x !== null && status !== 'fixed') {
+      el('circle', { class: 'cat-flagged', cx: sx(f.x), cy: sy(f.y), r: 7 * C.r0, fill: 'none', stroke: 'var(--del)', 'stroke-width': 1.6 * viewOpts.dot,
+        'stroke-dasharray': '3 2' }, gFlags);
+      const entry = entryByKey.get(key);
+      if (entry) entry.el.dataset.tip += `<br><b>Flagged: ${esc(f.issue)}</b> - ${esc(f.note)} (${status})`;
+    }
+    const tr = document.createElement('tr');
+    if (status === 'open') tr.className = 'open-flag';
+    const what = f.kind ? `${esc((typeOfList(f.kind) || { label: f.kind }).label.toLowerCase())} ${f.spot}` : f.spot;
+    tr.innerHTML = `<td>${esc(f.zone)}</td><td class="n">${what}</td><td>${esc(f.issue)}${f.note ? ': ' + esc(f.note) : ''}</td><td>${esc(status)}</td>` +
+      `<td><button type="button" class="btn" data-zoom="${i}">Zoom</button></td>`;
+    tb.appendChild(tr);
+  });
+  const hidden = [byTrim && `${byTrim} on spots the spacing trim removes`, bySuggestion && `${bySuggestion} on spots a suggestion takes over`].filter(Boolean);
+  const hiddenNote = hidden.length ? ` Hidden: ${hidden.join(', ')}.` : '';
+  document.getElementById('reviewNote').textContent = `${list.length - reviewHidden.size} spots flagged in tools/spot_map/data/reviews/, ${open} still open.${hiddenNote} Zoom to one and drag it ` +
+    'somewhere better (or click it to delete it); it counts as fixed once the move is exported.';
+  tb.querySelectorAll('button[data-zoom]').forEach(b => b.addEventListener('click', () => zoomToFlag(+b.dataset.zoom)));
+}
+
+// Centres the map on a flagged spot, zoomed in, and scrolls the map into view.
+function zoomToFlag(i) {
+  const f = (C.reviews || [])[i];
+  if (!f || f.x === null) return;
+  reviewAt = i;
+  z = 8; tx = W / 2 - sx(f.x) * z; ty = H / 2 - sy(f.y) * z;
+  apply();
+  document.querySelector('.mapbox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Suggestions not yet accepted, drawn as dashed outlines of their type over the spot they take over, and listed in their card.
+function renderSuggestions() {
+  const p = P(), list = ctl.mode === 'slate' ? [] : (C.suggestions || []);
+  const accepted = new Set(p.add.map(a => a.sug).filter(v => v !== undefined));
+  gSug.innerHTML = '';
+  document.getElementById('sugCard').hidden = !list.length;
+  const tb = document.querySelector('#sugs tbody');
+  tb.innerHTML = '';
+  let open = 0;
+  for (const s of list) {
+    const t = typeOf(s.type) || typeOf('spot'), culture = (s.fields || {}).culture;
+    const what = `${t.label}${t.key === 'tavern' ? (culture ? ' (' + culture + ')' : ' (neutral)') : ''}`;
+    const done = accepted.has(s.id) || s.placed;
+    if (!s.problem && !done) {
+      open++;
+      const c = shape(look(t.key)[0], sx(s.x), sy(s.y), 5.6 * C.r0, { class: 'cat-suggested', fill: look(t.key)[1], 'fill-opacity': 0.35, stroke: 'var(--ink)',
+        'stroke-width': 1.4 * viewOpts.dot, 'stroke-dasharray': '3 2' }, gSug);
+      c.dataset.sug = s.id;
+      const where = s.spot === undefined ? `new in ${esc(s.zone)}` : `${s.at ? 'beside' : 'on'} spot ${esc(s.zone)} ${s.spot}`;
+      c.dataset.tip = `<b>Suggested ${what.toLowerCase()}</b> ${where}${s.area ? ' - ' + esc(s.area) : ''}<br>${esc(s.reason)}<br>{${s.x}, ${s.y}} - click to accept`;
+    }
+    const tr = document.createElement('tr');
+    const action = s.problem ? `<span class="d">${esc(s.problem)}</span>` : s.placed ? 'placed' : done ? 'accepted' : `<button type="button" class="btn" data-sug="${s.id}">Accept</button>`;
+    tr.innerHTML = `<td>${esc(s.zone)}</td><td>${what}</td><td class="n">${s.spot === undefined ? 'new' : s.spot}</td><td class="why">${esc(s.reason)}</td><td>${action}</td>`;
+    tb.appendChild(tr);
+  }
+  document.getElementById('sugNote').textContent = `${list.length} suggestions from tools/spot_map/data/suggestions/ (one file per coordinates.lua block), ${open} not accepted yet. ` +
+    'Accepting one queues the new entry on its spot (or beside it, off the road) and deletes the spot, so it leaves the encounter pool. ' +
+    'Remove the pending entry to undo both. Suggestions marked "new" add an entry without replacing a spot.';
+  tb.querySelectorAll('button[data-sug]').forEach(b => b.addEventListener('click', () => accept([+b.dataset.sug])));
+}
+
+// A new pending entry of a type. Its owner fields take the nearest settlement's owner and its culture is neutral, unless `given` names them.
+function newEntry(type, lua, zone, area, x, y, given = {}) {
+  const owner = (nearest(settlements, x, y) || {}).owner || '';
+  const fields = {};
+  for (const [name, hint] of Object.entries(type.fields || {})) if (hint === 'owner' || hint === 'culture') fields[name] = given[name] || (hint === 'owner' ? owner : '');
+  return { type: type.key, lua, zone, area, x, y, fields };
+}
+
+// Queues a suggestion: its entry on the spot it names, and that spot's deletion.
+function acceptSuggestion(id) {
+  const s = (C.suggestions || []).find(x => x.id === id), p = P();
+  if (!s || s.problem || s.placed || p.add.some(a => a.sug === id)) return;
+  // A new entry only adds itself. One that takes over a spot also deletes that spot.
+  if (s.spot === undefined) { p.add.push({ ...newEntry(typeOf(s.type), s.lua, s.zone, s.area, s.x, s.y, s.fields || {}), sug: id, seq: nextSeq() }); return; }
+  const key = spotKey({ lua: s.lua, zone: s.zone, index: s.spot });
+  // Numbered here rather than on save, so "Accept all" keeps each suggestion's entry beside its spot's deletion in the queue.
+  if (!p.disable.includes(key)) { p.disable.push(key); (p.seq || (p.seq = {}))['disable|' + key] = nextSeq(); }
+  p.add.push({ ...newEntry(typeOf(s.type), s.lua, s.zone, s.area, s.x, s.y, s.fields || {}), sug: id, replaces: key, seq: nextSeq() });
+}
+
+// Accepts suggestions by id and redraws.
+function accept(ids) {
+  ids.forEach(acceptSuggestion);
+  savePending();
+  render();
+}
+
+// Removes a pending entry, and the deletion of the spot it took over when it came from a suggestion.
+function removeAdd(i) {
+  const p = P(), [a] = p.add.splice(i, 1);
+  if (a && a.replaces) p.disable = p.disable.filter(k => k !== a.replaces);
 }
 
 function renderPending() {
@@ -488,8 +733,9 @@ function renderPending() {
   document.getElementById('owners').innerHTML = owners.map(o => `<option value="${o}"></option>`).join('');
   tb.innerHTML = '';
   const zoneOpts = C.zones.map(z2 => `<option value="${z2.lua}|${z2.zone}">${z2.zone}${C.zones.some(o => o.lua !== z2.lua) ? ' (' + z2.lua + ')' : ''}</option>`).join('');
-  const esc = v => String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   const cultureOpts = ['<option value="">neutral</option>'].concat(STATE.cultures.map(c2 => `<option value="${c2}">${c2}</option>`)).join('');
+  // Rows are collected with their change number and listed newest first. Entries saved before numbering keep their order at the bottom.
+  const rows = [], seq = p.seq || {};
   p.add.forEach((a, i) => {
     const t = typeOf(a.type) || typeOf('spot');
     let details = `<input data-i="${i}" data-f="area" class="asel" aria-label="Area" value="${esc(a.area)}">`;
@@ -503,7 +749,7 @@ function renderPending() {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td><span class="pill add">${t.label.toLowerCase()}</span></td><td><select data-i="${i}" class="zsel" aria-label="Zone">${zoneOpts}</select></td>` +
       `<td>${details}</td><td class="n">${a.x}, ${a.y}</td><td><button type="button" class="x" data-kind="add" data-i="${i}" aria-label="Remove">&times;</button></td>`;
-    tb.appendChild(tr);
+    rows.push({ seq: a.seq || i, tr });
     tr.querySelector('.zsel').value = `${a.lua}|${a.zone}`;
     tr.querySelectorAll('select.fsel').forEach(sel => { sel.value = a.fields[sel.dataset.f] || ''; });
   });
@@ -516,7 +762,7 @@ function renderPending() {
       tr.innerHTML = `<td><span class="pill ${kind === 'disable' ? 'del' : 'on'}">${kind === 'disable' ? 'delete' : 'enable'}</span></td><td>${what}</td>` +
         `<td>${s ? esc(s.area) : esc(f.fields.initial_owner)}</td><td class="n">${(s || f).x}, ${(s || f).y}</td>` +
         `<td><button type="button" class="x" data-kind="${kind}" data-i="${i}" aria-label="Remove">&times;</button></td>`;
-      tb.appendChild(tr);
+      rows.push({ seq: seq[kind + '|' + key] || 0, tr });
     });
   }
   for (const [key, m] of Object.entries(p.move)) {
@@ -527,8 +773,12 @@ function renderPending() {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td><span class="pill add">move</span></td><td>${what}</td><td>from ${item.x}, ${item.y}</td><td class="n">${m.x}, ${m.y}</td>` +
       `<td><button type="button" class="x" data-move="${esc(key)}" aria-label="Remove">&times;</button></td>`;
-    tb.appendChild(tr);
+    rows.push({ seq: seq['move|' + key] || 0, tr });
   }
+  rows.sort((a, b) => b.seq - a.seq).forEach(r => tb.appendChild(r.tr));
+  const h = undoLog();
+  document.getElementById('undoBtn').disabled = !h.undo.length;
+  document.getElementById('redoBtn').disabled = !h.redo.length;
   document.getElementById('pendingNone').hidden = !!(p.add.length || p.disable.length || p.enable.length || Object.keys(p.move).length);
   tb.querySelectorAll('.zsel').forEach(sel => sel.addEventListener('change', () => {
     const [lua, zone] = sel.value.split('|'); Object.assign(P().add[+sel.dataset.i], { lua, zone }); savePending(); render();
@@ -536,7 +786,7 @@ function renderPending() {
   tb.querySelectorAll('.asel').forEach(inp => inp.addEventListener('change', () => { P().add[+inp.dataset.i].area = inp.value.trim(); savePending(); render(); }));
   tb.querySelectorAll('.fsel').forEach(inp => inp.addEventListener('change', () => { P().add[+inp.dataset.i].fields[inp.dataset.f] = inp.value.trim(); savePending(); }));
   tb.querySelectorAll('.x').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.move) delete P().move[b.dataset.move]; else P()[b.dataset.kind].splice(+b.dataset.i, 1);
+    if (b.dataset.move) delete P().move[b.dataset.move]; else if (b.dataset.kind === 'add') removeAdd(+b.dataset.i); else P()[b.dataset.kind].splice(+b.dataset.i, 1);
     savePending(); render();
   }));
 }
@@ -558,6 +808,8 @@ function dropAt(e, target) {
   else {
     const item = target.dataset.spot !== undefined ? spots[+target.dataset.spot] : pois[+target.dataset.poi];
     const key = target.dataset.spot !== undefined ? spotKey(item) : poiKey(item);
+    // Moving an entry again is a newer change, so it loses its old number.
+    delete (p.seq || {})['move|' + key];
     if (item.x === at[0] && item.y === at[1]) delete p.move[key]; else p.move[key] = { x: at[0], y: at[1] };
   }
   savePending();
@@ -567,7 +819,8 @@ function dropAt(e, target) {
 function clickAt(e) {
   const p = P();
   const t = e.target;
-  if (t.dataset && t.dataset.add !== undefined) { p.add.splice(+t.dataset.add, 1); }
+  if (t.dataset && t.dataset.sug !== undefined) { acceptSuggestion(+t.dataset.sug); }
+  else if (t.dataset && t.dataset.add !== undefined) { removeAdd(+t.dataset.add); }
   else if (t.dataset && (t.dataset.spot !== undefined || t.dataset.poi !== undefined)) {
     // A disabled entry toggles a switch-back-on; any other entry toggles a deletion.
     const item = t.dataset.spot !== undefined ? spots[+t.dataset.spot] : pois[+t.dataset.poi];
@@ -580,10 +833,7 @@ function clickAt(e) {
     const [x, y] = at;
     const near = nearest(C.spots, x, y);
     const fallback = C.zones[0] || { lua: C.key, zone: 'draft' };
-    const type = typeOf(ctl.plant) || typeOf('spot'), owner = (nearest(settlements, x, y) || {}).owner || '';
-    const fields = {};
-    for (const [name, hint] of Object.entries(type.fields || {})) if (hint === 'owner' || hint === 'culture') fields[name] = hint === 'owner' ? owner : '';
-    p.add.push({ type: type.key, lua: near ? near.lua : fallback.lua, zone: near ? near.zone : fallback.zone, area: near ? near.area : '', x, y, fields });
+    p.add.push(newEntry(typeOf(ctl.plant) || typeOf('spot'), near ? near.lua : fallback.lua, near ? near.zone : fallback.zone, near ? near.area : '', x, y));
   }
   savePending();
   render();
@@ -599,8 +849,7 @@ async function exportDraft() {
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || r.statusText);
     STATE = data.state;
-    const parts = Object.entries(data.result.blocks).map(([key, s2]) => `M.${key}: ${s2.spots} spots, ${s2.pois} points of interest${s2.replaced ? ' (replaced)' : ''}`);
-    msg.textContent = `Exported. ${parts.join('; ')}. Backup: ${data.result.backup}`;
+    msg.textContent = `Exported. ${data.result.summary}. Backup: ${data.result.backup}`;
     build(false);
   } catch (err) {
     msg.className = 'msg err'; msg.textContent = `Export failed: ${err.message}`;
@@ -626,12 +875,12 @@ async function doExport() {
     const r = await fetch('/api/export', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const data = await r.json();
     if (!r.ok) throw new Error(data.error || r.statusText);
-    pending[ctl.camp] = emptyPending();
-    savePending();
+    // An export starts the queue and its undo history over.
+    setQueue(emptyPending());
+    persist();
+    delete hist[qid()];
     STATE = data.state;
-    const parts = Object.entries(data.result.blocks).map(([lua, s]) =>
-      `${lua}: ${s.added} added, ${s.moved} moved, ${s.disabled} disabled, ${s.enabled} enabled${s.created ? ' (block created)' : ''}`);
-    msg.textContent = `Exported. ${parts.join('; ')}. Backup: ${data.result.backup}`;
+    msg.textContent = `Exported. ${data.result.summary}. Backup: ${data.result.backup}`;
     build(false);
   } catch (err) {
     msg.className = 'msg err'; msg.textContent = `Export failed: ${err.message}`;
@@ -654,6 +903,28 @@ document.getElementById('dotSizeVal').textContent = (+viewOpts.dot).toFixed(1);
 dotSize.addEventListener('change', () => { viewOpts.dot = +dotSize.value; saveView(); if (C) build(false); });
 dotSize.addEventListener('input', () => { document.getElementById('dotSizeVal').textContent = (+dotSize.value).toFixed(1); });
 applyPalette();
+
+// Map width: drag the bar between the map and the side column, or focus it and use the arrow keys. Double-click resets it. Remembered in
+// this browser only.
+const layoutEl = document.querySelector('.layout'), splitter = document.getElementById('splitter');
+const DOCK_DEFAULT = 420, DOCK_MIN = 280, MAP_MIN = 400;
+function setDock(w) {
+  viewOpts.dock = Math.round(Math.max(DOCK_MIN, Math.min(layoutEl.clientWidth - MAP_MIN, w)));
+  layoutEl.style.setProperty('--dock-w', viewOpts.dock + 'px');
+}
+if (viewOpts.dock) setDock(viewOpts.dock);
+splitter.addEventListener('pointerdown', e => { splitter.setPointerCapture(e.pointerId); splitter.classList.add('active'); });
+splitter.addEventListener('pointermove', e => {
+  if (splitter.classList.contains('active')) setDock(layoutEl.getBoundingClientRect().right - e.clientX - splitter.offsetWidth / 2);
+});
+splitter.addEventListener('pointerup', () => { splitter.classList.remove('active'); saveView(); });
+splitter.addEventListener('dblclick', () => { setDock(DOCK_DEFAULT); saveView(); });
+splitter.addEventListener('keydown', e => {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  e.preventDefault();
+  setDock((viewOpts.dock || DOCK_DEFAULT) + (e.key === 'ArrowLeft' ? 20 : -20));
+  saveView();
+});
 
 // Filter chips: each hides one category on the map. Remembered in this browser only.
 const hidden = new Set((() => { try { return JSON.parse(localStorage.getItem('spotmap.hidden') || '[]'); } catch (e) { return []; } })());
@@ -689,6 +960,30 @@ document.getElementById('trimManual').addEventListener('change', e => { ctl.trim
 document.getElementById('mapOn').addEventListener('change', e => { bg.style.display = e.target.checked ? '' : 'none'; });
 document.getElementById('mapFade').addEventListener('input', e => { bg.setAttribute('opacity', e.target.value / 100); });
 document.getElementById('exportBtn').addEventListener('click', doExport);
+document.getElementById('undoBtn').addEventListener('click', () => stepHistory(true));
+document.getElementById('redoBtn').addEventListener('click', () => stepHistory(false));
+// Ctrl+Z undoes, Ctrl+Y or Ctrl+Shift+Z redoes, except while typing in a field.
+document.addEventListener('keydown', e => {
+  if (!(e.ctrlKey || e.metaKey) || /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+  const k = e.key.toLowerCase();
+  if (k === 'z' || k === 'y') { e.preventDefault(); stepHistory(k === 'z' && !e.shiftKey); }
+});
+document.getElementById('reviewNext').addEventListener('click', () => {
+  const list = C.reviews || [];
+  for (let step = 1; step <= list.length; step++) {
+    const i = (reviewAt + step) % list.length;
+    if (!reviewHidden.has(i) && reviewStatus(list[i]) === 'open') { zoomToFlag(i); return; }
+  }
+  msg.className = 'msg'; msg.textContent = 'No open flagged spots left.';
+});
+// Accepts every open suggestion, and says so when some could not be (a problem shown in their row).
+document.getElementById('sugAll').addEventListener('click', () => {
+  const list = C.suggestions || [], before = P().add.length;
+  accept(list.map(s => s.id));
+  const added = P().add.length - before, broken = list.filter(s => s.problem).length;
+  msg.className = broken ? 'msg err' : 'msg';
+  msg.textContent = `Accepted ${added} suggestions.${broken ? ` ${broken} have a problem and were skipped (see their rows); restart the server if the code changed.` : ''}`;
+});
 let clearArmed = false;
 document.getElementById('clearBtn').addEventListener('click', e => {
   if (ctl.mode === 'slate' && P().add.length && !clearArmed) {
@@ -708,6 +1003,7 @@ document.querySelectorAll('#modes button').forEach(b => b.addEventListener('clic
 document.getElementById('reloadBtn').addEventListener('click', async () => {
   await fetchState();
   for (const key in slate) delete slate[key];
+  for (const key in hist) if (key.startsWith('slate|')) delete hist[key];
   buildCampaignButtons(); build(false);
   msg.className = 'msg'; msg.textContent = 'Reloaded from coordinates.lua, the saved layouts and the latest F4 dump.';
 });
@@ -735,7 +1031,10 @@ svg.addEventListener('pointerdown', e => {
   const entity = d.spot !== undefined || d.poi !== undefined || d.add !== undefined ? e.target : null;
   drag = { p: toSvg(e), tx, ty, moved: false, target: e.target, entity };
 });
+const coordOut = document.getElementById('coord');
 svg.addEventListener('pointermove', e => {
+  const at = toLogical(e);
+  coordOut.textContent = at ? `x ${at[0]}, y ${at[1]}` : 'x -, y -';
   if (drag) {
     const p = toSvg(e), dx = p[0] - drag.p[0], dy = p[1] - drag.p[1];
     if (Math.hypot(dx, dy) > 4 * W / svg.getBoundingClientRect().width) drag.moved = true;
@@ -758,7 +1057,7 @@ svg.addEventListener('pointerup', e => {
   drag = null; svg.classList.remove('drag');
 });
 svg.addEventListener('pointercancel', () => { drag = null; svg.classList.remove('drag'); });
-svg.addEventListener('pointerleave', () => { tip.style.display = 'none'; });
+svg.addEventListener('pointerleave', () => { tip.style.display = 'none'; coordOut.textContent = 'x -, y -'; });
 document.getElementById('zin').addEventListener('click', () => zoomAt(1.5, W / 2, H / 2));
 document.getElementById('zout').addEventListener('click', () => zoomAt(1 / 1.5, W / 2, H / 2));
 document.getElementById('zreset').addEventListener('click', () => { z = 1; tx = 0; ty = 0; apply(); });

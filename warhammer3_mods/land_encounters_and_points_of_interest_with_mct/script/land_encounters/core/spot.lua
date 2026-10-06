@@ -613,11 +613,13 @@ local PointOfInterestDelegate = {
 
 --- Initializes the POI table from the configs (smithies, taverns, resources). Smithy spots always exist, so a smithy marker left in a save
 --- still resolves. Whether their markers show follows the Remove Smithies setting, see `SmithyEventDelegate:sync_markers`.
---- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays.
+--- A zone, or a list in it, that coordinates.lua leaves out counts as empty: the spot map only writes the lists it fills.
+--- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays, or nil for a zone with none.
 function PointOfInterestDelegate:initialize(points_of_interest_data)
-    self:initialize_smithies(points_of_interest_data["smithies"])
-    self:initialize_taverns(points_of_interest_data["taverns"])
-    self:initialize_resources(points_of_interest_data["resources"])
+    local data = points_of_interest_data or {}
+    self:initialize_smithies(data["smithies"] or {})
+    self:initialize_taverns(data["taverns"] or {})
+    self:initialize_resources(data["resources"] or {})
 end
 
 --- Creates a SmithySpot for each entry in `smithies_data`. The player never starts as the owner.
