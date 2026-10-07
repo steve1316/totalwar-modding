@@ -85,13 +85,13 @@ function M.roll_stock(tavern)
     return stock
 end
 
---- Rolls the stock again when there is none yet, the Tavern has levelled up since, `restock_turns` have passed since it was rolled, or it
+--- Rolls the stock again when there is none yet, the Tavern has levelled up since, the MCT `tavern_hall_restock` turns have passed since it was rolled, or it
 --- holds more units than its level now stocks (a save from before the hall was made smaller).
 --- @param tavern TavernState The Tavern.
 function M.ensure_stock(tavern)
     local stock = tavern.hall_stock
     if stock == nil or stock.level ~= tavern.level or #stock.units > tavern_data.levels[tavern.level].hall.units
-        or cm:turn_number() >= stock.turn + tavern_data.hall.restock_turns then
+        or cm:turn_number() >= stock.turn + get_mct_settings().tavern_hall_restock then
         tavern.hall_stock = M.roll_stock(tavern)
     end
 end
@@ -130,7 +130,7 @@ function M.open(tavern, faction, general_cqi, own, hired)
     --- Adds one slot and its choice. `key` is its unit, or nil for the hero, whose `line` describes it. A hire the treasury cannot pay still
     --- shows its price and unit, and `shown_price` marks it so a click on it anyway is undone.
     local function add(kind, number, key, base, line)
-        local markup = kind == "renown" and tavern_data.hall.renown_markup or tavern_data.hall.price_markup
+        local markup = get_mct_settings().tavern_hire_markup + (kind == "renown" and tavern_data.hall.renown_extra or 0)
         local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, price = tavern:charge(base + markup, faction_name) }
         local choice = { key = slot.choice, lines = { line } }
         if key and room < 1 then
@@ -203,11 +203,11 @@ function M.resolve(tavern, faction_name, choice_key)
             table.remove(slot.kind == "unit" and stock.units or stock.renown, slot.index)
         end
         if pending.hired == 0 then
-            tavern.hall_closed_until[faction_name] = cm:turn_number() + tavern_data.hall.cooldown
+            tavern.hall_closed_until[faction_name] = cm:turn_number() + get_mct_settings().tavern_cooldown
             log("tavern: the hall of the " .. tavern:describe() .. " is closed to " .. faction_name .. " until turn " .. tavern.hall_closed_until[faction_name])
         end
         pending.hired = pending.hired + 1
-        if pending.hired >= tavern_data.hall.hires_per_visit then
+        if pending.hired >= get_mct_settings().tavern_hires_per_visit then
             log("tavern: " .. faction_name .. " has hired " .. pending.hired .. " this visit, so the hub reopens")
             tavern:open_hub(faction, pending.general_cqi)
             return

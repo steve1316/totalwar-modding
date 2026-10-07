@@ -22,9 +22,6 @@ M.unaffordable_suffix = "_unaffordable"
 --- Choice key of Leave on the per-floor go-deeper dilemmas. Its DB order is the highest, so Leave is always the last choice.
 M.leave_choice_key = "LEAPOI_TWR_LEAVE"
 
---- Most offers drawn onto one go-deeper dilemma.
-M.offers_per_floor = 4
-
 
 --- Offer records in popup order. `guide_section` is the MCT Towers page guide section that lists the offer (configs/mct_guides.lua). `cost`
 --- is gold taken from the haul (none means free). Any field may differ by difficulty (`S` and `tiered`). An offer that does has one line per

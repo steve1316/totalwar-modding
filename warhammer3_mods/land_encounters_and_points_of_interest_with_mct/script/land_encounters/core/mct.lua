@@ -11,15 +11,46 @@ local archetypes = require("script/land_encounters/configs/archetypes")
 --- Default settings. The MctInitialized listener overwrites these at first_tick with the user's
 --- finalized MCT option values via set_mct_settings.
 local mct_settings = {
-    disable_smithies = false,
-    --- Taverns are removed from the map and do nothing.
-    disable_taverns = false,
+    --- Smithies are on the map. When off they are removed and their tributes, takeovers and sieges pause.
+    enable_smithies = true,
+    --- Taverns are on the map. When off they are removed and do nothing.
+    enable_taverns = true,
+    --- Turns to finish a bounty or marked spot Tavern contract. Culls and quest steps add their extra turns from configs/tavern_data.lua.
+    tavern_contract_turns = 10,
+    --- Turns between new stock in a Tavern's mercenary hall.
+    tavern_hall_restock = 5,
+    --- Gold a mercenary hall hire costs over its recruitment cost. Regiments of Renown add the config's `renown_extra`.
+    tavern_hire_markup = 1000,
+    --- Most hires a faction makes in the mercenary hall per visit.
+    tavern_hires_per_visit = 2,
+    --- Turns the bar and the hall stay closed to a faction after it uses them.
+    tavern_cooldown = 5,
+    --- Percent more every Guild Tavern charges a faction after it fails or drops a contract.
+    tavern_penalty_percent = 25,
+    --- Turns that surcharge lasts.
+    tavern_penalty_turns = 10,
     --- Towers are on the map and can be delved.
     enable_towers = true,
     --- Turns a tower stays closed after a delve ends.
     tower_cooldown = 5,
+    --- Percent of each floor's gold added to the haul.
+    tower_gold_percent = 100,
+    --- Percent of each floor's enemy army budget.
+    tower_enemy_percent = 100,
+    --- Most offers drawn onto one go-deeper dilemma. With Climb and Leave the dilemma shows at most 8 choices.
+    tower_offers_per_floor = 4,
+    --- Percent chance the Hidden Floor offer stays in a draw it is eligible for.
+    tower_hidden_floor_chance = 100,
     --- Turns a level 3 Smithy cools after a free pick. Lower forge levels add their `cooldown_offset`.
     smithy_cooldown = 5,
+    --- Percent of the Smithy's commission, legendary commission and upgrade prices.
+    smithy_price_percent = 100,
+    --- Percent of a player Smithy's tribute interval.
+    smithy_tribute_percent = 100,
+    --- Percent chance an AI army at war with a Smithy's AI owner takes it.
+    smithy_ai_takeover_chance = 26,
+    --- Percent chance each round that an AI owner upgrades its Smithy.
+    smithy_ai_upgrade_chance = 3,
     --- Tell the player when a Smithy or Tower is ready again.
     ready_notices = true,
     spawn_percentage = 0.75,
@@ -31,15 +62,15 @@ local mct_settings = {
     spoils_chance = 30,
     --- Percent chance a fight (a battle spot or a tower floor) carries battle modifiers.
     battle_modifier_chance = 5,
-    --- Default to interception only - matches the pre-MCT-toggle behavior the user established.
-    enabled_intervention_types = { INTERCEPTION_TYPE },
+    --- Interception and allied reinforcement battles, matching the MCT defaults.
+    enabled_intervention_types = { INTERCEPTION_TYPE, ALLIED_REINFORCEMENTS_PERMITTED_TYPE },
     enabled_encounter_skin_ids = {},
     enabled_mods = {},
     enable_all_encounter_skins = true,
     use_only_modded_units = false,
     enable_compatibility_with_supported_mods = false,
     --- "easy", "medium", "hard", or "progressive" to step up by turn number.
-    randomized_encounter_force_generation_difficulty = "easy",
+    randomized_encounter_force_generation_difficulty = "progressive",
     turn_number_from_easy_to_medium = 15,
     turn_number_from_medium_to_hard = 25,
     enable_all_factions = true,
@@ -364,8 +395,16 @@ end
 --- Pulls the user's finalized MCT option values into the in-memory mct_settings table.
 --- @param mct_mod table The MCT mod handle returned by mct:get_mod_by_key.
 function set_mct_settings(mct_mod)
-    mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
-    mct_settings.disable_taverns = mct_mod:get_option_by_key("disable_taverns"):get_finalized_setting()
+    mct_settings.enable_smithies = mct_mod:get_option_by_key("enable_smithies"):get_finalized_setting()
+    mct_settings.enable_taverns = mct_mod:get_option_by_key("enable_taverns"):get_finalized_setting()
+    mct_settings.tavern_contract_turns = mct_mod:get_option_by_key("tavern_contract_turns"):get_finalized_setting()
+    mct_settings.tavern_hall_restock = mct_mod:get_option_by_key("tavern_hall_restock"):get_finalized_setting()
+    for _, key in ipairs({ "tower_gold_percent", "tower_enemy_percent", "tower_offers_per_floor", "tower_hidden_floor_chance", "smithy_price_percent",
+        "smithy_tribute_percent", "smithy_ai_takeover_chance", "smithy_ai_upgrade_chance", "tavern_hire_markup", "tavern_hires_per_visit", "tavern_cooldown",
+        "tavern_penalty_percent", "tavern_penalty_turns" }) do
+        mct_settings[key] = mct_mod:get_option_by_key(key):get_finalized_setting()
+        out("DEBUG - mct_settings." .. key .. ": " .. tostring(mct_settings[key]))
+    end
     mct_settings.enable_towers = mct_mod:get_option_by_key("enable_towers"):get_finalized_setting()
     mct_settings.tower_cooldown = mct_mod:get_option_by_key("tower_cooldown"):get_finalized_setting()
     mct_settings.smithy_cooldown = mct_mod:get_option_by_key("smithy_cooldown"):get_finalized_setting()
@@ -400,7 +439,8 @@ function set_mct_settings(mct_mod)
 
     mct_settings.enable_all_factions = mct_mod:get_option_by_key("enable_all_faction_checkboxes"):get_finalized_setting()
 
-    out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies) .. ", disable_taverns: " .. tostring(mct_settings.disable_taverns))
+    out("DEBUG - mct_settings.enable_smithies: " .. tostring(mct_settings.enable_smithies) .. ", enable_taverns: " .. tostring(mct_settings.enable_taverns)
+        .. ", tavern_contract_turns: " .. tostring(mct_settings.tavern_contract_turns) .. ", tavern_hall_restock: " .. tostring(mct_settings.tavern_hall_restock))
     out("DEBUG - mct_settings.enable_towers: " .. tostring(mct_settings.enable_towers) .. ", tower_cooldown: " .. tostring(mct_settings.tower_cooldown))
     out("DEBUG - mct_settings.smithy_cooldown: " .. tostring(mct_settings.smithy_cooldown) .. ", ready_notices: " .. tostring(mct_settings.ready_notices))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))

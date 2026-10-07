@@ -28,26 +28,20 @@ M.flavour = {
 --- Share of a bar offer's price the Tavern's owner pays. Guests pay the full price.
 M.owner_price_share = 0.75
 
---- Turns the bar stays closed to a faction after it takes an offer there.
-M.bar_cooldown = 5
 
---- The mercenary hall. Its stock is shared by every visitor and rolled again `restock_turns` after it was last rolled, or at once when the
+--- The mercenary hall. Its stock is shared by every visitor and rolled again the MCT `tavern_hall_restock` turns after it was last rolled, or at once when the
 --- Tavern levels up. A racial Tavern stocks its own culture, a neutral one `neutral_cultures` random cultures. A hire costs the unit's
---- recruitment cost plus `price_markup` gold, or `renown_markup` for a Regiment of Renown, for every visitor. A faction hires at most
---- `hires_per_visit` per visit, and its first hire closes the hall to it for `cooldown` turns.
+--- recruitment cost plus the MCT `tavern_hire_markup` gold, and `renown_extra` more for a Regiment of Renown, for every visitor. A faction
+--- hires at most the MCT `tavern_hires_per_visit` per visit, and its first hire closes the hall to it for the MCT `tavern_cooldown` turns.
 M.hall = {
-    restock_turns = 5,
     neutral_cultures = 2,
-    price_markup = 1000,
-    renown_markup = 2500,
-    hires_per_visit = 2,
-    cooldown = 5,
+    renown_extra = 1500,
 }
 
 --- The contract board. Every Tavern belongs to the Tavern Keepers' Guild. Each shows `board_size` contracts of different kinds, rolled again
 --- `restock_turns` after they were last rolled, and taking one removes it for every visitor. A faction holds at most `max_held` contracts at once across
 --- every Tavern. Taking one pays its deposit. Success returns the deposit with the reward. Failing or dropping one (from the missions panel)
---- loses the deposit, and every Guild Tavern then charges that faction `standing_surcharge` more for `standing_turns` turns. A bounty lord
+--- loses the deposit, and every Guild Tavern then charges that faction the MCT `tavern_penalty_percent` more for `tavern_penalty_turns`. A bounty lord
 --- or a marked spot appears at most `spawn_regions_away` regions from the Tavern, as far as `spawn_distance` from that region's settlement as
 --- the land allows. A level 3 Tavern also posts a quest chain: its `steps` in
 --- order (a hunt, a marked spot, then a boss hunt), each against an enemy of its `difficulty`, paying its `gold` and an item of its
@@ -56,16 +50,14 @@ M.contracts = {
     board_size = 2,
     restock_turns = 5,
     max_held = 1,
-    standing_surcharge = 0.25,
-    standing_turns = 10,
     spawn_regions_away = 1,
     spawn_distance = 100,
-    bounty_turns = 10,
-    cull_turns = 15,
-    marked_turns = 10,
+    --- Turns a cull gets on top of the MCT `tavern_contract_turns` deadline, since it needs several armies beaten.
+    cull_extra_turns = 5,
     chain = {
         deposit = 4000,
-        step_turns = 12,
+        --- Turns each quest step gets on top of the MCT `tavern_contract_turns` deadline.
+        step_extra_turns = 2,
         hero_rank = 15,
         steps = {
             { kind = "bounty", difficulty = "medium", gold = 2000, item_rarities = { "rare" } },

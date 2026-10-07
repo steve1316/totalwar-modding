@@ -127,6 +127,14 @@ local SmithyState = OwnedPoint.extend({
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Turn passing
 
+--- Returns a Smithy price scaled by the MCT `smithy_price_percent`, rounded to 50 gold.
+--- @param base number|nil The config price, or nil when there is none.
+--- @returns number|nil The price charged, or nil.
+local function smithy_price(base)
+    if base == nil then return nil end
+    return math.floor(base * get_mct_settings().smithy_price_percent / 100 / 50 + 0.5) * 50
+end
+
 --- Runs the once-per-round smithy update: tribute or AI items, cooldowns, missions, and auto-occupation when abandoned.
 --- @param mission_manager table The CA mission_manager handle used to issue missions.
 function SmithyState:update_state_given_turn_passing(mission_manager)
@@ -140,19 +148,21 @@ function SmithyState:update_state_given_turn_passing(mission_manager)
             self:update_visit_cooldown(controlling_faction:name())
             self:issue_mission_if_possible(controlling_faction, mission_manager)
         else
-            self:try_ai_upgrade(controlling_faction, self:level_data().upgrade_price)
+            self:try_ai_upgrade(controlling_faction, smithy_price(self:level_data().upgrade_price), get_mct_settings().smithy_ai_upgrade_chance)
         end
     else
         self:try_to_automatically_occupy_smithy_by_region_ownership_when_abandoned()
     end
 end
 
---- Gives the owner one item from the level's free-pick rarities: every tribute interval for a player, every `ai_item_interval` for the AI.
+--- Gives the owner one item from the level's free-pick rarities: every tribute interval (scaled by the MCT `smithy_tribute_percent`) for a
+--- player, every `ai_item_interval` for the AI.
 --- AI items are offset by the smithy's slot so the AI-owned smithies do not all pay out on the same round.
 --- @param controlling_faction faction The faction currently controlling this smithy.
 --- @param is_player boolean True when the owner is a human faction.
 function SmithyState:reward_owner_faction(controlling_faction, is_player)
-    local interval = is_player and self:level_data().tribute_interval or smithy_data.ai_item_interval
+    local interval = smithy_data.ai_item_interval
+    if is_player then interval = math.max(1, math.floor(self:level_data().tribute_interval * get_mct_settings().smithy_tribute_percent / 100 + 0.5)) end
     local offset = is_player and 0 or self.index_in_zone
     if (self.turns_under_control + offset) % interval ~= 0 then return end
     local ancillary = item_pool.pick_items(controlling_faction:name(), self:level_data().free_pick_rarities, 1)[1]
@@ -241,7 +251,7 @@ function SmithyState:trigger_event(area_and_character_info)
     elseif not self:is_prohibited_subculture(visiting_faction) and self:is_faction_at_war_with_owner(visiting_faction) then
         if self:is_occupied_by_player() then
             self:begin_siege(visiting_character)
-        elseif random_chance(OwnedPoint.AI_TAKEOVER_CHANCE) then
+        elseif random_chance(get_mct_settings().smithy_ai_takeover_chance) then
             self:set_controlling_faction(visiting_faction:name())
         end
     end
@@ -327,20 +337,21 @@ function SmithyState:open_forge(faction)
     end
 
     local commission = level.commission
-    local commission_items = treasury >= commission.price and item_pool.pick_items(faction_key, commission.rarities, commission.count) or {}
-    if treasury >= commission.price and #commission_items == 0 then
+    local commission_price = smithy_price(commission.price)
+    local commission_items = treasury >= commission_price and item_pool.pick_items(faction_key, commission.rarities, commission.count) or {}
+    if treasury >= commission_price and #commission_items == 0 then
         add_closed(COMMISSION_CHOICE, PAYLOAD_TEXT_LEAVE)
     else
-        add_paid(COMMISSION_CHOICE, commission.price, PAYLOAD_TEXT_COMMISSION .. self.level, function()
+        add_paid(COMMISSION_CHOICE, commission_price, PAYLOAD_TEXT_COMMISSION .. self.level, function()
             for _, ancillary in ipairs(commission_items) do payload:faction_ancillary_gain(faction, ancillary) end
         end)
     end
 
     --- The fifth choice upgrades the forge, or at the top level commissions a legendary piece instead.
     if level.upgrade_price then
-        offer.upgrade = add_paid(UPGRADE_CHOICE, level.upgrade_price, PAYLOAD_TEXT_UPGRADE .. self.level)
+        offer.upgrade = add_paid(UPGRADE_CHOICE, smithy_price(level.upgrade_price), PAYLOAD_TEXT_UPGRADE .. self.level)
     elseif level.legendary_commission then
-        local price = level.legendary_commission.price
+        local price = smithy_price(level.legendary_commission.price)
         local legendary = treasury >= price and item_pool.pick_legendary_item(faction_key)
         if treasury >= price and not legendary then
             add_closed(UPGRADE_CHOICE, PAYLOAD_TEXT_NO_LEGENDARY)
@@ -774,7 +785,7 @@ end
 --- smithy to that level first. A smithy whose config entry is marked `disabled = true` loses its marker; it keeps its index and save record.
 --- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
 function SmithyEventDelegate:sync_markers(points_of_interest)
-    local enabled = not get_mct_settings().disable_smithies
+    local enabled = get_mct_settings().enable_smithies
     local forced_level = debug_config.smithy_level[1]
     for _, smithy in ipairs(self.smithies_state) do
         if forced_level then

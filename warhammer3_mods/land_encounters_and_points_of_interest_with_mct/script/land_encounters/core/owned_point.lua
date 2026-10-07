@@ -145,13 +145,14 @@ function OwnedPoint:charge_capture_relations(taker_name)
 end
 
 --- Lets an AI owner upgrade the point: when there is a next level, the owner would keep at least the price in its treasury after paying,
---- and `AI_UPGRADE_CHANCE` percent hits. The chance is only rolled when the owner can afford it.
+--- and the chance hits. The chance is only rolled when the owner can afford it.
 --- @param owner faction The point's living AI owner.
 --- @param upgrade_price number|nil The gold to reach the next level, or nil at the top level.
+--- @param chance number|nil Percent chance of upgrading, `AI_UPGRADE_CHANCE` when nil.
 --- @returns boolean True when the point was upgraded.
-function OwnedPoint:try_ai_upgrade(owner, upgrade_price)
+function OwnedPoint:try_ai_upgrade(owner, upgrade_price, chance)
     if upgrade_price == nil or owner:treasury() < upgrade_price * 2 then return false end
-    if not random_chance(OwnedPoint.AI_UPGRADE_CHANCE) then return false end
+    if not random_chance(chance or OwnedPoint.AI_UPGRADE_CHANCE) then return false end
     cm:treasury_mod(self.controlling_faction_name, -upgrade_price)
     self:set_level(self.level + 1)
     log("point: " .. self.controlling_faction_name .. " pays " .. upgrade_price .. " gold to raise its point in " .. self.zone_name .. " to level " .. self.level)

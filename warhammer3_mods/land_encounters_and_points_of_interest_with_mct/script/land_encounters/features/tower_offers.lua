@@ -734,9 +734,9 @@ function M.choice_key(offer)
     return CHOICE_KEY_PREFIX .. offer.key:upper()
 end
 
---- Draws up to `offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones. Eligible offers in
+--- Draws up to the MCT `tower_offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones. Eligible offers in
 --- the debug `force_offers` list (configs/debug.lua) are drawn first. The offers are priced and sized at the next floor's difficulty, which
---- the delve keeps until the next draw.
+--- the delve keeps until the next draw. The Hidden Floor stays in the pool only on the MCT `tower_hidden_floor_chance` roll.
 --- @param delve table The delve record.
 --- @param faction_name string The delving faction.
 --- @param tower TowerState|nil The delve's tower. Offers about the tower itself are not drawn without it.
@@ -748,7 +748,7 @@ function M.draw(delve, faction_name, tower)
     local groups = {}
     for _, record in ipairs(offers_data.offers) do
         local offer = steps.resolve(record, delve.offer_difficulty)
-        if eligible(offer, ctx) then
+        if eligible(offer, ctx) and (not offer.bonus_floor or random_chance(get_mct_settings().tower_hidden_floor_chance)) then
             if offer.group then
                 groups[offer.group] = groups[offer.group] or {}
                 table.insert(groups[offer.group], offer.key)
@@ -762,17 +762,18 @@ function M.draw(delve, faction_name, tower)
     for name in pairs(groups) do group_names[#group_names + 1] = name end
     table.sort(group_names)
     for _, name in ipairs(group_names) do pool[#pool + 1] = groups[name][random_number(#groups[name])] end
+    local limit = get_mct_settings().tower_offers_per_floor
     local picked, count = {}, 0
     for _, key in ipairs(debug_config.force_offers) do
         for i, pooled in ipairs(pool) do
-            if pooled == key and count < offers_data.offers_per_floor then
+            if pooled == key and count < limit then
                 picked[table.remove(pool, i)] = true
                 count = count + 1
                 break
             end
         end
     end
-    for _ = 1, math.min(offers_data.offers_per_floor - count, #pool) do
+    for _ = 1, math.min(limit - count, #pool) do
         picked[table.remove(pool, random_number(#pool))] = true
     end
     local keys = {}

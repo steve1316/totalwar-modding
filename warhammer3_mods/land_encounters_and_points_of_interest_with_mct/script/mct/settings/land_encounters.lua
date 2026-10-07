@@ -7,6 +7,7 @@ require("script/land_encounters/core/mct")
 
 local archetypes = require("script/land_encounters/configs/archetypes")
 local smithy_data = require("script/land_encounters/configs/smithy_data")
+local tavern_data = require("script/land_encounters/configs/tavern_data")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local mct_guides = require("script/land_encounters/core/mct_guides")
 
@@ -239,7 +240,7 @@ add_checkbox("intervention_interception", "battle_engagement_section", "Intercep
     "Encounter battles are interceptions: the enemy army is visible and the battle cannot be declined from the dilemma, but standard battle "
     .. "mechanics apply. This is the default.", true)
 add_checkbox("intervention_allied_reinforcements", "battle_engagement_section", "Allied reinforcement battles",
-    "Some encounter battles let you attack with allied reinforcements available. Easier. Battlefield battles always use it when it is enabled.", false)
+    "Some encounter battles let you attack with allied reinforcements available. Easier. Battlefield battles always use it when it is enabled.", true)
 
 --- At-least-one enforcement so the user cannot turn every battle type off.
 lock_last_enabled_option({ "intervention_ambush", "intervention_interception", "intervention_allied_reinforcements" }, "leapoi_intervention_at_least_one_enforcer")
@@ -271,8 +272,8 @@ add_slider("battle_modifier_chance", "battle_events_section", "Battle modifier c
     .. "victory gold, helpful ones lower it. Default is " .. get_mct_settings().battle_modifier_chance .. ".", { 0, 25, 1, 0 },
     get_mct_settings().battle_modifier_chance)
 
-add_guide_section("battle_spots", "Guide: Battle Spots", encounters_page, mct_guides.battle_spots_text(), false)
-add_guide_section("treasure_spots", "Guide: Treasure Sites", encounters_page, mct_guides.treasure_spots_text(), false)
+add_guide_section("battle_spots", "Guide: Battle Spots", encounters_page, mct_guides.battle_spots_text(), true)
+add_guide_section("treasure_spots", "Guide: Treasure Sites", encounters_page, mct_guides.treasure_spots_text(), true)
 for _, offer_section in ipairs(mct_guides.spot_offer_sections()) do
     add_guide_section("spot_" .. offer_section.key, "Offers: " .. offer_section.title, encounters_page, offer_section.text, false)
 end
@@ -302,7 +303,7 @@ difficulty_dropdown:add_dropdown_values({
     {key = "progressive", text = "Progressive"},
 })
 difficulty_dropdown:set_is_global(true)
-difficulty_dropdown:set_default_value("easy")
+difficulty_dropdown:set_default_value("progressive")
 difficulty_dropdown:set_assigned_section("randomized_encounter_force_generation_section")
 
 add_slider("turn_number_from_easy_to_medium_slider", "randomized_encounter_force_generation_section", "Medium from turn",
@@ -419,6 +420,17 @@ add_checkbox("enable_towers", "towers_section", "Enable Towers",
 add_slider("tower_cooldown", "towers_section", "Tower cooldown (turns)",
     "Turns a tower stays closed after a delve ends, whether you left, cleared it or lost. Default is 5.", { 1, tower_data.longest_cooldown_message, 1, 0 },
     get_mct_settings().tower_cooldown)
+add_slider("tower_gold_percent", "towers_section", "Floor gold %",
+    "Scales the gold each won floor adds to the haul. Default is 100.", { 25, 300, 5, 0 }, get_mct_settings().tower_gold_percent)
+add_slider("tower_enemy_percent", "towers_section", "Floor enemy strength %",
+    "Scales the gold each floor's enemy army is bought with. Higher means stronger armies. Default is 100.", { 25, 300, 5, 0 },
+    get_mct_settings().tower_enemy_percent)
+add_slider("tower_offers_per_floor", "towers_section", "Offers per floor",
+    "Most offers shown after each won floor, beside Climb and Leave. Capped at 6 so the dilemma fits the screen. Default is 4.", { 1, 6, 1, 0 },
+    get_mct_settings().tower_offers_per_floor)
+add_slider("tower_hidden_floor_chance", "towers_section", "Hidden Floor offer chance %",
+    "Chance the Hidden Floor offer can show up after a floor. At 0 it never does. Default is 100.", { 0, 100, 5, 0 },
+    get_mct_settings().tower_hidden_floor_chance)
 
 add_guide_section("towers", "Guide: How Towers Work", towers_page, mct_guides.towers_text(), true)
 for _, offer_section in ipairs(mct_guides.tower_offer_sections()) do
@@ -431,12 +443,25 @@ end
 
 add_section("smithies_section", "Smithies", smithies_page)
 
-add_checkbox("disable_smithies", "smithies_section", "Remove Smithies from the map",
-    "Removes every Smithy from the map and pauses their tributes, takeovers and sieges. Takes effect the next time a save is loaded.", false)
+add_checkbox("enable_smithies", "smithies_section", "Enable Smithies",
+    "Places Smithies on the map. A lord can claim one for free items and a steady tribute. When off, every Smithy is removed and nothing "
+    .. "happens at them until they return. Requires loading the save again to take effect.", get_mct_settings().enable_smithies)
 add_slider("smithy_cooldown", "smithies_section", "Smithy cooldown (turns)",
     "Turns a level 3 forge cools after a free pick. Level 2 adds " .. smithy_data.levels[2].cooldown_offset .. " turns and level 1 adds "
     .. smithy_data.levels[1].cooldown_offset .. ". Default is " .. get_mct_settings().smithy_cooldown .. ".", { 1, smithy_data.cooldown_slider_max, 1, 0 },
     get_mct_settings().smithy_cooldown)
+add_slider("smithy_price_percent", "smithies_section", "Smithy prices %",
+    "Scales the price of commissions, legendary commissions and forge upgrades. Generous Donations keep their price. Default is 100.",
+    { 25, 300, 5, 0 }, get_mct_settings().smithy_price_percent)
+add_slider("smithy_tribute_percent", "smithies_section", "Tribute interval %",
+    "Scales the turns between tribute items for a player's Smithy. At 100, tribute comes every 15 turns at forge level 1, 10 at level 2 "
+    .. "and 5 at level 3. Higher means rarer tribute. Default is 100.", { 25, 300, 5, 0 }, get_mct_settings().smithy_tribute_percent)
+add_slider("smithy_ai_takeover_chance", "smithies_section", "AI takeover chance %",
+    "Chance an AI army at war with a Smithy's AI owner takes it when it walks onto it. Default is 26.", { 0, 100, 1, 0 },
+    get_mct_settings().smithy_ai_takeover_chance)
+add_slider("smithy_ai_upgrade_chance", "smithies_section", "AI upgrade chance %",
+    "Chance each round that an AI owner upgrades its Smithy, rolled only while it holds twice the price. Default is 3.", { 0, 20, 1, 0 },
+    get_mct_settings().smithy_ai_upgrade_chance)
 
 add_guide_section("smithy", "Guide: The Smithy", smithies_page, mct_guides.smithy_text(), true)
 
@@ -446,8 +471,31 @@ add_guide_section("smithy", "Guide: The Smithy", smithies_page, mct_guides.smith
 
 add_section("taverns_section", "Taverns", taverns_page)
 
-add_checkbox("disable_taverns", "taverns_section", "Remove Taverns from the map",
-    "Removes every Tavern from the map and pauses their takeovers. Takes effect the next time a save is loaded.", false)
+add_checkbox("enable_taverns", "taverns_section", "Enable Taverns",
+    "Places Taverns on the map with a mercenary hall, a contract board and a bar. When off, every Tavern is removed and its takeovers pause. "
+    .. "Requires loading the save again to take effect.", get_mct_settings().enable_taverns)
+add_slider("tavern_contract_turns", "taverns_section", "Contract deadline (turns)",
+    "Turns to finish a bounty or marked spot contract before it fails. Culls get " .. tavern_data.contracts.cull_extra_turns .. " more turns and "
+    .. "each quest step " .. tavern_data.contracts.chain.step_extra_turns .. " more. Default is " .. get_mct_settings().tavern_contract_turns .. ".",
+    { 3, 30, 1, 0 }, get_mct_settings().tavern_contract_turns)
+add_slider("tavern_hall_restock", "taverns_section", "Mercenary restock (turns)",
+    "Turns between new stock in a Tavern's mercenary hall. A Tavern that levels up restocks at once. Default is "
+    .. get_mct_settings().tavern_hall_restock .. ".", { 1, 20, 1, 0 }, get_mct_settings().tavern_hall_restock)
+add_slider("tavern_hire_markup", "taverns_section", "Mercenary markup (gold)",
+    "Gold a hire costs over its recruitment cost. A Regiment of Renown costs " .. tavern_data.hall.renown_extra .. " more on top. Default is "
+    .. get_mct_settings().tavern_hire_markup .. ".", { 0, 5000, 100, 0 }, get_mct_settings().tavern_hire_markup)
+add_slider("tavern_hires_per_visit", "taverns_section", "Hires per visit",
+    "How many units a faction can hire in the mercenary hall per visit. Default is " .. get_mct_settings().tavern_hires_per_visit .. ".", { 1, 5, 1, 0 },
+    get_mct_settings().tavern_hires_per_visit)
+add_slider("tavern_cooldown", "taverns_section", "Bar and hall cooldown (turns)",
+    "Turns the bar stays closed to a faction after it takes an offer there, and the hall after it hires. Default is "
+    .. get_mct_settings().tavern_cooldown .. ".", { 1, 15, 1, 0 }, get_mct_settings().tavern_cooldown)
+add_slider("tavern_penalty_percent", "taverns_section", "Failed contract surcharge %",
+    "How much more every Guild Tavern charges a faction after it fails or drops a contract. 0 turns the surcharge off. Default is "
+    .. get_mct_settings().tavern_penalty_percent .. ".", { 0, 100, 5, 0 }, get_mct_settings().tavern_penalty_percent)
+add_slider("tavern_penalty_turns", "taverns_section", "Failed contract surcharge (turns)",
+    "How long the Guild's surcharge lasts. Default is " .. get_mct_settings().tavern_penalty_turns .. ".", { 1, 30, 1, 0 },
+    get_mct_settings().tavern_penalty_turns)
 
 add_guide_section("taverns", "Guide: The Tavern", taverns_page, mct_guides.taverns_text(), true)
 

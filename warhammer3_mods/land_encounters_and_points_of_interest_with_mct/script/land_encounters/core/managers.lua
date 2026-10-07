@@ -1345,7 +1345,7 @@ function PointOfInterestEventManager:initialize_taverns(points_of_interest)
 end
 
 
---- Shows or removes the smithy markers to match the Remove Smithies setting and disabled config entries. Runs at first tick once the
+--- Shows or removes the smithy markers to match the Enable Smithies setting and disabled config entries. Runs at first tick once the
 --- smithy states exist.
 --- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
 function PointOfInterestEventManager:sync_smithy_markers(points_of_interest)
@@ -1357,17 +1357,17 @@ end
 function PointOfInterestEventManager:update_state_given_turn_passing()
     self.tower_event_delegate:update_state_given_turn_passing()
     self.tavern_event_delegate:update_state_given_turn_passing()
-    if get_mct_settings().disable_smithies then return end
+    if not get_mct_settings().enable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
 
---- Runs the per-faction part of a human turn start: closing a delve left from last turn, and smithy sieges unless smithies are disabled.
+--- Runs the per-faction part of a human turn start: closing a delve left from last turn, and smithy sieges while Smithies are enabled.
 --- @param faction_name string The human faction whose turn is starting.
 function PointOfInterestEventManager:on_faction_turn_start(faction_name)
     self.tower_event_delegate:on_faction_turn_start(faction_name)
     self.tavern_event_delegate:on_faction_turn_start(faction_name)
     guild_patron.on_faction_turn_start(faction_name)
-    if get_mct_settings().disable_smithies then return end
+    if not get_mct_settings().enable_smithies then return end
     self.smithy_event_delegate:on_faction_turn_start(faction_name)
 end
 
@@ -1383,7 +1383,7 @@ end
 function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_character_info, spot_info)
     if poi_type == "SmithySpot" then
         --- A removed smithy's marker is taken off the map on load. This guards the turn it is still shown.
-        if get_mct_settings().disable_smithies then return end
+        if not get_mct_settings().enable_smithies then return end
         self.smithy_event_delegate:trigger_event(area_and_character_info, spot_info)
     elseif poi_type == "TowerSpot" then
         self.tower_event_delegate:trigger_event(area_and_character_info, spot_info)

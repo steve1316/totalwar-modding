@@ -191,7 +191,7 @@ end
 --- @param faction_name string The faction key.
 --- @returns number The multiplier.
 function TavernState:price_factor(faction_name)
-    return tavern_contracts.penalty_turns_left(faction_name) > 0 and 1 + tavern_data.contracts.standing_surcharge or 1
+    return tavern_contracts.penalty_turns_left(faction_name) > 0 and 1 + get_mct_settings().tavern_penalty_percent / 100 or 1
 end
 
 --- A price at this Tavern for a faction: the base price times `price_factor`, to the nearest gold.
@@ -373,7 +373,7 @@ end
 
 --- Shows the marker at the current level, or removes it when Taverns are removed in MCT or this one is disabled in the config.
 function TavernState:sync_marker()
-    if get_mct_settings().disable_taverns or self.disabled then
+    if not get_mct_settings().enable_taverns or self.disabled then
         TavernSpot.remove_marker(self.zone_name, self.index_in_zone)
     else
         TavernSpot.replace_marker(self.zone_name, self.index_in_zone, self.coordinates, self.level)
@@ -625,7 +625,7 @@ end
 
 --- Ticks every Tavern. The FactionTurnStart listener calls this once per round. Removed or disabled Taverns do not tick.
 function TavernEventDelegate:update_state_given_turn_passing()
-    if get_mct_settings().disable_taverns then return end
+    if not get_mct_settings().enable_taverns then return end
     for _, tavern in ipairs(self.taverns_state) do
         if not tavern.disabled then tavern:update_state_given_turn_passing() end
     end
@@ -643,7 +643,7 @@ end
 --- @param area_and_character_info table The AreaEntered context with family_member.
 --- @param spot_info table The spot_info record for the triggered Tavern.
 function TavernEventDelegate:trigger_event(area_and_character_info, spot_info)
-    if get_mct_settings().disable_taverns then return end
+    if not get_mct_settings().enable_taverns then return end
     local tavern = self:find(spot_info.zone.name, spot_info.spot_index)
     local visitor = tavern and not tavern.disabled and tavern:trigger_event(area_and_character_info)
     if visitor then
@@ -675,7 +675,7 @@ function TavernEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
     end
 end
 
---- Handles a faction leaving a Tavern's bar. Taking an offer closes the bar to that faction for `bar_cooldown` turns. Going back reopens the
+--- Handles a faction leaving a Tavern's bar. Taking an offer closes the bar to that faction for the MCT `tavern_cooldown` turns. Going back reopens the
 --- hub for the same lord.
 --- @param faction_name string The faction that left the bar.
 --- @param site table The closed spot offer site, with its `tavern` { zone, index } and `general_cqi`.
@@ -684,7 +684,7 @@ function TavernEventDelegate:bar_closed(faction_name, site, took)
     local tavern = self:find(site.tavern.zone, site.tavern.index)
     if not tavern then return end
     if took then
-        tavern.bar_closed_until[faction_name] = cm:turn_number() + tavern_data.bar_cooldown
+        tavern.bar_closed_until[faction_name] = cm:turn_number() + get_mct_settings().tavern_cooldown
         log("tavern: the bar of the " .. tavern:describe() .. " is closed to " .. faction_name .. " until turn " .. tavern.bar_closed_until[faction_name])
         return
     end

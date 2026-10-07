@@ -76,6 +76,12 @@ local MARK_COUNTDOWN_EVENT = "ScriptEventLeapoiTavernMarkCountdown"
 --- Payload text prefix of a contract, followed by its kind and the Tavern's level, e.g. dummy_land_enc_tavern_contract_cull_2.
 local LINE_PREFIX = "dummy_land_enc_tavern_contract_"
 
+--- Payload text prefix of a contract's deadline line, followed by its turns, e.g. dummy_land_enc_tavern_contract_deadline_10.
+local DEADLINE_LINE_PREFIX = "dummy_land_enc_tavern_contract_deadline_"
+
+--- Payload text prefix of a quest's deadline line for each of its steps, followed by its turns.
+local STEP_DEADLINE_LINE_PREFIX = "dummy_land_enc_tavern_contract_step_deadline_"
+
 --- Payload text prefix of a mission reward's note that it includes the deposit, followed by the amount, e.g. ..._deposit_back_1000.
 local DEPOSIT_LINE_PREFIX = "dummy_land_enc_tavern_deposit_back_"
 
@@ -101,6 +107,18 @@ local LINE_BACK = offers_data.line_prefix .. offers_data.tavern.leave_line
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Board
+
+--- Returns a contract's deadline in turns: the MCT `tavern_contract_turns`, plus `cull_extra_turns` for a cull or `step_extra_turns` for each
+--- quest step.
+--- @param kind string "bounty", "cull", "marked" or "chain".
+--- @returns number The turns.
+local function deadline_turns(kind)
+    local data = tavern_data.contracts
+    local turns = get_mct_settings().tavern_contract_turns
+    if kind == "cull" then return turns + data.cull_extra_turns end
+    if kind == "chain" then return turns + data.chain.step_extra_turns end
+    return turns
+end
 
 --- The end of a log line naming a fight's battle modifiers, or nothing when it has none.
 --- @param modifiers table The modifier keys.
@@ -181,7 +199,7 @@ function M.open(tavern, faction, general_cqi)
         local fight = tavern.board.fights[i] or {}
         local slot = { choice = CHOICE_PREFIX .. i, index = i, kind = kind, deposit = tavern:charge(base, faction_name),
             target = kind == "cull" and enemy and enemy:name() or nil, enemy = fight.enemy, modifiers = fight.modifiers or {} }
-        local lines = { LINE_PREFIX .. kind .. "_" .. tavern.level }
+        local lines = { LINE_PREFIX .. kind .. "_" .. tavern.level, (kind == "chain" and STEP_DEADLINE_LINE_PREFIX or DEADLINE_LINE_PREFIX) .. deadline_turns(kind) }
         for _, line in ipairs(battle_modifiers.payload_lines(slot.modifiers)) do lines[#lines + 1] = line end
         local choice = { key = slot.choice, lines = lines }
         if tavern.board.taken[i] then
@@ -492,16 +510,15 @@ end
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns boolean False when it found no place to start, so it is void.
 local function start(tavern, faction_name, contract, invasion_battle_manager)
-    local data = tavern_data.contracts
+    local turns = deadline_turns(contract.kind)
     contract.key = mission_key(contract)
     contract.invasion, contract.force_cqi = nil, nil
     if contract.kind == "cull" then
         local armies = tavern_data.levels[contract.level].contracts.cull_armies
-        issue_mission(faction_name, contract, tavern, "DEFEAT_N_ARMIES_OF_FACTION", { "total " .. armies, "faction " .. contract.target }, data.cull_turns)
+        issue_mission(faction_name, contract, tavern, "DEFEAT_N_ARMIES_OF_FACTION", { "total " .. armies, "faction " .. contract.target }, turns)
         return true
     end
-    local step = contract.kind == "chain" and data.chain.steps[contract.step].kind or contract.kind
-    local turns = contract.kind == "chain" and data.chain.step_turns or data[contract.kind .. "_turns"]
+    local step = contract.kind == "chain" and tavern_data.contracts.chain.steps[contract.step].kind or contract.kind
     if step == "marked" then return start_marked(tavern, faction_name, contract, turns) end
     return start_hunt(tavern, faction_name, contract, invasion_battle_manager, turns)
 end
@@ -798,7 +815,7 @@ function M.on_mission_ended(delegate, faction_name, key, outcome)
     if patron then
         log("tavern: " .. faction_name .. " is a patron of the Guild, so no Tavern charges it more")
     else
-        M.penalty_until[faction_name] = cm:turn_number() + tavern_data.contracts.standing_turns
+        M.penalty_until[faction_name] = cm:turn_number() + get_mct_settings().tavern_penalty_turns
         log("tavern: every Guild Tavern charges " .. faction_name .. " more until turn " .. M.penalty_until[faction_name])
     end
     local message = outcome == "failed" and "tavern_contract_failed" or "tavern_contract_dropped"

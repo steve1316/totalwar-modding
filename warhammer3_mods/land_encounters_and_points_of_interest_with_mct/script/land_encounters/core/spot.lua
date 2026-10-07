@@ -632,7 +632,7 @@ local PointOfInterestDelegate = {
 
 --- Initializes the POI table from the configs (smithies and resources). Taverns keep their state in features/tavern.lua, so this list holds
 --- smithies only and a smithy's marker index stays its slot. Smithy spots always exist, so a smithy marker left in a save still resolves.
---- Whether their markers show follows the Remove Smithies setting, see `SmithyEventDelegate:sync_markers`. A zone, or a list in it, that
+--- Whether their markers show follows the Enable Smithies setting, see `SmithyEventDelegate:sync_markers`. A zone, or a list in it, that
 --- coordinates.lua leaves out counts as empty: the spot map only writes the lists it fills.
 --- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays, or nil for a zone with none.
 function PointOfInterestDelegate:initialize(points_of_interest_data)

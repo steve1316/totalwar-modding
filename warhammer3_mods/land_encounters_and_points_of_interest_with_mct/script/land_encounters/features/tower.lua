@@ -598,7 +598,7 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     --- The debug overrides (configs/debug.lua) replace the difficulty and budget for in-game testing.
     local floor, difficulty = tower_data.floor_difficulty(next_floor, floor_number, debug_config)
     local budget = #debug_config.floor_budget == 2 and debug_config.floor_budget or tower_data.budget_by_difficulty[difficulty]
-    local budget_multiplier = next_floor.budget or 1
+    local budget_multiplier = (next_floor.budget or 1) * get_mct_settings().tower_enemy_percent / 100
     local sabotage = tower_offers.sabotage_options(next_floor)
     --- A sized allied army (Allies in the dark): its lord and a set number of regular units, with gold to buy them all.
     local ally_options = nil
@@ -661,6 +661,7 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0
     local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1) * battle_modifiers.gold_multiplier(delve.modifiers)
+        * get_mct_settings().tower_gold_percent / 100
     if next_floor.double_or_nothing then
         gold_multiplier = gold_multiplier * (loss < next_floor.double_or_nothing and 2 or 0)
     end
