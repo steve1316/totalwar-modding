@@ -37,9 +37,9 @@ local mct_settings = {
     --- Turns that surcharge lasts.
     tavern_penalty_turns = 10,
     --- Percent chance an AI army at war with a Tavern's AI owner takes it.
-    tavern_ai_takeover_chance = 26,
+    tavern_ai_takeover_chance = 25,
     --- Percent chance each round that an AI owner upgrades its Tavern.
-    tavern_ai_upgrade_chance = 3,
+    tavern_ai_upgrade_chance = 5,
     --- Towers are on the map and can be delved.
     enable_towers = true,
     --- Turns a tower stays closed after a delve ends.
@@ -59,9 +59,9 @@ local mct_settings = {
     --- Percent of a player Smithy's tribute interval.
     smithy_tribute_percent = 100,
     --- Percent chance an AI army at war with a Smithy's AI owner takes it.
-    smithy_ai_takeover_chance = 26,
+    smithy_ai_takeover_chance = 25,
     --- Percent chance each round that an AI owner upgrades its Smithy.
-    smithy_ai_upgrade_chance = 3,
+    smithy_ai_upgrade_chance = 5,
     --- Tell the player when a Smithy or Tower is ready again.
     ready_notices = true,
     spawn_percentage = 0.75,

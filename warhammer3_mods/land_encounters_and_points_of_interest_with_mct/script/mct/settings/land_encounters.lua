@@ -501,6 +501,27 @@ add_setting_slider("tavern_ai_upgrade_chance", "taverns_section", "AI upgrade ch
 
 add_guide_section("taverns", "Guide: The Tavern", taverns_page, mct_guides.taverns_text(), true)
 
+--- Builds every guide's text again and puts it on its section. The guides read game text, which a campaign does not have ready when this
+--- file first runs, so they are rebuilt once MCT has started and each time its panel opens, before a page is drawn.
+local function refresh_guides()
+    local texts = {
+        battle_spots = mct_guides.battle_spots_text(),
+        treasure_spots = mct_guides.treasure_spots_text(),
+        towers = mct_guides.towers_text(),
+        smithy = mct_guides.smithy_text(),
+        taverns = mct_guides.taverns_text(),
+    }
+    for _, offer_section in ipairs(mct_guides.spot_offer_sections()) do texts["spot_" .. offer_section.key] = offer_section.text end
+    for _, offer_section in ipairs(mct_guides.tower_offer_sections()) do texts["tower_" .. offer_section.key] = offer_section.text end
+    for key, text in pairs(texts) do
+        local section = mct_mod:get_section_by_key("guide_" .. key .. "_section")
+        if section then section:set_description(text) end
+    end
+end
+for _, event in ipairs({ "MctInitialized", "MctPanelOpened" }) do
+    core:add_listener("leapoi_refresh_guides_" .. event, event, true, refresh_guides, true)
+end
+
 out("DEBUG - UI elements creation completed.")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
