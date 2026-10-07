@@ -123,20 +123,6 @@ M.missions_by_subculture = {
     --- WH3
     --- Kislev
     ["wh3_main_sc_ksl_kislev"] = {
-        --[1] = {
-        ---    mission = "land_enc_mission_smithy_kislev_ursire",
-        ---    ancillaries = { "wh3_main_anc_armour_great_bear_pelt", "wh3_main_anc_weapon_ursuns_claws" }
-        --},
-
-        --[2] = {
-        ---    mission = "land_enc_mission_smithy_kislev_wyrm_hunter",
-        ---    ancillaries = { "wh3_main_anc_armour_wyrm_harness", "wh3_main_anc_weapon_wyrmspike" }
-        --},
-
-        --[3] = {
-        ---    mission = "land_enc_mission_smithy_kislev_dazhs_brazier",
-        ---   ancillaries = { "wh3_main_anc_weapon_dazhs_brazier" }
-        --},
     },
 
     --- Daemons
