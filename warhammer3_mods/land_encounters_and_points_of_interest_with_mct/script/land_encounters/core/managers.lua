@@ -1361,7 +1361,8 @@ function PointOfInterestEventManager:update_state_given_turn_passing()
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
 
---- Runs the per-faction part of a human turn start: closing a delve left from last turn, and smithy sieges while Smithies are enabled.
+--- Runs the per-faction part of a human turn start: closing a delve left from last turn, Tavern contracts and sieges, and smithy sieges
+--- while Smithies are enabled.
 --- @param faction_name string The human faction whose turn is starting.
 function PointOfInterestEventManager:on_faction_turn_start(faction_name)
     self.tower_event_delegate:on_faction_turn_start(faction_name)

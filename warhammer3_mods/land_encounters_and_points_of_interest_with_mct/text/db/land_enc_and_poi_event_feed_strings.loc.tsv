@@ -276,6 +276,21 @@ event_feed_strings_text_description_event_land_enc_tavern_captured	We have drive
 event_feed_strings_text_title_event_land_enc_tavern_capture_repelled	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_capture_repelled	Attack Repelled	false
 event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains under their control.	false
+event_feed_strings_text_title_event_land_enc_tavern_besieged	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_besieged	Tavern Under Siege!	false
+event_feed_strings_text_description_event_land_enc_tavern_besieged	An enemy army has surrounded our tavern. At the start of our turn we must decide whether to defend it or give it up.	false
+event_feed_strings_text_title_event_land_enc_tavern_raided	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_raided	Tavern Raided	false
+event_feed_strings_text_description_event_land_enc_tavern_raided	We could not raise a garrison in time. The raiders emptied the cellars before leaving, and the tavern has lost a level.	false
+event_feed_strings_text_title_event_land_enc_tavern_successfully_defended	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_successfully_defended	Tavern Defended	false
+event_feed_strings_text_description_event_land_enc_tavern_successfully_defended	The enemy broke against the tavern's doors and fled. Our guards are already dragging the dead from the yard, and by nightfall the ale is flowing again.	false
+event_feed_strings_text_title_event_land_enc_tavern_lost	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_lost	Tavern Lost	false
+event_feed_strings_text_description_event_land_enc_tavern_lost	We lost control of the tavern. We saved the keeper and some of his staff, but the tavern has lost a level, and it is no longer ours to improve. We should recapture it as soon as we can.	false
+event_feed_strings_text_title_event_land_enc_tavern_unconditional_surrender	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_unconditional_surrender	Tavern Surrendered	false
+event_feed_strings_text_description_event_land_enc_tavern_unconditional_surrender	We sent the keeper and the guards an urgent order to leave, and they obeyed. The enemy has taken the tavern and it has lost a level, but our people live to fight another day. We will get the tavern back in time.	false
 event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_2	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_2	Tavern Improved	false
 event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	Builders have raised a second hall beside the old common room, and the tavern has grown to level 2. Its guards are tougher, and its rooms offer more.	false

@@ -186,6 +186,7 @@ dummy_land_enc_tavern_deposit_back_3750	ui/campaign ui/effect_bundles/treasury.p
 dummy_land_enc_tavern_deposit_back_4000	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_tavern_deposit_back_5000	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_tavern_seize	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_tavern_unconditional_surrender	ui/campaign ui/effect_bundles/casualties.png	default	0
 dummy_land_enc_tavern_donation_1	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_tavern_donation_2	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_tavern_donation_done	ui/campaign ui/effect_bundles/treasury.png	default	0

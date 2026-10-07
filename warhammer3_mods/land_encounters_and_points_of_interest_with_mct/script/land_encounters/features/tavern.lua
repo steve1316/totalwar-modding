@@ -1,8 +1,9 @@
 --- TavernState + TavernEventDelegate. A Tavern is a fixed place any lord can visit: its owner gets the full hub, an allied or neutral visitor
 --- the hub with a choice to seize it in place of the upgrade, and an enemy of the owner a capture battle. Any visitor can make the Guild a
---- Generous Donation (features/guild_patron.lua). An unowned Tavern is claimed by the first player lord to walk in,
---- and an AI army at war with an AI owner can take it. The AI never takes a player-owned Tavern. The mercenary hall lives in
---- features/tavern_hall.lua, the contract board in features/tavern_contracts.lua, and the bar is a spot offer site (features/spot_offers.lua).
+--- Generous Donation (features/guild_patron.lua). An unowned Tavern is claimed by the first player lord to walk in, and an AI army at war
+--- with an AI owner can take it. An AI army at war with a player owner besieges it instead (core/owned_point.lua), and the owner fights it
+--- with a garrison or surrenders. The mercenary hall lives in features/tavern_hall.lua, the contract board in features/tavern_contracts.lua,
+--- and the bar is a spot offer site (features/spot_offers.lua).
 --- TavernEventDelegate builds the Taverns from configs/coordinates.lua and routes events to them.
 
 require("script/land_encounters/utils/common")
@@ -32,6 +33,8 @@ local FIRST_OPTION = 0
 local EVENT_HUB_BY_LEVEL = { "land_enc_dilemma_tavern_hub_level_1", "land_enc_dilemma_tavern_hub_level_2", "land_enc_dilemma_tavern_hub_level_3" }
 --- The fight-or-leave dilemma offered to a player lord entering a Tavern held by an enemy.
 local EVENT_CAPTURE = "land_enc_dilemma_tavern_capture"
+--- The fight-or-surrender dilemma offered to a besieged owner.
+local EVENT_DEFENSE = "land_enc_dilemma_tavern_defense"
 
 --- Choice keys of the hub, in the order the DB shows them. A guest sees Seize where the owner sees the upgrade.
 local HALL_CHOICE = "FIRST"
@@ -73,8 +76,16 @@ local PAYLOAD_TEXT_UNAFFORDABLE = offers_data.unaffordable_line
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Properties definition
 
---- Inherits the ownership helpers, war and stance checks and messages of OwnedPoint (core/owned_point.lua).
+--- Inherits the ownership helpers, war and stance checks, messages and sieges of OwnedPoint (core/owned_point.lua).
 local TavernState = OwnedPoint.extend({
+    --- What the Tavern's sieges use (see OwnedPoint `SIEGE`).
+    SIEGE = {
+        defense_event = EVENT_DEFENSE,
+        messages = { besieged = "tavern_besieged", raided = "tavern_raided", defended = "tavern_successfully_defended", lost = "tavern_lost",
+            surrendered = "tavern_unconditional_surrender" },
+        listener_prefix = "land_enc_tavern_defense_",
+        kind = "tavern",
+    },
     --- Zone (region key) hosting the Tavern.
     zone_name = "",
     --- 1-based slot of the Tavern in its zone's `taverns` list. Matches the marker id suffix.
@@ -141,7 +152,8 @@ end
 --- Entering the Tavern
 
 --- Routes a general entering this Tavern's marker: the hub for its owner and for allied or neutral player lords, the claim for an unowned
---- one, the capture dilemma for an enemy, and a takeover roll for an AI army at war with an AI owner.
+--- one, the capture dilemma for an enemy, a siege by an AI army at war with a player owner, and a takeover roll for an AI army at war with
+--- an AI owner.
 --- @param area_and_character_info table The AreaEntered context with family_member.
 --- @returns string|nil The visiting faction when a Tavern dilemma was opened for it, else nil.
 function TavernState:trigger_event(area_and_character_info)
@@ -169,10 +181,13 @@ function TavernState:trigger_event(area_and_character_info)
             self:open_hub(visiting_faction, visiting_character:command_queue_index())
             return visitor
         end
-    elseif self:is_occupied() and not self:is_occupied_by_player() and not self:is_prohibited_subculture(visiting_faction)
-        and self:is_faction_at_war_with_owner(visiting_faction) and random_chance(get_mct_settings().tavern_ai_takeover_chance) then
-        log("tavern: " .. visitor .. " takes the " .. self:describe() .. " from " .. self.controlling_faction_name)
-        self:set_controlling_faction(visitor)
+    elseif self:is_occupied() and not self:is_prohibited_subculture(visiting_faction) and self:is_faction_at_war_with_owner(visiting_faction) then
+        if self:is_occupied_by_player() then
+            self:begin_siege(visiting_character)
+        elseif random_chance(get_mct_settings().tavern_ai_takeover_chance) then
+            log("tavern: " .. visitor .. " takes the " .. self:describe() .. " from " .. self.controlling_faction_name)
+            self:set_controlling_faction(visitor)
+        end
     end
     return nil
 end
@@ -426,7 +441,7 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Dilemma choices
 
---- Routes a Tavern dilemma choice (hub, hall, board or capture).
+--- Routes a Tavern dilemma choice (hub, hall, board, capture or defense).
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns boolean True when the faction paid for a Generous Donation in the hub.
@@ -434,6 +449,8 @@ function TavernState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
     local dilemma, faction_name = dilemma_choice_and_faction_info:dilemma(), dilemma_choice_and_faction_info:faction():name()
     if dilemma == EVENT_CAPTURE then
         self:resolve_capture_choice(dilemma_choice_and_faction_info:choice(), invasion_battle_manager)
+    elseif dilemma == EVENT_DEFENSE then
+        self:resolve_defense_choice(dilemma_choice_and_faction_info:choice(), invasion_battle_manager)
     elseif dilemma == tavern_hall.DILEMMA then
         tavern_hall.resolve(self, faction_name, dilemma_choice_and_faction_info:choice_key())
     elseif dilemma == tavern_contracts.DILEMMA then
@@ -477,6 +494,11 @@ function TavernState:export_state_as_table()
         controlling_faction_subculture = self.controlling_faction_subculture,
         is_capture_triggered = self.is_capture_triggered,
         visiting_enemy_faction_name = self.visiting_enemy_faction_name or false,
+        besieging_force_cqi = self.besieging_force_cqi or false,
+        besieging_character_cqi = self.besieging_character_cqi or false,
+        besieging_faction_name = self.besieging_faction_name or false,
+        garrison_force_cqi = self.garrison_force_cqi or false,
+        garrison_character_cqi = self.garrison_character_cqi or false,
         pending_hub = self.pending_hub or false,
         bar_closed_until = self.bar_closed_until,
         bar_draws = self.bar_draws,
@@ -488,7 +510,8 @@ function TavernState:export_state_as_table()
     }
 end
 
---- Restores the Tavern's saved state on top of its config.
+--- Restores the Tavern's saved state on top of its config. Records from before Tavern sieges have no siege or garrison fields, so they load
+--- without a siege or a defense in flight.
 --- @param previous_state table A record previously produced by export_state_as_table.
 function TavernState:reinstate(previous_state)
     self.level = previous_state.level or 1
@@ -496,6 +519,11 @@ function TavernState:reinstate(previous_state)
     self.controlling_faction_subculture = previous_state.controlling_faction_subculture or ""
     self.is_capture_triggered = previous_state.is_capture_triggered == true
     self.visiting_enemy_faction_name = previous_state.visiting_enemy_faction_name or nil
+    self.besieging_force_cqi = previous_state.besieging_force_cqi or nil
+    self.besieging_character_cqi = previous_state.besieging_character_cqi or nil
+    self.besieging_faction_name = previous_state.besieging_faction_name or nil
+    self.garrison_force_cqi = previous_state.garrison_force_cqi or nil
+    self.garrison_character_cqi = previous_state.garrison_character_cqi or nil
     self.pending_hub = previous_state.pending_hub or nil
     self.bar_closed_until = previous_state.bar_closed_until or {}
     self.bar_draws = previous_state.bar_draws or {}
@@ -551,7 +579,8 @@ local TavernEventDelegate = {
 }
 
 --- Builds every Tavern from the config and restores the saved ones. A Tavern in the config but not in the save (a new campaign, a save from
---- before Taverns, or a Tavern added since) starts at level 1 with its config owner. A capture battle in flight in the save is awaited again.
+--- before Taverns, or a Tavern added since) starts at level 1 with its config owner. A capture or defense battle in flight in the save is
+--- awaited again.
 --- Then every marker is shown or removed.
 --- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
 --- @param saved table|nil A record previously produced by export_state_as_table, or nil.
@@ -580,7 +609,9 @@ function TavernEventDelegate:initialize(points_of_interest, saved)
             end
             self.taverns_state[#self.taverns_state + 1] = tavern
             self.taverns_by_slot[slot_key(zone_name, i)] = tavern
-            if tavern.is_capture_triggered then
+            if tavern:has_garrison() then
+                tavern:listen_for_defense_result()
+            elseif tavern.is_capture_triggered then
                 local defensive_army = tavern:get_defensive_army()
                 self.invasion_battle_manager:set_auxiliary_army_for_reset(defensive_army)
                 self.invasion_battle_manager:await_battle(tavern, "TavernSpot", nil, defensive_army)
@@ -697,10 +728,21 @@ function TavernEventDelegate:on_mark_entered(character, marker_ref, instance_ref
     tavern_contracts.on_mark_entered(self, character, marker_ref, instance_ref)
 end
 
---- At a faction's turn start, voids its contracts that can no longer be met and keeps its bounty lords at war with it alone.
+--- At a faction's turn start, voids its contracts that can no longer be met and keeps its bounty lords at war with it alone, then checks the
+--- sieges on its Taverns. Opens at most one defense dilemma per turn. While Taverns are removed in MCT, or for a disabled Tavern, a siege is
+--- lifted instead, so the besiegers are not held for good.
 --- @param faction_name string The faction whose turn starts.
 function TavernEventDelegate:on_faction_turn_start(faction_name)
     tavern_contracts.on_faction_turn_start(self, faction_name)
+    local enabled = get_mct_settings().enable_taverns
+    for _, tavern in ipairs(self.taverns_state) do
+        if not enabled or tavern.disabled then
+            if tavern.besieging_force_cqi and tavern:is_occupied_by_same_faction(faction_name) then tavern:clear_siege_and_garrison() end
+        elseif tavern:check_siege_at_turn_start(faction_name) then
+            self.pending_dilemma_by_faction[faction_name] = { zone = tavern.zone_name, index = tavern.index_in_zone }
+            return
+        end
+    end
 end
 
 --- Exports every Tavern plus the delegate's own state for the save/load callbacks.

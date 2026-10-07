@@ -585,6 +585,8 @@ FOURTH	land_enc_dilemma_tavern_hub_level_3
 FIFTH	land_enc_dilemma_tavern_hub_level_3		
 FIRST	land_enc_dilemma_tavern_capture		
 SECOND	land_enc_dilemma_tavern_capture		
+FIRST	land_enc_dilemma_tavern_defense		
+SECOND	land_enc_dilemma_tavern_defense		
 LEAPOI_TVN_UNIT_1	land_enc_dilemma_tavern_hall		
 LEAPOI_TVN_UNIT_2	land_enc_dilemma_tavern_hall		
 LEAPOI_TVN_UNIT_3	land_enc_dilemma_tavern_hall		

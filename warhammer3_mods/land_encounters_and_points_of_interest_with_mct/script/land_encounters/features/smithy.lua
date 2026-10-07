@@ -1,6 +1,6 @@
 --- SmithyState + SmithyEventDelegate. SmithyState owns the per-smithy lifecycle: the forge (free picks, paid commissions, upgrades),
---- tribute and AI items, sieges and player-fought defenses, reclamation battles, AI takeovers, and missions. SmithyEventDelegate is the
---- manager that routes events to the right SmithyState.
+--- tribute and AI items, reclamation battles, AI takeovers, and missions. Sieges and player-fought defenses are shared with Taverns in
+--- core/owned_point.lua. SmithyEventDelegate is the manager that routes events to the right SmithyState.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/core/managers")
@@ -83,8 +83,16 @@ local MISSION_INTERVAL = 30
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Properties definition
 
---- Inherits the ownership helpers, war and stance checks and messages of OwnedPoint (core/owned_point.lua).
+--- Inherits the ownership helpers, war and stance checks, messages and sieges of OwnedPoint (core/owned_point.lua).
 local SmithyState = OwnedPoint.extend({
+    --- What the smithy's sieges use (see OwnedPoint `SIEGE`).
+    SIEGE = {
+        defense_event = EVENT_DEFENSE,
+        messages = { besieged = "smithy_besieged", raided = "smithy_raided", defended = "smithy_successfully_defended", lost = "smithy_lost",
+            surrendered = "smithy_unconditional_surrender" },
+        listener_prefix = "land_enc_smithy_defense_",
+        kind = "smithy",
+    },
     --- Zone (region key) hosting the smithy.
     zone_name = "",
     --- 1-based slot of the smithy inside its zone. Matches the marker id suffix.
@@ -97,16 +105,6 @@ local SmithyState = OwnedPoint.extend({
     visiting_enemy_character = nil,
     --- Faction of the player reclaiming the smithy, kept so a reloaded battle can find them, or nil.
     visiting_enemy_faction_name = nil,
-    --- Force cqi of the army besieging a player-owned smithy, or nil when there is no siege.
-    besieging_force_cqi = nil,
-    --- Character cqi of the besieging army's general, used to hold and release it.
-    besieging_character_cqi = nil,
-    --- Faction of the besieging army, which takes the smithy if the defense fails.
-    besieging_faction_name = nil,
-    --- Force cqi of the temporary garrison fighting a defense battle, or nil.
-    garrison_force_cqi = nil,
-    --- Character cqi of the garrison's general, used to remove the garrison after the battle.
-    garrison_character_cqi = nil,
     --- What the open forge dilemma offered: `free_picks[i]` is true for choices that give an item, `upgrade` for a paid upgrade.
     pending_forge_offer = nil,
     --- Forge level, 1 to 3. Survives ownership changes.
@@ -398,163 +396,6 @@ end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- Sieges and defense
-
---- Starts a siege of this player-owned smithy: the besieging army is held in place until the owner decides at their next turn start.
---- A smithy can only be besieged by one army at a time.
---- @param character character The general of the besieging AI army.
-function SmithyState:begin_siege(character)
-    if self.besieging_force_cqi then return end
-    self.besieging_force_cqi = character:military_force():command_queue_index()
-    self.besieging_character_cqi = character:command_queue_index()
-    self.besieging_faction_name = character:faction():name()
-    cm:disable_movement_for_character(cm:char_lookup_str(self.besieging_character_cqi))
-    self:show_message(self.controlling_faction_name, "smithy_besieged")
-end
-
---- At the owner's turn start, lifts a siege whose army is gone, or asks the owner to fight or surrender.
---- @param faction_name string The human faction whose turn is starting.
---- @returns boolean True when the defense dilemma was opened.
-function SmithyState:check_siege_at_turn_start(faction_name)
-    if not self.besieging_force_cqi or self:has_garrison() or not self:is_occupied_by_same_faction(faction_name) then return false end
-    if not force_exists(self.besieging_force_cqi) then
-        self:end_siege()
-        return false
-    end
-    cm:trigger_dilemma(faction_name, EVENT_DEFENSE)
-    return true
-end
-
---- Applies the owner's defense choice: fight with a garrison, or surrender the smithy.
---- @param choice number The 0-based choice index.
---- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager, used to build and place the garrison.
-function SmithyState:resolve_defense_choice(choice, invasion_battle_manager)
-    if not self.besieging_force_cqi then return end
-    if not force_exists(self.besieging_force_cqi) then
-        --- The besiegers died or were removed after the dilemma opened.
-        self:end_siege()
-        return
-    end
-    if choice == FIRST_OPTION then
-        self:fight_with_garrison(invasion_battle_manager)
-    else
-        self:release_besieger()
-        self:lose_to_besieger("smithy_unconditional_surrender")
-    end
-end
-
---- Spawns a temporary garrison for the owner beside the smithy, built like a capture army at the forge level, and has it attack the besiegers.
---- When the owner has no army data or there is no room to spawn, the siege becomes a raid: the forge loses a level and the smithy stays.
---- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager, used to build and place the garrison.
-function SmithyState:fight_with_garrison(invasion_battle_manager)
-    local owner = self.controlling_faction_name
-    local region = self:region()
-    local x, y = invasion_battle_manager:find_location_for_character_to_spawn(owner, self.coordinates)
-    if Army.faction_shorthand_for_subculture(self.controlling_faction_subculture) == nil or not region or x == -1 then
-        self:show_message(owner, "smithy_raided")
-        self:release_besieger()
-        self:set_level(self.level - 1)
-        self:end_siege()
-        return
-    end
-
-    local garrison = Army:new_from_subculture_and_level(self.controlling_faction_subculture, self.level)
-    local unit_list = invasion_battle_manager:build_unit_list(garrison)
-    cm:create_force(owner, unit_list, region:name(), x, y, true, function(character_cqi, force_cqi)
-        self.garrison_character_cqi = character_cqi
-        self.garrison_force_cqi = force_cqi
-        self:listen_for_defense_result()
-        cm:force_attack_of_opportunity(force_cqi, self.besieging_force_cqi, false)
-    end)
-end
-
---- Waits for the garrison's battle and resolves the defense from its result. Other battles in the meantime are ignored.
-function SmithyState:listen_for_defense_result()
-    local listener_name = self:defense_listener_name()
-    core:add_listener(
-        listener_name,
-        "BattleCompleted",
-        true,
-        function()
-            local fought, player_won = pending_battle_result_for_faction(self.controlling_faction_name)
-            if not fought then return end
-            core:remove_listener(listener_name)
-            self:resolve_defense_battle(player_won)
-        end,
-        true
-    )
-end
-
---- Removes the garrison, frees the besiegers, and keeps or loses the smithy by the battle result.
---- @param player_won boolean True when the owner's garrison won.
-function SmithyState:resolve_defense_battle(player_won)
-    if force_exists(self.garrison_force_cqi) then
-        kill_character_quietly(self.garrison_character_cqi)
-    end
-    self.garrison_force_cqi = nil
-    self.garrison_character_cqi = nil
-    self:release_besieger()
-    if player_won then
-        self:show_message(self.controlling_faction_name, "smithy_successfully_defended")
-        self:end_siege()
-    else
-        self:lose_to_besieger("smithy_lost")
-    end
-end
-
---- Hands the smithy to the besieging faction and drops the forge one level.
---- @param message string The event-feed message suffix shown to the old owner.
-function SmithyState:lose_to_besieger(message)
-    self:show_message(self.controlling_faction_name, message)
-    local new_owner = self.besieging_faction_name
-    self:end_siege()
-    self:set_level(self.level - 1)
-    self:set_controlling_faction(new_owner)
-end
-
---- Returns the name of this smithy's defense-battle listener.
---- @returns string The listener name.
-function SmithyState:defense_listener_name()
-    return "land_enc_smithy_defense_" .. self.zone_name .. "_" .. tostring(self.index_in_zone)
-end
-
---- Drops any siege or garrison when the smithy changes hands another way (for example its owner died): frees the besiegers, removes a
---- garrison that is still on the map, and stops waiting for its battle.
-function SmithyState:clear_siege_and_garrison()
-    self:release_besieger()
-    self:end_siege()
-    if self:has_garrison() then
-        if force_exists(self.garrison_force_cqi) then
-            kill_character_quietly(self.garrison_character_cqi)
-        end
-        core:remove_listener(self:defense_listener_name())
-        self.garrison_force_cqi = nil
-        self.garrison_character_cqi = nil
-    end
-end
-
---- True while a garrison defense battle is in flight.
---- @returns boolean True when a garrison is on record.
-function SmithyState:has_garrison()
-    return self.garrison_force_cqi ~= nil
-end
-
---- Lets the besieging army move again, when it still exists.
-function SmithyState:release_besieger()
-    if self.besieging_character_cqi and force_exists(self.besieging_force_cqi) then
-        cm:enable_movement_for_character(cm:char_lookup_str(self.besieging_character_cqi))
-    end
-end
-
---- Clears the siege fields.
-function SmithyState:end_siege()
-    self.besieging_force_cqi = nil
-    self.besieging_character_cqi = nil
-    self.besieging_faction_name = nil
-end
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Reclamation
 
 --- Applies the player's reclamation choice: fight for an enemy-owned smithy, or leave it.
@@ -634,22 +475,15 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
 
---- Returns the region under the smithy.
---- @returns region The region interface, or nil when the position has none.
-function SmithyState:region()
-    return region_at(self.coordinates)
-end
-
 --- Returns true while the free picks are cooling down.
 --- @returns boolean True when visit_cooldown is positive.
 function SmithyState:is_on_cooldown()
     return self.visit_cooldown > 0
 end
 
---- Sets the new controlling faction and resets turns_under_control. Any siege or garrison of the previous owner ends.
+--- Sets the new controlling faction and resets turns_under_control. Any siege or garrison of the previous owner ends (see OwnedPoint).
 --- @param faction faction|string|nil The new owner, as a faction handle or key. Empty or nil clears ownership.
 function SmithyState:set_controlling_faction(faction)
-    self:clear_siege_and_garrison()
     OwnedPoint.set_controlling_faction(self, faction)
     self.turns_under_control = 0
 end

@@ -1,10 +1,14 @@
 --- OwnedPoint: what a point of interest owned by a faction shares, Smithies and Taverns alike. It holds the owner fields' helpers, the war and
---- stance checks, the rules for AI takeovers and the owner a config entry starts with. SmithyState and TavernState inherit from it and keep
---- their own fields, battles and dilemmas.
+--- stance checks, the rules for AI takeovers, the owner a config entry starts with, and sieges: an AI army at war with a player owner holds
+--- the point until the owner fights it with a garrison or surrenders. SmithyState and TavernState inherit from it and keep their own fields,
+--- battles and dilemmas.
 
 require("script/land_encounters/utils/common")
 
 local realm_effects = require("script/land_encounters/core/realm_effects")
+local Army = require("script/land_encounters/core/army")
+
+local FIRST_OPTION = 0
 
 local OwnedPoint = {
     --- Owning faction key, or "" when unowned.
@@ -13,6 +17,20 @@ local OwnedPoint = {
     controlling_faction_subculture = "",
     --- {x, y} map position.
     coordinates = {},
+    --- Force cqi of the army besieging a player-owned point, or nil when there is no siege.
+    besieging_force_cqi = nil,
+    --- Character cqi of the besieging army's general, used to hold and release it.
+    besieging_character_cqi = nil,
+    --- Faction of the besieging army, which takes the point if the defense fails.
+    besieging_faction_name = nil,
+    --- Force cqi of the temporary garrison fighting a defense battle, or nil.
+    garrison_force_cqi = nil,
+    --- Character cqi of the garrison's general, used to remove the garrison after the battle.
+    garrison_character_cqi = nil,
+    --- What a class's sieges use, set by each class: the fight-or-surrender `defense_event` dilemma, the `messages` suffixes (besieged,
+    --- raided, defended, lost, surrendered), the `listener_prefix` of its defense-battle listeners, and the `kind` ("smithy" or "tavern")
+    --- its log lines and garrison army ids use.
+    SIEGE = nil,
 }
 
 --- Relations change, in the game's dilemma steps of 10, with an owner we are not at war with when we take its point from it.
@@ -89,9 +107,10 @@ function OwnedPoint:check_if_owner_is_alive_and_return_faction()
     return owner
 end
 
---- Sets the owner. Accepts a faction object or faction key.
+--- Sets the owner. Accepts a faction object or faction key. Any siege or garrison of the previous owner ends.
 --- @param faction faction|string|nil The new owner. Nil, "" or a faction this campaign does not have clears ownership.
 function OwnedPoint:set_controlling_faction(faction)
+    self:clear_siege_and_garrison()
     if type(faction) == "string" and faction ~= "" then
         faction = cm:get_faction(faction)
     end
@@ -158,6 +177,194 @@ end
 --- @param message string The message suffix, e.g. "smithy_lost" for event_feed_strings_text_title_event_land_enc_smithy_lost.
 function OwnedPoint:show_message(faction_name, message)
     show_located_message(faction_name, message, self.coordinates)
+end
+
+--- Returns the region under the point.
+--- @returns region The region interface, or nil when the position has none.
+function OwnedPoint:region()
+    return region_at(self.coordinates)
+end
+
+--- A short name for the log, e.g. "level 2 smithy zone 1". Classes with more to say override it.
+--- @returns string The description.
+function OwnedPoint:describe()
+    return "level " .. self.level .. " " .. self.SIEGE.kind .. " " .. tostring(self.zone_name) .. " " .. tostring(self.index_in_zone)
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Sieges and defense
+
+--- Writes a siege line to the log under the class's kind.
+--- @param text string The line.
+function OwnedPoint:log_siege(text)
+    log(self.SIEGE.kind .. ": " .. text)
+end
+
+--- Starts a siege of this player-owned point: the besieging army is held in place until the owner decides at their next turn start. A point
+--- can only be besieged by one army at a time, and only by a general at the head of an army.
+--- @param character character The general of the besieging AI army.
+function OwnedPoint:begin_siege(character)
+    if self.besieging_force_cqi or not cm:char_is_general_with_army(character) then return end
+    self.besieging_force_cqi = character:military_force():command_queue_index()
+    self.besieging_character_cqi = character:command_queue_index()
+    self.besieging_faction_name = character:faction():name()
+    cm:disable_movement_for_character(cm:char_lookup_str(self.besieging_character_cqi))
+    self:log_siege(self.besieging_faction_name .. " besieges the " .. self:describe() .. " of " .. self.controlling_faction_name .. " with force "
+        .. tostring(self.besieging_force_cqi) .. ", which is held in place")
+    self:show_message(self.controlling_faction_name, self.SIEGE.messages.besieged)
+end
+
+--- At the owner's turn start, lifts a siege whose army is gone, or asks the owner to fight or surrender.
+--- @param faction_name string The human faction whose turn is starting.
+--- @returns boolean True when the defense dilemma was opened.
+function OwnedPoint:check_siege_at_turn_start(faction_name)
+    if not self.besieging_force_cqi or self:has_garrison() or not self:is_occupied_by_same_faction(faction_name) then return false end
+    if not force_exists(self.besieging_force_cqi) then
+        self:log_siege("the army besieging the " .. self:describe() .. " is gone, so the siege is lifted")
+        self:end_siege()
+        return false
+    end
+    self:log_siege(faction_name .. " must fight for or surrender the " .. self:describe() .. " besieged by " .. tostring(self.besieging_faction_name))
+    cm:trigger_dilemma(faction_name, self.SIEGE.defense_event)
+    return true
+end
+
+--- Applies the owner's defense choice: fight with a garrison, or surrender the point.
+--- @param choice number The 0-based choice index.
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager, used to build and place the garrison.
+function OwnedPoint:resolve_defense_choice(choice, invasion_battle_manager)
+    if not self.besieging_force_cqi then return end
+    if not force_exists(self.besieging_force_cqi) then
+        --- The besiegers died or were removed after the dilemma opened.
+        self:log_siege("the army besieging the " .. self:describe() .. " left before the owner chose, so the siege is lifted")
+        self:end_siege()
+        return
+    end
+    self:log_siege(self.controlling_faction_name .. " chose to " .. (choice == FIRST_OPTION and "fight for" or "surrender") .. " the " .. self:describe())
+    if choice == FIRST_OPTION then
+        self:fight_with_garrison(invasion_battle_manager)
+    else
+        self:release_besieger()
+        self:lose_to_besieger(self.SIEGE.messages.surrendered)
+    end
+end
+
+--- Spawns a temporary garrison for the owner beside the point, built like a capture army at the point's level, and has it attack the
+--- besiegers. When the owner has no army data or there is no room to spawn, the siege becomes a raid: the point loses a level and the owner
+--- keeps it.
+--- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager, used to build and place the garrison.
+function OwnedPoint:fight_with_garrison(invasion_battle_manager)
+    local owner = self.controlling_faction_name
+    local region = self:region()
+    local x, y = invasion_battle_manager:find_location_for_character_to_spawn(owner, self.coordinates)
+    if Army.faction_shorthand_for_subculture(self.controlling_faction_subculture) == nil or not region or x == -1 then
+        self:show_message(owner, self.SIEGE.messages.raided)
+        self:release_besieger()
+        local before = self.level
+        self:set_level(self.level - 1)
+        self:log_siege("no garrison can defend the " .. self:describe() .. ", so it is raided from level " .. before .. " to " .. self.level)
+        self:end_siege()
+        return
+    end
+
+    local garrison = Army:new_from_subculture_and_level(self.controlling_faction_subculture, self.level, self.SIEGE.kind)
+    local unit_list = invasion_battle_manager:build_unit_list(garrison)
+    self:log_siege("a level " .. self.level .. " garrison of " .. owner .. " attacks the army besieging the " .. self:describe())
+    cm:create_force(owner, unit_list, region:name(), x, y, true, function(character_cqi, force_cqi)
+        self.garrison_character_cqi = character_cqi
+        self.garrison_force_cqi = force_cqi
+        self:listen_for_defense_result()
+        cm:force_attack_of_opportunity(force_cqi, self.besieging_force_cqi, false)
+    end)
+end
+
+--- Waits for the garrison's battle and resolves the defense from its result. Other battles in the meantime are ignored.
+function OwnedPoint:listen_for_defense_result()
+    local listener_name = self:defense_listener_name()
+    core:add_listener(
+        listener_name,
+        "BattleCompleted",
+        true,
+        function()
+            local fought, player_won = pending_battle_result_for_faction(self.controlling_faction_name)
+            if not fought then return end
+            core:remove_listener(listener_name)
+            self:resolve_defense_battle(player_won)
+        end,
+        true
+    )
+end
+
+--- Removes the garrison, frees the besiegers, and keeps or loses the point by the battle result.
+--- @param player_won boolean True when the owner's garrison won.
+function OwnedPoint:resolve_defense_battle(player_won)
+    self:log_siege("the garrison of the " .. self:describe() .. " " .. (player_won and "won" or "lost") .. " its battle against " .. tostring(self.besieging_faction_name))
+    if force_exists(self.garrison_force_cqi) then
+        kill_character_quietly(self.garrison_character_cqi)
+    end
+    self.garrison_force_cqi = nil
+    self.garrison_character_cqi = nil
+    self:release_besieger()
+    if player_won then
+        self:show_message(self.controlling_faction_name, self.SIEGE.messages.defended)
+        self:end_siege()
+    else
+        self:lose_to_besieger(self.SIEGE.messages.lost)
+    end
+end
+
+--- Hands the point to the besieging faction and drops it one level.
+--- @param message string The event-feed message suffix shown to the old owner.
+function OwnedPoint:lose_to_besieger(message)
+    self:show_message(self.controlling_faction_name, message)
+    local old_owner, new_owner, before = self.controlling_faction_name, self.besieging_faction_name, self.level
+    self:end_siege()
+    self:set_level(self.level - 1)
+    self:set_controlling_faction(new_owner)
+    self:log_siege(tostring(new_owner) .. " takes the " .. self:describe() .. " from " .. old_owner .. ", which drops from level " .. before .. " to " .. self.level)
+end
+
+--- Returns the name of this point's defense-battle listener.
+--- @returns string The listener name.
+function OwnedPoint:defense_listener_name()
+    return self.SIEGE.listener_prefix .. self.zone_name .. "_" .. tostring(self.index_in_zone)
+end
+
+--- Drops any siege or garrison when the point changes hands another way (for example its owner died): frees the besiegers, removes a
+--- garrison that is still on the map, and stops waiting for its battle.
+function OwnedPoint:clear_siege_and_garrison()
+    if self.besieging_force_cqi then self:log_siege("the siege of the " .. self:describe() .. " ends as it changes hands") end
+    self:release_besieger()
+    self:end_siege()
+    if self:has_garrison() then
+        if force_exists(self.garrison_force_cqi) then
+            kill_character_quietly(self.garrison_character_cqi)
+        end
+        core:remove_listener(self:defense_listener_name())
+        self.garrison_force_cqi = nil
+        self.garrison_character_cqi = nil
+    end
+end
+
+--- True while a garrison defense battle is in flight.
+--- @returns boolean True when a garrison is on record.
+function OwnedPoint:has_garrison()
+    return self.garrison_force_cqi ~= nil
+end
+
+--- Lets the besieging army move again, when it still exists.
+function OwnedPoint:release_besieger()
+    if self.besieging_character_cqi and force_exists(self.besieging_force_cqi) then
+        cm:enable_movement_for_character(cm:char_lookup_str(self.besieging_character_cqi))
+    end
+end
+
+--- Clears the siege fields.
+function OwnedPoint:end_siege()
+    self.besieging_force_cqi = nil
+    self.besieging_character_cqi = nil
+    self.besieging_faction_name = nil
 end
 
 --- Makes `class` inherit OwnedPoint, so its instances fall back to it for anything the class does not define.

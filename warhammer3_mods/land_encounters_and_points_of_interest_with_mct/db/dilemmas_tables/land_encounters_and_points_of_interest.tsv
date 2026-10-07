@@ -60,6 +60,7 @@ land_enc_dilemma_tavern_hub_level_1	false			wulfhart_hunters	false	Event	UI_CAM_
 land_enc_dilemma_tavern_hub_level_2	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tavern_hub_level_3	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tavern_capture	false			wh2_rogue_army_encountered	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tavern_defense	false			elector_invasion	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tavern_hall	false			wh2_twa05_ogre_camp_negotiation	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_tavern_board	false			diplomacy	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_hidden_tomb	false			books_of_nagash	false	Event	UI_CAM_EVENT_Dilemma			false
