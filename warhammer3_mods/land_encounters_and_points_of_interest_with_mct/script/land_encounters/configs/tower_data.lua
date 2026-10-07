@@ -65,6 +65,14 @@ function M.round_gold(gold)
     return math.floor(gold / M.gold_step + 0.5) * M.gold_step
 end
 
+--- Gold a floor's base gold pays, times `multiplier` and the MCT `tower_gold_percent`, rounded to the gold step.
+--- @param gold number The floor's base gold.
+--- @param multiplier number|nil Any other multiplier, 1 when nil.
+--- @returns number The gold paid.
+function M.floor_gold(gold, multiplier)
+    return M.round_gold(gold * (multiplier or 1) * get_mct_settings().tower_gold_percent / 100)
+end
+
 --- Writes gold as a whole number with no thousands separator, e.g. 3000, the way vanilla writes it.
 --- @param gold number The gold amount.
 --- @returns string The formatted amount.

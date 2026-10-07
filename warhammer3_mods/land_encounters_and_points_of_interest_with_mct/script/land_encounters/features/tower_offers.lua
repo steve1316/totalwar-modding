@@ -610,7 +610,7 @@ local HANDLERS = {
         apply = function(offer, ctx)
             local delve = ctx.delve
             local skipped = tower_data.floors[delve.floor + 1]
-            delve.haul.gold = delve.haul.gold + round_gold(skipped.gold * offer.reward_share)
+            delve.haul.gold = delve.haul.gold + tower_data.floor_gold(skipped.gold, offer.reward_share)
             for _, item in ipairs(item_pool.pick_items(ctx.faction_name, skipped.item_rarities, math.floor(skipped.item_count * offer.reward_share))) do
                 tower_data.add_items(delve.haul, { item })
             end
@@ -631,6 +631,8 @@ local HANDLERS = {
         apply = function(offer, ctx) skip_floors(ctx.delve, offer.skips) end,
     },
     hidden_floor = {
+        --- Drawn only on the MCT `tower_hidden_floor_chance` roll.
+        eligible = function() return random_chance(get_mct_settings().tower_hidden_floor_chance) end,
         apply = function(_, ctx)
             --- A few tries at a faction other than the tower's. With a single enabled faction the bonus floor uses it too.
             local faction = get_random_faction()
@@ -735,7 +737,7 @@ end
 
 --- Draws up to the MCT `tower_offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones. Eligible offers in
 --- the debug `force_offers` list (configs/debug.lua) are drawn first. The offers are priced and sized at the next floor's difficulty, which
---- the delve keeps until the next draw. The Hidden Floor stays in the pool only on the MCT `tower_hidden_floor_chance` roll.
+--- the delve keeps until the next draw.
 --- @param delve table The delve record.
 --- @param faction_name string The delving faction.
 --- @param tower TowerState|nil The delve's tower. Offers about the tower itself are not drawn without it.
@@ -747,7 +749,7 @@ function M.draw(delve, faction_name, tower)
     local groups = {}
     for _, record in ipairs(offers_data.offers) do
         local offer = steps.resolve(record, delve.offer_difficulty)
-        if eligible(offer, ctx) and (not offer.bonus_floor or random_chance(get_mct_settings().tower_hidden_floor_chance)) then
+        if eligible(offer, ctx) then
             if offer.group then
                 groups[offer.group] = groups[offer.group] or {}
                 table.insert(groups[offer.group], offer.key)

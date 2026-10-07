@@ -144,7 +144,7 @@ function TavernState:update_state_given_turn_passing()
         self:set_controlling_faction(nil)
         return
     end
-    if not owner_faction:is_human() then self:try_ai_upgrade(owner_faction, tavern_data.levels[self.level].upgrade_price, get_mct_settings().tavern_ai_upgrade_chance) end
+    if not owner_faction:is_human() then self:try_ai_upgrade(owner_faction, tavern_data.levels[self.level].upgrade_price) end
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,13 +181,8 @@ function TavernState:trigger_event(area_and_character_info)
             self:open_hub(visiting_faction, visiting_character:command_queue_index())
             return visitor
         end
-    elseif self:is_occupied() and not self:is_prohibited_subculture(visiting_faction) and self:is_faction_at_war_with_owner(visiting_faction) then
-        if self:is_occupied_by_player() then
-            self:begin_siege(visiting_character)
-        elseif random_chance(get_mct_settings().tavern_ai_takeover_chance) then
-            log("tavern: " .. visitor .. " takes the " .. self:describe() .. " from " .. self.controlling_faction_name)
-            self:set_controlling_faction(visitor)
-        end
+    elseif self:is_occupied() then
+        self:on_ai_army_entered(visiting_character, visiting_faction)
     end
     return nil
 end

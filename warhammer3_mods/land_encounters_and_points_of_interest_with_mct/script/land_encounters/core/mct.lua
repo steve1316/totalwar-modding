@@ -8,6 +8,13 @@ require("script/land_encounters/utils/common")
 
 local archetypes = require("script/land_encounters/configs/archetypes")
 
+--- MCT options whose key is also their `mct_settings` field, read and logged the same way by `set_mct_settings`.
+local SAME_NAMED_OPTIONS = { "enable_towers", "tower_cooldown", "tower_gold_percent", "tower_enemy_percent", "tower_offers_per_floor",
+    "tower_hidden_floor_chance", "enable_smithies", "smithy_cooldown", "smithy_price_percent", "smithy_tribute_percent", "smithy_ai_takeover_chance",
+    "smithy_ai_upgrade_chance", "enable_taverns", "tavern_contract_turns", "tavern_hall_restock", "tavern_hire_markup", "tavern_hires_per_visit",
+    "tavern_cooldown", "tavern_penalty_percent", "tavern_penalty_turns", "tavern_ai_takeover_chance", "tavern_ai_upgrade_chance", "ready_notices",
+    "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance" }
+
 --- Default settings. The MctInitialized listener overwrites these at first_tick with the user's
 --- finalized MCT option values via set_mct_settings.
 local mct_settings = {
@@ -399,25 +406,10 @@ end
 --- Pulls the user's finalized MCT option values into the in-memory mct_settings table.
 --- @param mct_mod table The MCT mod handle returned by mct:get_mod_by_key.
 function set_mct_settings(mct_mod)
-    mct_settings.enable_smithies = mct_mod:get_option_by_key("enable_smithies"):get_finalized_setting()
-    mct_settings.enable_taverns = mct_mod:get_option_by_key("enable_taverns"):get_finalized_setting()
-    mct_settings.tavern_contract_turns = mct_mod:get_option_by_key("tavern_contract_turns"):get_finalized_setting()
-    mct_settings.tavern_hall_restock = mct_mod:get_option_by_key("tavern_hall_restock"):get_finalized_setting()
-    for _, key in ipairs({ "tower_gold_percent", "tower_enemy_percent", "tower_offers_per_floor", "tower_hidden_floor_chance", "smithy_price_percent",
-        "smithy_tribute_percent", "smithy_ai_takeover_chance", "smithy_ai_upgrade_chance", "tavern_hire_markup", "tavern_hires_per_visit", "tavern_cooldown",
-        "tavern_penalty_percent", "tavern_penalty_turns", "tavern_ai_takeover_chance", "tavern_ai_upgrade_chance" }) do
+    for _, key in ipairs(SAME_NAMED_OPTIONS) do
         mct_settings[key] = mct_mod:get_option_by_key(key):get_finalized_setting()
         out("DEBUG - mct_settings." .. key .. ": " .. tostring(mct_settings[key]))
     end
-    mct_settings.enable_towers = mct_mod:get_option_by_key("enable_towers"):get_finalized_setting()
-    mct_settings.tower_cooldown = mct_mod:get_option_by_key("tower_cooldown"):get_finalized_setting()
-    mct_settings.smithy_cooldown = mct_mod:get_option_by_key("smithy_cooldown"):get_finalized_setting()
-    mct_settings.ready_notices = mct_mod:get_option_by_key("ready_notices"):get_finalized_setting()
-    mct_settings.spawn_percentage = mct_mod:get_option_by_key("spawn_percentage"):get_finalized_setting()
-    mct_settings.battle_chance = mct_mod:get_option_by_key("battle_chance"):get_finalized_setting()
-    mct_settings.pre_battle_chance = mct_mod:get_option_by_key("pre_battle_chance"):get_finalized_setting()
-    mct_settings.spoils_chance = mct_mod:get_option_by_key("spoils_chance"):get_finalized_setting()
-    mct_settings.battle_modifier_chance = mct_mod:get_option_by_key("battle_modifier_chance"):get_finalized_setting()
 
     --- Read the three intervention toggles and build the enabled set. The MCT anchor enforces
     --- at-least-one via set_locked, so this list should never be empty, but `pick_intervention_type`
@@ -443,11 +435,6 @@ function set_mct_settings(mct_mod)
 
     mct_settings.enable_all_factions = mct_mod:get_option_by_key("enable_all_faction_checkboxes"):get_finalized_setting()
 
-    out("DEBUG - mct_settings.enable_smithies: " .. tostring(mct_settings.enable_smithies) .. ", enable_taverns: " .. tostring(mct_settings.enable_taverns)
-        .. ", tavern_contract_turns: " .. tostring(mct_settings.tavern_contract_turns) .. ", tavern_hall_restock: " .. tostring(mct_settings.tavern_hall_restock))
-    out("DEBUG - mct_settings.enable_towers: " .. tostring(mct_settings.enable_towers) .. ", tower_cooldown: " .. tostring(mct_settings.tower_cooldown))
-    out("DEBUG - mct_settings.smithy_cooldown: " .. tostring(mct_settings.smithy_cooldown) .. ", ready_notices: " .. tostring(mct_settings.ready_notices))
-    out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))
     out("DEBUG - mct_settings.battle_chance: " .. tostring(mct_settings.battle_chance) .. ", pre_battle_chance: " .. tostring(mct_settings.pre_battle_chance)
         .. ", spoils_chance: " .. tostring(mct_settings.spoils_chance))
     out("DEBUG - mct_settings.enable_all_encounter_skins: " .. tostring(mct_settings.enable_all_encounter_skins))

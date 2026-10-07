@@ -28,7 +28,6 @@ M.flavour = {
 --- Share of a bar offer's price the Tavern's owner pays. Guests pay the full price.
 M.owner_price_share = 0.75
 
-
 --- The mercenary hall. Its stock is shared by every visitor and rolled again the MCT `tavern_hall_restock` turns after it was last rolled, or at once when the
 --- Tavern levels up. A racial Tavern stocks its own culture, a neutral one `neutral_cultures` random cultures. A hire costs the unit's
 --- recruitment cost plus the MCT `tavern_hire_markup` gold, and `renown_extra` more for a Regiment of Renown, for every visitor. A faction

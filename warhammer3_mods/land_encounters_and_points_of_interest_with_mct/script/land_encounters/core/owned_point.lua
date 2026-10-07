@@ -158,14 +158,13 @@ function OwnedPoint:charge_capture_relations(taker_name)
 end
 
 --- Lets an AI owner upgrade the point: when there is a next level, the owner would keep at least the price in its treasury after paying,
---- and the chance hits. The chance is only rolled when the owner can afford it.
+--- and the kind's MCT `<kind>_ai_upgrade_chance` hits. The chance is only rolled when the owner can afford it.
 --- @param owner faction The point's living AI owner.
 --- @param upgrade_price number|nil The gold to reach the next level, or nil at the top level.
---- @param chance number Percent chance of upgrading, from the point's MCT setting.
 --- @returns boolean True when the point was upgraded.
-function OwnedPoint:try_ai_upgrade(owner, upgrade_price, chance)
+function OwnedPoint:try_ai_upgrade(owner, upgrade_price)
     if upgrade_price == nil or owner:treasury() < upgrade_price * 2 then return false end
-    if not random_chance(chance) then return false end
+    if not random_chance(get_mct_settings()[self.SIEGE.kind .. "_ai_upgrade_chance"]) then return false end
     cm:treasury_mod(self.controlling_faction_name, -upgrade_price)
     self:set_level(self.level + 1)
     log("point: " .. self.controlling_faction_name .. " pays " .. upgrade_price .. " gold to raise its point in " .. self.zone_name .. " to level " .. self.level)
@@ -365,6 +364,20 @@ function OwnedPoint:end_siege()
     self.besieging_force_cqi = nil
     self.besieging_character_cqi = nil
     self.besieging_faction_name = nil
+end
+
+--- Handles an AI army walking onto an owned point: an army at war with a player owner begins a siege, and one at war with an AI owner takes
+--- the point on the kind's MCT `<kind>_ai_takeover_chance` roll. Prohibited subcultures and armies at peace with the owner do nothing.
+--- @param character character The AI army's general.
+--- @param faction faction The AI army's faction.
+function OwnedPoint:on_ai_army_entered(character, faction)
+    if self:is_prohibited_subculture(faction) or not self:is_faction_at_war_with_owner(faction) then return end
+    if self:is_occupied_by_player() then
+        self:begin_siege(character)
+    elseif random_chance(get_mct_settings()[self.SIEGE.kind .. "_ai_takeover_chance"]) then
+        log(self.SIEGE.kind .. ": " .. faction:name() .. " takes the " .. self:describe() .. " from " .. self.controlling_faction_name)
+        self:set_controlling_faction(faction:name())
+    end
 end
 
 --- Makes `class` inherit OwnedPoint, so its instances fall back to it for anything the class does not define.

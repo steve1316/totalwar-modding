@@ -6,6 +6,7 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/core/managers")
 
 local smithy_data = require("script/land_encounters/configs/smithy_data")
+local round_gold = require("script/land_encounters/configs/tower_data").round_gold
 local debug_config = require("script/land_encounters/configs/debug")
 local item_pool = require("script/land_encounters/core/item_pool")
 local SmithySpot = require("script/land_encounters/core/spot").SmithySpot
@@ -125,12 +126,12 @@ local SmithyState = OwnedPoint.extend({
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Turn passing
 
---- Returns a Smithy price scaled by the MCT `smithy_price_percent`, rounded to 50 gold.
+--- Returns a Smithy price scaled by the MCT `smithy_price_percent`, rounded to the gold step.
 --- @param base number|nil The config price, or nil when there is none.
 --- @returns number|nil The price charged, or nil.
 local function smithy_price(base)
     if base == nil then return nil end
-    return math.floor(base * get_mct_settings().smithy_price_percent / 100 / 50 + 0.5) * 50
+    return round_gold(base * get_mct_settings().smithy_price_percent / 100)
 end
 
 --- Runs the once-per-round smithy update: tribute or AI items, cooldowns, missions, and auto-occupation when abandoned.
@@ -146,7 +147,7 @@ function SmithyState:update_state_given_turn_passing(mission_manager)
             self:update_visit_cooldown(controlling_faction:name())
             self:issue_mission_if_possible(controlling_faction, mission_manager)
         else
-            self:try_ai_upgrade(controlling_faction, smithy_price(self:level_data().upgrade_price), get_mct_settings().smithy_ai_upgrade_chance)
+            self:try_ai_upgrade(controlling_faction, smithy_price(self:level_data().upgrade_price))
         end
     else
         self:try_to_automatically_occupy_smithy_by_region_ownership_when_abandoned()
@@ -246,12 +247,8 @@ function SmithyState:trigger_event(area_and_character_info)
             end
             self:show_message(visiting_faction:name(), "smithy_encountered")
         end
-    elseif not self:is_prohibited_subculture(visiting_faction) and self:is_faction_at_war_with_owner(visiting_faction) then
-        if self:is_occupied_by_player() then
-            self:begin_siege(visiting_character)
-        elseif random_chance(get_mct_settings().smithy_ai_takeover_chance) then
-            self:set_controlling_faction(visiting_faction:name())
-        end
+    else
+        self:on_ai_army_entered(visiting_character, visiting_faction)
     end
     return false
 end

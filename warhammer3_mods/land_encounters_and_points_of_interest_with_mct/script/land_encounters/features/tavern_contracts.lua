@@ -77,10 +77,10 @@ local MARK_COUNTDOWN_EVENT = "ScriptEventLeapoiTavernMarkCountdown"
 local LINE_PREFIX = "dummy_land_enc_tavern_contract_"
 
 --- Payload text prefix of a contract's deadline line, followed by its turns, e.g. dummy_land_enc_tavern_contract_deadline_10.
-local DEADLINE_LINE_PREFIX = "dummy_land_enc_tavern_contract_deadline_"
+local DEADLINE_LINE_PREFIX = LINE_PREFIX .. "deadline_"
 
 --- Payload text prefix of a quest's deadline line for each of its steps, followed by its turns.
-local STEP_DEADLINE_LINE_PREFIX = "dummy_land_enc_tavern_contract_step_deadline_"
+local STEP_DEADLINE_LINE_PREFIX = LINE_PREFIX .. "step_deadline_"
 
 --- Payload text prefix of a mission reward's note that it includes the deposit, followed by the amount, e.g. ..._deposit_back_1000.
 local DEPOSIT_LINE_PREFIX = "dummy_land_enc_tavern_deposit_back_"

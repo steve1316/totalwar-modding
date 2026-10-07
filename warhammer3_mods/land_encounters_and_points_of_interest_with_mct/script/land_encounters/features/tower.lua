@@ -473,7 +473,7 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             .. tostring(self:tower_in_zone(pending.zone_name).faction) .. (echoed and ", echoed: starts on floor 2" or "") .. ")")
         self.delves[faction_name] = {
             zone_name = pending.zone_name, general_cqi = pending.general_cqi, floor = echoed and 2 or 1,
-            haul = { gold = echoed and tower_data.floors[1].gold or 0, items = {}, units = {}, joined = 0 }, offers = {}, taken = {}, results = {},
+            haul = { gold = echoed and tower_data.floor_gold(tower_data.floors[1].gold) or 0, items = {}, units = {}, joined = 0 }, offers = {}, taken = {}, results = {},
             climb = echoed and { { floor = 1, difficulty = tower_data.floors[1].difficulty, state = "skipped" } } or {},
         }
         self:launch_floor(faction_name)
@@ -661,11 +661,10 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0
     local gold_multiplier = performance_multiplier(loss) * (next_floor.gold or 1) * battle_modifiers.gold_multiplier(delve.modifiers)
-        * get_mct_settings().tower_gold_percent / 100
     if next_floor.double_or_nothing then
         gold_multiplier = gold_multiplier * (loss < next_floor.double_or_nothing and 2 or 0)
     end
-    local gold = tower_data.round_gold(floor.gold * gold_multiplier)
+    local gold = tower_data.floor_gold(floor.gold, gold_multiplier)
     if next_floor.mirror then
         local bonus = tower_offers.mirror_bonus(delve.mirror_copied or 0)
         log("tower: the mirror floor adds " .. bonus .. " gold for " .. tostring(delve.mirror_copied) .. " copied units")
