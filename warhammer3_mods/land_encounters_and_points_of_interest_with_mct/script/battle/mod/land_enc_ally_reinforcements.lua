@@ -3,9 +3,8 @@
 --- `land_enc_ally_arrives_now` holds the ally's faction key: the ally is called onto the field as soon as the battle starts, instead of after its
 --- reinforcement timer, then sent at the enemy. Only AI armies of that faction are touched, so a key left over from an unfought battle cannot
 --- pick up another ally.
---- `land_enc_relief_column` holds a relief column's mode: the ally holds the field, the enemy charges it, and our army marches in as its
---- reinforcement. "scripted" calls our army in once the enemy reaches the ally (or at the latest arrival time), "charge_only" leaves our
---- arrival to the game.
+--- `land_enc_relief_column` holds a relief column's mode ("scripted"): the ally holds the field, the enemy charges it, and our army marches in
+--- as its reinforcement once the enemy reaches the ally (or at the latest arrival time).
 --- Units are called in small groups, each once the previous group is on the field. Calling them all at once makes units outside the game's
 --- current entry group jump to the map centre and back.
 
@@ -236,9 +235,9 @@ if relief_mode and relief_mode ~= "" then
         end
 
         local enemy, ally = collect_units(bm:get_non_player_alliance_num(), false), collect_units(bm:get_player_alliance_num(), false)
-        attack_until_contact("enemy", enemy, ally, CHARGE_DELAY_MS, ARRIVAL_LATEST_MS - CHARGE_DELAY_MS, relief_mode == "scripted" and function()
+        attack_until_contact("enemy", enemy, ally, CHARGE_DELAY_MS, ARRIVAL_LATEST_MS - CHARGE_DELAY_MS, function()
             bm:callback(function() arrive("the enemy reached the ally") end, ARRIVAL_AFTER_CONTACT_MS)
-        end or nil)
-        if relief_mode == "scripted" then bm:callback(function() arrive("the latest arrival time") end, ARRIVAL_LATEST_MS) end
+        end)
+        bm:callback(function() arrive("the latest arrival time") end, ARRIVAL_LATEST_MS)
     end)
 end

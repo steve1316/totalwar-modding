@@ -11,8 +11,6 @@ local offer_effects = require("script/land_encounters/core/offer_effects")
 local realm_effects = require("script/land_encounters/core/realm_effects")
 
 local battle_picker = require("script/land_encounters/core/battle_picker")
-local debug_config = require("script/land_encounters/configs/debug")
-local army_generator = require("script/land_encounters/core/army_generator")
 local spot_battles = require("script/land_encounters/features/spot_battles")
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
@@ -33,8 +31,6 @@ local BattleEventDelegate = {
 
 local FIRST_OPTION = 0
 
---- Units in the allied army of an allied-army test battle.
-local ALLY_TEST_UNITS = 8
 local ERROR_BATTLE_CLEAN_UP_EVENT = {
     incident = "land_enc_incident_battle_clean_up_event",
     targets = {
@@ -63,12 +59,6 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
     local triggering_faction_name = triggering_faction:name()
 
     if is_human_and_it_is_its_turn(triggering_faction) and self:character_is_general_and_can_trigger_dilemma(self.cached_player_character) then
-        if debug_config.ally_test[1] then
-            --- Listed modes take turns, one per battle spot entered.
-            self.ally_test_runs = (self.ally_test_runs or 0) + 1
-            self:start_ally_test(self.cached_player_character, spot_info, debug_config.ally_test[(self.ally_test_runs - 1) % #debug_config.ally_test + 1])
-            return true
-        end
         self.cached_event = battle_picker.pick()
         spot_battles.open(self.cached_event, self.cached_player_character, triggering_faction, spot_battles.roll())
         return true
@@ -96,22 +86,6 @@ function BattleEventDelegate:trigger_pre_battle_dilemma(area_and_character_info,
         )
         return false
     end
-end
-
---- Starts an allied-army test battle (configs/debug.lua `ally_test`) instead of the spot's dilemma: the encounter gets an allied army of
---- `ALLY_TEST_UNITS` units, and the invasion manager runs the test's setup when it spawns the armies. Results go to the script log.
---- @param character character The lord who entered the spot.
---- @param spot_info table A spot_info record for the spot.
---- @param mode string "side_by_side" or "relief_column".
-function BattleEventDelegate:start_ally_test(character, spot_info, mode)
-    self.cached_player_character = character
-    self.cached_event = battle_picker.pick(nil, { no_allies = true })
-    self.cached_event.intervention = ALLIED_REINFORCEMENTS_PERMITTED_TYPE
-    self.cached_event.ally_options = army_generator.ally_options(ALLY_TEST_UNITS)
-    self.invasion_battle_manager.ally_test = { mode = mode, player_cqi = character:command_queue_index() }
-    log("ally test: " .. mode .. " with a " .. self.cached_event.category .. " battle for lord " .. character:command_queue_index() .. " at ("
-        .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
-    self:start_battle(spot_info)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

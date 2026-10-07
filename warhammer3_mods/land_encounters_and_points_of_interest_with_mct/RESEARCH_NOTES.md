@@ -194,7 +194,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 
 ### 3.1 `owner_only` hides a bundle on any army we do not own `[game]`
 - **Scope:** every LEAPOI bundle is `owner_only = true`. On an AI or allied army the player cannot see it, even in battle.
-- **The test:** a copy with `owner_only = false` (`land_enc_effect_ally_test_war_rites`) became visible on the ally. Its +10 melee attack, melee defence and leadership applied.
+- **The test:** a test copy of War Rites with `owner_only = false` (since removed) became visible on the ally. Its +10 melee attack, melee defence and leadership applied.
 - **Still open:** whether the `owner_only` version also applies its stats on an AI army was never checked directly. Every enemy debuff relies on it.
 - **Stat display:** on another army's unit, a bundle's stats show under "Other" in the stat tooltip, not under the bundle's name. The objectives panel and banners list only the player's own army's effects.
 - **Workaround:** announce ally and enemy changes as battle notices (see 4.9).
@@ -431,8 +431,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
   - `land_enc_tower_mission_targets`: e.g. `divine_shield=420`;
   - `land_enc_tower_night_terrors`;
   - `land_enc_ally_arrives_now`;
-  - `land_enc_relief_column`;
-  - `land_enc_ally_test`.
+  - `land_enc_relief_column`.
 - **Back out:** results return as `key=met|failed` in `land_enc_tower_mission_results`, and kill counts in `land_enc_tower_rival_kills`.
 - **Every `B/*.lua` runs in every battle.** A key left over from an unfought battle can leak into the next one, so:
   - the campaign clears keys after the battle;
@@ -688,7 +687,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - **Temporary timings:** test timers at 30 s, then restore before committing.
 - **Debug switches** in `L/configs/debug.lua`:
   - `spot_kind`, `force_battle_categories`, `force_spot_offers`, `force_treasure_site`, `force_offers`, `battle_event_rolls`;
-  - `force_battle_faction`, `force_battle_modifiers`, `battle_difficulty`, `spot_cost`, `ally_test`, `realm_test`, ...
+  - `force_battle_faction`, `force_battle_modifiers`, `battle_difficulty`, `spot_cost`, `realm_test`, ...
   - They ship empty.
 - **Override at the source:** apply an override where the value is stored, not at each call site. A per-call `smithy_level` override took gold for an impossible upgrade.
 
