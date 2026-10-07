@@ -157,25 +157,32 @@ local function spot_offer_name(offer)
     return loc(prefix .. spot_offers.choice_key_prefix .. offer.key:upper())
 end
 
---- Builds the Encounters page treasure site guide: the intro, then each site's title and the special offer it always shows.
+--- Builds the Encounters page treasure site guide: the intro, then each site's title and the Easy line of the special offer it always shows.
 --- @returns string The guide text.
 function M.treasure_spots_text()
     local lines = { guides.treasure_spots_intro, "" }
     for _, site in ipairs(spot_offers.sites) do
-        local special = spot_offers.by_key[site.signature]
-        lines[#lines + 1] = guide_line(loc(DILEMMA_TITLE_PREFIX .. spot_offers.dilemma_prefix .. site.key), "always offers " .. spot_offer_name(special) .. ".")
+        lines[#lines + 1] = guide_line(loc(DILEMMA_TITLE_PREFIX .. spot_offers.dilemma_prefix .. site.key),
+            loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. site.signature .. "_easy"))
     end
     return table.concat(lines, "\n")
 end
 
 --- Builds the Encounters page spot offer sections in page order: each lists the name and Easy line of every offer in its pool, as the
---- dilemmas show them.
+--- dilemmas show them. A site's special that can also be drawn elsewhere says which site always offers it. The specials no other site draws
+--- are listed in the treasure site guide only.
 --- @returns table An array of { key, title, text }.
 function M.spot_offer_sections()
+    local site_of = {}
+    for _, site in ipairs(spot_offers.sites) do site_of[site.signature] = site end
     local lines_by_pool = {}
     for _, offer in ipairs(spot_offers.offers) do
         local lines = lines_by_pool[offer.pool] or {}
-        lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
+        local site = site_of[offer.key]
+        local site_title = site and loc(DILEMMA_TITLE_PREFIX .. spot_offers.dilemma_prefix .. site.key)
+        local name = spot_offer_name(offer)
+        if site then name = name .. " (always at " .. site_title .. ")" end
+        lines[#lines + 1] = guide_line(name, loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
         lines_by_pool[offer.pool] = lines
     end
     local sections = {}

@@ -11,8 +11,8 @@ M.battle_spots_intro = "Most encounter spots start a battle when a lord walks on
 
 --- Intro of the Encounters page treasure spot guide.
 M.treasure_spots_intro = "The rest of the encounter spots hold treasure instead, and Battle chance on the General page sets the split. Walking onto "
-    .. "one opens a treasure site with its own special offer, two more drawn from the site offers below, and Walk away. Costs and gold grow with "
-    .. "the difficulty. The offer guides show the Easy amounts. AI factions take a flat reward instead."
+    .. "one opens a treasure site with its own special offer, listed by site below, two more drawn from the site offers, and Walk away. Costs "
+    .. "and gold grow with the difficulty. The offer guides show the Easy amounts. AI factions take a flat reward instead."
 
 --- Text of the Towers page guide on how towers work.
 M.towers_intro = "One tower stands in each map zone, held by a random faction. Move a lord onto it to delve. Each floor is a battle somewhere "
@@ -52,7 +52,6 @@ M.tavern_intro = "Each map zone has one racial Tavern, run by a single race, and
 
 --- Encounters page spot offer sections in page order, one per offer pool in configs/spot_offers.lua.
 M.spot_offer_sections = {
-    { key = "signature", title = "Site Specials" },
     { key = "treasure", title = "Treasure Sites" },
     { key = "realm", title = "Realm" },
     { key = "pre_battle", title = "Pre-Battle" },
