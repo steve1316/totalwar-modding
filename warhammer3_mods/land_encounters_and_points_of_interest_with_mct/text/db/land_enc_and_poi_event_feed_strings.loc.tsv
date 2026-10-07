@@ -303,6 +303,24 @@ event_feed_strings_text_description_event_land_enc_tavern_mark_repelled	We were 
 event_feed_strings_text_title_event_land_enc_tavern_chain_next	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_chain_next	The Quest Goes On	false
 event_feed_strings_text_description_event_land_enc_tavern_chain_next	The Guild is pleased with our work, and the next step of its quest awaits us. Its reward is greater still.	false
+event_feed_strings_text_title_event_land_enc_tavern_patron_1	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_patron_1	Patron of the Guild	false
+event_feed_strings_text_description_event_land_enc_tavern_patron_1	Our gift has been counted and recounted. Every tavern of the Guild has grown, and its keepers will not soon forget our name.	false
+event_feed_strings_text_title_event_land_enc_tavern_patron_2	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_patron_2	Great Patron of the Guild	false
+event_feed_strings_text_description_event_land_enc_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_failed_patron	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed_patron	Contract Failed	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_failed_patron	The deadline has passed and the work is not done. The Guild keeps our deposit, but it charges its patron no more for the failure.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_dropped_patron	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped_patron	Contract Dropped	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_dropped_patron	We have walked away from the contract. The Guild keeps our deposit, but it charges its patron no more for it.	false
+event_feed_strings_text_title_event_land_enc_smithy_patron_1	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_patron_1	Patron of the Association	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
+event_feed_strings_text_title_event_land_enc_smithy_patron_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_patron_2	Great Patron of the Association	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
 event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
@@ -546,21 +564,3 @@ event_feed_strings_text_description_event_land_enc_spot_wound_paid_3	The price o
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_5	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_5	Our Lord Is Wounded	false
 event_feed_strings_text_description_event_land_enc_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
-event_feed_strings_text_title_event_land_enc_tavern_patron_1	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_patron_1	Patron of the Guild	false
-event_feed_strings_text_description_event_land_enc_tavern_patron_1	Our gift has been counted and recounted. Every tavern of the Guild has grown, and its keepers will not soon forget our name.	false
-event_feed_strings_text_title_event_land_enc_tavern_patron_2	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_patron_2	Great Patron of the Guild	false
-event_feed_strings_text_description_event_land_enc_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
-event_feed_strings_text_title_event_land_enc_tavern_contract_failed_patron	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed_patron	Contract Failed	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_failed_patron	The deadline has passed and the work is not done. The Guild keeps our deposit, but it charges its patron no more for the failure.	false
-event_feed_strings_text_title_event_land_enc_tavern_contract_dropped_patron	Tavern	false
-event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped_patron	Contract Dropped	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_dropped_patron	We have walked away from the contract. The Guild keeps our deposit, but it charges its patron no more for it.	false
-event_feed_strings_text_title_event_land_enc_smithy_patron_1	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_patron_1	Patron of the Association	false
-event_feed_strings_text_description_event_land_enc_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
-event_feed_strings_text_title_event_land_enc_smithy_patron_2	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_patron_2	Great Patron of the Association	false
-event_feed_strings_text_description_event_land_enc_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false

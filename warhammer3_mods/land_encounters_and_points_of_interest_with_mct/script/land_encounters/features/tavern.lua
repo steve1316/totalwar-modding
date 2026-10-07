@@ -54,8 +54,6 @@ local PAYLOAD_TEXT_BAR_OPEN = "dummy_land_enc_tavern_bar_open"
 local PAYLOAD_TEXT_BAR_CLOSED = "dummy_land_enc_tavern_bar_closed_"
 --- Payload text prefix describing the upgrade from the appended level to the next.
 local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_tavern_upgrade_"
---- Payload text prefix for an upgrade the owner cannot afford. The level is appended, since the text states that level's price.
-local PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE = "dummy_land_enc_tavern_cannot_afford_upgrade_"
 --- Payload text for the upgrade at the top level.
 local PAYLOAD_TEXT_FULLY_UPGRADED = "dummy_land_enc_tavern_fully_upgraded"
 --- Script context values the hub's description opens with: the scene picked for this visit, then the keeper's greeting.
@@ -68,7 +66,7 @@ local FLAVOUR_PREFIX = "campaign_localised_strings_string_land_enc_tavern_"
 local PAYLOAD_TEXT_LEAVE = "dummy_land_enc_tavern_leave"
 --- Payload text of the choice to seize the Tavern from its owner.
 local PAYLOAD_TEXT_SEIZE = "dummy_land_enc_tavern_seize"
---- Payload text under a donation the treasury cannot pay, shared with the spot offers.
+--- Payload text under an upgrade or a donation the treasury cannot pay, shared with the spot offers.
 local PAYLOAD_TEXT_UNAFFORDABLE = offers_data.unaffordable_line
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,8 +226,8 @@ function TavernState:show_scene(is_owner)
 end
 
 --- Builds and opens the hub: the mercenary hall, the contract board, the bar, the upgrade for the owner or Seize for a guest, the Generous
---- Donation, and leaving. A hall or bar closed to the visitor says for how long. An upgrade or a donation the visitor cannot afford shows
---- why and costs nothing.
+--- Donation, and leaving. A hall or bar closed to the visitor says for how long. An upgrade or a donation the visitor cannot afford still
+--- shows its price, says why and is greyed out, and a click on it anyway is refunded.
 --- @param faction faction The visiting player faction.
 --- @param general_cqi number The visiting lord's command queue index.
 function TavernState:open_hub(faction, general_cqi)
@@ -239,23 +237,29 @@ function TavernState:open_hub(faction, general_cqi)
     local treasury = faction:treasury()
     local hall_turns = turns_left(self.hall_closed_until, faction:name())
     local bar_turns = turns_left(self.bar_closed_until, faction:name())
+    --- Prices shown on choices the treasury cannot pay, by choice key, refunded when one is clicked anyway.
+    local refunds = {}
     local upgrade = { key = UPGRADE_CHOICE }
     if not is_owner then
         upgrade = { key = SEIZE_CHOICE, lines = { PAYLOAD_TEXT_SEIZE } }
     elseif price == nil then
         upgrade.lines = { PAYLOAD_TEXT_FULLY_UPGRADED }
-    elseif treasury < price then
-        upgrade.lines = { PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE .. self.level }
     else
         upgrade.lines = { PAYLOAD_TEXT_UPGRADE .. self.level }
         upgrade.gold = -price
+        if treasury < price then
+            upgrade.lines[2] = PAYLOAD_TEXT_UNAFFORDABLE
+            refunds[UPGRADE_CHOICE] = price
+        end
     end
     local donation_offer = guild_patron.donation_offer("tavern", faction:name(), treasury)
     local donation = { key = DONATION_CHOICE, lines = { donation_offer.line } }
-    if donation_offer.affordable then
+    if donation_offer.price then
         donation.gold = -donation_offer.price
-    elseif donation_offer.price then
-        donation.lines[2] = PAYLOAD_TEXT_UNAFFORDABLE
+        if not donation_offer.affordable then
+            donation.lines[2] = PAYLOAD_TEXT_UNAFFORDABLE
+            refunds[DONATION_CHOICE] = donation_offer.price
+        end
     end
     local choices = {
         { key = HALL_CHOICE, lines = { hall_turns == 0 and PAYLOAD_TEXT_HALL or PAYLOAD_TEXT_HALL_CLOSED .. hall_turns } },
@@ -265,12 +269,12 @@ function TavernState:open_hub(faction, general_cqi)
         donation,
         { key = LEAVE_CHOICE, lines = { PAYLOAD_TEXT_LEAVE } },
     }
-    self.pending_hub = { level = self.level, upgrade = upgrade.gold ~= nil, seize = not is_owner, donation = donation.gold ~= nil, hall = hall_turns == 0,
-        bar = bar_turns == 0, general_cqi = general_cqi }
+    self.pending_hub = { level = self.level, upgrade = upgrade.gold ~= nil and not refunds[UPGRADE_CHOICE], seize = not is_owner,
+        donation = donation_offer.affordable == true, hall = hall_turns == 0, bar = bar_turns == 0, general_cqi = general_cqi, refunds = refunds }
     log("tavern: hub of the " .. self:describe() .. " for " .. faction:name() .. " (owner " .. tostring(is_owner) .. ", treasury " .. treasury
-        .. ", upgrade " .. (upgrade.gold and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
+        .. ", upgrade " .. (self.pending_hub.upgrade and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
         .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ", donation "
-        .. (donation.gold and ("for " .. -donation.gold .. " gold") or "unavailable") .. ")")
+        .. (self.pending_hub.donation and ("for " .. donation_offer.price .. " gold") or "unavailable") .. ")")
     self:show_owner_in_dilemmas()
     self:show_scene(is_owner)
     dilemmas.launch(EVENT_HUB_BY_LEVEL[self.level], choices, faction:name())
@@ -320,6 +324,12 @@ function TavernState:resolve_hub_choice(choice_key, faction_name)
     self.pending_hub = nil
     log("tavern: " .. faction_name .. " chose " .. tostring(choice_key) .. " in the hub of the " .. self:describe())
     if not hub then return false end
+    --- A greyed-out paid choice clicked anyway was charged by its payload, so the gold goes back.
+    local refund = (hub.refunds or {})[choice_key]
+    if refund then
+        cm:treasury_mod(faction_name, refund)
+        log("tavern: " .. faction_name .. " chose " .. choice_key .. " without the gold, so " .. refund .. " is refunded")
+    end
     if choice_key == HALL_CHOICE and hub.hall then
         tavern_hall.open(self, cm:get_faction(faction_name), hub.general_cqi)
     elseif choice_key == BOARD_CHOICE then

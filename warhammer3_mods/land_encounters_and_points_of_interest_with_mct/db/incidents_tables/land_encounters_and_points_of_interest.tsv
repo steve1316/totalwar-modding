@@ -65,6 +65,10 @@ land_enc_incident_battle_won_ally_beset	false	faction	false	Event		false		0.0000
 land_enc_incident_battle_won_turn_the_tables	false	faction	false	Event		false		0.0000	false
 land_enc_incident_battle_won_relief_column	false	faction	false	Event		false		0.0000	false
 land_enc_incident_battle_avoided_ally	false	faction	false	Event		false		0.0000	false
+land_enc_incident_tavern_patron_1	false	wulfhart_hunters	false	Event		false		0.0000	false
+land_enc_incident_tavern_patron_2	false	wulfhart_hunters	false	Event		false		0.0000	false
+land_enc_incident_smithy_patron_1	false	land_enc_smithy_forge	false	Event		false		0.0000	false
+land_enc_incident_smithy_patron_2	false	land_enc_smithy_forge	false	Event		false		0.0000	false
 land_enc_incident_spot_cast_the_lots_won	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_cast_the_lots_lost	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_drink_from_the_spring_won	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
@@ -146,7 +150,3 @@ land_enc_incident_spot_missions_untracked	false	land_victory	false	Event		false	
 land_enc_incident_spot_wound_paid_2	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_wound_paid_3	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_wound_paid_5	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
-land_enc_incident_tavern_patron_1	false	wulfhart_hunters	false	Event		false		0.0000	false
-land_enc_incident_tavern_patron_2	false	wulfhart_hunters	false	Event		false		0.0000	false
-land_enc_incident_smithy_patron_1	false	land_enc_smithy_forge	false	Event		false		0.0000	false
-land_enc_incident_smithy_patron_2	false	land_enc_smithy_forge	false	Event		false		0.0000	false

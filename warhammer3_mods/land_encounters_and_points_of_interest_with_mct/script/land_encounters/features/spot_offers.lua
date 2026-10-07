@@ -291,7 +291,7 @@ end
 
 --- Builds an offer's choice: its line for this difficulty, plus the gold, items and units it gives as cards. A Tavern's bar also shows its
 --- price as a treasury card, which the payload charges. An offer the treasury cannot pay shows its line with the not-enough-gold line under
---- it, and no cards. Which way each offer was shown is kept on `pending.shown_affordable`.
+--- it, and no cards but that price card at the bar. Which way each offer was shown is kept on `pending.shown_affordable`.
 --- @param offer table The offer record at the site's difficulty.
 --- @param pending table The open site.
 --- @param faction_name string The faction key.
@@ -300,14 +300,17 @@ end
 local function build_choice(offer, pending, faction_name, choice_key)
     local line = offers_data.line_prefix .. offer.key .. "_" .. pending.difficulty
     pending.shown_affordable[offer.key] = M.affordable(offer, faction_name, pending)
-    if not pending.shown_affordable[offer.key] then return { key = choice_key, lines = { line, offers_data.unaffordable_line } } end
+    local price_as_card = offers_data.site_by_key[pending.site].price_as_card and offer.cost
+    if not pending.shown_affordable[offer.key] then
+        return { key = choice_key, lines = { line, offers_data.unaffordable_line }, gold = price_as_card and -site_cost(pending, offer) or nil }
+    end
     --- An offer that may start a battle says so, as every battle spot choice that leads to a fight does.
     local fights = offer.guardian or gamble_has(offer, "guardian")
     local choice = { key = choice_key, lines = fights and { line, offers_data.fight_line } or { line } }
     local cards = pending.cards[offer.key] or {}
     if offer.gold and not offer.gamble then choice.gold = offer.gold end
     if cards.gold then choice.gold = cards.gold end
-    if offers_data.site_by_key[pending.site].price_as_card and offer.cost then choice.gold = (choice.gold or 0) - site_cost(pending, offer) end
+    if price_as_card then choice.gold = (choice.gold or 0) - site_cost(pending, offer) end
     choice.items = cards.items
     local force = cards.units and tower_army.delving_force(pending.general_cqi)
     if force then choice.units = { force = force, keys = cards.units } end
@@ -502,11 +505,12 @@ function M.take(faction_name, choice_key)
         if pending.tavern and M.on_tavern_bar_closed then M.on_tavern_bar_closed(faction_name, pending, false) end
         return
     end
-    --- The button decides: one shown as unaffordable had no cards, so it buys nothing even if the treasury has grown since, and the reopened
-    --- site shows the offer as it stands now.
+    --- The button decides: one shown as unaffordable buys nothing even if the treasury has grown since, and the reopened site shows the offer
+    --- as it stands now. At the bar its price card was charged by the payload, so the gold goes back.
     if pending.shown_affordable and pending.shown_affordable[offer.key] == false then
         log("spot: " .. offer.key .. " was shown as unaffordable (cost " .. site_cost(pending, offer) .. ", treasury now "
             .. offer_effects.treasury(faction_name) .. "), nothing is bought and the site reopens")
+        if offers_data.site_by_key[pending.site].price_as_card and offer.cost then cm:treasury_mod(faction_name, site_cost(pending, offer)) end
         M.launch_site(faction_name)
         return
     end

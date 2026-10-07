@@ -80,6 +80,14 @@ effect_bundles_localised_title_land_enc_effect_ally_test_war_rites	War Rites (Al
 effect_bundles_localised_description_land_enc_effect_ally_test_war_rites	Test copy of War Rites that every faction can see.	false
 effect_bundles_localised_title_land_enc_effect_ally_test_reinforcement_time	Relief Column (Ally Test)	false
 effect_bundles_localised_description_land_enc_effect_ally_test_reinforcement_time	Test bundle: reinforcements for this army arrive at once.	false
+effect_bundles_localised_title_land_enc_effect_tavern_patron_1	Patron of the Guild	false
+effect_bundles_localised_description_land_enc_effect_tavern_patron_1	The Tavern Keepers' Guild remembers our generosity. Its keepers send us their best trade, pour our soldiers the good stuff and share their tales with our lords and heroes.	false
+effect_bundles_localised_title_land_enc_effect_tavern_patron_2	Great Patron of the Guild	false
+effect_bundles_localised_description_land_enc_effect_tavern_patron_2	No lord has ever given the Tavern Keepers' Guild more. Every tavern drinks to our name.	false
+effect_bundles_localised_title_land_enc_effect_smithy_patron_1	Patron of the Association	false
+effect_bundles_localised_description_land_enc_effect_smithy_patron_1	The Smiths' Association remembers our generosity. Its masters set their best apprentices to our blades, bows and armour.	false
+effect_bundles_localised_title_land_enc_effect_smithy_patron_2	Great Patron of the Association	false
+effect_bundles_localised_description_land_enc_effect_smithy_patron_2	No lord has ever given the Smiths' Association more. Its masters forge for our armies before any other.	false
 effect_bundles_localised_title_land_enc_effect_spot_reinforcement_time_25	Swift Reinforcements	false
 effect_bundles_localised_description_land_enc_effect_spot_reinforcement_time_25	Reinforcements for this army arrive sooner.	false
 effect_bundles_localised_title_land_enc_effect_spot_reinforcement_time_50	Swift Reinforcements	false
@@ -394,11 +402,3 @@ effect_bundles_localised_title_land_enc_effect_spot_dividends_450	Dividends	fals
 effect_bundles_localised_description_land_enc_effect_spot_dividends_450	Gold flows into our treasury each turn.	false
 effect_bundles_localised_title_land_enc_effect_spot_dividends_500	Dividends	false
 effect_bundles_localised_description_land_enc_effect_spot_dividends_500	Gold flows into our treasury each turn.	false
-effect_bundles_localised_title_land_enc_effect_tavern_patron_1	Patron of the Guild	false
-effect_bundles_localised_description_land_enc_effect_tavern_patron_1	The Tavern Keepers' Guild remembers our generosity. Its keepers send us their best trade, pour our soldiers the good stuff and share their tales with our lords and heroes.	false
-effect_bundles_localised_title_land_enc_effect_tavern_patron_2	Great Patron of the Guild	false
-effect_bundles_localised_description_land_enc_effect_tavern_patron_2	No lord has ever given the Tavern Keepers' Guild more. Every tavern drinks to our name.	false
-effect_bundles_localised_title_land_enc_effect_smithy_patron_1	Patron of the Association	false
-effect_bundles_localised_description_land_enc_effect_smithy_patron_1	The Smiths' Association remembers our generosity. Its masters set their best apprentices to our blades, bows and armour.	false
-effect_bundles_localised_title_land_enc_effect_smithy_patron_2	Great Patron of the Association	false
-effect_bundles_localised_description_land_enc_effect_smithy_patron_2	No lord has ever given the Smiths' Association more. Its masters forge for our armies before any other.	false

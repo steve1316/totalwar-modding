@@ -236,7 +236,7 @@ M.sites = {
     { key = "witchs_hut", tags = { "gamble", "curse" }, signature = "dark_bargain", ui_image = "ai_wins_soul" },
     { key = "collapsed_mine", tags = { "loot", "gamble" }, signature = "search_every_corner", ui_image = "under_empire_discovered" },
     { key = "merchants_wagon", tags = { "deal" }, signature = "buy_from_the_trader", ui_image = "imperial_supplies" },
-    { key = "sunken_library", tags = { "lore", "realm" }, signature = "research_scrolls", ui_image = "story_panels/chd_drill_machinations" },
+    { key = "sunken_library", tags = { "lore", "realm" }, signature = "research_scrolls", ui_image = "elector_diplomacy" },
 }
 
 --- The spoils pick after a won battle spot: a site with no signature that draws from its own pools. The picture is culture-aware, so each

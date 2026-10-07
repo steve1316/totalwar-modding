@@ -146,8 +146,6 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_rout_the_riders	[[c
 campaign_payload_ui_details_description_dummy_land_enc_tavern_coming_soon	This room opens in a later update.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_upgrade_1	The tavern grows to [[col:yellow]]level 2[[/col]]: more sellswords and a hero in its hall, stronger drinks at its bar and richer contracts on its board. Its defenders grow tougher too.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_upgrade_2	The tavern grows to [[col:yellow]]level 3[[/col]]: the best sellswords in its hall, its strongest drinks, and the richest contracts, with a three-step quest. Its defenders grow tougher too.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_cannot_afford_upgrade_1	Improving the tavern to level 2 costs [[col:yellow]]10000 gold[[/col]], more than our treasury holds.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_cannot_afford_upgrade_2	Improving the tavern to level 3 costs [[col:yellow]]20000 gold[[/col]], more than our treasury holds.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_fully_upgraded	The tavern is already at its highest level.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_leave	Leave the tavern.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_open	Head to the bar: [[col:green]]3 drinks and games[[/col]] are on offer, each paid from our treasury.	false
@@ -187,6 +185,17 @@ campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_3000	
 campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_3750	Includes our deposit of [[col:yellow]]3750 gold[[/col]] back.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_4000	Includes our deposit of [[col:yellow]]4000 gold[[/col]] back.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_deposit_back_5000	Includes our deposit of [[col:yellow]]5000 gold[[/col]] back.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_seize	Fight the tavern's guards and take it from its owner.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_donation_1	Donate [[col:yellow]]50000 gold[[/col]] to the Tavern Keepers' Guild. Every tavern still at level 1 grows to [[col:yellow]]level 2[[/col]], the Guild stops charging us more for failed contracts, our lords and heroes gain [[col:green]]250 experience[[/col]] every turn, and our faction gains [[col:green]]Patron of the Guild[[/col]] for good.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_donation_2	Donate [[col:yellow]]100000 gold[[/col]] to the Tavern Keepers' Guild. Every tavern grows to [[col:yellow]]level 3[[/col]], our lords and heroes gain [[col:green]]500 experience[[/col]] every turn, and our blessing grows into [[col:green]]Great Patron of the Guild[[/col]] for good.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_donation_done	The Guild already honours us as its greatest patron.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_donation_1	Donate [[col:yellow]]50000 gold[[/col]] to the Smiths' Association. Every smithy still at level 1 grows to [[col:yellow]]level 2[[/col]], and our faction gains [[col:green]]Patron of the Association[[/col]] for good.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_donation_2	Donate [[col:yellow]]100000 gold[[/col]] to the Smiths' Association. Every smithy grows to [[col:yellow]]level 3[[/col]], and our blessing grows into [[col:green]]Great Patron of the Association[[/col]] for good.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_donation_done	The Association already honours us as its greatest patron.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_1	Commission [[col:green]]a rare masterwork[[/col]] from the master blacksmith.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_2	Commission [[col:green]]a rare masterwork[[/col]] from the master blacksmith.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_3	Commission [[col:green]]a pair of rare masterworks[[/col]] from the master blacksmith.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_legendary	Commission [[col:green]]a unique piece[[/col]], one of the legendary items our faction can wield.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_tavern_back	Go back to the common room.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_unaffordable	[[col:red]]We cannot afford this.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_taken	[[col:red]]Already taken.[[/col]]	false
@@ -1222,14 +1231,3 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_3_
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_easy	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_medium	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_hard	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_seize	Fight the tavern's guards and take it from its owner.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_donation_1	Donate [[col:yellow]]50000 gold[[/col]] to the Tavern Keepers' Guild. Every tavern still at level 1 grows to [[col:yellow]]level 2[[/col]], the Guild stops charging us more for failed contracts, our lords and heroes gain [[col:green]]250 experience[[/col]] every turn, and our faction gains [[col:green]]Patron of the Guild[[/col]] for good.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_donation_2	Donate [[col:yellow]]100000 gold[[/col]] to the Tavern Keepers' Guild. Every tavern grows to [[col:yellow]]level 3[[/col]], our lords and heroes gain [[col:green]]500 experience[[/col]] every turn, and our blessing grows into [[col:green]]Great Patron of the Guild[[/col]] for good.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_donation_done	The Guild already honours us as its greatest patron.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_donation_1	Donate [[col:yellow]]50000 gold[[/col]] to the Smiths' Association. Every smithy still at level 1 grows to [[col:yellow]]level 2[[/col]], and our faction gains [[col:green]]Patron of the Association[[/col]] for good.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_donation_2	Donate [[col:yellow]]100000 gold[[/col]] to the Smiths' Association. Every smithy grows to [[col:yellow]]level 3[[/col]], and our blessing grows into [[col:green]]Great Patron of the Association[[/col]] for good.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_donation_done	The Association already honours us as its greatest patron.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_1	Commission [[col:green]]a rare masterwork[[/col]] from the master blacksmith.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_2	Commission [[col:green]]a rare masterwork[[/col]] from the master blacksmith.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_3	Commission [[col:green]]a pair of rare masterworks[[/col]] from the master blacksmith.	false
-campaign_payload_ui_details_description_dummy_land_enc_smithy_legendary	Commission [[col:green]]a unique piece[[/col]], one of the legendary items our faction can wield.	false

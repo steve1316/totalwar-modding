@@ -122,6 +122,14 @@ incidents_localised_title_land_enc_incident_battle_won_relief_column	Relief at L
 incidents_localised_description_land_enc_incident_battle_won_relief_column	We reached them in time. The enemy lies broken around our allies' last line, and their survivors hail us as saviours.	false
 incidents_localised_title_land_enc_incident_battle_avoided_ally	Left to Their Fate	false
 incidents_localised_description_land_enc_incident_battle_avoided_ally	We turned away and left our allies to face the enemy alone. We will never know how it ended for them, but our own army lives to fight another day.	false
+incidents_localised_title_land_enc_incident_tavern_patron_1	Patron of the Guild	false
+incidents_localised_description_land_enc_incident_tavern_patron_1	Our gift has been counted and recounted. Every tavern of the Guild has grown, and its keepers will not soon forget our name.	false
+incidents_localised_title_land_enc_incident_tavern_patron_2	Great Patron of the Guild	false
+incidents_localised_description_land_enc_incident_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
+incidents_localised_title_land_enc_incident_smithy_patron_1	Patron of the Association	false
+incidents_localised_description_land_enc_incident_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
+incidents_localised_title_land_enc_incident_smithy_patron_2	Great Patron of the Association	false
+incidents_localised_description_land_enc_incident_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_won	Cast the Lots	false
 incidents_localised_description_land_enc_incident_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_lost	Cast the Lots	false
@@ -284,11 +292,3 @@ incidents_localised_title_land_enc_incident_spot_wound_paid_3	The Price Is Paid	
 incidents_localised_description_land_enc_incident_spot_wound_paid_3	The price of what we took comes due at once. Our lord is struck down by a wound that will take 3 turns to heal.	false
 incidents_localised_title_land_enc_incident_spot_wound_paid_5	The Price Is Paid	false
 incidents_localised_description_land_enc_incident_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
-incidents_localised_title_land_enc_incident_tavern_patron_1	Patron of the Guild	false
-incidents_localised_description_land_enc_incident_tavern_patron_1	Our gift has been counted and recounted. Every tavern of the Guild has grown, and its keepers will not soon forget our name.	false
-incidents_localised_title_land_enc_incident_tavern_patron_2	Great Patron of the Guild	false
-incidents_localised_description_land_enc_incident_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
-incidents_localised_title_land_enc_incident_smithy_patron_1	Patron of the Association	false
-incidents_localised_description_land_enc_incident_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
-incidents_localised_title_land_enc_incident_smithy_patron_2	Great Patron of the Association	false
-incidents_localised_description_land_enc_incident_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false

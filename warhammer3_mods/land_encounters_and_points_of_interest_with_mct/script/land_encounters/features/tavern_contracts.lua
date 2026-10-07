@@ -160,7 +160,7 @@ end
 
 --- Opens the board for a lord: each posted contract with its battle modifiers, and its deposit as a treasury card, then Back. A contract
 --- that cannot be taken (someone accepted it already, the faction holds the most it can, a cull has no enemy near, or the deposit is more
---- than the treasury) shows why and no card.
+--- than the treasury) shows why. An unaffordable one keeps its deposit card, and a click on it anyway is refunded.
 --- @param tavern TavernState The Tavern.
 --- @param faction faction The visiting faction.
 --- @param general_cqi number The visiting lord's command queue index.
@@ -192,6 +192,8 @@ function M.open(tavern, faction, general_cqi)
             lines[#lines + 1] = LINE_NO_TARGET
         elseif treasury < slot.deposit then
             lines[#lines + 1] = LINE_UNAFFORDABLE
+            choice.gold = -slot.deposit
+            slot.refund = slot.deposit
         else
             slot.ok = true
             choice.gold = -slot.deposit
@@ -556,6 +558,8 @@ function M.resolve(tavern, faction_name, choice_key, invasion_battle_manager)
         take(tavern, faction_name, slot, pending.general_cqi, invasion_battle_manager)
     else
         log("tavern: " .. faction_name .. " chose " .. choice_key .. ", shown as closed, so no contract is taken and the board reopens")
+        --- An unaffordable contract shown with its deposit card was charged by its payload, so the gold goes back.
+        if slot.refund then cm:treasury_mod(faction_name, slot.refund) end
     end
     M.open(tavern, faction, pending.general_cqi)
 end
