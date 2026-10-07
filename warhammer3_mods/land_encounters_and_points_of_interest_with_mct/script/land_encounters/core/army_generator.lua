@@ -47,6 +47,10 @@ local UNIT_TYPES = {
     "generic",
 }
 
+--- Suffix of the grudge reward units (e.g. wh3_dlc25_dwf_art_grudge_thrower_grudge_unit). They only come from the Dwarfs' grudges, and a
+--- dilemma payload cannot add them, so no offer picks them.
+local GRUDGE_UNIT_SUFFIX = "_grudge_unit"
+
 local M = {}
 
 --- Unit key -> price over every faction's units, built on first use by `M.unit_price_by_key`.
@@ -480,7 +484,7 @@ function M.unit_price_by_key(unit_key)
 end
 
 --- Picks random units of a faction for the tower's unit offers: buyable units of the given tiers and unit types from enabled origins,
---- never Regiments of Renown unless `options.renown` asks for only them. A unit can be picked more than once.
+--- never Regiments of Renown unless `options.renown` asks for only them, and never a grudge reward unit. A unit can be picked more than once.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param tiers table Tier numbers to pick from, e.g. { 4, 5 }.
 --- @param unit_types table|nil Unit-type buckets to pick from, or nil for every type.
@@ -498,7 +502,8 @@ function M.pick_units(faction_shorthand_key, tiers, unit_types, count, options)
         local units = data.units["tier_" .. tier] or {}
         for _, unit_type in ipairs(unit_types or UNIT_TYPES) do
             for _, unit in ipairs(units[unit_type] or {}) do
-                if buyable(unit, origins) and is_renown(unit) == (options.renown == true) and not exclude[unit.land_unit] and not seen[unit.land_unit] then
+                if buyable(unit, origins) and is_renown(unit) == (options.renown == true) and not exclude[unit.land_unit] and not seen[unit.land_unit]
+                    and unit.land_unit:sub(-#GRUDGE_UNIT_SUFFIX) ~= GRUDGE_UNIT_SUFFIX then
                     seen[unit.land_unit] = true
                     pool[#pool + 1] = unit.land_unit
                 end

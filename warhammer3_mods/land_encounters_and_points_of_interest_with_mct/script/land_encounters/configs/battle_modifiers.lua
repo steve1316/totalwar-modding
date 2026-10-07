@@ -52,6 +52,9 @@ M.bundle_prefix = "land_enc_effect_spot_modifier_"
 --- Loc key prefix of each modifier's dilemma line.
 M.line_prefix = "campaign_localised_strings_string_land_enc_spot_modifier_"
 
+--- Payload text prefix of each modifier's line on a dilemma choice (a Tavern contract): its dilemma line, coloured by what it does to us.
+M.payload_prefix = "dummy_land_enc_spot_modifier_"
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Modifiers

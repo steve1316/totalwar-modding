@@ -43,3 +43,4 @@ campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_1	The keeper 
 campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_2	The keeper does not ask our names: "Nobody here has one. What do you need?"	false
 campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_3	The keeper turns the tap of the ancient barrel with great care: "A cup of this costs more than a horse. What do you need?"	false
 campaign_localised_strings_string_land_enc_tavern_greeting_scene_3_4	The keeper keeps one eye on the long table as he speaks: "Keep your hands where they can see them, and we will all get along. What do you need?"	false
+campaign_localised_strings_string_land_enc_point_relations_cost	[[col:red]]We are not at war with them, so taking it will cost us 20 relations with them.[[/col]]	false

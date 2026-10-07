@@ -1,5 +1,6 @@
 --- TavernState + TavernEventDelegate. A Tavern is a fixed place any lord can visit: its owner gets the full hub, an allied or neutral visitor
---- the hub without the upgrade, and an enemy of the owner a capture battle. An unowned Tavern is claimed by the first player lord to walk in,
+--- the hub with a choice to seize it in place of the upgrade, and an enemy of the owner a capture battle. Any visitor can make the Guild a
+--- Generous Donation (features/guild_patron.lua). An unowned Tavern is claimed by the first player lord to walk in,
 --- and an AI army at war with an AI owner can take it. The AI never takes a player-owned Tavern. The mercenary hall lives in
 --- features/tavern_hall.lua, the contract board in features/tavern_contracts.lua, and the bar is a spot offer site (features/spot_offers.lua).
 --- TavernEventDelegate builds the Taverns from configs/coordinates.lua and routes events to them.
@@ -15,6 +16,7 @@ local offers_data = require("script/land_encounters/configs/spot_offers")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tavern_hall = require("script/land_encounters/features/tavern_hall")
 local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
+local guild_patron = require("script/land_encounters/features/guild_patron")
 local TavernSpot = require("script/land_encounters/core/spot").TavernSpot
 
 local Army = require("script/land_encounters/core/army")
@@ -31,16 +33,14 @@ local EVENT_HUB_BY_LEVEL = { "land_enc_dilemma_tavern_hub_level_1", "land_enc_di
 --- The fight-or-leave dilemma offered to a player lord entering a Tavern held by an enemy.
 local EVENT_CAPTURE = "land_enc_dilemma_tavern_capture"
 
---- 1-based position of the mercenary hall choice.
-local HALL_CHOICE = 1
---- 1-based position of the contract board choice.
-local BOARD_CHOICE = 2
---- 1-based position of the bar choice.
-local BAR_CHOICE = 3
---- 1-based position of the upgrade choice.
-local UPGRADE_CHOICE = 4
---- 1-based position of the leave choice.
-local LEAVE_CHOICE = 5
+--- Choice keys of the hub, in the order the DB shows them. A guest sees Seize where the owner sees the upgrade.
+local HALL_CHOICE = "FIRST"
+local BOARD_CHOICE = "SECOND"
+local BAR_CHOICE = "THIRD"
+local UPGRADE_CHOICE = "FOURTH"
+local SEIZE_CHOICE = "LEAPOI_TVN_SEIZE"
+local DONATION_CHOICE = "FIFTH"
+local LEAVE_CHOICE = "SIXTH"
 
 --- Payload text (campaign_payload_ui_details key) of the contract board.
 local PAYLOAD_TEXT_BOARD = "dummy_land_enc_tavern_board_open"
@@ -58,8 +58,6 @@ local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_tavern_upgrade_"
 local PAYLOAD_TEXT_CANNOT_AFFORD_UPGRADE = "dummy_land_enc_tavern_cannot_afford_upgrade_"
 --- Payload text for the upgrade at the top level.
 local PAYLOAD_TEXT_FULLY_UPGRADED = "dummy_land_enc_tavern_fully_upgraded"
---- Payload text for the upgrade shown to a visitor who does not own the Tavern.
-local PAYLOAD_TEXT_OWNER_ONLY = "dummy_land_enc_tavern_owner_only_upgrade"
 --- Script context values the hub's description opens with: the scene picked for this visit, then the keeper's greeting.
 local SCENE_CONTEXT = "land_enc_tavern_scene"
 local GREETING_CONTEXT = "land_enc_tavern_greeting"
@@ -68,6 +66,10 @@ local FLAVOUR_PREFIX = "campaign_localised_strings_string_land_enc_tavern_"
 
 --- Payload text of the leave choice.
 local PAYLOAD_TEXT_LEAVE = "dummy_land_enc_tavern_leave"
+--- Payload text of the choice to seize the Tavern from its owner.
+local PAYLOAD_TEXT_SEIZE = "dummy_land_enc_tavern_seize"
+--- Payload text under a donation the treasury cannot pay, shared with the spot offers.
+local PAYLOAD_TEXT_UNAFFORDABLE = offers_data.unaffordable_line
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,8 +93,10 @@ local TavernState = OwnedPoint.extend({
     controlling_faction_subculture = "",
     --- True when its coordinates.lua entry is marked `disabled = true`: no marker and no per-turn upkeep. Read from the config on every load.
     disabled = false,
-    --- True while a capture battle (a player attacking an enemy-held Tavern) is in flight.
+    --- True while a capture battle (a player attacking a Tavern held by another faction) is in flight.
     is_capture_triggered = false,
+    --- True while the capture dilemma a guest opened from the hub (Seize) is open, so its choice is routed back here.
+    pending_capture = false,
     --- The character that opened the capture dilemma, or nil (not saved).
     visiting_enemy_character = nil,
     --- Faction of the player capturing the Tavern, kept so a reloaded battle can find them, or nil.
@@ -119,14 +123,17 @@ local TavernState = OwnedPoint.extend({
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Turn passing
 
---- Runs the once-per-round update: frees the Tavern when its owner has died.
+--- Runs the once-per-round update: frees the Tavern when its owner has died, and lets an AI owner upgrade it when it can afford to.
 function TavernState:update_state_given_turn_passing()
     if not self:is_occupied() then return end
     local owner = self.controlling_faction_name
-    if not self:check_if_owner_is_alive_and_return_faction() then
+    local owner_faction = self:check_if_owner_is_alive_and_return_faction()
+    if not owner_faction then
         log("tavern: " .. self:describe() .. " is unowned, its owner " .. owner .. " is gone")
         self:set_controlling_faction(nil)
+        return
     end
+    if not owner_faction:is_human() then self:try_ai_upgrade(owner_faction, tavern_data.levels[self.level].upgrade_price) end
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -153,11 +160,7 @@ function TavernState:trigger_event(area_and_character_info)
             self:set_controlling_faction(visitor)
         elseif self:is_faction_at_war_with_owner(visiting_faction) then
             if self:character_can_trigger_dilemma(visiting_character) then
-                log("tavern: " .. visitor .. " is at war with " .. self.controlling_faction_name .. " and may attack the " .. self:describe())
-                self.visiting_enemy_character = visiting_character
-                self.visiting_enemy_faction_name = visitor
-                self:show_owner_in_dilemmas()
-                cm:trigger_dilemma(visitor, EVENT_CAPTURE)
+                self:offer_capture(visiting_faction, visiting_character)
                 return visitor
             end
             self:show_message(visitor, "tavern_encountered")
@@ -224,8 +227,9 @@ function TavernState:show_scene(is_owner)
     log("tavern: the hub of the " .. self:describe() .. " opens with " .. table.concat(keys, ", ") .. ", then " .. greeting)
 end
 
---- Builds and opens the hub: the mercenary hall, the contract board, the bar, the upgrade for the owner, and leaving. A hall
---- or bar closed to the visitor says for how long. An upgrade the owner cannot afford, or any upgrade for a guest, shows a text line and costs nothing.
+--- Builds and opens the hub: the mercenary hall, the contract board, the bar, the upgrade for the owner or Seize for a guest, the Generous
+--- Donation, and leaving. A hall or bar closed to the visitor says for how long. An upgrade or a donation the visitor cannot afford shows
+--- why and costs nothing.
 --- @param faction faction The visiting player faction.
 --- @param general_cqi number The visiting lord's command queue index.
 function TavernState:open_hub(faction, general_cqi)
@@ -233,15 +237,11 @@ function TavernState:open_hub(faction, general_cqi)
     local is_owner = self:is_occupied_by_same_faction(faction:name())
     local price = tavern_data.levels[self.level].upgrade_price
     local treasury = faction:treasury()
-    local choices = {}
     local hall_turns = turns_left(self.hall_closed_until, faction:name())
-    choices[HALL_CHOICE] = { key = dilemmas.CHOICE_KEYS[HALL_CHOICE], lines = { hall_turns == 0 and PAYLOAD_TEXT_HALL or PAYLOAD_TEXT_HALL_CLOSED .. hall_turns } }
-    choices[BOARD_CHOICE] = { key = dilemmas.CHOICE_KEYS[BOARD_CHOICE], lines = { PAYLOAD_TEXT_BOARD } }
     local bar_turns = turns_left(self.bar_closed_until, faction:name())
-    choices[BAR_CHOICE] = { key = dilemmas.CHOICE_KEYS[BAR_CHOICE], lines = { bar_turns == 0 and PAYLOAD_TEXT_BAR_OPEN or PAYLOAD_TEXT_BAR_CLOSED .. bar_turns } }
-    local upgrade = { key = dilemmas.CHOICE_KEYS[UPGRADE_CHOICE] }
+    local upgrade = { key = UPGRADE_CHOICE }
     if not is_owner then
-        upgrade.lines = { PAYLOAD_TEXT_OWNER_ONLY }
+        upgrade = { key = SEIZE_CHOICE, lines = { PAYLOAD_TEXT_SEIZE } }
     elseif price == nil then
         upgrade.lines = { PAYLOAD_TEXT_FULLY_UPGRADED }
     elseif treasury < price then
@@ -250,19 +250,34 @@ function TavernState:open_hub(faction, general_cqi)
         upgrade.lines = { PAYLOAD_TEXT_UPGRADE .. self.level }
         upgrade.gold = -price
     end
-    choices[UPGRADE_CHOICE] = upgrade
-    choices[LEAVE_CHOICE] = { key = dilemmas.CHOICE_KEYS[LEAVE_CHOICE], lines = { PAYLOAD_TEXT_LEAVE } }
-    self.pending_hub = { level = self.level, upgrade = upgrade.gold ~= nil, hall = hall_turns == 0, bar = bar_turns == 0, general_cqi = general_cqi }
+    local donation_offer = guild_patron.donation_offer("tavern", faction:name(), treasury)
+    local donation = { key = DONATION_CHOICE, lines = { donation_offer.line } }
+    if donation_offer.affordable then
+        donation.gold = -donation_offer.price
+    elseif donation_offer.price then
+        donation.lines[2] = PAYLOAD_TEXT_UNAFFORDABLE
+    end
+    local choices = {
+        { key = HALL_CHOICE, lines = { hall_turns == 0 and PAYLOAD_TEXT_HALL or PAYLOAD_TEXT_HALL_CLOSED .. hall_turns } },
+        { key = BOARD_CHOICE, lines = { PAYLOAD_TEXT_BOARD } },
+        { key = BAR_CHOICE, lines = { bar_turns == 0 and PAYLOAD_TEXT_BAR_OPEN or PAYLOAD_TEXT_BAR_CLOSED .. bar_turns } },
+        upgrade,
+        donation,
+        { key = LEAVE_CHOICE, lines = { PAYLOAD_TEXT_LEAVE } },
+    }
+    self.pending_hub = { level = self.level, upgrade = upgrade.gold ~= nil, seize = not is_owner, donation = donation.gold ~= nil, hall = hall_turns == 0,
+        bar = bar_turns == 0, general_cqi = general_cqi }
     log("tavern: hub of the " .. self:describe() .. " for " .. faction:name() .. " (owner " .. tostring(is_owner) .. ", treasury " .. treasury
         .. ", upgrade " .. (upgrade.gold and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
-        .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ")")
+        .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ", donation "
+        .. (donation.gold and ("for " .. -donation.gold .. " gold") or "unavailable") .. ")")
     self:show_owner_in_dilemmas()
     self:show_scene(is_owner)
     dilemmas.launch(EVENT_HUB_BY_LEVEL[self.level], choices, faction:name())
 end
 
 --- The open dilemma's choices that cannot be taken: on the hall, hires without room or gold, and on the board, contracts that cannot be
---- taken. On the hub, a hall or bar closed to the visitor and an upgrade that is not paid.
+--- taken. On the hub, a hall or bar closed to the visitor, an owner's upgrade that is not paid, and a donation that is not paid.
 --- @returns string|nil, table The open dilemma's key and the choice keys to grey out, or nil when none is open.
 function TavernState:closed_choices()
     if self.pending_hall then return tavern_hall.closed_choices(self) end
@@ -270,9 +285,10 @@ function TavernState:closed_choices()
     local offer = self.pending_hub
     if not offer then return nil end
     local keys = {}
-    if not offer.hall then keys[#keys + 1] = dilemmas.CHOICE_KEYS[HALL_CHOICE] end
-    if not offer.bar then keys[#keys + 1] = dilemmas.CHOICE_KEYS[BAR_CHOICE] end
-    if not offer.upgrade then keys[#keys + 1] = dilemmas.CHOICE_KEYS[UPGRADE_CHOICE] end
+    if not offer.hall then keys[#keys + 1] = HALL_CHOICE end
+    if not offer.bar then keys[#keys + 1] = BAR_CHOICE end
+    if not offer.upgrade and not offer.seize then keys[#keys + 1] = UPGRADE_CHOICE end
+    if not offer.donation then keys[#keys + 1] = DONATION_CHOICE end
     return EVENT_HUB_BY_LEVEL[offer.level], keys
 end
 
@@ -294,28 +310,46 @@ function TavernState:open_bar(faction_name, general_cqi)
     return true
 end
 
---- Applies a hub choice: the mercenary hall, the contract board or the bar opens, or the upgrade raises the level, which the dilemma payload
---- already charged.
---- @param choice number The 0-based choice index.
+--- Applies a hub choice: the mercenary hall, the contract board or the bar opens, the upgrade raises the level, which the dilemma payload
+--- already charged, or a guest's Seize offers the capture battle. A paid donation is handed back to the delegate, which raises every Tavern.
+--- @param choice_key string The chosen choice key.
 --- @param faction_name string The faction that chose.
-function TavernState:resolve_hub_choice(choice, faction_name)
-    local index = choice + 1
+--- @returns boolean True when the faction paid for a Generous Donation.
+function TavernState:resolve_hub_choice(choice_key, faction_name)
     local hub = self.pending_hub
     self.pending_hub = nil
-    log("tavern: " .. faction_name .. " chose " .. tostring(dilemmas.CHOICE_KEYS[index]) .. " in the hub of the " .. self:describe())
-    if not hub then return end
-    if index == HALL_CHOICE and hub.hall then
+    log("tavern: " .. faction_name .. " chose " .. tostring(choice_key) .. " in the hub of the " .. self:describe())
+    if not hub then return false end
+    if choice_key == HALL_CHOICE and hub.hall then
         tavern_hall.open(self, cm:get_faction(faction_name), hub.general_cqi)
-    elseif index == BOARD_CHOICE then
+    elseif choice_key == BOARD_CHOICE then
         tavern_contracts.open(self, cm:get_faction(faction_name), hub.general_cqi)
-    elseif index == BAR_CHOICE and hub.bar then
+    elseif choice_key == BAR_CHOICE and hub.bar then
         self:open_bar(faction_name, hub.general_cqi)
-    elseif index == UPGRADE_CHOICE and hub.upgrade then
+    elseif choice_key == SEIZE_CHOICE and hub.seize then
+        self:offer_capture(cm:get_faction(faction_name), tower_army.character(hub.general_cqi))
+    elseif choice_key == DONATION_CHOICE and hub.donation then
+        return true
+    elseif choice_key == UPGRADE_CHOICE and hub.upgrade then
         local before = self.level
         self:set_level(self.level + 1)
         log("tavern: " .. self:describe() .. " upgraded from level " .. before .. " to " .. self.level)
         self:show_message(self.controlling_faction_name, "tavern_levelled_up_level_" .. self.level)
     end
+    return false
+end
+
+--- Opens the fight-or-leave capture dilemma for a lord of another faction (an enemy walking in, or a guest choosing Seize), saying what
+--- taking the Tavern would cost.
+--- @param faction faction The lord's faction.
+--- @param character character|nil The lord.
+function TavernState:offer_capture(faction, character)
+    self.visiting_enemy_character = character
+    self.visiting_enemy_faction_name = faction:name()
+    self.pending_capture = true
+    self:show_capture_terms(faction)
+    log("tavern: " .. faction:name() .. " may seize the " .. self:describe() .. " from " .. self.controlling_faction_name)
+    cm:trigger_dilemma(faction:name(), EVENT_CAPTURE)
 end
 
 --- Sets the level (clamped to 1-3) and swaps the map marker to that level's skin.
@@ -344,6 +378,7 @@ end
 --- @param choice number The 0-based choice index.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 function TavernState:resolve_capture_choice(choice, invasion_battle_manager)
+    self.pending_capture = false
     log("tavern: " .. tostring(self.visiting_enemy_faction_name) .. " chose " .. (choice == FIRST_OPTION and "to attack" or "to leave") .. " the " .. self:describe())
     if choice ~= FIRST_OPTION then
         self.visiting_enemy_character = nil
@@ -374,6 +409,7 @@ function TavernState:trigger_event_given_battle_result(player_won_battle)
         log("tavern: capture battle for the " .. self:describe() .. " " .. (player_won_battle and "won" or "lost") .. " by " .. tostring(attacker))
         if player_won_battle then
             self:show_message(attacker, "tavern_captured")
+            self:charge_capture_relations(attacker)
             self:set_controlling_faction(attacker)
         else
             self:show_message(attacker, "tavern_capture_repelled")
@@ -398,6 +434,7 @@ end
 --- Routes a Tavern dilemma choice (hub, hall, board or capture).
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
+--- @returns boolean True when the faction paid for a Generous Donation in the hub.
 function TavernState:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, invasion_battle_manager)
     local dilemma, faction_name = dilemma_choice_and_faction_info:dilemma(), dilemma_choice_and_faction_info:faction():name()
     if dilemma == EVENT_CAPTURE then
@@ -407,8 +444,9 @@ function TavernState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
     elseif dilemma == tavern_contracts.DILEMMA then
         tavern_contracts.resolve(self, faction_name, dilemma_choice_and_faction_info:choice_key(), invasion_battle_manager)
     else
-        self:resolve_hub_choice(dilemma_choice_and_faction_info:choice(), faction_name)
+        return self:resolve_hub_choice(dilemma_choice_and_faction_info:choice_key(), faction_name)
     end
+    return false
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,7 +591,9 @@ function TavernEventDelegate:initialize(points_of_interest, saved)
     end
     self.pending_dilemma_by_faction = (saved and saved.pending_dilemma_by_faction) or {}
     tavern_contracts.restore_state(saved and saved.contracts)
+    guild_patron.restore_state("tavern", saved and saved.patrons)
     tavern_contracts.rearm_battles(self)
+    tavern_contracts.watch_hunt_battles()
     log("tavern: " .. #self.taverns_state .. " Taverns in " .. #zone_names .. " zones (" .. restored .. " restored, "
         .. (#self.taverns_state - restored) .. " new)")
     self:sync_markers()
@@ -605,7 +645,7 @@ end
 --- @param faction_name string The visiting faction.
 --- @param tavern TavernState The Tavern it visits.
 function TavernEventDelegate:keep_route(faction_name, tavern)
-    local open = tavern.pending_hub ~= nil or tavern.pending_hall ~= nil or tavern.pending_board ~= nil
+    local open = tavern.pending_hub ~= nil or tavern.pending_hall ~= nil or tavern.pending_board ~= nil or tavern.pending_capture
     self.pending_dilemma_by_faction[faction_name] = open and { zone = tavern.zone_name, index = tavern.index_in_zone } or nil
 end
 
@@ -618,7 +658,9 @@ function TavernEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
     self.pending_dilemma_by_faction[faction_name] = nil
     local tavern = pending and self:find(pending.zone, pending.index)
     if tavern then
-        tavern:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, self.invasion_battle_manager)
+        if tavern:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, self.invasion_battle_manager) then
+            guild_patron.donate("tavern", faction_name, self.taverns_state, tavern.coordinates)
+        end
         self:keep_route(faction_name, tavern)
     end
 end
@@ -674,13 +716,14 @@ function TavernEventDelegate:on_faction_turn_start(faction_name)
 end
 
 --- Exports every Tavern plus the delegate's own state for the save/load callbacks.
---- @returns table A record with `taverns` (array of state records), `pending_dilemma_by_faction` and the `contracts` held.
+--- @returns table A record with `taverns` (array of state records), `pending_dilemma_by_faction`, the `contracts` held and the `patrons`.
 function TavernEventDelegate:export_state_as_table()
     local records = {}
     for _, tavern in ipairs(self.taverns_state) do
         records[#records + 1] = tavern:export_state_as_table()
     end
-    return { taverns = records, pending_dilemma_by_faction = self.pending_dilemma_by_faction, contracts = tavern_contracts.export_state() }
+    return { taverns = records, pending_dilemma_by_faction = self.pending_dilemma_by_faction, contracts = tavern_contracts.export_state(),
+        patrons = guild_patron.export_state("tavern") }
 end
 
 --- Constructs a fresh TavernEventDelegate wired to the given InvasionBattleManager. Taverns are built by `initialize` at first tick.

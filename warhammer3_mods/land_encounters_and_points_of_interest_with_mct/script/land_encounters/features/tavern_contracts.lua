@@ -5,7 +5,8 @@
 --- the whole Guild. The missions' own success, failure and cancellation events settle them, so nothing needs re-declaring after a load.
 --- features/tavern.lua opens the board from its hub, routes its choices here and saves the contracts held (`M.held_by_faction`) with the
 --- Taverns. Functions that settle contracts take the TavernEventDelegate, to find a contract's Tavern and to reach the invasion battle
---- manager. Marked spots use CA's Interactive_Marker_Manager, which saves and rebuilds its markers itself.
+--- manager. Marked spots use CA's Interactive_Marker_Manager, which saves and rebuilds its markers itself. A board's bounties, marked spots and
+--- quests roll battle modifiers like any other fight (features/battle_modifiers.lua), shown on their choices and fought in their battles.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
@@ -19,13 +20,17 @@ local realm_effects = require("script/land_encounters/core/realm_effects")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local Army = require("script/land_encounters/core/army")
 local debug_config = require("script/land_encounters/configs/debug")
+local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
+local spot_battles = require("script/land_encounters/features/spot_battles")
+local guild_patron = require("script/land_encounters/features/guild_patron")
 
 local M = {
-    --- Faction key -> the contracts it holds: { key, kind, slot, step, zone, index, level, deposit, general_cqi, target, invasion, force_cqi,
-    --- battle_event, hero_reward }. `key` is the mission, `slot` its number among the faction's contracts of that kind, `step` a chain's step,
-    --- `zone` and `index` the Tavern it came from, `general_cqi` the lord who took it, `target` a cull's faction, `invasion` and `force_cqi` a
-    --- hunted lord's army, `battle_event` the army a marked spot's battle is fought against while that battle is in flight, and `hero_reward` a
-    --- chain's end that frees a hero for want of a legendary item.
+    --- Faction key -> the contracts it holds: { key, kind, slot, step, zone, index, level, deposit, general_cqi, target, enemy, modifiers,
+    --- invasion, force_cqi, battle_event, battle_general, hero_reward }. `key` is the mission, `slot` its number among the faction's contracts of
+    --- that kind, `step` a chain's step, `zone` and `index` the Tavern it came from, `general_cqi` the lord who took it, `target` a cull's
+    --- faction, `enemy` the faction shorthand its armies are drawn from, `modifiers` its battle modifiers, `invasion` and `force_cqi` a hunted
+    --- lord's army, `battle_event` the army a marked spot's battle is fought against while that battle is in flight, `battle_general` our lord
+    --- in a contract battle that carries its modifiers, and `hero_reward` a chain's end that frees a hero for want of a legendary item.
     held_by_faction = {},
     --- Faction key -> the turn every Guild Tavern stops charging that faction more, after it failed or dropped a contract.
     penalty_until = {},
@@ -74,6 +79,10 @@ local LINE_PREFIX = "dummy_land_enc_tavern_contract_"
 --- Payload text prefix of a mission reward's note that it includes the deposit, followed by the amount, e.g. ..._deposit_back_1000.
 local DEPOSIT_LINE_PREFIX = "dummy_land_enc_tavern_deposit_back_"
 
+--- Names of the listeners that ready and end a battle against a hunted lord.
+local HUNT_PENDING_LISTENER = "land_enc_tavern_hunt_battle_pending"
+local HUNT_COMPLETED_LISTENER = "land_enc_tavern_hunt_battle_completed"
+
 --- Payload text under a contract someone has already accepted from this board.
 local LINE_TAKEN = "dummy_land_enc_tavern_contract_taken"
 
@@ -93,32 +102,53 @@ local LINE_BACK = offers_data.line_prefix .. offers_data.tavern.leave_line
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Board
 
---- Rolls a Tavern's board: `board_size` contracts of random kinds, and a quest chain at a level 3 Tavern. The debug `tavern_board` list
---- (configs/debug.lua) replaces them while it is set. A contract taken stays on the board, marked in `taken` by its place.
+--- The end of a log line naming a fight's battle modifiers, or nothing when it has none.
+--- @param modifiers table The modifier keys.
+--- @returns string E.g. " with blood_moon, wards".
+local function modifiers_note(modifiers)
+    return #modifiers > 0 and " with " .. table.concat(modifiers, ", ") or ""
+end
+
+--- Rolls a Tavern's board: `board_size` contracts, each of a different kind, and a quest chain at a level 3 Tavern. The debug `tavern_board` list
+--- (configs/debug.lua) replaces them while it is set. A contract taken stays on the board, marked in `taken` by its place. Each contract with
+--- battles of its own (all but a cull) also rolls the faction its armies come from and its battle modifiers, at its first battle's difficulty.
 --- @param tavern TavernState The Tavern.
---- @returns table { turn, offers = { kind, ... }, taken = { [place] = faction key } }.
+--- @returns table { turn, level, offers = { kind, ... }, taken = { [place] = faction key }, fights = { [place] = { enemy, modifiers } } }.
 function M.roll_board(tavern)
-    local board = { turn = cm:turn_number(), offers = {}, taken = {} }
+    local board = { turn = cm:turn_number(), level = tavern.level, offers = {}, taken = {}, fights = {} }
     local forced = #debug_config.tavern_board > 0
     if forced then
         for i, kind in ipairs(debug_config.tavern_board) do board.offers[i] = kind end
     else
-        for i = 1, tavern_data.contracts.board_size do board.offers[i] = KINDS[random_number(#KINDS)] end
+        local kinds = {}
+        for i, kind in ipairs(KINDS) do kinds[i] = kind end
+        for i = 1, math.min(tavern_data.contracts.board_size, #kinds) do board.offers[i] = table.remove(kinds, random_number(#kinds)) end
         if tavern_data.levels[tavern.level].contracts.chain then board.offers[#board.offers + 1] = "chain" end
     end
-    log("tavern: the board of the " .. tavern:describe() .. " posts " .. table.concat(board.offers, ", ") .. (forced and " (debug tavern_board)" or ""))
+    for i, kind in ipairs(board.offers) do
+        if kind ~= "cull" then
+            local enemy = get_random_faction()
+            local difficulty = kind == "chain" and tavern_data.contracts.chain.steps[1].difficulty or DIFFICULTY_KEYS[tavern.level]
+            board.fights[i] = { enemy = enemy, modifiers = battle_modifiers.roll({ faction = enemy, difficulty = difficulty }) }
+        end
+    end
+    local shown = {}
+    for i, kind in ipairs(board.offers) do
+        local modifiers = board.fights[i] and board.fights[i].modifiers or {}
+        shown[i] = kind .. (#modifiers > 0 and " (" .. table.concat(modifiers, ", ") .. ")" or "")
+    end
+    log("tavern: the board of the " .. tavern:describe() .. " posts " .. table.concat(shown, ", ") .. (forced and " (debug tavern_board)" or ""))
     return board
 end
 
---- Rolls the board again when there is none yet or `restock_turns` have passed since it was rolled. Rewards follow the Tavern's level when
---- the board opens, so a level-up needs no new roll. A board saved before taken contracts stayed on it gets an empty `taken`.
+--- Rolls the board again when there is none yet, `restock_turns` have passed since it was rolled, the Tavern's level changed (a level 3
+--- board posts the quest), or it was saved before battle modifiers (it has no `fights`).
 --- @param tavern TavernState The Tavern.
 function M.ensure_board(tavern)
     local board = tavern.board
-    if board == nil or cm:turn_number() >= board.turn + tavern_data.contracts.restock_turns then
+    if board == nil or board.fights == nil or board.level ~= tavern.level or cm:turn_number() >= board.turn + tavern_data.contracts.restock_turns then
         tavern.board = M.roll_board(tavern)
     end
-    tavern.board.taken = tavern.board.taken or {}
 end
 
 --- The contracts a faction holds. Read only: a faction that holds none gets a new empty list, not one kept in the save.
@@ -128,9 +158,9 @@ function M.held(faction_name)
     return M.held_by_faction[faction_name] or {}
 end
 
---- Opens the board for a lord: each posted contract with its deposit as a treasury card, then Back. A contract that cannot be taken (someone
---- accepted it already, the faction holds the most it can, a cull has no enemy near, or the deposit is more than the treasury) shows why and
---- no card.
+--- Opens the board for a lord: each posted contract with its battle modifiers, and its deposit as a treasury card, then Back. A contract
+--- that cannot be taken (someone accepted it already, the faction holds the most it can, a cull has no enemy near, or the deposit is more
+--- than the treasury) shows why and no card.
 --- @param tavern TavernState The Tavern.
 --- @param faction faction The visiting faction.
 --- @param general_cqi number The visiting lord's command queue index.
@@ -148,17 +178,20 @@ function M.open(tavern, faction, general_cqi)
     local slots, choices = {}, {}
     for i, kind in ipairs(tavern.board.offers) do
         local base = kind == "chain" and tavern_data.contracts.chain.deposit or tavern_data.levels[tavern.level].contracts.deposit
+        local fight = tavern.board.fights[i] or {}
         local slot = { choice = CHOICE_PREFIX .. i, index = i, kind = kind, deposit = tavern:charge(base, faction_name),
-            target = kind == "cull" and enemy and enemy:name() or nil }
-        local choice = { key = slot.choice, lines = { LINE_PREFIX .. kind .. "_" .. tavern.level } }
+            target = kind == "cull" and enemy and enemy:name() or nil, enemy = fight.enemy, modifiers = fight.modifiers or {} }
+        local lines = { LINE_PREFIX .. kind .. "_" .. tavern.level }
+        for _, line in ipairs(battle_modifiers.payload_lines(slot.modifiers)) do lines[#lines + 1] = line end
+        local choice = { key = slot.choice, lines = lines }
         if tavern.board.taken[i] then
-            choice.lines[2] = LINE_TAKEN
+            lines[#lines + 1] = LINE_TAKEN
         elseif full then
-            choice.lines[2] = LINE_HELD_FULL
+            lines[#lines + 1] = LINE_HELD_FULL
         elseif kind == "cull" and slot.target == nil then
-            choice.lines[2] = LINE_NO_TARGET
+            lines[#lines + 1] = LINE_NO_TARGET
         elseif treasury < slot.deposit then
-            choice.lines[2] = LINE_UNAFFORDABLE
+            lines[#lines + 1] = LINE_UNAFFORDABLE
         else
             slot.ok = true
             choice.gold = -slot.deposit
@@ -170,7 +203,8 @@ function M.open(tavern, faction, general_cqi)
     tavern.pending_board = { general_cqi = general_cqi, slots = slots }
     local shown = {}
     for _, slot in ipairs(slots) do
-        shown[#shown + 1] = slot.kind .. " for " .. slot.deposit .. (slot.target and " against " .. slot.target or "") .. (slot.ok and "" or " (closed)")
+        shown[#shown + 1] = slot.kind .. " for " .. slot.deposit .. (slot.target and " against " .. slot.target or "")
+            .. modifiers_note(slot.modifiers) .. (slot.ok and "" or " (closed)")
     end
     log("tavern: board of the " .. tavern:describe() .. " for " .. faction_name .. " (holds " .. #M.held(faction_name) .. ", treasury " .. treasury .. "): "
         .. table.concat(shown, ", "))
@@ -212,7 +246,7 @@ local function free_slot(faction_name, kind)
 end
 
 --- What a contract's mission pays on success: the reward gold, the deposit back when the contract ends with this mission (not a chain's
---- earlier steps), and an item (a legendary one at a chain's end).
+--- earlier steps), and an item (a legendary one at a chain's end). Battle modifiers leave the reward as it is.
 --- @param faction_name string The faction that holds it.
 --- @param contract table The contract.
 --- @returns number The reward gold.
@@ -320,14 +354,55 @@ local function difficulty_of(contract)
     return DIFFICULTY_KEYS[contract.level]
 end
 
---- The army a contract's hunt or marked battle is fought against: a random culture at the contract's difficulty.
+--- The army a contract's hunt or marked battle is fought against: the board's faction for it (a random one for a contract taken before
+--- modifiers) at the contract's difficulty, built and weakened as its battle modifiers say.
 --- @param faction_name string The faction that holds the contract.
 --- @param contract table The contract.
 --- @returns table The `Army:new_from_event` event, kept so the army can be built again after a load.
 local function army_event(faction_name, contract)
     local identifier = "tavern_" .. contract.key .. "_" .. faction_name
-    return { dilemma = "tavern_contract", faction = get_random_faction(), difficulty = difficulty_of(contract), intervention = INTERCEPTION_TYPE,
-        force_identifier = identifier .. "_force", invasion_identifier = identifier }
+    local modifiers = contract.modifiers or {}
+    return { dilemma = "tavern_contract", faction = contract.enemy or get_random_faction(), difficulty = difficulty_of(contract),
+        intervention = INTERCEPTION_TYPE, force_identifier = identifier .. "_force", invasion_identifier = identifier, modifiers = modifiers,
+        composition = battle_modifiers.composition(modifiers), enemy_bundles = battle_modifiers.bundles(modifiers, "enemy") }
+end
+
+--- Builds the army a contract's hunt or marked battle is fought against. It carries the modifiers' enemy bundles, which the battle manager
+--- puts on once it spawns.
+--- @param faction_name string The faction that holds the contract.
+--- @param contract table The contract.
+--- @param subculture string|nil The fighting faction's subculture, for the army's allies.
+--- @returns Army, table The army and its `Army:new_from_event` event.
+local function contract_army(faction_name, contract, subculture)
+    local event = army_event(faction_name, contract)
+    local army = Army:new_from_event(event, subculture)
+    army.sabotage = event
+    return army, event
+end
+
+--- A contract battle's modifiers as the battle spots hand them over: our bundles and the battle script's notices.
+--- @param contract table The contract.
+--- @returns table A battle event with only its `modifiers` and `difficulty`.
+local function modifier_event(contract)
+    return { modifiers = contract.modifiers or {}, difficulty = difficulty_of(contract) }
+end
+
+--- Readies our lord for a contract battle: its modifiers' bundles go on our army and the battle script is told its modifiers.
+--- @param contract table The contract.
+--- @param general_cqi number Our lord's command queue index.
+local function arm_contract_battle(contract, general_cqi)
+    contract.battle_general = general_cqi
+    local event = modifier_event(contract)
+    spot_battles.prepare_battle(event, general_cqi)
+    spot_battles.hand_to_battle(event, nil)
+end
+
+--- Takes a contract battle's modifiers off our lord and clears what the battle script was told, once that battle is over or was backed out of.
+--- @param contract table The contract.
+local function end_contract_battle(contract)
+    if not contract.battle_general then return end
+    spot_battles.end_battle(modifier_event(contract), contract.battle_general)
+    contract.battle_general = nil
 end
 
 --- Spawns a hunted lord (a bounty, or a chain's first or last step) near the Tavern, at war with the contract holder only, patrolling
@@ -339,12 +414,12 @@ end
 --- @param turns number Turns until the deadline.
 --- @returns boolean True when the army is being spawned.
 local function start_hunt(tavern, faction_name, contract, invasion_battle_manager, turns)
-    local event = army_event(faction_name, contract)
-    local army = Army:new_from_event(event, nil)
+    local army, event = contract_army(faction_name, contract, nil)
     local x, y, region_key = spawn_point(tavern, army.faction)
     if x == nil then return false end
     contract.invasion = event.invasion_identifier
-    log("tavern: " .. contract.key .. " for " .. faction_name .. " spawns a " .. event.difficulty .. " army of " .. army.faction .. " in " .. region_key)
+    log("tavern: " .. contract.key .. " for " .. faction_name .. " spawns a " .. event.difficulty .. " army of " .. army.faction .. " in " .. region_key
+        .. modifiers_note(event.modifiers))
     return invasion_battle_manager:spawn_patrol(army, faction_name, x, y, function(force_cqi)
         contract.force_cqi = force_cqi
         issue_mission(faction_name, contract, tavern, "ENGAGE_FORCE", { "cqi " .. tostring(force_cqi), "requires_victory", "override_text " .. HUNT_TEXT }, turns)
@@ -448,7 +523,8 @@ end
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 local function take(tavern, faction_name, slot, general_cqi, invasion_battle_manager)
     local contract = { kind = slot.kind, slot = free_slot(faction_name, slot.kind), step = slot.kind == "chain" and 1 or nil, zone = tavern.zone_name,
-        index = tavern.index_in_zone, level = tavern.level, deposit = slot.deposit, target = slot.target, general_cqi = general_cqi }
+        index = tavern.index_in_zone, level = tavern.level, deposit = slot.deposit, target = slot.target, general_cqi = general_cqi, enemy = slot.enemy,
+        modifiers = slot.modifiers }
     if not start(tavern, faction_name, contract, invasion_battle_manager) then
         log("tavern: " .. contract.key .. " for " .. faction_name .. " found nowhere to start")
         void(faction_name, contract, tavern)
@@ -524,14 +600,15 @@ function M.on_mark_entered(delegate, character, marker_ref, instance_ref)
     if contract == nil or contract.battle_event then return end
     local x, y = Interactive_Marker_Manager:get_coords_from_instance_ref(instance_ref)
     local ibm = delegate.invasion_battle_manager
-    local event = army_event(faction_name, contract)
-    local army = Army:new_from_event(event, character:faction():subculture())
+    local army, event = contract_army(faction_name, contract, character:faction():subculture())
     if not ibm:can_generate_battle(army, { x, y }) then
         log("tavern: no room for the battle at the marked spot of " .. contract.key)
         return
     end
     contract.battle_event = event
-    log("tavern: " .. faction_name .. " fights at the marked spot of " .. contract.key .. " against a " .. event.difficulty .. " army")
+    log("tavern: " .. faction_name .. " fights at the marked spot of " .. contract.key .. " against a " .. event.difficulty .. " army"
+        .. modifiers_note(event.modifiers))
+    arm_contract_battle(contract, character:command_queue_index())
     ibm:generate_battle(army, character, { x, y })
     await_mark_battle(delegate, faction_name, contract, army)
 end
@@ -547,6 +624,7 @@ function M.on_mark_battle(delegate, faction_name, key, won)
     local contract = find_contract(faction_name, key)
     if contract == nil or contract.battle_event == nil then return end
     contract.battle_event = nil
+    end_contract_battle(contract)
     log("tavern: the marked spot battle of " .. key .. " was " .. (won and "won" or "lost") .. " by " .. faction_name)
     if not won then
         local tavern = delegate:find(contract.zone, contract.index)
@@ -570,6 +648,50 @@ function M.rearm_battles(delegate)
             end
         end
     end
+end
+
+--- The command queue index of the army a battle side's lord leads, or nil when the side has none.
+--- @param character character A pending battle's attacker or defender.
+--- @returns number|nil The military force's command queue index.
+local function force_of(character)
+    if character:is_null_interface() or not character:has_military_force() then return nil end
+    return character:military_force():command_queue_index()
+end
+
+--- A battle is about to be fought: when one side is a hunted lord with battle modifiers and the other the faction hunting it, that faction's
+--- lord is readied with the contract's modifiers.
+--- @param battle pending_battle The pending battle.
+function M.on_pending_battle(battle)
+    if next(M.held_by_faction) == nil then return end
+    local attacker, defender = battle:attacker(), battle:defender()
+    local attacker_force, defender_force = force_of(attacker), force_of(defender)
+    for faction_name, held in pairs(M.held_by_faction) do
+        for _, contract in ipairs(held) do
+            local hunted = contract.force_cqi
+            local us = hunted and (hunted == attacker_force and defender or hunted == defender_force and attacker) or nil
+            if us and force_of(us) and us:faction():name() == faction_name and #(contract.modifiers or {}) > 0 and not contract.battle_general then
+                log("tavern: " .. faction_name .. " fights the hunted lord of " .. contract.key .. modifiers_note(contract.modifiers))
+                arm_contract_battle(contract, us:command_queue_index())
+            end
+        end
+    end
+end
+
+--- A battle is over: every hunted lord battle readied with modifiers takes them off again. A marked spot's battle ends in `M.on_mark_battle`.
+function M.on_battle_completed()
+    for _, held in pairs(M.held_by_faction) do
+        for _, contract in ipairs(held) do
+            if contract.force_cqi then end_contract_battle(contract) end
+        end
+    end
+end
+
+--- Listens for battles against hunted lords. The listeners are kept for the session and set up again on every load.
+function M.watch_hunt_battles()
+    core:remove_listener(HUNT_PENDING_LISTENER)
+    core:remove_listener(HUNT_COMPLETED_LISTENER)
+    core:add_listener(HUNT_PENDING_LISTENER, "PendingBattle", true, function(context) M.on_pending_battle(context:pending_battle()) end, true)
+    core:add_listener(HUNT_COMPLETED_LISTENER, "BattleCompleted", true, function() M.on_battle_completed() end, true)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -637,6 +759,7 @@ end
 --- @param faction_name string The faction that holds it.
 --- @param contract table The contract.
 local function clear_from_map(delegate, faction_name, contract)
+    end_contract_battle(contract)
     if contract.invasion then delegate.invasion_battle_manager:remove_invasion_force_by_identifier(contract.invasion) end
     clear_mark(faction_name, contract.key)
 end
@@ -666,9 +789,16 @@ function M.on_mission_ended(delegate, faction_name, key, outcome)
         end
         return
     end
-    M.penalty_until[faction_name] = cm:turn_number() + tavern_data.contracts.standing_turns
-    log("tavern: every Guild Tavern charges " .. faction_name .. " more until turn " .. M.penalty_until[faction_name])
-    if tavern then tavern:show_message(faction_name, outcome == "failed" and "tavern_contract_failed" or "tavern_contract_dropped") end
+    --- The Guild's patrons lose the deposit but pay no surcharge.
+    local patron = guild_patron.is_patron("tavern", faction_name)
+    if patron then
+        log("tavern: " .. faction_name .. " is a patron of the Guild, so no Tavern charges it more")
+    else
+        M.penalty_until[faction_name] = cm:turn_number() + tavern_data.contracts.standing_turns
+        log("tavern: every Guild Tavern charges " .. faction_name .. " more until turn " .. M.penalty_until[faction_name])
+    end
+    local message = outcome == "failed" and "tavern_contract_failed" or "tavern_contract_dropped"
+    if tavern then tavern:show_message(faction_name, message .. (patron and "_patron" or "")) end
 end
 
 --- At a faction's turn start, voids its contracts that can no longer be met (a hunted lord killed by someone else, a cull target destroyed,
@@ -681,8 +811,9 @@ function M.on_faction_turn_start(delegate, faction_name)
     local faction = #held > 0 and cm:get_faction(faction_name)
     for i = #held, 1, -1 do
         local contract = held[i]
-        --- A marked spot battle the lord backed out of last turn no longer blocks the mark.
+        --- A marked spot battle the lord backed out of last turn no longer blocks the mark, and a battle backed out of keeps no modifiers.
         contract.battle_event = nil
+        end_contract_battle(contract)
         --- A contract whose mission the game never issued (or lost) can never end, so it is void as well.
         local issued = cm:mission_is_active_for_faction(faction, contract.key)
         if is_void(contract) or not issued then

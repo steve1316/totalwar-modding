@@ -197,3 +197,7 @@ land_enc_effect_spot_dividends_250			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_350			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_450			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_500			faction	1	treasury.png	true	false	true
+land_enc_effect_tavern_patron_1			faction	1	edict_sla_festival_of_drinking_and_delights.png	true	false	true
+land_enc_effect_tavern_patron_2			faction	1	edict_sla_festival_of_drinking_and_delights.png	true	false	true
+land_enc_effect_smithy_patron_1			faction	1	edict_sla_festival_of_drinking_and_delights.png	true	false	true
+land_enc_effect_smithy_patron_2			faction	1	edict_sla_festival_of_drinking_and_delights.png	true	false	true

@@ -149,7 +149,13 @@ SITES = {
                        "holding the secrets of other realms."),
     "spoils_of_war": ("Spoils of War", "The field is ours, and the enemy flees or lies still. Before we march on, there is more to take from this victory."),
     "tavern_bar": ("The Bar", "The keeper leans on the bar beside barrels for every taste. Over at the tables, strangers are rolling dice, and a "
-                   "hulking champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it be?\""),
+                   "hulking champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it be?\""
+                   "\\\\n\\\\n[[col:yellow]]By Tavern level:[[/col]]\\\\n- Level 1: the house brews (Fighting Spirits gives +5), a feast heals half of each unit's losses, "
+                   "rumours cover the 3 nearest regions, and beating the champion is worth 500 experience."
+                   "\\\\n- Level 2: stronger brews (+10), a feast heals three quarters of the losses, rumours cover 5 regions, "
+                   "and the champion is worth 750 experience."
+                   "\\\\n- Level 3: the strongest brews (+15), a feast heals every loss, rumours cover 7 regions, "
+                   "and the champion is worth 1000 experience."),
 }
 
 # Shown under every site's description: the rules, said once, then the choice. Loc files store a line break as an escaped `\\n`.
@@ -320,8 +326,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]]."),
     "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]1 rank[[/col]] and our army [[col:green]]+5% ward save[[/col]] for 5 turns."),
     "walk_away": ("Walk Away", "Leave this place be."),
-    "fighting_spirits": ("Fighting Spirits", "Order a round of fighting spirits: " + stat("+{e0}", *ATTACK) + " and " + stat("+{e1}%", *WEAPON) + ", but "
-                         + stat("-{e2}", *DEFENCE, colour="red") + " for 5 turns."),
+    "fighting_spirits": ("Fighting Spirits", "Order a round of fighting spirits: " + stat("+{e0}", *ATTACK) + " and " + stat("+{e1}", *DEFENCE) + " for 5 turns."),
     "shieldbrew": ("Shieldbrew", "Order a round of shieldbrew: " + stat("+{e0}", *DEFENCE) + " and " + stat("+{e1}", *ARMOUR) + " for 5 turns."),
     "firewater": ("Firewater", "Order a round of firewater: " + stat("+{e0}%", *SPEED) + " and " + stat("+{e1}", *CHARGE) + " for 5 turns."),
     "marksmans_draught": ("Marksman's Draught", "Order a round of marksman's draught: " + stat("+{e0}%", *MISSILE) + " and " + stat("{e1}%", *RELOAD)
@@ -681,11 +686,10 @@ BUNDLES = {
     "dark_offering": ("force", "icon_effects_fortify.png", "Dark Offering", "A dark offering wards our army.",
                       [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 5)]),
     "tavern_fighting_spirits": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Fighting Spirits", "Our army drank fighting spirits at a tavern.",
-                                [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (6, 9, 12)),
-                                 ("wh_main_effect_force_stat_weapon_strength", "force_to_force_own", (5, 10, 15)),
-                                 ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", -6)]),
+                                [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15)),
+                                 ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (5, 10, 15))]),
     "tavern_shieldbrew": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Shieldbrew", "Our army drank shieldbrew at a tavern.",
-                          [("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (6, 9, 12)),
+                          [("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (5, 10, 15)),
                            ("wh_main_effect_force_stat_armour", "force_to_force_own", (10, 15, 20))]),
     "tavern_firewater": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Firewater", "Our army drank firewater at a tavern.",
                          [("wh_main_effect_force_stat_speed", "force_to_force_own", (5, 10, 15)),
@@ -1100,6 +1104,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(STRINGS_LOC, modifiers["line_prefix"] + key, battle_modifiers.line_text(key), "false")
         shown = battle_modifiers.notice_text(key)
         _, _, icon, _ = battle_modifiers.MODIFIERS[key]
+        line(modifiers["payload_prefix"] + key, icon, battle_modifiers.payload_text(key, harm))
         objective(modifiers["notice_prefix"] + key, icon, f"[[col:{battle_modifiers.HARM_COLOUR[harm]}]]{shown}[[/col]]", shown)
     for effect, (junction, ability, name) in battle_modifiers.ABILITY_EFFECTS.items():
         add(table("effects_tables"), effect, "general_ability.png", 310, "general_ability.png", "battle", "true")

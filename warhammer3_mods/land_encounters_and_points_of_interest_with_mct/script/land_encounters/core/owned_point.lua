@@ -4,6 +4,8 @@
 
 require("script/land_encounters/utils/common")
 
+local realm_effects = require("script/land_encounters/core/realm_effects")
+
 local OwnedPoint = {
     --- Owning faction key, or "" when unowned.
     controlling_faction_name = "",
@@ -16,8 +18,21 @@ local OwnedPoint = {
 --- Percent chance that an AI army at war with an AI owner takes the point by walking onto it.
 OwnedPoint.AI_TAKEOVER_CHANCE = 26
 
+--- Percent chance, each round, that an AI owner upgrades a point it can afford to (see `OwnedPoint:try_ai_upgrade`).
+OwnedPoint.AI_UPGRADE_CHANCE = 3
+
+--- Relations change, in the game's dilemma steps of 10, with an owner we are not at war with when we take its point from it.
+OwnedPoint.CAPTURE_RELATIONS_STEPS = -2
+
 --- Script context value a point's dilemma text reads its owner's name from.
 OwnedPoint.OWNER_CONTEXT = "land_enc_point_owner"
+
+--- Script context value a point's capture dilemma ends with: the relations it costs to take it from an owner we are not at war with, or
+--- nothing.
+OwnedPoint.RELATIONS_CONTEXT = "land_enc_point_relations"
+
+--- Loc key of that relations note.
+OwnedPoint.RELATIONS_TEXT = "campaign_localised_strings_string_land_enc_point_relations_cost"
 
 --- Subcultures that never take a point: rogue armies, savage orcs and the Border Princes.
 OwnedPoint.PROHIBITED_SUBCULTURES = {
@@ -109,6 +124,38 @@ function OwnedPoint:show_owner_in_dilemmas()
     local key = self.controlling_faction_name
     local name = key ~= "" and common.get_localised_string("factions_screen_name_" .. key) or ""
     common.set_context_value(OwnedPoint.OWNER_CONTEXT, name ~= "" and name or key)
+end
+
+--- Readies the point's next capture dilemma: its owner's name, and the note it ends with, the relations it costs when the visitor is not
+--- at war with the owner.
+--- @param visiting_faction faction The faction that may take the point.
+function OwnedPoint:show_capture_terms(visiting_faction)
+    self:show_owner_in_dilemmas()
+    local at_war = self:is_faction_at_war_with_owner(visiting_faction)
+    common.set_context_value(OwnedPoint.RELATIONS_CONTEXT, at_war and "" or common.get_localised_string(OwnedPoint.RELATIONS_TEXT))
+end
+
+--- Takes the relations cost of a capture: an owner the taker is not at war with thinks less of it. Called before the point changes hands.
+--- @param taker_name string The faction taking the point.
+function OwnedPoint:charge_capture_relations(taker_name)
+    local owner, taker = self:check_if_owner_is_alive_and_return_faction(), cm:get_faction(taker_name)
+    if not owner or not taker or owner:at_war_with(taker) then return end
+    log("point: " .. taker_name .. " takes a point from " .. self.controlling_faction_name .. " without a war")
+    realm_effects.change_relations(self.controlling_faction_name, taker_name, OwnedPoint.CAPTURE_RELATIONS_STEPS)
+end
+
+--- Lets an AI owner upgrade the point: when there is a next level, the owner would keep at least the price in its treasury after paying,
+--- and `AI_UPGRADE_CHANCE` percent hits. The chance is only rolled when the owner can afford it.
+--- @param owner faction The point's living AI owner.
+--- @param upgrade_price number|nil The gold to reach the next level, or nil at the top level.
+--- @returns boolean True when the point was upgraded.
+function OwnedPoint:try_ai_upgrade(owner, upgrade_price)
+    if upgrade_price == nil or owner:treasury() < upgrade_price * 2 then return false end
+    if not random_chance(OwnedPoint.AI_UPGRADE_CHANCE) then return false end
+    cm:treasury_mod(self.controlling_faction_name, -upgrade_price)
+    self:set_level(self.level + 1)
+    log("point: " .. self.controlling_faction_name .. " pays " .. upgrade_price .. " gold to raise its point in " .. self.zone_name .. " to level " .. self.level)
+    return true
 end
 
 --- Shows one of the point's event-feed messages at its position.

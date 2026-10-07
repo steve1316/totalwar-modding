@@ -9,9 +9,6 @@ event_feed_strings_text_description_event_land_enc_smithy_encountered	We passed 
 event_feed_strings_text_title_event_land_enc_smithy_visit_available	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_available	The Master Blacksmith Is Ready To Receive You	false
 event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends word that the forge is ready again. Send a lord to the smithy to choose from his new work.	false
-event_feed_strings_text_title_event_land_enc_smithy_ally_or_neutrally_controlled	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_ally_or_neutrally_controlled	Neutral Smithy Visited	false
-event_feed_strings_text_description_event_land_enc_smithy_ally_or_neutrally_controlled	We have visited a smithy belonging to a neighboring kingdom. The master blacksmith speaks to us from the walls of the building and tells us news of his kingdom, but he never lets us in. Only through war or the destruction of its owning faction can we take control of the smithy and appoint a blacksmith of our own. Maybe we should take it?	false
 event_feed_strings_text_title_event_land_enc_smithy_unconditional_surrender	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_unconditional_surrender	Smithy Surrendered	false
 event_feed_strings_text_description_event_land_enc_smithy_unconditional_surrender	We sent the master blacksmith and the garrison an urgent order to retreat, and they obeyed. The enemy has taken the smithy and its forge has lost a level, but our people live to fight another day. We will get the smithy back in time.	false
@@ -278,13 +275,13 @@ event_feed_strings_text_subtitle_event_land_enc_tavern_captured	Tavern Taken	fal
 event_feed_strings_text_description_event_land_enc_tavern_captured	We have driven out its guards and taken the tavern. Walk a lord in again to open it.	false
 event_feed_strings_text_title_event_land_enc_tavern_capture_repelled	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_capture_repelled	Attack Repelled	false
-event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains in enemy hands.	false
+event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains under their control.	false
 event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_2	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_2	Tavern Improved	false
-event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	The tavern has grown to level 2. Its guards are tougher, and its rooms will offer more once they open.	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	The tavern has grown to level 2. Its guards are tougher, and its rooms offer more.	false
 event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_3	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_3	Tavern Improved	false
-event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms will offer the most once they open.	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms offer the most.	false
 event_feed_strings_text_title_event_land_enc_tavern_contract_failed	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed	Contract Failed	false
 event_feed_strings_text_description_event_land_enc_tavern_contract_failed	The deadline has passed and the work is not done. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
@@ -549,3 +546,21 @@ event_feed_strings_text_description_event_land_enc_spot_wound_paid_3	The price o
 event_feed_strings_text_title_event_land_enc_spot_wound_paid_5	The Price Is Paid	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wound_paid_5	Our Lord Is Wounded	false
 event_feed_strings_text_description_event_land_enc_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
+event_feed_strings_text_title_event_land_enc_tavern_patron_1	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_patron_1	Patron of the Guild	false
+event_feed_strings_text_description_event_land_enc_tavern_patron_1	Our gift has been counted and recounted. Every tavern of the Guild has grown, and its keepers will not soon forget our name.	false
+event_feed_strings_text_title_event_land_enc_tavern_patron_2	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_patron_2	Great Patron of the Guild	false
+event_feed_strings_text_description_event_land_enc_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_failed_patron	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed_patron	Contract Failed	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_failed_patron	The deadline has passed and the work is not done. The Guild keeps our deposit, but it charges its patron no more for the failure.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_dropped_patron	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped_patron	Contract Dropped	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_dropped_patron	We have walked away from the contract. The Guild keeps our deposit, but it charges its patron no more for it.	false
+event_feed_strings_text_title_event_land_enc_smithy_patron_1	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_patron_1	Patron of the Association	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
+event_feed_strings_text_title_event_land_enc_smithy_patron_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_patron_2	Great Patron of the Association	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false

@@ -26,18 +26,19 @@ M.bar_cooldown = 5
 
 --- The mercenary hall. Its stock is shared by every visitor and rolled again `restock_turns` after it was last rolled, or at once when the
 --- Tavern levels up. A racial Tavern stocks its own culture, a neutral one `neutral_cultures` random cultures. A hire costs the unit's
---- recruitment cost plus `price_markup` gold, for every visitor. A faction hires at most `hires_per_visit` per visit, and its first hire
---- closes the hall to it for `cooldown` turns.
+--- recruitment cost plus `price_markup` gold, or `renown_markup` for a Regiment of Renown, for every visitor. A faction hires at most
+--- `hires_per_visit` per visit, and its first hire closes the hall to it for `cooldown` turns.
 M.hall = {
     restock_turns = 5,
     neutral_cultures = 2,
     price_markup = 1000,
+    renown_markup = 2500,
     hires_per_visit = 2,
     cooldown = 5,
 }
 
---- The contract board. Every Tavern belongs to the Tavern Keepers' Guild. Each shows `board_size` contracts, rolled again `restock_turns`
---- after they were last rolled, and taking one removes it for every visitor. A faction holds at most `max_held` contracts at once across
+--- The contract board. Every Tavern belongs to the Tavern Keepers' Guild. Each shows `board_size` contracts of different kinds, rolled again
+--- `restock_turns` after they were last rolled, and taking one removes it for every visitor. A faction holds at most `max_held` contracts at once across
 --- every Tavern. Taking one pays its deposit. Success returns the deposit with the reward. Failing or dropping one (from the missions panel)
 --- loses the deposit, and every Guild Tavern then charges that faction `standing_surcharge` more for `standing_turns` turns. A bounty lord
 --- or a marked spot appears at most `spawn_regions_away` regions from the Tavern, as far as `spawn_distance` from that region's settlement as
@@ -47,7 +48,7 @@ M.hall = {
 M.contracts = {
     board_size = 2,
     restock_turns = 5,
-    max_held = 3,
+    max_held = 1,
     standing_surcharge = 0.25,
     standing_turns = 10,
     spawn_regions_away = 1,
@@ -67,6 +68,15 @@ M.contracts = {
     },
 }
 
+--- The Generous Donations a faction can make to the Tavern Keepers' Guild at any Tavern's hub, in order: its `price`, the `place_level`
+--- every Tavern rises to, and the faction `bundle` it keeps for good (replacing the last donation's), whose effects include experience for
+--- every lord and hero each turn. A donor no longer pays the Guild's surcharge after a failed or dropped contract (see
+--- features/guild_patron.lua).
+M.donations = {
+    { price = 50000, place_level = 2, bundle = "land_enc_effect_tavern_patron_1" },
+    { price = 100000, place_level = 3, bundle = "land_enc_effect_tavern_patron_2" },
+}
+
 --- Each level (index 1-3). `upgrade_price` is the gold the owner pays to go from this level to the next, or nil at the top level. `hall` is
 --- the mercenary hall's stock: `units` regular units of `tiers`, `renown` Regiments of Renown as { min, max }, a hero of `hero_rank` for
 --- `hero_price` gold before the hall's markup (none when nil), and `own` slots of the visitor's own culture, rolled for each visit.
@@ -74,13 +84,13 @@ M.contracts = {
 --- cull's `cull_gold` reward for beating `cull_armies` armies, a marked spot's `marked_gold` reward, and `chain` when it posts a quest chain.
 --- A bounty lord's army, and a marked spot's, is as hard as a battle spot at the Tavern's level.
 M.levels = {
-    { upgrade_price = 10000, hall = { units = 4, tiers = { 1, 2 }, renown = { 0, 0 }, own = 1 },
+    { upgrade_price = 10000, hall = { units = 3, tiers = { 1, 2 }, renown = { 0, 0 }, own = 1 },
         contracts = { deposit = 1000, item_rarities = { "uncommon" }, bounty_gold = 2000, cull_gold = 1500, cull_armies = 2,
             marked_gold = 1500 } },
-    { upgrade_price = 20000, hall = { units = 6, tiers = { 1, 2, 3 }, renown = { 1, 1 }, hero_rank = 5, hero_price = 2000, own = 1 },
+    { upgrade_price = 20000, hall = { units = 4, tiers = { 1, 2, 3 }, renown = { 1, 1 }, hero_rank = 5, hero_price = 2000, own = 1 },
         contracts = { deposit = 2000, item_rarities = { "rare" }, bounty_gold = 3500, cull_gold = 3000, cull_armies = 3,
             marked_gold = 3000 } },
-    { upgrade_price = nil, hall = { units = 8, tiers = { 1, 2, 3, 4 }, renown = { 1, 2 }, hero_rank = 10, hero_price = 3500, own = 2 },
+    { upgrade_price = nil, hall = { units = 5, tiers = { 1, 2, 3, 4 }, renown = { 1, 2 }, hero_rank = 10, hero_price = 3500, own = 2 },
         contracts = { deposit = 3000, item_rarities = { "rare" }, bounty_gold = 5000, cull_gold = 4500, cull_armies = 4,
             marked_gold = 4500, chain = true } },
 }

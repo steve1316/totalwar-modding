@@ -34,6 +34,13 @@ M.levels = {
     },
 }
 
+--- The Generous Donations a faction can make to the Smiths' Association at its own Smithy's forge, in order: its `price`, the `place_level`
+--- every Smithy rises to, and the faction `bundle` it keeps for good (replacing the last donation's). See features/guild_patron.lua.
+M.donations = {
+    { price = 50000, place_level = 2, bundle = "land_enc_effect_smithy_patron_1" },
+    { price = 100000, place_level = 3, bundle = "land_enc_effect_smithy_patron_2" },
+}
+
 --- Maximum of the MCT `smithy_cooldown` slider (the level 3 cooldown).
 M.cooldown_slider_max = 30
 

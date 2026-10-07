@@ -284,3 +284,11 @@ incidents_localised_title_land_enc_incident_spot_wound_paid_3	The Price Is Paid	
 incidents_localised_description_land_enc_incident_spot_wound_paid_3	The price of what we took comes due at once. Our lord is struck down by a wound that will take 3 turns to heal.	false
 incidents_localised_title_land_enc_incident_spot_wound_paid_5	The Price Is Paid	false
 incidents_localised_description_land_enc_incident_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
+incidents_localised_title_land_enc_incident_tavern_patron_1	Patron of the Guild	false
+incidents_localised_description_land_enc_incident_tavern_patron_1	Our gift has been counted and recounted. Every tavern of the Guild has grown, and its keepers will not soon forget our name.	false
+incidents_localised_title_land_enc_incident_tavern_patron_2	Great Patron of the Guild	false
+incidents_localised_description_land_enc_incident_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
+incidents_localised_title_land_enc_incident_smithy_patron_1	Patron of the Association	false
+incidents_localised_description_land_enc_incident_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
+incidents_localised_title_land_enc_incident_smithy_patron_2	Great Patron of the Association	false
+incidents_localised_description_land_enc_incident_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false

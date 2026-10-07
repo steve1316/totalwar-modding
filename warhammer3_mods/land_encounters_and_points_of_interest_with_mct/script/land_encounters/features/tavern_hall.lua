@@ -29,13 +29,8 @@ local CHOICE_PREFIX = "LEAPOI_TVN_"
 --- Every tier a Regiment of Renown can sit in.
 local ALL_TIERS = { 0, 1, 2, 3, 4, 5 }
 
---- Payload text of each kind of slot. A hero's line names its rank after the prefix.
-local LINES = {
-    unit = "dummy_land_enc_tavern_hall_unit",
-    renown = "dummy_land_enc_tavern_hall_renown",
-    hero = "dummy_land_enc_tavern_hall_hero_",
-    own = "dummy_land_enc_tavern_hall_own",
-}
+--- Payload text of the hero's slot, followed by its rank. A unit's slot has no text: its unit card and price say it all.
+local LINE_HERO = "dummy_land_enc_tavern_hall_hero_"
 
 --- Payload text under a unit the army has no room for.
 local LINE_NO_ROOM = "dummy_land_enc_tavern_hall_no_room"
@@ -90,11 +85,13 @@ function M.roll_stock(tavern)
     return stock
 end
 
---- Rolls the stock again when there is none yet, the Tavern has levelled up since, or `restock_turns` have passed since it was rolled.
+--- Rolls the stock again when there is none yet, the Tavern has levelled up since, `restock_turns` have passed since it was rolled, or it
+--- holds more units than its level now stocks (a save from before the hall was made smaller).
 --- @param tavern TavernState The Tavern.
 function M.ensure_stock(tavern)
     local stock = tavern.hall_stock
-    if stock == nil or stock.level ~= tavern.level or cm:turn_number() >= stock.turn + tavern_data.hall.restock_turns then
+    if stock == nil or stock.level ~= tavern.level or #stock.units > tavern_data.levels[tavern.level].hall.units
+        or cm:turn_number() >= stock.turn + tavern_data.hall.restock_turns then
         tavern.hall_stock = M.roll_stock(tavern)
     end
 end
@@ -130,14 +127,19 @@ function M.open(tavern, faction, general_cqi, own, hired)
     local room = force and tower_army.free_slots(force) or 0
     local treasury = faction:treasury()
     local slots, choices = {}, {}
-    --- Adds one slot and its choice. `key` is its unit, or nil for the hero.
+    --- Adds one slot and its choice. `key` is its unit, or nil for the hero, whose `line` describes it. A hire the treasury cannot pay still
+    --- shows its price and unit, and `shown_price` marks it so a click on it anyway is undone.
     local function add(kind, number, key, base, line)
-        local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, price = tavern:charge(base + tavern_data.hall.price_markup, faction_name) }
+        local markup = kind == "renown" and tavern_data.hall.renown_markup or tavern_data.hall.price_markup
+        local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, price = tavern:charge(base + markup, faction_name) }
         local choice = { key = slot.choice, lines = { line } }
         if key and room < 1 then
-            choice.lines[2] = LINE_NO_ROOM
+            choice.lines[#choice.lines + 1] = LINE_NO_ROOM
         elseif treasury < slot.price then
-            choice.lines[2] = LINE_UNAFFORDABLE
+            choice.lines[#choice.lines + 1] = LINE_UNAFFORDABLE
+            choice.gold = -slot.price
+            if key then choice.units = { force = force, keys = { key } } end
+            slot.shown_price = true
         else
             slot.ok = true
             choice.gold = -slot.price
@@ -146,10 +148,10 @@ function M.open(tavern, faction, general_cqi, own, hired)
         slots[#slots + 1] = slot
         choices[#choices + 1] = choice
     end
-    for i, key in ipairs(stock.units) do add("unit", i, key, army_generator.unit_price_by_key(key), LINES.unit) end
-    for i, key in ipairs(stock.renown) do add("renown", i, key, army_generator.unit_price_by_key(key), LINES.renown) end
-    if stock.hero then add("hero", 1, nil, level.hero_price, LINES.hero .. stock.hero.rank) end
-    for i, key in ipairs(own) do add("own", i, key, army_generator.unit_price_by_key(key), LINES.own) end
+    for i, key in ipairs(stock.units) do add("unit", i, key, army_generator.unit_price_by_key(key)) end
+    for i, key in ipairs(stock.renown) do add("renown", i, key, army_generator.unit_price_by_key(key)) end
+    if stock.hero then add("hero", 1, nil, level.hero_price, LINE_HERO .. stock.hero.rank) end
+    for i, key in ipairs(own) do add("own", i, key, army_generator.unit_price_by_key(key)) end
     choices[#choices + 1] = { key = BACK_CHOICE, lines = { LINE_BACK } }
     tavern.pending_hall = { general_cqi = general_cqi, own = own, slots = slots, hired = hired or 0 }
     local shown = {}
@@ -185,6 +187,11 @@ function M.resolve(tavern, faction_name, choice_key)
     end
     if not slot.ok then
         log("tavern: " .. faction_name .. " chose " .. choice_key .. ", shown as closed, so nothing is hired and the hall reopens")
+        --- A closed hire that showed its price and unit was paid out by its payload, so the gold goes back and the unit leaves.
+        if slot.shown_price then
+            cm:treasury_mod(faction_name, slot.price)
+            if slot.key then cm:remove_unit_from_character(cm:char_lookup_str(pending.general_cqi), slot.key) end
+        end
     else
         log("tavern: " .. faction_name .. " hires " .. (slot.key or "a hero") .. " for " .. slot.price .. " gold at the " .. tavern:describe())
         if slot.kind == "hero" then

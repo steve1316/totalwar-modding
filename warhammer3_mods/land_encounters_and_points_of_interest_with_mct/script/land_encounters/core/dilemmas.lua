@@ -7,7 +7,7 @@ local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 local M = {}
 
 --- The choice keys of a dilemma in order, as the DB names them.
-M.CHOICE_KEYS = { "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH" }
+M.CHOICE_KEYS = { "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH" }
 
 --- Launches a custom dilemma. Each choice shows text lines and can pay gold, items and units when chosen.
 --- @param key string The dilemma key.

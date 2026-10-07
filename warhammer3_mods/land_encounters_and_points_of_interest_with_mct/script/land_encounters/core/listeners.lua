@@ -210,8 +210,9 @@ function M.register()
     )
 
 
-    --- Tower offers taken on the open go-deeper dilemma, Tavern hub choices that cannot be taken, and site or battle offers the treasury cannot pay, get greyed-out buttons once the
-    --- dilemma panel has built them. The panel is the local player's, so this UI-only step reads the local faction.
+    --- Tower offers taken on the open go-deeper dilemma, Tavern and forge choices that cannot be taken, and site or battle offers the
+    --- treasury cannot pay, get greyed-out buttons once the dilemma panel has built them. The panel is the local player's, so this UI-only
+    --- step reads the local faction.
     core:add_listener(
         "land_enc_tower_grey_out_taken",
         "PanelOpenedCampaign",
@@ -221,6 +222,7 @@ function M.register()
                 local faction_name = cm:get_local_faction_name(true)
                 M.point_of_interest_event_manager:grey_out_taken_tower_offers(faction_name)
                 M.point_of_interest_event_manager:grey_out_closed_tavern_choices(faction_name)
+                M.point_of_interest_event_manager:grey_out_closed_smithy_choices(faction_name)
                 spot_offers.grey_out_unaffordable(faction_name)
                 spot_battles.grey_out_unaffordable(faction_name)
             end, 0.1)

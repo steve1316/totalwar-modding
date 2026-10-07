@@ -477,7 +477,7 @@ M.offers = {
         { 1, "lost" },
     } },
     { key = "arm_wrestle_the_champion", pool = "tavern", tags = {}, gamble = {
-        { 1, "won", lord_xp = S(1000, 2000, 3000) },
+        { 1, "won", lord_xp = S(500, 750, 1000) },
         { 1, "lost", lord_health = 0.5 },
     } },
     { key = "buy_rumours", pool = "tavern", tags = {}, cost = S(1000, 1500, 2000), realm = "nearby_regions", count = S(3, 5, 7), reveal_turns = 5,

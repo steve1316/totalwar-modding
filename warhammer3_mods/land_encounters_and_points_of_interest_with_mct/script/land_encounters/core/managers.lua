@@ -8,6 +8,7 @@ require("script/land_encounters/core/mct")
 local army_generator = require("script/land_encounters/core/army_generator")
 local tower_army = require("script/land_encounters/features/tower_army")
 local debug_config = require("script/land_encounters/configs/debug")
+local guild_patron = require("script/land_encounters/features/guild_patron")
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
 --- require (the delegates pull core/managers back in for the incident globals).
@@ -774,8 +775,8 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     end
                 end
 
-                self:rank_up_lore_units(invasion_general:military_force())
-                self:weaken_invasion_force(invasion_general:military_force())
+                self:rank_up_lore_units(invasion_general:military_force(), self.event_army)
+                self:weaken_invasion_force(invasion_general:military_force(), self.event_army)
 
                 local faction_being_declared_war_to = declaring_faction_name
                 if faction_being_declared_war_to == self.event_army.faction then
@@ -866,12 +867,13 @@ end
 --- Gives a lore army's lore units their extra ranks once it spawns (battle modifiers: the gold its 20 units could not spend), never past
 --- `ALLY_MAX_RANK`.
 --- @param force military_force The spawned invasion force.
-function InvasionBattleManager:rank_up_lore_units(force)
-    local ranks = self.event_army.lore_ranks
+--- @param army Army The army it was built from.
+function InvasionBattleManager:rank_up_lore_units(force, army)
+    local ranks = army.lore_ranks
     if ranks <= 0 then return end
     local ranked = 0
     for _, entry in ipairs(tower_army.rankable_units(force:general_character():command_queue_index(), ranks, ALLY_MAX_RANK)) do
-        if self.event_army.lore_units[entry.unit:unit_key()] then
+        if army.lore_units[entry.unit:unit_key()] then
             cm:add_experience_to_unit(entry.unit, ranks)
             ranked = ranked + 1
         end
@@ -882,8 +884,9 @@ end
 --- Puts the event army's `sabotage` on its spawned force: each of `enemy_bundles`, every unit but the characters at `enemy_strength` of full
 --- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone.
 --- @param force military_force The spawned invasion force.
-function InvasionBattleManager:weaken_invasion_force(force)
-    local sabotage = self.event_army.sabotage or {}
+--- @param army Army The army it was built from.
+function InvasionBattleManager:weaken_invasion_force(force, army)
+    local sabotage = army.sabotage or {}
     for _, bundle in ipairs(sabotage.enemy_bundles or {}) do
         cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
     end
@@ -1110,7 +1113,8 @@ function InvasionBattleManager:build_unit_list(army)
 end
 
 
---- Starts a lasting invasion beside a position, at war with one faction only, and never marked for removal, unlike an encounter's army.
+--- Starts a lasting invasion beside a position, at war with one faction only, and never marked for removal, unlike an encounter's army. Once
+--- it spawns, a lore army's units get their ranks and the army's `sabotage` bundles go on, as for an encounter's army.
 --- @param army Army The army to send.
 --- @param target_type string The invasion manager's target type, e.g. "REGION" or "PATROL".
 --- @param target any The target, e.g. a region key or a list of patrol points.
@@ -1133,6 +1137,11 @@ function InvasionBattleManager:start_lasting_invasion(army, target_type, target,
     invasion:add_character_experience(army.lord.level, true)
     invasion:add_unit_experience(army.unit_experience_amount)
     invasion:start_invasion(function(started)
+        local spawned = cm:model():military_force_for_command_queue_index(started.force_cqi)
+        if spawned and not spawned:is_null_interface() then
+            self:rank_up_lore_units(spawned, army)
+            self:weaken_invasion_force(spawned, army)
+        end
         if not cm:get_faction(army.faction):at_war_with(cm:get_faction(target_faction_name)) then
             cm:force_declare_war(army.faction, target_faction_name, false, false)
         end
@@ -1357,6 +1366,7 @@ end
 function PointOfInterestEventManager:on_faction_turn_start(faction_name)
     self.tower_event_delegate:on_faction_turn_start(faction_name)
     self.tavern_event_delegate:on_faction_turn_start(faction_name)
+    guild_patron.on_faction_turn_start(faction_name)
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:on_faction_turn_start(faction_name)
 end
@@ -1398,6 +1408,12 @@ end
 --- @param faction_name string The local player's faction.
 function PointOfInterestEventManager:grey_out_closed_tavern_choices(faction_name)
     self.tavern_event_delegate:grey_out_closed_choices(faction_name)
+end
+
+--- Greys out the forge choices that cannot be taken on the local player's open Smithy forge.
+--- @param faction_name string The local player's faction.
+function PointOfInterestEventManager:grey_out_closed_smithy_choices(faction_name)
+    self.smithy_event_delegate:grey_out_closed_choices(faction_name)
 end
 
 --- Starts the battle at a Tavern contract's marked spot when a lord walks onto it.
