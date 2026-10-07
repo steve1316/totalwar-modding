@@ -29,6 +29,10 @@ local mct_settings = {
     tavern_penalty_percent = 25,
     --- Turns that surcharge lasts.
     tavern_penalty_turns = 10,
+    --- Percent chance an AI army at war with a Tavern's AI owner takes it.
+    tavern_ai_takeover_chance = 26,
+    --- Percent chance each round that an AI owner upgrades its Tavern.
+    tavern_ai_upgrade_chance = 3,
     --- Towers are on the map and can be delved.
     enable_towers = true,
     --- Turns a tower stays closed after a delve ends.
@@ -401,7 +405,7 @@ function set_mct_settings(mct_mod)
     mct_settings.tavern_hall_restock = mct_mod:get_option_by_key("tavern_hall_restock"):get_finalized_setting()
     for _, key in ipairs({ "tower_gold_percent", "tower_enemy_percent", "tower_offers_per_floor", "tower_hidden_floor_chance", "smithy_price_percent",
         "smithy_tribute_percent", "smithy_ai_takeover_chance", "smithy_ai_upgrade_chance", "tavern_hire_markup", "tavern_hires_per_visit", "tavern_cooldown",
-        "tavern_penalty_percent", "tavern_penalty_turns" }) do
+        "tavern_penalty_percent", "tavern_penalty_turns", "tavern_ai_takeover_chance", "tavern_ai_upgrade_chance" }) do
         mct_settings[key] = mct_mod:get_option_by_key(key):get_finalized_setting()
         out("DEBUG - mct_settings." .. key .. ": " .. tostring(mct_settings[key]))
     end

@@ -496,6 +496,12 @@ add_slider("tavern_penalty_percent", "taverns_section", "Failed contract surchar
 add_slider("tavern_penalty_turns", "taverns_section", "Failed contract surcharge (turns)",
     "How long the Guild's surcharge lasts. Default is " .. get_mct_settings().tavern_penalty_turns .. ".", { 1, 30, 1, 0 },
     get_mct_settings().tavern_penalty_turns)
+add_slider("tavern_ai_takeover_chance", "taverns_section", "AI takeover chance %",
+    "Chance an AI army at war with a Tavern's AI owner takes it when it walks onto it. Default is 26.", { 0, 100, 1, 0 },
+    get_mct_settings().tavern_ai_takeover_chance)
+add_slider("tavern_ai_upgrade_chance", "taverns_section", "AI upgrade chance %",
+    "Chance each round that an AI owner upgrades its Tavern, rolled only while it holds twice the price. Default is 3.", { 0, 20, 1, 0 },
+    get_mct_settings().tavern_ai_upgrade_chance)
 
 add_guide_section("taverns", "Guide: The Tavern", taverns_page, mct_guides.taverns_text(), true)
 

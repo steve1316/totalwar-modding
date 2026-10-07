@@ -133,7 +133,7 @@ function TavernState:update_state_given_turn_passing()
         self:set_controlling_faction(nil)
         return
     end
-    if not owner_faction:is_human() then self:try_ai_upgrade(owner_faction, tavern_data.levels[self.level].upgrade_price) end
+    if not owner_faction:is_human() then self:try_ai_upgrade(owner_faction, tavern_data.levels[self.level].upgrade_price, get_mct_settings().tavern_ai_upgrade_chance) end
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,7 +170,7 @@ function TavernState:trigger_event(area_and_character_info)
             return visitor
         end
     elseif self:is_occupied() and not self:is_occupied_by_player() and not self:is_prohibited_subculture(visiting_faction)
-        and self:is_faction_at_war_with_owner(visiting_faction) and random_chance(OwnedPoint.AI_TAKEOVER_CHANCE) then
+        and self:is_faction_at_war_with_owner(visiting_faction) and random_chance(get_mct_settings().tavern_ai_takeover_chance) then
         log("tavern: " .. visitor .. " takes the " .. self:describe() .. " from " .. self.controlling_faction_name)
         self:set_controlling_faction(visitor)
     end

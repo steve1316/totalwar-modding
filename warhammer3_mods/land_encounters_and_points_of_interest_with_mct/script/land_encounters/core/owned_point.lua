@@ -15,12 +15,6 @@ local OwnedPoint = {
     coordinates = {},
 }
 
---- Percent chance that an AI army at war with an AI owner takes the point by walking onto it.
-OwnedPoint.AI_TAKEOVER_CHANCE = 26
-
---- Percent chance, each round, that an AI owner upgrades a point it can afford to (see `OwnedPoint:try_ai_upgrade`).
-OwnedPoint.AI_UPGRADE_CHANCE = 3
-
 --- Relations change, in the game's dilemma steps of 10, with an owner we are not at war with when we take its point from it.
 OwnedPoint.CAPTURE_RELATIONS_STEPS = -2
 
@@ -148,11 +142,11 @@ end
 --- and the chance hits. The chance is only rolled when the owner can afford it.
 --- @param owner faction The point's living AI owner.
 --- @param upgrade_price number|nil The gold to reach the next level, or nil at the top level.
---- @param chance number|nil Percent chance of upgrading, `AI_UPGRADE_CHANCE` when nil.
+--- @param chance number Percent chance of upgrading, from the point's MCT setting.
 --- @returns boolean True when the point was upgraded.
 function OwnedPoint:try_ai_upgrade(owner, upgrade_price, chance)
     if upgrade_price == nil or owner:treasury() < upgrade_price * 2 then return false end
-    if not random_chance(chance or OwnedPoint.AI_UPGRADE_CHANCE) then return false end
+    if not random_chance(chance) then return false end
     cm:treasury_mod(self.controlling_faction_name, -upgrade_price)
     self:set_level(self.level + 1)
     log("point: " .. self.controlling_faction_name .. " pays " .. upgrade_price .. " gold to raise its point in " .. self.zone_name .. " to level " .. self.level)
