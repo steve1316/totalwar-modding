@@ -221,14 +221,14 @@ M.realm_kinds = { "own_region", "raise_region", "own_province", "enemy_region", 
 
 --- Treasure sites. `signature` is always offered when eligible. `ui_image` is the dilemma picture. The first 8 are the old treasure incidents.
 M.sites = {
-    { key = "hidden_tomb", tags = { "loot", "curse" }, signature = "tomb_robbing", ui_image = "books_of_nagash" },
+    { key = "hidden_tomb", tags = { "loot", "curse" }, signature = "tomb_robbing", ui_image = "story_panels/nagash_narrative_act_2" },
     { key = "abandoned_camp", tags = { "recovery", "deal" }, signature = "abandoned_camp", ui_image = "wh2_rogue_army_encountered" },
     { key = "buried_relics", tags = { "loot", "lore" }, signature = "buried_relics", ui_image = "wh2_sea_encounters_2" },
     { key = "hidden_temple", tags = { "blessing" }, signature = "hidden_temple", ui_image = "old_ones_temples_up" },
     { key = "caravan_remnants", tags = { "loot", "deal" }, signature = "caravan_remnants", ui_image = "ivory_road" },
     { key = "whispers_of_our_god", tags = { "blessing", "curse" }, signature = "whispers_of_the_gods", ui_image = "winds_of_magic_change" },
     { key = "the_explorer", tags = { "lore", "realm" }, signature = "the_explorer", ui_image = "minor_cult" },
-    { key = "legendary_bard", tags = { "realm", "deal" }, signature = "legendary_bard", ui_image = "wulfhart_hunters" },
+    { key = "legendary_bard", tags = { "realm", "deal" }, signature = "legendary_bard", ui_image = "gotrek_felix" },
     { key = "ruined_shrine", tags = { "blessing", "curse" }, signature = "stoneskin", ui_image = "old_ones_temples_down" },
     { key = "smugglers_cache", tags = { "deal", "realm_others" }, signature = "recruitment_cache", ui_image = "wh2_sea_encounters_1" },
     { key = "beast_lair", tags = { "recruit", "gamble" }, signature = "tame_the_beast", ui_image = "attrition_swamp" },
@@ -236,7 +236,7 @@ M.sites = {
     { key = "witchs_hut", tags = { "gamble", "curse" }, signature = "dark_bargain", ui_image = "ai_wins_soul" },
     { key = "collapsed_mine", tags = { "loot", "gamble" }, signature = "search_every_corner", ui_image = "under_empire_discovered" },
     { key = "merchants_wagon", tags = { "deal" }, signature = "buy_from_the_trader", ui_image = "imperial_supplies" },
-    { key = "sunken_library", tags = { "lore", "realm" }, signature = "research_scrolls", ui_image = "elector_diplomacy" },
+    { key = "sunken_library", tags = { "lore", "realm" }, signature = "research_scrolls", ui_image = "books_of_nagash" },
 }
 
 --- The spoils pick after a won battle spot: a site with no signature that draws from its own pools. The picture is culture-aware, so each
@@ -246,7 +246,7 @@ M.spoils = { key = "spoils_of_war", tags = { "loot", "recovery" }, pools = { "sp
 --- A Tavern's bar: a site with no signature that draws only drinks and games, and is never rolled for a treasure spot. Its last choice goes
 --- back to the Tavern's hub instead of walking away, and each price shows as a treasury card that the payload charges. The picture is
 --- culture-aware.
-M.tavern = { key = "tavern_bar", tags = {}, pools = { "tavern" }, ui_image = "generic", leave_line = "tavern_back", price_as_card = true }
+M.tavern = { key = "tavern_bar", tags = {}, pools = { "tavern" }, ui_image = "wulfhart_hunters", leave_line = "tavern_back", price_as_card = true }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

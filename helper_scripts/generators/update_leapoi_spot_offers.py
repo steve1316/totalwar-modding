@@ -58,6 +58,74 @@ VICTORY_GOLD_LUA = "script/land_encounters/configs/victory_gold.lua"
 RESULT_IMAGE = "wh2_sea_encounters_1"
 MISSION_RESULT_IMAGE = "land_victory"
 
+# Picture of each result's incident, by its key after the result prefix, picked in the art pass. A result not listed shows
+# `MISSION_RESULT_IMAGE` for a mission or `RESULT_IMAGE` otherwise.
+RESULT_IMAGES = {
+    "arm_wrestle_the_champion_lost": "waaagh_up",
+    "arm_wrestle_the_champion_won": "land_victory",
+    "bountiful_harvest": "imperial_supplies",
+    "buy_rumours": "minor_cult",
+    "cast_the_lots_lost": "wulfhart_hunters",
+    "cast_the_lots_won": "wulfhart_hunters",
+    "chase_the_routers_lost": "ursun_defeat",
+    "chase_the_routers_won": "carnage_charge",
+    "curse_a_distant_king": "story_panels/chd_pet_curse",
+    "dice_with_strangers_lost": "wulfhart_hunters",
+    "dice_with_strangers_won": "wulfhart_hunters",
+    "double_or_nothing_lost": "elector_politics",
+    "drink_from_the_spring_lost": "attrition_disease",
+    "drink_from_the_spring_won": "rift_entered",
+    "endow_the_province": "elector_region",
+    "gamble_with_the_hermit_lost": "wulfhart_hunters",
+    "garrison_drill": "victory",
+    "mission_against_the_odds_failed": "carnage_weapons",
+    "mission_blood_tally_failed": "carnage_weapons",
+    "mission_bloodbath_wager_failed": "carnage_weapons",
+    "mission_break_them_failed": "carnage_magic",
+    "mission_decapitate_failed": "carnage_weapons",
+    "mission_duelists_challenge_failed": "carnage_weapons",
+    "mission_flawless_victory_failed": "defeat",
+    "mission_flawless_victory_met": "victory",
+    "mission_guard_the_standard_failed": "defeat",
+    "mission_headhunt_failed": "carnage_weapons",
+    "mission_hold_the_line_failed": "defeat",
+    "mission_lords_glory_failed": "carnage_weapons",
+    "mission_monster_slayer_failed": "chaos_invasion",
+    "mission_rout_the_riders_failed": "queen_and_crone",
+    "mission_rout_the_riders_met": "carnage_charge",
+    "mission_silence_the_guns_failed": "carnage_magic",
+    "mission_spare_the_captain_failed": "carnage_weapons",
+    "mission_steadfast_failed": "defeat",
+    "mission_swift_victory_failed": "carnage_weapons",
+    "mission_trophy_hunt_failed": "carnage_weapons",
+    "mission_untouchable_failed": "defeat",
+    "mission_untouchable_met": "army_morale_up",
+    "missions_untracked": "messenger",
+    "mystery_brew_lost": "attrition_disease",
+    "mystery_brew_won": "army_morale_up",
+    "open_the_sealed_door_lost": "under_empire_destroyed",
+    "open_the_sealed_door_won": "nemesis_crown",
+    "point_them_at_each_other": "story_panels/chd_drill_machinations",
+    "poison_their_wells": "wh2_disease_attrition",
+    "quell_the_unrest": "faction",
+    "raise_the_settlement": "elector_confederation",
+    "ransom_the_captain": "messenger",
+    "sap_their_garrison": "elector_invasion",
+    "sell_their_secrets": "story_panels/chd_pet_blood",
+    "send_gifts": "messenger",
+    "share_the_find": "elector_diplomacy",
+    "spread_the_plague": "ai_enters_nurgle_realm",
+    "spy_on_their_capital": "wh2_treasure_hunt_2",
+    "stir_their_rebels": "elector_politics",
+    "touch_the_relic_blessed": "army_morale_up",
+    "touch_the_relic_cursed": "nemesis_crown",
+    "wake_the_guardian_lost": "chaos_rising",
+    "wake_the_guardian_won": "wh2_treasure_hunt_3",
+    "wound_paid_2": "attrition_disease",
+    "wound_paid_3": "attrition_disease",
+    "wound_paid_5": "attrition_disease",
+}
+
 # Loc file of the strings the script reads at runtime: the taken missions' lines.
 STRINGS_LOC = LOC_PREFIX + "spot_strings.loc.tsv"
 
@@ -1168,7 +1236,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         for field, text in [("title", title_case(title)), ("subtitle", title_case(subtitle or title)), ("description", fallback_text(description, FALLBACK_PLACES.get(suffix, "")))]:
             add(LOC_PREFIX + "event_feed_strings.loc.tsv", f"event_feed_strings_text_{field}_event_land_enc_{name}", text, "false")
         incident = config["result_incident_prefix"] + suffix
-        image = MISSION_RESULT_IMAGE if suffix.startswith("mission") else RESULT_IMAGE
+        image = RESULT_IMAGES.get(suffix) or (MISSION_RESULT_IMAGE if suffix.startswith("mission") else RESULT_IMAGE)
         add(table("incidents_tables"), incident, "false", image, "false", "Event", "", "false", "", "0.0000", "false")
         for option, value in [("GEN_TARGET_NONE", ""), ("VAR_CHANCE", "100")]:
             add(table("cdir_events_incident_option_junctions_tables"), row_id, incident, option, value, "default")
