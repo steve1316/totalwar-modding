@@ -47,7 +47,6 @@ Effects (when set) additionally need effect_bundles_tables + effect_bundles_to_e
 and effect_bundles .loc entries.
 --]]
 M.treasure_type = {
-    --"land_enc_incident_clean_up_event" SPECIAL: Only used for the abstract class spot to eliminate bugged points
     {
         incident = "land_enc_incident_tomb_robbing",
         targets =  { character = true, force = false, faction = false, region = false },

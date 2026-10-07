@@ -1,7 +1,5 @@
 --- All spot classes for the mod: the abstract Spot base, EventSpot (random encounter),
---- SmithySpot, TowerSpot, SpotDelegate, PointOfInterestDelegate, and the Zone aggregate. Also exports
---- five doc-only placeholder classes (EmitterSpot, DungeonSpot, InvasionSpot, ResourceSpot,
---- RiftSpot) that the original mod never implemented. TavernSpot holds the Tavern marker helpers.
+--- SmithySpot, TowerSpot, SpotDelegate, PointOfInterestDelegate, and the Zone aggregate. TavernSpot holds the Tavern marker helpers.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
@@ -184,20 +182,6 @@ end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
---- EmitterSpot (abstract, extends Spot)
---- (from models/spots/abstract_classes/emitter_spot.lua - file was empty)
-
-local EmitterSpot = nil
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- DungeonSpot
---- (from models/spots/dungeon_spot.lua - file was empty)
-
-local DungeonSpot = nil
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- EventSpot
 --- (from models/spots/event_spot.lua)
 
@@ -248,59 +232,6 @@ function EventSpot:newFrom(old_spot)
     setmetatable(old_spot, EventSpot)
     return old_spot
 end
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- InvasionSpot
---- (from models/spots/invasion_spot.lua - file was a doc-only comment block)
-
---[[
-
-An invasion of an enemy
-
-- Skarsnik, Queek, Belegar: controlling karak eight peeks and eliminating opposing factions generates a doomstack for respective faction.
-- Dark Elves: Controling x amount of Ulthuan generates a doomstack.
-- Chaos: % of chaos corruption across the world surpasses an amount -> doomstack.
-
-So if I'm playing as the Empire I get a notification that Ulthuan will soon fall when say DE have 50% regions. I will then want to send an army to help them cause if the donut falls surely the old world will be next. Or chaos factions are doing well. I will then want to send armies to make recover land for Kislev. Or maybe I don't and chose to deal with their armies if they come.
-
---]]
-
-local InvasionSpot = nil
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- ResourceSpot
---- (from models/spots/resource_spot.lua - file was a doc-only comment block)
-
---[[ Specification
-For the player:
-- The thematic resource spot will grant some of a resource and money for their faction.
-- It will be attacked every so often by a random enemy faction.
-- Can be upgraded 3 times
-- May also randomly give buffs to their zone or a visiting army.
-- Several thematic types
-
-For the AI:
-- Gives a random amount of treasury for the faction every 5 turns
-- 3 levels of defense
-
-]]--
-
-local ResourceSpot = nil
-
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- //////////////////////////////////////////////////////////////////////////////////////////////////
---- RiftSpot
---- (from models/spots/rift_spot.lua - file was a doc-only comment block)
-
---[[
-
-A daemonic invasion fills suddenly part of the territory. If beaten. A rift will unite to remote places in the map. Both AI and player can use it
-
---]]
-
-local RiftSpot = nil
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,10 +288,8 @@ end
 
 --- Promotes a base Spot to a SmithySpot in place via metatable rewiring.
 --- @param old_spot Spot The existing base-Spot instance to upcast.
---- @param index number The 1-based smithy slot index (currently unused by the upcast).
---- @param initial_owning_faction string The starting owning-faction key (currently unused by the upcast).
 --- @returns SmithySpot The same instance with its metatable replaced.
-function SmithySpot:new_from_coordinates(old_spot, index, initial_owning_faction)
+function SmithySpot:new_from_coordinates(old_spot)
     SmithySpot.__index = SmithySpot
     setmetatable(SmithySpot, {__index = Spot})
     local t = old_spot
@@ -403,19 +332,6 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- TowerSpot
---- (from models/spots/tower_spot.lua - file was a doc-only comment block)
-
---[[
-I was thinking special-encounter (not auto-resolveable combat) could be a "tower" or "dungeon"
-
-Starting up, it would give you a super-easy encounter, like fighting lordless zombies, empire-troops, darkspears/darkshards, skinks, nurglings, or skavenslaves.
-
-If you manage to suceed that battle, another dilemma would trigger that asks if you would like to leave the dungeon/tower or dwell deeper/higher; every tower/dungeon is based around a single faction for enemies you face, and every time you decide to "go higher/deeper" it gives you a harder encounter, but with increased reward rarity at each turn, or even potentialy if possible get you 1-5 random units (potentialy from other factions you arent playing) as that swear fealty to you.
-
-(power of mercs would scale on the cleared dungeon-level's strength, so if you beat skeleton-warriors you might get 2-4 skeleton-warriors or equalivent-cost units from other roosters)
-
-On the final or later floor, you would fight an actual-lord with spells/mounts and abilities that boost their troops refered to as the "Master of the Dungeon/Warren", and if you beat them it could give some cool item/rewards, or mayhap even a random hero from a random faction, where the roleplay is that you free-prisoners that swear fealty to you, or that you broke the curse of bla bla whatever n so on.
-]]--
 
 --- Marker helpers for towers. A tower sits on one of its zone's encounter spots, so its marker is keyed by that spot's index.
 local TowerSpot = {}
@@ -630,18 +546,17 @@ local PointOfInterestDelegate = {
     points_of_interest = {},
 }
 
---- Initializes the POI table from the configs (smithies and resources). Taverns keep their state in features/tavern.lua, so this list holds
+--- Initializes the POI table from the configs (smithies). Taverns keep their state in features/tavern.lua, so this list holds
 --- smithies only and a smithy's marker index stays its slot. Smithy spots always exist, so a smithy marker left in a save still resolves.
 --- Whether their markers show follows the Enable Smithies setting, see `SmithyEventDelegate:sync_markers`. A zone, or a list in it, that
 --- coordinates.lua leaves out counts as empty: the spot map only writes the lists it fills.
---- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays, or nil for a zone with none.
+--- @param points_of_interest_data table A keyed table with smithies and taverns arrays, or nil for a zone with none.
 function PointOfInterestDelegate:initialize(points_of_interest_data)
     local data = points_of_interest_data or {}
     self:initialize_smithies(data["smithies"] or {})
-    self:initialize_resources(data["resources"] or {})
 end
 
---- Creates a SmithySpot for each entry in `smithies_data`. The player never starts as the owner.
+--- Creates a SmithySpot for each entry in `smithies_data`. Smithy ownership lives in features/smithy.lua.
 --- @param smithies_data table An array of { coordinates, initial_owner, owner_if_player } records.
 function PointOfInterestDelegate:initialize_smithies(smithies_data)
     self.points_of_interest = {}
@@ -649,31 +564,11 @@ function PointOfInterestDelegate:initialize_smithies(smithies_data)
         for i=1, #smithies_data do
             local spot = Spot:new()
             spot:initialize_from_coordinates(i, smithies_data[i].coordinates)
-
-            local initial_owner = ""
-            if is_human_faction_name(smithies_data[i].initial_owner) then
-                initial_owner = smithies_data[i].owner_if_player
-            else
-                initial_owner = smithies_data[i].initial_owner
-            end
-
-            local smithy = SmithySpot:new_from_coordinates(spot, i, initial_owner)
+            local smithy = SmithySpot:new_from_coordinates(spot)
             table.insert(self.points_of_interest, smithy)
         end
     end
 end
-
-
---- Placeholder for future resource POI initialization. ResourceSpot is not implemented yet.
---- @param resources_data table An array of resource POI records. Currently iterated only as a no-op.
-function PointOfInterestDelegate:initialize_resources(resources_data)
-    if #resources_data > 0 then
-        for i=1, #resources_data do
-            --TODO table.insert(self.points_of_interest, ResourceSpot:newFrom(resources_data[i]))
-        end
-    end
-end
-
 
 --- Restores per-POI state from a previously saved campaign. New POIs added since the save are left at their fresh defaults.
 --- @param zone_name string The region key for the zone being restored.
@@ -745,11 +640,10 @@ function Zone:deactivate_spot_in_zone(spot_index)
 end
 
 
---- Initializes the zone's POIs (smithies / taverns / resources) from the configured coordinates.
---- @param points_of_interest_data table A keyed table with smithies, taverns, and resources arrays.
---- @param mctSettings table Live MCT settings forwarded to the POI delegate (legacy parameter, currently unused).
-function Zone:initialize_points_of_interest(points_of_interest_data, mctSettings)
-    self.point_of_interest_delegate:initialize(points_of_interest_data, mctSettings)
+--- Initializes the zone's POIs (smithies) from the configured coordinates.
+--- @param points_of_interest_data table A keyed table with smithies and taverns arrays.
+function Zone:initialize_points_of_interest(points_of_interest_data)
+    self.point_of_interest_delegate:initialize(points_of_interest_data)
 end
 
 
@@ -778,12 +672,7 @@ end
 
 return {
     Spot = Spot,
-    EmitterSpot = EmitterSpot,
-    DungeonSpot = DungeonSpot,
     EventSpot = EventSpot,
-    InvasionSpot = InvasionSpot,
-    ResourceSpot = ResourceSpot,
-    RiftSpot = RiftSpot,
     SmithySpot = SmithySpot,
     TavernSpot = TavernSpot,
     TowerSpot = TowerSpot,

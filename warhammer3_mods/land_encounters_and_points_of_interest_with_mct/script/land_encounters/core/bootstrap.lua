@@ -71,7 +71,6 @@ function LandEncounterManager:update_land_encounters()
     for i = 1, #self.zones do
         local current_zone = self.zones[i]
         current_zone:update_occupied_and_prohibited_spot_states()
-        --- TODO add POI controller logic
         self:populate_zone(current_zone)
     end
 end

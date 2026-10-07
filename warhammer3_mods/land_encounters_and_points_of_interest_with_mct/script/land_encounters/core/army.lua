@@ -109,7 +109,7 @@ function Army:randomize_army_composition_and_declare(random_army_manager)
 end
 
 
---- Picks a concrete lord subtype and level from the pool, and whether the lord is legendary. Names, ancillaries, and traits are
+--- Picks a concrete lord subtype and level from the pool, and whether the lord is legendary. Names and ancillaries are
 --- not generated in the randomization-only pipeline - they keep their empty defaults that
 --- create_from sets on the lord table.
 function Army:randomize_lord()
@@ -278,7 +278,6 @@ function Army:create_from(force)
             family_name = "",
             other_name = "",
             ancillaries = {},
-            trait = nil,
         },
         reinforcing_ally_armies = {},
         reinforcing_enemy_armies = {},

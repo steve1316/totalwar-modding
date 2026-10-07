@@ -11,8 +11,7 @@ EVENT_IMAGE_ID_LOCATION_OF_INTEREST = 1017
 
 --- Prefixes the message with the LEAPOI mod tag and writes it to the campaign log.
 --- @param text any The value to log. Coerced to a string via tostring().
---- @param test any Unused legacy parameter kept for backwards compatibility.
-function log(text, test)
+function log(text)
     local mod_header_text = "LEAPOI";
     local logText = tostring(text)
     local logContext = tostring(mod_header_text)

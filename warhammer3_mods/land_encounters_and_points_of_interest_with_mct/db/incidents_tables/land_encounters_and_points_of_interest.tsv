@@ -50,7 +50,6 @@ land_enc_incident_battle_won_daemonic_gift_dark_princes_paramour	false	hellebron
 land_enc_incident_battle_won_daemonic_gift_dark_princes_paramour_granted	false	ai_enters_slaanesh_realm	false	Event		false		0.0000	false
 land_enc_incident_battle_won_daemonic_gift_dark_princes_paramour_already_granted	false	ai_enters_slaanesh_realm	false	Event		false		0.0000	false
 land_enc_incident_battle_avoided_daemonic_gift_slaanesh	false	ai_enters_slaanesh_realm	false	Event		false		0.0000	false
-land_enc_incident_clean_up_event	false	story_panels/chd_pet_knowledge	false	Event		false		0.0000	false
 land_enc_incident_battle_clean_up_event	false	army_morale_up	false	Event		false		0.0000	false
 land_enc_incident_smithy_tribute	false	messenger	false	Event		false		0.0000	false
 land_enc_incident_battle_won_incursion_neutral	false	carnage_charge	false	Event		false		0.0000	false

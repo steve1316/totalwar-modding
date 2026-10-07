@@ -103,7 +103,6 @@ function M.register()
     --- Battle-spot dilemma choice. Fires when the player picks an option on a battle-spot dilemma,
     --- e.g. wh2_dlc11_cst_vampire_coast_encounters. Context fields (dilemma, choice, faction, etc.)
     --- are documented at https://chadvandy.github.io/tw_modding_resources/WH3/scripting_doc.html#DilemmaChoiceMadeEvent.
-    --- TODO: a future resource spot type will reuse this dispatcher.
     core:add_listener(
         "land_enc_battle_dilemma_choice",
         "DilemmaChoiceMadeEvent",
@@ -239,61 +238,6 @@ function M.register()
         end,
         true
     )
-
-
-    --[[ LINK TO OTHER MODS --]]
-    --[[
-        TODO: MCT related logic. Uncomment when ready
-    --]]
-    --[[
-    core:add_listener(
-        "land_encounter_mct_options",
-        "MctInitialized",
-        true,
-        function(context)
-            local mct = context:mct()
-            local mct_mod = mct:get_mod_by_key("land_encounters")
-
-            local encounter_start_option = mct_mod:get_option_by_key("encounter_start")
-            local start_num = encounter_start_option:get_finalized_setting()
-
-            encounter_start_option:set_uic_locked(true, "Can only change this option before starting a new campaign.")
-
-            encounter_number_start = start_num
-        end,
-        true
-    )
-    --]]
-
-    --- FOR DEBUGGING PURPOSES ONLY
-    --core:add_listener(
-    --	"land_enc_and_poi_incident_occured_event",
-    --	"IncidentOccuredEvent",
-    ---    function(context)
-    ---        out("LEAPOI - land_enc_and_poi_incident_occured_event current incident=" .. context:dilemma() .. ", for faction=" .. context:faction():name())
-    ---        return false
-    ---    end,
-    --	function(context)
-            --cm:force_winds_of_magic_change(province:key(), "wom_strength_4")
-    --	end,
-    --	IS_PERSISTENT_LISTENER
-    --)
-
-    --- FOR DEBUGGING PURPOSES ONLY
-    --- core:add_listener(
-    ---     "land_enc_and_poi_faction_gained_ancillary",
-    ---     "FactionGainedAncillary",
-    ---     function(context)
-    ---         out("LEAPOI - land_enc_and_poi_faction_gained_ancillary ancillary:" .. context:ancillary() .. " for faction:" .. context:faction():name())
-
-    ---         return false
-    ---     end,
-    ---     function(context)
-            --- Has to check if twice
-    ---        context:faction():ancillary_exists(context:ancillary())
-    ---    end,
-    ---    IS_PERSISTENT_LISTENER
-    --- )
 end
 
 return M

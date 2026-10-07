@@ -550,25 +550,3 @@ out("DEBUG - enabled supported mods: ")
 for _, mod in ipairs(get_mct_settings().enabled_mods) do
     out("DEBUG - " .. mod)
 end
-
---- TODO: If a MCT List is ever implemented, we can uncomment this. For now, it would display some of the items but it will put everything else into a tooltip when it gets too long and the tooltip itself will overflow vertically past the screen.
---- local enabled_supported_mods_section = mct_mod:add_new_section("enabled_supported_mods_section")
---- enabled_supported_mods_section:set_localised_text("Enabled Mods that are Supported", true)
---- enabled_supported_mods_section:set_description("This section lists all the mods that are currently enabled in your load order and supported by the new randomized encounter force generation system.")
---- enabled_supported_mods_section:assign_to_page(second_page)
-
---- -- Create the list of enabled mods that are supported.
---- out("DEBUG - enabled_mods: " .. table.concat(get_mct_settings().enabled_mods, ", "))
---- local key = "dummy_enabled_mod_compatibility_list"
---- local dummy_option = mct_mod:add_new_option(key, "dummy")
---- local text = "Enabled Mods that are Supported:\n"
---- if get_mct_settings().enabled_mods and #get_mct_settings().enabled_mods > 0 then
----     -- Add a new line for each mod.
----     for _, mod in ipairs(get_mct_settings().enabled_mods) do
----         text = text .. "\n" .. mod
----     end
---- else
----     text = text .. "\n" .. "None of the currently enabled mods are supported by this system."
---- end
---- dummy_option:set_text(text, true)
---- dummy_option:set_assigned_section("enabled_supported_mods_section")

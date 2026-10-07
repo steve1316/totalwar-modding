@@ -51,15 +51,6 @@ local faction_shorthand_key_to_full_key = {
     emp = "wh_main_emp_empire_qb1",
     grn = "wh_main_grn_greenskins_qb1",
     vmp = "wh_main_vmp_vampire_counts_qb1",
-    --- teb = "wh_main_teb_border_princes_rebels",
-    --- mar = "wh_main_emp_marienburg_rebels",
-    --- dmd = "wh3_dlc21_vmp_jiangshi_rebels",
-    --- jbv = "mixer_vmp_the_curse_of_nongchang_rebels", -- This is custom for Land Encounters.
-    --- nag = "mixer_nag_nagash_rebels", -- This is custom for Land Encounters.
-    --- alb = "ovn_alb_rebel",
-    --- arb = "ovn_arb_araby_rebels",
-    --- dk = "ovn_tmb_dread_king_rebels", -- This is custom for Land Encounters.
-    --- fim = "ovn_fim_fimir_rebel",
 }
 
 --- Recursively prints any Lua value to `out()` for debugging.
@@ -246,8 +237,8 @@ function convert_force_makeup_to_usable_format(difficulty, force_makeup, faction
         intervention_type = intervention_type,
         archetype = force_makeup.archetype,
         --- The lord pool is now a flat record. The randomization-only pipeline picks a single
-        --- agent_subtype up front and a level within the difficulty's lord_level_range. Names,
-        --- ancillaries, and traits are not generated for randomized lords - they default to
+        --- agent_subtype up front and a level within the difficulty's lord_level_range. Names
+        --- and ancillaries are not generated for randomized lords - they default to
         --- empty strings / empty tables in Army:create_from.
         lord = {
             agent_subtype = force_makeup.lord.agent_subtype,
@@ -834,10 +825,9 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                 IS_NOT_PERSISTENT_LISTENER
             )
 
-            --- Apply lord trait + ancillaries on a short delay so the general object exists.
+            --- Apply lord ancillaries and name on a short delay so the general object exists.
             cm:callback(
                 function()
-                    self:try_add_trait_to_invading_lord(invasion_force:get_general())
                     self:try_add_ancillaries_to_invading_lord(invasion_force:get_general())
                     self:try_name_legendary_lord(invasion_force:get_general())
                 end,
@@ -905,16 +895,6 @@ function InvasionBattleManager:weaken_invasion_force(force, army)
     if champion then
         cm:set_unit_hp_to_unary_of_maximum(champion, sabotage.champion_strength)
         out("LEAPOI: the enemy's champion " .. champion:unit_key() .. " starts at " .. sabotage.champion_strength * 100 .. "% strength")
-    end
-end
-
---- Applies the encounter lord's trait (if any) to the invasion general.
---- @param invasion_general character The newly spawned invasion general.
-function InvasionBattleManager:try_add_trait_to_invading_lord(invasion_general)
-    local lord_lookup = cm:char_lookup_str(invasion_general)
-    local lord_trait = self.event_army.lord.trait
-    if lord_trait ~= nil then
-        cm:force_add_trait(lord_lookup, lord_trait, false , 1)
     end
 end
 
