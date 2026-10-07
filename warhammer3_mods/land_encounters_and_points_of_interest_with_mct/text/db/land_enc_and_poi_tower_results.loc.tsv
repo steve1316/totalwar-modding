@@ -6,7 +6,7 @@ campaign_localised_strings_string_land_enc_tower_result_send_a_runner	[[col:yell
 campaign_localised_strings_string_land_enc_tower_result_tower_vault	[[col:yellow]]Tower Vault:[[/col]] [[col:green]]%s[[/col]] joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_tower_dividends	[[col:yellow]]Tower Dividends:[[/col]] [[col:green]]+%s gold[[/col]] will reach our treasury each turn for the next %s turns.	false
 campaign_localised_strings_string_land_enc_tower_result_strip_the_dead	[[col:yellow]]Strip the Dead:[[/col]] [[col:green]]+%s gold[[/col]] joins the haul. The haul now holds [[col:yellow]]%s gold[[/col]].	false
-campaign_localised_strings_string_land_enc_tower_result_tithe	[[col:yellow]]Tithe:[[/col]] %s gold from our treasury becomes [[col:green]]%s gold[[/col]] in the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_tithe	[[col:yellow]]Expedition Levy:[[/col]] %s gold from our treasury becomes [[col:green]]%s gold[[/col]] in the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_rites	[[col:yellow]]Roll the Bones:[[/col]] [[col:green]]war rites![[/col]] The army fights the next floor with War Rites on it.	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_gold	[[col:yellow]]Roll the Bones:[[/col]] [[col:green]]+%s gold[[/col]] joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_foe	[[col:yellow]]Roll the Bones:[[/col]] [[col:red]]the next army is 20%% stronger.[[/col]]	false

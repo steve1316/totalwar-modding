@@ -76,9 +76,9 @@ scripted_objectives_localised_text_land_enc_tower_buff_tower_champion	[[col:red]
 scripted_objectives_localised_description_land_enc_tower_buff_tower_champion		false
 scripted_objectives_localised_text_land_enc_tower_buff_tower_champion_message	Tower Champion: a legendary lord leads the enemy.	false
 scripted_objectives_localised_description_land_enc_tower_buff_tower_champion_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain	[[col:red]]Kill the Captain: the enemy has no heroes.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain	[[col:red]]Kill the Lieutenants: the enemy has no heroes.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain		false
-scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain_message	Kill the Captain: the enemy has no heroes.	false
+scripted_objectives_localised_text_land_enc_tower_buff_kill_the_captain_message	Kill the Lieutenants: the enemy has no heroes.	false
 scripted_objectives_localised_description_land_enc_tower_buff_kill_the_captain_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_lower_tiers_only	[[col:red]]Lower Tiers Only: the enemy has tier 1-2 units only.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_lower_tiers_only		false
@@ -292,17 +292,17 @@ scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_hard
 scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_hard_message	Quartermaster's Cache: +75% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 35% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_hard_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy	[[col:green]]Drill Sergeant: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy	[[col:green]]Hard Drills: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_easy		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy_message	Drill Sergeant: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy_message	Hard Drills: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_easy_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium	[[col:green]]Drill Sergeant: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium	[[col:green]]Hard Drills: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_medium		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium_message	Drill Sergeant: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium_message	Hard Drills: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_medium_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard	[[col:green]]Drill Sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard	[[col:green]]Hard Drills: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_hard		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard_message	Drill Sergeant: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard_message	Hard Drills: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_easy	[[col:green]]Iron Resolve: +10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_easy		false

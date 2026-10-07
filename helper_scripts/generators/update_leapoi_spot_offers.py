@@ -239,7 +239,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "bribe_the_guards": ("Bribe the Guards", PAY + "bribe their guards: the enemy army is [[col:green]]{weaker}% weaker[[/col]]."),
     "thin_the_ranks": ("Thin the Ranks", PAY + "thin their ranks: the enemy army fields [[col:green]]{fewer_units} fewer units[[/col]]."),
     "poison_the_stores": ("Poison the Stores", PAY + "poison their stores: enemy units start at [[col:green]]{strength}% strength[[/col]]."),
-    "kill_the_captain": ("Kill the Captain", PAY + "kill their captain: the enemy army has [[col:green]]no heroes[[/col]]."),
+    "kill_the_captain": ("Kill the Lieutenants", PAY + "kill their lieutenants: the enemy army has [[col:green]]no heroes[[/col]]."),
     "lower_tiers_only": ("Keep the Veterans Away", PAY + "keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]]."),
     "strip_monsters": ("Cull the Beasts", PAY + "cull their beasts: the enemy army fields [[col:green]]no monsters or war beasts[[/col]]."),
     "strip_cavalry": ("Scatter the Herds", PAY + "scatter their riders: the enemy army fields [[col:green]]no cavalry or chariots[[/col]]."),
@@ -268,7 +268,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "fire_kissed_blades": ("Fire-Kissed Blades", PAY + "pass our blades through the braziers: [[col:green]]flaming attacks[[/col]] for every unit in this battle."),
     "iron_resolve": ("Iron Resolve", PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership and "
                      "[[col:green]]immunity to fear and terror[[/col]] in this battle."),
-    "drill_sergeant": ("Drill Sergeant", PAY + "drive the army through hard drills: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed and "
+    "drill_sergeant": ("Hard Drills", PAY + "drive the army through hard drills: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed and "
                        "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]] charge bonus in this battle."),
     "call_the_winds": ("Call the Winds", PAY + "call the winds: [[col:green]]+{e0} Winds of Magic[[/col]] reserve in this battle."),
     "quartermasters_cache": ("Quartermaster's Cache", PAY + "raid the quartermaster's stores: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] "

@@ -196,6 +196,106 @@ campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_1	Commi
 campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_2	Commission [[col:green]]a rare masterwork[[/col]] from the master blacksmith.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_3	Commission [[col:green]]a pair of rare masterworks[[/col]] from the master blacksmith.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_legendary	Commission [[col:green]]a unique piece[[/col]], one of the legendary items our faction can wield.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_1	Deadline: [[col:yellow]]1 turn[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_1	Deadline: [[col:yellow]]1 turn[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_2	Deadline: [[col:yellow]]2 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_2	Deadline: [[col:yellow]]2 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_3	Deadline: [[col:yellow]]3 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_3	Deadline: [[col:yellow]]3 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_4	Deadline: [[col:yellow]]4 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_4	Deadline: [[col:yellow]]4 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_5	Deadline: [[col:yellow]]5 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_5	Deadline: [[col:yellow]]5 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_6	Deadline: [[col:yellow]]6 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_6	Deadline: [[col:yellow]]6 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_7	Deadline: [[col:yellow]]7 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_7	Deadline: [[col:yellow]]7 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_8	Deadline: [[col:yellow]]8 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_8	Deadline: [[col:yellow]]8 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_9	Deadline: [[col:yellow]]9 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_9	Deadline: [[col:yellow]]9 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_10	Deadline: [[col:yellow]]10 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_10	Deadline: [[col:yellow]]10 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_11	Deadline: [[col:yellow]]11 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_11	Deadline: [[col:yellow]]11 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_12	Deadline: [[col:yellow]]12 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_12	Deadline: [[col:yellow]]12 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_13	Deadline: [[col:yellow]]13 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_13	Deadline: [[col:yellow]]13 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_14	Deadline: [[col:yellow]]14 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_14	Deadline: [[col:yellow]]14 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_15	Deadline: [[col:yellow]]15 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_15	Deadline: [[col:yellow]]15 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_16	Deadline: [[col:yellow]]16 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_16	Deadline: [[col:yellow]]16 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_17	Deadline: [[col:yellow]]17 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_17	Deadline: [[col:yellow]]17 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_18	Deadline: [[col:yellow]]18 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_18	Deadline: [[col:yellow]]18 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_19	Deadline: [[col:yellow]]19 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_19	Deadline: [[col:yellow]]19 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_20	Deadline: [[col:yellow]]20 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_20	Deadline: [[col:yellow]]20 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_21	Deadline: [[col:yellow]]21 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_21	Deadline: [[col:yellow]]21 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_22	Deadline: [[col:yellow]]22 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_22	Deadline: [[col:yellow]]22 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_23	Deadline: [[col:yellow]]23 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_23	Deadline: [[col:yellow]]23 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_24	Deadline: [[col:yellow]]24 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_24	Deadline: [[col:yellow]]24 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_25	Deadline: [[col:yellow]]25 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_25	Deadline: [[col:yellow]]25 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_26	Deadline: [[col:yellow]]26 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_26	Deadline: [[col:yellow]]26 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_27	Deadline: [[col:yellow]]27 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_27	Deadline: [[col:yellow]]27 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_28	Deadline: [[col:yellow]]28 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_28	Deadline: [[col:yellow]]28 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_29	Deadline: [[col:yellow]]29 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_29	Deadline: [[col:yellow]]29 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_30	Deadline: [[col:yellow]]30 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_30	Deadline: [[col:yellow]]30 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_31	Deadline: [[col:yellow]]31 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_31	Deadline: [[col:yellow]]31 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_32	Deadline: [[col:yellow]]32 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_32	Deadline: [[col:yellow]]32 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_33	Deadline: [[col:yellow]]33 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_33	Deadline: [[col:yellow]]33 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_34	Deadline: [[col:yellow]]34 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_34	Deadline: [[col:yellow]]34 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_35	Deadline: [[col:yellow]]35 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_35	Deadline: [[col:yellow]]35 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_36	Deadline: [[col:yellow]]36 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_36	Deadline: [[col:yellow]]36 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_37	Deadline: [[col:yellow]]37 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_37	Deadline: [[col:yellow]]37 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_38	Deadline: [[col:yellow]]38 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_38	Deadline: [[col:yellow]]38 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_39	Deadline: [[col:yellow]]39 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_39	Deadline: [[col:yellow]]39 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_40	Deadline: [[col:yellow]]40 turns[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_40	Deadline: [[col:yellow]]40 turns[[/col]] for each step.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_6	[[col:red]]The keeper will not serve us again for 6 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_6	[[col:red]]The hall will not deal with us again for 6 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_7	[[col:red]]The keeper will not serve us again for 7 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_7	[[col:red]]The hall will not deal with us again for 7 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_8	[[col:red]]The keeper will not serve us again for 8 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_8	[[col:red]]The hall will not deal with us again for 8 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_9	[[col:red]]The keeper will not serve us again for 9 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_9	[[col:red]]The hall will not deal with us again for 9 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_10	[[col:red]]The keeper will not serve us again for 10 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_10	[[col:red]]The hall will not deal with us again for 10 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_11	[[col:red]]The keeper will not serve us again for 11 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_11	[[col:red]]The hall will not deal with us again for 11 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_12	[[col:red]]The keeper will not serve us again for 12 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_12	[[col:red]]The hall will not deal with us again for 12 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_13	[[col:red]]The keeper will not serve us again for 13 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_13	[[col:red]]The hall will not deal with us again for 13 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_14	[[col:red]]The keeper will not serve us again for 14 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_14	[[col:red]]The hall will not deal with us again for 14 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_15	[[col:red]]The keeper will not serve us again for 15 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_15	[[col:red]]The hall will not deal with us again for 15 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_tavern_back	Go back to the common room.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_unaffordable	[[col:red]]We cannot afford this.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_taken	[[col:red]]Already taken.[[/col]]	false
@@ -717,9 +817,9 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_thin_the_ranks_hard	
 campaign_payload_ui_details_description_dummy_land_enc_spot_poison_the_stores_easy	Pay [[col:yellow]]2000 gold[[/col]] from our treasury to poison their stores: enemy units start at [[col:green]]85% strength[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_poison_the_stores_medium	Pay [[col:yellow]]2500 gold[[/col]] from our treasury to poison their stores: enemy units start at [[col:green]]75% strength[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_poison_the_stores_hard	Pay [[col:yellow]]3000 gold[[/col]] from our treasury to poison their stores: enemy units start at [[col:green]]65% strength[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_kill_the_captain_easy	Pay [[col:yellow]]2000 gold[[/col]] from our treasury to kill their captain: the enemy army has [[col:green]]no heroes[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_kill_the_captain_medium	Pay [[col:yellow]]2000 gold[[/col]] from our treasury to kill their captain: the enemy army has [[col:green]]no heroes[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_kill_the_captain_hard	Pay [[col:yellow]]2000 gold[[/col]] from our treasury to kill their captain: the enemy army has [[col:green]]no heroes[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_kill_the_captain_easy	Pay [[col:yellow]]2000 gold[[/col]] from our treasury to kill their lieutenants: the enemy army has [[col:green]]no heroes[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_kill_the_captain_medium	Pay [[col:yellow]]2000 gold[[/col]] from our treasury to kill their lieutenants: the enemy army has [[col:green]]no heroes[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_kill_the_captain_hard	Pay [[col:yellow]]2000 gold[[/col]] from our treasury to kill their lieutenants: the enemy army has [[col:green]]no heroes[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_lower_tiers_only_easy	Pay [[col:yellow]]2500 gold[[/col]] from our treasury to keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_lower_tiers_only_medium	Pay [[col:yellow]]3000 gold[[/col]] from our treasury to keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_lower_tiers_only_hard	Pay [[col:yellow]]3500 gold[[/col]] from our treasury to keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]].	false
@@ -1231,103 +1331,3 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_3_
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_easy	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_medium	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_result_wound_paid_5_hard	[[col:red]]Our lord is wounded for 5 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_1	Deadline: [[col:yellow]]1 turn[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_1	Deadline: [[col:yellow]]1 turn[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_2	Deadline: [[col:yellow]]2 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_2	Deadline: [[col:yellow]]2 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_3	Deadline: [[col:yellow]]3 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_3	Deadline: [[col:yellow]]3 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_4	Deadline: [[col:yellow]]4 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_4	Deadline: [[col:yellow]]4 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_5	Deadline: [[col:yellow]]5 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_5	Deadline: [[col:yellow]]5 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_6	Deadline: [[col:yellow]]6 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_6	Deadline: [[col:yellow]]6 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_7	Deadline: [[col:yellow]]7 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_7	Deadline: [[col:yellow]]7 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_8	Deadline: [[col:yellow]]8 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_8	Deadline: [[col:yellow]]8 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_9	Deadline: [[col:yellow]]9 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_9	Deadline: [[col:yellow]]9 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_10	Deadline: [[col:yellow]]10 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_10	Deadline: [[col:yellow]]10 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_11	Deadline: [[col:yellow]]11 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_11	Deadline: [[col:yellow]]11 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_12	Deadline: [[col:yellow]]12 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_12	Deadline: [[col:yellow]]12 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_13	Deadline: [[col:yellow]]13 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_13	Deadline: [[col:yellow]]13 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_14	Deadline: [[col:yellow]]14 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_14	Deadline: [[col:yellow]]14 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_15	Deadline: [[col:yellow]]15 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_15	Deadline: [[col:yellow]]15 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_16	Deadline: [[col:yellow]]16 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_16	Deadline: [[col:yellow]]16 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_17	Deadline: [[col:yellow]]17 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_17	Deadline: [[col:yellow]]17 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_18	Deadline: [[col:yellow]]18 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_18	Deadline: [[col:yellow]]18 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_19	Deadline: [[col:yellow]]19 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_19	Deadline: [[col:yellow]]19 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_20	Deadline: [[col:yellow]]20 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_20	Deadline: [[col:yellow]]20 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_21	Deadline: [[col:yellow]]21 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_21	Deadline: [[col:yellow]]21 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_22	Deadline: [[col:yellow]]22 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_22	Deadline: [[col:yellow]]22 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_23	Deadline: [[col:yellow]]23 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_23	Deadline: [[col:yellow]]23 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_24	Deadline: [[col:yellow]]24 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_24	Deadline: [[col:yellow]]24 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_25	Deadline: [[col:yellow]]25 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_25	Deadline: [[col:yellow]]25 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_26	Deadline: [[col:yellow]]26 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_26	Deadline: [[col:yellow]]26 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_27	Deadline: [[col:yellow]]27 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_27	Deadline: [[col:yellow]]27 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_28	Deadline: [[col:yellow]]28 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_28	Deadline: [[col:yellow]]28 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_29	Deadline: [[col:yellow]]29 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_29	Deadline: [[col:yellow]]29 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_30	Deadline: [[col:yellow]]30 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_30	Deadline: [[col:yellow]]30 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_31	Deadline: [[col:yellow]]31 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_31	Deadline: [[col:yellow]]31 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_32	Deadline: [[col:yellow]]32 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_32	Deadline: [[col:yellow]]32 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_33	Deadline: [[col:yellow]]33 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_33	Deadline: [[col:yellow]]33 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_34	Deadline: [[col:yellow]]34 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_34	Deadline: [[col:yellow]]34 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_35	Deadline: [[col:yellow]]35 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_35	Deadline: [[col:yellow]]35 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_36	Deadline: [[col:yellow]]36 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_36	Deadline: [[col:yellow]]36 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_37	Deadline: [[col:yellow]]37 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_37	Deadline: [[col:yellow]]37 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_38	Deadline: [[col:yellow]]38 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_38	Deadline: [[col:yellow]]38 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_39	Deadline: [[col:yellow]]39 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_39	Deadline: [[col:yellow]]39 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_40	Deadline: [[col:yellow]]40 turns[[/col]].	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_40	Deadline: [[col:yellow]]40 turns[[/col]] for each step.	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_6	[[col:red]]The keeper will not serve us again for 6 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_6	[[col:red]]The hall will not deal with us again for 6 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_7	[[col:red]]The keeper will not serve us again for 7 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_7	[[col:red]]The hall will not deal with us again for 7 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_8	[[col:red]]The keeper will not serve us again for 8 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_8	[[col:red]]The hall will not deal with us again for 8 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_9	[[col:red]]The keeper will not serve us again for 9 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_9	[[col:red]]The hall will not deal with us again for 9 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_10	[[col:red]]The keeper will not serve us again for 10 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_10	[[col:red]]The hall will not deal with us again for 10 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_11	[[col:red]]The keeper will not serve us again for 11 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_11	[[col:red]]The hall will not deal with us again for 11 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_12	[[col:red]]The keeper will not serve us again for 12 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_12	[[col:red]]The hall will not deal with us again for 12 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_13	[[col:red]]The keeper will not serve us again for 13 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_13	[[col:red]]The hall will not deal with us again for 13 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_14	[[col:red]]The keeper will not serve us again for 14 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_14	[[col:red]]The hall will not deal with us again for 14 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_15	[[col:red]]The keeper will not serve us again for 15 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_15	[[col:red]]The hall will not deal with us again for 15 turns.[[/col]]	false
