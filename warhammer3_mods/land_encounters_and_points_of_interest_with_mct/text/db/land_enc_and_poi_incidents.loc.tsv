@@ -7,12 +7,12 @@ incidents_localised_description_land_enc_incident_abandoned_camp	Our vanguard fi
 incidents_localised_title_land_enc_incident_buried_relics	Buried Relics	false
 incidents_localised_description_land_enc_incident_buried_relics	A strange noise draws our scouts to a ruined village, where a passage opens beneath the old meeting hall. Inside lies a forgotten cache, and among the dust and bones is one prize worth the taking.	false
 incidents_localised_title_land_enc_incident_hidden_temple	Hidden Temple	false
-incidents_localised_description_land_enc_incident_hidden_temple	Deep in the ruins of an old city stands a temple untouched by time. Our lord keeps vigil there for a night and a day, and leaves with a quiet sense of protection that settles over the whole army.	false
+incidents_localised_description_land_enc_incident_hidden_temple	Deep in the ruins of an old city, one temple still has its roof and its doors. Our lord keeps vigil there for a night and a day, and walks out with a calm that settles over the whole army like a ward.	false
 incidents_localised_title_land_enc_incident_caravan_remnants	Caravan Remnants	false
 incidents_localised_description_land_enc_incident_caravan_remnants	Smoke rises not far from our camp. Our scouts find a caravan attacked but not fully sacked, its guards dead and its raiders long gone, and what they left behind is ours now.	false
 incidents_localised_title_land_enc_incident_legendary_bard	Legendary Bard Rescued	false
 incidents_localised_description_land_enc_incident_legendary_bard	A desperate rider begs us to save their village from a slaver raid. We arrive in time, and among the freed captives is a famous bard, who promises to sing of our deeds in every hall and market across the land.	false
-incidents_localised_title_land_enc_incident_whispers_of_the_gods	Whispers of Our God	false
+incidents_localised_title_land_enc_incident_whispers_of_the_gods	A Voice in the Dream	false
 incidents_localised_description_land_enc_incident_whispers_of_the_gods	Our lord's sleep is broken by a dream more vivid than any waking hour. A voice speaks of strength and of trials to come, and by morning the whole army fights as if nothing in the world could break it.	false
 incidents_localised_title_land_enc_incident_battle_won_skirmish	Challenge Won	false
 incidents_localised_title_land_enc_incident_the_explorer	The Explorers	false
@@ -25,71 +25,71 @@ incidents_localised_description_land_enc_incident_battle_won_underground	The nas
 incidents_localised_title_land_enc_incident_battle_avoided_underground	A Band Of Weaklings Ignored	false
 incidents_localised_description_land_enc_incident_battle_avoided_underground	Our general laughs in their faces. We leave the camp of weaklings without laying a finger on them. They scatter quickly and desperately as we move away, the mere threat of our presence enough to cure their reckless stupidity.	false
 incidents_localised_title_land_enc_incident_battle_won_bandits	Defeated Bandits	false
-incidents_localised_description_land_enc_incident_battle_won_bandits	Dust settles on the battlefield. The members of the bandit regiment lie dead or captured on the field. None of them will ever see the light of day or trouble our empire again. By torturing their leader, we discovered their lair and took everything they stole to aid the empire's war effort.	false
+incidents_localised_description_land_enc_incident_battle_won_bandits	Dust settles over the field, and the bandits lie dead or in chains. Under the knife their leader gives up the lair, and everything his band ever stole now goes to our war effort.	false
 incidents_localised_title_land_enc_incident_battle_avoided_bandits	An Uneventful Night	false
 incidents_localised_description_land_enc_incident_battle_avoided_bandits	Come morning there are no more strange noises in the surroundings, just the expected sounds of the road. The advance party reports that behind the hill are the remains of a recently vacated camp. The bandits may have chosen not to attack at night due to the heavy guard posted by the general and the clear defensive position of the army. Maybe dodging them was for our own good?	false
 incidents_localised_title_land_enc_incident_battle_won_incursion_hef	Cropped Ears	false
-incidents_localised_description_land_enc_incident_battle_won_incursion_hef	The incursion has been repelled and the invaders lie dead on the battlefield. The army is motivated and takes the lessons of the battle to heart. Studying the weapons of the high elves, they learn how to better defend against arrows and hide from enemy eyes. Maybe with the help of our god it will work for a while?	false
+incidents_localised_description_land_enc_incident_battle_won_incursion_hef	The raiders lie dead where they fell, their arrows scattered through the grass. Our soldiers pick over the elven bows and cloaks, and learn how better to weather their volleys and stay hidden from their scouts. The lesson will not last forever, but it will serve us for a while.	false
 incidents_localised_title_land_enc_incident_battle_won_incursion_lzd	A Suit of Scales	false
-incidents_localised_description_land_enc_incident_battle_won_incursion_lzd	The incursion has been repelled and the invaders lie dead on the battlefield. The army is motivated and takes the lessons of the battle to heart. By studying the weapons and hides of the lizardmen, we learn how to improve our defenses and last longer in battle. Maybe with the help of our god it will work for a while?	false
+incidents_localised_description_land_enc_incident_battle_won_incursion_lzd	The lizardmen lie dead among the trampled villages, their great beasts sprawled beside them. Our soldiers study their scaled hides and stone-edged weapons, and learn how to shore up our defence and last longer in battle. It will not last, but for a while the army fights the better for it.	false
 incidents_localised_title_land_enc_incident_battle_won_incursion_vco	Drowned Twice	false
-incidents_localised_description_land_enc_incident_battle_won_incursion_vco	The incursion has been repelled and the invaders lie dead on the battlefield. The army is motivated and takes the lessons of the battle to heart. By studying the magic of the enemy, we learn a few things that could help us survive. Maybe with the help of our god it will work for a while?	false
+incidents_localised_description_land_enc_incident_battle_won_incursion_vco	The drowned invaders lie still at last, and the stink of the tide is already fading from the field. Our soldiers pick through what the enemy's sea-magic left behind and learn a few things that could help us survive. It will fade in time, but for a while it should serve us.	false
 incidents_localised_title_land_enc_incident_battle_avoided_incursion	Territorial Plunder	false
-incidents_localised_description_land_enc_incident_battle_avoided_incursion	The raiders plunder some of the riches of the land you are passing through. Although the inhabitants eventually drive them off, a wave of devastation is left across the territory. The people of your land and of this one give you the nickname "The Dishonored".	false
+incidents_localised_description_land_enc_incident_battle_avoided_incursion	The raiders plunder the lands we are marching through. The locals drive them off in the end, but a trail of ruin is left across the territory. Here and at home alike, people now call us "The Dishonoured".	false
 incidents_localised_title_land_enc_incident_battle_won_surprise_bst	The Bull By The Horns	false
-incidents_localised_description_land_enc_incident_battle_won_surprise_bst	We have surprised the beastmen, beating them on their own ground. The forest, dyed red, seems to breathe a sigh of tranquility. The soldiers are motivated after the skirmish. The world has been purged of the vermin that torment it.	false
+incidents_localised_description_land_enc_incident_battle_won_surprise_bst	We caught the beastmen on their own ground and cut them down among the trees. The forest floor is red, and for once the woods are quiet. The soldiers come out of the skirmish in high spirits.	false
 incidents_localised_title_land_enc_incident_battle_won_surprise_skv	A Rat In The Trap	false
-incidents_localised_description_land_enc_incident_battle_won_surprise_skv	Despite being masters of subterfuge, the skaven could not stop the army's quick reaction and were devastated on the spot. For all their dead, it is clear that many of them escaped. Still, beating the skaven at their own game is clearly a sign of luck. We are blessed.	false
+incidents_localised_description_land_enc_incident_battle_won_surprise_skv	The skaven are masters of the ambush, but our army turned on them so fast that they broke on the spot. Many of the ratmen escaped into their tunnels, yet the dead pile high. Beating the skaven at their own game has the soldiers sure that luck is on our side.	false
 incidents_localised_title_land_enc_incident_battle_avoided_surprise	Massacre Averted	false
 incidents_localised_description_land_enc_incident_battle_avoided_surprise	The danger past, it turns out you avoided a likely deadly ambush. The enemies, seeing that the army was rapidly retreating, could not surround it and ended up abandoning their attack.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_grn	A Green Memory	false
 incidents_localised_description_land_enc_incident_battle_won_battlefield_grn	The greenskins and their legendary leader lie on the ground, defeated and strangely content. Apparently it was a memorable battle for them. They give us a powerful artifact and tell us that they will see us again for the next battle!	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_def	A Fitting End	false
-incidents_localised_description_land_enc_incident_battle_won_battlefield_def	Dead dark elves cover the plain as far as the eye can see. There is no trace of the slaver leaders and no sign that they can regroup any time soon. In the end, the people of our empire are safe. The slavers won't be showing up around here for a while. Our soldiers find artifacts in the main leader's tent, which will be better used by our forces.	false
+incidents_localised_description_land_enc_incident_battle_won_battlefield_def	Dead dark elves cover the plain as far as the eye can see. Their slaver captains are gone, and it will be a long while before they raid these lands again. In their leader's tent our soldiers find artefacts that will serve us better than they served him.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_vmp	Broken Bloodsucker Teeth	false
 incidents_localised_description_land_enc_incident_battle_won_battlefield_vmp	The necromancer and his few remaining followers fled as if they themselves had seen a ghost. The pile of bones left behind is so high that our wizards think it will take weeks to crumble away. An incredibly luxurious carriage, filled with relics, is the only thing left intact on the battlefield. It will be put to good use by our forces.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_tmb	An Airy Tomb	false
-incidents_localised_description_land_enc_incident_battle_won_battlefield_tmb	Come morning, the reanimated bones of those who came to stop us move no more. The rest of their army, the one chasing the marauders, was lost from sight during the battle. Among the belongings of the fallen we find riches, but something tells us that taking them may be a bad idea, lest we suffer the same fate as the marauders. Still, army headquarters decides it is too good an opportunity to pass up, so we take the relics we find before continuing our march.	false
+incidents_localised_description_land_enc_incident_battle_won_battlefield_tmb	By morning the risen dead who came to stop us lie still, while the rest of their host has vanished after the marauders. Among the fallen lie relics that may carry the same curse that set the dead on those raiders. Our lord judges them worth the risk, and we take them before marching on.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_dwf	An Oath Fulfilled	false
-incidents_localised_description_land_enc_incident_battle_won_battlefield_dwf	You have helped the Slayers regain their honor. Somehow the legendary duo survived. Felix carries an unconscious Gotrek to safety while we finish off the last Slayer, for Gotrek's time has not yet come. Will Felix write about this new adventure of the dwarf? And what will he say about us?	false
+incidents_localised_description_land_enc_incident_battle_won_battlefield_dwf	We have helped the Slayers regain their honour. Somehow the legendary pair survived. Felix carries an unconscious Gotrek to safety while we finish off the last Slayer, for Gotrek's doom has not yet come. Will Felix write of this adventure, and what will he say about us?	false
 incidents_localised_title_land_enc_incident_battle_avoided_battlefield	Wise Retreat	false
 incidents_localised_description_land_enc_incident_battle_avoided_battlefield	We left behind the powerful and dangerous army that stood before us. We don't know what would have happened had we faced them, but at least we can be sure that we will live to fight another day.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_chainsword	A Gift from Khorne	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_chainsword	Skarbrand begins to fade back into the Chaos he was born from. "WORTHY!" he seems to laugh as he fades away. "KHORNE SENDS HIS BLESSINGS TO YOU." He gives you a Khorne Cache. "FOR THE BATTLES TO COME."	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_chainsword_granted	From Beyond The Warp	false
-incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_chainsword_granted	The weapon before you seems otherworldly. The blade is always moving, too fast for the eye to follow, and makes a strange sound. Bringing the moving blade close to anything seems to destroy it with great ease. It seems to feed on what you kill. Better not let anyone but your forces take possession of it. You carry it with you to prevent someone else from having it.	false
+incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_chainsword_granted	The weapon before us is not of this world. Its teeth race around the blade too fast for the eye to follow, snarling like a beast, and they chew through anything held against them. It seems to grow hungrier with every kill. Such a thing cannot be left for others to find, so our lord keeps it close.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_chainsword_already_granted	Khorne Understands You Want a Challenge	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_chainsword_already_granted	The Master of War looks upon your victory with appreciation. Khorne rewards the best warriors. Your army is reinvigorated and fortified. War calls you!	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_the_bane_spear	A Gift from Khorne	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_the_bane_spear	Valkia smiles as her last warrior falls. To the Khornate it does not matter where the blood flows, as long as it flows. She points to a stash half-hidden by the terrain near a forest. "Sooner or later you will serve. And I will delight in fighting by your side when you do." You watch her fly through the sky and disappear. Beautiful and terrible, she leaves you wondering what blessing awaits you.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_the_bane_spear_granted	The Damned Spear	false
-incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_the_bane_spear_granted	The spear before you is clearly cursed. You feel a vibrating and terrifying power. When you touch the spear, you feel it could unleash devastating power at your will. Better not let anyone but your forces take possession of it. You carry it with you to prevent someone else from having it.	false
+incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_the_bane_spear_granted	The spear before us is plainly cursed, and it thrums with a power that sets the teeth on edge. When our lord grips the shaft, it feels ready to unleash ruin at a word. No one else can be allowed to wield it, so our lord keeps it close.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_the_bane_spear_already_granted	Khorne Understands You Want a Challenge	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_the_bane_spear_already_granted	The Master of War looks upon your victory with appreciation. Khorne rewards the best warriors. Your army is reinvigorated and fortified. War calls you!	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer	A Gift from Khorne	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer	The daemons are defeated and vanish. They cannot believe their defeat as they desperately try to cling to reality. "Be'lakor will destroy me... NOOOOO!" The leader of the daemons drops a stash hidden on his back. The other daemons try to reach him, but as they get closer they burn and are quickly dispelled back into Chaos. The presence of the God of War urges you to approach the cursed treasure...	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer_granted	The Ever Regenerating Blade	false
-incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer_granted	The blade of this weapon has strange teeth all the way around it. You feel as if the weapon is alive and has accumulated the life of the things it managed to kill. Better not let anyone but your forces take possession of it. You carry it with you to prevent someone else from having it.	false
+incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer_granted	Strange teeth line the whole edge of this blade. It feels alive in the hand, as if it has kept something of every life it ever took. We will not leave it for anyone else to claim, so it travels with our lord.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer_already_granted	Khorne Understands You Want a Challenge	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_skars_kraken_killer_already_granted	The Master of War looks upon your victory with appreciation. Khorne rewards the best warriors. Your army is reinvigorated and fortified. War calls you!	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter	A Gift from Khorne	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter	Azazel smiles. With the defeat of the armies following him, he feels the sword lose its power over him. "Have it if you want it. It's useful, but I don't like something about it. Well, it was fun while it lasted. I know who I can turn to when I need to get out of trouble." He smiles at you, and you feel strangely happy to see his smile. Seeing him fly away makes you feel somehow sad. You look at the sword... maybe you could put it to some use.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_granted	The Corrupted Blade	false
-incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_granted	The sword is clearly cursed. You feel the rage marked on the blade, but at the same time you feel wildness in it. Strangely, this blade seems to be marked by two opposing gods of Chaos, which gives it an odd balance. Better not let anyone but your forces take possession of it. You carry it with you to prevent someone else from having it.	false
+incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_granted	The sword is plainly cursed. Rage is worked into the blade, yet a wild, wanton streak still runs through it, left over from the Dark Prince before the Blood God claimed it. Our lord takes it, sooner than see it fall into other hands.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_already_granted	Azazel's Prank	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_gilellions_soulnetter_already_granted	There is nothing special about this sword. It appears to be a simple sword, useful but nothing more. You hear Azazel laugh in the distance. It seems that this time the daemon did it just for fun, but your troops still welcome the experience and the loot from defeating his pursuers.	false
 incidents_localised_title_land_enc_incident_battle_avoided_daemonic_gift_khorne	A Gift from Khorne Rejected	false
-incidents_localised_description_land_enc_incident_battle_avoided_daemonic_gift_khorne	You feel Khorne's gaze intensify. You feel the violence of your heart rise and a sense of shame. You and your army shamefully avoided the challenge and now a sense of murderous desire haunts you. Your eyes are clouded with red. You should avoid battles for a while...	false
+incidents_localised_description_land_enc_incident_battle_avoided_daemonic_gift_khorne	Khorne's gaze falls heavy on our army. We turned from his challenge, and now shame and a murderous hunger gnaw at every warrior until their eyes cloud red. We should avoid battle for a while...	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_khorne_already_granted	Khorne Understands You Want a Challenge	true
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_khorne_already_granted	The Master of War looks upon your victory with appreciation. Khorne rewards the best warriors. Your army is reinvigorated and fortified. War calls you!	true
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade	A Gift from Slaanesh	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade	Sigvald flees in terror, cursing you. "Ugly creature, one day I will kill you and drink from your horrible skull!" Searching his camp, you find a stash that clearly seems to beckon you. Apparently Sigvald tried to open it, and when he couldn't, he left marks all over it in a fit of jealousy. It opens at the mere touch of your hands...	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade_granted	Slaanesh Wants Your Favour	false
-incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade_granted	A sword of unparalleled beauty lies before you. It shows none of the corruption you expected from the giver. It simply seems to have been made out of an obsession with the art of blacksmithing, in search of perfection. You test it by destroying everything in Sigvald's tent. It is not only beautiful but extremely useful. You take it with you.	false
+incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade_granted	A sword of unparalleled beauty lies before us, with none of the corruption we expected from its giver. It looks like the work of a smith obsessed with perfection and nothing else. Our lord tests it on Sigvald's tent and leaves it in ribbons, and the blade comes away without a mark. We take it with us.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade_already_granted	Slaanesh Favours You	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_slaaneshs_blade_already_granted	The Dark Prince finds you amusing. He blesses you for your strength and skill in fulfilling his desire. You feel strangely empowered. It seems he wishes you to amuse him further.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_personal_sycophant	A Gift from Slaanesh	false
-incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_personal_sycophant	N'Kari trembles, not with anger but with pleasure. "I always love a good challenge!" He moves his tongue ecstatically, licking his lips. "Enter the next room, your prize is waiting for you." He touches your face and you feel compelled to obey. As you enter the room, the castle begins to shake and slowly disappears, leaving only the room you are in. In that room you find...	false
+incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_personal_sycophant	N'Kari shivers with delight at his own defeat. "I always love a good challenge!" He licks his lips slowly. "Enter the next room, your prize is waiting for you." He touches our lord's face, and the urge to obey is overwhelming. As our lord steps inside, the castle shakes and fades away, until only that one room remains. In that room our lord finds...	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_personal_sycophant_granted	A Useful Follower	false
 incidents_localised_description_land_enc_incident_battle_won_daemonic_gift_personal_sycophant_granted	A strange man is writing in a beautiful little notebook. He has elven features, yet he also appears human, and you cannot place his race. He stops and greets you in an ostentatious manner. He shows extreme devotion to you, praising you whenever you wish and telling your troops of your greatness and glory. They seem motivated by his speeches, so you decide to take him with you on your travels.	false
 incidents_localised_title_land_enc_incident_battle_won_daemonic_gift_personal_sycophant_already_granted	Slaanesh Favours You	false
@@ -111,7 +111,7 @@ incidents_localised_description_land_enc_incident_smithy_tribute	My warmest rega
 incidents_localised_title_land_enc_incident_battle_won_incursion_neutral	Raiders Repelled	false
 incidents_localised_description_land_enc_incident_battle_won_incursion_neutral	The incursion has been repelled and the invaders lie dead on the field. What they looted is returned to the land, and the army takes the lessons of the battle to heart.	false
 incidents_localised_title_land_enc_incident_battle_won_surprise_neutral	Ambush Turned	false
-incidents_localised_description_land_enc_incident_battle_won_surprise_neutral	We turned their ambush against them and broke them on their own ground. The soldiers are in high spirits after the fight.	false
+incidents_localised_description_land_enc_incident_battle_won_surprise_neutral	They meant to catch us on the march, but our scouts spotted them first and we struck before the trap could close. The would-be ambushers are broken on their own ground, and the soldiers are in high spirits after the fight.	false
 incidents_localised_title_land_enc_incident_battle_won_battlefield_neutral	A Battle to Remember	false
 incidents_localised_description_land_enc_incident_battle_won_battlefield_neutral	The enemy army lies broken across the field. Among the spoils we find weapons and relics worth carrying into the wars to come.	false
 incidents_localised_title_land_enc_incident_battle_won_ally_beset	Shoulder to Shoulder	false
@@ -127,19 +127,19 @@ incidents_localised_description_land_enc_incident_tavern_patron_1	Our gift has b
 incidents_localised_title_land_enc_incident_tavern_patron_2	Great Patron of the Guild	false
 incidents_localised_description_land_enc_incident_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
 incidents_localised_title_land_enc_incident_smithy_patron_1	Patron of the Association	false
-incidents_localised_description_land_enc_incident_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
+incidents_localised_description_land_enc_incident_smithy_patron_1	The Association's clerks have weighed our gift and stamped our name into their ledgers. Every smithy of the Association has grown, and its masters now greet our quartermasters like old friends.	false
 incidents_localised_title_land_enc_incident_smithy_patron_2	Great Patron of the Association	false
-incidents_localised_description_land_enc_incident_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false
+incidents_localised_description_land_enc_incident_smithy_patron_2	Our name is now cut into the anvil of every smithy the Association runs, for no lord has given it more. Each one has grown to its grandest, and our orders go to the front of the queue.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_won	Cast the Lots	false
 incidents_localised_description_land_enc_incident_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
 incidents_localised_title_land_enc_incident_spot_cast_the_lots_lost	Cast the Lots	false
-incidents_localised_description_land_enc_incident_spot_cast_the_lots_lost	The lots fall against us, as they so often do for strangers. The stranger sweeps up our stake with a crooked grin and is gone before anyone thinks to argue.	false
+incidents_localised_description_land_enc_incident_spot_cast_the_lots_lost	The lots fall against us, as they so often do for newcomers. The stranger sweeps up our stake with a crooked grin and is gone before anyone thinks to argue.	false
 incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_won	Drink from the Spring	false
 incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_won	The water runs cold and clear from the rock. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
 incidents_localised_title_land_enc_incident_spot_drink_from_the_spring_lost	Drink from the Spring	false
 incidents_localised_description_land_enc_incident_spot_drink_from_the_spring_lost	The water tastes of rot and old iron. Within hours sickness spreads through the camp, and the army will march weaker for some time.	false
 incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_won	Open the Sealed Door	false
-incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours.	false
+incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart, on a bare stone plinth, lies a treasure of legend.	false
 incidents_localised_title_land_enc_incident_spot_open_the_sealed_door_lost	Open the Sealed Door	false
 incidents_localised_description_land_enc_incident_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast and carried from the chamber, badly wounded.	false
 incidents_localised_title_land_enc_incident_spot_double_or_nothing_won	Double or Nothing	false
@@ -147,7 +147,7 @@ incidents_localised_description_land_enc_incident_spot_double_or_nothing_won	The
 incidents_localised_title_land_enc_incident_spot_double_or_nothing_lost	Double or Nothing	false
 incidents_localised_description_land_enc_incident_spot_double_or_nothing_lost	The bet is called and the throw turns against us. Our stake is gone, and the house thanks us warmly for our custom.	false
 incidents_localised_title_land_enc_incident_spot_wake_the_guardian_won	Wake the Guardian	false
-incidents_localised_description_land_enc_incident_spot_wake_the_guardian_won	The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
+incidents_localised_description_land_enc_incident_spot_wake_the_guardian_won	The great beast snorts and shifts its bulk, then sinks back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
 incidents_localised_title_land_enc_incident_spot_wake_the_guardian_lost	Wake the Guardian	false
 incidents_localised_description_land_enc_incident_spot_wake_the_guardian_lost	The ground shakes as the guardian of this place rises from its slumber. It sees intruders in its lair and charges, and our army must stand and fight!	false
 incidents_localised_title_land_enc_incident_spot_touch_the_relic_blessed	Touch the Relic	false
@@ -159,7 +159,7 @@ incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_wo
 incidents_localised_title_land_enc_incident_spot_gamble_with_the_hermit_lost	Gamble with the Hermit	false
 incidents_localised_description_land_enc_incident_spot_gamble_with_the_hermit_lost	The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone.	false
 incidents_localised_title_land_enc_incident_spot_endow_the_province	Endow the Province	false
-incidents_localised_description_land_enc_incident_spot_endow_the_province	Our gold builds roads, walls and storehouses across [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. The region grows stronger and richer, and its people will remember who paid for it.	false
+incidents_localised_description_land_enc_incident_spot_endow_the_province	Our gold pays for new roads and storehouses across [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. The region grows stronger and richer, and its people know who paid for it.	false
 incidents_localised_title_land_enc_incident_spot_garrison_drill	Garrison Drill	false
 incidents_localised_description_land_enc_incident_spot_garrison_drill	Fresh supplies reach the garrison of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and its officers drill the defenders from dawn to dusk. Its walls are manned by harder soldiers now.	false
 incidents_localised_title_land_enc_incident_spot_raise_the_settlement	Raise the Settlement	false
@@ -167,17 +167,17 @@ incidents_localised_description_land_enc_incident_spot_raise_the_settlement	Buil
 incidents_localised_title_land_enc_incident_spot_quell_the_unrest	Quell the Unrest	false
 incidents_localised_description_land_enc_incident_spot_quell_the_unrest	Our soldiers walk the streets of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and the loudest troublemakers fall quiet. Order returns, for now.	false
 incidents_localised_title_land_enc_incident_spot_bountiful_harvest	Bountiful Harvest	false
-incidents_localised_description_land_enc_incident_spot_bountiful_harvest	The fields around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] groan under a bountiful harvest. The stores fill, the markets swell, and the people prosper.	false
+incidents_localised_description_land_enc_incident_spot_bountiful_harvest	The fields around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] groan under a bountiful harvest. Carts queue at the granaries for days, and the markets are busier than anyone can remember.	false
 incidents_localised_title_land_enc_incident_spot_stir_their_rebels	Stir Their Rebels	false
-incidents_localised_description_land_enc_incident_spot_stir_their_rebels	Our agents spread grievances and weapons among the malcontents of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Unrest spreads through the enemy's lands.	false
+incidents_localised_description_land_enc_incident_spot_stir_their_rebels	Our agents hand out grievances and weapons among the malcontents of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Unrest is rising across the enemy's lands.	false
 incidents_localised_title_land_enc_incident_spot_poison_their_wells	Poison Their Wells	false
 incidents_localised_description_land_enc_incident_spot_poison_their_wells	Under cover of night, our agents foul the wells of [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Sickness spreads through its people, and any army camped there will suffer for it.	false
 incidents_localised_title_land_enc_incident_spot_sap_their_garrison	Sap Their Garrison	false
-incidents_localised_description_land_enc_incident_spot_sap_their_garrison	Our saboteurs slip into [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], spoiling stores, cutting ropes and spreading sickness through the barracks. Its garrison is weakened and shaken.	false
+incidents_localised_description_land_enc_incident_spot_sap_their_garrison	Our saboteurs slip into [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], spoiling the grain stores and spreading sickness through the barracks. Its garrison is weakened and shaken.	false
 incidents_localised_title_land_enc_incident_spot_spread_the_plague	Spread the Plague	false
 incidents_localised_description_land_enc_incident_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. The plague spreads, though our own army does not escape it entirely.	false
 incidents_localised_title_land_enc_incident_spot_mystery_brew_won	Mystery Brew	false
-incidents_localised_description_land_enc_incident_spot_mystery_brew_won	The brew goes down like liquid fire and comes back up as courage. The whole army stands a little taller, and fights a little harder.	false
+incidents_localised_description_land_enc_incident_spot_mystery_brew_won	The brew goes down like liquid fire and settles in the belly as courage. By morning the whole army is spoiling for a fight.	false
 incidents_localised_title_land_enc_incident_spot_mystery_brew_lost	Mystery Brew	false
 incidents_localised_description_land_enc_incident_spot_mystery_brew_lost	Whatever was in that barrel, it was not meant for drinking. The army wakes with sore heads and slow feet, and the keeper will not say what it was.	false
 incidents_localised_title_land_enc_incident_spot_dice_with_strangers_won	Dice with Strangers	false
@@ -189,23 +189,23 @@ incidents_localised_description_land_enc_incident_spot_arm_wrestle_the_champion_
 incidents_localised_title_land_enc_incident_spot_arm_wrestle_the_champion_lost	Arm-Wrestle the Champion	false
 incidents_localised_description_land_enc_incident_spot_arm_wrestle_the_champion_lost	The champion grins, leans in, and something in our lord's arm gives way with a crack. Our lord leaves the table hurt, and the crowd cheers the champion.	false
 incidents_localised_title_land_enc_incident_spot_buy_rumours	Buy Rumours	false
-incidents_localised_description_land_enc_incident_spot_buy_rumours	The keeper leans close and talks of the roads around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] and beyond, and we will see those lands for some time yet. Of the enemy nearby: [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_detail").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_buy_rumours	The keeper leans close and talks of the roads around [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] and beyond, and of the enemy camped nearby: [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_detail").StringValue}}[[/col]]. We will see those lands for some time yet.	false
 incidents_localised_title_land_enc_incident_spot_send_gifts	Send Gifts	false
-incidents_localised_description_land_enc_incident_spot_send_gifts	Our gifts are well received at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their rulers speak of us more warmly now, and remember who remembered them.	false
+incidents_localised_description_land_enc_incident_spot_send_gifts	Our gifts are well received at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their rulers speak of us more warmly now, and our envoys are welcome at their table.	false
 incidents_localised_title_land_enc_incident_spot_spy_on_their_capital	Spy on Their Capital	false
-incidents_localised_description_land_enc_incident_spot_spy_on_their_capital	Our spies slip into [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] and map every wall and gate, and we will see its streets for some time yet. They count its garrison: [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_detail").StringValue}}[[/col]].	false
+incidents_localised_description_land_enc_incident_spot_spy_on_their_capital	Our spies slip into [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]] to map its walls and gates and count its garrison: [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_detail").StringValue}}[[/col]]. We will see its streets for some time yet.	false
 incidents_localised_title_land_enc_incident_spot_curse_a_distant_king	Curse a Distant King	false
 incidents_localised_description_land_enc_incident_spot_curse_a_distant_king	A curse falls on the treasury of the court at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their wealth dwindles, and they will never know why.	false
 incidents_localised_title_land_enc_incident_spot_share_the_find	Share the Find	false
-incidents_localised_description_land_enc_incident_spot_share_the_find	We share what we found with our neighbours, starting at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their scholars are grateful, and think better of us for it.	false
+incidents_localised_description_land_enc_incident_spot_share_the_find	We share what we found with our neighbours, starting with [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. Their scholars are grateful, and think better of us for it.	false
 incidents_localised_title_land_enc_incident_spot_point_them_at_each_other	Point Them at Each Other	false
 incidents_localised_description_land_enc_incident_spot_point_them_at_each_other	Rumours spread from [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], carefully planted by our agents. Two rivals now eye each other with suspicion.	false
 incidents_localised_title_land_enc_incident_spot_sell_their_secrets	Sell Their Secrets	false
-incidents_localised_description_land_enc_incident_spot_sell_their_secrets	The secrets fetch a fine price at [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. But word travels, and our enemies grow closer to one another.	false
+incidents_localised_description_land_enc_incident_spot_sell_their_secrets	The secrets fetch a fine price in [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]]. But word travels, and our enemies grow closer to one another.	false
 incidents_localised_title_land_enc_incident_spot_ransom_the_captain	Ransom the Captain	false
 incidents_localised_description_land_enc_incident_spot_ransom_the_captain	Their captain is ransomed back to [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_spot_result_place").StringValue}}[[/col]], and the price is paid in full. Their kin will not forget the humiliation.	false
 incidents_localised_title_land_enc_incident_spot_chase_the_routers_won	Chase the Routers	false
-incidents_localised_description_land_enc_incident_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours.	false
+incidents_localised_description_land_enc_incident_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the gear they threw away to run faster is a rare item.	false
 incidents_localised_title_land_enc_incident_spot_chase_the_routers_lost	Chase the Routers	false
 incidents_localised_description_land_enc_incident_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for a time.	false
 incidents_localised_title_land_enc_incident_spot_mission_headhunt_met	Headhunt	false
@@ -213,11 +213,11 @@ incidents_localised_description_land_enc_incident_spot_mission_headhunt_met	The 
 incidents_localised_title_land_enc_incident_spot_mission_headhunt_failed	Headhunt	false
 incidents_localised_description_land_enc_incident_spot_mission_headhunt_failed	The enemy lord lived too long, and our vow goes unfulfilled.	false
 incidents_localised_title_land_enc_incident_spot_mission_blood_tally_met	Blood Tally	false
-incidents_localised_description_land_enc_incident_spot_mission_blood_tally_met	The enemy's soldiers fell in their hundreds, and the tally is met. The gold we were promised is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_blood_tally_met	The enemy's soldiers fell in their hundreds, and the tally is met. The promised gold is counted into our treasury.	false
 incidents_localised_title_land_enc_incident_spot_mission_blood_tally_failed	Blood Tally	false
 incidents_localised_description_land_enc_incident_spot_mission_blood_tally_failed	Too few of the enemy fell, and the tally comes up short.	false
 incidents_localised_title_land_enc_incident_spot_mission_hold_the_line_met	Hold the Line	false
-incidents_localised_description_land_enc_incident_spot_mission_hold_the_line_met	Our line bent but never broke, and few of our units were lost. The gold we were promised is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_hold_the_line_met	Our line bent but never broke, and few of our units were lost. The reward for holding firm goes straight to our treasury.	false
 incidents_localised_title_land_enc_incident_spot_mission_hold_the_line_failed	Hold the Line	false
 incidents_localised_description_land_enc_incident_spot_mission_hold_the_line_failed	Our line held in the end, but too many of our units were lost along the way.	false
 incidents_localised_title_land_enc_incident_spot_mission_swift_victory_met	Swift Victory	false
@@ -229,23 +229,23 @@ incidents_localised_description_land_enc_incident_spot_mission_guard_the_standar
 incidents_localised_title_land_enc_incident_spot_mission_guard_the_standard_failed	Guard the Standard	false
 incidents_localised_description_land_enc_incident_spot_mission_guard_the_standard_failed	The marked unit was lost in the fighting, and their sacrifice earns no reward.	false
 incidents_localised_title_land_enc_incident_spot_mission_break_them_met	Break Them	false
-incidents_localised_description_land_enc_incident_spot_mission_break_them_met	Unit after unit of theirs broke and fled before us. The gold we were promised is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_break_them_met	Unit after unit of theirs broke and fled before us. Every one that ran adds to the purse we were promised.	false
 incidents_localised_title_land_enc_incident_spot_mission_break_them_failed	Break Them	false
 incidents_localised_description_land_enc_incident_spot_mission_break_them_failed	Too few of their units broke, and they fought on to the bitter end.	false
 incidents_localised_title_land_enc_incident_spot_mission_trophy_hunt_met	Trophy Hunt	false
-incidents_localised_description_land_enc_incident_spot_mission_trophy_hunt_met	Their finest unit fell to our blades. Its survivors are pressed into our service, and a copy of it joins our army.	false
+incidents_localised_description_land_enc_incident_spot_mission_trophy_hunt_met	Their finest unit fell to our blades. Its survivors are pressed into our service, and a fresh unit of their kind now marches with our army.	false
 incidents_localised_title_land_enc_incident_spot_mission_trophy_hunt_failed	Trophy Hunt	false
 incidents_localised_description_land_enc_incident_spot_mission_trophy_hunt_failed	Their finest unit survived the battle, and the trophy slips through our fingers.	false
 incidents_localised_title_land_enc_incident_spot_mission_silence_the_guns_met	Silence the Guns	false
-incidents_localised_description_land_enc_incident_spot_mission_silence_the_guns_met	Their guns fell silent before they could do much harm. Among the wreckage we find a rare item, and it is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_silence_the_guns_met	Their guns fell silent before they could do much harm. Picking through the wrecked carriages, we find a rare item.	false
 incidents_localised_title_land_enc_incident_spot_mission_silence_the_guns_failed	Silence the Guns	false
-incidents_localised_description_land_enc_incident_spot_mission_silence_the_guns_failed	Their guns kept firing for too long, and the mission is failed.	false
+incidents_localised_description_land_enc_incident_spot_mission_silence_the_guns_failed	Their guns kept firing for too long, and the mission has failed.	false
 incidents_localised_title_land_enc_incident_spot_mission_bloodbath_wager_met	Bloodbath Wager	false
 incidents_localised_description_land_enc_incident_spot_mission_bloodbath_wager_met	The field ran red, and the wager is won. The gold comes back to us many times over.	false
 incidents_localised_title_land_enc_incident_spot_mission_bloodbath_wager_failed	Bloodbath Wager	false
 incidents_localised_description_land_enc_incident_spot_mission_bloodbath_wager_failed	Too few of the enemy fell, and the gold we wagered is lost.	false
 incidents_localised_title_land_enc_incident_spot_mission_duelists_challenge_met	Duellist's Challenge	false
-incidents_localised_description_land_enc_incident_spot_mission_duelists_challenge_met	Our lord met theirs blade to blade and struck them down. A unique item is taken from the fallen lord, and it is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_duelists_challenge_met	Our lord met theirs blade to blade and struck them down. A unique item is pried from the fallen lord's grip.	false
 incidents_localised_title_land_enc_incident_spot_mission_duelists_challenge_failed	Duellist's Challenge	false
 incidents_localised_description_land_enc_incident_spot_mission_duelists_challenge_failed	Our lord did not slay theirs, and the challenge goes unanswered.	false
 incidents_localised_title_land_enc_incident_spot_mission_spare_the_captain_met	Spare the Captain	false
@@ -257,19 +257,19 @@ incidents_localised_description_land_enc_incident_spot_mission_lords_glory_met	O
 incidents_localised_title_land_enc_incident_spot_mission_lords_glory_failed	Lord's Glory	false
 incidents_localised_description_land_enc_incident_spot_mission_lords_glory_failed	Our lord fought well, but not well enough for the songs.	false
 incidents_localised_title_land_enc_incident_spot_mission_monster_slayer_met	Monster Slayer	false
-incidents_localised_description_land_enc_incident_spot_mission_monster_slayer_met	Every beast they brought lies dead on the field. The gold we were promised is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_monster_slayer_met	Every beast they brought lies dead on the field. The bounty on such creatures is paid to us in full.	false
 incidents_localised_title_land_enc_incident_spot_mission_monster_slayer_failed	Monster Slayer	false
 incidents_localised_description_land_enc_incident_spot_mission_monster_slayer_failed	Some of their beasts still live, and the hunt is unfinished.	false
 incidents_localised_title_land_enc_incident_spot_mission_steadfast_met	Steadfast	false
-incidents_localised_description_land_enc_incident_spot_mission_steadfast_met	Not one of our units broke, however hard the enemy pressed. The gold we were promised is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_steadfast_met	Not one of our units broke, however hard the enemy pressed. The promised gold reaches our treasury before the dead are buried.	false
 incidents_localised_title_land_enc_incident_spot_mission_steadfast_failed	Steadfast	false
 incidents_localised_description_land_enc_incident_spot_mission_steadfast_failed	One of our units broke and ran, and the vow broke with it.	false
 incidents_localised_title_land_enc_incident_spot_mission_decapitate_met	Decapitate	false
-incidents_localised_description_land_enc_incident_spot_mission_decapitate_met	Their lord and every one of their heroes lie dead. Among their gear is a unique item, and it is ours.	false
+incidents_localised_description_land_enc_incident_spot_mission_decapitate_met	Their lord and every one of their heroes lie dead. Searching the bodies, we turn up a unique item.	false
 incidents_localised_title_land_enc_incident_spot_mission_decapitate_failed	Decapitate	false
 incidents_localised_description_land_enc_incident_spot_mission_decapitate_failed	Some of their leaders escaped the slaughter.	false
 incidents_localised_title_land_enc_incident_spot_mission_against_the_odds_met	Against the Odds	false
-incidents_localised_description_land_enc_incident_spot_mission_against_the_odds_met	Outnumbered, we fought and won all the same. The gold we were promised is ours, and it is well earned.	false
+incidents_localised_description_land_enc_incident_spot_mission_against_the_odds_met	Outnumbered, we fought and won all the same. The promised gold is paid out, and the soldiers who earned it toast the victory.	false
 incidents_localised_title_land_enc_incident_spot_mission_against_the_odds_failed	Against the Odds	false
 incidents_localised_description_land_enc_incident_spot_mission_against_the_odds_failed	We did not face the odds we swore to beat.	false
 incidents_localised_title_land_enc_incident_spot_mission_rout_the_riders_met	Rout the Riders	false
@@ -277,13 +277,13 @@ incidents_localised_description_land_enc_incident_spot_mission_rout_the_riders_m
 incidents_localised_title_land_enc_incident_spot_mission_rout_the_riders_failed	Rout the Riders	false
 incidents_localised_description_land_enc_incident_spot_mission_rout_the_riders_failed	Their riders held their nerve for too long.	false
 incidents_localised_title_land_enc_incident_spot_mission_untouchable_met	Untouchable	false
-incidents_localised_description_land_enc_incident_spot_mission_untouchable_met	Our lord came through the fighting barely scratched, and the army will not stop talking about it. The experience will not be forgotten.	false
+incidents_localised_description_land_enc_incident_spot_mission_untouchable_met	Our lord came through the thick of the fighting barely scratched, and the army will not stop talking about it. The day's fighting has taught our lord a great deal.	false
 incidents_localised_title_land_enc_incident_spot_mission_untouchable_failed	Untouchable	false
 incidents_localised_description_land_enc_incident_spot_mission_untouchable_failed	Our lord took too many wounds for the vow to hold.	false
 incidents_localised_title_land_enc_incident_spot_mission_flawless_victory_met	Flawless Victory	false
 incidents_localised_description_land_enc_incident_spot_mission_flawless_victory_met	Not a single unit of ours was lost. Songs of the flawless victory spread far, and a unique item is ours.	false
 incidents_localised_title_land_enc_incident_spot_mission_flawless_victory_failed	Flawless Victory	false
-incidents_localised_description_land_enc_incident_spot_mission_flawless_victory_failed	We lost a unit, and the victory was not flawless.	false
+incidents_localised_description_land_enc_incident_spot_mission_flawless_victory_failed	One of our units fell before the end, and there will be no songs of a flawless victory.	false
 incidents_localised_title_land_enc_incident_spot_missions_untracked	Missions	false
 incidents_localised_description_land_enc_incident_spot_missions_untracked	The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.	false
 incidents_localised_title_land_enc_incident_spot_wound_paid_2	The Price Is Paid	false

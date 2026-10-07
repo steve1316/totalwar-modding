@@ -8,14 +8,21 @@ local M = {}
 --- The hub's opening scene, picked on each visit from text/db/land_enc_and_poi_tavern_strings.loc.tsv: one of `scenes_per_level` scenes for
 --- the Tavern's level, and `moment_chance` percent of the time one of `moments` things happening tonight. The keeper then answers what was
 --- just described: tonight's moment when there is one, else one of `owner_greetings` lines for the owner, else the scene's own line.
---- `clashes` lists, by scene, the moments that would repeat it, which that scene never shows.
+--- `clashes` lists, by scene, the moments that would repeat or contradict it, which that scene never shows.
 M.flavour = {
     scenes_per_level = 4,
     moments = 8,
     moment_chance = 35,
     owner_greetings = 3,
-    --- The storyteller by the fire and the old veteran telling his tale.
-    clashes = { ["1_1"] = { [7] = true } },
+    --- 1_1: the storyteller by the fire and the old veteran telling his tale. 2_2: the full benches of caravan drivers trading road news,
+    --- and the caravan that just came in or the wedding filling the room. 3_3: the keeper pouring from the ancient barrel, and the good
+    --- barrel drunk dry. 3_4: the envoys at the one long table, and the wedding party that has taken it over.
+    clashes = {
+        ["1_1"] = { [7] = true },
+        ["2_2"] = { [4] = true, [5] = true },
+        ["3_3"] = { [3] = true },
+        ["3_4"] = { [5] = true },
+    },
 }
 
 --- Share of a bar offer's price the Tavern's owner pays. Guests pay the full price.

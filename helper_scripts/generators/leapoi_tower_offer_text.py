@@ -66,8 +66,8 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "enchanted_steel": (PAY + "enchant our steel: [[col:green]]magical attacks[[/col]] for every unit in the next battle.", broke("the steel stays plain")),
     "quartermasters_cache": (PAY + "raid the quartermaster's cache: [[col:green]]+{e0}%[[/col]] " + icon("icon_stat_ammo") + " ammunition and [[col:green]]{e1}%[[/col]] "
                              + icon("icon_stat_reload_time") + " faster reloads in the next battle.", broke("the cache stays shut")),
-    "drill_sergeant": (PAY + "hire a drill sergeant: [[col:green]]+{e0}%[[/col]] " + icon("icon_stat_speed") + " speed and [[col:green]]+{e1}[[/col]] "
-                       + icon("icon_stat_charge_bonus") + " charge bonus in the next battle.", broke("no drill is held")),
+    "drill_sergeant": (PAY + "drive the army through hard drills: [[col:green]]+{e0}%[[/col]] " + icon("icon_stat_speed") + " speed and [[col:green]]+{e1}[[/col]] "
+                       + icon("icon_stat_charge_bonus") + " charge bonus in the next battle.", broke("no drills are run")),
     "iron_resolve": (PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] " + icon("icon_stat_morale") + " leadership and [[col:green]]immunity to fear and terror[[/col]] "
                      "in the next battle.", broke("our resolve goes unsteeled")),
     "stoneskin": (PAY + "cast a ward of living stone: [[col:green]]+{e0}% physical resistance[[/col]] in the next battle.", broke("no ward of stone is cast")),
@@ -101,11 +101,11 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "assassinate": (PAY + "send an assassin up the stairs: the next floor's [[col:green]]lord is slain as the battle starts[[/col]].", broke("no assassin climbs the stairs")),
     "cripple_their_champion": (PAY + "cripple the next floor's champion: its [[col:green]]most expensive unit[[/col]] starts at [[col:green]]{champion}% strength[[/col]].",
                                broke("their champion stands ready")),
-    "spike_the_guns": (PAY + "spike the next floor's guns: its shooters have [[col:green]]-{e0}%[[/col]] " + icon("icon_stat_ammo") + " ammunition.",
-                       broke("their guns stay loaded")),
-    "bait_and_switch": (PAY + "lure the next floor into a false muster: its army is [[col:red]]{stronger}% bigger[[/col]], but every unit starts at "
+    "spike_the_guns": (PAY + "spoil the next floor's arrows and powder: its shooters have [[col:green]]-{e0}%[[/col]] " + icon("icon_stat_ammo") + " ammunition.",
+                       broke("their shot stays dry")),
+    "bait_and_switch": (PAY + "lure the next floor into a false muster: its army is [[col:red]]{stronger}% bigger[[/col]], but each of its units starts at "
                         "[[col:green]]{strength}% strength[[/col]].", broke("no bait is laid")),
-    "last_ditch_oath": ("Swear a last ditch oath: our lord [[col:green]]cannot die[[/col]] in the next battle, but our army has [[col:red]]-{e0}[[/col]] "
+    "last_ditch_oath": ("Swear a last-ditch oath: our lord [[col:green]]cannot die[[/col]] in the next battle, but our army has [[col:red]]-{e0}[[/col]] "
                         + icon("icon_stat_morale") + " leadership.", None),
     "lame_their_mounts": (PAY + "lame the next floor's mounts: its cavalry and chariots have [[col:green]]-{e0}%[[/col]] " + icon("icon_stat_speed") + " speed.",
                           broke("their mounts run free")),
@@ -119,7 +119,7 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "conscripts": (PAY + "press conscripts into service: [[col:green]]2 tier 1-2 units[[/col]] of our own kind join our army now.", broke("no one is pressed")),
     "captured_war_machine": (PAY + "salvage a war machine from the tower's armoury: [[col:green]]a tier {tiers} war machine[[/col]] joins our army now.",
                              broke("the war machine stays in the tower")),
-    "regiment_of_renown": (PAY + "hire a [[col:green]]Regiment of Renown[[/col]] of our own kind: it joins our army now.", broke("the regiment rides on")),
+    "regiment_of_renown": (PAY + "hire a [[col:green]]Regiment of Renown[[/col]] of our own kind: it joins our army now.", broke("the regiment moves on")),
     "veterans_oath": (PAY + "swear the veterans' oath: [[col:green]]3 units[[/col]] gain [[col:green]]{ranks}[[/col]] each.", broke("no oath is sworn")),
     "lessons_in_blood": (PAY + "study the fallen: our lord gains [[col:green]]+{lord_xp} experience[[/col]].", broke("the lesson goes unlearned")),
     "freed_prisoner": (PAY + "free a prisoner from the tower's cells: [[col:green]]a rank {rank} hero[[/col]] joins our army.", broke("the cells stay locked")),
@@ -161,7 +161,7 @@ TOWER_BUNDLES = {
                            ("green", "Whetstones and Oil: +{e0}% " + icon("icon_stat_damage") + " and +{e1} " + icon("modifier_icon_armour_piercing") + ".")),
     "warding_sigils": ("force", "icon_effects_fortify.png", "Warding Sigils", "Sigils painted on shields and banners turn blows aside for one battle.",
                        [("wh_main_effect_force_stat_ward_save", "force_to_force_own", (5, 10, 15))], ("green", "Warding Sigils: +{e0}% ward save.")),
-    "quartermasters_cache": ("force", "icon_effects_fortify.png", "Quartermaster's Cache", "A cache of powder, shot and arrows fills every quiver for the next battle.",
+    "quartermasters_cache": ("force", "icon_effects_fortify.png", "Quartermaster's Cache", "A cache of spare shot and arrows tops up every pouch and quiver for the next battle.",
                              [("wh_main_effect_force_stat_ammunition", "force_to_force_own", (25, 50, 75)),
                               ("wh_main_effect_force_stat_reload_time_reduction", "force_to_force_own", (15, 25, 35))],
                              ("green", "Quartermaster's Cache: +{e0}% " + icon("icon_stat_ammo") + " and {e1}% faster " + icon("icon_stat_reload_time") + ".")),
@@ -185,9 +185,9 @@ TOWER_BUNDLES = {
                            [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (-10, -15, -20))], None),
     "spike_the_guns": ("force", "icon_effects_fortify.png", "Spiked Guns", "Spiked guns and spoiled arrows leave this army short of shot.",
                        [("wh_main_effect_force_stat_ammunition", "force_to_force_own", (-30, -40, -50))], None),
-    "last_ditch_oath": ("force", "icon_effects_fortify.png", "Last Ditch Oath", "Our lord swore to stand to the last, and the army knows what it may cost.",
+    "last_ditch_oath": ("force", "icon_effects_fortify.png", "Last-Ditch Oath", "Our lord swore to stand to the last, and the army knows what it may cost.",
                         [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10)],
-                        ("yellow", "Last Ditch Oath: our lord cannot die, but our army has -{e0} " + icon("icon_stat_morale") + ".")),
+                        ("yellow", "Last-Ditch Oath: our lord cannot die, but our army has -{e0} " + icon("icon_stat_morale") + ".")),
     # Vanilla effects on the cavalry_chariots unit set, which takes every rider by type, modded ones too. The game fills an effect's unit list
     # from the viewer's own roster, so the description says so. Effects on unit classes leave no list but never apply.
     "lame_their_mounts": ("force", "icon_effects_fortify.png", "Lamed Mounts", "Caltrops and cut girths slow this army's cavalry and chariots in battle."
@@ -218,5 +218,5 @@ NOTICES = {
     "hunters_snares": ("red", "Hunter's Snares: enemy cavalry and chariots have -{e0} " + icon("icon_stat_charge_bonus") + "."),
     "cripple_their_champion": ("red", "Cripple Their Champion: the enemy's finest unit starts at {champion}% strength."),
     "spike_the_guns": ("red", "Spike the Guns: enemy shooters have -{e0}% " + icon("icon_stat_ammo") + "."),
-    "bait_and_switch": ("red", "Bait and Switch: the enemy army is {stronger}% bigger, but every unit starts at {strength}% strength."),
+    "bait_and_switch": ("red", "Bait and Switch: the enemy army is {stronger}% bigger, but each of its units starts at {strength}% strength."),
 }

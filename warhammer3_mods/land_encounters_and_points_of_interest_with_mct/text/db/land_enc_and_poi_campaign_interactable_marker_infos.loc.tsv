@@ -1,37 +1,37 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_campaign_interactable_marker_infos.loc		
 campaign_interactable_marker_infos_tooltip_encounter_marker_33	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_33	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_33	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_34	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_34	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_34	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_35	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_35	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_35	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_36	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_36	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_36	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_37	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_37	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_37	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_38	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_38	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_38	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_39	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_39	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_39	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_40	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_40	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_40	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_41	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_41	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_41	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_42	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_42	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_42	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_43	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_43	Land encounter	true
+campaign_interactable_marker_infos_name_encounter_marker_43	Land Encounter	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_44	A battle or an unknown event awaits us in this place. [[col:magic]]This can be searched with a [[img:icon_general]][[/img]]Lord.[[/col]]	true
-campaign_interactable_marker_infos_name_encounter_marker_44	Land encounter	true
-campaign_interactable_marker_infos_tooltip_encounter_marker_smithy	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 1 of 3.	true
+campaign_interactable_marker_infos_name_encounter_marker_44	Land Encounter	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_smithy	A smithy whose masters will forge arms for whoever holds it. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 1 of 3.	true
 campaign_interactable_marker_infos_name_encounter_marker_smithy	Smithy (Level 1)	true
 campaign_interactable_marker_infos_name_encounter_marker_smithy_level_2	Smithy (Level 2)	true
-campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_2	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 2 of 3.	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_2	A smithy whose masters will forge arms for whoever holds it. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 2 of 3.	true
 campaign_interactable_marker_infos_name_encounter_marker_smithy_level_3	Smithy (Level 3)	true
-campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_3	A point of interest. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 3 of 3.	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_smithy_level_3	A smithy whose masters will forge arms for whoever holds it. Controlling this place will give our faction benefits. [[col:magic]]This can be occupied or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] Its forge is at level 3 of 3.	true
 campaign_interactable_marker_infos_name_encounter_marker_tower	Ancient Tower	true
-campaign_interactable_marker_infos_tooltip_encounter_marker_tower	An ancient tower held by a hostile warband. Five floors of battles lead to its Master, and the deeper you go the richer the haul. [[col:magic]]This can be delved by a [[img:icon_general]][[/img]]Lord with an army.[[/col]]	true
+campaign_interactable_marker_infos_tooltip_encounter_marker_tower	An ancient tower held by a hostile warband. Five floors of battles lead to its Master, and every floor cleared adds to the haul. [[col:magic]]This can be delved by a [[img:icon_general]][[/img]]Lord with an army.[[/col]]	true
 campaign_interactable_marker_infos_name_encounter_marker_tavern	Tavern (Level 1)	true
 campaign_interactable_marker_infos_tooltip_encounter_marker_tavern	A tavern of the Tavern Keepers' Guild, where lords come to hire sellswords and drink to their victories. [[col:magic]]This can be claimed or visited by a [[img:icon_general]][[/img]]Lord.[[/col]] It is at level 1 of 3.	true
 campaign_interactable_marker_infos_name_encounter_marker_tavern_level_2	Tavern (Level 2)	true

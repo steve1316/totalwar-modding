@@ -1,10 +1,10 @@
 key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_missions.loc		
-missions_localised_description_land_enc_mission_smithy_kislev_ursire	PLACEHOLDER	false
+missions_localised_description_land_enc_mission_smithy_kislev_ursire	"My lord, the blacksmith has sent us a great bear pelt and a pair of iron claws." The quartermaster sets them down with care. "He says they will not be finished until they have torn through many of our enemies, as Ursun's own claws once did. We should carry them on our travels until then, my lord."	false
 missions_localised_title_land_enc_mission_smithy_kislev_ursire	The Ursire Set	false
-missions_localised_description_land_enc_mission_smithy_kislev_wyrm_killer	PLACEHOLDER	false
+missions_localised_description_land_enc_mission_smithy_kislev_wyrm_killer	"My lord, the blacksmith has sent us a harness of wyrm scale and a long iron spike." The quartermaster runs a hand over the scales. "He says the set was made to hunt the great beasts of the north, and it will not be finished until enough enemies have fallen to it. We should carry it on our travels until then, my lord."	false
 missions_localised_title_land_enc_mission_smithy_kislev_wyrm_killer	Wyrm Killer Set	false
-missions_localised_description_land_enc_mission_smithy_kislev_dazhs_brazier	PLACEHOLDER	false
+missions_localised_description_land_enc_mission_smithy_kislev_dazhs_brazier	"My lord, the blacksmith has sent us a brazier of black iron, its coals still glowing though no one has fed them." The quartermaster keeps a careful distance from the heat. "He says Dazh's fire will not burn true until it has been fed with the lives of many enemies. We should carry it on our travels until then, my lord."	false
 missions_localised_title_land_enc_mission_smithy_kislev_dazhs_brazier	The Eternal Brazier	false
 missions_localised_description_land_enc_mission_smithy_dark_elves_armour_of_living_death	The blacksmith has sent some strange armour to our quartermaster. It seems to breathe softly, and when someone comes close it stirs and sniffs at them. The blacksmith says that to complete it, we must bathe it in the blood of many enemies. We should fulfil his request on our journey, my lord. Perhaps it will prove useful to us.	false
 missions_localised_title_land_enc_mission_smithy_dark_elves_armour_of_living_death	Giving Life To The Armour	false

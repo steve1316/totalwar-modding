@@ -2,7 +2,7 @@ key	text	tooltip
 #Loc;1;text/db/land_enc_and_poi_event_feed_strings.loc		
 event_feed_strings_text_title_event_land_enc_and_poi_encountered	Location of Interest!	false
 event_feed_strings_text_subtitle_event_land_enc_and_poi_encountered	Opportunity Missed	false
-event_feed_strings_text_description_event_land_enc_and_poi_encountered	Your army has spotted something in the surrounding area that may have been of interest to you, but you were marching too fast to have time to see what it was. Switch to default stance before returning to the location to take a closer look.	false
+event_feed_strings_text_description_event_land_enc_and_poi_encountered	Our scouts glimpsed something of interest nearby, but the army was marching too fast to stop and look. Switch to default stance before returning to the location to take a closer look.	false
 event_feed_strings_text_title_event_land_enc_smithy_encountered	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_encountered	Smithy Missed	false
 event_feed_strings_text_description_event_land_enc_smithy_encountered	We passed a smithy without stopping. Perhaps a lord should come back to see what it holds.	false
@@ -17,7 +17,7 @@ event_feed_strings_text_subtitle_event_land_enc_smithy_reclaimed_repelled	Enemy 
 event_feed_strings_text_description_event_land_enc_smithy_reclaimed_repelled	Our army has been driven back from the smithy. Its defenders held the forge this time, but a smithy guarded so fiercely is worth taking. We should return with a stronger force.	false
 event_feed_strings_text_title_event_land_enc_smithy_successfully_defended	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_defended	Smithy Defended	false
-event_feed_strings_text_description_event_land_enc_smithy_successfully_defended	Hammers and blades alike lie red on the field. The enemy broke and fled, and the smithy still stands over its lands like a lord's keep. The forge will work another day.	false
+event_feed_strings_text_description_event_land_enc_smithy_successfully_defended	The enemy broke against the smithy's walls and fled. Our garrison is already dragging the dead from the yard, and by nightfall the forge is burning again.	false
 event_feed_strings_text_title_event_land_enc_smithy_lost	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_lost	Smithy Lost	false
 event_feed_strings_text_description_event_land_enc_smithy_lost	We lost control of the smithy. We saved the master blacksmith and some of his disciples, but the forge has lost a level, and we lose both its tribute and our visits to it. We should recapture it as soon as we can.	false
@@ -278,22 +278,22 @@ event_feed_strings_text_subtitle_event_land_enc_tavern_capture_repelled	Attack R
 event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains under their control.	false
 event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_2	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_2	Tavern Improved	false
-event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	The tavern has grown to level 2. Its guards are tougher, and its rooms offer more.	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	Builders have raised a second hall beside the old common room, and the tavern has grown to level 2. Its guards are tougher, and its rooms offer more.	false
 event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_3	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_3	Tavern Improved	false
-event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms offer the most.	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	Banners of famous companies now hang from the tavern's rafters, and it has grown to level 3, its highest. Its guards are the toughest, and its rooms offer the most.	false
 event_feed_strings_text_title_event_land_enc_tavern_contract_failed	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed	Contract Failed	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_failed	The deadline has passed and the work is not done. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_failed	The deadline has passed and the work is not done. The Guild keeps our deposit, and every tavern of the Guild charges us a quarter more for 10 turns.	false
 event_feed_strings_text_title_event_land_enc_tavern_contract_void	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_contract_void	Contract Void	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_void	The contract can no longer be met, as our quarry is gone by other hands. The Guild returns our deposit.	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_void	Another hand has dealt with our quarry, so the contract can no longer be met. The Guild returns our deposit.	false
 event_feed_strings_text_title_event_land_enc_tavern_bounty_sighted	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_bounty_sighted	Bounty Sighted	false
 event_feed_strings_text_description_event_land_enc_tavern_bounty_sighted	The lord we were paid to hunt has been seen here. Beat their army before the deadline to claim the bounty.	false
 event_feed_strings_text_title_event_land_enc_tavern_contract_dropped	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped	Contract Dropped	false
-event_feed_strings_text_description_event_land_enc_tavern_contract_dropped	We have walked away from the contract. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_dropped	We have walked away from the contract. The Guild keeps our deposit, and every tavern of the Guild charges us a quarter more for 10 turns.	false
 event_feed_strings_text_title_event_land_enc_tavern_mark_spotted	Tavern	false
 event_feed_strings_text_subtitle_event_land_enc_tavern_mark_spotted	Site Marked	false
 event_feed_strings_text_description_event_land_enc_tavern_mark_spotted	The Guild has marked this site. March a lord onto it and win the battle there before the countdown runs out.	false
@@ -317,16 +317,16 @@ event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped_patron	C
 event_feed_strings_text_description_event_land_enc_tavern_contract_dropped_patron	We have walked away from the contract. The Guild keeps our deposit, but it charges its patron no more for it.	false
 event_feed_strings_text_title_event_land_enc_smithy_patron_1	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_patron_1	Patron of the Association	false
-event_feed_strings_text_description_event_land_enc_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_1	The Association's clerks have weighed our gift and stamped our name into their ledgers. Every smithy of the Association has grown, and its masters now greet our quartermasters like old friends.	false
 event_feed_strings_text_title_event_land_enc_smithy_patron_2	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_patron_2	Great Patron of the Association	false
-event_feed_strings_text_description_event_land_enc_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_2	Our name is now cut into the anvil of every smithy the Association runs, for no lord has given it more. Each one has grown to its grandest, and our orders go to the front of the queue.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
 event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_lost	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_lost	Fortune Frowns	false
-event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_lost	The lots fall against us, as they so often do for strangers. The stranger sweeps up our stake with a crooked grin and is gone before anyone thinks to argue.	false
+event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_lost	The lots fall against us, as they so often do for newcomers. The stranger sweeps up our stake with a crooked grin and is gone before anyone thinks to argue.	false
 event_feed_strings_text_title_event_land_enc_spot_drink_from_the_spring_won	Drink from the Spring	false
 event_feed_strings_text_subtitle_event_land_enc_spot_drink_from_the_spring_won	Healing Waters	false
 event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_won	The water runs cold and clear from the rock. Wounds close and tired limbs grow strong again as the whole army drinks its fill.	false
@@ -335,7 +335,7 @@ event_feed_strings_text_subtitle_event_land_enc_spot_drink_from_the_spring_lost	
 event_feed_strings_text_description_event_land_enc_spot_drink_from_the_spring_lost	The water tastes of rot and old iron. Within hours sickness spreads through the camp, and the army will march weaker for some time.	false
 event_feed_strings_text_title_event_land_enc_spot_open_the_sealed_door_won	Open the Sealed Door	false
 event_feed_strings_text_subtitle_event_land_enc_spot_open_the_sealed_door_won	A Treasure Within	false
-event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart lies a treasure of legend, and now it is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_won	The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart, on a bare stone plinth, lies a treasure of legend.	false
 event_feed_strings_text_title_event_land_enc_spot_open_the_sealed_door_lost	Open the Sealed Door	false
 event_feed_strings_text_subtitle_event_land_enc_spot_open_the_sealed_door_lost	A Trap Sprung	false
 event_feed_strings_text_description_event_land_enc_spot_open_the_sealed_door_lost	The seal breaks, and so does the trap behind it. Our lord is caught in the blast and carried from the chamber, badly wounded.	false
@@ -346,8 +346,8 @@ event_feed_strings_text_title_event_land_enc_spot_double_or_nothing_lost	Double 
 event_feed_strings_text_subtitle_event_land_enc_spot_double_or_nothing_lost	The Stake Is Lost	false
 event_feed_strings_text_description_event_land_enc_spot_double_or_nothing_lost	The bet is called and the throw turns against us. Our stake is gone, and the house thanks us warmly for our custom.	false
 event_feed_strings_text_title_event_land_enc_spot_wake_the_guardian_won	Wake the Guardian	false
-event_feed_strings_text_subtitle_event_land_enc_spot_wake_the_guardian_won	It Sleeps on	false
-event_feed_strings_text_description_event_land_enc_spot_wake_the_guardian_won	The great beast stirs, snorts and settles back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
+event_feed_strings_text_subtitle_event_land_enc_spot_wake_the_guardian_won	It Sleeps On	false
+event_feed_strings_text_description_event_land_enc_spot_wake_the_guardian_won	The great beast snorts and shifts its bulk, then sinks back into its slumber. We creep past it and make off with a rare treasure from its hoard.	false
 event_feed_strings_text_title_event_land_enc_spot_wake_the_guardian_lost	Wake the Guardian	false
 event_feed_strings_text_subtitle_event_land_enc_spot_wake_the_guardian_lost	It Wakes!	false
 event_feed_strings_text_description_event_land_enc_spot_wake_the_guardian_lost	The ground shakes as the guardian of this place rises from its slumber. It sees intruders in its lair and charges, and our army must stand and fight!	false
@@ -365,34 +365,34 @@ event_feed_strings_text_subtitle_event_land_enc_spot_gamble_with_the_hermit_lost
 event_feed_strings_text_description_event_land_enc_spot_gamble_with_the_hermit_lost	The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone.	false
 event_feed_strings_text_title_event_land_enc_spot_endow_the_province	Endow the Province	false
 event_feed_strings_text_subtitle_event_land_enc_spot_endow_the_province	Endow the Province	false
-event_feed_strings_text_description_event_land_enc_spot_endow_the_province	Our gold builds roads, walls and storehouses across the place named above. The region grows stronger and richer, and its people will remember who paid for it.	false
+event_feed_strings_text_description_event_land_enc_spot_endow_the_province	Our gold pays for new roads and storehouses across that region. The region grows stronger and richer, and its people know who paid for it.	false
 event_feed_strings_text_title_event_land_enc_spot_garrison_drill	Garrison Drill	false
 event_feed_strings_text_subtitle_event_land_enc_spot_garrison_drill	Garrison Drill	false
-event_feed_strings_text_description_event_land_enc_spot_garrison_drill	Fresh supplies reach the garrison of the place named above, and its officers drill the defenders from dawn to dusk. Its walls are manned by harder soldiers now.	false
+event_feed_strings_text_description_event_land_enc_spot_garrison_drill	Fresh supplies reach the garrison of that settlement, and its officers drill the defenders from dawn to dusk. Its walls are manned by harder soldiers now.	false
 event_feed_strings_text_title_event_land_enc_spot_raise_the_settlement	Raise the Settlement	false
 event_feed_strings_text_subtitle_event_land_enc_spot_raise_the_settlement	Raise the Settlement	false
-event_feed_strings_text_description_event_land_enc_spot_raise_the_settlement	Builders swarm over the place named above, raising new halls and stronger walls. In a matter of days its heart stands a level higher than before.	false
+event_feed_strings_text_description_event_land_enc_spot_raise_the_settlement	Builders swarm over the settlement, raising new halls and stronger walls. In a matter of days its heart stands a level higher than before.	false
 event_feed_strings_text_title_event_land_enc_spot_quell_the_unrest	Quell the Unrest	false
 event_feed_strings_text_subtitle_event_land_enc_spot_quell_the_unrest	Quell the Unrest	false
-event_feed_strings_text_description_event_land_enc_spot_quell_the_unrest	Our soldiers walk the streets of the place named above, and the loudest troublemakers fall quiet. Order returns, for now.	false
+event_feed_strings_text_description_event_land_enc_spot_quell_the_unrest	Our soldiers walk the streets of the settlement, and the loudest troublemakers fall quiet. Order returns, for now.	false
 event_feed_strings_text_title_event_land_enc_spot_bountiful_harvest	Bountiful Harvest	false
 event_feed_strings_text_subtitle_event_land_enc_spot_bountiful_harvest	Bountiful Harvest	false
-event_feed_strings_text_description_event_land_enc_spot_bountiful_harvest	The fields around the place named above groan under a bountiful harvest. The stores fill, the markets swell, and the people prosper.	false
+event_feed_strings_text_description_event_land_enc_spot_bountiful_harvest	The fields around that region groan under a bountiful harvest. Carts queue at the granaries for days, and the markets are busier than anyone can remember.	false
 event_feed_strings_text_title_event_land_enc_spot_stir_their_rebels	Stir Their Rebels	false
 event_feed_strings_text_subtitle_event_land_enc_spot_stir_their_rebels	Stir Their Rebels	false
-event_feed_strings_text_description_event_land_enc_spot_stir_their_rebels	Our agents spread grievances and weapons among the malcontents of the place named above. Unrest spreads through the enemy's lands.	false
+event_feed_strings_text_description_event_land_enc_spot_stir_their_rebels	Our agents hand out grievances and weapons among the malcontents of that region. Unrest is rising across the enemy's lands.	false
 event_feed_strings_text_title_event_land_enc_spot_poison_their_wells	Poison Their Wells	false
 event_feed_strings_text_subtitle_event_land_enc_spot_poison_their_wells	Poison Their Wells	false
-event_feed_strings_text_description_event_land_enc_spot_poison_their_wells	Under cover of night, our agents foul the wells of the place named above. Sickness spreads through its people, and any army camped there will suffer for it.	false
+event_feed_strings_text_description_event_land_enc_spot_poison_their_wells	Under cover of night, our agents foul the wells of that region. Sickness spreads through its people, and any army camped there will suffer for it.	false
 event_feed_strings_text_title_event_land_enc_spot_sap_their_garrison	Sap Their Garrison	false
 event_feed_strings_text_subtitle_event_land_enc_spot_sap_their_garrison	Sap Their Garrison	false
-event_feed_strings_text_description_event_land_enc_spot_sap_their_garrison	Our saboteurs slip into the place named above, spoiling stores, cutting ropes and spreading sickness through the barracks. Its garrison is weakened and shaken.	false
+event_feed_strings_text_description_event_land_enc_spot_sap_their_garrison	Our saboteurs slip into the enemy settlement, spoiling the grain stores and spreading sickness through the barracks. Its garrison is weakened and shaken.	false
 event_feed_strings_text_title_event_land_enc_spot_spread_the_plague	Spread the Plague	false
 event_feed_strings_text_subtitle_event_land_enc_spot_spread_the_plague	Spread the Plague	false
-event_feed_strings_text_description_event_land_enc_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around the place named above. The plague spreads, though our own army does not escape it entirely.	false
+event_feed_strings_text_description_event_land_enc_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around that region. The plague spreads, though our own army does not escape it entirely.	false
 event_feed_strings_text_title_event_land_enc_spot_mystery_brew_won	Mystery Brew	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mystery_brew_won	A Fine Brew	false
-event_feed_strings_text_description_event_land_enc_spot_mystery_brew_won	The brew goes down like liquid fire and comes back up as courage. The whole army stands a little taller, and fights a little harder.	false
+event_feed_strings_text_description_event_land_enc_spot_mystery_brew_won	The brew goes down like liquid fire and settles in the belly as courage. By morning the whole army is spoiling for a fight.	false
 event_feed_strings_text_title_event_land_enc_spot_mystery_brew_lost	Mystery Brew	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mystery_brew_lost	A Foul Brew	false
 event_feed_strings_text_description_event_land_enc_spot_mystery_brew_lost	Whatever was in that barrel, it was not meant for drinking. The army wakes with sore heads and slow feet, and the keeper will not say what it was.	false
@@ -410,31 +410,31 @@ event_feed_strings_text_subtitle_event_land_enc_spot_arm_wrestle_the_champion_lo
 event_feed_strings_text_description_event_land_enc_spot_arm_wrestle_the_champion_lost	The champion grins, leans in, and something in our lord's arm gives way with a crack. Our lord leaves the table hurt, and the crowd cheers the champion.	false
 event_feed_strings_text_title_event_land_enc_spot_buy_rumours	Buy Rumours	false
 event_feed_strings_text_subtitle_event_land_enc_spot_buy_rumours	Buy Rumours	false
-event_feed_strings_text_description_event_land_enc_spot_buy_rumours	The keeper leans close and talks of the roads around the place named above and beyond, and we will see those lands for some time yet. Of the enemy nearby.	false
+event_feed_strings_text_description_event_land_enc_spot_buy_rumours	The keeper leans close and talks of the roads around that region and beyond, and of the enemy camped nearby. We will see those lands for some time yet.	false
 event_feed_strings_text_title_event_land_enc_spot_send_gifts	Send Gifts	false
 event_feed_strings_text_subtitle_event_land_enc_spot_send_gifts	Send Gifts	false
-event_feed_strings_text_description_event_land_enc_spot_send_gifts	Our gifts are well received at the place named above. Their rulers speak of us more warmly now, and remember who remembered them.	false
+event_feed_strings_text_description_event_land_enc_spot_send_gifts	Our gifts are well received at their court. Their rulers speak of us more warmly now, and our envoys are welcome at their table.	false
 event_feed_strings_text_title_event_land_enc_spot_spy_on_their_capital	Spy on Their Capital	false
 event_feed_strings_text_subtitle_event_land_enc_spot_spy_on_their_capital	Spy on Their Capital	false
-event_feed_strings_text_description_event_land_enc_spot_spy_on_their_capital	Our spies slip into the place named above and map every wall and gate, and we will see its streets for some time yet. They count its garrison.	false
+event_feed_strings_text_description_event_land_enc_spot_spy_on_their_capital	Our spies slip into the enemy capital to map its walls and gates and count its garrison. We will see its streets for some time yet.	false
 event_feed_strings_text_title_event_land_enc_spot_curse_a_distant_king	Curse a Distant King	false
 event_feed_strings_text_subtitle_event_land_enc_spot_curse_a_distant_king	Curse a Distant King	false
-event_feed_strings_text_description_event_land_enc_spot_curse_a_distant_king	A curse falls on the treasury of the court at the place named above. Their wealth dwindles, and they will never know why.	false
+event_feed_strings_text_description_event_land_enc_spot_curse_a_distant_king	A curse falls on the treasury of the court at their capital. Their wealth dwindles, and they will never know why.	false
 event_feed_strings_text_title_event_land_enc_spot_share_the_find	Share the Find	false
 event_feed_strings_text_subtitle_event_land_enc_spot_share_the_find	Share the Find	false
-event_feed_strings_text_description_event_land_enc_spot_share_the_find	We share what we found with our neighbours, starting at the place named above. Their scholars are grateful, and think better of us for it.	false
+event_feed_strings_text_description_event_land_enc_spot_share_the_find	We share what we found with our neighbours, starting with the nearest. Their scholars are grateful, and think better of us for it.	false
 event_feed_strings_text_title_event_land_enc_spot_point_them_at_each_other	Point Them at Each Other	false
 event_feed_strings_text_subtitle_event_land_enc_spot_point_them_at_each_other	Point Them at Each Other	false
-event_feed_strings_text_description_event_land_enc_spot_point_them_at_each_other	Rumours spread from the place named above, carefully planted by our agents. Two rivals now eye each other with suspicion.	false
+event_feed_strings_text_description_event_land_enc_spot_point_them_at_each_other	Rumours spread from that region, carefully planted by our agents. Two rivals now eye each other with suspicion.	false
 event_feed_strings_text_title_event_land_enc_spot_sell_their_secrets	Sell Their Secrets	false
 event_feed_strings_text_subtitle_event_land_enc_spot_sell_their_secrets	Sell Their Secrets	false
-event_feed_strings_text_description_event_land_enc_spot_sell_their_secrets	The secrets fetch a fine price at the place named above. But word travels, and our enemies grow closer to one another.	false
+event_feed_strings_text_description_event_land_enc_spot_sell_their_secrets	The secrets fetch a fine price in that region. But word travels, and our enemies grow closer to one another.	false
 event_feed_strings_text_title_event_land_enc_spot_ransom_the_captain	Ransom the Captain	false
 event_feed_strings_text_subtitle_event_land_enc_spot_ransom_the_captain	Ransom the Captain	false
-event_feed_strings_text_description_event_land_enc_spot_ransom_the_captain	Their captain is ransomed back to the place named above, and the price is paid in full. Their kin will not forget the humiliation.	false
+event_feed_strings_text_description_event_land_enc_spot_ransom_the_captain	Their captain is ransomed back to their own people, and the price is paid in full. Their kin will not forget the humiliation.	false
 event_feed_strings_text_title_event_land_enc_spot_chase_the_routers_won	Chase the Routers	false
 event_feed_strings_text_subtitle_event_land_enc_spot_chase_the_routers_won	A Rich Catch	false
-event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the spoils they drop is a rare item, and it is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_won	Our fastest troops run the fleeing enemy down before they reach safety. Among the gear they threw away to run faster is a rare item.	false
 event_feed_strings_text_title_event_land_enc_spot_chase_the_routers_lost	Chase the Routers	false
 event_feed_strings_text_subtitle_event_land_enc_spot_chase_the_routers_lost	Ambushed	false
 event_feed_strings_text_description_event_land_enc_spot_chase_the_routers_lost	The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for a time.	false
@@ -446,13 +446,13 @@ event_feed_strings_text_subtitle_event_land_enc_spot_mission_headhunt_failed	Mis
 event_feed_strings_text_description_event_land_enc_spot_mission_headhunt_failed	The enemy lord lived too long, and our vow goes unfulfilled.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_blood_tally_met	Blood Tally	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_blood_tally_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_blood_tally_met	The enemy's soldiers fell in their hundreds, and the tally is met. The gold we were promised is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_blood_tally_met	The enemy's soldiers fell in their hundreds, and the tally is met. The promised gold is counted into our treasury.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_blood_tally_failed	Blood Tally	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_blood_tally_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_blood_tally_failed	Too few of the enemy fell, and the tally comes up short.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_hold_the_line_met	Hold the Line	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_hold_the_line_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_hold_the_line_met	Our line bent but never broke, and few of our units were lost. The gold we were promised is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_hold_the_line_met	Our line bent but never broke, and few of our units were lost. The reward for holding firm goes straight to our treasury.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_hold_the_line_failed	Hold the Line	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_hold_the_line_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_hold_the_line_failed	Our line held in the end, but too many of our units were lost along the way.	false
@@ -470,22 +470,22 @@ event_feed_strings_text_subtitle_event_land_enc_spot_mission_guard_the_standard_
 event_feed_strings_text_description_event_land_enc_spot_mission_guard_the_standard_failed	The marked unit was lost in the fighting, and their sacrifice earns no reward.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_break_them_met	Break Them	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_break_them_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_break_them_met	Unit after unit of theirs broke and fled before us. The gold we were promised is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_break_them_met	Unit after unit of theirs broke and fled before us. Every one that ran adds to the purse we were promised.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_break_them_failed	Break Them	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_break_them_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_break_them_failed	Too few of their units broke, and they fought on to the bitter end.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_trophy_hunt_met	Trophy Hunt	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_trophy_hunt_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_trophy_hunt_met	Their finest unit fell to our blades. Its survivors are pressed into our service, and a copy of it joins our army.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_trophy_hunt_met	Their finest unit fell to our blades. Its survivors are pressed into our service, and a fresh unit of their kind now marches with our army.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_trophy_hunt_failed	Trophy Hunt	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_trophy_hunt_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_trophy_hunt_failed	Their finest unit survived the battle, and the trophy slips through our fingers.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_silence_the_guns_met	Silence the Guns	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_silence_the_guns_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_silence_the_guns_met	Their guns fell silent before they could do much harm. Among the wreckage we find a rare item, and it is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_silence_the_guns_met	Their guns fell silent before they could do much harm. Picking through the wrecked carriages, we find a rare item.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_silence_the_guns_failed	Silence the Guns	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_silence_the_guns_failed	Mission Failed	false
-event_feed_strings_text_description_event_land_enc_spot_mission_silence_the_guns_failed	Their guns kept firing for too long, and the mission is failed.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_silence_the_guns_failed	Their guns kept firing for too long, and the mission has failed.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_bloodbath_wager_met	Bloodbath Wager	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_bloodbath_wager_met	Mission Met	false
 event_feed_strings_text_description_event_land_enc_spot_mission_bloodbath_wager_met	The field ran red, and the wager is won. The gold comes back to us many times over.	false
@@ -494,7 +494,7 @@ event_feed_strings_text_subtitle_event_land_enc_spot_mission_bloodbath_wager_fai
 event_feed_strings_text_description_event_land_enc_spot_mission_bloodbath_wager_failed	Too few of the enemy fell, and the gold we wagered is lost.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_duelists_challenge_met	Duellist's Challenge	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_duelists_challenge_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_duelists_challenge_met	Our lord met theirs blade to blade and struck them down. A unique item is taken from the fallen lord, and it is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_duelists_challenge_met	Our lord met theirs blade to blade and struck them down. A unique item is pried from the fallen lord's grip.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_duelists_challenge_failed	Duellist's Challenge	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_duelists_challenge_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_duelists_challenge_failed	Our lord did not slay theirs, and the challenge goes unanswered.	false
@@ -512,25 +512,25 @@ event_feed_strings_text_subtitle_event_land_enc_spot_mission_lords_glory_failed	
 event_feed_strings_text_description_event_land_enc_spot_mission_lords_glory_failed	Our lord fought well, but not well enough for the songs.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_monster_slayer_met	Monster Slayer	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_monster_slayer_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_monster_slayer_met	Every beast they brought lies dead on the field. The gold we were promised is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_monster_slayer_met	Every beast they brought lies dead on the field. The bounty on such creatures is paid to us in full.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_monster_slayer_failed	Monster Slayer	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_monster_slayer_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_monster_slayer_failed	Some of their beasts still live, and the hunt is unfinished.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_steadfast_met	Steadfast	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_steadfast_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_steadfast_met	Not one of our units broke, however hard the enemy pressed. The gold we were promised is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_steadfast_met	Not one of our units broke, however hard the enemy pressed. The promised gold reaches our treasury before the dead are buried.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_steadfast_failed	Steadfast	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_steadfast_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_steadfast_failed	One of our units broke and ran, and the vow broke with it.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_decapitate_met	Decapitate	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_decapitate_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_decapitate_met	Their lord and every one of their heroes lie dead. Among their gear is a unique item, and it is ours.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_decapitate_met	Their lord and every one of their heroes lie dead. Searching the bodies, we turn up a unique item.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_decapitate_failed	Decapitate	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_decapitate_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_decapitate_failed	Some of their leaders escaped the slaughter.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_against_the_odds_met	Against the Odds	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_against_the_odds_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_against_the_odds_met	Outnumbered, we fought and won all the same. The gold we were promised is ours, and it is well earned.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_against_the_odds_met	Outnumbered, we fought and won all the same. The promised gold is paid out, and the soldiers who earned it toast the victory.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_against_the_odds_failed	Against the Odds	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_against_the_odds_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_against_the_odds_failed	We did not face the odds we swore to beat.	false
@@ -542,7 +542,7 @@ event_feed_strings_text_subtitle_event_land_enc_spot_mission_rout_the_riders_fai
 event_feed_strings_text_description_event_land_enc_spot_mission_rout_the_riders_failed	Their riders held their nerve for too long.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_untouchable_met	Untouchable	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_untouchable_met	Mission Met	false
-event_feed_strings_text_description_event_land_enc_spot_mission_untouchable_met	Our lord came through the fighting barely scratched, and the army will not stop talking about it. The experience will not be forgotten.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_untouchable_met	Our lord came through the thick of the fighting barely scratched, and the army will not stop talking about it. The day's fighting has taught our lord a great deal.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_untouchable_failed	Untouchable	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_untouchable_failed	Mission Failed	false
 event_feed_strings_text_description_event_land_enc_spot_mission_untouchable_failed	Our lord took too many wounds for the vow to hold.	false
@@ -551,7 +551,7 @@ event_feed_strings_text_subtitle_event_land_enc_spot_mission_flawless_victory_me
 event_feed_strings_text_description_event_land_enc_spot_mission_flawless_victory_met	Not a single unit of ours was lost. Songs of the flawless victory spread far, and a unique item is ours.	false
 event_feed_strings_text_title_event_land_enc_spot_mission_flawless_victory_failed	Flawless Victory	false
 event_feed_strings_text_subtitle_event_land_enc_spot_mission_flawless_victory_failed	Mission Failed	false
-event_feed_strings_text_description_event_land_enc_spot_mission_flawless_victory_failed	We lost a unit, and the victory was not flawless.	false
+event_feed_strings_text_description_event_land_enc_spot_mission_flawless_victory_failed	One of our units fell before the end, and there will be no songs of a flawless victory.	false
 event_feed_strings_text_title_event_land_enc_spot_missions_untracked	Missions	false
 event_feed_strings_text_subtitle_event_land_enc_spot_missions_untracked	Not Counted	false
 event_feed_strings_text_description_event_land_enc_spot_missions_untracked	The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.	false
