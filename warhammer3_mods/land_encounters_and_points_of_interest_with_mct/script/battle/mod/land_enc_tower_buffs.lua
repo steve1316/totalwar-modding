@@ -277,6 +277,13 @@ local function is_lost(sunit)
     return sunit.unit:number_of_men_alive() == 0 or sunit.unit:is_shattered()
 end
 
+--- True when a lord or hero has died on the field: no soldiers left. One that breaks and flees still lives, so it is not slain.
+--- @param sunit table The script unit.
+--- @returns boolean True when it is slain.
+local function slain(sunit)
+    return sunit.unit:number_of_men_alive() == 0
+end
+
 --- Sums a number over script units.
 --- @param sunits table Script units.
 --- @param value function Takes a battle unit and returns a number.
@@ -299,8 +306,10 @@ end
 --- even if it rallies.
 --- @param hunted function Takes a battle unit and returns true for one to hunt.
 --- @param routing_counts boolean True when a routing unit counts as beaten.
+--- @param lost function|nil Takes a script unit and returns true once it is beaten, `is_lost` when nil.
 --- @returns table The mission spec.
-local function hunt(hunted, routing_counts)
+local function hunt(hunted, routing_counts, lost)
+    lost = lost or is_lost
     return {
         start = function(m, ctx)
             m.hunted, m.beaten = {}, {}
@@ -312,7 +321,7 @@ local function hunt(hunted, routing_counts)
         tick = function(m, ctx)
             local left = 0
             for _, sunit in ipairs(m.hunted) do
-                if is_lost(sunit) or (routing_counts and sunit.unit:is_routing()) then m.beaten[sunit] = true end
+                if lost(sunit) or (routing_counts and sunit.unit:is_routing()) then m.beaten[sunit] = true end
                 if not m.beaten[sunit] then left = left + 1 end
             end
             if left == 0 then m.state = "met" elseif type(m.value) == "number" and ctx.elapsed > m.value then m.state = "failed" end
@@ -970,13 +979,13 @@ local MISSIONS = {
     },
     headhunt = {
         tick = function(m, ctx)
-            if ctx.their_lord and is_lost(ctx.their_lord) then m.state = "met" elseif ctx.elapsed > m.value then m.state = "failed" end
+            if ctx.their_lord and slain(ctx.their_lord) then m.state = "met" elseif ctx.elapsed > m.value then m.state = "failed" end
             return math.max(0, m.value - ctx.elapsed)
         end,
     },
     duelists_challenge = {
         tick = function(m, ctx)
-            if ctx.their_lord and is_lost(ctx.their_lord) then m.state = "met" end
+            if ctx.their_lord and slain(ctx.their_lord) then m.state = "met" end
         end,
     },
     hold_the_line = {
@@ -1039,8 +1048,8 @@ local MISSIONS = {
     silence_the_guns = hunt(function(unit) return not unit:is_commanding_unit() and unit:starting_ammo() > 0 end, false),
     --- Every enemy monster is destroyed.
     monster_slayer = hunt(function(unit) return unit:unit_class() == "mon" or unit:unit_class() == "minf" end, false),
-    --- The enemy lord and every hero fall.
-    decapitate = hunt(function(unit) return unit:is_commanding_unit() or unit:unit_class() == "com" end, false),
+    --- The enemy lord and every hero are slain. Ones that flee still live.
+    decapitate = hunt(function(unit) return unit:is_commanding_unit() or unit:unit_class() == "com" end, false, slain),
     --- Every enemy rider (cavalry, chariots and monstrous cavalry) routs or falls within the time limit.
     rout_the_riders = hunt(function(unit)
         return not unit:is_commanding_unit() and (unit:is_cavalry() or unit:is_chariot() or unit:unit_class() == "mcav")
@@ -1084,10 +1093,10 @@ local MISSIONS = {
 MISSIONS.bloodbath_wager = MISSIONS.blood_tally
 --- A battle spot's Flawless victory is Hold the line with a limit of 0, which the campaign hands over as its target.
 MISSIONS.flawless_victory = MISSIONS.hold_the_line
---- A battle spot's Spare the captain: fails once the enemy lord falls, and is met when the battle is decided with that lord still standing.
+--- A battle spot's Spare the captain: fails once the enemy lord is slain, and is met when the battle is decided with that lord still alive.
 MISSIONS.spare_the_captain = {
     tick = function(m, ctx)
-        if ctx.their_lord and is_lost(ctx.their_lord) then m.state = "failed" end
+        if ctx.their_lord and slain(ctx.their_lord) then m.state = "failed" end
     end,
     finish = function(m) m.state = "met" end,
 }

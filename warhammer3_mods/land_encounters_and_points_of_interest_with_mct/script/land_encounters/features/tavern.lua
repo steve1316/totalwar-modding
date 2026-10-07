@@ -104,6 +104,8 @@ local TavernState = OwnedPoint.extend({
     pending_hub = nil,
     --- Faction key -> the turn the bar serves that faction again, after it took an offer there.
     bar_closed_until = {},
+    --- Faction key -> { turn, keys }: the offers the bar last showed that faction, shown again for the rest of that turn.
+    bar_draws = {},
     --- Faction key -> the turn the mercenary hall serves that faction again, after it hired there.
     hall_closed_until = {},
     --- The mercenary hall's shared stock (see features/tavern_hall.lua), or nil until the hall first opens.
@@ -292,8 +294,12 @@ function TavernState:open_bar(faction_name, general_cqi)
     end
     local share = (self:is_occupied_by_same_faction(faction_name) and tavern_data.owner_price_share or 1) * self:price_factor(faction_name)
     log("tavern: " .. faction_name .. " opens the bar of the " .. self:describe() .. " at price share " .. share)
-    spot_offers.open_site(character, character:faction(), offers_data.tavern, nil, { zone = self.zone_name, index = self.index_in_zone,
-        difficulty = DIFFICULTY_KEYS[self.level], price_difficulty = get_current_difficulty(), price_share = share })
+    --- The bar shows a faction the same offers for the rest of the turn, so going back to the hub and in again does not draw new ones.
+    local draw = self.bar_draws[faction_name]
+    local keys = draw and draw.turn == cm:turn_number() and draw.keys or nil
+    local shown = spot_offers.open_site(character, character:faction(), offers_data.tavern, nil, { zone = self.zone_name, index = self.index_in_zone,
+        difficulty = DIFFICULTY_KEYS[self.level], price_difficulty = get_current_difficulty(), price_share = share, keys = keys })
+    self.bar_draws[faction_name] = { turn = cm:turn_number(), keys = shown }
     return true
 end
 
@@ -473,6 +479,7 @@ function TavernState:export_state_as_table()
         visiting_enemy_faction_name = self.visiting_enemy_faction_name or false,
         pending_hub = self.pending_hub or false,
         bar_closed_until = self.bar_closed_until,
+        bar_draws = self.bar_draws,
         hall_closed_until = self.hall_closed_until,
         hall_stock = self.hall_stock or false,
         pending_hall = self.pending_hall or false,
@@ -491,6 +498,7 @@ function TavernState:reinstate(previous_state)
     self.visiting_enemy_faction_name = previous_state.visiting_enemy_faction_name or nil
     self.pending_hub = previous_state.pending_hub or nil
     self.bar_closed_until = previous_state.bar_closed_until or {}
+    self.bar_draws = previous_state.bar_draws or {}
     self.hall_closed_until = previous_state.hall_closed_until or {}
     self.hall_stock = previous_state.hall_stock or nil
     self.pending_hall = previous_state.pending_hall or nil
@@ -519,6 +527,7 @@ function TavernState:new(zone_name, index_in_zone, entry)
         controlling_faction_subculture = "",
         is_capture_triggered = false,
         bar_closed_until = {},
+        bar_draws = {},
         hall_closed_until = {},
     }
     setmetatable(t, self)

@@ -337,8 +337,10 @@ end
 --- @param faction faction The lord's faction.
 --- @param site table|nil The site record to open, e.g. the spoils pick, or nil to roll a treasure site.
 --- @param event table|nil The won battle's event, for the spoils pick.
---- @param tavern table|nil For a Tavern's bar: { zone, index, difficulty, price_difficulty, price_share }. Its offers act at `difficulty` and
---- are priced at `price_difficulty` times `price_share`.
+--- @param tavern table|nil For a Tavern's bar: { zone, index, difficulty, price_difficulty, price_share, keys }. Its offers act at `difficulty`
+--- and are priced at `price_difficulty` times `price_share`. `keys`, when set, are the offers the bar showed earlier this turn: they are shown
+--- again in place of a new draw, leaving out any that are no longer eligible.
+--- @returns table The offer keys the site shows.
 function M.open_site(character, faction, site, event, tavern)
     local faction_name = faction:name()
     site = site or pick_site()
@@ -353,7 +355,15 @@ function M.open_site(character, faction, site, event, tavern)
         targets = {},
         event = event,
     }
-    local keys, signature = M.draw(site, ctx)
+    local keys, signature = {}, nil
+    if tavern and tavern.keys then
+        for _, key in ipairs(tavern.keys) do
+            if eligible(offers_data.at(key, ctx.difficulty), ctx) then keys[#keys + 1] = key end
+        end
+        log("spot: " .. faction_name .. " reopens " .. site.key .. " with the offers it showed this turn: " .. table.concat(keys, ", "))
+    else
+        keys, signature = M.draw(site, ctx)
+    end
     local pending = { site = site.key, offers = keys, signature = signature, general_cqi = ctx.general_cqi, x = ctx.x, y = ctx.y,
         difficulty = ctx.difficulty, cards = {}, targets = {} }
     --- A Tavern's bar prices each offer at the campaign difficulty times its price share, rounded to 25 gold. The debug `spot_cost` replaces
@@ -372,6 +382,7 @@ function M.open_site(character, faction, site, event, tavern)
     M.pending_by_faction[faction_name] = pending
     log("spot: " .. faction_name .. " opens " .. site.key .. " with lord " .. ctx.general_cqi .. ", treasury " .. offer_effects.treasury(faction_name))
     M.launch_site(faction_name)
+    return keys
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
