@@ -1,5 +1,6 @@
---- Registers every core:add_listener used by the mod: FactionTurnStart, AreaEntered, the DilemmaChoiceMadeEvent listeners (battle, smithy,
---- treasure site, tower and Tavern), and the MctInitialized hook. Manager instances are populated by the entry point's pre_first_tick_callback.
+--- Registers every core:add_listener used by the mod: FactionTurnStart, AreaEntered, the DilemmaChoiceMadeEvent listeners (registered
+--- greyed-out choices, battle, smithy, treasure site, tower and Tavern), the dilemma panel's grey-out, and the MctInitialized hook. Manager
+--- instances are populated by the entry point's pre_first_tick_callback.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/core/mct")
@@ -9,8 +10,8 @@ local IS_PERSISTENT_LISTENER = true
 local events = require("script/land_encounters/configs/events")
 local battle_dilemma_keys = require("script/land_encounters/configs/battle_categories").dilemma_keys
 local smithy_events = events.smithy
+local dilemmas = require("script/land_encounters/core/dilemmas")
 local spot_offers = require("script/land_encounters/features/spot_offers")
-local spot_battles = require("script/land_encounters/features/spot_battles")
 local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
 
 --- Tavern dilemma key -> true, for the Tavern choice listener.
@@ -39,6 +40,7 @@ M.last_round_update_turn = nil
 
 --- Registers every persistent listener. Called once at module load by the entry point.
 function M.register()
+
     --- Once per round (on the first human turn), expire stale encounters, refill them, and update POI states. Every human turn, check that
     --- faction's smithy sieges.
     core:add_listener(
@@ -210,22 +212,15 @@ function M.register()
     )
 
 
-    --- Tower offers taken on the open go-deeper dilemma, Tavern and forge choices that cannot be taken, and site or battle offers the
-    --- treasury cannot pay, get greyed-out buttons once the dilemma panel has built them. The panel is the local player's, so this UI-only
-    --- step reads the local faction.
+    --- The choices each open dilemma registered as closed when it was launched (taken tower offers, Tavern and forge choices that cannot be
+    --- taken, site or battle offers the treasury cannot pay) get greyed-out buttons once the dilemma panel has built them. The panel is the
+    --- local player's, so this UI-only step reads the local faction.
     core:add_listener(
-        "land_enc_tower_grey_out_taken",
+        "land_enc_grey_out_closed_choices",
         "PanelOpenedCampaign",
         function(context) return context.string == "events" end,
         function()
-            cm:callback(function()
-                local faction_name = cm:get_local_faction_name(true)
-                M.point_of_interest_event_manager:grey_out_taken_tower_offers(faction_name)
-                M.point_of_interest_event_manager:grey_out_closed_tavern_choices(faction_name)
-                M.point_of_interest_event_manager:grey_out_closed_smithy_choices(faction_name)
-                spot_offers.grey_out_unaffordable(faction_name)
-                spot_battles.grey_out_unaffordable(faction_name)
-            end, 0.1)
+            cm:callback(function() dilemmas.grey_out_open(cm:get_local_faction_name(true)) end, 0.1)
         end,
         IS_PERSISTENT_LISTENER
     )

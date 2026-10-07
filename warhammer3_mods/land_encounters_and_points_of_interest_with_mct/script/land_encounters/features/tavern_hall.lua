@@ -128,18 +128,19 @@ function M.open(tavern, faction, general_cqi, own, hired)
     local treasury = faction:treasury()
     local slots, choices = {}, {}
     --- Adds one slot and its choice. `key` is its unit, or nil for the hero, whose `line` describes it. A hire the treasury cannot pay still
-    --- shows its price and unit, and `shown_price` marks it so a click on it anyway is undone.
+    --- shows its price and unit, and is marked unaffordable so a click on it anyway is undone.
     local function add(kind, number, key, base, line)
         local markup = get_mct_settings().tavern_hire_markup + (kind == "renown" and tavern_data.hall.renown_extra or 0)
         local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, price = tavern:charge(base + markup, faction_name) }
         local choice = { key = slot.choice, lines = { line } }
         if key and room < 1 then
             choice.lines[#choice.lines + 1] = LINE_NO_ROOM
+            choice.closed = true
         elseif treasury < slot.price then
             choice.lines[#choice.lines + 1] = LINE_UNAFFORDABLE
             choice.gold = -slot.price
             if key then choice.units = { force = force, keys = { key } } end
-            slot.shown_price = true
+            choice.unaffordable = true
         else
             slot.ok = true
             choice.gold = -slot.price
@@ -159,13 +160,6 @@ function M.open(tavern, faction, general_cqi, own, hired)
     log("tavern: hall of the " .. tavern:describe() .. " for " .. faction_name .. " (hired " .. (hired or 0) .. ", treasury " .. treasury .. ", room " .. room
         .. "): " .. table.concat(shown, ", "))
     dilemmas.launch(M.DILEMMA, choices, faction_name)
-end
-
---- The open hall's choices that cannot be taken: hires without room or gold.
---- @param tavern TavernState The Tavern.
---- @returns string, table The hall's dilemma key and the choice keys to grey out.
-function M.closed_choices(tavern)
-    return M.DILEMMA, dilemmas.closed_keys(tavern.pending_hall.slots)
 end
 
 --- Applies a hall choice. A hire the payload granted and charged leaves the stock (a hero is freed here), and the first one of a visit closes
@@ -188,9 +182,8 @@ function M.resolve(tavern, faction_name, choice_key)
     if not slot.ok then
         log("tavern: " .. faction_name .. " chose " .. choice_key .. ", shown as closed, so nothing is hired and the hall reopens")
         --- A closed hire that showed its price and unit was paid out by its payload, so the gold goes back and the unit leaves.
-        if slot.shown_price then
-            cm:treasury_mod(faction_name, slot.price)
-            if slot.key then cm:remove_unit_from_character(cm:char_lookup_str(pending.general_cqi), slot.key) end
+        if dilemmas.refund(faction_name, M.DILEMMA, choice_key) and slot.key then
+            cm:remove_unit_from_character(cm:char_lookup_str(pending.general_cqi), slot.key)
         end
     else
         log("tavern: " .. faction_name .. " hires " .. (slot.key or "a hero") .. " for " .. slot.price .. " gold at the " .. tavern:describe())

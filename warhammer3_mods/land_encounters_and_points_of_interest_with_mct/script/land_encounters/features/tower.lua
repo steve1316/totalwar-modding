@@ -776,13 +776,6 @@ function TowerEventDelegate:launch_deeper(faction_name)
     launch_dilemma(EVENT_DEEPER .. "_floor_" .. delve.floor, choices, faction_name)
 end
 
---- Greys out the taken offers on a player's open go-deeper dilemma. UI only.
---- @param faction_name string The local player's faction.
-function TowerEventDelegate:grey_out_taken_offers(faction_name)
-    local delve = self.delves[faction_name]
-    if delve and not delve.in_battle then tower_offers.grey_out_taken(delve, EVENT_DEEPER .. "_floor_" .. delve.floor) end
-end
-
 --- Sends a Daemon's deal army at the delving faction's capital: an army of a random Chaos faction from the `daemons_deal` offer, spawned
 --- somewhere in the capital's province as a lasting invasion that stays until beaten. A faction with no capital is spared.
 --- @param faction_name string The delving faction.

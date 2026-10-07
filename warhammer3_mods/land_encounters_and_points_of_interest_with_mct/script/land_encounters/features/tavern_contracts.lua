@@ -211,11 +211,12 @@ function M.open(tavern, faction, general_cqi)
         elseif treasury < slot.deposit then
             lines[#lines + 1] = LINE_UNAFFORDABLE
             choice.gold = -slot.deposit
-            slot.refund = slot.deposit
+            choice.unaffordable = true
         else
             slot.ok = true
             choice.gold = -slot.deposit
         end
+        choice.closed = not slot.ok
         slots[#slots + 1] = slot
         choices[#choices + 1] = choice
     end
@@ -229,13 +230,6 @@ function M.open(tavern, faction, general_cqi)
     log("tavern: board of the " .. tavern:describe() .. " for " .. faction_name .. " (holds " .. #M.held(faction_name) .. ", treasury " .. treasury .. "): "
         .. table.concat(shown, ", "))
     dilemmas.launch(M.DILEMMA, choices, faction_name)
-end
-
---- The open board's choices that cannot be taken.
---- @param tavern TavernState The Tavern.
---- @returns string, table The board's dilemma key and the choice keys to grey out.
-function M.closed_choices(tavern)
-    return M.DILEMMA, dilemmas.closed_keys(tavern.pending_board.slots)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -576,7 +570,7 @@ function M.resolve(tavern, faction_name, choice_key, invasion_battle_manager)
     else
         log("tavern: " .. faction_name .. " chose " .. choice_key .. ", shown as closed, so no contract is taken and the board reopens")
         --- An unaffordable contract shown with its deposit card was charged by its payload, so the gold goes back.
-        if slot.refund then cm:treasury_mod(faction_name, slot.refund) end
+        dilemmas.refund(faction_name, M.DILEMMA, choice_key)
     end
     M.open(tavern, faction, pending.general_cqi)
 end

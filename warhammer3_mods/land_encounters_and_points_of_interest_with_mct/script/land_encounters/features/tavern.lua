@@ -237,40 +237,39 @@ function TavernState:open_hub(faction, general_cqi)
     local treasury = faction:treasury()
     local hall_turns = turns_left(self.hall_closed_until, faction:name())
     local bar_turns = turns_left(self.bar_closed_until, faction:name())
-    --- Prices shown on choices the treasury cannot pay, by choice key, refunded when one is clicked anyway.
-    local refunds = {}
     local upgrade = { key = UPGRADE_CHOICE }
     if not is_owner then
         upgrade = { key = SEIZE_CHOICE, lines = { PAYLOAD_TEXT_SEIZE } }
     elseif price == nil then
         upgrade.lines = { PAYLOAD_TEXT_FULLY_UPGRADED }
+        upgrade.closed = true
     else
         upgrade.lines = { PAYLOAD_TEXT_UPGRADE .. self.level }
         upgrade.gold = -price
         if treasury < price then
             upgrade.lines[2] = PAYLOAD_TEXT_UNAFFORDABLE
-            refunds[UPGRADE_CHOICE] = price
+            upgrade.unaffordable = true
         end
     end
     local donation_offer = guild_patron.donation_offer("tavern", faction:name(), treasury)
-    local donation = { key = DONATION_CHOICE, lines = { donation_offer.line } }
+    local donation = { key = DONATION_CHOICE, lines = { donation_offer.line }, closed = not donation_offer.price }
     if donation_offer.price then
         donation.gold = -donation_offer.price
         if not donation_offer.affordable then
             donation.lines[2] = PAYLOAD_TEXT_UNAFFORDABLE
-            refunds[DONATION_CHOICE] = donation_offer.price
+            donation.unaffordable = true
         end
     end
     local choices = {
-        { key = HALL_CHOICE, lines = { hall_turns == 0 and PAYLOAD_TEXT_HALL or PAYLOAD_TEXT_HALL_CLOSED .. hall_turns } },
+        { key = HALL_CHOICE, lines = { hall_turns == 0 and PAYLOAD_TEXT_HALL or PAYLOAD_TEXT_HALL_CLOSED .. hall_turns }, closed = hall_turns > 0 },
         { key = BOARD_CHOICE, lines = { PAYLOAD_TEXT_BOARD } },
-        { key = BAR_CHOICE, lines = { bar_turns == 0 and PAYLOAD_TEXT_BAR_OPEN or PAYLOAD_TEXT_BAR_CLOSED .. bar_turns } },
+        { key = BAR_CHOICE, lines = { bar_turns == 0 and PAYLOAD_TEXT_BAR_OPEN or PAYLOAD_TEXT_BAR_CLOSED .. bar_turns }, closed = bar_turns > 0 },
         upgrade,
         donation,
         { key = LEAVE_CHOICE, lines = { PAYLOAD_TEXT_LEAVE } },
     }
-    self.pending_hub = { level = self.level, upgrade = upgrade.gold ~= nil and not refunds[UPGRADE_CHOICE], seize = not is_owner,
-        donation = donation_offer.affordable == true, hall = hall_turns == 0, bar = bar_turns == 0, general_cqi = general_cqi, refunds = refunds }
+    self.pending_hub = { level = self.level, upgrade = upgrade.gold ~= nil and not upgrade.unaffordable, seize = not is_owner,
+        donation = donation_offer.affordable == true, hall = hall_turns == 0, bar = bar_turns == 0, general_cqi = general_cqi }
     log("tavern: hub of the " .. self:describe() .. " for " .. faction:name() .. " (owner " .. tostring(is_owner) .. ", treasury " .. treasury
         .. ", upgrade " .. (self.pending_hub.upgrade and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
         .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ", donation "
@@ -278,22 +277,6 @@ function TavernState:open_hub(faction, general_cqi)
     self:show_owner_in_dilemmas()
     self:show_scene(is_owner)
     dilemmas.launch(EVENT_HUB_BY_LEVEL[self.level], choices, faction:name())
-end
-
---- The open dilemma's choices that cannot be taken: on the hall, hires without room or gold, and on the board, contracts that cannot be
---- taken. On the hub, a hall or bar closed to the visitor, an owner's upgrade that is not paid, and a donation that is not paid.
---- @returns string|nil, table The open dilemma's key and the choice keys to grey out, or nil when none is open.
-function TavernState:closed_choices()
-    if self.pending_hall then return tavern_hall.closed_choices(self) end
-    if self.pending_board then return tavern_contracts.closed_choices(self) end
-    local offer = self.pending_hub
-    if not offer then return nil end
-    local keys = {}
-    if not offer.hall then keys[#keys + 1] = HALL_CHOICE end
-    if not offer.bar then keys[#keys + 1] = BAR_CHOICE end
-    if not offer.upgrade and not offer.seize then keys[#keys + 1] = UPGRADE_CHOICE end
-    if not offer.donation then keys[#keys + 1] = DONATION_CHOICE end
-    return EVENT_HUB_BY_LEVEL[offer.level], keys
 end
 
 --- Opens the bar for a lord: 3 offers acting at the Tavern's level, priced at the campaign difficulty, a quarter less for the owner, and
@@ -325,11 +308,7 @@ function TavernState:resolve_hub_choice(choice_key, faction_name)
     log("tavern: " .. faction_name .. " chose " .. tostring(choice_key) .. " in the hub of the " .. self:describe())
     if not hub then return false end
     --- A greyed-out paid choice clicked anyway was charged by its payload, so the gold goes back.
-    local refund = (hub.refunds or {})[choice_key]
-    if refund then
-        cm:treasury_mod(faction_name, refund)
-        log("tavern: " .. faction_name .. " chose " .. choice_key .. " without the gold, so " .. refund .. " is refunded")
-    end
+    dilemmas.refund(faction_name, EVENT_HUB_BY_LEVEL[hub.level], choice_key)
     if choice_key == HALL_CHOICE and hub.hall then
         tavern_hall.open(self, cm:get_faction(faction_name), hub.general_cqi)
     elseif choice_key == BOARD_CHOICE then
@@ -691,16 +670,6 @@ function TavernEventDelegate:bar_closed(faction_name, site, took)
     log("tavern: " .. faction_name .. " goes back to the hub of the " .. tavern:describe())
     tavern:open_hub(cm:get_faction(faction_name), site.general_cqi)
     self:keep_route(faction_name, tavern)
-end
-
---- Greys out the hub choices that cannot be taken on the local player's open hub.
---- @param faction_name string The local player's faction.
-function TavernEventDelegate:grey_out_closed_choices(faction_name)
-    local pending = self.pending_dilemma_by_faction[faction_name]
-    local tavern = pending and self:find(pending.zone, pending.index)
-    if not tavern then return end
-    local dilemma_key, keys = tavern:closed_choices()
-    if dilemma_key then dilemmas.grey_out(dilemma_key, keys) end
 end
 
 --- Settles a faction's contract whose mission ended (see features/tavern_contracts.lua).

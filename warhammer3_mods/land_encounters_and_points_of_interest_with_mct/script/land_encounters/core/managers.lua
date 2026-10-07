@@ -1404,18 +1404,6 @@ function PointOfInterestEventManager:trigger_tavern_dilemma_event_given_choice(d
     self.tavern_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
 end
 
---- Greys out the hub choices that cannot be taken on the local player's open Tavern hub.
---- @param faction_name string The local player's faction.
-function PointOfInterestEventManager:grey_out_closed_tavern_choices(faction_name)
-    self.tavern_event_delegate:grey_out_closed_choices(faction_name)
-end
-
---- Greys out the forge choices that cannot be taken on the local player's open Smithy forge.
---- @param faction_name string The local player's faction.
-function PointOfInterestEventManager:grey_out_closed_smithy_choices(faction_name)
-    self.smithy_event_delegate:grey_out_closed_choices(faction_name)
-end
-
 --- Starts the battle at a Tavern contract's marked spot when a lord walks onto it.
 --- @param character character The lord.
 --- @param marker_ref string The marker type's key.
@@ -1430,12 +1418,6 @@ end
 --- @param outcome string "succeeded", "failed" or "cancelled".
 function PointOfInterestEventManager:on_tavern_contract_ended(faction_name, mission_key, outcome)
     self.tavern_event_delegate:on_contract_ended(faction_name, mission_key, outcome)
-end
-
---- Greys out the taken tower offers on the local player's open go-deeper dilemma.
---- @param faction_name string The local player's faction.
-function PointOfInterestEventManager:grey_out_taken_tower_offers(faction_name)
-    self.tower_event_delegate:grey_out_taken_offers(faction_name)
 end
 
 --- Forwards a dilemma-choice event to the smithy POI delegate, which finds the smithy by the choosing faction.

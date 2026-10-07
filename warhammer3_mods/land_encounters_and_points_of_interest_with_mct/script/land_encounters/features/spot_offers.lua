@@ -302,7 +302,7 @@ local function build_choice(offer, pending, faction_name, choice_key)
     pending.shown_affordable[offer.key] = M.affordable(offer, faction_name, pending)
     local price_as_card = offers_data.site_by_key[pending.site].price_as_card and offer.cost
     if not pending.shown_affordable[offer.key] then
-        return { key = choice_key, lines = { line, offers_data.unaffordable_line }, gold = price_as_card and -site_cost(pending, offer) or nil }
+        return { key = choice_key, lines = { line, offers_data.unaffordable_line }, gold = price_as_card and -site_cost(pending, offer) or nil, unaffordable = true }
     end
     --- An offer that may start a battle says so, as every battle spot choice that leads to a fight does.
     local fights = offer.guardian or gamble_has(offer, "guardian")
@@ -510,7 +510,7 @@ function M.take(faction_name, choice_key)
     if pending.shown_affordable and pending.shown_affordable[offer.key] == false then
         log("spot: " .. offer.key .. " was shown as unaffordable (cost " .. site_cost(pending, offer) .. ", treasury now "
             .. offer_effects.treasury(faction_name) .. "), nothing is bought and the site reopens")
-        if offers_data.site_by_key[pending.site].price_as_card and offer.cost then cm:treasury_mod(faction_name, site_cost(pending, offer)) end
+        dilemmas.refund(faction_name, offers_data.dilemma_prefix .. pending.site, choice_key)
         M.launch_site(faction_name)
         return
     end
@@ -549,21 +549,6 @@ function M.take(faction_name, choice_key)
     log("spot: " .. faction_name .. " took " .. offer.key .. " at " .. pending.site .. " for " .. paid .. " gold, treasury " .. before .. " -> "
         .. offer_effects.treasury(faction_name) .. " (payload cards land after this)")
     if pending.tavern and M.on_tavern_bar_closed then M.on_tavern_bar_closed(faction_name, pending, true) end
-end
-
---- Greys out the offers on a faction's open site dilemma that the treasury could not pay when it was shown. UI only: one clicked anyway
---- reopens the site.
---- @param faction_name string The local faction key.
-function M.grey_out_unaffordable(faction_name)
-    local pending = M.pending_by_faction[faction_name]
-    if pending == nil or pending.shown_affordable == nil then return end
-    local keys = {}
-    for _, key in ipairs(pending.offers) do
-        if pending.shown_affordable[key] == false then
-            keys[#keys + 1] = site_choice_key(pending, key)
-        end
-    end
-    dilemmas.grey_out(offers_data.dilemma_prefix .. pending.site, keys)
 end
 
 --- True when a dilemma key is a treasure site's.

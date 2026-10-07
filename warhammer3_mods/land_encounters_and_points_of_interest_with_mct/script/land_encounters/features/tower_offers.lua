@@ -11,7 +11,6 @@ local debug_config = require("script/land_encounters/configs/debug")
 local tower_champions = require("script/land_encounters/configs/tower_champions")
 local offer_effects = require("script/land_encounters/core/offer_effects")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
-local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
 local steps = require("script/land_encounters/utils/steps")
@@ -814,7 +813,7 @@ function M.describe_next_floor(next_floor)
 end
 
 --- Builds an offer's go-deeper choice: its line (or its not-enough-gold line when the haul cannot pay), then where it leads. A skip leads
---- past the next floor, and a bonus floor's own line already says where it leads. A stay offer taken on this floor only says it was taken.
+--- past the next floor, and a bonus floor's own line already says where it leads. A stay offer taken on this floor says so and is greyed out.
 --- A unit offer the haul can pay for shows its units as cards, and its payload adds them to the army.
 --- @param offer_key string The offer key.
 --- @param delve table The delve record.
@@ -822,7 +821,7 @@ end
 --- @returns table A choice record for `launch_dilemma`.
 function M.choice(offer_key, delve, next_floor)
     local offer = at(offer_key, delve)
-    if spent(offer, delve) then return { key = M.choice_key(offer), lines = { TAKEN_LINE } } end
+    if spent(offer, delve) then return { key = M.choice_key(offer), lines = { TAKEN_LINE }, closed = true } end
     local affordable = delve.haul.gold >= offer_cost(offer, delve)
     local line = battle_modifiers.ally_line(offers_data.line(offer.key, offer_difficulty(delve), delve.floor), offer.ally_units and delve.ally_theme)
     local lines = { line .. (affordable and "" or offers_data.unaffordable_suffix) }
@@ -922,19 +921,6 @@ function M.show_climb(delve)
         lines[#lines + 1] = string.format(climb_text(floor == delve.floor + 1 and "next" or "ahead"), floor_name(floor, tower_data.floors[floor].difficulty))
     end
     set_floor_context(CLIMB_CONTEXT_KEY, delve.floor, table.concat(lines, "\n"))
-end
-
---- Greys out the buttons of the stay offers already taken on the open go-deeper dilemma, so each keeps its slot but cannot be clicked. UI only:
---- a taken slot that is clicked anyway just reopens.
---- @param delve table The delve record.
---- @param dilemma_key string The open go-deeper dilemma's key.
-function M.grey_out_taken(delve, dilemma_key)
-    local taken = {}
-    for _, key in ipairs(delve.offers or {}) do
-        local offer = find(key)
-        if spent(offer, delve) then taken[#taken + 1] = M.choice_key(offer) end
-    end
-    dilemmas.grey_out(dilemma_key, taken)
 end
 
 --- Turns the sabotage taken for the next floor into what its army needs: generator options (`no_heroes`, `fewer_units`, `max_tier`, `min_tier`,

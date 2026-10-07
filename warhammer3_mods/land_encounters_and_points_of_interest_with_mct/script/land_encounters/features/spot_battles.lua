@@ -178,7 +178,7 @@ function M.launch(faction_name)
         local line = battle_modifiers.ally_line(offers_data.line_prefix .. key .. "_" .. pending.difficulty, offer.allies and pending.ally_theme)
         local can_pay = spot_offers.affordable(offer, faction_name)
         pending.shown_affordable[key] = can_pay
-        local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line } }
+        local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line }, closed = not can_pay }
         local cards = pending.cards[key]
         local force = can_pay and cards and cards.units and tower_army.delving_force(pending.general_cqi)
         if force then choice.units = { force = force, keys = cards.units } end
@@ -192,7 +192,7 @@ function M.launch(faction_name)
             pending.shown_affordable[key] = can_pay
             lines = can_pay and { line, offers_data.returns_line } or { line, offers_data.unaffordable_line }
         end
-        choices[#choices + 1] = { key = spot_offers.choice_key(key), lines = lines }
+        choices[#choices + 1] = { key = spot_offers.choice_key(key), lines = lines, closed = pending.taken[key] or pending.shown_affordable[key] == false }
     end
     choices[#choices + 1] = { key = offers_data.avoid_choice_key, lines = { AVOID_LINE, AVOID_CONSEQUENCES_LINE } }
     M.show_missions(pending)
@@ -221,21 +221,6 @@ function M.open(event, character, faction, with_offers)
     log("spot battle: " .. faction_name .. " opens " .. event.dilemma .. (with_offers and " with offers" or " plain") .. ", lord " .. ctx.general_cqi
         .. ", treasury " .. offer_effects.treasury(faction_name))
     M.launch(faction_name)
-end
-
---- Greys out what cannot be taken on a faction's open pre-battle dilemma: the offers and missions the treasury could not pay when it was
---- shown, and the missions already taken. UI only: an offer clicked anyway starts the battle as it is, and a mission just reopens.
---- @param faction_name string The local faction key.
-function M.grey_out_unaffordable(faction_name)
-    local pending = M.pending_by_faction[faction_name]
-    if pending == nil or pending.shown_affordable == nil then return end
-    local keys = {}
-    for _, list in ipairs({ pending.offers, pending.missions or {} }) do
-        for _, key in ipairs(list) do
-            if pending.shown_affordable[key] == false or (pending.taken or {})[key] then keys[#keys + 1] = spot_offers.choice_key(key) end
-        end
-    end
-    dilemmas.grey_out(pending.dilemma, keys)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
