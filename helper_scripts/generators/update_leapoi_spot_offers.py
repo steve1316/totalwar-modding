@@ -19,6 +19,7 @@ from typing import Dict, List, Pattern, Tuple
 
 from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
 from generators import leapoi_battle_modifiers as battle_modifiers
+from generators.leapoi_stat_icons import add_stat_icons
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
 TABLE_FILE = "land_encounters_and_points_of_interest.tsv"
@@ -1012,7 +1013,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
 
     def line(component: str, icon: str, text: str) -> None:
         add(table("campaign_payload_ui_details_tables"), component, "ui/campaign ui/effect_bundles/" + icon, "default", 0)
-        add(LOC_PREFIX + "campaign_payload_ui_details.loc.tsv", "campaign_payload_ui_details_description_" + component, text, "false")
+        add(LOC_PREFIX + "campaign_payload_ui_details.loc.tsv", "campaign_payload_ui_details_description_" + component, add_stat_icons(text), "false")
 
     def label(dilemma: str, choice: str, text: str) -> None:
         add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")

@@ -24,7 +24,7 @@ M.towers_intro = "One tower stands in each map zone, held by a random faction. M
 M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, or onto your own to pick a free item. The forge then cools for the Smithy "
     .. "cooldown, plus extra turns at lower forge levels. Upgrade the forge for better items, a shorter cooldown and more frequent tribute. A "
     .. "Smithy held by anyone else can be taken by beating its garrison, which gets harder at higher levels. Taking one from a faction you are not "
-    .. "at war with costs 20 relations with them. Enemies can besiege or retake yours, and AI owners upgrade theirs now and then. Every Smithy "
+    .. "at war with costs 20 [[img:icon_diplomacy]][[/img]] relations with them. Enemies can besiege or retake yours, and AI owners upgrade theirs now and then. Every Smithy "
     .. "belongs to the Smiths' Association. A Generous Donation of 50000 gold at your own forge raises every Smithy to at least level 2 and blesses "
     .. "your armies' weapons for good. A second donation of 100000 gold raises every Smithy to level 3 and doubles the blessing. The prices "
     .. "below are at the default Smithy prices setting."
@@ -33,10 +33,10 @@ M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, or onto your
 M.tavern_intro = "Each map zone has one racial Tavern, run by a single race, and one neutral Tavern open to all. Walk a lord onto an unclaimed "
     .. "Tavern to claim it, onto your own to open its hub, or onto one held by an ally or a neutral faction to visit as a guest. Any Tavern you do "
     .. "not own can be taken by beating its garrison, which gets harder at higher levels. Taking one from a faction you are not at war with costs "
-    .. "20 relations with them. Enemies at war with you can besiege yours. You then fight them with its garrison or surrender it, and a Tavern "
+    .. "20 [[img:icon_diplomacy]][[/img]] relations with them. Enemies at war with you can besiege yours. You then fight them with its garrison or surrender it, and a Tavern "
     .. "you lose drops a level. Only the owner can upgrade a Tavern, and AI owners do so now and then.\n\n"
     .. "The mercenary hall hires out units of the Tavern's race (two random races at a neutral one), famous regiments, a hero and a few units of "
-    .. "your own kind. Each costs gold over its recruitment cost (1000 by default), and a famous regiment 1500 more. The stock is shared by every "
+    .. "your own kind. Each costs gold over its [[img:icon_money]][[/img]] recruitment cost (1000 by default), and a famous regiment 1500 more. The stock is shared by every "
     .. "visitor and changes every few turns. You can hire a few per visit (2 by default), then the hall closes to your faction for a few turns.\n\n"
     .. "At the bar, 3 of the drinks and games below are on offer each visit. Their price rises with the campaign's difficulty, and a higher level "
     .. "makes each drink stronger. Taking one closes the bar to your faction for a few turns. The owner pays a quarter less at their own bar.\n\n"
@@ -47,8 +47,8 @@ M.tavern_intro = "Each map zone has one racial Tavern, run by a single race, and
     .. "marked spots and quests can roll battle modifiers like any other fight. The board shows them before you take the contract, and they do not "
     .. "change the reward.\n\n"
     .. "A Generous Donation of 50000 gold at any Tavern raises every Tavern to at least level 2 and ends the Guild's surcharge for you. It also "
-    .. "blesses your faction's income, trade and armies for good, with experience for every lord and hero each turn. A second donation of 100000 "
-    .. "gold raises every Tavern to level 3 and doubles the blessing."
+    .. "blesses your faction's [[img:icon_income]][[/img]] income, trade and armies for good, with [[img:icon_experience]][[/img]] experience for "
+    .. "every lord and hero each turn. A second donation of 100000 gold raises every Tavern to level 3 and doubles the blessing."
 
 --- Encounters page spot offer sections in page order, one per offer pool in configs/spot_offers.lua.
 M.spot_offer_sections = {
