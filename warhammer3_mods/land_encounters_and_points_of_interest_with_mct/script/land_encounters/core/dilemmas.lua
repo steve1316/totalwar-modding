@@ -6,17 +6,21 @@ local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
 local M = {}
 
+--- The choice keys of a dilemma in order, as the DB names them.
+M.CHOICE_KEYS = { "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH" }
+
 --- Launches a custom dilemma. Each choice shows text lines and can pay gold, items and units when chosen.
 --- @param key string The dilemma key.
---- @param choices table An array of { key = "FIRST", lines = { `dummy_` keys }, gold = number or nil, items = { ancillary keys } or nil,
---- units = { force = military force, keys = { unit keys } } or nil }. Units show as cards and join that army.
+--- @param choices table An array of { key = "FIRST", lines = { `dummy_` keys }, gold = number or nil (paid when positive, charged when
+--- negative), items = { ancillary keys } or nil, units = { force = military force, keys = { unit keys } } or nil }. Units show as cards and
+--- join that army.
 --- @param faction_name string The faction to show the dilemma to.
 function M.launch(key, choices, faction_name)
     local faction = cm:get_faction(faction_name)
     local builder = cm:create_dilemma_builder(key)
     local payload = cm:create_payload()
     for _, choice in ipairs(choices) do
-        if choice.gold and choice.gold > 0 then
+        if choice.gold and choice.gold ~= 0 then
             payload:treasury_adjustment(choice.gold)
         end
         for _, item in ipairs(choice.items or {}) do
@@ -40,6 +44,28 @@ function M.launch(key, choices, faction_name)
         payload:clear()
     end
     cm:launch_custom_dilemma_from_builder(builder, faction)
+end
+
+--- Finds the slot a choice key belongs to, for a dilemma built from slots (records with a `choice` key and an `ok` flag).
+--- @param slots table The slots the dilemma showed.
+--- @param choice_key string The chosen choice key.
+--- @returns table|nil The slot, or nil when no slot has that key (Back, or a choice of another dilemma).
+function M.find_slot(slots, choice_key)
+    for _, slot in ipairs(slots) do
+        if slot.choice == choice_key then return slot end
+    end
+    return nil
+end
+
+--- The choice keys of the slots that cannot be taken (their `ok` flag is not set), in slot order.
+--- @param slots table The slots the dilemma showed.
+--- @returns table Choice keys to grey out.
+function M.closed_keys(slots)
+    local keys = {}
+    for _, slot in ipairs(slots) do
+        if not slot.ok then keys[#keys + 1] = slot.choice end
+    end
+    return keys
 end
 
 --- Greys out choice buttons on the open dilemma panel, so each keeps its slot but cannot be clicked. UI only: the local player's panel is

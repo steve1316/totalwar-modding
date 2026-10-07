@@ -12,6 +12,8 @@ local archetypes = require("script/land_encounters/configs/archetypes")
 --- finalized MCT option values via set_mct_settings.
 local mct_settings = {
     disable_smithies = false,
+    --- Taverns are removed from the map and do nothing.
+    disable_taverns = false,
     --- Towers are on the map and can be delved.
     enable_towers = true,
     --- Turns a tower stays closed after a delve ends.
@@ -363,6 +365,7 @@ end
 --- @param mct_mod table The MCT mod handle returned by mct:get_mod_by_key.
 function set_mct_settings(mct_mod)
     mct_settings.disable_smithies = mct_mod:get_option_by_key("disable_smithies"):get_finalized_setting()
+    mct_settings.disable_taverns = mct_mod:get_option_by_key("disable_taverns"):get_finalized_setting()
     mct_settings.enable_towers = mct_mod:get_option_by_key("enable_towers"):get_finalized_setting()
     mct_settings.tower_cooldown = mct_mod:get_option_by_key("tower_cooldown"):get_finalized_setting()
     mct_settings.smithy_cooldown = mct_mod:get_option_by_key("smithy_cooldown"):get_finalized_setting()
@@ -397,7 +400,7 @@ function set_mct_settings(mct_mod)
 
     mct_settings.enable_all_factions = mct_mod:get_option_by_key("enable_all_faction_checkboxes"):get_finalized_setting()
 
-    out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies))
+    out("DEBUG - mct_settings.disable_smithies: " .. tostring(mct_settings.disable_smithies) .. ", disable_taverns: " .. tostring(mct_settings.disable_taverns))
     out("DEBUG - mct_settings.enable_towers: " .. tostring(mct_settings.enable_towers) .. ", tower_cooldown: " .. tostring(mct_settings.tower_cooldown))
     out("DEBUG - mct_settings.smithy_cooldown: " .. tostring(mct_settings.smithy_cooldown) .. ", ready_notices: " .. tostring(mct_settings.ready_notices))
     out("DEBUG - mct_settings.spawn_percentage: " .. tostring(mct_settings.spawn_percentage))

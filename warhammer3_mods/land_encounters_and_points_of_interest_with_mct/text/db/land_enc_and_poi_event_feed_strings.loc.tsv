@@ -9,9 +9,6 @@ event_feed_strings_text_description_event_land_enc_smithy_encountered	We passed 
 event_feed_strings_text_title_event_land_enc_smithy_visit_available	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_visit_available	The Master Blacksmith Is Ready To Receive You	false
 event_feed_strings_text_description_event_land_enc_smithy_visit_available	The master blacksmith sends word that the forge is ready again. Send a lord to the smithy to choose from his new work.	false
-event_feed_strings_text_title_event_land_enc_smithy_ally_or_neutrally_controlled	Smithy	false
-event_feed_strings_text_subtitle_event_land_enc_smithy_ally_or_neutrally_controlled	Neutral Smithy Visited	false
-event_feed_strings_text_description_event_land_enc_smithy_ally_or_neutrally_controlled	We have visited a smithy belonging to a neighboring kingdom. The master blacksmith speaks to us from the walls of the building and tells us news of his kingdom, but he never lets us in. Only through war or the destruction of its owning faction can we take control of the smithy and appoint a blacksmith of our own. Maybe we should take it?	false
 event_feed_strings_text_title_event_land_enc_smithy_unconditional_surrender	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_unconditional_surrender	Smithy Surrendered	false
 event_feed_strings_text_description_event_land_enc_smithy_unconditional_surrender	We sent the master blacksmith and the garrison an urgent order to retreat, and they obeyed. The enemy has taken the smithy and its forge has lost a level, but our people live to fight another day. We will get the smithy back in time.	false
@@ -35,7 +32,7 @@ event_feed_strings_text_subtitle_event_land_enc_smithy_levelled_up_level_2	Forge
 event_feed_strings_text_description_event_land_enc_smithy_levelled_up_level_2	Our gold has rebuilt the forge and strengthened its garrison. It now stands at [[col:yellow]]level 2 of 3[[/col]]: its free pieces are of [[col:yellow]]uncommon or rare[[/col]] quality, it is ready again [[col:yellow]]7 turns[[/col]] after each piece, and its tribute arrives every [[col:yellow]]10 turns[[/col]].	false
 event_feed_strings_text_title_event_land_enc_smithy_levelled_up_level_3	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_levelled_up_level_3	Forge Improved to Level 3	false
-event_feed_strings_text_description_event_land_enc_smithy_levelled_up_level_3	Our gold has rebuilt the forge and strengthened its garrison. It now stands at [[col:yellow]]level 3 of 3[[/col]], the finest it can be: its free pieces are all [[col:yellow]]rare[[/col]], it is ready again [[col:yellow]]5 turns[[/col]] after each piece, its tribute arrives every [[col:yellow]]5 turns[[/col]], a commission yields [[col:yellow]]two masterworks[[/col]], and the master blacksmith will craft a [[col:yellow]]unique piece[[/col]] for [[col:yellow]]20,000[[/col]] gold.	false
+event_feed_strings_text_description_event_land_enc_smithy_levelled_up_level_3	Our gold has rebuilt the forge and strengthened its garrison. It now stands at [[col:yellow]]level 3 of 3[[/col]], the finest it can be: its free pieces are all [[col:yellow]]rare[[/col]], it is ready again [[col:yellow]]5 turns[[/col]] after each piece, its tribute arrives every [[col:yellow]]5 turns[[/col]], a commission yields [[col:yellow]]two masterworks[[/col]], and the master blacksmith will craft a [[col:yellow]]unique piece[[/col]] for [[col:yellow]]20000[[/col]] gold.	false
 event_feed_strings_text_title_event_land_enc_smithy_successfully_reclaimed_level_1	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_successfully_reclaimed_level_1	Smithy Reclaimed	false
 event_feed_strings_text_description_event_land_enc_smithy_successfully_reclaimed_level_1	The enemy army has been routed and the smithy is ours. We install our own master blacksmith and a detachment to guard him. The forge stands at [[col:yellow]]level 1 of 3[[/col]]. A lord can visit to take a piece or commission a masterwork, and the forge will send tribute over time.	false
@@ -267,6 +264,63 @@ event_feed_strings_text_description_event_land_enc_tower_ready	The tower's gates
 event_feed_strings_text_title_event_land_enc_tower_dark_bargain_paid	Ancient Tower	false
 event_feed_strings_text_subtitle_event_land_enc_tower_dark_bargain_paid	The Dark Bargain Is Paid	false
 event_feed_strings_text_description_event_land_enc_tower_dark_bargain_paid	What we bargained with in the tower has taken its due. Our lord is [[col:red]]wounded for 5 turns[[/col]], but keeps the Daemon's mark.	false
+event_feed_strings_text_title_event_land_enc_tavern_claimed	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_claimed	Tavern Claimed	false
+event_feed_strings_text_description_event_land_enc_tavern_claimed	We have claimed this unowned tavern and put our own keeper behind the bar. Walk a lord in again to open it.	false
+event_feed_strings_text_title_event_land_enc_tavern_encountered	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_encountered	Enemy Tavern	false
+event_feed_strings_text_description_event_land_enc_tavern_encountered	This tavern is held by our enemies. A lord at the head of an army can try to take it.	false
+event_feed_strings_text_title_event_land_enc_tavern_captured	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_captured	Tavern Taken	false
+event_feed_strings_text_description_event_land_enc_tavern_captured	We have driven out its guards and taken the tavern. Walk a lord in again to open it.	false
+event_feed_strings_text_title_event_land_enc_tavern_capture_repelled	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_capture_repelled	Attack Repelled	false
+event_feed_strings_text_description_event_land_enc_tavern_capture_repelled	The tavern's guards threw us back. It remains under their control.	false
+event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_2	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_2	Tavern Improved	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_2	The tavern has grown to level 2. Its guards are tougher, and its rooms offer more.	false
+event_feed_strings_text_title_event_land_enc_tavern_levelled_up_level_3	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_levelled_up_level_3	Tavern Improved	false
+event_feed_strings_text_description_event_land_enc_tavern_levelled_up_level_3	The tavern has grown to level 3, its highest. Its guards are the toughest, and its rooms offer the most.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_failed	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed	Contract Failed	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_failed	The deadline has passed and the work is not done. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_void	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_void	Contract Void	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_void	The contract can no longer be met, as our quarry is gone by other hands. The Guild returns our deposit.	false
+event_feed_strings_text_title_event_land_enc_tavern_bounty_sighted	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_bounty_sighted	Bounty Sighted	false
+event_feed_strings_text_description_event_land_enc_tavern_bounty_sighted	The lord we were paid to hunt has been seen here. Beat their army before the deadline to claim the bounty.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_dropped	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped	Contract Dropped	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_dropped	We have walked away from the contract. The Guild keeps our deposit, and every Tavern of the Guild charges us a quarter more for 10 turns.	false
+event_feed_strings_text_title_event_land_enc_tavern_mark_spotted	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_mark_spotted	Site Marked	false
+event_feed_strings_text_description_event_land_enc_tavern_mark_spotted	The Guild has marked this site. March a lord onto it and win the battle there before the countdown runs out.	false
+event_feed_strings_text_title_event_land_enc_tavern_mark_repelled	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_mark_repelled	Driven Back	false
+event_feed_strings_text_description_event_land_enc_tavern_mark_repelled	We were beaten at the marked site, but the mark still stands. We can try again before the countdown runs out.	false
+event_feed_strings_text_title_event_land_enc_tavern_chain_next	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_chain_next	The Quest Goes On	false
+event_feed_strings_text_description_event_land_enc_tavern_chain_next	The Guild is pleased with our work, and the next step of its quest awaits us. Its reward is greater still.	false
+event_feed_strings_text_title_event_land_enc_tavern_patron_1	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_patron_1	Patron of the Guild	false
+event_feed_strings_text_description_event_land_enc_tavern_patron_1	Our gift has been counted and recounted. Every tavern of the Guild has grown, and its keepers will not soon forget our name.	false
+event_feed_strings_text_title_event_land_enc_tavern_patron_2	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_patron_2	Great Patron of the Guild	false
+event_feed_strings_text_description_event_land_enc_tavern_patron_2	No lord has given the Guild more. Every tavern has grown to its grandest, and they all drink to our name.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_failed_patron	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_failed_patron	Contract Failed	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_failed_patron	The deadline has passed and the work is not done. The Guild keeps our deposit, but it charges its patron no more for the failure.	false
+event_feed_strings_text_title_event_land_enc_tavern_contract_dropped_patron	Tavern	false
+event_feed_strings_text_subtitle_event_land_enc_tavern_contract_dropped_patron	Contract Dropped	false
+event_feed_strings_text_description_event_land_enc_tavern_contract_dropped_patron	We have walked away from the contract. The Guild keeps our deposit, but it charges its patron no more for it.	false
+event_feed_strings_text_title_event_land_enc_smithy_patron_1	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_patron_1	Patron of the Association	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_1	Our gift has been weighed and stamped. Every smithy of the Association has grown, and its masters will not soon forget our name.	false
+event_feed_strings_text_title_event_land_enc_smithy_patron_2	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_patron_2	Great Patron of the Association	false
+event_feed_strings_text_description_event_land_enc_smithy_patron_2	No lord has given the Association more. Every smithy has grown to its grandest, and their forges burn for us first.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
 event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure changes hands.	false
@@ -336,6 +390,27 @@ event_feed_strings_text_description_event_land_enc_spot_sap_their_garrison	Our s
 event_feed_strings_text_title_event_land_enc_spot_spread_the_plague	Spread the Plague	false
 event_feed_strings_text_subtitle_event_land_enc_spot_spread_the_plague	Spread the Plague	false
 event_feed_strings_text_description_event_land_enc_spot_spread_the_plague	We drive the sick and the dying toward the enemy's lands around the place named above. The plague spreads, though our own army does not escape it entirely.	false
+event_feed_strings_text_title_event_land_enc_spot_mystery_brew_won	Mystery Brew	false
+event_feed_strings_text_subtitle_event_land_enc_spot_mystery_brew_won	A Fine Brew	false
+event_feed_strings_text_description_event_land_enc_spot_mystery_brew_won	The brew goes down like liquid fire and comes back up as courage. The whole army stands a little taller, and fights a little harder.	false
+event_feed_strings_text_title_event_land_enc_spot_mystery_brew_lost	Mystery Brew	false
+event_feed_strings_text_subtitle_event_land_enc_spot_mystery_brew_lost	A Foul Brew	false
+event_feed_strings_text_description_event_land_enc_spot_mystery_brew_lost	Whatever was in that barrel, it was not meant for drinking. The army wakes with sore heads and slow feet, and the keeper will not say what it was.	false
+event_feed_strings_text_title_event_land_enc_spot_dice_with_strangers_won	Dice with Strangers	false
+event_feed_strings_text_subtitle_event_land_enc_spot_dice_with_strangers_won	The Dice Are Kind	false
+event_feed_strings_text_description_event_land_enc_spot_dice_with_strangers_won	The dice land in our favour, again and again. The strangers pay up with sour faces, and our stake comes back doubled.	false
+event_feed_strings_text_title_event_land_enc_spot_dice_with_strangers_lost	Dice with Strangers	false
+event_feed_strings_text_subtitle_event_land_enc_spot_dice_with_strangers_lost	Loaded Dice	false
+event_feed_strings_text_description_event_land_enc_spot_dice_with_strangers_lost	The dice turn against us, and the strangers sweep our stake from the table. Only later does anyone wonder whose dice they were.	false
+event_feed_strings_text_title_event_land_enc_spot_arm_wrestle_the_champion_won	Arm-Wrestle the Champion	false
+event_feed_strings_text_subtitle_event_land_enc_spot_arm_wrestle_the_champion_won	Champion Beaten	false
+event_feed_strings_text_description_event_land_enc_spot_arm_wrestle_the_champion_won	The table groans and the crowd roars as the champion's arm slams down. Our lord walks out a legend of the common room.	false
+event_feed_strings_text_title_event_land_enc_spot_arm_wrestle_the_champion_lost	Arm-Wrestle the Champion	false
+event_feed_strings_text_subtitle_event_land_enc_spot_arm_wrestle_the_champion_lost	Arm Broken	false
+event_feed_strings_text_description_event_land_enc_spot_arm_wrestle_the_champion_lost	The champion grins, leans in, and something in our lord's arm gives way with a crack. Our lord leaves the table hurt, and the crowd cheers the champion.	false
+event_feed_strings_text_title_event_land_enc_spot_buy_rumours	Buy Rumours	false
+event_feed_strings_text_subtitle_event_land_enc_spot_buy_rumours	Buy Rumours	false
+event_feed_strings_text_description_event_land_enc_spot_buy_rumours	The keeper leans close and talks of the roads around the place named above and beyond, and we will see those lands for some time yet. Of the enemy nearby.	false
 event_feed_strings_text_title_event_land_enc_spot_send_gifts	Send Gifts	false
 event_feed_strings_text_subtitle_event_land_enc_spot_send_gifts	Send Gifts	false
 event_feed_strings_text_description_event_land_enc_spot_send_gifts	Our gifts are well received at the place named above. Their rulers speak of us more warmly now, and remember who remembered them.	false

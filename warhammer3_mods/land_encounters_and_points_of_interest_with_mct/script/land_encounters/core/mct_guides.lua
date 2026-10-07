@@ -6,6 +6,7 @@ local tower_offers = require("script/land_encounters/configs/tower_offers")
 local tower_data = require("script/land_encounters/configs/tower_data")
 local battle_categories = require("script/land_encounters/configs/battle_categories")
 local smithy_data = require("script/land_encounters/configs/smithy_data")
+local tavern_data = require("script/land_encounters/configs/tavern_data")
 local spot_offers = require("script/land_encounters/configs/spot_offers")
 local archetypes = require("script/land_encounters/configs/archetypes")
 
@@ -195,6 +196,31 @@ function M.smithy_text()
         if level.legendary_commission then facts[#facts + 1] = "a legendary item for " .. level.legendary_commission.price .. " gold" end
         if level.upgrade_price then facts[#facts + 1] = "upgrades for " .. level.upgrade_price .. " gold" end
         lines[#lines + 1] = guide_line("Level " .. number, join_words(facts, "and") .. ".")
+    end
+    return table.concat(lines, "\n")
+end
+
+--- Builds the Taverns page guide: the intro, each level's mercenary hall and what it costs to reach the next, then the name and level 1 line
+--- of every bar offer.
+--- @returns string The guide text.
+function M.taverns_text()
+    local lines = { guides.tavern_intro, "" }
+    for number, level in ipairs(tavern_data.levels) do
+        local hall = level.hall
+        local stock = { hall.units .. " units of tiers " .. hall.tiers[1] .. "-" .. hall.tiers[#hall.tiers] }
+        if hall.renown[2] > 0 then
+            stock[#stock + 1] = (hall.renown[1] == hall.renown[2] and hall.renown[1] or hall.renown[1] .. "-" .. hall.renown[2]) .. (hall.renown[2] == 1 and " famous regiment" or " famous regiments")
+        end
+        if hall.hero_rank then stock[#stock + 1] = "a rank " .. hall.hero_rank .. " hero" end
+        stock[#stock + 1] = hall.own .. " of your own kind"
+        local upgrade = level.upgrade_price and ("Upgrades to level " .. (number + 1) .. " for " .. level.upgrade_price .. " gold.") or "This is the top level."
+        lines[#lines + 1] = guide_line("Level " .. number, "the hall hires out " .. join_words(stock, "and") .. ". " .. upgrade)
+    end
+    lines[#lines + 1] = ""
+    for _, offer in ipairs(spot_offers.offers) do
+        if offer.pool == "tavern" then
+            lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
+        end
     end
     return table.concat(lines, "\n")
 end

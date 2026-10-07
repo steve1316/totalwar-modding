@@ -39,6 +39,12 @@ M.smithy_cooldown = {}
 
 --- Forge level every Smithy acts as instead of its own, e.g. { 3 }.
 M.smithy_level = {}
+--- Level every Smithy's garrison fights at when a lord tries to seize it, instead of the forge's own, e.g. { 1 } for an easy fight.
+M.smithy_fight_level = {}
+--- Level every Tavern is set to on load instead of its own, e.g. { 3 }.
+M.tavern_level = {}
+--- Contracts every Tavern board posts when it is next rolled, instead of random ones, e.g. { "marked", "chain" }.
+M.tavern_board = {}
 
 --- Spot offer keys drawn first on every treasure site after its signature offer, while they are eligible, e.g. { "send_gifts", "roll_the_bones" }.
 M.force_spot_offers = {}

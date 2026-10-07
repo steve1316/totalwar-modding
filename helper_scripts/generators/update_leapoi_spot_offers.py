@@ -95,6 +95,10 @@ DEFENCE = ("icon_stat_defence", "melee defence")
 LEADERSHIP = ("icon_stat_morale", "leadership")
 SPEED = ("icon_stat_speed", "speed")
 CHARGE = ("icon_stat_charge_bonus", "charge bonus")
+ARMOUR = ("icon_stat_armour", "armour")
+WEAPON = ("icon_stat_damage", "weapon strength")
+MISSILE = ("icon_stat_ranged_damage", "missile damage")
+RELOAD = ("icon_stat_reload_time", "faster reloads")
 
 # The line under every offer the treasury cannot pay: (icon, text).
 UNAFFORDABLE = ("treasury.png", "[[col:red]]We cannot afford this.[[/col]]")
@@ -144,10 +148,20 @@ SITES = {
     "sunken_library": ("Sunken Library", "A library has sunk into the marsh, its shelves rotting in black water. Some scrolls survive, sealed in wax and lead, "
                        "holding the secrets of other realms."),
     "spoils_of_war": ("Spoils of War", "The field is ours, and the enemy flees or lies still. Before we march on, there is more to take from this victory."),
+    "tavern_bar": ("The Bar", "The keeper leans on the bar beside barrels for every taste. Over at the tables, strangers are rolling dice, and a "
+                   "hulking champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it be?\""
+                   "\\\\n\\\\n[[col:yellow]]By Tavern level:[[/col]]\\\\n- Level 1: the house brews (Fighting Spirits gives +5), a feast heals half of each unit's losses, "
+                   "rumours cover the 3 nearest regions, and beating the champion is worth 500 experience."
+                   "\\\\n- Level 2: stronger brews (+10), a feast heals three quarters of the losses, rumours cover 5 regions, "
+                   "and the champion is worth 750 experience."
+                   "\\\\n- Level 3: the strongest brews (+15), a feast heals every loss, rumours cover 7 regions, "
+                   "and the champion is worth 1000 experience."),
 }
 
 # Shown under every site's description: the rules, said once, then the choice. Loc files store a line break as an escaped `\\n`.
 SITE_FOOTER = "\\\\n\\\\n[[col:yellow]]Choose one, or walk away.[[/col]]"
+# Footer of a site whose last choice is its own leave line, ending with that line's text, e.g. "go back to the common room.".
+LEAVE_FOOTER = "\\\\n\\\\n[[col:yellow]]Choose one, or {}[[/col]]"
 
 # Offer key -> (choice label, line). A line may use {cost}, {gold}, {won_gold}, {lost_gold} and {per_turn}, filled per difficulty.
 OFFERS: Dict[str, Tuple[str, str]] = {
@@ -312,6 +326,23 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]]."),
     "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]1 rank[[/col]] and our army [[col:green]]+5% ward save[[/col]] for 5 turns."),
     "walk_away": ("Walk Away", "Leave this place be."),
+    "fighting_spirits": ("Fighting Spirits", "Order a round of fighting spirits: " + stat("+{e0}", *ATTACK) + " and " + stat("+{e1}", *DEFENCE) + " for 5 turns."),
+    "shieldbrew": ("Shieldbrew", "Order a round of shieldbrew: " + stat("+{e0}", *DEFENCE) + " and " + stat("+{e1}", *ARMOUR) + " for 5 turns."),
+    "firewater": ("Firewater", "Order a round of firewater: " + stat("+{e0}%", *SPEED) + " and " + stat("+{e1}", *CHARGE) + " for 5 turns."),
+    "marksmans_draught": ("Marksman's Draught", "Order a round of marksman's draught: " + stat("+{e0}%", *MISSILE) + " and " + stat("{e1}%", *RELOAD)
+                          + " for 5 turns."),
+    "mystery_brew": ("Mystery Brew", "Try the keeper's mystery brew: a 50/50 chance of " + stat("+{won_e0}", *ATTACK) + " and " + stat("+{won_e1}", *LEADERSHIP)
+                     + " for 5 turns, or a hangover of " + stat("-{lost_e0}", *LEADERSHIP, colour="red") + " and " + stat("-{lost_e1}%", *SPEED, colour="red")
+                     + " for {lost_turns} turns."),
+    "feast_for_the_army": ("Feast for the Army", "Lay on a feast for the army: every unit regains [[col:green]]{heal}% of its missing strength[[/col]], and our "
+                           "army [[col:green]]ignores attrition[[/col]] next turn."),
+    "dice_with_strangers": ("Dice with Strangers", "Roll dice with strangers: a 50/50 chance our stake comes back [[col:green]]doubled[[/col]] or is "
+                            "[[col:red]]lost[[/col]]."),
+    "arm_wrestle_the_champion": ("Arm-Wrestle the Champion", "Arm-wrestle the house champion: a 50/50 chance our lord gains [[col:green]]+{won_xp} "
+                                 "experience[[/col]] or is [[col:red]]hurt, losing half their remaining health[[/col]]."),
+    "buy_rumours": ("Buy Rumours", "Buy the rumours of the road: the {count} nearest regions not our own are [[col:green]]revealed for {reveal_turns} "
+                    "turns[[/col]], and the keeper names the enemy armies nearby."),
+    "tavern_back": ("Back", "Go back to the common room."),
 }
 
 # Offer key -> its line's vanilla effect-bundle icon, reusing the icons Steve picked for the matching tower offers.
@@ -358,6 +389,9 @@ ICONS = {
     "lame_their_mounts": "attrition.png", "hunters_snares": "discouraged.png", "sacred_ground": "lileaths_blessing.png",
     "cripple_their_champion": "blood_kiss.png", "spike_the_guns": "ammo.png", "bait_and_switch": "trickster_cult.png", "last_ditch_oath": "attribute_unbreakable.png",
     "lords_glory": "rampage_savage.png", "monster_slayer": "hellforged.png", "steadfast": "morale.png", "decapitate": "nemesis_crown_sealed.png",
+    "fighting_spirits": "melee.png", "shieldbrew": "armour.png", "firewater": "charge.png", "marksmans_draught": "ranged_damage.png",
+    "mystery_brew": "random_recipe.png", "feast_for_the_army": "edict_ogr_feasts_for_the_strong.png", "dice_with_strangers": "trickster_cult.png",
+    "arm_wrestle_the_champion": "experience.png", "buy_rumours": "wh2_dlc14_def_tzarkans_whispers.png", "tavern_back": "campaign_movement.png",
     "against_the_odds": "vigour.png", "rout_the_riders": "mount.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
 }
 
@@ -512,6 +546,20 @@ MESSAGES = {
         "Our saboteurs slip into {place}, spoiling stores, cutting ropes and spreading sickness through the barracks. Its garrison is weakened and shaken."),
     "spread_the_plague": ("Spread the Plague", "",
         "We drive the sick and the dying toward the enemy's lands around {place}. The plague spreads, though our own army does not escape it entirely."),
+    "mystery_brew_won": ("Mystery Brew", "A Fine Brew",
+        "The brew goes down like liquid fire and comes back up as courage. The whole army stands a little taller, and fights a little harder."),
+    "mystery_brew_lost": ("Mystery Brew", "A Foul Brew",
+        "Whatever was in that barrel, it was not meant for drinking. The army wakes with sore heads and slow feet, and the keeper will not say what it was."),
+    "dice_with_strangers_won": ("Dice with Strangers", "The Dice Are Kind",
+        "The dice land in our favour, again and again. The strangers pay up with sour faces, and our stake comes back doubled."),
+    "dice_with_strangers_lost": ("Dice with Strangers", "Loaded Dice",
+        "The dice turn against us, and the strangers sweep our stake from the table. Only later does anyone wonder whose dice they were."),
+    "arm_wrestle_the_champion_won": ("Arm-Wrestle the Champion", "Champion Beaten",
+        "The table groans and the crowd roars as the champion's arm slams down. Our lord walks out a legend of the common room."),
+    "arm_wrestle_the_champion_lost": ("Arm-Wrestle the Champion", "Arm Broken",
+        "The champion grins, leans in, and something in our lord's arm gives way with a crack. Our lord leaves the table hurt, and the crowd cheers the champion."),
+    "buy_rumours": ("Buy Rumours", "",
+        "The keeper leans close and talks of the roads around {place} and beyond, and we will see those lands for some time yet. Of the enemy nearby: {detail}."),
     "send_gifts": ("Send Gifts", "",
         "Our gifts are well received at {place}. Their rulers speak of us more warmly now, and remember who remembered them."),
     "spy_on_their_capital": ("Spy on Their Capital", "",
@@ -548,6 +596,12 @@ RESULT_LINES = {
     "touch_the_relic_cursed": ("red", "A curse on our army for 3 turns."),
     "gamble_with_the_hermit_lost": ("red", "The hermit keeps our {cost} gold."),
     "chase_the_routers_lost": ("red", "Our lord is wounded for 2 turns."),
+    "mystery_brew_won": ("green", "A fine brew on our army for 5 turns."),
+    "mystery_brew_lost": ("red", "A hangover on our army for {lost_turns} turns."),
+    "dice_with_strangers_lost": ("red", "Our stake is lost."),
+    "arm_wrestle_the_champion_won": ("green", "+{won_xp} experience for our lord."),
+    "arm_wrestle_the_champion_lost": ("red", "Our lord loses half their remaining health."),
+    "buy_rumours": ("green", "{count} regions revealed for {reveal_turns} turns."),
     "endow_the_province": ("green", "+{points} development points."),
     "garrison_drill": ("green", "Garrison healed, and +{e0} melee attack, melee defence and leadership for {turns} turns."),
     "raise_the_settlement": ("green", "Main building +1 level."),
@@ -631,6 +685,23 @@ BUNDLES = {
                        ("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15))]),
     "dark_offering": ("force", "icon_effects_fortify.png", "Dark Offering", "A dark offering wards our army.",
                       [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 5)]),
+    "tavern_fighting_spirits": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Fighting Spirits", "Our army drank fighting spirits at a tavern.",
+                                [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15)),
+                                 ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (5, 10, 15))]),
+    "tavern_shieldbrew": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Shieldbrew", "Our army drank shieldbrew at a tavern.",
+                          [("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (5, 10, 15)),
+                           ("wh_main_effect_force_stat_armour", "force_to_force_own", (10, 15, 20))]),
+    "tavern_firewater": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Firewater", "Our army drank firewater at a tavern.",
+                         [("wh_main_effect_force_stat_speed", "force_to_force_own", (5, 10, 15)),
+                          ("wh2_dlc14_effect_force_charge_bonus_add", "force_to_force_own", (6, 10, 14))]),
+    "tavern_marksmans_draught": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Marksman's Draught", "Our army drank a marksman's draught at a tavern.",
+                                 [("wh_main_effect_force_stat_missile_damage", "force_to_force_own", (8, 12, 16)),
+                                  ("wh_main_effect_force_stat_reload_time_reduction", "force_to_force_own", (10, 15, 20))]),
+    "tavern_mystery_brew": ("force", "edict_sla_festival_of_drinking_and_delights.png", "A Fine Brew", "Our army drank a mystery brew, and it was a fine one.",
+                            [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (12, 16, 20)),
+                             ("wh_main_effect_force_stat_leadership", "force_to_force_own", (12, 16, 20))]),
+    "tavern_hangover": ("force", "discouraged.png", "Hangover", "Our army drank a mystery brew, and it was a foul one.",
+                        [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
 }
 
 # Dividends bundle: shows a faction's gold each turn through the tower's dividends effect, one bundle per amount the config pays.
@@ -699,7 +770,7 @@ local function encode(v)
     for k, value in pairs(v) do parts[#parts + 1] = string.format("%q", tostring(k)) .. ":" .. encode(value) end
     return "{" .. table.concat(parts, ",") .. "}"
 end
-io.write(encode({ sites = data.sites, spoils = data.spoils, offers = data.all_at("easy"), at = at, dividends_bundle_prefix = data.dividends_bundle_prefix,
+io.write(encode({ sites = data.sites, spoils = data.spoils, tavern = data.tavern, offers = data.all_at("easy"), at = at, dividends_bundle_prefix = data.dividends_bundle_prefix,
     tower_offers = tower.offers, tower_at = tower_at, tower_varies = tower_varies, notice_varies = notice_varies,
     tower_unaffordable_suffix = tower.unaffordable_suffix, tower_line_prefix = tower.line_prefix,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
@@ -813,7 +884,7 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
         bundles (Dict[str, Tuple]): Every bundle the generator writes, from `expand_bundles`.
 
     Returns:
-        Dict[str, str]: Placeholder -> value. Besides the offer's numbers: {won_gold}, {lost_gold}, {lost_turns}, {lost_strength}, {turns},
+        Dict[str, str]: Placeholder -> value. Besides the offer's numbers: {won_gold}, {lost_gold}, {lost_turns}, {lost_strength}, {won_xp}, {won_e0}... (an outcome bundle's effects), {turns},
         {per_turn}, {per_unit}, {tiers}, {relations} (in tens), {daemon_armies}, {armies}, {heal}, {stronger}, {weaker}, {strength}, {champion}, {ally_stronger},
         {ranks}, {targets}, {minutes} (of a battle value in seconds), {garrison} (as a percent), {ally_min}, {ally_max} and {e0}, {e1}... for the
         effects of the bundle it gives, signs dropped.
@@ -826,8 +897,12 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
             values[outcome["2"] + "_gold"] = str(abs(outcome["gold"]))
         if "army_bundle" in outcome:
             values[outcome["2"] + "_turns"] = str(outcome["army_bundle"][1])
+            for i, (_, _, value) in enumerate(bundles.get(outcome["army_bundle"][0], ("", "", "", "", []))[4]):
+                values[f"{outcome['2']}_e{i}"] = str(abs(value))
         if "own_strength" in outcome:
             values[outcome["2"] + "_strength"] = str(round(outcome["own_strength"] * 100))
+        if "lord_xp" in outcome:
+            values[outcome["2"] + "_xp"] = str(outcome["lord_xp"])
     for field in BUNDLE_FIELDS:
         if field not in offer:
             continue
@@ -888,6 +963,18 @@ def wound_turns(config: Dict) -> List[int]:
                    if "wound" in fields})
 
 
+def all_sites(config: Dict) -> List[Dict]:
+    """Lists every site with a dilemma: the treasure sites, the spoils pick and the Tavern bar.
+
+    Args:
+        config (Dict): The loaded config.
+
+    Returns:
+        List[Dict]: The site records.
+    """
+    return config["sites"] + [config["spoils"], config["tavern"]]
+
+
 def build_rows(config: Dict) -> Dict[str, List[str]]:
     """Builds every row this script owns, by file path under the mod root.
 
@@ -926,7 +1013,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     site_keys = [(c, k) for c, k in choice_keys if k == "walk_away" or by_key[k]["pool"] not in config["battle_pools"]]
     battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] in config["battle_pools"]]
     row_id = FIRST_ROW_ID
-    for site in config["sites"] + [config["spoils"]]:
+    for site in all_sites(config):
         dilemma = config["dilemma_prefix"] + site["key"]
         title, description = SITES[site["key"]]
         add(table("dilemmas_tables"), dilemma, "false", "", "", site["ui_image"], "false", "Event", "UI_CAM_EVENT_Dilemma", "", "", "false")
@@ -936,10 +1023,16 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(table("cdir_events_dilemma_payloads_tables"), row_id, "FIRST", dilemma, "TEXT_DISPLAY", "LOOKUP[dummy_do_nothing]", "default")
         row_id += 1
         add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_title_" + dilemma, title_case(title), "false")
-        add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_description_" + dilemma, description + SITE_FOOTER, "false")
+        leave = site.get("leave_line")
+        footer = LEAVE_FOOTER.format(OFFERS[leave][1][0].lower() + OFFERS[leave][1][1:]) if leave else SITE_FOOTER
+        add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_description_" + dilemma, description + footer, "false")
         labels = site_keys + ([(config["signature_choice_key"], site["signature"])] if site.get("signature") else [])
         for choice, key in labels:
-            label(dilemma, choice, title_case(OFFERS[key][0]))
+            # A site with its own leave line labels Walk away after it.
+            shown = site.get("leave_line", key) if key == "walk_away" else key
+            label(dilemma, choice, title_case(OFFERS[shown][0]))
+        if site.get("leave_line"):
+            line(config["line_prefix"] + site["leave_line"], ICONS[site["leave_line"]], OFFERS[site["leave_line"]][1])
 
     avoid_labels = read_labels(config["battle_dilemmas"], "SECOND")
     line(config["unaffordable_line"], UNAFFORDABLE[0], UNAFFORDABLE[1])
@@ -1011,6 +1104,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(STRINGS_LOC, modifiers["line_prefix"] + key, battle_modifiers.line_text(key), "false")
         shown = battle_modifiers.notice_text(key)
         _, _, icon, _ = battle_modifiers.MODIFIERS[key]
+        line(modifiers["payload_prefix"] + key, icon, battle_modifiers.payload_text(key, harm))
         objective(modifiers["notice_prefix"] + key, icon, f"[[col:{battle_modifiers.HARM_COLOUR[harm]}]]{shown}[[/col]]", shown)
     for effect, (junction, ability, name) in battle_modifiers.ABILITY_EFFECTS.items():
         add(table("effects_tables"), effect, "general_ability.png", 310, "general_ability.png", "battle", "true")
@@ -1303,12 +1397,13 @@ def check_text(config: Dict) -> None:
         SystemExit: Naming every problem found.
     """
     problems = [f"no text for {o['key']}" for o in config["offers"] if o["key"] not in OFFERS]
+    problems += [f"no text for leave line {s['leave_line']}" for s in all_sites(config) if s.get("leave_line") and s["leave_line"] not in OFFERS]
     modifier_keys = {m["key"] for m in config["battle_modifiers"]["list"]}
     generic = {m["key"] for m in config["battle_modifiers"]["list"] if "army" in m and "faction" not in m}
     problems += [f"no allied theme text for {key}" for key in sorted(generic ^ set(battle_modifiers.ALLY_THEMES))]
     problems += [f"no text for battle modifier {key}" for key in sorted(modifier_keys - set(battle_modifiers.MODIFIERS))]
     problems += [f"text for unknown battle modifier {key}" for key in sorted(set(battle_modifiers.MODIFIERS) - modifier_keys)]
-    problems += [f"no text for site {s['key']}" for s in config["sites"] + [config["spoils"]] if s["key"] not in SITES]
+    problems += [f"no text for site {s['key']}" for s in all_sites(config) if s["key"] not in SITES]
     problems += [f"no icon for {key}" for key in OFFERS if key not in ICONS]
     problems += [f"no notice for {o['key']}" for o in config["offers"]
                  if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and "trick" not in o and o["key"] not in NOTICES

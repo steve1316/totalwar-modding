@@ -152,6 +152,16 @@ function M.nearest_factions(faction, x, y, count, filter)
     return found
 end
 
+--- Returns the nearest faction at war with a faction, among the owners of the nearest regions.
+--- @param faction faction The faction whose enemies are searched.
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param filter function|nil Called with each enemy, returns true to keep it.
+--- @returns faction|nil The nearest enemy, or nil when no enemy holds a region.
+function M.nearest_enemy(faction, x, y, filter)
+    return M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) and (filter == nil or filter(other)) end)[1]
+end
+
 --- Wraps one region and its owner as a target.
 --- @param region region The region, or nil.
 --- @param with_owner boolean True to list the region's owner as a target faction too.
@@ -159,6 +169,18 @@ end
 local function region_target(region, with_owner)
     if region == nil then return nil end
     return { regions = { region:name() }, factions = with_owner and { region:owning_faction():name() } or {} }
+end
+
+--- Wraps the nearest regions that pass a filter as a target.
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param filter function Called with each region and its owner, returns true to keep it.
+--- @param count number|nil How many regions, 1 when nil.
+--- @returns table|nil { regions, factions = {} }, or nil when no region passes.
+local function regions_target(x, y, filter, count)
+    local target = { regions = {}, factions = {} }
+    for _, region in ipairs(M.nearest_regions(x, y, filter, count or 1)) do table.insert(target.regions, region:name()) end
+    return #target.regions > 0 and target or nil
 end
 
 --- Finders by target kind. Each returns { regions = { region keys }, factions = { faction keys } }, or nil when there is no target.
@@ -173,13 +195,13 @@ local FINDERS = {
         end))
     end,
     enemy_region = function(faction, x, y) return region_target(M.nearest_region(x, y, owned_by_enemy_of(faction)), true) end,
-    enemy_regions = function(faction, x, y, count)
-        local target = { regions = {}, factions = {} }
-        for _, region in ipairs(M.nearest_regions(x, y, owned_by_enemy_of(faction), count or 1)) do table.insert(target.regions, region:name()) end
-        return #target.regions > 0 and target or nil
+    enemy_regions = function(faction, x, y, count) return regions_target(x, y, owned_by_enemy_of(faction), count) end,
+    nearby_regions = function(faction, x, y, count)
+        local self_name = faction:name()
+        return regions_target(x, y, function(_, owner) return owner:name() ~= self_name end, count)
     end,
     enemy_capital = function(faction, x, y)
-        local enemy = M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) and other:has_home_region() end)[1]
+        local enemy = M.nearest_enemy(faction, x, y, function(other) return other:has_home_region() end)
         return enemy and { regions = { enemy:home_region():name() }, factions = { enemy:name() } } or nil
     end,
     friend = function(faction, x, y)
@@ -221,7 +243,7 @@ local FINDERS = {
         return { regions = {}, factions = { pool[1]:name(), pool[2]:name() } }
     end,
     enemy_friends = function(faction, x, y)
-        local enemy = M.nearest_factions(faction, x, y, 1, function(other) return faction:at_war_with(other) end)[1]
+        local enemy = M.nearest_enemy(faction, x, y)
         if enemy == nil then return nil end
         local names = { enemy:name() }
         local enemies = faction:factions_at_war_with()
@@ -365,6 +387,41 @@ function M.garrison_summary(region_key)
         parts[#parts + 1] = counts[key] .. " " .. (name ~= "" and name or key)
     end
     return units:num_items() .. " units: " .. table.concat(parts, ", ")
+end
+
+--- Lists the armies of factions at war with a faction within a map distance of a position, for a result's text, nearest first, e.g.
+--- "2 armies: Grimgor's Boyz (19 units), Clan Mors (12 units)".
+--- @param faction faction The faction whose enemies are listed.
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param radius number The map distance to look within.
+--- @returns string The armies, or "no enemy armies" when there are none.
+function M.enemy_armies_summary(faction, x, y, radius)
+    local found = {}
+    local enemies = faction:factions_at_war_with()
+    for i = 0, enemies:num_items() - 1 do
+        local enemy = enemies:item_at(i)
+        local forces = enemy:military_force_list()
+        for j = 0, forces:num_items() - 1 do
+            local force = forces:item_at(j)
+            if not force:is_armed_citizenry() and force:has_general() then
+                local general = force:general_character()
+                local dx, dy = general:logical_position_x() - x, general:logical_position_y() - y
+                local distance = dx * dx + dy * dy
+                if distance <= radius * radius then
+                    found[#found + 1] = { enemy:name(), distance, #found + 1, units = force:unit_list():num_items() }
+                end
+            end
+        end
+    end
+    if #found == 0 then return "no enemy armies" end
+    sort_nearest(found)
+    local parts = {}
+    for _, entry in ipairs(found) do
+        local name = common.get_localised_string("factions_screen_name_" .. entry[1])
+        parts[#parts + 1] = (name ~= "" and name or entry[1]) .. " (" .. entry.units .. " units)"
+    end
+    return #found .. (#found == 1 and " army: " or " armies: ") .. table.concat(parts, ", ")
 end
 
 --- Returns where a realm offer's message points: the first target region's settlement, or else the first target faction's capital.

@@ -67,6 +67,15 @@ function M.lines(keys)
     return lines
 end
 
+--- The payload lines of a fight's modifiers, to show them on a dilemma choice.
+--- @param keys table|nil The modifier keys.
+--- @returns table Payload text keys.
+function M.payload_lines(keys)
+    local lines = {}
+    for _, key in ipairs(keys or {}) do lines[#lines + 1] = data.payload_prefix .. key end
+    return lines
+end
+
 --- The offers a fight's modifiers keep out of its draw.
 --- @param keys table|nil The modifier keys.
 --- @returns table Offer key -> true.

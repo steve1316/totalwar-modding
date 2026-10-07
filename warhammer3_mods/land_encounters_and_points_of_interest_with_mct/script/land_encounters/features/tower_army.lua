@@ -88,6 +88,18 @@ function M.unit_strengths(general_cqi)
     return list
 end
 
+--- Finds the lord's own unit in its army: the unit it commands, or else the army's first unit, where the game keeps the lord.
+--- @param general_cqi number The lord's command queue index.
+--- @returns table|nil Its `unit_strengths` entry, or nil when the lord leads no army.
+function M.lord_unit(general_cqi)
+    local units = M.unit_strengths(general_cqi)
+    for _, entry in ipairs(units) do
+        local ok, commanded = pcall(function() return entry.unit:has_unit_commander() and entry.unit:unit_commander():command_queue_index() == general_cqi end)
+        if ok and commanded then return entry end
+    end
+    return units[1]
+end
+
 --- Lists the delving army's regular units, leaving out the lord and heroes.
 --- @param general_cqi number The delving lord's command queue index.
 --- @returns table The `unit_strengths` entries that are not characters.

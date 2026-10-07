@@ -9,7 +9,14 @@ local M = {}
 --- tavern (from constants/events/tavern_events.lua)
 --- Source file is empty (stub).
 
-M.tavern = {}
+M.tavern = {
+    "land_enc_dilemma_tavern_hub_level_1",
+    "land_enc_dilemma_tavern_hub_level_2",
+    "land_enc_dilemma_tavern_hub_level_3",
+    "land_enc_dilemma_tavern_capture",
+    "land_enc_dilemma_tavern_hall",
+    "land_enc_dilemma_tavern_board",
+}
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -8,6 +8,7 @@ require("script/land_encounters/core/mct")
 local army_generator = require("script/land_encounters/core/army_generator")
 local tower_army = require("script/land_encounters/features/tower_army")
 local debug_config = require("script/land_encounters/configs/debug")
+local guild_patron = require("script/land_encounters/features/guild_patron")
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
 --- require (the delegates pull core/managers back in for the incident globals).
@@ -15,6 +16,7 @@ local BattleEventDelegate
 local TreasureEventDelegate
 local SmithyEventDelegate
 local TowerEventDelegate
+local TavernEventDelegate
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -773,8 +775,8 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     end
                 end
 
-                self:rank_up_lore_units(invasion_general:military_force())
-                self:weaken_invasion_force(invasion_general:military_force())
+                self:rank_up_lore_units(invasion_general:military_force(), self.event_army)
+                self:weaken_invasion_force(invasion_general:military_force(), self.event_army)
 
                 local faction_being_declared_war_to = declaring_faction_name
                 if faction_being_declared_war_to == self.event_army.faction then
@@ -865,12 +867,13 @@ end
 --- Gives a lore army's lore units their extra ranks once it spawns (battle modifiers: the gold its 20 units could not spend), never past
 --- `ALLY_MAX_RANK`.
 --- @param force military_force The spawned invasion force.
-function InvasionBattleManager:rank_up_lore_units(force)
-    local ranks = self.event_army.lore_ranks
+--- @param army Army The army it was built from.
+function InvasionBattleManager:rank_up_lore_units(force, army)
+    local ranks = army.lore_ranks
     if ranks <= 0 then return end
     local ranked = 0
     for _, entry in ipairs(tower_army.rankable_units(force:general_character():command_queue_index(), ranks, ALLY_MAX_RANK)) do
-        if self.event_army.lore_units[entry.unit:unit_key()] then
+        if army.lore_units[entry.unit:unit_key()] then
             cm:add_experience_to_unit(entry.unit, ranks)
             ranked = ranked + 1
         end
@@ -881,8 +884,9 @@ end
 --- Puts the event army's `sabotage` on its spawned force: each of `enemy_bundles`, every unit but the characters at `enemy_strength` of full
 --- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone.
 --- @param force military_force The spawned invasion force.
-function InvasionBattleManager:weaken_invasion_force(force)
-    local sabotage = self.event_army.sabotage or {}
+--- @param army Army The army it was built from.
+function InvasionBattleManager:weaken_invasion_force(force, army)
+    local sabotage = army.sabotage or {}
     for _, bundle in ipairs(sabotage.enemy_bundles or {}) do
         cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
     end
@@ -1000,8 +1004,8 @@ end
 
 
 --- Registers a one-off BattleCompleted listener that cleans up the invasion forces and routes the result to the delegate.
---- @param delegate table The delegate (BattleSpotEventDelegate or SmithyEventDelegate) that receives the battle outcome.
---- @param spot_type string "BattleSpot", "SmithySpot" or "TowerSpot" - controls how the result is forwarded.
+--- @param delegate table What receives the battle outcome: a BattleSpotEventDelegate, a SmithyState, a TowerEventDelegate or a TavernState.
+--- @param spot_type string "BattleSpot", "SmithySpot", "TowerSpot" or "TavernSpot" - controls how the result is forwarded.
 --- @param spot_info table A spot_info record for the spot that triggered the battle.
 --- @param army Army The encounter Army whose invasion forces will be cleaned up.
 function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot_info, army)
@@ -1049,7 +1053,7 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             if found_encounter_faction == true then
                 if spot_type == "BattleSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle, spot_info)
-                elseif spot_type == "SmithySpot" then
+                elseif spot_type == "SmithySpot" or spot_type == "TavernSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle)
                 elseif spot_type == "TowerSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle, battle_faction_name)
@@ -1058,6 +1062,18 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
         end,
         IS_NOT_PERSISTENT_LISTENER
 	)
+end
+
+
+--- Marks an encounter's armies for removal at the next turn start and waits for its battle's result. Used when a battle starts and again
+--- after a load.
+--- @param delegate table What receives the battle outcome, see `reset_state_post_battle`.
+--- @param spot_type string How the result is forwarded, see `reset_state_post_battle`.
+--- @param spot_info table|nil A spot_info record for the spot that triggered the battle.
+--- @param army Army The encounter Army.
+function InvasionBattleManager:await_battle(delegate, spot_type, spot_info, army)
+    self:mark_battle_forces_for_removal(army)
+    self:reset_state_post_battle(delegate, spot_type, spot_info, army)
 end
 
 
@@ -1097,15 +1113,17 @@ function InvasionBattleManager:build_unit_list(army)
 end
 
 
---- Sends an army at a region as a lasting invasion: it spawns beside the given position, marches on the region and stays until beaten. The
---- army is never marked for removal, unlike an encounter's.
+--- Starts a lasting invasion beside a position, at war with one faction only, and never marked for removal, unlike an encounter's army. Once
+--- it spawns, a lore army's units get their ranks and the army's `sabotage` bundles go on, as for an encounter's army.
 --- @param army Army The army to send.
---- @param region_key string The region it marches on.
+--- @param target_type string The invasion manager's target type, e.g. "REGION" or "PATROL".
+--- @param target any The target, e.g. a region key or a list of patrol points.
 --- @param target_faction_name string The faction it declares war on.
 --- @param x number The position to spawn beside.
 --- @param y number The position to spawn beside.
+--- @param on_spawn function|nil Called with the army's force command queue index once it exists.
 --- @returns boolean True when a spawn location was found and the invasion started.
-function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name, x, y)
+function InvasionBattleManager:start_lasting_invasion(army, target_type, target, target_faction_name, x, y, on_spawn)
     local spawn_x, spawn_y = self:find_location_for_character_to_spawn(army.faction, { x, y })
     if spawn_x == -1 then return false end
     army:randomize_units(self.random_army_manager)
@@ -1114,16 +1132,47 @@ function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name,
         self.invasion_manager:remove_invasion(army.invasion_identifier)
     end
     local invasion = self.invasion_manager:new_invasion(army.invasion_identifier, army.faction, force, { spawn_x, spawn_y })
-    invasion:set_target("REGION", region_key, target_faction_name)
+    invasion:set_target(target_type, target, target_faction_name)
     invasion:create_general(false, army.lord.subtype, "", "", "", "")
     invasion:add_character_experience(army.lord.level, true)
     invasion:add_unit_experience(army.unit_experience_amount)
-    invasion:start_invasion(function()
+    invasion:start_invasion(function(started)
+        local spawned = cm:model():military_force_for_command_queue_index(started.force_cqi)
+        if spawned and not spawned:is_null_interface() then
+            self:rank_up_lore_units(spawned, army)
+            self:weaken_invasion_force(spawned, army)
+        end
         if not cm:get_faction(army.faction):at_war_with(cm:get_faction(target_faction_name)) then
             cm:force_declare_war(army.faction, target_faction_name, false, false)
         end
+        if on_spawn then on_spawn(started.force_cqi) end
     end, false, false, false)
     return true
+end
+
+--- Sends an army at a region as a lasting invasion: it spawns beside the given position, marches on the region and stays until beaten.
+--- @param army Army The army to send.
+--- @param region_key string The region it marches on.
+--- @param target_faction_name string The faction it declares war on.
+--- @param x number The position to spawn beside.
+--- @param y number The position to spawn beside.
+--- @returns boolean True when a spawn location was found and the invasion started.
+function InvasionBattleManager:spawn_raid(army, region_key, target_faction_name, x, y)
+    return self:start_lasting_invasion(army, "REGION", region_key, target_faction_name, x, y)
+end
+
+--- Spawns an army that patrols between where it spawns and a point, at war with one faction only. Used by Tavern bounties, whose lord must
+--- stay alive until that faction hunts it down.
+--- @param army Army The army to spawn.
+--- @param target_faction_name string The only faction it declares war on.
+--- @param x number The position to spawn beside.
+--- @param y number The position to spawn beside.
+--- @param on_spawn function Called with the army's force command queue index once it exists.
+--- @param patrol table|nil The { x, y } point it patrols to and from its spawn, or nil to stay where it spawns.
+--- @returns boolean True when a spawn location was found and the army is being created.
+function InvasionBattleManager:spawn_patrol(army, target_faction_name, x, y, on_spawn, patrol)
+    local point = patrol and { x = patrol[1], y = patrol[2] } or { x = x, y = y }
+    return self:start_lasting_invasion(army, "PATROL", { "start", point }, target_faction_name, x, y, on_spawn)
 end
 
 --- Finds a valid spawn location near `center_coordinates`. Walks outward in 2-meter steps up to 4 iterations,
@@ -1262,6 +1311,10 @@ local PointOfInterestEventManager = {
     tower_event_delegate = {},
     --- Tower records from the save, held until the zones exist and `initialize_towers` runs.
     saved_towers = nil,
+    --- Builds, saves and ticks the Taverns.
+    tavern_event_delegate = {},
+    --- Tavern records from the save, held until `initialize_taverns` runs at first tick.
+    saved_taverns = nil,
 }
 
 
@@ -1283,6 +1336,15 @@ function PointOfInterestEventManager:initialize_towers(zones)
 end
 
 
+--- Builds or restores the Taverns from the campaign's points of interest and places their markers. Runs at first tick, for a new campaign
+--- and a loaded one alike.
+--- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
+function PointOfInterestEventManager:initialize_taverns(points_of_interest)
+    self.tavern_event_delegate:initialize(points_of_interest, self.saved_taverns)
+    self.saved_taverns = nil
+end
+
+
 --- Shows or removes the smithy markers to match the Remove Smithies setting and disabled config entries. Runs at first tick once the
 --- smithy states exist.
 --- @param points_of_interest table The campaign's points of interest by zone, from configs/coordinates.lua.
@@ -1294,6 +1356,7 @@ end
 --- Forwards per-turn state updates to each POI delegate. Hidden smithies must not keep paying tributes or issuing missions.
 function PointOfInterestEventManager:update_state_given_turn_passing()
     self.tower_event_delegate:update_state_given_turn_passing()
+    self.tavern_event_delegate:update_state_given_turn_passing()
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:update_state_given_turn_passing()
 end
@@ -1302,6 +1365,8 @@ end
 --- @param faction_name string The human faction whose turn is starting.
 function PointOfInterestEventManager:on_faction_turn_start(faction_name)
     self.tower_event_delegate:on_faction_turn_start(faction_name)
+    self.tavern_event_delegate:on_faction_turn_start(faction_name)
+    guild_patron.on_faction_turn_start(faction_name)
     if get_mct_settings().disable_smithies then return end
     self.smithy_event_delegate:on_faction_turn_start(faction_name)
 end
@@ -1312,7 +1377,7 @@ end
 --- Event management
 
 --- Dispatches a POI event to the matching delegate.
---- @param poi_type string The POI type tag ("SmithySpot" or "TowerSpot").
+--- @param poi_type string The POI type tag ("SmithySpot", "TowerSpot" or "TavernSpot").
 --- @param area_and_character_info table The AreaEntered context.
 --- @param spot_info table The spot_info record for the triggered POI.
 function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_character_info, spot_info)
@@ -1322,6 +1387,8 @@ function PointOfInterestEventManager:trigger_poi_event(poi_type, area_and_charac
         self.smithy_event_delegate:trigger_event(area_and_character_info, spot_info)
     elseif poi_type == "TowerSpot" then
         self.tower_event_delegate:trigger_event(area_and_character_info, spot_info)
+    elseif poi_type == "TavernSpot" then
+        self.tavern_event_delegate:trigger_event(area_and_character_info, spot_info)
     end
 end
 
@@ -1329,6 +1396,40 @@ end
 --- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
 function PointOfInterestEventManager:trigger_tower_dilemma_event_given_choice(dilemma_choice_and_faction_info)
     self.tower_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+end
+
+--- Forwards a Tavern dilemma choice to the Tavern delegate.
+--- @param dilemma_choice_and_faction_info table The DilemmaChoiceMadeEvent context.
+function PointOfInterestEventManager:trigger_tavern_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+    self.tavern_event_delegate:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info)
+end
+
+--- Greys out the hub choices that cannot be taken on the local player's open Tavern hub.
+--- @param faction_name string The local player's faction.
+function PointOfInterestEventManager:grey_out_closed_tavern_choices(faction_name)
+    self.tavern_event_delegate:grey_out_closed_choices(faction_name)
+end
+
+--- Greys out the forge choices that cannot be taken on the local player's open Smithy forge.
+--- @param faction_name string The local player's faction.
+function PointOfInterestEventManager:grey_out_closed_smithy_choices(faction_name)
+    self.smithy_event_delegate:grey_out_closed_choices(faction_name)
+end
+
+--- Starts the battle at a Tavern contract's marked spot when a lord walks onto it.
+--- @param character character The lord.
+--- @param marker_ref string The marker type's key.
+--- @param instance_ref string The marker's instance.
+function PointOfInterestEventManager:on_tavern_mark_entered(character, marker_ref, instance_ref)
+    self.tavern_event_delegate:on_mark_entered(character, marker_ref, instance_ref)
+end
+
+--- Settles a Tavern contract whose mission ended.
+--- @param faction_name string The faction whose mission ended.
+--- @param mission_key string The mission key.
+--- @param outcome string "succeeded", "failed" or "cancelled".
+function PointOfInterestEventManager:on_tavern_contract_ended(faction_name, mission_key, outcome)
+    self.tavern_event_delegate:on_contract_ended(faction_name, mission_key, outcome)
 end
 
 --- Greys out the taken tower offers on the local player's open go-deeper dilemma.
@@ -1345,39 +1446,48 @@ function PointOfInterestEventManager:trigger_dilemma_event_given_choice(dilemma_
 end
 
 
---- Exports the smithy delegate's per-zone POI state for save/load.
+--- Exports the smithy, tower and Tavern delegates' state for save/load.
 --- @returns table A table keyed by POI type whose values are delegate-specific save records.
 function PointOfInterestEventManager:export_state_as_table()
     local points_of_interests_data = {}
     points_of_interests_data["smithies"] = self.smithy_event_delegate:export_state_as_table()
     points_of_interests_data["towers"] = self.tower_event_delegate:export_state_as_table()
+    points_of_interests_data["taverns"] = self.tavern_event_delegate:export_state_as_table()
     return points_of_interests_data
 end
 
 
---- Restores the smithy delegate's per-zone POI state from previously saved data, and keeps the saved towers for `initialize_towers`.
+--- Restores the smithy delegate's per-zone POI state from previously saved data, and keeps the saved towers and Taverns for
+--- `initialize_towers` and `initialize_taverns`.
 --- @param previous_state table The keyed save record previously produced by export_state_as_table.
 function PointOfInterestEventManager:reinstate_event_if_able(previous_state)
     self.smithy_event_delegate:reinstate_event_if_able(previous_state["smithies"])
     self.saved_towers = previous_state["towers"]
+    self.saved_taverns = previous_state["taverns"]
 end
 
 
---- Lazy-loads the smithy and tower delegate modules (avoiding the circular require) and builds the manager.
+--- Lazy-loads the smithy, tower and Tavern delegate modules (avoiding the circular require) and builds the manager.
 --- @param mission_manager table The CA mission_manager handle.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
---- @returns PointOfInterestEventManager A new manager with the smithy and tower delegates wired in, and the tower's Daemon's deal army
---- handed to spot offers.
+--- @returns PointOfInterestEventManager A new manager with the smithy, tower and Tavern delegates wired in, and the tower's Daemon's deal army
+--- and the Tavern bar's return to the hub handed to spot offers.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
     TowerEventDelegate = TowerEventDelegate or require("script/land_encounters/features/tower")
+    TavernEventDelegate = TavernEventDelegate or require("script/land_encounters/features/tavern")
     local t = {
         smithy_event_delegate = SmithyEventDelegate:new(mission_manager, invasion_battle_manager),
         tower_event_delegate = TowerEventDelegate:new(invasion_battle_manager),
+        tavern_event_delegate = TavernEventDelegate:new(invasion_battle_manager),
     }
     --- A treasure site's Daemon's bargain sends the same army as the tower's Daemon's deal.
-    require("script/land_encounters/features/spot_offers").send_daemon_army = function(faction_name, count)
+    local spot_offers = require("script/land_encounters/features/spot_offers")
+    spot_offers.send_daemon_army = function(faction_name, count)
         t.tower_event_delegate:send_daemon_army(faction_name, count)
+    end
+    spot_offers.on_tavern_bar_closed = function(faction_name, site, took)
+        t.tavern_event_delegate:bar_closed(faction_name, site, took)
     end
     setmetatable(t, self)
     self.__index = self

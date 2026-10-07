@@ -203,6 +203,21 @@ def line_text(key: str) -> str:
     return f"[[col:yellow]]Modifier:[[/col]] {name} - {effect}"
 
 
+def payload_text(key: str, harm: str) -> str:
+    """The line of a modifier on a dilemma choice, where text shows green unless told otherwise: its name and effect take the colour of
+    what it does to us.
+
+    Args:
+        key (str): The modifier key.
+        harm (str): "-" when it hurts us, "+" when it helps, "~" when it cuts both ways.
+
+    Returns:
+        str: The loc text.
+    """
+    name, effect, _, _ = MODIFIERS[key]
+    return f"[[col:yellow]]Modifier:[[/col]] [[col:{HARM_COLOUR[harm]}]]{name} - {effect}[[/col]]"
+
+
 def notice_text(key: str) -> str:
     """The battle notice of a modifier, uncoloured.
 
