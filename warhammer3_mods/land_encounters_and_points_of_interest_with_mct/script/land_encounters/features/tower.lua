@@ -13,6 +13,7 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local TowerSpot = require("script/land_encounters/core/spot").TowerSpot
 local Army = require("script/land_encounters/core/army")
 local tower_army = require("script/land_encounters/features/tower_army")
+local boons = require("script/land_encounters/features/boons")
 local tower_offers = require("script/land_encounters/features/tower_offers")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local offer_effects = require("script/land_encounters/core/offer_effects")
@@ -624,6 +625,7 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         ally_options = ally_options,
         ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
         composition = battle_modifiers.composition(delve.modifiers),
+        modifiers = delve.modifiers,
     }, general:faction():subculture())
     --- The battle manager puts these on the floor army once it spawns, with the battle modifiers' enemy bundles.
     for _, bundle in ipairs(battle_modifiers.bundles(delve.modifiers, "enemy")) do offer_effects.merge_sabotage(sabotage, { enemy_bundle = bundle }) end
@@ -650,13 +652,16 @@ function TowerEventDelegate:rearm_floor_battle(faction_name)
     tower_offers.hand_buffs_to_battle(self.delves[faction_name])
 end
 
---- Adds a won floor's rewards to the haul. Gold scales with how much of the delving army's strength the floor cost.
+--- Adds a won floor's rewards to the haul. Gold scales with how much of the delving army's strength the floor cost. A champion floor also
+--- rewards the delving lord with boons (features/boons.lua).
 --- @param faction_name string The delving faction.
 --- @param delve table The delve record.
 --- @returns table { gold = the floor's gold, items = the floor's items, record = the floor record }, for the missions to pay from.
 function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     local next_floor = delve.next_floor or {}
     delve.next_floor = nil
+    local general = next_floor.champion and tower_army.character(delve.general_cqi)
+    if general then boons.on_champion_won(general) end
     local floor = next_floor.record or tower_data.floors[delve.floor]
     local before, after = delve.strength_before, tower_army.army_strength(delve.general_cqi)
     local loss = (before and after) and math.max(0, before - after) or 0

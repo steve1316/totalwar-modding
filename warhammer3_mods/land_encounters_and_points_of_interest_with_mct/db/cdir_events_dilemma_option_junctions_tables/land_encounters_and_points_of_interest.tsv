@@ -240,3 +240,6 @@ id	dilemma_key	option_key	value	target
 7018100234	land_enc_dilemma_boon_full	GEN_TARGET_NONE		default
 7018100235	land_enc_dilemma_boon_full	VAR_CHANCE	100	default
 7018100236	land_enc_dilemma_boon_full	VAR_FOLLOWUP_CHANCE	100	default
+7018100243	land_enc_dilemma_boon_pick	GEN_TARGET_NONE		default
+7018100244	land_enc_dilemma_boon_pick	VAR_CHANCE	100	default
+7018100245	land_enc_dilemma_boon_pick	VAR_FOLLOWUP_CHANCE	100	default

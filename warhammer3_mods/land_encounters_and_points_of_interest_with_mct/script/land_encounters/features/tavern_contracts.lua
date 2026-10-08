@@ -23,6 +23,8 @@ local debug_config = require("script/land_encounters/configs/debug")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local spot_battles = require("script/land_encounters/features/spot_battles")
 local guild_patron = require("script/land_encounters/features/guild_patron")
+local tower_army = require("script/land_encounters/features/tower_army")
+local boons = require("script/land_encounters/features/boons")
 
 local M = {
     --- Faction key -> the contracts it holds: { key, kind, slot, step, zone, index, level, deposit, general_cqi, target, enemy, modifiers,
@@ -798,6 +800,7 @@ function M.on_mission_ended(delegate, faction_name, key, outcome)
         return
     end
     table.remove(M.held(faction_name), i)
+    boons.on_contract_ended(tower_army.character(contract.general_cqi), contract.kind, contract.enemy, outcome == "succeeded")
     if outcome == "succeeded" then
         if contract.hero_reward then
             tower_lords.free_hero(contract.general_cqi, faction_name, { offer_effects.culture_shorthand(faction_name) }, tavern_data.contracts.chain.hero_rank)

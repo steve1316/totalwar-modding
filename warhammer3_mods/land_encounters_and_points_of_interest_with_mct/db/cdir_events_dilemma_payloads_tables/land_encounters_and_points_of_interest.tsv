@@ -197,3 +197,6 @@ id	choice_key	dilemma_key	payload_key	value	target_key
 7018100240	LEAPOI_BON_DROP_4	land_enc_dilemma_boon_full	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
 7018100241	LEAPOI_BON_DROP_5	land_enc_dilemma_boon_full	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
 7018100242	LEAPOI_BON_DROP_NEW	land_enc_dilemma_boon_full	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
+7018100246	LEAPOI_BON_PICK_1	land_enc_dilemma_boon_pick	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
+7018100247	LEAPOI_BON_PICK_2	land_enc_dilemma_boon_pick	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default
+7018100248	LEAPOI_BON_PICK_3	land_enc_dilemma_boon_pick	TEXT_DISPLAY	LOOKUP[dummy_do_nothing]	default

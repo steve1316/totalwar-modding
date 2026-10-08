@@ -13,7 +13,7 @@ local SAME_NAMED_OPTIONS = { "enable_towers", "tower_cooldown", "tower_gold_perc
     "tower_hidden_floor_chance", "enable_smithies", "smithy_cooldown", "smithy_price_percent", "smithy_tribute_percent", "smithy_ai_takeover_chance",
     "smithy_ai_upgrade_chance", "enable_taverns", "tavern_contract_turns", "tavern_hall_restock", "tavern_hire_markup", "tavern_hires_per_visit",
     "tavern_cooldown", "tavern_penalty_percent", "tavern_penalty_turns", "tavern_ai_takeover_chance", "tavern_ai_upgrade_chance", "ready_notices",
-    "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance", "enable_boons", "boon_slots", "curse_slots" }
+    "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance", "enable_boons", "boon_slots", "curse_slots", "boon_win_chance", "curse_loss_chance", "linger_chance" }
 
 --- Default settings. The MctInitialized listener overwrites these at first_tick with the user's
 --- finalized MCT option values via set_mct_settings.
@@ -24,6 +24,12 @@ local mct_settings = {
     boon_slots = 3,
     --- Curses a lord can carry at once.
     curse_slots = 3,
+    --- Percent chance a hard or modified LEAPOI win gives the lord a boon.
+    boon_win_chance = 15,
+    --- Percent chance a lost LEAPOI fight, or a failed Tavern contract, gives the lord a curse.
+    curse_loss_chance = 50,
+    --- Percent chance each battle modifier of a fight leaves its boon or curse on the lord.
+    linger_chance = 25,
     --- Smithies are on the map. When off they are removed and their tributes, takeovers and sieges pause.
     enable_smithies = true,
     --- Taverns are on the map. When off they are removed and do nothing.

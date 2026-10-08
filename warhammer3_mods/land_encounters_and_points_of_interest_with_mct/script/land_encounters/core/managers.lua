@@ -9,6 +9,7 @@ local army_generator = require("script/land_encounters/core/army_generator")
 local tower_army = require("script/land_encounters/features/tower_army")
 local debug_config = require("script/land_encounters/configs/debug")
 local guild_patron = require("script/land_encounters/features/guild_patron")
+local boons = require("script/land_encounters/features/boons")
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
 --- require (the delegates pull core/managers back in for the incident globals).
@@ -148,6 +149,20 @@ function pending_battle_result_for_faction(faction_name)
         return true, cm:pending_battle_cache_defender_victory()
     end
     return false, false
+end
+
+--- The lord of a faction's side in the battle that just ended, from the game's record of it.
+--- @param faction_name string The faction.
+--- @returns userdata|nil The lord, or nil when the faction had none there.
+function pending_battle_lord(faction_name)
+    local attacker = cm:pending_battle_cache_faction_is_attacker(faction_name)
+    local count = attacker and cm:pending_battle_cache_num_attackers() or cm:pending_battle_cache_num_defenders()
+    for i = 1, count do
+        local cqi, _, side_faction
+        if attacker then cqi, _, side_faction = cm:pending_battle_cache_get_attacker(i) else cqi, _, side_faction = cm:pending_battle_cache_get_defender(i) end
+        if side_faction == faction_name then return tower_army.character(cqi) end
+    end
+    return nil
 end
 
 --- True when a military force with this cqi still exists.
@@ -937,6 +952,7 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             end
 
             if found_encounter_faction == true then
+                boons.on_leapoi_fight(pending_battle_lord(battle_faction_name), player_won_battle, army.difficulty, army.modifiers)
                 if spot_type == "BattleSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle, spot_info)
                 elseif spot_type == "SmithySpot" or spot_type == "TavernSpot" then

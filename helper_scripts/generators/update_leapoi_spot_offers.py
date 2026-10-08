@@ -1292,7 +1292,9 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     boon_config = config["boons"]
     for component, icon, text in boons.lines(boon_config):
         line(component, icon, text)
-    title, description, image, drop_label, new_label = boons.FULL_DILEMMA
+    boon_dilemmas = boons.dilemmas(boon_config)
+    drop_label, new_label = boons.FULL_DILEMMA[3:]
+    title, description, image = boon_dilemmas["full"]
     full_choices = boon_config["full_choices"] + [boon_config["full_new_choice"]]
     add_dilemma(boon_config["full_dilemma"], image, title, description, full_choices)
     for i, choice in enumerate(full_choices):
@@ -1303,6 +1305,12 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(table("cdir_events_dilemma_choices_tables"), choice, TOWER_GRANT_ORDER + i)
         for tower_dilemma in config["tower_deeper_dilemmas"]:
             label(tower_dilemma, choice, title_case(boons.OFFERS[key]))
+    title, description, image = boon_dilemmas["pick"]
+    pick_label = boons.PICK_DILEMMA[3]
+    add_dilemma(boon_config["pick_dilemma"], image, title, description, boon_config["pick_choices"])
+    for i, choice in enumerate(boon_config["pick_choices"]):
+        add(table("cdir_events_dilemma_choices_tables"), choice, boons.PICK_CHOICE_ORDER + i)
+        label(boon_config["pick_dilemma"], choice, title_case(pick_label))
     for event, (title, description, image) in boons.incidents(boon_config).items():
         add_incident(boon_config["incident_prefix"] + event, image, title, description)
     return rows

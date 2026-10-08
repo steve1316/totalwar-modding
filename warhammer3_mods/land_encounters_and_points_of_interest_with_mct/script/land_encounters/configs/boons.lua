@@ -26,6 +26,19 @@ M.realm_turns = 10
 M.enable_setting = "enable_boons"
 M.slot_settings = { boon = "boon_slots", curse = "curse_slots" }
 
+--- MCT setting keys of the percent chances: a boon after a hard or modified LEAPOI win, a curse after a lost one or a failed Tavern
+--- contract, and each battle modifier leaving its mark.
+M.chance_settings = { win = "boon_win_chance", loss = "curse_loss_chance", linger = "linger_chance" }
+
+--- Percent chance a won tower champion floor gives a faction-wide blessing instead of a choice of boons.
+M.champion_realm_chance = 5
+
+--- How many tower boons a won champion floor lets the lord choose from.
+M.champion_choices = 2
+
+--- Level of the boon a finished Tavern quest chain gives.
+M.chain_boon_level = 2
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Naming
@@ -54,14 +67,24 @@ M.full_dilemma = "land_enc_dilemma_boon_full"
 M.full_choices = { "LEAPOI_BON_DROP_1", "LEAPOI_BON_DROP_2", "LEAPOI_BON_DROP_3", "LEAPOI_BON_DROP_4", "LEAPOI_BON_DROP_5" }
 M.full_new_choice = "LEAPOI_BON_DROP_NEW"
 
+--- The dilemma that lets a lord choose one of a few boons, and its choice keys in order.
+M.pick_dilemma = "land_enc_dilemma_boon_pick"
+M.pick_choices = { "LEAPOI_BON_PICK_1", "LEAPOI_BON_PICK_2", "LEAPOI_BON_PICK_3" }
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Catalogue
 
---- Races a rolled boon or curse can be about (Bane of a Race, Grudge of a Race).
-M.races = { "empire", "bretonnia", "kislev", "cathay", "dwarfs", "high_elves", "wood_elves", "dark_elves", "lizardmen", "greenskins", "skaven",
-    "ogres", "vampire_counts", "vampire_coast", "tomb_kings", "norsca", "chaos", "khorne", "nurgle", "slaanesh", "tzeentch", "daemons",
-    "beastmen", "chaos_dwarfs" }
+--- Faction shorthand (as in configs/factions_data.lua) -> the race a boon or curse about it rolls, e.g. a Tavern bounty's Bane.
+M.race_of_shorthand = { emp = "empire", brt = "bretonnia", ksl = "kislev", cth = "cathay", dwf = "dwarfs", hef = "high_elves",
+    wef = "wood_elves", def = "dark_elves", lzd = "lizardmen", grn = "greenskins", skv = "skaven", ogr = "ogres", vmp = "vampire_counts",
+    cst = "vampire_coast", tmb = "tomb_kings", nor = "norsca", chs = "chaos", kho = "khorne", nur = "nurgle", sla = "slaanesh",
+    tze = "tzeentch", dae = "daemons", bst = "beastmen", chd = "chaos_dwarfs" }
+
+--- Races a rolled boon or curse can be about (Bane of a Race, Grudge of a Race), in a fixed order.
+M.races = {}
+for _, race in pairs(M.race_of_shorthand) do M.races[#M.races + 1] = race end
+table.sort(M.races)
 
 --- Boons, by key. `charges`: lasts that many of the lord's battles at one level instead of growing. `race`: rolls a race when gained.
 --- `drops`: the sources it can come from at random, e.g. "treasure"; none when left out.
@@ -113,8 +136,12 @@ M.by_key = { boon = {}, curse = {} }
 for _, record in ipairs(M.boons) do M.by_key.boon[record.key] = record end
 for _, record in ipairs(M.curses) do M.by_key.curse[record.key] = record end
 
---- Key -> faction-wide record, filled below.
+--- Key -> faction-wide record, and the keys of the faction-wide blessings, filled below.
 M.realm_by_key = {}
-for _, record in ipairs(M.realm) do M.realm_by_key[record.key] = record end
+M.blessings = {}
+for _, record in ipairs(M.realm) do
+    M.realm_by_key[record.key] = record
+    if record.good then M.blessings[#M.blessings + 1] = record.key end
+end
 
 return M

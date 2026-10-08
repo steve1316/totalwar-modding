@@ -2,6 +2,7 @@
 mod by update_leapoi_spot_offers.py: one character bundle and one payload line per boon or curse level (per race for a rolled one), the
 faction-wide bundles, the incidents and the full-slots dilemma."""
 
+import re
 from typing import Dict, List, Optional, Tuple
 
 from generators import leapoi_effect_library as library
@@ -53,28 +54,79 @@ MARCH_BLOCKED = library.effect_key("march_blocked")
 # Level numbers in bundle titles, e.g. "Bloodsworn III".
 ROMAN = ["", "I", "II", "III", "IV", "V"]
 
-# Line break inside loc text, stored escaped in the TSV.
-BREAK = "\\\\n\\\\n"
+# Line break inside loc text, stored escaped in the TSV, and the gap between paragraphs.
+NL = "\\\\n"
+BREAK = NL + NL
 
-# Event -> (incident title, description, picture). "{lord}" in a description is the lord's name, read from the config's `lord_context`.
-INCIDENTS: Dict[str, Tuple[str, str, str]] = {
-    "boon_gained": ("A Boon Is Won", "Something has changed in {lord}'s army, and for the better. Every warrior can feel it.", "ursun_claimed"),
-    "boon_grew": ("The Boon Grows", "Another victory, and {lord}'s army has grown stronger for it.", "victory"),
-    "boon_lost": ("A Boon Fades", "Whatever gave {lord}'s army its edge is gone now.", "attrition_mountain"),
-    "curse_gained": ("A Curse Takes Hold", "A shadow has fallen over {lord}'s army, and it will not lift on its own.", "ai_wins_soul"),
-    "curse_worse": ("The Curse Deepens", "The curse on {lord}'s army grows heavier with every passing day.", "attrition_vampire_territory"),
-    "curse_lifted": ("A Curse Is Lifted", "The weight on {lord}'s army is gone at last.", "rift_entered"),
-    "curse_turned": ("The Curse Turns", "{lord}'s army has carried its curse so long that it has become something else.", "sword_of_khaine"),
-    "realm_boon": ("A Blessing on the Realm", "Good fortune has settled over the whole realm, though it will not last forever.", "winds_of_magic_change"),
-    "realm_curse": ("A Curse on the Realm", "A darkness has fallen over the whole realm. It will pass, in time.", "chaos_doom_tide"),
+# Characters of loc text that fit on one line of the notification panel's description box, and the lines a description should fill. The
+# box has a fixed height of about 17 lines, so a short description leaves a dark gap under it and a long one scrolls.
+LINE_CHARS = 45
+MIN_LINES, MAX_LINES = 10, 18
+
+# Rule sections shared by the descriptions: (heading, bullet lines). "{wins}", "{max}", "{turns}", "{turns_to_turn}" and "{realm_turns}" are
+# filled from the config.
+BOON_GROWTH = ("How boons grow", ["A boon grows one level for every {wins} battles this lord wins, up to level {max}.",
+                                  "Lost battles do not count, but they never take a level away.",
+                                  "A charged boon does not grow. It lasts a set number of battles, then fades.",
+                                  "Gaining a boon this lord already has raises it a level, or refills its charges."])
+BOON_GROWTH_SHORT = (BOON_GROWTH[0], BOON_GROWTH[1][:2])
+CURSE_GROWTH = ("How curses grow", ["A curse worsens one level every {turns} turns, up to level {max}.",
+                                    "Some curses turn into a boon after {turns_to_turn} turns at their worst. The rest stay until lifted.",
+                                    "When this lord has no room for another curse, the mildest one worsens instead."])
+BOON_SOURCES = ("Where boons come from", ["A win in a hard LEAPOI battle, or one with battle modifiers",
+                                          "A battle modifier that lingers after the fight",
+                                          "A fallen tower champion",
+                                          "Tavern bounties and quest chains",
+                                          "Pacts at treasure spots, Towers and Taverns"])
+CURSE_SOURCES = ("Where curses come from", ["A lost LEAPOI battle", "A battle modifier that lingers after the fight", "A failed Tavern contract",
+                                            "Pacts and cursed relics, which trade a curse for power"])
+SLOTS = "How many boons and curses a lord can carry is set on the Boons and Curses page of the mod's settings. A lord who dies or leaves " \
+        "the faction loses them all."
+REALM = ("Faction-wide", ["It touches the whole faction, not one lord, and takes no lord's slot.", "It lasts {realm_turns} turns, then passes."])
+
+# Event -> (incident title, description parts, picture). A part is a paragraph or a rule section. "{lord}" is the lord's name, read from
+# the config's `lord_context`.
+INCIDENTS: Dict[str, Tuple[str, list, str]] = {
+    "boon_gained": ("A Boon Is Won", ["Something has changed in {lord}'s army, and for the better. Every warrior can feel it.", BOON_GROWTH, SLOTS],
+                    "ursun_claimed"),
+    "boon_grew": ("The Boon Grows", ["Another victory, and {lord}'s army has grown stronger for it.", BOON_GROWTH], "victory"),
+    "boon_lost": ("A Boon Fades", ["Whatever gave {lord}'s army its edge is gone now.",
+                                   ("Why boons fade", ["A charged boon fades after its last battle.",
+                                                       "A boon given up to make room for a new one is gone for good, with every level it gained."]),
+                                   BOON_SOURCES], "attrition_mountain"),
+    "curse_gained": ("A Curse Takes Hold", ["A shadow has fallen over {lord}'s army, and it will not lift on its own.", CURSE_GROWTH, SLOTS],
+                     "ai_wins_soul"),
+    "curse_worse": ("The Curse Deepens", ["The curse on {lord}'s army grows heavier with every passing day.", CURSE_GROWTH, CURSE_SOURCES],
+                    "attrition_vampire_territory"),
+    "curse_lifted": ("A Curse Is Lifted", ["The weight on {lord}'s army is gone at last.", CURSE_SOURCES, SLOTS], "rift_entered"),
+    "curse_turned": ("The Curse Turns", ["{lord}'s army has carried its curse so long that it has become something else.",
+                                         ("What it became", ["The curse is gone, and its boon takes its place at level 1.",
+                                                             "If this lord has no room for it, another boon must be given up to keep it."]),
+                                         BOON_GROWTH_SHORT], "sword_of_khaine"),
+    "realm_boon": ("A Blessing on the Realm", ["Good fortune has settled over the whole realm, though it will not last forever.", REALM,
+                                               ("Where blessings come from", ["A fallen tower champion, now and then, in place of its boons"])],
+                   "winds_of_magic_change"),
+    "realm_curse": ("A Curse on the Realm", ["A darkness has fallen over the whole realm. It will pass, in time.", REALM, CURSE_SOURCES],
+                    "chaos_doom_tide"),
 }
 
 # Display order of the full-slots dilemma's first choice in cdir_events_dilemma_choices. The others follow it, the new boon's last.
 FULL_CHOICE_ORDER = 1100
 
-# The full-slots dilemma: (title, description, picture, label of a slot's choice, label of the new boon's choice).
-FULL_DILEMMA = ("Too Many Blessings", "This lord can carry no more boons. To take the new one, another must be given up.", "nemesis_crown", "Give This Up",
-                "Refuse the New Boon")
+# Display order of the pick dilemma's first choice in cdir_events_dilemma_choices.
+PICK_CHOICE_ORDER = 1110
+
+# The pick dilemma: (title, description parts, picture, label of each choice).
+PICK_DILEMMA = ("Spoils of the Champion", ["The champion has fallen, and something of its power can be claimed. Choose one boon for {lord}.",
+                                           ("The boons on offer", ["Each starts at level 1. The ones not chosen are lost.",
+                                                                   "If {lord} has no free slot, another boon must be given up to take it."]),
+                                           BOON_GROWTH_SHORT], "sword_of_khaine", "Claim This Boon")
+
+# The full-slots dilemma: (title, description parts, picture, label of a slot's choice, label of the new boon's choice).
+FULL_DILEMMA = ("Too Many Blessings", ["{lord} can carry no more boons. To take the new one, another must be given up.",
+                                       ("What giving one up costs", ["A boon given up is gone for good, with every level it has gained.",
+                                                                     "The new boon is on the last choice. Refusing it keeps every boon as it is."]),
+                                       BOON_GROWTH_SHORT], "nemesis_crown", "Give This Up", "Refuse the New Boon")
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -430,8 +482,39 @@ def lines(config: Dict) -> List[Tuple[str, str, str]]:
     return out
 
 
+def describe(parts: list, config: Dict, event: str) -> str:
+    """Writes a description from its parts, with the rules and the lord's name filled in.
+
+    Args:
+        parts (list): Paragraphs and (heading, bullet lines) rule sections.
+        config (Dict): The boons config from the Lua dump.
+        event (str): The event type whose context holds the lord's name, "Incident" or "Dilemma".
+
+    Returns:
+        str: The description as loc text.
+    """
+    lord = f'[[col:yellow]]{{{{CcoCampaignEvent{event}:ScriptObjectContext("{config["lord_context"]}").StringValue}}}}[[/col]]'
+    values = {"lord": lord, "wins": config["wins_per_level"], "max": config["max_level"], "turns": config["turns_per_level"],
+              "turns_to_turn": config["turns_to_turn"], "realm_turns": config["realm_turns"]}
+    shown = [part if isinstance(part, str) else f"[[col:yellow]]{part[0]}[[/col]]" + "".join(NL + "- " + line for line in part[1]) for part in parts]
+    return BREAK.join(shown).format_map(values)
+
+
+def shown_lines(description: str) -> int:
+    """Roughly how many lines a description fills in the notification panel.
+
+    Args:
+        description (str): The loc text.
+
+    Returns:
+        int: The line count.
+    """
+    plain = re.sub(r"\[\[/?col[^\]]*\]\]|\{\{[^}]*\}\}", "Lordname", description)
+    return sum(max(1, -(-len(line) // LINE_CHARS)) for line in plain.split(NL))
+
+
 def incidents(config: Dict) -> Dict[str, Tuple[str, str, str]]:
-    """The incidents with the lord's name filled into their descriptions.
+    """The incidents with their rules and the lord's name filled into their descriptions.
 
     Args:
         config (Dict): The boons config from the Lua dump.
@@ -439,8 +522,19 @@ def incidents(config: Dict) -> Dict[str, Tuple[str, str, str]]:
     Returns:
         Dict[str, Tuple[str, str, str]]: Event -> (title, description, picture).
     """
-    lord = f'[[col:yellow]]{{{{CcoCampaignEventIncident:ScriptObjectContext("{config["lord_context"]}").StringValue}}}}[[/col]]'
-    return {event: (title, description.replace("{lord}", lord), image) for event, (title, description, image) in INCIDENTS.items()}
+    return {event: (title, describe(parts, config, "Incident"), image) for event, (title, parts, image) in INCIDENTS.items()}
+
+
+def dilemmas(config: Dict) -> Dict[str, Tuple[str, str, str]]:
+    """The full-slots and pick dilemmas with their rules and the lord's name filled into their descriptions.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        Dict[str, Tuple[str, str, str]]: "full" and "pick" -> (title, description, picture).
+    """
+    return {name: (dilemma[0], describe(dilemma[1], config, "Dilemma"), dilemma[2]) for name, dilemma in (("full", FULL_DILEMMA), ("pick", PICK_DILEMMA))}
 
 
 def owned_prefixes(config: Dict) -> List[str]:
@@ -452,7 +546,8 @@ def owned_prefixes(config: Dict) -> List[str]:
     Returns:
         List[str]: The prefixes.
     """
-    return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"]]
+    return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"]]
+            + config["pick_choices"]
             + [config["line_prefix"] + kind + "_" for kind in ("boon", "curse", "realm")] + config["full_choices"]
             + [config["incident_prefix"] + event for event in INCIDENTS])
 
@@ -481,4 +576,7 @@ def problems(config: Dict) -> List[str]:
                 found.append(f"{record['key']} text does not say {charges} battles")
     found += [f"race {race} differs" for race in sorted(set(config["races"]) ^ set(library.RACES))]
     found += [f"faction-wide {key} differs" for key in sorted({r["key"] for r in config["realm"]} ^ set(REALM))]
+    texts = {**incidents(config), **{"dilemma " + name: text for name, text in dilemmas(config).items()}}
+    found += [f"{name} description fills {shown_lines(text[1])} lines, not {MIN_LINES}-{MAX_LINES}" for name, text in texts.items()
+              if not MIN_LINES <= shown_lines(text[1]) <= MAX_LINES]
     return found

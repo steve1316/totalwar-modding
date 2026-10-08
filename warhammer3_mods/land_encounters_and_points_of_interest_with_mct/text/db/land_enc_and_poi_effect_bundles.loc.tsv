@@ -598,226 +598,6 @@ effect_bundles_localised_title_land_enc_effect_boon_dread_host_4	Dread Host IV	f
 effect_bundles_localised_description_land_enc_effect_boon_dread_host_4	Stories of this army walk ahead of it.\\n\\nLevel 4 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_dread_host_5	Dread Host V	false
 effect_bundles_localised_description_land_enc_effect_boon_dread_host_5	Stories of this army walk ahead of it.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_empire_1	Bane of the Empire I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_empire_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_empire_2	Bane of the Empire II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_empire_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_empire_3	Bane of the Empire III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_empire_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_empire_4	Bane of the Empire IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_empire_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_empire_5	Bane of the Empire V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_empire_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_1	Bane of Bretonnia I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_2	Bane of Bretonnia II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_3	Bane of Bretonnia III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_4	Bane of Bretonnia IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_5	Bane of Bretonnia V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_1	Bane of Kislev I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_2	Bane of Kislev II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_3	Bane of Kislev III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_4	Bane of Kislev IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_5	Bane of Kislev V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_1	Bane of Grand Cathay I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_2	Bane of Grand Cathay II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_3	Bane of Grand Cathay III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_4	Bane of Grand Cathay IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_5	Bane of Grand Cathay V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_1	Bane of the Dwarfs I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_2	Bane of the Dwarfs II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_3	Bane of the Dwarfs III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_4	Bane of the Dwarfs IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_5	Bane of the Dwarfs V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_1	Bane of the High Elves I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_2	Bane of the High Elves II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_3	Bane of the High Elves III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_4	Bane of the High Elves IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_5	Bane of the High Elves V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_1	Bane of the Wood Elves I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_2	Bane of the Wood Elves II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_3	Bane of the Wood Elves III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_4	Bane of the Wood Elves IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_5	Bane of the Wood Elves V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_1	Bane of the Dark Elves I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_2	Bane of the Dark Elves II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_3	Bane of the Dark Elves III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_4	Bane of the Dark Elves IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_5	Bane of the Dark Elves V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_1	Bane of the Lizardmen I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_2	Bane of the Lizardmen II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_3	Bane of the Lizardmen III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_4	Bane of the Lizardmen IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_5	Bane of the Lizardmen V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_1	Bane of the Greenskins I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_2	Bane of the Greenskins II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_3	Bane of the Greenskins III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_4	Bane of the Greenskins IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_5	Bane of the Greenskins V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_1	Bane of the Skaven I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_2	Bane of the Skaven II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_3	Bane of the Skaven III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_4	Bane of the Skaven IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_5	Bane of the Skaven V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_1	Bane of the Ogre Kingdoms I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_2	Bane of the Ogre Kingdoms II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_3	Bane of the Ogre Kingdoms III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_4	Bane of the Ogre Kingdoms IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_5	Bane of the Ogre Kingdoms V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_1	Bane of the Vampire Counts I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_2	Bane of the Vampire Counts II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_3	Bane of the Vampire Counts III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_4	Bane of the Vampire Counts IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_5	Bane of the Vampire Counts V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_1	Bane of the Vampire Coast I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_2	Bane of the Vampire Coast II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_3	Bane of the Vampire Coast III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_4	Bane of the Vampire Coast IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_5	Bane of the Vampire Coast V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_1	Bane of the Tomb Kings I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_2	Bane of the Tomb Kings II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_3	Bane of the Tomb Kings III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_4	Bane of the Tomb Kings IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_5	Bane of the Tomb Kings V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_1	Bane of Norsca I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_2	Bane of Norsca II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_3	Bane of Norsca III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_4	Bane of Norsca IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_5	Bane of Norsca V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_1	Bane of the Warriors of Chaos I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_2	Bane of the Warriors of Chaos II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_3	Bane of the Warriors of Chaos III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_4	Bane of the Warriors of Chaos IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_5	Bane of the Warriors of Chaos V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_1	Bane of Khorne I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_2	Bane of Khorne II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_3	Bane of Khorne III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_4	Bane of Khorne IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_5	Bane of Khorne V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_1	Bane of Nurgle I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_2	Bane of Nurgle II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_3	Bane of Nurgle III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_4	Bane of Nurgle IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_5	Bane of Nurgle V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_1	Bane of Slaanesh I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_2	Bane of Slaanesh II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_3	Bane of Slaanesh III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_4	Bane of Slaanesh IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_5	Bane of Slaanesh V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_1	Bane of Tzeentch I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_2	Bane of Tzeentch II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_3	Bane of Tzeentch III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_4	Bane of Tzeentch IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_5	Bane of Tzeentch V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_1	Bane of the Daemons of Chaos I	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_2	Bane of the Daemons of Chaos II	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_3	Bane of the Daemons of Chaos III	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_4	Bane of the Daemons of Chaos IV	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_5	Bane of the Daemons of Chaos V	false
-effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_bane_beastmen_1	Bane of the Beastmen I	false
 effect_bundles_localised_description_land_enc_effect_boon_bane_beastmen_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_bane_beastmen_2	Bane of the Beastmen II	false
@@ -828,6 +608,36 @@ effect_bundles_localised_title_land_enc_effect_boon_bane_beastmen_4	Bane of the 
 effect_bundles_localised_description_land_enc_effect_boon_bane_beastmen_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_bane_beastmen_5	Bane of the Beastmen V	false
 effect_bundles_localised_description_land_enc_effect_boon_bane_beastmen_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_1	Bane of Bretonnia I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_2	Bane of Bretonnia II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_3	Bane of Bretonnia III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_4	Bane of Bretonnia IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_bretonnia_5	Bane of Bretonnia V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_bretonnia_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_1	Bane of Grand Cathay I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_2	Bane of Grand Cathay II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_3	Bane of Grand Cathay III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_4	Bane of Grand Cathay IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_cathay_5	Bane of Grand Cathay V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_cathay_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_1	Bane of the Warriors of Chaos I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_2	Bane of the Warriors of Chaos II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_3	Bane of the Warriors of Chaos III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_4	Bane of the Warriors of Chaos IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_5	Bane of the Warriors of Chaos V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_dwarfs_1	Bane of the Chaos Dwarfs I	false
 effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_dwarfs_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_dwarfs_2	Bane of the Chaos Dwarfs II	false
@@ -838,6 +648,196 @@ effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_dwarfs_4	Bane of 
 effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_dwarfs_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_bane_chaos_dwarfs_5	Bane of the Chaos Dwarfs V	false
 effect_bundles_localised_description_land_enc_effect_boon_bane_chaos_dwarfs_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_1	Bane of the Daemons of Chaos I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_2	Bane of the Daemons of Chaos II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_3	Bane of the Daemons of Chaos III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_4	Bane of the Daemons of Chaos IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_daemons_5	Bane of the Daemons of Chaos V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_daemons_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_1	Bane of the Dark Elves I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_2	Bane of the Dark Elves II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_3	Bane of the Dark Elves III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_4	Bane of the Dark Elves IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dark_elves_5	Bane of the Dark Elves V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dark_elves_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_1	Bane of the Dwarfs I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_2	Bane of the Dwarfs II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_3	Bane of the Dwarfs III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_4	Bane of the Dwarfs IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_dwarfs_5	Bane of the Dwarfs V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_dwarfs_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_empire_1	Bane of the Empire I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_empire_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_empire_2	Bane of the Empire II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_empire_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_empire_3	Bane of the Empire III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_empire_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_empire_4	Bane of the Empire IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_empire_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_empire_5	Bane of the Empire V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_empire_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_1	Bane of the Greenskins I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_2	Bane of the Greenskins II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_3	Bane of the Greenskins III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_4	Bane of the Greenskins IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_greenskins_5	Bane of the Greenskins V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_greenskins_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_1	Bane of the High Elves I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_2	Bane of the High Elves II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_3	Bane of the High Elves III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_4	Bane of the High Elves IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_high_elves_5	Bane of the High Elves V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_high_elves_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_1	Bane of Khorne I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_2	Bane of Khorne II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_3	Bane of Khorne III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_4	Bane of Khorne IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_khorne_5	Bane of Khorne V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_khorne_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_1	Bane of Kislev I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_2	Bane of Kislev II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_3	Bane of Kislev III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_4	Bane of Kislev IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_kislev_5	Bane of Kislev V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_kislev_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_1	Bane of the Lizardmen I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_2	Bane of the Lizardmen II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_3	Bane of the Lizardmen III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_4	Bane of the Lizardmen IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_lizardmen_5	Bane of the Lizardmen V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_lizardmen_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_1	Bane of Norsca I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_2	Bane of Norsca II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_3	Bane of Norsca III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_4	Bane of Norsca IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_norsca_5	Bane of Norsca V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_norsca_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_1	Bane of Nurgle I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_2	Bane of Nurgle II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_3	Bane of Nurgle III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_4	Bane of Nurgle IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_nurgle_5	Bane of Nurgle V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_nurgle_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_1	Bane of the Ogre Kingdoms I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_2	Bane of the Ogre Kingdoms II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_3	Bane of the Ogre Kingdoms III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_4	Bane of the Ogre Kingdoms IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_ogres_5	Bane of the Ogre Kingdoms V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_ogres_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_1	Bane of the Skaven I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_2	Bane of the Skaven II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_3	Bane of the Skaven III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_4	Bane of the Skaven IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_skaven_5	Bane of the Skaven V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_skaven_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_1	Bane of Slaanesh I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_2	Bane of Slaanesh II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_3	Bane of Slaanesh III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_4	Bane of Slaanesh IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_slaanesh_5	Bane of Slaanesh V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_slaanesh_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_1	Bane of the Tomb Kings I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_2	Bane of the Tomb Kings II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_3	Bane of the Tomb Kings III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_4	Bane of the Tomb Kings IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tomb_kings_5	Bane of the Tomb Kings V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tomb_kings_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_1	Bane of Tzeentch I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_2	Bane of Tzeentch II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_3	Bane of Tzeentch III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_4	Bane of Tzeentch IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_tzeentch_5	Bane of Tzeentch V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_tzeentch_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_1	Bane of the Vampire Coast I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_2	Bane of the Vampire Coast II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_3	Bane of the Vampire Coast III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_4	Bane of the Vampire Coast IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_coast_5	Bane of the Vampire Coast V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_coast_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_1	Bane of the Vampire Counts I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_2	Bane of the Vampire Counts II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_3	Bane of the Vampire Counts III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_4	Bane of the Vampire Counts IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_vampire_counts_5	Bane of the Vampire Counts V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_vampire_counts_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_1	Bane of the Wood Elves I	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_1	The lord has learned exactly where this enemy breaks.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_2	Bane of the Wood Elves II	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_2	The lord has learned exactly where this enemy breaks.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_3	Bane of the Wood Elves III	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_3	The lord has learned exactly where this enemy breaks.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_4	Bane of the Wood Elves IV	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_4	The lord has learned exactly where this enemy breaks.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_boon_bane_wood_elves_5	Bane of the Wood Elves V	false
+effect_bundles_localised_description_land_enc_effect_boon_bane_wood_elves_5	The lord has learned exactly where this enemy breaks.\\n\\nLevel 5 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_death_touched_1	Death-Touched I	false
 effect_bundles_localised_description_land_enc_effect_boon_death_touched_1	The dead that haunted this army now march with it.\\n\\nLevel 1 of 5.	false
 effect_bundles_localised_title_land_enc_effect_boon_death_touched_2	Death-Touched II	false
@@ -1006,226 +1006,6 @@ effect_bundles_localised_title_land_enc_effect_curse_shaky_aim_4	Shaky Aim IV	fa
 effect_bundles_localised_description_land_enc_effect_curse_shaky_aim_4	Hands shake, and arrows drift wide.\\n\\nLevel 4 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_shaky_aim_5	Shaky Aim V	false
 effect_bundles_localised_description_land_enc_effect_curse_shaky_aim_5	Hands shake, and arrows drift wide.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_1	Grudge of the Empire I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_2	Grudge of the Empire II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_3	Grudge of the Empire III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_4	Grudge of the Empire IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_5	Grudge of the Empire V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_1	Grudge of Bretonnia I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_2	Grudge of Bretonnia II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_3	Grudge of Bretonnia III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_4	Grudge of Bretonnia IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_5	Grudge of Bretonnia V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_1	Grudge of Kislev I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_2	Grudge of Kislev II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_3	Grudge of Kislev III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_4	Grudge of Kislev IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_5	Grudge of Kislev V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_1	Grudge of Grand Cathay I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_2	Grudge of Grand Cathay II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_3	Grudge of Grand Cathay III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_4	Grudge of Grand Cathay IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_5	Grudge of Grand Cathay V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_1	Grudge of the Dwarfs I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_2	Grudge of the Dwarfs II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_3	Grudge of the Dwarfs III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_4	Grudge of the Dwarfs IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_5	Grudge of the Dwarfs V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_1	Grudge of the High Elves I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_2	Grudge of the High Elves II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_3	Grudge of the High Elves III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_4	Grudge of the High Elves IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_5	Grudge of the High Elves V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_1	Grudge of the Wood Elves I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_2	Grudge of the Wood Elves II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_3	Grudge of the Wood Elves III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_4	Grudge of the Wood Elves IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_5	Grudge of the Wood Elves V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_1	Grudge of the Dark Elves I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_2	Grudge of the Dark Elves II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_3	Grudge of the Dark Elves III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_4	Grudge of the Dark Elves IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_5	Grudge of the Dark Elves V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_1	Grudge of the Lizardmen I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_2	Grudge of the Lizardmen II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_3	Grudge of the Lizardmen III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_4	Grudge of the Lizardmen IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_5	Grudge of the Lizardmen V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_1	Grudge of the Greenskins I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_2	Grudge of the Greenskins II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_3	Grudge of the Greenskins III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_4	Grudge of the Greenskins IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_5	Grudge of the Greenskins V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_1	Grudge of the Skaven I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_2	Grudge of the Skaven II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_3	Grudge of the Skaven III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_4	Grudge of the Skaven IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_5	Grudge of the Skaven V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_1	Grudge of the Ogre Kingdoms I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_2	Grudge of the Ogre Kingdoms II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_3	Grudge of the Ogre Kingdoms III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_4	Grudge of the Ogre Kingdoms IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_5	Grudge of the Ogre Kingdoms V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_1	Grudge of the Vampire Counts I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_2	Grudge of the Vampire Counts II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_3	Grudge of the Vampire Counts III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_4	Grudge of the Vampire Counts IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_5	Grudge of the Vampire Counts V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_1	Grudge of the Vampire Coast I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_2	Grudge of the Vampire Coast II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_3	Grudge of the Vampire Coast III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_4	Grudge of the Vampire Coast IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_5	Grudge of the Vampire Coast V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_1	Grudge of the Tomb Kings I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_2	Grudge of the Tomb Kings II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_3	Grudge of the Tomb Kings III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_4	Grudge of the Tomb Kings IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_5	Grudge of the Tomb Kings V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_1	Grudge of Norsca I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_2	Grudge of Norsca II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_3	Grudge of Norsca III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_4	Grudge of Norsca IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_5	Grudge of Norsca V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_1	Grudge of the Warriors of Chaos I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_2	Grudge of the Warriors of Chaos II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_3	Grudge of the Warriors of Chaos III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_4	Grudge of the Warriors of Chaos IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_5	Grudge of the Warriors of Chaos V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_1	Grudge of Khorne I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_2	Grudge of Khorne II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_3	Grudge of Khorne III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_4	Grudge of Khorne IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_5	Grudge of Khorne V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_1	Grudge of Nurgle I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_2	Grudge of Nurgle II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_3	Grudge of Nurgle III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_4	Grudge of Nurgle IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_5	Grudge of Nurgle V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_1	Grudge of Slaanesh I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_2	Grudge of Slaanesh II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_3	Grudge of Slaanesh III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_4	Grudge of Slaanesh IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_5	Grudge of Slaanesh V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_1	Grudge of Tzeentch I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_2	Grudge of Tzeentch II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_3	Grudge of Tzeentch III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_4	Grudge of Tzeentch IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_5	Grudge of Tzeentch V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_1	Grudge of the Daemons of Chaos I	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_2	Grudge of the Daemons of Chaos II	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_3	Grudge of the Daemons of Chaos III	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_4	Grudge of the Daemons of Chaos IV	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
-effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_5	Grudge of the Daemons of Chaos V	false
-effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_grudge_beastmen_1	Grudge of the Beastmen I	false
 effect_bundles_localised_description_land_enc_effect_curse_grudge_beastmen_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_grudge_beastmen_2	Grudge of the Beastmen II	false
@@ -1236,6 +1016,36 @@ effect_bundles_localised_title_land_enc_effect_curse_grudge_beastmen_4	Grudge of
 effect_bundles_localised_description_land_enc_effect_curse_grudge_beastmen_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_grudge_beastmen_5	Grudge of the Beastmen V	false
 effect_bundles_localised_description_land_enc_effect_curse_grudge_beastmen_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_1	Grudge of Bretonnia I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_2	Grudge of Bretonnia II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_3	Grudge of Bretonnia III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_4	Grudge of Bretonnia IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_bretonnia_5	Grudge of Bretonnia V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_bretonnia_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_1	Grudge of Grand Cathay I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_2	Grudge of Grand Cathay II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_3	Grudge of Grand Cathay III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_4	Grudge of Grand Cathay IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_cathay_5	Grudge of Grand Cathay V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_cathay_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_1	Grudge of the Warriors of Chaos I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_2	Grudge of the Warriors of Chaos II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_3	Grudge of the Warriors of Chaos III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_4	Grudge of the Warriors of Chaos IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_5	Grudge of the Warriors of Chaos V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_dwarfs_1	Grudge of the Chaos Dwarfs I	false
 effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_dwarfs_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_dwarfs_2	Grudge of the Chaos Dwarfs II	false
@@ -1246,6 +1056,196 @@ effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_dwarfs_4	Grudg
 effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_dwarfs_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_grudge_chaos_dwarfs_5	Grudge of the Chaos Dwarfs V	false
 effect_bundles_localised_description_land_enc_effect_curse_grudge_chaos_dwarfs_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_1	Grudge of the Daemons of Chaos I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_2	Grudge of the Daemons of Chaos II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_3	Grudge of the Daemons of Chaos III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_4	Grudge of the Daemons of Chaos IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_daemons_5	Grudge of the Daemons of Chaos V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_daemons_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_1	Grudge of the Dark Elves I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_2	Grudge of the Dark Elves II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_3	Grudge of the Dark Elves III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_4	Grudge of the Dark Elves IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dark_elves_5	Grudge of the Dark Elves V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dark_elves_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_1	Grudge of the Dwarfs I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_2	Grudge of the Dwarfs II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_3	Grudge of the Dwarfs III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_4	Grudge of the Dwarfs IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_dwarfs_5	Grudge of the Dwarfs V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_dwarfs_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_1	Grudge of the Empire I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_2	Grudge of the Empire II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_3	Grudge of the Empire III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_4	Grudge of the Empire IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_empire_5	Grudge of the Empire V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_empire_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_1	Grudge of the Greenskins I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_2	Grudge of the Greenskins II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_3	Grudge of the Greenskins III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_4	Grudge of the Greenskins IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_greenskins_5	Grudge of the Greenskins V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_greenskins_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_1	Grudge of the High Elves I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_2	Grudge of the High Elves II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_3	Grudge of the High Elves III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_4	Grudge of the High Elves IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_high_elves_5	Grudge of the High Elves V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_high_elves_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_1	Grudge of Khorne I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_2	Grudge of Khorne II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_3	Grudge of Khorne III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_4	Grudge of Khorne IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_khorne_5	Grudge of Khorne V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_khorne_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_1	Grudge of Kislev I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_2	Grudge of Kislev II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_3	Grudge of Kislev III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_4	Grudge of Kislev IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_kislev_5	Grudge of Kislev V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_kislev_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_1	Grudge of the Lizardmen I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_2	Grudge of the Lizardmen II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_3	Grudge of the Lizardmen III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_4	Grudge of the Lizardmen IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_lizardmen_5	Grudge of the Lizardmen V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_lizardmen_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_1	Grudge of Norsca I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_2	Grudge of Norsca II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_3	Grudge of Norsca III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_4	Grudge of Norsca IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_norsca_5	Grudge of Norsca V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_norsca_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_1	Grudge of Nurgle I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_2	Grudge of Nurgle II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_3	Grudge of Nurgle III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_4	Grudge of Nurgle IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_nurgle_5	Grudge of Nurgle V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_nurgle_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_1	Grudge of the Ogre Kingdoms I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_2	Grudge of the Ogre Kingdoms II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_3	Grudge of the Ogre Kingdoms III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_4	Grudge of the Ogre Kingdoms IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_ogres_5	Grudge of the Ogre Kingdoms V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_ogres_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_1	Grudge of the Skaven I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_2	Grudge of the Skaven II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_3	Grudge of the Skaven III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_4	Grudge of the Skaven IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_skaven_5	Grudge of the Skaven V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_skaven_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_1	Grudge of Slaanesh I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_2	Grudge of Slaanesh II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_3	Grudge of Slaanesh III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_4	Grudge of Slaanesh IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_slaanesh_5	Grudge of Slaanesh V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_slaanesh_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_1	Grudge of the Tomb Kings I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_2	Grudge of the Tomb Kings II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_3	Grudge of the Tomb Kings III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_4	Grudge of the Tomb Kings IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tomb_kings_5	Grudge of the Tomb Kings V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tomb_kings_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_1	Grudge of Tzeentch I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_2	Grudge of Tzeentch II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_3	Grudge of Tzeentch III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_4	Grudge of Tzeentch IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_tzeentch_5	Grudge of Tzeentch V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_tzeentch_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_1	Grudge of the Vampire Coast I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_2	Grudge of the Vampire Coast II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_3	Grudge of the Vampire Coast III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_4	Grudge of the Vampire Coast IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_coast_5	Grudge of the Vampire Coast V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_coast_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_1	Grudge of the Vampire Counts I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_2	Grudge of the Vampire Counts II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_3	Grudge of the Vampire Counts III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_4	Grudge of the Vampire Counts IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_vampire_counts_5	Grudge of the Vampire Counts V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_vampire_counts_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_1	Grudge of the Wood Elves I	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_1	This enemy has sworn to remember the lord's name.\\n\\nLevel 1 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_2	Grudge of the Wood Elves II	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_2	This enemy has sworn to remember the lord's name.\\n\\nLevel 2 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_3	Grudge of the Wood Elves III	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_3	This enemy has sworn to remember the lord's name.\\n\\nLevel 3 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_4	Grudge of the Wood Elves IV	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_4	This enemy has sworn to remember the lord's name.\\n\\nLevel 4 of 5.	false
+effect_bundles_localised_title_land_enc_effect_curse_grudge_wood_elves_5	Grudge of the Wood Elves V	false
+effect_bundles_localised_description_land_enc_effect_curse_grudge_wood_elves_5	This enemy has sworn to remember the lord's name.\\n\\nLevel 5 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_glass_jaw_1	Glass Jaw I	false
 effect_bundles_localised_description_land_enc_effect_curse_glass_jaw_1	The lord took a blow that never quite healed.\\n\\nLevel 1 of 5.	false
 effect_bundles_localised_title_land_enc_effect_curse_glass_jaw_2	Glass Jaw II	false

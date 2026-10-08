@@ -14,6 +14,22 @@ local tower_army = require("script/land_encounters/features/tower_army")
 --- Both kinds a lord carries, in the order they are walked.
 local KINDS = { "boon", "curse" }
 
+--- Kind -> drop source -> the keys that drop there, built once from the config.
+local DROP_POOLS = { boon = {}, curse = {} }
+for kind, list in pairs({ boon = data.boons, curse = data.curses }) do
+    for _, config in ipairs(list) do
+        for _, source in ipairs(config.drops or {}) do
+            DROP_POOLS[kind][source] = DROP_POOLS[kind][source] or {}
+            table.insert(DROP_POOLS[kind][source], config.key)
+        end
+    end
+end
+
+--- Choice key -> its slot number, for the full-slots and pick dilemmas.
+local CHOICE_SLOT = {}
+for i, key in ipairs(data.full_choices) do CHOICE_SLOT[key] = i end
+for i, key in ipairs(data.pick_choices) do CHOICE_SLOT[key] = i end
+
 local M = {
     --- Character command queue index (as a string) -> { faction, boon = { entry }, curse = { entry } }. An entry is { key, level, race,
     --- wins (battles won toward the next level), charges (battles left on a charged boon), turns (turns toward the next level, or at the
@@ -21,6 +37,8 @@ local M = {
     lords = {},
     --- Faction key -> the boon waiting on the full-slots dilemma: { cqi, entry }.
     pending = {},
+    --- Faction key -> the boons offered on the pick dilemma: { cqi, keys }.
+    picks = {},
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,6 +180,7 @@ local function ask_full(character, entry)
     for i, boon in ipairs(record_of(character).boon) do choices[#choices + 1] = { key = data.full_choices[i], lines = { M.line("boon", boon) } } end
     choices[#choices + 1] = { key = data.full_new_choice, lines = { M.line("boon", entry) } }
     M.pending[faction_name] = { cqi = tostring(character:command_queue_index()), entry = entry }
+    common.set_context_value(data.lord_context, lord_name(character))
     log("boons: lord " .. character:command_queue_index() .. " has full boon slots, asking which to give up for " .. M.bundle("boon", entry))
     dilemmas.launch(data.full_dilemma, choices, faction_name)
 end
@@ -214,12 +233,10 @@ function M.on_full_choice(faction_name, choice_key)
         log("boons: lord " .. pending.cqi .. " refuses " .. M.bundle("boon", pending.entry))
         return
     end
-    for i, key in ipairs(data.full_choices) do
-        if key == choice_key then
-            M.remove(character, "boon", i, "boon_lost")
-            add(character, "boon", pending.entry)
-            return
-        end
+    local slot = CHOICE_SLOT[choice_key]
+    if slot then
+        M.remove(character, "boon", slot, "boon_lost")
+        add(character, "boon", pending.entry)
     end
 end
 
@@ -239,13 +256,19 @@ end
 --- @param source string A `drops` source, e.g. "treasure".
 --- @returns string|nil The key, or nil when none drops there.
 function M.pick(kind, source)
-    local pool = {}
-    for _, config in ipairs(kind == "boon" and data.boons or data.curses) do
-        for _, drop in ipairs(config.drops or {}) do
-            if drop == source then pool[#pool + 1] = config.key end
-        end
-    end
-    return pool[1] and pool[random_number(#pool)] or nil
+    local pool = DROP_POOLS[kind][source]
+    return pool and pool[random_number(#pool)] or nil
+end
+
+--- Gives a lord a random boon or curse that drops from a source.
+--- @param character userdata The lord.
+--- @param kind string "boon" or "curse".
+--- @param source string A `drops` source.
+--- @param level number|nil Its level, 1 when nil.
+--- @returns boolean True when the lord gained or raised something.
+function M.gain_from(character, kind, source, level)
+    local key = M.pick(kind, source)
+    return key ~= nil and M.gain(character, kind, key, level)
 end
 
 --- Gives a lord what an offer grants: `boon` and `curse` as { key, level } or { from = a drop source } for a random one.
@@ -254,8 +277,9 @@ end
 function M.grant_fields(character, fields)
     for _, kind in ipairs(KINDS) do
         local grant = fields[kind]
-        local key = grant and (grant.from and M.pick(kind, grant.from) or grant[1])
-        if key and character then M.gain(character, kind, key, grant[2] or 1) end
+        if grant and character then
+            if grant.from then M.gain_from(character, kind, grant.from) else M.gain(character, kind, grant[1], grant[2] or 1) end
+        end
     end
 end
 
@@ -264,6 +288,106 @@ end
 --- @returns boolean True for such an offer.
 function M.grants(offer)
     return offer.boon ~= nil or offer.curse ~= nil
+end
+
+--- Lets a lord choose one of a few different boons that drop from a source, on the pick dilemma.
+--- @param character userdata The lord.
+--- @param source string A `drops` source, e.g. "tower".
+--- @param count number How many boons to offer, at most one per pick choice.
+function M.offer_pick(character, source, count)
+    if not (M.enabled() and character:faction():is_human()) then return end
+    local pool = {}
+    for i, key in ipairs(DROP_POOLS.boon[source] or {}) do pool[i] = key end
+    local keys = {}
+    for i, key in ipairs(randomic_shuffle(pool)) do
+        if i <= math.min(count, #data.pick_choices) then keys[i] = key end
+    end
+    if #keys == 0 then return end
+    local faction_name = character:faction():name()
+    local choices = {}
+    for i, key in ipairs(keys) do choices[i] = { key = data.pick_choices[i], lines = { M.line("boon", { key = key, level = 1 }) } } end
+    M.picks[faction_name] = { cqi = tostring(character:command_queue_index()), keys = keys }
+    common.set_context_value(data.lord_context, lord_name(character))
+    log("boons: lord " .. character:command_queue_index() .. " chooses one of " .. table.concat(keys, ", "))
+    dilemmas.launch(data.pick_dilemma, choices, faction_name)
+end
+
+--- Resolves the pick dilemma: the lord gains the chosen boon.
+--- @param faction_name string The faction that answered.
+--- @param choice_key string The choice key.
+function M.on_pick_choice(faction_name, choice_key)
+    local pick = M.picks[faction_name]
+    M.picks[faction_name] = nil
+    local character = pick and tower_army.character(tonumber(pick.cqi))
+    local key = character and pick.keys[CHOICE_SLOT[choice_key] or 0]
+    if key then M.gain(character, "boon", key) end
+end
+
+--- After a LEAPOI fight: a hard or modified win may give the lord a boon, a loss may give a curse, and each of the fight's battle modifiers
+--- may leave its boon or curse on the lord, each at its MCT chance.
+--- @param character userdata|nil The human lord who fought.
+--- @param won boolean True when the lord's side won.
+--- @param difficulty string|nil The fight's difficulty.
+--- @param modifiers table|nil The fight's battle modifier keys.
+function M.on_leapoi_fight(character, won, difficulty, modifiers)
+    if not M.enabled() then return end
+    if not character then
+        log("boons: no human lord found in the fight's record, so its result rolls nothing")
+        return
+    end
+    local settings = get_mct_settings()
+    local cqi = character:command_queue_index()
+    local hard = difficulty == "hard" or next(modifiers or {}) ~= nil
+    log("boons: lord " .. cqi .. " " .. (won and "won" or "lost") .. " a " .. tostring(difficulty) .. " LEAPOI fight with modifiers "
+        .. table.concat(modifiers or {}, ", ") .. " (chances: win " .. settings[data.chance_settings.win] .. "%, loss " .. settings[data.chance_settings.loss]
+        .. "%, linger " .. settings[data.chance_settings.linger] .. "%)")
+    --- Rolls one chance and logs it.
+    --- @param what string What the roll is for.
+    --- @param chance number The percent chance.
+    --- @returns boolean True on a hit.
+    local function roll(what, chance)
+        local hit = random_chance(chance)
+        log("boons: " .. what .. " roll at " .. chance .. "% " .. (hit and "hits" or "misses"))
+        return hit
+    end
+    if won and hard and roll("win boon", settings[data.chance_settings.win]) then
+        M.gain_from(character, "boon", "battle")
+    elseif not won and roll("loss curse", settings[data.chance_settings.loss]) then
+        M.gain_from(character, "curse", "battle")
+    end
+    for _, modifier in ipairs(modifiers or {}) do
+        local linger = data.lingers[modifier]
+        if linger and roll(modifier .. " linger", settings[data.chance_settings.linger]) then M.gain(character, linger[1], linger[2]) end
+    end
+end
+
+--- After a won tower champion floor: a rare faction-wide blessing, or else a choice of tower boons for the delving lord.
+--- @param character userdata The delving lord.
+function M.on_champion_won(character)
+    if not M.enabled() then return end
+    if random_chance(data.champion_realm_chance) then
+        M.gain_realm(character:faction():name(), data.blessings[random_number(#data.blessings)])
+        return
+    end
+    M.offer_pick(character, "tower", data.champion_choices)
+end
+
+--- After a Tavern contract ends: a finished quest chain gives a Tavern boon at `chain_boon_level`, a bounty gives Bane of the hunted
+--- army's race, and a failed or dropped contract may give a Tavern curse at the loss chance. A lost contract battle has already rolled its
+--- own curse, so this only rolls when the contract itself ends.
+--- @param character userdata|nil The lord who took the contract.
+--- @param kind string The contract kind, e.g. "bounty" or "chain".
+--- @param enemy string|nil The hunted army's faction shorthand.
+--- @param succeeded boolean True when the contract was completed.
+function M.on_contract_ended(character, kind, enemy, succeeded)
+    if not (character and M.enabled()) then return end
+    if succeeded and kind == "chain" then
+        M.gain_from(character, "boon", "tavern", data.chain_boon_level)
+    elseif succeeded and kind == "bounty" then
+        M.gain(character, "boon", "bane", 1, data.race_of_shorthand[enemy or ""])
+    elseif not succeeded and random_chance(get_mct_settings()[data.chance_settings.loss]) then
+        M.gain_from(character, "curse", "tavern")
+    end
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -351,21 +475,24 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Listeners and saving
 
---- Registers the battle and full-slots dilemma listeners, and the debug grants on load. Only lords with a record count their battles.
+--- Registers the battle, full-slots and pick dilemma listeners, and the debug grants on load. Only lords with a record count their battles.
 function M.register()
     core:add_listener("land_enc_boons_battle_completed", "CharacterCompletedBattle",
         function(context) return M.lords[tostring(context:character():command_queue_index())] ~= nil end,
         function(context) M.on_battle_completed(context:character(), context:character():won_battle()) end, true)
+    core:add_listener("land_enc_boons_pick_choice", "DilemmaChoiceMadeEvent",
+        function(context) return context:dilemma() == data.pick_dilemma end,
+        function(context) M.on_pick_choice(context:faction():name(), context:choice_key()) end, true)
     core:add_listener("land_enc_boons_full_choice", "DilemmaChoiceMadeEvent",
         function(context) return context:dilemma() == data.full_dilemma end,
         function(context) M.on_full_choice(context:faction():name(), context:choice_key()) end, true)
     if debug_config.grant_boons[1] or debug_config.grant_curses[1] then cm:add_first_tick_callback(grant_debug) end
 end
 
---- Exports the lords' boons and curses and any open full-slots question for the save file.
+--- Exports the lords' boons and curses and any open full-slots or pick question for the save file.
 --- @returns table The state.
 function M.export_state()
-    return { lords = M.lords, pending = M.pending }
+    return { lords = M.lords, pending = M.pending, picks = M.picks }
 end
 
 --- Restores the lords' boons and curses from the save file. A save from before boons restores none.
@@ -374,6 +501,7 @@ function M.restore_state(saved)
     saved = saved or {}
     M.lords = saved.lords or {}
     M.pending = saved.pending or {}
+    M.picks = saved.picks or {}
 end
 
 return M

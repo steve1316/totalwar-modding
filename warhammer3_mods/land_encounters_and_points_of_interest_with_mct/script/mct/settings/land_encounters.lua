@@ -513,6 +513,12 @@ add_checkbox("enable_boons", "boons_section", "Enable boons and curses",
     .. "no lord gains a new one, and the ones already carried stay as they are.", get_mct_settings().enable_boons)
 add_setting_slider("boon_slots", "boons_section", "Boon slots", "How many boons a lord can carry. A lord with every slot full chooses which "
     .. "boon to give up for a new one.", { 1, 5, 1, 0 })
+add_setting_slider("boon_win_chance", "boons_section", "Boon after a hard win %", "Chance a lord who wins a hard LEAPOI fight, or one with "
+    .. "battle modifiers, gains a boon.", { 0, 100, 5, 0 })
+add_setting_slider("curse_loss_chance", "boons_section", "Curse after a loss %", "Chance a lord who loses a LEAPOI fight, or fails a Tavern "
+    .. "contract, gains a curse.", { 0, 100, 5, 0 })
+add_setting_slider("linger_chance", "boons_section", "Lingering modifier %", "Chance each battle modifier of a fight leaves its own boon or "
+    .. "curse on the lord, e.g. Blood Moon leaving Bloodsworn.", { 0, 100, 5, 0 })
 add_setting_slider("curse_slots", "boons_section", "Curse slots", "How many curses a lord can carry. A new curse on a lord with every slot "
     .. "full makes their mildest curse worse instead.", { 1, 5, 1, 0 })
 
