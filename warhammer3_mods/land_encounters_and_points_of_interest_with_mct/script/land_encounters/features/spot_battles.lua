@@ -91,7 +91,7 @@ local function eligible(offer, ctx)
     if offer.no_heroes and ctx.event.no_heroes then return false end
     if not offer_effects.army_fits(offer, ctx.event.faction, ctx.general_cqi) then return false end
     if offer.unit_ranks and #tower_army.regular_units(ctx.general_cqi) == 0 then return false end
-    if boons.grants(offer) and not boons.enabled() then return false end
+    if not boons.drawable(offer, tower_army.character(ctx.general_cqi)) then return false end
     if offer.traitor then
         local units = offer_effects.pick_recruits(ctx.general_cqi, ctx.event.faction, offer.traitor, ctx.shown_units)
         if #units < offer.traitor.count then return false end
@@ -188,7 +188,7 @@ function M.launch(faction_name)
         pending.shown_affordable[key] = can_pay
         local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line }, closed = not can_pay }
         local cards = pending.cards[key]
-        if cards and cards.spell then table.insert(choice.lines, 2, army_spells.line(cards.spell)) end
+        army_spells.add_line(choice.lines, cards and cards.spell)
         local force = can_pay and cards and cards.units and tower_army.delving_force(pending.general_cqi)
         if force then choice.units = { force = force, keys = cards.units } end
         choices[#choices + 1] = choice
@@ -200,6 +200,7 @@ function M.launch(faction_name)
             local can_pay = spot_offers.affordable(offers_data.at(key, pending.difficulty), faction_name)
             pending.shown_affordable[key] = can_pay
             lines = can_pay and { line, offers_data.returns_line } or { line, offers_data.unaffordable_line }
+            army_spells.add_line(lines, (pending.cards[key] or {}).spell)
         end
         choices[#choices + 1] = { key = spot_offers.choice_key(key), lines = lines, closed = pending.taken[key] or pending.shown_affordable[key] == false }
     end
@@ -282,12 +283,9 @@ end
 --- @param offer table The offer record at the battle's difficulty.
 --- @param event table The battle event.
 local function pay_price(faction_name, pending, offer, event)
-    if offer.bleed then
-        tower_army.bleed_army(pending.general_cqi, offer.bleed)
-        log("spot battle: " .. offer.key .. " costs every unit " .. offer.bleed .. " strength")
-    end
+    if offer.bleed then tower_army.bleed_army(pending.general_cqi, offer.bleed, offer.key) end
     local general = tower_army.character(pending.general_cqi)
-    boons.grant_fields(general, offer)
+    boons.grant_fields(general, offer, event.faction)
     local kin = offer.relations and general and realm_effects.nearest_kin(general:faction(), general:logical_position_x(), general:logical_position_y(), event.faction)
     if kin then realm_effects.change_relations(faction_name, kin:name(), offer.relations) end
     if offer.victory_gold then
@@ -340,6 +338,9 @@ function M.take(faction_name, choice_key, event)
     end
     event.missions = (pending.battle or {}).missions or {}
     event.standard = (pending.battle or {}).standard
+    --- A mission's stake changes the enemy army as an offer does, and its rolled spell is paid from the dilemma's cards.
+    event.mission_cards = pending.cards
+    for _, key in ipairs(event.missions) do apply_to_event(offers_data.at(key, pending.difficulty), event) end
     local offer = nil
     for _, key in ipairs(pending.offers) do
         if spot_offers.choice_key(key) == choice_key then offer = offers_data.at(key, pending.difficulty) end
@@ -446,14 +447,24 @@ function M.hand_to_battle(event, army)
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, table.concat(terrors, ","))
 end
 
+--- Curses our lord for a failed mission that carries a `fail_curse`.
+--- @param offer table The mission's offer record at the battle's difficulty.
+--- @param general userdata|nil Our lord.
+local function pay_failure(offer, general)
+    if not (offer.fail_curse and general) then return end
+    log("spot battle: mission " .. offer.key .. " failed, so its curse falls on lord " .. general:command_queue_index())
+    boons.grant_fields(general, { curse = offer.fail_curse })
+end
+
 --- Works out one mission met's rewards: gold, items, or a copy of the enemy's most expensive unit, which its result grants. Ranks for the
---- marked unit and our lord's experience are given here.
+--- marked unit, our lord's experience, a boon (a race boon about the enemy's race), an army spell and a lifted curse are given here.
 --- @param offer table The mission's offer record at the battle's difficulty.
 --- @param event table The battle event.
 --- @param faction_name string Our faction key.
 --- @param general_cqi number Our lord's command queue index.
+--- @param general userdata|nil Our lord.
 --- @returns table The rewards { gold, items, units } for the mission's result.
-local function pay_mission(offer, event, faction_name, general_cqi)
+local function pay_mission(offer, event, faction_name, general_cqi, general)
     local gold = offer.gold
     local items = {}
     if offer.items then items = item_pool.pick_items(faction_name, offer.items.rarities, offer.items.count) end
@@ -464,19 +475,33 @@ local function pay_mission(offer, event, faction_name, general_cqi)
         if entry then cm:add_experience_to_unit(entry.unit, offer.unit_ranks) else log("spot battle: guard the standard found no marked unit") end
     end
     if offer.lord_xp then offer_effects.add_lord_xp(general_cqi, offer.lord_xp) end
+    boons.grant_fields(general, offer, event.faction)
+    local spell = offer.spell_pool and ((event.mission_cards or {})[offer.key] or {}).spell
+    if spell then
+        tower_army.apply_bundle(general_cqi, army_spells.bundle(spell), offer.spell_turns)
+        log("spot battle: mission " .. offer.key .. " gives the army " .. army_spells.name(spell) .. " for " .. offer.spell_turns .. " turns")
+    end
+    if offer.lift_curse and general then boons.lift_worst_curse(general) end
     local units = offer.trophy and event.trophy and { event.trophy } or {}
     log("spot battle: mission " .. offer.key .. " pays" .. (gold and " " .. gold .. " gold" or "") .. (#items > 0 and ", items " .. table.concat(items, ", ") or "")
         .. (#units > 0 and ", trophy " .. units[1] or ""))
     return { gold = gold, items = items, units = units }
 end
 
---- Settles a won battle's missions from what the battle script reported, with a result for each met or failed that grants its rewards. After
---- an auto-resolved battle nothing was counted: one result says so and gives back the paid missions' stakes.
+--- Settles a battle's missions. A lost battle fails every one, and only their `fail_curse` lands. A won one settles each from what the
+--- battle script reported, with a result for each met or failed that grants its rewards. After an auto-resolved win nothing was counted:
+--- one result says so and gives back the paid missions' stakes.
 --- @param event table The battle event.
 --- @param faction_name string Our faction key.
 --- @param general_cqi number Our lord's command queue index.
-function M.settle_missions(event, faction_name, general_cqi)
+--- @param won boolean True when our side won.
+function M.settle_missions(event, faction_name, general_cqi, won)
     if not event.missions or #event.missions == 0 then return end
+    if not won then
+        local general = tower_army.character(general_cqi)
+        for _, key in ipairs(event.missions) do pay_failure(offers_data.at(key, event.difficulty), general) end
+        return
+    end
     local outcomes = tower_missions.read_outcomes({ missions = event.missions, standard = event.standard, trophy = event.trophy })
     local general = tower_army.character(general_cqi)
     local position = general and { general:logical_position_x(), general:logical_position_y() } or { 0, 0 }
@@ -494,7 +519,8 @@ function M.settle_missions(event, faction_name, general_cqi)
         local offer = offers_data.at(mission.key, event.difficulty)
         log("spot battle: mission " .. mission.key .. " " .. (mission.void and "void" or mission.met and "met" or "failed"))
         if not mission.void then
-            local rewards = mission.met and pay_mission(offer, event, faction_name, general_cqi) or { items = {} }
+            if not mission.met then pay_failure(offer, general) end
+            local rewards = mission.met and pay_mission(offer, event, faction_name, general_cqi, general) or { items = {} }
             rewards.character = general
             rewards.difficulty = event.difficulty
             spot_offers.show_result(faction_name, "mission_" .. mission.key .. (mission.met and "_met" or "_failed"), rewards, position,

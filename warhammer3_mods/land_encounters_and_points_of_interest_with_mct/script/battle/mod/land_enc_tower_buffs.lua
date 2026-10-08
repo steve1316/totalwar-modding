@@ -302,13 +302,14 @@ local function kills(unit)
 end
 
 --- A mission spec that hunts every enemy unit a test picks: met once each is lost (or, with `routing_counts`, has routed), and failed
---- once `value` seconds pass when the mission has a time limit, or at the start when there is nothing to hunt. A routed unit stays beaten
+--- once `value` seconds pass when the mission has a time limit, or at the start when there is nothing to hunt (or void, see `none`). A routed unit stays beaten
 --- even if it rallies.
 --- @param hunted function Takes a battle unit and returns true for one to hunt.
 --- @param routing_counts boolean True when a routing unit counts as beaten.
 --- @param lost function|nil Takes a script unit and returns true once it is beaten, `is_lost` when nil.
+--- @param none string|nil The state when there is nothing to hunt, "failed" when nil, or "void" for a mission that then does not apply.
 --- @returns table The mission spec.
-local function hunt(hunted, routing_counts, lost)
+local function hunt(hunted, routing_counts, lost, none)
     lost = lost or is_lost
     return {
         start = function(m, ctx)
@@ -316,7 +317,7 @@ local function hunt(hunted, routing_counts, lost)
             for _, sunit in ipairs(ctx.theirs) do
                 if hunted(sunit.unit) then m.hunted[#m.hunted + 1] = sunit end
             end
-            if #m.hunted == 0 then m.state = "failed" end
+            if #m.hunted == 0 then m.state = none or "failed" end
         end,
         tick = function(m, ctx)
             local left = 0
@@ -1093,6 +1094,14 @@ local MISSIONS = {
     },
 }
 MISSIONS.bloodbath_wager = MISSIONS.blood_tally
+--- A battle spot's Witch hunt: every enemy unit that can cast spells is destroyed. Void when the enemy has none.
+MISSIONS.witch_hunt = hunt(function(unit) return unit:can_use_magic() end, false, nil, "void")
+--- A battle spot's Trial by fire: the battle is won, against an army the stake made stronger.
+MISSIONS.trial_by_fire = { finish = function(m) m.state = "met" end }
+--- A battle spot's Settle the grudge, Penance and Oath of victory track as Duellist's challenge, Steadfast and Swift victory do.
+MISSIONS.settle_the_grudge = MISSIONS.duelists_challenge
+MISSIONS.penance = MISSIONS.steadfast
+MISSIONS.oath_of_victory = MISSIONS.swift_victory
 --- A battle spot's Flawless victory is Hold the line with a limit of 0, which the campaign hands over as its target.
 MISSIONS.flawless_victory = MISSIONS.hold_the_line
 --- A battle spot's Spare the captain: fails once the enemy lord is slain, and is met when the battle is decided with that lord still alive.

@@ -449,7 +449,8 @@ def grant_text(kind: str, grant) -> str:
 
     Args:
         kind (str): "boon" or "curse".
-        grant: The offer's `boon` or `curse` field as dumped: [key, level], or { "from": source } for a random one.
+        grant: The offer's `boon` or `curse` field as dumped: [key, level], or { "from": source } for a random one. A race boon (Bane) is named
+            for the enemy race.
 
     Returns:
         str: The text.
@@ -459,6 +460,8 @@ def grant_text(kind: str, grant) -> str:
         return f"[[col:{colour}]]a random {kind}[[/col]]"
     key, level = grant[0], grant[1] if len(grant) > 1 else 1
     name, _, _, levels = (BOONS if kind == "boon" else CURSES)[key]
+    if not levels:
+        return f"[[col:{colour}]]{name.format(race='the enemy race')} {ROMAN[level]}[[/col]]"
     return f"[[col:{colour}]]{level_title(name, levels, level)} ({levels[level - 1][0]})[[/col]]"
 
 

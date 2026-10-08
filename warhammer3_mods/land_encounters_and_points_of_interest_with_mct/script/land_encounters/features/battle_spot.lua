@@ -160,14 +160,15 @@ function BattleEventDelegate:trigger_battle_avoidance_incident(spot_info)
     trigger_incident(self.cached_event.avoidance_incident, self.cached_event.avoidance_targets, spot_info, self.cached_player_character)
 end
 
---- Called by InvasionBattleManager after BattleCompleted. On player win, pays the missions met and fires the victory incident. Either way
+--- Called by InvasionBattleManager after BattleCompleted. Settles the missions (a loss fails them all), and on a player win fires the
+--- victory incident. Either way
 --- the pre-battle offers' one-battle bundles come off and everything handed to the battle script is cleared.
 --- @param player_won_battle boolean True when the player was victorious.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
     local character = self.cached_player_character
     local general_cqi = character and character.command_queue_index and character:command_queue_index() or nil
-    if player_won_battle and general_cqi then spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi) end
+    if general_cqi then spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi, player_won_battle) end
     spot_battles.end_battle(self.cached_event, general_cqi)
     if player_won_battle then
         self:trigger_victory_incident(spot_info)

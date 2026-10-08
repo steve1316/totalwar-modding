@@ -138,7 +138,7 @@ end
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
     if offer.trait and tower_lords.has_trait(ctx.general_cqi, offer.trait) then return false end
-    if boons.grants(offer) and not boons.enabled() then return false end
+    if not boons.drawable(offer, tower_army.character(ctx.general_cqi)) then return false end
     if (offer.heal or offer.heal_share) and not offer_effects.army_damaged(ctx.general_cqi) then return false end
     if offer.shoots and not offer_effects.army_shoots(ctx.general_cqi) then return false end
     if offer.hero_rank and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
@@ -153,7 +153,8 @@ local function eligible(offer, ctx)
     --- Units another offer on this dilemma already shows are left out, so no unit is offered twice.
     ctx.shown_units = ctx.shown_units or {}
     if offer.recruit then
-        cards.units = offer_effects.pick_recruits(ctx.general_cqi, offer_effects.culture_shorthand(ctx.faction_name), offer.recruit, ctx.shown_units)
+        local shorthand = offer.recruit.beaten and (ctx.event or {}).faction or offer_effects.culture_shorthand(ctx.faction_name)
+        cards.units = offer_effects.pick_recruits(ctx.general_cqi, shorthand, offer.recruit, ctx.shown_units)
         if #cards.units < offer.recruit.count then return false end
     end
     if offer.renown then
@@ -184,10 +185,14 @@ local function eligible(offer, ctx)
     if offer.spell_pool then cards.spell = army_spells.roll(offer.spell_pool) end
     for _, key in ipairs(cards.units or {}) do ctx.shown_units[key] = true end
     if offer.gold_per_enemy_unit then cards.gold = offer.gold_per_enemy_unit * #enemy_units end
-    if offer.ransom then
-        local kin = ctx.event and ctx.event.faction and realm_effects.nearest_kin(ctx.faction, ctx.x, ctx.y, ctx.event.faction)
-        if kin == nil then return false end
-        ctx.targets[offer.key] = { regions = {}, factions = { kin:name() } }
+    if offer.beaten_kin then
+        --- Looked up once per draw, since it walks every region on the map.
+        if ctx.kin == nil then
+            local kin = ctx.event and ctx.event.faction and realm_effects.nearest_kin(ctx.faction, ctx.x, ctx.y, ctx.event.faction)
+            ctx.kin = kin and kin:name() or false
+        end
+        if not ctx.kin then return false end
+        ctx.targets[offer.key] = { regions = {}, factions = { ctx.kin } }
     end
     if offer.realm then
         local target = realm_effects.find_target(offer.realm, ctx.faction, ctx.x, ctx.y, offer.count)
@@ -235,7 +240,19 @@ function M.draw(site, ctx)
         extras = extras + 1
         return true
     end
-    for _, forced_key in ipairs(debug_config.force_spot_offers) do
+    --- More forced offers in this site's pools than it shows: they are tried in a random order, so a long test list cycles through them.
+    local in_pool, order = {}, {}
+    for _, entry in ipairs(pool) do in_pool[entry[1].key] = true end
+    for _, key in ipairs(debug_config.force_spot_offers) do
+        if in_pool[key] then order[#order + 1] = key end
+    end
+    if #order > wanted then
+        for i = #order, 2, -1 do
+            local j = random_number(i)
+            order[i], order[j] = order[j], order[i]
+        end
+    end
+    for _, forced_key in ipairs(order) do
         for i, entry in ipairs(pool) do
             if entry[1].key == forced_key and extras < wanted then
                 if try(i) then forced = forced + 1 end
@@ -309,7 +326,7 @@ local function build_choice(offer, pending, faction_name, choice_key)
     local fights = offer.guardian or gamble_has(offer, "guardian")
     local choice = { key = choice_key, lines = fights and { line, offers_data.fight_line } or { line } }
     local cards = pending.cards[offer.key] or {}
-    if cards.spell then table.insert(choice.lines, 2, army_spells.line(cards.spell)) end
+    army_spells.add_line(choice.lines, cards.spell)
     if offer.gold and not offer.gamble then choice.gold = offer.gold end
     if cards.gold then choice.gold = cards.gold end
     if price_as_card then choice.gold = (choice.gold or 0) - site_cost(pending, offer) end
@@ -404,7 +421,7 @@ local function wake_guardian(state, guardian)
     end
 end
 
---- Applies the effects an offer's payload does not: bundles, traits, wounds, camps, heals, sacrifices, heroes, dividends, the Daemon's
+--- Applies the effects an offer's payload does not: bundles, traits, wounds, camps, bleeding, heals, sacrifices, heroes, dividends, the Daemon's
 --- deal armies, boons and curses, a guardian battle and the old incident. A gamble outcome has no cards, so its gold and items are picked here for its result to grant. A wound
 --- lands at once, and an offer's own wound (not a gamble's, whose result says so) shows its own result.
 --- @param fields table The offer record or a gamble outcome, at the site's difficulty.
@@ -437,6 +454,7 @@ local function apply_fields(fields, offer, state, rolled)
         log("spot: lord " .. general_cqi .. " gains " .. fields.lord_ranks .. " ranks")
     end
     if fields.lord_xp then offer_effects.add_lord_xp(general_cqi, fields.lord_xp) end
+    if fields.bleed then tower_army.bleed_army(general_cqi, fields.bleed, offer.key) end
     if fields.heal then tower_army.heal_army(general_cqi, 1) end
     if fields.heal_share then tower_army.heal_army(general_cqi, fields.heal_share) end
     if fields.lord_health then

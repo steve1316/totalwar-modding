@@ -489,6 +489,35 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Class methods
 
+--- Logs what decides whether our army can join a relief column as the reinforcement, just before the ally attacks: our war and alliance
+--- with each side, the distance from our lord to each army, and our stance.
+--- @param player_character character Our lord.
+--- @param ally_force_cqi number The ally's military force command queue index.
+--- @param enemy_force_cqi number The enemy's military force command queue index.
+local function log_relief_state(player_character, ally_force_cqi, enemy_force_cqi)
+    local ok, err = pcall(function()
+        local ours = player_character:faction()
+        local parts = {}
+        for name, cqi in pairs({ ally = ally_force_cqi, enemy = enemy_force_cqi }) do
+            local force = cm:model():military_force_for_command_queue_index(cqi)
+            local general = force and not force:is_null_interface() and force:general_character()
+            if general then
+                local faction = general:faction()
+                local dx, dy = general:logical_position_x() - player_character:logical_position_x(), general:logical_position_y() - player_character:logical_position_y()
+                parts[#parts + 1] = name .. " " .. faction:name() .. " at (" .. general:logical_position_x() .. ", " .. general:logical_position_y() .. "), distance "
+                    .. string.format("%.1f", math.sqrt(dx * dx + dy * dy)) .. ", at war with us " .. tostring(ours:at_war_with(faction)) .. ", allied with us "
+                    .. tostring(ours:allied_with(faction)) .. ", military allies " .. tostring(ours:military_allies_with(faction))
+            else
+                parts[#parts + 1] = name .. " force " .. tostring(cqi) .. " not found"
+            end
+        end
+        local force = player_character:military_force()
+        parts[#parts + 1] = "our stance " .. tostring(force:active_stance()) .. ", our movement left " .. tostring(player_character:action_points_remaining_percent()) .. "%"
+        out("LEAPOI: relief column state: " .. table.concat(parts, "; "))
+    end)
+    if not ok then out("LEAPOI: relief column state could not be logged: " .. tostring(err)) end
+end
+
 --- How the battle script runs a relief column in the pending battle: "scripted", or nil when the battle is not one.
 --- @returns string|nil The mode.
 function InvasionBattleManager:relief_mode()
@@ -727,6 +756,7 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                         if x ~= -1 then cm:teleport_to(cm:char_lookup_str(player_character), x, y) end
                         out("LEAPOI: relief column: our lord moved to (" .. x .. ", " .. y .. "), the ally " .. self.ally_force_cqi
                             .. " attacks the enemy " .. enemy_force_cqi)
+                        log_relief_state(player_character, self.ally_force_cqi, enemy_force_cqi)
                         cm:force_attack_of_opportunity(self.ally_force_cqi, enemy_force_cqi, false)
                     elseif self.event_army.intervention_type == AMBUSH_TYPE then
                         out("DEBUG - AMBUSH_TYPE called.")

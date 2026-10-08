@@ -170,6 +170,8 @@ effect_bundles_localised_title_land_enc_effect_spot_victory_feast_hard	Victory F
 effect_bundles_localised_description_land_enc_effect_spot_victory_feast_hard	The army feasted long into the night on what the beaten enemy left behind. Spirits are high on the march.	false
 effect_bundles_localised_title_land_enc_effect_spot_dark_offering	Dark Offering	false
 effect_bundles_localised_description_land_enc_effect_spot_dark_offering	Blood was spilled on an old altar before we marched. Something unseen now turns blows from our warriors.	false
+effect_bundles_localised_title_land_enc_effect_spot_fallen_feast	Feast on the Fallen	false
+effect_bundles_localised_description_land_enc_effect_spot_fallen_feast	Our army fed on the dead after the battle. Dark rumours of it spread through our lands.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_fighting_spirits_easy	Fighting Spirits	false
 effect_bundles_localised_description_land_enc_effect_spot_tavern_fighting_spirits_easy	The tavern's fighting spirits burned all the way down. Our warriors marched out spoiling for a brawl.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_fighting_spirits_medium	Fighting Spirits	false

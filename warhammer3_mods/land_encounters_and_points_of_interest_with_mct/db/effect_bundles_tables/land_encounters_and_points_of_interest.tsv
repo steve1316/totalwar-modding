@@ -85,6 +85,7 @@ land_enc_effect_spot_victory_feast_easy			force	1	icon_effects_fortify.png	false
 land_enc_effect_spot_victory_feast_medium			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_victory_feast_hard			force	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_dark_offering			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_fallen_feast			faction	1	corruption_tzeentch.png	true	false	true
 land_enc_effect_spot_tavern_fighting_spirits_easy			force	1	edict_sla_festival_of_drinking_and_delights.png	false	false	true
 land_enc_effect_spot_tavern_fighting_spirits_medium			force	1	edict_sla_festival_of_drinking_and_delights.png	false	false	true
 land_enc_effect_spot_tavern_fighting_spirits_hard			force	1	edict_sla_festival_of_drinking_and_delights.png	false	false	true

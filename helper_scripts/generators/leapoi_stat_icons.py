@@ -15,7 +15,6 @@ STAT_ICON_FOLDER = "ui/skins/default/"
 STAT_ICONS: List[Tuple[str, str]] = [
     (r"movement range", "icon_effect_campaign_movement"),
     (r"recruitment costs?", "icon_money"),
-    (r"winds of magic", "icon_wom_recharge"),
     (r"physical resistance", "icon_resistance_physical"),
     (r"missile resistance", "icon_resistance_missile"),
     (r"magic resistance", "icon_resistance_magic"),

@@ -362,8 +362,7 @@ local function compose(offer, ctx)
         end
     end
     if offer.bleed then
-        tower_army.bleed_army(delve.general_cqi, offer.bleed)
-        log("tower: " .. offer.key .. " costs every unit " .. offer.bleed .. " strength")
+        tower_army.bleed_army(delve.general_cqi, offer.bleed, offer.key)
     end
     if offer.sabotage then
         sabotage(offer, ctx)
@@ -394,7 +393,7 @@ end
 --- What a composed offer does: drawn while what it grants can be given, applied by `compose`.
 local COMPOSED_HANDLER = {
     eligible = function(ctx, offer)
-        if boons.grants(offer) and not boons.enabled() then return false end
+        if not boons.drawable(offer) then return false end
         if offer.no_champion and ctx.delve.next_floor and ctx.delve.next_floor.champion then return false end
         if offer.relations and not tower_kin(ctx) then return false end
         if offer.spell_pool then
@@ -680,7 +679,7 @@ local HANDLERS = {
                 change_next_floor(ctx.delve, { budget = offer.next_budget })
                 return "roll_the_bones_foe"
             end
-            tower_army.bleed_army(ctx.delve.general_cqi, offer.bleed)
+            tower_army.bleed_army(ctx.delve.general_cqi, offer.bleed, offer.key)
             return "roll_the_bones_bleed", { offer.bleed }
         end,
     },
@@ -921,8 +920,7 @@ function M.choice(offer_key, delve, next_floor)
         local difficulty = climb_difficulty(offer, floor)
         lines[2] = "dummy_land_enc_tower_descend_floor_" .. floor .. (difficulty and "_" .. difficulty or "")
     end
-    local spell = offer.spell_pool and (delve.offer_spells or {})[offer.key]
-    if spell then table.insert(lines, 2, army_spells.line(spell)) end
+    army_spells.add_line(lines, offer.spell_pool and (delve.offer_spells or {})[offer.key])
     local choice = { key = M.choice_key(offer), lines = lines }
     local units = (delve.offer_units or {})[offer.key]
     local force = units and affordable and tower_army.delving_force(delve.general_cqi)

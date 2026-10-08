@@ -405,16 +405,42 @@ function M.gain_from(character, kind, source, level)
     return key ~= nil and M.gain(character, kind, key, level)
 end
 
---- Gives a lord what an offer grants: `boon` and `curse` as { key, level } or { from = a drop source } for a random one.
+--- Gives a lord what an offer grants: `boon` and `curse` as { key, level } or { from = a drop source } for a random one. A race boon or
+--- curse (Bane, Grudge) is about the enemy's race when it is known, else a random one.
 --- @param character userdata|nil The lord.
 --- @param fields table The offer or outcome record.
-function M.grant_fields(character, fields)
+--- @param enemy string|nil The enemy's faction shorthand, e.g. "emp".
+function M.grant_fields(character, fields, enemy)
+    local race = data.race_of_shorthand[enemy or ""]
     for _, kind in ipairs(KINDS) do
         local grant = fields[kind]
         if grant and character then
-            if grant.from then M.gain_from(character, kind, grant.from) else M.gain(character, kind, grant[1], grant[2] or 1) end
+            if grant.from then M.gain_from(character, kind, grant.from) else M.gain(character, kind, grant[1], grant[2] or 1, race) end
         end
     end
+end
+
+--- Lifts a lord's worst curse, the one at the highest level, and says so.
+--- @param character userdata The lord.
+--- @returns boolean True when a curse was lifted.
+function M.lift_worst_curse(character)
+    local curses, worst = M.find_record(character).curse, nil
+    for i, curse in ipairs(curses) do
+        if worst == nil or curse.level > curses[worst].level then worst = i end
+    end
+    if worst == nil then return false end
+    M.remove(character, "curse", worst, "curse_lifted")
+    return true
+end
+
+--- True when an offer that touches boons and curses can be drawn: they are on, and one that lifts a curse finds the lord with one.
+--- @param offer table The offer record: `boon`, `curse`, `fail_curse` or `lift_curse`.
+--- @param character userdata|nil The lord, for `lift_curse`.
+--- @returns boolean True when it can be drawn.
+function M.drawable(offer, character)
+    if not (M.grants(offer) or offer.fail_curse or offer.lift_curse) then return true end
+    if not M.enabled() then return false end
+    return not offer.lift_curse or (character ~= nil and #M.find_record(character).curse > 0)
 end
 
 --- True when an offer grants a boon or a curse, so it is only drawn while boons and curses are on.

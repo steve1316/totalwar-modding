@@ -157,8 +157,10 @@ end
 --- Takes the same strength points from every unit in the delving army, down to 1.
 --- @param general_cqi number The delving lord's command queue index.
 --- @param points number Strength points each unit loses.
-function M.bleed_army(general_cqi, points)
+--- @param reason string What it was the price of, for the log.
+function M.bleed_army(general_cqi, points, reason)
     for _, entry in ipairs(M.unit_strengths(general_cqi)) do M.set_strength(entry.unit, entry.strength - points) end
+    log(reason .. " costs every unit of lord " .. general_cqi .. " " .. points .. " strength")
 end
 
 --- Heals a share of each unit's missing strength in the delving army.

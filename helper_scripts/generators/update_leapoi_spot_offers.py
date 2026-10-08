@@ -191,48 +191,95 @@ MISSION = "[[col:yellow]]Mission:[[/col]] "
 
 # Site key -> (title, description).
 SITES = {
-    "hidden_tomb": ("Hidden Tomb", "A forgotten tomb lies half-buried in the hillside, its door split by roots and time. The wards carved into the stone are old, "
-                    "but not all of them have failed, and something inside still remembers how to bite."),
-    "abandoned_camp": ("Abandoned Camp", "Cold fires and empty tents stand in a sheltered hollow. Whoever camped here left in a hurry, "
-                       "and left their stores and a fair share of loot behind."),
-    "buried_relics": ("Buried Relics", "Bones of something enormous jut from the churned earth. Among them lie older things, weapons and charms buried long "
-                      "before the beast ever died here."),
-    "hidden_temple": ("Hidden Temple", "A temple rises from the wilds, its walls choked with vines but its altar swept clean, as if someone still "
-                      "tends it. Its keepers left long ago, yet offerings laid here are still answered."),
-    "caravan_remnants": ("Caravan Remnants", "A half-sacked caravan lies across the road, its wagons overturned and its goods scattered in the mud. The raiders "
-                         "were in a hurry, and they missed more than they took."),
-    "whispers_of_our_god": ("A Voice in the Dream", "Our lord wakes from a dream more vivid than any waking hour. A voice spoke in it, offering strength for the "
-                            "trials ahead, and some of its gifts come with a price."),
-    "the_explorer": ("The Explorers", "A band of weathered explorers shares our fire for the night. They trade maps and tales of the road ahead, and ask only "
-                     "for safe passage in return."),
-    "legendary_bard": ("Legendary Bard", "A famous bard sits in chains in a bandit camp we have just put to flight. Freed, they promise to sing of our deeds "
-                       "in every hall and war camp across the land."),
-    "ruined_shrine": ("Ruined Shrine", "A burnt-out shrine stands by the road, its idols blackened and cracked. Offerings left here may be answered with a blessing, or "
-                      "with something far less kind."),
-    "smugglers_cache": ("Smugglers' Cache", "Crates and barrels lie hidden under a false floor, and their owners watch us from the treeline. They deal in "
-                        "goods and secrets, and they are open to offers."),
-    "beast_lair": ("Beast Lair", "Something big lives in this cave. Fresh bones litter the entrance, and the stench carries on the "
-                   "wind for a mile."),
-    "old_battlefield": ("Old Battlefield", "Crows wheel over an old battlefield where two armies broke each other long ago. Wrecked war machines "
-                        "and unburied bones still lie half sunk in the mud."),
-    "witchs_hut": ("Witch's Hut", "A crooked hut squats in the marsh, thick with smoke and stranger smells. The witch who lives here deals in pacts "
-                   "and curses, and every one of them has a price."),
-    "collapsed_mine": ("Collapsed Mine", "A collapsed mine yawns in the hillside, its lower galleries half-flooded. The deeper tunnels are still rich, and "
-                       "still deadly to anyone who lingers."),
-    "merchants_wagon": ("Merchant's Wagon", "A travelling merchant has lost the road and most of their escort. Far from any market and glad of any customer, "
-                        "they throw open their wagon to us."),
-    "sunken_library": ("Sunken Library", "A library has sunk into the marsh, its shelves rotting in black water. Some scrolls survive, sealed in wax and lead, "
-                       "holding the secrets of other realms."),
-    "spoils_of_war": ("Spoils of War", "The field is ours. Enemy dead lie in heaps, and their baggage stands abandoned where they broke and ran. "
-                      "Before we march on, there is more to take from this victory."),
-    "tavern_bar": ("The Bar", "The keeper leans on the bar beside barrels for every taste. Over at the tables, strangers are rolling dice, and a "
-                   "hulking champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it be?\""
-                   "\\\\n\\\\n[[col:yellow]]By Tavern level:[[/col]]\\\\n- Level 1: the house brews (Fighting Spirits gives +5), a feast heals half of each unit's losses, "
-                   "rumours cover the 3 nearest regions, and beating the champion is worth 500 experience."
-                   "\\\\n- Level 2: stronger brews (+10), a feast heals three quarters of the losses, rumours cover 5 regions, "
-                   "and the champion is worth 750 experience."
-                   "\\\\n- Level 3: the strongest brews (+15), a feast heals every loss, rumours cover 7 regions, "
-                   "and the champion is worth 1000 experience."),
+    "hidden_tomb": ("Hidden Tomb",
+                    "A forgotten tomb lies half-buried in the hillside, its door split by roots and time. Our scouts found it by "
+                    "chance.\\\\n\\\\nThe wards carved into the stone are old, but not all of them have failed. The air at the threshold is colder "
+                    "than it should be.\\\\n\\\\nWhatever was laid to rest here was buried with care, and with wealth. Something inside still "
+                    "remembers how to bite."),
+    "abandoned_camp": ("Abandoned Camp",
+                       "Cold fires and empty tents stand in a sheltered hollow. The ashes are grey and long dead, and the canvas flaps loose in the "
+                       "wind.\\\\n\\\\nWhoever camped here left in a hurry. Bedrolls lie where they were dropped, and a cookpot still hangs over the "
+                       "fire pit. There are no bodies and no sign of a fight, only boot prints leading away in every direction.\\\\n\\\\nThey left "
+                       "their stores and a fair share of loot behind, and no one has come back for it."),
+    "buried_relics": ("Buried Relics",
+                      "Bones of something enormous jut from the churned earth. Our soldiers give them a wide berth.\\\\n\\\\nAmong them lie older "
+                      "things, weapons and charms buried long before the beast ever died here. Rusted blades and cracked amulets turn up wherever "
+                      "the ground is torn.\\\\n\\\\nWhoever buried them meant them to stay hidden. The beast's death has brought them back to the "
+                      "surface."),
+    "hidden_temple": ("Hidden Temple",
+                      "A temple rises from the wilds, its walls choked with vines but its altar swept clean, as if someone still tends it. No path "
+                      "leads here.\\\\n\\\\nIts keepers left long ago. The carvings on the pillars are worn smooth and the roof has fallen in "
+                      "places, letting the rain onto the old stones.\\\\n\\\\nYet offerings laid here are still answered. The men speak quietly "
+                      "inside, and few of them care to stay after dark."),
+    "caravan_remnants": ("Caravan Remnants",
+                         "A half-sacked caravan lies across the road, its wagons overturned and its goods scattered in the mud. The drivers are dead "
+                         "or fled.\\\\n\\\\nThe raiders were in a hurry. They cut open sacks and smashed crates, took what they could carry and rode "
+                         "off before anyone could stop them.\\\\n\\\\nThey missed more than they took. There is still plenty here for an army "
+                         "willing to dig through the wreckage."),
+    "whispers_of_our_god": ("A Voice in the Dream",
+                            "Our lord wakes from a dream more vivid than any waking hour. The dream will not fade.\\\\n\\\\nA voice spoke in it, "
+                            "offering strength for the trials ahead. It knew our lord's name, our road and the battles still to come.\\\\n\\\\nThe "
+                            "voice offered many gifts, but not all of them are free. Some of its gifts come with a price, and it did not say what "
+                            "that price would be."),
+    "the_explorer": ("The Explorers",
+                     "A band of weathered explorers shares our fire for the night. They know the land well.\\\\n\\\\nThey trade maps and tales of "
+                     "the road ahead, of passes, rivers and the dangers waiting beyond them. Some of what they say is surely boasting, but much of "
+                     "it rings true.\\\\n\\\\nThey ask only for safe passage in return. Few travellers are so easy to deal with in these lands."),
+    "legendary_bard": ("Legendary Bard",
+                       "A famous bard sits in chains in a bandit camp we have just put to flight. The bandits kept them to sing at their "
+                       "fires.\\\\n\\\\nThe bard's name is known in courts and taverns far from here. Their songs travel faster than any "
+                       "army.\\\\n\\\\nFreed, they promise to sing of our deeds in every hall and war camp across the land. A song like that could "
+                       "carry our name a long way."),
+    "ruined_shrine": ("Ruined Shrine",
+                      "A burnt-out shrine stands by the road, its idols blackened and cracked. The roof has long since fallen in.\\\\n\\\\nNo one "
+                      "knows who burned it. Still, small offerings lie fresh at the foot of the broken altar.\\\\n\\\\nOfferings left here may be "
+                      "answered with a blessing, or with something far less kind. Our soldiers keep their distance and watch the shadows."),
+    "smugglers_cache": ("Smugglers' Cache",
+                        "Crates and barrels lie hidden under a false floor in a ruined barn. Our scouts found them by chance.\\\\n\\\\nTheir owners "
+                        "watch us from the treeline. They are armed, but they know better than to start a fight with an army.\\\\n\\\\nThey deal in "
+                        "goods and secrets, and they are open to offers. Not everything they sell is honest, but all of it is useful."),
+    "beast_lair": ("Beast Lair",
+                   "Something big lives in this cave. Fresh bones litter the entrance, some of them still red.\\\\n\\\\nThe stench carries on the "
+                   "wind for a mile. Our horses will not go near it, and the men grow quiet as we draw close.\\\\n\\\\nA lair like this often holds "
+                   "the remains of those who came before us, along with whatever they carried."),
+    "old_battlefield": ("Old Battlefield",
+                        "Crows wheel over an old battlefield where two armies broke each other long ago. No one came back to bury the "
+                        "dead.\\\\n\\\\nWrecked war machines and unburied bones still lie half sunk in the mud. Rusted armour and broken banners "
+                        "cover the ground.\\\\n\\\\nThe dead have no more use for what they left behind. Our soldiers pick their way through the "
+                        "field with care."),
+    "witchs_hut": ("Witch's Hut",
+                   "A crooked hut squats in the marsh, thick with smoke and stranger smells. Charms of bone and feather hang from the "
+                   "eaves.\\\\n\\\\nThe witch who lives here deals in pacts and curses. She knew we were coming before our scouts reached her door, "
+                   "and she has been waiting for us.\\\\n\\\\nShe will offer her help, but every one of her bargains has a price. Few who deal with "
+                   "her walk away unchanged."),
+    "collapsed_mine": ("Collapsed Mine",
+                       "A collapsed mine yawns in the hillside, its lower galleries half-flooded. Broken carts and rotten timbers block the main "
+                       "shaft.\\\\n\\\\nThe deeper tunnels are still rich. Veins of ore glint in the torchlight, and the old miners left tools and "
+                       "stores behind when they fled.\\\\n\\\\nThe tunnels are still deadly to anyone who lingers. The roof groans and shifts, and "
+                       "the water rises a little more each day."),
+    "merchants_wagon": ("Merchant's Wagon",
+                        "A travelling merchant has lost the road and most of their escort. Their wagon creaks into our camp on a cracked "
+                        "wheel.\\\\n\\\\nThe merchant is shaken, but they know their trade. The wagon is packed with goods from far away, some "
+                        "useful, some strange, and all of it for sale.\\\\n\\\\nFar from any market and glad of any customer, they throw open their "
+                        "wagon to us. Prices are fair, for once."),
+    "sunken_library": ("Sunken Library",
+                       "A library has sunk into the marsh, its shelves rotting in black water. Only the upper floors still stand above the "
+                       "water.\\\\n\\\\nMost of the books are lost to mould and mud. Some scrolls survive, sealed in wax and lead, holding the "
+                       "secrets of other realms.\\\\n\\\\nReaching them means wading into cold, deep water. Our scouts say something moves beneath "
+                       "the surface."),
+    "spoils_of_war": ("Spoils of War",
+                      "The field is ours. Enemy dead lie in heaps, and the wounded are being gathered from the mud. The crows are already "
+                      "circling.\\\\n\\\\nTheir baggage stands abandoned where they broke and ran. Wagons, weapons and supplies lie scattered across "
+                      "the ground, and our soldiers are already picking through them.\\\\n\\\\nBefore we march on, there is more to take from this "
+                      "victory. The men have earned it, and the enemy has no further use for it."),
+    "tavern_bar": ("The Bar",
+                   "The keeper leans on the bar beside barrels for every taste. Over at the tables, strangers are rolling dice, and a hulking "
+                   "champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it "
+                   "be?\"\\\\n\\\\n[[col:yellow]]By Tavern level:[[/col]]\\\\n- Level 1: the house brews (Fighting Spirits gives +5), a feast heals "
+                   "half of each unit's losses, rumours cover the 3 nearest regions, and beating the champion is worth 500 experience.\\\\n- Level "
+                   "2: stronger brews (+10), a feast heals three quarters of the losses, rumours cover 5 regions, and the champion is worth 750 "
+                   "experience.\\\\n- Level 3: the strongest brews (+15), a feast heals every loss, rumours cover 7 regions, and the champion is "
+                   "worth 1000 experience."),
 }
 
 # Shown under every site's description: the rules, said once, then the choice. Loc files store a line break as an escaped `\\n`.
@@ -411,6 +458,13 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "lords_glory": ("Lord's Glory", MISSION + "our lord kills [[col:yellow]]{battle_value} enemy soldiers[[/col]] for [[col:green]]a random rare item[[/col]]."),
     "monster_slayer": ("Monster Slayer", MISSION + "destroy [[col:yellow]]every enemy monster[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
     "steadfast": ("Steadfast", MISSION + "let [[col:yellow]]no unit of ours rout[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
+    "trial_by_fire": ("Trial by Fire", MISSION + "stake our pride: the enemy army is [[col:red]]{stronger}% stronger[[/col]], and a win means our lord gains {boon}."),
+    "witch_hunt": ("Witch Hunt", MISSION + "destroy [[col:yellow]]every enemy spellcaster[[/col]] for the army spell below for the next {spell_turns} turns. "
+                   "It only counts when the enemy fields a spellcaster."),
+    "settle_the_grudge": ("Settle the Grudge", MISSION + "[[col:yellow]]kill the enemy lord[[/col]], and our lord gains {boon}."),
+    "penance": ("Penance", MISSION + "win without [[col:yellow]]a single unit of ours routing[[/col]], and [[col:green]]our lord's worst curse is lifted[[/col]]."),
+    "oath_of_victory": ("Oath of Victory", MISSION + "win within [[col:yellow]]{minutes} minutes[[/col]] and our lord gains {boon}. Fail, and our lord is "
+                        "struck by {fail_curse}."),
     "decapitate": ("Decapitate", MISSION + "kill [[col:yellow]]the enemy lord and every hero[[/col]] for [[col:green]]a unique item[[/col]]."),
     "against_the_odds": ("Against the Odds", MISSION + "win [[col:yellow]]while the enemy outnumbers us[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
     "rout_the_riders": ("Rout the Riders", MISSION + "rout every enemy [[col:yellow]]cavalry and chariot unit within {minutes} minutes[[/col]] for [[col:green]]a random rare item[[/col]]."),
@@ -425,7 +479,18 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "victory_feast": ("Victory Feast", PAY + "hold a victory feast: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership and "
                       "[[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack for 5 turns."),
     "trophy_of_war": ("Trophy of War", "Take a trophy of war: our lord grows as a [[col:green]]Trophy Hunter[[/col]], a trait that rises with every trophy taken."),
-    "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or our lord [[col:red]]wounded for 2 turns[[/col]]."),
+    "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or every unit losing "
+                          "[[col:red]]10% of its strength[[/col]] in an ambush."),
+    "scavenge_their_scrolls": ("Scavenge Their Scrolls", "Scavenge their scrolls: the army spell below is ours to cast in any battle for the next "
+                               "{spell_turns} turns."),
+    "raise_their_banner": ("Raise Their Banner", "Raise their captured banner over our camp: our lord gains {boon}, but [[col:red]]-{relations} relations[[/col]] "
+                           "with the nearest faction of their race."),
+    "desecrate_the_fallen": ("Desecrate the Fallen", "Strip the graves of the fallen: [[col:green]]+{gold} gold[[/col]] to our treasury, but our lord is struck by {curse}."),
+    "press_the_survivors": ("Press the Survivors", "Press their survivors into service: [[col:green]]2 tier 2-3 units[[/col]] of their race join our army now, but "
+                            "[[col:red]]-{relations} relations[[/col]] with the nearest faction of their race."),
+    "feast_on_the_fallen": ("Feast on the Fallen", "Feast on the fallen: every unit regains [[col:green]]{heal}% of its missing strength[[/col]], but "
+                            "[[col:red]]+{e0} Chaos corruption[[/col]] in every province for {turns} turns."),
+    "blood_tithe": ("Blood Tithe", "Offer the blood of the living: our lord gains {boon}, and every unit loses [[col:red]]{bleed}% of its strength[[/col]] now."),
     "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]1 rank[[/col]] and our army [[col:green]]+5% ward save[[/col]] for 5 turns."),
     "walk_away": ("Walk Away", "Leave this place be."),
     "fighting_spirits": ("Fighting Spirits", "Order a round of fighting spirits: " + stat("+{e0}", *ATTACK) + " and " + stat("+{e1}", *DEFENCE) + " for 5 turns."),
@@ -472,7 +537,10 @@ ICONS = {
     "strip_the_dead": "nor_spoils.png", "ransom_the_captain": "noble.png", "tribute_from_the_locals": "income.png", "loot_the_baggage": "treasure_map.png",
     "recruit_a_captive": "slaves.png", "press_on": "campaign_movement.png",
     "victory_feast": "effect_rite.png", "trophy_of_war": "wh3_cp1_unit_reward.png", "chase_the_routers": "cotw_track_army.png", 
-    "dark_offering": "bloodreaper.png",
+    "dark_offering": "bloodreaper.png", "scavenge_their_scrolls": "magic.png", "raise_their_banner": "vow_knights_positive.png",
+    "desecrate_the_fallen": "dlc10_death_night.png", "press_the_survivors": "slaves.png", "feast_on_the_fallen": "edict_ogr_feasts_for_the_strong.png",
+    "blood_tithe": "bloodreaper.png", "trial_by_fire": "champions_essence.png", "witch_hunt": "magic.png", "settle_the_grudge": "rampage_harsh.png",
+    "penance": "lileaths_blessing.png", "oath_of_victory": "vow_knights_positive.png",
     "bribe_the_guards": "subterfuge.png", "thin_the_ranks": "attrition.png", "poison_the_stores": "phase_posion.png",
     "kill_the_captain": "dlc10_assassination_targets.png", "lower_tiers_only": "peasant.png", "break_their_spirit": "discouraged.png",
     "strip_monsters": "rampage_harsh.png", "strip_cavalry": "charge.png", "strip_missile": "ammo.png", "strip_artillery": "artillery.png",
@@ -507,63 +575,208 @@ TAKEN = ("icon_blank.png", "[[col:red]]Already taken.[[/col]]")
 # Mission key -> (what it asked, said when met, said when failed). Each becomes a result after a won battle.
 MISSION_MESSAGES = {
     "headhunt": ("Headhunt",
-        "The enemy lord fell in time, just as we vowed. Their finest possession, a rare item, now belongs to us.",
-        "The enemy lord lived too long, and our vow goes unfulfilled."),
+                 "The enemy lord fell in time, just as we vowed. We marked them before the first arrow flew, and our best blades went looking for "
+                 "them.\\\\n\\\\nThey found them in the thick of the press, and it was over quickly. The body was dragged back to our lines before "
+                 "the battle had even turned.\\\\n\\\\nTheir finest possession, a rare item, now belongs to us. Let the next lord who faces us "
+                 "remember whose it was.",
+                 "The enemy lord lived too long, and our vow goes unfulfilled. We named our target before the battle and sent our best after them, "
+                 "but they kept out of reach.\\\\n\\\\nEvery charge that should have found them struck bodyguards instead. By the time we cut a way "
+                 "through, the moment had passed.\\\\n\\\\nThe soldiers know a vow was made and broken. There is no prize to show for it, only the "
+                 "dead to count."),
     "blood_tally": ("Blood Tally",
-        "The enemy's soldiers fell in their hundreds, and the tally is met. The promised gold is counted into our treasury.",
-        "Too few of the enemy fell, and the tally comes up short."),
+                    "The enemy's soldiers fell in their hundreds, and the tally is met. We counted every corpse, and the clerks had to send for more "
+                    "ink.\\\\n\\\\nOur soldiers fought for the number as much as for the field. They pressed on long after the enemy began to give "
+                    "way, and the bodies piled high along the line.\\\\n\\\\nThe promised gold is counted into our treasury. It was earned in blood, "
+                    "and there was plenty of it.",
+                    "Too few of the enemy fell, and the tally comes up short. We swore a heavy count before the battle, but the field did not give "
+                    "it to us.\\\\n\\\\nToo many of them fled, surrendered or simply stayed out of reach. The clerks walked the field twice and "
+                    "found the same number both times.\\\\n\\\\nThere is no gold for a tally half met. The soldiers grumble, and the treasury stays "
+                    "as it was."),
     "hold_the_line": ("Hold the Line",
-        "Our line bent but never broke, and few of our units were lost. The reward for holding firm goes straight to our treasury.",
-        "Our line held in the end, but too many of our units were lost along the way."),
+                      "Our line bent but never broke, and few of our units were lost. The enemy threw everything they had at us, and each time we "
+                      "pushed them back.\\\\n\\\\nThe sergeants kept the ranks tight, and the wounded were dragged to the rear before gaps could "
+                      "open. When the enemy finally gave up, our banners still stood where they had started.\\\\n\\\\nThe reward for holding firm "
+                      "goes straight to our treasury.",
+                      "Our line held in the end, but too many of our units were lost along the way. We kept the field, but the cost was higher than "
+                      "we promised.\\\\n\\\\nWhole companies were ground down where the fighting was worst. The gaps were filled, then filled again, "
+                      "until there was little left to fill them with.\\\\n\\\\nA victory bought this dearly earns no reward. Tonight the army counts "
+                      "its dead instead of its coin."),
     "swift_victory": ("Swift Victory",
-        "The battle was over almost before it began. Word of the swift victory spreads, and an extra item comes our way.",
-        "The battle dragged on too long for the victory to be called swift."),
+                      "The battle was over almost before it began. Our first charge struck hard, and the enemy never found their feet.\\\\n\\\\nBy "
+                      "the time their rear ranks knew what was happening, their front had already broken. The rest ran without waiting to be "
+                      "told.\\\\n\\\\nWord of the swift victory spreads, and an extra item comes our way. Those who hear the story will think twice "
+                      "before standing against us.",
+                      "The battle dragged on too long for the victory to be called swift. We hoped to break them in the first clash, but they held "
+                      "longer than anyone expected.\\\\n\\\\nThe fighting wore on through the day, line pushing against line. We won in the end, but "
+                      "nobody will tell this one as a quick affair.\\\\n\\\\nThere is no extra item for a slow grind, only tired soldiers and a long "
+                      "night of burying the dead."),
     "guard_the_standard": ("Guard the Standard",
-        "The marked unit stood firm through the worst of the fighting. They return as hardened veterans, 3 ranks the wiser.",
-        "The marked unit was lost in the fighting, and their sacrifice earns no reward."),
+                           "The marked unit stood firm through the worst of the fighting. The enemy saw where our attention lay and sent wave after "
+                           "wave against them.\\\\n\\\\nThey gave ground when they had to and took it back when they could. When the dust settled, "
+                           "they were still standing, bloodied but unbroken.\\\\n\\\\nThey return as hardened veterans, 3 ranks the wiser. The rest "
+                           "of the army looks at them differently now.",
+                           "The marked unit was lost in the fighting, and their sacrifice earns no reward. We set them a hard task, and they were "
+                           "swallowed by it.\\\\n\\\\nThe enemy found them early and did not let go. Help was sent, but it came too late to "
+                           "matter.\\\\n\\\\nTheir names will be read out at the fire tonight. The army will remember them, even if there is nothing "
+                           "else to show for it."),
     "break_them": ("Break Them",
-        "Unit after unit of theirs broke and fled before us. Every one that ran adds to the purse we were promised.",
-        "Too few of their units broke, and they fought on to the bitter end."),
+                   "Unit after unit of theirs broke and fled before us. We pressed every wavering line until it gave, and then we pressed the "
+                   "next.\\\\n\\\\nThe enemy's officers shouted themselves hoarse trying to rally them. It did no good. Their courage ran out long "
+                   "before their numbers did.\\\\n\\\\nEvery one that ran adds to the purse we were promised. The field is littered with dropped "
+                   "shields and abandoned banners.",
+                   "Too few of their units broke, and they fought on to the bitter end. We hoped to send them running, but they would not "
+                   "run.\\\\n\\\\nEach company held its ground until it was cut down where it stood. It was a grim day's work, and slower than "
+                   "anyone wanted.\\\\n\\\\nThe purse we were promised stays closed. Stubborn foes make for poor pay, however well we fought."),
     "trophy_hunt": ("Trophy Hunt",
-        "Their finest unit fell to our blades. Its survivors are pressed into our service, and a fresh unit of their kind now marches with our army.",
-        "Their finest unit survived the battle, and the trophy slips through our fingers."),
+                    "Their finest unit fell to our blades. We picked them out before the battle and went after them with everything we "
+                    "had.\\\\n\\\\nThey fought hard, as their name promised, but in the end they broke like any other. Those left alive threw down "
+                    "their weapons rather than die.\\\\n\\\\nThe survivors are pressed into our service, and a fresh unit of their kind now marches "
+                    "with our army. They will learn to fight under our banner.",
+                    "Their finest unit survived the battle, and the trophy slips through our fingers. We marked them early, but they were never "
+                    "where we struck.\\\\n\\\\nThey fell back in good order while the rest of their army took the blows. When the day ended, they "
+                    "were still together and still dangerous.\\\\n\\\\nThere will be no new recruits from their ranks this time. We will have to "
+                    "meet them again."),
     "silence_the_guns": ("Silence the Guns",
-        "Their guns fell silent before they could do much harm. Picking through the wrecked carriages, we find a rare item.",
-        "Their guns kept firing for too long, and the mission has failed."),
+                         "Their guns fell silent before they could do much harm. We sent our fastest units straight at the batteries while the rest "
+                         "of the army held the line.\\\\n\\\\nThe crews barely had time to reload before we were among them. Few of them lived to "
+                         "see the end of the battle.\\\\n\\\\nPicking through the wrecked carriages, we find a rare item. Their gunners will not be "
+                         "needing it now.",
+                         "Their guns kept firing for too long, and the mission has failed. Every attempt to reach the batteries was torn apart "
+                         "before it got close.\\\\n\\\\nShot after shot ploughed through our ranks. By the time the guns finally stopped, the damage "
+                         "was done and the field was full of our dead.\\\\n\\\\nThere is nothing to salvage from the wreckage this time. We will "
+                         "remember the sound of those guns."),
     "bloodbath_wager": ("Bloodbath Wager",
-        "The field ran red, and the wager is won. The gold comes back to us many times over.",
-        "Too few of the enemy fell, and the gold we wagered is lost."),
+                        "The field ran red, and the wager is won. We staked our gold on a slaughter, and our soldiers gave us one.\\\\n\\\\nThe "
+                        "enemy dead lie thick across the ground, more than anyone dared to hope for before the battle. Crows have gathered from "
+                        "miles around.\\\\n\\\\nThe gold comes back to us many times over. Not a bad return for a day's grim work.",
+                        "Too few of the enemy fell, and the gold we wagered is lost. We bet on a slaughter, and the enemy would not "
+                        "oblige.\\\\n\\\\nThey fell back too soon, or held too well, and the count never climbed high enough. The bookkeepers shake "
+                        "their heads over the ledger.\\\\n\\\\nThe gold is gone, and there is nothing to show for it. Next time, perhaps, we will "
+                        "bet more carefully."),
     "duelists_challenge": ("Duellist's Challenge",
-        "Our lord met theirs blade to blade and struck them down. A unique item is pried from the fallen lord's grip.",
-        "Our lord did not slay theirs, and the challenge goes unanswered."),
+                           "Our lord met theirs blade to blade and struck them down. The fighting nearby slowed as soldiers on both sides turned to "
+                           "watch.\\\\n\\\\nIt was not a clean fight, and our lord did not come away unmarked. But when it ended, only one of them "
+                           "was still standing.\\\\n\\\\nA unique item is pried from the fallen lord's grip. It is ours now, and our lord carries "
+                           "the tale with it.",
+                           "Our lord did not slay theirs, and the challenge goes unanswered. We sought them out on the field, but the duel never "
+                           "ended as it should.\\\\n\\\\nPerhaps the press of bodies kept them apart. Perhaps another blade found the enemy lord "
+                           "first. Either way, the deed was not done by our lord's hand.\\\\n\\\\nThe soldiers will not sing of this one. There is "
+                           "no prize for a challenge left unmet."),
     "spare_the_captain": ("Spare the Captain",
-        "Their lord was taken alive, just as we planned. The ransom has been paid, and the gold is ours.",
-        "Their lord fell in the fighting, so there is no one left to ransom."),
+                          "Their lord was taken alive, just as we planned. We held back our heaviest blows and let the fight wear them down until "
+                          "they could no longer resist.\\\\n\\\\nThey were dragged from the field in chains, bruised and furious. Their people paid "
+                          "quickly, as people do when a lord's life is on the line.\\\\n\\\\nThe ransom has been paid, and the gold is ours.",
+                          "Their lord fell in the fighting, so there is no one left to ransom. We meant to take them alive, but the battle had other "
+                          "ideas.\\\\n\\\\nIn the crush of the melee, someone struck too hard, or too soon. By the time word reached the front, the "
+                          "lord was already dead.\\\\n\\\\nA corpse fetches no ransom, and their people will not pay for a body. The gold we hoped "
+                          "for will never come."),
     "lords_glory": ("Lord's Glory",
-        "Our lord carved through the enemy ranks, and the tally of the slain is sung around every fire. A rare item is taken from the field.",
-        "Our lord fought well, but not well enough for the songs."),
+                    "Our lord carved through the enemy ranks, and the tally of the slain is sung around every fire. Wherever the fighting was "
+                    "thickest, our lord was there.\\\\n\\\\nSoldiers who saw it swear they lost count. The enemy learned to give our lord a wide "
+                    "berth, and it did them little good.\\\\n\\\\nA rare item is taken from the field, a fitting prize for such a day.",
+                    "Our lord fought well, but not well enough for the songs. The enemy kept their distance, or fell to other blades "
+                    "first.\\\\n\\\\nThere was hard fighting, and our lord did their share of it. Yet the count of the slain fell short of what was "
+                    "hoped for.\\\\n\\\\nNo prize comes from the field this time. The minstrels will have to find another tale to tell."),
     "monster_slayer": ("Monster Slayer",
-        "Every beast they brought lies dead on the field. The bounty on such creatures is paid to us in full.",
-        "Some of their beasts still live, and the hunt is unfinished."),
+                       "Every beast they brought lies dead on the field. Some took a dozen spears to bring down, and some took more.\\\\n\\\\nThe "
+                       "ground shook while they lived, and our soldiers paid in blood to put them down. When the last one fell, a cheer went up all "
+                       "along the line.\\\\n\\\\nThe bounty on such creatures is paid to us in full. The carcasses will feed the crows for weeks.",
+                       "Some of their beasts still live, and the hunt is unfinished. We set out to kill every monster they brought, but not all of "
+                       "them fell.\\\\n\\\\nThe survivors limped away bleeding or were driven off before we could finish them. Their roars could be "
+                       "heard long after the fighting ended.\\\\n\\\\nThere is no bounty for half a hunt. The beasts will heal, and we will see them "
+                       "again."),
     "steadfast": ("Steadfast",
-        "Not one of our units broke, however hard the enemy pressed. The promised gold reaches our treasury before the dead are buried.",
-        "One of our units broke and ran, and the vow broke with it."),
+                  "Not one of our units broke, however hard the enemy pressed. Charge after charge struck our lines, and each time our soldiers "
+                  "held.\\\\n\\\\nThe sergeants kept the ranks closed and the frightened in their places. Nobody turned to run, not even when the "
+                  "dead piled up at their feet.\\\\n\\\\nThe promised gold reaches our treasury before the dead are buried.",
+                  "One of our units broke and ran, and the vow broke with it. We swore that no one would flee, and one company could not keep that "
+                  "promise.\\\\n\\\\nThe rest of the army held firm, but the rout was seen by all. It will be a long time before the others let them "
+                  "forget it.\\\\n\\\\nThere is no gold for a broken vow. The treasury stays as it was."),
     "decapitate": ("Decapitate",
-        "Their lord and every one of their heroes lie dead. Searching the bodies, we turn up a unique item.",
-        "Some of their leaders escaped the slaughter."),
+                   "Their lord and every one of their heroes lie dead. We hunted their leaders across the field, one after another, until none were "
+                   "left to give orders.\\\\n\\\\nWithout them, the rest of their army was a mob. It broke soon after, and few of them made it "
+                   "far.\\\\n\\\\nSearching the bodies, we turn up a unique item. It is a fine prize for a hard day's hunting.",
+                   "Some of their leaders escaped the slaughter. We meant to cut off the head of their army, but not every blow found its "
+                   "mark.\\\\n\\\\nOne or more of them slipped away in the confusion, guarded by loyal troops or simply lucky. They will lead again, "
+                   "and they will remember us.\\\\n\\\\nThere is no prize for a hunt left unfinished. We will meet the survivors again, and next "
+                   "time they will not be so lucky."),
     "against_the_odds": ("Against the Odds",
-        "Outnumbered, we fought and won all the same. The promised gold is paid out, and the soldiers who earned it toast the victory.",
-        "We did not face the odds we swore to beat."),
+                         "Outnumbered, we fought and won all the same. They came at us with more soldiers than we had, and they expected an easy "
+                         "day.\\\\n\\\\nThey did not get one. Our army held its ground and made them pay for every step, until their numbers counted "
+                         "for nothing.\\\\n\\\\nThe promised gold is paid out, and the soldiers who earned it toast the victory. Few armies would "
+                         "have stood their ground that day.",
+                         "We did not face the odds we swore to beat. The vow was to fight a stronger army, but the enemy we met was not strong "
+                         "enough to test it.\\\\n\\\\nWe may have won, but a win against an equal or weaker foe was not what we swore. The odds were "
+                         "never against us.\\\\n\\\\nThere is no gold for a challenge that never came. The vow goes unfulfilled, and the soldiers "
+                         "feel cheated of their glory."),
     "rout_the_riders": ("Rout the Riders",
-        "Their riders scattered before us in time. Among the abandoned saddles we find a rare item.",
-        "Their riders held their nerve for too long."),
+                        "Their riders scattered before us in time. We met every charge with spears and arrows until their mounts would not face us "
+                        "any longer.\\\\n\\\\nThe last of them wheeled away in a panic, leaving the dead and the dying behind. Loose mounts ran wild "
+                        "across the field.\\\\n\\\\nAmong the abandoned saddles we find a rare item. Its owner left in too much of a hurry to take "
+                        "it with them.",
+                        "Their riders held their nerve for too long. We tried to break them, but every charge they made came on as hard as the "
+                        "last.\\\\n\\\\nOur spears held them off, but they did not run when we needed them to. By the time they finally pulled back, "
+                        "it was too late.\\\\n\\\\nThere is nothing to pick from their saddles this time. They rode away with everything they "
+                        "brought, and our losses are all we have to count."),
     "untouchable": ("Untouchable",
-        "Our lord came through the thick of the fighting barely scratched, and the army will not stop talking about it. The day's fighting has taught "
-        "our lord a great deal.",
-        "Our lord took too many wounds for the vow to hold."),
+                    "Our lord came through the thick of the fighting barely scratched, and the army will not stop talking about it. Blades and "
+                    "arrows seemed to turn aside.\\\\n\\\\nSoldiers who fought nearby swear they saw blows that should have killed. Our lord walked "
+                    "away from every one of them.\\\\n\\\\nThe day's fighting has taught our lord a great deal, lessons that will serve well in the "
+                    "battles ahead.",
+                    "Our lord took too many wounds for the vow to hold. The vow was to come through the battle unharmed, and the enemy made sure it "
+                    "did not happen.\\\\n\\\\nOur lord fought on through the blood and the pain, but the surgeons have plenty of work "
+                    "tonight.\\\\n\\\\nThere is nothing to show for it this time, only scars and the memory of a promise that could not be kept."),
     "flawless_victory": ("Flawless Victory",
-        "Not a single unit of ours was lost. Songs of the flawless victory spread far, and a unique item is ours.",
-        "One of our units fell before the end, and there will be no songs of a flawless victory."),
+                         "Not a single unit of ours was lost. The enemy struck at us again and again, and every company came home.\\\\n\\\\nThe "
+                         "sergeants called the roll after the battle and found every banner still in its place. Few armies can say as "
+                         "much.\\\\n\\\\nSongs of the flawless victory spread far, and a unique item is ours. It is a rare day when war asks nothing "
+                         "of us.",
+                         "One of our units fell before the end, and there will be no songs of a flawless victory. We came close, but close does not "
+                         "count.\\\\n\\\\nThe enemy found one company and did not let go until it was gone. The rest of the army fought on and won "
+                         "the day, but the loss stands.\\\\n\\\\nThere is no prize this time, only the names of the fallen. They will be remembered, "
+                         "even if no songs are sung."),
+    "trial_by_fire": ("Trial by Fire",
+                      "They came at us with more than we had bargained for, and we beat them all the same. Every soldier who stood in that line will "
+                      "tell the story for years.\\\\n\\\\nThe enemy outnumbered us and outweighed us, and still they broke first. It was a close "
+                      "thing, closer than anyone wants to admit.\\\\n\\\\nSomething of that day stays with our lord now: a boon earned in fire, "
+                      "carried into every fight to come.",
+                      "The trial was too much for us this time. We staked our pride on a fight against a stronger army, and the gods of war were not "
+                      "watching.\\\\n\\\\nThe enemy was every bit as strong as we feared. They pushed us back step by step until there was nothing "
+                      "left to give.\\\\n\\\\nThere is no boon to show for it, only the dead to bury and a lesson to remember. Next time, we will "
+                      "choose our fights with more care."),
+    "witch_hunt": ("Witch Hunt",
+                   "Every one of their spellcasters lies dead on the field, and their tools of the trade are ours. We hunted them down one by one "
+                   "while the battle raged around them.\\\\n\\\\nAmong the burned robes and broken staves, our scholars find a scroll still intact. "
+                   "Its power is ours to call on in the battles to come.\\\\n\\\\nWhoever wrote it will not miss it. Their kind should think hard "
+                   "before casting against us again.",
+                   "Some of their spellcasters slipped away from the fighting. Whatever secrets they carried went with them, and the hunt comes up "
+                   "empty.\\\\n\\\\nWe pressed hard to reach them, but they kept behind their soldiers and fled when the line began to fail. None of "
+                   "our riders could catch them.\\\\n\\\\nThe scrolls we hoped to take will burn in some other army's campfire."),
+    "settle_the_grudge": ("Settle the Grudge",
+                          "Their lord fell to our blades, and the grudge is settled in blood. The old debt has been paid in full.\\\\n\\\\nOur lord "
+                          "walked the field afterwards and learned exactly where their kind are weakest. That knowledge will not be "
+                          "forgotten.\\\\n\\\\nTheir race will pay for it in every battle to come. The soldiers have already begun to tell the tale, "
+                          "and it grows in every telling.",
+                          "Their lord lived through the battle, and the grudge stays unsettled. We came for them, and they slipped "
+                          "away.\\\\n\\\\nOur soldiers grumble that the debt is still owed. Some of them have already started sharpening their "
+                          "blades for the next time.\\\\n\\\\nPerhaps the next meeting will end differently. Our lord has not forgotten, and neither "
+                          "have we."),
+    "penance": ("Penance",
+                "Not one of our units broke, however hard the enemy pressed. The army held firm as a body, and something dark that clung to our lord "
+                "has let go.\\\\n\\\\nThe worst of the curses on our lord is lifted, and the camp breathes easier tonight.\\\\n\\\\nThe priests say "
+                "the penance has been accepted. Whatever was owed has been paid in blood and sweat, and our lord stands a little straighter for it.",
+                "One of our units broke and ran, and the penance was not paid. Whatever darkness clings to our lord stays where it is for "
+                "now.\\\\n\\\\nThe rest of the army held, but one broken company was enough. The soldiers avoid our lord's tent "
+                "tonight.\\\\n\\\\nThe priests say there will be other chances to make amends. Until then, the curse goes with us into every battle."),
+    "oath_of_victory": ("Oath of Victory",
+                        "The battle was won before the sun had moved, just as our lord swore it would be. The army roared the oath back at its lord "
+                        "as the enemy fled. The enemy never had time to form a proper line.\\\\n\\\\nOur lord carries a boon from that day, won by "
+                        "keeping a promise few would dare to make. The soldiers will speak of it for a long time.\\\\n\\\\nAn oath kept in battle is "
+                        "worth more than gold.",
+                        "Our lord swore a swift victory and could not deliver it. The enemy held, and the fighting dragged on long after the time "
+                        "our lord had promised.\\\\n\\\\nThe soldiers saw the oath broken, and they will not forget. Some of them mutter that such "
+                        "vows should not be made lightly.\\\\n\\\\nA curse now follows our lord, a mark of the promise that was not kept. It will "
+                        "not lift easily."),
 }
 
 # Battle objectives this script owns, for the missions added after the tower's hand-written ones: name -> (panel text, banner).
@@ -573,6 +786,11 @@ MISSION_OBJECTIVES = {
     "lords_glory": ("Lord's Glory: enemy soldiers our lord has slain", "Lord's Glory: our lord must slay enough of the enemy."),
     "monster_slayer": ("Monster Slayer: enemy monsters left", "Monster Slayer: destroy every enemy monster."),
     "steadfast": ("Steadfast: keep every unit of ours from routing", "Steadfast: no unit of ours may rout."),
+    "trial_by_fire": ("Trial by Fire: win against the stronger army", "Trial by Fire: win against the stronger army."),
+    "witch_hunt": ("Witch Hunt: enemy spellcasters left", "Witch Hunt: destroy every enemy spellcaster."),
+    "settle_the_grudge": ("Settle the Grudge: slay the enemy lord", "Settle the Grudge: kill the enemy lord."),
+    "penance": ("Penance: keep every unit of ours from routing", "Penance: no unit of ours may rout."),
+    "oath_of_victory": ("Oath of Victory: seconds left to win", "Oath of Victory: win within 8 minutes."),
     "decapitate": ("Decapitate: enemy lord and heroes left", "Decapitate: kill the enemy lord and every hero."),
     "against_the_odds": ("Against the Odds: win while outnumbered", "Against the Odds: win while the enemy outnumbers us."),
     "rout_the_riders": ("Rout the Riders: enemy cavalry and chariots still fighting", "Rout the Riders: rout every enemy cavalry and chariot unit within 6 minutes."),
@@ -610,88 +828,214 @@ AVOID_CONSEQUENCES = ("avoid_consequences", "random_recipe.png", "[[col:yellow]]
 # place highlighted.
 MESSAGES = {
     "cast_the_lots_won": ("Cast the Lots", "Fortune Smiles",
-        "The lots tumble from the cup and fall in our favour. The stranger who offered the game scowls, but pays up all the same, and a rare treasure "
-        "changes hands."),
+                          "The lots tumble from the cup and fall in our favour. A cheer goes up from the soldiers crowded round the table, and a few "
+                          "coins change hands among them on side bets.\\\\n\\\\nThe stranger who offered the game scowls, but pays up all the same. "
+                          "There are no excuses and no talk of another round.\\\\n\\\\nA rare treasure changes hands. Some of the older soldiers "
+                          "mutter that luck like this is never free, but for now the treasure is ours."),
     "cast_the_lots_lost": ("Cast the Lots", "Fortune Frowns",
-        "The lots fall against us, as they so often do for newcomers. The stranger sweeps up our stake with a crooked grin and is gone before anyone "
-        "thinks to argue."),
+                           "The lots fall against us, as they so often do for newcomers. The soldiers watching groan, and one of them swears the cup "
+                           "tipped before the throw.\\\\n\\\\nThe stranger sweeps up our stake with a crooked grin and is gone before anyone thinks "
+                           "to argue. By the time the sergeants push through the crowd, there is only an empty stool.\\\\n\\\\nIt is a hard lesson, "
+                           "and an expensive one. Next time, someone says, we bring our own cup."),
     "drink_from_the_spring_won": ("Drink from the Spring", "Healing Waters",
-        "The water runs cold and clear from the rock. Wounds close and tired limbs grow strong again as the whole army drinks its fill."),
+                                  "The water runs cold and clear from the rock. Our scouts taste it first, then call the rest of the army forward "
+                                  "when nothing ill befalls them.\\\\n\\\\nWounds close and tired limbs grow strong again as the whole army drinks "
+                                  "its fill. Soldiers who limped into camp now stand without a stick, and the surgeons find they have little to "
+                                  "do.\\\\n\\\\nEvery flask and skin is filled before we march on. Whatever power lies in this place, it was kind to "
+                                  "us today."),
     "drink_from_the_spring_lost": ("Drink from the Spring", "Foul Waters",
-        "The water tastes of rot and old iron. Within hours sickness spreads through the camp, and the army will march weaker for some time."),
+                                   "The water tastes of rot and old iron. A few of the soldiers spit it out, but most are too thirsty to care and "
+                                   "drink deep.\\\\n\\\\nWithin hours sickness spreads through the camp. Soldiers double over in their tents, and "
+                                   "the surgeons run short of clean cloth and patience long before nightfall.\\\\n\\\\nThe army will march weaker "
+                                   "for some time. We mark the spring on our maps so that no one is fool enough to drink from it again."),
     "open_the_sealed_door_won": ("Open the Sealed Door", "A Treasure Within",
-        "The seal breaks and the door grinds open on a chamber untouched for centuries. At its heart, on a bare stone plinth, lies a treasure of legend."),
+                                 "The seal breaks and the door grinds open on a chamber untouched for centuries. Stale air rolls out, thick with "
+                                 "dust, and the torches gutter as we step inside.\\\\n\\\\nThe walls are carved with figures no one in the army can "
+                                 "name. Nothing stirs, and no trap springs as our lord walks slowly toward the far end.\\\\n\\\\nAt its heart, on a "
+                                 "bare stone plinth, lies a treasure of legend. It is lifted with care and carried out into the daylight."),
     "open_the_sealed_door_lost": ("Open the Sealed Door", "A Trap Sprung",
-        "The seal breaks, and so does the trap behind it. Our lord is caught in the blast and carried from the chamber, badly wounded."),
+                                  "The seal breaks, and so does the trap behind it. Fire and stone fill the passage, and the roar of it is heard all "
+                                  "the way back at the camp.\\\\n\\\\nOur lord is caught in the blast and carried from the chamber, badly wounded. "
+                                  "The guards who drag the lord clear are burned and coughing, but they do not let go.\\\\n\\\\nWhatever lay beyond "
+                                  "that door, it was guarded well. The chamber is choked with rubble now, and no one in the army has any wish to dig "
+                                  "it out."),
     "double_or_nothing_won": ("Double or Nothing", "The Stake Doubles",
-        "The bet is called and the throw comes up in our favour. Our stake returns to the treasury doubled, and the house is not pleased about it."),
+                              "The bet is called and the throw comes up in our favour. For a moment the whole room is silent, then our soldiers "
+                              "burst out cheering.\\\\n\\\\nOur stake returns to the treasury doubled, counted out coin by coin under the watchful "
+                              "eyes of our paymasters. Not a single piece is missing.\\\\n\\\\nThe house is not pleased about it. The owner forces a "
+                              "smile and wishes us luck on the road, though it is plain we will not be welcome back soon."),
     "double_or_nothing_lost": ("Double or Nothing", "The Stake Is Lost",
-        "The bet is called and the throw turns against us. Our stake is gone, and the house thanks us warmly for our custom."),
+                               "The bet is called and the throw turns against us. A groan goes up from the soldiers who crowded in to watch, and "
+                               "someone kicks over a stool.\\\\n\\\\nOur stake is gone, swept into the house's coffers before the dice have stopped "
+                               "rolling. There is no second throw, and no one offers us one.\\\\n\\\\nThe house thanks us warmly for our custom. Our "
+                               "paymasters say nothing on the walk back to camp, but their faces say enough."),
     "wake_the_guardian_won": ("Wake the Guardian", "It Sleeps On",
-        "The great beast snorts and shifts its bulk, then sinks back into its slumber. We creep past it and make off with a rare treasure from its hoard."),
+                              "The great beast snorts and shifts its bulk, then sinks back into its slumber. Every soldier in the lair holds their "
+                              "breath until the rumbling stops.\\\\n\\\\nWe creep past it on soft feet, keeping to the shadows along the walls. The "
+                              "hoard is piled high, and we take only what we can carry without a sound.\\\\n\\\\nWe make off with a rare treasure "
+                              "from its hoard. Only when the lair is far behind us does anyone dare to laugh about it."),
     "wake_the_guardian_lost": ("Wake the Guardian", "It Wakes!",
-        "The ground shakes as the guardian of this place rises from its slumber. It sees intruders in its lair and charges, and our army must stand and "
-        "fight!"),
+                               "The ground shakes as the guardian of this place rises from its slumber. Dust and loose stone rain down from the roof "
+                               "of the lair as it lifts its head.\\\\n\\\\nIt sees intruders in its lair and charges. There is no time to fall back "
+                               "or form proper lines, and the soldiers nearest the beast scatter before it.\\\\n\\\\nOur army must stand and fight! "
+                               "The officers bellow orders over the din, and every blade we have turns to face the beast."),
     "touch_the_relic_blessed": ("Touch the Relic", "A Blessing",
-        "Warmth spreads from the relic into the hands that hold it. A blessing settles over the army, and the soldiers march a little taller for it."),
+                                "Warmth spreads from the relic into the hands that hold it. The glow passes from one soldier to the next as they "
+                                "line up to lay a hand on it.\\\\n\\\\nA blessing settles over the army. The priests among us cannot agree on which "
+                                "power sent it, but none of them doubt that it is real.\\\\n\\\\nThe soldiers march a little taller for it. Even the "
+                                "hardest veterans find themselves humming the old marching songs as we take the road again."),
     "touch_the_relic_cursed": ("Touch the Relic", "A Curse",
-        "The relic is cold as a grave, and a creeping dread spreads through the ranks. A curse settles over the army, though it should not last long."),
+                               "The relic is cold as a grave. The hand that touches it goes numb to the elbow, and the soldier drops it with a "
+                               "cry.\\\\n\\\\nA creeping dread spreads through the ranks. Soldiers start at shadows, the horses will not settle, and "
+                               "the night watch swears they hear whispers beyond the fires.\\\\n\\\\nA curse settles over the army, though it should "
+                               "not last long. Until it lifts, there is nothing to do but grit our teeth and endure it."),
     "gamble_with_the_hermit_won": ("Gamble with the Hermit", "A Lucky Throw",
-        "The hermit squints at the dice, then laughs and shuffles off into the hut. They return with a unique treasure and press it into our hands."),
+                                   "The hermit squints at the dice, then laughs. It is a dry, cracked sound, as if it has not been used in "
+                                   "years.\\\\n\\\\nThe hermit shuffles off into the hut, and for a long while we hear things being moved and "
+                                   "dropped inside. Our soldiers wait by the door, unsure what to expect.\\\\n\\\\nThey return with a unique "
+                                   "treasure and press it into our hands. The hermit asks for nothing else, and waves us back to the road without a "
+                                   "word."),
     "gamble_with_the_hermit_lost": ("Gamble with the Hermit", "The Hermit Wins",
-        "The hermit wins throw after throw, cackling all the while. When the game is done our gold is in the hermit's pouch, and the hermit is gone."),
+                                    "The hermit wins throw after throw, cackling all the while. No matter who takes the dice, the hermit's luck "
+                                    "holds.\\\\n\\\\nOur soldiers grow suspicious and check the dice, then the cup, then the table. They find "
+                                    "nothing wrong with any of it, which only makes it worse.\\\\n\\\\nWhen the game is done our gold is in the "
+                                    "hermit's pouch. By the time we look up from the table, the hermit is gone, and so is the lantern from the hut."),
     "endow_the_province": ("Endow the Province", "",
-        "Our gold pays for new roads and storehouses across {place}. The region grows stronger and richer, and its people know who paid for it."),
+                           "Our gold pays for new roads and storehouses across {place}. Work crews arrive by the cartload, and the sound of hammers "
+                           "carries from one end of the region to the other.\\\\n\\\\nThe region grows stronger and richer. Trade moves faster along "
+                           "the new roads, and the storehouses fill before the season is out.\\\\n\\\\nIts people know who paid for it. Our banners "
+                           "hang over the new gates, and the locals are careful to speak our name with respect."),
     "garrison_drill": ("Garrison Drill", "",
-        "Fresh supplies reach the garrison of {place}, and its officers drill the defenders from dawn to dusk. Its walls are manned by harder soldiers now."),
+                       "Fresh supplies reach the garrison of {place}, and its officers drill the defenders from dawn to dusk. Shields are repaired, "
+                       "blades sharpened and the walls checked stone by stone.\\\\n\\\\nThe drills are hard and the sergeants harder. Those who "
+                       "complain run the walls again, and those who fall behind run them twice.\\\\n\\\\nIts walls are manned by harder soldiers "
+                       "now. Any enemy who comes to test them will find the defenders ready and waiting."),
     "raise_the_settlement": ("Raise the Settlement", "",
-        "Builders swarm over {place}, raising new halls and stronger walls. In a matter of days its heart stands a level higher than before."),
+                             "Builders swarm over {place}, raising new halls and stronger walls. Stone comes in by the cartload, and the work goes "
+                             "on by torchlight long after dark.\\\\n\\\\nThe townsfolk watch old buildings come down and new ones rise in their "
+                             "place. Few of them have ever seen work move so fast.\\\\n\\\\nIn a matter of days its heart stands a level higher than "
+                             "before. The builders pack their tools and move on, leaving a settlement ready for what is coming."),
     "quell_the_unrest": ("Quell the Unrest", "",
-        "Our soldiers walk the streets of {place}, and the loudest troublemakers fall quiet. Order returns, for now."),
+                         "Our soldiers walk the streets of {place} in close order, shields up and faces hard. They do not need to draw their "
+                         "blades.\\\\n\\\\nThe loudest troublemakers fall quiet. A few are dragged before the magistrates, and the rest decide that "
+                         "today is a good day to stay indoors.\\\\n\\\\nOrder returns, for now. The markets reopen and the shutters come down, but "
+                         "our captains know that quiet streets do not stay quiet for ever."),
     "bountiful_harvest": ("Bountiful Harvest", "",
-        "The fields around {place} groan under a bountiful harvest. Carts queue at the granaries for days, and the markets are busier than anyone "
-        "can remember."),
+                          "The fields around {place} groan under a bountiful harvest. The grain stands tall and heavy, and every hand in the region "
+                          "is called out to bring it in.\\\\n\\\\nCarts queue at the granaries for days, and the markets are busier than anyone can "
+                          "remember. Bread is cheap, and the taverns are full.\\\\n\\\\nThe farmers give thanks to whatever powers they keep. For "
+                          "once, no one in the region goes hungry this season."),
     "stir_their_rebels": ("Stir Their Rebels", "",
-        "Our agents hand out grievances and weapons among the malcontents of {place}. Unrest is rising across the enemy's lands."),
+                          "Our agents hand out grievances and weapons among the malcontents of {place}. They whisper of unpaid wages, cruel taxes "
+                          "and lords who care nothing for the common folk.\\\\n\\\\nIt does not take much. Angry words become angry crowds, and "
+                          "angry crowds become mobs with blades in their hands.\\\\n\\\\nUnrest is rising across the enemy's lands. Their rulers "
+                          "will have to spend time and soldiers putting it down, and that is time we can use."),
     "poison_their_wells": ("Poison Their Wells", "",
-        "Under cover of night, our agents foul the wells of {place}. Sickness spreads through its people, and any army camped there will suffer for it."),
+                           "Under cover of night, our agents foul the wells of {place}. They work quickly and quietly, and are long gone before the "
+                           "first bucket is drawn at dawn.\\\\n\\\\nSickness spreads through its people. The healers are overwhelmed, and the "
+                           "streets fill with the sound of coughing.\\\\n\\\\nAny army camped there will suffer for it. It is cruel work, but war "
+                           "rarely leaves room for kindness, and the enemy would do the same to us."),
     "sap_their_garrison": ("Sap Their Garrison", "",
-        "Our saboteurs slip into {place}, spoiling the grain stores and spreading sickness through the barracks. Its garrison is weakened and shaken."),
+                           "Our saboteurs slip into {place} dressed as merchants and labourers. No one looks twice at them as they find their way to "
+                           "the barracks.\\\\n\\\\nThey spoil the grain stores and spread sickness through the barracks. By the time the officers "
+                           "notice, half the garrison is too sick to stand a watch.\\\\n\\\\nIts garrison is weakened and shaken. Those still on "
+                           "their feet glance at every stranger now, and none of them sleep easily."),
     "spread_the_plague": ("Spread the Plague", "",
-        "We drive the sick and the dying toward the enemy's lands around {place}. The plague spreads, though our own army does not escape it entirely."),
+                          "We drive the sick and the dying toward the enemy's lands around {place}. It is grim work, and the soldiers who herd them "
+                          "wear cloths over their faces.\\\\n\\\\nThe plague spreads quickly through the villages and along the roads. Their healers "
+                          "burn what they can, but it is not enough to stop it.\\\\n\\\\nOur own army does not escape it entirely. Coughing is heard "
+                          "in our camp too, and the surgeons have their hands full."),
     "mystery_brew_won": ("Mystery Brew", "A Fine Brew",
-        "The brew goes down like liquid fire and settles in the belly as courage. By morning the whole army is spoiling for a fight."),
+                         "The brew goes down like liquid fire. Eyes water, throats burn, and more than one veteran has to sit down after the first "
+                         "cup.\\\\n\\\\nThen it settles in the belly as courage. The songs grow louder around the fires, and old grudges between "
+                         "companies are forgotten for the night.\\\\n\\\\nBy morning the whole army is spoiling for a fight. The sergeants have "
+                         "never seen the ranks so eager to march."),
     "mystery_brew_lost": ("Mystery Brew", "A Foul Brew",
-        "Whatever was in that barrel, it was not meant for drinking. The army wakes with sore heads and slow feet, and the keeper will not say what it was."),
+                          "Whatever was in that barrel, it was not meant for drinking. It tasted fine going down, which is the worst "
+                          "part.\\\\n\\\\nThe army wakes with sore heads and slow feet. Soldiers stumble out of their tents groaning, and more than "
+                          "one is sick behind the wagons before breakfast.\\\\n\\\\nThe keeper will not say what it was. When pressed, the keeper "
+                          "only shrugs and says no one forced us to drink it."),
     "dice_with_strangers_won": ("Dice with Strangers", "The Dice Are Kind",
-        "The dice land in our favour, again and again. The strangers pay up with sour faces, and our stake comes back doubled."),
+                                "The dice land in our favour, again and again. Each throw draws a louder cheer from the soldiers gathered round the "
+                                "table.\\\\n\\\\nThe strangers pay up with sour faces. They mutter among themselves and check the dice more than "
+                                "once, but find nothing to complain about.\\\\n\\\\nOur stake comes back doubled. The strangers leave soon after, "
+                                "and our soldiers keep a close eye on them until they are out of sight."),
     "dice_with_strangers_lost": ("Dice with Strangers", "Loaded Dice",
-        "The dice turn against us, and the strangers sweep our stake from the table. Only later does anyone wonder whose dice they were."),
+                                 "The dice turn against us, throw after throw. Our soldiers watch in silence as their luck runs dry.\\\\n\\\\nThe "
+                                 "strangers sweep our stake from the table with practised hands. They thank us politely, finish their drinks and "
+                                 "leave at an easy pace.\\\\n\\\\nOnly later does anyone wonder whose dice they were. By then the strangers are long "
+                                 "gone, and our stake with them."),
     "arm_wrestle_the_champion_won": ("Arm-Wrestle the Champion", "Champion Beaten",
-        "The table groans and the crowd roars as the champion's arm slams down. Our lord walks out a legend of the common room."),
+                                     "Our lord and the champion lock hands over a table scarred by a hundred such contests. For a long moment "
+                                     "neither arm moves, and the common room goes quiet.\\\\n\\\\nThen the table groans and the crowd roars as the "
+                                     "champion's arm slams down. Tankards fly, coin changes hands, and the champion sits stunned.\\\\n\\\\nOur lord "
+                                     "walks out a legend of the common room. The story will be told in that tavern for years, and it will grow with "
+                                     "each telling."),
     "arm_wrestle_the_champion_lost": ("Arm-Wrestle the Champion", "Arm Broken",
-        "The champion grins, leans in, and something in our lord's arm gives way with a crack. Our lord leaves the table hurt, and the crowd cheers the champion."),
+                                      "The champion grins, leans in, and something in our lord's arm gives way with a crack. The sound carries "
+                                      "across the whole common room.\\\\n\\\\nOur lord leaves the table hurt, cradling the arm and refusing all "
+                                      "help. Our surgeons are waiting by the door with splints and harsh words.\\\\n\\\\nThe crowd cheers the "
+                                      "champion, who raises a tankard to the room. It is a bitter lesson in picking the right fights."),
     "buy_rumours": ("Buy Rumours", "",
-        "The keeper leans close and talks of the roads around {place} and beyond, and of the enemy camped nearby: {detail}. We will see those lands "
-        "for some time yet."),
+                    "The keeper leans close and talks of the roads around {place} and beyond. Our coin buys a great deal of talk, and some of it is "
+                    "even true.\\\\n\\\\nThe keeper speaks too of the enemy camped nearby: {detail}. Our officers write it all down and mark their "
+                    "maps by candlelight.\\\\n\\\\nWe will see those lands for some time yet. Whatever moves on those roads, we will know of it "
+                    "before it reaches us."),
     "send_gifts": ("Send Gifts", "",
-        "Our gifts are well received at {place}. Their rulers speak of us more warmly now, and our envoys are welcome at their table."),
+                   "Our gifts are well received at {place}. Fine cloth, good wine and worked silver are laid before their rulers in the great "
+                   "hall.\\\\n\\\\nTheir rulers speak of us more warmly now. Old suspicions do not vanish overnight, but the tone of their letters "
+                   "has plainly changed.\\\\n\\\\nOur envoys are welcome at their table. Where they once waited for days at the gate, they are now "
+                   "shown in at once."),
     "spy_on_their_capital": ("Spy on Their Capital", "",
-        "Our spies slip into {place} to map its walls and gates and count its garrison: {detail}. We will see its streets for some time yet."),
+                             "Our spies slip into {place} to map its walls and gates and count its garrison. They pass as traders, pilgrims and "
+                             "beggars, and no one stops them.\\\\n\\\\nWhat they bring back is worth the risk: {detail}. Our officers study it "
+                             "closely and copy it into every map we carry.\\\\n\\\\nWe will see its streets for some time yet. Should we ever march "
+                             "on those walls, we will not go in blind."),
     "curse_a_distant_king": ("Curse a Distant King", "",
-        "A curse falls on the treasury of the court at {place}. Their wealth dwindles, and they will never know why."),
+                             "A curse falls on the treasury of the court at {place}. It is spoken far away, over smoke and old bones, and carried on "
+                             "the wind.\\\\n\\\\nTheir wealth dwindles. Coins go missing from locked chests, ledgers fail to balance and the "
+                             "stewards blame one another for the loss.\\\\n\\\\nThey will never know why. Their rulers will hang a few clerks and "
+                             "double the guards, and the gold will keep slipping away all the same."),
     "share_the_find": ("Share the Find", "",
-        "We share what we found with our neighbours, starting with {place}. Their scholars are grateful, and think better of us for it."),
+                       "We share what we found with our neighbours, starting with {place}. Copies are made and sent off by our fastest "
+                       "riders.\\\\n\\\\nTheir scholars are grateful. They pore over what we sent for days, and their letters back are full of "
+                       "questions and thanks.\\\\n\\\\nThey think better of us for it. It costs us little to share, and a good name among our "
+                       "neighbours may be worth more than any secret."),
     "point_them_at_each_other": ("Point Them at Each Other", "",
-        "Rumours spread from {place}, carefully planted by our agents. Two rivals now eye each other with suspicion."),
+                                 "Rumours spread from {place}, carefully planted by our agents. A forged letter here, a careless word in a tavern "
+                                 "there, and the story takes on a life of its own.\\\\n\\\\nTwo rivals now eye each other with suspicion. Each is "
+                                 "sure the other has been plotting behind their back.\\\\n\\\\nNeither of them looks our way. While they watch each "
+                                 "other, our own plans can move forward with fewer eyes upon them."),
     "sell_their_secrets": ("Sell Their Secrets", "",
-        "The secrets fetch a fine price in {place}. But word travels, and our enemies grow closer to one another."),
+                           "The secrets fetch a fine price in {place}. The buyers pay without haggling, which tells us we could have asked for "
+                           "more.\\\\n\\\\nBut word travels. It does not take long for the ones we sold out to learn who did it, and they are not "
+                           "the forgiving sort.\\\\n\\\\nOur enemies grow closer to one another. Old quarrels are set aside, and we may yet find "
+                           "them standing together against us."),
     "ransom_the_captain": ("Ransom the Captain", "",
-        "Their captain is ransomed back to {place}, and the price is paid in full. Their kin will not forget the humiliation."),
+                           "Their captain is ransomed back to {place}, and the price is paid in full. The coin arrives under guard and is counted "
+                           "twice before the captain is let go.\\\\n\\\\nThe captain rides home with head bowed, past the jeering of our soldiers. "
+                           "It is not the return any officer hopes for.\\\\n\\\\nTheir kin will not forget the humiliation. The ransom fills our "
+                           "coffers, but it has bought us no friends among them."),
+    "raise_their_banner": ("Raise Their Banner", "",
+                           "Their captured banner now flies over our camp, and our soldiers march taller beneath it. They point it out to every new "
+                           "recruit and every passing trader.\\\\n\\\\nIn {place}, the insult is felt keenly. That banner was carried by their "
+                           "fathers and grandfathers, and now it hangs over a foreign camp.\\\\n\\\\nTheir kin will remember who flew it. They will "
+                           "want it back one day, and they will want blood with it."),
+    "press_the_survivors": ("Press the Survivors", "",
+                            "The survivors are given a choice that is no choice at all, and they take up arms under our banner. Some do it with "
+                            "bitter faces, others with blank ones.\\\\n\\\\nOur sergeants watch them closely for the first few days. A soldier "
+                            "pressed into service is a soldier who might run, or worse.\\\\n\\\\nWord reaches {place}, and their kin do not take "
+                            "kindly to it. To them, every pressed soldier is a son or brother stolen."),
     "chase_the_routers_won": ("Chase the Routers", "A Rich Catch",
-        "Our fastest troops run the fleeing enemy down before they reach safety. Among the gear they threw away to run faster is a rare item."),
+                              "Our fastest troops run the fleeing enemy down before they reach safety. The chase goes on for miles, over fields and "
+                              "through ditches, until the last of them is caught.\\\\n\\\\nAlong the way the enemy threw away everything that slowed "
+                              "them down. Shields, packs and helmets lie scattered across the ground.\\\\n\\\\nAmong the gear they threw away to run "
+                              "faster is a rare item. It is brought back to our lord with no small pride."),
     "chase_the_routers_lost": ("Chase the Routers", "Ambushed",
-        "The fleeing enemy were bait. They turn on our pursuers in a narrow pass, and our lord takes a wound that will lay them low for a time."),
+                               "The fleeing enemy were bait. They run just fast enough to stay ahead, and our pursuers take the lure without a "
+                               "second thought.\\\\n\\\\nThey turn on our pursuers in a narrow pass. The enemy we thought were beaten stand and "
+                               "fight with sudden fury, and the trap closes fast.\\\\n\\\\nEvery unit of ours comes back bloodied. We were lucky it "
+                               "was not worse, and our officers will be slower to give chase next time."),
 }
 
 # Message suffix -> the words its event feed message uses for {place}, which only the result incident can show by name.
@@ -704,7 +1048,10 @@ FALLBACK_PLACES = {
 }
 
 # Shown when an offer's price is a wound, by its turns.
-WOUND_PAID = ("The Price Is Paid", "Our Lord Is Wounded", "The price of what we took comes due at once. Our lord is struck down by a wound that will take {turns} turns to heal.")
+WOUND_PAID = ("The Price Is Paid", "Our Lord Is Wounded",
+              "The price of what we took comes due at once. Whatever bargain we struck, it was always going to be paid in blood.\\\\n\\\\nOur lord is struck down "
+              "by a wound that will take {turns} turns to heal. The surgeons work through the night to keep the lord alive.\\\\n\\\\nThe soldiers keep their "
+              "voices low around the lord's tent. It is a heavy price, but one we chose to pay.")
 
 # Result -> (colour, text) of the effect line under a result's incident, for results whose payload shows no gold, item or unit card.
 # Every mission failed gets its own line, and every wound paid one built from WOUND_PAID_LINE.
@@ -718,7 +1065,7 @@ RESULT_LINES = {
     "touch_the_relic_blessed": ("green", "A blessing on our army for 5 turns."),
     "touch_the_relic_cursed": ("red", "A curse on our army for 3 turns."),
     "gamble_with_the_hermit_lost": ("red", "The hermit keeps our {cost} gold."),
-    "chase_the_routers_lost": ("red", "Our lord is wounded for 2 turns."),
+    "chase_the_routers_lost": ("red", "Every unit loses {lost_bleed}% of its strength."),
     "mystery_brew_won": ("green", "A fine brew on our army for 5 turns."),
     "mystery_brew_lost": ("red", "A hangover on our army for {lost_turns} turns."),
     "dice_with_strangers_lost": ("red", "Our stake is lost."),
@@ -809,6 +1156,8 @@ BUNDLES = {
                        ("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15))]),
     "dark_offering": ("force", "icon_effects_fortify.png", "Dark Offering", "Blood was spilled on an old altar before we marched. Something unseen now turns blows from our warriors.",
                       [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 5)]),
+    "fallen_feast": ("faction", "corruption_tzeentch.png", "Feast on the Fallen", "Our army fed on the dead after the battle. Dark rumours of it spread through our lands.",
+                     [("wh3_main_effect_corruption_chaos_events_bad", "faction_to_province_own", 5)]),
     "tavern_fighting_spirits": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Fighting Spirits",
                                 "The tavern's fighting spirits burned all the way down. Our warriors marched out spoiling for a brawl.",
                                 [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15)),
@@ -935,6 +1284,11 @@ def load_config() -> Dict:
     # The offers granting boons and curses take their text from the boons catalogue, as the lore armies take theirs from the config.
     texts, icons = boons.offer_texts(config["offers"], PAY)
     OFFERS.update(texts)
+    # An offer angering the beaten army's kin says so on its result, and names them plainly where the event feed cannot.
+    for offer in config["offers"]:
+        if offer.get("beaten_kin"):
+            RESULT_LINES.setdefault(offer["key"], RESULT_LINES["ransom_the_captain"])
+            FALLBACK_PLACES.setdefault(offer["key"], FALLBACK_PLACES["ransom_the_captain"])
     ICONS.update(icons)
     tower_texts, tower_icons = boons.offer_texts(config["tower_offers"], TOWER_PAY)
     TOWER_ICONS.update(tower_icons)
@@ -1048,6 +1402,8 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
             values[outcome["2"] + "_strength"] = str(round(outcome["own_strength"] * 100))
         if "lord_xp" in outcome:
             values[outcome["2"] + "_xp"] = str(outcome["lord_xp"])
+        if "bleed" in outcome:
+            values[outcome["2"] + "_bleed"] = str(outcome["bleed"])
     for field in BUNDLE_FIELDS:
         if field not in offer:
             continue
@@ -1066,8 +1422,10 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
     if "relations" in offer:
         values["relations"] = str(abs(offer["relations"]) * 10)
     for kind in ("boon", "curse"):
-        if isinstance(offer.get(kind), list):
+        if offer.get(kind):
             values[kind] = boons.grant_text(kind, offer[kind])
+    if offer.get("fail_curse"):
+        values["fail_curse"] = boons.grant_text("curse", offer["fail_curse"])
     if "victory_gold" in offer:
         multiplier = offer["victory_gold"]
         values["victory_gold"] = "double victory gold" if multiplier == 2 else f"+{round((multiplier - 1) * 100)}% victory gold"
@@ -1294,7 +1652,11 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         messages["mission_" + key + "_met"] = (title, "Mission Met", met)
         messages["mission_" + key + "_failed"] = (title, "Mission Failed", failed)
     messages["missions_untracked"] = ("Missions", "Not Counted",
-                                      "The battle was fought without our watchful eyes on it, so none of our missions could be judged. Any gold we wagered is returned to our treasury.")
+                                      "The battle was fought without our watchful eyes on it. The armies clashed and the matter was settled, but nobody "
+                                      "was there to count what happened.\\n\\nSo none of our missions could be judged. No vow was kept and no "
+                                      "vow was broken, and no reward or penalty comes of them.\\n\\nAny gold we wagered on them is returned to our "
+                                      "treasury. Next time, our officers will have to watch the fighting closely, from the first charge to the last "
+                                      "man standing.")
     for turns in wound_turns(config):
         messages["wound_paid_" + str(turns)] = (WOUND_PAID[0], WOUND_PAID[1], WOUND_PAID[2].format(turns=turns))
 
@@ -1666,6 +2028,26 @@ def check_text(config: Dict) -> None:
         raise SystemExit("\n".join(problems))
 
 
+def check_event_lengths() -> None:
+    """Stops when any dilemma or incident description in the mod's loc files is too short to fill the notification panel's description box,
+    which leaves a dark gap under it. Covers the hand-written rows as well as the generated ones. A long one only scrolls, which the dilemmas
+    that list a Tower floor or a Tavern room need.
+
+    Raises:
+        SystemExit: Naming every description under `boons.MIN_LINES` lines, with its line count.
+    """
+    problems = []
+    for name in ("dilemmas", "incidents"):
+        prefix = f"{name}_localised_description_"
+        rows = [line.split("\t") for line in open(MOD_ROOT + LOC_PREFIX + name + ".loc.tsv", encoding="utf-8").read().splitlines()[2:]]
+        for key, text, *_ in rows:
+            lines = boons.shown_lines(text)
+            if key.startswith(prefix) and lines < boons.MIN_LINES:
+                problems.append(f"{key[len(prefix):]} fills {lines} lines, not {boons.MIN_LINES} or more")
+    if problems:
+        raise SystemExit("Event descriptions that would leave a gap:\n  " + "\n  ".join(problems))
+
+
 def main() -> None:
     """Loads the config, checks the text, and writes the rows."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -1679,6 +2061,7 @@ def main() -> None:
     write_victory_gold(args.dry_run)
     write_army_spells(args.dry_run)
     hook_battle_descriptions(config, args.dry_run)
+    check_event_lengths()
 
 
 if __name__ == "__main__":

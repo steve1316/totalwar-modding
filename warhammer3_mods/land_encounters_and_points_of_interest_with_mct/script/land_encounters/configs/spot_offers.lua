@@ -9,7 +9,7 @@
 ---   gold            Gold gained. A negative value inside a gamble outcome is a loss.
 ---   items           { rarities, count }: random items of those rarities.
 ---   unique          How many legendary items.
----   recruit         { count, tiers, unit_types }: units of the lord's culture join the army.
+---   recruit         { count, tiers, unit_types, beaten }: units of the lord's culture join the army, or of the beaten army's race with `beaten`.
 ---   renown          How many Regiments of Renown of the lord's culture join.
 ---   hero_rank       A freed hero of this rank joins.
 ---   xp              Experience for the lord.
@@ -87,13 +87,19 @@
 ---   roster          Only drawn against a faction that fields one of these unit types.
 ---   max_units       Only drawn when our army has at most this many regular units.
 ---   trophy          True: a copy of the enemy's most expensive unit joins our army.
+---   budget          A stake: multiplies the enemy army's gold budget.
+---   boon            A boon our lord gains for the mission met (see `boons.grant_fields`). A race boon is about the enemy's race.
+---   fail_curse      A curse our lord gains when the mission fails or the battle is lost.
+---   spell_pool, spell_turns  An army spell rolled when the mission is drawn, which the choice names, on our army for that many turns.
+---   lift_curse      True: our lord's worst curse is lifted. Only drawn for a lord with a curse.
 ---
 --- Spoils fields (pool "spoils", drawn on the spoils pick after a won battle spot, which also draws realm offers and offers marked `spoils`):
 ---   spoils               True on an offer of another pool that the spoils pick can draw too.
 ---   gold_per_enemy_unit  Gold for each unit in the army we beat (Easy value, scaled).
 ---   battle_item          True: 1 item of the battle's own victory rarities.
 ---   captive              True: a random unit of the army we beat joins our army.
----   ransom               True: worse relations (`relations`) with the nearest faction of the beaten army's culture.
+---   beaten_kin           True: relations change (`relations`) with the nearest faction of the beaten army's race, which the result names.
+---   bleed                Every unit of ours loses this much strength now, as on a pre-battle offer. Also on a gamble outcome.
 ---   trait_points         A trait the lord gains a point of each time, growing through its levels.
 ---   lord_ranks           Ranks the lord gains.
 ---   lord_xp              Experience the lord gains.
@@ -480,7 +486,7 @@ M.offers = {
 
     --- Spoils, picked after a won battle spot.
     { key = "strip_the_dead", pool = "spoils", tags = { "loot" }, gold_per_enemy_unit = shared.strip_the_dead.per_unit },
-    { key = "ransom_the_captain", pool = "spoils", tags = { "loot", "deal" }, gold = S(2500, 3000, 3500), ransom = true, relations = -5 },
+    { key = "ransom_the_captain", pool = "spoils", tags = { "loot", "deal" }, gold = S(2500, 3000, 3500), beaten_kin = true, relations = -5 },
     { key = "tribute_from_the_locals", pool = "spoils", tags = { "deal" }, dividends = { per_turn = 500, turns = 5 } },
     { key = "loot_the_baggage", pool = "spoils", tags = { "loot" }, battle_item = true },
     { key = "recruit_a_captive", pool = "spoils", tags = { "recruit" }, captive = true },
@@ -489,10 +495,17 @@ M.offers = {
     { key = "trophy_of_war", pool = "spoils", tags = { "loot" }, trait_points = "land_enc_trait_spot_trophy_hunter" },
     { key = "chase_the_routers", pool = "spoils", tags = { "gamble" }, gamble = {
         { 1, "won", items = { rarities = { "rare" }, count = 1 } },
-        { 1, "lost", wound = 2 },
+        { 1, "lost", bleed = 10 },
     } },
     { key = "dark_offering", pool = "spoils", tags = { "curse" }, sacrifice = { ranks = 0 }, lord_ranks = 1,
         army_bundle = { SPOT_BUNDLE .. "dark_offering", 5 } },
+    { key = "scavenge_their_scrolls", pool = "spoils", tags = { "loot" }, spell_pool = "all", spell_turns = 5 },
+    { key = "raise_their_banner", pool = "spoils", tags = { "deal" }, boon = { from = "battle" }, beaten_kin = true, relations = -2 },
+    { key = "desecrate_the_fallen", pool = "spoils", tags = { "loot", "curse" }, gold = S(3000, 4000, 5000), curse = { "haunted", 1 } },
+    { key = "press_the_survivors", pool = "spoils", tags = { "recruit" }, recruit = { count = 2, tiers = { 2, 3 }, beaten = true }, beaten_kin = true,
+        relations = -2 },
+    { key = "feast_on_the_fallen", pool = "spoils", tags = { "recovery", "curse" }, heal_share = 0.3, faction_bundle = { SPOT_BUNDLE .. "fallen_feast", 5 } },
+    { key = "blood_tithe", pool = "spoils", tags = { "curse" }, boon = { from = "battle" }, bleed = 15 },
 
     --- The Tavern bar. Drinks last 5 turns and grow stronger with the Tavern's level, and a hangover lasts 3 turns.
     { key = "fighting_spirits", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "fighting_spirits"), 5 } },
@@ -540,6 +553,12 @@ M.offers = {
     { key = "against_the_odds", pool = "mission", tags = {}, max_units = shared.against_the_odds.max_units, gold = S(2000, 2500, 3000) },
     { key = "rout_the_riders", pool = "mission", tags = {}, battle_value = shared.rout_the_riders.battle_value, roster = shared.rout_the_riders.roster,
         items = { rarities = { "rare" }, count = 1 } },
+    --- Missions that pay in boons, spells and lifted curses.
+    { key = "trial_by_fire", pool = "mission", tags = {}, budget = 1.25, boon = { from = "battle" } },
+    { key = "witch_hunt", pool = "mission", tags = {}, spell_pool = "lore", spell_turns = 5 },
+    { key = "settle_the_grudge", pool = "mission", tags = {}, boon = { "bane", 1 } },
+    { key = "penance", pool = "mission", tags = {}, lift_curse = true },
+    { key = "oath_of_victory", pool = "mission", tags = {}, battle_value = 480, boon = { from = "battle" }, fail_curse = { "cowards_mark", 1 } },
 }
 
 --- Offer key -> offer record.

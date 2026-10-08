@@ -55,6 +55,13 @@ function M.line(id)
     return LINE_PREFIX .. id
 end
 
+--- Puts a spell's payload line second on a choice, under the offer's own line. Does nothing without a spell.
+--- @param lines table The choice's line keys.
+--- @param id string|nil The spell's id.
+function M.add_line(lines, id)
+    if id then table.insert(lines, 2, M.line(id)) end
+end
+
 --- A spell's name, for the log.
 --- @param id string The spell's id.
 --- @returns string The name, or the id when unknown.

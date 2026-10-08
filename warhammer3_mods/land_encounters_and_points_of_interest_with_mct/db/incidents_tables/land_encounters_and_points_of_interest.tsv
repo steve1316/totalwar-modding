@@ -100,6 +100,8 @@ land_enc_incident_spot_share_the_find	false	elector_diplomacy	false	Event		false
 land_enc_incident_spot_point_them_at_each_other	false	story_panels/chd_drill_machinations	false	Event		false		0.0000	false
 land_enc_incident_spot_sell_their_secrets	false	story_panels/chd_pet_blood	false	Event		false		0.0000	false
 land_enc_incident_spot_ransom_the_captain	false	messenger	false	Event		false		0.0000	false
+land_enc_incident_spot_raise_their_banner	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
+land_enc_incident_spot_press_the_survivors	false	wh2_sea_encounters_1	false	Event		false		0.0000	false
 land_enc_incident_spot_chase_the_routers_won	false	carnage_charge	false	Event		false		0.0000	false
 land_enc_incident_spot_chase_the_routers_lost	false	ursun_defeat	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_headhunt_met	false	land_victory	false	Event		false		0.0000	false
@@ -140,6 +142,16 @@ land_enc_incident_spot_mission_untouchable_met	false	army_morale_up	false	Event	
 land_enc_incident_spot_mission_untouchable_failed	false	defeat	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_flawless_victory_met	false	victory	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_flawless_victory_failed	false	defeat	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_trial_by_fire_met	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_trial_by_fire_failed	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_witch_hunt_met	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_witch_hunt_failed	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_settle_the_grudge_met	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_settle_the_grudge_failed	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_penance_met	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_penance_failed	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_oath_of_victory_met	false	land_victory	false	Event		false		0.0000	false
+land_enc_incident_spot_mission_oath_of_victory_failed	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_missions_untracked	false	messenger	false	Event		false		0.0000	false
 land_enc_incident_spot_wound_paid_2	false	attrition_disease	false	Event		false		0.0000	false
 land_enc_incident_spot_wound_paid_3	false	attrition_disease	false	Event		false		0.0000	false
