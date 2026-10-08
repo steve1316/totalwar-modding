@@ -1925,6 +1925,7 @@ def owned_patterns(config: Dict) -> List[Pattern]:
     """
     tower_notices = list(TOWER_NOTICE_TEXT)
     bundle_notices = [name for name, entry in TOWER_BUNDLES.items() if entry[5]]
+    bundle_notices += [army_spells.BUNDLE_NAME + spell["id"] + army_spells.ENEMY_NOTICE for spell in army_spells.spells()]
     difficulty = f"(?:_(?:{'|'.join(DIFFICULTIES)}))?"
     kinds = [(config["tower_line_prefix"], tower_line_keys(config), "(?:_unaffordable)?"), (TOWER_BUNDLE, list(TOWER_BUNDLES), ""),
              (NOTICE_PREFIX, tower_notices + bundle_notices + list(NOTICES) + list(MISSION_OBJECTIVES), "(?:_message)?")]
