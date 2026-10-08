@@ -5,6 +5,7 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 
 local data = require("script/land_encounters/configs/army_spells")
+local shared = require("script/land_encounters/configs/shared_offers")
 
 local M = {}
 
@@ -12,9 +13,11 @@ local M = {}
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constants
 
---- Prefix of each spell's bundle and payload line. The spell's id follows.
-local BUNDLE_PREFIX = "land_enc_effect_tower_spell_"
+--- Prefix of each spell's bundle and payload line. The spell's id follows. A spell's bundle is a tower bundle, so the battle shows its notice.
+local BUNDLE_PREFIX = shared.TOWER_BUNDLE .. "spell_"
 local LINE_PREFIX = "dummy_land_enc_spot_spell_"
+--- Suffix of the battle notice naming a spell the enemy army gained. Mirrored in generators/leapoi_army_spells.py.
+local ENEMY_NOTICE_SUFFIX = "_enemy"
 
 --- Every spell, lore then bound then army, for the "all" pool.
 local ALL = {}
@@ -46,6 +49,15 @@ end
 --- @returns string The bundle key.
 function M.bundle(id)
     return BUNDLE_PREFIX .. id
+end
+
+--- A spell's battle notice name: its bundle's name after the tower bundle prefix, whose notice names the spell and the charges our army
+--- gained. The enemy's notice adds a suffix.
+--- @param id string The spell's id.
+--- @param enemy boolean|nil Whether the enemy army gained it.
+--- @returns string The notice name.
+function M.notice(id, enemy)
+    return M.bundle(id):sub(#shared.TOWER_BUNDLE + 1) .. (enemy and ENEMY_NOTICE_SUFFIX or "")
 end
 
 --- A spell's payload line, which names it and its uses.

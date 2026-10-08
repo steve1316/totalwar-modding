@@ -193,6 +193,8 @@ M.lingers = {
     mud = { "curse", "stumbling_charge" }, exhausting = { "curse", "weary_ranks" }, miasma = { "curse", "withered_supply" },
     rot = { "curse", "withered_supply" }, wild_winds = { "curse", "wild_magic" }, winds_drained = { "curse", "shunned_by_the_winds" },
     cowards = { "curse", "cowards_mark" }, gale = { "curse", "shaky_aim" }, disarmed = { "curse", "shaky_aim" },
+    gift_of_the_winds = { "boon", "kindled_winds" }, blinding_dust = { "boon", "blinding_strikes" }, bloodlust = { "boon", "bloodsworn" },
+    weary_march = { "curse", "weary_ranks" },
 }
 
 --- Faction-wide boons and curses, by key. `good` is true for a blessing.

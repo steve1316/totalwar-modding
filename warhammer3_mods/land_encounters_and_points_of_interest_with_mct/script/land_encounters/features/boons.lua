@@ -497,7 +497,7 @@ function M.on_leapoi_fight(character, won, difficulty, modifiers)
     end
     local settings = get_mct_settings()
     local cqi = character:command_queue_index()
-    local hard = difficulty == "hard" or next(modifiers or {}) ~= nil
+    local hard = difficulty == "hard" or #(modifiers or {}) > 0
     log("boons: lord " .. cqi .. " " .. (won and "won" or "lost") .. " a " .. tostring(difficulty) .. " LEAPOI fight with modifiers "
         .. table.concat(modifiers or {}, ", ") .. " (chances: win " .. settings[data.chance_settings.win] .. "%, loss " .. settings[data.chance_settings.loss]
         .. "%, linger " .. settings[data.chance_settings.linger] .. "%)")

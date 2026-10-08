@@ -163,7 +163,7 @@ LIBRARY: Dict[str, Tuple[str, str, List[Tuple[str, float]]]] = {
                       [("speed_attacking", 20), ("unbreakable_attacking", 1), ("wh3_dlc25_effect_force_stat_unbreakable_vs_undead", 1)]),
     "lore": ("Kindled Winds", "Test: cheaper Lore of Fire and faster spell cooldowns.",
              [("lore_fire_cost", -50), ("wh2_dlc12_effect_magic_cooldown_all_lores", -25)]),
-    "army_spell": ("Falling Star", "Test: the army can call down the Comet of Casandora twice per battle, at no Winds of Magic cost.",
+    "army_spell": ("Falling Star", "Test: the army can call down the Comet of Casandora twice per battle.",
                    [("comet_army_ability", 1), ("comet_army_ability_uses", 1)]),
     "stances": ("Hobbled March", "Test: no March stance, and the Ambush stance costs more.", [("march_blocked", 1), ("ambush_stance_cost", 100)]),
     "tired": ("Weary Ranks", "Test: the army starts every battle tired.", [("wh_main_effect_force_campaign_stance_begin_fatigued_4_tired", 4)]),

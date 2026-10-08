@@ -375,23 +375,23 @@ campaign_payload_ui_details_description_dummy_land_enc_tower_call_the_winds_medi
 campaign_payload_ui_details_description_dummy_land_enc_tower_call_the_winds_medium_unaffordable	[[col:red]]The haul holds less than 2000 gold[[/col]], so the winds stay still. The army climbs as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_call_the_winds_hard	Pay [[col:yellow]]2500 gold[[/col]] from the haul to call the winds: [[col:green]]+40 Winds of Magic[[/col]] reserve in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_call_the_winds_hard_unaffordable	[[col:red]]The haul holds less than 2500 gold[[/col]], so the winds stay still. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_easy	Pay [[col:yellow]]1500 gold[[/col]] from the haul to unroll a scroll of banishment: army spell [[col:green]]Banishment, 1 use[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_easy	Pay [[col:yellow]]1500 gold[[/col]] from the haul to unroll a scroll of banishment: army spell [[col:green]]Banishment, 1 use[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_easy_unaffordable	[[col:red]]The haul holds less than 1500 gold[[/col]], so the scroll stays sealed. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_medium	Pay [[col:yellow]]2000 gold[[/col]] from the haul to unroll a scroll of banishment: army spell [[col:green]]Banishment, 1 use[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_medium	Pay [[col:yellow]]2000 gold[[/col]] from the haul to unroll a scroll of banishment: army spell [[col:green]]Banishment, 1 use[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_medium_unaffordable	[[col:red]]The haul holds less than 2000 gold[[/col]], so the scroll stays sealed. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_hard	Pay [[col:yellow]]2500 gold[[/col]] from the haul to unroll a scroll of banishment: army spell [[col:green]]Banishment, 1 use[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_hard	Pay [[col:yellow]]2500 gold[[/col]] from the haul to unroll a scroll of banishment: army spell [[col:green]]Banishment, 1 use[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_scroll_of_banishment_hard_unaffordable	[[col:red]]The haul holds less than 2500 gold[[/col]], so the scroll stays sealed. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_easy	Pay [[col:yellow]]1500 gold[[/col]] from the haul to take the Net of Amyntok: army spell [[col:green]]Net of Amyntok, 3 uses[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_easy	Pay [[col:yellow]]1500 gold[[/col]] from the haul to take the Net of Amyntok: army spell [[col:green]]Net of Amyntok, 3 uses[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_easy_unaffordable	[[col:red]]The haul holds less than 1500 gold[[/col]], so the net stays in its case. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_medium	Pay [[col:yellow]]2000 gold[[/col]] from the haul to take the Net of Amyntok: army spell [[col:green]]Net of Amyntok, 3 uses[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_medium	Pay [[col:yellow]]2000 gold[[/col]] from the haul to take the Net of Amyntok: army spell [[col:green]]Net of Amyntok, 3 uses[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_medium_unaffordable	[[col:red]]The haul holds less than 2000 gold[[/col]], so the net stays in its case. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_hard	Pay [[col:yellow]]2500 gold[[/col]] from the haul to take the Net of Amyntok: army spell [[col:green]]Net of Amyntok, 3 uses[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_hard	Pay [[col:yellow]]2500 gold[[/col]] from the haul to take the Net of Amyntok: army spell [[col:green]]Net of Amyntok, 3 uses[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_net_of_amyntok_hard_unaffordable	[[col:red]]The haul holds less than 2500 gold[[/col]], so the net stays in its case. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_easy	Pay [[col:yellow]]1500 gold[[/col]] from the haul to drink from the tower's roots: army spell [[col:green]]Earthblood, 2 uses[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_easy	Pay [[col:yellow]]1500 gold[[/col]] from the haul to drink from the tower's roots: army spell [[col:green]]Earthblood, 2 uses[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_easy_unaffordable	[[col:red]]The haul holds less than 1500 gold[[/col]], so the roots stay dry. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_medium	Pay [[col:yellow]]2000 gold[[/col]] from the haul to drink from the tower's roots: army spell [[col:green]]Earthblood, 2 uses[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_medium	Pay [[col:yellow]]2000 gold[[/col]] from the haul to drink from the tower's roots: army spell [[col:green]]Earthblood, 2 uses[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_medium_unaffordable	[[col:red]]The haul holds less than 2000 gold[[/col]], so the roots stay dry. The army climbs as it is.	false
-campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_hard	Pay [[col:yellow]]2500 gold[[/col]] from the haul to drink from the tower's roots: army spell [[col:green]]Earthblood, 2 uses[[/col]], in the next battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_hard	Pay [[col:yellow]]2500 gold[[/col]] from the haul to drink from the tower's roots: army spell [[col:green]]Earthblood, 2 uses[[/col]], in the next battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_earthblood_hard_unaffordable	[[col:red]]The haul holds less than 2500 gold[[/col]], so the roots stay dry. The army climbs as it is.	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_curse_of_years	Read from the Book of Years: army spell [[col:green]]Curse of Years, 2 uses[[/col]], in the next battle, but our lord is struck by [[col:red]]Shunned by the Winds I (+10% Winds of Magic cost)[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_tower_the_dwellers_below	Wake what sleeps beneath the tower: army spell [[col:green]]The Dwellers Below, 1 use[[/col]], in the next battle, but our lord is [[col:red]]wounded for 3 turns[[/col]] when the delve ends.	false
@@ -1282,6 +1282,12 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_lost_warp	[
 campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_scatter	[[col:yellow]]Modifier:[[/col]] [[col:green]]Scattered Ranks - The enemy's units start the battle scattered around their centre.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_revealed	[[col:yellow]]Modifier:[[/col]] [[col:yellow]]Naked Plain - Every unit on the field is always visible and cannot hide.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_wild_winds	[[col:yellow]]Modifier:[[/col]] [[col:yellow]]Wild Winds - Every 3 minutes a magical storm spawns near a random unit from either side.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_gift_of_the_winds	[[col:yellow]]Modifier:[[/col]] [[col:green]]Gift of the Winds - Our army can cast a random army spell, named in the battle.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_arcane_duel	[[col:yellow]]Modifier:[[/col]] [[col:yellow]]Arcane Duel - Our army and the enemy can each cast a random army spell.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_blinding_dust	[[col:yellow]]Modifier:[[/col]] [[col:yellow]]Blinding Dust - Every unit's attacks blind what they hit.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_weary_march	[[col:yellow]]Modifier:[[/col]] [[col:red]]Weary March - Our army starts the battle Tired.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_spent_foe	[[col:yellow]]Modifier:[[/col]] [[col:green]]Spent Foe - The enemy army starts the battle Tired.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_bloodlust	[[col:yellow]]Modifier:[[/col]] [[col:yellow]]Bloodlust - Every unit on the field gains Frenzy.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_enemy_last_stand	[[col:yellow]]Modifier:[[/col]] [[col:red]]Fight to the Last - Enemy units cannot rout until they fall below half strength.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_dead_rise	[[col:yellow]]Modifier:[[/col]] [[col:green]]The Dead Rise - At 5:00 our destroyed units return where they started, at 25% strength.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_modifier_undying	[[col:yellow]]Modifier:[[/col]] [[col:red]]Undying Foe - At 5:00 two destroyed enemy units return where they started, at half strength.[[/col]]	false
@@ -1972,121 +1978,121 @@ campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooli
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_3	[[col:red]]The hedge-witch will not gamble with this lord again for 3 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_4	[[col:red]]The hedge-witch will not gamble with this lord again for 4 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_5	[[col:red]]The hedge-witch will not gamble with this lord again for 5 turns.[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_001	[[col:green]]Army spell: Djaf's Incantation of Cursed Blades[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_002	[[col:green]]Army spell: Neru's Incantation of Protection[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_003	[[col:green]]Army spell: Ptra's Incantation of Righteous Smiting[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_004	[[col:green]]Army spell: Sakhmet's Incantation of the Skullstorm[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_005	[[col:green]]Army spell: Usekhp's Incantation of Desiccation[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_006	[[col:green]]Army spell: Usirian's Incantation of Vengeance[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_007	[[col:green]]Army spell: Denizens of the Deep[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_008	[[col:green]]Army spell: Vangheist's Revenge[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_009	[[col:green]]Army spell: Kraken's Pull[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_010	[[col:green]]Army spell: Spiteful Shot[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_011	[[col:green]]Army spell: Drowned Dead[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_012	[[col:green]]Army spell: Flensing Ruin[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_013	[[col:green]]Army spell: Armour of Darkness[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_014	[[col:green]]Army spell: Black Whirlwind[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_015	[[col:green]]Army spell: Brittle Bone[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_016	[[col:green]]Army spell: Veil of Shadows[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_017	[[col:green]]Army spell: Warp Stars[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_018	[[col:green]]Army spell: Bladewind[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_019	[[col:green]]Army spell: Chillwind[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_020	[[col:green]]Army spell: Doombolt[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_021	[[col:green]]Army spell: Power of Darkness[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_022	[[col:green]]Army spell: Apotheosis[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_023	[[col:green]]Army spell: Arcane Unforging[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_024	[[col:green]]Army spell: Hand of Glory[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_025	[[col:green]]Army spell: Soul Quench[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_026	[[col:green]]Army spell: Tempest[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_027	[[col:green]]Army spell: Bless with Filth[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_028	[[col:green]]Army spell: Pestilent Birth[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_029	[[col:green]]Army spell: Plague[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_030	[[col:green]]Army spell: Vermintide[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_031	[[col:green]]Army spell: Wither[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_032	[[col:green]]Army spell: Crack's Call[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_033	[[col:green]]Army spell: Howling Warpgale[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_034	[[col:green]]Army spell: Warp Lightning[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_035	[[col:green]]Army spell: Ash Storm[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_036	[[col:green]]Army spell: Curse of Hashut[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_037	[[col:green]]Army spell: Dark Subjugation[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_038	[[col:green]]Army spell: Flames of Azgorh[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_039	[[col:green]]Army spell: Curse of the Ancient Witch[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_040	[[col:green]]Army spell: Cursed Cauldron[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_041	[[col:green]]Army spell: Malediction of Madness[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_042	[[col:green]]Army spell: The Forbidden Fens[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_043	[[col:green]]Army spell: Vengeance of Spirits[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_044	[[col:green]]Army spell: Witchbrew[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_045	[[col:green]]Army spell: Flensing Haar[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_046	[[col:green]]Army spell: Ladrielle's Shroud[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_047	[[col:green]]Army spell: Mathlann’s Spite[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_048	[[col:green]]Army spell: Mistress of the Deeps[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_049	[[col:green]]Army spell: The Writhing Mist[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_050	[[col:green]]Army spell: Walk Between Worlds[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_051	[[col:green]]Army spell: Raise Dead (Skeleton Warriors)[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_052	[[col:green]]Army spell: The Dark Riders[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_053	[[col:green]]Army spell: The Harbinger[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_054	[[col:green]]Army spell: Braingobbler[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_055	[[col:green]]Army spell: Bullgorger[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_056	[[col:green]]Army spell: The Maw[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_057	[[col:green]]Army spell: Toothcracker[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_058	[[col:green]]Army spell: Crystal Sanctuary[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_059	[[col:green]]Army spell: Death Frost[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_060	[[col:green]]Army spell: Frost Blades[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_061	[[col:green]]Army spell: Ice Maiden's Kiss[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_062	[[col:green]]Army spell: Ice Sheet[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_063	[[col:green]]Army spell: Curse of the Leper[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_064	[[col:green]]Army spell: Miasma of Pestilence[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_065	[[col:green]]Army spell: Blight Boil[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_066	[[col:green]]Army spell: Hysterical Frenzy[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_067	[[col:green]]Army spell: Pavane of Slaanesh[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_068	[[col:green]]Army spell: Phantasmagoria[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_069	[[col:green]]Army spell: Biting Wind[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_070	[[col:green]]Army spell: Blizzard[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_071	[[col:green]]Army spell: Gust of True Flight[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_072	[[col:green]]Army spell: Hailstorm[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_073	[[col:green]]Army spell: Hawks of Miska[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_074	[[col:green]]Army spell: Swiftwing[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_075	[[col:green]]Army spell: Blue Fire of Tzeentch[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_076	[[col:green]]Army spell: Glean Magic[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_077	[[col:green]]Army spell: Treason of Tzeentch[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_078	[[col:green]]Army spell: Tzeentch's Firestorm[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_079	[[col:green]]Army spell: Constellation of the Dragon[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_080	[[col:green]]Army spell: Dragon's Breath[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_081	[[col:green]]Army spell: Jade Shield[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_082	[[col:green]]Army spell: Might of Heaven & Earth[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_083	[[col:green]]Army spell: Stone Ground Stance[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_084	[[col:green]]Army spell: Blossom Wind[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_085	[[col:green]]Army spell: Cloak of Jet[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_086	[[col:green]]Army spell: Storm of Shadows[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_087	[[col:green]]Army spell: Talons of Night[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_088	[[col:green]]Army spell: Pann's Impenetrable Pelt[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_089	[[col:green]]Army spell: Wyssan's Wildform[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_090	[[col:green]]Army spell: Bray-Scream[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_091	[[col:green]]Army spell: Devolve[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_092	[[col:green]]Army spell: Mantle of Ghorok[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_093	[[col:green]]Army spell: Traitor-Kin[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_094	[[col:green]]Army spell: Awakening of the Wood[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_095	[[col:green]]Army spell: Melkoth's Mystifying Miasma[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_096	[[col:green]]Army spell: Brain Bursta[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_097	[[col:green]]Army spell: 'Eadbutt[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_098	[[col:green]]Army spell: 'Ere We Go[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_099	[[col:green]]Army spell: Fists of Gork[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_100	[[col:green]]Army spell: Foot of Gork[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_101	[[col:green]]Army spell: Gaze of Mork[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_102	[[col:green]]Army spell: Aspect of the Dread Knight[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_103	[[col:green]]Army spell: Flaming Sword of Rhuin[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_104	[[col:green]]Army spell: Curse of the Midnight Wind[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_105	[[col:green]]Army spell: Light of Battle[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_106	[[col:green]]Army spell: Shem's Burning Gaze[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_107	[[col:green]]Army spell: Curse of Da Bad Moon[[/col]], 2 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_108	[[col:green]]Army spell: Gork'll Fix It[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_109	[[col:green]]Army spell: Itchy Nuisance[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_110	[[col:green]]Army spell: Night Shroud[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_111	[[col:green]]Army spell: Sneaky Stabbin'[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_112	[[col:green]]Army spell: Final Transmutation[[/col]], 1 cast in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_113	[[col:green]]Army spell: Glittering Robe[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_114	[[col:green]]Army spell: Raise Dead[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_115	[[col:green]]Army spell: Vanhel's Danse Macabre[[/col]], 3 casts in each battle, at no Winds of Magic cost.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_001	[[col:green]]Army spell: Djaf's Incantation of Cursed Blades[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_002	[[col:green]]Army spell: Neru's Incantation of Protection[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_003	[[col:green]]Army spell: Ptra's Incantation of Righteous Smiting[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_004	[[col:green]]Army spell: Sakhmet's Incantation of the Skullstorm[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_005	[[col:green]]Army spell: Usekhp's Incantation of Desiccation[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_006	[[col:green]]Army spell: Usirian's Incantation of Vengeance[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_007	[[col:green]]Army spell: Denizens of the Deep[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_008	[[col:green]]Army spell: Vangheist's Revenge[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_009	[[col:green]]Army spell: Kraken's Pull[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_010	[[col:green]]Army spell: Spiteful Shot[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_011	[[col:green]]Army spell: Drowned Dead[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_012	[[col:green]]Army spell: Flensing Ruin[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_013	[[col:green]]Army spell: Armour of Darkness[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_014	[[col:green]]Army spell: Black Whirlwind[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_015	[[col:green]]Army spell: Brittle Bone[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_016	[[col:green]]Army spell: Veil of Shadows[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_017	[[col:green]]Army spell: Warp Stars[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_018	[[col:green]]Army spell: Bladewind[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_019	[[col:green]]Army spell: Chillwind[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_020	[[col:green]]Army spell: Doombolt[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_021	[[col:green]]Army spell: Power of Darkness[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_022	[[col:green]]Army spell: Apotheosis[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_023	[[col:green]]Army spell: Arcane Unforging[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_024	[[col:green]]Army spell: Hand of Glory[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_025	[[col:green]]Army spell: Soul Quench[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_026	[[col:green]]Army spell: Tempest[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_027	[[col:green]]Army spell: Bless with Filth[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_028	[[col:green]]Army spell: Pestilent Birth[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_029	[[col:green]]Army spell: Plague[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_030	[[col:green]]Army spell: Vermintide[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_031	[[col:green]]Army spell: Wither[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_032	[[col:green]]Army spell: Crack's Call[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_033	[[col:green]]Army spell: Howling Warpgale[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_034	[[col:green]]Army spell: Warp Lightning[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_035	[[col:green]]Army spell: Ash Storm[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_036	[[col:green]]Army spell: Curse of Hashut[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_037	[[col:green]]Army spell: Dark Subjugation[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_038	[[col:green]]Army spell: Flames of Azgorh[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_039	[[col:green]]Army spell: Curse of the Ancient Witch[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_040	[[col:green]]Army spell: Cursed Cauldron[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_041	[[col:green]]Army spell: Malediction of Madness[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_042	[[col:green]]Army spell: The Forbidden Fens[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_043	[[col:green]]Army spell: Vengeance of Spirits[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_044	[[col:green]]Army spell: Witchbrew[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_045	[[col:green]]Army spell: Flensing Haar[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_046	[[col:green]]Army spell: Ladrielle's Shroud[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_047	[[col:green]]Army spell: Mathlann’s Spite[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_048	[[col:green]]Army spell: Mistress of the Deeps[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_049	[[col:green]]Army spell: The Writhing Mist[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_050	[[col:green]]Army spell: Walk Between Worlds[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_051	[[col:green]]Army spell: Raise Dead (Skeleton Warriors)[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_052	[[col:green]]Army spell: The Dark Riders[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_053	[[col:green]]Army spell: The Harbinger[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_054	[[col:green]]Army spell: Braingobbler[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_055	[[col:green]]Army spell: Bullgorger[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_056	[[col:green]]Army spell: The Maw[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_057	[[col:green]]Army spell: Toothcracker[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_058	[[col:green]]Army spell: Crystal Sanctuary[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_059	[[col:green]]Army spell: Death Frost[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_060	[[col:green]]Army spell: Frost Blades[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_061	[[col:green]]Army spell: Ice Maiden's Kiss[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_062	[[col:green]]Army spell: Ice Sheet[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_063	[[col:green]]Army spell: Curse of the Leper[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_064	[[col:green]]Army spell: Miasma of Pestilence[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_065	[[col:green]]Army spell: Blight Boil[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_066	[[col:green]]Army spell: Hysterical Frenzy[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_067	[[col:green]]Army spell: Pavane of Slaanesh[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_068	[[col:green]]Army spell: Phantasmagoria[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_069	[[col:green]]Army spell: Biting Wind[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_070	[[col:green]]Army spell: Blizzard[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_071	[[col:green]]Army spell: Gust of True Flight[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_072	[[col:green]]Army spell: Hailstorm[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_073	[[col:green]]Army spell: Hawks of Miska[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_074	[[col:green]]Army spell: Swiftwing[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_075	[[col:green]]Army spell: Blue Fire of Tzeentch[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_076	[[col:green]]Army spell: Glean Magic[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_077	[[col:green]]Army spell: Treason of Tzeentch[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_078	[[col:green]]Army spell: Tzeentch's Firestorm[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_079	[[col:green]]Army spell: Constellation of the Dragon[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_080	[[col:green]]Army spell: Dragon's Breath[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_081	[[col:green]]Army spell: Jade Shield[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_082	[[col:green]]Army spell: Might of Heaven & Earth[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_083	[[col:green]]Army spell: Stone Ground Stance[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_084	[[col:green]]Army spell: Blossom Wind[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_085	[[col:green]]Army spell: Cloak of Jet[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_086	[[col:green]]Army spell: Storm of Shadows[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_087	[[col:green]]Army spell: Talons of Night[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_088	[[col:green]]Army spell: Pann's Impenetrable Pelt[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_089	[[col:green]]Army spell: Wyssan's Wildform[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_090	[[col:green]]Army spell: Bray-Scream[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_091	[[col:green]]Army spell: Devolve[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_092	[[col:green]]Army spell: Mantle of Ghorok[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_093	[[col:green]]Army spell: Traitor-Kin[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_094	[[col:green]]Army spell: Awakening of the Wood[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_095	[[col:green]]Army spell: Melkoth's Mystifying Miasma[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_096	[[col:green]]Army spell: Brain Bursta[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_097	[[col:green]]Army spell: 'Eadbutt[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_098	[[col:green]]Army spell: 'Ere We Go[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_099	[[col:green]]Army spell: Fists of Gork[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_100	[[col:green]]Army spell: Foot of Gork[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_101	[[col:green]]Army spell: Gaze of Mork[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_102	[[col:green]]Army spell: Aspect of the Dread Knight[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_103	[[col:green]]Army spell: Flaming Sword of Rhuin[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_104	[[col:green]]Army spell: Curse of the Midnight Wind[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_105	[[col:green]]Army spell: Light of Battle[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_106	[[col:green]]Army spell: Shem's Burning Gaze[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_107	[[col:green]]Army spell: Curse of Da Bad Moon[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_108	[[col:green]]Army spell: Gork'll Fix It[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_109	[[col:green]]Army spell: Itchy Nuisance[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_110	[[col:green]]Army spell: Night Shroud[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_111	[[col:green]]Army spell: Sneaky Stabbin'[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_112	[[col:green]]Army spell: Final Transmutation[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_113	[[col:green]]Army spell: Glittering Robe[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_114	[[col:green]]Army spell: Raise Dead[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_115	[[col:green]]Army spell: Vanhel's Danse Macabre[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_001	[[col:green]]Army spell: Arnzipal's Black Horror[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_002	[[col:green]]Army spell: Assault of Stone[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_003	[[col:green]]Army spell: Blast[[/col]], 1 cast in each battle.	false

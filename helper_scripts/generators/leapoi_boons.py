@@ -273,7 +273,7 @@ BOONS: Dict[str, Tuple[str, str, str, List[Level]]] = {
         ["Army ability: Comet of Casandora, 1 use", "Comet of Casandora, 2 uses", "Comet of Casandora, 3 uses", "Comet of Casandora, 3 uses, +10% spell intensity",
          "Comet of Casandora, 4 uses, +20% spell intensity"],
         (COMET, F, [1, 1, 1, 1, 1]), (COMET_USES, F, [N, 1, 2, 2, 3]), (INTENSITY, F, [N, N, N, 10, 20]))),
-    "stone_rampart": ("Stone Rampart", "Attackers break on this army like waves on rock.", "icon_effects_fortify.png", ramp(
+    "stone_rampart": ("Stone Rampart", "Attackers break on this army like waves on rock.", "armour_character.png", ramp(
         ["+3 melee defence when defending", "+6 melee defence when defending", "+9 melee defence and Regeneration when defending",
          "+12 melee defence and Regeneration when defending", "+15 melee defence, Regeneration and Unbreakable when defending"],
         (MD_DEFENDING, F, [3, 6, 9, 12, 15]), (REGEN_DEFENDING, F, [N, N, 1, 1, 1]), (UNBREAKABLE_DEFENDING, F, [N, N, N, N, 1]))),
@@ -285,7 +285,7 @@ BOONS: Dict[str, Tuple[str, str, str, List[Level]]] = {
         ["+10% post-battle loot", "+20% post-battle loot", "+30% post-battle loot, +25% raiding income", "+40% post-battle loot, +25% raiding income",
          "+50% post-battle loot, +25% raiding income, +15% magic item drop chance"],
         (LOOT, F, [10, 20, 30, 40, 50]), (RAID, F, [N, N, 25, 25, 25]), (DROP, C, [N, N, N, N, 15]))),
-    "quartermaster": ("Quartermaster's Ledger", "A careful hand keeps the army fed for less.", "icon_effects_fortify.png", ramp(
+    "quartermaster": ("Quartermaster's Ledger", "A careful hand keeps the army fed for less.", "variable_upkeep.png", ramp(
         ["-5% upkeep", "-10% upkeep", "-15% upkeep", "-20% upkeep", "-25% upkeep"], (UPKEEP, F, [-5, -10, -15, -20, -25]))),
     "drillmaster": ("Iron Drillmaster", "Drill at dawn, drill at dusk. The ranks get sharper every day.", "morale.png", ramp(
         ["+50 unit experience per turn", "+100 unit experience per turn", "+150 unit experience per turn", "+200 unit experience per turn",
@@ -386,7 +386,7 @@ REALM: Dict[str, Tuple[str, str, str, str, List[Tuple[str, str, float]]]] = {
                    "Every army: +5 Winds of Magic reserve per turn", [("wh3_main_effect_winds_of_magic_events", "faction_to_force_own", 5)]),
     "old_ones_favour": ("Favour of the Old Ones", "Scholars across the realm wake with ideas they did not have before.", "lileaths_blessing.png",
                         "+15% research rate", [("wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", 15)]),
-    "golden_age": ("Golden Age", "Trade flows and the harvests are rich.", "icon_effects_fortify.png", "+10% income from all buildings, +10 public order",
+    "golden_age": ("Golden Age", "Trade flows and the harvests are rich.", "trade_agreement.png", "+10% income from all buildings, +10 public order",
                    [("wh_main_effect_economy_gdp_mod_all", "faction_to_province_own", 10), ("wh_main_effect_public_order_faction", "faction_to_province_own", 10)]),
     "dark_gods_wrath": ("Wrath of the Dark Gods", "The realm has caught the attention of something hungry.", "corruption_tzeentch.png",
                         "+10 Chaos corruption and -10 public order in every province",

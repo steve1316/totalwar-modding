@@ -9,6 +9,7 @@ local data = require("script/land_encounters/configs/battle_modifiers")
 local debug_config = require("script/land_encounters/configs/debug")
 local army_generator = require("script/land_encounters/core/army_generator")
 local alliances = require("script/land_encounters/configs/alliances")
+local army_spells = require("script/land_encounters/core/army_spells")
 
 local M = {}
 
@@ -43,6 +44,32 @@ local function pool_for(fight, keys)
     return pool
 end
 
+--- Rolls the army spell each spell modifier on a list gives each of its sides, unless it has one, and keeps them on the list as `spells`
+--- (modifier key -> side -> spell id), so they travel and save with the modifiers. A list with no spell modifier gets no `spells`, so it
+--- still reads as empty when it has no modifiers.
+--- @param keys table The modifier keys.
+--- @returns table The same list.
+local function roll_spells(keys)
+    for _, key in ipairs(keys) do
+        local modifier = data.by_key[key]
+        if modifier.spell and not (keys.spells and keys.spells[key]) then
+            keys.spells = keys.spells or {}
+            keys.spells[key] = {}
+            for _, side in ipairs(modifier.sides) do keys.spells[key][side] = army_spells.roll(modifier.spell) end
+        end
+    end
+    return keys
+end
+
+--- The spell a spell modifier on a list gives one side, or nil.
+--- @param keys table The modifier keys, with their `spells`.
+--- @param key string The modifier key.
+--- @param side string "ours", "enemy" or "allies".
+--- @returns string|nil The spell id.
+local function spell_of(keys, key, side)
+    return ((keys.spells or {})[key] or {})[side]
+end
+
 --- Rolls a fight's modifiers: none unless the MCT chance hits (no random number is drawn at 0), else 1-3 by `count_weights`, never one
 --- twice, never two of one group, and only those `eligible` for the fight. The debug `force_battle_modifiers` switch picks them instead.
 --- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand, and `difficulty`. Without it no army composition
@@ -55,7 +82,7 @@ function M.roll(fight)
             if data.by_key[key] then forced[#forced + 1] = key end
         end
         log("battle modifiers: debug force_battle_modifiers picks " .. table.concat(forced, ", "))
-        return forced
+        return roll_spells(forced)
     end
     local chance = get_mct_settings()[data.chance_setting] or 0
     if chance <= 0 or not random_chance(chance) then return {} end
@@ -69,7 +96,7 @@ function M.roll(fight)
         end
     end
     log("battle modifiers: rolled " .. table.concat(picked, ", "))
-    return picked
+    return roll_spells(picked)
 end
 
 --- Rolls one more modifier onto a fight, for Tempt Fate: one `eligible` for it that the fight does not have, and not of a group it already has.
@@ -88,8 +115,13 @@ end
 --- @param event table The battle event.
 --- @param keys table The modifier keys.
 function M.add_to_event(event, keys)
+    roll_spells(keys)
     event.modifiers = event.modifiers or {}
     for _, key in ipairs(keys) do event.modifiers[#event.modifiers + 1] = key end
+    for key, spells in pairs(keys.spells or {}) do
+        event.modifiers.spells = event.modifiers.spells or {}
+        event.modifiers.spells[key] = spells
+    end
     event.composition = event.composition or M.composition(keys)
     for side, field in pairs({ enemy = "enemy_bundles", allies = "ally_bundles" }) do
         event[field] = event[field] or {}
@@ -126,8 +158,9 @@ function M.keeps_out(keys)
     return kept
 end
 
---- The bundles a fight's modifiers put on one side for the battle.
---- @param keys table|nil The modifier keys.
+--- The bundles a fight's modifiers put on one side for the battle: each bundle modifier's own, and the army spell a spell modifier rolled for
+--- that side.
+--- @param keys table|nil The modifier keys, with their `spells`.
 --- @param side string "ours", "enemy" or "allies".
 --- @returns table The bundle keys.
 function M.bundles(keys, side)
@@ -135,16 +168,24 @@ function M.bundles(keys, side)
     for _, key in ipairs(keys or {}) do
         local modifier = data.by_key[key]
         if modifier.bundle and modifier.hits[side] then bundles[#bundles + 1] = data.bundle_prefix .. key .. "_" .. side end
+        local spell = spell_of(keys, key, side)
+        if spell then bundles[#bundles + 1] = army_spells.bundle(spell) end
     end
     return bundles
 end
 
---- The battle notice names of a fight's modifiers, which the battle script shows as objectives and banners.
---- @param keys table|nil The modifier keys.
+--- The battle notice names of a fight's modifiers, which the battle script shows as objectives and banners, with the notices naming the army
+--- spells a spell modifier gave our army and the enemy's.
+--- @param keys table|nil The modifier keys, with their `spells`.
 --- @returns table The notice names.
 function M.notices(keys)
     local names = {}
-    for _, key in ipairs(keys or {}) do names[#names + 1] = data.notice_prefix .. key end
+    for _, key in ipairs(keys or {}) do
+        names[#names + 1] = data.notice_prefix .. key
+        local ours, enemy = spell_of(keys, key, "ours"), spell_of(keys, key, "enemy")
+        if ours then names[#names + 1] = army_spells.notice(ours) end
+        if enemy then names[#names + 1] = army_spells.notice(enemy, true) end
+    end
     return names
 end
 

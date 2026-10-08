@@ -121,6 +121,26 @@ local DEAD_RISE_STRENGTH = 0.25
 local UNDYING_STRENGTH = 0.5
 local UNDYING_UNITS = 2
 
+--- Name of the button beside the objectives panel that hides and shows it.
+local TOGGLE_NAME = "land_enc_objectives_toggle"
+--- Template of the objectives toggle button.
+local TOGGLE_TEMPLATE = "ui/templates/round_small_button"
+--- Icon of the objectives toggle button.
+local TOGGLE_ICON = "ui/skins/default/icon_objectives.png"
+--- Tooltip of the objectives toggle button.
+local TOGGLE_TOOLTIP = "Hide or show the objectives"
+--- Gap between the top-left menu bar (or, without one, the objectives panel) and the toggle button, in pixels.
+local TOGGLE_GAP = 4
+--- Width of the dragon ornament at the right end of the top-left menu bar, as a share of the bar's own width. The game leaves the ornament out
+--- of the bar's size, and it draws over anything placed under it.
+local TOGGLE_ORNAMENT_SHARE = 0.45
+--- How many levels of the menu bar's children are searched for its true right edge.
+local TOGGLE_EDGE_DEPTH = 2
+--- Wait after the first objectives are set before the toggle button is placed, so the panel has its size, in ms.
+local TOGGLE_AFTER_MS = 500
+--- How often a hidden objectives panel is hidden again, since a new or updated objective can show it, in ms.
+local TOGGLE_ENFORCE_MS = 500
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
@@ -1213,6 +1233,81 @@ local function track_missions(names, ours, theirs)
     end)
 end
 
+--- The right edge of a component and of everything shown inside it, in pixels.
+--- @param uic userdata The component.
+--- @param depth number How many levels of children to look through.
+--- @returns number The right edge.
+local function right_edge(uic, depth)
+    local x = uic:Position()
+    local width = uic:Dimensions()
+    local edge = x + width
+    if depth > 0 then
+        for i = 0, uic:ChildCount() - 1 do
+            local child = UIComponent(uic:Find(i))
+            if child:Visible() then edge = math.max(edge, right_edge(child, depth - 1)) end
+        end
+    end
+    return edge
+end
+
+--- Where the objectives toggle goes: right of the top-left menu bar and its dragon ornament, or beside the objectives panel without a menu bar.
+--- @param button userdata The toggle button.
+--- @param panel userdata The objectives panel.
+--- @param bar userdata|nil The top-left menu bar.
+--- @returns number, number, string The spot's x and y, and the layout it was worked out from, for the log.
+local function toggle_spot(button, panel, bar)
+    if not bar then
+        local x, y = panel:Position()
+        local width, height = panel:Dimensions()
+        return x + width + TOGGLE_GAP, y, "panel at " .. x .. "," .. y .. " size " .. width .. "x" .. height
+    end
+    local bar_x, bar_y = bar:Position()
+    local bar_width, bar_height = bar:Dimensions()
+    local _, button_height = button:Dimensions()
+    local edge = right_edge(bar, TOGGLE_EDGE_DEPTH)
+    local past_ornament = bar_x + bar_width + math.floor(bar_width * TOGGLE_ORNAMENT_SHARE)
+    return math.max(edge, past_ornament) + TOGGLE_GAP, bar_y + math.floor((bar_height - button_height) / 2),
+        "menu bar at " .. bar_x .. "," .. bar_y .. " size " .. bar_width .. "x" .. bar_height .. ", children reach " .. edge
+end
+
+--- Adds a button right of the top-left menu bar and its dragon ornament that hides and shows the objectives panel, so the panel need not
+--- cover the unit cards on small screens. The game shifts the button when the resolution or UI scale changes, so every `TOGGLE_ENFORCE_MS`
+--- it is moved back beside the menu bar if it strayed, and a hidden panel is hidden again, since a new or updated objective can show it.
+local function add_objectives_toggle()
+    local root = core:get_ui_root()
+    local panel = find_uicomponent(root, "scripted_objectives_panel")
+    if not panel then
+        log("objectives toggle: no objectives panel found, no button added")
+        return
+    end
+    local button = core:get_or_create_component(TOGGLE_NAME, TOGGLE_TEMPLATE, root)
+    if not button then
+        log("objectives toggle: the button could not be made from " .. TOGGLE_TEMPLATE)
+        return
+    end
+    local bar = find_uicomponent(root, "menu_bar")
+    button:SetImagePath(TOGGLE_ICON)
+    button:SetTooltipText(TOGGLE_TOOLTIP, true)
+    local function place()
+        local x, y, layout = toggle_spot(button, panel, bar)
+        local at_x, at_y = button:Position()
+        if at_x == x and at_y == y then return end
+        button:MoveTo(x, y)
+        log("objectives toggle: " .. layout .. ", button moved from " .. tostring(at_x) .. "," .. tostring(at_y) .. " to " .. x .. "," .. y)
+    end
+    place()
+    local hidden = false
+    core:add_listener(TOGGLE_NAME, "ComponentLClickUp", function(context) return context.string == TOGGLE_NAME end, function()
+        hidden = not hidden
+        panel:SetVisible(not hidden)
+        log("objectives toggle: panel " .. (hidden and "hidden" or "shown"))
+    end, true)
+    bm:repeat_callback(safe("objectives toggle", function()
+        place()
+        if hidden and panel:Visible() then panel:SetVisible(false) end
+    end), TOGGLE_ENFORCE_MS, TOGGLE_NAME)
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Entry
@@ -1235,5 +1330,6 @@ if #buffs > 0 then
         --- The missions mark their units first, so a modifier that teleports at the start (Scattered Ranks) leaves them alone.
         track_missions(buffs, ours, theirs)
         play_modifiers(buffs, ours, theirs)
+        bm:callback(safe("objectives toggle", add_objectives_toggle), TOGGLE_AFTER_MS, TOGGLE_NAME)
     end)
 end

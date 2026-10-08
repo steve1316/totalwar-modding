@@ -34,6 +34,9 @@ POOLS = ("lore", "bound", "army")
 # Name of each spell's bundle after the tower bundle prefix, so its battle notice works like a tower buff's, and the prefix of its payload line
 # (owned with the spot offer lines). The spell's id follows both.
 BUNDLE_NAME = "spell_"
+
+# Suffix of the battle notice naming a spell the enemy army gained. Mirrored in script/land_encounters/core/army_spells.lua.
+ENEMY_NOTICE = "_enemy"
 LINE_PREFIX = "dummy_land_enc_spot_spell_"
 
 # The generated Lua list of the pools.
@@ -79,7 +82,7 @@ def spells() -> List[Dict]:
 
 
 def line_text(spell: Dict) -> str:
-    """A spell's payload line. A lore spell's says it costs no Winds of Magic, since only lore spells usually cost them.
+    """A spell's payload line.
 
     Args:
         spell (Dict): The spell, with its `pool`.
@@ -87,8 +90,7 @@ def line_text(spell: Dict) -> str:
     Returns:
         str: The line.
     """
-    free = ", at no Winds of Magic cost" if spell["pool"] == "lore" else ""
-    return f"[[col:green]]Army spell: {spell['name']}[[/col]], {casts_text(spell['uses'])}{free}."
+    return f"[[col:green]]Army spell: {spell['name']}[[/col]], {casts_text(spell['uses'])}."
 
 
 def lua() -> str:
@@ -124,7 +126,7 @@ def name_of(loc: Dict[str, str], key: str) -> str:
 
 
 def description(spell: Dict) -> str:
-    """A spell's bundle description: where the army's spell comes from, and how often it can be cast.
+    """A spell's bundle description: where the army's spell comes from. The spell's own tooltip shows its casts.
 
     Args:
         spell (Dict): The spell, with its `pool`.
@@ -132,8 +134,7 @@ def description(spell: Dict) -> str:
     Returns:
         str: The description.
     """
-    casts = casts_text(spell["uses"])
-    return f"{POOL_TEXT[spell['pool']].format(name=spell['name'])} {casts[0].upper()}{casts[1:]}."
+    return POOL_TEXT[spell["pool"]].format(name=spell["name"])
 
 
 def casts_text(uses: int) -> str:
@@ -158,6 +159,22 @@ def lore_uses(winds: int) -> int:
         int: 3, 2 or 1.
     """
     return 3 if winds <= 8 else 2 if winds <= 14 else 1
+
+
+def charges_text(spell: Dict, enemy: bool = False) -> str:
+    """A spell's battle notice: the charges of it that our army, or the enemy's, gained for the battle.
+
+    Args:
+        spell (Dict): The spell, with its `name` and `uses`.
+        enemy (bool): Whether the enemy army gained it.
+
+    Returns:
+        str: The notice, e.g. "We gain +2 charges of Net of Amyntok.".
+    """
+    gains, can = ("The enemy gains", "The enemy can") if enemy else ("We gain", "We can")
+    if spell["uses"] < 0:
+        return f"{can} cast {spell['name']} freely."
+    return f"{gains} +{spell['uses']} charge{'' if spell['uses'] == 1 else 's'} of {spell['name']}."
 
 
 def uses_text(uses: int) -> str:

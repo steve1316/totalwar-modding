@@ -17,7 +17,7 @@ import subprocess
 from collections import defaultdict
 from typing import Dict, List, Pattern, Sequence, Tuple
 
-from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, PAY as TOWER_PAY, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES, TOWER_NAMES
+from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, PAY as TOWER_PAY, SPELL_ICON, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES, TOWER_NAMES
 from generators import leapoi_battle_modifiers as battle_modifiers
 from generators import leapoi_effect_library as effect_library
 from generators import leapoi_army_spells as army_spells
@@ -513,6 +513,9 @@ OFFERS: Dict[str, Tuple[str, str]] = {
 }
 
 # Offer key -> its line's vanilla effect-bundle icon, reusing the icons Steve picked for the matching tower offers.
+# The fallback bundle icon, which a Tower battle notice does not take over from its bundle.
+GARRISON_ICON = "icon_effects_fortify.png"
+
 ICONS = {
     "tomb_robbing": "resource_gold_idols.png", "abandoned_camp": "replenishment.png", "buried_relics": "treasure_map.png",
     "hidden_temple": "temples_of_the_old_ones.png", "caravan_remnants": "convoy_icon.png", "whispers_of_the_gods": "lileaths_blessing.png",
@@ -880,14 +883,14 @@ MESSAGES = {
                                "or form proper lines, and the soldiers nearest the beast scatter before it.\\\\n\\\\nOur army must stand and fight! "
                                "The officers bellow orders over the din, and every blade we have turns to face the beast."),
     "touch_the_relic_blessed": ("Touch the Relic", "A Blessing",
-                                "Warmth spreads from the relic into the hands that hold it. The glow passes from one soldier to the next as they "
-                                "line up to lay a hand on it.\\\\n\\\\nA blessing settles over the army. The priests among us cannot agree on which "
+                                "The relic is warm to the touch, and a soft glow spreads into the hand that holds it. One by one, the soldiers "
+                                "line up to lay a hand on it and share in the glow.\\\\n\\\\nA blessing settles over the army. The priests among us cannot agree on which "
                                 "power sent it, but none of them doubt that it is real.\\\\n\\\\nThe soldiers march a little taller for it. Even the "
                                 "hardest veterans find themselves humming the old marching songs as we take the road again."),
     "touch_the_relic_cursed": ("Touch the Relic", "A Curse",
-                               "The relic is cold as a grave. The hand that touches it goes numb to the elbow, and the soldier drops it with a "
-                               "cry.\\\\n\\\\nA creeping dread spreads through the ranks. Soldiers start at shadows, the horses will not settle, and "
-                               "the night watch swears they hear whispers beyond the fires.\\\\n\\\\nA curse settles over the army, though it should "
+                               "The relic is as cold as a grave. The first soldier to touch it loses all feeling up to the elbow and drops it "
+                               "with a cry.\\\\n\\\\nA creeping dread spreads through the ranks. Soldiers jump at every shadow, the horses refuse to "
+                               "settle, and the sentries swear they hear whispers out past the campfires.\\\\n\\\\nA curse settles over the army, though it should "
                                "not last long. Until it lifts, there is nothing to do but grit our teeth and endure it."),
     "gamble_with_the_hermit_won": ("Gamble with the Hermit", "A Lucky Throw",
                                    "The hermit squints at the dice, then laughs. It is a dry, cracked sound, as if it has not been used in "
@@ -1103,27 +1106,27 @@ BUNDLES = {
                               [("wh3_main_effect_own_reinforcement_time_percentage_mod", "force_to_force_own", -50)]),
     "reinforcement_time_75": ("force", "military.png", "Swift Reinforcements", "Scouts have marked the fastest paths for our relief columns. Reinforcements reach this army sooner.",
                               [("wh3_main_effect_own_reinforcement_time_percentage_mod", "force_to_force_own", -75)]),
-    "camping": ("force", "icon_effects_fortify.png", "Searching Every Corner", "Our army searches every corner and cannot march until our next turn.",
+    "camping": ("force", "campaign_movement.png", "Searching Every Corner", "Our army searches every corner and cannot march until our next turn.",
                 [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", -100)]),
-    "strip_the_valuables": ("force", "icon_effects_fortify.png", "Weighed Down", "Every wagon and pack is stuffed with stripped valuables. The army moves slowly under the weight.",
+    "strip_the_valuables": ("force", "nor_spoils.png", "Weighed Down", "Every wagon and pack is stuffed with stripped valuables. The army moves slowly under the weight.",
                             [("wh_main_effect_force_stat_leadership", "force_to_force_own", -15), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
-    "bless_the_banners": ("force", "icon_effects_fortify.png", "Blessed Banners", "Our banners were held over the smoke of an old shrine's fire. The warriors stand firmer beneath them.",
+    "bless_the_banners": ("force", "devotion.png", "Blessed Banners", "Our banners were held over the smoke of an old shrine's fire. The warriors stand firmer beneath them.",
                           [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15)),
                            ("wh_main_effect_force_stat_leadership", "force_to_force_own", (5, 10, 15))]),
-    "stoneskin": ("force", "icon_effects_fortify.png", "Stoneskin", "A ward of living stone hardens our army's hide.",
+    "stoneskin": ("force", "resistance_physical.png", "Stoneskin", "A ward of living stone hardens our army's hide.",
                    [("wh_main_effect_force_stat_physical_resistance", "force_to_force_own", (5, 10, 15))]),
-    "ancient_tactics": ("force", "icon_effects_fortify.png", "Ancient Tactics", "Faded battle orders found in the ruins have our captains drilling the ranks in forgotten formations.",
+    "ancient_tactics": ("force", "experience.png", "Ancient Tactics", "Faded battle orders found in the ruins have our captains drilling the ranks in forgotten formations.",
                         [("wh2_dlc14_effect_force_charge_bonus_add", "force_to_force_own", 5), ("wh_main_effect_force_stat_speed", "force_to_force_own", 5)]),
-    "touch_the_relic_frailty": ("force", "icon_effects_fortify.png", "Relic's Frailty", "Since our lord touched the relic, shields feel heavy and parries come a beat too late.",
+    "touch_the_relic_frailty": ("force", "fractured_mind.png", "Relic's Frailty", "Since our lord touched the relic, shields feel heavy and parries come a beat too late.",
                                 [("wh_main_effect_force_stat_melee_defence", "force_to_force_own", -10), ("wh_main_effect_force_stat_armour", "force_to_force_own", -10)]),
-    "leave_an_offering": ("force", "icon_effects_fortify.png", "Offering Made", "We left gifts at a wayside shrine before marching on. Blows that should land seem to glance away.",
+    "leave_an_offering": ("force", "temples_of_the_old_ones.png", "Offering Made", "We left gifts at a wayside shrine before marching on. Blows that should land seem to glance away.",
                           [("wh_main_effect_force_stat_ward_save", "force_to_force_own", (5, 10, 15))]),
-    "enchanted_steel": ("force", "icon_effects_fortify.png", "Enchanted Steel", "Strange marks found at the site were etched into every blade. Our weapons now bite where plain steel would not.",
+    "enchanted_steel": ("force", "hellforged.png", "Enchanted Steel", "Strange marks found at the site were etched into every blade. Our weapons now bite where plain steel would not.",
                         [("wh_main_effect_force_stat_enable_magic_attacks", "force_to_force_own", 1)]),
-    "bloodstained_blades": ("force", "icon_effects_fortify.png", "Bloodstained Blades",
+    "bloodstained_blades": ("force", "dlc10_blood_voyage.png", "Bloodstained Blades",
                             "Our warriors took up blades found still stained with old blood. They cut deep, and no one wants to clean them.",
                             [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", 20), ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", -20)]),
-    "buy_supplies": ("force", "icon_effects_fortify.png", "Well Supplied", "A full baggage train rides with the army. No one goes hungry on the march.",
+    "buy_supplies": ("force", "supplies.png", "Well Supplied", "A full baggage train rides with the army. No one goes hungry on the march.",
                      [("wh_main_effect_force_army_campaign_attrition_all_immunity", "force_to_force_own", 1)]),
     "recruitment_cache": ("faction", "military_spending.png", "Smugglers' Cache", "Smugglers left a hidden store of arms and kit behind. New recruits can be outfitted for far less.",
                           [("wh_main_effect_force_all_campaign_recruitment_cost_all", "faction_to_force_own", (-10, -20, -30))]),
@@ -1149,12 +1152,12 @@ BUNDLES = {
                            ("wh_main_effect_economy_gdp_mod_all", "province_to_region_own", (5, 10, 15))]),
     "stir_their_rebels": ("province", "chaos_gifts.png", "Stirred Rebels", "Our agents spread rumours and gold among the malcontents here. Armed bands now gather in the hills.",
                           [("wh_main_effect_public_order_events", "province_to_province_own", (-10, -15, -20))]),
-    "press_on": ("force", "icon_effects_fortify.png", "Pressing On", "The enemy broke and ran. Our army follows hard on their heels before they can regroup.",
+    "press_on": ("force", "icon_effects_forced_march.png", "Pressing On", "The enemy broke and ran. Our army follows hard on their heels before they can regroup.",
                  [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 50)]),
     "victory_feast": ("force", "icon_effects_fortify.png", "Victory Feast", "The army feasted long into the night on what the beaten enemy left behind. Spirits are high on the march.",
                       [("wh_main_effect_force_stat_leadership", "force_to_force_own", (5, 10, 15)),
                        ("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15))]),
-    "dark_offering": ("force", "icon_effects_fortify.png", "Dark Offering", "Blood was spilled on an old altar before we marched. Something unseen now turns blows from our warriors.",
+    "dark_offering": ("force", "defiled_bloodground.png", "Dark Offering", "Blood was spilled on an old altar before we marched. Something unseen now turns blows from our warriors.",
                       [("wh_main_effect_force_stat_ward_save", "force_to_force_own", 5)]),
     "fallen_feast": ("faction", "corruption_tzeentch.png", "Feast on the Fallen", "Our army fed on the dead after the battle. Dark rumours of it spread through our lands.",
                      [("wh3_main_effect_corruption_chaos_events_bad", "faction_to_province_own", 5)]),
@@ -1578,11 +1581,14 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         if notice:
             for _, bundle_name in stepped_names(name, any(isinstance(value, tuple) for _, _, value in effects)):
                 shown = notice[1].format_map(line_values({"effect_bundle": TOWER_BUNDLE + bundle_name}, bundles))
-                objective(bundle_name, tower_icon(name), f"[[col:{notice[0]}]]{shown}[[/col]]", shown)
+                objective(bundle_name, notice_icon(name), f"[[col:{notice[0]}]]{shown}[[/col]]", shown)
+    for spell in army_spells.spells():
+        shown = army_spells.charges_text(spell, enemy=True)
+        objective(army_spells.BUNDLE_NAME + spell["id"] + army_spells.ENEMY_NOTICE, SPELL_ICON, f"[[col:red]]{shown}[[/col]]", shown)
     for key, (colour, text) in TOWER_NOTICE_TEXT.items():
         for difficulty, name in notice_names(key, config):
             shown = text.format_map(line_values(config["tower_at"][difficulty][key], bundles))
-            objective(name, tower_icon(key), f"[[col:{colour}]]{shown}[[/col]]", shown)
+            objective(name, notice_icon(key), f"[[col:{colour}]]{shown}[[/col]]", shown)
     for key in tower_line_keys(config):
         line_text, broke_text = TOWER_LINES[key]
         for difficulty, name in stepped_names(key, config["tower_varies"].get(key)):
@@ -1827,6 +1833,19 @@ def hook_battle_descriptions(config: Dict, dry_run: bool) -> None:
     print(f"{LOC_PREFIX}dilemmas.loc.tsv: {changed} battle descriptions hooked")
     if changed and not dry_run:
         open(path, "wb").write("".join(lines).encode("utf-8"))
+
+
+def notice_icon(key: str) -> str:
+    """Picks a Tower battle notice's icon: its bundle's own, unless that is the garrison fallback, else the tower line's.
+
+    Args:
+        key (str): The bundle or notice key.
+
+    Returns:
+        str: The icon file, or an empty string when there is none.
+    """
+    bundle = TOWER_BUNDLES.get(key)
+    return bundle[1] if bundle and bundle[1] != GARRISON_ICON else tower_icon(key)
 
 
 def tower_icon(key: str) -> str:
