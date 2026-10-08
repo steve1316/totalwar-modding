@@ -17,7 +17,7 @@ import subprocess
 from collections import defaultdict
 from typing import Dict, List, Pattern, Tuple
 
-from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
+from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, PAY as TOWER_PAY, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
 from generators import leapoi_battle_modifiers as battle_modifiers
 from generators import leapoi_effect_library as effect_library
 from generators import leapoi_boons as boons
@@ -33,6 +33,9 @@ FIRST_ROW_ID = 7018100000
 # Choice order of the offers, in config order from this number. A site's signature sits on the vanilla FIRST key, and Walk away comes last.
 FIRST_CHOICE_ORDER = 300
 WALK_AWAY_ORDER = 998
+
+# Choice order of the first tower offer granting a boon or curse, after the hand-made tower choices.
+TOWER_GRANT_ORDER = 210
 
 DIFFICULTIES = ["easy", "medium", "hard"]
 
@@ -841,6 +844,11 @@ for _, offer in ipairs(data.offers) do
         notice_varies[name] = steps.notice(name, outcome, "easy") ~= name
     end
 end
+--- The tower's go-deeper dilemmas, which list every tower offer.
+local tower_deeper_dilemmas = {}
+for _, key in ipairs(require("script/land_encounters/configs/events").tower_spot) do
+    if key:find("_deeper_floor_", 1, true) then tower_deeper_dilemmas[#tower_deeper_dilemmas + 1] = key end
+end
 local battle_dilemmas = {}
 for key in pairs(require("script/land_encounters/configs/battle_categories").dilemma_keys) do battle_dilemmas[#battle_dilemmas + 1] = key end
 local battle_modifiers = require("script/land_encounters/configs/battle_modifiers")
@@ -863,7 +871,8 @@ local function encode(v)
 end
 io.write(encode({ sites = data.sites, spoils = data.spoils, tavern = data.tavern, offers = data.all_at("easy"), at = at, dividends_bundle_prefix = data.dividends_bundle_prefix,
     tower_offers = tower.offers, tower_at = tower_at, tower_varies = tower_varies, notice_varies = notice_varies,
-    tower_unaffordable_suffix = tower.unaffordable_suffix, tower_line_prefix = tower.line_prefix,
+    tower_unaffordable_suffix = tower.unaffordable_suffix, tower_line_prefix = tower.line_prefix, tower_choice_key_prefix = tower.choice_key_prefix,
+    tower_deeper_dilemmas = tower_deeper_dilemmas,
     choice_key_prefix = data.choice_key_prefix, walk_away_choice_key = data.walk_away_choice_key, signature_choice_key = data.signature_choice_key,
     dilemma_prefix = data.dilemma_prefix, line_prefix = data.line_prefix, message_prefix = data.message_prefix, camp_bundle = data.camp_bundle,
     result_incident_prefix = data.result_incident_prefix, result_place_context = data.result_place_context, battle_pools = data.battle_pools,
@@ -888,6 +897,13 @@ def load_config() -> Dict:
     output = subprocess.run(["lua", "-", MOD_ROOT], input=LUA_DUMP, capture_output=True, text=True, check=True).stdout
     config = json.loads(output)
     battle_modifiers.add_lore(config["battle_modifiers"]["list"])
+    # The offers granting boons and curses take their text from the boons catalogue, as the lore armies take theirs from the config.
+    texts, icons = boons.offer_texts(config["offers"], PAY)
+    OFFERS.update(texts)
+    ICONS.update(icons)
+    tower_texts, tower_icons = boons.offer_texts(config["tower_offers"], TOWER_PAY)
+    TOWER_ICONS.update(tower_icons)
+    TOWER_LINES.update({key: (line, None) for key, (_, line) in tower_texts.items()})
     return config
 
 
@@ -1282,6 +1298,11 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     for i, choice in enumerate(full_choices):
         add(table("cdir_events_dilemma_choices_tables"), choice, boons.FULL_CHOICE_ORDER + i)
         label(boon_config["full_dilemma"], choice, title_case(new_label if choice == boon_config["full_new_choice"] else drop_label))
+    # The tower offers granting boons and curses get their choice rows here. Every other tower choice is a hand row.
+    for i, (choice, key) in enumerate(tower_grant_choices(config)):
+        add(table("cdir_events_dilemma_choices_tables"), choice, TOWER_GRANT_ORDER + i)
+        for tower_dilemma in config["tower_deeper_dilemmas"]:
+            label(tower_dilemma, choice, title_case(boons.OFFERS[key]))
     for event, (title, description, image) in boons.incidents(boon_config).items():
         add_incident(boon_config["incident_prefix"] + event, image, title, description)
     return rows
@@ -1430,6 +1451,18 @@ def tower_line_keys(config: Dict) -> List[str]:
     return [offer["key"] for offer in config["tower_offers"] if config["tower_varies"].get(offer["key"]) or offer["key"] in TOWER_LINES]
 
 
+def tower_grant_choices(config: Dict) -> List[Tuple[str, str]]:
+    """The tower offers granting boons and curses, whose choice rows this script writes. Every other tower choice is a hand row.
+
+    Args:
+        config (Dict): The loaded config.
+
+    Returns:
+        List[Tuple[str, str]]: (choice key, offer key) in config order.
+    """
+    return [(config["tower_choice_key_prefix"] + o["key"].upper(), o["key"]) for o in config["tower_offers"] if boons.grants(o)]
+
+
 def owned_patterns(config: Dict) -> List[Pattern]:
     """Builds the patterns of the tower rows this script owns, by the key a row starts with (a loc key ends with it): the lines of the tower
     offers that differ by difficulty, the tiered tower bundles, and the notices of both, with or without a difficulty.
@@ -1447,6 +1480,7 @@ def owned_patterns(config: Dict) -> List[Pattern]:
              (NOTICE_PREFIX, tower_notices + bundle_notices + list(NOTICES) + list(MISSION_OBJECTIVES), "(?:_message)?")]
     patterns = [re.compile(f"(?:^|_){prefix}(?:{'|'.join(names)}){difficulty}{tail}$") for prefix, names, tail in kinds]
     patterns.append(re.compile(f"(?:^|_)(?:{'|'.join(re.escape(p) for p in boons.owned_prefixes(config['boons']))})"))
+    patterns.append(re.compile(f"(?:{'|'.join(choice for choice, _ in tower_grant_choices(config))})$"))
     return patterns
 
 

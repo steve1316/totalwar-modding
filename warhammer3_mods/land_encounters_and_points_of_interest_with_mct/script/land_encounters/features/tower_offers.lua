@@ -15,13 +15,13 @@ local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
 local steps = require("script/land_encounters/utils/steps")
 local spot_config = require("script/land_encounters/configs/spot_offers")
+local boons = require("script/land_encounters/features/boons")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constants
 
 --- Prefix of every offer's choice key. The rest is the offer's key in capitals.
-local CHOICE_KEY_PREFIX = "LEAPOI_TWR_"
 --- Payload line telling the player a stay offer brings them back to the same choice.
 local RETURNS_HERE_LINE = "dummy_land_enc_tower_returns_here"
 --- Script context value shown at the top of every per-floor go-deeper description through `ScriptObjectContext`.
@@ -318,6 +318,13 @@ local function faction_bundle(offer, ctx)
     offer_effects.faction_bundle(ctx.faction_name, offer.effect_bundle, offer.turns)
     return offer.key
 end
+
+--- What a pact or another offer granting a boon or curse does: it is drawn while boons and curses are on, and gives the delving lord what it
+--- grants.
+local GRANT_HANDLER = {
+    eligible = function() return boons.enabled() end,
+    apply = function(offer, ctx) boons.grant_fields(tower_army.character(ctx.delve.general_cqi), offer) end,
+}
 
 --- When each offer can be drawn and what it does. `eligible(ctx)` returns true when the offer would do something. `apply(offer, ctx)` runs
 --- after its cost is paid. A stay offer's `apply` returns its outcome (the result loc key suffix) and the values for that line's
@@ -716,11 +723,18 @@ local HANDLERS = {
 --- @param offer table The offer record at the delve's offer difficulty.
 --- @param ctx table The offer context.
 --- @returns boolean True when the offer can be drawn.
+--- The handler of an offer: its own, the shared one of an offer granting a boon or curse, or nil.
+--- @param offer table The offer record.
+--- @returns table|nil The handler.
+local function handler_of(offer)
+    return HANDLERS[offer.key] or (boons.grants(offer) and GRANT_HANDLER or nil)
+end
+
 local function eligible(offer, ctx)
     if spent(offer, ctx.delve) then return false end
     if ctx.keeps_out[offer.key] then return false end
     if not offer_effects.army_fits(offer, ctx.tower and ctx.tower.faction, ctx.delve.general_cqi) then return false end
-    local handler = HANDLERS[offer.key]
+    local handler = handler_of(offer)
     return not (handler and handler.eligible) or handler.eligible(ctx, offer)
 end
 
@@ -728,11 +742,12 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Offers
 
+
 --- Builds an offer's choice key.
 --- @param offer table The offer record.
 --- @returns string The choice key, e.g. "LEAPOI_TWR_WAR_RITES".
 function M.choice_key(offer)
-    return CHOICE_KEY_PREFIX .. offer.key:upper()
+    return offers_data.choice_key_prefix .. offer.key:upper()
 end
 
 --- Draws up to the MCT `tower_offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones. Eligible offers in
@@ -854,7 +869,7 @@ function M.take(choice_key, delve, faction_name, extras)
     extras = extras or {}
     local offer = nil
     for _, key in ipairs(delve.offers or {}) do
-        if CHOICE_KEY_PREFIX .. key:upper() == choice_key then
+        if M.choice_key({ key = key }) == choice_key then
             offer = at(key, delve)
             break
         end
@@ -877,7 +892,7 @@ function M.take(choice_key, delve, faction_name, extras)
     offer_effects.log_army_change(delve.general_cqi, offer.key)
     delve.haul.gold = delve.haul.gold - cost
     delve.taken[offer.key] = true
-    local handler = HANDLERS[offer.key]
+    local handler = handler_of(offer)
     local outcome, values = nil, nil
     if offer.mission then tower_missions.take(offer, delve) end
     if handler and handler.apply then

@@ -19,6 +19,9 @@ M.line_prefix = "dummy_land_enc_tower_"
 --- Line suffix of an offer the haul cannot pay, after the offer's own line, e.g. dummy_land_enc_tower_war_rites_medium_unaffordable.
 M.unaffordable_suffix = "_unaffordable"
 
+--- Prefix of every offer's choice key. The key in capitals follows, e.g. LEAPOI_TWR_WAR_RITES.
+M.choice_key_prefix = "LEAPOI_TWR_"
+
 --- Choice key of Leave on the per-floor go-deeper dilemmas. Its DB order is the highest, so Leave is always the last choice.
 M.leave_choice_key = "LEAPOI_TWR_LEAVE"
 
@@ -172,6 +175,11 @@ M.offers = {
     --- capital and stay until beaten. Each lands `spawn_distance` (min, max) away from the settlement of a random region in the capital's province.
     { key = "daemons_deal", guide_section = "gambles", stay = true, items = shared.daemons_deal.unique, armies = shared.daemons_deal.armies, difficulty = "hard",
         factions = { "chs", "kho", "nur", "sla", "tze" }, spawn_distance = { 10, 20 } },
+    --- Pacts: a boon for the delving lord that costs a curse (features/boons.lua), taken without leaving the floor.
+    { key = "blood_pact", guide_section = "pacts", stay = true, boon = shared.blood_pact.boon, curse = shared.blood_pact.curse },
+    { key = "gold_for_blood", guide_section = "pacts", stay = true, boon = shared.gold_for_blood.boon, curse = shared.gold_for_blood.curse },
+    { key = "star_pact", guide_section = "pacts", stay = true, boon = shared.star_pact.boon, curse = shared.star_pact.curse },
+    { key = "rust_for_iron", guide_section = "pacts", stay = true, boon = { "ironhide", 2 }, curse = { "creeping_rust", 1 } },
     --- Skips the next floor for `reward_share` of its gold and half its items, and the floor after becomes hard. Not offered when the next
     --- floor is the Master's.
     { key = "tempt_fate", guide_section = "gambles", skips = 1, reward_share = 0.5, climb_difficulty = "hard" },

@@ -3,6 +3,7 @@
 --- level is a bundle on the lord. Rare faction-wide ones are plain faction bundles that run out by themselves. AI lords get none.
 
 require("script/land_encounters/utils/common")
+require("script/land_encounters/utils/random")
 require("script/land_encounters/core/mct")
 
 local data = require("script/land_encounters/configs/boons")
@@ -176,7 +177,7 @@ end
 function M.gain(character, kind, key, level, race)
     local config = data.by_key[kind][key]
     if not (config and M.enabled() and character:faction():is_human()) then return false end
-    race = config.race and (race or data.races[cm:random_number(#data.races)]) or nil
+    race = config.race and (race or data.races[random_number(#data.races)]) or nil
     local list = record_of(character)[kind]
     local carried = find(list, key, race)
     if carried and config.charges then
@@ -231,6 +232,38 @@ function M.gain_realm(faction_name, key)
     cm:apply_effect_bundle(data.realm_prefix .. key, faction_name, data.realm_turns)
     launch_line_incident(data.incident_prefix .. (config.good and "realm_boon" or "realm_curse"), data.line_prefix .. "realm_" .. key, cm:get_faction(faction_name))
     log("boons: " .. faction_name .. " gains " .. data.realm_prefix .. key .. " for " .. data.realm_turns .. " turns")
+end
+
+--- A random boon or curse that can drop from a source.
+--- @param kind string "boon" or "curse".
+--- @param source string A `drops` source, e.g. "treasure".
+--- @returns string|nil The key, or nil when none drops there.
+function M.pick(kind, source)
+    local pool = {}
+    for _, config in ipairs(kind == "boon" and data.boons or data.curses) do
+        for _, drop in ipairs(config.drops or {}) do
+            if drop == source then pool[#pool + 1] = config.key end
+        end
+    end
+    return pool[1] and pool[random_number(#pool)] or nil
+end
+
+--- Gives a lord what an offer grants: `boon` and `curse` as { key, level } or { from = a drop source } for a random one.
+--- @param character userdata|nil The lord.
+--- @param fields table The offer or outcome record.
+function M.grant_fields(character, fields)
+    for _, kind in ipairs(KINDS) do
+        local grant = fields[kind]
+        local key = grant and (grant.from and M.pick(kind, grant.from) or grant[1])
+        if key and character then M.gain(character, kind, key, grant[2] or 1) end
+    end
+end
+
+--- True when an offer grants a boon or a curse, so it is only drawn while boons and curses are on.
+--- @param offer table The offer record.
+--- @returns boolean True for such an offer.
+function M.grants(offer)
+    return offer.boon ~= nil or offer.curse ~= nil
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

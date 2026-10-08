@@ -70,6 +70,7 @@ M.tower_offer_sections = {
     { key = "units_and_lord", title = "Units and Lord" },
     { key = "faction_boons", title = "Faction Boons" },
     { key = "gambles", title = "Gambles" },
+    { key = "pacts", title = "Pacts" },
     { key = "the_climb", title = "The Climb" },
     { key = "missions", title = "Missions" },
 }

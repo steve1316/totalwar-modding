@@ -14,6 +14,7 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_lords = require("script/land_encounters/features/tower_lords")
+local boons = require("script/land_encounters/features/boons")
 
 local M = {
     --- Faction key -> the site dilemma it has open: { site, offers, signature, general_cqi, x, y, difficulty, cards, targets, shown_affordable }.
@@ -136,6 +137,7 @@ end
 --- @returns boolean True when the offer can be drawn.
 local function eligible(offer, ctx)
     if offer.trait and tower_lords.has_trait(ctx.general_cqi, offer.trait) then return false end
+    if boons.grants(offer) and not boons.enabled() then return false end
     if (offer.heal or offer.heal_share) and not offer_effects.army_damaged(ctx.general_cqi) then return false end
     if offer.shoots and not offer_effects.army_shoots(ctx.general_cqi) then return false end
     if offer.hero_rank and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
@@ -403,7 +405,7 @@ local function wake_guardian(state, guardian)
 end
 
 --- Applies the effects an offer's payload does not: bundles, traits, wounds, camps, heals, sacrifices, heroes, dividends, the Daemon's
---- deal armies, a guardian battle and the old incident. A gamble outcome has no cards, so its gold and items are picked here for its result to grant. A wound
+--- deal armies, boons and curses, a guardian battle and the old incident. A gamble outcome has no cards, so its gold and items are picked here for its result to grant. A wound
 --- lands at once, and an offer's own wound (not a gamble's, whose result says so) shows its own result.
 --- @param fields table The offer record or a gamble outcome, at the site's difficulty.
 --- @param offer table The offer record, for the log.
@@ -473,6 +475,7 @@ local function apply_fields(fields, offer, state, rolled)
     if fields.daemon_armies then
         if M.send_daemon_army then M.send_daemon_army(faction_name, fields.daemon_armies) else log("spot: no Daemon's deal sender is set") end
     end
+    boons.grant_fields(general, fields)
     if fields.incident and general then
         trigger_incident_for_character(fields.incident, incident_targets(fields.incident), general)
         log("spot: " .. offer.key .. " fires " .. fields.incident)

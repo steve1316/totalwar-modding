@@ -107,4 +107,9 @@ M.recruitment_cache = { cost = M.STANDARD, bundle = tiered("land_enc_effect_spot
 M.tower_dividends = { cost = M.STANDARD, per_turn = S(250, 350, 450), turns = 10 }
 M.strip_the_dead = { per_unit = 250 }
 
+--- Pacts offered at treasure sites or the bar and on tower floors: the boon and the curse each grants (features/boons.lua), as { key, level }.
+M.blood_pact = { boon = { "bloodsworn", 2 }, curse = { "haunted", 1 } }
+M.gold_for_blood = { boon = { "plunderer", 2 }, curse = { "bleeding_coffers", 1 } }
+M.star_pact = { boon = { "stormcaller", 1 }, curse = { "shunned_by_the_winds", 1 } }
+
 return M

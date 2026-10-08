@@ -323,6 +323,15 @@ M.offers = {
     { key = "feed_the_shadows", pool = "treasure", tags = { "curse" }, sacrifice = { ranks = 1 } },
     { key = "daemons_deal", pool = "treasure", tags = { "curse", "gamble" }, unique = shared.daemons_deal.unique, daemon_armies = shared.daemons_deal.armies },
 
+    --- Pacts: a boon for the lord that costs a curse (features/boons.lua). `boon` and `curse` are { key, level } or { from = a drop source }.
+    { key = "blood_pact", pool = "treasure", tags = { "pact" }, boon = shared.blood_pact.boon, curse = shared.blood_pact.curse },
+    { key = "hunters_bargain", pool = "treasure", tags = { "pact" }, boon = { "hunters_path", 2 }, curse = { "leaden_march", 1 } },
+    { key = "price_of_the_winds", pool = "treasure", tags = { "pact" }, boon = { "kindled_winds", 2 }, curse = { "wild_magic", 1 } },
+    { key = "dread_oath", pool = "treasure", tags = { "pact" }, boon = { "dread_host", 2 }, curse = { "cowards_mark", 1 } },
+    { key = "star_pact", pool = "treasure", tags = { "pact" }, boon = shared.star_pact.boon, curse = shared.star_pact.curse },
+    { key = "claim_the_cursed_relic", pool = "treasure", tags = { "pact" }, boon = { from = "treasure" }, curse = { from = "treasure" } },
+    { key = "read_the_omens", pool = "treasure", tags = { "blessing" }, cost = STANDARD, boon = { "fates_favour", 1 } },
+
     --- Treasure: recruits.
     { key = "conscripts", pool = "treasure", tags = { "recruit" }, recruit = { count = shared.conscripts.count, tiers = shared.conscripts.tiers } },
     { key = "hire_sellswords", pool = "treasure", tags = { "recruit", "deal" }, cost = STANDARD, recruit = { count = 1, tiers = S({ 3, 4 }, { 4 }, { 4, 5 }) } },
@@ -482,6 +491,9 @@ M.offers = {
     } },
     { key = "buy_rumours", pool = "tavern", tags = {}, cost = S(1000, 1500, 2000), realm = "nearby_regions", count = S(3, 5, 7), reveal_turns = 5,
         army_report = 150 },
+    { key = "sing_the_war_chant", pool = "tavern", tags = {}, cost = STANDARD, boon = { "war_chant", 1 } },
+    { key = "thiefs_mark", pool = "tavern", tags = { "pact" }, boon = { "kings_ransom", 1 }, curse = { "magpies_curse", 1 } },
+    { key = "gold_for_blood", pool = "tavern", tags = { "pact" }, boon = shared.gold_for_blood.boon, curse = shared.gold_for_blood.curse },
 
     --- Missions, tracked by the battle script under the tower's names.
     { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },

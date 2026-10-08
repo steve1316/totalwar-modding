@@ -251,6 +251,95 @@ REALM: Dict[str, Tuple[str, str, str, str, List[Tuple[str, str, float]]]] = {
 }
 
 
+# Offer key -> name, for the offers that grant boons and curses at sites, the bar and tower floors. Its line opens with the name in lower case.
+OFFERS: Dict[str, str] = {
+    "blood_pact": "Swear the Blood Pact",
+    "hunters_bargain": "Strike the Hunter's Bargain",
+    "price_of_the_winds": "Pay the Price of the Winds",
+    "dread_oath": "Take the Dread Oath",
+    "star_pact": "Seal the Star Pact",
+    "claim_the_cursed_relic": "Claim the Cursed Relic",
+    "read_the_omens": "Read the Omens",
+    "sing_the_war_chant": "Learn the War Chant",
+    "thiefs_mark": "Take the Thief's Mark",
+    "gold_for_blood": "Trade Gold for Blood",
+    "rust_for_iron": "Trade Rust for Iron",
+}
+
+# Icon of an offer whose boon is random.
+RANDOM_ICON = "fractured_mind.png"
+
+
+def grants(offer: Dict) -> bool:
+    """True when an offer grants a boon or a curse, as features/boons.lua `grants` decides.
+
+    Args:
+        offer (Dict): An offer record from the Lua dump.
+
+    Returns:
+        bool: True for such an offer.
+    """
+    return "boon" in offer or "curse" in offer
+
+
+def level_title(name: str, levels: List[Level], number: int) -> str:
+    """A boon's or curse's title at a level, e.g. "Bloodsworn II". One with a single level keeps its name.
+
+    Args:
+        name (str): Its name.
+        levels (List[Level]): Its levels.
+        number (int): The level.
+
+    Returns:
+        str: The title.
+    """
+    return name if len(levels) == 1 else f"{name} {ROMAN[number]}"
+
+
+def grant_text(kind: str, grant) -> str:
+    """How an offer's line names what it grants in its colour, e.g. "[[col:green]]Bloodsworn II (+6 melee attack)[[/col]]".
+
+    Args:
+        kind (str): "boon" or "curse".
+        grant: The offer's `boon` or `curse` field as dumped: [key, level], or { "from": source } for a random one.
+
+    Returns:
+        str: The text.
+    """
+    colour = "green" if kind == "boon" else "red"
+    if isinstance(grant, dict):
+        return f"[[col:{colour}]]a random {kind}[[/col]]"
+    key, level = grant[0], grant[1] if len(grant) > 1 else 1
+    name, _, _, levels = (BOONS if kind == "boon" else CURSES)[key]
+    return f"[[col:{colour}]]{level_title(name, levels, level)} ({levels[level - 1][0]})[[/col]]"
+
+
+def offer_texts(offers: List[Dict], pay: str) -> Tuple[Dict[str, Tuple[str, str]], Dict[str, str]]:
+    """The name, line and icon of every offer that grants a boon or curse.
+
+    Args:
+        offers (List[Dict]): Offer records from the Lua dump.
+        pay (str): The paid line's opening, with a {cost} placeholder, ending where the action follows.
+
+    Returns:
+        Tuple: (offer key -> (name, line), offer key -> icon).
+    """
+    texts, icons = {}, {}
+    for offer in offers:
+        if not grants(offer):
+            continue
+        name = OFFERS[offer["key"]]
+        action = name.lower()
+        opening = pay + action if "cost" in offer else action[0].upper() + action[1:]
+        parts = [f"our lord gains {grant_text('boon', offer['boon'])}"] if "boon" in offer else []
+        if "curse" in offer:
+            parts.append(f"{'and is struck by' if parts else 'our lord is struck by'} {grant_text('curse', offer['curse'])}")
+        texts[offer["key"]] = (name, opening + ": " + ", ".join(parts) + ".")
+        boon = offer.get("boon")
+        icons[offer["key"]] = BOONS[boon[0]][2] if isinstance(boon, list) else RANDOM_ICON
+    return texts, icons
+
+
 def race_levels(key: str, race: str) -> List[Level]:
     """The levels of a rolled boon or curse for one race.
 
@@ -312,7 +401,7 @@ def bundles(config: Dict) -> Dict[str, Tuple]:
     for kind in ("boon", "curse"):
         for stem, name, flavour, icon, levels in variants(kind, config):
             for number, (text, effects) in enumerate(levels, 1):
-                title = name if len(levels) == 1 else f"{name} {ROMAN[number]}"
+                title = level_title(name, levels, number)
                 shown = flavour if len(levels) == 1 else f"{flavour}{BREAK}Level {number} of {len(levels)}."
                 shaped[f"{config['bundle_prefix'][kind]}{stem}_{number}"] = ("character", icon, title, shown, effects)
     for key, (name, flavour, icon, _, effects) in REALM.items():

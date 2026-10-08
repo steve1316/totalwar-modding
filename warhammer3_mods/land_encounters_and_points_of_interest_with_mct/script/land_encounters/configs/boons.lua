@@ -64,23 +64,42 @@ M.races = { "empire", "bretonnia", "kislev", "cathay", "dwarfs", "high_elves", "
     "beastmen", "chaos_dwarfs" }
 
 --- Boons, by key. `charges`: lasts that many of the lord's battles at one level instead of growing. `race`: rolls a race when gained.
+--- `drops`: the sources it can come from at random, e.g. "treasure"; none when left out.
 M.boons = {
-    { key = "bloodsworn" }, { key = "ironhide" }, { key = "old_oath_banner" }, { key = "eagle_eyed" }, { key = "swift_column" },
-    { key = "kindled_winds" }, { key = "stormcaller" }, { key = "stone_rampart" }, { key = "storm_forward" }, { key = "plunderer" },
-    { key = "quartermaster" }, { key = "drillmaster" }, { key = "blinding_strikes" }, { key = "leeching_strikes" }, { key = "hunters_path" },
-    { key = "warded" }, { key = "overflowing_power" }, { key = "dread_host" }, { key = "bane", race = true }, { key = "death_touched" },
-    { key = "tireless" },
-    { key = "war_chant", charges = 3 }, { key = "fates_favour", charges = 3 }, { key = "kings_ransom", charges = 3 },
-    { key = "undying_vigil", charges = 2 },
+    { key = "bloodsworn", drops = { "battle" } }, { key = "ironhide", drops = { "battle" } }, { key = "old_oath_banner", drops = { "tower" } },
+    { key = "eagle_eyed", drops = { "treasure" } }, { key = "swift_column", drops = { "battle" } }, { key = "kindled_winds" },
+    { key = "stormcaller", drops = { "tower", "tavern" } }, { key = "stone_rampart", drops = { "battle" } }, { key = "storm_forward", drops = { "battle" } },
+    { key = "plunderer", drops = { "treasure" } }, { key = "quartermaster", drops = { "treasure", "tavern" } }, { key = "drillmaster", drops = { "tower" } },
+    { key = "blinding_strikes", drops = { "treasure", "battle" } }, { key = "leeching_strikes", drops = { "tower" } }, { key = "hunters_path" },
+    { key = "warded", drops = { "tavern" } }, { key = "overflowing_power", drops = { "treasure" } }, { key = "dread_host" },
+    { key = "bane", race = true, drops = { "battle" } }, { key = "death_touched" }, { key = "tireless" },
+    { key = "war_chant", charges = 3, drops = { "treasure" } }, { key = "fates_favour", charges = 3, drops = { "treasure", "tower" } },
+    { key = "kings_ransom", charges = 3 }, { key = "undying_vigil", charges = 2, drops = { "treasure", "tower" } },
 }
 
---- Curses, by key. `turns_into`: the boon it becomes after `turns_to_turn` turns at `max_level`. `race`: rolls a race when gained.
+--- Curses, by key. `turns_into`: the boon it becomes after `turns_to_turn` turns at `max_level`. `race`: rolls a race when gained. `drops`: the
+--- sources it can come from at random; none when left out.
 M.curses = {
-    { key = "haunted", turns_into = "death_touched" }, { key = "creeping_rust" }, { key = "leaden_march" }, { key = "bleeding_coffers" },
-    { key = "weary_ranks", turns_into = "tireless" }, { key = "withered_supply" }, { key = "fogbound" }, { key = "magpies_curse" },
-    { key = "wild_magic", turns_into = "overflowing_power" }, { key = "shunned_by_the_winds" }, { key = "cowards_mark" }, { key = "marked_prey" },
-    { key = "brittle_bones", turns_into = "ironhide" }, { key = "shaky_aim" }, { key = "grudge", race = true, turns_into = "bane" },
-    { key = "glass_jaw" }, { key = "stumbling_charge" }, { key = "cursed_coin" },
+    { key = "haunted", turns_into = "death_touched", drops = { "battle" } }, { key = "creeping_rust" }, { key = "leaden_march" },
+    { key = "bleeding_coffers", drops = { "battle" } }, { key = "weary_ranks", turns_into = "tireless", drops = { "battle" } },
+    { key = "withered_supply", drops = { "battle" } }, { key = "fogbound", drops = { "battle", "treasure" } }, { key = "magpies_curse" },
+    { key = "wild_magic", turns_into = "overflowing_power" }, { key = "shunned_by_the_winds" },
+    { key = "cowards_mark", drops = { "battle" } }, { key = "marked_prey", drops = { "battle", "tavern" } },
+    { key = "brittle_bones", turns_into = "ironhide", drops = { "battle" } }, { key = "shaky_aim" },
+    { key = "grudge", race = true, turns_into = "bane", drops = { "treasure", "tavern" } }, { key = "glass_jaw", drops = { "battle" } },
+    { key = "stumbling_charge" }, { key = "cursed_coin", drops = { "treasure", "tavern" } },
+}
+
+--- Battle modifier key (configs/battle_modifiers.lua) -> the boon or curse it can leave on the lord after the fight, as { kind, key }.
+M.lingers = {
+    blood_moon = { "boon", "bloodsworn" }, iron_hides = { "boon", "ironhide" }, hallowed = { "boon", "old_oath_banner" },
+    plenty_shot = { "boon", "eagle_eyed" }, swift_winds = { "boon", "swift_column" }, winds_surge = { "boon", "kindled_winds" },
+    hold_fast = { "boon", "stone_rampart" }, strider = { "boon", "hunters_path" }, ambush_country = { "boon", "hunters_path" },
+    wards = { "boon", "warded" }, storm_magic = { "boon", "overflowing_power" }, terror_field = { "boon", "dread_host" },
+    cursed_earth = { "curse", "haunted" }, brittle = { "curse", "creeping_rust" }, heavy_ground = { "curse", "leaden_march" },
+    mud = { "curse", "leaden_march" }, exhausting = { "curse", "weary_ranks" }, miasma = { "curse", "withered_supply" },
+    rot = { "curse", "withered_supply" }, wild_winds = { "curse", "wild_magic" }, winds_drained = { "curse", "shunned_by_the_winds" },
+    cowards = { "curse", "cowards_mark" }, gale = { "curse", "shaky_aim" }, disarmed = { "curse", "shaky_aim" },
 }
 
 --- Faction-wide boons and curses, by key. `good` is true for a blessing.
