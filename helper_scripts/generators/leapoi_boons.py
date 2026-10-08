@@ -5,6 +5,7 @@ faction-wide bundles, the incidents and the full-slots dilemma."""
 import re
 from typing import Dict, List, Optional, Tuple
 
+from generators import leapoi_battle_modifiers as battle_modifiers
 from generators import leapoi_effect_library as library
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -689,6 +690,96 @@ def service_lines(config: Dict) -> List[Tuple[str, str, str]]:
     return out
 
 
+def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict]) -> List[Tuple[str, str, str, str]]:
+    """The MCT guide line of every boon, curse and faction-wide effect: what its first and last levels do and where a lord gets it.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+        offers (List[Dict]): The spot offers from the Lua dump.
+        tower_offers (List[Dict]): The tower offers from the Lua dump.
+
+    Returns:
+        List[Tuple[str, str, str, str]]: (kind, key, loc key, text), boons then curses then faction-wide effects, in config order.
+    """
+    found: Dict[Tuple[str, str], List[str]] = {}
+
+    def source(kind: str, key: str, text: str) -> None:
+        found.setdefault((kind, key), []).append(text)
+
+    drop_text = {("boon", "battle"): "a hard or modified LEAPOI win", ("curse", "battle"): "a lost LEAPOI battle",
+                 ("boon", "treasure"): "Claim the Cursed Relic at treasure sites", ("curse", "treasure"): "Claim the Cursed Relic at treasure sites",
+                 ("boon", "tower"): "the spoils of a fallen Tower champion",
+                 ("boon", "tavern"): f"a finished Tavern quest chain (level {config['chain_boon_level']})",
+                 ("curse", "tavern"): "a failed or dropped Tavern contract"}
+    for kind, records in (("boon", config["boons"]), ("curse", config["curses"])):
+        for record in records:
+            for drop in record.get("drops", []):
+                source(kind, record["key"], drop_text[(kind, drop)])
+    places: Dict[str, List[str]] = {}
+    for offer in offers:
+        if grants(offer) and not isinstance(offer.get("boon"), dict):
+            places.setdefault(offer["key"], []).append({"treasure": "treasure sites", "tavern": "the Tavern bar"}.get(offer.get("pool"), "treasure sites"))
+    for offer in tower_offers:
+        if grants(offer):
+            places.setdefault(offer["key"], []).append("the Tower")
+    places.setdefault(config["smithy_room"]["rust_offer"], []).append("the Smithy")
+    for offer in offers + tower_offers:
+        if offer["key"] not in places:
+            continue
+        for kind in ("boon", "curse"):
+            grant = offer.get(kind)
+            if isinstance(grant, list):
+                level = f", level {grant[1]}" if grant[1] > 1 else ""
+                text = f"{OFFERS[offer['key']]} ({' and '.join(dict.fromkeys(places[offer['key']]))}{level})"
+                if text not in found.get((kind, grant[0]), []):
+                    source(kind, grant[0], text)
+    lingering: Dict[Tuple[str, str], List[str]] = {}
+    for modifier, (kind, key) in config["lingers"].items():
+        lingering.setdefault((kind, key), []).append(battle_modifiers.MODIFIERS[modifier][0])
+    for (kind, key), names in lingering.items():
+        source(kind, key, " or ".join(sorted(names)) + " lingering after a fight")
+    for record in config["curses"]:
+        if record.get("turns_into"):
+            name = CURSES[record["key"]][0].replace("{race}", "the same race")
+            source("boon", record["turns_into"], f"{name} after {config['turns_to_turn']} turns at level {config['max_level']}")
+    source("boon", "bane", "a finished Tavern bounty, against the hunted race")
+    chance = config["champion_realm_chance"]
+    for key in config["blessings"]:
+        source("realm", key, f"a fallen Tower champion ({chance}% chance, in place of its boons)")
+    for key in config["realm_curses"]:
+        source("realm", key, f"losing to a Tower champion ({chance}% chance)")
+
+    def effects(levels: List[Level]) -> str:
+        if len(levels) == 1:
+            return levels[0][0] + "."
+        return f"Level 1: {levels[0][0]}. Level {len(levels)}: {levels[-1][0]}."
+
+    out = []
+    for kind, catalogue, records in (("boon", BOONS, config["boons"]), ("curse", CURSES, config["curses"])):
+        for record in records:
+            name, _, _, levels = catalogue[record["key"]]
+            if record.get("race"):
+                name = name.replace("{race}", "a Race")
+                levels = [(text.replace(library.RACES[config["races"][0]][0], "that race"), fx)
+                          for text, fx in race_levels(record["key"], config["races"][0])]
+            text = f"[[col:yellow]]{name}[[/col]]: {effects(levels)}"
+            if record.get("race"):
+                text += " The race is rolled when it is gained."
+            if record.get("turns_into"):
+                text += f" Turns into {BOONS[record['turns_into']][0].replace('{race}', 'the same race')} after {config['turns_to_turn']} turns at level {config['max_level']}."
+            sources = found.get((kind, record["key"]), [])
+            text += " [[col:yellow]]From:[[/col]] " + ("; ".join(sources) if sources else "nothing yet") + "."
+            out.append((kind, record["key"], "campaign_localised_strings_string_" + config["guide_prefix"] + kind + "_" + record["key"], text))
+    good = {r["key"]: r.get("good") for r in config["realm"]}
+    for record in config["realm"]:
+        name, _, _, text, _ = REALM[record["key"]]
+        sources = found.get(("realm", record["key"]), [])
+        line = (f"[[col:yellow]]{name}[[/col]] ({'blessing' if good[record['key']] else 'curse'}, {config['realm_turns']} turns): {text}. "
+                f"[[col:yellow]]From:[[/col]] {'; '.join(sources) if sources else 'nothing yet'}.")
+        out.append(("realm", record["key"], "campaign_localised_strings_string_" + config["guide_prefix"] + "realm_" + record["key"], line))
+    return out
+
+
 def owned_prefixes(config: Dict) -> List[str]:
     """Every key prefix of the rows this catalogue writes, so the generator replaces them on each run.
 
@@ -699,7 +790,8 @@ def owned_prefixes(config: Dict) -> List[str]:
         List[str]: The prefixes.
     """
     return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"],
-                                                      config["smithy_room"]["dilemma"], config["witch_room"]["dilemma"], config["result_prefix"]]
+                                                      config["smithy_room"]["dilemma"], config["witch_room"]["dilemma"], config["result_prefix"],
+                                                      config["guide_prefix"]]
             + config["pick_choices"]
             + [config["line_prefix"] + kind + "_" for kind in ("boon", "curse", "realm")] + config["full_choices"]
             + [config["incident_prefix"] + event for event in INCIDENTS])

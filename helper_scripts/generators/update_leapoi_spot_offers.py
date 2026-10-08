@@ -1322,6 +1322,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         line(component, icon, text)
     for key, text in boons.results(boon_config):
         add(STRINGS_LOC, key, text, "false")
+    for _, _, key, text in boons.guide(boon_config, config["offers"], config["tower_offers"]):
+        add(STRINGS_LOC, key, add_stat_icons(text), "false")
     for event, (title, description, image) in boons.incidents(boon_config).items():
         add_incident(boon_config["incident_prefix"] + event, image, title, description)
     return rows

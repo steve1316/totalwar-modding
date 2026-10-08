@@ -430,6 +430,15 @@ function M.on_champion_won(character)
     M.offer_pick(character, "tower", data.champion_choices)
 end
 
+--- After a lost tower champion floor: a rare faction-wide curse on the delving faction.
+--- @param faction_name string The delving faction.
+function M.on_champion_lost(faction_name)
+    if not M.enabled() then return end
+    local hit = random_chance(data.champion_realm_chance)
+    log("boons: " .. faction_name .. " lost to a tower champion, faction-wide curse roll at " .. data.champion_realm_chance .. "% " .. (hit and "hits" or "misses"))
+    if hit then M.gain_realm(faction_name, data.realm_curses[random_number(#data.realm_curses)]) end
+end
+
 --- After a Tavern contract ends: a finished quest chain gives a Tavern boon at `chain_boon_level`, a bounty gives Bane of the hunted
 --- army's race, and a failed or dropped contract may give a Tavern curse at the loss chance. A lost contract battle has already rolled its
 --- own curse, so this only rolls when the contract itself ends.

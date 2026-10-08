@@ -50,6 +50,18 @@ M.tavern_intro = "Each map zone has one racial Tavern, run by a single race, and
     .. "blesses your faction's [[img:icon_income]][[/img]] income, trade and armies for good, with [[img:icon_experience]][[/img]] experience for "
     .. "every lord and hero each turn. A second donation of 100000 gold raises every Tavern to level 3 and doubles the blessing."
 
+--- Intro of the Boons and Curses page guide. Every boon, curse and faction-wide effect follows it.
+M.boons_intro = "A lord can carry lasting boons and curses. A boon grows one level for every 5 battles the lord wins, up to level 5. A curse "
+    .. "gets one level worse every 5 turns, up to level 5. A few curses that stay at level 5 for 10 turns turn into a boon. A lord has 3 boon "
+    .. "slots and 3 curse slots by default. A new boon on a lord with every slot full asks which one to give up, and a new curse makes the "
+    .. "mildest one worse instead. Gaining one the lord already carries raises it a level. A lord who dies or leaves the faction loses them all, "
+    .. "and AI lords get none.\n\n"
+    .. "By default a hard or modified LEAPOI win, a lost LEAPOI battle and each battle modifier of a fight each have a 3% chance to leave a boon "
+    .. "or curse. The sliders above change these chances. A Tower champion floor has a 3% chance to bless the whole faction for 10 turns "
+    .. "when won, or curse it when lost. Pacts at treasure sites, the Tavern bar and the Tower trade a curse for a stronger "
+    .. "boon. At a Smithy you own, the smith tempers a boon one level or breaks a curse. At any Tavern, the hedge-witch cleanses a curse, or "
+    .. "gambles on one: half the time it lifts, otherwise it becomes another curse. Charged boons last a few battles instead of growing."
+
 --- Encounters page spot offer sections in page order, one per offer pool in configs/spot_offers.lua.
 M.spot_offer_sections = {
     { key = "treasure", title = "Treasure Sites" },

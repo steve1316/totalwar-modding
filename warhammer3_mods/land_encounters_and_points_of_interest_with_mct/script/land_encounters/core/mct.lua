@@ -25,11 +25,11 @@ local mct_settings = {
     --- Curses a lord can carry at once.
     curse_slots = 3,
     --- Percent chance a hard or modified LEAPOI win gives the lord a boon.
-    boon_win_chance = 15,
+    boon_win_chance = 3,
     --- Percent chance a lost LEAPOI fight, or a failed Tavern contract, gives the lord a curse.
-    curse_loss_chance = 50,
+    curse_loss_chance = 3,
     --- Percent chance each battle modifier of a fight leaves its boon or curse on the lord.
-    linger_chance = 25,
+    linger_chance = 3,
     --- Smithies are on the map. When off they are removed and their tributes, takeovers and sieges pause.
     enable_smithies = true,
     --- Taverns are on the map. When off they are removed and do nothing.

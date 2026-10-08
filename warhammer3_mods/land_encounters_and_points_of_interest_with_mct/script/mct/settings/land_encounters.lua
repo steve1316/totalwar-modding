@@ -194,7 +194,9 @@ end
 --- @returns table The MCT option.
 local function add_setting_slider(key, section_key, text, tooltip, range)
     local default = get_mct_settings()[key]
-    return add_slider(key, section_key, text, tooltip .. " Default is " .. default .. ".", range, default)
+    --- A slider whose label ends in % holds a percentage, so its default says so.
+    local unit = text:find("%%$") and "%" or ""
+    return add_slider(key, section_key, text, tooltip .. " Default is " .. default .. unit .. ".", range, default)
 end
 
 --- Locks every child checkbox while its "enable all" master checkbox is on.
@@ -514,13 +516,15 @@ add_checkbox("enable_boons", "boons_section", "Enable boons and curses",
 add_setting_slider("boon_slots", "boons_section", "Boon slots", "How many boons a lord can carry. A lord with every slot full chooses which "
     .. "boon to give up for a new one.", { 1, 5, 1, 0 })
 add_setting_slider("boon_win_chance", "boons_section", "Boon after a hard win %", "Chance a lord who wins a hard LEAPOI fight, or one with "
-    .. "battle modifiers, gains a boon.", { 0, 100, 5, 0 })
+    .. "battle modifiers, gains a boon.", { 0, 100, 1, 0 })
 add_setting_slider("curse_loss_chance", "boons_section", "Curse after a loss %", "Chance a lord who loses a LEAPOI fight, or fails a Tavern "
-    .. "contract, gains a curse.", { 0, 100, 5, 0 })
+    .. "contract, gains a curse.", { 0, 100, 1, 0 })
 add_setting_slider("linger_chance", "boons_section", "Lingering modifier %", "Chance each battle modifier of a fight leaves its own boon or "
-    .. "curse on the lord, e.g. Blood Moon leaving Bloodsworn.", { 0, 100, 5, 0 })
+    .. "curse on the lord, e.g. Blood Moon leaving Bloodsworn.", { 0, 100, 1, 0 })
 add_setting_slider("curse_slots", "boons_section", "Curse slots", "How many curses a lord can carry. A new curse on a lord with every slot "
     .. "full makes their mildest curse worse instead.", { 1, 5, 1, 0 })
+
+add_guide_section("boons", "Guide: Boons and Curses", boons_page, mct_guides.boons_text(), true)
 
 --- Builds every guide's text again and puts it on its section. The guides read game text, which a campaign does not have ready when this
 --- file first runs, so they are rebuilt once MCT has started and each time its panel opens, before a page is drawn.
@@ -531,6 +535,7 @@ local function refresh_guides()
         towers = mct_guides.towers_text(),
         smithy = mct_guides.smithy_text(),
         taverns = mct_guides.taverns_text(),
+        boons = mct_guides.boons_text(),
     }
     for _, offer_section in ipairs(mct_guides.spot_offer_sections()) do texts["spot_" .. offer_section.key] = offer_section.text end
     for _, offer_section in ipairs(mct_guides.tower_offer_sections()) do texts["tower_" .. offer_section.key] = offer_section.text end

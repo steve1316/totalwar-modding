@@ -724,7 +724,8 @@ function TowerEventDelegate:swear_in_units(delve)
     end
 end
 
---- Resolves a floor battle and ends any one-battle effects bought for it. A loss ends the delve and forfeits the haul. A win adds the floor to
+--- Resolves a floor battle and ends any one-battle effects bought for it. A loss ends the delve and forfeits the haul, and a lost champion
+--- floor may curse the whole faction (features/boons.lua). A win adds the floor to
 --- the haul, then offers the claim after the last floor, or draws this floor's offers and opens its go-deeper dilemma.
 --- @param player_won_battle boolean True when the delving faction won.
 --- @param faction_name string The delving faction.
@@ -739,6 +740,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     delve.ally_invasion = nil
     tower_offers.settle_last_stand(delve, player_won_battle)
     if not player_won_battle then
+        if (delve.next_floor or {}).champion then boons.on_champion_lost(faction_name) end
         self:end_delve(faction_name, "tower_lost", true)
         return
     end

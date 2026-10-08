@@ -30,8 +30,8 @@ M.slot_settings = { boon = "boon_slots", curse = "curse_slots" }
 --- contract, and each battle modifier leaving its mark.
 M.chance_settings = { win = "boon_win_chance", loss = "curse_loss_chance", linger = "linger_chance" }
 
---- Percent chance a won tower champion floor gives a faction-wide blessing instead of a choice of boons.
-M.champion_realm_chance = 5
+--- Percent chance a won tower champion floor gives a faction-wide blessing instead of a choice of boons, and a lost one a faction-wide curse.
+M.champion_realm_chance = 3
 
 --- How many tower boons a won champion floor lets the lord choose from.
 M.champion_choices = 2
@@ -86,6 +86,10 @@ M.service_line_prefix = "dummy_land_enc_boon_service_"
 --- Prefix of the services' result lines (text/db/land_enc_and_poi_spot_strings.loc.tsv), which the reopened room shows at the top of its
 --- description through `result_context`. The service follows: temper, break, cleanse, gamble_won, gamble_lost, rust.
 M.result_prefix = "land_enc_boon_result_"
+
+--- Prefix of each boon's, curse's and faction-wide effect's MCT guide line (text/db/land_enc_and_poi_spot_strings.loc.tsv): its effects and
+--- where it comes from. The kind (boon, curse or realm), then the key follow.
+M.guide_prefix = "land_enc_boon_guide_"
 M.result_context = "land_enc_boon_service_result"
 
 --- The Smithy's Temper and Break room, opened by `open_choice` on the forge. Tempering raises a boon one level for `temper_price` gold per
@@ -162,7 +166,7 @@ M.curses = {
     { key = "cowards_mark", drops = { "battle" } }, { key = "marked_prey", drops = { "battle", "tavern" } },
     { key = "brittle_bones", turns_into = "ironhide", drops = { "battle" } }, { key = "shaky_aim" },
     { key = "grudge", race = true, turns_into = "bane", drops = { "treasure", "tavern" } }, { key = "glass_jaw", drops = { "battle" } },
-    { key = "stumbling_charge" }, { key = "cursed_coin", drops = { "treasure", "tavern" } },
+    { key = "stumbling_charge", drops = { "battle" } }, { key = "cursed_coin", drops = { "treasure", "tavern" } },
 }
 
 --- Battle modifier key (configs/battle_modifiers.lua) -> the boon or curse it can leave on the lord after the fight, as { kind, key }.
@@ -172,7 +176,7 @@ M.lingers = {
     hold_fast = { "boon", "stone_rampart" }, strider = { "boon", "hunters_path" }, ambush_country = { "boon", "hunters_path" },
     wards = { "boon", "warded" }, storm_magic = { "boon", "overflowing_power" }, terror_field = { "boon", "dread_host" },
     cursed_earth = { "curse", "haunted" }, brittle = { "curse", "creeping_rust" }, heavy_ground = { "curse", "leaden_march" },
-    mud = { "curse", "leaden_march" }, exhausting = { "curse", "weary_ranks" }, miasma = { "curse", "withered_supply" },
+    mud = { "curse", "stumbling_charge" }, exhausting = { "curse", "weary_ranks" }, miasma = { "curse", "withered_supply" },
     rot = { "curse", "withered_supply" }, wild_winds = { "curse", "wild_magic" }, winds_drained = { "curse", "shunned_by_the_winds" },
     cowards = { "curse", "cowards_mark" }, gale = { "curse", "shaky_aim" }, disarmed = { "curse", "shaky_aim" },
 }
@@ -188,12 +192,14 @@ M.by_key = { boon = {}, curse = {} }
 for _, record in ipairs(M.boons) do M.by_key.boon[record.key] = record end
 for _, record in ipairs(M.curses) do M.by_key.curse[record.key] = record end
 
---- Key -> faction-wide record, and the keys of the faction-wide blessings, filled below.
+--- Key -> faction-wide record, and the keys of the faction-wide blessings and curses, filled below.
 M.realm_by_key = {}
 M.blessings = {}
+M.realm_curses = {}
 for _, record in ipairs(M.realm) do
     M.realm_by_key[record.key] = record
-    if record.good then M.blessings[#M.blessings + 1] = record.key end
+    local list = record.good and M.blessings or M.realm_curses
+    list[#list + 1] = record.key
 end
 
 return M

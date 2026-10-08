@@ -9,6 +9,7 @@ local smithy_data = require("script/land_encounters/configs/smithy_data")
 local tavern_data = require("script/land_encounters/configs/tavern_data")
 local spot_offers = require("script/land_encounters/configs/spot_offers")
 local archetypes = require("script/land_encounters/configs/archetypes")
+local boons = require("script/land_encounters/configs/boons")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -203,6 +204,19 @@ function M.smithy_text()
         if level.legendary_commission then facts[#facts + 1] = "a legendary item for " .. level.legendary_commission.price .. " gold" end
         if level.upgrade_price then facts[#facts + 1] = "upgrades for " .. level.upgrade_price .. " gold" end
         lines[#lines + 1] = guide_line("Level " .. number, join_words(facts, "and") .. ".")
+    end
+    return table.concat(lines, "\n")
+end
+
+--- Builds the Boons and Curses page guide: the intro, then every boon, curse and faction-wide effect with what it does and where it comes
+--- from. The lines are written by the generator, keyed by `boons.guide_prefix`.
+--- @returns string The guide text.
+function M.boons_text()
+    local lines = { guides.boons_intro }
+    for _, part in ipairs({ { "Boons", "boon", boons.boons }, { "Curses", "curse", boons.curses }, { "Faction-wide", "realm", boons.realm } }) do
+        lines[#lines + 1] = ""
+        lines[#lines + 1] = "[[col:yellow]]" .. part[1] .. "[[/col]]"
+        for _, record in ipairs(part[3]) do lines[#lines + 1] = loc("campaign_localised_strings_string_" .. boons.guide_prefix .. part[2] .. "_" .. record.key) end
     end
     return table.concat(lines, "\n")
 end
