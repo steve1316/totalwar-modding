@@ -58,4 +58,12 @@ M.battle_event_rolls = {}
 --- Gold every paid site and battle offer costs instead of its own, e.g. { 10000 } to see them unaffordable. Their lines still name their own cost.
 M.spot_cost = {}
 
+--- Effect library bundle keys (helper_scripts/generators/leapoi_effect_library.py) put on every army of the human faction at each turn start
+--- and on load, for 2 turns, e.g. { "land_enc_effect_lib_ctx_attacking", "land_enc_effect_lib_lore" }.
+M.test_bundles = {}
+
+--- Effect library bundle keys put on every LEAPOI enemy army as it spawns: battle spots, tower floors and Tavern contracts, e.g.
+--- { "land_enc_effect_lib_onhit_blinded" }.
+M.test_bundles_enemy = {}
+
 return M

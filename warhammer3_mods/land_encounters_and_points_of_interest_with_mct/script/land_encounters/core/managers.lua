@@ -783,13 +783,18 @@ function InvasionBattleManager:rank_up_lore_units(force, army)
 end
 
 --- Puts the event army's `sabotage` on its spawned force: each of `enemy_bundles`, every unit but the characters at `enemy_strength` of full
---- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone.
+--- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone. The debug
+--- `test_bundles_enemy` bundles go on every army.
 --- @param force military_force The spawned invasion force.
 --- @param army Army The army it was built from.
 function InvasionBattleManager:weaken_invasion_force(force, army)
     local sabotage = army.sabotage or {}
     for _, bundle in ipairs(sabotage.enemy_bundles or {}) do
         cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+    end
+    for _, bundle in ipairs(debug_config.test_bundles_enemy) do
+        cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+        out("LEAPOI: debug test_bundles_enemy puts " .. bundle .. " on the enemy army")
     end
     local want_champion = sabotage.champion_strength and sabotage.champion_strength < (sabotage.enemy_strength or 1)
     if not sabotage.enemy_strength and not want_champion then return end

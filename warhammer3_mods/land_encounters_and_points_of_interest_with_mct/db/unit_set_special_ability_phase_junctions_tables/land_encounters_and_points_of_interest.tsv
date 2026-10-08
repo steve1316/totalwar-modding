@@ -1,0 +1,3 @@
+key	special_ability_phase	unit_set
+#unit_set_special_ability_phase_junctions_tables;0;db/unit_set_special_ability_phase_junctions_tables/land_encounters_and_points_of_interest		
+land_enc_lib_jn_blinded_hits	wh_dlc06_unit_contact_blinded	all_units

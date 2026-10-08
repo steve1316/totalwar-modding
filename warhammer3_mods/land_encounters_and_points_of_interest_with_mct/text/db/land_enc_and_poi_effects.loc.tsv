@@ -12,3 +12,14 @@ effects_description_land_enc_effect_ability_enable_aura_of_immolation_all_units	
 effects_description_land_enc_effect_ability_enable_too_horrible_to_die_all_units	Passive ability: "Too Horrible to Die" for all units	false
 effects_description_land_enc_effect_ability_enable_gorefeast_all_units	Passive ability: "Gorefeast" for all units	false
 effects_description_land_enc_effect_ability_enable_unholy_vigour_all_units	Passive ability: "Unholy Vigour" for all units	false
+effects_description_land_enc_lib_fx_blinded_hits	Attacks cause "Blinded" for all units	false
+effects_description_land_enc_lib_fx_leech_hits	Attacks cause "Leeched" for all units, draining hit points	false
+effects_description_land_enc_lib_fx_melee_attack_defending	Melee attack: %+n when defending	false
+effects_description_land_enc_lib_fx_regeneration_defending	Passive ability: "Regeneration" when defending	false
+effects_description_land_enc_lib_fx_speed_attacking	Speed: %+n% when attacking	false
+effects_description_land_enc_lib_fx_unbreakable_attacking	Attribute: Unbreakable when attacking	false
+effects_description_land_enc_lib_fx_lore_fire_cost	Winds of Magic cost: %+n% for Lore of Fire spells	false
+effects_description_land_enc_lib_fx_comet_army_ability	Army ability: "Comet of Casandora"	false
+effects_description_land_enc_lib_fx_comet_army_ability_uses	Uses: %+n for the "Comet of Casandora" army ability	false
+effects_description_land_enc_lib_fx_march_blocked	Cannot use the March stance	false
+effects_description_land_enc_lib_fx_ambush_stance_cost	Campaign movement cost of the Ambush stance: %+n%	false

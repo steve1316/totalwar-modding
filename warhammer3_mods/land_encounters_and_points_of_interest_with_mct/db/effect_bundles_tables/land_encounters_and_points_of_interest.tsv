@@ -199,3 +199,13 @@ land_enc_effect_spot_dividends_250			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_350			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_450			faction	1	treasury.png	true	false	true
 land_enc_effect_spot_dividends_500			faction	1	treasury.png	true	false	true
+land_enc_effect_lib_onhit_blinded			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_onhit_leech			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_ctx_defending			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_ctx_attacking			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_lore			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_army_spell			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_stances			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_tired			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_magic			force	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_lib_campaign_curse			force	1	icon_effects_fortify.png	false	false	true

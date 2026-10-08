@@ -19,6 +19,7 @@ from typing import Dict, List, Pattern, Tuple
 
 from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
 from generators import leapoi_battle_modifiers as battle_modifiers
+from generators import leapoi_effect_library as effect_library
 from generators.leapoi_stat_icons import add_stat_icons
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
@@ -46,7 +47,8 @@ NOTICE_PREFIX = "land_enc_tower_buff_"
 # Line markers that make a row this script's own, so a run replaces it.
 OWNED_MARKERS = ("land_enc_dilemma_site_", "LEAPOI_SPT_", "dummy_land_enc_spot_", "land_enc_effect_spot_", "land_enc_trait_spot_", "event_land_enc_spot_",
                  "string_land_enc_spot_", "land_enc_incident_spot_", "land_enc_tower_buff_modifier_", "land_enc_effect_ability_enable_",
-                 "land_enc_ability_enable_", "dummy_land_enc_tower_allies_in_the_dark_")
+                 "land_enc_ability_enable_", "dummy_land_enc_tower_allies_in_the_dark_", effect_library.BUNDLE_PREFIX,
+                 effect_library.CUSTOM_PREFIX)
 
 # The Allies in the Dark offers, whose lines also come in a version naming the theme their allied army rolled.
 ALLY_OFFERS = ("allies_in_the_dark_small", "allies_in_the_dark_medium", "allies_in_the_dark_large")
@@ -917,7 +919,7 @@ def tiers_text(tiers: List[int]) -> str:
 
 def expand_bundles(config: Dict) -> Dict[str, Tuple]:
     """Lists every bundle this script writes by its full key: the spot's, a tiered bundle as one bundle per difficulty (named as
-    `steps.tiered` names them), the tower's tiered battle bundles, and one dividends bundle per gold amount either feature pays each turn.
+    `steps.tiered` names them), the tower's tiered battle bundles, one dividends bundle per gold amount either feature pays each turn, and the effect library's bundles.
 
     Args:
         config (Dict): The loaded config.
@@ -946,6 +948,7 @@ def expand_bundles(config: Dict) -> Dict[str, Tuple]:
     amounts |= {offer["per_turn"] for offers in config["tower_at"].values() for offer in offers.values() if "per_turn" in offer}
     for amount in sorted(amounts):
         flat[config["dividends_bundle_prefix"] + str(amount)] = (target, icon, title, description, [(effect, scope, amount)])
+    flat.update(effect_library.bundles())
     return flat
 
 
@@ -1198,6 +1201,11 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(LOC_PREFIX + "effects.loc.tsv", "effects_description_" + effect, f'Passive ability: "{name}" for all units', "false")
         add(table("unit_set_unit_ability_junctions_tables"), junction, ability, "all_units")
         add(table("effect_bonus_value_unit_set_unit_ability_junctions_tables"), "enable", effect, junction)
+
+    for table_name, fields in effect_library.custom_rows():
+        add(table(table_name), *fields)
+    for loc, key, text in effect_library.custom_texts():
+        add(LOC_PREFIX + loc + ".loc.tsv", key, text, "false")
 
     for key, (target, icon, title, description, effects) in bundles.items():
         add(table("effect_bundles_tables"), key, "", "", target, 1, icon, "true" if target == "faction" else "false", "false", "true")

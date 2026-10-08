@@ -12,6 +12,7 @@ local battle_dilemma_keys = require("script/land_encounters/configs/battle_categ
 local smithy_events = events.smithy
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local spot_offers = require("script/land_encounters/features/spot_offers")
+local effect_library = require("script/land_encounters/features/effect_library")
 local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
 
 --- Tavern dilemma key -> true, for the Tavern choice listener.
@@ -58,6 +59,7 @@ function M.register()
             end
             M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
             spot_offers.on_faction_turn_start(context:faction():name())
+            effect_library.apply_test_bundles(context:faction())
         end,
         IS_PERSISTENT_LISTENER
     )
