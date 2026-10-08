@@ -336,10 +336,8 @@ local GRANT_HANDLER = {
 local function tower_kin(ctx)
     if ctx.kin == nil then
         local faction = ctx.tower and ctx.tower.coordinates and cm:get_faction(ctx.faction_name)
-        local found = faction and realm_effects.nearest_factions(faction, ctx.tower.coordinates[1], ctx.tower.coordinates[2], 1, function(other)
-            return Army.faction_shorthand_for_subculture(other:subculture()) == ctx.tower.faction
-        end) or {}
-        ctx.kin = found[1] and found[1]:name() or false
+        local kin = faction and realm_effects.nearest_kin(faction, ctx.tower.coordinates[1], ctx.tower.coordinates[2], ctx.tower.faction)
+        ctx.kin = kin and kin:name() or false
     end
     return ctx.kin or nil
 end

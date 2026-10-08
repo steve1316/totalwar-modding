@@ -203,6 +203,9 @@ TOWER_ICONS = {
     "shadow_cloaks": "stalk.png", "tireless_tonic": "replenishment.png", "scroll_of_banishment": "magic.png", "net_of_amyntok": "magic.png",
     "earthblood": "magic.png", "curse_of_years": "magic.png", "the_dwellers_below": "magic.png", "falling_star": "magic.png",
     "grand_scroll": "magic.png", "bound_relic": "magic.png", "war_horn": "magic.png",
+    "blood_sigils": "resistance_ward_save.png", "hard_drills": "charge.png", "hold_the_ground": "siege_defence.png", "spell_banishment": "magic.png",
+    "spell_net_of_amyntok": "magic.png", "spell_earthblood": "magic.png", "spell_curse_of_years": "magic.png", "spell_dwellers_below": "magic.png",
+    "spell_falling_star": "magic.png",
     "exhaust_the_garrison": "attrition.png", "foul_the_winds": "magic.png", "smoke_the_halls": "hex_1.png", "blood_contract": "dlc10_assassination_targets.png",
     "collapse_the_stair": "siege_attack.png", "press_the_prisoners": "peasant.png", "loot_the_reliquary": "corruption_tzeentch.png",
     "blood_for_glory": "general_ability.png",
@@ -225,6 +228,9 @@ TOWER_NAMES: Dict[str, str] = {
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Battle bundles and notices
 
+# Effects of the bundles that make the army hold its ground: Hold the Stair on a tower floor, Hold the Ground at a battle spot.
+HOLD_EFFECTS = [(library.effect_key("regeneration_defending"), "force_to_force_own", 1), (library.effect_key("unbreakable_defending"), "force_to_force_own", 1)]
+
 # Tiered tower bundle name after `land_enc_effect_tower_` -> (target, icon, title, description, [(effect, scope, (easy, medium, hard) or value)],
 # notice or None). A notice (colour, text) names the battle notice of a bundle on our army. A bundle on the enemy is announced by its
 # offer's notice in `NOTICES` instead.
@@ -238,16 +244,10 @@ TOWER_BUNDLES = {
                            [("wh_main_effect_force_stat_weapon_strength", "force_to_force_own", (5, 10, 15)),
                             ("wh_main_effect_force_stat_ap_damage", "force_to_force_own", (5, 10, 15))],
                            ("green", "Whetstones and Oil: +{e0}% " + icon("icon_stat_damage") + " and +{e1} " + icon("modifier_icon_armour_piercing") + ".")),
-    "warding_sigils": ("force", "icon_effects_fortify.png", "Warding Sigils", "Sigils painted on shields and banners turn blows aside for one battle.",
-                       [("wh_main_effect_force_stat_ward_save", "force_to_force_own", (5, 10, 15))], ("green", "Warding Sigils: +{e0}% ward save.")),
     "quartermasters_cache": ("force", "icon_effects_fortify.png", "Quartermaster's Cache", "A cache of spare shot and arrows tops up every pouch and quiver for the next battle.",
                              [("wh_main_effect_force_stat_ammunition", "force_to_force_own", (25, 50, 75)),
                               ("wh_main_effect_force_stat_reload_time_reduction", "force_to_force_own", (15, 25, 35))],
                              ("green", "Quartermaster's Cache: +{e0}% " + icon("icon_stat_ammo") + " and {e1}% faster " + icon("icon_stat_reload_time") + ".")),
-    "drill_sergeant": ("force", "icon_effects_fortify.png", "Hard Drills", "A hard morning of drill has the army moving and charging faster for one battle.",
-                       [("wh_main_effect_force_stat_speed", "force_to_force_own", (5, 10, 15)),
-                        ("wh2_dlc14_effect_force_charge_bonus_add", "force_to_force_own", (5, 10, 15))],
-                       ("green", "Hard Drills: +{e0}% " + icon("icon_stat_speed") + " and +{e1} " + icon("icon_stat_charge_bonus") + ".")),
     "iron_resolve": ("force", "icon_effects_fortify.png", "Iron Resolve", "The army swore to hold whatever comes. Nothing frightens it for one battle.",
                      [("wh_main_effect_force_stat_leadership", "force_to_force_own", (10, 20, 30)),
                       ("wh_main_effect_attribute_enable_immune_to_psychology", "force_to_force_own", 1)],
@@ -264,8 +264,11 @@ TOWER_BUNDLES = {
     "blinding_powder": ("force", "icon_effects_fortify.png", "Blinding Powder", "Every pouch is packed with blinding powder for one battle.",
                         [(library.effect_key("blinded_hits"), "force_to_force_own", 1)], ("green", "Blinding Powder: our attacks blind what they hit.")),
     "hold_the_stair": ("force", "icon_effects_fortify.png", "Hold the Stair", "The stairwell is fortified. The army will not give ground for one battle.",
-                       [(library.effect_key("regeneration_defending"), "force_to_force_own", 1), (library.effect_key("unbreakable_defending"), "force_to_force_own", 1)],
+                       HOLD_EFFECTS,
                        ("green", "Hold the Stair: Regeneration and Unbreakable when defending.")),
+    "hold_the_ground": ("force", "icon_effects_fortify.png", "Hold the Ground", "The army has dug in. It will not give ground for one battle.",
+                        HOLD_EFFECTS,
+                        ("green", "Hold the Ground: Regeneration and Unbreakable when defending.")),
     "berserker_brew": ("force", "icon_effects_fortify.png", "Berserker Brew", "The brew burns in every throat. The army fights in a frenzy for one battle.",
                        [("wh3_dlc27_effect_ability_enable_frenzy_all", "force_to_force_own", 1)], ("green", "Berserker Brew: every unit is Frenzied.")),
     "shadow_cloaks": ("force", "icon_effects_fortify.png", "Shadow Cloaks", "Cloaks of shadow hide the army as it takes the field for one battle.",
@@ -321,6 +324,7 @@ TOWER_BUNDLES = {
 
 # One bundle per army spell (generators/leapoi_army_spells.py), for the battle it is cast in, with its battle notice.
 for _spell in army_spells.spells():
+    TOWER_ICONS[army_spells.BUNDLE_NAME + _spell["id"]] = "magic.png"
     TOWER_BUNDLES[army_spells.BUNDLE_NAME + _spell["id"]] = (
         "force", "icon_effects_fortify.png", _spell["name"], army_spells.description(_spell),
         [spell(_spell["id"])], ("green", f"{_spell['name']}: army spell, {army_spells.uses_text(_spell['uses'])}."))

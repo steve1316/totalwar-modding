@@ -26,6 +26,23 @@ local function eligible(modifier, fight)
     return true
 end
 
+--- The modifiers that can still roll onto a fight: `eligible` for it, not already on it, and not of a group already on it.
+--- @param fight table|nil The fight, see `eligible`.
+--- @param keys table|nil The modifiers the fight has.
+--- @returns table The modifier records.
+local function pool_for(fight, keys)
+    local had, groups = {}, {}
+    for _, key in ipairs(keys or {}) do
+        had[key] = true
+        if data.by_key[key].group then groups[data.by_key[key].group] = true end
+    end
+    local pool = {}
+    for _, modifier in ipairs(data.list) do
+        if not had[modifier.key] and not (modifier.group and groups[modifier.group]) and eligible(modifier, fight) then pool[#pool + 1] = modifier end
+    end
+    return pool
+end
+
 --- Rolls a fight's modifiers: none unless the MCT chance hits (no random number is drawn at 0), else 1-3 by `count_weights`, never one
 --- twice, never two of one group, and only those `eligible` for the fight. The debug `force_battle_modifiers` switch picks them instead.
 --- @param fight table|nil The fight: `faction`, the enemy's 3-letter faction shorthand, and `difficulty`. Without it no army composition
@@ -43,10 +60,7 @@ function M.roll(fight)
     local chance = get_mct_settings()[data.chance_setting] or 0
     if chance <= 0 or not random_chance(chance) then return {} end
     local count = pick_weighted(data.count_weights)
-    local pool, picked, groups = {}, {}, {}
-    for _, modifier in ipairs(data.list) do
-        if eligible(modifier, fight) then pool[#pool + 1] = modifier end
-    end
+    local pool, picked, groups = pool_for(fight), {}, {}
     while #picked < count and #pool > 0 do
         local modifier = table.remove(pool, random_number(#pool))
         if not (modifier.group and groups[modifier.group]) then
@@ -56,6 +70,31 @@ function M.roll(fight)
     end
     log("battle modifiers: rolled " .. table.concat(picked, ", "))
     return picked
+end
+
+--- Rolls one more modifier onto a fight, for Tempt Fate: one `eligible` for it that the fight does not have, and not of a group it already has.
+--- @param fight table The fight: `faction`, the enemy's 3-letter faction shorthand, and `difficulty`.
+--- @param keys table|nil The modifiers the fight has.
+--- @returns string|nil The modifier key, or nil when none is left.
+function M.roll_extra(fight, keys)
+    local pool = pool_for(fight, keys)
+    local key = pool[1] and pool[random_number(#pool)].key or nil
+    log("battle modifiers: rolled extra " .. tostring(key) .. " from " .. #pool .. " left")
+    return key
+end
+
+--- Adds modifiers to a battle event with what the enemy army and the allies are built with: their bundles, and the army composition (only
+--- one modifier of the composition group can be on a fight). Ours go on when the battle starts.
+--- @param event table The battle event.
+--- @param keys table The modifier keys.
+function M.add_to_event(event, keys)
+    event.modifiers = event.modifiers or {}
+    for _, key in ipairs(keys) do event.modifiers[#event.modifiers + 1] = key end
+    event.composition = event.composition or M.composition(keys)
+    for side, field in pairs({ enemy = "enemy_bundles", allies = "ally_bundles" }) do
+        event[field] = event[field] or {}
+        for _, bundle in ipairs(M.bundles(keys, side)) do event[field][#event[field] + 1] = bundle end
+    end
 end
 
 --- The dilemma lines of a fight's modifiers.

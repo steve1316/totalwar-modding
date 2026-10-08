@@ -20,6 +20,8 @@ local tower_offers = require("script/land_encounters/features/tower_offers")
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local army_spells = require("script/land_encounters/core/army_spells")
+local realm_effects = require("script/land_encounters/core/realm_effects")
+local boons = require("script/land_encounters/features/boons")
 
 --- svr keys the battle script reads the buff, notice, trick and mission names, Night terrors' targets and the mission targets from, and the
 --- prefix it strips from a one-battle bundle to find its notice. The tower owns them, since the battle script plays both under its names.
@@ -89,6 +91,7 @@ local function eligible(offer, ctx)
     if offer.no_heroes and ctx.event.no_heroes then return false end
     if not offer_effects.army_fits(offer, ctx.event.faction, ctx.general_cqi) then return false end
     if offer.unit_ranks and #tower_army.regular_units(ctx.general_cqi) == 0 then return false end
+    if boons.grants(offer) and not boons.enabled() then return false end
     if offer.traitor then
         local units = offer_effects.pick_recruits(ctx.general_cqi, ctx.event.faction, offer.traitor, ctx.shown_units)
         if #units < offer.traitor.count then return false end
@@ -99,8 +102,9 @@ local function eligible(offer, ctx)
     return true
 end
 
---- Draws `count` eligible offers from a pool with `random_number`, eligible offers in the debug `force_spot_offers` list first. Offers that
---- share a `group` (the allied army sizes) go in as one, picked at random as the tower draws them, or the group's forced offer.
+--- Draws `count` eligible offers from a pool with `random_number`, eligible offers in the debug `force_spot_offers` list first (a random
+--- `count` of them when more are listed). Offers that share a `group` (the allied army sizes) go in as one, picked at random as the tower
+--- draws them, or the group's forced offer.
 --- @param pool_name string "pre_battle" or "mission".
 --- @param count number How many to draw.
 --- @param ctx table The draw context, see `eligible`.
@@ -125,16 +129,18 @@ local function draw_pool(pool_name, count, ctx)
         end
         pool[#pool + 1] = picked
     end
-    local keys, forced = {}, 0
+    local keys = {}
     for _, forced_key in ipairs(debug_config.force_spot_offers) do
         for i, key in ipairs(pool) do
-            if key == forced_key and #keys < count then
+            if key == forced_key then
                 keys[#keys + 1] = table.remove(pool, i)
-                forced = forced + 1
                 break
             end
         end
     end
+    --- More forced offers than slots: a random few of them show, in list order, so a long test list cycles through its offers.
+    while #keys > count do table.remove(keys, random_number(#keys)) end
+    local forced = #keys
     while #keys < count and #pool > 0 do
         keys[#keys + 1] = table.remove(pool, random_number(#pool))
     end
@@ -268,6 +274,32 @@ local function apply_to_event(fields, event)
     end
 end
 
+--- Pays a pre-battle offer's price beyond gold and adds its stakes: every unit loses `bleed` strength, our lord gains the `boon` or `curse` it
+--- grants, relations change with the nearest faction of the enemy's race (looked up only now, since it walks every region on the map), the
+--- battle's victory gold is multiplied by `victory_gold`, and a `random_modifier` joins the fight.
+--- @param faction_name string Our faction key.
+--- @param pending table The open dilemma.
+--- @param offer table The offer record at the battle's difficulty.
+--- @param event table The battle event.
+local function pay_price(faction_name, pending, offer, event)
+    if offer.bleed then
+        tower_army.bleed_army(pending.general_cqi, offer.bleed)
+        log("spot battle: " .. offer.key .. " costs every unit " .. offer.bleed .. " strength")
+    end
+    local general = tower_army.character(pending.general_cqi)
+    boons.grant_fields(general, offer)
+    local kin = offer.relations and general and realm_effects.nearest_kin(general:faction(), general:logical_position_x(), general:logical_position_y(), event.faction)
+    if kin then realm_effects.change_relations(faction_name, kin:name(), offer.relations) end
+    if offer.victory_gold then
+        event.victory_gold = (event.victory_gold or 1) * offer.victory_gold
+        log("spot battle: " .. offer.key .. " multiplies the victory gold by " .. offer.victory_gold)
+    end
+    if offer.random_modifier then
+        local key = battle_modifiers.roll_extra({ faction = event.faction, difficulty = event.difficulty }, event.modifiers)
+        if key then battle_modifiers.add_to_event(event, { key }) end
+    end
+end
+
 --- Takes a mission on the open dilemma: pays its cost, marks it taken (Guard the standard marks one of our units) and reopens the dilemma.
 --- A mission already taken or shown as unaffordable just reopens it.
 --- @param faction_name string The faction key.
@@ -323,6 +355,7 @@ function M.take(faction_name, choice_key, event)
     local before = offer_effects.treasury(faction_name)
     if offer.cost then cm:treasury_mod(faction_name, -spot_offers.offer_cost(offer)) end
     apply_to_event(offer, event)
+    pay_price(faction_name, pending, offer, event)
     local spell = offer.spell_pool and (pending.cards[offer.key] or {}).spell
     if spell then
         event.battle_bundles = event.battle_bundles or {}

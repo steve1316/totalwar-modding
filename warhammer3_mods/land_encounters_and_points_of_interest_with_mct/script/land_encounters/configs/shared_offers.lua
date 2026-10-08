@@ -15,6 +15,9 @@ local TOWER_BUNDLE = "land_enc_effect_tower_"
 
 local M = {}
 
+--- Key prefix of the tower's effect bundles, shared with the spot offers that use them.
+M.TOWER_BUNDLE = TOWER_BUNDLE
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Cost bands (Easy, Medium, Hard)
@@ -32,9 +35,13 @@ M.UNIQUE = S(2000, 3000, 4000)
 --- Battle buffs: a bundle on our army for the next battle.
 M.war_rites = { cost = M.STANDARD, bundle = tiered(TOWER_BUNDLE .. "war_rites") }
 M.whetstones_and_oil = { cost = M.STANDARD, bundle = tiered(TOWER_BUNDLE .. "whetstones_and_oil") }
-M.warding_sigils = { cost = M.STANDARD, bundle = tiered(TOWER_BUNDLE .. "warding_sigils") }
+M.warding_sigils = { bundle = tiered(TOWER_BUNDLE .. "blood_sigils"), bleed = 10 }
+M.drill_sergeant = { bundle = tiered(TOWER_BUNDLE .. "hard_drills") }
+M.blinding_powder = { cost = M.STANDARD, bundle = TOWER_BUNDLE .. "blinding_powder" }
+M.berserker_brew = { bundle = TOWER_BUNDLE .. "berserker_brew", budget = 1.15 }
+M.shadow_cloaks = { cost = M.STANDARD, bundle = TOWER_BUNDLE .. "shadow_cloaks" }
+M.tireless_tonic = { bundle = TOWER_BUNDLE .. "tireless_tonic", curse = { "weary_ranks", 1 } }
 M.iron_resolve = { cost = M.STANDARD, bundle = tiered(TOWER_BUNDLE .. "iron_resolve") }
-M.drill_sergeant = { cost = M.STANDARD, bundle = tiered(TOWER_BUNDLE .. "drill_sergeant") }
 M.quartermasters_cache = { cost = M.STANDARD, bundle = tiered(TOWER_BUNDLE .. "quartermasters_cache") }
 M.call_the_winds = { cost = M.STANDARD, bundle = tiered(TOWER_BUNDLE .. "call_the_winds") }
 M.fire_kissed_blades = { cost = 2000, bundle = TOWER_BUNDLE .. "fire_kissed_blades" }
@@ -43,6 +50,9 @@ M.tower_artillery = { cost = 1500, bundle = TOWER_BUNDLE .. "tower_artillery" }
 --- Sabotage on the enemy army of the next battle.
 M.bribe_the_guards = { cost = M.STRONG, budget = S(0.85, 0.75, 0.65) }
 M.thin_the_ranks = { cost = M.STRONG, fewer_units = S(2, 3, 4) }
+M.exhaust_the_garrison = { cost = M.STANDARD, bundle = TOWER_BUNDLE .. "exhausted_garrison" }
+M.smoke_the_halls = { cost = M.STANDARD, bundle = TOWER_BUNDLE .. "smoked_halls", roster = { "missile_infantry", "missile_cavalry", "warmachine" } }
+M.blood_contract = { curse = { "marked_prey", 1 } }
 M.poison_the_stores = { cost = M.STRONG, enemy_strength = S(0.85, 0.75, 0.65) }
 M.kill_the_captain = { cost = 2000, no_heroes = true }
 M.lower_tiers_only = { cost = M.PREMIUM, max_tier = 2 }

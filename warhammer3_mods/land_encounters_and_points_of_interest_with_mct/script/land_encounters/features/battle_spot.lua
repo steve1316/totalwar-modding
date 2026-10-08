@@ -192,7 +192,7 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
     end
     self:grant_victory_items(self.cached_player_character:faction())
     self:grant_ally_rewards(self.cached_player_character, spot_info)
-    self:pay_modifier_gold(self.cached_player_character:faction())
+    self:pay_extra_gold(self.cached_player_character:faction())
     --- The spoils pick (features/spot_offers.lua) follows the victory reward when its roll hits.
     if self.cached_player_character:faction():is_human() and spot_battles.roll_spoils() then
         spot_offers.open_site(self.cached_player_character, self.cached_player_character:faction(), spoils_site, self.cached_event)
@@ -280,15 +280,18 @@ function BattleEventDelegate:trigger_victory_with_gift(character, gift, spot_inf
     cm:grant_unit_to_character(cm:char_lookup_str(character), gift)
 end
 
---- Pays the change the battle's modifiers make to its victory gold: more for harmful ones, less for helpful ones, rounded to 50.
+--- Pays the change the battle's modifiers and its raised stakes (`victory_gold`, from a pre-battle offer) make to its victory gold: more for
+--- harmful modifiers and raised stakes, less for helpful modifiers, rounded to 50.
 --- @param faction faction Our faction.
-function BattleEventDelegate:pay_modifier_gold(faction)
-    local modifiers = self.cached_event.modifiers
-    if not modifiers or #modifiers == 0 then return end
-    local base = victory_gold[self.cached_event.victory_incident] or 0
-    local change = round_gold(base * (battle_modifiers.gold_multiplier(modifiers) - 1))
+function BattleEventDelegate:pay_extra_gold(faction)
+    local event = self.cached_event
+    local multiplier = battle_modifiers.gold_multiplier(event.modifiers) * (event.victory_gold or 1)
+    if multiplier == 1 then return end
+    local base = victory_gold[event.victory_incident] or 0
+    local change = round_gold(base * (multiplier - 1))
     if change ~= 0 then cm:treasury_mod(faction:name(), change) end
-    log("spot battle: modifiers " .. table.concat(modifiers, ", ") .. " change the victory gold " .. base .. " by " .. change)
+    log("spot battle: modifiers " .. table.concat(event.modifiers or {}, ", ") .. " and stakes x" .. (event.victory_gold or 1) .. " change the victory gold "
+        .. base .. " by " .. change)
 end
 
 --- Rewards an Ally in Peril win with `ally.relations` with the ally's kin, or gold when there is none. A battle whose ally never spawned

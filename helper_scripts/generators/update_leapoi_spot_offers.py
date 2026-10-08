@@ -314,7 +314,8 @@ OFFERS: Dict[str, Tuple[str, str]] = {
 
     "bribe_the_guards": ("Bribe the Guards", PAY + "bribe their guards: the enemy army is [[col:green]]{weaker}% weaker[[/col]]."),
     "thin_the_ranks": ("Thin the Ranks", PAY + "thin their ranks: the enemy army fields [[col:green]]{fewer_units} fewer units[[/col]]."),
-    "poison_the_stores": ("Poison the Stores", PAY + "poison their stores: enemy units start at [[col:green]]{strength}% strength[[/col]]."),
+    "poison_the_stores": ("Poison the Stores", "Poison their stores: enemy units start at [[col:green]]{strength}% strength[[/col]], but word gets out: "
+                          "[[col:red]]-{relations} relations[[/col]] with the nearest faction of their race."),
     "kill_the_captain": ("Kill the Lieutenants", PAY + "kill their lieutenants: the enemy army has [[col:green]]no heroes[[/col]]."),
     "lower_tiers_only": ("Keep the Veterans Away", PAY + "keep their veterans away: the enemy army has [[col:green]]tier 1-2 units only[[/col]]."),
     "strip_monsters": ("Cull the Beasts", PAY + "cull their beasts: the enemy army fields [[col:green]]no monsters or war beasts[[/col]]."),
@@ -336,20 +337,41 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "lame_their_mounts": ("Lame Their Mounts", PAY + "lame their mounts: enemy cavalry and chariots have " + stat("-{e0}%", *SPEED) + " in this battle."),
     "hunters_snares": ("Hunter's Snares", PAY + "lay hunter's snares: enemy cavalry and chariots have " + stat("-{e0}", *CHARGE) + " in this battle."),
     "turn_a_traitor": ("Turn a Traitor", PAY + "turn a traitor: [[col:green]]a tier {tiers} unit[[/col]] of the enemy's kind joins our army now, and the enemy fields one unit fewer."),
-    "war_rites": ("War Rites", PAY + "hold war rites: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, "
-                  "[[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership in this battle."),
-    "whetstones_and_oil": ("Whetstones and Oil", PAY + "hone every blade: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength and "
-                           "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]] armour-piercing damage in this battle."),
-    "warding_sigils": ("Warding Sigils", PAY + "paint warding sigils: [[col:green]]+{e0}% ward save[[/col]] in this battle."),
+    "war_rites": ("War Rites", "Hold war rites: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, "
+                  "[[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership in this battle, "
+                  "but the din draws more foes: the enemy army is [[col:red]]{stronger}% stronger[[/col]]."),
+    "whetstones_and_oil": ("Rustbane Oil", "Oil every blade: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength and "
+                           "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]] armour-piercing damage in this battle, but the oil "
+                           "eats the steel: our lord is struck by {curse}."),
+    "warding_sigils": ("Blood Sigils", "Paint the sigils in our own blood: [[col:green]]+{e0}% ward save[[/col]] in this battle, but every unit loses "
+                       "[[col:red]]{bleed}% of its strength[[/col]] now."),
     "battle_scroll": ("Battle Scroll", PAY + "buy a battle scroll: the army spell below is ours to cast in this battle."),
     "cache_of_scrolls": ("Cache of Scrolls", PAY + "open a cache of scrolls: the army spell below is ours to cast in any battle for the next "
                          "{spell_turns} turns."),
     "fire_kissed_blades": ("Fire-Kissed Blades", PAY + "pass our blades through the braziers: [[col:green]]flaming attacks[[/col]] for every unit in this battle."),
     "iron_resolve": ("Iron Resolve", PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership and "
                      "[[col:green]]immunity to fear and terror[[/col]] in this battle."),
-    "drill_sergeant": ("Hard Drills", PAY + "drive the army through hard drills: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed and "
-                       "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]] charge bonus in this battle."),
-    "call_the_winds": ("Call the Winds", PAY + "call the winds: [[col:green]]+{e0} Winds of Magic[[/col]] reserve in this battle."),
+    "drill_sergeant": ("Hard Drills", "Drive the army through hard drills: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed and "
+                       "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]] charge bonus in this battle, but the army starts it "
+                       "[[col:red]]Winded[[/col]]."),
+    "call_the_winds": ("Call the Winds", "Call the winds: [[col:green]]+{e0} Winds of Magic[[/col]] reserve in this battle, but they do not settle afterwards: our lord "
+                       "is struck by {curse}."),
+    "blinding_powder": ("Blinding Powder", PAY + "hand out blinding powder: every unit's attacks [[col:green]]blind what they hit[[/col]] in this battle."),
+    "hold_the_ground": ("Hold the Ground", PAY + "dig in: [[col:green]]Regeneration and Unbreakable when defending[[/col]] in this battle."),
+    "berserker_brew": ("Berserker Brew", "Pass round the berserker brew: every unit gains [[col:green]]Frenzy[[/col]] in this battle, but the howling draws more "
+                       "foes: the enemy army is [[col:red]]{stronger}% stronger[[/col]]."),
+    "shadow_cloaks": ("Shadow Cloaks", PAY + "hand out shadow cloaks: every unit gains [[col:green]]Stalk and Vanguard Deployment[[/col]] in this battle."),
+    "tireless_tonic": ("Tireless Tonic", "Drink the tonic: the army [[col:green]]never tires[[/col]] in this battle, but our lord is struck by {curse}."),
+    "exhaust_their_camp": ("Exhaust Their Camp", PAY + "keep their camp awake all night: the enemy army [[col:green]]starts the battle Tired[[/col]]."),
+    "smoke_screen": ("Smoke Screen", PAY + "lay a smoke screen: enemy missile units have [[col:green]]-{e0}% range[[/col]] in this battle."),
+    "blood_contract": ("Blood Contract", "Sign a contract in blood: the enemy [[col:green]]lord is slain as the battle starts[[/col]], but our lord is struck by "
+                       "{curse}."),
+    "undermine_their_lines": ("Undermine Their Lines", "Dig tunnels under their camp: the enemy army is [[col:green]]{weaker}% weaker[[/col]], but every unit of "
+                              "ours loses [[col:red]]{bleed}% of its strength[[/col]] digging them."),
+    "raise_the_stakes": ("Raise the Stakes", "Raise the stakes: the enemy army is [[col:red]]{stronger}% stronger[[/col]], but a win pays "
+                         "[[col:green]]{victory_gold}[[/col]]."),
+    "tempt_fate": ("Tempt Fate", "Tempt fate: a [[col:yellow]]random battle modifier[[/col]], good or bad, joins this fight, and a win pays "
+                   "[[col:green]]{victory_gold}[[/col]]."),
     "quartermasters_cache": ("Quartermaster's Cache", PAY + "raid the quartermaster's stores: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] "
                              "ammunition and [[col:green]]{e1}%[[/col]] [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]] faster reloads in this battle."),
     "tower_artillery": ("Call a Barrage", PAY + "haul in salvaged Dwarf guns: gain the [[col:green]]Zhufbar 42 Pounders[[/col]] artillery barrage army ability in this battle."),
@@ -457,6 +479,10 @@ ICONS = {
     "turn_a_traitor": "khainite_assassin.png", "war_rites": "effect_rite.png", "whetstones_and_oil": "weapon_damage.png",
     "battle_scroll": "magic.png", "cache_of_scrolls": "magic.png", "warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "iron_resolve": "attribute_immune_to_psychology.png",
     "call_the_winds": "wh3_dlc24_wind_blast.png", "quartermasters_cache": "ammo.png", "night_raid": "dlc10_death_night.png",
+    "blinding_powder": "wh_dlc06_unit_contact_blinded.png", "hold_the_ground": "siege_defence.png", "berserker_brew": "rampage_savage.png",
+    "shadow_cloaks": "stalk.png", "tireless_tonic": "vigour.png", "exhaust_their_camp": "attrition.png",
+    "smoke_screen": "hex_1.png", "blood_contract": "dlc10_assassination_targets.png", "undermine_their_lines": "siege_attack.png",
+    "raise_the_stakes": "treasury.png", "tempt_fate": "random_recipe.png",
     "bottomless_quivers": "ammo_character.png", "oath_of_no_retreat": "morale.png", "divine_shield": "lileaths_blessing.png",
     "arm_the_allies": "effect_rite.png", "rally_their_line": "morale.png", "lend_them_veterans": "vow_knights_positive.png",
     "reinforce_the_ally_escort": "trade_agreement.png", "reinforce_the_ally_army": "trade_agreement.png",
@@ -564,6 +590,11 @@ NOTICES = {
     "reinforce_the_ally_army": ("green", "Reinforce the Ally: our allies' army was raised with {ally_stronger}% more gold."),
     "night_raid_won": ("red", "Night Raid: the enemy army is 25% weaker."),
     "night_raid_lost": ("yellow", "Night Raid: our units start at {lost_strength}% strength."),
+    "exhaust_their_camp": ("red", "Exhaust Their Camp: the enemy starts the battle Tired."),
+    "smoke_screen": ("red", "Smoke Screen: enemy missile units have -{e0}% range."),
+    "undermine_their_lines": ("red", "Undermine Their Lines: the enemy army is {weaker}% weaker."),
+    "raise_the_stakes": ("yellow", "Raise the Stakes: the enemy army is {stronger}% stronger, for {victory_gold}."),
+    "tempt_fate": ("yellow", "Tempt Fate: a win pays {victory_gold}."),
 }
 
 # Notice -> its offer, for a notice not named after its offer. The notice shows that offer's numbers and line icon.
@@ -1034,6 +1065,12 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
         values["tiers"] = tiers_text(tiers)
     if "relations" in offer:
         values["relations"] = str(abs(offer["relations"]) * 10)
+    for kind in ("boon", "curse"):
+        if isinstance(offer.get(kind), list):
+            values[kind] = boons.grant_text(kind, offer[kind])
+    if "victory_gold" in offer:
+        multiplier = offer["victory_gold"]
+        values["victory_gold"] = "double victory gold" if multiplier == 2 else f"+{round((multiplier - 1) * 100)}% victory gold"
     if "garrison_strength" in offer:
         values["garrison"] = str(round(offer["garrison_strength"] * 100))
     armies = offer.get("daemon_armies", offer.get("armies"))
@@ -1331,7 +1368,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         line(army_spells.LINE_PREFIX + spell["id"], "magic.png", army_spells.line_text(spell), [spell["name"]])
     for key, text in boons.results(boon_config):
         add(STRINGS_LOC, key, text, "false")
-    for _, _, key, text in boons.guide(boon_config, config["offers"], config["tower_offers"], TOWER_NAMES):
+    spot_names = {key: name for key, (name, _) in OFFERS.items()}
+    for _, _, key, text in boons.guide(boon_config, config["offers"], config["tower_offers"], {**spot_names, **TOWER_NAMES}):
         add(STRINGS_LOC, key, add_stat_icons(text), "false")
     for event, (title, description, image) in boons.incidents(boon_config).items():
         add_incident(boon_config["incident_prefix"] + event, image, title, description)
@@ -1609,6 +1647,7 @@ def check_text(config: Dict) -> None:
                  and o["key"] not in NOTICES
                  and o["key"] not in config["tower_at"]["easy"]]
     problems += [f"no messages for mission {o['key']}" for o in config["offers"] if o["pool"] == "mission" and o["key"] not in MISSION_MESSAGES]
+    problems += [f"no notice icon for tower bundle {name}" for name, entry in TOWER_BUNDLES.items() if entry[5] and not tower_icon(name)]
     problems += [f"no tower line for {key}" for key in tower_line_keys(config) if key not in TOWER_LINES or not tower_icon(key)]
     problems += [f"no tower notice for {key}" for key, varies in config["notice_varies"].items()
                  if varies and key not in TOWER_NOTICE_TEXT and key in config["tower_at"]["easy"]

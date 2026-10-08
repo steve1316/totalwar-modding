@@ -474,7 +474,7 @@ def offer_texts(offers: List[Dict], pay: str) -> Tuple[Dict[str, Tuple[str, str]
     """
     texts, icons = {}, {}
     for offer in offers:
-        if not grants(offer) or offer.get("compose"):
+        if not grants(offer) or offer.get("compose") or offer["key"] not in OFFERS:
             continue
         name = OFFERS[offer["key"]]
         action = name.lower()
@@ -729,7 +729,8 @@ def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict], names: Opt
         config (Dict): The boons config from the Lua dump.
         offers (List[Dict]): The spot offers from the Lua dump.
         tower_offers (List[Dict]): The tower offers from the Lua dump.
-        names (Optional[Dict[str, str]]): Names of offers granting a boon or curse that `OFFERS` does not name, e.g. the composed tower offers.
+        names (Optional[Dict[str, str]]): Names of offers granting a boon or curse that `OFFERS` does not name, e.g. the composed tower offers
+            and the spot offers with their own text.
 
     Returns:
         List[Tuple[str, str, str, str]]: (kind, key, loc key, text), boons then curses then faction-wide effects, in config order.
@@ -752,7 +753,8 @@ def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict], names: Opt
     places: Dict[str, List[str]] = {}
     for offer in offers:
         if grants(offer) and not isinstance(offer.get("boon"), dict):
-            places.setdefault(offer["key"], []).append({"treasure": "treasure sites", "tavern": "the Tavern bar"}.get(offer.get("pool"), "treasure sites"))
+            places.setdefault(offer["key"], []).append({"tavern": "the Tavern bar", "pre_battle": "battle spots", "spoils": "battle spoils",
+                                                        "mission": "battle spot missions"}.get(offer.get("pool"), "treasure sites"))
     for offer in tower_offers:
         if grants(offer):
             places.setdefault(offer["key"], []).append("the Tower")

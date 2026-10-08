@@ -185,10 +185,7 @@ local function eligible(offer, ctx)
     for _, key in ipairs(cards.units or {}) do ctx.shown_units[key] = true end
     if offer.gold_per_enemy_unit then cards.gold = offer.gold_per_enemy_unit * #enemy_units end
     if offer.ransom then
-        local beaten = ctx.event and ctx.event.faction
-        local kin = realm_effects.nearest_factions(ctx.faction, ctx.x, ctx.y, 1, function(other)
-            return offer_effects.culture_shorthand(other:name()) == beaten
-        end)[1]
+        local kin = ctx.event and ctx.event.faction and realm_effects.nearest_kin(ctx.faction, ctx.x, ctx.y, ctx.event.faction)
         if kin == nil then return false end
         ctx.targets[offer.key] = { regions = {}, factions = { kin:name() } }
     end

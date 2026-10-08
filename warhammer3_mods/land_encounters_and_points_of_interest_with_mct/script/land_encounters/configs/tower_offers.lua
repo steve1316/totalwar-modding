@@ -51,23 +51,23 @@ M.offers = {
     { key = "war_rites", guide_section = "battle_buffs", cost = shared.war_rites.cost, effect_bundle = shared.war_rites.bundle },
     { key = "whetstones_and_oil", guide_section = "battle_buffs", cost = shared.whetstones_and_oil.cost, effect_bundle = shared.whetstones_and_oil.bundle },
     --- Blood Sigils: free, but every unit loses `bleed` points of strength now.
-    { key = "warding_sigils", guide_section = "battle_buffs", compose = true, effect_bundle = tiered("land_enc_effect_tower_blood_sigils"), bleed = 10 },
+    { key = "warding_sigils", guide_section = "battle_buffs", compose = true, effect_bundle = shared.warding_sigils.bundle, bleed = shared.warding_sigils.bleed },
     { key = "fire_kissed_blades", guide_section = "battle_buffs", cost = shared.fire_kissed_blades.cost, effect_bundle = shared.fire_kissed_blades.bundle },
     { key = "enchanted_steel", guide_section = "battle_buffs", cost = shared.enchanted_steel.cost, effect_bundle = "land_enc_effect_tower_enchanted_steel" },
     { key = "quartermasters_cache", guide_section = "battle_buffs", cost = shared.quartermasters_cache.cost, effect_bundle = shared.quartermasters_cache.bundle,
         shoots = true, compose = true, battle_floors = 2 },
-    { key = "drill_sergeant", guide_section = "battle_buffs", compose = true, effect_bundle = tiered("land_enc_effect_tower_hard_drills") },
+    { key = "drill_sergeant", guide_section = "battle_buffs", compose = true, effect_bundle = shared.drill_sergeant.bundle },
     { key = "iron_resolve", guide_section = "battle_buffs", cost = shared.iron_resolve.cost, effect_bundle = shared.iron_resolve.bundle },
     { key = "stoneskin", guide_section = "battle_buffs", compose = true, effect_bundle = tiered("land_enc_effect_tower_stoneskin"), next_budget = 1.1 },
     --- Composed offers (`compose`) apply their parts in order, see `compose` in features/tower_offers.lua: a next-battle `effect_bundle` kept
     --- for `battle_floors` floors, `bleed` (strength points every unit loses now), `next_budget`, a `boon` or `curse`, `wound_turns` (our lord
     --- is wounded when the delve ends), `owner_relations` (relations with the tower's owner), `faction_bundle` and `army_bundle` for `turns`,
     --- `lord_xp`, `item_rarity` (an item into the haul) and the sabotage fields.
-    { key = "blinding_powder", guide_section = "battle_buffs", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_blinding_powder" },
+    { key = "blinding_powder", guide_section = "battle_buffs", compose = true, cost = shared.blinding_powder.cost, effect_bundle = shared.blinding_powder.bundle },
     { key = "hold_the_stair", guide_section = "battle_buffs", compose = true, cost = shared.STRONG, effect_bundle = "land_enc_effect_tower_hold_the_stair" },
-    { key = "berserker_brew", guide_section = "battle_buffs", compose = true, effect_bundle = "land_enc_effect_tower_berserker_brew", next_budget = 1.15 },
-    { key = "shadow_cloaks", guide_section = "battle_buffs", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_shadow_cloaks" },
-    { key = "tireless_tonic", guide_section = "battle_buffs", compose = true, effect_bundle = "land_enc_effect_tower_tireless_tonic", curse = { "weary_ranks", 1 } },
+    { key = "berserker_brew", guide_section = "battle_buffs", compose = true, effect_bundle = shared.berserker_brew.bundle, next_budget = shared.berserker_brew.budget },
+    { key = "shadow_cloaks", guide_section = "battle_buffs", compose = true, cost = shared.shadow_cloaks.cost, effect_bundle = shared.shadow_cloaks.bundle },
+    { key = "tireless_tonic", guide_section = "battle_buffs", compose = true, effect_bundle = shared.tireless_tonic.bundle, curse = shared.tireless_tonic.curse },
     { key = "scaling_blessing", guide_section = "battle_buffs", cost_share_by_floor = { 0.25, 0.25, 0.5, 0.5 }, per_floor = true, effect_bundle = "land_enc_effect_tower_scaling_blessing" },
     --- In-battle tricks act in the next floor's battle only. An `effect_bundle` grants a vanilla army ability or more winds of magic, and
     --- `effect_bundles` picks one of several at random. A `trick` is done by the battle script (script/battle/mod/land_enc_tower_buffs.lua),
@@ -114,11 +114,12 @@ M.offers = {
         roster = shared.spike_the_guns.roster },
     --- Composed sabotage (`sabotage = true`) marks the next floor's army with its notice and `enemy_bundle`. `no_champion` keeps it off a
     --- champion floor.
-    { key = "exhaust_the_garrison", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.STANDARD, enemy_bundle = "land_enc_effect_tower_exhausted_garrison" },
+    { key = "exhaust_the_garrison", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.exhaust_the_garrison.cost,
+        enemy_bundle = shared.exhaust_the_garrison.bundle },
     { key = "foul_the_winds", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.STANDARD, enemy_bundle = "land_enc_effect_tower_fouled_winds" },
-    { key = "smoke_the_halls", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.STANDARD, enemy_bundle = "land_enc_effect_tower_smoked_halls",
-        roster = { "missile_infantry", "missile_cavalry", "warmachine" } },
-    { key = "blood_contract", guide_section = "sabotage", compose = true, sabotage = true, no_champion = true, curse = { "marked_prey", 1 } },
+    { key = "smoke_the_halls", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.smoke_the_halls.cost, enemy_bundle = shared.smoke_the_halls.bundle,
+        roster = shared.smoke_the_halls.roster },
+    { key = "blood_contract", guide_section = "sabotage", compose = true, sabotage = true, no_champion = true, curse = shared.blood_contract.curse },
     { key = "collapse_the_stair", guide_section = "sabotage", compose = true, next_budget = 0.75, bleed = 10 },
     { key = "bait_and_switch", guide_section = "sabotage", cost = shared.bait_and_switch.cost, next_budget = shared.bait_and_switch.budget,
         enemy_strength = shared.bait_and_switch.enemy_strength },

@@ -156,6 +156,18 @@ scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_100	[[col:yel
 scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_100		false
 scripted_objectives_localised_text_land_enc_tower_buff_ally_relief_100_message	Relief Column: the enemy falls on our allies. Reach them before they break!	false
 scripted_objectives_localised_description_land_enc_tower_buff_ally_relief_100_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_easy_message	Warding Sigils: +5% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_medium_message	Warding Sigils: +10% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_hard_message	Warding Sigils: +15% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy_message	Hard Drills: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium_message	Hard Drills: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard_message	Hard Drills: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
+scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain	Spare the Captain: keep the enemy lord alive	false
 scripted_objectives_localised_description_land_enc_tower_buff_spare_the_captain		false
 scripted_objectives_localised_text_land_enc_tower_buff_spare_the_captain_message	Spare the Captain: win with the enemy lord still alive.	false
@@ -244,6 +256,26 @@ scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_hard	[[co
 scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_night_raid_lost_hard_message	Night Raid: our units start at 75% strength.	false
 scripted_objectives_localised_description_land_enc_tower_buff_night_raid_lost_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_exhaust_their_camp	[[col:red]]Exhaust Their Camp: the enemy starts the battle Tired.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_exhaust_their_camp		false
+scripted_objectives_localised_text_land_enc_tower_buff_exhaust_their_camp_message	Exhaust Their Camp: the enemy starts the battle Tired.	false
+scripted_objectives_localised_description_land_enc_tower_buff_exhaust_their_camp_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_smoke_screen	[[col:red]]Smoke Screen: enemy missile units have -30% range.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_smoke_screen		false
+scripted_objectives_localised_text_land_enc_tower_buff_smoke_screen_message	Smoke Screen: enemy missile units have -30% range.	false
+scripted_objectives_localised_description_land_enc_tower_buff_smoke_screen_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_undermine_their_lines	[[col:red]]Undermine Their Lines: the enemy army is 25% weaker.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_undermine_their_lines		false
+scripted_objectives_localised_text_land_enc_tower_buff_undermine_their_lines_message	Undermine Their Lines: the enemy army is 25% weaker.	false
+scripted_objectives_localised_description_land_enc_tower_buff_undermine_their_lines_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_raise_the_stakes	[[col:yellow]]Raise the Stakes: the enemy army is 25% stronger, for double victory gold.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_raise_the_stakes		false
+scripted_objectives_localised_text_land_enc_tower_buff_raise_the_stakes_message	Raise the Stakes: the enemy army is 25% stronger, for double victory gold.	false
+scripted_objectives_localised_description_land_enc_tower_buff_raise_the_stakes_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_tempt_fate	[[col:yellow]]Tempt Fate: a win pays +50% victory gold.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_tempt_fate		false
+scripted_objectives_localised_text_land_enc_tower_buff_tempt_fate_message	Tempt Fate: a win pays +50% victory gold.	false
+scripted_objectives_localised_description_land_enc_tower_buff_tempt_fate_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_war_rites_easy	[[col:green]]War Rites: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_war_rites_easy		false
 scripted_objectives_localised_text_land_enc_tower_buff_war_rites_easy_message	War Rites: +5 [[img:ui/skins/default/icon_stat_attack.png]][[/img]][[img:ui/skins/default/icon_stat_defence.png]][[/img]][[img:ui/skins/default/icon_stat_morale.png]][[/img]].	false
@@ -268,18 +300,6 @@ scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_hard	[
 scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_whetstones_and_oil_hard_message	Whetstones and Oil: +15% [[img:ui/skins/default/icon_stat_damage.png]][[/img]] and +15 [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_whetstones_and_oil_hard_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_easy	[[col:green]]Warding Sigils: +5% ward save.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_easy		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_easy_message	Warding Sigils: +5% ward save.	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_easy_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_medium	[[col:green]]Warding Sigils: +10% ward save.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_medium		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_medium_message	Warding Sigils: +10% ward save.	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_medium_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_hard	[[col:green]]Warding Sigils: +15% ward save.[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_hard		false
-scripted_objectives_localised_text_land_enc_tower_buff_warding_sigils_hard_message	Warding Sigils: +15% ward save.	false
-scripted_objectives_localised_description_land_enc_tower_buff_warding_sigils_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_easy	[[col:green]]Quartermaster's Cache: +25% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 15% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_easy		false
 scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_easy_message	Quartermaster's Cache: +25% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 15% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
@@ -292,18 +312,6 @@ scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_hard
 scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_quartermasters_cache_hard_message	Quartermaster's Cache: +75% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] and 35% faster [[img:ui/skins/default/icon_stat_reload_time.png]][[/img]].	false
 scripted_objectives_localised_description_land_enc_tower_buff_quartermasters_cache_hard_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy	[[col:green]]Hard Drills: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_easy		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_easy_message	Hard Drills: +5% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +5 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_easy_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium	[[col:green]]Hard Drills: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_medium		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_medium_message	Hard Drills: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_medium_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard	[[col:green]]Hard Drills: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].[[/col]]	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_hard		false
-scripted_objectives_localised_text_land_enc_tower_buff_drill_sergeant_hard_message	Hard Drills: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]].	false
-scripted_objectives_localised_description_land_enc_tower_buff_drill_sergeant_hard_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_easy	[[col:green]]Iron Resolve: +10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_easy		false
 scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_easy_message	Iron Resolve: +10 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
@@ -360,6 +368,10 @@ scripted_objectives_localised_text_land_enc_tower_buff_hold_the_stair	[[col:gree
 scripted_objectives_localised_description_land_enc_tower_buff_hold_the_stair		false
 scripted_objectives_localised_text_land_enc_tower_buff_hold_the_stair_message	Hold the Stair: Regeneration and Unbreakable when defending.	false
 scripted_objectives_localised_description_land_enc_tower_buff_hold_the_stair_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hold_the_ground	[[col:green]]Hold the Ground: Regeneration and Unbreakable when defending.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hold_the_ground		false
+scripted_objectives_localised_text_land_enc_tower_buff_hold_the_ground_message	Hold the Ground: Regeneration and Unbreakable when defending.	false
+scripted_objectives_localised_description_land_enc_tower_buff_hold_the_ground_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_berserker_brew	[[col:green]]Berserker Brew: every unit is Frenzied.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_berserker_brew		false
 scripted_objectives_localised_text_land_enc_tower_buff_berserker_brew_message	Berserker Brew: every unit is Frenzied.	false

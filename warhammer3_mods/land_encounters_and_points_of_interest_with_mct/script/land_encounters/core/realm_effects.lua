@@ -152,6 +152,17 @@ function M.nearest_factions(faction, x, y, count, filter)
     return found
 end
 
+--- Returns the nearest faction of one race, among the owners of the nearest regions.
+--- @param faction faction The faction searching (never returned).
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param shorthand string The race's 3-letter faction shorthand, as in configs/factions_data.lua.
+--- @returns faction|nil The nearest faction of that race, or nil when none holds a region.
+function M.nearest_kin(faction, x, y, shorthand)
+    local Army = require("script/land_encounters/core/army")
+    return M.nearest_factions(faction, x, y, 1, function(other) return Army.faction_shorthand_for_subculture(other:subculture()) == shorthand end)[1]
+end
+
 --- Returns the nearest faction at war with a faction, among the owners of the nearest regions.
 --- @param faction faction The faction whose enemies are searched.
 --- @param x number The map x position.

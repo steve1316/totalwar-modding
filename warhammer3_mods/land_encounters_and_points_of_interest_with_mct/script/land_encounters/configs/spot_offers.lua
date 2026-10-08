@@ -67,6 +67,11 @@
 ---   ally_ranks      The allied army's regular units gain this many ranks.
 ---   extra_ally_units  A sized allied army fields this many more units.
 ---   ally_budget     Multiplies a full allied army's gold budget.
+---   bleed           Every unit of ours loses this much strength now, as the price.
+---   boon, curse     A boon or curse our lord gains (see `boons.grant_fields`). Only drawn while boons and curses are on.
+---   relations       Relations change, in the game's dilemma steps, with the nearest faction of the enemy army's race, when one holds a region.
+---   victory_gold    Multiplies the battle's victory gold, on top of its modifiers' change.
+---   random_modifier True: a random battle modifier is added to the fight, named by its notice in battle.
 ---
 --- A battle notice whose effect differs by difficulty carries the difficulty in its name, e.g. thin_the_ranks_medium (see `steps.notice`).
 ---
@@ -389,8 +394,7 @@ M.offers = {
     --- Pre-battle: sabotage on the enemy army.
     { key = "bribe_the_guards", pool = "pre_battle", tags = { "sabotage" }, cost = shared.bribe_the_guards.cost, budget = shared.bribe_the_guards.budget },
     { key = "thin_the_ranks", pool = "pre_battle", tags = { "sabotage" }, cost = shared.thin_the_ranks.cost, fewer_units = shared.thin_the_ranks.fewer_units },
-    { key = "poison_the_stores", pool = "pre_battle", tags = { "sabotage" }, cost = shared.poison_the_stores.cost,
-        enemy_strength = shared.poison_the_stores.enemy_strength },
+    { key = "poison_the_stores", pool = "pre_battle", tags = { "sabotage" }, enemy_strength = shared.poison_the_stores.enemy_strength, relations = -2 },
     { key = "kill_the_captain", pool = "pre_battle", tags = { "sabotage" }, cost = shared.kill_the_captain.cost, no_heroes = true },
     { key = "lower_tiers_only", pool = "pre_battle", tags = { "sabotage" }, cost = shared.lower_tiers_only.cost, max_tier = shared.lower_tiers_only.max_tier },
     { key = "strip_monsters", pool = "pre_battle", tags = { "sabotage" }, cost = shared.strip_monsters.cost, strip_types = shared.strip_monsters.strip_types },
@@ -414,23 +418,37 @@ M.offers = {
         enemy_bundle = shared.lame_their_mounts.enemy_bundle, roster = shared.lame_their_mounts.roster },
     { key = "hunters_snares", pool = "pre_battle", tags = { "sabotage" }, cost = shared.hunters_snares.cost, enemy_bundle = shared.hunters_snares.enemy_bundle,
         roster = shared.hunters_snares.roster },
+    { key = "exhaust_their_camp", pool = "pre_battle", tags = { "sabotage" }, cost = shared.exhaust_the_garrison.cost, enemy_bundle = shared.exhaust_the_garrison.bundle },
+    { key = "smoke_screen", pool = "pre_battle", tags = { "sabotage" }, cost = shared.smoke_the_halls.cost, enemy_bundle = shared.smoke_the_halls.bundle,
+        roster = shared.smoke_the_halls.roster },
+    --- The tower's trick: the battle script slays the enemy lord.
+    { key = "blood_contract", pool = "pre_battle", tags = { "sabotage" }, trick = true, curse = shared.blood_contract.curse },
+    { key = "undermine_their_lines", pool = "pre_battle", tags = { "sabotage" }, budget = 0.75, bleed = 10 },
 
     --- Pre-battle: buffs on our army for this battle.
-    { key = "war_rites", pool = "pre_battle", tags = { "buff" }, cost = shared.war_rites.cost, battle_bundle = shared.war_rites.bundle },
-    { key = "whetstones_and_oil", pool = "pre_battle", tags = { "buff" }, cost = shared.whetstones_and_oil.cost, battle_bundle = shared.whetstones_and_oil.bundle },
-    { key = "warding_sigils", pool = "pre_battle", tags = { "buff" }, cost = shared.warding_sigils.cost, battle_bundle = shared.warding_sigils.bundle },
+    { key = "war_rites", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.war_rites.bundle, budget = 1.15 },
+    { key = "whetstones_and_oil", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.whetstones_and_oil.bundle, curse = { "creeping_rust", 1 } },
+    { key = "warding_sigils", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.warding_sigils.bundle, bleed = shared.warding_sigils.bleed },
     --- Rolls an army spell when drawn, for this battle.
     { key = "battle_scroll", pool = "pre_battle", tags = { "buff" }, cost = shared.STANDARD, spell_pool = "all" },
     { key = "fire_kissed_blades", pool = "pre_battle", tags = { "buff" }, cost = shared.fire_kissed_blades.cost, battle_bundle = shared.fire_kissed_blades.bundle },
     { key = "iron_resolve", pool = "pre_battle", tags = { "buff" }, cost = shared.iron_resolve.cost, battle_bundle = shared.iron_resolve.bundle },
-    { key = "drill_sergeant", pool = "pre_battle", tags = { "buff" }, cost = shared.drill_sergeant.cost, battle_bundle = shared.drill_sergeant.bundle },
-    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, cost = shared.call_the_winds.cost, battle_bundle = shared.call_the_winds.bundle,
-        caster = true },
+    { key = "drill_sergeant", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.drill_sergeant.bundle },
+    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.call_the_winds.bundle, caster = true, curse = { "wild_magic", 1 } },
     { key = "quartermasters_cache", pool = "pre_battle", tags = { "buff" }, cost = shared.quartermasters_cache.cost,
         battle_bundle = shared.quartermasters_cache.bundle, shoots = true },
     { key = "tower_artillery", pool = "pre_battle", tags = { "buff" }, cost = shared.tower_artillery.cost, battle_bundle = shared.tower_artillery.bundle },
 
     { key = "last_ditch_oath", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.last_ditch_oath.bundle },
+    { key = "blinding_powder", pool = "pre_battle", tags = { "buff" }, cost = shared.blinding_powder.cost, battle_bundle = shared.blinding_powder.bundle },
+    { key = "hold_the_ground", pool = "pre_battle", tags = { "buff" }, cost = STRONG, battle_bundle = shared.TOWER_BUNDLE .. "hold_the_ground" },
+    { key = "berserker_brew", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.berserker_brew.bundle, budget = shared.berserker_brew.budget },
+    { key = "shadow_cloaks", pool = "pre_battle", tags = { "buff" }, cost = shared.shadow_cloaks.cost, battle_bundle = shared.shadow_cloaks.bundle },
+    { key = "tireless_tonic", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.tireless_tonic.bundle, curse = shared.tireless_tonic.curse },
+
+    --- Pre-battle: a harder fight for more victory gold.
+    { key = "raise_the_stakes", pool = "pre_battle", tags = { "stakes" }, budget = 1.25, victory_gold = 2 },
+    { key = "tempt_fate", pool = "pre_battle", tags = { "stakes" }, random_modifier = true, victory_gold = 1.5 },
 
     --- Pre-battle: allies by size, and a gamble.
     { key = "allies_in_the_dark_small", pool = "pre_battle", tags = { "allies" }, cost = shared.allies_in_the_dark_small.cost,
