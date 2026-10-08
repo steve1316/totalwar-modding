@@ -17,7 +17,7 @@ import subprocess
 from collections import defaultdict
 from typing import Dict, List, Pattern, Tuple
 
-from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, PAY as TOWER_PAY, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
+from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, PAY as TOWER_PAY, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES, TOWER_NAMES
 from generators import leapoi_battle_modifiers as battle_modifiers
 from generators import leapoi_effect_library as effect_library
 from generators import leapoi_boons as boons
@@ -1304,7 +1304,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     for i, (choice, key) in enumerate(tower_grant_choices(config)):
         add(table("cdir_events_dilemma_choices_tables"), choice, TOWER_GRANT_ORDER + i)
         for tower_dilemma in config["tower_deeper_dilemmas"]:
-            label(tower_dilemma, choice, title_case(boons.OFFERS[key]))
+            label(tower_dilemma, choice, title_case(TOWER_NAMES.get(key) or boons.OFFERS[key]))
     title, description, image = boon_dilemmas["pick"]
     pick_label = boons.PICK_DILEMMA[3]
     add_dilemma(boon_config["pick_dilemma"], image, title, description, boon_config["pick_choices"])
@@ -1322,7 +1322,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         line(component, icon, text)
     for key, text in boons.results(boon_config):
         add(STRINGS_LOC, key, text, "false")
-    for _, _, key, text in boons.guide(boon_config, config["offers"], config["tower_offers"]):
+    for _, _, key, text in boons.guide(boon_config, config["offers"], config["tower_offers"], TOWER_NAMES):
         add(STRINGS_LOC, key, add_stat_icons(text), "false")
     for event, (title, description, image) in boons.incidents(boon_config).items():
         add_incident(boon_config["incident_prefix"] + event, image, title, description)
@@ -1473,7 +1473,8 @@ def tower_line_keys(config: Dict) -> List[str]:
 
 
 def tower_grant_choices(config: Dict) -> List[Tuple[str, str]]:
-    """The tower offers granting boons and curses, whose choice rows this script writes. Every other tower choice is a hand row.
+    """The tower offers whose choice rows this script writes: those granting boons and curses, and those named in `TOWER_NAMES`. Every other
+    tower choice is a hand row.
 
     Args:
         config (Dict): The loaded config.
@@ -1481,7 +1482,7 @@ def tower_grant_choices(config: Dict) -> List[Tuple[str, str]]:
     Returns:
         List[Tuple[str, str]]: (choice key, offer key) in config order.
     """
-    return [(config["tower_choice_key_prefix"] + o["key"].upper(), o["key"]) for o in config["tower_offers"] if boons.grants(o)]
+    return [(config["tower_choice_key_prefix"] + o["key"].upper(), o["key"]) for o in config["tower_offers"] if boons.grants(o) or o["key"] in TOWER_NAMES]
 
 
 def owned_patterns(config: Dict) -> List[Pattern]:

@@ -9,6 +9,9 @@ bundle it gives.
 
 from typing import Dict, Tuple
 
+from generators import leapoi_boons as boons
+from generators import leapoi_effect_library as library
+
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Text helpers
@@ -37,6 +40,18 @@ def broke(why: str, climbs: bool = True) -> str:
     return "[[col:red]]The haul holds less than {cost} gold[[/col]], so " + why + "." + (" The army climbs as it is." if climbs else "")
 
 
+def spell(name: str) -> Tuple[str, str, int]:
+    """The bundle effect that grants one of the library's army spells.
+
+    Args:
+        name (str): The ARMY_SPELLS name, e.g. "banishment".
+
+    Returns:
+        Tuple[str, str, int]: (effect, scope, value).
+    """
+    return (library.effect_key(name + "_army_ability"), "force_to_force_own", 1)
+
+
 def icon(name: str) -> str:
     """Writes a stat icon for loc text.
 
@@ -62,15 +77,39 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
                   + " melee defence and " + icon("icon_stat_morale") + " leadership in the next battle.", broke("no rites are held")),
     "whetstones_and_oil": (PAY + "hone every blade: [[col:green]]+{e0}%[[/col]] " + icon("icon_stat_damage") + " weapon strength and [[col:green]]+{e1}[[/col]] "
                            + icon("modifier_icon_armour_piercing") + " armour-piercing damage in the next battle.", broke("the blades stay dull")),
-    "warding_sigils": (PAY + "paint warding sigils: [[col:green]]+{e0}% ward save[[/col]] in the next battle.", broke("no sigils are painted")),
+    "warding_sigils": ("Paint the sigils in our own blood: [[col:green]]+{e0}% ward save[[/col]] in the next battle, but every unit loses "
+                       "[[col:red]]{bleed}% of its strength[[/col]] now.", None),
     "enchanted_steel": (PAY + "enchant our steel: [[col:green]]magical attacks[[/col]] for every unit in the next battle.", broke("the steel stays plain")),
     "quartermasters_cache": (PAY + "raid the quartermaster's cache: [[col:green]]+{e0}%[[/col]] " + icon("icon_stat_ammo") + " ammunition and [[col:green]]{e1}%[[/col]] "
-                             + icon("icon_stat_reload_time") + " faster reloads in the next battle.", broke("the cache stays shut")),
-    "drill_sergeant": (PAY + "drive the army through hard drills: [[col:green]]+{e0}%[[/col]] " + icon("icon_stat_speed") + " speed and [[col:green]]+{e1}[[/col]] "
-                       + icon("icon_stat_charge_bonus") + " charge bonus in the next battle.", broke("no drills are run")),
+                             + icon("icon_stat_reload_time") + " faster reloads for the [[col:green]]next {battle_floors} floors[[/col]].", broke("the cache stays shut")),
+    "drill_sergeant": ("Drive the army through hard drills: [[col:green]]+{e0}%[[/col]] " + icon("icon_stat_speed") + " speed and [[col:green]]+{e1}[[/col]] "
+                       + icon("icon_stat_charge_bonus") + " charge bonus in the next battle, but the army [[col:red]]starts that battle Winded[[/col]].", None),
+    "blinding_powder": (PAY + "pack blinding powder into every pouch: our attacks [[col:green]]blind what they hit[[/col]] in the next battle.",
+                        broke("the powder stays in its sacks")),
+    "hold_the_stair": (PAY + "fortify the stairwell: [[col:green]]Regeneration and Unbreakable when defending[[/col]] in the next battle.",
+                       broke("the stair stays open")),
+    "berserker_brew": ("Drink the berserker brew: every unit gains [[col:green]]Frenzy[[/col]] in the next battle, but the next army is "
+                       "[[col:red]]{stronger}% stronger[[/col]].", None),
+    "shadow_cloaks": (PAY + "hand out shadow cloaks: every unit gains [[col:green]]Stalk and Vanguard Deployment[[/col]] in the next battle.",
+                      broke("the cloaks stay folded")),
+    "tireless_tonic": ("Drink the tireless tonic: the army [[col:green]]never tires[[/col]] in the next battle, but our lord is struck by "
+                       + boons.grant_text("curse", ["weary_ranks", 1]) + ".", None),
+    "scroll_of_banishment": (PAY + "unroll a scroll of banishment: army spell [[col:green]]Banishment, 1 use[[/col]], in the next battle, at no Winds of Magic cost.",
+                             broke("the scroll stays sealed")),
+    "net_of_amyntok": (PAY + "take the Net of Amyntok: army spell [[col:green]]Net of Amyntok, 3 uses[[/col]], in the next battle, at no Winds of Magic cost.",
+                       broke("the net stays in its case")),
+    "earthblood": (PAY + "drink from the tower's roots: army spell [[col:green]]Earthblood, 2 uses[[/col]], in the next battle, at no Winds of Magic cost.",
+                   broke("the roots stay dry")),
+    "curse_of_years": ("Read from the Book of Years: army spell [[col:green]]Curse of Years, 2 uses[[/col]], in the next battle, but our lord is struck by "
+                       + boons.grant_text("curse", ["shunned_by_the_winds", 1]) + ".", None),
+    "the_dwellers_below": ("Wake what sleeps beneath the tower: army spell [[col:green]]The Dwellers Below, 1 use[[/col]], in the next battle, but our lord "
+                           "is [[col:red]]wounded for {wound_turns} turns[[/col]] when the delve ends.", None),
+    "falling_star": ("Call down a star: army spell [[col:green]]Comet of Casandora, 1 use[[/col]], in the next battle, but every unit loses "
+                     "[[col:red]]{bleed}% of its strength[[/col]] in the blast now.", None),
     "iron_resolve": (PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] " + icon("icon_stat_morale") + " leadership and [[col:green]]immunity to fear and terror[[/col]] "
                      "in the next battle.", broke("our resolve goes unsteeled")),
-    "stoneskin": (PAY + "cast a ward of living stone: [[col:green]]+{e0}% physical resistance[[/col]] in the next battle.", broke("no ward of stone is cast")),
+    "stoneskin": ("Cast a ward of living stone: [[col:green]]+{e0}% physical resistance[[/col]] in the next battle, but the tower notices and the next "
+                  "army is [[col:red]]{stronger}% stronger[[/col]].", None),
     "call_the_winds": (PAY + "call the winds: [[col:green]]+{e0} Winds of Magic[[/col]] reserve in the next battle.", broke("the winds stay still")),
     "bottomless_quivers": (PAY + "fill bottomless quivers: our missile units [[col:green]]never run out of ammunition[[/col]] in the next battle.",
                            broke("the quivers can still run dry")),
@@ -140,6 +179,18 @@ TOWER_ICONS = {
     "tend_wounded": "replenishment.png", "rest_by_the_fire": "icon_effects_fortify.png", "stoneskin": "resistance_physical.png",
     "cursed_idol": "resource_gold_idols_large.png", "captured_war_machine": "artillery.png", "veterans_oath": "experience.png",
     "lessons_in_blood": "general_ability.png", "freed_prisoner": "noble.png", "towers_favour": "income.png",
+    "blinding_powder": "wh_dlc06_unit_contact_blinded.png", "hold_the_stair": "icon_effects_fortify.png", "berserker_brew": "rampage_savage.png",
+    "shadow_cloaks": "stalk.png", "tireless_tonic": "replenishment.png", "scroll_of_banishment": "magic.png", "net_of_amyntok": "magic.png",
+    "earthblood": "magic.png", "curse_of_years": "magic.png", "the_dwellers_below": "magic.png", "falling_star": "magic.png",
+}
+
+
+# Choice names of the tower offers added by the roguelite content pass, whose choice rows the generator writes. Every older tower choice is a
+# hand row, apart from the offers granting boons and curses.
+TOWER_NAMES: Dict[str, str] = {
+    "blinding_powder": "Blinding Powder", "hold_the_stair": "Hold the Stair", "berserker_brew": "Berserker Brew", "shadow_cloaks": "Shadow Cloaks",
+    "tireless_tonic": "Tireless Tonic", "scroll_of_banishment": "Scroll of Banishment", "net_of_amyntok": "Net of Amyntok", "earthblood": "Earthblood",
+    "curse_of_years": "Curse of Years", "the_dwellers_below": "The Dwellers Below", "falling_star": "Call Down a Star",
 }
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,7 +225,38 @@ TOWER_BUNDLES = {
                       ("wh_main_effect_attribute_enable_immune_to_psychology", "force_to_force_own", 1)],
                      ("green", "Iron Resolve: +{e0} " + icon("icon_stat_morale") + ", immune to fear and terror.")),
     "stoneskin": ("force", "icon_effects_fortify.png", "Stoneskin", "A ward of living stone hardens the army's hide for one battle.",
-                  [("wh_main_effect_force_stat_physical_resistance", "force_to_force_own", (5, 10, 15))], ("green", "Stoneskin: +{e0}% physical resistance.")),
+                  [("wh_main_effect_force_stat_physical_resistance", "force_to_force_own", (10, 15, 20))], ("green", "Stoneskin: +{e0}% physical resistance.")),
+    "blood_sigils": ("force", "icon_effects_fortify.png", "Blood Sigils", "Sigils painted in our own blood turn blows aside for one battle.",
+                     [("wh_main_effect_force_stat_ward_save", "force_to_force_own", (10, 15, 20))], ("green", "Blood Sigils: +{e0}% ward save.")),
+    "hard_drills": ("force", "icon_effects_fortify.png", "Hard Drills", "A brutal morning of drill has the army moving and charging faster, but already winded, for one battle.",
+                    [("wh_main_effect_force_stat_speed", "force_to_force_own", (10, 15, 20)),
+                     ("wh2_dlc14_effect_force_charge_bonus_add", "force_to_force_own", (10, 15, 20)),
+                     ("wh_main_effect_force_campaign_stance_begin_fatigued_3_winded", "force_to_force_own", 3)],
+                    ("yellow", "Hard Drills: +{e0}% " + icon("icon_stat_speed") + " and +{e1} " + icon("icon_stat_charge_bonus") + ", but our army starts Winded.")),
+    "blinding_powder": ("force", "icon_effects_fortify.png", "Blinding Powder", "Every pouch is packed with blinding powder for one battle.",
+                        [(library.effect_key("blinded_hits"), "force_to_force_own", 1)], ("green", "Blinding Powder: our attacks blind what they hit.")),
+    "hold_the_stair": ("force", "icon_effects_fortify.png", "Hold the Stair", "The stairwell is fortified. The army will not give ground for one battle.",
+                       [(library.effect_key("regeneration_defending"), "force_to_force_own", 1), (library.effect_key("unbreakable_defending"), "force_to_force_own", 1)],
+                       ("green", "Hold the Stair: Regeneration and Unbreakable when defending.")),
+    "berserker_brew": ("force", "icon_effects_fortify.png", "Berserker Brew", "The brew burns in every throat. The army fights in a frenzy for one battle.",
+                       [("wh3_dlc27_effect_ability_enable_frenzy_all", "force_to_force_own", 1)], ("green", "Berserker Brew: every unit is Frenzied.")),
+    "shadow_cloaks": ("force", "icon_effects_fortify.png", "Shadow Cloaks", "Cloaks of shadow hide the army as it takes the field for one battle.",
+                      [("wh_main_effect_attribute_enable_stalk", "force_to_force_own", 1), ("wh_main_effect_attribute_enable_vanguard_deployment", "force_to_force_own", 1)],
+                      ("green", "Shadow Cloaks: Stalk and Vanguard Deployment.")),
+    "tireless_tonic": ("force", "icon_effects_fortify.png", "Tireless Tonic", "The tonic keeps every warrior fresh for one battle.",
+                       [("wh2_dlc10_effect_attribute_enable_perfect_vigour", "force_to_force_own", 1)], ("green", "Tireless Tonic: our army never tires.")),
+    "spell_banishment": ("force", "icon_effects_fortify.png", "Scroll of Banishment", "A scroll of banishment, ready to be read in the next battle.",
+                         [spell("banishment")], ("green", "Scroll of Banishment: army spell Banishment, 1 use.")),
+    "spell_net_of_amyntok": ("force", "icon_effects_fortify.png", "Net of Amyntok", "The Net of Amyntok, ready to be cast in the next battle.",
+                             [spell("net_of_amyntok")], ("green", "Net of Amyntok: army spell, 3 uses.")),
+    "spell_earthblood": ("force", "icon_effects_fortify.png", "Earthblood", "The tower's roots lend their strength for the next battle.",
+                         [spell("earthblood")], ("green", "Earthblood: army spell, 2 uses.")),
+    "spell_curse_of_years": ("force", "icon_effects_fortify.png", "Curse of Years", "A page from the Book of Years, ready to be read in the next battle.",
+                             [spell("curse_of_years")], ("green", "Curse of Years: army spell, 2 uses.")),
+    "spell_dwellers_below": ("force", "icon_effects_fortify.png", "The Dwellers Below", "Something beneath the tower answers our call in the next battle.",
+                             [spell("dwellers_below")], ("green", "The Dwellers Below: army spell, 1 use.")),
+    "spell_falling_star": ("force", "icon_effects_fortify.png", "Call Down a Star", "A star waits to fall at our word in the next battle.",
+                           [(library.effect_key("comet_army_ability"), "force_to_force_own", 1)], ("green", "Call Down a Star: army spell Comet of Casandora, 1 use.")),
     "call_the_winds": ("force", "icon_effects_fortify.png", "Call the Winds", "The Winds of Magic gather close for one battle.",
                        [("wh3_main_effect_winds_of_magic_pool_min", "force_to_force_own", (20, 30, 40)),
                         ("wh3_main_effect_winds_of_magic_pool_cap", "force_to_force_own", (20, 30, 40))],

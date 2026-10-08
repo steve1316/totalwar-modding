@@ -326,6 +326,38 @@ local GRANT_HANDLER = {
     apply = function(offer, ctx) boons.grant_fields(tower_army.character(ctx.delve.general_cqi), offer) end,
 }
 
+--- Applies a composed offer's parts in order: a next-battle `effect_bundle` (kept for `battle_floors` floors), `bleed` (strength points every
+--- unit loses now), `next_budget`, the `boon` or `curse` it grants, `wound_turns` (our lord is wounded for that many turns when the delve
+--- ends), `faction_bundle` and `army_bundle` for `turns`, and `lord_xp`.
+--- @param offer table The offer record at the delve's offer difficulty.
+--- @param ctx table The offer context.
+local function compose(offer, ctx)
+    local delve = ctx.delve
+    if offer.effect_bundle then
+        battle_buff(offer, ctx)
+        if offer.battle_floors then
+            delve.lasting_bundles = delve.lasting_bundles or {}
+            delve.lasting_bundles[offer.effect_bundle] = offer.battle_floors - 1
+        end
+    end
+    if offer.bleed then
+        for _, entry in ipairs(tower_army.unit_strengths(delve.general_cqi)) do tower_army.set_strength(entry.unit, math.max(1, entry.strength - offer.bleed)) end
+        log("tower: " .. offer.key .. " costs every unit " .. offer.bleed .. " strength")
+    end
+    if offer.next_budget then change_next_floor(delve, { budget = offer.next_budget }) end
+    if boons.grants(offer) then GRANT_HANDLER.apply(offer, ctx) end
+    if offer.wound_turns then delve.dark_bargain = math.max(delve.dark_bargain or 0, offer.wound_turns) end
+    if offer.faction_bundle then offer_effects.faction_bundle(ctx.faction_name, offer.faction_bundle, offer.turns) end
+    if offer.army_bundle then tower_army.apply_bundle(delve.general_cqi, offer.army_bundle, offer.turns) end
+    if offer.lord_xp then offer_effects.add_lord_xp(delve.general_cqi, offer.lord_xp) end
+end
+
+--- What a composed offer does: drawn while what it grants can be given, applied by `compose`.
+local COMPOSED_HANDLER = {
+    eligible = function(_, offer) return not boons.grants(offer) or boons.enabled() end,
+    apply = compose,
+}
+
 --- When each offer can be drawn and what it does. `eligible(ctx)` returns true when the offer would do something. `apply(offer, ctx)` runs
 --- after its cost is paid. A stay offer's `apply` returns its outcome (the result loc key suffix) and the values for that line's
 --- placeholders. `ctx` is { delve, faction_name, dividends }. An offer with no entry is always eligible and does nothing.
@@ -385,13 +417,9 @@ local HANDLERS = {
     },
     war_rites = { apply = battle_buff },
     whetstones_and_oil = { apply = battle_buff },
-    warding_sigils = { apply = battle_buff },
     fire_kissed_blades = { apply = battle_buff },
     enchanted_steel = { apply = battle_buff },
-    quartermasters_cache = { apply = battle_buff },
-    drill_sergeant = { apply = battle_buff },
     iron_resolve = { apply = battle_buff },
-    stoneskin = { apply = battle_buff },
     scaling_blessing = { eligible = has_gold, apply = battle_buff },
     loaded_dice = {
         eligible = has_gold,
@@ -723,11 +751,11 @@ local HANDLERS = {
 --- @param offer table The offer record at the delve's offer difficulty.
 --- @param ctx table The offer context.
 --- @returns boolean True when the offer can be drawn.
---- The handler of an offer: its own, the shared one of an offer granting a boon or curse, or nil.
+--- The handler of an offer: its own, the composed one, the shared one of an offer granting a boon or curse, or nil.
 --- @param offer table The offer record.
 --- @returns table|nil The handler.
 local function handler_of(offer)
-    return HANDLERS[offer.key] or (boons.grants(offer) and GRANT_HANDLER or nil)
+    return HANDLERS[offer.key] or (offer.compose and COMPOSED_HANDLER) or (boons.grants(offer) and GRANT_HANDLER or nil)
 end
 
 local function eligible(offer, ctx)
@@ -1053,17 +1081,30 @@ function M.hand_buffs_to_battle(delve)
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, table.concat(targets, ","))
 end
 
---- Takes the one-battle effects off the delving army once the floor they were bought for is over, and clears the battle's buff list.
+--- Takes the one-battle effects off the delving army once the floor they were bought for is over, and clears the battle's buff list. A
+--- bundle bought for more floors (`lasting_bundles`) stays on for its next floor, unless the delve is over.
 --- @param delve table The delve record.
-function M.end_battle_effects(delve)
+--- @param delve_over boolean|nil True when the delve ends, so every bundle comes off.
+function M.end_battle_effects(delve, delve_over)
     core:svr_save_string(BATTLE_BUFFS_SVR_KEY, "")
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, "")
     delve.enemy_notices = nil
     delve.battle_tricks = nil
     tower_missions.end_battle(delve)
-    local bundles = delve.battle_bundles or {}
+    local bundles, kept, lasting = {}, {}, delve.lasting_bundles or {}
+    for _, bundle in ipairs(delve.battle_bundles or {}) do
+        if not delve_over and (lasting[bundle] or 0) > 0 then
+            lasting[bundle] = lasting[bundle] - 1
+            kept[#kept + 1] = bundle
+            log("tower: " .. bundle .. " stays on for another floor")
+        else
+            lasting[bundle] = nil
+            bundles[#bundles + 1] = bundle
+        end
+    end
     for _, bundle in ipairs(delve.modifier_bundles or {}) do bundles[#bundles + 1] = bundle end
-    delve.battle_bundles, delve.modifier_bundles = nil, nil
+    delve.battle_bundles, delve.modifier_bundles = #kept > 0 and kept or nil, nil
+    delve.lasting_bundles = next(lasting) and lasting or nil
     if #bundles > 0 then log("tower: removing one-battle bundles: " .. table.concat(bundles, ", ")) end
     for _, bundle in ipairs(bundles) do tower_army.remove_bundle(delve.general_cqi, bundle) end
 end
@@ -1071,7 +1112,7 @@ end
 --- Takes the delve-long effects off the delving army when the delve ends, however it ends.
 --- @param delve table The delve record.
 function M.end_delve_effects(delve)
-    M.end_battle_effects(delve)
+    M.end_battle_effects(delve, true)
     if not delve.hellforge then return end
     delve.hellforge = nil
     log("tower: removing the Hellforge pact")

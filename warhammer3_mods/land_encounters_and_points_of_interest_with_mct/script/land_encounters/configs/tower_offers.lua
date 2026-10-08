@@ -50,14 +50,24 @@ M.offers = {
     --- with the floor number, and `cost_share` charges that share of the haul's gold instead of a fixed cost (`cost_share_by_floor` per floor won).
     { key = "war_rites", guide_section = "battle_buffs", cost = shared.war_rites.cost, effect_bundle = shared.war_rites.bundle },
     { key = "whetstones_and_oil", guide_section = "battle_buffs", cost = shared.whetstones_and_oil.cost, effect_bundle = shared.whetstones_and_oil.bundle },
-    { key = "warding_sigils", guide_section = "battle_buffs", cost = shared.warding_sigils.cost, effect_bundle = shared.warding_sigils.bundle },
+    --- Blood Sigils: free, but every unit loses `bleed` points of strength now.
+    { key = "warding_sigils", guide_section = "battle_buffs", compose = true, effect_bundle = tiered("land_enc_effect_tower_blood_sigils"), bleed = 10 },
     { key = "fire_kissed_blades", guide_section = "battle_buffs", cost = shared.fire_kissed_blades.cost, effect_bundle = shared.fire_kissed_blades.bundle },
     { key = "enchanted_steel", guide_section = "battle_buffs", cost = shared.enchanted_steel.cost, effect_bundle = "land_enc_effect_tower_enchanted_steel" },
     { key = "quartermasters_cache", guide_section = "battle_buffs", cost = shared.quartermasters_cache.cost, effect_bundle = shared.quartermasters_cache.bundle,
-        shoots = true },
-    { key = "drill_sergeant", guide_section = "battle_buffs", cost = shared.drill_sergeant.cost, effect_bundle = shared.drill_sergeant.bundle },
+        shoots = true, compose = true, battle_floors = 2 },
+    { key = "drill_sergeant", guide_section = "battle_buffs", compose = true, effect_bundle = tiered("land_enc_effect_tower_hard_drills") },
     { key = "iron_resolve", guide_section = "battle_buffs", cost = shared.iron_resolve.cost, effect_bundle = shared.iron_resolve.bundle },
-    { key = "stoneskin", guide_section = "battle_buffs", cost = shared.stoneskin.cost, effect_bundle = tiered("land_enc_effect_tower_stoneskin") },
+    { key = "stoneskin", guide_section = "battle_buffs", compose = true, effect_bundle = tiered("land_enc_effect_tower_stoneskin"), next_budget = 1.1 },
+    --- Composed offers (`compose`) apply their parts in order, see `compose` in features/tower_offers.lua: a next-battle `effect_bundle` kept
+    --- for `battle_floors` floors, `bleed` (strength points every unit loses now), `next_budget`, a `boon` or `curse`, `wound_turns` (our lord
+    --- is wounded when the delve ends), `owner_relations` (relations with the tower's owner), `faction_bundle` and `army_bundle` for `turns`,
+    --- `lord_xp`, `item_rarity` (an item into the haul) and the sabotage fields.
+    { key = "blinding_powder", guide_section = "battle_buffs", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_blinding_powder" },
+    { key = "hold_the_stair", guide_section = "battle_buffs", compose = true, cost = shared.STRONG, effect_bundle = "land_enc_effect_tower_hold_the_stair" },
+    { key = "berserker_brew", guide_section = "battle_buffs", compose = true, effect_bundle = "land_enc_effect_tower_berserker_brew", next_budget = 1.15 },
+    { key = "shadow_cloaks", guide_section = "battle_buffs", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_shadow_cloaks" },
+    { key = "tireless_tonic", guide_section = "battle_buffs", compose = true, effect_bundle = "land_enc_effect_tower_tireless_tonic", curse = { "weary_ranks", 1 } },
     { key = "scaling_blessing", guide_section = "battle_buffs", cost_share_by_floor = { 0.25, 0.25, 0.5, 0.5 }, per_floor = true, effect_bundle = "land_enc_effect_tower_scaling_blessing" },
     --- In-battle tricks act in the next floor's battle only. An `effect_bundle` grants a vanilla army ability or more winds of magic, and
     --- `effect_bundles` picks one of several at random. A `trick` is done by the battle script (script/battle/mod/land_enc_tower_buffs.lua),
@@ -66,6 +76,13 @@ M.offers = {
     { key = "call_the_winds", guide_section = "spells", cost = shared.call_the_winds.cost, effect_bundle = shared.call_the_winds.bundle, caster = true },
     { key = "vortex_scroll", guide_section = "spells", cost = 1500, effect_bundles = { "land_enc_effect_tower_vortex_scroll_storm_of_fire", "land_enc_effect_tower_vortex_scroll_wraith_storm",
         "land_enc_effect_tower_vortex_scroll_soul_storm" } },
+    --- Army spells: a bound spell on the army ability bar for the next battle, at no Winds of Magic cost.
+    { key = "scroll_of_banishment", guide_section = "spells", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_spell_banishment" },
+    { key = "net_of_amyntok", guide_section = "spells", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_spell_net_of_amyntok" },
+    { key = "earthblood", guide_section = "spells", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_spell_earthblood" },
+    { key = "curse_of_years", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_curse_of_years", curse = { "shunned_by_the_winds", 1 } },
+    { key = "the_dwellers_below", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_dwellers_below", wound_turns = 3 },
+    { key = "falling_star", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_falling_star", bleed = 10 },
     { key = "bottomless_quivers", guide_section = "tricks", cost = shared.bottomless_quivers.cost, trick = true, shoots = true },
     { key = "oath_of_no_retreat", guide_section = "tricks", cost = shared.oath_of_no_retreat.cost, trick = true },
     { key = "divine_shield", guide_section = "tricks", cost = shared.divine_shield.cost, trick = true, battle_value = shared.divine_shield.battle_value },

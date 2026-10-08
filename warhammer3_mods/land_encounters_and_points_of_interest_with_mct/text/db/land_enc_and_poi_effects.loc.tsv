@@ -26,6 +26,12 @@ effects_description_land_enc_lib_fx_ambush_stance_cost	Campaign movement cost of
 effects_description_land_enc_lib_fx_melee_defence_defending	Melee defence: %+n when defending	false
 effects_description_land_enc_lib_fx_leadership_defending	Leadership: %+n when defending	false
 effects_description_land_enc_lib_fx_unbreakable_defending	Attribute: Unbreakable when defending	false
+effects_description_land_enc_lib_fx_banishment_army_ability	Army ability: "Banishment"	false
+effects_description_land_enc_lib_fx_net_of_amyntok_army_ability	Army ability: "Net of Amyntok"	false
+effects_description_land_enc_lib_fx_earthblood_army_ability	Army ability: "Earthblood"	false
+effects_description_land_enc_lib_fx_curse_of_years_army_ability	Army ability: "Curse of Years"	false
+effects_description_land_enc_lib_fx_dwellers_below_army_ability	Army ability: "The Dwellers Below"	false
+effects_description_land_enc_lib_fx_blizzard_army_ability	Army ability: "Blizzard"	false
 effects_description_land_enc_lib_fx_weapon_strength_vs_empire	Weapon strength: %+n% when fighting against the Empire	false
 effects_description_land_enc_lib_fx_melee_attack_vs_empire	Melee attack: %+n when fighting against the Empire	false
 effects_description_land_enc_lib_fx_weapon_strength_vs_bretonnia	Weapon strength: %+n% when fighting against Bretonnia	false

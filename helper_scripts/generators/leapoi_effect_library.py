@@ -4,6 +4,7 @@ Written into the mod by update_leapoi_spot_offers.py."""
 
 from typing import Dict, List, Tuple
 
+from generators import leapoi_free_spells as free_spells
 from generators.leapoi_battle_modifiers import BUNDLE_ICON, SCOPE
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,6 +87,24 @@ CUSTOM_EFFECTS: Dict[str, Tuple[str, str, str, List[Tuple[str, Tuple]]]] = {
     ]),
 }
 
+# Army spell name -> (bound spell, army ability unique id, name in text). Each becomes an "<name>_army_ability" custom effect that grants the
+# bound spell as an army ability, cast from the army ability bar with the bound spell's own uses and no Winds of Magic cost.
+ARMY_SPELLS: Dict[str, Tuple[str, str, str]] = {
+    "banishment": ("wh3_main_spell_bound_banishment", "1700181002", "Banishment"),
+    "net_of_amyntok": ("wh_dlc04_spell_bound_net_of_amyntok", "1700181003", "Net of Amyntok"),
+    "earthblood": ("wh3_main_spell_bound_earth_blood", "1700181004", "Earthblood"),
+    "curse_of_years": ("wh3_dlc29_spell_bound_curse_of_years", "1700181005", "Curse of Years"),
+    "dwellers_below": ("wh3_main_spell_bound_the_dwellers_below", "1700181006", "The Dwellers Below"),
+}
+# The free army versions of lore spells (generators/leapoi_free_spells.py) are army spells too, with army ability ids from 1700181101.
+for _number, (_free, (_, _, _, _free_name)) in enumerate(free_spells.FREE_SPELLS.items()):
+    ARMY_SPELLS[_free] = (free_spells.key(_free), str(1700181101 + _number), _free_name)
+for _spell, (_bound, _unique_id, _spell_name) in ARMY_SPELLS.items():
+    CUSTOM_EFFECTS[_spell + "_army_ability"] = ("magic.png", "battle", f'Army ability: "{_spell_name}"', [
+        ("army_special_abilities_tables", ("{jn}", _bound, _unique_id, "false")),
+        ("effect_bonus_value_military_force_ability_junctions_tables", ("enable", "{fx}", "{jn}")),
+    ])
+
 # Race key (configs/boons.lua `races`) -> (name in text, battle context, diplomacy effect), for the boons and curses about one race.
 RACES: Dict[str, Tuple[str, str, str]] = {
     "empire": ("the Empire", "fighting_culture_empire", "wh_main_faction_political_diplomacy_mod_empire"),
@@ -137,6 +156,7 @@ LIBRARY: Dict[str, Tuple[str, str, List[Tuple[str, float]]]] = {
                       [("speed_attacking", 20), ("unbreakable_attacking", 1), ("wh3_dlc25_effect_force_stat_unbreakable_vs_undead", 1)]),
     "lore": ("Kindled Winds", "Test: cheaper Lore of Fire and faster spell cooldowns.",
              [("lore_fire_cost", -50), ("wh2_dlc12_effect_magic_cooldown_all_lores", -25)]),
+    "free_spell": ("Free Blizzard", "Test: the army can cast Blizzard twice per battle, at no Winds of Magic cost.", [("blizzard_army_ability", 1)]),
     "army_spell": ("Falling Star", "Test: the army can call down the Comet of Casandora twice per battle, at no Winds of Magic cost.",
                    [("comet_army_ability", 1), ("comet_army_ability_uses", 1)]),
     "stances": ("Hobbled March", "Test: no March stance, and the Ambush stance costs more.", [("march_blocked", 1), ("ambush_stance_cost", 100)]),
@@ -167,7 +187,7 @@ def effect_key(name: str) -> str:
 
 
 def custom_rows() -> List[Tuple[str, Tuple]]:
-    """The DB rows of every custom effect: its effects_tables row and its binding rows.
+    """The DB rows of every custom effect, its effects_tables row and its binding rows, and of the free spells.
 
     Returns:
         List[Tuple[str, Tuple]]: (table, fields) per row.
@@ -180,7 +200,7 @@ def custom_rows() -> List[Tuple[str, Tuple]]:
             if table.endswith(".loc"):
                 continue
             rows.append((table, tuple(str(f).replace("{fx}", fx).replace("{jn}", jn) for f in fields)))
-    return rows
+    return rows + free_spells.rows()
 
 
 def custom_texts() -> List[Tuple[str, str, str]]:
@@ -195,7 +215,7 @@ def custom_texts() -> List[Tuple[str, str, str]]:
         texts.append(("effects", "effects_description_" + fx, text))
         for table, (key, line) in [(t, f) for t, f in bindings if t.endswith(".loc")]:
             texts.append((table[:-4], key.replace("{jn}", jn), line))
-    return texts
+    return texts + free_spells.texts()
 
 
 def bundles() -> Dict[str, Tuple]:

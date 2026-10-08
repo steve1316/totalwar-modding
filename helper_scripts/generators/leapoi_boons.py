@@ -448,7 +448,7 @@ def grant_text(kind: str, grant) -> str:
 
 
 def offer_texts(offers: List[Dict], pay: str) -> Tuple[Dict[str, Tuple[str, str]], Dict[str, str]]:
-    """The name, line and icon of every offer that grants a boon or curse.
+    """The name, line and icon of every offer that grants a boon or curse, other than a composed tower offer, whose text says more.
 
     Args:
         offers (List[Dict]): Offer records from the Lua dump.
@@ -459,7 +459,7 @@ def offer_texts(offers: List[Dict], pay: str) -> Tuple[Dict[str, Tuple[str, str]
     """
     texts, icons = {}, {}
     for offer in offers:
-        if not grants(offer):
+        if not grants(offer) or offer.get("compose"):
             continue
         name = OFFERS[offer["key"]]
         action = name.lower()
@@ -690,13 +690,14 @@ def service_lines(config: Dict) -> List[Tuple[str, str, str]]:
     return out
 
 
-def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict]) -> List[Tuple[str, str, str, str]]:
+def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict], names: Optional[Dict[str, str]] = None) -> List[Tuple[str, str, str, str]]:
     """The MCT guide line of every boon, curse and faction-wide effect: what its first and last levels do and where a lord gets it.
 
     Args:
         config (Dict): The boons config from the Lua dump.
         offers (List[Dict]): The spot offers from the Lua dump.
         tower_offers (List[Dict]): The tower offers from the Lua dump.
+        names (Optional[Dict[str, str]]): Names of offers granting a boon or curse that `OFFERS` does not name, e.g. the composed tower offers.
 
     Returns:
         List[Tuple[str, str, str, str]]: (kind, key, loc key, text), boons then curses then faction-wide effects, in config order.
@@ -715,6 +716,7 @@ def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict]) -> List[Tu
         for record in records:
             for drop in record.get("drops", []):
                 source(kind, record["key"], drop_text[(kind, drop)])
+    named = {**OFFERS, **(names or {})}
     places: Dict[str, List[str]] = {}
     for offer in offers:
         if grants(offer) and not isinstance(offer.get("boon"), dict):
@@ -730,7 +732,7 @@ def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict]) -> List[Tu
             grant = offer.get(kind)
             if isinstance(grant, list):
                 level = f", level {grant[1]}" if grant[1] > 1 else ""
-                text = f"{OFFERS[offer['key']]} ({' and '.join(dict.fromkeys(places[offer['key']]))}{level})"
+                text = f"{named[offer['key']]} ({' and '.join(dict.fromkeys(places[offer['key']]))}{level})"
                 if text not in found.get((kind, grant[0]), []):
                     source(kind, grant[0], text)
     lingering: Dict[Tuple[str, str], List[str]] = {}

@@ -316,18 +316,86 @@ scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_hard	[[col:g
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_hard		false
 scripted_objectives_localised_text_land_enc_tower_buff_iron_resolve_hard_message	Iron Resolve: +30 [[img:ui/skins/default/icon_stat_morale.png]][[/img]], immune to fear and terror.	false
 scripted_objectives_localised_description_land_enc_tower_buff_iron_resolve_hard_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy	[[col:green]]Stoneskin: +5% physical resistance.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy	[[col:green]]Stoneskin: +10% physical resistance.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_easy		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy_message	Stoneskin: +5% physical resistance.	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_easy_message	Stoneskin: +10% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_easy_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium	[[col:green]]Stoneskin: +10% physical resistance.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium	[[col:green]]Stoneskin: +15% physical resistance.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_medium		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium_message	Stoneskin: +10% physical resistance.	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_medium_message	Stoneskin: +15% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_medium_message		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard	[[col:green]]Stoneskin: +15% physical resistance.[[/col]]	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard	[[col:green]]Stoneskin: +20% physical resistance.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_hard		false
-scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard_message	Stoneskin: +15% physical resistance.	false
+scripted_objectives_localised_text_land_enc_tower_buff_stoneskin_hard_message	Stoneskin: +20% physical resistance.	false
 scripted_objectives_localised_description_land_enc_tower_buff_stoneskin_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_sigils_easy	[[col:green]]Blood Sigils: +10% ward save.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_sigils_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_sigils_easy_message	Blood Sigils: +10% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_sigils_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_sigils_medium	[[col:green]]Blood Sigils: +15% ward save.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_sigils_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_sigils_medium_message	Blood Sigils: +15% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_sigils_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_sigils_hard	[[col:green]]Blood Sigils: +20% ward save.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_sigils_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_sigils_hard_message	Blood Sigils: +20% ward save.	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_sigils_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hard_drills_easy	[[col:yellow]]Hard Drills: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]], but our army starts Winded.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hard_drills_easy		false
+scripted_objectives_localised_text_land_enc_tower_buff_hard_drills_easy_message	Hard Drills: +10% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +10 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]], but our army starts Winded.	false
+scripted_objectives_localised_description_land_enc_tower_buff_hard_drills_easy_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hard_drills_medium	[[col:yellow]]Hard Drills: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]], but our army starts Winded.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hard_drills_medium		false
+scripted_objectives_localised_text_land_enc_tower_buff_hard_drills_medium_message	Hard Drills: +15% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +15 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]], but our army starts Winded.	false
+scripted_objectives_localised_description_land_enc_tower_buff_hard_drills_medium_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hard_drills_hard	[[col:yellow]]Hard Drills: +20% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +20 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]], but our army starts Winded.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hard_drills_hard		false
+scripted_objectives_localised_text_land_enc_tower_buff_hard_drills_hard_message	Hard Drills: +20% [[img:ui/skins/default/icon_stat_speed.png]][[/img]] and +20 [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]], but our army starts Winded.	false
+scripted_objectives_localised_description_land_enc_tower_buff_hard_drills_hard_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_blinding_powder	[[col:green]]Blinding Powder: our attacks blind what they hit.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_blinding_powder		false
+scripted_objectives_localised_text_land_enc_tower_buff_blinding_powder_message	Blinding Powder: our attacks blind what they hit.	false
+scripted_objectives_localised_description_land_enc_tower_buff_blinding_powder_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_hold_the_stair	[[col:green]]Hold the Stair: Regeneration and Unbreakable when defending.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_hold_the_stair		false
+scripted_objectives_localised_text_land_enc_tower_buff_hold_the_stair_message	Hold the Stair: Regeneration and Unbreakable when defending.	false
+scripted_objectives_localised_description_land_enc_tower_buff_hold_the_stair_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_berserker_brew	[[col:green]]Berserker Brew: every unit is Frenzied.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_berserker_brew		false
+scripted_objectives_localised_text_land_enc_tower_buff_berserker_brew_message	Berserker Brew: every unit is Frenzied.	false
+scripted_objectives_localised_description_land_enc_tower_buff_berserker_brew_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_shadow_cloaks	[[col:green]]Shadow Cloaks: Stalk and Vanguard Deployment.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_shadow_cloaks		false
+scripted_objectives_localised_text_land_enc_tower_buff_shadow_cloaks_message	Shadow Cloaks: Stalk and Vanguard Deployment.	false
+scripted_objectives_localised_description_land_enc_tower_buff_shadow_cloaks_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_tireless_tonic	[[col:green]]Tireless Tonic: our army never tires.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_tireless_tonic		false
+scripted_objectives_localised_text_land_enc_tower_buff_tireless_tonic_message	Tireless Tonic: our army never tires.	false
+scripted_objectives_localised_description_land_enc_tower_buff_tireless_tonic_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_banishment	[[col:green]]Scroll of Banishment: army spell Banishment, 1 use.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_banishment		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_banishment_message	Scroll of Banishment: army spell Banishment, 1 use.	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_banishment_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_net_of_amyntok	[[col:green]]Net of Amyntok: army spell, 3 uses.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_net_of_amyntok		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_net_of_amyntok_message	Net of Amyntok: army spell, 3 uses.	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_net_of_amyntok_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_earthblood	[[col:green]]Earthblood: army spell, 2 uses.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_earthblood		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_earthblood_message	Earthblood: army spell, 2 uses.	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_earthblood_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_curse_of_years	[[col:green]]Curse of Years: army spell, 2 uses.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_curse_of_years		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_curse_of_years_message	Curse of Years: army spell, 2 uses.	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_curse_of_years_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_dwellers_below	[[col:green]]The Dwellers Below: army spell, 1 use.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_dwellers_below		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_dwellers_below_message	The Dwellers Below: army spell, 1 use.	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_dwellers_below_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_falling_star	[[col:green]]Call Down a Star: army spell Comet of Casandora, 1 use.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_falling_star		false
+scripted_objectives_localised_text_land_enc_tower_buff_spell_falling_star_message	Call Down a Star: army spell Comet of Casandora, 1 use.	false
+scripted_objectives_localised_description_land_enc_tower_buff_spell_falling_star_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_easy	[[col:green]]Call the Winds: +20 Winds of Magic in reserve.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_call_the_winds_easy		false
 scripted_objectives_localised_text_land_enc_tower_buff_call_the_winds_easy_message	Call the Winds: +20 Winds of Magic in reserve.	false

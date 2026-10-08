@@ -1,0 +1,4 @@
+key	text	tooltip
+#Loc;1;text/db/land_enc_and_poi_unit_abilities.loc		
+unit_abilities_onscreen_name_land_enc_lib_free_blizzard	{{tr:unit_abilities_onscreen_name_wh3_main_spell_tempest_blizzard}}	false
+unit_abilities_tooltip_text_land_enc_lib_free_blizzard	{{tr:unit_abilities_tooltip_text_wh3_main_spell_tempest_blizzard}}	false
