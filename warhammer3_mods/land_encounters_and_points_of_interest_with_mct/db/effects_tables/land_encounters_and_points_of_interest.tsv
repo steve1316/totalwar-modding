@@ -19,13 +19,13 @@ land_enc_lib_fx_regeneration_defending	general_ability.png	310	general_ability.p
 land_enc_lib_fx_speed_attacking	battle_movement.png	310	battle_movement.png	battle	true
 land_enc_lib_fx_unbreakable_attacking	attribute_unbreakable.png	310	attribute_unbreakable.png	battle	true
 land_enc_lib_fx_lore_fire_cost	magic.png	310	magic.png	battle	true
-land_enc_lib_fx_comet_army_ability	magic.png	310	magic.png	battle	true
 land_enc_lib_fx_comet_army_ability_uses	magic.png	310	magic.png	battle	true
 land_enc_lib_fx_march_blocked	teleport.png	310	teleport.png	campaign	true
 land_enc_lib_fx_ambush_stance_cost	teleport.png	310	teleport.png	campaign	true
 land_enc_lib_fx_melee_defence_defending	melee.png	310	melee.png	battle	true
 land_enc_lib_fx_leadership_defending	morale.png	310	morale.png	battle	true
 land_enc_lib_fx_unbreakable_defending	attribute_unbreakable.png	310	attribute_unbreakable.png	battle	true
+land_enc_lib_fx_comet_army_ability	magic.png	310	magic.png	battle	true
 land_enc_lib_fx_banishment_army_ability	magic.png	310	magic.png	battle	true
 land_enc_lib_fx_net_of_amyntok_army_ability	magic.png	310	magic.png	battle	true
 land_enc_lib_fx_earthblood_army_ability	magic.png	310	magic.png	battle	true

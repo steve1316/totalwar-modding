@@ -19,13 +19,13 @@ effects_description_land_enc_lib_fx_regeneration_defending	Passive ability: "Reg
 effects_description_land_enc_lib_fx_speed_attacking	Speed: %+n% when attacking	false
 effects_description_land_enc_lib_fx_unbreakable_attacking	Attribute: Unbreakable when attacking	false
 effects_description_land_enc_lib_fx_lore_fire_cost	Winds of Magic cost: %+n% for Lore of Fire spells	false
-effects_description_land_enc_lib_fx_comet_army_ability	Army ability: "Comet of Casandora"	false
 effects_description_land_enc_lib_fx_comet_army_ability_uses	Uses: %+n for the "Comet of Casandora" army ability	false
 effects_description_land_enc_lib_fx_march_blocked	Cannot use the March stance	false
 effects_description_land_enc_lib_fx_ambush_stance_cost	Campaign movement cost of the Ambush stance: %+n%	false
 effects_description_land_enc_lib_fx_melee_defence_defending	Melee defence: %+n when defending	false
 effects_description_land_enc_lib_fx_leadership_defending	Leadership: %+n when defending	false
 effects_description_land_enc_lib_fx_unbreakable_defending	Attribute: Unbreakable when defending	false
+effects_description_land_enc_lib_fx_comet_army_ability	Army ability: "Comet of Casandora"	false
 effects_description_land_enc_lib_fx_banishment_army_ability	Army ability: "Banishment"	false
 effects_description_land_enc_lib_fx_net_of_amyntok_army_ability	Army ability: "Net of Amyntok"	false
 effects_description_land_enc_lib_fx_earthblood_army_ability	Army ability: "Earthblood"	false

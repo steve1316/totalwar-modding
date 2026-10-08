@@ -11,6 +11,7 @@ local debug_config = require("script/land_encounters/configs/debug")
 local tower_champions = require("script/land_encounters/configs/tower_champions")
 local offer_effects = require("script/land_encounters/core/offer_effects")
 local realm_effects = require("script/land_encounters/core/realm_effects")
+local Army = require("script/land_encounters/core/army")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
@@ -327,24 +328,25 @@ local GRANT_HANDLER = {
     apply = function(offer, ctx) boons.grant_fields(tower_army.character(ctx.delve.general_cqi), offer) end,
 }
 
---- The nearest faction of the tower's race, which a composed offer's `kin_relations` changes relations with. Kept on the delve while its
---- offers are drawn.
+--- The nearest faction of the tower's race, which a composed offer's `relations` changes relations with. Looked up once per offer context,
+--- since it walks every region on the map.
 --- @param ctx table The offer context.
 --- @returns string|nil The faction key, or nil when none is near.
 local function tower_kin(ctx)
-    if not (ctx.tower and ctx.tower.coordinates) then return nil end
-    local faction = cm:get_faction(ctx.faction_name)
-    local found = faction and realm_effects.nearest_factions(faction, ctx.tower.coordinates[1], ctx.tower.coordinates[2], 1, function(other)
-        return offer_effects.culture_shorthand(other:name()) == ctx.tower.faction
-    end) or {}
-    ctx.delve.kin_faction = found[1] and found[1]:name() or nil
-    return ctx.delve.kin_faction
+    if ctx.kin == nil then
+        local faction = ctx.tower and ctx.tower.coordinates and cm:get_faction(ctx.faction_name)
+        local found = faction and realm_effects.nearest_factions(faction, ctx.tower.coordinates[1], ctx.tower.coordinates[2], 1, function(other)
+            return Army.faction_shorthand_for_subculture(other:subculture()) == ctx.tower.faction
+        end) or {}
+        ctx.kin = found[1] and found[1]:name() or false
+    end
+    return ctx.kin or nil
 end
 
 --- Applies a composed offer's parts in order: a next-battle `effect_bundle` (kept for `battle_floors` floors), `bleed` (strength points every
 --- unit loses now), `next_budget`, the `boon` or `curse` it grants, `wound_turns` (our lord is wounded for that many turns when the delve
---- ends), `faction_bundle` and `army_bundle` for `turns`, `lord_xp`, `haul_item` (an item of that rarity into the haul), `kin_relations`
---- (relations with the nearest faction of the tower's race) and `sabotage` (the next floor's army carries its notice and `enemy_bundle`). A
+--- ends), `faction_bundle` and `army_bundle` for `turns`, `lord_xp`, `haul_item` (an item of that rarity into the haul), `relations`
+--- (with the nearest faction of the tower's race, in steps of 10) and `sabotage` (the next floor's army carries its notice and `enemy_bundle`). A
 --- stay offer reports its result: the faction its relations changed with, or the item it put in the haul.
 --- @param offer table The offer record at the delve's offer difficulty.
 --- @param ctx table The offer context.
@@ -360,10 +362,14 @@ local function compose(offer, ctx)
         end
     end
     if offer.bleed then
-        for _, entry in ipairs(tower_army.unit_strengths(delve.general_cqi)) do tower_army.set_strength(entry.unit, math.max(1, entry.strength - offer.bleed)) end
+        tower_army.bleed_army(delve.general_cqi, offer.bleed)
         log("tower: " .. offer.key .. " costs every unit " .. offer.bleed .. " strength")
     end
-    if offer.next_budget then change_next_floor(delve, { budget = offer.next_budget }) end
+    if offer.sabotage then
+        sabotage(offer, ctx)
+    elseif offer.next_budget then
+        change_next_floor(delve, { budget = offer.next_budget })
+    end
     if boons.grants(offer) then GRANT_HANDLER.apply(offer, ctx) end
     if offer.wound_turns then delve.dark_bargain = math.max(delve.dark_bargain or 0, offer.wound_turns) end
     if offer.faction_bundle then offer_effects.faction_bundle(ctx.faction_name, offer.faction_bundle, offer.turns) end
@@ -376,12 +382,12 @@ local function compose(offer, ctx)
         local name = items[1] and common.get_localised_string("ancillaries_onscreen_name_" .. items[1]) or ""
         values[#values + 1] = name ~= "" and name or (items[1] or "nothing")
     end
-    if offer.kin_relations and delve.kin_faction then
-        realm_effects.change_relations(ctx.faction_name, delve.kin_faction, offer.kin_relations)
-        local name = common.get_localised_string("factions_screen_name_" .. delve.kin_faction)
-        values[#values + 1] = name ~= "" and name or delve.kin_faction
+    local kin = offer.relations and tower_kin(ctx)
+    if kin then
+        realm_effects.change_relations(ctx.faction_name, kin, offer.relations)
+        local name = common.get_localised_string("factions_screen_name_" .. kin)
+        values[#values + 1] = name ~= "" and name or kin
     end
-    if offer.sabotage then change_next_floor(delve, { sabotage = steps.notice(offer.key, find(offer.key), offer_difficulty(delve)) }) end
     if offer.stay then return offer.key, values end
 end
 
@@ -390,7 +396,7 @@ local COMPOSED_HANDLER = {
     eligible = function(ctx, offer)
         if boons.grants(offer) and not boons.enabled() then return false end
         if offer.no_champion and ctx.delve.next_floor and ctx.delve.next_floor.champion then return false end
-        if offer.kin_relations and not tower_kin(ctx) then return false end
+        if offer.relations and not tower_kin(ctx) then return false end
         return offer.count == nil or recruit(ctx, offer)
     end,
     apply = compose,
@@ -670,9 +676,7 @@ local HANDLERS = {
                 change_next_floor(ctx.delve, { budget = offer.next_budget })
                 return "roll_the_bones_foe"
             end
-            for _, entry in ipairs(tower_army.unit_strengths(ctx.delve.general_cqi)) do
-                tower_army.set_strength(entry.unit, entry.strength - offer.bleed)
-            end
+            tower_army.bleed_army(ctx.delve.general_cqi, offer.bleed)
             return "roll_the_bones_bleed", { offer.bleed }
         end,
     },

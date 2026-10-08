@@ -162,7 +162,7 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "veterans_oath": (PAY + "swear the veterans' oath: [[col:green]]3 units[[/col]] gain [[col:green]]{ranks}[[/col]] each.", broke("no oath is sworn")),
     "lessons_in_blood": (PAY + "study the fallen: our lord gains [[col:green]]+{lord_xp} experience[[/col]].", broke("the lesson goes unlearned")),
     "freed_prisoner": (PAY + "free a prisoner from the tower's cells: [[col:green]]a rank {rank} hero[[/col]] joins our army.", broke("the cells stay locked")),
-    "towers_favour": ("Win the tower's favour: [[col:green]]+{e0}% income[[/col]] from all buildings for {turns} turns, but [[col:red]]-20 relations[[/col]] with the "
+    "towers_favour": ("Win the tower's favour: [[col:green]]+{e0}% income[[/col]] from all buildings for {turns} turns, but [[col:red]]-{relations} relations[[/col]] with the "
                       "nearest faction of the tower's race.", None),
     "research_scrolls": (PAY + "take the tower's research scrolls: [[col:green]]+25% research rate[[/col]] for {turns} turns.", broke("the scrolls stay on the shelf", climbs=False)),
     "recruitment_cache": ("Open a recruitment cache: [[col:green]]-{e0}% recruitment cost[[/col]] for {turns} turns, but [[col:red]]-{e1} public order[[/col]] in "
@@ -176,8 +176,8 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
                        + boons.grant_text("curse", ["marked_prey", 1]) + ".", None),
     "collapse_the_stair": ("Bring the stairwell down on the floor above: its army is [[col:green]]{weaker}% weaker[[/col]], but every unit of ours loses "
                            "[[col:red]]{bleed}% of its strength[[/col]] in the rubble now.", None),
-    "press_the_prisoners": ("Press the tower's prisoners into service: [[col:green]]2 tier 2-3 units[[/col]] of the tower's race join our army now, but "
-                            "[[col:red]]-20 relations[[/col]] with the nearest faction of that race.", None),
+    "press_the_prisoners": ("Press the tower's prisoners into service: [[col:green]]{count} tier {tiers} units[[/col]] of the tower's race join our army now, "
+                            "but [[col:red]]-{relations} relations[[/col]] with the nearest faction of that race.", None),
     "loot_the_reliquary": ("Loot the tower's reliquary: [[col:green]]a rare item[[/col]] joins the haul, but [[col:red]]+{e0} Chaos corruption[[/col]] in every "
                            "province for {turns} turns.", None),
     "blood_for_glory": ("Throw our lord into the bloodiest fighting: our lord gains [[col:green]]+{lord_xp} experience[[/col]], but our army suffers "
@@ -278,7 +278,7 @@ TOWER_BUNDLES = {
     "spell_dwellers_below": ("force", "icon_effects_fortify.png", "The Dwellers Below", "Something beneath the tower answers our call in the next battle.",
                              [spell("dwellers_below")], ("green", "The Dwellers Below: army spell, 1 use.")),
     "spell_falling_star": ("force", "icon_effects_fortify.png", "Call Down a Star", "A star waits to fall at our word in the next battle.",
-                           [(library.effect_key("comet_army_ability"), "force_to_force_own", 1)], ("green", "Call Down a Star: army spell Comet of Casandora, 1 use.")),
+                           [spell("comet")], ("green", "Call Down a Star: army spell Comet of Casandora, 1 use.")),
     "call_the_winds": ("force", "icon_effects_fortify.png", "Call the Winds", "The Winds of Magic gather close for one battle.",
                        [("wh3_main_effect_winds_of_magic_pool_min", "force_to_force_own", (20, 30, 40)),
                         ("wh3_main_effect_winds_of_magic_pool_cap", "force_to_force_own", (20, 30, 40))],
@@ -335,7 +335,7 @@ NOTICES = {
     "spike_the_guns": ("red", "Spike the Guns: enemy shooters have -{e0}% " + icon("icon_stat_ammo") + "."),
     "bait_and_switch": ("red", "Bait and Switch: the enemy army is {stronger}% bigger, but each of its units starts at {strength}% strength."),
     "exhaust_the_garrison": ("red", "Exhaust the Garrison: the enemy starts the battle Tired."),
-    "foul_the_winds": ("red", "Foul the Winds: enemy spells cost 50% more Winds of Magic."),
-    "smoke_the_halls": ("red", "Smoke the Halls: enemy missile units have -30% range."),
+    "foul_the_winds": ("red", "Foul the Winds: enemy spells cost {e0}% more Winds of Magic."),
+    "smoke_the_halls": ("red", "Smoke the Halls: enemy missile units have -{e0}% range."),
     "blood_contract": ("red", "Blood Contract: the enemy lord is slain as the battle starts."),
 }

@@ -677,17 +677,9 @@ local TRICKS = {
         lord:kill()
         log("Assassinate: the enemy lord " .. lord.unit:type() .. " is slain")
     end,
-    --- Blood Contract: the enemy lord is slain as the battle starts, paid for with a curse in the campaign.
-    blood_contract = function(_, theirs)
-        local lord = lord_of(theirs)
-        if not lord then
-            log("Blood contract: no enemy lord found")
-            return
-        end
-        lord:kill()
-        log("Blood contract: the enemy lord " .. lord.unit:type() .. " is slain")
-    end,
 }
+--- Blood Contract slays the enemy lord the same way, paid for with a curse in the campaign.
+TRICKS.blood_contract = TRICKS.assassinate
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

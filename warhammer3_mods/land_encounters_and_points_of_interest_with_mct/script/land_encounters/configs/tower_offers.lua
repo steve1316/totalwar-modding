@@ -168,7 +168,7 @@ M.offers = {
     { key = "blood_for_glory", guide_section = "units_and_lord", compose = true, lord_xp = S(2000, 3000, 4000), army_bundle = "land_enc_effect_tower_plague_bearer",
         turns = 3 },
     --- Units of the tower's race join now, like Turn a Traitor's.
-    { key = "press_the_prisoners", guide_section = "units_and_lord", compose = true, count = 2, tiers = { 2, 3 }, from_tower = true, kin_relations = -2 },
+    { key = "press_the_prisoners", guide_section = "units_and_lord", compose = true, count = 2, tiers = { 2, 3 }, from_tower = true, relations = -2 },
     { key = "lessons_in_blood", guide_section = "units_and_lord", cost = shared.STRONG, lord_xp = S(2000, 3000, 4000) },
     --- Frees a hero of `rank` from the tower's faction, or of the delving faction's culture when that fails. It joins the army.
     { key = "freed_prisoner", guide_section = "units_and_lord", cost = shared.STRONG, rank = S(5, 7, 9) },
@@ -178,9 +178,9 @@ M.offers = {
     --- On clearing the tower the lord takes `trait` and the title in the `title_loc` loc key after their name. Not offered to a lord who has it.
     { key = "epithet", guide_section = "units_and_lord", trait = "land_enc_trait_tower_towerbreaker", title_loc = "campaign_localised_strings_string_land_enc_tower_epithet" },
     --- Faction offers put `effect_bundle` on the delving faction for `turns` turns.
-    --- `kin_relations` changes relations, in steps of 10, with the nearest faction of the tower's race. Not drawn when there is none.
+    --- `relations` changes relations, in steps of 10, with the nearest faction of the tower's race. Not drawn when there is none.
     { key = "towers_favour", guide_section = "faction_boons", compose = true, stay = true, faction_bundle = tiered("land_enc_effect_tower_towers_favour"), turns = 5,
-        kin_relations = -2 },
+        relations = -2 },
     { key = "research_scrolls", guide_section = "faction_boons", cost = shared.STRONG, stay = true, effect_bundle = "land_enc_effect_tower_research_scrolls", turns = 5 },
     { key = "recruitment_cache", guide_section = "faction_boons", compose = true, stay = true, faction_bundle = "land_enc_effect_tower_recruitment_cache", turns = 5 },
     --- `haul_item` puts an item of that rarity into the haul.

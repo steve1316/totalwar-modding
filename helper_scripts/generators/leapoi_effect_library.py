@@ -61,11 +61,6 @@ CUSTOM_EFFECTS: Dict[str, Tuple[str, str, str, List[Tuple[str, Tuple]]]] = {
         ("effect_bonus_value_special_ability_group_junctions_tables", ("cost_percentage_mod", "{fx}", "wh_main_lore_fire")),
         ("effect_bonus_value_special_ability_group_junctions_tables", ("cost_percentage_mod", "{fx}", "wh_main_lore_fire_upgraded")),
     ]),
-    # The bound item version of the comet: 1 use and no Winds of Magic cost. An army ability keeps the cost of the spell it points at.
-    "comet_army_ability": ("magic.png", "battle", 'Army ability: "Comet of Casandora"', [
-        ("army_special_abilities_tables", ("{jn}", "wh3_main_spell_bound_comet_of_casandora", "1700181001", "false")),
-        ("effect_bonus_value_military_force_ability_junctions_tables", ("enable", "{fx}", "{jn}")),
-    ]),
     "comet_army_ability_uses": ("magic.png", "battle", 'Uses: %+n for the "Comet of Casandora" army ability', [
         ("effect_bonus_value_military_force_ability_junctions_tables", ("uses_mod", "{fx}", JUNCTION_PREFIX + "comet_army_ability")),
     ]),
@@ -88,8 +83,10 @@ CUSTOM_EFFECTS: Dict[str, Tuple[str, str, str, List[Tuple[str, Tuple]]]] = {
 }
 
 # Army spell name -> (bound spell, army ability unique id, name in text). Each becomes an "<name>_army_ability" custom effect that grants the
-# bound spell as an army ability, cast from the army ability bar with the bound spell's own uses and no Winds of Magic cost.
+# bound spell as an army ability, cast from the army ability bar with the bound spell's own uses and no Winds of Magic cost. An army ability
+# keeps the cost of the spell it points at, so each points at a bound (item) version.
 ARMY_SPELLS: Dict[str, Tuple[str, str, str]] = {
+    "comet": ("wh3_main_spell_bound_comet_of_casandora", "1700181001", "Comet of Casandora"),
     "banishment": ("wh3_main_spell_bound_banishment", "1700181002", "Banishment"),
     "net_of_amyntok": ("wh_dlc04_spell_bound_net_of_amyntok", "1700181003", "Net of Amyntok"),
     "earthblood": ("wh3_main_spell_bound_earth_blood", "1700181004", "Earthblood"),

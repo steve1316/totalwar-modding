@@ -154,6 +154,13 @@ function M.set_strength(unit, strength)
     cm:set_unit_hp_to_unary_of_maximum(unit, math.max(1, math.min(100, strength)) / 100)
 end
 
+--- Takes the same strength points from every unit in the delving army, down to 1.
+--- @param general_cqi number The delving lord's command queue index.
+--- @param points number Strength points each unit loses.
+function M.bleed_army(general_cqi, points)
+    for _, entry in ipairs(M.unit_strengths(general_cqi)) do M.set_strength(entry.unit, entry.strength - points) end
+end
+
 --- Heals a share of each unit's missing strength in the delving army.
 --- @param general_cqi number The delving lord's command queue index.
 --- @param share number Share of the missing strength to restore (0-1).

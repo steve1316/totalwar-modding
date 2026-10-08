@@ -9,11 +9,12 @@ extracted with rpfm_cli (`db/<table>/data__.tsv`):
     python -m generators.leapoi_free_spells <folder>
 """
 
-import csv
 import json
 import os
 import sys
 from typing import Dict, List, Tuple
+
+from core.utilities import load_tsv_data
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,15 +76,6 @@ def sources(name: str) -> List[str]:
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Rows
 
-def headers() -> Dict[str, List[str]]:
-    """The column names of each copied table, from the kept vanilla rows.
-
-    Returns:
-        Dict[str, List[str]]: Table -> column names.
-    """
-    return {table: entry["header"] for table, entry in json.load(open(DATA, encoding="utf-8")).items()}
-
-
 def rows() -> List[Tuple[str, Tuple]]:
     """The DB rows of every free spell.
 
@@ -92,12 +84,13 @@ def rows() -> List[Tuple[str, Tuple]]:
     """
     data = json.load(open(DATA, encoding="utf-8"))
     out = []
-    for name, (source, uses, unique_id, _) in FREE_SPELLS.items():
-        upgraded = source + "_upgraded"
+    for name, (_, uses, unique_id, _) in FREE_SPELLS.items():
+        source, upgraded = sources(name)
         for table, column in COPIED.items():
             header, kept = data[table]["header"], data[table]["rows"]
             index = header.index(column)
-            picked = kept.get(upgraded) if table == "special_ability_to_special_ability_phase_junctions_tables" and kept.get(upgraded) else kept.get(source, [])
+            phases = table == "special_ability_to_special_ability_phase_junctions_tables" and kept.get(upgraded)
+            picked = phases or kept.get(source, [])
             for row in picked:
                 row = list(row)
                 row[index] = key(name)
@@ -133,14 +126,12 @@ def refresh(folder: str) -> None:
     wanted = {source for name in FREE_SPELLS for source in sources(name)}
     data = {}
     for table, column in COPIED.items():
-        lines = list(csv.reader(open(os.path.join(folder, "db", table, "data__.tsv"), encoding="utf-8"), delimiter="\t"))
-        header = lines[0]
-        index = header.index(column)
+        records, header, version = load_tsv_data(os.path.join(folder, "db", table, "data__.tsv"))
         kept: Dict[str, List[List[str]]] = {}
-        for row in lines[2:]:
-            if row and row[index] in wanted:
-                kept.setdefault(row[index], []).append(row)
-        data[table] = {"header": header, "version": lines[1], "rows": kept}
+        for record in records:
+            if record.get(column) in wanted:
+                kept.setdefault(record[column], []).append([record.get(field, "") for field in header])
+        data[table] = {"header": header, "version": version.split("	"), "rows": kept}
     json.dump(data, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
     print(f"kept rows for {len(wanted)} abilities in {DATA}")
 
