@@ -580,6 +580,22 @@ scripted_objectives_localised_text_land_enc_tower_buff_bait_and_switch	[[col:red
 scripted_objectives_localised_description_land_enc_tower_buff_bait_and_switch		false
 scripted_objectives_localised_text_land_enc_tower_buff_bait_and_switch_message	Bait and Switch: the enemy army is 25% bigger, but each of its units starts at 75% strength.	false
 scripted_objectives_localised_description_land_enc_tower_buff_bait_and_switch_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_exhaust_the_garrison	[[col:red]]Exhaust the Garrison: the enemy starts the battle Tired.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_exhaust_the_garrison		false
+scripted_objectives_localised_text_land_enc_tower_buff_exhaust_the_garrison_message	Exhaust the Garrison: the enemy starts the battle Tired.	false
+scripted_objectives_localised_description_land_enc_tower_buff_exhaust_the_garrison_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_foul_the_winds	[[col:red]]Foul the Winds: enemy spells cost 50% more Winds of Magic.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_foul_the_winds		false
+scripted_objectives_localised_text_land_enc_tower_buff_foul_the_winds_message	Foul the Winds: enemy spells cost 50% more Winds of Magic.	false
+scripted_objectives_localised_description_land_enc_tower_buff_foul_the_winds_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_smoke_the_halls	[[col:red]]Smoke the Halls: enemy missile units have -30% range.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_smoke_the_halls		false
+scripted_objectives_localised_text_land_enc_tower_buff_smoke_the_halls_message	Smoke the Halls: enemy missile units have -30% range.	false
+scripted_objectives_localised_description_land_enc_tower_buff_smoke_the_halls_message		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_contract	[[col:red]]Blood Contract: the enemy lord is slain as the battle starts.[[/col]]	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_contract		false
+scripted_objectives_localised_text_land_enc_tower_buff_blood_contract_message	Blood Contract: the enemy lord is slain as the battle starts.	false
+scripted_objectives_localised_description_land_enc_tower_buff_blood_contract_message		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_hallowed	[[col:green]]Hallowed Ground: our units have +10 leadership.[[/col]]	false
 scripted_objectives_localised_description_land_enc_tower_buff_modifier_hallowed		false
 scripted_objectives_localised_text_land_enc_tower_buff_modifier_hallowed_message	Hallowed Ground: our units have +10 leadership.	false

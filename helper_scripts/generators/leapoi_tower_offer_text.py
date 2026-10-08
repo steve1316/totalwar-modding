@@ -162,10 +162,26 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
     "veterans_oath": (PAY + "swear the veterans' oath: [[col:green]]3 units[[/col]] gain [[col:green]]{ranks}[[/col]] each.", broke("no oath is sworn")),
     "lessons_in_blood": (PAY + "study the fallen: our lord gains [[col:green]]+{lord_xp} experience[[/col]].", broke("the lesson goes unlearned")),
     "freed_prisoner": (PAY + "free a prisoner from the tower's cells: [[col:green]]a rank {rank} hero[[/col]] joins our army.", broke("the cells stay locked")),
-    "towers_favour": (PAY + "win the tower's favour: [[col:green]]+{e0}% income[[/col]] from all buildings for {turns} turns.",
-                      broke("the tower's masters pay us no heed", climbs=False)),
+    "towers_favour": ("Win the tower's favour: [[col:green]]+{e0}% income[[/col]] from all buildings for {turns} turns, but [[col:red]]-20 relations[[/col]] with the "
+                      "nearest faction of the tower's race.", None),
     "research_scrolls": (PAY + "take the tower's research scrolls: [[col:green]]+25% research rate[[/col]] for {turns} turns.", broke("the scrolls stay on the shelf", climbs=False)),
-    "recruitment_cache": (PAY + "open a recruitment cache: [[col:green]]-{e0}% recruitment cost[[/col]] for {turns} turns.", broke("the cache stays sealed", climbs=False)),
+    "recruitment_cache": ("Open a recruitment cache: [[col:green]]-{e0}% recruitment cost[[/col]] for {turns} turns, but [[col:red]]-{e1} public order[[/col]] in "
+                          "every province for those turns.", None),
+    "exhaust_the_garrison": (PAY + "keep the next floor's garrison awake all night: its army [[col:green]]starts the battle Tired[[/col]].",
+                             broke("the garrison sleeps soundly")),
+    "foul_the_winds": (PAY + "foul the winds around the next floor: its army pays [[col:green]]+{e0}% Winds of Magic[[/col]] for every spell.",
+                       broke("the winds stay clean")),
+    "smoke_the_halls": (PAY + "fill the next floor's halls with smoke: its missile units have [[col:green]]-{e0}% range[[/col]].", broke("the halls stay clear")),
+    "blood_contract": ("Sign a contract in blood: the next floor's [[col:green]]lord is slain as the battle starts[[/col]], but our lord is struck by "
+                       + boons.grant_text("curse", ["marked_prey", 1]) + ".", None),
+    "collapse_the_stair": ("Bring the stairwell down on the floor above: its army is [[col:green]]{weaker}% weaker[[/col]], but every unit of ours loses "
+                           "[[col:red]]{bleed}% of its strength[[/col]] in the rubble now.", None),
+    "press_the_prisoners": ("Press the tower's prisoners into service: [[col:green]]2 tier 2-3 units[[/col]] of the tower's race join our army now, but "
+                            "[[col:red]]-20 relations[[/col]] with the nearest faction of that race.", None),
+    "loot_the_reliquary": ("Loot the tower's reliquary: [[col:green]]a rare item[[/col]] joins the haul, but [[col:red]]+{e0} Chaos corruption[[/col]] in every "
+                           "province for {turns} turns.", None),
+    "blood_for_glory": ("Throw our lord into the bloodiest fighting: our lord gains [[col:green]]+{lord_xp} experience[[/col]], but our army suffers "
+                        "[[col:red]]attrition for {turns} turns[[/col]].", None),
     "plague_bearer": ("Carry the tower's plague out: [[col:green]]+{gold} gold[[/col]] in the haul, but our army suffers [[col:red]]attrition for {turns} turns[[/col]].", None),
     "daemons_deal": ("Deal with a daemon: [[col:green]]{items} unique items[[/col]] join the haul now, but [[col:red]]when the delve ends, {armies} on our capital[[/col]].",
                      None),
@@ -182,6 +198,9 @@ TOWER_ICONS = {
     "blinding_powder": "wh_dlc06_unit_contact_blinded.png", "hold_the_stair": "icon_effects_fortify.png", "berserker_brew": "rampage_savage.png",
     "shadow_cloaks": "stalk.png", "tireless_tonic": "replenishment.png", "scroll_of_banishment": "magic.png", "net_of_amyntok": "magic.png",
     "earthblood": "magic.png", "curse_of_years": "magic.png", "the_dwellers_below": "magic.png", "falling_star": "magic.png",
+    "exhaust_the_garrison": "attrition.png", "foul_the_winds": "magic.png", "smoke_the_halls": "hex_1.png", "blood_contract": "dlc10_assassination_targets.png",
+    "collapse_the_stair": "siege_attack.png", "press_the_prisoners": "peasant.png", "loot_the_reliquary": "corruption_tzeentch.png",
+    "blood_for_glory": "general_ability.png",
 }
 
 
@@ -191,6 +210,9 @@ TOWER_NAMES: Dict[str, str] = {
     "blinding_powder": "Blinding Powder", "hold_the_stair": "Hold the Stair", "berserker_brew": "Berserker Brew", "shadow_cloaks": "Shadow Cloaks",
     "tireless_tonic": "Tireless Tonic", "scroll_of_banishment": "Scroll of Banishment", "net_of_amyntok": "Net of Amyntok", "earthblood": "Earthblood",
     "curse_of_years": "Curse of Years", "the_dwellers_below": "The Dwellers Below", "falling_star": "Call Down a Star",
+    "exhaust_the_garrison": "Exhaust the Garrison", "foul_the_winds": "Foul the Winds", "smoke_the_halls": "Smoke the Halls", "blood_contract": "Blood Contract",
+    "collapse_the_stair": "Collapse the Stair", "press_the_prisoners": "Press the Prisoners", "loot_the_reliquary": "Loot the Reliquary",
+    "blood_for_glory": "Blood for Glory",
 }
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,6 +300,17 @@ TOWER_BUNDLES = {
                        [("wh3_dlc27_effect_force_stat_charge_bonus_cavalry_chariots_add", "force_to_force_own", (-15, -20, -25))], None),
     "towers_favour": ("faction", "income.png", "Tower's Favour", "The tower's masters speak well of us. Trade flows a little easier.",
                       [("wh_main_effect_economy_gdp_mod_all", "faction_to_region_own", (5, 10, 15))], None),
+    "recruitment_cache": ("faction", "income.png", "Recruitment Cache", "The tower's armoury equips our recruits cheaply, and the provinces resent the levies.",
+                          [("wh_main_effect_force_all_campaign_recruitment_cost_all", "faction_to_force_own", -20),
+                           ("wh_main_effect_public_order_faction", "faction_to_province_own", -10)], None),
+    "reliquary_corruption": ("faction", "corruption_tzeentch.png", "Looted Reliquary", "Whatever was sealed in the tower's reliquary is loose in our lands now.",
+                             [("wh3_main_effect_corruption_chaos_events_bad", "faction_to_province_own", 5)], None),
+    "exhausted_garrison": ("force", "icon_effects_fortify.png", "Exhausted Garrison", "This army spent the night awake and starts the battle tired.",
+                           [("wh_main_effect_force_campaign_stance_begin_fatigued_4_tired", "force_to_force_own", 4)], None),
+    "fouled_winds": ("force", "icon_effects_fortify.png", "Fouled Winds", "The winds around this army are fouled. Every spell costs more.",
+                     [("wh2_dlc14_effect_magic_cost_all_lores_percentage", "force_to_force_own", 50)], None),
+    "smoked_halls": ("force", "icon_effects_fortify.png", "Smoke-Filled Halls", "Smoke fills the halls. This army's shooters cannot see far.",
+                     [("wh_main_effect_force_stat_range", "force_to_force_own", -30)], None),
 }
 
 # Offer key -> (colour, text) of the notice of a shared sabotage or trick whose effect differs by difficulty. Red weakens the enemy, green
@@ -301,4 +334,8 @@ NOTICES = {
     "cripple_their_champion": ("red", "Cripple Their Champion: the enemy's finest unit starts at {champion}% strength."),
     "spike_the_guns": ("red", "Spike the Guns: enemy shooters have -{e0}% " + icon("icon_stat_ammo") + "."),
     "bait_and_switch": ("red", "Bait and Switch: the enemy army is {stronger}% bigger, but each of its units starts at {strength}% strength."),
+    "exhaust_the_garrison": ("red", "Exhaust the Garrison: the enemy starts the battle Tired."),
+    "foul_the_winds": ("red", "Foul the Winds: enemy spells cost 50% more Winds of Magic."),
+    "smoke_the_halls": ("red", "Smoke the Halls: enemy missile units have -30% range."),
+    "blood_contract": ("red", "Blood Contract: the enemy lord is slain as the battle starts."),
 }

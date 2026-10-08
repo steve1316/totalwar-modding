@@ -107,6 +107,14 @@ M.offers = {
         champion_strength = shared.cripple_their_champion.champion_strength },
     { key = "spike_the_guns", guide_section = "sabotage", cost = shared.spike_the_guns.cost, enemy_bundle = shared.spike_the_guns.enemy_bundle,
         roster = shared.spike_the_guns.roster },
+    --- Composed sabotage (`sabotage = true`) marks the next floor's army with its notice and `enemy_bundle`. `no_champion` keeps it off a
+    --- champion floor.
+    { key = "exhaust_the_garrison", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.STANDARD, enemy_bundle = "land_enc_effect_tower_exhausted_garrison" },
+    { key = "foul_the_winds", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.STANDARD, enemy_bundle = "land_enc_effect_tower_fouled_winds" },
+    { key = "smoke_the_halls", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.STANDARD, enemy_bundle = "land_enc_effect_tower_smoked_halls",
+        roster = { "missile_infantry", "missile_cavalry", "warmachine" } },
+    { key = "blood_contract", guide_section = "sabotage", compose = true, sabotage = true, no_champion = true, curse = { "marked_prey", 1 } },
+    { key = "collapse_the_stair", guide_section = "sabotage", compose = true, next_budget = 0.75, bleed = 10 },
     { key = "bait_and_switch", guide_section = "sabotage", cost = shared.bait_and_switch.cost, next_budget = shared.bait_and_switch.budget,
         enemy_strength = shared.bait_and_switch.enemy_strength },
     { key = "lame_their_mounts", guide_section = "sabotage", cost = shared.lame_their_mounts.cost, enemy_bundle = shared.lame_their_mounts.enemy_bundle,
@@ -157,6 +165,10 @@ M.offers = {
     --- Removes the weakest regular unit and heals `heal_share` of every other unit's missing strength.
     { key = "blood_price", guide_section = "healing", heal_share = 0.5 },
     --- Gives the delving lord `lord_xp` experience.
+    { key = "blood_for_glory", guide_section = "units_and_lord", compose = true, lord_xp = S(2000, 3000, 4000), army_bundle = "land_enc_effect_tower_plague_bearer",
+        turns = 3 },
+    --- Units of the tower's race join now, like Turn a Traitor's.
+    { key = "press_the_prisoners", guide_section = "units_and_lord", compose = true, count = 2, tiers = { 2, 3 }, from_tower = true, kin_relations = -2 },
     { key = "lessons_in_blood", guide_section = "units_and_lord", cost = shared.STRONG, lord_xp = S(2000, 3000, 4000) },
     --- Frees a hero of `rank` from the tower's faction, or of the delving faction's culture when that fails. It joins the army.
     { key = "freed_prisoner", guide_section = "units_and_lord", cost = shared.STRONG, rank = S(5, 7, 9) },
@@ -166,10 +178,14 @@ M.offers = {
     --- On clearing the tower the lord takes `trait` and the title in the `title_loc` loc key after their name. Not offered to a lord who has it.
     { key = "epithet", guide_section = "units_and_lord", trait = "land_enc_trait_tower_towerbreaker", title_loc = "campaign_localised_strings_string_land_enc_tower_epithet" },
     --- Faction offers put `effect_bundle` on the delving faction for `turns` turns.
-    { key = "towers_favour", guide_section = "faction_boons", cost = shared.STRONG, stay = true, effect_bundle = tiered("land_enc_effect_tower_towers_favour"), turns = 5 },
+    --- `kin_relations` changes relations, in steps of 10, with the nearest faction of the tower's race. Not drawn when there is none.
+    { key = "towers_favour", guide_section = "faction_boons", compose = true, stay = true, faction_bundle = tiered("land_enc_effect_tower_towers_favour"), turns = 5,
+        kin_relations = -2 },
     { key = "research_scrolls", guide_section = "faction_boons", cost = shared.STRONG, stay = true, effect_bundle = "land_enc_effect_tower_research_scrolls", turns = 5 },
-    { key = "recruitment_cache", guide_section = "faction_boons", cost = shared.recruitment_cache.cost, stay = true, effect_bundle = shared.recruitment_cache.bundle,
-        turns = shared.recruitment_cache.turns },
+    { key = "recruitment_cache", guide_section = "faction_boons", compose = true, stay = true, faction_bundle = "land_enc_effect_tower_recruitment_cache", turns = 5 },
+    --- `haul_item` puts an item of that rarity into the haul.
+    { key = "loot_the_reliquary", guide_section = "faction_boons", compose = true, stay = true, haul_item = "rare", faction_bundle = "land_enc_effect_tower_reliquary_corruption",
+        turns = 5 },
     --- The next floor's gold doubles when the army loses under `max_loss` strength points on it, and is lost otherwise.
     { key = "double_or_nothing", guide_section = "gambles", max_loss = 40 },
     --- Puts `effect_bundle` on the army for the rest of the delve. `items_lost` haul items are lost after every floor won from then on.
