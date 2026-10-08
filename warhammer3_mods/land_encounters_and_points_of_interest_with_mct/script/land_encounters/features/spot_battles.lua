@@ -19,6 +19,7 @@ local tower_missions = require("script/land_encounters/features/tower_missions")
 local tower_offers = require("script/land_encounters/features/tower_offers")
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
+local army_spells = require("script/land_encounters/core/army_spells")
 
 --- svr keys the battle script reads the buff, notice, trick and mission names, Night terrors' targets and the mission targets from, and the
 --- prefix it strips from a one-battle bundle to find its notice. The tower owns them, since the battle script plays both under its names.
@@ -94,6 +95,7 @@ local function eligible(offer, ctx)
         ctx.cards[offer.key] = { units = units }
         for _, key in ipairs(units) do ctx.shown_units[key] = true end
     end
+    if offer.spell_pool then ctx.cards[offer.key] = { spell = army_spells.roll(offer.spell_pool) } end
     return true
 end
 
@@ -180,6 +182,7 @@ function M.launch(faction_name)
         pending.shown_affordable[key] = can_pay
         local choice = { key = spot_offers.choice_key(key), lines = can_pay and { line, FIGHT_LINE } or { line, offers_data.unaffordable_line }, closed = not can_pay }
         local cards = pending.cards[key]
+        if cards and cards.spell then table.insert(choice.lines, 2, army_spells.line(cards.spell)) end
         local force = can_pay and cards and cards.units and tower_army.delving_force(pending.general_cqi)
         if force then choice.units = { force = force, keys = cards.units } end
         choices[#choices + 1] = choice
@@ -320,6 +323,12 @@ function M.take(faction_name, choice_key, event)
     local before = offer_effects.treasury(faction_name)
     if offer.cost then cm:treasury_mod(faction_name, -spot_offers.offer_cost(offer)) end
     apply_to_event(offer, event)
+    local spell = offer.spell_pool and (pending.cards[offer.key] or {}).spell
+    if spell then
+        event.battle_bundles = event.battle_bundles or {}
+        event.battle_bundles[#event.battle_bundles + 1] = army_spells.bundle(spell)
+        log("spot battle: " .. offer.key .. " gives the army " .. army_spells.name(spell) .. " for this battle")
+    end
     if offer.gamble then
         local outcome = spot_offers.roll_outcome(offer.gamble)
         log("spot battle: " .. offer.key .. " rolls " .. outcome[2])
@@ -332,7 +341,7 @@ function M.take(faction_name, choice_key, event)
             end
         end
         add_notice(event, steps.notice(offer.key .. "_" .. outcome[2], raw_outcome, pending.difficulty))
-    elseif not offer.battle_bundle then
+    elseif not (offer.battle_bundle or spell) then
         --- A one-battle bundle is announced under its tower name, so only the other offers need their own notice. A trick's notice is its
         --- tower name too, which tells the battle script to play it.
         add_notice(event, steps.notice(offer.notice or offer.key, offers_data.by_key[offer.key], pending.difficulty))

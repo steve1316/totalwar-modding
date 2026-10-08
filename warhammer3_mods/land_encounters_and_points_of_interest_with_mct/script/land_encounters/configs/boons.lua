@@ -19,7 +19,7 @@ M.turns_per_level = 5
 --- Turns a curse spends at `max_level` before one with a `turns_into` boon becomes it.
 M.turns_to_turn = 10
 
---- Turns a faction-wide boon or curse lasts.
+--- Turns a faction-wide boon or curse lasts. The script counts them and takes the bundle off, so its clock and the bundle agree.
 M.realm_turns = 10
 
 --- MCT setting keys: the switch, and the slots a lord has for boons and for curses.
@@ -52,6 +52,20 @@ M.realm_prefix = "land_enc_effect_realm_"
 --- Prefix of a boon's or curse's payload line on a dilemma choice. The kind, then the bundle name without its prefix follow, e.g.
 --- dummy_land_enc_boon_bloodsworn_3.
 M.line_prefix = "dummy_land_enc_"
+
+--- Prefix of the clock effects: the line at the top of a boon's or curse's bundle saying how long it lasts or when it changes, e.g. "Worsens in
+--- 3 turns.". The clock's name follows, then "_one" when a counted clock reads 1, e.g. land_enc_clock_worsens_one.
+M.clock_prefix = "land_enc_clock_"
+
+--- Clocks that show a count: battles a charged boon lasts, won battles until a boon upgrades, turns until a curse worsens or becomes its
+--- boon, and turns a faction-wide one lasts.
+M.counted_clocks = { "lasts", "upgrades", "worsens", "becomes", "realm" }
+
+--- Clocks with a fixed text: a boon at its top level, and a curse at its worst that never turns.
+M.fixed_clocks = { "strongest", "worst" }
+
+--- Scope of a clock effect on a lord's bundle and on a faction-wide one.
+M.clock_scope = { character = "character_to_character_own", faction = "faction_to_faction_own_unseen" }
 
 --- Prefix of the incidents that tell the player about a lord's boons and curses. The event follows: boon_gained, boon_grew, boon_lost,
 --- curse_gained, curse_worse, curse_lifted, curse_turned, curse_shifted (a failed gamble), realm_boon, realm_curse, and the services' own:

@@ -9,6 +9,7 @@ bundle it gives.
 
 from typing import Dict, Tuple
 
+from generators import leapoi_army_spells as army_spells
 from generators import leapoi_boons as boons
 from generators import leapoi_effect_library as library
 
@@ -106,6 +107,9 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
                            "is [[col:red]]wounded for {wound_turns} turns[[/col]] when the delve ends.", None),
     "falling_star": ("Call down a star: army spell [[col:green]]Comet of Casandora, 1 use[[/col]], in the next battle, but every unit loses "
                      "[[col:red]]{bleed}% of its strength[[/col]] in the blast now.", None),
+    "grand_scroll": (PAY + "read a grand scroll: the lore spell below is ours to cast in the next battle.", broke("the scroll stays rolled")),
+    "bound_relic": (PAY + "take up a bound relic: the spell below is ours to cast in the next battle.", broke("the relic stays on its plinth")),
+    "war_horn": (PAY + "sound an old war horn: the army ability below is ours to use in the next battle.", broke("the horn stays silent")),
     "iron_resolve": (PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] " + icon("icon_stat_morale") + " leadership and [[col:green]]immunity to fear and terror[[/col]] "
                      "in the next battle.", broke("our resolve goes unsteeled")),
     "stoneskin": ("Cast a ward of living stone: [[col:green]]+{e0}% physical resistance[[/col]] in the next battle, but the tower notices and the next "
@@ -198,6 +202,7 @@ TOWER_ICONS = {
     "blinding_powder": "wh_dlc06_unit_contact_blinded.png", "hold_the_stair": "icon_effects_fortify.png", "berserker_brew": "rampage_savage.png",
     "shadow_cloaks": "stalk.png", "tireless_tonic": "replenishment.png", "scroll_of_banishment": "magic.png", "net_of_amyntok": "magic.png",
     "earthblood": "magic.png", "curse_of_years": "magic.png", "the_dwellers_below": "magic.png", "falling_star": "magic.png",
+    "grand_scroll": "magic.png", "bound_relic": "magic.png", "war_horn": "magic.png",
     "exhaust_the_garrison": "attrition.png", "foul_the_winds": "magic.png", "smoke_the_halls": "hex_1.png", "blood_contract": "dlc10_assassination_targets.png",
     "collapse_the_stair": "siege_attack.png", "press_the_prisoners": "peasant.png", "loot_the_reliquary": "corruption_tzeentch.png",
     "blood_for_glory": "general_ability.png",
@@ -210,6 +215,7 @@ TOWER_NAMES: Dict[str, str] = {
     "blinding_powder": "Blinding Powder", "hold_the_stair": "Hold the Stair", "berserker_brew": "Berserker Brew", "shadow_cloaks": "Shadow Cloaks",
     "tireless_tonic": "Tireless Tonic", "scroll_of_banishment": "Scroll of Banishment", "net_of_amyntok": "Net of Amyntok", "earthblood": "Earthblood",
     "curse_of_years": "Curse of Years", "the_dwellers_below": "The Dwellers Below", "falling_star": "Call Down a Star",
+    "grand_scroll": "Grand Scroll", "bound_relic": "Bound Relic", "war_horn": "War Horn",
     "exhaust_the_garrison": "Exhaust the Garrison", "foul_the_winds": "Foul the Winds", "smoke_the_halls": "Smoke the Halls", "blood_contract": "Blood Contract",
     "collapse_the_stair": "Collapse the Stair", "press_the_prisoners": "Press the Prisoners", "loot_the_reliquary": "Loot the Reliquary",
     "blood_for_glory": "Blood for Glory",
@@ -312,6 +318,12 @@ TOWER_BUNDLES = {
     "smoked_halls": ("force", "icon_effects_fortify.png", "Smoke-Filled Halls", "Smoke fills the halls. This army's shooters cannot see far.",
                      [("wh_main_effect_force_stat_range", "force_to_force_own", -30)], None),
 }
+
+# One bundle per army spell (generators/leapoi_army_spells.py), for the battle it is cast in, with its battle notice.
+for _spell in army_spells.spells():
+    TOWER_BUNDLES[army_spells.BUNDLE_NAME + _spell["id"]] = (
+        "force", "icon_effects_fortify.png", _spell["name"], army_spells.description(_spell),
+        [spell(_spell["id"])], ("green", f"{_spell['name']}: army spell, {army_spells.uses_text(_spell['uses'])}."))
 
 # Offer key -> (colour, text) of the notice of a shared sabotage or trick whose effect differs by difficulty. Red weakens the enemy, green
 # helps us, yellow costs us. The numbers come from the tower offer at each difficulty.

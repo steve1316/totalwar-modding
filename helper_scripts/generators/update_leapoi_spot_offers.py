@@ -15,11 +15,12 @@ import os
 import re
 import subprocess
 from collections import defaultdict
-from typing import Dict, List, Pattern, Tuple
+from typing import Dict, List, Pattern, Sequence, Tuple
 
 from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, PAY as TOWER_PAY, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES, TOWER_NAMES
 from generators import leapoi_battle_modifiers as battle_modifiers
 from generators import leapoi_effect_library as effect_library
+from generators import leapoi_army_spells as army_spells
 from generators import leapoi_boons as boons
 from generators.leapoi_stat_icons import add_stat_icons
 
@@ -340,6 +341,9 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "whetstones_and_oil": ("Whetstones and Oil", PAY + "hone every blade: [[col:green]]+{e0}%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength and "
                            "[[col:green]]+{e1}[[/col]] [[img:ui/skins/default/modifier_icon_armour_piercing.png]][[/img]] armour-piercing damage in this battle."),
     "warding_sigils": ("Warding Sigils", PAY + "paint warding sigils: [[col:green]]+{e0}% ward save[[/col]] in this battle."),
+    "battle_scroll": ("Battle Scroll", PAY + "buy a battle scroll: the army spell below is ours to cast in this battle."),
+    "cache_of_scrolls": ("Cache of Scrolls", PAY + "open a cache of scrolls: the army spell below is ours to cast in any battle for the next "
+                         "{spell_turns} turns."),
     "fire_kissed_blades": ("Fire-Kissed Blades", PAY + "pass our blades through the braziers: [[col:green]]flaming attacks[[/col]] for every unit in this battle."),
     "iron_resolve": ("Iron Resolve", PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership and "
                      "[[col:green]]immunity to fear and terror[[/col]] in this battle."),
@@ -451,7 +455,7 @@ ICONS = {
     "kill_the_captain": "dlc10_assassination_targets.png", "lower_tiers_only": "peasant.png", "break_their_spirit": "discouraged.png",
     "strip_monsters": "rampage_harsh.png", "strip_cavalry": "charge.png", "strip_missile": "ammo.png", "strip_artillery": "artillery.png",
     "turn_a_traitor": "khainite_assassin.png", "war_rites": "effect_rite.png", "whetstones_and_oil": "weapon_damage.png",
-    "warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "iron_resolve": "attribute_immune_to_psychology.png",
+    "battle_scroll": "magic.png", "cache_of_scrolls": "magic.png", "warding_sigils": "resistance_ward_save.png", "fire_kissed_blades": "modifier_icon_flaming.png", "iron_resolve": "attribute_immune_to_psychology.png",
     "call_the_winds": "wh3_dlc24_wind_blast.png", "quartermasters_cache": "ammo.png", "night_raid": "dlc10_death_night.png",
     "bottomless_quivers": "ammo_character.png", "oath_of_no_retreat": "morale.png", "divine_shield": "lileaths_blessing.png",
     "arm_the_allies": "effect_rite.png", "rally_their_line": "morale.png", "lend_them_veterans": "vow_knights_positive.png",
@@ -1102,9 +1106,9 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     def table(name: str) -> str:
         return f"db/{name}/{TABLE_FILE}"
 
-    def line(component: str, icon: str, text: str) -> None:
+    def line(component: str, icon: str, text: str, keep: Sequence[str] = ()) -> None:
         add(table("campaign_payload_ui_details_tables"), component, "ui/campaign ui/effect_bundles/" + icon, "default", 0)
-        add(LOC_PREFIX + "campaign_payload_ui_details.loc.tsv", "campaign_payload_ui_details_description_" + component, add_stat_icons(text), "false")
+        add(LOC_PREFIX + "campaign_payload_ui_details.loc.tsv", "campaign_payload_ui_details_description_" + component, add_stat_icons(text, keep), "false")
 
     def label(dilemma: str, choice: str, text: str) -> None:
         add(table("cdir_events_dilemma_choice_details_tables"), choice, dilemma, "", "")
@@ -1292,6 +1296,9 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     boon_config = config["boons"]
     for component, icon, text in boons.lines(boon_config):
         line(component, icon, text)
+    for effect, text in boons.clocks(boon_config):
+        add(table("effects_tables"), effect, boons.CLOCK_ICON, boons.CLOCK_PRIORITY, boons.CLOCK_ICON, "campaign", "true")
+        add(LOC_PREFIX + "effects.loc.tsv", "effects_description_" + effect, text, "false")
     boon_dilemmas = boons.dilemmas(boon_config)
     drop_label, new_label = boons.FULL_DILEMMA[3:]
     title, description, image = boon_dilemmas["full"]
@@ -1320,6 +1327,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             label(dilemma, choice, title_case(text))
     for component, icon, text in boons.service_lines(boon_config):
         line(component, icon, text)
+    for spell in army_spells.spells():
+        line(army_spells.LINE_PREFIX + spell["id"], "magic.png", army_spells.line_text(spell), [spell["name"]])
     for key, text in boons.results(boon_config):
         add(STRINGS_LOC, key, text, "false")
     for _, _, key, text in boons.guide(boon_config, config["offers"], config["tower_offers"], TOWER_NAMES):
@@ -1544,6 +1553,18 @@ def write_rows(rows: Dict[str, List[str]], patterns: List[Pattern], dry_run: boo
                 f.write(("".join(kept) + "".join(row + "\r\n" for row in new_rows)).encode("utf-8"))
 
 
+def write_army_spells(dry_run: bool) -> None:
+    """Writes the Lua list of the army spell pools the offers roll from.
+
+    Args:
+        dry_run (bool): True to only print what would be written.
+    """
+    text = army_spells.lua()
+    print(f"{army_spells.LUA}: {sum(len(v) for v in army_spells.load().values())} spells")
+    if not dry_run:
+        open(MOD_ROOT + army_spells.LUA, "w", encoding="utf-8", newline="\n").write(text)
+
+
 def write_victory_gold(dry_run: bool) -> None:
     """Writes the Lua table of each battle victory incident's treasury gold, read from the incidents' payload rows.
 
@@ -1584,7 +1605,8 @@ def check_text(config: Dict) -> None:
     problems += [f"no text for site {s['key']}" for s in all_sites(config) if s["key"] not in SITES]
     problems += [f"no icon for {key}" for key in OFFERS if key not in ICONS]
     problems += [f"no notice for {o['key']}" for o in config["offers"]
-                 if o["pool"] == "pre_battle" and "battle_bundle" not in o and "gamble" not in o and "trick" not in o and o["key"] not in NOTICES
+                 if o["pool"] == "pre_battle" and "battle_bundle" not in o and "spell_pool" not in o and "gamble" not in o and "trick" not in o
+                 and o["key"] not in NOTICES
                  and o["key"] not in config["tower_at"]["easy"]]
     problems += [f"no messages for mission {o['key']}" for o in config["offers"] if o["pool"] == "mission" and o["key"] not in MISSION_MESSAGES]
     problems += [f"no tower line for {key}" for key in tower_line_keys(config) if key not in TOWER_LINES or not tower_icon(key)]
@@ -1616,6 +1638,7 @@ def main() -> None:
     check_text(config)
     write_rows(build_rows(config), owned_patterns(config), args.dry_run)
     write_victory_gold(args.dry_run)
+    write_army_spells(args.dry_run)
     hook_battle_descriptions(config, args.dry_run)
 
 

@@ -310,6 +310,9 @@ M.offers = {
     { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "leave_an_offering"), 5 } },
     { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "bless_the_banners"), 5 } },
     { key = "stoneskin", pool = "treasure", tags = { "blessing" }, cost = shared.stoneskin.cost, army_bundle = { tiered(SPOT_BUNDLE .. "stoneskin"), 5 } },
+    --- `spell_pool` rolls an army spell (configs/army_spells.lua) when the offer is drawn, which the choice names. The army keeps it for
+    --- `spell_turns` turns.
+    { key = "cache_of_scrolls", pool = "treasure", tags = { "blessing", "lore" }, cost = shared.STRONG, spell_pool = "all", spell_turns = 5 },
     --- The oath's price is the altar's keepers: a hard battle starts here.
     { key = "oath_at_the_altar", pool = "treasure", tags = { "blessing" }, trait = "land_enc_trait_spot_shrine_sworn", guardian = "hard" },
     --- Magical attacks are yes or no, so the price buys turns.
@@ -416,6 +419,8 @@ M.offers = {
     { key = "war_rites", pool = "pre_battle", tags = { "buff" }, cost = shared.war_rites.cost, battle_bundle = shared.war_rites.bundle },
     { key = "whetstones_and_oil", pool = "pre_battle", tags = { "buff" }, cost = shared.whetstones_and_oil.cost, battle_bundle = shared.whetstones_and_oil.bundle },
     { key = "warding_sigils", pool = "pre_battle", tags = { "buff" }, cost = shared.warding_sigils.cost, battle_bundle = shared.warding_sigils.bundle },
+    --- Rolls an army spell when drawn, for this battle.
+    { key = "battle_scroll", pool = "pre_battle", tags = { "buff" }, cost = shared.STANDARD, spell_pool = "all" },
     { key = "fire_kissed_blades", pool = "pre_battle", tags = { "buff" }, cost = shared.fire_kissed_blades.cost, battle_bundle = shared.fire_kissed_blades.bundle },
     { key = "iron_resolve", pool = "pre_battle", tags = { "buff" }, cost = shared.iron_resolve.cost, battle_bundle = shared.iron_resolve.bundle },
     { key = "drill_sergeant", pool = "pre_battle", tags = { "buff" }, cost = shared.drill_sergeant.cost, battle_bundle = shared.drill_sergeant.bundle },

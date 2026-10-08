@@ -12,6 +12,7 @@ local tower_champions = require("script/land_encounters/configs/tower_champions"
 local offer_effects = require("script/land_encounters/core/offer_effects")
 local realm_effects = require("script/land_encounters/core/realm_effects")
 local Army = require("script/land_encounters/core/army")
+local army_spells = require("script/land_encounters/core/army_spells")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
@@ -354,6 +355,7 @@ end
 local function compose(offer, ctx)
     local delve = ctx.delve
     local values = {}
+    if offer.spell_pool then add_battle_bundle(delve, army_spells.bundle((delve.offer_spells or {})[offer.key])) end
     if offer.effect_bundle then
         battle_buff(offer, ctx)
         if offer.battle_floors then
@@ -397,6 +399,10 @@ local COMPOSED_HANDLER = {
         if boons.grants(offer) and not boons.enabled() then return false end
         if offer.no_champion and ctx.delve.next_floor and ctx.delve.next_floor.champion then return false end
         if offer.relations and not tower_kin(ctx) then return false end
+        if offer.spell_pool then
+            ctx.delve.offer_spells = ctx.delve.offer_spells or {}
+            ctx.delve.offer_spells[offer.key] = army_spells.roll(offer.spell_pool)
+        end
         return offer.count == nil or recruit(ctx, offer)
     end,
     apply = compose,
@@ -917,6 +923,8 @@ function M.choice(offer_key, delve, next_floor)
         local difficulty = climb_difficulty(offer, floor)
         lines[2] = "dummy_land_enc_tower_descend_floor_" .. floor .. (difficulty and "_" .. difficulty or "")
     end
+    local spell = offer.spell_pool and (delve.offer_spells or {})[offer.key]
+    if spell then table.insert(lines, 2, army_spells.line(spell)) end
     local choice = { key = M.choice_key(offer), lines = lines }
     local units = (delve.offer_units or {})[offer.key]
     local force = units and affordable and tower_army.delving_force(delve.general_cqi)

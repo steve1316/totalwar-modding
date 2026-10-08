@@ -88,6 +88,21 @@ LIFTING = ("Lifting other curses", ["At a Smithy we own, the master smith breaks
                                      "Some curses turn into a boon after {turns_to_turn} turns at their worst, so enduring one can pay off."])
 REALM = ("Faction-wide", ["It touches the whole faction, not one lord, and takes no lord's slot.", "It lasts {realm_turns} turns, then passes."])
 
+# Clock name (configs/boons.lua `counted_clocks` and `fixed_clocks`) -> (text, text when the count is 1). The clock is the line at the top of
+# a boon's or curse's bundle, and "%n" is its count, set by the script. A fixed clock has no count.
+CLOCKS: Dict[str, Tuple[str, Optional[str]]] = {
+    "lasts": ("Lasts %n battles.", "Lasts 1 battle."),
+    "upgrades": ("Upgrades in %n won battles.", "Upgrades in 1 won battle."),
+    "worsens": ("Worsens in %n turns.", "Worsens in 1 turn."),
+    "becomes": ("Becomes a boon in %n turns.", "Becomes a boon in 1 turn."),
+    "realm": ("Lasts %n turns.", "Lasts 1 turn."),
+    "strongest": ("At its strongest, and lasts for good.", None),
+    "worst": ("At its worst, and lasts until lifted.", None),
+}
+
+# Icon and priority of the clock effects. The lowest priority puts the clock above the bundle's other effects.
+CLOCK_ICON, CLOCK_PRIORITY = "turns.png", 0
+
 # Event -> (incident title, description parts, picture). A part is a paragraph or a rule section. "{lord}" is the lord's name, read from
 # the config's `lord_context`.
 INCIDENTS: Dict[str, Tuple[str, list, str]] = {
@@ -563,6 +578,23 @@ def lines(config: Dict) -> List[Tuple[str, str, str]]:
     return out
 
 
+def clocks(config: Dict) -> List[Tuple[str, str]]:
+    """The clock effects, one per fixed clock and two per counted clock (its count, and 1).
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        List[Tuple[str, str]]: (effect key, text) per clock effect.
+    """
+    out = []
+    for name, (text, one) in CLOCKS.items():
+        out.append((config["clock_prefix"] + name, f"[[col:yellow]]{text}[[/col]]"))
+        if one:
+            out.append((config["clock_prefix"] + name + "_one", f"[[col:yellow]]{one}[[/col]]"))
+    return out
+
+
 def describe(parts: list, config: Dict, event: str) -> str:
     """Writes a description from its parts, with the rules and the lord's name filled in.
 
@@ -793,7 +825,7 @@ def owned_prefixes(config: Dict) -> List[str]:
     """
     return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"],
                                                       config["smithy_room"]["dilemma"], config["witch_room"]["dilemma"], config["result_prefix"],
-                                                      config["guide_prefix"]]
+                                                      config["guide_prefix"], config["clock_prefix"]]
             + config["pick_choices"]
             + [config["line_prefix"] + kind + "_" for kind in ("boon", "curse", "realm")] + config["full_choices"]
             + [config["incident_prefix"] + event for event in INCIDENTS])
@@ -822,6 +854,9 @@ def problems(config: Dict) -> List[str]:
             if charges and not levels[0][0].endswith(f"for {charges} battles"):
                 found.append(f"{record['key']} text does not say {charges} battles")
     found += [f"race {race} differs" for race in sorted(set(config["races"]) ^ set(library.RACES))]
+    found += [f"clock {name} differs" for name in sorted(set(config["counted_clocks"] + config["fixed_clocks"]) ^ set(CLOCKS))]
+    found += [f"clock {name} should {'' if name in config['counted_clocks'] else 'not '}have a count" for name, (text, one) in CLOCKS.items()
+              if (one is not None) != (name in config["counted_clocks"]) or ("%n" in text) != (one is not None)]
     found += [f"faction-wide {key} differs" for key in sorted({r["key"] for r in config["realm"]} ^ set(REALM))]
     texts = {**incidents(config), **{"dilemma " + name: text for name, text in dilemmas(config).items()}}
     found += [f"{name} description fills {shown_lines(text[1])} lines, not {MIN_LINES}-{MAX_LINES}" for name, text in texts.items()

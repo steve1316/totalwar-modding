@@ -4,6 +4,7 @@ Written into the mod by update_leapoi_spot_offers.py."""
 
 from typing import Dict, List, Tuple
 
+from generators import leapoi_army_spells as army_spells
 from generators import leapoi_free_spells as free_spells
 from generators.leapoi_battle_modifiers import BUNDLE_ICON, SCOPE
 
@@ -93,13 +94,22 @@ ARMY_SPELLS: Dict[str, Tuple[str, str, str]] = {
     "curse_of_years": ("wh3_dlc29_spell_bound_curse_of_years", "1700181005", "Curse of Years"),
     "dwellers_below": ("wh3_main_spell_bound_the_dwellers_below", "1700181006", "The Dwellers Below"),
 }
-# The free army versions of lore spells (generators/leapoi_free_spells.py) are army spells too, with army ability ids from 1700181101.
-for _number, (_free, (_, _, _, _free_name)) in enumerate(free_spells.FREE_SPELLS.items()):
-    ARMY_SPELLS[_free] = (free_spells.key(_free), str(1700181101 + _number), _free_name)
+# Every pool spell (generators/leapoi_army_spells.py) is an army spell too: a lore spell points at its free copy, a bound spell at itself. CA's
+# own army abilities are enabled as they are, below.
+_pools = army_spells.load()
+for _number, _spell in enumerate(_pools["lore"], 1):
+    ARMY_SPELLS[_spell["id"]] = (free_spells.key(_spell["id"]), str(army_spells.LORE_ID_BASE + _number), _spell["name"])
+for _number, _spell in enumerate(_pools["bound"], 1):
+    ARMY_SPELLS[_spell["id"]] = (_spell["source"], str(army_spells.BOUND_ID_BASE + _number), _spell["name"])
 for _spell, (_bound, _unique_id, _spell_name) in ARMY_SPELLS.items():
     CUSTOM_EFFECTS[_spell + "_army_ability"] = ("magic.png", "battle", f'Army ability: "{_spell_name}"', [
         ("army_special_abilities_tables", ("{jn}", _bound, _unique_id, "false")),
         ("effect_bonus_value_military_force_ability_junctions_tables", ("enable", "{fx}", "{jn}")),
+    ])
+
+for _spell in _pools["army"]:
+    CUSTOM_EFFECTS[_spell["id"] + "_army_ability"] = ("magic.png", "battle", f'Army ability: "{_spell["name"]}"', [
+        ("effect_bonus_value_military_force_ability_junctions_tables", ("enable", "{fx}", _spell["army"])),
     ])
 
 # Race key (configs/boons.lua `races`) -> (name in text, battle context, diplomacy effect), for the boons and curses about one race.
@@ -153,7 +163,6 @@ LIBRARY: Dict[str, Tuple[str, str, List[Tuple[str, float]]]] = {
                       [("speed_attacking", 20), ("unbreakable_attacking", 1), ("wh3_dlc25_effect_force_stat_unbreakable_vs_undead", 1)]),
     "lore": ("Kindled Winds", "Test: cheaper Lore of Fire and faster spell cooldowns.",
              [("lore_fire_cost", -50), ("wh2_dlc12_effect_magic_cooldown_all_lores", -25)]),
-    "free_spell": ("Free Blizzard", "Test: the army can cast Blizzard twice per battle, at no Winds of Magic cost.", [("blizzard_army_ability", 1)]),
     "army_spell": ("Falling Star", "Test: the army can call down the Comet of Casandora twice per battle, at no Winds of Magic cost.",
                    [("comet_army_ability", 1), ("comet_army_ability_uses", 1)]),
     "stances": ("Hobbled March", "Test: no March stance, and the Ambush stance costs more.", [("march_blocked", 1), ("ambush_stance_cost", 100)]),

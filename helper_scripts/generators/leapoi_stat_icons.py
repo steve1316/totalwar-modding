@@ -5,7 +5,7 @@ Gold is left without an icon: prices are everywhere and the treasury card alread
 """
 
 import re
-from typing import List, Pattern, Tuple
+from typing import List, Pattern, Sequence, Tuple
 
 # Folder of the unit stat icons.
 STAT_ICON_FOLDER = "ui/skins/default/"
@@ -53,16 +53,18 @@ TAG = re.compile(r"\[\[[^\]]*\]\]")
 ICON_BEFORE = re.compile(r"\[\[/img\]\]\s*(?:\[\[col:[a-z]+\]\])?\s*$")
 
 
-def add_stat_icons(text: str) -> str:
+def add_stat_icons(text: str, keep: Sequence[str] = ()) -> str:
     """Adds the stat icon in front of every stat phrase in the text that does not have one yet.
 
     Args:
         text (str): The loc text.
+        keep (Sequence[str]): Names left without icons, e.g. a spell called "Oath of Replenishment".
 
     Returns:
         str: The text with stat icons.
     """
     tags = [(m.start(), m.end()) for m in TAG.finditer(text)]
+    tags += [(m.start(), m.end()) for name in keep if name for m in re.finditer(re.escape(name), text)]
     inserts = {}
     taken = []
     for pattern, icon in COMPILED:

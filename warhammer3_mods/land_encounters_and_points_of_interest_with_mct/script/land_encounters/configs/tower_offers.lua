@@ -83,6 +83,11 @@ M.offers = {
     { key = "curse_of_years", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_curse_of_years", curse = { "shunned_by_the_winds", 1 } },
     { key = "the_dwellers_below", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_dwellers_below", wound_turns = 3 },
     { key = "falling_star", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_falling_star", bleed = 10 },
+    --- `spell_pool` rolls a spell from that pool (configs/army_spells.lua) when the offer is drawn. The choice names it, and it is the army's
+    --- for the next battle.
+    { key = "grand_scroll", guide_section = "spells", compose = true, cost = shared.STRONG, spell_pool = "lore" },
+    { key = "bound_relic", guide_section = "spells", compose = true, cost = shared.STANDARD, spell_pool = "bound" },
+    { key = "war_horn", guide_section = "spells", compose = true, cost = shared.STANDARD, spell_pool = "army" },
     { key = "bottomless_quivers", guide_section = "tricks", cost = shared.bottomless_quivers.cost, trick = true, shoots = true },
     { key = "oath_of_no_retreat", guide_section = "tricks", cost = shared.oath_of_no_retreat.cost, trick = true },
     { key = "divine_shield", guide_section = "tricks", cost = shared.divine_shield.cost, trick = true, battle_value = shared.divine_shield.battle_value },

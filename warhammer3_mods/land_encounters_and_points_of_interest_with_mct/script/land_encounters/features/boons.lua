@@ -1,6 +1,7 @@
 --- Boons and curses (configs/boons.lua): lasting effects a human faction's lords carry. A boon grows a level every few battles the lord wins,
 --- a curse gets worse every few turns until it is cleansed, and a few curses endured at their worst turn into a boon. Each boon or curse
---- level is a bundle on the lord. Rare faction-wide ones are plain faction bundles that run out by themselves. AI lords get none.
+--- level is a bundle on the lord, topped by a clock line saying how long it lasts or when it changes. Rare faction-wide ones are faction
+--- bundles the script counts down and takes off. AI lords get none.
 
 require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
@@ -39,6 +40,8 @@ local M = {
     pending = {},
     --- Faction key -> the boons offered on the pick dilemma: { cqi, keys }.
     picks = {},
+    --- Faction key -> faction-wide key -> the turn its bundle comes off.
+    realms = {},
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +82,76 @@ end
 --- @returns string The payload line key.
 function M.line(kind, entry)
     return data.line_prefix .. kind .. "_" .. stem(entry)
+end
+
+--- Battles the lord must win to raise a boon one level.
+--- @returns number The wins.
+local function wins_per_level()
+    return debug_config.boon_wins_per_level[1] or data.wins_per_level
+end
+
+--- Turns that make a curse one level worse.
+--- @returns number The turns.
+local function turns_per_level()
+    return debug_config.curse_turns_per_level[1] or data.turns_per_level
+end
+
+--- The clock a boon or curse shows at the top of its bundle.
+--- @param kind string "boon" or "curse".
+--- @param entry table The entry.
+--- @returns string, number|nil The clock's name, and its count for a counted clock.
+local function clock(kind, entry)
+    if kind == "boon" then
+        if entry.charges then return "lasts", entry.charges end
+        if entry.level < data.max_level then return "upgrades", wins_per_level() - entry.wins end
+        return "strongest"
+    end
+    if entry.level < data.max_level then return "worsens", turns_per_level() - entry.turns end
+    if data.by_key.curse[entry.key].turns_into then return "becomes", data.turns_to_turn - entry.turns end
+    return "worst"
+end
+
+--- Applies a bundle with a clock effect on top through a custom bundle, or the plain bundle when the custom one cannot be built.
+--- @param key string The bundle key.
+--- @param name string The clock's name.
+--- @param count number|nil The clock's count, nil for a fixed clock.
+--- @param scope string The clock effect's scope.
+--- @param apply function Applies the custom bundle.
+--- @param fallback function Applies the plain bundle.
+local function apply_with_clock(key, name, count, scope, apply, fallback)
+    count = count and math.max(1, count)
+    local effect = data.clock_prefix .. name .. (count == 1 and "_one" or "")
+    local ok, err = pcall(function()
+        local bundle = cm:create_new_custom_effect_bundle(key)
+        bundle:add_effect(effect, scope, count or 1)
+        bundle:set_duration(0)
+        apply(bundle)
+    end)
+    if not ok then
+        log("boons: " .. key .. " could not take its clock " .. effect .. " (" .. tostring(err) .. "), so it goes on without it")
+        fallback()
+    end
+end
+
+--- Puts a boon's or curse's bundle on the lord with its clock, replacing the one there.
+--- @param character userdata The lord.
+--- @param kind string "boon" or "curse".
+--- @param entry table The entry.
+local function show(character, kind, entry)
+    local key = M.bundle(kind, entry)
+    local name, count = clock(kind, entry)
+    apply_with_clock(key, name, count, data.clock_scope.character, function(bundle) cm:apply_custom_effect_bundle_to_character(bundle, character) end,
+        function() cm:apply_effect_bundle_to_character(key, character, 0) end)
+end
+
+--- Puts a faction-wide bundle on a faction with its clock of turns left, replacing the one there.
+--- @param faction_name string The faction.
+--- @param key string The faction-wide key.
+--- @param turns number The turns it has left.
+local function show_realm(faction_name, key, turns)
+    local bundle_key = data.realm_prefix .. key
+    apply_with_clock(bundle_key, "realm", turns, data.clock_scope.faction, function(bundle) cm:apply_custom_effect_bundle_to_faction(bundle, cm:get_faction(faction_name)) end,
+        function() cm:apply_effect_bundle(bundle_key, faction_name, 0) end)
 end
 
 --- The entry for a key (and race) in a list, with its slot.
@@ -173,7 +246,7 @@ function M.raise(character, kind, entry, event)
     if entry.level >= data.max_level or entry.charges then return false end
     cm:remove_effect_bundle_from_character(M.bundle(kind, entry), character)
     entry.level, entry.wins, entry.turns = entry.level + 1, 0, 0
-    cm:apply_effect_bundle_to_character(M.bundle(kind, entry), character, 0)
+    show(character, kind, entry)
     if event == nil then event = kind == "boon" and "boon_grew" or "curse_worse" end
     notify(event, character, kind, entry)
     return true
@@ -210,7 +283,7 @@ function M.shift_curse(character, index)
     local entry = new_entry(config, old.level)
     cm:remove_effect_bundle_from_character(M.bundle("curse", old), character)
     list[index] = entry
-    cm:apply_effect_bundle_to_character(M.bundle("curse", entry), character, 0)
+    show(character, "curse", entry)
     log("boons: lord " .. character:command_queue_index() .. "'s " .. M.bundle("curse", old) .. " shifts into " .. M.bundle("curse", entry))
     notify("curse_shifted", character, "curse", entry)
     return config.key
@@ -224,7 +297,7 @@ end
 local function add(character, kind, entry, event)
     local list = record_of(character)[kind]
     list[#list + 1] = entry
-    cm:apply_effect_bundle_to_character(M.bundle(kind, entry), character, 0)
+    show(character, kind, entry)
     if event == nil then event = kind .. "_gained" end
     notify(event, character, kind, entry)
 end
@@ -260,6 +333,7 @@ function M.gain(character, kind, key, level, race, event)
     local carried = find(list, key, entry.race)
     if carried and config.charges then
         carried.charges = config.charges
+        show(character, kind, carried)
         log("boons: lord " .. character:command_queue_index() .. " refreshes " .. key .. " to " .. config.charges .. " battles")
         return true, carried
     end
@@ -304,7 +378,9 @@ end
 function M.gain_realm(faction_name, key)
     local config = data.realm_by_key[key]
     if not (config and M.enabled()) then return end
-    cm:apply_effect_bundle(data.realm_prefix .. key, faction_name, data.realm_turns)
+    M.realms[faction_name] = M.realms[faction_name] or {}
+    M.realms[faction_name][key] = cm:turn_number() + data.realm_turns
+    show_realm(faction_name, key, data.realm_turns)
     launch_line_incident(data.incident_prefix .. (config.good and "realm_boon" or "realm_curse"), data.line_prefix .. "realm_" .. key, cm:get_faction(faction_name))
     log("boons: " .. faction_name .. " gains " .. data.realm_prefix .. key .. " for " .. data.realm_turns .. " turns")
 end
@@ -468,15 +544,15 @@ end
 function M.on_battle_completed(character, won)
     local record = M.lords[tostring(character:command_queue_index())]
     if not record then return end
-    local wins_per_level = debug_config.boon_wins_per_level[1] or data.wins_per_level
+    local needed = wins_per_level()
     for i = #record.boon, 1, -1 do
         local boon = record.boon[i]
         if boon.charges then
             boon.charges = boon.charges - 1
-            if boon.charges <= 0 then M.remove(character, "boon", i, "boon_lost") end
-        elseif won then
+            if boon.charges <= 0 then M.remove(character, "boon", i, "boon_lost") else show(character, "boon", boon) end
+        elseif won and boon.level < data.max_level then
             boon.wins = boon.wins + 1
-            if boon.wins >= wins_per_level then M.raise(character, "boon", boon) end
+            if boon.wins >= needed then M.raise(character, "boon", boon) else show(character, "boon", boon) end
         end
     end
 end
@@ -491,10 +567,28 @@ local function turn_curse(character, index)
     M.gain(character, "boon", data.by_key.curse[curse.key].turns_into, 1, curse.race)
 end
 
---- At a human faction's turn start: forgets lords who are gone, puts back any bundle a lord lost, and moves every curse on a turn.
+--- Counts down a faction's faction-wide boons and curses: each one with turns left gets its clock moved on, and a finished one comes off.
+--- @param faction_name string The faction whose turn starts.
+local function tick_realms(faction_name)
+    local turn = cm:turn_number()
+    for key, ends in pairs(M.realms[faction_name] or {}) do
+        local left = ends - turn
+        if left > 0 then
+            show_realm(faction_name, key, left)
+            log("boons: " .. faction_name .. "'s " .. data.realm_prefix .. key .. " has " .. left .. " turns left")
+        else
+            cm:remove_effect_bundle(data.realm_prefix .. key, faction_name)
+            M.realms[faction_name][key] = nil
+            log("boons: " .. faction_name .. "'s " .. data.realm_prefix .. key .. " has run out")
+        end
+    end
+end
+
+--- At a human faction's turn start: forgets lords who are gone, moves every curse on a turn, puts every bundle back on with its clock moved
+--- on (and any a lord lost), and counts down the faction-wide ones.
 --- @param faction_name string The faction whose turn starts.
 function M.on_faction_turn_start(faction_name)
-    local turns_per_level = debug_config.curse_turns_per_level[1] or data.turns_per_level
+    local needed = turns_per_level()
     for cqi, record in pairs(M.lords) do
         if record.faction == faction_name then
             local character = tower_army.character(tonumber(cqi))
@@ -502,24 +596,28 @@ function M.on_faction_turn_start(faction_name)
                 log("boons: lord " .. cqi .. " is gone, dropping " .. #record.boon .. " boons and " .. #record.curse .. " curses")
                 M.lords[cqi] = nil
             else
-                for _, kind in ipairs(KINDS) do
-                    for _, entry in ipairs(record[kind]) do
-                        local bundle = M.bundle(kind, entry)
-                        if not character:has_effect_bundle(bundle) then cm:apply_effect_bundle_to_character(bundle, character, 0) end
-                    end
-                end
                 for i = #record.curse, 1, -1 do
                     local curse = record.curse[i]
                     curse.turns = curse.turns + 1
                     if curse.level < data.max_level then
-                        if curse.turns >= turns_per_level then M.raise(character, "curse", curse) end
+                        if curse.turns >= needed then M.raise(character, "curse", curse) end
                     elseif data.by_key.curse[curse.key].turns_into and curse.turns >= data.turns_to_turn then
                         turn_curse(character, i)
                     end
                 end
+                local clocks = {}
+                for _, kind in ipairs(KINDS) do
+                    for _, entry in ipairs(record[kind]) do
+                        show(character, kind, entry)
+                        local name, count = clock(kind, entry)
+                        clocks[#clocks + 1] = M.bundle(kind, entry) .. " " .. name .. (count and " " .. count or "")
+                    end
+                end
+                if #clocks > 0 then log("boons: lord " .. cqi .. " clocks: " .. table.concat(clocks, ", ")) end
             end
         end
     end
+    tick_realms(faction_name)
 end
 
 --- Gives every lord of the human factions the debug `grant_boons` and `grant_curses` they do not carry yet.
@@ -556,10 +654,10 @@ function M.register()
     if debug_config.grant_boons[1] or debug_config.grant_curses[1] then cm:add_first_tick_callback(grant_debug) end
 end
 
---- Exports the lords' boons and curses and any open full-slots or pick question for the save file.
+--- Exports the lords' boons and curses, the faction-wide ones' end turns, and any open full-slots or pick question for the save file.
 --- @returns table The state.
 function M.export_state()
-    return { lords = M.lords, pending = M.pending, picks = M.picks }
+    return { lords = M.lords, pending = M.pending, picks = M.picks, realms = M.realms }
 end
 
 --- Restores the lords' boons and curses from the save file. A save from before boons restores none.
@@ -569,6 +667,7 @@ function M.restore_state(saved)
     M.lords = saved.lords or {}
     M.pending = saved.pending or {}
     M.picks = saved.picks or {}
+    M.realms = saved.realms or {}
 end
 
 return M

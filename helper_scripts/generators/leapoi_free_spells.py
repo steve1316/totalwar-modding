@@ -15,6 +15,7 @@ import sys
 from typing import Dict, List, Tuple
 
 from core.utilities import load_tsv_data
+from generators import leapoi_army_spells as army_spells
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,9 +27,11 @@ DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "leapoi_free_spe
 # Prefix of every free spell's ability key. The spell's name follows.
 KEY_PREFIX = "land_enc_lib_free_"
 
-# Free spell name -> (vanilla spell ability, uses per battle, unique id of the copy, name in text).
+# Free spell name (its army spell id) -> (vanilla spell ability, uses per battle, unique id of the copy, name in text): every spell of the
+# lore pool (generators/leapoi_army_spells.py).
 FREE_SPELLS: Dict[str, Tuple[str, int, str, str]] = {
-    "blizzard": ("wh3_main_spell_tempest_blizzard", 2, "1700182001", "Blizzard"),
+    spell["id"]: (spell["source"], spell["uses"], str(army_spells.FREE_ID_BASE + number), spell["name"])
+    for number, spell in enumerate(army_spells.load()["lore"], 1)
 }
 
 # Tables a copy takes rows from, and the column that names the ability in each.

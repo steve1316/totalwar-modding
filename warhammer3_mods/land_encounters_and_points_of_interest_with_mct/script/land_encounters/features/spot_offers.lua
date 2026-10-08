@@ -15,6 +15,7 @@ local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_army = require("script/land_encounters/features/tower_army")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local boons = require("script/land_encounters/features/boons")
+local army_spells = require("script/land_encounters/core/army_spells")
 
 local M = {
     --- Faction key -> the site dilemma it has open: { site, offers, signature, general_cqi, x, y, difficulty, cards, targets, shown_affordable }.
@@ -180,6 +181,7 @@ local function eligible(offer, ctx)
         if #captives == 0 then return false end
         cards.units = { captives[random_number(#captives)] }
     end
+    if offer.spell_pool then cards.spell = army_spells.roll(offer.spell_pool) end
     for _, key in ipairs(cards.units or {}) do ctx.shown_units[key] = true end
     if offer.gold_per_enemy_unit then cards.gold = offer.gold_per_enemy_unit * #enemy_units end
     if offer.ransom then
@@ -310,6 +312,7 @@ local function build_choice(offer, pending, faction_name, choice_key)
     local fights = offer.guardian or gamble_has(offer, "guardian")
     local choice = { key = choice_key, lines = fights and { line, offers_data.fight_line } or { line } }
     local cards = pending.cards[offer.key] or {}
+    if cards.spell then table.insert(choice.lines, 2, army_spells.line(cards.spell)) end
     if offer.gold and not offer.gamble then choice.gold = offer.gold end
     if cards.gold then choice.gold = cards.gold end
     if price_as_card then choice.gold = (choice.gold or 0) - site_cost(pending, offer) end
@@ -425,6 +428,10 @@ local function apply_fields(fields, offer, state, rolled)
         log("spot: " .. offer.key .. " rolls gold " .. tostring(rewards.gold) .. ", items " .. table.concat(rewards.items, ", "))
     end
     if fields.army_bundle then tower_army.apply_bundle(general_cqi, fields.army_bundle[1], fields.army_bundle[2]) end
+    if fields.spell_pool and state.spell then
+        tower_army.apply_bundle(general_cqi, army_spells.bundle(state.spell), fields.spell_turns)
+        log("spot: " .. offer.key .. " gives lord " .. general_cqi .. "'s army " .. army_spells.name(state.spell) .. " for " .. fields.spell_turns .. " turns")
+    end
     if fields.faction_bundle then offer_effects.faction_bundle(faction_name, fields.faction_bundle[1], fields.faction_bundle[2]) end
     if fields.trait then tower_lords.add_trait(general_cqi, fields.trait, 1, true) end
     if fields.trait_points then tower_lords.add_trait(general_cqi, fields.trait_points, 1, true) end
@@ -530,7 +537,8 @@ function M.take(faction_name, choice_key)
     end
     M.pending_by_faction[faction_name] = nil
     local paid = offer.cost and site_cost(pending, offer) or 0
-    local state = { faction_name = faction_name, general_cqi = pending.general_cqi, difficulty = pending.difficulty, x = pending.x, y = pending.y, paid = paid }
+    local state = { faction_name = faction_name, general_cqi = pending.general_cqi, difficulty = pending.difficulty, x = pending.x, y = pending.y, paid = paid,
+        spell = (pending.cards[offer.key] or {}).spell }
     local before = offer_effects.treasury(faction_name)
     offer_effects.log_army_change(pending.general_cqi, offer.key)
     --- A site that shows its price as a card had it charged by the payload.
