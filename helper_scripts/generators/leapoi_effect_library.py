@@ -36,7 +36,7 @@ CUSTOM_EFFECTS: Dict[str, Tuple[str, str, str, List[Tuple[str, Tuple]]]] = {
     # offer that hands it out needs a new campaign, said in the change notes.
     "leech_hits": ("magic_character.png", "battle", 'Attacks cause "Leeched" for all units, draining hit points', [
         ("special_ability_phase_displays_tables", ("{jn}", "", "wh3_dlc20_lore_of_death_banner_debuff", "", "top", "true")),
-        ("special_ability_phases_tables", ("{jn}", "5.0000", "negative", "", "false", "false", "0.0000", "0.0000", "0.0000", "1.0000", "20", "1",
+        ("special_ability_phases_tables", ("{jn}", "5.0000", "negative", "", "false", "false", "0.0000", "0.0000", "0.0000", "1.0000", "10", "1",
                                            "false", "0.0000", "0.0000", "false", "0", "", "{jn}", "", "false", "false", "true", "0.0000", "", "",
                                            "false", "0.0000", "0.0000", "false", "0.0000")),
         ("special_ability_phases.loc", ("special_ability_phases_onscreen_name_{jn}", "Leeched!")),
@@ -74,7 +74,55 @@ CUSTOM_EFFECTS: Dict[str, Tuple[str, str, str, List[Tuple[str, Tuple]]]] = {
     "ambush_stance_cost": ("teleport.png", "campaign", "Campaign movement cost of the Ambush stance: %+n%", [
         ("effect_bonus_value_stance_junctions_tables", ("cost_percentage_mod", "{fx}", "MILITARY_FORCE_ACTIVE_STANCE_TYPE_AMBUSH")),
     ]),
+    "melee_defence_defending": ("melee.png", "battle", "Melee defence: %+n when defending", [
+        ("effect_bonus_value_battle_context_junctions_tables", ("melee_defence_mod", "{fx}", "fighting_force_status_yours_defending")),
+    ]),
+    "leadership_defending": ("morale.png", "battle", "Leadership: %+n when defending", [
+        ("effect_bonus_value_battle_context_junctions_tables", ("morale", "{fx}", "fighting_force_status_yours_defending")),
+    ]),
+    "unbreakable_defending": ("attribute_unbreakable.png", "battle", "Attribute: Unbreakable when defending", [
+        ("battle_context_unit_attribute_junctions_tables", ("{jn}", "fighting_force_status_yours_defending", "unbreakable")),
+        ("effect_bonus_value_battle_context_unit_attribute_junctions_tables", ("enable", "{fx}", "{jn}")),
+    ]),
 }
+
+# Race key (configs/boons.lua `races`) -> (name in text, battle context, diplomacy effect), for the boons and curses about one race.
+RACES: Dict[str, Tuple[str, str, str]] = {
+    "empire": ("the Empire", "fighting_culture_empire", "wh_main_faction_political_diplomacy_mod_empire"),
+    "bretonnia": ("Bretonnia", "fighting_culture_bretonnia", "wh_dlc05_faction_political_diplomacy_mod_bretonnia"),
+    "kislev": ("Kislev", "fighting_culture_kislev", "wh3_main_faction_political_diplomacy_mod_kislev"),
+    "cathay": ("Grand Cathay", "fighting_culture_cathay", "wh3_main_faction_political_diplomacy_mod_cathay"),
+    "dwarfs": ("the Dwarfs", "fighting_culture_dwarfs", "wh_main_faction_political_diplomacy_mod_dwarfs"),
+    "high_elves": ("the High Elves", "fighting_culture_highelf", "wh2_main_faction_political_diplomacy_mod_high_elves"),
+    "wood_elves": ("the Wood Elves", "fighting_culture_wood_elves", "wh_dlc05_faction_political_diplomacy_mod_wood_elves"),
+    "dark_elves": ("the Dark Elves", "fighting_culture_darkelf", "wh2_main_faction_political_diplomacy_mod_dark_elves"),
+    "lizardmen": ("the Lizardmen", "fighting_culture_lizardmen", "wh2_main_faction_political_diplomacy_mod_lizardmen"),
+    "greenskins": ("the Greenskins", "fighting_culture_greenskins", "wh_main_faction_political_diplomacy_mod_greenskins"),
+    "skaven": ("the Skaven", "fighting_culture_skaven", "wh3_main_faction_political_diplomacy_mod_skaven"),
+    "ogres": ("the Ogre Kingdoms", "fighting_culture_ogres", "wh3_main_faction_political_diplomacy_mod_ogre_kingdoms"),
+    "vampire_counts": ("the Vampire Counts", "fighting_culture_vampire_counts", "wh_main_faction_political_diplomacy_mod_vampire_counts"),
+    "vampire_coast": ("the Vampire Coast", "fighting_culture_vampire_coast", "wh2_dlc11_faction_political_diplomacy_mod_vampire_coast"),
+    "tomb_kings": ("the Tomb Kings", "fighting_culture_tomb_kings", "wh2_dlc09_faction_political_diplomacy_mod_tomb_kings"),
+    "norsca": ("Norsca", "fighting_culture_norsca", "wh_main_faction_political_diplomacy_mod_norsca"),
+    "chaos": ("the Warriors of Chaos", "fighting_culture_chaos", "wh_main_faction_political_diplomacy_mod_chaos"),
+    "khorne": ("Khorne", "fighting_culture_khorne", "wh3_main_faction_political_diplomacy_mod_khorne"),
+    "nurgle": ("Nurgle", "fighting_culture_nurgle", "wh3_main_faction_political_diplomacy_mod_nurgle"),
+    "slaanesh": ("Slaanesh", "fighting_culture_slaanesh", "wh3_main_faction_political_diplomacy_mod_slaanesh"),
+    "tzeentch": ("Tzeentch", "fighting_culture_tzeentch", "wh3_main_faction_political_diplomacy_mod_tzeentch"),
+    "daemons": ("the Daemons of Chaos", "fighting_culture_daemons", "wh3_main_faction_political_diplomacy_mod_daemons"),
+    "beastmen": ("the Beastmen", "fighting_culture_beastmen", "wh_dlc03_faction_political_diplomacy_mod_beastmen"),
+    "chaos_dwarfs": ("the Chaos Dwarfs", "fighting_culture_chaos_dwarfs", "wh3_dlc23_faction_political_diplomacy_mod_chaos_dwarfs"),
+}
+
+# Weapon strength (melee damage and its armour-piercing part, as vanilla's "against Humans" does) and melee attack against each race.
+for _race, (_name, _context, _) in RACES.items():
+    CUSTOM_EFFECTS["weapon_strength_vs_" + _race] = ("weapon_damage.png", "battle", f"Weapon strength: %+n% when fighting against {_name}", [
+        ("effect_bonus_value_battle_context_junctions_tables", ("melee_damage_mod_mult", "{fx}", _context)),
+        ("effect_bonus_value_battle_context_junctions_tables", ("melee_damage_ap_mod_mult", "{fx}", _context)),
+    ])
+    CUSTOM_EFFECTS["melee_attack_vs_" + _race] = ("melee.png", "battle", f"Melee attack: %+n when fighting against {_name}", [
+        ("effect_bonus_value_battle_context_junctions_tables", ("melee_attack_mod", "{fx}", _context)),
+    ])
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////

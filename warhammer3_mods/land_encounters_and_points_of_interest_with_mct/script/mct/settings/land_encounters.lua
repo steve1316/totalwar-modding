@@ -220,6 +220,7 @@ local forces_page = mct_mod:create_settings_page("Enemy Forces", 2)
 local towers_page = mct_mod:create_settings_page("Towers", 1)
 local smithies_page = mct_mod:create_settings_page("Smithies", 1)
 local taverns_page = mct_mod:create_settings_page("Taverns", 1)
+local boons_page = mct_mod:create_settings_page("Boons and Curses", 1)
 if mct_default_page then
     mct_mod:set_default_settings_page(general_page)
     mct_default_page:remove()
@@ -500,6 +501,20 @@ add_setting_slider("tavern_ai_upgrade_chance", "taverns_section", "AI upgrade ch
     "Chance each round that an AI owner upgrades its Tavern, rolled only while it holds twice the price.", { 0, 20, 1, 0 })
 
 add_guide_section("taverns", "Guide: The Tavern", taverns_page, mct_guides.taverns_text(), true)
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Boons and Curses page
+
+add_section("boons_section", "Boons and Curses", boons_page)
+
+add_checkbox("enable_boons", "boons_section", "Enable boons and curses",
+    "Lords gain lasting boons, which grow as they win battles, and curses, which get worse every few turns until they are cleansed. When off, "
+    .. "no lord gains a new one, and the ones already carried stay as they are.", get_mct_settings().enable_boons)
+add_setting_slider("boon_slots", "boons_section", "Boon slots", "How many boons a lord can carry. A lord with every slot full chooses which "
+    .. "boon to give up for a new one.", { 1, 5, 1, 0 })
+add_setting_slider("curse_slots", "boons_section", "Curse slots", "How many curses a lord can carry. A new curse on a lord with every slot "
+    .. "full makes their mildest curse worse instead.", { 1, 5, 1, 0 })
 
 --- Builds every guide's text again and puts it on its section. The guides read game text, which a campaign does not have ready when this
 --- file first runs, so they are rebuilt once MCT has started and each time its panel opens, before a page is drawn.

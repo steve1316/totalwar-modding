@@ -66,4 +66,16 @@ M.test_bundles = {}
 --- { "land_enc_effect_lib_onhit_blinded" }.
 M.test_bundles_enemy = {}
 
+--- Boon keys (configs/boons.lua) every lord of the human factions gains at level 1 when a game loads, once each, e.g. { "bloodsworn" }.
+M.grant_boons = {}
+
+--- Curse keys every lord of the human factions gains at level 1 when a game loads, once each, e.g. { "haunted" }.
+M.grant_curses = {}
+
+--- Battles won that raise a boon a level, instead of the config's, e.g. { 1 }.
+M.boon_wins_per_level = {}
+
+--- Turns that make a curse a level worse, instead of the config's, e.g. { 1 }.
+M.curse_turns_per_level = {}
+
 return M

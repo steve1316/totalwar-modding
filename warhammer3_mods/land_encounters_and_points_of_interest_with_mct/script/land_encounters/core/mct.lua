@@ -13,11 +13,17 @@ local SAME_NAMED_OPTIONS = { "enable_towers", "tower_cooldown", "tower_gold_perc
     "tower_hidden_floor_chance", "enable_smithies", "smithy_cooldown", "smithy_price_percent", "smithy_tribute_percent", "smithy_ai_takeover_chance",
     "smithy_ai_upgrade_chance", "enable_taverns", "tavern_contract_turns", "tavern_hall_restock", "tavern_hire_markup", "tavern_hires_per_visit",
     "tavern_cooldown", "tavern_penalty_percent", "tavern_penalty_turns", "tavern_ai_takeover_chance", "tavern_ai_upgrade_chance", "ready_notices",
-    "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance" }
+    "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance", "enable_boons", "boon_slots", "curse_slots" }
 
 --- Default settings. The MctInitialized listener overwrites these at first_tick with the user's
 --- finalized MCT option values via set_mct_settings.
 local mct_settings = {
+    --- Lords carry boons and curses. When off, no lord gains one, and the ones already carried stay as they are.
+    enable_boons = true,
+    --- Boons a lord can carry at once.
+    boon_slots = 3,
+    --- Curses a lord can carry at once.
+    curse_slots = 3,
     --- Smithies are on the map. When off they are removed and their tributes, takeovers and sieges pause.
     enable_smithies = true,
     --- Taverns are on the map. When off they are removed and do nothing.

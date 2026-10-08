@@ -1,5 +1,5 @@
 --- Registers cm:add_saving_game_callback and cm:add_loading_game_callback for the mod's state blobs: land manager, POI event manager, spot
---- event manager, spot offers, spot battle offers, and the open dilemmas' greyed-out choices and refunds. Manager references are populated
+--- event manager, spot offers, spot battle offers, the open dilemmas' greyed-out choices and refunds, and the lords' boons and curses. Manager references are populated
 --- by the entry point's pre_first_tick_callback.
 
 require("script/land_encounters/utils/common")
@@ -10,6 +10,7 @@ local FLATTENED_SPOT_EVENT_STATE = "flattened_land_encounters_spot_event_manager
 local SPOT_OFFERS_STATE = "land_encounters_spot_offers_state"
 local SPOT_BATTLES_STATE = "land_encounters_spot_battles_state"
 local DILEMMAS_STATE = "land_encounters_dilemmas_state"
+local BOONS_STATE = "land_encounters_boons_state"
 local DEFAULT_FLATTENED_SPOTS_VALUE = {}
 
 local M = {}
@@ -35,6 +36,7 @@ function M.register()
             cm:save_named_value(SPOT_OFFERS_STATE, require("script/land_encounters/features/spot_offers").export_state(), context)
             cm:save_named_value(SPOT_BATTLES_STATE, require("script/land_encounters/features/spot_battles").export_state(), context)
             cm:save_named_value(DILEMMAS_STATE, require("script/land_encounters/core/dilemmas").export_state(), context)
+            cm:save_named_value(BOONS_STATE, require("script/land_encounters/features/boons").export_state(), context)
         end
     )
 
@@ -47,6 +49,7 @@ function M.register()
             require("script/land_encounters/features/spot_offers").restore_state(cm:load_named_value(SPOT_OFFERS_STATE, {}, context))
             require("script/land_encounters/features/spot_battles").restore_state(cm:load_named_value(SPOT_BATTLES_STATE, {}, context))
             require("script/land_encounters/core/dilemmas").restore_state(cm:load_named_value(DILEMMAS_STATE, {}, context))
+            require("script/land_encounters/features/boons").restore_state(cm:load_named_value(BOONS_STATE, {}, context))
         end
     )
 end

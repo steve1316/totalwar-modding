@@ -288,3 +288,21 @@ incidents_localised_title_land_enc_incident_spot_wound_paid_3	The Price Is Paid	
 incidents_localised_description_land_enc_incident_spot_wound_paid_3	The price of what we took comes due at once. Our lord is struck down by a wound that will take 3 turns to heal.	false
 incidents_localised_title_land_enc_incident_spot_wound_paid_5	The Price Is Paid	false
 incidents_localised_description_land_enc_incident_spot_wound_paid_5	The price of what we took comes due at once. Our lord is struck down by a wound that will take 5 turns to heal.	false
+incidents_localised_title_land_enc_incident_boon_gained	A Boon Is Won	false
+incidents_localised_description_land_enc_incident_boon_gained	Something has changed in [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_boon_lord").StringValue}}[[/col]]'s army, and for the better. Every warrior can feel it.	false
+incidents_localised_title_land_enc_incident_boon_grew	The Boon Grows	false
+incidents_localised_description_land_enc_incident_boon_grew	Another victory, and [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_boon_lord").StringValue}}[[/col]]'s army has grown stronger for it.	false
+incidents_localised_title_land_enc_incident_boon_lost	A Boon Fades	false
+incidents_localised_description_land_enc_incident_boon_lost	Whatever gave [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_boon_lord").StringValue}}[[/col]]'s army its edge is gone now.	false
+incidents_localised_title_land_enc_incident_curse_gained	A Curse Takes Hold	false
+incidents_localised_description_land_enc_incident_curse_gained	A shadow has fallen over [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_boon_lord").StringValue}}[[/col]]'s army, and it will not lift on its own.	false
+incidents_localised_title_land_enc_incident_curse_worse	The Curse Deepens	false
+incidents_localised_description_land_enc_incident_curse_worse	The curse on [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_boon_lord").StringValue}}[[/col]]'s army grows heavier with every passing day.	false
+incidents_localised_title_land_enc_incident_curse_lifted	A Curse Is Lifted	false
+incidents_localised_description_land_enc_incident_curse_lifted	The weight on [[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_boon_lord").StringValue}}[[/col]]'s army is gone at last.	false
+incidents_localised_title_land_enc_incident_curse_turned	The Curse Turns	false
+incidents_localised_description_land_enc_incident_curse_turned	[[col:yellow]]{{CcoCampaignEventIncident:ScriptObjectContext("land_enc_boon_lord").StringValue}}[[/col]]'s army has carried its curse so long that it has become something else.	false
+incidents_localised_title_land_enc_incident_realm_boon	A Blessing on the Realm	false
+incidents_localised_description_land_enc_incident_realm_boon	Good fortune has settled over the whole realm, though it will not last forever.	false
+incidents_localised_title_land_enc_incident_realm_curse	A Curse on the Realm	false
+incidents_localised_description_land_enc_incident_realm_curse	A darkness has fallen over the whole realm. It will pass, in time.	false

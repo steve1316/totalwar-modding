@@ -79,3 +79,4 @@ land_enc_dilemma_site_merchants_wagon	false			imperial_supplies	false	Event	UI_C
 land_enc_dilemma_site_sunken_library	false			books_of_nagash	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_spoils_of_war	false			land_victory	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_site_tavern_bar	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_boon_full	false			nemesis_crown	false	Event	UI_CAM_EVENT_Dilemma			false

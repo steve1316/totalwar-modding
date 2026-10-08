@@ -144,3 +144,12 @@ land_enc_incident_spot_missions_untracked	false	messenger	false	Event		false		0.
 land_enc_incident_spot_wound_paid_2	false	attrition_disease	false	Event		false		0.0000	false
 land_enc_incident_spot_wound_paid_3	false	attrition_disease	false	Event		false		0.0000	false
 land_enc_incident_spot_wound_paid_5	false	attrition_disease	false	Event		false		0.0000	false
+land_enc_incident_boon_gained	false	ursun_claimed	false	Event		false		0.0000	false
+land_enc_incident_boon_grew	false	victory	false	Event		false		0.0000	false
+land_enc_incident_boon_lost	false	attrition_mountain	false	Event		false		0.0000	false
+land_enc_incident_curse_gained	false	ai_wins_soul	false	Event		false		0.0000	false
+land_enc_incident_curse_worse	false	attrition_vampire_territory	false	Event		false		0.0000	false
+land_enc_incident_curse_lifted	false	rift_entered	false	Event		false		0.0000	false
+land_enc_incident_curse_turned	false	sword_of_khaine	false	Event		false		0.0000	false
+land_enc_incident_realm_boon	false	winds_of_magic_change	false	Event		false		0.0000	false
+land_enc_incident_realm_curse	false	chaos_doom_tide	false	Event		false		0.0000	false

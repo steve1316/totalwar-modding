@@ -23,3 +23,54 @@ effects_description_land_enc_lib_fx_comet_army_ability	Army ability: "Comet of C
 effects_description_land_enc_lib_fx_comet_army_ability_uses	Uses: %+n for the "Comet of Casandora" army ability	false
 effects_description_land_enc_lib_fx_march_blocked	Cannot use the March stance	false
 effects_description_land_enc_lib_fx_ambush_stance_cost	Campaign movement cost of the Ambush stance: %+n%	false
+effects_description_land_enc_lib_fx_melee_defence_defending	Melee defence: %+n when defending	false
+effects_description_land_enc_lib_fx_leadership_defending	Leadership: %+n when defending	false
+effects_description_land_enc_lib_fx_unbreakable_defending	Attribute: Unbreakable when defending	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_empire	Weapon strength: %+n% when fighting against the Empire	false
+effects_description_land_enc_lib_fx_melee_attack_vs_empire	Melee attack: %+n when fighting against the Empire	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_bretonnia	Weapon strength: %+n% when fighting against Bretonnia	false
+effects_description_land_enc_lib_fx_melee_attack_vs_bretonnia	Melee attack: %+n when fighting against Bretonnia	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_kislev	Weapon strength: %+n% when fighting against Kislev	false
+effects_description_land_enc_lib_fx_melee_attack_vs_kislev	Melee attack: %+n when fighting against Kislev	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_cathay	Weapon strength: %+n% when fighting against Grand Cathay	false
+effects_description_land_enc_lib_fx_melee_attack_vs_cathay	Melee attack: %+n when fighting against Grand Cathay	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_dwarfs	Weapon strength: %+n% when fighting against the Dwarfs	false
+effects_description_land_enc_lib_fx_melee_attack_vs_dwarfs	Melee attack: %+n when fighting against the Dwarfs	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_high_elves	Weapon strength: %+n% when fighting against the High Elves	false
+effects_description_land_enc_lib_fx_melee_attack_vs_high_elves	Melee attack: %+n when fighting against the High Elves	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_wood_elves	Weapon strength: %+n% when fighting against the Wood Elves	false
+effects_description_land_enc_lib_fx_melee_attack_vs_wood_elves	Melee attack: %+n when fighting against the Wood Elves	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_dark_elves	Weapon strength: %+n% when fighting against the Dark Elves	false
+effects_description_land_enc_lib_fx_melee_attack_vs_dark_elves	Melee attack: %+n when fighting against the Dark Elves	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_lizardmen	Weapon strength: %+n% when fighting against the Lizardmen	false
+effects_description_land_enc_lib_fx_melee_attack_vs_lizardmen	Melee attack: %+n when fighting against the Lizardmen	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_greenskins	Weapon strength: %+n% when fighting against the Greenskins	false
+effects_description_land_enc_lib_fx_melee_attack_vs_greenskins	Melee attack: %+n when fighting against the Greenskins	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_skaven	Weapon strength: %+n% when fighting against the Skaven	false
+effects_description_land_enc_lib_fx_melee_attack_vs_skaven	Melee attack: %+n when fighting against the Skaven	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_ogres	Weapon strength: %+n% when fighting against the Ogre Kingdoms	false
+effects_description_land_enc_lib_fx_melee_attack_vs_ogres	Melee attack: %+n when fighting against the Ogre Kingdoms	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_vampire_counts	Weapon strength: %+n% when fighting against the Vampire Counts	false
+effects_description_land_enc_lib_fx_melee_attack_vs_vampire_counts	Melee attack: %+n when fighting against the Vampire Counts	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_vampire_coast	Weapon strength: %+n% when fighting against the Vampire Coast	false
+effects_description_land_enc_lib_fx_melee_attack_vs_vampire_coast	Melee attack: %+n when fighting against the Vampire Coast	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_tomb_kings	Weapon strength: %+n% when fighting against the Tomb Kings	false
+effects_description_land_enc_lib_fx_melee_attack_vs_tomb_kings	Melee attack: %+n when fighting against the Tomb Kings	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_norsca	Weapon strength: %+n% when fighting against Norsca	false
+effects_description_land_enc_lib_fx_melee_attack_vs_norsca	Melee attack: %+n when fighting against Norsca	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_chaos	Weapon strength: %+n% when fighting against the Warriors of Chaos	false
+effects_description_land_enc_lib_fx_melee_attack_vs_chaos	Melee attack: %+n when fighting against the Warriors of Chaos	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_khorne	Weapon strength: %+n% when fighting against Khorne	false
+effects_description_land_enc_lib_fx_melee_attack_vs_khorne	Melee attack: %+n when fighting against Khorne	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_nurgle	Weapon strength: %+n% when fighting against Nurgle	false
+effects_description_land_enc_lib_fx_melee_attack_vs_nurgle	Melee attack: %+n when fighting against Nurgle	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_slaanesh	Weapon strength: %+n% when fighting against Slaanesh	false
+effects_description_land_enc_lib_fx_melee_attack_vs_slaanesh	Melee attack: %+n when fighting against Slaanesh	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_tzeentch	Weapon strength: %+n% when fighting against Tzeentch	false
+effects_description_land_enc_lib_fx_melee_attack_vs_tzeentch	Melee attack: %+n when fighting against Tzeentch	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_daemons	Weapon strength: %+n% when fighting against the Daemons of Chaos	false
+effects_description_land_enc_lib_fx_melee_attack_vs_daemons	Melee attack: %+n when fighting against the Daemons of Chaos	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_beastmen	Weapon strength: %+n% when fighting against the Beastmen	false
+effects_description_land_enc_lib_fx_melee_attack_vs_beastmen	Melee attack: %+n when fighting against the Beastmen	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_chaos_dwarfs	Weapon strength: %+n% when fighting against the Chaos Dwarfs	false
+effects_description_land_enc_lib_fx_melee_attack_vs_chaos_dwarfs	Melee attack: %+n when fighting against the Chaos Dwarfs	false

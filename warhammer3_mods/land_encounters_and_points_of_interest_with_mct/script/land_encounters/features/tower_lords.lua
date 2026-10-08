@@ -102,12 +102,13 @@ end
 function M.add_title(general_cqi, title)
     local general = character(general_cqi)
     if not general then return end
-    local forename = common.get_localised_string(general:get_forename())
-    local surname = common.get_localised_string(general:get_surname())
-    if forename == "" or title == "" then
+    local name = lord_name(general)
+    if name == "" or title == "" then
         log("tower: lord " .. general_cqi .. " has no readable name or title, the title '" .. title .. "' is not added")
         return
     end
+    local forename = common.get_localised_string(general:get_forename())
+    local surname = common.get_localised_string(general:get_surname())
     surname = (surname ~= "" and surname .. " " or "") .. title
     cm:change_character_custom_name(general, forename, surname, "", "")
     log("tower: lord " .. general_cqi .. " is now " .. forename .. " " .. surname)

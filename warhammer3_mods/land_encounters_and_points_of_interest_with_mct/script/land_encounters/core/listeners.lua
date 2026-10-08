@@ -13,6 +13,7 @@ local smithy_events = events.smithy
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local spot_offers = require("script/land_encounters/features/spot_offers")
 local effect_library = require("script/land_encounters/features/effect_library")
+local boons = require("script/land_encounters/features/boons")
 local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
 
 --- Tavern dilemma key -> true, for the Tavern choice listener.
@@ -41,6 +42,7 @@ M.last_round_update_turn = nil
 
 --- Registers every persistent listener. Called once at module load by the entry point.
 function M.register()
+    boons.register()
 
     --- Once per round (on the first human turn), expire stale encounters, refill them, and update POI states. Every human turn, check that
     --- faction's smithy sieges.
@@ -60,6 +62,7 @@ function M.register()
             M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
             spot_offers.on_faction_turn_start(context:faction():name())
             effect_library.apply_test_bundles(context:faction())
+            boons.on_faction_turn_start(context:faction():name())
         end,
         IS_PERSISTENT_LISTENER
     )

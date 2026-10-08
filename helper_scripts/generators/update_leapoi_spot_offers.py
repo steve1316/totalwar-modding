@@ -20,6 +20,7 @@ from typing import Dict, List, Pattern, Tuple
 from generators.leapoi_tower_offer_text import NOTICES as TOWER_NOTICE_TEXT, TOWER_BUNDLES, TOWER_ICONS, TOWER_LINES
 from generators import leapoi_battle_modifiers as battle_modifiers
 from generators import leapoi_effect_library as effect_library
+from generators import leapoi_boons as boons
 from generators.leapoi_stat_icons import add_stat_icons
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
@@ -843,6 +844,7 @@ end
 local battle_dilemmas = {}
 for key in pairs(require("script/land_encounters/configs/battle_categories").dilemma_keys) do battle_dilemmas[#battle_dilemmas + 1] = key end
 local battle_modifiers = require("script/land_encounters/configs/battle_modifiers")
+local boons = require("script/land_encounters/configs/boons")
 table.sort(battle_dilemmas)
 local function encode(v)
     local t = type(v)
@@ -868,7 +870,7 @@ io.write(encode({ sites = data.sites, spoils = data.spoils, tavern = data.tavern
     avoid_choice_key = data.avoid_choice_key,
     unaffordable_line = data.unaffordable_line, taken_line = data.taken_line, missions_context = data.missions_context,
     mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas, result_detail_context = data.result_detail_context,
-    battle_modifiers = battle_modifiers }))
+    battle_modifiers = battle_modifiers, boons = boons }))
 """
 
 
@@ -919,7 +921,8 @@ def tiers_text(tiers: List[int]) -> str:
 
 def expand_bundles(config: Dict) -> Dict[str, Tuple]:
     """Lists every bundle this script writes by its full key: the spot's, a tiered bundle as one bundle per difficulty (named as
-    `steps.tiered` names them), the tower's tiered battle bundles, one dividends bundle per gold amount either feature pays each turn, and the effect library's bundles.
+    `steps.tiered` names them), the tower's tiered battle bundles, one dividends bundle per gold amount either feature pays each turn, the effect library's bundles, and every
+    boon, curse and faction-wide bundle.
 
     Args:
         config (Dict): The loaded config.
@@ -949,6 +952,7 @@ def expand_bundles(config: Dict) -> Dict[str, Tuple]:
     for amount in sorted(amounts):
         flat[config["dividends_bundle_prefix"] + str(amount)] = (target, icon, title, description, [(effect, scope, amount)])
     flat.update(effect_library.bundles())
+    flat.update(boons.bundles(config["boons"]))
     return flat
 
 
@@ -1091,6 +1095,27 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         add(LOC_PREFIX + "cdir_events_dilemma_choice_details.loc.tsv", "cdir_events_dilemma_choice_details_localised_choice_label_" + dilemma + choice,
             text, "false")
 
+    def add_dilemma(key: str, image: str, title: str, description: str, choices: List[str]) -> None:
+        nonlocal row_id
+        add(table("dilemmas_tables"), key, "false", "", "", image, "false", "Event", "UI_CAM_EVENT_Dilemma", "", "", "false")
+        for option, value in [("GEN_TARGET_NONE", ""), ("VAR_CHANCE", "100"), ("VAR_FOLLOWUP_CHANCE", "100")]:
+            add(table("cdir_events_dilemma_option_junctions_tables"), row_id, key, option, value, "default")
+            row_id += 1
+        for choice in choices:
+            add(table("cdir_events_dilemma_payloads_tables"), row_id, choice, key, "TEXT_DISPLAY", "LOOKUP[dummy_do_nothing]", "default")
+            row_id += 1
+        add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_title_" + key, title_case(title), "false")
+        add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_description_" + key, description, "false")
+
+    def add_incident(key: str, image: str, title: str, description: str) -> None:
+        nonlocal row_id
+        add(table("incidents_tables"), key, "false", image, "false", "Event", "", "false", "", "0.0000", "false")
+        for option, value in [("GEN_TARGET_NONE", ""), ("VAR_CHANCE", "100")]:
+            add(table("cdir_events_incident_option_junctions_tables"), row_id, key, option, value, "default")
+            row_id += 1
+        add(LOC_PREFIX + "incidents.loc.tsv", "incidents_localised_title_" + key, title_case(title), "false")
+        add(LOC_PREFIX + "incidents.loc.tsv", "incidents_localised_description_" + key, description, "false")
+
     def objective(name: str, icon: str, text: str, banner: str) -> None:
         for suffix, shown in [("", text), ("_message", banner)]:
             add(table("scripted_objectives_tables"), NOTICE_PREFIX + name + suffix, "ui/campaign ui/effect_bundles/" + icon)
@@ -1104,23 +1129,16 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     battle_keys = [(c, k) for c, k in choice_keys if k != "walk_away" and by_key[k]["pool"] in config["battle_pools"]]
     row_id = FIRST_ROW_ID
     for site in all_sites(config):
-        dilemma = config["dilemma_prefix"] + site["key"]
+        site_dilemma = config["dilemma_prefix"] + site["key"]
         title, description = SITES[site["key"]]
-        add(table("dilemmas_tables"), dilemma, "false", "", "", site["ui_image"], "false", "Event", "UI_CAM_EVENT_Dilemma", "", "", "false")
-        for option, value in [("GEN_TARGET_NONE", ""), ("VAR_CHANCE", "100"), ("VAR_FOLLOWUP_CHANCE", "100")]:
-            add(table("cdir_events_dilemma_option_junctions_tables"), row_id, dilemma, option, value, "default")
-            row_id += 1
-        add(table("cdir_events_dilemma_payloads_tables"), row_id, "FIRST", dilemma, "TEXT_DISPLAY", "LOOKUP[dummy_do_nothing]", "default")
-        row_id += 1
-        add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_title_" + dilemma, title_case(title), "false")
         leave = site.get("leave_line")
         footer = LEAVE_FOOTER.format(OFFERS[leave][1][0].lower() + OFFERS[leave][1][1:]) if leave else SITE_FOOTER
-        add(LOC_PREFIX + "dilemmas.loc.tsv", "dilemmas_localised_description_" + dilemma, description + footer, "false")
+        add_dilemma(site_dilemma, site["ui_image"], title, description + footer, ["FIRST"])
         labels = site_keys + ([(config["signature_choice_key"], site["signature"])] if site.get("signature") else [])
         for choice, key in labels:
             # A site with its own leave line labels Walk away after it.
             shown = site.get("leave_line", key) if key == "walk_away" else key
-            label(dilemma, choice, title_case(OFFERS[shown][0]))
+            label(site_dilemma, choice, title_case(OFFERS[shown][0]))
         if site.get("leave_line"):
             line(config["line_prefix"] + site["leave_line"], ICONS[site["leave_line"]], OFFERS[site["leave_line"]][1])
 
@@ -1243,17 +1261,11 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         name = config["message_prefix"] + suffix
         for field, text in [("title", title_case(title)), ("subtitle", title_case(subtitle or title)), ("description", fallback_text(description, FALLBACK_PLACES.get(suffix, "")))]:
             add(LOC_PREFIX + "event_feed_strings.loc.tsv", f"event_feed_strings_text_{field}_event_land_enc_{name}", text, "false")
-        incident = config["result_incident_prefix"] + suffix
         image = RESULT_IMAGES.get(suffix) or (MISSION_RESULT_IMAGE if suffix.startswith("mission") else RESULT_IMAGE)
-        add(table("incidents_tables"), incident, "false", image, "false", "Event", "", "false", "", "0.0000", "false")
-        for option, value in [("GEN_TARGET_NONE", ""), ("VAR_CHANCE", "100")]:
-            add(table("cdir_events_incident_option_junctions_tables"), row_id, incident, option, value, "default")
-            row_id += 1
         place = f'{{{{CcoCampaignEventIncident:ScriptObjectContext("{config["result_place_context"]}").StringValue}}}}'
         detail = f'{{{{CcoCampaignEventIncident:ScriptObjectContext("{config["result_detail_context"]}").StringValue}}}}'
         shown = description.replace("{place}", f"[[col:yellow]]{place}[[/col]]").replace("{detail}", f"[[col:yellow]]{detail}[[/col]]")
-        add(LOC_PREFIX + "incidents.loc.tsv", "incidents_localised_title_" + incident, title_case(title), "false")
-        add(LOC_PREFIX + "incidents.loc.tsv", "incidents_localised_description_" + incident, shown, "false")
+        add_incident(config["result_incident_prefix"] + suffix, image, title, shown)
         if suffix in lines:
             colour, text = lines[suffix]
             offer_key = result_key(suffix)
@@ -1261,6 +1273,17 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
             for difficulty in DIFFICULTIES:
                 shown = text.format_map(line_values(config["at"][difficulty][offer_key], bundles)) if offer_key else text
                 line(config["line_prefix"] + "result_" + suffix + "_" + difficulty, result_icon(suffix), f"[[col:{colour}]]{shown}[[/col]]")
+    boon_config = config["boons"]
+    for component, icon, text in boons.lines(boon_config):
+        line(component, icon, text)
+    title, description, image, drop_label, new_label = boons.FULL_DILEMMA
+    full_choices = boon_config["full_choices"] + [boon_config["full_new_choice"]]
+    add_dilemma(boon_config["full_dilemma"], image, title, description, full_choices)
+    for i, choice in enumerate(full_choices):
+        add(table("cdir_events_dilemma_choices_tables"), choice, boons.FULL_CHOICE_ORDER + i)
+        label(boon_config["full_dilemma"], choice, title_case(new_label if choice == boon_config["full_new_choice"] else drop_label))
+    for event, (title, description, image) in boons.incidents(boon_config).items():
+        add_incident(boon_config["incident_prefix"] + event, image, title, description)
     return rows
 
 
@@ -1422,7 +1445,9 @@ def owned_patterns(config: Dict) -> List[Pattern]:
     difficulty = f"(?:_(?:{'|'.join(DIFFICULTIES)}))?"
     kinds = [(config["tower_line_prefix"], tower_line_keys(config), "(?:_unaffordable)?"), (TOWER_BUNDLE, list(TOWER_BUNDLES), ""),
              (NOTICE_PREFIX, tower_notices + bundle_notices + list(NOTICES) + list(MISSION_OBJECTIVES), "(?:_message)?")]
-    return [re.compile(f"(?:^|_){prefix}(?:{'|'.join(names)}){difficulty}{tail}$") for prefix, names, tail in kinds]
+    patterns = [re.compile(f"(?:^|_){prefix}(?:{'|'.join(names)}){difficulty}{tail}$") for prefix, names, tail in kinds]
+    patterns.append(re.compile(f"(?:^|_)(?:{'|'.join(re.escape(p) for p in boons.owned_prefixes(config['boons']))})"))
+    return patterns
 
 
 def owned(line: str, patterns: List[Pattern]) -> bool:
@@ -1510,6 +1535,7 @@ def check_text(config: Dict) -> None:
                  if varies and key not in TOWER_NOTICE_TEXT and key in config["tower_at"]["easy"]
                  and (config["tower_at"]["easy"][key].get("trick") or config["tower_at"]["easy"][key]["guide_section"] == "sabotage")]
     problems += [f"no result for line {key}" for key in RESULT_LINES if key not in MESSAGES and not key.startswith("mission")]
+    problems += boons.problems(config["boons"])
     problems += [f"no fallback place for {key}" for key, (_, _, description) in MESSAGES.items() if "{place}" in description and key not in FALLBACK_PLACES]
     bundles = expand_bundles(config)
     problems += [f"no bundle {bundle} for {key}" for offers in config["at"].values() for key, offer in offers.items()

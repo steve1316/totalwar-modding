@@ -12,13 +12,9 @@ local M = {}
 --- @param faction faction The faction whose turn starts.
 function M.apply_test_bundles(faction)
     if not debug_config.test_bundles[1] then return end
-    local forces = faction:military_force_list()
-    for i = 0, forces:num_items() - 1 do
-        local force = forces:item_at(i)
-        if not force:is_armed_citizenry() and force:has_general() then
-            for _, bundle in ipairs(debug_config.test_bundles) do cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 2) end
-        end
-    end
+    each_army(faction, function(force)
+        for _, bundle in ipairs(debug_config.test_bundles) do cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 2) end
+    end)
     log("effect library: debug test_bundles " .. table.concat(debug_config.test_bundles, ", ") .. " on " .. faction:name() .. "'s armies")
 end
 
