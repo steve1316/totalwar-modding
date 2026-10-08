@@ -189,7 +189,7 @@ function M.open(tavern, faction, general_cqi)
     tavern.pending_hub, tavern.pending_hall = nil, nil
     M.ensure_board(tavern)
     local full = #M.held(faction_name) >= tavern_data.contracts.max_held
-    local treasury = faction:treasury()
+    local treasury = dilemmas.treasury(faction:name())
     --- A cull's target, the nearest enemy that holds land, is the same for every cull on the board.
     local enemy = nil
     for _, kind in ipairs(tavern.board.offers) do

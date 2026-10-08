@@ -13,6 +13,10 @@ local SmithySpot = require("script/land_encounters/core/spot").SmithySpot
 local guild_patron = require("script/land_encounters/features/guild_patron")
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local offers_data = require("script/land_encounters/configs/spot_offers")
+local boons_data = require("script/land_encounters/configs/boons")
+local boons = require("script/land_encounters/features/boons")
+local boon_services = require("script/land_encounters/features/boon_services")
+local tower_army = require("script/land_encounters/features/tower_army")
 
 local Army = require("script/land_encounters/core/army")
 local OwnedPoint = require("script/land_encounters/core/owned_point")
@@ -106,8 +110,11 @@ local SmithyState = OwnedPoint.extend({
     visiting_enemy_character = nil,
     --- Faction of the player reclaiming the smithy, kept so a reloaded battle can find them, or nil.
     visiting_enemy_faction_name = nil,
-    --- What the open forge dilemma offered: `free_picks[i]` is true for choices that give an item, `upgrade` for a paid upgrade.
+    --- What the open forge dilemma offered: `free_picks[i]` is true for choices that give an item, `upgrade` for a paid upgrade, and the
+    --- visiting lord's `general_cqi`.
     pending_forge_offer = nil,
+    --- The open Temper and Break room (see features/boon_services.lua), or nil when none is open.
+    pending_room = nil,
     --- Forge level, 1 to 3. Survives ownership changes.
     level = 1,
     --- Owning faction key, or "" when unowned.
@@ -132,6 +139,13 @@ local SmithyState = OwnedPoint.extend({
 local function smithy_price(base)
     if base == nil then return nil end
     return round_gold(base * get_mct_settings().smithy_price_percent / 100)
+end
+
+--- Returns what the Temper and Break room charges for a service: its Smithy price at the owner's share, since only the owner uses the forge.
+--- @param base number The service's base gold.
+--- @returns number The gold charged.
+local function room_price(base)
+    return round_gold(smithy_price(base) * boons_data.owner_price_share)
 end
 
 --- Runs the once-per-round smithy update: tribute or AI items, cooldowns, missions, and auto-occupation when abandoned.
@@ -226,12 +240,15 @@ function SmithyState:trigger_event(area_and_character_info)
 
     if is_human_and_it_is_its_turn(visiting_faction) then
         if self:is_occupied_by_same_faction(visiting_faction:name()) then
-            --- While the forge cools there is nothing to take, so a message saying how many turns are left replaces the dilemma.
+            --- While the forge cools there is nothing to take, so a message saying how many turns are left replaces the dilemma. The Temper
+            --- and Break room never cools, so it opens by itself while boons and curses are on.
             if self:is_on_cooldown() then
                 self:show_message(visiting_faction:name(), "smithy_visit_on_cooldown_turns_" .. math.min(self.visit_cooldown, LONGEST_COOLDOWN))
-                return false
+                if not boons.enabled() then return false end
+                self:open_room(visiting_character, false)
+                return true
             end
-            self:open_forge(visiting_faction)
+            self:open_forge(visiting_faction, visiting_character)
             return true
         elseif not self:is_occupied() then
             self:show_message(visiting_faction:name(), "smithy_default_occupation_level_" .. self.level)
@@ -278,14 +295,16 @@ function SmithyState:free_pick_cooldown()
 end
 
 --- Builds and opens the forge dilemma for the owner: three free picks, a paid commission, a paid upgrade, the Generous Donation to the
---- Smiths' Association, and Leave. Only called while the forge is ready. Each paid choice shows its price. One the faction cannot afford says so and is
---- greyed out, as is one with nothing to give. The free picks and Leave never are.
+--- Smiths' Association, the Temper and Break room while boons and curses are on, and Leave. Only called while the forge is ready. Each paid
+--- choice shows its price. One the faction cannot afford says so and is greyed out, as is one with nothing to give. The free picks, the room
+--- and Leave never are.
 --- @param faction faction The owning player faction.
-function SmithyState:open_forge(faction)
+--- @param character character The visiting lord.
+function SmithyState:open_forge(faction, character)
     local level = self:level_data()
     local faction_key = faction:name()
-    local treasury = faction:treasury()
-    local offer = { free_picks = {}, upgrade = false, donation = false }
+    local treasury = dilemmas.treasury(faction_key)
+    local offer = { free_picks = {}, upgrade = false, donation = false, general_cqi = character:command_queue_index() }
     local choices = {}
 
     --- Adds a paid choice: its price card and `line`, then the `items` it gives when the treasury can pay. One the treasury cannot pay also
@@ -357,18 +376,28 @@ function SmithyState:open_forge(faction)
     end
 
     choices[LEAVE_CHOICE] = { key = FORGE_CHOICE_KEYS[LEAVE_CHOICE], lines = { PAYLOAD_TEXT_LEAVE } }
+    if boons.enabled() then
+        choices[#choices + 1] = { key = boons_data.smithy_room.open_choice, lines = { boon_services.line("smithy_room") } }
+    end
 
     self.pending_forge_offer = offer
     dilemmas.launch(EVENT_FORGE_BY_LEVEL[self.level], choices, faction_key)
 end
 
 --- Applies a forge choice. The dilemma payload already granted the items and charged the gold, so only the cooldown and level change here.
---- A paid donation is handed back to the delegate, which raises every Smithy.
+--- A paid donation is handed back to the delegate, which raises every Smithy. The Temper and Break room opens its own dilemma.
 --- @param choice number The 0-based choice index.
 --- @param dilemma_key string The forge dilemma's key.
+--- @param choice_key string The chosen choice key.
 --- @returns boolean True when the faction paid for a Generous Donation.
-function SmithyState:resolve_forge_choice(choice, dilemma_key)
+function SmithyState:resolve_forge_choice(choice, dilemma_key, choice_key)
     local offer = self.pending_forge_offer or { free_picks = {} }
+    if choice_key == boons_data.smithy_room.open_choice then
+        self.pending_forge_offer = nil
+        local character = offer.general_cqi and tower_army.character(offer.general_cqi)
+        if character then self:open_room(character, false) end
+        return false
+    end
     local index = choice + 1
     --- A greyed-out paid choice clicked anyway was charged by its payload, so the gold goes back.
     dilemmas.refund(self.controlling_faction_name, dilemma_key, FORGE_CHOICE_KEYS[index])
@@ -380,6 +409,23 @@ function SmithyState:resolve_forge_choice(choice, dilemma_key)
     end
     self.pending_forge_offer = nil
     return index == DONATION_CHOICE and offer.donation == true
+end
+
+--- Opens the Temper and Break room for a lord at the owner's prices.
+--- @param character character The visiting lord.
+--- @param rust_taken boolean True when the lord took Rust for Iron on this visit already.
+function SmithyState:open_room(character, rust_taken)
+    self.pending_room = boon_services.open_smithy(character, self.controlling_faction_name, room_price, rust_taken, PAYLOAD_TEXT_LEAVE)
+end
+
+--- Applies a Temper and Break choice, then opens the room again for the same lord, or closes it on Leave.
+--- @param choice_key string The chosen choice key.
+function SmithyState:resolve_room_choice(choice_key)
+    local open_room = self.pending_room
+    self.pending_room = nil
+    if not open_room then return end
+    local action, _, character = boon_services.resolve(open_room, self.controlling_faction_name, boons_data.smithy_room.dilemma, choice_key)
+    if action == "reopen" then self:open_room(character, open_room.rust_taken) end
 end
 
 --- Sets the forge level (clamped to 1-3) and swaps the map marker to that level's skin.
@@ -453,7 +499,9 @@ function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
     local choice = dilemma_choice_and_faction_info:choice()
     local dilemma = dilemma_choice_and_faction_info:dilemma()
     if FORGE_EVENTS[dilemma] then
-        return self:resolve_forge_choice(choice, dilemma)
+        return self:resolve_forge_choice(choice, dilemma, dilemma_choice_and_faction_info:choice_key())
+    elseif dilemma == boons_data.smithy_room.dilemma then
+        self:resolve_room_choice(dilemma_choice_and_faction_info:choice_key())
     elseif dilemma == EVENT_DEFENSE then
         self:resolve_defense_choice(choice, invasion_battle_manager)
     elseif dilemma == EVENT_RECLAMATION then
@@ -504,6 +552,7 @@ function SmithyState:export_state_as_table()
         garrison_force_cqi = self.garrison_force_cqi or false,
         garrison_character_cqi = self.garrison_character_cqi or false,
         pending_forge_offer = self.pending_forge_offer or false,
+        pending_room = self.pending_room or false,
         level = self.level,
         controlling_faction_name = self.controlling_faction_name,
         controlling_faction_subculture = self.controlling_faction_subculture,
@@ -528,6 +577,7 @@ function SmithyState:reinstate(previous_state)
     self.garrison_force_cqi = value("garrison_force_cqi")
     self.garrison_character_cqi = value("garrison_character_cqi")
     self.pending_forge_offer = value("pending_forge_offer")
+    self.pending_room = value("pending_room")
     self.level = previous_state.level or 1
     self.controlling_faction_name = previous_state.controlling_faction_name
     self.controlling_faction_subculture = previous_state.controlling_faction_subculture
@@ -661,6 +711,8 @@ function SmithyEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
     if smithy and smithy:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, self.invasion_battle_manager) then
         guild_patron.donate("smithy", faction_name, self.smithies_state, smithy.coordinates)
     end
+    --- The Temper and Break room reopens after each service, so its next choice comes back to the same Smithy.
+    if smithy and smithy.pending_room then self.pending_dilemma_by_faction[faction_name] = index end
 end
 
 --- Exports every SmithyState plus the delegate's own state for the save/load callbacks.

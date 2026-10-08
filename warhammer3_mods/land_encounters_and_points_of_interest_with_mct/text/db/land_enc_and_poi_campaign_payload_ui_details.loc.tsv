@@ -1801,3 +1801,14 @@ campaign_payload_ui_details_description_dummy_land_enc_realm_golden_age	[[col:gr
 campaign_payload_ui_details_description_dummy_land_enc_realm_dark_gods_wrath	[[col:red]]Wrath of the Dark Gods: +10 Chaos corruption and -10 [[img:icon_public_order]][[/img]] public order in every province, for 10 turns[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_realm_black_plague	[[col:red]]Black Plague: -10 [[img:icon_growth]][[/img]] growth in every province, for 10 turns[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_realm_pariah	[[col:red]]Pariah: -20 [[img:icon_diplomacy]][[/img]] relations with every faction, for 10 turns[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_smithy_room	Visit the master smith to [[col:green]]temper a boon[[/col]] or [[col:green]]break a curse[[/col]], each paid from our treasury.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_room	Seek out the hedge-witch in the back room, who can [[col:green]]cleanse a curse[[/col]] or gamble on one, for a price.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_nothing	[[col:red]]This lord carries no curse for the hedge-witch to lift.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_top	[[col:red]]Already at its highest level.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_charged	[[col:red]]A charged boon cannot be tempered.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble	[[col:yellow]]50% of the time the curse lifts. Otherwise it becomes another curse of the same level, which starts worsening again.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_1	[[col:red]]The hedge-witch will not gamble with this lord again for 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_2	[[col:red]]The hedge-witch will not gamble with this lord again for 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_3	[[col:red]]The hedge-witch will not gamble with this lord again for 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_4	[[col:red]]The hedge-witch will not gamble with this lord again for 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_5	[[col:red]]The hedge-witch will not gamble with this lord again for 5 turns.[[/col]]	false

@@ -54,7 +54,8 @@ M.realm_prefix = "land_enc_effect_realm_"
 M.line_prefix = "dummy_land_enc_"
 
 --- Prefix of the incidents that tell the player about a lord's boons and curses. The event follows: boon_gained, boon_grew, boon_lost,
---- curse_gained, curse_worse, curse_lifted, curse_turned, realm_boon, realm_curse.
+--- curse_gained, curse_worse, curse_lifted, curse_turned, curse_shifted (a failed gamble), realm_boon, realm_curse, and the services' own:
+--- boon_tempered, curse_broken, curse_cleansed, gamble_won, rust_struck.
 M.incident_prefix = "land_enc_incident_"
 
 --- Script context the incidents read the lord's name from.
@@ -70,6 +71,57 @@ M.full_new_choice = "LEAPOI_BON_DROP_NEW"
 --- The dilemma that lets a lord choose one of a few boons, and its choice keys in order.
 M.pick_dilemma = "land_enc_dilemma_boon_pick"
 M.pick_choices = { "LEAPOI_BON_PICK_1", "LEAPOI_BON_PICK_2", "LEAPOI_BON_PICK_3" }
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Services
+
+--- Share of a service's price the owner of the Smithy or Tavern pays. Only an owner uses a Smithy's forge, so its room always charges this.
+M.owner_price_share = 0.75
+
+--- Prefix of the services' payload lines. The line's name follows: smithy_room and witch_room on the forge and hub choices, witch_nothing
+--- when the lord has no curse, top and charged under a boon that cannot be tempered, gamble under a gamble, and gamble_cooling_<turns>.
+M.service_line_prefix = "dummy_land_enc_boon_service_"
+
+--- Prefix of the services' result lines (text/db/land_enc_and_poi_spot_strings.loc.tsv), which the reopened room shows at the top of its
+--- description through `result_context`. The service follows: temper, break, cleanse, gamble_won, gamble_lost, rust.
+M.result_prefix = "land_enc_boon_result_"
+M.result_context = "land_enc_boon_service_result"
+
+--- The Smithy's Temper and Break room, opened by `open_choice` on the forge. Tempering raises a boon one level for `temper_price` gold per
+--- level it reaches, breaking lifts a curse for `break_price` gold per level it has, and `rust_offer` (a tower pact in configs/tower_offers.lua)
+--- can be taken once per visit. One temper and one break choice per slot, in slot order.
+M.smithy_room = {
+    dilemma = "land_enc_dilemma_smithy_temper",
+    open_choice = "LEAPOI_BON_SMITHY_ROOM",
+    --- The forge dilemmas that show `open_choice`.
+    opened_from = { "land_enc_dilemma_smithy_forge_level_1", "land_enc_dilemma_smithy_forge_level_2", "land_enc_dilemma_smithy_forge_level_3" },
+    temper_choices = { "LEAPOI_BON_TEMPER_1", "LEAPOI_BON_TEMPER_2", "LEAPOI_BON_TEMPER_3", "LEAPOI_BON_TEMPER_4", "LEAPOI_BON_TEMPER_5" },
+    break_choices = { "LEAPOI_BON_BREAK_1", "LEAPOI_BON_BREAK_2", "LEAPOI_BON_BREAK_3", "LEAPOI_BON_BREAK_4", "LEAPOI_BON_BREAK_5" },
+    rust_choice = "LEAPOI_BON_RUST",
+    leave_choice = "LEAPOI_BON_SMITHY_LEAVE",
+    temper_price = 5000,
+    break_price = 5000,
+    rust_offer = "rust_for_iron",
+}
+
+--- The Tavern's hedge-witch, opened by `open_choice` on the hub. Cleansing lifts a curse for `cleanse_price` gold per level it has. A gamble
+--- costs `gamble_price` gold per level: `gamble_lift_chance` percent of the time the curse lifts, otherwise it becomes another curse of the
+--- same level whose clock starts again. A lord who gambles cannot gamble at that Tavern again for `gamble_cooldown` turns. One cleanse and
+--- one gamble choice per curse slot, in slot order.
+M.witch_room = {
+    dilemma = "land_enc_dilemma_tavern_witch",
+    open_choice = "LEAPOI_BON_TAVERN_ROOM",
+    --- The hub dilemmas that show `open_choice`.
+    opened_from = { "land_enc_dilemma_tavern_hub_level_1", "land_enc_dilemma_tavern_hub_level_2", "land_enc_dilemma_tavern_hub_level_3" },
+    cleanse_choices = { "LEAPOI_BON_CLEANSE_1", "LEAPOI_BON_CLEANSE_2", "LEAPOI_BON_CLEANSE_3", "LEAPOI_BON_CLEANSE_4", "LEAPOI_BON_CLEANSE_5" },
+    gamble_choices = { "LEAPOI_BON_GAMBLE_1", "LEAPOI_BON_GAMBLE_2", "LEAPOI_BON_GAMBLE_3", "LEAPOI_BON_GAMBLE_4", "LEAPOI_BON_GAMBLE_5" },
+    back_choice = "LEAPOI_BON_WITCH_BACK",
+    cleanse_price = 2500,
+    gamble_price = 1000,
+    gamble_lift_chance = 50,
+    gamble_cooldown = 5,
+}
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

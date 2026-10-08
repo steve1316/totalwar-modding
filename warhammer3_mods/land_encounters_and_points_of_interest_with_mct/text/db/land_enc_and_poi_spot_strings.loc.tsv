@@ -168,3 +168,9 @@ campaign_localised_strings_string_land_enc_spot_modifier_lore_ksl_icecourt	[[col
 campaign_localised_strings_string_land_enc_spot_modifier_lore_ksl_witchwood	[[col:yellow]]Modifier:[[/col]] Witchwood Folk - Akshina ambushers wait in the trees beside Kislevite warriors, and the Things in the Woods are never far away.	false
 campaign_localised_strings_string_land_enc_spot_modifier_lore_ogr_maneaters	[[col:yellow]]Modifier:[[/col]] Maneater Company - Maneaters who have fought in every corner of the world march with leadbelchers and a rabble of gnoblars.	false
 campaign_localised_strings_string_land_enc_spot_modifier_lore_ogr_beastriders	[[col:yellow]]Modifier:[[/col]] Beastrider Lodge - Mournfang cavalry have come down from the Mountains of Mourn with a stonehorn in tow.	false
+campaign_localised_strings_string_land_enc_boon_result_temper	[[col:green]]Tempered:[[/col]] {old} is now {new}.	false
+campaign_localised_strings_string_land_enc_boon_result_break	[[col:green]]Broken:[[/col]] {old} is gone.	false
+campaign_localised_strings_string_land_enc_boon_result_cleanse	[[col:green]]Cleansed:[[/col]] {old} is gone.	false
+campaign_localised_strings_string_land_enc_boon_result_gamble_won	[[col:green]]The gamble paid off:[[/col]] {old} is gone.	false
+campaign_localised_strings_string_land_enc_boon_result_gamble_lost	[[col:red]]The gamble failed:[[/col]] {old} has become {new}.	false
+campaign_localised_strings_string_land_enc_boon_result_rust	[[col:yellow]]The pact is struck:[[/col]] {new}, at the cost of {old}.	false

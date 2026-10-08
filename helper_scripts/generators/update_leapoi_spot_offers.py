@@ -1311,6 +1311,17 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
     for i, choice in enumerate(boon_config["pick_choices"]):
         add(table("cdir_events_dilemma_choices_tables"), choice, boons.PICK_CHOICE_ORDER + i)
         label(boon_config["pick_dilemma"], choice, title_case(pick_label))
+    for room, name in (("smithy_room", "smithy"), ("witch_room", "witch")):
+        title, description, image = boon_dilemmas[name]
+        add_dilemma(boon_config[room]["dilemma"], image, title, description, boons.room_choices(boon_config, room))
+    for choice, order, shown in boons.service_choices(boon_config):
+        add(table("cdir_events_dilemma_choices_tables"), choice, order)
+        for dilemma, text in shown:
+            label(dilemma, choice, title_case(text))
+    for component, icon, text in boons.service_lines(boon_config):
+        line(component, icon, text)
+    for key, text in boons.results(boon_config):
+        add(STRINGS_LOC, key, text, "false")
     for event, (title, description, image) in boons.incidents(boon_config).items():
         add_incident(boon_config["incident_prefix"] + event, image, title, description)
     return rows
@@ -1489,6 +1500,7 @@ def owned_patterns(config: Dict) -> List[Pattern]:
     patterns = [re.compile(f"(?:^|_){prefix}(?:{'|'.join(names)}){difficulty}{tail}$") for prefix, names, tail in kinds]
     patterns.append(re.compile(f"(?:^|_)(?:{'|'.join(re.escape(p) for p in boons.owned_prefixes(config['boons']))})"))
     patterns.append(re.compile(f"(?:{'|'.join(choice for choice, _ in tower_grant_choices(config))})$"))
+    patterns.append(re.compile(f"(?:{'|'.join(choice for choice, _, _ in boons.service_choices(config['boons']))})$"))
     return patterns
 
 

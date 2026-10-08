@@ -125,7 +125,7 @@ function M.open(tavern, faction, general_cqi, own, hired)
     end
     local force = tower_army.delving_force(general_cqi)
     local room = force and tower_army.free_slots(force) or 0
-    local treasury = faction:treasury()
+    local treasury = dilemmas.treasury(faction_name)
     local slots, choices = {}, {}
     --- Adds one slot and its choice. `key` is its unit, or nil for the hero, whose `line` describes it. A hire the treasury cannot pay still
     --- shows its price and unit, and is marked unaffordable so a click on it anyway is undone.

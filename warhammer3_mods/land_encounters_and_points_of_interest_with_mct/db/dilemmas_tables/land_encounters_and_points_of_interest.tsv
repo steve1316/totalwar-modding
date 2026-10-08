@@ -81,3 +81,5 @@ land_enc_dilemma_site_spoils_of_war	false			land_victory	false	Event	UI_CAM_EVEN
 land_enc_dilemma_site_tavern_bar	false			wulfhart_hunters	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_boon_full	false			nemesis_crown	false	Event	UI_CAM_EVENT_Dilemma			false
 land_enc_dilemma_boon_pick	false			sword_of_khaine	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_smithy_temper	false			story_panels/chd_drill_blades	false	Event	UI_CAM_EVENT_Dilemma			false
+land_enc_dilemma_tavern_witch	false			story_panels/chd_drill_machinations	false	Event	UI_CAM_EVENT_Dilemma			false

@@ -42,6 +42,15 @@ M.last_round_update_turn = nil
 
 --- Registers every persistent listener. Called once at module load by the entry point.
 function M.register()
+    --- Registered first, so every other choice listener reads the treasury with the chosen price already counted as spent.
+    core:add_listener(
+        "land_enc_dilemma_charges",
+        "DilemmaChoiceMadeEvent",
+        true,
+        function(context) dilemmas.settle(context:faction():name(), context:dilemma(), context:choice_key()) end,
+        IS_PERSISTENT_LISTENER
+    )
+
     boons.register()
 
     --- Once per round (on the first human turn), expire stale encounters, refill them, and update POI states. Every human turn, check that

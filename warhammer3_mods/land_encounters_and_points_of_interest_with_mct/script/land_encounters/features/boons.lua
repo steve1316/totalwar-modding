@@ -102,7 +102,7 @@ local function launch_line_incident(incident, line, faction)
     local ok, err = pcall(function()
         local builder = cm:create_incident_builder(incident)
         local payload = cm:create_payload()
-        payload:text_display(line)
+        for _, shown in ipairs(type(line) == "table" and line or { line }) do payload:text_display(shown) end
         builder:set_payload(payload)
         cm:launch_custom_incident_from_builder(builder, faction)
     end)
@@ -111,11 +111,12 @@ local function launch_line_incident(incident, line, faction)
 end
 
 --- Tells the player about one of a lord's boons or curses with an incident that shows its line and names the lord.
---- @param event string The incident's event, e.g. "boon_grew".
+--- @param event string|boolean The incident's event, e.g. "boon_grew", or false to say nothing.
 --- @param character userdata The lord.
 --- @param kind string "boon" or "curse".
 --- @param entry table The entry.
 local function notify(event, character, kind, entry)
+    if not event then return end
     common.set_context_value(data.lord_context, lord_name(character))
     launch_line_incident(data.incident_prefix .. event, M.line(kind, entry), character:faction())
     log("boons: " .. event .. " " .. M.bundle(kind, entry) .. " on lord " .. character:command_queue_index())
@@ -130,6 +131,34 @@ local function record_of(character)
     return M.lords[cqi]
 end
 
+--- A lord's boons and curses without making a record for them, for the Smithy and Tavern services.
+--- @param character userdata The lord.
+--- @returns table { boon = { entry }, curse = { entry } }, empty lists when the lord carries nothing.
+function M.find_record(character)
+    return M.lords[tostring(character:command_queue_index())] or { boon = {}, curse = {} }
+end
+
+--- A new entry for a boon or curse, rolling its race when it has one and none is given.
+--- @param config table The boon or curse record of configs/boons.lua.
+--- @param level number|nil Its level, 1 when nil.
+--- @param race string|nil Its race.
+--- @returns table The entry.
+local function new_entry(config, level, race)
+    return { key = config.key, level = math.min(level or 1, data.max_level), race = config.race and (race or data.races[random_number(#data.races)]) or nil,
+        wins = 0, turns = 0, charges = config.charges }
+end
+
+--- Tells the player about a change to a lord with an incident that shows several lines and names the lord, e.g. Rust for Iron's boon and
+--- curse together.
+--- @param event string The incident's event.
+--- @param character userdata The lord.
+--- @param lines table The payload line keys.
+function M.announce(event, character, lines)
+    common.set_context_value(data.lord_context, lord_name(character))
+    launch_line_incident(data.incident_prefix .. event, lines, character:faction())
+    log("boons: " .. event .. " " .. table.concat(lines, ", ") .. " on lord " .. character:command_queue_index())
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Changes
@@ -138,13 +167,15 @@ end
 --- @param character userdata The lord.
 --- @param kind string "boon" or "curse".
 --- @param entry table The entry.
+--- @param event string|boolean|nil The incident to show instead of the usual one, or false for none.
 --- @returns boolean True when it rose.
-function M.raise(character, kind, entry)
+function M.raise(character, kind, entry, event)
     if entry.level >= data.max_level or entry.charges then return false end
     cm:remove_effect_bundle_from_character(M.bundle(kind, entry), character)
     entry.level, entry.wins, entry.turns = entry.level + 1, 0, 0
     cm:apply_effect_bundle_to_character(M.bundle(kind, entry), character, 0)
-    notify(kind == "boon" and "boon_grew" or "curse_worse", character, kind, entry)
+    if event == nil then event = kind == "boon" and "boon_grew" or "curse_worse" end
+    notify(event, character, kind, entry)
     return true
 end
 
@@ -160,15 +191,42 @@ function M.remove(character, kind, index, event)
     if event then notify(event, character, kind, entry) end
 end
 
+--- Turns one of a lord's curses into a random other curse they do not carry, at the same level and with its clock started again, and says
+--- so. Used by a lost gamble at the hedge-witch.
+--- @param character userdata The lord.
+--- @param index number The curse's slot.
+--- @returns string|nil The new curse's key, or nil when no other curse is left to become.
+function M.shift_curse(character, index)
+    local list = record_of(character).curse
+    local old = list[index]
+    if not old then return nil end
+    local carried, pool = {}, {}
+    for _, curse in ipairs(list) do carried[curse.key] = true end
+    for _, config in ipairs(data.curses) do
+        if not carried[config.key] then pool[#pool + 1] = config end
+    end
+    if #pool == 0 then return nil end
+    local config = pool[random_number(#pool)]
+    local entry = new_entry(config, old.level)
+    cm:remove_effect_bundle_from_character(M.bundle("curse", old), character)
+    list[index] = entry
+    cm:apply_effect_bundle_to_character(M.bundle("curse", entry), character, 0)
+    log("boons: lord " .. character:command_queue_index() .. "'s " .. M.bundle("curse", old) .. " shifts into " .. M.bundle("curse", entry))
+    notify("curse_shifted", character, "curse", entry)
+    return config.key
+end
+
 --- Puts a new entry in a lord's free slot and says so.
 --- @param character userdata The lord.
 --- @param kind string "boon" or "curse".
 --- @param entry table The entry.
-local function add(character, kind, entry)
+--- @param event string|boolean|nil The incident to show instead of the usual one, or false for none.
+local function add(character, kind, entry, event)
     local list = record_of(character)[kind]
     list[#list + 1] = entry
     cm:apply_effect_bundle_to_character(M.bundle(kind, entry), character, 0)
-    notify(kind .. "_gained", character, kind, entry)
+    if event == nil then event = kind .. "_gained" end
+    notify(event, character, kind, entry)
 end
 
 --- Asks which boon a lord with full slots gives up for a new one: one choice per boon they carry, then the new one.
@@ -192,23 +250,23 @@ end
 --- @param key string The boon or curse key.
 --- @param level number|nil Its level, 1 when nil.
 --- @param race string|nil Its race, for a rolled one. A random race when nil.
---- @returns boolean True when the lord gained or raised something.
-function M.gain(character, kind, key, level, race)
+--- @param event string|boolean|nil The incident to show instead of the usual one, or false for none.
+--- @returns boolean, table|nil True when the lord gained or raised something, and the entry that changed (nil while the full-slots dilemma asks).
+function M.gain(character, kind, key, level, race, event)
     local config = data.by_key[kind][key]
     if not (config and M.enabled() and character:faction():is_human()) then return false end
-    race = config.race and (race or data.races[random_number(#data.races)]) or nil
+    local entry = new_entry(config, level, race)
     local list = record_of(character)[kind]
-    local carried = find(list, key, race)
+    local carried = find(list, key, entry.race)
     if carried and config.charges then
         carried.charges = config.charges
         log("boons: lord " .. character:command_queue_index() .. " refreshes " .. key .. " to " .. config.charges .. " battles")
-        return true
+        return true, carried
     end
-    if carried then return M.raise(character, kind, carried) end
-    local entry = { key = key, level = math.min(level or 1, data.max_level), race = race, wins = 0, turns = 0, charges = config.charges }
+    if carried then return M.raise(character, kind, carried, event), carried end
     if #list < M.slots(kind) then
-        add(character, kind, entry)
-        return true
+        add(character, kind, entry, event)
+        return true, entry
     end
     if kind == "boon" then
         ask_full(character, entry)
@@ -218,7 +276,7 @@ function M.gain(character, kind, key, level, race)
     for _, curse in ipairs(list) do
         if curse.level < data.max_level and (mildest == nil or curse.level < mildest.level) then mildest = curse end
     end
-    return mildest ~= nil and M.raise(character, kind, mildest)
+    return mildest ~= nil and M.raise(character, kind, mildest, event), mildest
 end
 
 --- Resolves the full-slots dilemma: the chosen boon goes and the new one takes its slot, or the new one is refused.

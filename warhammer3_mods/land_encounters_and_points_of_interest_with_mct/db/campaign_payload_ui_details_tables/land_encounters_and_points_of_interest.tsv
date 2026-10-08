@@ -1801,3 +1801,14 @@ dummy_land_enc_realm_golden_age	ui/campaign ui/effect_bundles/icon_effects_forti
 dummy_land_enc_realm_dark_gods_wrath	ui/campaign ui/effect_bundles/corruption_tzeentch.png	default	0
 dummy_land_enc_realm_black_plague	ui/campaign ui/effect_bundles/phase_posion.png	default	0
 dummy_land_enc_realm_pariah	ui/campaign ui/effect_bundles/discouraged.png	default	0
+dummy_land_enc_boon_service_smithy_room	ui/campaign ui/effect_bundles/icon_effects_army.png	default	0
+dummy_land_enc_boon_service_witch_room	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_witch_nothing	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_top	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_charged	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_gamble	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_gamble_cooling_1	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_gamble_cooling_2	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_gamble_cooling_3	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_gamble_cooling_4	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_gamble_cooling_5	ui/campaign ui/effect_bundles/fractured_mind.png	default	0

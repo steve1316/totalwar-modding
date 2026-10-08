@@ -13,6 +13,11 @@ local M = {
     --- Faction key -> dilemma key -> choice key -> the gold a greyed-out paid choice was charged by its price card, refunded when it is
     --- clicked anyway. Saved with the closed choices.
     refunds_by_faction = {},
+    --- Faction key -> dilemma key -> choice key -> the gold each paid choice's price card charges. Not saved: it only matters for the
+    --- moment a choice is answered.
+    charges_by_faction = {},
+    --- Faction key -> gold a just-answered choice charged that the game has not taken from the treasury yet. Cleared a moment later.
+    unsettled = {},
 }
 
 --- The choice keys of a dilemma in order, as the DB names them.
@@ -41,7 +46,7 @@ function M.launch(key, choices, faction_name)
     local faction = cm:get_faction(faction_name)
     local builder = cm:create_dilemma_builder(key)
     local payload = cm:create_payload()
-    local closed, refunds = {}, {}
+    local closed, refunds, charges = {}, {}, {}
     --- Adds a choice's text lines to the payload.
     --- @param choice table The choice record.
     local function add_lines(choice)
@@ -73,7 +78,9 @@ function M.launch(key, choices, faction_name)
         payload:clear()
         if choice.closed or choice.unaffordable then closed[#closed + 1] = choice.key end
         if choice.unaffordable and (choice.gold or 0) < 0 then refunds[choice.key] = -choice.gold end
+        if (choice.gold or 0) < 0 then charges[choice.key] = -choice.gold end
     end
+    set_entry(M.charges_by_faction, faction_name, key, next(charges) and charges or nil)
     set_entry(M.closed_by_faction, faction_name, key, #closed > 0 and closed or nil)
     set_entry(M.refunds_by_faction, faction_name, key, next(refunds) and refunds or nil)
     cm:launch_custom_dilemma_from_builder(builder, faction)
@@ -88,6 +95,35 @@ function M.find_slot(slots, choice_key)
         if slot.choice == choice_key then return slot end
     end
     return nil
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Treasury
+
+--- Notes the price of a choice just answered. The game takes it from the treasury only after every listener has run, so a dilemma reopened
+--- in the meantime would otherwise read the treasury from before the payment and offer what the faction can no longer afford. Called
+--- first for every dilemma choice (core/listeners.lua).
+--- @param faction_name string The faction that chose.
+--- @param dilemma_key string The answered dilemma's key.
+--- @param choice_key string The chosen choice key.
+function M.settle(faction_name, dilemma_key, choice_key)
+    local charges = (M.charges_by_faction[faction_name] or {})[dilemma_key]
+    if charges == nil then return end
+    set_entry(M.charges_by_faction, faction_name, dilemma_key, nil)
+    local gold = charges[choice_key]
+    if gold == nil then return end
+    M.unsettled[faction_name] = (M.unsettled[faction_name] or 0) + gold
+    log("dilemmas: " .. faction_name .. " pays " .. gold .. " for " .. tostring(choice_key) .. " on " .. dilemma_key .. ", counted as spent until the game takes it")
+    cm:callback(function() M.unsettled[faction_name] = nil end, 0.5)
+end
+
+--- A faction's treasury less any price just paid that the game has not taken yet. Every dilemma that shows prices reads this.
+--- @param faction_name string The faction key.
+--- @returns number The gold, or 0 when the faction is missing.
+function M.treasury(faction_name)
+    local faction = cm:get_faction(faction_name)
+    return faction and faction:treasury() - (M.unsettled[faction_name] or 0) or 0
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -82,6 +82,9 @@ CURSE_SOURCES = ("Where curses come from", ["A lost LEAPOI battle", "A battle mo
                                             "Pacts and cursed relics, which trade a curse for power"])
 SLOTS = "How many boons and curses a lord can carry is set on the Boons and Curses page of the mod's settings. A lord who dies or leaves " \
         "the faction loses them all."
+LIFTING = ("Lifting other curses", ["At a Smithy we own, the master smith breaks a curse. The price grows with its level.",
+                                     "At any Tavern, the hedge-witch cleanses a curse for less, or gambles on one for less still.",
+                                     "Some curses turn into a boon after {turns_to_turn} turns at their worst, so enduring one can pay off."])
 REALM = ("Faction-wide", ["It touches the whole faction, not one lord, and takes no lord's slot.", "It lasts {realm_turns} turns, then passes."])
 
 # Event -> (incident title, description parts, picture). A part is a paragraph or a rule section. "{lord}" is the lord's name, read from
@@ -98,7 +101,30 @@ INCIDENTS: Dict[str, Tuple[str, list, str]] = {
                      "ai_wins_soul"),
     "curse_worse": ("The Curse Deepens", ["The curse on {lord}'s army grows heavier with every passing day.", CURSE_GROWTH, CURSE_SOURCES],
                     "attrition_vampire_territory"),
-    "curse_lifted": ("A Curse Is Lifted", ["The weight on {lord}'s army is gone at last.", CURSE_SOURCES, SLOTS], "rift_entered"),
+    "curse_lifted": ("A Curse Is Lifted", ["The weight on {lord}'s army is gone at last.",
+                                           ("What changed", ["The curse is gone for good, with every level it had gained."]), LIFTING], "rift_entered"),
+    "curse_shifted": ("The Gamble Fails", ["The hedge-witch's bones fell badly. The curse on {lord}'s army has not lifted. It has become something else.",
+                                           ("What changed", ["The gamble failed. The new curse, shown below, keeps the old one's level.",
+                                                             "Its clock starts again, so it worsens {turns} turns from now.",
+                                                             "A lord who gambles must wait {cooldown} turns to gamble at that Tavern again."]),
+                                           (CURSE_GROWTH[0], CURSE_GROWTH[1][:2])], "chaos_doom_tide"),
+    "gamble_won": ("The Gamble Pays Off", ["The hedge-witch's bones fell well. The curse on {lord}'s army is gone, for a fraction of the usual price.",
+                                           ("The gamble", ["It paid off. The curse is gone for good, with every level it had gained.",
+                                                           "A lord who gambles must wait {cooldown} turns to gamble at that Tavern again."]),
+                                           LIFTING], "winds_of_magic_change"),
+    "curse_cleansed": ("Cleansed by the Hedge-Witch", ["Bitter smoke, a muttered word and a pinch of grave dust, and the curse on {lord}'s army is gone.",
+                                                       ("What changed", ["The curse is gone for good, with every level it had gained."]),
+                                                       LIFTING], "rift_entered"),
+    "curse_broken": ("The Curse Is Broken", ["Hammer and fire have done what prayer could not. The curse on {lord}'s army is broken.",
+                                             ("What changed", ["The curse is gone for good, with every level it had gained."]),
+                                             LIFTING], "rift_entered"),
+    "boon_tempered": ("Tempered at the Forge", ["The master smith has worked the blessing on {lord}'s army into the steel itself. It burns brighter now.",
+                                                ("What changed", ["The boon rose one level. Its new strength is shown below."]),
+                                                BOON_GROWTH], "army_morale_up"),
+    "rust_struck": ("Rust for Iron", ["The smith's bargain is struck. {lord}'s army is harder to wound now, but rust has crept into its blades.",
+                                      ("The pact", ["The boon and the curse below came together.",
+                                                    "The boon grows with victories, and the curse worsens with time, like any other."]),
+                                      BOON_GROWTH_SHORT, ("How curses grow", CURSE_GROWTH[1][:1])], "carnage_weapons"),
     "curse_turned": ("The Curse Turns", ["{lord}'s army has carried its curse so long that it has become something else.",
                                          ("What it became", ["The curse is gone, and its boon takes its place at level 1.",
                                                              "If this lord has no room for it, another boon must be given up to keep it."]),
@@ -127,6 +153,60 @@ FULL_DILEMMA = ("Too Many Blessings", ["{lord} can carry no more boons. To take 
                                        ("What giving one up costs", ["A boon given up is gone for good, with every level it has gained.",
                                                                      "The new boon is on the last choice. Refusing it keeps every boon as it is."]),
                                        BOON_GROWTH_SHORT], "nemesis_crown", "Give This Up", "Refuse the New Boon")
+
+# The Smithy's Temper and Break room: (title, description parts, picture, choice labels by kind).
+SMITHY_ROOM = ("Temper and Break", ["The master smith clears the anvil for {lord}. Steel can be tempered here, and old curses beaten out of it.",
+                                    ("What the forge offers", ["Temper a boon: it rises one level. The price grows with the level it reaches.",
+                                                               "Break a curse: it is gone for good. The price grows with the curse's level.",
+                                                               "Rust for Iron: a pact that hardens the army's hide and rusts its blades."]),
+                                    ("Prices", ["As the owner, we pay {owner_off}% less than the smith's usual rates. The room never cools down."])],
+               "story_panels/chd_drill_blades", {"temper": "Temper This Boon", "break": "Break This Curse", "rust": "Trade Rust for Iron", "leave": "Leave"})
+
+# The Tavern's hedge-witch: (title, description parts, picture, choice labels by kind).
+WITCH_ROOM = ("The Hedge-Witch", ["Behind a curtain of dried herbs, the hedge-witch looks {lord} over and smiles at what she sees.",
+                                  ("What the witch offers", ["Cleanse a curse: it lifts for good. The price grows with the curse's level.",
+                                                             "Gamble on a curse: cheaper, but it lifts only {lift}% of the time. Otherwise it becomes another "
+                                                             "curse of the same level, which starts worsening again.",
+                                                             "A lord who gambles must wait {cooldown} turns to gamble here again."]),
+                                  ("Prices", ["The Tavern's owner pays {owner_off}% less."])],
+              "story_panels/chd_drill_machinations", {"cleanse": "Cleanse This Curse", "gamble": "Gamble on This Curse", "back": "Back"})
+
+# The services' result lines, which a reopened room shows at the top: service -> text. "{old}" and "{new}" are the boon or curse names before
+# and after, filled in by features/boon_services.lua.
+RESULTS = {
+    "temper": "[[col:green]]Tempered:[[/col]] {old} is now {new}.",
+    "break": "[[col:green]]Broken:[[/col]] {old} is gone.",
+    "cleanse": "[[col:green]]Cleansed:[[/col]] {old} is gone.",
+    "gamble_won": "[[col:green]]The gamble paid off:[[/col]] {old} is gone.",
+    "gamble_lost": "[[col:red]]The gamble failed:[[/col]] {old} has become {new}.",
+    "rust": "[[col:yellow]]The pact is struck:[[/col]] {new}, at the cost of {old}.",
+}
+
+# Labels of the choices that open the rooms, on the forge and the hub.
+ROOM_LABELS = {"smithy_room": SMITHY_ROOM[0], "witch_room": "Visit the Hedge-Witch"}
+
+# Display orders of the room choices in cdir_events_dilemma_choices: the forge's room choice sits after the donation (6) and before Leave
+# (998), the hub's after the donation (5) and before Leave (998). Inside the rooms, temper then break then Rust for Iron then Leave, and
+# each curse's cleanse with its gamble.
+ROOM_OPEN_ORDER = {"smithy_room": 7, "witch_room": 6}
+TEMPER_ORDER, BREAK_ORDER, RUST_ORDER, SMITHY_LEAVE_ORDER = 1120, 1125, 1130, 1131
+CLEANSE_ORDER, WITCH_BACK_ORDER = 1140, 1150
+
+# Icon of the services' lines, other than the Smithy room's.
+SERVICE_ICON = "fractured_mind.png"
+
+# The services' payload lines: name -> (icon, text). "{lift}" is the gamble's lift chance.
+SERVICE_LINES = {
+    "smithy_room": ("icon_effects_army.png", "Visit the master smith to [[col:green]]temper a boon[[/col]] or [[col:green]]break a curse[[/col]], each "
+                    "paid from our treasury."),
+    "witch_room": (SERVICE_ICON, "Seek out the hedge-witch in the back room, who can [[col:green]]cleanse a curse[[/col]] "
+                   "or gamble on one, for a price."),
+    "witch_nothing": (SERVICE_ICON, "[[col:red]]This lord carries no curse for the hedge-witch to lift.[[/col]]"),
+    "top": (SERVICE_ICON, "[[col:red]]Already at its highest level.[[/col]]"),
+    "charged": (SERVICE_ICON, "[[col:red]]A charged boon cannot be tempered.[[/col]]"),
+    "gamble": (SERVICE_ICON, "[[col:yellow]]{lift}% of the time the curse lifts. Otherwise it becomes another curse of the same level, which "
+               "starts worsening again.[[/col]]"),
+}
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -494,8 +574,10 @@ def describe(parts: list, config: Dict, event: str) -> str:
         str: The description as loc text.
     """
     lord = f'[[col:yellow]]{{{{CcoCampaignEvent{event}:ScriptObjectContext("{config["lord_context"]}").StringValue}}}}[[/col]]'
+    witch = config["witch_room"]
     values = {"lord": lord, "wins": config["wins_per_level"], "max": config["max_level"], "turns": config["turns_per_level"],
-              "turns_to_turn": config["turns_to_turn"], "realm_turns": config["realm_turns"]}
+              "turns_to_turn": config["turns_to_turn"], "realm_turns": config["realm_turns"], "lift": witch["gamble_lift_chance"],
+              "cooldown": witch["gamble_cooldown"], "owner_off": round((1 - config["owner_price_share"]) * 100)}
     shown = [part if isinstance(part, str) else f"[[col:yellow]]{part[0]}[[/col]]" + "".join(NL + "- " + line for line in part[1]) for part in parts]
     return BREAK.join(shown).format_map(values)
 
@@ -526,15 +608,85 @@ def incidents(config: Dict) -> Dict[str, Tuple[str, str, str]]:
 
 
 def dilemmas(config: Dict) -> Dict[str, Tuple[str, str, str]]:
-    """The full-slots and pick dilemmas with their rules and the lord's name filled into their descriptions.
+    """The full-slots, pick and service room dilemmas with their rules and the lord's name filled into their descriptions.
 
     Args:
         config (Dict): The boons config from the Lua dump.
 
     Returns:
-        Dict[str, Tuple[str, str, str]]: "full" and "pick" -> (title, description, picture).
+        Dict[str, Tuple[str, str, str]]: "full", "pick", "smithy" and "witch" -> (title, description, picture).
     """
-    return {name: (dilemma[0], describe(dilemma[1], config, "Dilemma"), dilemma[2]) for name, dilemma in (("full", FULL_DILEMMA), ("pick", PICK_DILEMMA))}
+    named = (("full", FULL_DILEMMA), ("pick", PICK_DILEMMA), ("smithy", SMITHY_ROOM), ("witch", WITCH_ROOM))
+    result = f'{{{{CcoCampaignEventDilemma:ScriptObjectContext("{config["result_context"]}").StringValue}}}}'
+    return {name: ((dilemma[0], (result if name in ("smithy", "witch") else "") + describe(dilemma[1], config, "Dilemma"), dilemma[2]))
+            for name, dilemma in named}
+
+
+def results(config: Dict) -> List[Tuple[str, str]]:
+    """The services' result lines.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        List[Tuple[str, str]]: (loc key, text).
+    """
+    return [("campaign_localised_strings_string_" + config["result_prefix"] + name, text) for name, text in RESULTS.items()]
+
+
+def service_choices(config: Dict) -> List[Tuple[str, int, List[Tuple[str, str]]]]:
+    """Every choice of the service rooms and the choices that open them.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        List[Tuple[str, int, List[Tuple[str, str]]]]: (choice key, display order, [(dilemma, label)]).
+    """
+    smithy, witch = config["smithy_room"], config["witch_room"]
+    labels, witch_labels = SMITHY_ROOM[3], WITCH_ROOM[3]
+    out = [(room["open_choice"], ROOM_OPEN_ORDER[name], [(dilemma, ROOM_LABELS[name]) for dilemma in room["opened_from"]])
+           for name, room in (("smithy_room", smithy), ("witch_room", witch))]
+    out += [(choice, TEMPER_ORDER + i, [(smithy["dilemma"], labels["temper"])]) for i, choice in enumerate(smithy["temper_choices"])]
+    out += [(choice, BREAK_ORDER + i, [(smithy["dilemma"], labels["break"])]) for i, choice in enumerate(smithy["break_choices"])]
+    out += [(smithy["rust_choice"], RUST_ORDER, [(smithy["dilemma"], labels["rust"])]),
+            (smithy["leave_choice"], SMITHY_LEAVE_ORDER, [(smithy["dilemma"], labels["leave"])])]
+    for i, (cleanse, gamble) in enumerate(zip(witch["cleanse_choices"], witch["gamble_choices"])):
+        out += [(cleanse, CLEANSE_ORDER + 2 * i, [(witch["dilemma"], witch_labels["cleanse"])]),
+                (gamble, CLEANSE_ORDER + 2 * i + 1, [(witch["dilemma"], witch_labels["gamble"])])]
+    out.append((witch["back_choice"], WITCH_BACK_ORDER, [(witch["dilemma"], witch_labels["back"])]))
+    return out
+
+
+def room_choices(config: Dict, room: str) -> List[str]:
+    """The choices of one service room, in display order (`service_choices` lists each room's choices in that order).
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+        room (str): "smithy_room" or "witch_room".
+
+    Returns:
+        List[str]: The choice keys.
+    """
+    dilemma = config[room]["dilemma"]
+    return [choice for choice, _, shown in service_choices(config) if shown[0][0] == dilemma]
+
+
+def service_lines(config: Dict) -> List[Tuple[str, str, str]]:
+    """The payload lines of the services: the room choices, the reasons a service is closed, the gamble's odds and its cooldown.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        List[Tuple[str, str, str]]: (payload key, icon, text).
+    """
+    witch = config["witch_room"]
+    out = [(config["service_line_prefix"] + name, icon, text.format(lift=witch["gamble_lift_chance"])) for name, (icon, text) in SERVICE_LINES.items()]
+    for turns in range(1, witch["gamble_cooldown"] + 1):
+        out.append((f"{config['service_line_prefix']}gamble_cooling_{turns}", SERVICE_ICON,
+                    f"[[col:red]]The hedge-witch will not gamble with this lord again for {turns} turn{'s' if turns > 1 else ''}.[[/col]]"))
+    return out
 
 
 def owned_prefixes(config: Dict) -> List[str]:
@@ -546,7 +698,8 @@ def owned_prefixes(config: Dict) -> List[str]:
     Returns:
         List[str]: The prefixes.
     """
-    return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"]]
+    return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"],
+                                                      config["smithy_room"]["dilemma"], config["witch_room"]["dilemma"], config["result_prefix"]]
             + config["pick_choices"]
             + [config["line_prefix"] + kind + "_" for kind in ("boon", "curse", "realm")] + config["full_choices"]
             + [config["incident_prefix"] + event for event in INCIDENTS])

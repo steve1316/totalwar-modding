@@ -243,3 +243,9 @@ id	dilemma_key	option_key	value	target
 7018100243	land_enc_dilemma_boon_pick	GEN_TARGET_NONE		default
 7018100244	land_enc_dilemma_boon_pick	VAR_CHANCE	100	default
 7018100245	land_enc_dilemma_boon_pick	VAR_FOLLOWUP_CHANCE	100	default
+7018100249	land_enc_dilemma_smithy_temper	GEN_TARGET_NONE		default
+7018100250	land_enc_dilemma_smithy_temper	VAR_CHANCE	100	default
+7018100251	land_enc_dilemma_smithy_temper	VAR_FOLLOWUP_CHANCE	100	default
+7018100264	land_enc_dilemma_tavern_witch	GEN_TARGET_NONE		default
+7018100265	land_enc_dilemma_tavern_witch	VAR_CHANCE	100	default
+7018100266	land_enc_dilemma_tavern_witch	VAR_FOLLOWUP_CHANCE	100	default

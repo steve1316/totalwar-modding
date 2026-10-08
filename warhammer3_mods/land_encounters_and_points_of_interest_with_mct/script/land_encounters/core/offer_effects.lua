@@ -4,6 +4,7 @@
 require("script/land_encounters/utils/random")
 
 local tower_army = require("script/land_encounters/features/tower_army")
+local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local item_pool = require("script/land_encounters/core/item_pool")
 local army_generator = require("script/land_encounters/core/army_generator")
@@ -248,8 +249,7 @@ end
 --- @param faction_name string The faction key.
 --- @returns number The treasury gold, or 0 when the faction is missing.
 function M.treasury(faction_name)
-    local faction = cm:get_faction(faction_name)
-    return faction and faction:treasury() or 0
+    return dilemmas.treasury(faction_name)
 end
 
 return M
