@@ -303,6 +303,10 @@ campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_terms_1	[
 campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_terms_2	[[col:yellow]]Contract terms:[[/col]] meet the battle mission below in the contract's fight for [[col:green]]+1500 gold[[/col]] on top of its own reward.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_terms_3	[[col:yellow]]Contract terms:[[/col]] meet the battle mission below in the contract's fight for [[col:green]]+2000 gold[[/col]] on top of its own reward.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_buy_out	Buy out the contract we hold: it ends now, the Guild keeps [[col:red]]half our deposit[[/col]], and no Tavern charges us more for it.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_veteran_3	[[col:yellow]]Veteran company:[[/col]] it joins at [[col:green]]rank 3[[/col]], but costs [[col:red]]50% more[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_veteran_5	[[col:yellow]]Veteran company:[[/col]] it joins at [[col:green]]rank 5[[/col]], but costs [[col:red]]50% more[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_veteran_7	[[col:yellow]]Veteran company:[[/col]] it joins at [[col:green]]rank 7[[/col]], but costs [[col:red]]50% more[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_cut	[[col:yellow]]Cut-price sellswords:[[/col]] [[col:green]]half the price[[/col]], but they join at [[col:red]]25% strength[[/col]] and must replenish.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_tavern_back	Go back to the common room.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_unaffordable	[[col:red]]We cannot afford this.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_taken	[[col:red]]Already taken.[[/col]]	false
@@ -2001,16 +2005,38 @@ campaign_payload_ui_details_description_dummy_land_enc_realm_dark_gods_wrath	[[c
 campaign_payload_ui_details_description_dummy_land_enc_realm_black_plague	[[col:red]]Black Plague: -10 [[img:icon_growth]][[/img]] growth in every province, for 10 turns[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_realm_pariah	[[col:red]]Pariah: -20 [[img:icon_diplomacy]][[/img]] relations with every faction, for 10 turns[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_smithy_room	Visit the master smith to [[col:green]]temper a boon[[/col]] or [[col:green]]break a curse[[/col]], each paid from our treasury.	false
-campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_room	Seek out the hedge-witch in the back room, who can [[col:green]]cleanse a curse[[/col]] or gamble on one, for a price.	false
-campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_nothing	[[col:red]]This lord carries no curse for the hedge-witch to lift.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_room	Seek out the hedge-witch in the back room, who can [[col:green]]feed or reweave a boon[[/col]], and [[col:green]]lift a curse[[/col]] for gold, a gamble or blood.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_nothing	[[col:red]]This lord carries no boon or curse for the hedge-witch to work on.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_top	[[col:red]]Already at its highest level.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_charged	[[col:red]]A charged boon cannot be tempered.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble	[[col:yellow]]50% of the time the curse lifts. Otherwise it becomes another curse of the same level, which starts worsening again.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_feed	[[col:green]]+2 won battles[[/col]] toward this boon's next level.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_reweave	[[col:yellow]]50% of the time the boon rises a level. Otherwise it becomes another boon of the same level.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_1	[[col:red]]The army bleeds 5% of its strength[[/col]] to lift this curse, but pays no gold.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_2	[[col:red]]The army bleeds 10% of its strength[[/col]] to lift this curse, but pays no gold.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_3	[[col:red]]The army bleeds 15% of its strength[[/col]] to lift this curse, but pays no gold.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_4	[[col:red]]The army bleeds 20% of its strength[[/col]] to lift this curse, but pays no gold.	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_5	[[col:red]]The army bleeds 25% of its strength[[/col]] to lift this curse, but pays no gold.	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_1	[[col:red]]The hedge-witch will not gamble with this lord again for 1 turn.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_2	[[col:red]]The hedge-witch will not gamble with this lord again for 2 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_3	[[col:red]]The hedge-witch will not gamble with this lord again for 3 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_4	[[col:red]]The hedge-witch will not gamble with this lord again for 4 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_gamble_cooling_5	[[col:red]]The hedge-witch will not gamble with this lord again for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_feed_cooling_1	[[col:red]]The hedge-witch will not feed a boon for this lord again for 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_feed_cooling_2	[[col:red]]The hedge-witch will not feed a boon for this lord again for 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_feed_cooling_3	[[col:red]]The hedge-witch will not feed a boon for this lord again for 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_feed_cooling_4	[[col:red]]The hedge-witch will not feed a boon for this lord again for 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_feed_cooling_5	[[col:red]]The hedge-witch will not feed a boon for this lord again for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_reweave_cooling_1	[[col:red]]The hedge-witch will not reweave a boon for this lord again for 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_reweave_cooling_2	[[col:red]]The hedge-witch will not reweave a boon for this lord again for 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_reweave_cooling_3	[[col:red]]The hedge-witch will not reweave a boon for this lord again for 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_reweave_cooling_4	[[col:red]]The hedge-witch will not reweave a boon for this lord again for 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_reweave_cooling_5	[[col:red]]The hedge-witch will not reweave a boon for this lord again for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_cooling_1	[[col:red]]The hedge-witch will not work a blood rite for this lord again for 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_cooling_2	[[col:red]]The hedge-witch will not work a blood rite for this lord again for 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_cooling_3	[[col:red]]The hedge-witch will not work a blood rite for this lord again for 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_cooling_4	[[col:red]]The hedge-witch will not work a blood rite for this lord again for 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_boon_service_blood_cooling_5	[[col:red]]The hedge-witch will not work a blood rite for this lord again for 5 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_001	[[col:green]]Army spell: Djaf's Incantation of Cursed Blades[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_002	[[col:green]]Army spell: Neru's Incantation of Protection[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_003	[[col:green]]Army spell: Ptra's Incantation of Righteous Smiting[[/col]], 3 casts in each battle.	false

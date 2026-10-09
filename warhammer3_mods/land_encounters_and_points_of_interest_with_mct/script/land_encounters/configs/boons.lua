@@ -125,8 +125,10 @@ M.smithy_room = {
 
 --- The Tavern's hedge-witch, opened by `open_choice` on the hub. Cleansing lifts a curse for `cleanse_price` gold per level it has. A gamble
 --- costs `gamble_price` gold per level: `gamble_lift_chance` percent of the time the curse lifts, otherwise it becomes another curse of the
---- same level whose clock starts again. A lord who gambles cannot gamble at that Tavern again for `gamble_cooldown` turns. One cleanse and
---- one gamble choice per curse slot, in slot order.
+--- same level whose clock starts again. A blood rite lifts a curse for no gold, bleeding the army `blood_bleed` percent per level. For a boon,
+--- feeding it adds `feed_wins` won battles toward its next level for `feed_price` gold per level, and reweaving it costs `reweave_price` gold
+--- per level: `reweave_rise_chance` percent of the time it rises a level, otherwise it becomes another boon of the same level. A lord who
+--- uses a service in `cooldowns` cannot use it at that Tavern again for its turns. One feed and one reweave choice per boon slot, then one cleanse, gamble and blood rite choice per curse slot, in slot order.
 M.witch_room = {
     dilemma = "land_enc_dilemma_tavern_witch",
     open_choice = "LEAPOI_BON_TAVERN_ROOM",
@@ -134,11 +136,19 @@ M.witch_room = {
     opened_from = { "land_enc_dilemma_tavern_hub_level_1", "land_enc_dilemma_tavern_hub_level_2", "land_enc_dilemma_tavern_hub_level_3" },
     cleanse_choices = { "LEAPOI_BON_CLEANSE_1", "LEAPOI_BON_CLEANSE_2", "LEAPOI_BON_CLEANSE_3", "LEAPOI_BON_CLEANSE_4", "LEAPOI_BON_CLEANSE_5" },
     gamble_choices = { "LEAPOI_BON_GAMBLE_1", "LEAPOI_BON_GAMBLE_2", "LEAPOI_BON_GAMBLE_3", "LEAPOI_BON_GAMBLE_4", "LEAPOI_BON_GAMBLE_5" },
+    blood_choices = { "LEAPOI_BON_BLOOD_1", "LEAPOI_BON_BLOOD_2", "LEAPOI_BON_BLOOD_3", "LEAPOI_BON_BLOOD_4", "LEAPOI_BON_BLOOD_5" },
+    feed_choices = { "LEAPOI_BON_FEED_1", "LEAPOI_BON_FEED_2", "LEAPOI_BON_FEED_3", "LEAPOI_BON_FEED_4", "LEAPOI_BON_FEED_5" },
+    reweave_choices = { "LEAPOI_BON_REWEAVE_1", "LEAPOI_BON_REWEAVE_2", "LEAPOI_BON_REWEAVE_3", "LEAPOI_BON_REWEAVE_4", "LEAPOI_BON_REWEAVE_5" },
     back_choice = "LEAPOI_BON_WITCH_BACK",
     cleanse_price = 2500,
     gamble_price = 1000,
     gamble_lift_chance = 50,
-    gamble_cooldown = 5,
+    blood_bleed = 5,
+    feed_price = 1500,
+    feed_wins = 2,
+    reweave_price = 1000,
+    reweave_rise_chance = 50,
+    cooldowns = { feed = 5, reweave = 5, gamble = 5, blood = 5 },
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

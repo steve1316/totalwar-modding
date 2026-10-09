@@ -33,6 +33,9 @@ local LINE_BACK = offers_data.line_prefix .. offers_data.tavern.leave_line
 --- The Rust for Iron pact the Smithy room offers, read from the tower offers.
 local RUST_OFFER = tower_offers.by_key[data.smithy_room.rust_offer]
 
+--- The services that work on a boon. Every other one works on a curse.
+local BOON_SERVICES = { temper = true, feed = true, reweave = true }
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Helpers
@@ -44,11 +47,22 @@ function M.line(name)
     return data.service_line_prefix .. name
 end
 
---- True when a lord carries at least one curse, so the hedge-witch has something to do.
+--- The line saying why a boon cannot be tempered, fed or rewoven, or nil when it can.
+--- @param boon table The boon.
+--- @returns string|nil The payload line key.
+local function boon_closed(boon)
+    if boon.charges then return M.line("charged") end
+    if not boons.can_grow(boon) then return M.line("top") end
+    return nil
+end
+
+--- True when a lord carries at least one boon or curse, so the hedge-witch has something to do.
 --- @param character userdata|nil The lord.
---- @returns boolean True when they carry a curse.
-function M.has_curse(character)
-    return character ~= nil and #boons.find_record(character).curse > 0
+--- @returns boolean True when they carry a boon or a curse.
+function M.has_work(character)
+    if character == nil then return false end
+    local record = boons.find_record(character)
+    return #record.boon > 0 or #record.curse > 0
 end
 
 --- Starts a room's slots and choices. `add` puts in one slot: a service with no price, one closed with a reason (its price dropped), one the
@@ -59,7 +73,8 @@ local function room(treasury)
     local slots, choices = {}, {}
     local function add(choice_key, kind, index, entry, gold, lines, closed_line)
         if closed_line then gold = nil end
-        local slot = { choice = choice_key, kind = kind, index = index, key = entry and entry.key, level = entry and entry.level, price = gold }
+        local slot = { choice = choice_key, kind = kind, list = BOON_SERVICES[kind] and "boon" or "curse", index = index, key = entry and entry.key,
+            level = entry and entry.level, price = gold }
         local choice = { key = choice_key, lines = lines, lines_first = true }
         if closed_line then
             lines[#lines + 1] = closed_line
@@ -136,7 +151,7 @@ function M.open_smithy(character, faction_name, price, rust_taken, leave_line)
     local spec, record = data.smithy_room, boons.find_record(character)
     local slots, choices, add = room(dilemmas.treasury(faction_name))
     for i, boon in ipairs(record.boon) do
-        local closed = boon.charges and M.line("charged") or boon.level >= data.max_level and M.line("top") or nil
+        local closed = boon_closed(boon)
         local shown = closed and boon or { key = boon.key, level = boon.level + 1, race = boon.race }
         add(spec.temper_choices[i], "temper", i, boon, price(spec.temper_price * (boon.level + 1)), { boons.line("boon", shown) }, closed)
     end
@@ -153,23 +168,41 @@ function M.open_smithy(character, faction_name, price, rust_taken, leave_line)
     return open_room
 end
 
---- Opens the hedge-witch for a lord: a cleanse and a gamble per curse, then Back. The gambles are closed, saying for how long, while the lord's
---- gamble at this Tavern cools down.
+--- Opens the hedge-witch for a lord: a feed and a reweave per boon, a cleanse, a gamble and a blood rite per curse, then Back. A service is
+--- closed, saying for how long, while the lord's last use of it at this Tavern cools down. A charged boon or one at its highest level cannot
+--- be fed or rewoven and says why.
 --- @param character userdata The visiting lord.
 --- @param faction_name string The visiting faction.
 --- @param price function Base gold -> the gold this Tavern charges the visitor for it.
---- @param gamble_turns number Turns until the lord may gamble here again, 0 when they may now.
+--- @param cooling table Service kind (each of `cooldowns`) -> turns until the lord may use it here again, 0 or nil when now.
 --- @returns table The open room to keep on the Tavern: { cqi, slots }.
-function M.open_witch(character, faction_name, price, gamble_turns)
-    local spec = data.witch_room
+function M.open_witch(character, faction_name, price, cooling)
+    local spec, record = data.witch_room, boons.find_record(character)
     local slots, choices, add = room(dilemmas.treasury(faction_name))
-    for i, curse in ipairs(boons.find_record(character).curse) do
+    --- The line closing a service while it cools down, or nil.
+    local function cooled(kind)
+        local turns = cooling[kind] or 0
+        return turns > 0 and M.line(kind .. "_cooling_" .. turns) or nil
+    end
+    for i, boon in ipairs(record.boon) do
+        local closed = boon_closed(boon)
+        add(spec.feed_choices[i], "feed", i, boon, price(spec.feed_price * boon.level), { boons.line("boon", boon), M.line("feed") }, closed or cooled("feed"))
+        add(spec.reweave_choices[i], "reweave", i, boon, price(spec.reweave_price * boon.level), { boons.line("boon", boon), M.line("reweave") },
+            closed or cooled("reweave"))
+    end
+    for i, curse in ipairs(record.curse) do
         add(spec.cleanse_choices[i], "cleanse", i, curse, price(spec.cleanse_price * curse.level), { boons.line("curse", curse) })
-        add(spec.gamble_choices[i], "gamble", i, curse, price(spec.gamble_price * curse.level),
-            { boons.line("curse", curse), M.line("gamble") }, gamble_turns > 0 and M.line("gamble_cooling_" .. gamble_turns) or nil)
+        add(spec.gamble_choices[i], "gamble", i, curse, price(spec.gamble_price * curse.level), { boons.line("curse", curse), M.line("gamble") }, cooled("gamble"))
+        add(spec.blood_choices[i], "blood", i, curse, nil, { boons.line("curse", curse), M.line("blood_" .. curse.level) }, cooled("blood"))
     end
     choices[#choices + 1] = { key = spec.back_choice, lines = { LINE_BACK } }
-    return launch(spec.dilemma, character, faction_name, "hedge-witch (gamble cooling " .. gamble_turns .. " turns)", slots, choices)
+    local cooling_note = {}
+    for kind, turns in pairs(cooling) do
+        if turns > 0 then cooling_note[#cooling_note + 1] = kind .. " " .. turns end
+    end
+    table.sort(cooling_note)
+    return launch(spec.dilemma, character, faction_name, "hedge-witch (cooling: " .. (#cooling_note > 0 and table.concat(cooling_note, ", ") or "none") .. ")",
+        slots, choices)
 end
 
 --- Applies a room choice. The payload already charged the price. A closed or unpaid choice clicked anyway is refunded and changes nothing,
@@ -194,7 +227,7 @@ function M.resolve(open_room, faction_name, dilemma_key, choice_key)
         return "reopen", nil, character
     end
     local record = boons.find_record(character)
-    local list = slot.kind == "temper" and record.boon or record.curse
+    local list = record[slot.list]
     local entry = slot.index and list[slot.index]
     if slot.index and not (entry and entry.key == slot.key and entry.level == slot.level) then
         log("boons: " .. faction_name .. " chose " .. choice_key .. ", but that slot changed since the room opened, so nothing happens")
@@ -214,11 +247,31 @@ function M.resolve(open_room, faction_name, dilemma_key, choice_key)
         local before = title("curse", entry)
         local lifted = random_chance(data.witch_room.gamble_lift_chance)
         log("boons: the gamble " .. (lifted and "lifts the curse" or "shifts the curse"))
-        if not lifted and boons.shift_curse(character, slot.index) then
+        if not lifted and boons.shift(character, "curse", slot.index, "curse_shifted") then
             keep_result(faction_name, "gamble_lost", before, title("curse", record.curse[slot.index]))
         else
             keep_result(faction_name, "gamble_won", before)
             boons.remove(character, "curse", slot.index, "gamble_won")
+        end
+    elseif slot.kind == "blood" then
+        local bleed = data.witch_room.blood_bleed * entry.level
+        tower_army.bleed_army(open_room.cqi, bleed, "blood rite")
+        keep_result(faction_name, "blood", title("curse", entry))
+        boons.remove(character, "curse", slot.index, "blood_rite")
+    elseif slot.kind == "feed" then
+        local before = title("boon", entry)
+        local raised = boons.add_wins(character, entry, data.witch_room.feed_wins, "boon_fed")
+        keep_result(faction_name, raised and "feed_raised" or "feed", before, title("boon", entry))
+    elseif slot.kind == "reweave" then
+        local before = title("boon", entry)
+        local rises = random_chance(data.witch_room.reweave_rise_chance)
+        log("boons: the reweave " .. (rises and "raises the boon" or "shifts the boon"))
+        if rises and boons.raise(character, "boon", entry, "boon_rewoven") then
+            keep_result(faction_name, "reweave_won", before, title("boon", entry))
+        elseif boons.shift(character, "boon", slot.index, "boon_shifted") then
+            keep_result(faction_name, "reweave_lost", before, title("boon", record.boon[slot.index]))
+        else
+            keep_result(faction_name, "reweave_held", before)
         end
     elseif slot.kind == "rust" then
         local _, boon = boons.gain(character, "boon", RUST_OFFER.boon[1], RUST_OFFER.boon[2], nil, false)

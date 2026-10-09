@@ -264,29 +264,55 @@ function M.remove(character, kind, index, event)
     if event then notify(event, character, kind, entry) end
 end
 
---- Turns one of a lord's curses into a random other curse they do not carry, at the same level and with its clock started again, and says
---- so. Used by a lost gamble at the hedge-witch.
+--- Turns one of a lord's boons or curses into a random other one they do not carry (never a charged boon), at the same level and with its
+--- clock started again, and says so. Used by a lost gamble or reweave at the hedge-witch.
 --- @param character userdata The lord.
---- @param index number The curse's slot.
---- @returns string|nil The new curse's key, or nil when no other curse is left to become.
-function M.shift_curse(character, index)
-    local list = record_of(character).curse
+--- @param kind string "boon" or "curse".
+--- @param index number The entry's slot.
+--- @param event string The incident that says so.
+--- @returns string|nil The new key, or nil when no other one is left to become.
+function M.shift(character, kind, index, event)
+    local list = record_of(character)[kind]
     local old = list[index]
     if not old then return nil end
     local carried, pool = {}, {}
-    for _, curse in ipairs(list) do carried[curse.key] = true end
-    for _, config in ipairs(data.curses) do
-        if not carried[config.key] then pool[#pool + 1] = config end
+    for _, entry in ipairs(list) do carried[entry.key] = true end
+    for _, config in ipairs(kind == "boon" and data.boons or data.curses) do
+        if not carried[config.key] and not config.charges then pool[#pool + 1] = config end
     end
     if #pool == 0 then return nil end
     local config = pool[random_number(#pool)]
     local entry = new_entry(config, old.level)
-    cm:remove_effect_bundle_from_character(M.bundle("curse", old), character)
+    cm:remove_effect_bundle_from_character(M.bundle(kind, old), character)
     list[index] = entry
-    show(character, "curse", entry)
-    log("boons: lord " .. character:command_queue_index() .. "'s " .. M.bundle("curse", old) .. " shifts into " .. M.bundle("curse", entry))
-    notify("curse_shifted", character, "curse", entry)
+    show(character, kind, entry)
+    log("boons: lord " .. character:command_queue_index() .. "'s " .. M.bundle(kind, old) .. " shifts into " .. M.bundle(kind, entry))
+    notify(event, character, kind, entry)
     return config.key
+end
+
+--- True when a boon can still grow: it is not charged and not at its highest level.
+--- @param entry table The boon.
+--- @returns boolean True when it can grow.
+function M.can_grow(entry)
+    return not entry.charges and entry.level < data.max_level
+end
+
+--- Adds won battles to one of a lord's boons, after a won battle or the hedge-witch's Feed a Boon. It rises a level once it has enough, and
+--- says so.
+--- @param character userdata The lord.
+--- @param entry table The boon.
+--- @param wins number The wins added.
+--- @param event string|nil The incident a rise shows, the usual "boon_grew" when nil.
+--- @returns boolean True when the boon rose a level.
+function M.add_wins(character, entry, wins, event)
+    if not M.can_grow(entry) then return false end
+    entry.wins = entry.wins + wins
+    log("boons: lord " .. character:command_queue_index() .. "'s " .. M.bundle("boon", entry) .. " gains " .. wins .. " wins (" .. entry.wins .. " of "
+        .. wins_per_level() .. ")")
+    if entry.wins >= wins_per_level() then return M.raise(character, "boon", entry, event) end
+    show(character, "boon", entry)
+    return false
 end
 
 --- Puts a new entry in a lord's free slot and says so.
@@ -577,15 +603,13 @@ end
 function M.on_battle_completed(character, won)
     local record = M.lords[tostring(character:command_queue_index())]
     if not record then return end
-    local needed = wins_per_level()
     for i = #record.boon, 1, -1 do
         local boon = record.boon[i]
         if boon.charges then
             boon.charges = boon.charges - 1
             if boon.charges <= 0 then M.remove(character, "boon", i, "boon_lost") else show(character, "boon", boon) end
-        elseif won and boon.level < data.max_level then
-            boon.wins = boon.wins + 1
-            if boon.wins >= needed then M.raise(character, "boon", boon) else show(character, "boon", boon) end
+        elseif won then
+            M.add_wins(character, boon, 1)
         end
     end
 end

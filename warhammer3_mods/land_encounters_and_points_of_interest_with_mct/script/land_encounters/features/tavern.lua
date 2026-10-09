@@ -132,8 +132,9 @@ local TavernState = OwnedPoint.extend({
     pending_board = nil,
     --- The open hedge-witch (see features/boon_services.lua), or nil when none is open.
     pending_room = nil,
-    --- Lord command queue index (as a string) -> the turn that lord may gamble at the hedge-witch here again.
-    gamble_until = {},
+    --- Hedge-witch service kind ("gamble", "feed", "reweave" or "blood") -> lord command queue index (as a string) -> the turn that lord may
+    --- use it here again.
+    service_until = {},
 
 })
 
@@ -287,10 +288,10 @@ function TavernState:open_hub(faction, general_cqi)
         donation,
         { key = LEAVE_CHOICE, lines = { PAYLOAD_TEXT_LEAVE } },
     }
-    --- The hedge-witch, while boons and curses are on. Closed for a lord with no curse to lift.
+    --- The hedge-witch, while boons and curses are on. Closed for a lord with no boon or curse to work on.
     local witch = false
     if boons.enabled() then
-        witch = boon_services.has_curse(tower_army.character(general_cqi))
+        witch = boon_services.has_work(tower_army.character(general_cqi))
         choices[#choices + 1] = { key = boons_data.witch_room.open_choice, lines = { boon_services.line(witch and "witch_room" or "witch_nothing") },
             closed = not witch }
     end
@@ -367,14 +368,18 @@ function TavernState:open_witch(faction_name, general_cqi)
     local character = tower_army.character(general_cqi)
     if not character then return end
     local share = self:is_occupied_by_same_faction(faction_name) and boons_data.owner_price_share or 1
-    local gamble_turns = turns_left(self.gamble_until, tostring(general_cqi))
-    --- A cooldown that has run out is forgotten, so the save does not keep it.
-    if gamble_turns == 0 then self.gamble_until[tostring(general_cqi)] = nil end
-    self.pending_room = boon_services.open_witch(character, faction_name, function(base) return self:charge(base * share, faction_name) end, gamble_turns)
+    local key, cooling = tostring(general_cqi), {}
+    for kind in pairs(boons_data.witch_room.cooldowns) do
+        local until_turn = self.service_until[kind] or {}
+        cooling[kind] = turns_left(until_turn, key)
+        --- A cooldown that has run out is forgotten, so the save does not keep it.
+        if cooling[kind] == 0 then until_turn[key] = nil end
+    end
+    self.pending_room = boon_services.open_witch(character, faction_name, function(base) return self:charge(base * share, faction_name) end, cooling)
 end
 
---- Applies a hedge-witch choice. A gamble closes the gambles to that lord here for the room's cooldown. The room then opens again for the
---- same lord while they carry a curse, and Back, or a lord with no curse left, goes back to the hub.
+--- Applies a hedge-witch choice. A gamble, feed, reweave or blood rite closes that service to the lord here for its cooldown. The room then
+--- opens again for the same lord while they carry a boon or curse, and Back, or a lord with neither left, goes back to the hub.
 --- @param choice_key string The chosen choice key.
 --- @param faction_name string The faction that chose.
 function TavernState:resolve_witch_choice(choice_key, faction_name)
@@ -382,13 +387,15 @@ function TavernState:resolve_witch_choice(choice_key, faction_name)
     self.pending_room = nil
     if not open_room then return end
     local action, slot, character = boon_services.resolve(open_room, faction_name, boons_data.witch_room.dilemma, choice_key)
-    if slot and slot.kind == "gamble" then
+    local cooldown = slot and boons_data.witch_room.cooldowns[slot.kind]
+    if cooldown then
         local key = tostring(open_room.cqi)
-        self.gamble_until[key] = cm:turn_number() + boons_data.witch_room.gamble_cooldown
-        log("tavern: lord " .. key .. " may gamble at the " .. self:describe() .. " again on turn " .. self.gamble_until[key])
+        self.service_until[slot.kind] = self.service_until[slot.kind] or {}
+        self.service_until[slot.kind][key] = cm:turn_number() + cooldown
+        log("tavern: lord " .. key .. " may use " .. slot.kind .. " at the " .. self:describe() .. " again on turn " .. self.service_until[slot.kind][key])
     end
     character = character or tower_army.character(open_room.cqi)
-    if action == "reopen" and boon_services.has_curse(character) then
+    if action == "reopen" and boon_services.has_work(character) then
         self:open_witch(faction_name, open_room.cqi)
     elseif character then
         self:open_hub(cm:get_faction(faction_name), open_room.cqi)
@@ -556,7 +563,7 @@ function TavernState:export_state_as_table()
         board = self.board or false,
         pending_board = self.pending_board or false,
         pending_room = self.pending_room or false,
-        gamble_until = self.gamble_until,
+        service_until = self.service_until,
     }
 end
 
@@ -583,7 +590,8 @@ function TavernState:reinstate(previous_state)
     self.board = previous_state.board or nil
     self.pending_board = previous_state.pending_board or nil
     self.pending_room = previous_state.pending_room or nil
-    self.gamble_until = previous_state.gamble_until or {}
+    --- A save from before the other services kept only the gamble's cooldowns.
+    self.service_until = previous_state.service_until or { gamble = previous_state.gamble_until or {} }
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -609,7 +617,7 @@ function TavernState:new(zone_name, index_in_zone, entry)
         bar_closed_until = {},
         bar_draws = {},
         hall_closed_until = {},
-        gamble_until = {},
+        service_until = {},
     }
     setmetatable(t, self)
     self.__index = self

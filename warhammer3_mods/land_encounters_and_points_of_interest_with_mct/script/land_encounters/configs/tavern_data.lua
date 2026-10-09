@@ -31,10 +31,15 @@ M.owner_price_share = 0.75
 --- The mercenary hall. Its stock is shared by every visitor and rolled again the MCT `tavern_hall_restock` turns after it was last rolled, or at once when the
 --- Tavern levels up. A racial Tavern stocks its own culture, a neutral one `neutral_cultures` random cultures. A hire costs the unit's
 --- recruitment cost plus the MCT `tavern_hire_markup` gold, and `renown_extra` more for a Regiment of Renown, for every visitor. A faction
---- hires at most the MCT `tavern_hires_per_visit` per visit, and its first hire closes the hall to it for the MCT `tavern_cooldown` turns.
+--- hires at most the MCT `tavern_hires_per_visit` per visit, and its first hire closes the hall to it for the MCT `tavern_cooldown` turns. One
+--- regular unit of each stock is a veteran company, with its level's `veteran_ranks`, at `veteran_price` times its price, and another is a
+--- cut-price sellsword at `cut_price` times its price, which arrives at `cut_strength` percent of its strength.
 M.hall = {
     neutral_cultures = 2,
     renown_extra = 1500,
+    veteran_price = 1.5,
+    cut_price = 0.5,
+    cut_strength = 25,
 }
 
 --- The contract board. Every Tavern belongs to the Tavern Keepers' Guild. Each shows `board_size` contracts of different kinds, rolled again
@@ -87,19 +92,20 @@ M.donations = {
 
 --- Each level (index 1-3). `upgrade_price` is the gold the owner pays to go from this level to the next, or nil at the top level. `hall` is
 --- the mercenary hall's stock: `units` regular units of `tiers`, `renown` Regiments of Renown as { min, max }, a hero of `hero_rank` for
---- `hero_price` gold before the hall's markup (none when nil), and `own` slots of the visitor's own culture, rolled for each visit.
+--- `hero_price` gold before the hall's markup (none when nil), `own` slots of the visitor's own culture, rolled for each visit, and the
+--- `veteran_ranks` of its veteran company.
 --- `contracts` is the board at this level: the `deposit`, an item of `item_rarities` with each reward, a bounty's `bounty_gold` reward, a
 --- cull's `cull_gold` reward for beating `cull_armies` armies, a marked spot's `marked_gold` reward, the contract terms' `terms_gold`, and
 --- `chain` when it posts a quest chain.
 --- A bounty lord's army, and a marked spot's, is as hard as a battle spot at the Tavern's level.
 M.levels = {
-    { upgrade_price = 10000, hall = { units = 3, tiers = { 1, 2 }, renown = { 0, 0 }, own = 1 },
+    { upgrade_price = 10000, hall = { units = 3, tiers = { 1, 2 }, renown = { 0, 0 }, own = 1, veteran_ranks = 3 },
         contracts = { deposit = 1000, item_rarities = { "uncommon" }, bounty_gold = 2000, cull_gold = 1500, cull_armies = 2,
             marked_gold = 1500, terms_gold = 1000 } },
-    { upgrade_price = 20000, hall = { units = 4, tiers = { 1, 2, 3 }, renown = { 1, 1 }, hero_rank = 5, hero_price = 2000, own = 1 },
+    { upgrade_price = 20000, hall = { units = 4, tiers = { 1, 2, 3 }, renown = { 1, 1 }, hero_rank = 5, hero_price = 2000, own = 1, veteran_ranks = 5 },
         contracts = { deposit = 2000, item_rarities = { "rare" }, bounty_gold = 3500, cull_gold = 3000, cull_armies = 3,
             marked_gold = 3000, terms_gold = 1500 } },
-    { upgrade_price = nil, hall = { units = 5, tiers = { 1, 2, 3, 4 }, renown = { 1, 2 }, hero_rank = 10, hero_price = 3500, own = 2 },
+    { upgrade_price = nil, hall = { units = 5, tiers = { 1, 2, 3, 4 }, renown = { 1, 2 }, hero_rank = 10, hero_price = 3500, own = 2, veteran_ranks = 7 },
         contracts = { deposit = 3000, item_rarities = { "rare" }, bounty_gold = 5000, cull_gold = 4500, cull_armies = 4,
             marked_gold = 4500, terms_gold = 2000, chain = true } },
 }

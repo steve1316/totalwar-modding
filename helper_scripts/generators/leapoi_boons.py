@@ -137,6 +137,24 @@ INCIDENTS: Dict[str, Tuple[str, list, str]] = {
     "boon_tempered": ("Tempered at the Forge", ["The master smith has worked the blessing on {lord}'s army into the steel itself. It burns brighter now.",
                                                 ("What changed", ["The boon rose one level. Its new strength is shown below."]),
                                                 BOON_GROWTH], "army_morale_up"),
+    "boon_fed": ("Fed by the Hedge-Witch", ["The hedge-witch burned a lock of {lord}'s hair with bitter herbs. The blessing on the army drank it in "
+                                            "and grew.",
+                                            ("What changed", ["The witch's feeding pushed the boon over the edge. It rose one level, shown below.",
+                                                              "Its count of won battles starts again from nothing."]),
+                                            BOON_GROWTH_SHORT], "army_morale_up"),
+    "boon_rewoven": ("The Weave Holds", ["The hedge-witch pulled the threads of {lord}'s blessing apart and wove them tighter. It held.",
+                                         ("What changed", ["The boon rose one level, shown below.",
+                                                           "A lord who reweaves must wait {service_cooldown} turns to use that service at that Tavern again."]),
+                                         BOON_GROWTH], "winds_of_magic_change"),
+    "boon_shifted": ("The Weave Shifts", ["The hedge-witch's threads slipped. The blessing on {lord}'s army is still there, but it is not the one it was.",
+                                          ("What changed", ["The reweave failed. The new boon, shown below, keeps the old one's level.",
+                                                            "Its count of won battles starts again from nothing.",
+                                                            "A lord who reweaves must wait {service_cooldown} turns to use that service at that Tavern again."]),
+                                          BOON_GROWTH_SHORT], "chaos_doom_tide"),
+    "blood_rite": ("A Blood Rite", ["The hedge-witch asked for no gold, only blood. {lord}'s soldiers gave it, and the curse washed out with it.",
+                                    ("What it cost", ["The army bled {blood}% of its strength for each level the curse had.",
+                                                      "A lord who works a blood rite must wait {service_cooldown} turns to work another at that Tavern."]),
+                                    ("What changed", ["The curse is gone for good, with every level it had gained."])], "rift_entered"),
     "rust_struck": ("Rust for Iron", ["The smith's bargain is struck. {lord}'s army is harder to wound now, but rust has crept into its blades.",
                                       ("The pact", ["The boon and the curse below came together.",
                                                     "The boon grows with victories, and the curse worsens with time, like any other."]),
@@ -179,13 +197,14 @@ SMITHY_ROOM = ("Temper and Break", ["The master smith clears the anvil for {lord
                "story_panels/chd_drill_blades", {"temper": "Temper This Boon", "break": "Break This Curse", "rust": "Trade Rust for Iron", "leave": "Leave"})
 
 # The Tavern's hedge-witch: (title, description parts, picture, choice labels by kind).
-WITCH_ROOM = ("The Hedge-Witch", ["Behind a curtain of dried herbs, the hedge-witch looks {lord} over and smiles at what she sees.",
-                                  ("What the witch offers", ["Cleanse a curse: it lifts for good. The price grows with the curse's level.",
-                                                             "Gamble on a curse: cheaper, but it lifts only {lift}% of the time. Otherwise it becomes another "
-                                                             "curse of the same level, which starts worsening again.",
-                                                             "A lord who gambles must wait {cooldown} turns to gamble here again."]),
-                                  ("Prices", ["The Tavern's owner pays {owner_off}% less."])],
-              "story_panels/chd_drill_machinations", {"cleanse": "Cleanse This Curse", "gamble": "Gamble on This Curse", "back": "Back"})
+WITCH_ROOM = ("The Hedge-Witch", ["Behind a curtain of dried herbs, the hedge-witch looks {lord} over and smiles. Each service waits "
+                                  "{service_cooldown} turns after use, and the owner pays {owner_off}% less.",
+                                  ("Boons", ["Feed: {feed_wins} more won battles toward its next level.",
+                                             "Reweave: {rise}% it rises a level, or it becomes another boon."]),
+                                  ("Curses", ["Cleanse: it lifts for good.", "Gamble: cheaper, but lifts {lift}% of the time, or becomes another curse.",
+                                              "Blood rite: lifts for no gold, but the army bleeds {blood}% per level."])],
+              "story_panels/chd_drill_machinations", {"feed": "Feed This Boon", "reweave": "Reweave This Boon", "cleanse": "Cleanse This Curse",
+                                                      "gamble": "Gamble on This Curse", "blood": "Work a Blood Rite", "back": "Back"})
 
 # The services' result lines, which a reopened room shows at the top: service -> text. "{old}" and "{new}" are the boon or curse names before
 # and after, filled in by features/boon_services.lua.
@@ -196,6 +215,12 @@ RESULTS = {
     "gamble_won": "[[col:green]]The gamble paid off:[[/col]] {old} is gone.",
     "gamble_lost": "[[col:red]]The gamble failed:[[/col]] {old} has become {new}.",
     "rust": "[[col:yellow]]The pact is struck:[[/col]] {new}, at the cost of {old}.",
+    "feed": "[[col:green]]Fed:[[/col]] {old} draws closer to its next level.",
+    "feed_raised": "[[col:green]]Fed:[[/col]] {old} is now {new}.",
+    "reweave_won": "[[col:green]]The weave held:[[/col]] {old} is now {new}.",
+    "reweave_lost": "[[col:yellow]]The weave shifted:[[/col]] {old} has become {new}.",
+    "reweave_held": "[[col:yellow]]The weave slipped, but nothing changed:[[/col]] {old} stays as it was.",
+    "blood": "[[col:green]]Lifted in blood:[[/col]] {old} is gone.",
 }
 
 # Labels of the choices that open the rooms, on the forge and the hub.
@@ -206,7 +231,7 @@ ROOM_LABELS = {"smithy_room": SMITHY_ROOM[0], "witch_room": "Visit the Hedge-Wit
 # each curse's cleanse with its gamble.
 ROOM_OPEN_ORDER = {"smithy_room": 7, "witch_room": 6}
 TEMPER_ORDER, BREAK_ORDER, RUST_ORDER, SMITHY_LEAVE_ORDER = 1120, 1125, 1130, 1131
-CLEANSE_ORDER, WITCH_BACK_ORDER = 1140, 1150
+FEED_ORDER, CLEANSE_ORDER, WITCH_BACK_ORDER = 1100, 1140, 1160
 
 # Icon of the services' lines, other than the Smithy room's.
 SERVICE_ICON = "fractured_mind.png"
@@ -215,14 +240,20 @@ SERVICE_ICON = "fractured_mind.png"
 SERVICE_LINES = {
     "smithy_room": ("icon_effects_army.png", "Visit the master smith to [[col:green]]temper a boon[[/col]] or [[col:green]]break a curse[[/col]], each "
                     "paid from our treasury."),
-    "witch_room": (SERVICE_ICON, "Seek out the hedge-witch in the back room, who can [[col:green]]cleanse a curse[[/col]] "
-                   "or gamble on one, for a price."),
-    "witch_nothing": (SERVICE_ICON, "[[col:red]]This lord carries no curse for the hedge-witch to lift.[[/col]]"),
+    "witch_room": (SERVICE_ICON, "Seek out the hedge-witch in the back room, who can [[col:green]]feed or reweave a boon[[/col]], and "
+                   "[[col:green]]lift a curse[[/col]] for gold, a gamble or blood."),
+    "witch_nothing": (SERVICE_ICON, "[[col:red]]This lord carries no boon or curse for the hedge-witch to work on.[[/col]]"),
     "top": (SERVICE_ICON, "[[col:red]]Already at its highest level.[[/col]]"),
     "charged": (SERVICE_ICON, "[[col:red]]A charged boon cannot be tempered.[[/col]]"),
     "gamble": (SERVICE_ICON, "[[col:yellow]]{lift}% of the time the curse lifts. Otherwise it becomes another curse of the same level, which "
                "starts worsening again.[[/col]]"),
+    "feed": (SERVICE_ICON, "[[col:green]]+{feed_wins} won battles[[/col]] toward this boon's next level."),
+    "reweave": (SERVICE_ICON, "[[col:yellow]]{rise}% of the time the boon rises a level. Otherwise it becomes another boon of the same "
+                "level.[[/col]]"),
 }
+
+# What each hedge-witch service's cooldown line says the witch will not do again: service -> words.
+COOLING_WORDS = {"gamble": "gamble with", "feed": "feed a boon for", "reweave": "reweave a boon for", "blood": "work a blood rite for"}
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -613,7 +644,8 @@ def describe(parts: list, config: Dict, event: str) -> str:
     witch = config["witch_room"]
     values = {"lord": lord, "wins": config["wins_per_level"], "max": config["max_level"], "turns": config["turns_per_level"],
               "turns_to_turn": config["turns_to_turn"], "realm_turns": config["realm_turns"], "lift": witch["gamble_lift_chance"],
-              "cooldown": witch["gamble_cooldown"], "owner_off": round((1 - config["owner_price_share"]) * 100)}
+              "cooldown": witch["cooldowns"]["gamble"], "owner_off": round((1 - config["owner_price_share"]) * 100), "feed_wins": witch["feed_wins"],
+              "rise": witch["reweave_rise_chance"], "blood": witch["blood_bleed"], "service_cooldown": max(witch["cooldowns"].values())}
     shown = [part if isinstance(part, str) else f"[[col:yellow]]{part[0]}[[/col]]" + "".join(NL + "- " + line for line in part[1]) for part in parts]
     return BREAK.join(shown).format_map(values)
 
@@ -687,9 +719,13 @@ def service_choices(config: Dict) -> List[Tuple[str, int, List[Tuple[str, str]]]
     out += [(choice, BREAK_ORDER + i, [(smithy["dilemma"], labels["break"])]) for i, choice in enumerate(smithy["break_choices"])]
     out += [(smithy["rust_choice"], RUST_ORDER, [(smithy["dilemma"], labels["rust"])]),
             (smithy["leave_choice"], SMITHY_LEAVE_ORDER, [(smithy["dilemma"], labels["leave"])])]
-    for i, (cleanse, gamble) in enumerate(zip(witch["cleanse_choices"], witch["gamble_choices"])):
-        out += [(cleanse, CLEANSE_ORDER + 2 * i, [(witch["dilemma"], witch_labels["cleanse"])]),
-                (gamble, CLEANSE_ORDER + 2 * i + 1, [(witch["dilemma"], witch_labels["gamble"])])]
+    for i, (feed, reweave) in enumerate(zip(witch["feed_choices"], witch["reweave_choices"])):
+        out += [(feed, FEED_ORDER + 2 * i, [(witch["dilemma"], witch_labels["feed"])]),
+                (reweave, FEED_ORDER + 2 * i + 1, [(witch["dilemma"], witch_labels["reweave"])])]
+    for i, (cleanse, gamble, blood) in enumerate(zip(witch["cleanse_choices"], witch["gamble_choices"], witch["blood_choices"])):
+        out += [(cleanse, CLEANSE_ORDER + 3 * i, [(witch["dilemma"], witch_labels["cleanse"])]),
+                (gamble, CLEANSE_ORDER + 3 * i + 1, [(witch["dilemma"], witch_labels["gamble"])]),
+                (blood, CLEANSE_ORDER + 3 * i + 2, [(witch["dilemma"], witch_labels["blood"])])]
     out.append((witch["back_choice"], WITCH_BACK_ORDER, [(witch["dilemma"], witch_labels["back"])]))
     return out
 
@@ -717,11 +753,16 @@ def service_lines(config: Dict) -> List[Tuple[str, str, str]]:
     Returns:
         List[Tuple[str, str, str]]: (payload key, icon, text).
     """
-    witch = config["witch_room"]
-    out = [(config["service_line_prefix"] + name, icon, text.format(lift=witch["gamble_lift_chance"])) for name, (icon, text) in SERVICE_LINES.items()]
-    for turns in range(1, witch["gamble_cooldown"] + 1):
-        out.append((f"{config['service_line_prefix']}gamble_cooling_{turns}", SERVICE_ICON,
-                    f"[[col:red]]The hedge-witch will not gamble with this lord again for {turns} turn{'s' if turns > 1 else ''}.[[/col]]"))
+    witch, prefix = config["witch_room"], config["service_line_prefix"]
+    values = {"lift": witch["gamble_lift_chance"], "feed_wins": witch["feed_wins"], "rise": witch["reweave_rise_chance"]}
+    out = [(prefix + name, icon, text.format(**values)) for name, (icon, text) in SERVICE_LINES.items()]
+    for level in range(1, config["max_level"] + 1):
+        out.append((f"{prefix}blood_{level}", SERVICE_ICON, f"[[col:red]]The army bleeds {witch['blood_bleed'] * level}% of its strength[[/col]] to lift "
+                    "this curse, but pays no gold."))
+    for kind, words in COOLING_WORDS.items():
+        for turns in range(1, witch["cooldowns"][kind] + 1):
+            out.append((f"{prefix}{kind}_cooling_{turns}", SERVICE_ICON,
+                        f"[[col:red]]The hedge-witch will not {words} this lord again for {turns} turn{'s' if turns > 1 else ''}.[[/col]]"))
     return out
 
 

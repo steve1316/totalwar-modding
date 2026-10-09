@@ -171,6 +171,10 @@ land_enc_incident_gamble_won	false	winds_of_magic_change	false	Event		false		0.0
 land_enc_incident_curse_cleansed	false	rift_entered	false	Event		false		0.0000	false
 land_enc_incident_curse_broken	false	rift_entered	false	Event		false		0.0000	false
 land_enc_incident_boon_tempered	false	army_morale_up	false	Event		false		0.0000	false
+land_enc_incident_boon_fed	false	army_morale_up	false	Event		false		0.0000	false
+land_enc_incident_boon_rewoven	false	winds_of_magic_change	false	Event		false		0.0000	false
+land_enc_incident_boon_shifted	false	chaos_doom_tide	false	Event		false		0.0000	false
+land_enc_incident_blood_rite	false	rift_entered	false	Event		false		0.0000	false
 land_enc_incident_rust_struck	false	carnage_weapons	false	Event		false		0.0000	false
 land_enc_incident_curse_turned	false	sword_of_khaine	false	Event		false		0.0000	false
 land_enc_incident_realm_boon	false	winds_of_magic_change	false	Event		false		0.0000	false
