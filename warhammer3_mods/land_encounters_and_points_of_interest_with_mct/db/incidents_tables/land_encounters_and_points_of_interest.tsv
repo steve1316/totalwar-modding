@@ -63,6 +63,15 @@ land_enc_incident_tavern_patron_1	false	wulfhart_hunters	false	Event		false		0.0
 land_enc_incident_tavern_patron_2	false	wulfhart_hunters	false	Event		false		0.0000	false
 land_enc_incident_smithy_patron_1	false	land_enc_smithy_forge	false	Event		false		0.0000	false
 land_enc_incident_smithy_patron_2	false	land_enc_smithy_forge	false	Event		false		0.0000	false
+land_enc_incident_spot_tomb_robbing_spared	false	vc_puzzle_1_background	false	Event		false		0.0000	false
+land_enc_incident_spot_tomb_robbing_haunted	false	vc_puzzle_1_background	false	Event		false		0.0000	false
+land_enc_incident_spot_abandoned_camp	false	wh2_rogue_army_encountered	false	Event		false		0.0000	false
+land_enc_incident_spot_buried_relics	false	vc_puzzle_4_background	false	Event		false		0.0000	false
+land_enc_incident_spot_hidden_temple	false	old_ones_temples_up	false	Event		false		0.0000	false
+land_enc_incident_spot_caravan_remnants	false	carnage_weapons	false	Event		false		0.0000	false
+land_enc_incident_spot_whispers_of_the_gods	false	winds_of_magic_change	false	Event		false		0.0000	false
+land_enc_incident_spot_the_explorer	false	elector_region	false	Event		false		0.0000	false
+land_enc_incident_spot_legendary_bard	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_cast_the_lots_won	false	wulfhart_hunters	false	Event		false		0.0000	false
 land_enc_incident_spot_cast_the_lots_lost	false	wulfhart_hunters	false	Event		false		0.0000	false
 land_enc_incident_spot_drink_from_the_spring_won	false	rift_entered	false	Event		false		0.0000	false

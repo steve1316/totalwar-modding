@@ -25,7 +25,9 @@
 ---   guardian        A battle starts at the site, against an army that attacks the lord at once: true at the current difficulty, or a
 ---                   difficulty key, e.g. "hard". On an offer or a gamble outcome.
 ---   dividends       { per_turn, turns }: gold each turn start, shown by the `dividends_bundle_prefix` bundle for that amount.
----   incident        A site's old incident, fired as the signature reward.
+---   story           True: a site special's story shows as its result once taken (a gamble's outcome or a realm target's result shows it
+---                   instead).
+---   cleanse         { boon, level }: our lord's worst curse is lifted, or the lord gains that boon when it has none.
 ---   gamble          A list of outcomes { weight, name, ...fields }. One is rolled when the offer is taken, and its fields apply.
 ---   realm           The realm target kind, see `M.realm_kinds`. The offer is not drawn when it has no target.
 ---   region_bundle, province_bundle, target_faction_bundle  { bundle, turns } on the realm target.
@@ -274,15 +276,24 @@ M.tavern = { key = "tavern_bar", tags = {}, pools = { "tavern" }, ui_image = "wu
 --- Offers
 
 M.offers = {
-    --- Signature rewards of the old treasure sites: the old incident fires.
-    { key = "tomb_robbing", pool = "signature", tags = {}, incident = "land_enc_incident_tomb_robbing" },
-    { key = "abandoned_camp", pool = "signature", tags = {}, incident = "land_enc_incident_abandoned_camp" },
-    { key = "buried_relics", pool = "signature", tags = {}, incident = "land_enc_incident_buried_relics" },
-    { key = "hidden_temple", pool = "signature", tags = {}, incident = "land_enc_incident_hidden_temple" },
-    { key = "caravan_remnants", pool = "signature", tags = {}, incident = "land_enc_incident_caravan_remnants" },
-    { key = "whispers_of_the_gods", pool = "signature", tags = {}, incident = "land_enc_incident_whispers_of_the_gods" },
-    { key = "the_explorer", pool = "signature", tags = {}, incident = "land_enc_incident_the_explorer" },
-    { key = "legendary_bard", pool = "signature", tags = {}, incident = "land_enc_incident_legendary_bard" },
+    --- The site specials. Each tells its site's old story as its result. The AI's balancing bonus still fires the old incidents.
+    { key = "tomb_robbing", pool = "signature", tags = {}, items = { rarities = { "rare" }, count = 1 }, lord_xp = 2000, gamble = {
+        { 2, "spared" },
+        { 1, "haunted", curse = { "haunted", 2 } },
+    } },
+    { key = "abandoned_camp", pool = "signature", tags = {}, story = true, heal_share = S(0.5, 0.75, 1), army_bundle = { SPOT_BUNDLE .. "buy_supplies", 1 },
+        camp = true },
+    { key = "buried_relics", pool = "signature", tags = {}, story = true, camp = true,
+        items = S({ rarities = { "uncommon" }, count = 2 }, { rarities = { "uncommon" }, count = 2 }, { rarities = { "rare" }, count = 2 }) },
+    { key = "hidden_temple", pool = "signature", tags = {}, story = true, cost = STANDARD, cleanse = { "warded", 1 } },
+    { key = "caravan_remnants", pool = "signature", tags = {}, gold = 2500, lord_xp = 500, items = { rarities = { "common", "uncommon", "rare" }, count = 1 },
+        realm = "region_owner", relations = -2 },
+    { key = "whispers_of_the_gods", pool = "signature", tags = {}, army_bundle = { "land_enc_effect_whispers_of_the_gods", 3 }, spell_pool = "lore",
+        spell_turns = 3, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "sig_troubled_faithful", 5 } },
+    { key = "the_explorer", pool = "signature", tags = {}, cost = STANDARD, army_bundle = { SPOT_BUNDLE .. "sig_explorers", 5 }, realm = "nearby_regions",
+        count = 5, reveal_turns = 5 },
+    { key = "legendary_bard", pool = "signature", tags = {}, story = true, cost = STANDARD, faction_bundle = { "land_enc_effect_legendary_bard", 5 },
+        army_bundle = { SPOT_BUNDLE .. "sig_bard_song", 5 } },
 
     --- Treasure: loot.
     { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = S(1000, 1500, 2000), spoils = true },

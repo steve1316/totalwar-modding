@@ -129,6 +129,9 @@ land_enc_effect_spot_smithy_arms_trade_hard			province	1	income.png	false	false	
 land_enc_effect_spot_smithy_armoury_easy			region	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_smithy_armoury_medium			region	1	icon_effects_fortify.png	false	false	true
 land_enc_effect_spot_smithy_armoury_hard			region	1	icon_effects_fortify.png	false	false	true
+land_enc_effect_spot_sig_troubled_faithful			province	1	public_order_unhappy.png	false	false	true
+land_enc_effect_spot_sig_explorers			force	1	campaign_movement.png	false	false	true
+land_enc_effect_spot_sig_bard_song			force	1	morale.png	false	false	true
 land_enc_effect_spot_tavern_hangover			force	1	discouraged.png	false	false	true
 land_enc_effect_tower_war_rites_easy			force	1	effect_rite.png	false	false	true
 land_enc_effect_tower_war_rites_medium			force	1	effect_rite.png	false	false	true

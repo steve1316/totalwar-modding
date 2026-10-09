@@ -68,6 +68,15 @@ MISSION_RESULT_IMAGE = "land_victory"
 # Picture of each result's incident, by its key after the result prefix, picked in the art pass. A result not listed shows
 # `MISSION_RESULT_IMAGE` for a mission or `RESULT_IMAGE` otherwise.
 RESULT_IMAGES = {
+    "tomb_robbing_spared": "vc_puzzle_1_background",
+    "tomb_robbing_haunted": "vc_puzzle_1_background",
+    "abandoned_camp": "wh2_rogue_army_encountered",
+    "buried_relics": "vc_puzzle_4_background",
+    "hidden_temple": "old_ones_temples_up",
+    "caravan_remnants": "carnage_weapons",
+    "whispers_of_the_gods": "winds_of_magic_change",
+    "the_explorer": "elector_region",
+    "legendary_bard": "land_victory",
     "arm_wrestle_the_champion_lost": "waaagh_up",
     "arm_wrestle_the_champion_won": "land_victory",
     "bountiful_harvest": "imperial_supplies",
@@ -300,14 +309,23 @@ LEAVE_FOOTER = "\\\\n\\\\n[[col:yellow]]Choose one, or {}[[/col]]"
 
 # Offer key -> (choice label, line). A line may use {cost}, {gold}, {won_gold}, {lost_gold} and {per_turn}, filled per difficulty.
 OFFERS: Dict[str, Tuple[str, str]] = {
-    "tomb_robbing": ("Rob the Tomb", "Rob the tomb: [[col:green]]a random item[[/col]] and [[col:green]]+2000 experience[[/col]] for our lord."),
-    "abandoned_camp": ("Rest at the Camp", "Rest at the camp: [[col:green]]+5% replenishment[[/col]] for 3 turns."),
-    "buried_relics": ("Dig Up the Relics", "Dig up the relics: [[col:green]]a random item[[/col]]."),
-    "hidden_temple": ("Pray at the Temple", "Pray at the temple: [[col:green]]+5% ward save[[/col]] for 5 turns, and our lord gains [[col:green]]+250 experience[[/col]] each turn."),
-    "caravan_remnants": ("Salvage the Caravan", "Salvage the caravan: [[col:green]]+2500 gold[[/col]] to our treasury, [[col:green]]a random item[[/col]] and [[col:green]]+500 experience[[/col]] for our lord."),
-    "whispers_of_the_gods": ("Heed the Whisper", "Heed the whisper: our army is [[col:green]]unbreakable[[/col]] and [[col:green]]never tires[[/col]] for 3 turns, and our lord gains [[col:green]]+250 experience[[/col]] each turn."),
-    "the_explorer": ("Hear the Explorers Out", "Hear the explorers out: [[col:green]]+15% movement range[[/col]] and [[col:green]]+15% ambush defence[[/col]] for 5 turns."),
-    "legendary_bard": ("Free the Bard", "Free the bard: [[col:green]]+5% income[[/col]] and [[col:green]]-25% construction cost[[/col]] in our provinces for 5 turns."),
+    "tomb_robbing": ("Rob the Tomb", "Rob the tomb: [[col:green]]a rare item[[/col]] and [[col:green]]+2000 experience[[/col]] for our lord, but a 1 in 3 chance the "
+                     "dead follow, and our lord is struck by [[col:red]]Haunted II[[/col]]."),
+    "abandoned_camp": ("Rest in the Camp", "Rest in the camp: every unit regains [[col:green]]{heal}% of its missing strength[[/col]] and our army "
+                       "[[col:green]]ignores attrition[[/col]] next turn, but our army [[col:red]]cannot move again this turn[[/col]]."),
+    "buried_relics": ("Dig Through the Night", "Dig through the night: [[col:green]]2 items[[/col]] from the cache, but our army [[col:red]]cannot move again "
+                      "this turn[[/col]]."),
+    "hidden_temple": ("Pray at the Altar", PAY + "pray at the altar: our lord's [[col:green]]worst curse is lifted[[/col]], or our lord gains "
+                      "[[col:green]]Warded I[[/col]] when no curse weighs on them."),
+    "caravan_remnants": ("Claim the Cargo", "Claim the cargo: [[col:green]]+{gold} gold[[/col]], [[col:green]]a random item[[/col]] and [[col:green]]+{lord_xp} "
+                         "experience[[/col]] for our lord, but [[col:red]]-{relations} relations[[/col]] with the owner of this region."),
+    "whispers_of_the_gods": ("Heed the Voice", "Heed the voice: our army is [[col:green]]unbreakable[[/col]] and [[col:green]]never tires[[/col]], our lord gains "
+                             "[[col:green]]+250 experience[[/col]] each turn, and the army spell below is ours, all for 3 turns, but [[col:red]]-{e0} public "
+                             "order[[/col]] in our nearest province for 5 turns."),
+    "the_explorer": ("Hire the Explorers", PAY + "hire the explorers: [[col:green]]+{e0}% movement range[[/col]] and [[col:green]]+{e1}% ambush "
+                     "defence[[/col]] for {turns} turns, and the {count} nearest regions not our own are [[col:green]]revealed for {reveal_turns} turns[[/col]]."),
+    "legendary_bard": ("Patronise the Bard", PAY + "patronise the bard: [[col:green]]+5% income[[/col]] and [[col:green]]-25% construction cost[[/col]] in our "
+                       "provinces, and [[col:green]]+{e0} leadership[[/col]] for our army, all for 5 turns."),
 
     "take_the_gold": ("Take the Gold", "Take the gold: [[col:green]]+{gold} gold[[/col]] to our treasury."),
     "strip_the_valuables": ("Strip the Valuables", "Strip everything of value: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army is weighed down: "
@@ -879,6 +897,52 @@ AVOID_CONSEQUENCES = ("avoid_consequences", "random_recipe.png", "[[col:yellow]]
 # or the target faction's when it holds no region. Each is also a result incident, which shows only the title and description, with the
 # place highlighted.
 MESSAGES = {
+    "tomb_robbing_spared": ("Hidden Tomb", "A Tomb Robbed",
+                            "One of our soldiers falls through a crack in the earth and lands in a great buried tomb. He shouts up from the dark that "
+                            "he is unhurt, and that there is more down there than dust.\\\\n\\\\nMore are sent down with torches and ropes, and they "
+                            "come back laden with grave goods. Gold cups, old blades and painted urns are hauled up one by one.\\\\n\\\\nOur lord "
+                            "takes the pick of them, and learns much from the carvings on the walls. Whoever built this place knew things about war "
+                            "that the living have forgotten."),
+    "tomb_robbing_haunted": ("Hidden Tomb", "The Dead Follow",
+                             "One of our soldiers falls through a crack in the earth and lands in a great buried tomb. More are sent down with torches "
+                             "and ropes, and they come back laden with gold cups, old blades and painted urns.\\\\n\\\\nOur lord takes the pick of "
+                             "them and studies the carvings on the walls long into the night.\\\\n\\\\nBut something follows the last man up the "
+                             "rope. The camp's fires burn low and cold, and our lord wakes to whispers in a tongue no one living speaks."),
+    "abandoned_camp": ("Abandoned Camp", "Rest and Recovery",
+                       "Our vanguard finds an abandoned camp hidden between the hills, its tents still pitched and its stores still full. There is "
+                       "no sign of a fight, and no sign of where its owners went.\\\\n\\\\nWe check it for traps and find none. No poisoned "
+                       "water, no loose earth, no tripwires in the grass. Whoever left did so in a hurry.\\\\n\\\\nSo the army stays the night "
+                       "and rests. The wounded are tended, the soldiers eat well for once, and they sleep under canvas someone else carried here."),
+    "buried_relics": ("Buried Relics", "Two Prizes",
+                      "A strange noise draws our scouts to a ruined village. The houses are empty shells and the well is dry, but the sound comes "
+                      "again from beneath the old meeting hall.\\\\n\\\\nWhen the floor is cleared, a passage opens into the earth. The army "
+                      "camps while our scouts dig through every tunnel by torchlight, all through the night.\\\\n\\\\nBy dawn they have "
+                      "brought up two prizes worth the taking. We leave the dead to their rest and march on, a day behind."),
+    "hidden_temple": ("Hidden Temple", "A Night at the Altar",
+                      "Deep in the ruins of an old city, one temple still has its roof and its doors. The streets around it are broken and "
+                      "overgrown, but nothing has touched the inside.\\\\n\\\\nOur lord keeps vigil there for a night and a day, alone before "
+                      "the old altar, while the army waits in the rubble outside.\\\\n\\\\nWhen our lord walks out, the shadow that followed "
+                      "them is gone. If nothing troubled our lord, the temple's calm settles over them like a ward instead."),
+    "caravan_remnants": ("Caravan Remnants", "Cargo Claimed",
+                         "Smoke rises not far from our camp. Our scouts ride out to find the cause and come back with grim news.\\\\n\\\\nA "
+                         "caravan has been attacked but not fully sacked. Its guards lie dead around the wagons, and much of the cargo is still "
+                         "whole.\\\\n\\\\nWe take what was left behind. But the crests on the wagons are known in these lands, and word of who "
+                         "took the cargo will reach their owners soon."),
+    "whispers_of_the_gods": ("A Voice in the Dream", "The Voice Heeded",
+                             "Our lord's sleep is broken by a dream more vivid than any waking hour. There is no sound of the camp, no wind, only a "
+                             "great darkness and a voice within it.\\\\n\\\\nThe voice speaks of strength and of trials to come, and teaches "
+                             "our lord words of power. By morning the whole army fights as if nothing in the world could break it.\\\\n\\\\nBut "
+                             "the tale has spread to our lands as well, and the faithful at home fear the voice that spoke in our lord's dream."),
+    "the_explorer": ("The Explorers", "Maps of the Land",
+                     "A band of explorers asks to travel under the protection of our weapons until the road grows safer. They are worn and few, "
+                     "and they ask a fair price for what they know.\\\\n\\\\nWe pay it. In return they share their maps and their hard-won "
+                     "knowledge of the land: the dry fords, the short paths, and the places best avoided.\\\\n\\\\nOur march grows swifter "
+                     "and surer for it, and the lands around us are laid bare."),
+    "legendary_bard": ("Legendary Bard", "A Song of Our Deeds",
+                       "A desperate rider begs us to save their village from a slaver raid. We arrive in time, and the captives are freed from "
+                       "their chains.\\\\n\\\\nAmong them is a famous bard, thin and bruised but still in good voice. For a patron's purse, "
+                       "the bard swears to sing of our deeds in every hall and market across the land.\\\\n\\\\nThe songs travel faster than "
+                       "we do. Builders work cheaper for a famous lord, trade comes easier, and our soldiers march a little prouder."),
     "cast_the_lots_won": ("Cast the Lots", "Fortune Smiles",
                           "The lots tumble from the cup and fall in our favour. A cheer goes up from the soldiers crowded round the table, and a few "
                           "coins change hands among them on side bets.\\\\n\\\\nThe stranger who offered the game scowls, but pays up all the same. "
@@ -1129,6 +1193,7 @@ WOUND_PAID = ("The Price Is Paid", "Our Lord Is Wounded",
 # Result -> (colour, text) of the effect line under a result's incident, for results whose payload shows no gold, item or unit card.
 # Every mission failed gets its own line, and every wound paid one built from WOUND_PAID_LINE.
 RESULT_LINES = {
+    "tomb_robbing_haunted": ("red", "Our lord is struck by Haunted II."),
     "cast_the_lots_lost": ("red", "Our stake is lost."),
     "drink_from_the_spring_won": ("green", "Every unit is healed to full."),
     "drink_from_the_spring_lost": ("red", "Attrition on our army for {lost_turns} turns."),
@@ -1287,6 +1352,13 @@ BUNDLES = {
     "smithy_armoury": ("region", "icon_effects_fortify.png", "Garrison Armoury", "The Smithy arms the garrison with its best plate and shields.",
                        [("wh_main_effect_force_stat_armour", "region_to_force_own_regionwide_if_garrison", (10, 15, 20)),
                         ("wh_main_effect_force_stat_melee_defence", "region_to_force_own_regionwide_if_garrison", (5, 8, 10))]),
+    "sig_troubled_faithful": ("province", "public_order_unhappy.png", "Troubled Faithful", "The faithful at home have heard of our lord's dream, and they fear the voice that spoke in it.",
+                              [("wh_main_effect_public_order_events", "province_to_province_own", -10)]),
+    "sig_explorers": ("force", "campaign_movement.png", "The Explorers' Maps", "The explorers' maps show every dry ford and short path, and every place an enemy could lie in wait.",
+                      [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", 15),
+                       ("wh_main_effect_force_army_campaign_ambush_defence_success_chance", "force_to_force_own", 15)]),
+    "sig_bard_song": ("force", "morale.png", "Song of Our Deeds", "The bard's songs of our deeds run ahead of the army, and every soldier stands a little taller for them.",
+                      [("wh_main_effect_force_stat_leadership", "force_to_force_own", 10)]),
     "tavern_hangover": ("force", "discouraged.png", "Hangover", "The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.",
                         [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
 }
@@ -2128,6 +2200,7 @@ def check_text(config: Dict) -> None:
         SystemExit: Naming every problem found.
     """
     problems = [f"no text for {o['key']}" for o in config["offers"] if o["key"] not in OFFERS]
+    problems += [f"no story for {o['key']}" for o in config["offers"] if o.get("story") and o["key"] not in MESSAGES]
     problems += [f"no text for leave line {s['leave_line']}" for s in all_sites(config) if s.get("leave_line") and s["leave_line"] not in OFFERS]
     modifier_keys = {m["key"] for m in config["battle_modifiers"]["list"]}
     generic = {m["key"] for m in config["battle_modifiers"]["list"] if "army" in m and "faction" not in m}

@@ -6,7 +6,6 @@ require("script/land_encounters/utils/random")
 require("script/land_encounters/utils/common")
 
 local offers_data = require("script/land_encounters/configs/spot_offers")
-local treasure_events = require("script/land_encounters/configs/events").treasure_type
 local debug_config = require("script/land_encounters/configs/debug")
 local offer_effects = require("script/land_encounters/core/offer_effects")
 local realm_effects = require("script/land_encounters/core/realm_effects")
@@ -56,16 +55,6 @@ end
 --- @returns string The choice key, e.g. LEAPOI_SPT_TAKE_THE_GOLD.
 function M.choice_key(key)
     return offers_data.choice_key_prefix .. key:upper()
-end
-
---- Finds the old treasure incident's targets, for a signature offer that fires it.
---- @param incident string The incident key.
---- @returns table The targets flag map.
-local function incident_targets(incident)
-    for _, event in ipairs(treasure_events) do
-        if event.incident == incident then return event.targets end
-    end
-    return { character = true }
 end
 
 --- Shows a result as an incident built in script: its payload grants the result's gold, items and units as cards, and shows its effect line
@@ -507,9 +496,9 @@ local function apply_fields(fields, offer, state, rolled)
         if M.send_daemon_army then M.send_daemon_army(faction_name, fields.daemon_armies) else log("spot: no Daemon's deal sender is set") end
     end
     boons.grant_fields(general, fields)
-    if fields.incident and general then
-        trigger_incident_for_character(fields.incident, incident_targets(fields.incident), general)
-        log("spot: " .. offer.key .. " fires " .. fields.incident)
+    if fields.cleanse and general and not boons.lift_worst_curse(general) then
+        boons.gain(general, "boon", fields.cleanse[1], fields.cleanse[2])
+        log("spot: lord " .. general_cqi .. " has no curse to lift, so gains " .. fields.cleanse[1])
     end
     rewards.character = general
     rewards.difficulty = state.difficulty
@@ -577,18 +566,22 @@ function M.take(faction_name, choice_key)
             rewards.items[1] and "ancillaries_onscreen_name_" .. rewards.items[1] or nil)
     end
     local target = pending.targets and pending.targets[offer.key]
-    if target then
-        realm_effects.apply(offer, target, faction_name)
-        local position, region_key = realm_effects.target_position(target)
-        --- The result names the target region, or the target faction when it holds none.
-        local place = region_key and "regions_onscreen_" .. region_key or target.factions[1] and "factions_screen_name_" .. target.factions[1] or nil
-        local detail = nil
-        if offer.reveal_turns then
-            for _, revealed in ipairs(target.regions) do
-                M.reveals[#M.reveals + 1] = { faction = faction_name, region = revealed, turns = offer.reveal_turns }
+    --- A realm offer shows where it landed. A site special tells its story, unless its gamble's outcome told one already.
+    if target or (offer.story and not offer.gamble) then
+        local position, place, detail = nil, nil, nil
+        if target then
+            realm_effects.apply(offer, target, faction_name)
+            local region_key
+            position, region_key = realm_effects.target_position(target)
+            --- The result names the target region, or the target faction when it holds none.
+            place = region_key and "regions_onscreen_" .. region_key or target.factions[1] and "factions_screen_name_" .. target.factions[1] or nil
+            if offer.reveal_turns then
+                for _, revealed in ipairs(target.regions) do
+                    M.reveals[#M.reveals + 1] = { faction = faction_name, region = revealed, turns = offer.reveal_turns }
+                end
+                detail = offer.army_report and realm_effects.enemy_armies_summary(cm:get_faction(faction_name), pending.x, pending.y, offer.army_report)
+                    or realm_effects.garrison_summary(region_key)
             end
-            detail = offer.army_report and realm_effects.enemy_armies_summary(cm:get_faction(faction_name), pending.x, pending.y, offer.army_report)
-                or realm_effects.garrison_summary(region_key)
         end
         M.show_result(faction_name, offer.key, { character = tower_army.character(pending.general_cqi), difficulty = pending.difficulty, detail = detail },
             position or { pending.x, pending.y }, place)

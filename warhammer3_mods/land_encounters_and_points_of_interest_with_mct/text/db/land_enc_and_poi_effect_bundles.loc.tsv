@@ -258,6 +258,12 @@ effect_bundles_localised_title_land_enc_effect_spot_smithy_armoury_medium	Garris
 effect_bundles_localised_description_land_enc_effect_spot_smithy_armoury_medium	The Smithy arms the garrison with its best plate and shields.	false
 effect_bundles_localised_title_land_enc_effect_spot_smithy_armoury_hard	Garrison Armoury	false
 effect_bundles_localised_description_land_enc_effect_spot_smithy_armoury_hard	The Smithy arms the garrison with its best plate and shields.	false
+effect_bundles_localised_title_land_enc_effect_spot_sig_troubled_faithful	Troubled Faithful	false
+effect_bundles_localised_description_land_enc_effect_spot_sig_troubled_faithful	The faithful at home have heard of our lord's dream, and they fear the voice that spoke in it.	false
+effect_bundles_localised_title_land_enc_effect_spot_sig_explorers	The Explorers' Maps	false
+effect_bundles_localised_description_land_enc_effect_spot_sig_explorers	The explorers' maps show every dry ford and short path, and every place an enemy could lie in wait.	false
+effect_bundles_localised_title_land_enc_effect_spot_sig_bard_song	Song of Our Deeds	false
+effect_bundles_localised_description_land_enc_effect_spot_sig_bard_song	The bard's songs of our deeds run ahead of the army, and every soldier stands a little taller for them.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_hangover	Hangover	false
 effect_bundles_localised_description_land_enc_effect_spot_tavern_hangover	The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.	false
 effect_bundles_localised_title_land_enc_effect_tower_war_rites_easy	War Rites	false

@@ -476,11 +476,11 @@ function M.lift_worst_curse(character)
 end
 
 --- True when an offer that touches boons and curses can be drawn: they are on, and one that lifts a curse finds the lord with one.
---- @param offer table The offer record: `boon`, `curse`, `fail_curse` or `lift_curse`.
+--- @param offer table The offer record: `boon`, `curse`, `fail_curse`, `lift_curse` or `cleanse`.
 --- @param character userdata|nil The lord, for `lift_curse`.
 --- @returns boolean True when it can be drawn.
 function M.drawable(offer, character)
-    if not (M.grants(offer) or offer.fail_curse or offer.lift_curse) then return true end
+    if not (M.grants(offer) or offer.fail_curse or offer.lift_curse or offer.cleanse) then return true end
     if not M.enabled() then return false end
     return not offer.lift_curse or (character ~= nil and #M.find_record(character).curse > 0)
 end
