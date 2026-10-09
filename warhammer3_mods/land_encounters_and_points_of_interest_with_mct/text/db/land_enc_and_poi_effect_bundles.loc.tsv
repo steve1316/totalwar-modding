@@ -179,29 +179,49 @@ effect_bundles_localised_description_land_enc_effect_spot_tavern_fighting_spirit
 effect_bundles_localised_title_land_enc_effect_spot_tavern_fighting_spirits_hard	Fighting Spirits	false
 effect_bundles_localised_description_land_enc_effect_spot_tavern_fighting_spirits_hard	The tavern's fighting spirits burned all the way down. Our warriors marched out spoiling for a brawl.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_shieldbrew_easy	Shieldbrew	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_shieldbrew_easy	The shieldbrew sat in every belly like a stone. Our warriors marched out steady on their feet and hard to knock down.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_shieldbrew_easy	The shieldbrew sat in every belly like a stone. Our warriors stand their ground like rocks, though they are slow to move.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_shieldbrew_medium	Shieldbrew	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_shieldbrew_medium	The shieldbrew sat in every belly like a stone. Our warriors marched out steady on their feet and hard to knock down.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_shieldbrew_medium	The shieldbrew sat in every belly like a stone. Our warriors stand their ground like rocks, though they are slow to move.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_shieldbrew_hard	Shieldbrew	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_shieldbrew_hard	The shieldbrew sat in every belly like a stone. Our warriors marched out steady on their feet and hard to knock down.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_shieldbrew_hard	The shieldbrew sat in every belly like a stone. Our warriors stand their ground like rocks, though they are slow to move.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_firewater_easy	Firewater	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_firewater_easy	The firewater left every throat burning and every foot itching to run. Our warriors marched out eager to charge.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_firewater_easy	The firewater left every throat burning and every foot itching to run. Our warriors charge like madmen, and tire as fast.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_firewater_medium	Firewater	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_firewater_medium	The firewater left every throat burning and every foot itching to run. Our warriors marched out eager to charge.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_firewater_medium	The firewater left every throat burning and every foot itching to run. Our warriors charge like madmen, and tire as fast.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_firewater_hard	Firewater	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_firewater_hard	The firewater left every throat burning and every foot itching to run. Our warriors marched out eager to charge.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_firewater_hard	The firewater left every throat burning and every foot itching to run. Our warriors charge like madmen, and tire as fast.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_marksmans_draught_easy	Marksman's Draught	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_marksmans_draught_easy	A round of marksman's draught steadied the hands of our shooters. They marched out keen to test their aim.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_marksmans_draught_easy	A round of marksman's draught steadied the hands of our shooters, and filled every quiver. Nobody thought to drill the spears.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_marksmans_draught_medium	Marksman's Draught	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_marksmans_draught_medium	A round of marksman's draught steadied the hands of our shooters. They marched out keen to test their aim.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_marksmans_draught_medium	A round of marksman's draught steadied the hands of our shooters, and filled every quiver. Nobody thought to drill the spears.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_marksmans_draught_hard	Marksman's Draught	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_marksmans_draught_hard	A round of marksman's draught steadied the hands of our shooters. They marched out keen to test their aim.	false
-effect_bundles_localised_title_land_enc_effect_spot_tavern_mystery_brew_easy	A Fine Brew	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_mystery_brew_easy	The mystery brew turned out smooth and strong. Our warriors marched out in high spirits.	false
-effect_bundles_localised_title_land_enc_effect_spot_tavern_mystery_brew_medium	A Fine Brew	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_mystery_brew_medium	The mystery brew turned out smooth and strong. Our warriors marched out in high spirits.	false
-effect_bundles_localised_title_land_enc_effect_spot_tavern_mystery_brew_hard	A Fine Brew	false
-effect_bundles_localised_description_land_enc_effect_spot_tavern_mystery_brew_hard	The mystery brew turned out smooth and strong. Our warriors marched out in high spirits.	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_marksmans_draught_hard	A round of marksman's draught steadied the hands of our shooters, and filled every quiver. Nobody thought to drill the spears.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_blinding_strikes	Blinding Strikes	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_blinding_strikes	The mystery brew sharpened every eye in the army. Our blows find the enemy's eyes.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_press_gang_easy	Press-Ganged	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_press_gang_easy	Our sergeants dragged drinkers from the tavern into our ranks. The people here have not forgiven it.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_press_gang_medium	Press-Ganged	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_press_gang_medium	Our sergeants dragged drinkers from the tavern into our ranks. The people here have not forgiven it.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_press_gang_hard	Press-Ganged	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_press_gang_hard	Our sergeants dragged drinkers from the tavern into our ranks. The people here have not forgiven it.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_smugglers_cut_easy	The Smugglers' Cut	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_smugglers_cut_easy	Our share of the smugglers' trade fills the treasury.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_smugglers_cut_medium	The Smugglers' Cut	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_smugglers_cut_medium	Our share of the smugglers' trade fills the treasury.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_smugglers_cut_hard	The Smugglers' Cut	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_smugglers_cut_hard	Our share of the smugglers' trade fills the treasury.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_pathfinder_easy	Pathfinder	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_pathfinder_easy	A pathfinder from the tavern knows every short cut and every well along the way.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_pathfinder_medium	Pathfinder	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_pathfinder_medium	A pathfinder from the tavern knows every short cut and every well along the way.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_pathfinder_hard	Pathfinder	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_pathfinder_hard	A pathfinder from the tavern knows every short cut and every well along the way.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_blood_wine_easy	Blood Wine	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_blood_wine_easy	The blood wine runs hot in every vein. Wounds close as fast as they open when our warriors hold their ground.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_blood_wine_medium	Blood Wine	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_blood_wine_medium	The blood wine runs hot in every vein. Wounds close as fast as they open when our warriors hold their ground.	false
+effect_bundles_localised_title_land_enc_effect_spot_tavern_blood_wine_hard	Blood Wine	false
+effect_bundles_localised_description_land_enc_effect_spot_tavern_blood_wine_hard	The blood wine runs hot in every vein. Wounds close as fast as they open when our warriors hold their ground.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_hangover	Hangover	false
 effect_bundles_localised_description_land_enc_effect_spot_tavern_hangover	The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.	false
 effect_bundles_localised_title_land_enc_effect_tower_war_rites_easy	War Rites	false

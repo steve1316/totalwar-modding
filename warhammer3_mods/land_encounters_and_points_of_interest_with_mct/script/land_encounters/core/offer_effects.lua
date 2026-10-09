@@ -179,7 +179,7 @@ function M.add_lord_xp(general_cqi, xp)
     log("offer: lord " .. general_cqi .. " gains " .. xp .. " experience")
 end
 
---- Gives `offer.ranks` ranks to `offer.count` random units that can take them.
+--- Gives `offer.ranks` ranks to `offer.count` random units that can take them, every such unit when `count` is `math.huge`.
 --- @param general_cqi number The lord's command queue index.
 --- @param offer table The offer record: `count`, `ranks` and `max_rank`.
 function M.add_ranks(general_cqi, offer)

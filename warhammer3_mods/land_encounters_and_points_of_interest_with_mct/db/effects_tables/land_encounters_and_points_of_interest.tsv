@@ -17,6 +17,7 @@ land_enc_lib_fx_leech_hits	magic_character.png	310	magic_character.png	battle	tr
 land_enc_lib_fx_melee_attack_defending	melee.png	310	melee.png	battle	true
 land_enc_lib_fx_regeneration_defending	general_ability.png	310	general_ability.png	battle	true
 land_enc_lib_fx_speed_attacking	battle_movement.png	310	battle_movement.png	battle	true
+land_enc_lib_fx_charge_attacking	charge.png	310	charge.png	battle	true
 land_enc_lib_fx_unbreakable_attacking	attribute_unbreakable.png	310	attribute_unbreakable.png	battle	true
 land_enc_lib_fx_lore_fire_cost	magic.png	310	magic.png	battle	true
 land_enc_lib_fx_comet_army_ability_uses	magic.png	310	magic.png	battle	true

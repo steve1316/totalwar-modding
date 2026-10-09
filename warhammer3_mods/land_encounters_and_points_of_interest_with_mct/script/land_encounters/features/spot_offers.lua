@@ -90,6 +90,7 @@ function M.show_result(faction_name, result, rewards, position, subtitle)
         if rewards.gold and rewards.gold ~= 0 then payload:treasury_adjustment(rewards.gold) end
         for _, item in ipairs(rewards.items or {}) do payload:faction_ancillary_gain(faction, item) end
         for _, unit in ipairs(force and rewards.units or {}) do payload:add_unit(force, unit, 1, 0) end
+        if rewards.spell then payload:text_display(army_spells.line(rewards.spell)) end
         if common.get_localised_string("campaign_payload_ui_details_description_" .. line) ~= "" then payload:text_display(line) end
         builder:set_payload(payload)
         cm:launch_custom_incident_from_builder(builder, faction)
@@ -442,10 +443,14 @@ local function apply_fields(fields, offer, state, rolled)
         log("spot: " .. offer.key .. " rolls gold " .. tostring(rewards.gold) .. ", items " .. table.concat(rewards.items, ", "))
     end
     if fields.army_bundle then tower_army.apply_bundle(general_cqi, fields.army_bundle[1], fields.army_bundle[2]) end
-    if fields.spell_pool and state.spell then
-        tower_army.apply_bundle(general_cqi, army_spells.bundle(state.spell), fields.spell_turns)
-        log("spot: " .. offer.key .. " gives lord " .. general_cqi .. "'s army " .. army_spells.name(state.spell) .. " for " .. fields.spell_turns .. " turns")
+    --- An offer's spell was rolled with its cards. A gamble outcome's is rolled when the outcome lands, and its result names it.
+    local spell = fields.spell_pool and (rolled and army_spells.roll(fields.spell_pool) or state.spell)
+    if spell then
+        tower_army.apply_bundle(general_cqi, army_spells.bundle(spell), fields.spell_turns)
+        log("spot: " .. offer.key .. " gives lord " .. general_cqi .. "'s army " .. army_spells.name(spell) .. " for " .. fields.spell_turns .. " turns")
+        if rolled then rewards.spell = spell end
     end
+    if fields.ranks then offer_effects.add_ranks(general_cqi, { count = math.huge, ranks = fields.ranks, max_rank = fields.max_rank }) end
     if fields.faction_bundle then offer_effects.faction_bundle(faction_name, fields.faction_bundle[1], fields.faction_bundle[2]) end
     if fields.trait then tower_lords.add_trait(general_cqi, fields.trait, 1, true) end
     if fields.trait_points then tower_lords.add_trait(general_cqi, fields.trait_points, 1, true) end

@@ -109,7 +109,11 @@ RESULT_IMAGES = {
     "mission_untouchable_met": "army_morale_up",
     "missions_untracked": "messenger",
     "mystery_brew_lost": "attrition_disease",
-    "mystery_brew_won": "army_morale_up",
+    "mystery_brew_strikes": "army_morale_up",
+    "mystery_brew_spell": "carnage_magic",
+    "dice_with_strangers_prize": "wh2_treasure_hunt_2",
+    "press_gang_night": "elector_politics",
+    "smugglers_cut": "wh2_treasure_hunt_3",
     "open_the_sealed_door_lost": "under_empire_destroyed",
     "open_the_sealed_door_won": "nemesis_crown",
     "point_them_at_each_other": "story_panels/chd_drill_machinations",
@@ -493,22 +497,38 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "blood_tithe": ("Blood Tithe", "Offer the blood of the living: our lord gains {boon}, and every unit loses [[col:red]]{bleed}% of its strength[[/col]] now."),
     "dark_offering": ("Make a Dark Offering", "Make a dark offering: sacrifice our [[col:red]]weakest unit[[/col]], and our lord gains [[col:green]]1 rank[[/col]] and our army [[col:green]]+5% ward save[[/col]] for 5 turns."),
     "walk_away": ("Walk Away", "Leave this place be."),
-    "fighting_spirits": ("Fighting Spirits", "Order a round of fighting spirits: " + stat("+{e0}", *ATTACK) + " and " + stat("+{e1}", *DEFENCE) + " for 5 turns."),
-    "shieldbrew": ("Shieldbrew", "Order a round of shieldbrew: " + stat("+{e0}", *DEFENCE) + " and " + stat("+{e1}", *ARMOUR) + " for 5 turns."),
-    "firewater": ("Firewater", "Order a round of firewater: " + stat("+{e0}%", *SPEED) + " and " + stat("+{e1}", *CHARGE) + " for 5 turns."),
-    "marksmans_draught": ("Marksman's Draught", "Order a round of marksman's draught: " + stat("+{e0}%", *MISSILE) + " and " + stat("{e1}%", *RELOAD)
-                          + " for 5 turns."),
-    "mystery_brew": ("Mystery Brew", "Try the keeper's mystery brew: a 50/50 chance of " + stat("+{won_e0}", *ATTACK) + " and " + stat("+{won_e1}", *LEADERSHIP)
-                     + " for 5 turns, or a hangover of " + stat("-{lost_e0}", *LEADERSHIP, colour="red") + " and " + stat("-{lost_e1}%", *SPEED, colour="red")
-                     + " for {lost_turns} turns."),
+    "fighting_spirits": ("Fighting Spirits", "Order a round of fighting spirits: " + stat("+{e0}", *ATTACK) + " and " + stat("+{e1}%", *WEAPON)
+                         + ", but " + stat("-{e2}", *DEFENCE, colour="red") + ", for 5 turns."),
+    "shieldbrew": ("Shieldbrew", "Order a round of shieldbrew: " + stat("+{e0}", *DEFENCE) + " and " + stat("+{e1}", *LEADERSHIP)
+                   + " when defending, and [[col:green]]Unbreakable when defending[[/col]] at a level 3 Tavern, but " + stat("-{e2}%", *SPEED, colour="red")
+                   + ", for 5 turns."),
+    "firewater": ("Firewater", "Order a round of firewater: " + stat("+{e0}%", *SPEED) + " and " + stat("+{e1}", *CHARGE) + " when attacking, and "
+                  "[[col:green]]Frenzy[[/col]] for every unit, but our army starts every battle [[col:red]]Winded[[/col]], for 5 turns."),
+    "marksmans_draught": ("Marksman's Draught", "Order a round of marksman's draught: " + stat("+{e0}%", *MISSILE) + " and [[col:green]]+{e1}% ammunition[[/col]], "
+                          "but " + stat("-{e2}", *DEFENCE, colour="red") + ", for 5 turns."),
+    "mystery_brew": ("Mystery Brew", "Try the keeper's mystery brew: maybe [[col:green]]Blinding Strikes[[/col]] (every hit blinds) for 5 turns, maybe "
+                     "[[col:green]]a random army spell[[/col]] for 5 turns, or maybe a hangover of " + stat("-{lost_e0}", *LEADERSHIP, colour="red") + " and "
+                     + stat("-{lost_e1}%", *SPEED, colour="red") + " for {lost_turns} turns."),
     "feast_for_the_army": ("Feast for the Army", "Lay on a feast for the army: every unit regains [[col:green]]{heal}% of its missing strength[[/col]], and our "
                            "army [[col:green]]ignores attrition[[/col]] next turn."),
-    "dice_with_strangers": ("Dice with Strangers", "Roll dice with strangers: a 50/50 chance our stake comes back [[col:green]]doubled[[/col]] or is "
-                            "[[col:red]]lost[[/col]]."),
+    "dice_with_strangers": ("Dice with Strangers", "Roll dice with strangers: a 50/50 chance our stake comes back [[col:green]]doubled[[/col]], or now and "
+                            "then as a [[col:green]]rare item[[/col]], or is [[col:red]]lost in a brawl that costs every unit {lost_bleed}% of its "
+                            "strength[[/col]]."),
     "arm_wrestle_the_champion": ("Arm-Wrestle the Champion", "Arm-wrestle the house champion: a 50/50 chance our lord gains [[col:green]]+{won_xp} "
                                  "experience[[/col]] or is [[col:red]]hurt, losing half their remaining health[[/col]]."),
     "buy_rumours": ("Buy Rumours", "Buy the rumours of the road: the {count} nearest regions not our own are [[col:green]]revealed for {reveal_turns} "
                     "turns[[/col]], and the keeper names the enemy armies nearby."),
+    "spell_pedlar": ("The Spell Pedlar", "Buy from the spell pedlar: the army spell below is ours to cast in any battle for the next {spell_turns} turns."),
+    "press_gang_night": ("Press-Gang Night", "Press-gang the drinkers: our army gains [[col:green]]{recruits}[[/col]] of our roster now, but "
+                         "[[col:red]]-{e0} public order[[/col]] in our nearest province for {turns} turns."),
+    "fighting_pit": ("The Fighting Pit", "Send our warriors into the fighting pit: every unit gains [[col:green]]{ranks}[[/col]], but loses "
+                     "[[col:red]]{bleed}% of its strength[[/col]] now."),
+    "smugglers_cut": ("The Smugglers' Cut", "Take the smugglers' cut: [[col:green]]+{e0}% income[[/col]] for {turns} turns, but [[col:red]]-{relations} "
+                      "relations[[/col]] with the owner of this region."),
+    "hire_a_pathfinder": ("Hire a Pathfinder", "Hire a pathfinder: [[col:green]]+{e0}% campaign movement and no attrition[[/col]] for {turns} turns, but "
+                          "our army [[col:red]]cannot move this turn[[/col]]."),
+    "blood_wine": ("Blood Wine", "Drink the blood wine: [[col:green]]Regeneration[[/col]] and " + stat("+{e1}", *LEADERSHIP) + " when defending for {turns} "
+                   "turns, but every unit loses [[col:red]]{bleed}% of its strength[[/col]] now."),
     "tavern_back": ("Back", "Go back to the common room."),
 }
 
@@ -569,6 +589,8 @@ ICONS = {
     "fighting_spirits": "melee.png", "shieldbrew": "armour.png", "firewater": "charge.png", "marksmans_draught": "ranged_damage.png",
     "mystery_brew": "random_recipe.png", "feast_for_the_army": "edict_ogr_feasts_for_the_strong.png", "dice_with_strangers": "trickster_cult.png",
     "arm_wrestle_the_champion": "experience.png", "buy_rumours": "wh2_dlc14_def_tzarkans_whispers.png", "tavern_back": "campaign_movement.png",
+    "spell_pedlar": "magic_character.png", "press_gang_night": "peasant.png", "fighting_pit": "experience.png", "smugglers_cut": "cargo.png",
+    "hire_a_pathfinder": "campaign_movement.png", "blood_wine": "bloodreaper.png",
     "against_the_odds": "vigour.png", "rout_the_riders": "mount.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
 }
 
@@ -948,11 +970,16 @@ MESSAGES = {
                           "wear cloths over their faces.\\\\n\\\\nThe plague spreads quickly through the villages and along the roads. Their healers "
                           "burn what they can, but it is not enough to stop it.\\\\n\\\\nOur own army does not escape it entirely. Coughing is heard "
                           "in our camp too, and the surgeons have their hands full."),
-    "mystery_brew_won": ("Mystery Brew", "A Fine Brew",
-                         "The brew goes down like liquid fire. Eyes water, throats burn, and more than one veteran has to sit down after the first "
-                         "cup.\\\\n\\\\nThen it settles in the belly as courage. The songs grow louder around the fires, and old grudges between "
-                         "companies are forgotten for the night.\\\\n\\\\nBy morning the whole army is spoiling for a fight. The sergeants have "
-                         "never seen the ranks so eager to march."),
+    "mystery_brew_strikes": ("Mystery Brew", "Fire in the Eyes",
+                             "The brew goes down like liquid fire. Eyes water, throats burn, and more than one veteran has to sit down after the "
+                             "first cup.\\\\n\\\\nBy morning the soldiers swear they see every gap in a shield and every opening in a guard. Their "
+                             "blows land where the enemy cannot see them coming.\\\\n\\\\nThe sergeants have never seen the ranks so sharp. For a "
+                             "few days, every blade in the army strikes at the eyes."),
+    "mystery_brew_spell": ("Mystery Brew", "A Spark of Sorcery",
+                           "The brew glows faintly in the cup, and the soldiers who drink it see colours that are not there. One of them starts "
+                           "muttering in a tongue none of us know.\\\\n\\\\nBy morning the words have not faded. Our wizards listen closely and "
+                           "write them down, and what they write is a working spell.\\\\n\\\\nThe army can call on it for a few days. The keeper "
+                           "will not say where the brew came from, only that it should be used before it wears off."),
     "mystery_brew_lost": ("Mystery Brew", "A Foul Brew",
                           "Whatever was in that barrel, it was not meant for drinking. It tasted fine going down, which is the worst "
                           "part.\\\\n\\\\nThe army wakes with sore heads and slow feet. Soldiers stumble out of their tents groaning, and more than "
@@ -963,11 +990,27 @@ MESSAGES = {
                                 "table.\\\\n\\\\nThe strangers pay up with sour faces. They mutter among themselves and check the dice more than "
                                 "once, but find nothing to complain about.\\\\n\\\\nOur stake comes back doubled. The strangers leave soon after, "
                                 "and our soldiers keep a close eye on them until they are out of sight."),
+    "dice_with_strangers_prize": ("Dice with Strangers", "A Prize on the Table",
+                                  "The strangers run out of coin long before their luck runs out of patience. One of them throws a wrapped bundle "
+                                  "onto the table to cover the last bet.\\\\n\\\\nThe dice fall our way once more. The stranger unwraps the bundle "
+                                  "with a sour face and pushes it across the table.\\\\n\\\\nIt is worth far more than our stake. The strangers "
+                                  "leave without a word, and our soldiers drink to the luck of the dice."),
     "dice_with_strangers_lost": ("Dice with Strangers", "Loaded Dice",
-                                 "The dice turn against us, throw after throw. Our soldiers watch in silence as their luck runs dry.\\\\n\\\\nThe "
-                                 "strangers sweep our stake from the table with practised hands. They thank us politely, finish their drinks and "
-                                 "leave at an easy pace.\\\\n\\\\nOnly later does anyone wonder whose dice they were. By then the strangers are long "
-                                 "gone, and our stake with them."),
+                                 "The dice turn against us, throw after throw. Our soldiers watch in silence as their luck runs dry, until one of "
+                                 "them grabs a stranger's wrist and finds a second set of dice up the sleeve.\\\\n\\\\nThe common room erupts. "
+                                 "Tables go over, tankards fly, and the strangers' friends draw knives from under their cloaks.\\\\n\\\\nBy the time "
+                                 "the watch arrives, the strangers are gone with our stake. Our own soldiers limp back to camp nursing cuts and "
+                                 "broken bones."),
+    "press_gang_night": ("Press-Gang Night", "",
+                         "Our sergeants buy round after round for the common room, then wait for the drinkers to fall asleep at their "
+                         "tables.\\\\n\\\\nThey wake in our camp with sore heads and new uniforms. Some curse us, some shrug, and a few even seem "
+                         "glad of the pay.\\\\n\\\\nWord travels fast around {place}. Mothers hide their sons when our soldiers pass, and the "
+                         "people there will not forgive us soon."),
+    "smugglers_cut": ("The Smugglers' Cut", "",
+                      "The smugglers meet us in the back room and push a ledger across the table. Our share of their trade is written in a neat "
+                      "hand.\\\\n\\\\nThe goods they move through {place} pay no tolls, and the rulers there know it. They know our name now "
+                      "too.\\\\n\\\\nOur treasury grows fat on the trade for a while. Their envoys are cold with ours, and they will not forget "
+                      "who took the cut."),
     "arm_wrestle_the_champion_won": ("Arm-Wrestle the Champion", "Champion Beaten",
                                      "Our lord and the champion lock hands over a table scarred by a hundred such contests. For a long moment "
                                      "neither arm moves, and the common room goes quiet.\\\\n\\\\nThen the table groans and the crowd roars as the "
@@ -1045,7 +1088,7 @@ MESSAGES = {
 FALLBACK_PLACES = {
     "endow_the_province": "that region", "garrison_drill": "that settlement", "raise_the_settlement": "the settlement",
     "quell_the_unrest": "the settlement", "bountiful_harvest": "that region", "stir_their_rebels": "that region", "poison_their_wells": "that region",
-    "sap_their_garrison": "the enemy settlement", "spread_the_plague": "that region", "buy_rumours": "that region", "send_gifts": "their court",
+    "sap_their_garrison": "the enemy settlement", "spread_the_plague": "that region", "buy_rumours": "that region", "press_gang_night": "our province", "smugglers_cut": "their lands", "send_gifts": "their court",
     "spy_on_their_capital": "the enemy capital", "curse_a_distant_king": "their capital", "share_the_find": "the nearest",
     "point_them_at_each_other": "that region", "sell_their_secrets": "that region", "ransom_the_captain": "their own people",
 }
@@ -1069,9 +1112,12 @@ RESULT_LINES = {
     "touch_the_relic_cursed": ("red", "A curse on our army for 3 turns."),
     "gamble_with_the_hermit_lost": ("red", "The hermit keeps our {cost} gold."),
     "chase_the_routers_lost": ("red", "Every unit loses {lost_bleed}% of its strength."),
-    "mystery_brew_won": ("green", "A fine brew on our army for 5 turns."),
+    "mystery_brew_strikes": ("green", "Blinding Strikes on our army for 5 turns."),
+    "mystery_brew_spell": ("green", "The army spell below is ours to cast for 5 turns."),
     "mystery_brew_lost": ("red", "A hangover on our army for {lost_turns} turns."),
-    "dice_with_strangers_lost": ("red", "Our stake is lost."),
+    "dice_with_strangers_lost": ("red", "Our stake is lost, and every unit loses {lost_bleed}% of its strength."),
+    "press_gang_night": ("red", "-{e0} public order in our nearest province for {turns} turns."),
+    "smugglers_cut": ("red", "-{relations} relations with the owner of this region."),
     "arm_wrestle_the_champion_won": ("green", "+{won_xp} experience for our lord."),
     "arm_wrestle_the_champion_lost": ("red", "Our lord loses half their remaining health."),
     "buy_rumours": ("green", "{count} regions revealed for {reveal_turns} turns."),
@@ -1098,7 +1144,8 @@ RESULT_LINES = {
 WOUND_PAID_LINE = ("red", "Our lord is wounded for {turns} turns.")
 
 # Bundle key suffix after `land_enc_effect_spot_` -> (target, icon, title, description, [(effect, scope, value)]). A value written as
-# (easy, medium, hard) makes a tiered bundle, one per difficulty named with it, e.g. land_enc_effect_spot_stoneskin_medium.
+# (easy, medium, hard) makes a tiered bundle, one per difficulty named with it, e.g. land_enc_effect_spot_stoneskin_medium. A None step leaves
+# the effect out at that difficulty, so such an effect comes last: offer lines number the effects by position ({e0}, {e1}...).
 BUNDLES = {
     "reinforcement_time_25": ("force", "military.png", "Swift Reinforcements", "Scouts have marked the fastest paths for our relief columns. Reinforcements reach this army sooner.",
                               [("wh3_main_effect_own_reinforcement_time_percentage_mod", "force_to_force_own", -25)]),
@@ -1163,23 +1210,38 @@ BUNDLES = {
                      [("wh3_main_effect_corruption_chaos_events_bad", "faction_to_province_own", 5)]),
     "tavern_fighting_spirits": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Fighting Spirits",
                                 "The tavern's fighting spirits burned all the way down. Our warriors marched out spoiling for a brawl.",
-                                [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (5, 10, 15)),
-                                 ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (5, 10, 15))]),
+                                [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (6, 10, 14)),
+                                 ("wh_main_effect_force_stat_weapon_strength", "force_to_force_own", (5, 8, 12)),
+                                 ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (-4, -6, -8))]),
     "tavern_shieldbrew": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Shieldbrew",
-                          "The shieldbrew sat in every belly like a stone. Our warriors marched out steady on their feet and hard to knock down.",
-                          [("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (5, 10, 15)),
-                           ("wh_main_effect_force_stat_armour", "force_to_force_own", (10, 15, 20))]),
+                          "The shieldbrew sat in every belly like a stone. Our warriors stand their ground like rocks, though they are slow to move.",
+                          [("land_enc_lib_fx_melee_defence_defending", "force_to_force_own", (8, 12, 16)),
+                           ("land_enc_lib_fx_leadership_defending", "force_to_force_own", (8, 12, 16)),
+                           ("wh_main_effect_force_stat_speed", "force_to_force_own", -5),
+                           ("land_enc_lib_fx_unbreakable_defending", "force_to_force_own", (None, None, 1))]),
     "tavern_firewater": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Firewater",
-                         "The firewater left every throat burning and every foot itching to run. Our warriors marched out eager to charge.",
-                         [("wh_main_effect_force_stat_speed", "force_to_force_own", (5, 10, 15)),
-                          ("wh2_dlc14_effect_force_charge_bonus_add", "force_to_force_own", (6, 10, 14))]),
+                         "The firewater left every throat burning and every foot itching to run. Our warriors charge like madmen, and tire as fast.",
+                         [("land_enc_lib_fx_speed_attacking", "force_to_force_own", (8, 12, 16)),
+                          ("land_enc_lib_fx_charge_attacking", "force_to_force_own", (8, 12, 16)),
+                          ("wh3_dlc27_effect_ability_enable_frenzy_all", "force_to_force_own", 1),
+                          ("wh_main_effect_force_campaign_stance_begin_fatigued_3_winded", "force_to_force_own", 3)]),
     "tavern_marksmans_draught": ("force", "edict_sla_festival_of_drinking_and_delights.png", "Marksman's Draught",
-                                 "A round of marksman's draught steadied the hands of our shooters. They marched out keen to test their aim.",
+                                 "A round of marksman's draught steadied the hands of our shooters, and filled every quiver. Nobody thought to drill the spears.",
                                  [("wh_main_effect_force_stat_missile_damage", "force_to_force_own", (8, 12, 16)),
-                                  ("wh_main_effect_force_stat_reload_time_reduction", "force_to_force_own", (10, 15, 20))]),
-    "tavern_mystery_brew": ("force", "edict_sla_festival_of_drinking_and_delights.png", "A Fine Brew", "The mystery brew turned out smooth and strong. Our warriors marched out in high spirits.",
-                            [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", (12, 16, 20)),
-                             ("wh_main_effect_force_stat_leadership", "force_to_force_own", (12, 16, 20))]),
+                                  ("wh_main_effect_force_stat_ammunition", "force_to_force_own", (20, 30, 40)),
+                                  ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (-5, -8, -10))]),
+    "tavern_blinding_strikes": ("force", "wh_dlc06_unit_contact_blinded.png", "Blinding Strikes", "The mystery brew sharpened every eye in the army. Our blows find the enemy's eyes.",
+                                [("land_enc_lib_fx_blinded_hits", "force_to_force_own", 1)]),
+    "tavern_press_gang": ("province", "public_order_unhappy.png", "Press-Ganged", "Our sergeants dragged drinkers from the tavern into our ranks. The people here have not forgiven it.",
+                          [("wh_main_effect_public_order_events", "province_to_province_own", (-5, -8, -10))]),
+    "tavern_smugglers_cut": ("faction", "income.png", "The Smugglers' Cut", "Our share of the smugglers' trade fills the treasury.",
+                             [("wh_main_effect_economy_gdp_mod_all", "faction_to_region_own", (10, 15, 20))]),
+    "tavern_pathfinder": ("force", "campaign_movement.png", "Pathfinder", "A pathfinder from the tavern knows every short cut and every well along the way.",
+                          [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", (20, 30, 40)),
+                           ("wh_main_effect_force_army_campaign_attrition_all_immunity", "force_to_force_own", 1)]),
+    "tavern_blood_wine": ("force", "bloodreaper.png", "Blood Wine", "The blood wine runs hot in every vein. Wounds close as fast as they open when our warriors hold their ground.",
+                          [("land_enc_lib_fx_regeneration_defending", "force_to_force_own", 1),
+                           ("land_enc_lib_fx_leadership_defending", "force_to_force_own", (8, 12, 16))]),
     "tavern_hangover": ("force", "discouraged.png", "Hangover", "The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.",
                         [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
 }
@@ -1346,7 +1408,8 @@ def expand_bundles(config: Dict) -> Dict[str, Tuple]:
                 flat[prefix + suffix] = (target, icon, title, description, effects)
                 continue
             for i, difficulty in enumerate(DIFFICULTIES):
-                stepped = [(effect, scope, value[i] if isinstance(value, tuple) else value) for effect, scope, value in effects]
+                picked = ((effect, scope, value[i] if isinstance(value, tuple) else value) for effect, scope, value in effects)
+                stepped = [(effect, scope, value) for effect, scope, value in picked if value is not None]
                 flat[f"{prefix}{suffix}_{difficulty}"] = (target, icon, title, description, stepped)
     modifiers = config["battle_modifiers"]
     for modifier in modifiers["list"]:
@@ -1424,6 +1487,8 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
         values["tiers"] = tiers_text(tiers)
     if "relations" in offer:
         values["relations"] = str(abs(offer["relations"]) * 10)
+    if "recruit" in offer:
+        values["recruits"] = plural(offer["recruit"]["count"], "tier " + tiers_text(offer["recruit"]["tiers"]) + " unit")
     for kind in ("boon", "curse"):
         if offer.get(kind):
             values[kind] = boons.grant_text(kind, offer[kind])
@@ -1753,7 +1818,9 @@ def result_key(result: str) -> str:
     Returns:
         str: The offer or mission key, e.g. "cast_the_lots" or "untouchable". A result of no offer comes back as it is, e.g. "wound_paid_5".
     """
-    return re.sub(r"^mission_|_(won|lost|blessed|cursed|met|failed)$", "", result)
+    result = re.sub(r"^mission_", "", result)
+    keys = [key for key in list(OFFERS) + list(MISSION_MESSAGES) if result == key or result.startswith(key + "_")]
+    return max(keys, key=len) if keys else result
 
 
 def fallback_text(description: str, place: str) -> str:

@@ -247,6 +247,12 @@ local FINDERS = {
         table.sort(names)
         return #names > 0 and { regions = {}, factions = names } or nil
     end,
+    region_owner = function(faction, x, y)
+        local here = region_at({ x, y })
+        if here and is_other_living_faction(here:owning_faction(), faction:name()) then return region_target(here, true) end
+        local other = M.nearest_factions(faction, x, y, 1)[1]
+        return other and { regions = {}, factions = { other:name() } } or nil
+    end,
     rival_pair = function(faction, x, y)
         local pool = M.nearest_factions(faction, x, y, RIVAL_POOL)
         if #pool < 2 then return nil end

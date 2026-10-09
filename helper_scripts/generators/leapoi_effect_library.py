@@ -54,6 +54,9 @@ CUSTOM_EFFECTS: Dict[str, Tuple[str, str, str, List[Tuple[str, Tuple]]]] = {
     "speed_attacking": ("battle_movement.png", "battle", "Speed: %+n% when attacking", [
         ("effect_bonus_value_battle_context_junctions_tables", ("mod_land_movement_battle", "{fx}", "fighting_force_status_yours_attacking")),
     ]),
+    "charge_attacking": ("charge.png", "battle", "Charge bonus: %+n when attacking", [
+        ("effect_bonus_value_battle_context_junctions_tables", ("charge_bonus", "{fx}", "fighting_force_status_yours_attacking")),
+    ]),
     "unbreakable_attacking": ("attribute_unbreakable.png", "battle", "Attribute: Unbreakable when attacking", [
         ("battle_context_unit_attribute_junctions_tables", ("{jn}", "fighting_force_status_yours_attacking", "unbreakable")),
         ("effect_bonus_value_battle_context_unit_attribute_junctions_tables", ("enable", "{fx}", "{jn}")),

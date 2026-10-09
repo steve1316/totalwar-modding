@@ -86,10 +86,14 @@ land_enc_incident_spot_stir_their_rebels	false	elector_politics	false	Event		fal
 land_enc_incident_spot_poison_their_wells	false	wh2_disease_attrition	false	Event		false		0.0000	false
 land_enc_incident_spot_sap_their_garrison	false	elector_invasion	false	Event		false		0.0000	false
 land_enc_incident_spot_spread_the_plague	false	ai_enters_nurgle_realm	false	Event		false		0.0000	false
-land_enc_incident_spot_mystery_brew_won	false	army_morale_up	false	Event		false		0.0000	false
+land_enc_incident_spot_mystery_brew_strikes	false	army_morale_up	false	Event		false		0.0000	false
+land_enc_incident_spot_mystery_brew_spell	false	carnage_magic	false	Event		false		0.0000	false
 land_enc_incident_spot_mystery_brew_lost	false	attrition_disease	false	Event		false		0.0000	false
 land_enc_incident_spot_dice_with_strangers_won	false	wulfhart_hunters	false	Event		false		0.0000	false
+land_enc_incident_spot_dice_with_strangers_prize	false	wh2_treasure_hunt_2	false	Event		false		0.0000	false
 land_enc_incident_spot_dice_with_strangers_lost	false	wulfhart_hunters	false	Event		false		0.0000	false
+land_enc_incident_spot_press_gang_night	false	elector_politics	false	Event		false		0.0000	false
+land_enc_incident_spot_smugglers_cut	false	wh2_treasure_hunt_3	false	Event		false		0.0000	false
 land_enc_incident_spot_arm_wrestle_the_champion_won	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_arm_wrestle_the_champion_lost	false	waaagh_up	false	Event		false		0.0000	false
 land_enc_incident_spot_buy_rumours	false	minor_cult	false	Event		false		0.0000	false

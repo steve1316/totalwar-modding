@@ -17,6 +17,7 @@ effects_description_land_enc_lib_fx_leech_hits	Attacks cause "Leeched" for all u
 effects_description_land_enc_lib_fx_melee_attack_defending	Melee attack: %+n when defending	false
 effects_description_land_enc_lib_fx_regeneration_defending	Passive ability: "Regeneration" when defending	false
 effects_description_land_enc_lib_fx_speed_attacking	Speed: %+n% when attacking	false
+effects_description_land_enc_lib_fx_charge_attacking	Charge bonus: %+n when attacking	false
 effects_description_land_enc_lib_fx_unbreakable_attacking	Attribute: Unbreakable when attacking	false
 effects_description_land_enc_lib_fx_lore_fire_cost	Winds of Magic cost: %+n% for Lore of Fire spells	false
 effects_description_land_enc_lib_fx_comet_army_ability_uses	Uses: %+n for the "Comet of Casandora" army ability	false

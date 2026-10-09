@@ -43,6 +43,8 @@
 ---   stake_multiplier  A gamble outcome that pays back the gold paid for the offer this many times over.
 ---   lord_health     A gamble outcome that leaves our lord's own unit at this share of its current strength.
 ---   army_report     The result lists the enemy armies within this map distance of the Tavern, instead of a garrison.
+---   ranks, max_rank Every regular unit in our army gains `ranks` ranks, skipping a unit already within `ranks` of `max_rank`.
+---   A gamble outcome may carry `spell_pool` and `spell_turns`. Its spell is rolled when the outcome lands and named on the result.
 --- Pre-battle offer fields (pool "pre_battle"). Taking one pays its cost and the battle starts with it:
 ---   budget          Multiplies the enemy army's gold budget, e.g. 0.75.
 ---   fewer_units     The enemy army fields this many fewer units.
@@ -223,8 +225,9 @@ M.fight_choice_key = "FIRST"
 ---   rival_pair       The two biggest of the 6 nearest factions, set against each other.
 ---   enemy_friends    The nearest enemy, made friendlier with your other enemies.
 ---   nearby_regions   The `count` nearest regions that are not yours.
+---   region_owner     The owner of the region the site stands in, or the nearest other faction when that region is yours.
 M.realm_kinds = { "own_region", "raise_region", "own_province", "enemy_region", "enemy_regions", "enemy_province", "enemy_capital", "friend",
-    "biggest_faction", "neighbours", "rival_pair", "enemy_friends", "nearby_regions" }
+    "biggest_faction", "neighbours", "rival_pair", "enemy_friends", "nearby_regions", "region_owner" }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -507,19 +510,21 @@ M.offers = {
     { key = "feast_on_the_fallen", pool = "spoils", tags = { "recovery", "curse" }, heal_share = 0.3, faction_bundle = { SPOT_BUNDLE .. "fallen_feast", 5 } },
     { key = "blood_tithe", pool = "spoils", tags = { "curse" }, boon = { from = "battle" }, bleed = 15 },
 
-    --- The Tavern bar. Drinks last 5 turns and grow stronger with the Tavern's level, and a hangover lasts 3 turns.
+    --- The Tavern bar. Drinks last 5 turns, grow stronger with the Tavern's level and each carry a cost, and a hangover lasts 3 turns.
     { key = "fighting_spirits", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "fighting_spirits"), 5 } },
     { key = "shieldbrew", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "shieldbrew"), 5 } },
     { key = "firewater", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "firewater"), 5 } },
     { key = "marksmans_draught", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "marksmans_draught"), 5 }, shoots = true },
     { key = "mystery_brew", pool = "tavern", tags = {}, cost = S(500, 750, 1000), gamble = {
-        { 1, "won", army_bundle = { tiered(TAVERN_BUNDLE .. "mystery_brew"), 5 } },
-        { 1, "lost", army_bundle = { TAVERN_BUNDLE .. "hangover", 3 } },
+        { 4, "strikes", army_bundle = { TAVERN_BUNDLE .. "blinding_strikes", 5 } },
+        { 3, "spell", spell_pool = "all", spell_turns = 5 },
+        { 3, "lost", army_bundle = { TAVERN_BUNDLE .. "hangover", 3 } },
     } },
     { key = "feast_for_the_army", pool = "tavern", tags = {}, cost = STANDARD, heal_share = S(0.5, 0.75, 1), army_bundle = { SPOT_BUNDLE .. "buy_supplies", 1 } },
     { key = "dice_with_strangers", pool = "tavern", tags = {}, cost = STANDARD, gamble = {
-        { 1, "won", stake_multiplier = 2 },
-        { 1, "lost" },
+        { 3, "won", stake_multiplier = 2 },
+        { 1, "prize", items = { rarities = { "rare" }, count = 1 } },
+        { 4, "lost", bleed = S(10, 12, 15) },
     } },
     { key = "arm_wrestle_the_champion", pool = "tavern", tags = {}, gamble = {
         { 1, "won", lord_xp = S(500, 750, 1000) },
@@ -528,6 +533,13 @@ M.offers = {
     { key = "buy_rumours", pool = "tavern", tags = {}, cost = S(1000, 1500, 2000), realm = "nearby_regions", count = S(3, 5, 7), reveal_turns = 5,
         army_report = 150 },
     { key = "sing_the_war_chant", pool = "tavern", tags = {}, cost = STANDARD, boon = { "war_chant", 1 } },
+    { key = "spell_pedlar", pool = "tavern", tags = {}, cost = S(2000, 2500, 3000), spell_pool = S("army", "bound", "lore"), spell_turns = 5 },
+    { key = "press_gang_night", pool = "tavern", tags = { "recruit" }, recruit = { count = S(1, 2, 2), tiers = { 1, 2 } }, realm = "own_province",
+        province_bundle = { tiered(TAVERN_BUNDLE .. "press_gang"), 5 } },
+    { key = "fighting_pit", pool = "tavern", tags = {}, bleed = 25, ranks = S(1, 1, 2), max_rank = 9 },
+    { key = "smugglers_cut", pool = "tavern", tags = {}, realm = "region_owner", relations = -2, faction_bundle = { tiered(TAVERN_BUNDLE .. "smugglers_cut"), 5 } },
+    { key = "hire_a_pathfinder", pool = "tavern", tags = {}, camp = true, army_bundle = { tiered(TAVERN_BUNDLE .. "pathfinder"), 5 } },
+    { key = "blood_wine", pool = "tavern", tags = {}, bleed = S(10, 12, 15), army_bundle = { tiered(TAVERN_BUNDLE .. "blood_wine"), 5 } },
     { key = "thiefs_mark", pool = "tavern", tags = { "pact" }, boon = { "kings_ransom", 1 }, curse = { "magpies_curse", 1 } },
     { key = "gold_for_blood", pool = "tavern", tags = { "pact" }, boon = shared.gold_for_blood.boon, curse = shared.gold_for_blood.curse },
 
