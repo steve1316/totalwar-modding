@@ -415,9 +415,9 @@ local function wake_guardian(state, guardian)
     end
 end
 
---- Applies the effects an offer's payload does not: bundles, traits, wounds, camps, bleeding, heals, sacrifices, heroes, dividends, the Daemon's
---- deal armies, boons and curses, a guardian battle and the old incident. A gamble outcome has no cards, so its gold and items are picked here for its result to grant. A wound
---- lands at once, and an offer's own wound (not a gamble's, whose result says so) shows its own result.
+--- Applies the effects an offer's payload does not: bundles, traits, camps, bleeding, heals, sacrifices, heroes, dividends, the Daemon's deal
+--- armies, boons and curses, a cleansing, a gamble outcome's wound and a guardian battle. A gamble outcome has no cards, so its gold and items
+--- are picked here for its result to grant.
 --- @param fields table The offer record or a gamble outcome, at the site's difficulty.
 --- @param offer table The offer record, for the log.
 --- @param state table { faction_name, general_cqi, difficulty, x, y, paid }.
@@ -452,6 +452,15 @@ local function apply_fields(fields, offer, state, rolled)
         log("spot: lord " .. general_cqi .. " gains " .. fields.lord_ranks .. " ranks")
     end
     if fields.lord_xp then offer_effects.add_lord_xp(general_cqi, fields.lord_xp) end
+    --- Recruits that join weakened are found once the payload has granted them.
+    if fields.recruit and fields.recruit.strength and state.units and #state.units > 0 then
+        local keys, strength = {}, fields.recruit.strength
+        for _, key in ipairs(state.units) do keys[key] = true end
+        tower_army.after_join(general_cqi, keys, function(entry)
+            tower_army.set_strength(entry.unit, strength)
+            log("spot: " .. entry.unit:unit_key() .. " from " .. offer.key .. " joins lord " .. general_cqi .. " at " .. strength .. "% strength")
+        end)
+    end
     if fields.bleed then tower_army.bleed_army(general_cqi, fields.bleed, offer.key) end
     if fields.heal then tower_army.heal_army(general_cqi, 1) end
     if fields.heal_share then tower_army.heal_army(general_cqi, fields.heal_share) end
@@ -475,9 +484,6 @@ local function apply_fields(fields, offer, state, rolled)
     if fields.wound and general then
         cm:wound_character(cm:char_lookup_str(general), fields.wound)
         log("spot: lord " .. general_cqi .. " wounded for " .. fields.wound .. " turns")
-        if not rolled then
-            M.show_result(faction_name, "wound_paid_" .. fields.wound, { character = general, difficulty = state.difficulty }, { state.x, state.y })
-        end
     end
     if fields.camp and general then
         cm:disable_movement_for_character(cm:char_lookup_str(general))
@@ -552,7 +558,7 @@ function M.take(faction_name, choice_key)
     M.pending_by_faction[faction_name] = nil
     local paid = offer.cost and site_cost(pending, offer) or 0
     local state = { faction_name = faction_name, general_cqi = pending.general_cqi, difficulty = pending.difficulty, x = pending.x, y = pending.y, paid = paid,
-        spell = (pending.cards[offer.key] or {}).spell }
+        spell = (pending.cards[offer.key] or {}).spell, units = (pending.cards[offer.key] or {}).units }
     local before = offer_effects.treasury(faction_name)
     offer_effects.log_army_change(pending.general_cqi, offer.key)
     --- A site that shows its price as a card had it charged by the payload.

@@ -4,6 +4,9 @@ local army_generator = require("script/land_encounters/core/army_generator")
 
 local M = {}
 
+--- Seconds after a dilemma choice before the game has applied its payload, e.g. the units it grants.
+M.AFTER_PAYLOAD_SECONDS = 0.5
+
 --- Finds a living character by command queue index.
 --- @param cqi number The character's command queue index.
 --- @returns userdata|nil The character, or nil when gone.
@@ -145,6 +148,42 @@ function M.log_army(general_cqi, label)
             .. (entry.character and " (character)" or "")
     end
     log("tower army " .. label .. " (" .. #parts .. " units): " .. table.concat(parts, ", "))
+end
+
+--- The command queue indexes of a lord's regular units, to tell later which units joined since (see `M.joined_since`).
+--- @param general_cqi number The lord's command queue index.
+--- @returns table Unit command queue index -> true.
+function M.unit_cqis(general_cqi)
+    local found = {}
+    for _, entry in ipairs(M.regular_units(general_cqi)) do found[entry.unit:command_queue_index()] = true end
+    return found
+end
+
+--- Calls `fn` with each regular unit of `keys` that a dilemma payload adds to a lord's army, once it has: the game grants a payload's units
+--- only after the choice's listeners have run.
+--- @param general_cqi number The lord's command queue index.
+--- @param keys table Unit key -> true.
+--- @param fn function Called with each joined unit's `M.unit_strengths` entry.
+function M.after_join(general_cqi, keys, fn)
+    local before = M.unit_cqis(general_cqi)
+    cm:callback(function()
+        local joined = M.joined_since(general_cqi, before, keys)
+        if #joined == 0 then log("army: no unit the payload granted joined lord " .. general_cqi .. "'s army") end
+        for _, entry in ipairs(joined) do fn(entry) end
+    end, M.AFTER_PAYLOAD_SECONDS)
+end
+
+--- The regular units that joined a lord's army since `before` was taken, e.g. once a dilemma payload has granted them.
+--- @param general_cqi number The lord's command queue index.
+--- @param before table Unit command queue index -> true, from `M.unit_cqis`.
+--- @param keys table|nil Unit key -> true to keep only those keys, or nil for every key.
+--- @returns table The joined units' `M.unit_strengths` entries.
+function M.joined_since(general_cqi, before, keys)
+    local joined = {}
+    for _, entry in ipairs(M.regular_units(general_cqi)) do
+        if not before[entry.unit:command_queue_index()] and (keys == nil or keys[entry.unit:unit_key()]) then joined[#joined + 1] = entry end
+    end
+    return joined
 end
 
 --- Sets one unit's strength.

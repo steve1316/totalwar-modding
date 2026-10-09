@@ -488,7 +488,8 @@ def grant_text(kind: str, grant) -> str:
     """
     colour = "green" if kind == "boon" else "red"
     if isinstance(grant, dict):
-        return f"[[col:{colour}]]a random {kind}[[/col]]"
+        level = grant.get("level", 1)
+        return f"[[col:{colour}]]a random {f'level {level} ' if level > 1 else ''}{kind}[[/col]]"
     key, level = grant[0], grant[1] if len(grant) > 1 else 1
     name, _, _, levels = (BOONS if kind == "boon" else CURSES)[key]
     if not levels:

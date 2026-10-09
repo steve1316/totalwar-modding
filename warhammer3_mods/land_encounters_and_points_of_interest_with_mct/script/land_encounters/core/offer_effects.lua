@@ -125,7 +125,7 @@ end
 --- @param offer_key string The offer's key for the log.
 function M.log_army_change(general_cqi, offer_key)
     tower_army.log_army(general_cqi, "before " .. offer_key)
-    cm:callback(function() tower_army.log_army(general_cqi, "after " .. offer_key) end, 0.5)
+    cm:callback(function() tower_army.log_army(general_cqi, "after " .. offer_key) end, tower_army.AFTER_PAYLOAD_SECONDS)
 end
 
 --- Removes one unit from a lord's army. The game only removes by unit key, taking a copy of its own choosing, so when the army has other

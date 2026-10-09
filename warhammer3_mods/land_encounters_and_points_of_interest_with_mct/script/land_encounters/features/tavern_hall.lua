@@ -38,9 +38,6 @@ local LINE_VETERAN = "dummy_land_enc_tavern_hall_veteran_"
 --- Payload text of the cut-price sellsword's slot.
 local LINE_CUT = "dummy_land_enc_tavern_hall_cut"
 
---- Seconds after a hire before its unit is ranked up or weakened, since the dilemma payload grants the unit after the choice is handled.
-local AFTER_HIRE_SECONDS = 0.5
-
 --- Payload text under a unit the army has no room for.
 local LINE_NO_ROOM = "dummy_land_enc_tavern_hall_no_room"
 
@@ -181,33 +178,14 @@ function M.open(tavern, faction, general_cqi, own, hired)
     dilemmas.launch(M.DILEMMA, choices, faction_name)
 end
 
---- The command queue indexes of the regular units of one key in a lord's army.
---- @param general_cqi number The lord.
---- @param key string The unit key.
---- @returns table Unit command queue index -> true.
-local function units_of(general_cqi, key)
-    local found = {}
-    for _, entry in ipairs(tower_army.regular_units(general_cqi)) do
-        if entry.unit:unit_key() == key then found[entry.unit:command_queue_index()] = true end
-    end
-    return found
-end
-
---- Ranks up a hired veteran company or weakens a hired cut-price sellsword, once the payload has granted it: the unit of its key that was
---- not in the lord's army before the hire.
+--- Ranks up a hired veteran company or weakens a hired cut-price sellsword, once the payload has granted it.
 --- @param general_cqi number The lord who hired it.
---- @param key string The unit key.
+--- @param hired table The joined unit's `tower_army.unit_strengths` entry.
 --- @param mark string "veteran" or "cut".
 --- @param ranks number The veteran's ranks.
---- @param before table The command queue indexes of the units of that key before the hire, from `units_of`.
-local function finish_hire(general_cqi, key, mark, ranks, before)
-    local hired = nil
-    for _, entry in ipairs(tower_army.regular_units(general_cqi)) do
-        if entry.unit:unit_key() == key and not before[entry.unit:command_queue_index()] then hired = entry end
-    end
-    if not hired then
-        log("tavern: the hired " .. mark .. " " .. key .. " is not in lord " .. general_cqi .. "'s army")
-    elseif mark == "veteran" then
+local function finish_hire(general_cqi, hired, mark, ranks)
+    local key = hired.unit:unit_key()
+    if mark == "veteran" then
         cm:add_experience_to_unit(hired.unit, ranks)
         log("tavern: the veteran " .. key .. " joins lord " .. general_cqi .. "'s army with " .. ranks .. " ranks")
     else
@@ -250,9 +228,9 @@ function M.resolve(tavern, faction_name, choice_key)
             table.remove(slot.kind == "unit" and stock.units or stock.renown, slot.index)
         end
         if slot.mark then
-            local ranks, before = tavern_data.levels[tavern.level].hall.veteran_ranks, units_of(pending.general_cqi, slot.key)
+            local ranks, mark = tavern_data.levels[tavern.level].hall.veteran_ranks, slot.mark
             stock[slot.mark] = nil
-            cm:callback(function() finish_hire(pending.general_cqi, slot.key, slot.mark, ranks, before) end, AFTER_HIRE_SECONDS)
+            tower_army.after_join(pending.general_cqi, { [slot.key] = true }, function(hired) finish_hire(pending.general_cqi, hired, mark, ranks) end)
         end
         if pending.hired == 0 then
             tavern.hall_closed_until[faction_name] = cm:turn_number() + get_mct_settings().tavern_cooldown

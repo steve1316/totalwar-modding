@@ -92,12 +92,8 @@ effect_bundles_localised_title_land_enc_effect_spot_camping	Searching Every Corn
 effect_bundles_localised_description_land_enc_effect_spot_camping	Our army searches every corner and cannot march until our next turn.	false
 effect_bundles_localised_title_land_enc_effect_spot_strip_the_valuables	Weighed Down	false
 effect_bundles_localised_description_land_enc_effect_spot_strip_the_valuables	Every wagon and pack is stuffed with stripped valuables. The army moves slowly under the weight.	false
-effect_bundles_localised_title_land_enc_effect_spot_bless_the_banners_easy	Blessed Banners	false
-effect_bundles_localised_description_land_enc_effect_spot_bless_the_banners_easy	Our banners were held over the smoke of an old shrine's fire. The warriors stand firmer beneath them.	false
-effect_bundles_localised_title_land_enc_effect_spot_bless_the_banners_medium	Blessed Banners	false
-effect_bundles_localised_description_land_enc_effect_spot_bless_the_banners_medium	Our banners were held over the smoke of an old shrine's fire. The warriors stand firmer beneath them.	false
-effect_bundles_localised_title_land_enc_effect_spot_bless_the_banners_hard	Blessed Banners	false
-effect_bundles_localised_description_land_enc_effect_spot_bless_the_banners_hard	Our banners were held over the smoke of an old shrine's fire. The warriors stand firmer beneath them.	false
+effect_bundles_localised_title_land_enc_effect_spot_bless_the_banners	Blessed Banners	false
+effect_bundles_localised_description_land_enc_effect_spot_bless_the_banners	Our banners were held over the smoke of an old shrine's fire. The warriors stand firmer beneath them.	false
 effect_bundles_localised_title_land_enc_effect_spot_stoneskin_easy	Stoneskin	false
 effect_bundles_localised_description_land_enc_effect_spot_stoneskin_easy	A ward of living stone hardens our army's hide.	false
 effect_bundles_localised_title_land_enc_effect_spot_stoneskin_medium	Stoneskin	false
@@ -264,6 +260,26 @@ effect_bundles_localised_title_land_enc_effect_spot_sig_explorers	The Explorers'
 effect_bundles_localised_description_land_enc_effect_spot_sig_explorers	The explorers' maps show every dry ford and short path, and every place an enemy could lie in wait.	false
 effect_bundles_localised_title_land_enc_effect_spot_sig_bard_song	Song of Our Deeds	false
 effect_bundles_localised_description_land_enc_effect_spot_sig_bard_song	The bard's songs of our deeds run ahead of the army, and every soldier stands a little taller for them.	false
+effect_bundles_localised_title_land_enc_effect_spot_blessed_banners_easy	Blessed Banners	false
+effect_bundles_localised_description_land_enc_effect_spot_blessed_banners_easy	Our banners were blessed at an old shrine. The warriors stand firmer beneath them, though the heavy cloth slows the march.	false
+effect_bundles_localised_title_land_enc_effect_spot_blessed_banners_medium	Blessed Banners	false
+effect_bundles_localised_description_land_enc_effect_spot_blessed_banners_medium	Our banners were blessed at an old shrine. The warriors stand firmer beneath them, though the heavy cloth slows the march.	false
+effect_bundles_localised_title_land_enc_effect_spot_blessed_banners_hard	Blessed Banners	false
+effect_bundles_localised_description_land_enc_effect_spot_blessed_banners_hard	Our banners were blessed at an old shrine. The warriors stand firmer beneath them, though the heavy cloth slows the march.	false
+effect_bundles_localised_title_land_enc_effect_spot_ancient_drills_easy	Ancient Drills	false
+effect_bundles_localised_description_land_enc_effect_spot_ancient_drills_easy	Faded battle orders have our captains drilling the ranks in forgotten formations: all attack, and little guard.	false
+effect_bundles_localised_title_land_enc_effect_spot_ancient_drills_medium	Ancient Drills	false
+effect_bundles_localised_description_land_enc_effect_spot_ancient_drills_medium	Faded battle orders have our captains drilling the ranks in forgotten formations: all attack, and little guard.	false
+effect_bundles_localised_title_land_enc_effect_spot_ancient_drills_hard	Ancient Drills	false
+effect_bundles_localised_description_land_enc_effect_spot_ancient_drills_hard	Faded battle orders have our captains drilling the ranks in forgotten formations: all attack, and little guard.	false
+effect_bundles_localised_title_land_enc_effect_spot_scroll_research_easy	Forbidden Scrolls	false
+effect_bundles_localised_description_land_enc_effect_spot_scroll_research_easy	The scrolls found at the site are full of strange learning, and our scholars cannot put them down.	false
+effect_bundles_localised_title_land_enc_effect_spot_scroll_research_medium	Forbidden Scrolls	false
+effect_bundles_localised_description_land_enc_effect_spot_scroll_research_medium	The scrolls found at the site are full of strange learning, and our scholars cannot put them down.	false
+effect_bundles_localised_title_land_enc_effect_spot_scroll_research_hard	Forbidden Scrolls	false
+effect_bundles_localised_description_land_enc_effect_spot_scroll_research_hard	The scrolls found at the site are full of strange learning, and our scholars cannot put them down.	false
+effect_bundles_localised_title_land_enc_effect_spot_scroll_heresy	Heresy Preached	false
+effect_bundles_localised_description_land_enc_effect_spot_scroll_heresy	Word of the scrolls' teachings has spread through the province, and the priests are furious.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_hangover	Hangover	false
 effect_bundles_localised_description_land_enc_effect_spot_tavern_hangover	The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.	false
 effect_bundles_localised_title_land_enc_effect_tower_war_rites_easy	War Rites	false

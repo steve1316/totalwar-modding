@@ -1435,6 +1435,9 @@ dummy_land_enc_spot_modifier_lore_ksl_icecourt	ui/campaign ui/effect_bundles/att
 dummy_land_enc_spot_modifier_lore_ksl_witchwood	ui/campaign ui/effect_bundles/attribute_encourages.png	default	0
 dummy_land_enc_spot_modifier_lore_ogr_maneaters	ui/campaign ui/effect_bundles/attribute_encourages.png	default	0
 dummy_land_enc_spot_modifier_lore_ogr_beastriders	ui/campaign ui/effect_bundles/attribute_encourages.png	default	0
+dummy_land_enc_spot_result_free_the_prisoner_chased_easy	ui/campaign ui/effect_bundles/noble.png	default	0
+dummy_land_enc_spot_result_free_the_prisoner_chased_medium	ui/campaign ui/effect_bundles/noble.png	default	0
+dummy_land_enc_spot_result_free_the_prisoner_chased_hard	ui/campaign ui/effect_bundles/noble.png	default	0
 dummy_land_enc_spot_result_tomb_robbing_haunted_easy	ui/campaign ui/effect_bundles/resource_gold_idols.png	default	0
 dummy_land_enc_spot_result_tomb_robbing_haunted_medium	ui/campaign ui/effect_bundles/resource_gold_idols.png	default	0
 dummy_land_enc_spot_result_tomb_robbing_haunted_hard	ui/campaign ui/effect_bundles/resource_gold_idols.png	default	0
@@ -1630,15 +1633,6 @@ dummy_land_enc_spot_result_mission_oath_of_victory_failed_hard	ui/campaign ui/ef
 dummy_land_enc_spot_result_missions_untracked_easy	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_spot_result_missions_untracked_medium	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_spot_result_missions_untracked_hard	ui/campaign ui/effect_bundles/treasury.png	default	0
-dummy_land_enc_spot_result_wound_paid_2_easy	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_2_medium	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_2_hard	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_3_easy	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_3_medium	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_3_hard	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_5_easy	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_5_medium	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
-dummy_land_enc_spot_result_wound_paid_5_hard	ui/campaign ui/effect_bundles/chaos_gifts.png	default	0
 dummy_land_enc_boon_bloodsworn_1	ui/campaign ui/effect_bundles/blood_kiss.png	default	0
 dummy_land_enc_boon_bloodsworn_2	ui/campaign ui/effect_bundles/blood_kiss.png	default	0
 dummy_land_enc_boon_bloodsworn_3	ui/campaign ui/effect_bundles/blood_kiss.png	default	0

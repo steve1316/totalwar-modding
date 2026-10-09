@@ -63,6 +63,9 @@ land_enc_incident_tavern_patron_1	false	wulfhart_hunters	false	Event		false		0.0
 land_enc_incident_tavern_patron_2	false	wulfhart_hunters	false	Event		false		0.0000	false
 land_enc_incident_smithy_patron_1	false	land_enc_smithy_forge	false	Event		false		0.0000	false
 land_enc_incident_smithy_patron_2	false	land_enc_smithy_forge	false	Event		false		0.0000	false
+land_enc_incident_spot_free_the_prisoner_freed	false	army_morale_up	false	Event		false		0.0000	false
+land_enc_incident_spot_free_the_prisoner_chased	false	wh2_rogue_army_encountered	false	Event		false		0.0000	false
+land_enc_incident_spot_research_scrolls	false	books_of_nagash	false	Event		false		0.0000	false
 land_enc_incident_spot_tomb_robbing_spared	false	vc_puzzle_1_background	false	Event		false		0.0000	false
 land_enc_incident_spot_tomb_robbing_haunted	false	vc_puzzle_1_background	false	Event		false		0.0000	false
 land_enc_incident_spot_abandoned_camp	false	wh2_rogue_army_encountered	false	Event		false		0.0000	false
@@ -166,9 +169,6 @@ land_enc_incident_spot_mission_penance_failed	false	land_victory	false	Event		fa
 land_enc_incident_spot_mission_oath_of_victory_met	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_mission_oath_of_victory_failed	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_missions_untracked	false	messenger	false	Event		false		0.0000	false
-land_enc_incident_spot_wound_paid_2	false	attrition_disease	false	Event		false		0.0000	false
-land_enc_incident_spot_wound_paid_3	false	attrition_disease	false	Event		false		0.0000	false
-land_enc_incident_spot_wound_paid_5	false	attrition_disease	false	Event		false		0.0000	false
 land_enc_incident_boon_gained	false	ursun_claimed	false	Event		false		0.0000	false
 land_enc_incident_boon_grew	false	victory	false	Event		false		0.0000	false
 land_enc_incident_boon_lost	false	attrition_mountain	false	Event		false		0.0000	false

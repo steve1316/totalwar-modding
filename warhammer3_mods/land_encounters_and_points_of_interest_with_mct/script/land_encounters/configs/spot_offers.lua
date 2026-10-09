@@ -9,14 +9,14 @@
 ---   gold            Gold gained. A negative value inside a gamble outcome is a loss.
 ---   items           { rarities, count }: random items of those rarities.
 ---   unique          How many legendary items.
----   recruit         { count, tiers, unit_types, beaten }: units of the lord's culture join the army, or of the beaten army's race with `beaten`.
+---   recruit         { count, tiers, unit_types, beaten, strength }: units of the lord's culture join the army, or of the beaten army's race
+---                   with `beaten`, at `strength` percent of their strength when set.
 ---   renown          How many Regiments of Renown of the lord's culture join.
 ---   hero_rank       A freed hero of this rank joins.
 ---   xp              Experience for the lord.
 ---   army_bundle     { bundle, turns } on the lord's army.
 ---   faction_bundle  { bundle, turns } on the lord's faction.
 ---   trait           A trait the lord gains for good. Not drawn when the lord has it.
----   wound           The lord is wounded for this many turns, at once.
 ---   camp            True: the army cannot move again this turn.
 ---   heal            True: every unit is healed to full.
 ---   heal_share      Every unit regains this share of its missing strength.
@@ -27,6 +27,8 @@
 ---   dividends       { per_turn, turns }: gold each turn start, shown by the `dividends_bundle_prefix` bundle for that amount.
 ---   story           True: a site special's story shows as its result once taken (a gamble's outcome or a realm target's result shows it
 ---                   instead).
+---   wound           On a gamble outcome only: the lord is wounded for this many turns, at once. Kept for Open the Sealed Door, by Steve's
+---                   choice. New offers never wound the lord.
 ---   cleanse         { boon, level }: our lord's worst curse is lifted, or the lord gains that boon when it has none.
 ---   gamble          A list of outcomes { weight, name, ...fields }. One is rolled when the offer is taken, and its fields apply.
 ---   realm           The realm target kind, see `M.realm_kinds`. The offer is not drawn when it has no target.
@@ -296,9 +298,9 @@ M.offers = {
         army_bundle = { SPOT_BUNDLE .. "sig_bard_song", 5 } },
 
     --- Treasure: loot.
-    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = S(1000, 1500, 2000), spoils = true },
+    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = S(2000, 3000, 4000), camp = true, spoils = true },
     { key = "strip_the_valuables", pool = "treasure", tags = { "loot", "curse" }, gold = S(1000, 2000, 3000), army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 3 } },
-    { key = "pry_open_the_reliquary", pool = "treasure", tags = { "loot", "curse" }, items = { rarities = { "rare" }, count = 1 }, wound = 2 },
+    { key = "pry_open_the_reliquary", pool = "treasure", tags = { "loot", "curse" }, items = { rarities = { "rare" }, count = 1 }, curse = { "haunted", 1 } },
     { key = "search_every_corner", pool = "treasure", tags = { "loot" }, items = { rarities = { "common", "uncommon", "rare" }, count = 2 }, camp = true },
     { key = "the_hidden_vault", pool = "treasure", tags = { "loot" }, cost = UNIQUE, unique = 1 },
 
@@ -317,7 +319,7 @@ M.offers = {
     } },
     --- Blessings come at the low step for 5 turns, curses last 3 turns.
     { key = "touch_the_relic", pool = "treasure", tags = { "gamble", "blessing", "curse" }, gamble = {
-        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "bless_the_banners_easy", 5 } },
+        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "bless_the_banners", 5 } },
         { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "stoneskin_easy", 5 } },
         { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "ancient_tactics", 5 } },
         { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 3 } },
@@ -339,8 +341,8 @@ M.offers = {
     } },
 
     --- Treasure: blessings.
-    { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "leave_an_offering"), 5 } },
-    { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "bless_the_banners"), 5 } },
+    { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, bleed = 15, army_bundle = { tiered(SPOT_BUNDLE .. "leave_an_offering"), 5 } },
+    { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "blessed_banners"), 5 } },
     { key = "stoneskin", pool = "treasure", tags = { "blessing" }, cost = shared.stoneskin.cost, army_bundle = { tiered(SPOT_BUNDLE .. "stoneskin"), 5 } },
     --- `spell_pool` rolls an army spell (configs/army_spells.lua) when the offer is drawn, which the choice names. The army keeps it for
     --- `spell_turns` turns.
@@ -352,7 +354,7 @@ M.offers = {
         army_bundle = { SPOT_BUNDLE .. "enchanted_steel", S(5, 6, 7) } },
 
     --- Treasure: curses and pacts.
-    { key = "dark_bargain", pool = "treasure", tags = { "curse" }, trait = "land_enc_trait_tower_daemon_marked", wound = 5 },
+    { key = "dark_bargain", pool = "treasure", tags = { "curse" }, trait = "land_enc_trait_tower_daemon_marked", curse = { from = "treasure", level = 3 } },
     { key = "plague_bearer", pool = "treasure", tags = { "curse", "loot" }, gold = shared.plague_bearer.gold, army_bundle = { PLAGUE, shared.plague_bearer.turns } },
     { key = "bloodstained_blades", pool = "treasure", tags = { "curse" }, army_bundle = { SPOT_BUNDLE .. "bloodstained_blades", 5 } },
     { key = "feed_the_shadows", pool = "treasure", tags = { "curse" }, sacrifice = { ranks = 1 } },
@@ -368,9 +370,12 @@ M.offers = {
     { key = "read_the_omens", pool = "treasure", tags = { "blessing" }, cost = STANDARD, boon = { "fates_favour", 1 } },
 
     --- Treasure: recruits.
-    { key = "conscripts", pool = "treasure", tags = { "recruit" }, recruit = { count = shared.conscripts.count, tiers = shared.conscripts.tiers } },
+    { key = "conscripts", pool = "treasure", tags = { "recruit" }, recruit = { count = S(2, 2, 3), tiers = shared.conscripts.tiers, strength = 25 } },
     { key = "hire_sellswords", pool = "treasure", tags = { "recruit", "deal" }, cost = STANDARD, recruit = { count = 1, tiers = S({ 3, 4 }, { 4 }, { 4, 5 }) } },
-    { key = "free_the_prisoner", pool = "treasure", tags = { "recruit" }, hero_rank = S(1, 3, 5) },
+    { key = "free_the_prisoner", pool = "treasure", tags = { "recruit" }, hero_rank = S(3, 5, 7), gamble = {
+        { 2, "freed" },
+        { 1, "chased", guardian = true },
+    } },
     { key = "tame_the_beast", pool = "treasure", tags = { "recruit", "gamble" },
         recruit = { count = 1, tiers = S({ 1, 2, 3 }, { 2, 3, 4 }, { 3, 4, 5 }), unit_types = { "monster", "war_beast", "monstrous_infantry", "monstrous_cavalry" } } },
     { key = "regiment_of_renown", pool = "treasure", tags = { "recruit", "deal" }, cost = shared.regiment_of_renown.cost, renown = 1 },
@@ -387,8 +392,9 @@ M.offers = {
     { key = "buy_supplies", pool = "treasure", tags = { "deal", "recovery" }, cost = STANDARD, army_bundle = { SPOT_BUNDLE .. "buy_supplies", S(5, 6, 7) } },
 
     --- Treasure: lore.
-    { key = "research_scrolls", pool = "treasure", tags = { "lore" }, faction_bundle = { "land_enc_effect_tower_research_scrolls", 5 } },
-    { key = "ancient_tactics", pool = "treasure", tags = { "lore" }, army_bundle = { SPOT_BUNDLE .. "ancient_tactics", 5 } },
+    { key = "research_scrolls", pool = "treasure", tags = { "lore" }, faction_bundle = { tiered(SPOT_BUNDLE .. "scroll_research"), 5 }, realm = "own_province",
+        province_bundle = { SPOT_BUNDLE .. "scroll_heresy", 5 } },
+    { key = "ancient_tactics", pool = "treasure", tags = { "lore" }, army_bundle = { tiered(SPOT_BUNDLE .. "ancient_drills"), 5 } },
 
     --- Realm: your own lands.
     { key = "endow_the_province", pool = "realm", tags = { "realm" }, cost = PREMIUM, realm = "own_region", points = S(50, 75, 100) },
