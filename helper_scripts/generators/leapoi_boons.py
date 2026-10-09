@@ -304,7 +304,7 @@ BOONS: Dict[str, Tuple[str, str, str, List[Level]]] = {
         ["Army ability: Comet of Casandora, 1 use", "Comet of Casandora, 2 uses", "Comet of Casandora, 3 uses", "Comet of Casandora, 3 uses, +10% spell intensity",
          "Comet of Casandora, 4 uses, +20% spell intensity"],
         (COMET, F, [1, 1, 1, 1, 1]), (COMET_USES, F, [N, 1, 2, 2, 3]), (INTENSITY, F, [N, N, N, 10, 20]))),
-    "stone_rampart": ("Stone Rampart", "Attackers break on this army like waves on rock.", "armour_character.png", ramp(
+    "stone_rampart": ("Stone Rampart", "Attackers break on this army like waves upon the rocks.", "armour_character.png", ramp(
         ["+3 melee defence when defending", "+6 melee defence when defending", "+9 melee defence and Regeneration when defending",
          "+12 melee defence and Regeneration when defending", "+15 melee defence, Regeneration and Unbreakable when defending"],
         (MD_DEFENDING, F, [3, 6, 9, 12, 15]), (REGEN_DEFENDING, F, [N, N, 1, 1, 1]), (UNBREAKABLE_DEFENDING, F, [N, N, N, N, 1]))),
@@ -341,7 +341,7 @@ BOONS: Dict[str, Tuple[str, str, str, List[Level]]] = {
     "dread_host": ("Dread Host", "Stories of this army walk ahead of it.", "attribute_causes_terror.png", ramp(
         ["Every unit causes fear", "Fear, +5 leadership", "Fear, +10 leadership", "Every unit causes terror, +10 leadership", "Terror, +15 leadership"],
         (FEAR, F, [1, 1, 1, N, N]), (TERROR, F, [N, N, N, 1, 1]), (LEAD, F, [N, 5, 10, 10, 15]))),
-    "bane": ("Bane of {race}", "The lord has learned exactly where this enemy breaks.", "weapon_damage.png", []),
+    "bane": ("Bane of {race}", "The lord has learned exactly how to make this enemy hurt the most.", "weapon_damage.png", []),
     "death_touched": ("Death-Touched", "The dead that haunted this army now march with it.", "icon_necromantic_power.png", ramp(
         ["Immune to psychology", "Immune to psychology, causes fear", "+5 leadership, causes fear", "+10 leadership, causes fear",
          "+10 leadership, causes terror"],
@@ -361,9 +361,9 @@ BOONS: Dict[str, Tuple[str, str, str, List[Level]]] = {
 
 # Curse key -> (name, flavour, icon, levels). A rolled curse's name and texts carry "{race}".
 CURSES: Dict[str, Tuple[str, str, str, List[Level]]] = {
-    "haunted": ("Haunted", "The dead follow this army at night. The soldiers can hear them.", "dlc10_death_night.png", ramp(
+    "haunted": ("Haunted", "The dead follow this army at night. The soldiers are unsettled by them.", "dlc10_death_night.png", ramp(
         ["-3 leadership", "-6 leadership", "-9 leadership", "-12 leadership", "-15 leadership"], (LEAD, F, [-3, -6, -9, -12, -15]))),
-    "creeping_rust": ("Creeping Rust", "No amount of oil keeps the rust off this army's blades.", "weapon_damage.png", ramp(
+    "creeping_rust": ("Creeping Rust", "No amount of oil is enough to keep the rust off this army's blades.", "weapon_damage.png", ramp(
         ["-3% weapon strength", "-6% weapon strength", "-9% weapon strength", "-12% weapon strength", "-15% weapon strength"],
         (WS, F, [-3, -6, -9, -12, -15]))),
     "leaden_march": ("Leaden March", "Every step feels like wading through mud.", "attrition.png", ramp(
@@ -375,7 +375,7 @@ CURSES: Dict[str, Tuple[str, str, str, List[Level]]] = {
         ["Tires 5% faster", "Tires 10% faster", "Starts every battle Winded, tires 10% faster", "Starts every battle Tired, tires 10% faster",
          "Starts every battle Tired, tires 15% faster"],
         (VIGOUR, F, [-5, -10, -10, -10, -15]), (WINDED, F, [N, N, 3, N, N]), (TIRED, F, [N, N, N, 4, 4]))),
-    "withered_supply": ("Withered Supply", "Food spoils, wounds fester, and new recruits never seem to arrive.", "phase_posion.png", ramp(
+    "withered_supply": ("Withered Supply", "The food in the supply has spoiled, and wounds seem to fester and are slower to heal.", "phase_posion.png", ramp(
         ["-20% replenishment", "-40% replenishment", "-60% replenishment", "-80% replenishment", "No replenishment, and attrition even at home"],
         (REPLENISH, F, [-20, -40, -60, -80, -100]), (ATTRITION, F, [N, N, N, N, 1]))),
     "fogbound": ("Fogbound", "A grey fog follows this army wherever it goes.", "attribute_revealed.png", ramp(
@@ -395,18 +395,18 @@ CURSES: Dict[str, Tuple[str, str, str, List[Level]]] = {
         ["-10% ambush defence", "-15% ambush defence", "-20% ambush defence", "-25% ambush defence, +10% enemy hero action success",
          "-30% ambush defence, +15% enemy hero action success"],
         (AMBUSH_DEFENCE, F, [-10, -15, -20, -25, -30]), (ENEMY_HEROES, C, [N, N, N, 10, 15]))),
-    "brittle_bones": ("Brittle Bones", "Wounds that should heal in days take weeks.", "resistance_physical.png", ramp(
+    "brittle_bones": ("Brittle Bones", "The men are physically weakened. They have lost muscle, and their bones have grown creaky.", "resistance_physical.png", ramp(
         ["-3 armour", "-6 armour", "-9 armour", "-12 armour", "-15 armour"], (ARMOUR, F, [-3, -6, -9, -12, -15]))),
-    "shaky_aim": ("Shaky Aim", "Hands shake, and arrows drift wide.", "ammo.png", ramp(
+    "shaky_aim": ("Shaky Aim", "With shaky hands, ranged attacks drift wide.", "ammo.png", ramp(
         ["-5% missile strength", "-10% missile strength", "-15% missile strength", "-20% missile strength", "-25% missile strength"],
         (MISSILE, F, [-5, -10, -15, -20, -25]))),
     "grudge": ("Grudge of {race}", "This enemy has sworn to remember the lord's name.", "discouraged.png", []),
-    "glass_jaw": ("Glass Jaw", "The lord took a blow that never quite healed.", "casualties.png", ramp(
+    "glass_jaw": ("Glass Jaw", "The lord took a blow to the head that never quite healed right.", "casualties.png", ramp(
         ["Lord: -5 armour", "Lord: -10 armour", "Lord: -15 armour, -5 melee attack", "Lord: -20 armour, -5 melee attack", "Lord: -25 armour, -10 melee attack"],
         (LORD_ARMOUR, C, [-5, -10, -15, -20, -25]), (LORD_MA, C, [N, N, -5, -5, -10]))),
     "stumbling_charge": ("Stumbling Charge", "Charges lose their nerve a few paces from the enemy.", "charge.png", ramp(
         ["-5% charge bonus", "-10% charge bonus", "-15% charge bonus", "-20% charge bonus", "-25% charge bonus"], (CHARGE, F, [-5, -10, -15, -20, -25]))),
-    "cursed_coin": ("Cursed Coin", "Recruits want double pay before they will march under this lord.", "casualties.png", ramp(
+    "cursed_coin": ("Cursed Coin", "Recruits want extra pay before they will march under this lord.", "casualties.png", ramp(
         ["+5% recruitment cost", "+10% recruitment cost", "+15% recruitment cost", "+20% recruitment cost", "+25% recruitment cost"],
         (RECRUIT, F, [5, 10, 15, 20, 25]))),
 }
