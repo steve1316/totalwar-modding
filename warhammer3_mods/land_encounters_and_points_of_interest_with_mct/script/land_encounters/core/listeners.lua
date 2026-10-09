@@ -233,8 +233,20 @@ function M.register()
         "PanelOpenedCampaign",
         function(context) return context.string == "events" end,
         function()
-            cm:callback(function() dilemmas.grey_out_open(cm:get_local_faction_name(true)) end, 0.1)
+            cm:callback(function()
+                dilemmas.grey_out_open(cm:get_local_faction_name(true))
+                dilemmas.cap_choices()
+            end, 0.1)
         end,
+        IS_PERSISTENT_LISTENER
+    )
+
+    --- Puts a scrolled dilemma's choice grid back when the events panel closes, so the next dilemma lays out as the game made it.
+    core:add_listener(
+        "land_enc_release_dilemma_scroll",
+        "PanelClosedCampaign",
+        function(context) return context.string == "events" end,
+        function() dilemmas.release_scroll() end,
         IS_PERSISTENT_LISTENER
     )
 

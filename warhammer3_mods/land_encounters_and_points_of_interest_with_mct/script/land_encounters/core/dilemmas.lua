@@ -7,6 +7,21 @@ require("script/land_encounters/utils/common")
 --- Prefix of each choice's row id in the dilemma panel's list, followed by the dilemma key and the choice key.
 local CHOICE_ROW_PREFIX = "CcoCdirEventsDilemmaChoiceDetailRecord"
 
+--- Most rows of choices the dilemma panel shows before the rest scroll, two choices to a row.
+local MAX_VISIBLE_ROWS = 3
+
+--- Screen height the dilemma panel leaves free: the top menu bar and a gap below the panel.
+local SCREEN_MARGIN = 100
+
+--- Name of the scrolling list the choice grid moves into when it has more than `MAX_VISIBLE_ROWS` rows or does not fit on the screen.
+local SCROLL_NAME = "land_enc_dilemma_scroll"
+
+--- Room beside the choice grid for the scrolling list's slider.
+local SLIDER_WIDTH = 30
+
+--- Path of the dilemma panel's choice grid's parent, from the UI root.
+local PANEL_PATH = { "events", "event_layouts", "dilemma_active", "dilemma", "background" }
+
 local M = {
     --- Faction key -> dilemma key -> the choice keys greyed out on that dilemma while it is open. Saved, so a reloaded panel is greyed too.
     closed_by_faction = {},
@@ -188,6 +203,91 @@ function M.grey_out_open(faction_name)
     for dilemma_key, choice_keys in pairs(M.closed_by_faction[faction_name] or {}) do
         M.grey_out(dilemma_key, choice_keys)
     end
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Scrolling
+
+--- Finds the open dilemma panel's choice grid and the panel part that holds it, wherever the grid sits.
+--- @returns table|nil, table|nil The panel's `background`, and the `dilemma_list` grid, or nil when no dilemma panel is open.
+local function find_grid()
+    local env = core:get_env()
+    local background = env.find_uicomponent_from_table(core:get_ui_root(), PANEL_PATH)
+    if not background then return nil, nil end
+    local grid = env.find_uicomponent(background, "dilemma_list") or env.find_uicomponent(background, SCROLL_NAME, "list_clip", "list_box", "dilemma_list")
+    return background, grid
+end
+
+--- Puts the choice grid back where the panel keeps it and removes the scrolling list, so the next dilemma lays out as the game made it.
+function M.release_scroll()
+    local env = core:get_env()
+    local background, grid = find_grid()
+    if not background then return end
+    local scroll = env.find_uicomponent(background, SCROLL_NAME)
+    if not scroll then return end
+    if grid then background:Adopt(grid:Address(), 1) end
+    scroll:Destroy()
+    background:Layout()
+    log("dilemmas: the choice grid is back in the dilemma panel and the scrolling list is gone")
+end
+
+--- Shows at most `MAX_VISIBLE_ROWS` rows of choices on the open dilemma panel, and fewer when the whole panel would not fit on the screen:
+--- the choice grid then moves into a scrolling list as tall as the rows shown. A scrolling list left from the last dilemma is released
+--- first, in case the panel moved on without closing. UI only, for the local player's panel.
+function M.cap_choices()
+    local env = core:get_env()
+    M.release_scroll()
+    local background, grid = find_grid()
+    if not grid then return end
+    --- How far down the grid each row of choices starts, top row first.
+    local row_tops, seen, choices = {}, {}, 0
+    local grid_width, grid_height = grid:Dimensions()
+    local _, grid_y = grid:Position()
+    for i = 0, grid:ChildCount() - 1 do
+        local choice = env.UIComponent(grid:Find(i))
+        if choice:Visible() then
+            local _, y = choice:Position()
+            choices = choices + 1
+            if not seen[y] then
+                seen[y] = true
+                row_tops[#row_tops + 1] = y - grid_y
+            end
+        end
+    end
+    table.sort(row_tops)
+    local _, screen_height = core:get_ui_root():Dimensions()
+    local _, panel_height = env.UIComponent(background:Parent()):Dimensions()
+    local room = screen_height - SCREEN_MARGIN - (panel_height - grid_height)
+    if #row_tops < 2 or (#row_tops <= MAX_VISIBLE_ROWS and grid_height <= room) then return end
+    --- The most rows that fit in the room, at least one, and never every row, since the rest must scroll.
+    local shown_rows = 1
+    for rows = 2, math.min(MAX_VISIBLE_ROWS, #row_tops - 1) do
+        if row_tops[rows + 1] <= room then shown_rows = rows end
+    end
+    local shown_height = row_tops[shown_rows + 1]
+    local scroll = env.UIComponent(background:CreateComponent(SCROLL_NAME, "ui/templates/listview"))
+    local clip = env.find_uicomponent(scroll, "list_clip")
+    local box = env.find_uicomponent(clip, "list_box")
+    if not clip or not box then
+        log("dilemmas: the scrolling list has no list_clip or list_box, so the " .. choices .. " choices stay as they are")
+        scroll:Destroy()
+        return
+    end
+    background:Adopt(scroll:Address(), 1)
+    box:Adopt(grid:Address())
+    for _, part in ipairs({ scroll, clip }) do
+        part:SetCanResizeWidth(true)
+        part:SetCanResizeHeight(true)
+    end
+    scroll:Resize(grid_width + SLIDER_WIDTH, shown_height)
+    clip:Resize(grid_width, shown_height)
+    box:Layout()
+    background:Layout()
+    local scroll_width, scroll_height = scroll:Dimensions()
+    log("dilemmas: " .. choices .. " choices in " .. #row_tops .. " rows scroll in a list of " .. scroll_width .. "x" .. scroll_height .. ", showing "
+        .. shown_rows .. " rows (grid " .. grid_width .. "x" .. grid_height .. ", screen height " .. screen_height .. ", panel " .. panel_height
+        .. ", room for the grid " .. room .. ")")
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
