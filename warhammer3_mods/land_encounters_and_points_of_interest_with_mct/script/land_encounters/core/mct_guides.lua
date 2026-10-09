@@ -9,6 +9,7 @@ local smithy_data = require("script/land_encounters/configs/smithy_data")
 local tavern_data = require("script/land_encounters/configs/tavern_data")
 local spot_offers = require("script/land_encounters/configs/spot_offers")
 local archetypes = require("script/land_encounters/configs/archetypes")
+local boons = require("script/land_encounters/configs/boons")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,7 +193,19 @@ function M.spot_offer_sections()
     return sections
 end
 
---- Builds the Smithies page guide: the intro, then one line per forge level with its free picks, cooldown, commission and upgrade price.
+--- Adds the name and level 1 line of every offer in a pool to a guide, e.g. the Tavern bar's or the Smithy's Work Orders.
+--- @param lines table The guide's lines, added to.
+--- @param pool string The offer pool, e.g. "tavern".
+local function add_pool_lines(lines, pool)
+    for _, offer in ipairs(spot_offers.offers) do
+        if offer.pool == pool then
+            lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
+        end
+    end
+end
+
+--- Builds the Smithies page guide: the intro, one line per forge level with its free picks, cooldown, commission and upgrade price, then the
+--- name and level 1 line of every Work Orders offer.
 --- @returns string The guide text.
 function M.smithy_text()
     local lines = { guides.smithy_intro, "" }
@@ -202,7 +215,23 @@ function M.smithy_text()
         facts[#facts + 1] = "a commission of " .. items_phrase(level.commission.count, level.commission.rarities) .. " for " .. level.commission.price .. " gold"
         if level.legendary_commission then facts[#facts + 1] = "a legendary item for " .. level.legendary_commission.price .. " gold" end
         if level.upgrade_price then facts[#facts + 1] = "upgrades for " .. level.upgrade_price .. " gold" end
+        if level.legendary_tribute_chance then facts[#facts + 1] = "a " .. level.legendary_tribute_chance .. "% chance each tribute is a legendary item" end
         lines[#lines + 1] = guide_line("Level " .. number, join_words(facts, "and") .. ".")
+    end
+    lines[#lines + 1] = ""
+    add_pool_lines(lines, "smithy")
+    return table.concat(lines, "\n")
+end
+
+--- Builds the Boons and Curses page guide: the intro, then every boon, curse and faction-wide effect with what it does and where it comes
+--- from. The lines are written by the generator, keyed by `boons.guide_prefix`.
+--- @returns string The guide text.
+function M.boons_text()
+    local lines = { guides.boons_intro }
+    for _, part in ipairs({ { "Boons", "boon", boons.boons }, { "Curses", "curse", boons.curses }, { "Faction-wide", "realm", boons.realm } }) do
+        lines[#lines + 1] = ""
+        lines[#lines + 1] = "[[col:yellow]]" .. part[1] .. "[[/col]]"
+        for _, record in ipairs(part[3]) do lines[#lines + 1] = loc("campaign_localised_strings_string_" .. boons.guide_prefix .. part[2] .. "_" .. record.key) end
     end
     return table.concat(lines, "\n")
 end
@@ -224,11 +253,7 @@ function M.taverns_text()
         lines[#lines + 1] = guide_line("Level " .. number, "the hall hires out " .. join_words(stock, "and") .. ". " .. upgrade)
     end
     lines[#lines + 1] = ""
-    for _, offer in ipairs(spot_offers.offers) do
-        if offer.pool == "tavern" then
-            lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
-        end
-    end
+    add_pool_lines(lines, "tavern")
     return table.concat(lines, "\n")
 end
 

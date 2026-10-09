@@ -10,18 +10,21 @@ local item_pool = require("script/land_encounters/core/item_pool")
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_champions = require("script/land_encounters/configs/tower_champions")
 local offer_effects = require("script/land_encounters/core/offer_effects")
+local realm_effects = require("script/land_encounters/core/realm_effects")
+local Army = require("script/land_encounters/core/army")
+local army_spells = require("script/land_encounters/core/army_spells")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
 local steps = require("script/land_encounters/utils/steps")
 local spot_config = require("script/land_encounters/configs/spot_offers")
+local boons = require("script/land_encounters/features/boons")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Constants
 
 --- Prefix of every offer's choice key. The rest is the offer's key in capitals.
-local CHOICE_KEY_PREFIX = "LEAPOI_TWR_"
 --- Payload line telling the player a stay offer brings them back to the same choice.
 local RETURNS_HERE_LINE = "dummy_land_enc_tower_returns_here"
 --- Script context value shown at the top of every per-floor go-deeper description through `ScriptObjectContext`.
@@ -319,6 +322,89 @@ local function faction_bundle(offer, ctx)
     return offer.key
 end
 
+--- What a pact or another offer granting a boon or curse does: it is drawn while boons and curses are on, and gives the delving lord what it
+--- grants.
+local GRANT_HANDLER = {
+    eligible = function() return boons.enabled() end,
+    apply = function(offer, ctx) boons.grant_fields(tower_army.character(ctx.delve.general_cqi), offer) end,
+}
+
+--- The nearest faction of the tower's race, which a composed offer's `relations` changes relations with. Looked up once per offer context,
+--- since it walks every region on the map.
+--- @param ctx table The offer context.
+--- @returns string|nil The faction key, or nil when none is near.
+local function tower_kin(ctx)
+    if ctx.kin == nil then
+        local faction = ctx.tower and ctx.tower.coordinates and cm:get_faction(ctx.faction_name)
+        local kin = faction and realm_effects.nearest_kin(faction, ctx.tower.coordinates[1], ctx.tower.coordinates[2], ctx.tower.faction)
+        ctx.kin = kin and kin:name() or false
+    end
+    return ctx.kin or nil
+end
+
+--- Applies a composed offer's parts in order: a next-battle `effect_bundle` (kept for `battle_floors` floors), `bleed` (strength points every
+--- unit loses now), `next_budget`, the `boon` or `curse` it grants, `wound_turns` (our lord is wounded for that many turns when the delve
+--- ends), `faction_bundle` and `army_bundle` for `turns`, `lord_xp`, `haul_item` (an item of that rarity into the haul), `relations`
+--- (with the nearest faction of the tower's race, in steps of 10) and `sabotage` (the next floor's army carries its notice and `enemy_bundle`). A
+--- stay offer reports its result: the faction its relations changed with, or the item it put in the haul.
+--- @param offer table The offer record at the delve's offer difficulty.
+--- @param ctx table The offer context.
+--- @returns string|nil, table|nil The result outcome (the offer's key) and its line's values, for a stay offer.
+local function compose(offer, ctx)
+    local delve = ctx.delve
+    local values = {}
+    if offer.spell_pool then add_battle_bundle(delve, army_spells.bundle((delve.offer_spells or {})[offer.key])) end
+    if offer.effect_bundle then
+        battle_buff(offer, ctx)
+        if offer.battle_floors then
+            delve.lasting_bundles = delve.lasting_bundles or {}
+            delve.lasting_bundles[offer.effect_bundle] = offer.battle_floors - 1
+        end
+    end
+    if offer.bleed then
+        tower_army.bleed_army(delve.general_cqi, offer.bleed, offer.key)
+    end
+    if offer.sabotage then
+        sabotage(offer, ctx)
+    elseif offer.next_budget then
+        change_next_floor(delve, { budget = offer.next_budget })
+    end
+    if boons.grants(offer) then GRANT_HANDLER.apply(offer, ctx) end
+    if offer.wound_turns then delve.dark_bargain = math.max(delve.dark_bargain or 0, offer.wound_turns) end
+    if offer.faction_bundle then offer_effects.faction_bundle(ctx.faction_name, offer.faction_bundle, offer.turns) end
+    if offer.army_bundle then tower_army.apply_bundle(delve.general_cqi, offer.army_bundle, offer.turns) end
+    if offer.lord_xp then offer_effects.add_lord_xp(delve.general_cqi, offer.lord_xp) end
+    if offer.haul_item then
+        local items = item_pool.pick_items(ctx.faction_name, { offer.haul_item }, 1)
+        tower_data.add_items(delve.haul, items)
+        log("tower: " .. offer.key .. " puts " .. (items[1] or "no item") .. " in the haul")
+        local name = items[1] and common.get_localised_string("ancillaries_onscreen_name_" .. items[1]) or ""
+        values[#values + 1] = name ~= "" and name or (items[1] or "nothing")
+    end
+    local kin = offer.relations and tower_kin(ctx)
+    if kin then
+        realm_effects.change_relations(ctx.faction_name, kin, offer.relations)
+        local name = common.get_localised_string("factions_screen_name_" .. kin)
+        values[#values + 1] = name ~= "" and name or kin
+    end
+    if offer.stay then return offer.key, values end
+end
+
+--- What a composed offer does: drawn while what it grants can be given, applied by `compose`.
+local COMPOSED_HANDLER = {
+    eligible = function(ctx, offer)
+        if not boons.drawable(offer) then return false end
+        if offer.no_champion and ctx.delve.next_floor and ctx.delve.next_floor.champion then return false end
+        if offer.relations and not tower_kin(ctx) then return false end
+        if offer.spell_pool then
+            ctx.delve.offer_spells = ctx.delve.offer_spells or {}
+            ctx.delve.offer_spells[offer.key] = army_spells.roll(offer.spell_pool)
+        end
+        return offer.count == nil or recruit(ctx, offer)
+    end,
+    apply = compose,
+}
+
 --- When each offer can be drawn and what it does. `eligible(ctx)` returns true when the offer would do something. `apply(offer, ctx)` runs
 --- after its cost is paid. A stay offer's `apply` returns its outcome (the result loc key suffix) and the values for that line's
 --- placeholders. `ctx` is { delve, faction_name, dividends }. An offer with no entry is always eligible and does nothing.
@@ -378,13 +464,9 @@ local HANDLERS = {
     },
     war_rites = { apply = battle_buff },
     whetstones_and_oil = { apply = battle_buff },
-    warding_sigils = { apply = battle_buff },
     fire_kissed_blades = { apply = battle_buff },
     enchanted_steel = { apply = battle_buff },
-    quartermasters_cache = { apply = battle_buff },
-    drill_sergeant = { apply = battle_buff },
     iron_resolve = { apply = battle_buff },
-    stoneskin = { apply = battle_buff },
     scaling_blessing = { eligible = has_gold, apply = battle_buff },
     loaded_dice = {
         eligible = has_gold,
@@ -533,9 +615,7 @@ local HANDLERS = {
             offer_effects.add_lord_xp(ctx.delve.general_cqi, offer.lord_xp)
         end,
     },
-    towers_favour = { apply = faction_bundle },
     research_scrolls = { apply = faction_bundle },
-    recruitment_cache = { apply = faction_bundle },
     --- The unit offers' payloads add their units, so taking them only needs the gold paid.
     ransom_a_captive = {
         eligible = function(ctx, offer)
@@ -599,9 +679,7 @@ local HANDLERS = {
                 change_next_floor(ctx.delve, { budget = offer.next_budget })
                 return "roll_the_bones_foe"
             end
-            for _, entry in ipairs(tower_army.unit_strengths(ctx.delve.general_cqi)) do
-                tower_army.set_strength(entry.unit, entry.strength - offer.bleed)
-            end
+            tower_army.bleed_army(ctx.delve.general_cqi, offer.bleed, offer.key)
             return "roll_the_bones_bleed", { offer.bleed }
         end,
     },
@@ -716,11 +794,18 @@ local HANDLERS = {
 --- @param offer table The offer record at the delve's offer difficulty.
 --- @param ctx table The offer context.
 --- @returns boolean True when the offer can be drawn.
+--- The handler of an offer: its own, the composed one, the shared one of an offer granting a boon or curse, or nil.
+--- @param offer table The offer record.
+--- @returns table|nil The handler.
+local function handler_of(offer)
+    return HANDLERS[offer.key] or (offer.compose and COMPOSED_HANDLER) or (boons.grants(offer) and GRANT_HANDLER or nil)
+end
+
 local function eligible(offer, ctx)
     if spent(offer, ctx.delve) then return false end
     if ctx.keeps_out[offer.key] then return false end
     if not offer_effects.army_fits(offer, ctx.tower and ctx.tower.faction, ctx.delve.general_cqi) then return false end
-    local handler = HANDLERS[offer.key]
+    local handler = handler_of(offer)
     return not (handler and handler.eligible) or handler.eligible(ctx, offer)
 end
 
@@ -728,11 +813,12 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Offers
 
+
 --- Builds an offer's choice key.
 --- @param offer table The offer record.
 --- @returns string The choice key, e.g. "LEAPOI_TWR_WAR_RITES".
 function M.choice_key(offer)
-    return CHOICE_KEY_PREFIX .. offer.key:upper()
+    return offers_data.choice_key_prefix .. offer.key:upper()
 end
 
 --- Draws up to the MCT `tower_offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones. Eligible offers in
@@ -834,6 +920,7 @@ function M.choice(offer_key, delve, next_floor)
         local difficulty = climb_difficulty(offer, floor)
         lines[2] = "dummy_land_enc_tower_descend_floor_" .. floor .. (difficulty and "_" .. difficulty or "")
     end
+    army_spells.add_line(lines, offer.spell_pool and (delve.offer_spells or {})[offer.key])
     local choice = { key = M.choice_key(offer), lines = lines }
     local units = (delve.offer_units or {})[offer.key]
     local force = units and affordable and tower_army.delving_force(delve.general_cqi)
@@ -854,7 +941,7 @@ function M.take(choice_key, delve, faction_name, extras)
     extras = extras or {}
     local offer = nil
     for _, key in ipairs(delve.offers or {}) do
-        if CHOICE_KEY_PREFIX .. key:upper() == choice_key then
+        if M.choice_key({ key = key }) == choice_key then
             offer = at(key, delve)
             break
         end
@@ -877,7 +964,7 @@ function M.take(choice_key, delve, faction_name, extras)
     offer_effects.log_army_change(delve.general_cqi, offer.key)
     delve.haul.gold = delve.haul.gold - cost
     delve.taken[offer.key] = true
-    local handler = HANDLERS[offer.key]
+    local handler = handler_of(offer)
     local outcome, values = nil, nil
     if offer.mission then tower_missions.take(offer, delve) end
     if handler and handler.apply then
@@ -1038,17 +1125,30 @@ function M.hand_buffs_to_battle(delve)
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, table.concat(targets, ","))
 end
 
---- Takes the one-battle effects off the delving army once the floor they were bought for is over, and clears the battle's buff list.
+--- Takes the one-battle effects off the delving army once the floor they were bought for is over, and clears the battle's buff list. A
+--- bundle bought for more floors (`lasting_bundles`) stays on for its next floor, unless the delve is over.
 --- @param delve table The delve record.
-function M.end_battle_effects(delve)
+--- @param delve_over boolean|nil True when the delve ends, so every bundle comes off.
+function M.end_battle_effects(delve, delve_over)
     core:svr_save_string(BATTLE_BUFFS_SVR_KEY, "")
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, "")
     delve.enemy_notices = nil
     delve.battle_tricks = nil
     tower_missions.end_battle(delve)
-    local bundles = delve.battle_bundles or {}
+    local bundles, kept, lasting = {}, {}, delve.lasting_bundles or {}
+    for _, bundle in ipairs(delve.battle_bundles or {}) do
+        if not delve_over and (lasting[bundle] or 0) > 0 then
+            lasting[bundle] = lasting[bundle] - 1
+            kept[#kept + 1] = bundle
+            log("tower: " .. bundle .. " stays on for another floor")
+        else
+            lasting[bundle] = nil
+            bundles[#bundles + 1] = bundle
+        end
+    end
     for _, bundle in ipairs(delve.modifier_bundles or {}) do bundles[#bundles + 1] = bundle end
-    delve.battle_bundles, delve.modifier_bundles = nil, nil
+    delve.battle_bundles, delve.modifier_bundles = #kept > 0 and kept or nil, nil
+    delve.lasting_bundles = next(lasting) and lasting or nil
     if #bundles > 0 then log("tower: removing one-battle bundles: " .. table.concat(bundles, ", ")) end
     for _, bundle in ipairs(bundles) do tower_army.remove_bundle(delve.general_cqi, bundle) end
 end
@@ -1056,7 +1156,7 @@ end
 --- Takes the delve-long effects off the delving army when the delve ends, however it ends.
 --- @param delve table The delve record.
 function M.end_delve_effects(delve)
-    M.end_battle_effects(delve)
+    M.end_battle_effects(delve, true)
     if not delve.hellforge then return end
     delve.hellforge = nil
     log("tower: removing the Hellforge pact")

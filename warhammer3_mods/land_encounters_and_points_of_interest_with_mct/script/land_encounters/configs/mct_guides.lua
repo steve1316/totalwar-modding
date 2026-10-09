@@ -21,10 +21,15 @@ M.towers_intro = "One tower stands in each map zone, held by a random faction. M
     .. "gold below is at the default Floor gold setting."
 
 --- Intro of the Smithies page guide. The per-level lines follow it.
-M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, or onto your own to pick a free item. The forge then cools for the Smithy "
-    .. "cooldown, plus extra turns at lower forge levels. Upgrade the forge for better items, a shorter cooldown and more frequent tribute. A "
+M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, or onto your own to pick one of two free items. The forge then cools for "
+    .. "the Smithy cooldown, plus extra turns at lower forge levels. While it cools, Rush the Forge ends the wait for 500 gold per turn left, "
+    .. "times the forge level. The forge's Work Orders offer three orders for the whole army, listed below, and serve you again 5 turns after "
+    .. "you take one. Upgrade the forge for better items, a shorter cooldown and more frequent tribute. A "
     .. "Smithy held by anyone else can be taken by beating its garrison, which gets harder at higher levels. Taking one from a faction you are not "
     .. "at war with costs 20 [[img:icon_diplomacy]][[/img]] relations with them. Enemies can besiege or retake yours, and AI owners upgrade theirs now and then. Every Smithy "
+    .. "While you hold both a Smithy and its region, Arms Trade raises the province's income and the Garrison Armoury arms the region's garrison, "
+    .. "more at each forge level. Every few turns your highest-level Smithy offers a Smith's Commission: a kill count, beating armies of your "
+    .. "nearest enemy, or winning a battle at a marked spot near it, for an item named on the mission. Failing one costs nothing. Every Smithy "
     .. "belongs to the Smiths' Association. A Generous Donation of 50000 gold at your own forge raises every Smithy to at least level 2 and blesses "
     .. "your armies' weapons for good. A second donation of 100000 gold raises every Smithy to level 3 and doubles the blessing. The prices "
     .. "below are at the default Smithy prices setting."
@@ -50,6 +55,18 @@ M.tavern_intro = "Each map zone has one racial Tavern, run by a single race, and
     .. "blesses your faction's [[img:icon_income]][[/img]] income, trade and armies for good, with [[img:icon_experience]][[/img]] experience for "
     .. "every lord and hero each turn. A second donation of 100000 gold raises every Tavern to level 3 and doubles the blessing."
 
+--- Intro of the Boons and Curses page guide. Every boon, curse and faction-wide effect follows it.
+M.boons_intro = "A lord can carry lasting boons and curses. A boon grows one level for every 5 battles the lord wins, up to level 5. A curse "
+    .. "gets one level worse every 5 turns, up to level 5. A few curses that stay at level 5 for 10 turns turn into a boon. A lord has 3 boon "
+    .. "slots and 3 curse slots by default. A new boon on a lord with every slot full asks which one to give up, and a new curse makes the "
+    .. "mildest one worse instead. Gaining one the lord already carries raises it a level. A lord who dies or leaves the faction loses them all, "
+    .. "and AI lords get none.\n\n"
+    .. "By default a hard or modified LEAPOI win, a lost LEAPOI battle and each battle modifier of a fight each have a 3% chance to leave a boon "
+    .. "or curse. The sliders above change these chances. A Tower champion floor has a 3% chance to bless the whole faction for 10 turns "
+    .. "when won, or curse it when lost. Pacts at treasure sites, the Tavern bar and the Tower trade a curse for a stronger "
+    .. "boon. At a Smithy you own, the smith tempers a boon one level or breaks a curse. At any Tavern, the hedge-witch cleanses a curse, or "
+    .. "gambles on one: half the time it lifts, otherwise it becomes another curse. Charged boons last a few battles instead of growing."
+
 --- Encounters page spot offer sections in page order, one per offer pool in configs/spot_offers.lua.
 M.spot_offer_sections = {
     { key = "treasure", title = "Treasure Sites" },
@@ -70,6 +87,7 @@ M.tower_offer_sections = {
     { key = "units_and_lord", title = "Units and Lord" },
     { key = "faction_boons", title = "Faction Boons" },
     { key = "gambles", title = "Gambles" },
+    { key = "pacts", title = "Pacts" },
     { key = "the_climb", title = "The Climb" },
     { key = "missions", title = "Missions" },
 }

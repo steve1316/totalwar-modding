@@ -12,3 +12,509 @@ effects_description_land_enc_effect_ability_enable_aura_of_immolation_all_units	
 effects_description_land_enc_effect_ability_enable_too_horrible_to_die_all_units	Passive ability: "Too Horrible to Die" for all units	false
 effects_description_land_enc_effect_ability_enable_gorefeast_all_units	Passive ability: "Gorefeast" for all units	false
 effects_description_land_enc_effect_ability_enable_unholy_vigour_all_units	Passive ability: "Unholy Vigour" for all units	false
+effects_description_land_enc_lib_fx_blinded_hits	Attacks cause "Blinded" for all units	false
+effects_description_land_enc_lib_fx_leech_hits	Attacks cause "Leeched" for all units, draining hit points	false
+effects_description_land_enc_lib_fx_melee_attack_defending	Melee attack: %+n when defending	false
+effects_description_land_enc_lib_fx_regeneration_defending	Passive ability: "Regeneration" when defending	false
+effects_description_land_enc_lib_fx_speed_attacking	Speed: %+n% when attacking	false
+effects_description_land_enc_lib_fx_charge_attacking	Charge bonus: %+n when attacking	false
+effects_description_land_enc_lib_fx_unbreakable_attacking	Attribute: Unbreakable when attacking	false
+effects_description_land_enc_lib_fx_lore_fire_cost	Winds of Magic cost: %+n% for Lore of Fire spells	false
+effects_description_land_enc_lib_fx_comet_army_ability_uses	Uses: %+n for the "Comet of Casandora" army ability	false
+effects_description_land_enc_lib_fx_march_blocked	Cannot use the March stance	false
+effects_description_land_enc_lib_fx_ambush_stance_cost	Campaign movement cost of the Ambush stance: %+n%	false
+effects_description_land_enc_lib_fx_melee_defence_defending	Melee defence: %+n when defending	false
+effects_description_land_enc_lib_fx_leadership_defending	Leadership: %+n when defending	false
+effects_description_land_enc_lib_fx_unbreakable_defending	Attribute: Unbreakable when defending	false
+effects_description_land_enc_lib_fx_comet_army_ability	Army ability: "Comet of Casandora"	false
+effects_description_land_enc_lib_fx_banishment_army_ability	Army ability: "Banishment"	false
+effects_description_land_enc_lib_fx_net_of_amyntok_army_ability	Army ability: "Net of Amyntok"	false
+effects_description_land_enc_lib_fx_earthblood_army_ability	Army ability: "Earthblood"	false
+effects_description_land_enc_lib_fx_curse_of_years_army_ability	Army ability: "Curse of Years"	false
+effects_description_land_enc_lib_fx_dwellers_below_army_ability	Army ability: "The Dwellers Below"	false
+effects_description_land_enc_lib_fx_lore_001_army_ability	Army ability: "Djaf's Incantation of Cursed Blades"	false
+effects_description_land_enc_lib_fx_lore_002_army_ability	Army ability: "Neru's Incantation of Protection"	false
+effects_description_land_enc_lib_fx_lore_003_army_ability	Army ability: "Ptra's Incantation of Righteous Smiting"	false
+effects_description_land_enc_lib_fx_lore_004_army_ability	Army ability: "Sakhmet's Incantation of the Skullstorm"	false
+effects_description_land_enc_lib_fx_lore_005_army_ability	Army ability: "Usekhp's Incantation of Desiccation"	false
+effects_description_land_enc_lib_fx_lore_006_army_ability	Army ability: "Usirian's Incantation of Vengeance"	false
+effects_description_land_enc_lib_fx_lore_007_army_ability	Army ability: "Denizens of the Deep"	false
+effects_description_land_enc_lib_fx_lore_008_army_ability	Army ability: "Vangheist's Revenge"	false
+effects_description_land_enc_lib_fx_lore_009_army_ability	Army ability: "Kraken's Pull"	false
+effects_description_land_enc_lib_fx_lore_010_army_ability	Army ability: "Spiteful Shot"	false
+effects_description_land_enc_lib_fx_lore_011_army_ability	Army ability: "Drowned Dead"	false
+effects_description_land_enc_lib_fx_lore_012_army_ability	Army ability: "Flensing Ruin"	false
+effects_description_land_enc_lib_fx_lore_013_army_ability	Army ability: "Armour of Darkness"	false
+effects_description_land_enc_lib_fx_lore_014_army_ability	Army ability: "Black Whirlwind"	false
+effects_description_land_enc_lib_fx_lore_015_army_ability	Army ability: "Brittle Bone"	false
+effects_description_land_enc_lib_fx_lore_016_army_ability	Army ability: "Veil of Shadows"	false
+effects_description_land_enc_lib_fx_lore_017_army_ability	Army ability: "Warp Stars"	false
+effects_description_land_enc_lib_fx_lore_018_army_ability	Army ability: "Bladewind"	false
+effects_description_land_enc_lib_fx_lore_019_army_ability	Army ability: "Chillwind"	false
+effects_description_land_enc_lib_fx_lore_020_army_ability	Army ability: "Doombolt"	false
+effects_description_land_enc_lib_fx_lore_021_army_ability	Army ability: "Power of Darkness"	false
+effects_description_land_enc_lib_fx_lore_022_army_ability	Army ability: "Apotheosis"	false
+effects_description_land_enc_lib_fx_lore_023_army_ability	Army ability: "Arcane Unforging"	false
+effects_description_land_enc_lib_fx_lore_024_army_ability	Army ability: "Hand of Glory"	false
+effects_description_land_enc_lib_fx_lore_025_army_ability	Army ability: "Soul Quench"	false
+effects_description_land_enc_lib_fx_lore_026_army_ability	Army ability: "Tempest"	false
+effects_description_land_enc_lib_fx_lore_027_army_ability	Army ability: "Bless with Filth"	false
+effects_description_land_enc_lib_fx_lore_028_army_ability	Army ability: "Pestilent Birth"	false
+effects_description_land_enc_lib_fx_lore_029_army_ability	Army ability: "Plague"	false
+effects_description_land_enc_lib_fx_lore_030_army_ability	Army ability: "Vermintide"	false
+effects_description_land_enc_lib_fx_lore_031_army_ability	Army ability: "Wither"	false
+effects_description_land_enc_lib_fx_lore_032_army_ability	Army ability: "Crack's Call"	false
+effects_description_land_enc_lib_fx_lore_033_army_ability	Army ability: "Howling Warpgale"	false
+effects_description_land_enc_lib_fx_lore_034_army_ability	Army ability: "Warp Lightning"	false
+effects_description_land_enc_lib_fx_lore_035_army_ability	Army ability: "Ash Storm"	false
+effects_description_land_enc_lib_fx_lore_036_army_ability	Army ability: "Curse of Hashut"	false
+effects_description_land_enc_lib_fx_lore_037_army_ability	Army ability: "Dark Subjugation"	false
+effects_description_land_enc_lib_fx_lore_038_army_ability	Army ability: "Flames of Azgorh"	false
+effects_description_land_enc_lib_fx_lore_039_army_ability	Army ability: "Curse of the Ancient Witch"	false
+effects_description_land_enc_lib_fx_lore_040_army_ability	Army ability: "Cursed Cauldron"	false
+effects_description_land_enc_lib_fx_lore_041_army_ability	Army ability: "Malediction of Madness"	false
+effects_description_land_enc_lib_fx_lore_042_army_ability	Army ability: "The Forbidden Fens"	false
+effects_description_land_enc_lib_fx_lore_043_army_ability	Army ability: "Vengeance of Spirits"	false
+effects_description_land_enc_lib_fx_lore_044_army_ability	Army ability: "Witchbrew"	false
+effects_description_land_enc_lib_fx_lore_045_army_ability	Army ability: "Flensing Haar"	false
+effects_description_land_enc_lib_fx_lore_046_army_ability	Army ability: "Ladrielle's Shroud"	false
+effects_description_land_enc_lib_fx_lore_047_army_ability	Army ability: "Mathlann’s Spite"	false
+effects_description_land_enc_lib_fx_lore_048_army_ability	Army ability: "Mistress of the Deeps"	false
+effects_description_land_enc_lib_fx_lore_049_army_ability	Army ability: "The Writhing Mist"	false
+effects_description_land_enc_lib_fx_lore_050_army_ability	Army ability: "Walk Between Worlds"	false
+effects_description_land_enc_lib_fx_lore_051_army_ability	Army ability: "Raise Dead (Skeleton Warriors)"	false
+effects_description_land_enc_lib_fx_lore_052_army_ability	Army ability: "The Dark Riders"	false
+effects_description_land_enc_lib_fx_lore_053_army_ability	Army ability: "The Harbinger"	false
+effects_description_land_enc_lib_fx_lore_054_army_ability	Army ability: "Braingobbler"	false
+effects_description_land_enc_lib_fx_lore_055_army_ability	Army ability: "Bullgorger"	false
+effects_description_land_enc_lib_fx_lore_056_army_ability	Army ability: "The Maw"	false
+effects_description_land_enc_lib_fx_lore_057_army_ability	Army ability: "Toothcracker"	false
+effects_description_land_enc_lib_fx_lore_058_army_ability	Army ability: "Crystal Sanctuary"	false
+effects_description_land_enc_lib_fx_lore_059_army_ability	Army ability: "Death Frost"	false
+effects_description_land_enc_lib_fx_lore_060_army_ability	Army ability: "Frost Blades"	false
+effects_description_land_enc_lib_fx_lore_061_army_ability	Army ability: "Ice Maiden's Kiss"	false
+effects_description_land_enc_lib_fx_lore_062_army_ability	Army ability: "Ice Sheet"	false
+effects_description_land_enc_lib_fx_lore_063_army_ability	Army ability: "Curse of the Leper"	false
+effects_description_land_enc_lib_fx_lore_064_army_ability	Army ability: "Miasma of Pestilence"	false
+effects_description_land_enc_lib_fx_lore_065_army_ability	Army ability: "Blight Boil"	false
+effects_description_land_enc_lib_fx_lore_066_army_ability	Army ability: "Hysterical Frenzy"	false
+effects_description_land_enc_lib_fx_lore_067_army_ability	Army ability: "Pavane of Slaanesh"	false
+effects_description_land_enc_lib_fx_lore_068_army_ability	Army ability: "Phantasmagoria"	false
+effects_description_land_enc_lib_fx_lore_069_army_ability	Army ability: "Biting Wind"	false
+effects_description_land_enc_lib_fx_lore_070_army_ability	Army ability: "Blizzard"	false
+effects_description_land_enc_lib_fx_lore_071_army_ability	Army ability: "Gust of True Flight"	false
+effects_description_land_enc_lib_fx_lore_072_army_ability	Army ability: "Hailstorm"	false
+effects_description_land_enc_lib_fx_lore_073_army_ability	Army ability: "Hawks of Miska"	false
+effects_description_land_enc_lib_fx_lore_074_army_ability	Army ability: "Swiftwing"	false
+effects_description_land_enc_lib_fx_lore_075_army_ability	Army ability: "Blue Fire of Tzeentch"	false
+effects_description_land_enc_lib_fx_lore_076_army_ability	Army ability: "Glean Magic"	false
+effects_description_land_enc_lib_fx_lore_077_army_ability	Army ability: "Treason of Tzeentch"	false
+effects_description_land_enc_lib_fx_lore_078_army_ability	Army ability: "Tzeentch's Firestorm"	false
+effects_description_land_enc_lib_fx_lore_079_army_ability	Army ability: "Constellation of the Dragon"	false
+effects_description_land_enc_lib_fx_lore_080_army_ability	Army ability: "Dragon's Breath"	false
+effects_description_land_enc_lib_fx_lore_081_army_ability	Army ability: "Jade Shield"	false
+effects_description_land_enc_lib_fx_lore_082_army_ability	Army ability: "Might of Heaven & Earth"	false
+effects_description_land_enc_lib_fx_lore_083_army_ability	Army ability: "Stone Ground Stance"	false
+effects_description_land_enc_lib_fx_lore_084_army_ability	Army ability: "Blossom Wind"	false
+effects_description_land_enc_lib_fx_lore_085_army_ability	Army ability: "Cloak of Jet"	false
+effects_description_land_enc_lib_fx_lore_086_army_ability	Army ability: "Storm of Shadows"	false
+effects_description_land_enc_lib_fx_lore_087_army_ability	Army ability: "Talons of Night"	false
+effects_description_land_enc_lib_fx_lore_088_army_ability	Army ability: "Pann's Impenetrable Pelt"	false
+effects_description_land_enc_lib_fx_lore_089_army_ability	Army ability: "Wyssan's Wildform"	false
+effects_description_land_enc_lib_fx_lore_090_army_ability	Army ability: "Bray-Scream"	false
+effects_description_land_enc_lib_fx_lore_091_army_ability	Army ability: "Devolve"	false
+effects_description_land_enc_lib_fx_lore_092_army_ability	Army ability: "Mantle of Ghorok"	false
+effects_description_land_enc_lib_fx_lore_093_army_ability	Army ability: "Traitor-Kin"	false
+effects_description_land_enc_lib_fx_lore_094_army_ability	Army ability: "Awakening of the Wood"	false
+effects_description_land_enc_lib_fx_lore_095_army_ability	Army ability: "Melkoth's Mystifying Miasma"	false
+effects_description_land_enc_lib_fx_lore_096_army_ability	Army ability: "Brain Bursta"	false
+effects_description_land_enc_lib_fx_lore_097_army_ability	Army ability: "'Eadbutt"	false
+effects_description_land_enc_lib_fx_lore_098_army_ability	Army ability: "'Ere We Go"	false
+effects_description_land_enc_lib_fx_lore_099_army_ability	Army ability: "Fists of Gork"	false
+effects_description_land_enc_lib_fx_lore_100_army_ability	Army ability: "Foot of Gork"	false
+effects_description_land_enc_lib_fx_lore_101_army_ability	Army ability: "Gaze of Mork"	false
+effects_description_land_enc_lib_fx_lore_102_army_ability	Army ability: "Aspect of the Dread Knight"	false
+effects_description_land_enc_lib_fx_lore_103_army_ability	Army ability: "Flaming Sword of Rhuin"	false
+effects_description_land_enc_lib_fx_lore_104_army_ability	Army ability: "Curse of the Midnight Wind"	false
+effects_description_land_enc_lib_fx_lore_105_army_ability	Army ability: "Light of Battle"	false
+effects_description_land_enc_lib_fx_lore_106_army_ability	Army ability: "Shem's Burning Gaze"	false
+effects_description_land_enc_lib_fx_lore_107_army_ability	Army ability: "Curse of Da Bad Moon"	false
+effects_description_land_enc_lib_fx_lore_108_army_ability	Army ability: "Gork'll Fix It"	false
+effects_description_land_enc_lib_fx_lore_109_army_ability	Army ability: "Itchy Nuisance"	false
+effects_description_land_enc_lib_fx_lore_110_army_ability	Army ability: "Night Shroud"	false
+effects_description_land_enc_lib_fx_lore_111_army_ability	Army ability: "Sneaky Stabbin'"	false
+effects_description_land_enc_lib_fx_lore_112_army_ability	Army ability: "Final Transmutation"	false
+effects_description_land_enc_lib_fx_lore_113_army_ability	Army ability: "Glittering Robe"	false
+effects_description_land_enc_lib_fx_lore_114_army_ability	Army ability: "Raise Dead"	false
+effects_description_land_enc_lib_fx_lore_115_army_ability	Army ability: "Vanhel's Danse Macabre"	false
+effects_description_land_enc_lib_fx_bound_001_army_ability	Army ability: "Arnzipal's Black Horror"	false
+effects_description_land_enc_lib_fx_bound_002_army_ability	Army ability: "Assault of Stone"	false
+effects_description_land_enc_lib_fx_bound_003_army_ability	Army ability: "Blast"	false
+effects_description_land_enc_lib_fx_bound_004_army_ability	Army ability: "Lesser Doombolt"	false
+effects_description_land_enc_lib_fx_bound_005_army_ability	Army ability: "Fiery Convocation"	false
+effects_description_land_enc_lib_fx_bound_006_army_ability	Army ability: "Soul Stealer"	false
+effects_description_land_enc_lib_fx_bound_007_army_ability	Army ability: "Soulblight"	false
+effects_description_land_enc_lib_fx_bound_008_army_ability	Army ability: "Word of Pain"	false
+effects_description_land_enc_lib_fx_bound_009_army_ability	Army ability: "The Purple Sun of Xereus"	false
+effects_description_land_enc_lib_fx_bound_010_army_ability	Army ability: "Tidecall"	false
+effects_description_land_enc_lib_fx_bound_011_army_ability	Army ability: "Wind Blast"	false
+effects_description_land_enc_lib_fx_bound_012_army_ability	Army ability: "Warp-Fireball"	false
+effects_description_land_enc_lib_fx_bound_013_army_ability	Army ability: "Gaze of Nagash"	false
+effects_description_land_enc_lib_fx_bound_014_army_ability	Army ability: "Wind of Death"	false
+effects_description_land_enc_lib_fx_bound_015_army_ability	Army ability: "Death Frenzy"	false
+effects_description_land_enc_lib_fx_bound_016_army_ability	Army ability: "Flesh to Stone"	false
+effects_description_land_enc_lib_fx_bound_017_army_ability	Army ability: "Regrowth"	false
+effects_description_land_enc_lib_fx_bound_018_army_ability	Army ability: "Lesser Raise Dead"	false
+effects_description_land_enc_lib_fx_bound_019_army_ability	Army ability: "Lesser Banishment"	false
+effects_description_land_enc_lib_fx_bound_020_army_ability	Army ability: "Lesser Chain Lightning"	false
+effects_description_land_enc_lib_fx_bound_021_army_ability	Army ability: "Savage Dominion"	false
+effects_description_land_enc_lib_fx_bound_022_army_ability	Army ability: "Shield of Thorns"	false
+effects_description_land_enc_lib_fx_bound_023_army_ability	Army ability: "Urannon's Thunderbolt"	false
+effects_description_land_enc_lib_fx_bound_024_army_ability	Army ability: "Klad Brakak"	false
+effects_description_land_enc_lib_fx_bound_025_army_ability	Army ability: "Gilded Horn of Galon Konook"	false
+effects_description_land_enc_lib_fx_bound_026_army_ability	Army ability: "Pestilent Breath"	false
+effects_description_land_enc_lib_fx_bound_027_army_ability	Army ability: "Scorch"	false
+effects_description_land_enc_lib_fx_bound_028_army_ability	Army ability: "Black Staff"	false
+effects_description_land_enc_lib_fx_bound_029_army_ability	Army ability: "Embers of the Phoenix"	false
+effects_description_land_enc_lib_fx_bound_030_army_ability	Army ability: "Hand of Gods"	false
+effects_description_land_enc_lib_fx_bound_031_army_ability	Army ability: "Bound Fiery Convocation"	false
+effects_description_land_enc_lib_fx_bound_032_army_ability	Army ability: "Radiant Gem of Hoeth"	false
+effects_description_land_enc_lib_fx_bound_033_army_ability	Army ability: "Ring of Corin"	false
+effects_description_land_enc_lib_fx_bound_034_army_ability	Army ability: "Rod of the Storm"	false
+effects_description_land_enc_lib_fx_bound_035_army_ability	Army ability: "Rubric of Dark Dimensions"	false
+effects_description_land_enc_lib_fx_bound_036_army_ability	Army ability: "The Gem of Sunfire"	false
+effects_description_land_enc_lib_fx_bound_037_army_ability	Army ability: "The Seerstaff of Saphery"	false
+effects_description_land_enc_lib_fx_bound_038_army_ability	Army ability: "Tome of Furion"	false
+effects_description_land_enc_lib_fx_bound_039_army_ability	Army ability: "Wand of the Kharaidon"	false
+effects_description_land_enc_lib_fx_bound_040_army_ability	Army ability: "Whip of Misery"	false
+effects_description_land_enc_lib_fx_bound_041_army_ability	Army ability: "Reaver Bow"	false
+effects_description_land_enc_lib_fx_bound_042_army_ability	Army ability: "Winged Staff"	false
+effects_description_land_enc_lib_fx_bound_043_army_ability	Army ability: "Ashes & Dust"	false
+effects_description_land_enc_lib_fx_bound_044_army_ability	Army ability: "Dance of Despair"	false
+effects_description_land_enc_lib_fx_bound_045_army_ability	Army ability: "Gehenna's Golden Globe"	false
+effects_description_land_enc_lib_fx_bound_046_army_ability	Army ability: "Magma Storm"	false
+effects_description_land_enc_lib_fx_bound_047_army_ability	Army ability: "Merciw's Monstrous Regiment"	false
+effects_description_land_enc_lib_fx_bound_048_army_ability	Army ability: "Storm of Renewal"	false
+effects_description_land_enc_lib_fx_bound_049_army_ability	Army ability: "Thorsen's Thunderstorm"	false
+effects_description_land_enc_lib_fx_bound_050_army_ability	Army ability: "Time Amok"	false
+effects_description_land_enc_lib_fx_bound_051_army_ability	Army ability: "Fleshy Abundance"	false
+effects_description_land_enc_lib_fx_bound_052_army_ability	Army ability: "Gehenna's Golden Hounds"	false
+effects_description_land_enc_lib_fx_bound_053_army_ability	Army ability: "Infernal Gateway"	false
+effects_description_land_enc_lib_fx_bound_054_army_ability	Army ability: "Pink Fire of Tzeentch"	false
+effects_description_land_enc_lib_fx_bound_055_army_ability	Army ability: "Slicing Shards"	false
+effects_description_land_enc_lib_fx_bound_056_army_ability	Army ability: "Stream of Corruption"	false
+effects_description_land_enc_lib_fx_bound_057_army_ability	Army ability: "The Penumbral Pendulum"	false
+effects_description_land_enc_lib_fx_bound_058_army_ability	Army ability: "Breath of Hatred"	false
+effects_description_land_enc_lib_fx_bound_059_army_ability	Army ability: "Burning Wrath"	false
+effects_description_land_enc_lib_fx_bound_060_army_ability	Army ability: "Hell Hammer"	false
+effects_description_land_enc_lib_fx_bound_061_army_ability	Army ability: "Missile Mirror"	false
+effects_description_land_enc_lib_fx_bound_062_army_ability	Army ability: "The Burning Head"	false
+effects_description_land_enc_lib_fx_bound_063_army_ability	Army ability: "Bonecrusher"	false
+effects_description_land_enc_lib_fx_bound_064_army_ability	Army ability: "Trollguts"	false
+effects_description_land_enc_lib_fx_bound_065_army_ability	Army ability: "Acquiescence"	false
+effects_description_land_enc_lib_fx_bound_066_army_ability	Army ability: "Fireball"	false
+effects_description_land_enc_lib_fx_bound_067_army_ability	Army ability: "Doom & Darkness"	false
+effects_description_land_enc_lib_fx_bound_068_army_ability	Army ability: "Transformation of Kadon"	false
+effects_description_land_enc_lib_fx_bound_069_army_ability	Army ability: "Fog of the Damned"	false
+effects_description_land_enc_lib_fx_bound_070_army_ability	Army ability: "Lesser Awakening from the Grave"	false
+effects_description_land_enc_lib_fx_bound_071_army_ability	Army ability: "Curse of Years"	false
+effects_description_land_enc_lib_fx_bound_072_army_ability	Army ability: "Eye for an Eye"	false
+effects_description_land_enc_lib_fx_bound_073_army_ability	Army ability: "Invocation of Nehek"	false
+effects_description_land_enc_lib_fx_bound_074_army_ability	Army ability: "Okkam's Mindrazor"	false
+effects_description_land_enc_lib_fx_bound_075_army_ability	Army ability: "Irresistible Plague!"	false
+effects_description_land_enc_lib_fx_bound_076_army_ability	Army ability: "Plaguemaster"	false
+effects_description_land_enc_lib_fx_bound_077_army_ability	Army ability: "Ferocious Fury of Ulric"	false
+effects_description_land_enc_lib_fx_bound_078_army_ability	Army ability: "Fury of Ulric"	false
+effects_description_land_enc_lib_fx_bound_079_army_ability	Army ability: "Skitterleap"	false
+effects_description_land_enc_lib_fx_bound_080_army_ability	Army ability: "The Dreaded Thirteenth Spell"	false
+effects_description_land_enc_lib_fx_bound_081_army_ability	Army ability: "The Soulstealer"	false
+effects_description_land_enc_lib_fx_bound_082_army_ability	Army ability: "Breath of Darkness"	false
+effects_description_land_enc_lib_fx_bound_083_army_ability	Army ability: "Breath of Darkness"	false
+effects_description_land_enc_lib_fx_bound_084_army_ability	Army ability: "The Hand of Dust"	false
+effects_description_land_enc_lib_fx_bound_085_army_ability	Army ability: "The Abyssal Swarm"	false
+effects_description_land_enc_lib_fx_bound_086_army_ability	Army ability: "Master of Lightning"	false
+effects_description_land_enc_lib_fx_bound_087_army_ability	Army ability: "Celestial Comet"	false
+effects_description_land_enc_lib_fx_bound_088_army_ability	Army ability: "Celestial Lightning"	false
+effects_description_land_enc_lib_fx_bound_089_army_ability	Army ability: "Ancestral Warriors"	false
+effects_description_land_enc_lib_fx_bound_090_army_ability	Army ability: "Banishment"	false
+effects_description_land_enc_lib_fx_bound_091_army_ability	Army ability: "Cascading Fire Cloak"	false
+effects_description_land_enc_lib_fx_bound_092_army_ability	Army ability: "Comet of Casandora"	false
+effects_description_land_enc_lib_fx_bound_093_army_ability	Army ability: "Earth Blood"	false
+effects_description_land_enc_lib_fx_bound_094_army_ability	Army ability: "The Enfeebling Foe"	false
+effects_description_land_enc_lib_fx_bound_095_army_ability	Army ability: "Flame Storm"	false
+effects_description_land_enc_lib_fx_bound_096_army_ability	Army ability: "Flock of Doom"	false
+effects_description_land_enc_lib_fx_bound_097_army_ability	Army ability: "Harmonic Convergence"	false
+effects_description_land_enc_lib_fx_bound_098_army_ability	Army ability: "Lash of Slaanesh"	false
+effects_description_land_enc_lib_fx_bound_099_army_ability	Army ability: "Pha's Protection"	false
+effects_description_land_enc_lib_fx_bound_100_army_ability	Army ability: "Pit of Shades"	false
+effects_description_land_enc_lib_fx_bound_101_army_ability	Army ability: "Plague of Rust"	false
+effects_description_land_enc_lib_fx_bound_102_army_ability	Army ability: "Rancid Visitations"	false
+effects_description_land_enc_lib_fx_bound_103_army_ability	Army ability: "Spirit Leech"	false
+effects_description_land_enc_lib_fx_bound_104_army_ability	Army ability: "The Curse of Anraheir"	false
+effects_description_land_enc_lib_fx_bound_105_army_ability	Army ability: "The Dwellers Below"	false
+effects_description_land_enc_lib_fx_bound_106_army_ability	Army ability: "The Fate of Bjuna"	false
+effects_description_land_enc_lib_fx_bound_107_army_ability	Army ability: "Transmutation of Lead"	false
+effects_description_land_enc_lib_fx_bound_108_army_ability	Army ability: "Wall of Wind & Fire"	false
+effects_description_land_enc_lib_fx_bound_109_army_ability	Army ability: "Call of Tor"	false
+effects_description_land_enc_lib_fx_bound_110_army_ability	Army ability: "Heart of Winter"	false
+effects_description_land_enc_lib_fx_bound_111_army_ability	Army ability: "Searing Doom"	false
+effects_description_land_enc_lib_fx_bound_112_army_ability	Army ability: "The Withering"	false
+effects_description_land_enc_lib_fx_bound_113_army_ability	Army ability: "The Amber Spear"	false
+effects_description_land_enc_lib_fx_bound_114_army_ability	Army ability: "Viletide"	false
+effects_description_land_enc_lib_fx_bound_115_army_ability	Army ability: "Grand Hammer of Sigmar"	false
+effects_description_land_enc_lib_fx_bound_116_army_ability	Army ability: "Net of Amyntok"	false
+effects_description_land_enc_lib_fx_bound_117_army_ability	Army ability: "Grand Shield of Faith"	false
+effects_description_land_enc_lib_fx_bound_118_army_ability	Army ability: "Grand Soulfire"	false
+effects_description_land_enc_lib_fx_bound_119_army_ability	Army ability: "Vindictive Glare"	false
+effects_description_land_enc_lib_fx_bound_120_army_ability	Army ability: "Birona's Timewarp"	false
+effects_description_land_enc_lib_fx_bound_121_army_ability	Army ability: "Book of Arkhan"	false
+effects_description_land_enc_lib_fx_bound_122_army_ability	Army ability: "Chain Lightning"	false
+effects_description_land_enc_lib_fx_bound_123_army_ability	Army ability: "Fireball"	false
+effects_description_land_enc_lib_fx_bound_124_army_ability	Army ability: "Hammer of Sigmar"	false
+effects_description_land_enc_lib_fx_bound_125_army_ability	Army ability: "Piercing Bolts of Burning"	false
+effects_description_land_enc_lib_fx_bound_126_army_ability	Army ability: "Shield of Faith"	false
+effects_description_land_enc_lib_fx_bound_127_army_ability	Army ability: "Soulfire"	false
+effects_description_land_enc_lib_fx_bound_128_army_ability	Army ability: "Staff of Damnation"	false
+effects_description_land_enc_lib_fx_army_001_army_ability	Army ability: "Legionary Barrage"	false
+effects_description_land_enc_lib_fx_army_002_army_ability	Army ability: "Rictus Clanstone"	false
+effects_description_land_enc_lib_fx_army_003_army_ability	Army ability: "Sand Veil"	false
+effects_description_land_enc_lib_fx_army_004_army_ability	Army ability: "Tomb Swarm"	false
+effects_description_land_enc_lib_fx_army_005_army_ability	Army ability: "Norse Roar"	false
+effects_description_land_enc_lib_fx_army_006_army_ability	Army ability: "Rod of the Storm"	false
+effects_description_land_enc_lib_fx_army_007_army_ability	Army ability: "Sartosa Grapeshot"	false
+effects_description_land_enc_lib_fx_army_008_army_ability	Army ability: "Shanty: First Verse"	false
+effects_description_land_enc_lib_fx_army_009_army_ability	Army ability: "Shanty: Second Verse"	false
+effects_description_land_enc_lib_fx_army_010_army_ability	Army ability: "Shanty: Third Verse"	false
+effects_description_land_enc_lib_fx_army_011_army_ability	Army ability: "Wraith Storm"	false
+effects_description_land_enc_lib_fx_army_012_army_ability	Army ability: "Zhufbar 42-Pounders"	false
+effects_description_land_enc_lib_fx_army_013_army_ability	Army ability: "Battlefield Resupply"	false
+effects_description_land_enc_lib_fx_army_014_army_ability	Army ability: "Great Invocation of Sotek"	false
+effects_description_land_enc_lib_fx_army_015_army_ability	Army ability: "Jungle Swarm"	false
+effects_description_land_enc_lib_fx_army_016_army_ability	Army ability: "Warpstorm Doomrocket"	false
+effects_description_land_enc_lib_fx_army_017_army_ability	Army ability: "Man the Cannons!"	false
+effects_description_land_enc_lib_fx_army_018_army_ability	Army ability: "Beasts of Itzl"	false
+effects_description_land_enc_lib_fx_army_019_army_ability	Army ability: "Protection of Quetzl"	false
+effects_description_land_enc_lib_fx_army_020_army_ability	Army ability: "Storm of Xholankha"	false
+effects_description_land_enc_lib_fx_army_021_army_ability	Army ability: "Shield of the Old Ones"	false
+effects_description_land_enc_lib_fx_army_022_army_ability	Army ability: "Mislead"	false
+effects_description_land_enc_lib_fx_army_023_army_ability	Army ability: "Azhag's Big Waaagh!"	false
+effects_description_land_enc_lib_fx_army_024_army_ability	Army ability: "Azhag's Waaagh!"	false
+effects_description_land_enc_lib_fx_army_025_army_ability	Army ability: "Big Waaagh!"	false
+effects_description_land_enc_lib_fx_army_026_army_ability	Army ability: "Doom Diver Strike"	false
+effects_description_land_enc_lib_fx_army_027_army_ability	Army ability: "Envelop in Mist"	false
+effects_description_land_enc_lib_fx_army_028_army_ability	Army ability: "Grimgor's Big Waaagh!"	false
+effects_description_land_enc_lib_fx_army_029_army_ability	Army ability: "Grimgor's Waaagh!"	false
+effects_description_land_enc_lib_fx_army_030_army_ability	Army ability: "Grom's Big Waaagh!"	false
+effects_description_land_enc_lib_fx_army_031_army_ability	Army ability: "Grom's Waaagh!"	false
+effects_description_land_enc_lib_fx_army_032_army_ability	Army ability: "Invocation of Ending"	false
+effects_description_land_enc_lib_fx_army_033_army_ability	Army ability: "Oath of Replenishment"	false
+effects_description_land_enc_lib_fx_army_034_army_ability	Army ability: "Oath of Replenishment"	false
+effects_description_land_enc_lib_fx_army_035_army_ability	Army ability: "Skarsnik's Big Waaagh!"	false
+effects_description_land_enc_lib_fx_army_036_army_ability	Army ability: "Skarsnik's Waaagh!"	false
+effects_description_land_enc_lib_fx_army_037_army_ability	Army ability: "Summon the Sentinels"	false
+effects_description_land_enc_lib_fx_army_038_army_ability	Army ability: "Summon the Sentinels"	false
+effects_description_land_enc_lib_fx_army_039_army_ability	Army ability: "Unleash the Winds"	false
+effects_description_land_enc_lib_fx_army_040_army_ability	Army ability: "Waaagh!"	false
+effects_description_land_enc_lib_fx_army_041_army_ability	Army ability: "Wurrzag's Big Waaagh!"	false
+effects_description_land_enc_lib_fx_army_042_army_ability	Army ability: "Wurrzag's Waaagh!"	false
+effects_description_land_enc_lib_fx_army_043_army_ability	Army ability: "Warden's Cage"	false
+effects_description_land_enc_lib_fx_army_044_army_ability	Army ability: "Call to Ceithin-Har"	false
+effects_description_land_enc_lib_fx_army_045_army_ability	Army ability: "Transformation of Kadon"	false
+effects_description_land_enc_lib_fx_army_046_army_ability	Army ability: "Roused to Wrath"	false
+effects_description_land_enc_lib_fx_army_047_army_ability	Army ability: "Ancestral Rune of Grimnir"	false
+effects_description_land_enc_lib_fx_army_048_army_ability	Army ability: "Ancestral Rune of Grungni"	false
+effects_description_land_enc_lib_fx_army_049_army_ability	Army ability: "Ancestral Rune of Valaya"	false
+effects_description_land_enc_lib_fx_army_050_army_ability	Army ability: "Shatterstone"	false
+effects_description_land_enc_lib_fx_army_051_army_ability	Army ability: "Sotek's Sanctum"	false
+effects_description_land_enc_lib_fx_army_052_army_ability	Army ability: "Touched by the Moon"	false
+effects_description_land_enc_lib_fx_army_053_army_ability	Army ability: "Tzcatli's Sanctum"	false
+effects_description_land_enc_lib_fx_army_054_army_ability	Army ability: "Vile Entropy"	false
+effects_description_land_enc_lib_fx_army_055_army_ability	Army ability: "Viletide"	false
+effects_description_land_enc_lib_fx_army_056_army_ability	Army ability: "Xapati's Sanctum"	false
+effects_description_land_enc_lib_fx_army_057_army_ability	Army ability: "Bloodwrack Cauldron"	false
+effects_description_land_enc_lib_fx_army_058_army_ability	Army ability: "Bolt of Spite"	false
+effects_description_land_enc_lib_fx_army_059_army_ability	Army ability: "Brazen Cauldron"	false
+effects_description_land_enc_lib_fx_army_060_army_ability	Army ability: "Channelling Spire"	false
+effects_description_land_enc_lib_fx_army_061_army_ability	Army ability: "Dark Conduit"	false
+effects_description_land_enc_lib_fx_army_062_army_ability	Army ability: "Eagle Sanctuary"	false
+effects_description_land_enc_lib_fx_army_063_army_ability	Army ability: "Eshin Clanstone"	false
+effects_description_land_enc_lib_fx_army_064_army_ability	Army ability: "Feral Cold Ones"	false
+effects_description_land_enc_lib_fx_army_065_army_ability	Army ability: "Geomantic Nexus"	false
+effects_description_land_enc_lib_fx_army_066_army_ability	Army ability: "Holy Stela"	false
+effects_description_land_enc_lib_fx_army_067_army_ability	Army ability: "Khaine's Flail"	false
+effects_description_land_enc_lib_fx_army_068_army_ability	Army ability: "Khaine's Lash"	false
+effects_description_land_enc_lib_fx_army_069_army_ability	Army ability: "Khaine's Scourge"	false
+effects_description_land_enc_lib_fx_army_070_army_ability	Army ability: "Lure of the Pale Queen"	false
+effects_description_land_enc_lib_fx_army_071_army_ability	Army ability: "Mors Clanstone"	false
+effects_description_land_enc_lib_fx_army_072_army_ability	Army ability: "Moulder Clanstone"	false
+effects_description_land_enc_lib_fx_army_073_army_ability	Army ability: "Pestilens Clanstone"	false
+effects_description_land_enc_lib_fx_army_074_army_ability	Army ability: "Shadows of Anlec"	false
+effects_description_land_enc_lib_fx_army_075_army_ability	Army ability: "Skryre Clanstone"	false
+effects_description_land_enc_lib_fx_army_076_army_ability	Army ability: "Sky Cauldron"	false
+effects_description_land_enc_lib_fx_army_077_army_ability	Army ability: "Soul Rain"	false
+effects_description_land_enc_lib_fx_army_078_army_ability	Army ability: "Soul Storm"	false
+effects_description_land_enc_lib_fx_army_079_army_ability	Army ability: "Soul Torrent"	false
+effects_description_land_enc_lib_fx_army_080_army_ability	Army ability: "Temple of Mists"	false
+effects_description_land_enc_lib_fx_army_081_army_ability	Army ability: "The Menace Below"	false
+effects_description_land_enc_lib_fx_army_082_army_ability	Army ability: "Vaul's Hammer"	false
+effects_description_land_enc_lib_fx_army_083_army_ability	Army ability: "Vortical Blast"	false
+effects_description_land_enc_lib_fx_army_084_army_ability	Army ability: "Vortical Enrichment"	false
+effects_description_land_enc_lib_fx_army_085_army_ability	Army ability: "Warpbomb"	false
+effects_description_land_enc_lib_fx_army_086_army_ability	Army ability: "Iron Reinforcements"	false
+effects_description_land_enc_lib_fx_army_087_army_ability	Army ability: "Armour of Contempt"	false
+effects_description_land_enc_lib_fx_army_088_army_ability	Army ability: "Doom of Hashut"	false
+effects_description_land_enc_lib_fx_army_089_army_ability	Army ability: "Guns of Zharr"	false
+effects_description_land_enc_lib_fx_army_090_army_ability	Army ability: "Dreadquake Battery"	false
+effects_description_land_enc_lib_fx_army_091_army_ability	Army ability: "Dreadquake Battery"	false
+effects_description_land_enc_lib_fx_army_092_army_ability	Army ability: "Wrath of Zharr"	false
+effects_description_land_enc_lib_fx_army_093_army_ability	Army ability: "Blood & Fireborn"	false
+effects_description_land_enc_lib_fx_army_094_army_ability	Army ability: "Bjuna Bombard"	false
+effects_description_land_enc_lib_fx_army_095_army_ability	Army ability: "Call of the Wild"	false
+effects_description_land_enc_lib_fx_army_096_army_ability	Army ability: "Engineer's Gyrocopter Bomb"	false
+effects_description_land_enc_lib_fx_army_097_army_ability	Army ability: "Launch Gyrocopters"	false
+effects_description_land_enc_lib_fx_army_098_army_ability	Army ability: "Pandemicium"	false
+effects_description_land_enc_lib_fx_army_099_army_ability	Army ability: "The Purple Eclipse"	false
+effects_description_land_enc_lib_fx_army_100_army_ability	Army ability: "Spirit Barrage"	false
+effects_description_land_enc_lib_fx_army_101_army_ability	Army ability: "Spirit of Grungni"	false
+effects_description_land_enc_lib_fx_army_102_army_ability	Army ability: "Call the Miners"	false
+effects_description_land_enc_lib_fx_army_103_army_ability	Army ability: "Blood God's Shackles"	false
+effects_description_land_enc_lib_fx_army_104_army_ability	Army ability: "Blood God's Shackles"	false
+effects_description_land_enc_lib_fx_army_105_army_ability	Army ability: "Boiling Cauldron"	false
+effects_description_land_enc_lib_fx_army_106_army_ability	Army ability: "Foot of Gork"	false
+effects_description_land_enc_lib_fx_army_107_army_ability	Army ability: "Gorbad's Big Waaagh!"	false
+effects_description_land_enc_lib_fx_army_108_army_ability	Army ability: "Gorbad's Waaagh!"	false
+effects_description_land_enc_lib_fx_army_109_army_ability	Army ability: "Khorne's Wrath"	false
+effects_description_land_enc_lib_fx_army_110_army_ability	Army ability: "Asur Fire II"	false
+effects_description_land_enc_lib_fx_army_111_army_ability	Army ability: "Asur Fire I"	false
+effects_description_land_enc_lib_fx_army_112_army_ability	Army ability: "Asur Fire III"	false
+effects_description_land_enc_lib_fx_army_113_army_ability	Army ability: "Titanic Exultation"	false
+effects_description_land_enc_lib_fx_army_114_army_ability	Army ability: "Dragonship Assault"	false
+effects_description_land_enc_lib_fx_army_115_army_ability	Army ability: "Dragonship Blitz"	false
+effects_description_land_enc_lib_fx_army_116_army_ability	Army ability: "Dragonship Volley"	false
+effects_description_land_enc_lib_fx_army_117_army_ability	Army ability: "Shamanistic Ritual (Death)"	false
+effects_description_land_enc_lib_fx_army_118_army_ability	Army ability: "Shamanistic Ritual (Fire)"	false
+effects_description_land_enc_lib_fx_army_119_army_ability	Army ability: "Shamanistic Ritual (Metal)"	false
+effects_description_land_enc_lib_fx_army_120_army_ability	Army ability: "Ships of the Line"	false
+effects_description_land_enc_lib_fx_army_121_army_ability	Army ability: "War Supplies"	false
+effects_description_land_enc_lib_fx_army_122_army_ability	Army ability: "Apotheosis"	false
+effects_description_land_enc_lib_fx_army_123_army_ability	Army ability: "Hand of Glory"	false
+effects_description_land_enc_lib_fx_army_124_army_ability	Army ability: "Tempest"	false
+effects_description_land_enc_lib_fx_army_125_army_ability	Army ability: "Mouldering Fortification"	false
+effects_description_land_enc_lib_fx_army_126_army_ability	Army ability: "Mark of the Rot-Forged Legionaries"	false
+effects_description_land_enc_lib_fx_army_127_army_ability	Army ability: "Bubonic Broadside"	false
+effects_description_land_enc_lib_fx_army_128_army_ability	Army ability: "Summon Plague Drones"	false
+effects_description_land_enc_lib_fx_army_129_army_ability	Army ability: "Summon Plague Drones (Death's heads)"	false
+effects_description_land_enc_lib_fx_army_130_army_ability	Army ability: "Ryze: Crypt Horrors"	false
+effects_description_land_enc_lib_fx_army_131_army_ability	Army ability: "Ryze: Grave Guard"	false
+effects_description_land_enc_lib_fx_army_132_army_ability	Army ability: "Ryze: Grave Guard"	false
+effects_description_land_enc_lib_fx_army_133_army_ability	Army ability: "Ryze: Khemrian Warsphinx"	false
+effects_description_land_enc_lib_fx_army_134_army_ability	Army ability: "Ryze: Khemric Titan"	false
+effects_description_land_enc_lib_fx_army_135_army_ability	Army ability: "Ryze: Mournguls"	false
+effects_description_land_enc_lib_fx_army_136_army_ability	Army ability: "Ryze: Necrofex Colossus"	false
+effects_description_land_enc_lib_fx_army_137_army_ability	Army ability: "Ryze: Nehekharan Warriors"	false
+effects_description_land_enc_lib_fx_army_138_army_ability	Army ability: "Ryze: Rotting Prometheans (Gunnery Mob)"	false
+effects_description_land_enc_lib_fx_army_139_army_ability	Army ability: "Ryze: Spirit Host"	false
+effects_description_land_enc_lib_fx_army_140_army_ability	Army ability: "Ryze: Terrorgheist"	false
+effects_description_land_enc_lib_fx_army_141_army_ability	Army ability: "Ryze: Ushabti"	false
+effects_description_land_enc_lib_fx_army_142_army_ability	Army ability: "Ryze: Zombie Pirate Gunnery Mob (Bombers)"	false
+effects_description_land_enc_lib_fx_army_143_army_ability	Army ability: "Scruten Clanstone"	false
+effects_description_land_enc_lib_fx_army_144_army_ability	Army ability: "The Menace Below (Stormvermin)"	false
+effects_description_land_enc_lib_fx_army_145_army_ability	Army ability: "Unleash"	false
+effects_description_land_enc_lib_fx_army_146_army_ability	Army ability: "Oblast Outriders"	false
+effects_description_land_enc_lib_fx_army_147_army_ability	Army ability: "Ancestral Warriors"	false
+effects_description_land_enc_lib_fx_army_148_army_ability	Army ability: "Arcane Surge"	false
+effects_description_land_enc_lib_fx_army_149_army_ability	Army ability: "Blade of Khorne"	false
+effects_description_land_enc_lib_fx_army_150_army_ability	Army ability: "Bolt of Change"	false
+effects_description_land_enc_lib_fx_army_151_army_ability	Army ability: "Celestial Intervention"	false
+effects_description_land_enc_lib_fx_army_152_army_ability	Army ability: "Curse of the Slug"	false
+effects_description_land_enc_lib_fx_army_153_army_ability	Army ability: "Fascination"	false
+effects_description_land_enc_lib_fx_army_154_army_ability	Army ability: "Fecundity"	false
+effects_description_land_enc_lib_fx_army_155_army_ability	Army ability: "Gluttony"	false
+effects_description_land_enc_lib_fx_army_156_army_ability	Army ability: "Horn of Khorne"	false
+effects_description_land_enc_lib_fx_army_157_army_ability	Army ability: "Narcissism"	false
+effects_description_land_enc_lib_fx_army_158_army_ability	Army ability: "Relentless Rage"	false
+effects_description_land_enc_lib_fx_army_159_army_ability	Army ability: "Rot, Glorious Rot"	false
+effects_description_land_enc_lib_fx_army_160_army_ability	Army ability: "Stoneshaker"	false
+effects_description_land_enc_lib_fx_army_161_army_ability	Army ability: "Storm of Fire"	false
+effects_description_land_enc_lib_fx_army_162_army_ability	Army ability: "Summoned from Beyond"	false
+effects_description_land_enc_lib_fx_army_163_army_ability	Army ability: "Sweet Sorrow"	false
+effects_description_land_enc_lib_fx_army_164_army_ability	Army ability: "The Bitterness of Winter"	false
+effects_description_land_enc_lib_fx_army_165_army_ability	Army ability: "The Land Awakened"	false
+effects_description_land_enc_lib_fx_army_166_army_ability	Army ability: "Thunder Charge"	false
+effects_description_land_enc_lib_fx_army_167_army_ability	Army ability: "Wrath of the Bear"	false
+effects_description_land_enc_lib_fx_army_168_army_ability	Army ability: "Merciw's Monstrous Regiment"	false
+effects_description_land_enc_lib_fx_army_169_army_ability	Army ability: "Ashes & Dust"	false
+effects_description_land_enc_lib_fx_army_170_army_ability	Army ability: "Magma Storm"	false
+effects_description_land_enc_lib_fx_army_171_army_ability	Army ability: "Thorsen's Thunderstorm"	false
+effects_description_land_enc_lib_fx_army_172_army_ability	Army ability: "Greater Gate of Khorne"	false
+effects_description_land_enc_lib_fx_army_173_army_ability	Army ability: "Storm of Renewal"	false
+effects_description_land_enc_lib_fx_army_174_army_ability	Army ability: "Time Amok"	false
+effects_description_land_enc_lib_fx_army_175_army_ability	Army ability: "Gehenna's Golden Globe"	false
+effects_description_land_enc_lib_fx_army_176_army_ability	Army ability: "Dance of Despair"	false
+effects_description_land_enc_lib_fx_army_177_army_ability	Army ability: "Meat Feast"	false
+effects_description_land_enc_lib_fx_army_178_army_ability	Army ability: "Dismember"	false
+effects_description_land_enc_lib_fx_army_179_army_ability	Army ability: "Massacre"	false
+effects_description_land_enc_lib_fx_army_180_army_ability	Army ability: "Biting Wind"	false
+effects_description_land_enc_lib_fx_army_181_army_ability	Army ability: "Diabolical Puppetry"	false
+effects_description_land_enc_lib_fx_army_182_army_ability	Army ability: "Inevitable Fate"	false
+effects_description_land_enc_lib_fx_army_183_army_ability	Army ability: "Tempest of Blue Flame"	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_empire	Weapon strength: %+n% when fighting against the Empire	false
+effects_description_land_enc_lib_fx_melee_attack_vs_empire	Melee attack: %+n when fighting against the Empire	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_bretonnia	Weapon strength: %+n% when fighting against Bretonnia	false
+effects_description_land_enc_lib_fx_melee_attack_vs_bretonnia	Melee attack: %+n when fighting against Bretonnia	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_kislev	Weapon strength: %+n% when fighting against Kislev	false
+effects_description_land_enc_lib_fx_melee_attack_vs_kislev	Melee attack: %+n when fighting against Kislev	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_cathay	Weapon strength: %+n% when fighting against Grand Cathay	false
+effects_description_land_enc_lib_fx_melee_attack_vs_cathay	Melee attack: %+n when fighting against Grand Cathay	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_dwarfs	Weapon strength: %+n% when fighting against the Dwarfs	false
+effects_description_land_enc_lib_fx_melee_attack_vs_dwarfs	Melee attack: %+n when fighting against the Dwarfs	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_high_elves	Weapon strength: %+n% when fighting against the High Elves	false
+effects_description_land_enc_lib_fx_melee_attack_vs_high_elves	Melee attack: %+n when fighting against the High Elves	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_wood_elves	Weapon strength: %+n% when fighting against the Wood Elves	false
+effects_description_land_enc_lib_fx_melee_attack_vs_wood_elves	Melee attack: %+n when fighting against the Wood Elves	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_dark_elves	Weapon strength: %+n% when fighting against the Dark Elves	false
+effects_description_land_enc_lib_fx_melee_attack_vs_dark_elves	Melee attack: %+n when fighting against the Dark Elves	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_lizardmen	Weapon strength: %+n% when fighting against the Lizardmen	false
+effects_description_land_enc_lib_fx_melee_attack_vs_lizardmen	Melee attack: %+n when fighting against the Lizardmen	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_greenskins	Weapon strength: %+n% when fighting against the Greenskins	false
+effects_description_land_enc_lib_fx_melee_attack_vs_greenskins	Melee attack: %+n when fighting against the Greenskins	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_skaven	Weapon strength: %+n% when fighting against the Skaven	false
+effects_description_land_enc_lib_fx_melee_attack_vs_skaven	Melee attack: %+n when fighting against the Skaven	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_ogres	Weapon strength: %+n% when fighting against the Ogre Kingdoms	false
+effects_description_land_enc_lib_fx_melee_attack_vs_ogres	Melee attack: %+n when fighting against the Ogre Kingdoms	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_vampire_counts	Weapon strength: %+n% when fighting against the Vampire Counts	false
+effects_description_land_enc_lib_fx_melee_attack_vs_vampire_counts	Melee attack: %+n when fighting against the Vampire Counts	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_vampire_coast	Weapon strength: %+n% when fighting against the Vampire Coast	false
+effects_description_land_enc_lib_fx_melee_attack_vs_vampire_coast	Melee attack: %+n when fighting against the Vampire Coast	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_tomb_kings	Weapon strength: %+n% when fighting against the Tomb Kings	false
+effects_description_land_enc_lib_fx_melee_attack_vs_tomb_kings	Melee attack: %+n when fighting against the Tomb Kings	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_norsca	Weapon strength: %+n% when fighting against Norsca	false
+effects_description_land_enc_lib_fx_melee_attack_vs_norsca	Melee attack: %+n when fighting against Norsca	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_chaos	Weapon strength: %+n% when fighting against the Warriors of Chaos	false
+effects_description_land_enc_lib_fx_melee_attack_vs_chaos	Melee attack: %+n when fighting against the Warriors of Chaos	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_khorne	Weapon strength: %+n% when fighting against Khorne	false
+effects_description_land_enc_lib_fx_melee_attack_vs_khorne	Melee attack: %+n when fighting against Khorne	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_nurgle	Weapon strength: %+n% when fighting against Nurgle	false
+effects_description_land_enc_lib_fx_melee_attack_vs_nurgle	Melee attack: %+n when fighting against Nurgle	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_slaanesh	Weapon strength: %+n% when fighting against Slaanesh	false
+effects_description_land_enc_lib_fx_melee_attack_vs_slaanesh	Melee attack: %+n when fighting against Slaanesh	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_tzeentch	Weapon strength: %+n% when fighting against Tzeentch	false
+effects_description_land_enc_lib_fx_melee_attack_vs_tzeentch	Melee attack: %+n when fighting against Tzeentch	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_daemons	Weapon strength: %+n% when fighting against the Daemons of Chaos	false
+effects_description_land_enc_lib_fx_melee_attack_vs_daemons	Melee attack: %+n when fighting against the Daemons of Chaos	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_beastmen	Weapon strength: %+n% when fighting against the Beastmen	false
+effects_description_land_enc_lib_fx_melee_attack_vs_beastmen	Melee attack: %+n when fighting against the Beastmen	false
+effects_description_land_enc_lib_fx_weapon_strength_vs_chaos_dwarfs	Weapon strength: %+n% when fighting against the Chaos Dwarfs	false
+effects_description_land_enc_lib_fx_melee_attack_vs_chaos_dwarfs	Melee attack: %+n when fighting against the Chaos Dwarfs	false
+effects_description_land_enc_clock_lasts	[[col:yellow]]Lasts %n battles.[[/col]]	false
+effects_description_land_enc_clock_lasts_one	[[col:yellow]]Lasts 1 battle.[[/col]]	false
+effects_description_land_enc_clock_upgrades	[[col:yellow]]Upgrades in %n won battles.[[/col]]	false
+effects_description_land_enc_clock_upgrades_one	[[col:yellow]]Upgrades in 1 won battle.[[/col]]	false
+effects_description_land_enc_clock_worsens	[[col:yellow]]Worsens in %n turns.[[/col]]	false
+effects_description_land_enc_clock_worsens_one	[[col:yellow]]Worsens in 1 turn.[[/col]]	false
+effects_description_land_enc_clock_becomes	[[col:yellow]]Becomes a boon in %n turns.[[/col]]	false
+effects_description_land_enc_clock_becomes_one	[[col:yellow]]Becomes a boon in 1 turn.[[/col]]	false
+effects_description_land_enc_clock_realm	[[col:yellow]]Lasts %n turns.[[/col]]	false
+effects_description_land_enc_clock_realm_one	[[col:yellow]]Lasts 1 turn.[[/col]]	false
+effects_description_land_enc_clock_strongest	[[col:yellow]]At its strongest, and lasts for good.[[/col]]	false
+effects_description_land_enc_clock_worst	[[col:yellow]]At its worst, and lasts until lifted.[[/col]]	false

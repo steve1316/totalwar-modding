@@ -107,6 +107,14 @@ function OwnedPoint:check_if_owner_is_alive_and_return_faction()
     return owner
 end
 
+--- Turns until a room that closed to a faction (a Tavern's bar or hall, a Smithy's Work Orders) serves it again.
+--- @param closed_until table The room's faction key -> turn map, e.g. `bar_closed_until`.
+--- @param faction_name string The faction key.
+--- @returns number 0 when the room serves it now.
+function OwnedPoint:turns_left(closed_until, faction_name)
+    return math.max(0, (closed_until[faction_name] or 0) - cm:turn_number())
+end
+
 --- Sets the owner. Accepts a faction object or faction key. Any siege or garrison of the previous owner ends.
 --- @param faction faction|string|nil The new owner. Nil, "" or a faction this campaign does not have clears ownership.
 function OwnedPoint:set_controlling_faction(faction)

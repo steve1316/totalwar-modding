@@ -6,7 +6,7 @@ from typing import Dict, List, Tuple
 # Scope every modifier bundle effect uses: the army carrying the bundle.
 SCOPE = "force_to_force_own"
 
-# Icon of every modifier bundle.
+# Icon of the effect library's test bundles, which have no icon of their own.
 BUNDLE_ICON = "icon_effects_fortify.png"
 
 # Our own effects that grant a vanilla passive ability to every unit, where vanilla has none: key -> (unit_set_unit_ability junction key,
@@ -37,7 +37,7 @@ UNIT_LIST_EFFECTS = {
 }
 
 # Said on its own paragraph under such a bundle on another army. Loc files store a line break as an escaped `\\n`.
-DISCLAIMER = "\\\\n\\\\nThe units listed below come from your own roster, but only this army's units are affected."
+DISCLAIMER = "\\\\n\\\\nThe units these effects list come from your own roster, but only this army's units are affected."
 
 # Notice colour by harm: what helps us is green, what hurts us red, what cuts both ways yellow.
 HARM_COLOUR = {"+": "green", "-": "red", "~": "yellow"}
@@ -50,49 +50,49 @@ ALLY_THEMES: Dict[str, str] = {
     "comp_gunline": "mostly missile infantry and artillery",
 }
 
-# Modifier key -> (name, what it does, objective icon under ui/campaign ui/effect_bundles/, [(effect, value)]). The text reads after
+# Modifier key -> (name, what it does, icon of its objective and bundle under ui/campaign ui/effect_bundles/, [(effect, value)]). The text reads after
 # "Modifier: <name> - " on the dilemma and after "<name>:" in the battle notice.
 MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
     "hallowed": ("Hallowed Ground", "Our units have +10 leadership.", "morale.png", [("wh_main_effect_force_stat_leadership", 10)]),
     "cursed_earth": ("Cursed Earth", "Our units have -10 leadership.", "morale.png", [("wh_main_effect_force_stat_leadership", -10)]),
-    "blood_moon": ("Blood Moon", "Every unit on the field has +10 melee attack.", "weapon_damage.png", [("wh_main_effect_force_stat_melee_attack", 10)]),
+    "blood_moon": ("Blood Moon", "Every unit on the field has +10 melee attack.", "melee.png", [("wh_main_effect_force_stat_melee_attack", 10)]),
     "iron_hides": ("Iron Hides", "Every unit on the field has +5% physical resistance.", "resistance_physical.png",
                    [("wh_main_effect_force_stat_physical_resistance", 5)]),
-    "swift_winds": ("Tailwind", "Every unit on the field has +20% speed.", "vigour.png", [("wh_main_effect_force_stat_speed", 20)]),
-    "heavy_ground": ("Heavy Ground", "Every unit on the field has -10% speed.", "attrition.png", [("wh_main_effect_force_stat_speed", -10)]),
-    "thunder_charge": ("Thunderous Charge", "Every unit on the field has +25 charge bonus.", "weapon_damage.png", [("wh2_dlc14_effect_force_charge_bonus_add", 25)]),
+    "swift_winds": ("Tailwind", "Every unit on the field has +20% speed.", "battle_movement_character.png", [("wh_main_effect_force_stat_speed", 20)]),
+    "heavy_ground": ("Heavy Ground", "Every unit on the field has -10% speed.", "battle_movement.png", [("wh_main_effect_force_stat_speed", -10)]),
+    "thunder_charge": ("Thunderous Charge", "Every unit on the field has +25 charge bonus.", "charge.png", [("wh2_dlc14_effect_force_charge_bonus_add", 25)]),
     "brittle": ("Brittle Blades", "Enemy units have -10% weapon strength.", "weapon_damage.png", [("wh_main_effect_force_stat_weapon_strength", -10)]),
     "wards": ("Wards of the Old Ones", "Enemy units have +5% ward save.", "resistance_ward_save.png", [("wh_main_effect_force_stat_ward_save", 5)]),
-    "gale": ("Howling Gale", "Every missile unit on the field has -25% range.", "ammo.png", [("wh_main_effect_force_stat_range", -25)]),
-    "winds_surge": ("Surge of the Winds", "Every army starts with +30 Winds of Magic reserve.", "wh3_dlc24_wind_blast.png",
+    "gale": ("Howling Gale", "Every missile unit on the field has -25% range.", "accuracy.png", [("wh_main_effect_force_stat_range", -25)]),
+    "winds_surge": ("Surge of the Winds", "Every army starts with +30 Winds of Magic reserve.", "magic_campaign.png",
                     [("wh3_main_effect_winds_of_magic_pool_min", 30), ("wh3_main_effect_winds_of_magic_pool_cap", 30)]),
-    "exhausting": ("Sweltering Heat", "Every unit on the field tires 10% faster.", "attrition.png", [("wh_main_effect_force_stat_vigour_loss_reduction", -10)]),
+    "exhausting": ("Sweltering Heat", "Every unit on the field tires 10% faster.", "vigour.png", [("wh_main_effect_force_stat_vigour_loss_reduction", -10)]),
     "frenzy": ("Blood Frenzy", "Every enemy unit gains Frenzy.", "blood_kiss.png", [("wh3_dlc27_effect_ability_enable_frenzy_all", 1)]),
     "berserkers": ("Berserkers", "Our units gain Berserk.", "blood_kiss.png", [("wh3_dlc27_effect_ability_enable_berserk_all_units", 1)]),
-    "regen_enemy": ("Flesh That Knits", "Every enemy unit gains Regeneration.", "lileaths_blessing.png",
+    "regen_enemy": ("Flesh That Knits", "Every enemy unit gains Regeneration.", "stat_healing_received.png",
                     [("land_enc_effect_ability_enable_regeneration_all_units", 1)]),
-    "regen_ours": ("Troll Blood", "Every unit of ours gains Regeneration.", "lileaths_blessing.png", [("land_enc_effect_ability_enable_regeneration_all_units", 1)]),
-    "killing_blow": ("Executioners' Edge", "Every unit of ours gains Deathblow.", "assassin.png", [("land_enc_effect_ability_enable_deathblow_all_units", 1)]),
+    "regen_ours": ("Troll Blood", "Every unit of ours gains Regeneration.", "stat_healing_received.png", [("land_enc_effect_ability_enable_regeneration_all_units", 1)]),
+    "killing_blow": ("Executioners' Edge", "Every unit of ours gains Deathblow.", "attribute_executor.png", [("land_enc_effect_ability_enable_deathblow_all_units", 1)]),
     "strength_numbers": ("Strength in Numbers", "Every enemy unit gains Strength in Numbers.", "morale.png",
                          [("land_enc_effect_ability_enable_strength_in_numbers_all_units", 1)]),
     "feasting": ("Feasting on Fear", "Our units gain Feasting on Fear.", "dlc10_death_night.png", [("wh3_dlc27_effect_ability_feasting_on_fear_all_units", 1)]),
-    "flies": ("Cloud of Flies", "Every unit on the field gains Cloud of Flies.", "phase_posion.png", [("land_enc_effect_ability_enable_cloud_of_flies_all_units", 1)]),
+    "flies": ("Cloud of Flies", "Every unit on the field gains Cloud of Flies.", "trait_nurgle.png", [("land_enc_effect_ability_enable_cloud_of_flies_all_units", 1)]),
     "immolation": ("Aura of Immolation", "Every enemy unit gains Aura of Immolation.", "modifier_icon_flaming.png",
                    [("land_enc_effect_ability_enable_aura_of_immolation_all_units", 1)]),
-    "too_horrible": ("Too Horrible to Die", "Every enemy unit gains Too Horrible to Die.", "lileaths_blessing.png",
+    "too_horrible": ("Too Horrible to Die", "Every enemy unit gains Too Horrible to Die.", "wh3_dlc29_chs_random_blessed_symptom.png",
                      [("land_enc_effect_ability_enable_too_horrible_to_die_all_units", 1)]),
-    "pleasure_pain": ("Pleasure Through Pain", "Every unit on the field gains Pleasure Through Pain.", "blood_kiss.png",
+    "pleasure_pain": ("Pleasure Through Pain", "Every unit on the field gains Pleasure Through Pain.", "seductive_influence.png",
                       [("wh3_dlc27_effect_ability_enable_pleasure_through_pain_all_units", 1)]),
     "gorefeast": ("Gorefeast", "Every enemy unit gains Gorefeast.", "blood_kiss.png", [("land_enc_effect_ability_enable_gorefeast_all_units", 1)]),
     "unholy_vigour": ("Unholy Vigour", "Our units gain Unholy Vigour.", "vigour.png", [("land_enc_effect_ability_enable_unholy_vigour_all_units", 1)]),
-    "bleeding_field": ("Bleeding Field", "Every unit on the field loses 1% of its strength every 15 seconds.", "casualties.png", []),
-    "miasma": ("Plague Miasma", "Every enemy unit loses 1% of its strength every 15 seconds.", "phase_posion.png", []),
-    "rot": ("Rot of Nurgle", "Every unit of ours loses 1% of its strength every 15 seconds.", "phase_posion.png", []),
-    "second_wind": ("Second Wind", "Our units regain 5% of their strength at 2 and 4 minutes.", "lileaths_blessing.png", []),
-    "lord_vigil": ("Lord's Vigil", "Our lord regains 1% of their strength every 30 seconds.", "lileaths_blessing.png", []),
+    "bleeding_field": ("Bleeding Field", "Every unit on the field loses 1% of its strength every 15 seconds.", "phase_disemboweled.png", []),
+    "miasma": ("Plague Miasma", "Every enemy unit loses 1% of its strength every 15 seconds.", "plague.png", []),
+    "rot": ("Rot of Nurgle", "Every unit of ours loses 1% of its strength every 15 seconds.", "corruption_nurgle.png", []),
+    "second_wind": ("Second Wind", "Our units regain 5% of their strength at 2 and 4 minutes.", "replenishment.png", []),
+    "lord_vigil": ("Lord's Vigil", "Our lord regains 1% of their strength every 30 seconds.", "health_character.png", []),
     "short_shot": ("Short of Shot", "Every missile unit on the field starts with half its ammunition.", "ammo.png", []),
     "plenty_shot": ("Endless Quivers", "Every missile unit on the field never runs out of ammunition.", "ammo_character.png", []),
-    "panic": ("Panic", "At 3:00 the enemy's two weakest units rout.", "dlc10_death_night.png", []),
+    "panic": ("Panic", "At 3:00 the enemy's two weakest units rout.", "fractured_mind.png", []),
     "cowards": ("Cowards' Ground", "At 3:00 our weakest unit routs.", "discouraged.png", []),
     "duel_lords": ("Fated Lords", "Neither lord can be harmed for the first 3 minutes.", "nemesis_crown_sealed.png", []),
     "hold_fast": ("Hold Fast", "No unit on the field can rout for the first 3 minutes.", "morale.png", []),
@@ -103,7 +103,7 @@ MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
                       [("wh3_main_effect_attribute_enable_silenced_enemy", 1)]),
     "silence_all": ("Dead Winds", "Every spellcaster on the field is Silenced and cannot cast spells.", "magic_cooldown.png",
                     [("wh3_main_effect_attribute_enable_silenced_enemy", 1)]),
-    "mud": ("Sucking Mud", "No unit on the field can run.", "attrition.png", []),
+    "mud": ("Sucking Mud", "No unit on the field can run.", "battle_movement.png", []),
     "fire_moving": ("Skirmish Drill", "Our missile units can fire while moving.", "wh2_dlc17_attribute_mounted_fire_move.png", []),
     "strider": ("Sure Footing", "Our units ignore difficult ground.", "attribute_ignore_forest_penalties.png", []),
     "disarmed": ("Downpour", "Enemy missile units cannot shoot for the first 3 minutes.", "ammo_switch.png", []),
@@ -111,23 +111,29 @@ MODIFIERS: Dict[str, Tuple[str, str, str, List[Tuple[str, float]]]] = {
                  [("wh3_dlc27_effect_attribute_enable_glorious_charge_cavalry_chaiots", 1)]),
     "expendable": ("Callous Ranks", "Enemy units have Expendable and routing does not shake the rest of their army.", "attribute_expendable.png", []),
     "tireless_enemy": ("Tireless Foe", "Enemy units never tire.", "attribute_fatigue_immune.png", []),
-    "run_amok": ("Maddened Beasts", "Monsters and war beasts on both sides may run amok.", "bst_rampage.png", []),
-    "grim_presence": ("Grim Presence", "Enemy units within 25m of our lord lose 0.5% of their strength every 10 seconds.", "death_hag.png", []),
-    "storm_magic": ("Storm of Magic", "Every army gains 20 Winds of Magic every minute.", "attribute_mastery_of_elemental_winds.png", []),
-    "winds_drained": ("Drained Winds", "The enemy starts the battle with no Winds of Magic.", "emp_winds_of_shyish.png", []),
+    "run_amok": ("Maddened Beasts", "Monsters and war beasts on both sides may run amok.", "run_amok.png", []),
+    "grim_presence": ("Grim Presence", "Enemy units within 25m of our lord lose 0.5% of their strength every 10 seconds.", "icon_land_of_the_dead_1.png", []),
+    "storm_magic": ("Storm of Magic", "Every army gains 20 Winds of Magic every minute.", "magic_campaign.png", []),
+    "winds_drained": ("Drained Winds", "The enemy starts the battle with no Winds of Magic.", "great_maw_give_me_gut_magic.png", []),
     "warp_shift": ("Warp Shift", "Every 2 minutes a random unit from either side is flung to a nearby spot.", "teleport.png", []),
     "jest": ("Tzeentch's Jest", "Every 2 minutes a random enemy unit and a random unit of ours swap places.", "attribute_mark_tzeentch.png", []),
     "blink": ("Blink Strike", "At 2:00 our cavalry and chariots are flung behind the enemy line.", "teleport.png", []),
     "lost_warp": ("Lost in the Warp", "At 2:00 a random unit of ours vanishes for 30 seconds, then reappears nearby.", "corruption_tzeentch.png", []),
     "scatter": ("Scattered Ranks", "The enemy's units start the battle scattered around their centre.", "attribute_guerrilla_deploy.png", []),
     "revealed": ("Naked Plain", "Every unit on the field is always visible and cannot hide.", "attribute_revealed.png", []),
-    "wild_winds": ("Wild Winds", "Every 3 minutes a magical storm spawns near a random unit from either side.", "wh3_dlc24_wind_blast.png", []),
+    "wild_winds": ("Wild Winds", "Every 3 minutes a magical storm spawns near a random unit from either side.", "resource_vortex_site.png", []),
     "enemy_last_stand": ("Fight to the Last", "Enemy units cannot rout until they fall below half strength.", "attribute_unyielding_assault.png", []),
     "dead_rise": ("The Dead Rise", "At 5:00 our destroyed units return where they started, at 25% strength.", "attribute_undead.png", []),
     "comp_monsters": ("Monster Horde", f"The enemy army is {ALLY_THEMES['comp_monsters']}.", "rampage_cataclysmic.png", []),
-    "comp_riders": ("Riders' Host", f"The enemy army is {ALLY_THEMES['comp_riders']}.", "charge.png", []),
+    "comp_riders": ("Riders' Host", f"The enemy army is {ALLY_THEMES['comp_riders']}.", "mount.png", []),
     "comp_shieldwall": ("Shield Wall", f"The enemy army is {ALLY_THEMES['comp_shieldwall']}.", "icon_effects_fortify.png", []),
     "comp_gunline": ("Gunline", f"The enemy army is {ALLY_THEMES['comp_gunline']}.", "artillery.png", []),
+    "gift_of_the_winds": ("Gift of the Winds", "Our army can cast a random army spell, named in the battle.", "magic.png", []),
+    "arcane_duel": ("Arcane Duel", "Our army and the enemy can each cast a random army spell.", "wizard.png", []),
+    "blinding_dust": ("Blinding Dust", "Every unit's attacks blind what they hit.", "wh_dlc06_unit_contact_blinded.png", [("land_enc_lib_fx_blinded_hits", 1)]),
+    "weary_march": ("Weary March", "Our army starts the battle Tired.", "vigour.png", [("wh_main_effect_force_campaign_stance_begin_fatigued_4_tired", 4)]),
+    "spent_foe": ("Spent Foe", "The enemy army starts the battle Tired.", "vigour.png", [("wh_main_effect_force_campaign_stance_begin_fatigued_4_tired", 4)]),
+    "bloodlust": ("Bloodlust", "Every unit on the field gains Frenzy.", "blood_kiss.png", [("wh3_dlc27_effect_ability_enable_frenzy_all", 1)]),
     "undying": ("Undying Foe", "At 5:00 two destroyed enemy units return where they started, at half strength.", "icon_necromantic_power.png", []),
 }
 
@@ -164,6 +170,10 @@ FLAVOUR: Dict[str, str] = {
     "silence_enemy": "A stillness falls on the enemy's casters, and the winds will not answer them.",
     "silence_all": "The Winds of Magic have died away over this field, and no caster can call them.",
     "glorious": "Our riders burn to charge home, and nothing will turn them aside.",
+    "blinding_dust": "Fine grit blows across the field and finds every eye a blade opens.",
+    "weary_march": "The march here was long and hard, and the army arrives worn out.",
+    "spent_foe": "This army marched through the night to reach the field, and it shows.",
+    "bloodlust": "A red madness hangs over the field, and every warrior feels it.",
 }
 
 
@@ -241,8 +251,8 @@ def bundle(key: str, side: str) -> Tuple[str, str, str, str, List[Tuple[str, str
     Returns:
         Tuple: (target, icon, title, description, [(effect, scope, value)]).
     """
-    name, _, _, effects = MODIFIERS[key]
+    name, _, icon, effects = MODIFIERS[key]
     description = FLAVOUR[key]
     if side != "ours" and any(e in UNIT_LIST_EFFECTS for e, _ in effects):
         description += DISCLAIMER
-    return "force", BUNDLE_ICON, name, description, [(e, SCOPE, v) for e, v in effects]
+    return "force", icon, name, description, [(e, SCOPE, v) for e, v in effects]

@@ -17,6 +17,7 @@ M.tavern = {
     "land_enc_dilemma_tavern_defense",
     "land_enc_dilemma_tavern_hall",
     "land_enc_dilemma_tavern_board",
+    "land_enc_dilemma_tavern_witch",
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -266,6 +267,7 @@ M.smithy = {
     "land_enc_dilemma_smithy_forge_level_3",
     "land_enc_dilemma_smithy_reclamation",
     "land_enc_dilemma_smithy_defense",
+    "land_enc_dilemma_smithy_temper",
     "land_enc_dilemma_smithy_visit_level_1",
     "land_enc_dilemma_smithy_visit_level_2",
     "land_enc_dilemma_smithy_visit_level_3"

@@ -194,7 +194,9 @@ end
 --- @returns table The MCT option.
 local function add_setting_slider(key, section_key, text, tooltip, range)
     local default = get_mct_settings()[key]
-    return add_slider(key, section_key, text, tooltip .. " Default is " .. default .. ".", range, default)
+    --- A slider whose label ends in % holds a percentage, so its default says so.
+    local unit = text:find("%%$") and "%" or ""
+    return add_slider(key, section_key, text, tooltip .. " Default is " .. default .. unit .. ".", range, default)
 end
 
 --- Locks every child checkbox while its "enable all" master checkbox is on.
@@ -220,6 +222,7 @@ local forces_page = mct_mod:create_settings_page("Enemy Forces", 2)
 local towers_page = mct_mod:create_settings_page("Towers", 1)
 local smithies_page = mct_mod:create_settings_page("Smithies", 1)
 local taverns_page = mct_mod:create_settings_page("Taverns", 1)
+local boons_page = mct_mod:create_settings_page("Boons and Curses", 1)
 if mct_default_page then
     mct_mod:set_default_settings_page(general_page)
     mct_default_page:remove()
@@ -464,6 +467,8 @@ add_setting_slider("smithy_tribute_percent", "smithies_section", "Tribute interv
     "Scales the turns between tribute items for a player's Smithy. At 100, tribute comes every " .. smithy_data.levels[1].tribute_interval
     .. " turns at forge level 1, " .. smithy_data.levels[2].tribute_interval .. " at level 2 and " .. smithy_data.levels[3].tribute_interval
     .. " at level 3. Higher means rarer tribute.", { 25, 300, 5, 0 })
+add_setting_slider("smithy_mission_interval", "smithies_section", "Commission interval (turns)",
+    "Turns between the Smith's Commissions your highest-level Smithy offers while you hold none.", { 5, 30, 1, 0 })
 add_setting_slider("smithy_ai_takeover_chance", "smithies_section", "AI takeover chance %",
     "Chance an AI army at war with a Smithy's AI owner takes it when it walks onto it.", { 0, 100, 1, 0 })
 add_setting_slider("smithy_ai_upgrade_chance", "smithies_section", "AI upgrade chance %",
@@ -501,6 +506,28 @@ add_setting_slider("tavern_ai_upgrade_chance", "taverns_section", "AI upgrade ch
 
 add_guide_section("taverns", "Guide: The Tavern", taverns_page, mct_guides.taverns_text(), true)
 
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Boons and Curses page
+
+add_section("boons_section", "Boons and Curses", boons_page)
+
+add_checkbox("enable_boons", "boons_section", "Enable boons and curses",
+    "Lords gain lasting boons, which grow as they win battles, and curses, which get worse every few turns until they are cleansed. When off, "
+    .. "no lord gains a new one, and the ones already carried stay as they are.", get_mct_settings().enable_boons)
+add_setting_slider("boon_slots", "boons_section", "Boon slots", "How many boons a lord can carry. A lord with every slot full chooses which "
+    .. "boon to give up for a new one.", { 1, 5, 1, 0 })
+add_setting_slider("boon_win_chance", "boons_section", "Boon after a hard win %", "Chance a lord who wins a hard LEAPOI fight, or one with "
+    .. "battle modifiers, gains a boon.", { 0, 100, 1, 0 })
+add_setting_slider("curse_loss_chance", "boons_section", "Curse after a loss %", "Chance a lord who loses a LEAPOI fight, or fails a Tavern "
+    .. "contract, gains a curse.", { 0, 100, 1, 0 })
+add_setting_slider("linger_chance", "boons_section", "Lingering modifier %", "Chance each battle modifier of a fight leaves its own boon or "
+    .. "curse on the lord, e.g. Blood Moon leaving Bloodsworn.", { 0, 100, 1, 0 })
+add_setting_slider("curse_slots", "boons_section", "Curse slots", "How many curses a lord can carry. A new curse on a lord with every slot "
+    .. "full makes their mildest curse worse instead.", { 1, 5, 1, 0 })
+
+add_guide_section("boons", "Guide: Boons and Curses", boons_page, mct_guides.boons_text(), true)
+
 --- Builds every guide's text again and puts it on its section. The guides read game text, which a campaign does not have ready when this
 --- file first runs, so they are rebuilt once MCT has started and each time its panel opens, before a page is drawn.
 local function refresh_guides()
@@ -510,6 +537,7 @@ local function refresh_guides()
         towers = mct_guides.towers_text(),
         smithy = mct_guides.smithy_text(),
         taverns = mct_guides.taverns_text(),
+        boons = mct_guides.boons_text(),
     }
     for _, offer_section in ipairs(mct_guides.spot_offer_sections()) do texts["spot_" .. offer_section.key] = offer_section.text end
     for _, offer_section in ipairs(mct_guides.tower_offer_sections()) do texts["tower_" .. offer_section.key] = offer_section.text end

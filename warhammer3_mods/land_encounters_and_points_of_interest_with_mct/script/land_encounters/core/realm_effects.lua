@@ -152,6 +152,17 @@ function M.nearest_factions(faction, x, y, count, filter)
     return found
 end
 
+--- Returns the nearest faction of one race, among the owners of the nearest regions.
+--- @param faction faction The faction searching (never returned).
+--- @param x number The map x position.
+--- @param y number The map y position.
+--- @param shorthand string The race's 3-letter faction shorthand, as in configs/factions_data.lua.
+--- @returns faction|nil The nearest faction of that race, or nil when none holds a region.
+function M.nearest_kin(faction, x, y, shorthand)
+    local Army = require("script/land_encounters/core/army")
+    return M.nearest_factions(faction, x, y, 1, function(other) return Army.faction_shorthand_for_subculture(other:subculture()) == shorthand end)[1]
+end
+
 --- Returns the nearest faction at war with a faction, among the owners of the nearest regions.
 --- @param faction faction The faction whose enemies are searched.
 --- @param x number The map x position.
@@ -236,6 +247,12 @@ local FINDERS = {
         table.sort(names)
         return #names > 0 and { regions = {}, factions = names } or nil
     end,
+    region_owner = function(faction, x, y)
+        local here = region_at({ x, y })
+        if here and is_other_living_faction(here:owning_faction(), faction:name()) then return region_target(here, true) end
+        local other = M.nearest_factions(faction, x, y, 1)[1]
+        return other and { regions = {}, factions = { other:name() } } or nil
+    end,
     rival_pair = function(faction, x, y)
         local pool = M.nearest_factions(faction, x, y, RIVAL_POOL)
         if #pool < 2 then return nil end
@@ -252,6 +269,24 @@ local FINDERS = {
             if is_other_living_faction(other, faction:name()) and other:name() ~= enemy:name() then table.insert(names, other:name()) end
         end
         return #names > 1 and { regions = {}, factions = names } or nil
+    end,
+}
+
+--- Finders for a realm offer's `side_relations`, from its first target faction. Each returns a list of faction keys, which may be empty.
+local SIDE_FINDERS = {
+    --- The faction at war with the target nearest the target's own lands, other than us.
+    target_enemy = function(other, faction_name, position)
+        local enemy = position and M.nearest_enemy(other, position[1], position[2], function(candidate) return candidate:name() ~= faction_name end)
+        return enemy and { enemy:name() } or {}
+    end,
+    --- Every faction allied with the target, other than us.
+    target_allies = function(other, faction_name)
+        local names, factions = {}, cm:model():world():faction_list()
+        for i = 0, factions:num_items() - 1 do
+            local candidate = factions:item_at(i)
+            if is_other_living_faction(candidate, faction_name) and other:allied_with(candidate) then names[#names + 1] = candidate:name() end
+        end
+        return names
     end,
 }
 
@@ -340,8 +375,22 @@ local function apply_to_region(offer, region, faction_name)
     end
 end
 
+--- Finds the factions a realm offer's `side_relations` reach, from its target's first faction, and keeps them on the target as `side`.
+--- @param offer table The offer record from `configs/spot_offers.lua`.
+--- @param target table The target from `M.find_target`.
+--- @param faction_name string The faction taking the offer.
+--- @returns boolean True when at least one faction was found.
+function M.find_side(offer, target, faction_name)
+    local other = target.factions[1] and cm:get_faction(target.factions[1])
+    target.side = other and SIDE_FINDERS[offer.side_relations[1]](other, faction_name, M.target_position(target)) or {}
+    log("realm: " .. offer.key .. " finds " .. #target.side .. " " .. offer.side_relations[1] .. " of " .. tostring(target.factions[1]) .. ": "
+        .. table.concat(target.side, ", "))
+    return #target.side > 0
+end
+
 --- Applies a realm offer to its target: region and province bundles on the target regions, a bundle on the target factions, relations,
---- development points, a garrison heal, a settlement upgrade and a shroud reveal, as the offer's fields ask.
+--- development points, a garrison heal, a settlement upgrade and a shroud reveal, as the offer's fields ask, and its `side_relations` with
+--- the factions `M.find_side` kept.
 --- @param offer table The offer record from `configs/spot_offers.lua`.
 --- @param target table The target from `M.find_target`.
 --- @param faction_name string The faction that took the offer.
@@ -365,6 +414,7 @@ function M.apply(offer, target, faction_name)
             for _, other in ipairs(target.factions) do M.change_relations(faction_name, other, offer.relations) end
         end
     end
+    for _, other in ipairs(offer.side_relations and target.side or {}) do M.change_relations(faction_name, other, offer.side_relations[2]) end
 end
 
 --- Lists a region's garrison for a result's text, e.g. "8 units: 3 Spearmen, 2 Crossbowmen, 1 Bolt Thrower, ...".

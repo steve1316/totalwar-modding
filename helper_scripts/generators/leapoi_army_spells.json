@@ -1,0 +1,2862 @@
+{
+ "army": [
+  {
+   "army": "wh2_dlc09_army_abilities_barrage_of_the_legion",
+   "id": "army_001",
+   "name": "Legionary Barrage",
+   "source": "wh2_dlc09_army_abilities_barrage_of_the_legion",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc09_army_abilities_rictus_clanstone",
+   "id": "army_002",
+   "name": "Rictus Clanstone",
+   "source": "wh2_dlc09_army_abilities_rictus_clanstone",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc09_army_abilities_sand_veil",
+   "id": "army_003",
+   "name": "Sand Veil",
+   "source": "wh2_dlc09_army_abilities_sand_veil",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc09_army_abilities_tomb_swarm",
+   "id": "army_004",
+   "name": "Tomb Swarm",
+   "source": "wh2_dlc09_army_abilities_tomb_swarm",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_norse_roar",
+   "id": "army_005",
+   "name": "Norse Roar",
+   "source": "wh2_dlc11_army_abilities_norse_roar",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_rod_of_the_storm",
+   "id": "army_006",
+   "name": "Rod of the Storm",
+   "source": "wh2_dlc11_army_abilities_rod_of_the_storm",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_sartosa_grapeshot",
+   "id": "army_007",
+   "name": "Sartosa Grapeshot",
+   "source": "wh2_dlc11_army_abilities_sartosa_grapeshot",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_shanty_verse_1",
+   "id": "army_008",
+   "name": "Shanty: First Verse",
+   "source": "wh2_dlc11_army_abilities_shanty_verse_1",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_shanty_verse_2",
+   "id": "army_009",
+   "name": "Shanty: Second Verse",
+   "source": "wh2_dlc11_army_abilities_shanty_verse_2",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_shanty_verse_3",
+   "id": "army_010",
+   "name": "Shanty: Third Verse",
+   "source": "wh2_dlc11_army_abilities_shanty_verse_3",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_wraith_storm",
+   "id": "army_011",
+   "name": "Wraith Storm",
+   "source": "wh2_dlc11_army_abilities_wraith_storm",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc11_army_abilities_zhufbar_42_pounders",
+   "id": "army_012",
+   "name": "Zhufbar 42-Pounders",
+   "source": "wh2_dlc11_army_abilities_zhufbar_42_pounders",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc11_quest_battle_supply",
+   "id": "army_013",
+   "name": "Battlefield Resupply",
+   "source": "wh2_dlc11_quest_battle_supply",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc12_army_abilities_great_invocation_of_sotek",
+   "id": "army_014",
+   "name": "Great Invocation of Sotek",
+   "source": "wh2_dlc12_army_abilities_great_invocation_of_sotek",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc12_army_abilities_jungle_swarm",
+   "id": "army_015",
+   "name": "Jungle Swarm",
+   "source": "wh2_dlc12_army_abilities_jungle_swarm",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc12_army_abilities_warpstorm_doomrocket",
+   "id": "army_016",
+   "name": "Warpstorm Doomrocket",
+   "source": "wh2_dlc12_army_abilities_warpstorm_doomrocket",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc13_army_abilities_amber_bow_cannons",
+   "id": "army_017",
+   "name": "Man the Cannons!",
+   "source": "wh2_dlc13_army_abilities_amber_bow_cannons",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc13_army_abilities_beasts_of_itzl",
+   "id": "army_018",
+   "name": "Beasts of Itzl",
+   "source": "wh2_dlc13_army_abilities_beasts_of_itzl",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc13_army_abilities_protection_of_quetzl",
+   "id": "army_019",
+   "name": "Protection of Quetzl",
+   "source": "wh2_dlc13_army_abilities_protection_of_quetzl",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc13_army_abilities_storm_of_xholankha",
+   "id": "army_020",
+   "name": "Storm of Xholankha",
+   "source": "wh2_dlc13_army_abilities_storm_of_xholankha",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc13_final_battle_abilities_shield_of_the_old_ones",
+   "id": "army_021",
+   "name": "Shield of the Old Ones",
+   "source": "wh2_dlc13_final_battle_abilities_shield_of_the_old_ones",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc14_final_battle_ability_summon_snikch",
+   "id": "army_022",
+   "name": "Mislead",
+   "source": "wh2_dlc14_final_battle_ability_summon_snikch",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_azhags_big_waaagh",
+   "id": "army_023",
+   "name": "Azhag's Big Waaagh!",
+   "source": "wh2_dlc15_army_abilities_azhags_big_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_azhags_waaagh",
+   "id": "army_024",
+   "name": "Azhag's Waaagh!",
+   "source": "wh2_dlc15_army_abilities_azhags_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_big_waaagh",
+   "id": "army_025",
+   "name": "Big Waaagh!",
+   "source": "wh2_dlc15_army_abilities_big_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_doom_diver_strike",
+   "id": "army_026",
+   "name": "Doom Diver Strike",
+   "source": "wh2_dlc15_army_abilities_doom_diver_strike",
+   "uses": 5
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_envelop_in_mist",
+   "id": "army_027",
+   "name": "Envelop in Mist",
+   "source": "wh2_dlc15_army_abilities_envelop_in_mist",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_grimgors_big_waaagh",
+   "id": "army_028",
+   "name": "Grimgor's Big Waaagh!",
+   "source": "wh2_dlc15_army_abilities_grimgors_big_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_grimgors_waaagh",
+   "id": "army_029",
+   "name": "Grimgor's Waaagh!",
+   "source": "wh2_dlc15_army_abilities_grimgors_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_groms_big_waaagh",
+   "id": "army_030",
+   "name": "Grom's Big Waaagh!",
+   "source": "wh2_dlc15_army_abilities_groms_big_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_groms_waaagh",
+   "id": "army_031",
+   "name": "Grom's Waaagh!",
+   "source": "wh2_dlc15_army_abilities_groms_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_invocation_of_ending",
+   "id": "army_032",
+   "name": "Invocation of Ending",
+   "source": "wh2_dlc15_army_abilities_invocation_of_ending",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_oath_of_replenishment",
+   "id": "army_033",
+   "name": "Oath of Replenishment",
+   "source": "wh2_dlc15_army_abilities_oath_of_replenishment",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_oath_of_replenishment_upgraded",
+   "id": "army_034",
+   "name": "Oath of Replenishment",
+   "source": "wh2_dlc15_army_abilities_oath_of_replenishment_upgraded",
+   "uses": 4
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_skarsniks_big_waaagh",
+   "id": "army_035",
+   "name": "Skarsnik's Big Waaagh!",
+   "source": "wh2_dlc15_army_abilities_skarsniks_big_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_skarsniks_waaagh",
+   "id": "army_036",
+   "name": "Skarsnik's Waaagh!",
+   "source": "wh2_dlc15_army_abilities_skarsniks_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_summon_the_sentinels",
+   "id": "army_037",
+   "name": "Summon the Sentinels",
+   "source": "wh2_dlc15_army_abilities_summon_the_sentinels",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_summon_the_sentinels_upgraded",
+   "id": "army_038",
+   "name": "Summon the Sentinels",
+   "source": "wh2_dlc15_army_abilities_summon_the_sentinels_upgraded",
+   "uses": 4
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_unleash_the_winds",
+   "id": "army_039",
+   "name": "Unleash the Winds",
+   "source": "wh2_dlc15_army_abilities_unleash_the_winds",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_waaagh",
+   "id": "army_040",
+   "name": "Waaagh!",
+   "source": "wh2_dlc15_army_abilities_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_wurrzags_big_waaagh",
+   "id": "army_041",
+   "name": "Wurrzag's Big Waaagh!",
+   "source": "wh2_dlc15_army_abilities_wurrzags_big_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_army_abilities_wurrzags_waaagh",
+   "id": "army_042",
+   "name": "Wurrzag's Waaagh!",
+   "source": "wh2_dlc15_army_abilities_wurrzags_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh2_dlc15_character_abilities_wardens_cage",
+   "id": "army_043",
+   "name": "Warden's Cage",
+   "source": "wh2_dlc15_character_abilities_wardens_cage",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc16_army_abilities_call_to_ceithin_har",
+   "id": "army_044",
+   "name": "Call to Ceithin-Har",
+   "source": "wh2_dlc16_army_abilities_call_to_ceithin_har",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc16_army_abilities_transformation_of_kadon",
+   "id": "army_045",
+   "name": "Transformation of Kadon",
+   "source": "wh2_dlc16_army_abilities_transformation_of_kadon",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc16_army_abilities_roused_to_wrath_3",
+   "id": "army_046",
+   "name": "Roused to Wrath",
+   "source": "wh2_dlc16_lord_abilities_roused_to_wrath_3",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_ancestral_rune_of_grimnir",
+   "id": "army_047",
+   "name": "Ancestral Rune of Grimnir",
+   "source": "wh2_dlc17_army_abilities_ancestral_rune_of_grimnir",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_ancestral_rune_of_grungni",
+   "id": "army_048",
+   "name": "Ancestral Rune of Grungni",
+   "source": "wh2_dlc17_army_abilities_ancestral_rune_of_grungni",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_ancestral_rune_of_valaya",
+   "id": "army_049",
+   "name": "Ancestral Rune of Valaya",
+   "source": "wh2_dlc17_army_abilities_ancestral_rune_of_valaya",
+   "uses": 1
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_shatterstone",
+   "id": "army_050",
+   "name": "Shatterstone",
+   "source": "wh2_dlc17_army_abilities_shatterstone",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_soteks_sanctum",
+   "id": "army_051",
+   "name": "Sotek's Sanctum",
+   "source": "wh2_dlc17_army_abilities_soteks_sanctum",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_touched_by_the_moon",
+   "id": "army_052",
+   "name": "Touched by the Moon",
+   "source": "wh2_dlc17_army_abilities_touched_by_the_moon",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_tzcatlis_sanctum",
+   "id": "army_053",
+   "name": "Tzcatli's Sanctum",
+   "source": "wh2_dlc17_army_abilities_tzcatlis_sanctum",
+   "uses": 3
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_vile_entropy",
+   "id": "army_054",
+   "name": "Vile Entropy",
+   "source": "wh2_dlc17_army_abilities_vile_entropy",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_viletide",
+   "id": "army_055",
+   "name": "Viletide",
+   "source": "wh2_dlc17_army_abilities_viletide",
+   "uses": 2
+  },
+  {
+   "army": "wh2_dlc17_army_abilities_xapatis_sanctum",
+   "id": "army_056",
+   "name": "Xapati's Sanctum",
+   "source": "wh2_dlc17_army_abilities_xapatis_sanctum",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_bloodwrack_cauldron",
+   "id": "army_057",
+   "name": "Bloodwrack Cauldron",
+   "source": "wh2_main_army_abilities_bloodwrack_cauldron",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_bolt_of_spite",
+   "id": "army_058",
+   "name": "Bolt of Spite",
+   "source": "wh2_main_army_abilities_bolt_of_spite",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_brazen_cauldron",
+   "id": "army_059",
+   "name": "Brazen Cauldron",
+   "source": "wh2_main_army_abilities_brazen_cauldron",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_channeling_spire",
+   "id": "army_060",
+   "name": "Channelling Spire",
+   "source": "wh2_main_army_abilities_channeling_spire",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_dark_conduit",
+   "id": "army_061",
+   "name": "Dark Conduit",
+   "source": "wh2_main_army_abilities_dark_conduit",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_eagle_sanctuary",
+   "id": "army_062",
+   "name": "Eagle Sanctuary",
+   "source": "wh2_main_army_abilities_eagle_sanctuary",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_eshin_clanstone",
+   "id": "army_063",
+   "name": "Eshin Clanstone",
+   "source": "wh2_main_army_abilities_eshin_clanstone",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_feral_cold_ones",
+   "id": "army_064",
+   "name": "Feral Cold Ones",
+   "source": "wh2_main_army_abilities_feral_cold_ones",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_geomantic_nexus",
+   "id": "army_065",
+   "name": "Geomantic Nexus",
+   "source": "wh2_main_army_abilities_geomantic_nexus",
+   "uses": 2
+  },
+  {
+   "army": "wh2_main_army_abilities_holy_stela",
+   "id": "army_066",
+   "name": "Holy Stela",
+   "source": "wh2_main_army_abilities_holy_stela",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_khaines_flail",
+   "id": "army_067",
+   "name": "Khaine's Flail",
+   "source": "wh2_main_army_abilities_khaines_flail",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_khaines_lash",
+   "id": "army_068",
+   "name": "Khaine's Lash",
+   "source": "wh2_main_army_abilities_khaines_lash",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_khaines_scourge",
+   "id": "army_069",
+   "name": "Khaine's Scourge",
+   "source": "wh2_main_army_abilities_khaines_scourge",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_lure_of_the_pale_queen",
+   "id": "army_070",
+   "name": "Lure of the Pale Queen",
+   "source": "wh2_main_army_abilities_lure_of_the_pale_queen",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_mors_clanstone",
+   "id": "army_071",
+   "name": "Mors Clanstone",
+   "source": "wh2_main_army_abilities_mors_clanstone",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_moulder_clanstone",
+   "id": "army_072",
+   "name": "Moulder Clanstone",
+   "source": "wh2_main_army_abilities_moulder_clanstone",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_pestilens_clanstone",
+   "id": "army_073",
+   "name": "Pestilens Clanstone",
+   "source": "wh2_main_army_abilities_pestilens_clanstone",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_shadows_of_anlec",
+   "id": "army_074",
+   "name": "Shadows of Anlec",
+   "source": "wh2_main_army_abilities_shadows_of_anlec",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_skryre_clanstone",
+   "id": "army_075",
+   "name": "Skryre Clanstone",
+   "source": "wh2_main_army_abilities_skryre_clanstone",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_sky_cauldron",
+   "id": "army_076",
+   "name": "Sky Cauldron",
+   "source": "wh2_main_army_abilities_sky_cauldron",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_soul_rain",
+   "id": "army_077",
+   "name": "Soul Rain",
+   "source": "wh2_main_army_abilities_soul_rain",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_soul_storm",
+   "id": "army_078",
+   "name": "Soul Storm",
+   "source": "wh2_main_army_abilities_soul_storm",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_soul_torrent",
+   "id": "army_079",
+   "name": "Soul Torrent",
+   "source": "wh2_main_army_abilities_soul_torrent",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_temple_of_mists",
+   "id": "army_080",
+   "name": "Temple of Mists",
+   "source": "wh2_main_army_abilities_temple_of_mists",
+   "uses": 3
+  },
+  {
+   "army": "wh2_main_army_abilities_the_menace_below",
+   "id": "army_081",
+   "name": "The Menace Below",
+   "source": "wh2_main_army_abilities_the_menace_below",
+   "uses": 1
+  },
+  {
+   "army": "wh2_main_army_abilities_vauls_hammer",
+   "id": "army_082",
+   "name": "Vaul's Hammer",
+   "source": "wh2_main_army_abilities_vauls_hammer",
+   "uses": 2
+  },
+  {
+   "army": "wh2_main_army_abilities_skaven_bomb",
+   "id": "army_083",
+   "name": "Vortical Blast",
+   "source": "wh2_main_army_abilities_vortic_blast",
+   "uses": -1
+  },
+  {
+   "army": "wh2_main_army_abilities_heal_splosion",
+   "id": "army_084",
+   "name": "Vortical Enrichment",
+   "source": "wh2_main_army_abilities_vortic_enrichment",
+   "uses": -1
+  },
+  {
+   "army": "wh2_main_army_abilities_warpbomb",
+   "id": "army_085",
+   "name": "Warpbomb",
+   "source": "wh2_main_army_abilities_warpbomb",
+   "uses": 1
+  },
+  {
+   "army": "wh3_cp1_army_abilities_rapid_reinforcements",
+   "id": "army_086",
+   "name": "Iron Reinforcements",
+   "source": "wh3_cp1_army_abilities_tiger_warrior_reinforcements",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc23_army_abilities_armour_of_contempt",
+   "id": "army_087",
+   "name": "Armour of Contempt",
+   "source": "wh3_dlc23_army_abilities_armour_of_contempt",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc23_army_abilities_doom_of_hashut",
+   "id": "army_088",
+   "name": "Doom of Hashut",
+   "source": "wh3_dlc23_army_abilities_doom_of_hashut",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc23_army_abilities_guns_of_zharr",
+   "id": "army_089",
+   "name": "Guns of Zharr",
+   "source": "wh3_dlc23_army_abilities_guns_of_zharr",
+   "uses": -1
+  },
+  {
+   "army": "wh3_dlc23_army_abilities_tower_ballistics",
+   "id": "army_090",
+   "name": "Dreadquake Battery",
+   "source": "wh3_dlc23_army_abilities_tower_ballistics",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc23_army_abilities_tower_ballistics_upgraded_toz",
+   "id": "army_091",
+   "name": "Dreadquake Battery",
+   "source": "wh3_dlc23_army_abilities_tower_ballistics_upgraded_toz",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc23_army_abilities_wrath_of_zharr",
+   "id": "army_092",
+   "name": "Wrath of Zharr",
+   "source": "wh3_dlc23_army_abilities_wrath_of_zharr",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc23_army_abilities_blood_and_fireborn",
+   "id": "army_093",
+   "name": "Blood & Fireborn",
+   "source": "wh3_dlc23_lord_abilities_blood_and_fireborn",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_bjuna_bombard",
+   "id": "army_094",
+   "name": "Bjuna Bombard",
+   "source": "wh3_dlc25_army_abilities_bjuna_bombard",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_call_of_the_wild",
+   "id": "army_095",
+   "name": "Call of the Wild",
+   "source": "wh3_dlc25_army_abilities_call_of_the_wild",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_gyrocopter_bomb",
+   "id": "army_096",
+   "name": "Engineer's Gyrocopter Bomb",
+   "source": "wh3_dlc25_army_abilities_gyrocopter_bomb",
+   "uses": -1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_launch_gyrocopters",
+   "id": "army_097",
+   "name": "Launch Gyrocopters",
+   "source": "wh3_dlc25_army_abilities_launch_gyrocopters",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_pandemicium",
+   "id": "army_098",
+   "name": "Pandemicium",
+   "source": "wh3_dlc25_army_abilities_pandemicium",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_purple_eclipse",
+   "id": "army_099",
+   "name": "The Purple Eclipse",
+   "source": "wh3_dlc25_army_abilities_purple_eclipse",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_spirit_barrage",
+   "id": "army_100",
+   "name": "Spirit Barrage",
+   "source": "wh3_dlc25_army_abilities_spirit_barrage",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_spirit_of_grungni",
+   "id": "army_101",
+   "name": "Spirit of Grungni",
+   "source": "wh3_dlc25_army_abilities_spirit_of_grungni",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc25_army_abilities_summon_miners",
+   "id": "army_102",
+   "name": "Call the Miners",
+   "source": "wh3_dlc25_army_abilities_summon_miners",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc26_army_abilities_blood_gods_shackles",
+   "id": "army_103",
+   "name": "Blood God's Shackles",
+   "source": "wh3_dlc26_army_abilities_blood_gods_shackles",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc26_army_abilities_blood_gods_shackles_upgraded",
+   "id": "army_104",
+   "name": "Blood God's Shackles",
+   "source": "wh3_dlc26_army_abilities_blood_gods_shackles_upgraded",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc26_army_abilities_boiling_cauldron",
+   "id": "army_105",
+   "name": "Boiling Cauldron",
+   "source": "wh3_dlc26_army_abilities_boiling_cauldron",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc26_army_abilities_da_plan_foot_of_gork",
+   "id": "army_106",
+   "name": "Foot of Gork",
+   "source": "wh3_dlc26_army_abilities_da_plan_foot_of_gork",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc26_army_abilities_gorbads_big_waaagh",
+   "id": "army_107",
+   "name": "Gorbad's Big Waaagh!",
+   "source": "wh3_dlc26_army_abilities_gorbads_big_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh3_dlc26_army_abilities_gorbads_waaagh",
+   "id": "army_108",
+   "name": "Gorbad's Waaagh!",
+   "source": "wh3_dlc26_army_abilities_gorbads_waaagh",
+   "uses": -1
+  },
+  {
+   "army": "wh3_dlc26_army_abilities_khornes_wrath",
+   "id": "army_109",
+   "name": "Khorne's Wrath",
+   "source": "wh3_dlc26_army_abilities_khornes_wrath",
+   "uses": -1
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_asuryans_fury",
+   "id": "army_110",
+   "name": "Asur Fire II",
+   "source": "wh3_dlc27_army_abilities_asuryans_fury",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_asuryans_rage",
+   "id": "army_111",
+   "name": "Asur Fire I",
+   "source": "wh3_dlc27_army_abilities_asuryans_rage",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_asuryans_wrath",
+   "id": "army_112",
+   "name": "Asur Fire III",
+   "source": "wh3_dlc27_army_abilities_asuryans_wrath",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_decadence_in_praise_of_sla_i",
+   "id": "army_113",
+   "name": "Titanic Exultation",
+   "source": "wh3_dlc27_army_abilities_decadence_in_praise_of_sla_i",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_dragonship_assault",
+   "id": "army_114",
+   "name": "Dragonship Assault",
+   "source": "wh3_dlc27_army_abilities_dragonship_assault",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_dragonship_blitz",
+   "id": "army_115",
+   "name": "Dragonship Blitz",
+   "source": "wh3_dlc27_army_abilities_dragonship_blitz",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_dragonship_volley",
+   "id": "army_116",
+   "name": "Dragonship Volley",
+   "source": "wh3_dlc27_army_abilities_dragonship_volley",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_sayl_manipulations_spawn_shaman_death",
+   "id": "army_117",
+   "name": "Shamanistic Ritual (Death)",
+   "source": "wh3_dlc27_army_abilities_sayl_manipulations_spawn_shaman_death",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_sayl_manipulations_spawn_shaman_fire",
+   "id": "army_118",
+   "name": "Shamanistic Ritual (Fire)",
+   "source": "wh3_dlc27_army_abilities_sayl_manipulations_spawn_shaman_fire",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_sayl_manipulations_spawn_shaman_metal",
+   "id": "army_119",
+   "name": "Shamanistic Ritual (Metal)",
+   "source": "wh3_dlc27_army_abilities_sayl_manipulations_spawn_shaman_metal",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_ships_of_the_line",
+   "id": "army_120",
+   "name": "Ships of the Line",
+   "source": "wh3_dlc27_army_abilities_ships_of_the_line",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_abilities_war_supplies",
+   "id": "army_121",
+   "name": "War Supplies",
+   "source": "wh3_dlc27_army_abilities_war_supplies",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_high_magic_apotheosis",
+   "id": "army_122",
+   "name": "Apotheosis",
+   "source": "wh3_dlc27_army_high_magic_apotheosis",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_high_magic_hand_of_glory",
+   "id": "army_123",
+   "name": "Hand of Glory",
+   "source": "wh3_dlc27_army_high_magic_hand_of_glory",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc27_army_high_magic_tempest",
+   "id": "army_124",
+   "name": "Tempest",
+   "source": "wh3_dlc27_army_high_magic_tempest",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_mark_plague_spawned_i",
+   "id": "army_125",
+   "name": "Mouldering Fortification",
+   "source": "wh3_dlc29_army_abilities_mark_plague_spawned",
+   "uses": -1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_mark_rot_forged_legionaries_i",
+   "id": "army_126",
+   "name": "Mark of the Rot-Forged Legionaries",
+   "source": "wh3_dlc29_army_abilities_mark_rot_forged_legionaries",
+   "uses": -1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_pestilential_bombardment",
+   "id": "army_127",
+   "name": "Bubonic Broadside",
+   "source": "wh3_dlc29_army_abilities_pestilential_bombardment",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_rotborne_summon_plague_drones",
+   "id": "army_128",
+   "name": "Summon Plague Drones",
+   "source": "wh3_dlc29_army_abilities_rotborne_summon_plague_drones",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_rotborne_summon_plague_drones_1",
+   "id": "army_129",
+   "name": "Summon Plague Drones (Death's heads)",
+   "source": "wh3_dlc29_army_abilities_rotborne_summon_plague_drones_1",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_crypt_horrors",
+   "id": "army_130",
+   "name": "Ryze: Crypt Horrors",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_crypt_horrors",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_grave_guard",
+   "id": "army_131",
+   "name": "Ryze: Grave Guard",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_grave_guard",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_grave_guard_endless",
+   "id": "army_132",
+   "name": "Ryze: Grave Guard",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_grave_guard_endless",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_khemrian_warsphinx",
+   "id": "army_133",
+   "name": "Ryze: Khemrian Warsphinx",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_khemrian_warsphinx",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_khemric_titan",
+   "id": "army_134",
+   "name": "Ryze: Khemric Titan",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_khemric_titan",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_mournguls",
+   "id": "army_135",
+   "name": "Ryze: Mournguls",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_mournguls",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_necrofex_colossus",
+   "id": "army_136",
+   "name": "Ryze: Necrofex Colossus",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_necrofex_colossus",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_nehekharan_warriors",
+   "id": "army_137",
+   "name": "Ryze: Nehekharan Warriors",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_nehekharan_warriors",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_rotting_prometheans_gunnery_mob",
+   "id": "army_138",
+   "name": "Ryze: Rotting Prometheans (Gunnery Mob)",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_rotting_prometheans_gunnery_mob",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_spirit_host",
+   "id": "army_139",
+   "name": "Ryze: Spirit Host",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_spirit_host",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_terrorgheist",
+   "id": "army_140",
+   "name": "Ryze: Terrorgheist",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_terrorgheist",
+   "uses": 1
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_ushabti",
+   "id": "army_141",
+   "name": "Ryze: Ushabti",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_ushabti",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_zombie_pirate_gunnery_mob_bombers",
+   "id": "army_142",
+   "name": "Ryze: Zombie Pirate Gunnery Mob (Bombers)",
+   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_zombie_pirate_gunnery_mob_bombers",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_scruten_clanstone",
+   "id": "army_143",
+   "name": "Scruten Clanstone",
+   "source": "wh3_dlc29_army_abilities_scruten_clanstone",
+   "uses": 3
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_stormvermin_menace_below",
+   "id": "army_144",
+   "name": "The Menace Below (Stormvermin)",
+   "source": "wh3_dlc29_army_abilities_stormvermin_menace_below",
+   "uses": 2
+  },
+  {
+   "army": "wh3_dlc29_army_abilities_unleash",
+   "id": "army_145",
+   "name": "Unleash",
+   "source": "wh3_dlc29_army_abilities_unleash",
+   "uses": 1
+  },
+  {
+   "army": "wh3_main_abilities_call_horse_archers",
+   "id": "army_146",
+   "name": "Oblast Outriders",
+   "source": "wh3_main_abilities_call_horse_archers",
+   "uses": 2
+  },
+  {
+   "army": "wh3_main_army_abilities_ancestral_warriors",
+   "id": "army_147",
+   "name": "Ancestral Warriors",
+   "source": "wh3_main_army_abilities_ancestral_warriors",
+   "uses": 1
+  },
+  {
+   "army": "wh3_main_army_abilities_arcane_surge",
+   "id": "army_148",
+   "name": "Arcane Surge",
+   "source": "wh3_main_army_abilities_arcane_surge",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_blade_of_khorne",
+   "id": "army_149",
+   "name": "Blade of Khorne",
+   "source": "wh3_main_army_abilities_blade_of_khorne",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_bolt_of_change",
+   "id": "army_150",
+   "name": "Bolt of Change",
+   "source": "wh3_main_army_abilities_bolt_of_change",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_celestial_intervention",
+   "id": "army_151",
+   "name": "Celestial Intervention",
+   "source": "wh3_main_army_abilities_celestial_intervention",
+   "uses": 1
+  },
+  {
+   "army": "wh3_main_army_abilities_curse_of_the_slug",
+   "id": "army_152",
+   "name": "Curse of the Slug",
+   "source": "wh3_main_army_abilities_curse_of_the_slug",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_fascination",
+   "id": "army_153",
+   "name": "Fascination",
+   "source": "wh3_main_army_abilities_fascination",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_fecundity",
+   "id": "army_154",
+   "name": "Fecundity",
+   "source": "wh3_main_army_abilities_fecundity",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_gluttony",
+   "id": "army_155",
+   "name": "Gluttony",
+   "source": "wh3_main_army_abilities_gluttony",
+   "uses": 1
+  },
+  {
+   "army": "wh3_main_army_abilities_horn_of_khorne",
+   "id": "army_156",
+   "name": "Horn of Khorne",
+   "source": "wh3_main_army_abilities_horn_of_khorne",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_narcissism",
+   "id": "army_157",
+   "name": "Narcissism",
+   "source": "wh3_main_army_abilities_narcissism",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_relentless_rage",
+   "id": "army_158",
+   "name": "Relentless Rage",
+   "source": "wh3_main_army_abilities_relentless_rage",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_rot_glorious_rot",
+   "id": "army_159",
+   "name": "Rot, Glorious Rot",
+   "source": "wh3_main_army_abilities_rot_glorious_rot",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_stoneshaker",
+   "id": "army_160",
+   "name": "Stoneshaker",
+   "source": "wh3_main_army_abilities_stoneshaker",
+   "uses": 3
+  },
+  {
+   "army": "wh3_main_army_abilities_storm_of_fire",
+   "id": "army_161",
+   "name": "Storm of Fire",
+   "source": "wh3_main_army_abilities_storm_of_fire",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_summoned_from_beyond_daemon_prince",
+   "id": "army_162",
+   "name": "Summoned from Beyond",
+   "source": "wh3_main_army_abilities_summoned_from_beyond_daemon_prince",
+   "uses": 10
+  },
+  {
+   "army": "wh3_main_army_abilities_sweet_sorrow",
+   "id": "army_163",
+   "name": "Sweet Sorrow",
+   "source": "wh3_main_army_abilities_sweet_sorrow",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_army_abilities_the_bitterness_of_winter",
+   "id": "army_164",
+   "name": "The Bitterness of Winter",
+   "source": "wh3_main_army_abilities_the_bitterness_of_winter",
+   "uses": 3
+  },
+  {
+   "army": "wh3_main_army_abilities_the_land_awakened",
+   "id": "army_165",
+   "name": "The Land Awakened",
+   "source": "wh3_main_army_abilities_the_land_awakened",
+   "uses": 1
+  },
+  {
+   "army": "wh3_main_army_abilities_thunder_charge",
+   "id": "army_166",
+   "name": "Thunder Charge",
+   "source": "wh3_main_army_abilities_thunder_charge",
+   "uses": 2
+  },
+  {
+   "army": "wh3_main_army_abilities_wrath_of_the_bear",
+   "id": "army_167",
+   "name": "Wrath of the Bear",
+   "source": "wh3_main_army_abilities_wrath_of_the_bear",
+   "uses": 3
+  },
+  {
+   "army": "wh3_main_cataclysm_beasts_merciws_monstrous_regiment",
+   "id": "army_168",
+   "name": "Merciw's Monstrous Regiment",
+   "source": "wh3_main_cataclysm_beasts_merciws_monstrous_regiment",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_cataclysm_death_ashes_and_dust",
+   "id": "army_169",
+   "name": "Ashes & Dust",
+   "source": "wh3_main_cataclysm_death_ashes_and_dust",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_cataclysm_fire_magma_storm",
+   "id": "army_170",
+   "name": "Magma Storm",
+   "source": "wh3_main_cataclysm_fire_magma_storm",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_cataclysm_heavens_thorsens_thunderstorm",
+   "id": "army_171",
+   "name": "Thorsen's Thunderstorm",
+   "source": "wh3_main_cataclysm_heavens_thorsens_thunderstorm",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_cataclysm_khorne_greater_gate_of_khorne",
+   "id": "army_172",
+   "name": "Greater Gate of Khorne",
+   "source": "wh3_main_cataclysm_khorne_greater_gate_of_khorne",
+   "uses": 1
+  },
+  {
+   "army": "wh3_main_cataclysm_life_storm_of_renewal",
+   "id": "army_173",
+   "name": "Storm of Renewal",
+   "source": "wh3_main_cataclysm_life_storm_of_renewal",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_cataclysm_light_time_amok",
+   "id": "army_174",
+   "name": "Time Amok",
+   "source": "wh3_main_cataclysm_light_time_amok",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_cataclysm_metal_gehennas_golden_globe",
+   "id": "army_175",
+   "name": "Gehenna's Golden Globe",
+   "source": "wh3_main_cataclysm_metal_gehennas_golden_globe",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_cataclysm_shadow_dance_of_despair",
+   "id": "army_176",
+   "name": "Dance of Despair",
+   "source": "wh3_main_cataclysm_shadow_dance_of_despair",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_prisoners_butcher",
+   "id": "army_177",
+   "name": "Meat Feast",
+   "source": "wh3_main_prisoners_butcher",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_prisoners_dismember",
+   "id": "army_178",
+   "name": "Dismember",
+   "source": "wh3_main_prisoners_dismember",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_prisoners_massacre",
+   "id": "army_179",
+   "name": "Massacre",
+   "source": "wh3_main_prisoners_massacre",
+   "uses": -1
+  },
+  {
+   "army": "wh3_main_spell_tempest_biting_wind_army",
+   "id": "army_180",
+   "name": "Biting Wind",
+   "source": "wh3_main_spell_tempest_biting_wind_army",
+   "uses": 1
+  },
+  {
+   "army": "wh3_pro10_army_abilities_diabolical_puppetry",
+   "id": "army_181",
+   "name": "Diabolical Puppetry",
+   "source": "wh3_pro10_army_abilities_diabolical_puppetry",
+   "uses": -1
+  },
+  {
+   "army": "wh3_pro10_army_abilities_inevitable_fate",
+   "id": "army_182",
+   "name": "Inevitable Fate",
+   "source": "wh3_pro10_army_abilities_inevitable_fate",
+   "uses": -1
+  },
+  {
+   "army": "wh3_pro10_army_abilities_tempest_of_blue_flame",
+   "id": "army_183",
+   "name": "Tempest of Blue Flame",
+   "source": "wh3_pro10_army_abilities_tempest_of_blue_flame",
+   "uses": -1
+  }
+ ],
+ "bound": [
+  {
+   "id": "bound_001",
+   "name": "Arnzipal's Black Horror",
+   "source": "wh2_dlc10_item_bound_arnizipals_black_horror",
+   "uses": 1
+  },
+  {
+   "id": "bound_002",
+   "name": "Assault of Stone",
+   "source": "wh2_dlc10_item_bound_assault_of_stone",
+   "uses": 1
+  },
+  {
+   "id": "bound_003",
+   "name": "Blast",
+   "source": "wh2_dlc10_item_bound_blast",
+   "uses": 1
+  },
+  {
+   "id": "bound_004",
+   "name": "Lesser Doombolt",
+   "source": "wh2_dlc10_spell_bound_lesser_doombolt",
+   "uses": 2
+  },
+  {
+   "id": "bound_005",
+   "name": "Fiery Convocation",
+   "source": "wh2_dlc10_spell_bound_magic_fiery_convocation",
+   "uses": 2
+  },
+  {
+   "id": "bound_006",
+   "name": "Soul Stealer",
+   "source": "wh2_dlc10_spell_bound_soul_stealer_ror",
+   "uses": 1
+  },
+  {
+   "id": "bound_007",
+   "name": "Soulblight",
+   "source": "wh2_dlc10_spell_bound_soulblight",
+   "uses": 2
+  },
+  {
+   "id": "bound_008",
+   "name": "Word of Pain",
+   "source": "wh2_dlc10_spell_bound_word_of_pain",
+   "uses": 2
+  },
+  {
+   "id": "bound_009",
+   "name": "The Purple Sun of Xereus",
+   "source": "wh2_dlc11_spell_bound_the_purple_sun_of_xereus",
+   "uses": 2
+  },
+  {
+   "id": "bound_010",
+   "name": "Tidecall",
+   "source": "wh2_dlc11_spell_bound_tidecall",
+   "uses": 4
+  },
+  {
+   "id": "bound_011",
+   "name": "Wind Blast",
+   "source": "wh2_dlc11_spell_bound_wind_blast",
+   "uses": 4
+  },
+  {
+   "id": "bound_012",
+   "name": "Warp-Fireball",
+   "source": "wh2_dlc14_spell_bound_warpfireball",
+   "uses": 4
+  },
+  {
+   "id": "bound_013",
+   "name": "Gaze of Nagash",
+   "source": "wh2_dlc15_spell_bound_gaze_of_nagash",
+   "uses": 3
+  },
+  {
+   "id": "bound_014",
+   "name": "Wind of Death",
+   "source": "wh2_dlc15_spell_bound_wind_of_death",
+   "uses": 1
+  },
+  {
+   "id": "bound_015",
+   "name": "Death Frenzy",
+   "source": "wh2_dlc16_spell_bound_death_frenzy",
+   "uses": 1
+  },
+  {
+   "id": "bound_016",
+   "name": "Flesh to Stone",
+   "source": "wh2_dlc16_spell_bound_flesh_to_stone",
+   "uses": 3
+  },
+  {
+   "id": "bound_017",
+   "name": "Regrowth",
+   "source": "wh2_dlc16_spell_bound_regrowth",
+   "uses": 1
+  },
+  {
+   "id": "bound_018",
+   "name": "Lesser Raise Dead",
+   "source": "wh2_dlc16_spell_bound_vampires_lesser_raise_dead",
+   "uses": 1
+  },
+  {
+   "id": "bound_019",
+   "name": "Lesser Banishment",
+   "source": "wh2_dlc17_spell_bound_lesser_banishment",
+   "uses": 1
+  },
+  {
+   "id": "bound_020",
+   "name": "Lesser Chain Lightning",
+   "source": "wh2_dlc17_spell_bound_lesser_chain_lightning",
+   "uses": 1
+  },
+  {
+   "id": "bound_021",
+   "name": "Savage Dominion",
+   "source": "wh2_dlc17_spell_bound_savage_dominion",
+   "uses": 2
+  },
+  {
+   "id": "bound_022",
+   "name": "Shield of Thorns",
+   "source": "wh2_dlc17_spell_bound_shield_of_thorns",
+   "uses": 2
+  },
+  {
+   "id": "bound_023",
+   "name": "Urannon's Thunderbolt",
+   "source": "wh2_dlc17_spell_bound_urannons_thunderbolt",
+   "uses": 2
+  },
+  {
+   "id": "bound_024",
+   "name": "Klad Brakak",
+   "source": "wh2_dlc17_spell_bound_urannons_thunderbolt_upgraded",
+   "uses": -1
+  },
+  {
+   "id": "bound_025",
+   "name": "Gilded Horn of Galon Konook",
+   "source": "wh2_main_item_bound_gilded_horn_of_galon_konook",
+   "uses": 2
+  },
+  {
+   "id": "bound_026",
+   "name": "Pestilent Breath",
+   "source": "wh2_main_mount_bound_pestilent_breath",
+   "uses": -1
+  },
+  {
+   "id": "bound_027",
+   "name": "Scorch",
+   "source": "wh2_main_mount_bound_scorch",
+   "uses": -1
+  },
+  {
+   "id": "bound_028",
+   "name": "Black Staff",
+   "source": "wh2_main_spell_bound_black_staff",
+   "uses": 3
+  },
+  {
+   "id": "bound_029",
+   "name": "Embers of the Phoenix",
+   "source": "wh2_main_spell_bound_embers_of_the_phoenix",
+   "uses": 3
+  },
+  {
+   "id": "bound_030",
+   "name": "Hand of Gods",
+   "source": "wh2_main_spell_bound_hand_of_gods",
+   "uses": 2
+  },
+  {
+   "id": "bound_031",
+   "name": "Bound Fiery Convocation",
+   "source": "wh2_main_spell_bound_khaines_ring_of_fury",
+   "uses": 2
+  },
+  {
+   "id": "bound_032",
+   "name": "Radiant Gem of Hoeth",
+   "source": "wh2_main_spell_bound_radiant_gem_of_hoeth",
+   "uses": 4
+  },
+  {
+   "id": "bound_033",
+   "name": "Ring of Corin",
+   "source": "wh2_main_spell_bound_ring_of_corin",
+   "uses": 2
+  },
+  {
+   "id": "bound_034",
+   "name": "Rod of the Storm",
+   "source": "wh2_main_spell_bound_rod_of_the_storm",
+   "uses": 3
+  },
+  {
+   "id": "bound_035",
+   "name": "Rubric of Dark Dimensions",
+   "source": "wh2_main_spell_bound_rubric_of_dark_dimensions",
+   "uses": 2
+  },
+  {
+   "id": "bound_036",
+   "name": "The Gem of Sunfire",
+   "source": "wh2_main_spell_bound_the_gem_of_sunfire",
+   "uses": 1
+  },
+  {
+   "id": "bound_037",
+   "name": "The Seerstaff of Saphery",
+   "source": "wh2_main_spell_bound_the_seerstaff_of_saphery",
+   "uses": 4
+  },
+  {
+   "id": "bound_038",
+   "name": "Tome of Furion",
+   "source": "wh2_main_spell_bound_tome_of_furion",
+   "uses": 4
+  },
+  {
+   "id": "bound_039",
+   "name": "Wand of the Kharaidon",
+   "source": "wh2_main_spell_bound_wand_of_the_kharaidon",
+   "uses": 2
+  },
+  {
+   "id": "bound_040",
+   "name": "Whip of Misery",
+   "source": "wh2_main_spell_bound_whip_of_agony",
+   "uses": 3
+  },
+  {
+   "id": "bound_041",
+   "name": "Reaver Bow",
+   "source": "wh2_main_weapon_bound_reaver_bow",
+   "uses": 3
+  },
+  {
+   "id": "bound_042",
+   "name": "Winged Staff",
+   "source": "wh2_main_weapon_bound_winged_staff",
+   "uses": 4
+  },
+  {
+   "id": "bound_043",
+   "name": "Ashes & Dust",
+   "source": "wh3_dlc20_cataclysm_bound_ashes_and_dust",
+   "uses": 1
+  },
+  {
+   "id": "bound_044",
+   "name": "Dance of Despair",
+   "source": "wh3_dlc20_cataclysm_bound_dance_of_despair",
+   "uses": 1
+  },
+  {
+   "id": "bound_045",
+   "name": "Gehenna's Golden Globe",
+   "source": "wh3_dlc20_cataclysm_bound_gehennas_golden_globe",
+   "uses": 1
+  },
+  {
+   "id": "bound_046",
+   "name": "Magma Storm",
+   "source": "wh3_dlc20_cataclysm_bound_magma_storm",
+   "uses": 1
+  },
+  {
+   "id": "bound_047",
+   "name": "Merciw's Monstrous Regiment",
+   "source": "wh3_dlc20_cataclysm_bound_merciws_monstrous_regiment",
+   "uses": 1
+  },
+  {
+   "id": "bound_048",
+   "name": "Storm of Renewal",
+   "source": "wh3_dlc20_cataclysm_bound_storm_of_renewal",
+   "uses": 1
+  },
+  {
+   "id": "bound_049",
+   "name": "Thorsen's Thunderstorm",
+   "source": "wh3_dlc20_cataclysm_bound_thorsens_thunderstorm",
+   "uses": 1
+  },
+  {
+   "id": "bound_050",
+   "name": "Time Amok",
+   "source": "wh3_dlc20_cataclysm_bound_time_amok",
+   "uses": 1
+  },
+  {
+   "id": "bound_051",
+   "name": "Fleshy Abundance",
+   "source": "wh3_dlc20_spell_bound_fleshy_abundance",
+   "uses": 1
+  },
+  {
+   "id": "bound_052",
+   "name": "Gehenna's Golden Hounds",
+   "source": "wh3_dlc20_spell_bound_gehennas_golden_hounds",
+   "uses": 1
+  },
+  {
+   "id": "bound_053",
+   "name": "Infernal Gateway",
+   "source": "wh3_dlc20_spell_bound_infernal_gateway",
+   "uses": 1
+  },
+  {
+   "id": "bound_054",
+   "name": "Pink Fire of Tzeentch",
+   "source": "wh3_dlc20_spell_bound_pink_fire_of_tzeentch",
+   "uses": 2
+  },
+  {
+   "id": "bound_055",
+   "name": "Slicing Shards",
+   "source": "wh3_dlc20_spell_bound_slicing_shards",
+   "uses": 1
+  },
+  {
+   "id": "bound_056",
+   "name": "Stream of Corruption",
+   "source": "wh3_dlc20_spell_bound_stream_of_corruption",
+   "uses": 2
+  },
+  {
+   "id": "bound_057",
+   "name": "The Penumbral Pendulum",
+   "source": "wh3_dlc20_spell_bound_the_penumbral_pendulum",
+   "uses": 1
+  },
+  {
+   "id": "bound_058",
+   "name": "Breath of Hatred",
+   "source": "wh3_dlc23_bound_abilities_breath_of_hatred",
+   "uses": 3
+  },
+  {
+   "id": "bound_059",
+   "name": "Burning Wrath",
+   "source": "wh3_dlc23_spell_bound_burning_wrath",
+   "uses": 3
+  },
+  {
+   "id": "bound_060",
+   "name": "Hell Hammer",
+   "source": "wh3_dlc23_spell_bound_hell_hammer",
+   "uses": 1
+  },
+  {
+   "id": "bound_061",
+   "name": "Missile Mirror",
+   "source": "wh3_dlc24_unit_bound_missile_mirror",
+   "uses": 2
+  },
+  {
+   "id": "bound_062",
+   "name": "The Burning Head",
+   "source": "wh3_dlc25_spell_bound_fire_the_burning_head",
+   "uses": 1
+  },
+  {
+   "id": "bound_063",
+   "name": "Bonecrusher",
+   "source": "wh3_dlc26_spell_bound_bonecrusher",
+   "uses": 1
+  },
+  {
+   "id": "bound_064",
+   "name": "Trollguts",
+   "source": "wh3_dlc26_spell_bound_trollguts",
+   "uses": 1
+  },
+  {
+   "id": "bound_065",
+   "name": "Acquiescence",
+   "source": "wh3_dlc27_spell_bound_acquiescence",
+   "uses": 2
+  },
+  {
+   "id": "bound_066",
+   "name": "Fireball",
+   "source": "wh3_dlc27_spell_bound_fireball_upgraded",
+   "uses": 6
+  },
+  {
+   "id": "bound_067",
+   "name": "Doom & Darkness",
+   "source": "wh3_dlc27_spell_bound_runecaller_death_doom_and_darkness",
+   "uses": 3
+  },
+  {
+   "id": "bound_068",
+   "name": "Transformation of Kadon",
+   "source": "wh3_dlc27_spell_bound_transformation_of_kadon",
+   "uses": 1
+  },
+  {
+   "id": "bound_069",
+   "name": "Fog of the Damned",
+   "source": "wh3_dlc29_bound_deep_fog_of_the_damned",
+   "uses": 2
+  },
+  {
+   "id": "bound_070",
+   "name": "Lesser Awakening from the Grave",
+   "source": "wh3_dlc29_bound_spell_vampires_raise_dead_upgraded",
+   "uses": 2
+  },
+  {
+   "id": "bound_071",
+   "name": "Curse of Years",
+   "source": "wh3_dlc29_spell_bound_curse_of_years",
+   "uses": 2
+  },
+  {
+   "id": "bound_072",
+   "name": "Eye for an Eye",
+   "source": "wh3_dlc29_spell_bound_eye_jabber",
+   "uses": -1
+  },
+  {
+   "id": "bound_073",
+   "name": "Invocation of Nehek",
+   "source": "wh3_dlc29_spell_bound_invocation_of_nehek",
+   "uses": 2
+  },
+  {
+   "id": "bound_074",
+   "name": "Okkam's Mindrazor",
+   "source": "wh3_dlc29_spell_bound_okkams_mindrazor",
+   "uses": 2
+  },
+  {
+   "id": "bound_075",
+   "name": "Irresistible Plague!",
+   "source": "wh3_dlc29_spell_bound_plague",
+   "uses": 1
+  },
+  {
+   "id": "bound_076",
+   "name": "Plaguemaster",
+   "source": "wh3_dlc29_spell_bound_plaguemaster",
+   "uses": 2
+  },
+  {
+   "id": "bound_077",
+   "name": "Ferocious Fury of Ulric",
+   "source": "wh3_dlc29_spell_bound_prayer_ferocious_fury_of_ulric",
+   "uses": -1
+  },
+  {
+   "id": "bound_078",
+   "name": "Fury of Ulric",
+   "source": "wh3_dlc29_spell_bound_prayer_fury_of_ulric",
+   "uses": -1
+  },
+  {
+   "id": "bound_079",
+   "name": "Skitterleap",
+   "source": "wh3_dlc29_spell_bound_skitterleap",
+   "uses": 3
+  },
+  {
+   "id": "bound_080",
+   "name": "The Dreaded Thirteenth Spell",
+   "source": "wh3_dlc29_spell_bound_the_dreaded_thirteenth",
+   "uses": 1
+  },
+  {
+   "id": "bound_081",
+   "name": "The Soulstealer",
+   "source": "wh3_dlc29_spell_bound_undeath_khizaar_the_soulstealer",
+   "uses": 1
+  },
+  {
+   "id": "bound_082",
+   "name": "Breath of Darkness",
+   "source": "wh3_dlc29_spell_bound_undeath_morkharn_breath_of_darkness",
+   "uses": 2
+  },
+  {
+   "id": "bound_083",
+   "name": "Breath of Darkness",
+   "source": "wh3_dlc29_spell_bound_undeath_morkharn_breath_of_darkness_upgraded",
+   "uses": 2
+  },
+  {
+   "id": "bound_084",
+   "name": "The Hand of Dust",
+   "source": "wh3_dlc29_spell_bound_undeath_sulekhim_hand_of_dust",
+   "uses": 2
+  },
+  {
+   "id": "bound_085",
+   "name": "The Abyssal Swarm",
+   "source": "wh3_dlc29_spell_bound_undeath_the_abyssal_swarm",
+   "uses": 2
+  },
+  {
+   "id": "bound_086",
+   "name": "Master of Lightning",
+   "source": "wh3_dlc29_spell_bound_warp_lightning",
+   "uses": 3
+  },
+  {
+   "id": "bound_087",
+   "name": "Celestial Comet",
+   "source": "wh3_main_mount_bound_celestial_comet",
+   "uses": 2
+  },
+  {
+   "id": "bound_088",
+   "name": "Celestial Lightning",
+   "source": "wh3_main_mount_bound_celestial_lightning",
+   "uses": 2
+  },
+  {
+   "id": "bound_089",
+   "name": "Ancestral Warriors",
+   "source": "wh3_main_spell_bound_ancestral_warriors",
+   "uses": 2
+  },
+  {
+   "id": "bound_090",
+   "name": "Banishment",
+   "source": "wh3_main_spell_bound_banishment",
+   "uses": 1
+  },
+  {
+   "id": "bound_091",
+   "name": "Cascading Fire Cloak",
+   "source": "wh3_main_spell_bound_cascading_fire_cloak",
+   "uses": 2
+  },
+  {
+   "id": "bound_092",
+   "name": "Comet of Casandora",
+   "source": "wh3_main_spell_bound_comet_of_casandora",
+   "uses": 1
+  },
+  {
+   "id": "bound_093",
+   "name": "Earth Blood",
+   "source": "wh3_main_spell_bound_earth_blood",
+   "uses": 2
+  },
+  {
+   "id": "bound_094",
+   "name": "The Enfeebling Foe",
+   "source": "wh3_main_spell_bound_enfeebling_foe",
+   "uses": 2
+  },
+  {
+   "id": "bound_095",
+   "name": "Flame Storm",
+   "source": "wh3_main_spell_bound_flame_storm",
+   "uses": 1
+  },
+  {
+   "id": "bound_096",
+   "name": "Flock of Doom",
+   "source": "wh3_main_spell_bound_flock_of_doom",
+   "uses": 2
+  },
+  {
+   "id": "bound_097",
+   "name": "Harmonic Convergence",
+   "source": "wh3_main_spell_bound_harmonic_convergence",
+   "uses": 2
+  },
+  {
+   "id": "bound_098",
+   "name": "Lash of Slaanesh",
+   "source": "wh3_main_spell_bound_lash_of_slaanesh",
+   "uses": 2
+  },
+  {
+   "id": "bound_099",
+   "name": "Pha's Protection",
+   "source": "wh3_main_spell_bound_phas_protection",
+   "uses": 2
+  },
+  {
+   "id": "bound_100",
+   "name": "Pit of Shades",
+   "source": "wh3_main_spell_bound_pit_of_shades",
+   "uses": 1
+  },
+  {
+   "id": "bound_101",
+   "name": "Plague of Rust",
+   "source": "wh3_main_spell_bound_plague_of_rust",
+   "uses": 2
+  },
+  {
+   "id": "bound_102",
+   "name": "Rancid Visitations",
+   "source": "wh3_main_spell_bound_rancid_visitations",
+   "uses": 2
+  },
+  {
+   "id": "bound_103",
+   "name": "Spirit Leech",
+   "source": "wh3_main_spell_bound_spirit_leech",
+   "uses": 2
+  },
+  {
+   "id": "bound_104",
+   "name": "The Curse of Anraheir",
+   "source": "wh3_main_spell_bound_the_curse_of_anraheir",
+   "uses": 1
+  },
+  {
+   "id": "bound_105",
+   "name": "The Dwellers Below",
+   "source": "wh3_main_spell_bound_the_dwellers_below",
+   "uses": 1
+  },
+  {
+   "id": "bound_106",
+   "name": "The Fate of Bjuna",
+   "source": "wh3_main_spell_bound_the_fate_of_bjuna",
+   "uses": 1
+  },
+  {
+   "id": "bound_107",
+   "name": "Transmutation of Lead",
+   "source": "wh3_main_spell_bound_transmutation_of_lead",
+   "uses": 1
+  },
+  {
+   "id": "bound_108",
+   "name": "Wall of Wind & Fire",
+   "source": "wh3_main_spell_bound_wall_of_wind_and_fire",
+   "uses": 2
+  },
+  {
+   "id": "bound_109",
+   "name": "Call of Tor",
+   "source": "wh3_twa07_spell_bound_call_of_tor",
+   "uses": -1
+  },
+  {
+   "id": "bound_110",
+   "name": "Heart of Winter",
+   "source": "wh3_twa08_spell_bound_heart_of_winter_elemental_bear_ror",
+   "uses": 1
+  },
+  {
+   "id": "bound_111",
+   "name": "Searing Doom",
+   "source": "wh3_twa08_spell_bound_searing_doom",
+   "uses": 2
+  },
+  {
+   "id": "bound_112",
+   "name": "The Withering",
+   "source": "wh3_twa08_spell_bound_the_withering",
+   "uses": 1
+  },
+  {
+   "id": "bound_113",
+   "name": "The Amber Spear",
+   "source": "wh_dlc03_spell_bound_the_amber_spear",
+   "uses": 3
+  },
+  {
+   "id": "bound_114",
+   "name": "Viletide",
+   "source": "wh_dlc03_spell_bound_viletide",
+   "uses": 4
+  },
+  {
+   "id": "bound_115",
+   "name": "Grand Hammer of Sigmar",
+   "source": "wh_dlc04_spell_bound_hammer_of_sigmar_upgraded",
+   "uses": -1
+  },
+  {
+   "id": "bound_116",
+   "name": "Net of Amyntok",
+   "source": "wh_dlc04_spell_bound_net_of_amyntok",
+   "uses": 3
+  },
+  {
+   "id": "bound_117",
+   "name": "Grand Shield of Faith",
+   "source": "wh_dlc04_spell_bound_shield_of_faith_upgraded",
+   "uses": -1
+  },
+  {
+   "id": "bound_118",
+   "name": "Grand Soulfire",
+   "source": "wh_dlc04_spell_bound_soulfire_upgraded",
+   "uses": -1
+  },
+  {
+   "id": "bound_119",
+   "name": "Vindictive Glare",
+   "source": "wh_dlc06_spell_bound_vindictive_glare",
+   "uses": 4
+  },
+  {
+   "id": "bound_120",
+   "name": "Birona's Timewarp",
+   "source": "wh_main_spell_bound_bironas_timewarp",
+   "uses": 1
+  },
+  {
+   "id": "bound_121",
+   "name": "Book of Arkhan",
+   "source": "wh_main_spell_bound_book_of_arkhan",
+   "uses": 4
+  },
+  {
+   "id": "bound_122",
+   "name": "Chain Lightning",
+   "source": "wh_main_spell_bound_chain_lightning_ror",
+   "uses": 1
+  },
+  {
+   "id": "bound_123",
+   "name": "Fireball",
+   "source": "wh_main_spell_bound_fireball",
+   "uses": 4
+  },
+  {
+   "id": "bound_124",
+   "name": "Hammer of Sigmar",
+   "source": "wh_main_spell_bound_hammer_of_sigmar",
+   "uses": -1
+  },
+  {
+   "id": "bound_125",
+   "name": "Piercing Bolts of Burning",
+   "source": "wh_main_spell_bound_piercing_bolts_of_burning",
+   "uses": 4
+  },
+  {
+   "id": "bound_126",
+   "name": "Shield of Faith",
+   "source": "wh_main_spell_bound_shield_of_faith",
+   "uses": -1
+  },
+  {
+   "id": "bound_127",
+   "name": "Soulfire",
+   "source": "wh_main_spell_bound_soulfire",
+   "uses": -1
+  },
+  {
+   "id": "bound_128",
+   "name": "Staff of Damnation",
+   "source": "wh_main_spell_bound_staff_of_damnation",
+   "uses": 3
+  }
+ ],
+ "lore": [
+  {
+   "id": "lore_001",
+   "name": "Djaf's Incantation of Cursed Blades",
+   "source": "wh2_dlc09_spell_nehekhara_djafs_incantation_of_cursed_blades",
+   "uses": 3,
+   "winds": 3
+  },
+  {
+   "id": "lore_002",
+   "name": "Neru's Incantation of Protection",
+   "source": "wh2_dlc09_spell_nehekhara_nerus_incantation_of_protection",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_003",
+   "name": "Ptra's Incantation of Righteous Smiting",
+   "source": "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_004",
+   "name": "Sakhmet's Incantation of the Skullstorm",
+   "source": "wh2_dlc09_spell_nehekhara_sakhmets_incantation_of_the_skullstorm",
+   "uses": 2,
+   "winds": 10
+  },
+  {
+   "id": "lore_005",
+   "name": "Usekhp's Incantation of Desiccation",
+   "source": "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation",
+   "uses": 1,
+   "winds": 15
+  },
+  {
+   "id": "lore_006",
+   "name": "Usirian's Incantation of Vengeance",
+   "source": "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance",
+   "uses": 2,
+   "winds": 10
+  },
+  {
+   "id": "lore_007",
+   "name": "Denizens of the Deep",
+   "source": "wh2_dlc11_spell_deep_denizens_of_the_deep",
+   "uses": 2,
+   "winds": 12
+  },
+  {
+   "id": "lore_008",
+   "name": "Vangheist's Revenge",
+   "source": "wh2_dlc11_spell_deep_ghost_ship",
+   "uses": 1,
+   "winds": 20
+  },
+  {
+   "id": "lore_009",
+   "name": "Kraken's Pull",
+   "source": "wh2_dlc11_spell_deep_krakens_pull",
+   "uses": 1,
+   "winds": 15
+  },
+  {
+   "id": "lore_010",
+   "name": "Spiteful Shot",
+   "source": "wh2_dlc11_spell_deep_spiteful_shot",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_011",
+   "name": "Drowned Dead",
+   "source": "wh2_dlc11_spell_vampires_drowned_dead",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_012",
+   "name": "Flensing Ruin",
+   "source": "wh2_dlc14_spell_ruin_flensing_ruin",
+   "uses": 1,
+   "winds": 15
+  },
+  {
+   "id": "lore_013",
+   "name": "Armour of Darkness",
+   "source": "wh2_dlc14_spell_stealth_armour_of_darkness",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_014",
+   "name": "Black Whirlwind",
+   "source": "wh2_dlc14_spell_stealth_black_whirlwind",
+   "uses": 2,
+   "winds": 13
+  },
+  {
+   "id": "lore_015",
+   "name": "Brittle Bone",
+   "source": "wh2_dlc14_spell_stealth_brittle_bone",
+   "uses": 2,
+   "winds": 11
+  },
+  {
+   "id": "lore_016",
+   "name": "Veil of Shadows",
+   "source": "wh2_dlc14_spell_stealth_veil_of_shadows",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_017",
+   "name": "Warp Stars",
+   "source": "wh2_dlc14_spell_stealth_warp_stars",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_018",
+   "name": "Bladewind",
+   "source": "wh2_main_spell_dark_magic_bladewind",
+   "uses": 2,
+   "winds": 11
+  },
+  {
+   "id": "lore_019",
+   "name": "Chillwind",
+   "source": "wh2_main_spell_dark_magic_chillwind",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_020",
+   "name": "Doombolt",
+   "source": "wh2_main_spell_dark_magic_doombolt",
+   "uses": 2,
+   "winds": 9
+  },
+  {
+   "id": "lore_021",
+   "name": "Power of Darkness",
+   "source": "wh2_main_spell_dark_magic_power_of_darkness",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_022",
+   "name": "Apotheosis",
+   "source": "wh2_main_spell_high_magic_apotheosis",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_023",
+   "name": "Arcane Unforging",
+   "source": "wh2_main_spell_high_magic_arcane_unforging",
+   "uses": 2,
+   "winds": 14
+  },
+  {
+   "id": "lore_024",
+   "name": "Hand of Glory",
+   "source": "wh2_main_spell_high_magic_hand_of_glory",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_025",
+   "name": "Soul Quench",
+   "source": "wh2_main_spell_high_magic_soul_quench",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_026",
+   "name": "Tempest",
+   "source": "wh2_main_spell_high_magic_tempest",
+   "uses": 2,
+   "winds": 10
+  },
+  {
+   "id": "lore_027",
+   "name": "Bless with Filth",
+   "source": "wh2_main_spell_plague_bless_with_filth",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_028",
+   "name": "Pestilent Birth",
+   "source": "wh2_main_spell_plague_pestilent_birth",
+   "uses": 2,
+   "winds": 14
+  },
+  {
+   "id": "lore_029",
+   "name": "Plague",
+   "source": "wh2_main_spell_plague_plague",
+   "uses": 2,
+   "winds": 12
+  },
+  {
+   "id": "lore_030",
+   "name": "Vermintide",
+   "source": "wh2_main_spell_plague_vermintide",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_031",
+   "name": "Wither",
+   "source": "wh2_main_spell_plague_wither",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_032",
+   "name": "Crack's Call",
+   "source": "wh2_main_spell_ruin_cracks_call",
+   "uses": 1,
+   "winds": 15
+  },
+  {
+   "id": "lore_033",
+   "name": "Howling Warpgale",
+   "source": "wh2_main_spell_ruin_howling_warpgale",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_034",
+   "name": "Warp Lightning",
+   "source": "wh2_main_spell_ruin_warp_lightning",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_035",
+   "name": "Ash Storm",
+   "source": "wh3_dlc23_spell_hashut_ash_storm",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_036",
+   "name": "Curse of Hashut",
+   "source": "wh3_dlc23_spell_hashut_curse_of_hashut",
+   "uses": 2,
+   "winds": 10
+  },
+  {
+   "id": "lore_037",
+   "name": "Dark Subjugation",
+   "source": "wh3_dlc23_spell_hashut_dark_subjugation",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_038",
+   "name": "Flames of Azgorh",
+   "source": "wh3_dlc23_spell_hashut_flames_of_azgorh",
+   "uses": 1,
+   "winds": 18
+  },
+  {
+   "id": "lore_039",
+   "name": "Curse of the Ancient Witch",
+   "source": "wh3_dlc24_spell_hags_curse_of_the_ancient_witch",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_040",
+   "name": "Cursed Cauldron",
+   "source": "wh3_dlc24_spell_hags_cursed_cauldron",
+   "uses": 1,
+   "winds": 18
+  },
+  {
+   "id": "lore_041",
+   "name": "Malediction of Madness",
+   "source": "wh3_dlc24_spell_hags_malediction_of_madness",
+   "uses": 1,
+   "winds": 16
+  },
+  {
+   "id": "lore_042",
+   "name": "The Forbidden Fens",
+   "source": "wh3_dlc24_spell_hags_the_forbidden_fens",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_043",
+   "name": "Vengeance of Spirits",
+   "source": "wh3_dlc24_spell_hags_vengeance_of_spirits",
+   "uses": 2,
+   "winds": 12
+  },
+  {
+   "id": "lore_044",
+   "name": "Witchbrew",
+   "source": "wh3_dlc24_spell_hags_witchbrew",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_045",
+   "name": "Flensing Haar",
+   "source": "wh3_dlc27_spell_mists_flensing_haar",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_046",
+   "name": "Ladrielle's Shroud",
+   "source": "wh3_dlc27_spell_mists_ladrielles_shroud",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_047",
+   "name": "Mathlann\u2019s Spite",
+   "source": "wh3_dlc27_spell_mists_mathlanns_spite",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_048",
+   "name": "Mistress of the Deeps",
+   "source": "wh3_dlc27_spell_mists_mistress_of_the_deeps",
+   "uses": 2,
+   "winds": 13
+  },
+  {
+   "id": "lore_049",
+   "name": "The Writhing Mist",
+   "source": "wh3_dlc27_spell_mists_the_writhing_mist",
+   "uses": 2,
+   "winds": 10
+  },
+  {
+   "id": "lore_050",
+   "name": "Walk Between Worlds",
+   "source": "wh3_dlc27_spell_mists_walk_between_worlds",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_051",
+   "name": "Raise Dead (Skeleton Warriors)",
+   "source": "wh3_dlc29_bound_spell_vampires_raise_dead",
+   "uses": 2,
+   "winds": 12
+  },
+  {
+   "id": "lore_052",
+   "name": "The Dark Riders",
+   "source": "wh3_dlc29_spell_undeath_akararan_the_dark_riders",
+   "uses": 1,
+   "winds": 18
+  },
+  {
+   "id": "lore_053",
+   "name": "The Harbinger",
+   "source": "wh3_dlc29_spell_undeath_kandorak_the_harbinger",
+   "uses": 1,
+   "winds": 23
+  },
+  {
+   "id": "lore_054",
+   "name": "Braingobbler",
+   "source": "wh3_main_spell_great_maw_braingobbler",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_055",
+   "name": "Bullgorger",
+   "source": "wh3_main_spell_great_maw_bullgorger",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_056",
+   "name": "The Maw",
+   "source": "wh3_main_spell_great_maw_the_maw",
+   "uses": 1,
+   "winds": 18
+  },
+  {
+   "id": "lore_057",
+   "name": "Toothcracker",
+   "source": "wh3_main_spell_great_maw_toothcracker",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_058",
+   "name": "Crystal Sanctuary",
+   "source": "wh3_main_spell_ice_crystal_sanctuary",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_059",
+   "name": "Death Frost",
+   "source": "wh3_main_spell_ice_death_frost",
+   "uses": 2,
+   "winds": 12
+  },
+  {
+   "id": "lore_060",
+   "name": "Frost Blades",
+   "source": "wh3_main_spell_ice_frost_blades",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_061",
+   "name": "Ice Maiden's Kiss",
+   "source": "wh3_main_spell_ice_ice_maidens_kiss",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_062",
+   "name": "Ice Sheet",
+   "source": "wh3_main_spell_ice_ice_sheet",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_063",
+   "name": "Curse of the Leper",
+   "source": "wh3_main_spell_nurgle_curse_of_the_leper",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_064",
+   "name": "Miasma of Pestilence",
+   "source": "wh3_main_spell_nurgle_miasma_of_pestilence",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_065",
+   "name": "Blight Boil",
+   "source": "wh3_main_spell_nurgle_pestilent_pustule",
+   "uses": 2,
+   "winds": 13
+  },
+  {
+   "id": "lore_066",
+   "name": "Hysterical Frenzy",
+   "source": "wh3_main_spell_slaanesh_hysterical_frenzy",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_067",
+   "name": "Pavane of Slaanesh",
+   "source": "wh3_main_spell_slaanesh_pavane_of_slaanesh",
+   "uses": 2,
+   "winds": 14
+  },
+  {
+   "id": "lore_068",
+   "name": "Phantasmagoria",
+   "source": "wh3_main_spell_slaanesh_phantasmagoria",
+   "uses": 1,
+   "winds": 15
+  },
+  {
+   "id": "lore_069",
+   "name": "Biting Wind",
+   "source": "wh3_main_spell_tempest_biting_wind",
+   "uses": 2,
+   "winds": 12
+  },
+  {
+   "id": "lore_070",
+   "name": "Blizzard",
+   "source": "wh3_main_spell_tempest_blizzard",
+   "uses": 1,
+   "winds": 18
+  },
+  {
+   "id": "lore_071",
+   "name": "Gust of True Flight",
+   "source": "wh3_main_spell_tempest_gust_of_true_flight",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_072",
+   "name": "Hailstorm",
+   "source": "wh3_main_spell_tempest_hailstorm",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_073",
+   "name": "Hawks of Miska",
+   "source": "wh3_main_spell_tempest_hawks_of_miska",
+   "uses": 2,
+   "winds": 13
+  },
+  {
+   "id": "lore_074",
+   "name": "Swiftwing",
+   "source": "wh3_main_spell_tempest_swiftwing",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_075",
+   "name": "Blue Fire of Tzeentch",
+   "source": "wh3_main_spell_tzeentch_blue_fire_of_tzeentch",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_076",
+   "name": "Glean Magic",
+   "source": "wh3_main_spell_tzeentch_glean_magic",
+   "uses": 2,
+   "winds": 9
+  },
+  {
+   "id": "lore_077",
+   "name": "Treason of Tzeentch",
+   "source": "wh3_main_spell_tzeentch_treason_of_tzeentch",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_078",
+   "name": "Tzeentch's Firestorm",
+   "source": "wh3_main_spell_tzeentch_tzeentchs_firestorm",
+   "uses": 1,
+   "winds": 15
+  },
+  {
+   "id": "lore_079",
+   "name": "Constellation of the Dragon",
+   "source": "wh3_main_spell_yang_constellation_of_the_dragon",
+   "uses": 1,
+   "winds": 15
+  },
+  {
+   "id": "lore_080",
+   "name": "Dragon's Breath",
+   "source": "wh3_main_spell_yang_dragons_breath",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_081",
+   "name": "Jade Shield",
+   "source": "wh3_main_spell_yang_jade_shield",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_082",
+   "name": "Might of Heaven & Earth",
+   "source": "wh3_main_spell_yang_might_of_heaven_and_earth",
+   "uses": 2,
+   "winds": 10
+  },
+  {
+   "id": "lore_083",
+   "name": "Stone Ground Stance",
+   "source": "wh3_main_spell_yang_stone_ground_stance",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_084",
+   "name": "Blossom Wind",
+   "source": "wh3_main_spell_yin_blossom_wind",
+   "uses": 2,
+   "winds": 9
+  },
+  {
+   "id": "lore_085",
+   "name": "Cloak of Jet",
+   "source": "wh3_main_spell_yin_cloak_of_jet",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_086",
+   "name": "Storm of Shadows",
+   "source": "wh3_main_spell_yin_storm_of_shadows",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_087",
+   "name": "Talons of Night",
+   "source": "wh3_main_spell_yin_talons_of_night",
+   "uses": 1,
+   "winds": 17
+  },
+  {
+   "id": "lore_088",
+   "name": "Pann's Impenetrable Pelt",
+   "source": "wh_dlc03_spell_beasts_panns_impenetrable_pelt",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_089",
+   "name": "Wyssan's Wildform",
+   "source": "wh_dlc03_spell_beasts_wyssans_wildform",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_090",
+   "name": "Bray-Scream",
+   "source": "wh_dlc03_spell_wild_bray_scream",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_091",
+   "name": "Devolve",
+   "source": "wh_dlc03_spell_wild_devolve",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_092",
+   "name": "Mantle of Ghorok",
+   "source": "wh_dlc03_spell_wild_mantle_of_ghorok",
+   "uses": 2,
+   "winds": 9
+  },
+  {
+   "id": "lore_093",
+   "name": "Traitor-Kin",
+   "source": "wh_dlc03_spell_wild_traitor_kin",
+   "uses": 2,
+   "winds": 11
+  },
+  {
+   "id": "lore_094",
+   "name": "Awakening of the Wood",
+   "source": "wh_dlc05_spell_life_awakening_of_the_wood",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_095",
+   "name": "Melkoth's Mystifying Miasma",
+   "source": "wh_dlc05_spell_shadow_melkoths_mystifying_miasma",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_096",
+   "name": "Brain Bursta",
+   "source": "wh_main_spell_big_waaagh_brain_bursta",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_097",
+   "name": "'Eadbutt",
+   "source": "wh_main_spell_big_waaagh_eadbutt",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_098",
+   "name": "'Ere We Go",
+   "source": "wh_main_spell_big_waaagh_ere_we_go",
+   "uses": 2,
+   "winds": 11
+  },
+  {
+   "id": "lore_099",
+   "name": "Fists of Gork",
+   "source": "wh_main_spell_big_waaagh_fists_of_gork",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_100",
+   "name": "Foot of Gork",
+   "source": "wh_main_spell_big_waaagh_foot_of_gork",
+   "uses": 1,
+   "winds": 18
+  },
+  {
+   "id": "lore_101",
+   "name": "Gaze of Mork",
+   "source": "wh_main_spell_big_waaagh_gaze_of_mork",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_102",
+   "name": "Aspect of the Dread Knight",
+   "source": "wh_main_spell_death_aspect_of_the_dreadknight",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_103",
+   "name": "Flaming Sword of Rhuin",
+   "source": "wh_main_spell_fire_flaming_sword_of_rhuin",
+   "uses": 3,
+   "winds": 7
+  },
+  {
+   "id": "lore_104",
+   "name": "Curse of the Midnight Wind",
+   "source": "wh_main_spell_heavens_curse_of_the_midnight_wind",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_105",
+   "name": "Light of Battle",
+   "source": "wh_main_spell_light_light_of_battle",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_106",
+   "name": "Shem's Burning Gaze",
+   "source": "wh_main_spell_light_shems_burning_gaze",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_107",
+   "name": "Curse of Da Bad Moon",
+   "source": "wh_main_spell_lil_waaagh_curse_of_da_bad_moon",
+   "uses": 2,
+   "winds": 11
+  },
+  {
+   "id": "lore_108",
+   "name": "Gork'll Fix It",
+   "source": "wh_main_spell_lil_waaagh_gorkll_fix_it",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_109",
+   "name": "Itchy Nuisance",
+   "source": "wh_main_spell_lil_waaagh_itchy_nuisance",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_110",
+   "name": "Night Shroud",
+   "source": "wh_main_spell_lil_waaagh_night_shroud",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_111",
+   "name": "Sneaky Stabbin'",
+   "source": "wh_main_spell_lil_waaagh_sneaky_stabbin",
+   "uses": 3,
+   "winds": 4
+  },
+  {
+   "id": "lore_112",
+   "name": "Final Transmutation",
+   "source": "wh_main_spell_metal_final_transmutation",
+   "uses": 1,
+   "winds": 17
+  },
+  {
+   "id": "lore_113",
+   "name": "Glittering Robe",
+   "source": "wh_main_spell_metal_glittering_robe",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_114",
+   "name": "Raise Dead",
+   "source": "wh_main_spell_vampires_raise_dead",
+   "uses": 3,
+   "winds": 5
+  },
+  {
+   "id": "lore_115",
+   "name": "Vanhel's Danse Macabre",
+   "source": "wh_main_spell_vampires_vanhels_danse_macabre",
+   "uses": 3,
+   "winds": 4
+  }
+ ]
+}

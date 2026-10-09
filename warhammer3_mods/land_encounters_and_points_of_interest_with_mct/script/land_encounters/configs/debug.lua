@@ -41,10 +41,18 @@ M.smithy_cooldown = {}
 M.smithy_level = {}
 --- Level every Smithy's garrison fights at when a lord tries to seize it, instead of the forge's own, e.g. { 1 } for an easy fight.
 M.smithy_fight_level = {}
+--- Offers a Smith's Commission on every round to each player faction that holds none, instead of every MCT interval, e.g. { true }.
+M.smithy_commission_now = {}
+--- Commission kind every Smithy offers instead of a random one, e.g. { "fetch_star_metal" }.
+M.smithy_commission_kind = {}
 --- Level every Tavern is set to on load instead of its own, e.g. { 3 }.
 M.tavern_level = {}
 --- Contracts every Tavern board posts when it is next rolled, instead of random ones, e.g. { "marked", "chain" }.
 M.tavern_board = {}
+--- Puts hazard pay on every bounty and marked contract of a board rolled while it is set, e.g. { true }.
+M.tavern_hazard = {}
+--- Battle missions every bounty and marked contract of a board rolled while it is set carries as contract terms, the first one, e.g. { "headhunt" }.
+M.tavern_contract_mission = {}
 
 --- Spot offer keys drawn first on every treasure site after its signature offer, while they are eligible, e.g. { "send_gifts", "roll_the_bones" }.
 M.force_spot_offers = {}
@@ -57,5 +65,25 @@ M.battle_event_rolls = {}
 
 --- Gold every paid site and battle offer costs instead of its own, e.g. { 10000 } to see them unaffordable. Their lines still name their own cost.
 M.spot_cost = {}
+
+--- Effect library bundle keys (helper_scripts/generators/leapoi_effect_library.py) put on every army of the human faction at each turn start
+--- and on load, for 2 turns, e.g. { "land_enc_effect_lib_ctx_attacking", "land_enc_effect_lib_lore" }.
+M.test_bundles = {}
+
+--- Effect library bundle keys put on every LEAPOI enemy army as it spawns: battle spots, tower floors and Tavern contracts, e.g.
+--- { "land_enc_effect_lib_onhit_blinded" }.
+M.test_bundles_enemy = {}
+
+--- Boon keys (configs/boons.lua) every lord of the human factions gains at level 1 when a game loads, once each, e.g. { "bloodsworn" }.
+M.grant_boons = {}
+
+--- Curse keys every lord of the human factions gains at level 1 when a game loads, once each, e.g. { "haunted" }.
+M.grant_curses = {}
+
+--- Battles won that raise a boon a level, instead of the config's, e.g. { 1 }.
+M.boon_wins_per_level = {}
+
+--- Turns that make a curse a level worse, instead of the config's, e.g. { 1 }.
+M.curse_turns_per_level = {}
 
 return M

@@ -18,6 +18,9 @@ local tower_army = require("script/land_encounters/features/tower_army")
 local tavern_hall = require("script/land_encounters/features/tavern_hall")
 local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
 local guild_patron = require("script/land_encounters/features/guild_patron")
+local boons_data = require("script/land_encounters/configs/boons")
+local boons = require("script/land_encounters/features/boons")
+local boon_services = require("script/land_encounters/features/boon_services")
 local TavernSpot = require("script/land_encounters/core/spot").TavernSpot
 
 local Army = require("script/land_encounters/core/army")
@@ -43,7 +46,7 @@ local BAR_CHOICE = "THIRD"
 local UPGRADE_CHOICE = "FOURTH"
 local SEIZE_CHOICE = "LEAPOI_TVN_SEIZE"
 local DONATION_CHOICE = "FIFTH"
-local LEAVE_CHOICE = "SIXTH"
+local LEAVE_CHOICE = "LEAPOI_TVN_LEAVE"
 
 --- Payload text (campaign_payload_ui_details key) of the contract board.
 local PAYLOAD_TEXT_BOARD = "dummy_land_enc_tavern_board_open"
@@ -127,6 +130,11 @@ local TavernState = OwnedPoint.extend({
     board = nil,
     --- The open board: the visiting lord's `general_cqi` and the `slots` it showed. Nil when no board is open.
     pending_board = nil,
+    --- The open hedge-witch (see features/boon_services.lua), or nil when none is open.
+    pending_room = nil,
+    --- Hedge-witch service kind ("gamble", "feed", "reweave" or "blood") -> lord command queue index (as a string) -> the turn that lord may
+    --- use it here again.
+    service_until = {},
 
 })
 
@@ -191,14 +199,6 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Hub
 
---- Turns until a room (the bar or the hall) serves a faction again.
---- @param closed_until table The room's faction key -> turn map, e.g. `bar_closed_until`.
---- @param faction_name string The faction key.
---- @returns number 0 when the room serves it now.
-local function turns_left(closed_until, faction_name)
-    return math.max(0, (closed_until[faction_name] or 0) - cm:turn_number())
-end
-
 --- What the Tavern's prices are multiplied by for a faction: 1, or more while the Guild still holds a failed or dropped contract against it.
 --- @param faction_name string The faction key.
 --- @returns number The multiplier.
@@ -243,12 +243,12 @@ end
 --- @param faction faction The visiting player faction.
 --- @param general_cqi number The visiting lord's command queue index.
 function TavernState:open_hub(faction, general_cqi)
-    self.pending_hall, self.pending_board = nil, nil
+    self.pending_hall, self.pending_board, self.pending_room = nil, nil, nil
     local is_owner = self:is_occupied_by_same_faction(faction:name())
     local price = tavern_data.levels[self.level].upgrade_price
-    local treasury = faction:treasury()
-    local hall_turns = turns_left(self.hall_closed_until, faction:name())
-    local bar_turns = turns_left(self.bar_closed_until, faction:name())
+    local treasury = dilemmas.treasury(faction:name())
+    local hall_turns = self:turns_left(self.hall_closed_until, faction:name())
+    local bar_turns = self:turns_left(self.bar_closed_until, faction:name())
     local upgrade = { key = UPGRADE_CHOICE }
     if not is_owner then
         upgrade = { key = SEIZE_CHOICE, lines = { PAYLOAD_TEXT_SEIZE } }
@@ -278,10 +278,18 @@ function TavernState:open_hub(faction, general_cqi)
         { key = BAR_CHOICE, lines = { bar_turns == 0 and PAYLOAD_TEXT_BAR_OPEN or PAYLOAD_TEXT_BAR_CLOSED .. bar_turns }, closed = bar_turns > 0 },
         upgrade,
         donation,
-        { key = LEAVE_CHOICE, lines = { PAYLOAD_TEXT_LEAVE } },
     }
+    --- The hedge-witch, while boons and curses are on. Closed for a lord with no boon or curse to work on.
+    local witch = false
+    if boons.enabled() then
+        witch = boon_services.has_work(tower_army.character(general_cqi))
+        choices[#choices + 1] = { key = boons_data.witch_room.open_choice, lines = { boon_services.line(witch and "witch_room" or "witch_nothing") },
+            closed = not witch }
+    end
+    --- The panel lists choices in the order they are added, so Leave goes last.
+    choices[#choices + 1] = { key = LEAVE_CHOICE, lines = { PAYLOAD_TEXT_LEAVE } }
     self.pending_hub = { level = self.level, upgrade = upgrade.gold ~= nil and not upgrade.unaffordable, seize = not is_owner,
-        donation = donation_offer.affordable == true, hall = hall_turns == 0, bar = bar_turns == 0, general_cqi = general_cqi }
+        donation = donation_offer.affordable == true, hall = hall_turns == 0, bar = bar_turns == 0, witch = witch, general_cqi = general_cqi }
     log("tavern: hub of the " .. self:describe() .. " for " .. faction:name() .. " (owner " .. tostring(is_owner) .. ", treasury " .. treasury
         .. ", upgrade " .. (self.pending_hub.upgrade and ("for " .. price .. " gold") or "unavailable") .. ", hall " .. (hall_turns == 0 and "open" or "closed for " .. hall_turns
         .. " turns") .. ", bar " .. (bar_turns == 0 and "open" or "closed for " .. bar_turns .. " turns") .. ", donation "
@@ -305,11 +313,8 @@ function TavernState:open_bar(faction_name, general_cqi)
     local share = (self:is_occupied_by_same_faction(faction_name) and tavern_data.owner_price_share or 1) * self:price_factor(faction_name)
     log("tavern: " .. faction_name .. " opens the bar of the " .. self:describe() .. " at price share " .. share)
     --- The bar shows a faction the same offers for the rest of the turn, so going back to the hub and in again does not draw new ones.
-    local draw = self.bar_draws[faction_name]
-    local keys = draw and draw.turn == cm:turn_number() and draw.keys or nil
-    local shown = spot_offers.open_site(character, character:faction(), offers_data.tavern, nil, { zone = self.zone_name, index = self.index_in_zone,
-        difficulty = DIFFICULTY_KEYS[self.level], price_difficulty = get_current_difficulty(), price_share = share, keys = keys })
-    self.bar_draws[faction_name] = { turn = cm:turn_number(), keys = shown }
+    spot_offers.open_site(character, character:faction(), offers_data.tavern, nil, { kind = "tavern", zone = self.zone_name, index = self.index_in_zone,
+        difficulty = DIFFICULTY_KEYS[self.level], price_difficulty = get_current_difficulty(), price_share = share, draws = self.bar_draws })
     return true
 end
 
@@ -331,6 +336,8 @@ function TavernState:resolve_hub_choice(choice_key, faction_name)
         tavern_contracts.open(self, cm:get_faction(faction_name), hub.general_cqi)
     elseif choice_key == BAR_CHOICE and hub.bar then
         self:open_bar(faction_name, hub.general_cqi)
+    elseif choice_key == boons_data.witch_room.open_choice and hub.witch then
+        self:open_witch(faction_name, hub.general_cqi)
     elseif choice_key == SEIZE_CHOICE and hub.seize then
         self:offer_capture(cm:get_faction(faction_name), tower_army.character(hub.general_cqi))
     elseif choice_key == DONATION_CHOICE and hub.donation then
@@ -342,6 +349,47 @@ function TavernState:resolve_hub_choice(choice_key, faction_name)
         self:show_message(self.controlling_faction_name, "tavern_levelled_up_level_" .. self.level)
     end
     return false
+end
+
+--- Opens the hedge-witch for a lord: a quarter off for the owner, more while the faction has failed one of the Guild's contracts.
+--- @param faction_name string The visiting faction.
+--- @param general_cqi number The visiting lord's command queue index.
+function TavernState:open_witch(faction_name, general_cqi)
+    local character = tower_army.character(general_cqi)
+    if not character then return end
+    local share = self:is_occupied_by_same_faction(faction_name) and boons_data.owner_price_share or 1
+    local key, cooling = tostring(general_cqi), {}
+    for kind in pairs(boons_data.witch_room.cooldowns) do
+        local until_turn = self.service_until[kind] or {}
+        cooling[kind] = self:turns_left(until_turn, key)
+        --- A cooldown that has run out is forgotten, so the save does not keep it.
+        if cooling[kind] == 0 then until_turn[key] = nil end
+    end
+    self.pending_room = boon_services.open_witch(character, faction_name, function(base) return self:charge(base * share, faction_name) end, cooling)
+end
+
+--- Applies a hedge-witch choice. A gamble, feed, reweave or blood rite closes that service to the lord here for its cooldown. The room then
+--- opens again for the same lord while they carry a boon or curse, and Back, or a lord with neither left, goes back to the hub.
+--- @param choice_key string The chosen choice key.
+--- @param faction_name string The faction that chose.
+function TavernState:resolve_witch_choice(choice_key, faction_name)
+    local open_room = self.pending_room
+    self.pending_room = nil
+    if not open_room then return end
+    local action, slot, character = boon_services.resolve(open_room, faction_name, boons_data.witch_room.dilemma, choice_key)
+    local cooldown = slot and boons_data.witch_room.cooldowns[slot.kind]
+    if cooldown then
+        local key = tostring(open_room.cqi)
+        self.service_until[slot.kind] = self.service_until[slot.kind] or {}
+        self.service_until[slot.kind][key] = cm:turn_number() + cooldown
+        log("tavern: lord " .. key .. " may use " .. slot.kind .. " at the " .. self:describe() .. " again on turn " .. self.service_until[slot.kind][key])
+    end
+    character = character or tower_army.character(open_room.cqi)
+    if action == "reopen" and boon_services.has_work(character) then
+        self:open_witch(faction_name, open_room.cqi)
+    elseif character then
+        self:open_hub(cm:get_faction(faction_name), open_room.cqi)
+    end
 end
 
 --- Opens the fight-or-leave capture dilemma for a lord of another faction (an enemy walking in, or a guest choosing Seize), saying what
@@ -448,6 +496,8 @@ function TavernState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
         self:resolve_defense_choice(dilemma_choice_and_faction_info:choice(), invasion_battle_manager)
     elseif dilemma == tavern_hall.DILEMMA then
         tavern_hall.resolve(self, faction_name, dilemma_choice_and_faction_info:choice_key())
+    elseif dilemma == boons_data.witch_room.dilemma then
+        self:resolve_witch_choice(dilemma_choice_and_faction_info:choice_key(), faction_name)
     elseif dilemma == tavern_contracts.DILEMMA then
         tavern_contracts.resolve(self, faction_name, dilemma_choice_and_faction_info:choice_key(), invasion_battle_manager)
     else
@@ -502,6 +552,8 @@ function TavernState:export_state_as_table()
         pending_hall = self.pending_hall or false,
         board = self.board or false,
         pending_board = self.pending_board or false,
+        pending_room = self.pending_room or false,
+        service_until = self.service_until,
     }
 end
 
@@ -527,6 +579,9 @@ function TavernState:reinstate(previous_state)
     self.pending_hall = previous_state.pending_hall or nil
     self.board = previous_state.board or nil
     self.pending_board = previous_state.pending_board or nil
+    self.pending_room = previous_state.pending_room or nil
+    --- A save from before the other services kept only the gamble's cooldowns.
+    self.service_until = previous_state.service_until or { gamble = previous_state.gamble_until or {} }
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -552,6 +607,7 @@ function TavernState:new(zone_name, index_in_zone, entry)
         bar_closed_until = {},
         bar_draws = {},
         hall_closed_until = {},
+        service_until = {},
     }
     setmetatable(t, self)
     self.__index = self
@@ -669,7 +725,7 @@ end
 --- @param faction_name string The visiting faction.
 --- @param tavern TavernState The Tavern it visits.
 function TavernEventDelegate:keep_route(faction_name, tavern)
-    local open = tavern.pending_hub ~= nil or tavern.pending_hall ~= nil or tavern.pending_board ~= nil or tavern.pending_capture
+    local open = tavern.pending_hub ~= nil or tavern.pending_hall ~= nil or tavern.pending_board ~= nil or tavern.pending_room ~= nil or tavern.pending_capture
     self.pending_dilemma_by_faction[faction_name] = open and { zone = tavern.zone_name, index = tavern.index_in_zone } or nil
 end
 
@@ -692,10 +748,10 @@ end
 --- Handles a faction leaving a Tavern's bar. Taking an offer closes the bar to that faction for the MCT `tavern_cooldown` turns. Going back reopens the
 --- hub for the same lord.
 --- @param faction_name string The faction that left the bar.
---- @param site table The closed spot offer site, with its `tavern` { zone, index } and `general_cqi`.
+--- @param site table The closed spot offer site, with its `venue` { kind, zone, index } and `general_cqi`.
 --- @param took boolean True when an offer was taken.
 function TavernEventDelegate:bar_closed(faction_name, site, took)
-    local tavern = self:find(site.tavern.zone, site.tavern.index)
+    local tavern = self:find(site.venue.zone, site.venue.index)
     if not tavern then return end
     if took then
         tavern.bar_closed_until[faction_name] = cm:turn_number() + get_mct_settings().tavern_cooldown

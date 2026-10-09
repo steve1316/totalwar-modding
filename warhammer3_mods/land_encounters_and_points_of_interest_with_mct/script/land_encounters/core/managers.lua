@@ -9,6 +9,7 @@ local army_generator = require("script/land_encounters/core/army_generator")
 local tower_army = require("script/land_encounters/features/tower_army")
 local debug_config = require("script/land_encounters/configs/debug")
 local guild_patron = require("script/land_encounters/features/guild_patron")
+local boons = require("script/land_encounters/features/boons")
 
 --- Feature delegates are lazy-loaded inside the manager constructors below to avoid a circular
 --- require (the delegates pull core/managers back in for the incident globals).
@@ -148,6 +149,20 @@ function pending_battle_result_for_faction(faction_name)
         return true, cm:pending_battle_cache_defender_victory()
     end
     return false, false
+end
+
+--- The lord of a faction's side in the battle that just ended, from the game's record of it.
+--- @param faction_name string The faction.
+--- @returns userdata|nil The lord, or nil when the faction had none there.
+function pending_battle_lord(faction_name)
+    local attacker = cm:pending_battle_cache_faction_is_attacker(faction_name)
+    local count = attacker and cm:pending_battle_cache_num_attackers() or cm:pending_battle_cache_num_defenders()
+    for i = 1, count do
+        local cqi, _, side_faction
+        if attacker then cqi, _, side_faction = cm:pending_battle_cache_get_attacker(i) else cqi, _, side_faction = cm:pending_battle_cache_get_defender(i) end
+        if side_faction == faction_name then return tower_army.character(cqi) end
+    end
+    return nil
 end
 
 --- True when a military force with this cqi still exists.
@@ -474,6 +489,35 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Class methods
 
+--- Logs what decides whether our army can join a relief column as the reinforcement, just before the ally attacks: our war and alliance
+--- with each side, the distance from our lord to each army, and our stance.
+--- @param player_character character Our lord.
+--- @param ally_force_cqi number The ally's military force command queue index.
+--- @param enemy_force_cqi number The enemy's military force command queue index.
+local function log_relief_state(player_character, ally_force_cqi, enemy_force_cqi)
+    local ok, err = pcall(function()
+        local ours = player_character:faction()
+        local parts = {}
+        for name, cqi in pairs({ ally = ally_force_cqi, enemy = enemy_force_cqi }) do
+            local force = cm:model():military_force_for_command_queue_index(cqi)
+            local general = force and not force:is_null_interface() and force:general_character()
+            if general then
+                local faction = general:faction()
+                local dx, dy = general:logical_position_x() - player_character:logical_position_x(), general:logical_position_y() - player_character:logical_position_y()
+                parts[#parts + 1] = name .. " " .. faction:name() .. " at (" .. general:logical_position_x() .. ", " .. general:logical_position_y() .. "), distance "
+                    .. string.format("%.1f", math.sqrt(dx * dx + dy * dy)) .. ", at war with us " .. tostring(ours:at_war_with(faction)) .. ", allied with us "
+                    .. tostring(ours:allied_with(faction)) .. ", military allies " .. tostring(ours:military_allies_with(faction))
+            else
+                parts[#parts + 1] = name .. " force " .. tostring(cqi) .. " not found"
+            end
+        end
+        local force = player_character:military_force()
+        parts[#parts + 1] = "our stance " .. tostring(force:active_stance()) .. ", our movement left " .. tostring(player_character:action_points_remaining_percent()) .. "%"
+        out("LEAPOI: relief column state: " .. table.concat(parts, "; "))
+    end)
+    if not ok then out("LEAPOI: relief column state could not be logged: " .. tostring(err)) end
+end
+
 --- How the battle script runs a relief column in the pending battle: "scripted", or nil when the battle is not one.
 --- @returns string|nil The mode.
 function InvasionBattleManager:relief_mode()
@@ -712,6 +756,7 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                         if x ~= -1 then cm:teleport_to(cm:char_lookup_str(player_character), x, y) end
                         out("LEAPOI: relief column: our lord moved to (" .. x .. ", " .. y .. "), the ally " .. self.ally_force_cqi
                             .. " attacks the enemy " .. enemy_force_cqi)
+                        log_relief_state(player_character, self.ally_force_cqi, enemy_force_cqi)
                         cm:force_attack_of_opportunity(self.ally_force_cqi, enemy_force_cqi, false)
                     elseif self.event_army.intervention_type == AMBUSH_TYPE then
                         out("DEBUG - AMBUSH_TYPE called.")
@@ -783,13 +828,18 @@ function InvasionBattleManager:rank_up_lore_units(force, army)
 end
 
 --- Puts the event army's `sabotage` on its spawned force: each of `enemy_bundles`, every unit but the characters at `enemy_strength` of full
---- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone.
+--- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone. The debug
+--- `test_bundles_enemy` bundles go on every army.
 --- @param force military_force The spawned invasion force.
 --- @param army Army The army it was built from.
 function InvasionBattleManager:weaken_invasion_force(force, army)
     local sabotage = army.sabotage or {}
     for _, bundle in ipairs(sabotage.enemy_bundles or {}) do
         cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+    end
+    for _, bundle in ipairs(debug_config.test_bundles_enemy) do
+        cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)
+        out("LEAPOI: debug test_bundles_enemy puts " .. bundle .. " on the enemy army")
     end
     local want_champion = sabotage.champion_strength and sabotage.champion_strength < (sabotage.enemy_strength or 1)
     if not sabotage.enemy_strength and not want_champion then return end
@@ -932,6 +982,7 @@ function InvasionBattleManager:reset_state_post_battle(delegate, spot_type, spot
             end
 
             if found_encounter_faction == true then
+                boons.on_leapoi_fight(pending_battle_lord(battle_faction_name), player_won_battle, army.difficulty, army.modifiers)
                 if spot_type == "BattleSpot" then
                     delegate:trigger_event_given_battle_result(player_won_battle, spot_info)
                 elseif spot_type == "SmithySpot" or spot_type == "TavernSpot" then
@@ -1173,8 +1224,8 @@ function SpotEventManager:new(invasion_battle_manager)
         battle_event_delegate = BattleEventDelegate:new(invasion_battle_manager)
     }
     --- A treasure site's guardian battle (Wake the Guardian, Oath at the Altar) starts the way a battle spot's does.
-    require("script/land_encounters/features/spot_offers").start_guardian_battle = function(character, x, y, difficulty)
-        t.battle_event_delegate:start_guardian_battle(character, { coordinates = { x, y } }, difficulty)
+    require("script/land_encounters/features/spot_offers").start_guardian_battle = function(character, x, y, difficulty, prize)
+        t.battle_event_delegate:start_guardian_battle(character, { coordinates = { x, y } }, difficulty, prize)
     end
     setmetatable(t, self)
     self.__index = self
@@ -1294,6 +1345,22 @@ function PointOfInterestEventManager:on_tavern_mark_entered(character, marker_re
     self.tavern_event_delegate:on_mark_entered(character, marker_ref, instance_ref)
 end
 
+--- Starts the battle at a Smith's Commission's Fetch Star-Metal mark when a lord walks onto it.
+--- @param character character The lord.
+--- @param marker_ref string The marker type's key.
+--- @param instance_ref string The marker's instance.
+function PointOfInterestEventManager:on_smithy_mark_entered(character, marker_ref, instance_ref)
+    self.smithy_event_delegate:on_mark_entered(character, marker_ref, instance_ref)
+end
+
+--- Forgets a Smith's Commission whose mission ended.
+--- @param faction_name string The faction whose mission ended.
+--- @param mission_key string The mission key.
+--- @param outcome string "succeeded", "failed" or "cancelled".
+function PointOfInterestEventManager:on_smithy_commission_ended(faction_name, mission_key, outcome)
+    self.smithy_event_delegate:on_commission_ended(faction_name, mission_key, outcome)
+end
+
 --- Settles a Tavern contract whose mission ended.
 --- @param faction_name string The faction whose mission ended.
 --- @param mission_key string The mission key.
@@ -1335,7 +1402,7 @@ end
 --- @param mission_manager table The CA mission_manager handle.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns PointOfInterestEventManager A new manager with the smithy, tower and Tavern delegates wired in, and the tower's Daemon's deal army
---- and the Tavern bar's return to the hub handed to spot offers.
+--- and the way back from the Tavern bar and the Smithy's Work Orders handed to spot offers.
 function PointOfInterestEventManager:new(mission_manager, invasion_battle_manager)
     SmithyEventDelegate = SmithyEventDelegate or require("script/land_encounters/features/smithy")
     TowerEventDelegate = TowerEventDelegate or require("script/land_encounters/features/tower")
@@ -1350,9 +1417,10 @@ function PointOfInterestEventManager:new(mission_manager, invasion_battle_manage
     spot_offers.send_daemon_army = function(faction_name, count)
         t.tower_event_delegate:send_daemon_army(faction_name, count)
     end
-    spot_offers.on_tavern_bar_closed = function(faction_name, site, took)
-        t.tavern_event_delegate:bar_closed(faction_name, site, took)
-    end
+    spot_offers.on_venue_closed = {
+        tavern = function(faction_name, site, took) t.tavern_event_delegate:bar_closed(faction_name, site, took) end,
+        smithy = function(faction_name, site, took) t.smithy_event_delegate:orders_closed(faction_name, site, took) end,
+    }
     setmetatable(t, self)
     self.__index = self
     return t

@@ -13,6 +13,12 @@ local SmithySpot = require("script/land_encounters/core/spot").SmithySpot
 local guild_patron = require("script/land_encounters/features/guild_patron")
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local offers_data = require("script/land_encounters/configs/spot_offers")
+local boons_data = require("script/land_encounters/configs/boons")
+local boons = require("script/land_encounters/features/boons")
+local boon_services = require("script/land_encounters/features/boon_services")
+local tower_army = require("script/land_encounters/features/tower_army")
+local spot_offers = require("script/land_encounters/features/spot_offers")
+local smithy_commissions = require("script/land_encounters/features/smithy_commissions")
 
 local Army = require("script/land_encounters/core/army")
 local OwnedPoint = require("script/land_encounters/core/owned_point")
@@ -33,6 +39,8 @@ local FORGE_EVENTS = {
     ["land_enc_dilemma_smithy_forge_level_2"] = true,
     ["land_enc_dilemma_smithy_forge_level_3"] = true,
 }
+--- The incident a player owner's tribute arrives through, showing the item's card.
+local TRIBUTE_INCIDENT = "land_enc_incident_smithy_tribute"
 --- The dilemma offered to a player entering an enemy-owned smithy.
 local EVENT_RECLAMATION = "land_enc_dilemma_smithy_reclamation"
 --- The fight-or-surrender dilemma offered to a besieged owner.
@@ -45,18 +53,20 @@ local LEGACY_VISIT_EVENTS = {
     ["land_enc_dilemma_smithy_visit_level_3"] = 3,
 }
 
---- Choice keys of the forge dilemma: three free picks, the commission, the upgrade, the Generous Donation and Leave.
-local FORGE_CHOICE_KEYS = { "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "SIXTH", "LEAPOI_SMT_LEAVE" }
---- Number of free picks, which take the first choices.
-local FREE_PICK_COUNT = 3
---- 1-based position of the commission choice.
-local COMMISSION_CHOICE = 4
---- 1-based position of the upgrade choice.
-local UPGRADE_CHOICE = 5
---- 1-based position of the Generous Donation to the Smiths' Association.
-local DONATION_CHOICE = 6
---- 1-based position of Leave, for a lord that walked onto the Smithy by accident. It does nothing.
-local LEAVE_CHOICE = 7
+--- Choice keys of the forge's free picks.
+local FREE_PICK_KEYS = { "FIRST", "SECOND" }
+--- Choice key of Work Orders.
+local ORDERS_KEY = "LEAPOI_SMT_ORDERS"
+--- Choice key of the commission.
+local COMMISSION_KEY = "FOURTH"
+--- Choice key of the upgrade, or the legendary commission at the top level.
+local UPGRADE_KEY = "FIFTH"
+--- Choice key of the Generous Donation to the Smiths' Association.
+local DONATION_KEY = "SIXTH"
+--- Choice key of Leave, for a lord that walked onto the Smithy by accident. It does nothing.
+local LEAVE_KEY = "LEAPOI_SMT_LEAVE"
+--- Choice key of Rush the Forge, shown in place of the commission, the upgrade and the donation while the free picks cool.
+local RUSH_KEY = "LEAPOI_SMT_RUSH"
 
 --- Payload text (campaign_payload_ui_details key) for a choice that does nothing.
 local PAYLOAD_TEXT_LEAVE = "dummy_land_enc_smithy_leave"
@@ -68,6 +78,16 @@ local PAYLOAD_TEXT_LEGENDARY = "dummy_land_enc_smithy_legendary"
 local PAYLOAD_TEXT_NO_LEGENDARY = "dummy_land_enc_smithy_no_legendary"
 --- Payload text prefix describing the upgrade from the appended level to the next.
 local PAYLOAD_TEXT_UPGRADE = "dummy_land_enc_smithy_upgrade_"
+--- Payload text of Work Orders while it serves the faction.
+local PAYLOAD_TEXT_ORDERS = "dummy_land_enc_smithy_orders_open"
+--- Payload text prefix of Work Orders while it is closed to the faction, followed by the turns left.
+local PAYLOAD_TEXT_ORDERS_CLOSED = "dummy_land_enc_smithy_orders_closed_"
+--- Payload text prefix of a free pick while the forge cools, followed by the turns left.
+local PAYLOAD_TEXT_COOLING = "dummy_land_enc_smithy_cooling_"
+--- Payload text of Rush the Forge.
+local PAYLOAD_TEXT_RUSH = "dummy_land_enc_smithy_rush"
+--- Payload text of Back to the forge, shared by the Work Orders and the Temper and Break room.
+local PAYLOAD_TEXT_BACK = offers_data.line_prefix .. offers_data.smithy.leave_line
 --- Payload text under a donation the treasury cannot pay, shared with the spot offers.
 local PAYLOAD_TEXT_UNAFFORDABLE = offers_data.unaffordable_line
 
@@ -76,9 +96,6 @@ local LONGEST_COOLDOWN = smithy_data.cooldown_slider_max
 for _, level in ipairs(smithy_data.levels) do
     LONGEST_COOLDOWN = math.max(LONGEST_COOLDOWN, smithy_data.cooldown_slider_max + level.cooldown_offset)
 end
-
---- Turns between Dark Elf smithy missions for a player owner.
-local MISSION_INTERVAL = 30
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -106,8 +123,17 @@ local SmithyState = OwnedPoint.extend({
     visiting_enemy_character = nil,
     --- Faction of the player reclaiming the smithy, kept so a reloaded battle can find them, or nil.
     visiting_enemy_faction_name = nil,
-    --- What the open forge dilemma offered: `free_picks[i]` is true for choices that give an item, `upgrade` for a paid upgrade.
+    --- What the open forge dilemma offered: `free_picks[key]` is true for choice keys that give an item, `upgrade`, `donation`, `orders` and
+    --- `rush` for the choices that do something, and the visiting lord's `general_cqi`.
     pending_forge_offer = nil,
+    --- The open Temper and Break room (see features/boon_services.lua), or nil when none is open.
+    pending_room = nil,
+    --- Faction key -> the turn its Work Orders counter serves it again, after it took an order.
+    orders_closed_until = {},
+    --- Faction key -> { turn, keys }: the orders the counter showed it this turn, shown again when it comes back the same turn.
+    orders_draws = {},
+    --- The owner perks on the map: { faction, level } they were put on for, or nil when none are on.
+    perks = nil,
     --- Forge level, 1 to 3. Survives ownership changes.
     level = 1,
     --- Owning faction key, or "" when unowned.
@@ -134,9 +160,16 @@ local function smithy_price(base)
     return round_gold(base * get_mct_settings().smithy_price_percent / 100)
 end
 
---- Runs the once-per-round smithy update: tribute or AI items, cooldowns, missions, and auto-occupation when abandoned.
---- @param mission_manager table The CA mission_manager handle used to issue missions.
-function SmithyState:update_state_given_turn_passing(mission_manager)
+--- Returns what the Temper and Break room charges for a service: its Smithy price at the owner's share, since only the owner uses the forge.
+--- @param base number The service's base gold.
+--- @returns number The gold charged.
+local function room_price(base)
+    return round_gold(smithy_price(base) * boons_data.owner_price_share)
+end
+
+--- Runs the once-per-round smithy update: the owner perks, tribute or AI items, cooldowns, and auto-occupation when abandoned.
+function SmithyState:update_state_given_turn_passing()
+    self:refresh_perks()
     local controlling_faction = self:check_if_owner_is_alive_and_return_faction()
     if controlling_faction ~= nil and self:is_occupied() then
         --- Count this turn first so periodic rewards wait a full interval instead of firing on the turn the smithy is taken.
@@ -145,7 +178,6 @@ function SmithyState:update_state_given_turn_passing(mission_manager)
         self:reward_owner_faction(controlling_faction, is_player)
         if is_player then
             self:update_visit_cooldown(controlling_faction:name())
-            self:issue_mission_if_possible(controlling_faction, mission_manager)
         else
             self:try_ai_upgrade(controlling_faction, smithy_price(self:level_data().upgrade_price))
         end
@@ -164,10 +196,83 @@ function SmithyState:reward_owner_faction(controlling_faction, is_player)
     if is_player then interval = math.max(1, math.floor(self:level_data().tribute_interval * get_mct_settings().smithy_tribute_percent / 100 + 0.5)) end
     local offset = is_player and 0 or self.index_in_zone
     if (self.turns_under_control + offset) % interval ~= 0 then return end
-    local ancillary = item_pool.pick_items(controlling_faction:name(), self:level_data().free_pick_rarities, 1)[1]
-    if ancillary ~= nil then
+    local faction_key = controlling_faction:name()
+    local chance = is_player and self:level_data().legendary_tribute_chance
+    local ancillary = chance and random_chance(chance) and item_pool.pick_legendary_item(faction_key)
+    if ancillary then log("smithy: Master's Mark: the tribute of the " .. self:describe() .. " for " .. faction_key .. " is the legendary " .. ancillary) end
+    ancillary = ancillary or item_pool.pick_items(faction_key, self:level_data().free_pick_rarities, 1)[1]
+    if ancillary == nil then return end
+    if is_player then
+        self:send_tribute(controlling_faction, ancillary)
+    else
         cm:add_ancillary_to_faction(controlling_faction, ancillary, false)
     end
+end
+
+--- Sends a player owner its tribute through the tribute incident, which shows the item's card. When the incident cannot be built, the item
+--- goes to the faction anyway.
+--- @param faction faction The owning player faction.
+--- @param ancillary string The item's key.
+function SmithyState:send_tribute(faction, ancillary)
+    local ok, err = pcall(function()
+        local payload = cm:create_payload()
+        payload:faction_ancillary_gain(faction, ancillary)
+        local builder = cm:create_incident_builder(TRIBUTE_INCIDENT)
+        builder:set_payload(payload)
+        cm:launch_custom_incident_from_builder(builder, faction)
+    end)
+    if ok then
+        log("smithy: tribute " .. ancillary .. " from the " .. self:describe() .. " reaches " .. faction:name() .. " through its incident")
+        return
+    end
+    log("smithy: the tribute incident could not be built (" .. tostring(err) .. "), so " .. ancillary .. " goes to " .. faction:name() .. " directly")
+    cm:add_ancillary_to_faction(faction, ancillary, false)
+end
+
+--- A region of a province that a faction holds, which the faction's province bundles are put on and taken off through.
+--- @param region region A region of the province.
+--- @param faction_name string The faction key.
+--- @returns region|nil The region, or nil when the faction holds none there.
+local function held_region_in_province(region, faction_name)
+    local regions = region:province():region_list()
+    for i = 0, regions:num_items() - 1 do
+        local candidate = regions:item_at(i)
+        if candidate:owning_faction():name() == faction_name then return candidate end
+    end
+    return nil
+end
+
+--- Puts the owner perks at the forge level on while a player holds both the Smithy and its region, and takes them off otherwise: Arms Trade
+--- on the owner's share of the province, and the Garrison Armoury on the region. Runs each round, and when the owner or the level changes. A
+--- change the game refuses (e.g. while the campaign is still being set up) is logged and tried again next round.
+function SmithyState:refresh_perks()
+    if self.controlling_faction_name == "" and not self.perks then return end
+    local region = self:region()
+    if not region then return end
+    local owner = self.controlling_faction_name
+    local faction = owner ~= "" and cm:get_faction(owner)
+    local wanted = faction and faction:is_human() and region:owning_faction():name() == owner and { faction = owner, level = self.level } or nil
+    local held = self.perks
+    if (held and wanted and held.faction == wanted.faction and held.level == wanted.level) or (not held and not wanted) then return end
+    local ok, err = pcall(function()
+        local perks = smithy_data.perks
+        if held then
+            cm:remove_effect_bundle_from_region(perks.armoury.steps[held.level], region:name())
+            local own = held_region_in_province(region, held.faction)
+            if own then cm:remove_effect_bundle_from_faction_province(perks.arms_trade.steps[held.level], own) end
+        end
+        if wanted then
+            cm:apply_effect_bundle_to_region(perks.armoury.steps[wanted.level], region:name(), 0)
+            cm:apply_effect_bundle_to_faction_province(perks.arms_trade.steps[wanted.level], region, 0)
+        end
+    end)
+    local change = (held and ("level " .. held.level .. " for " .. held.faction) or "none") .. " -> " .. (wanted and ("level " .. wanted.level .. " for " .. owner) or "none")
+    if not ok then
+        log("smithy: owner perks of the " .. self:describe() .. " could not change (" .. change .. "): " .. tostring(err))
+        return
+    end
+    log("smithy: owner perks of the " .. self:describe() .. " in region " .. region:name() .. ": " .. change)
+    self.perks = wanted
 end
 
 --- Decrements the free-pick cooldown each turn and tells the player owner when the forge is ready again.
@@ -179,26 +284,6 @@ function SmithyState:update_visit_cooldown(controlling_faction)
             show_ready_notice(controlling_faction, "smithy_visit_available", self.coordinates)
         end
     end
-end
-
---- Issues a Dark Elf smithy mission to the player owner every `MISSION_INTERVAL` turns. Other subcultures have no missions yet.
---- @param controlling_faction faction The player faction controlling this smithy.
---- @param mission_manager table The CA mission_manager handle used to issue missions.
-function SmithyState:issue_mission_if_possible(controlling_faction, mission_manager)
-    if self.turns_under_control % MISSION_INTERVAL ~= 0 then return end
-    local subculture_missions = smithy_data.missions_by_subculture[self.controlling_faction_subculture]
-    if subculture_missions == nil or #subculture_missions == 0 then return end
-    local smithy_mission = subculture_missions[random_number(#subculture_missions)]
-    local mm = mission_manager:new(controlling_faction:name(), smithy_mission.mission)
-    mm:set_mission_issuer("CLAN_ELDERS")
-    mm:add_new_objective("KILL_X_ENTITIES")
-    mm:add_condition("total 7500")
-    mm:set_turn_limit(15)
-    mm:set_should_whitelist(false)
-    for i = 1, #smithy_mission.ancillaries do
-        mm:add_payload("add_ancillary_to_faction_pool{ancillary_key " .. smithy_mission.ancillaries[i] .. ";}")
-    end
-    mm:trigger()
 end
 
 --- When the smithy is abandoned, assigns the owning faction of the underlying region as the new controller.
@@ -226,12 +311,8 @@ function SmithyState:trigger_event(area_and_character_info)
 
     if is_human_and_it_is_its_turn(visiting_faction) then
         if self:is_occupied_by_same_faction(visiting_faction:name()) then
-            --- While the forge cools there is nothing to take, so a message saying how many turns are left replaces the dilemma.
-            if self:is_on_cooldown() then
-                self:show_message(visiting_faction:name(), "smithy_visit_on_cooldown_turns_" .. math.min(self.visit_cooldown, LONGEST_COOLDOWN))
-                return false
-            end
-            self:open_forge(visiting_faction)
+            --- A cooling forge opens too, with its free picks greyed out (see `open_forge`).
+            self:open_forge(visiting_faction, visiting_character)
             return true
         elseif not self:is_occupied() then
             self:show_message(visiting_faction:name(), "smithy_default_occupation_level_" .. self.level)
@@ -277,109 +358,196 @@ function SmithyState:free_pick_cooldown()
     return slider + offset
 end
 
---- Builds and opens the forge dilemma for the owner: three free picks, a paid commission, a paid upgrade, the Generous Donation to the
---- Smiths' Association, and Leave. Only called while the forge is ready. Each paid choice shows its price. One the faction cannot afford says so and is
---- greyed out, as is one with nothing to give. The free picks and Leave never are.
+--- The gold Rush the Forge costs now: `rush_price_per_turn` per turn left on the free picks, times the forge level, at the Smithy's prices.
+--- @returns number The gold.
+function SmithyState:rush_price()
+    return smithy_price(smithy_data.rush_price_per_turn * self.visit_cooldown * self.level)
+end
+
+--- Builds and opens the forge dilemma for the owner: two free picks, Work Orders, a paid commission, a paid upgrade, the Generous Donation
+--- to the Smiths' Association, the Temper and Break room while boons and curses are on, and Leave. While the forge cools, the free picks are
+--- greyed out with the turns left, and Rush the Forge takes the place of the commission, the upgrade and the donation. Each paid choice shows
+--- its price. One the faction cannot afford says so and is greyed out, as is one with nothing to give, and Work Orders while it is closed to
+--- the faction. The free picks, the room and Leave never are.
 --- @param faction faction The owning player faction.
-function SmithyState:open_forge(faction)
+--- @param character character The visiting lord.
+function SmithyState:open_forge(faction, character)
     local level = self:level_data()
     local faction_key = faction:name()
-    local treasury = faction:treasury()
-    local offer = { free_picks = {}, upgrade = false, donation = false }
+    local treasury = dilemmas.treasury(faction_key)
+    local cooling = self:is_on_cooldown()
+    local offer = { free_picks = {}, upgrade = false, donation = false, orders = false, rush = false, general_cqi = character:command_queue_index() }
     local choices = {}
 
     --- Adds a paid choice: its price card and `line`, then the `items` it gives when the treasury can pay. One the treasury cannot pay also
     --- says so and is greyed out, and is marked unaffordable so a click on it anyway is refunded.
-    --- @param index number The choice's 1-based position.
+    --- @param key string The choice key.
     --- @param price number The gold it costs.
     --- @param line string Its payload text.
     --- @param items table|nil The ancillary keys it gives.
     --- @returns boolean True when the treasury can pay.
-    local function add_paid(index, price, line, items)
+    local function add_paid(key, price, line, items)
         local affordable = treasury >= price
-        local choice = { key = FORGE_CHOICE_KEYS[index], gold = -price, lines = { line }, lines_first = true }
+        local choice = { key = key, gold = -price, lines = { line }, lines_first = true }
         if affordable then
             choice.items = items
         else
             choice.lines[2] = PAYLOAD_TEXT_UNAFFORDABLE
             choice.unaffordable = true
         end
-        choices[index] = choice
+        choices[#choices + 1] = choice
         return affordable
     end
 
     --- Adds a choice that does nothing, greyed out, saying why.
-    --- @param index number The choice's 1-based position.
+    --- @param key string The choice key.
     --- @param line string Its payload text.
-    local function add_closed(index, line)
-        choices[index] = { key = FORGE_CHOICE_KEYS[index], lines = { line }, closed = true }
+    local function add_closed(key, line)
+        choices[#choices + 1] = { key = key, lines = { line }, closed = true }
     end
 
-    local picks = item_pool.pick_items(faction_key, level.free_pick_rarities, FREE_PICK_COUNT)
-    for i = 1, FREE_PICK_COUNT do
-        if picks[i] then
-            choices[i] = { key = FORGE_CHOICE_KEYS[i], items = { picks[i] } }
-            offer.free_picks[i] = true
-        else
-            choices[i] = { key = FORGE_CHOICE_KEYS[i], lines = { PAYLOAD_TEXT_LEAVE } }
+    if cooling then
+        for _, key in ipairs(FREE_PICK_KEYS) do add_closed(key, PAYLOAD_TEXT_COOLING .. math.min(self.visit_cooldown, LONGEST_COOLDOWN)) end
+    else
+        local picks = item_pool.pick_items(faction_key, level.free_pick_rarities, #FREE_PICK_KEYS)
+        for i, key in ipairs(FREE_PICK_KEYS) do
+            if picks[i] then
+                choices[#choices + 1] = { key = key, items = { picks[i] } }
+                offer.free_picks[key] = true
+            else
+                choices[#choices + 1] = { key = key, lines = { PAYLOAD_TEXT_LEAVE } }
+            end
         end
     end
 
-    local commission = level.commission
-    local commission_price = smithy_price(commission.price)
-    local commission_items = treasury >= commission_price and item_pool.pick_items(faction_key, commission.rarities, commission.count) or {}
-    if treasury >= commission_price and #commission_items == 0 then
-        add_closed(COMMISSION_CHOICE, PAYLOAD_TEXT_LEAVE)
+    local orders_turns = self:turns_left(self.orders_closed_until, faction_key)
+    if orders_turns > 0 then
+        add_closed(ORDERS_KEY, PAYLOAD_TEXT_ORDERS_CLOSED .. orders_turns)
     else
-        add_paid(COMMISSION_CHOICE, commission_price, PAYLOAD_TEXT_COMMISSION .. self.level, commission_items)
+        choices[#choices + 1] = { key = ORDERS_KEY, lines = { PAYLOAD_TEXT_ORDERS } }
+        offer.orders = true
     end
 
-    --- The fifth choice upgrades the forge, or at the top level commissions a legendary piece instead.
-    if level.upgrade_price then
-        offer.upgrade = add_paid(UPGRADE_CHOICE, smithy_price(level.upgrade_price), PAYLOAD_TEXT_UPGRADE .. self.level)
-    elseif level.legendary_commission then
-        local price = smithy_price(level.legendary_commission.price)
-        local legendary = treasury >= price and item_pool.pick_legendary_item(faction_key)
-        if treasury >= price and not legendary then
-            add_closed(UPGRADE_CHOICE, PAYLOAD_TEXT_NO_LEGENDARY)
+    local rush_price = cooling and self:rush_price() or 0
+    if cooling then
+        offer.rush = add_paid(RUSH_KEY, rush_price, PAYLOAD_TEXT_RUSH)
+    else
+        local commission = level.commission
+        local commission_price = smithy_price(commission.price)
+        local commission_items = treasury >= commission_price and item_pool.pick_items(faction_key, commission.rarities, commission.count) or {}
+        if treasury >= commission_price and #commission_items == 0 then
+            add_closed(COMMISSION_KEY, PAYLOAD_TEXT_LEAVE)
         else
-            add_paid(UPGRADE_CHOICE, price, PAYLOAD_TEXT_LEGENDARY, legendary and { legendary } or nil)
+            add_paid(COMMISSION_KEY, commission_price, PAYLOAD_TEXT_COMMISSION .. self.level, commission_items)
         end
-    else
-        add_closed(UPGRADE_CHOICE, PAYLOAD_TEXT_LEAVE)
+
+        --- The fifth choice upgrades the forge, or at the top level commissions a legendary piece instead.
+        if level.upgrade_price then
+            offer.upgrade = add_paid(UPGRADE_KEY, smithy_price(level.upgrade_price), PAYLOAD_TEXT_UPGRADE .. self.level)
+        elseif level.legendary_commission then
+            local price = smithy_price(level.legendary_commission.price)
+            local legendary = treasury >= price and item_pool.pick_legendary_item(faction_key)
+            if treasury >= price and not legendary then
+                add_closed(UPGRADE_KEY, PAYLOAD_TEXT_NO_LEGENDARY)
+            else
+                add_paid(UPGRADE_KEY, price, PAYLOAD_TEXT_LEGENDARY, legendary and { legendary } or nil)
+            end
+        else
+            add_closed(UPGRADE_KEY, PAYLOAD_TEXT_LEAVE)
+        end
+
+        local donation = guild_patron.donation_offer("smithy", faction_key, treasury)
+        if donation.price then
+            offer.donation = add_paid(DONATION_KEY, donation.price, donation.line)
+        else
+            add_closed(DONATION_KEY, donation.line)
+        end
     end
 
-    local donation = guild_patron.donation_offer("smithy", faction_key, treasury)
-    if donation.price then
-        offer.donation = add_paid(DONATION_CHOICE, donation.price, donation.line)
-    else
-        add_closed(DONATION_CHOICE, donation.line)
+    if boons.enabled() then
+        choices[#choices + 1] = { key = boons_data.smithy_room.open_choice, lines = { boon_services.line("smithy_room") } }
     end
+    --- The panel lists choices in the order they are added, so Leave goes last.
+    choices[#choices + 1] = { key = LEAVE_KEY, lines = { PAYLOAD_TEXT_LEAVE } }
 
-    choices[LEAVE_CHOICE] = { key = FORGE_CHOICE_KEYS[LEAVE_CHOICE], lines = { PAYLOAD_TEXT_LEAVE } }
-
+    log("smithy: forge of the " .. self:describe() .. " opens for " .. faction_key .. " with lord " .. offer.general_cqi .. " (level " .. self.level
+        .. ", treasury " .. treasury .. ", " .. (cooling and ("cooling for " .. self.visit_cooldown .. " turns, rush " .. rush_price .. " gold")
+        or "free picks ready") .. ", work orders " .. (orders_turns > 0 and ("closed for " .. orders_turns .. " turns") or "open") .. ")")
     self.pending_forge_offer = offer
     dilemmas.launch(EVENT_FORGE_BY_LEVEL[self.level], choices, faction_key)
 end
 
---- Applies a forge choice. The dilemma payload already granted the items and charged the gold, so only the cooldown and level change here.
---- A paid donation is handed back to the delegate, which raises every Smithy.
---- @param choice number The 0-based choice index.
---- @param dilemma_key string The forge dilemma's key.
---- @returns boolean True when the faction paid for a Generous Donation.
-function SmithyState:resolve_forge_choice(choice, dilemma_key)
-    local offer = self.pending_forge_offer or { free_picks = {} }
-    local index = choice + 1
-    --- A greyed-out paid choice clicked anyway was charged by its payload, so the gold goes back.
-    dilemmas.refund(self.controlling_faction_name, dilemma_key, FORGE_CHOICE_KEYS[index])
-    if offer.free_picks[index] then
-        self.visit_cooldown = self:free_pick_cooldown()
-    elseif index == UPGRADE_CHOICE and offer.upgrade then
-        self:set_level(self.level + 1)
-        self:show_message(self.controlling_faction_name, "smithy_levelled_up_level_" .. self.level)
+--- Opens the Work Orders counter for a lord: 3 offers acting at the forge level, priced at the campaign difficulty and the Smithy prices.
+--- @param faction_name string The owning faction.
+--- @param general_cqi number The visiting lord's command queue index.
+--- @returns boolean True when the counter opened, false when the lord is gone.
+function SmithyState:open_orders(faction_name, general_cqi)
+    local character = tower_army.character(general_cqi)
+    if not character then
+        log("smithy: lord " .. tostring(general_cqi) .. " of " .. faction_name .. " is gone, so the Work Orders do not open")
+        return false
     end
+    local share = get_mct_settings().smithy_price_percent / 100
+    log("smithy: " .. faction_name .. " opens the Work Orders of the " .. self:describe() .. " at level " .. self.level .. ", price share " .. share)
+    --- The counter shows a faction the same orders for the rest of the turn, so going back to the forge and in again does not draw new ones.
+    spot_offers.open_site(character, character:faction(), offers_data.smithy, nil, { kind = "smithy", zone = self.zone_name, index = self.index_in_zone,
+        difficulty = DIFFICULTY_KEYS[self.level], price_difficulty = get_current_difficulty(), price_share = share, draws = self.orders_draws })
+    return true
+end
+
+--- Applies a forge choice. The dilemma payload already granted the items and charged the gold, so only the cooldown and level change here.
+--- Work Orders and the Temper and Break room open their own dilemmas, and Rush the Forge ends the cooldown and opens the full forge again. A
+--- paid donation is handed back to the delegate, which raises every Smithy.
+--- @param dilemma_key string The forge dilemma's key.
+--- @param choice_key string The chosen choice key.
+--- @returns boolean True when the faction paid for a Generous Donation.
+function SmithyState:resolve_forge_choice(dilemma_key, choice_key)
+    local offer = self.pending_forge_offer or { free_picks = {} }
     self.pending_forge_offer = nil
-    return index == DONATION_CHOICE and offer.donation == true
+    local faction_name = self.controlling_faction_name
+    log("smithy: " .. faction_name .. " chose " .. tostring(choice_key) .. " at the forge of the " .. self:describe())
+    --- A greyed-out paid choice clicked anyway was charged by its payload, so the gold goes back.
+    dilemmas.refund(faction_name, dilemma_key, choice_key)
+    if choice_key == boons_data.smithy_room.open_choice then
+        local character = tower_army.character(offer.general_cqi)
+        if character then self:open_room(character, false) end
+    elseif choice_key == RUSH_KEY and offer.rush then
+        log("smithy: " .. faction_name .. " rushes the forge of the " .. self:describe() .. ", " .. self.visit_cooldown .. " turns early")
+        self.visit_cooldown = 0
+        local character = tower_army.character(offer.general_cqi)
+        if character then self:open_forge(cm:get_faction(faction_name), character) end
+    elseif choice_key == ORDERS_KEY and offer.orders then
+        self:open_orders(faction_name, offer.general_cqi)
+    elseif offer.free_picks[choice_key] then
+        self.visit_cooldown = self:free_pick_cooldown()
+    elseif choice_key == UPGRADE_KEY and offer.upgrade then
+        self:set_level(self.level + 1)
+        self:show_message(faction_name, "smithy_levelled_up_level_" .. self.level)
+    end
+    return choice_key == DONATION_KEY and offer.donation == true
+end
+
+--- Opens the Temper and Break room for a lord at the owner's prices.
+--- @param character character The visiting lord.
+--- @param rust_taken boolean True when the lord took Rust for Iron on this visit already.
+function SmithyState:open_room(character, rust_taken)
+    self.pending_room = boon_services.open_smithy(character, self.controlling_faction_name, room_price, rust_taken, PAYLOAD_TEXT_BACK)
+end
+
+--- Applies a Temper and Break choice, then opens the room again for the same lord, or the forge on Back.
+--- @param choice_key string The chosen choice key.
+function SmithyState:resolve_room_choice(choice_key)
+    local open_room = self.pending_room
+    self.pending_room = nil
+    if not open_room then return end
+    local action, _, character = boon_services.resolve(open_room, self.controlling_faction_name, boons_data.smithy_room.dilemma, choice_key)
+    if action == "reopen" then
+        self:open_room(character, open_room.rust_taken)
+        return
+    end
+    local lord = tower_army.character(open_room.cqi)
+    log("smithy: lord " .. tostring(open_room.cqi) .. " goes back from Temper and Break to the forge of the " .. self:describe())
+    if lord then self:open_forge(cm:get_faction(self.controlling_faction_name), lord) end
 end
 
 --- Sets the forge level (clamped to 1-3) and swaps the map marker to that level's skin.
@@ -389,6 +557,7 @@ function SmithyState:set_level(level)
     if level == self.level then return end
     self.level = level
     SmithySpot.replace_marker(self.zone_name, self.index_in_zone, self.coordinates, level)
+    self:refresh_perks()
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -453,7 +622,9 @@ function SmithyState:trigger_dilemma_event_given_choice(dilemma_choice_and_facti
     local choice = dilemma_choice_and_faction_info:choice()
     local dilemma = dilemma_choice_and_faction_info:dilemma()
     if FORGE_EVENTS[dilemma] then
-        return self:resolve_forge_choice(choice, dilemma)
+        return self:resolve_forge_choice(dilemma, dilemma_choice_and_faction_info:choice_key())
+    elseif dilemma == boons_data.smithy_room.dilemma then
+        self:resolve_room_choice(dilemma_choice_and_faction_info:choice_key())
     elseif dilemma == EVENT_DEFENSE then
         self:resolve_defense_choice(choice, invasion_battle_manager)
     elseif dilemma == EVENT_RECLAMATION then
@@ -478,11 +649,14 @@ function SmithyState:is_on_cooldown()
     return self.visit_cooldown > 0
 end
 
---- Sets the new controlling faction and resets turns_under_control. Any siege or garrison of the previous owner ends (see OwnedPoint).
+--- Sets the new controlling faction and resets turns_under_control. Any siege or garrison of the previous owner ends (see OwnedPoint). Only
+--- the owner uses the Work Orders, so their closures and draws are forgotten.
 --- @param faction faction|string|nil The new owner, as a faction handle or key. Empty or nil clears ownership.
 function SmithyState:set_controlling_faction(faction)
     OwnedPoint.set_controlling_faction(self, faction)
     self.turns_under_control = 0
+    self.orders_closed_until, self.orders_draws = {}, {}
+    self:refresh_perks()
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -504,6 +678,10 @@ function SmithyState:export_state_as_table()
         garrison_force_cqi = self.garrison_force_cqi or false,
         garrison_character_cqi = self.garrison_character_cqi or false,
         pending_forge_offer = self.pending_forge_offer or false,
+        pending_room = self.pending_room or false,
+        orders_closed_until = self.orders_closed_until,
+        orders_draws = self.orders_draws,
+        perks = self.perks or false,
         level = self.level,
         controlling_faction_name = self.controlling_faction_name,
         controlling_faction_subculture = self.controlling_faction_subculture,
@@ -528,6 +706,11 @@ function SmithyState:reinstate(previous_state)
     self.garrison_force_cqi = value("garrison_force_cqi")
     self.garrison_character_cqi = value("garrison_character_cqi")
     self.pending_forge_offer = value("pending_forge_offer")
+    self.pending_room = value("pending_room")
+    --- A save from before Work Orders has no closures or draws.
+    self.orders_closed_until = previous_state.orders_closed_until or {}
+    self.orders_draws = previous_state.orders_draws or {}
+    self.perks = value("perks")
     self.level = previous_state.level or 1
     self.controlling_faction_name = previous_state.controlling_faction_name
     self.controlling_faction_subculture = previous_state.controlling_faction_subculture
@@ -554,7 +737,9 @@ function SmithyState:new(zone_name, index_in_zone, coordinates)
         controlling_faction_name = "",
         controlling_faction_subculture = "",
         turns_under_control = 0,
-        visit_cooldown = 0
+        visit_cooldown = 0,
+        orders_closed_until = {},
+        orders_draws = {},
     }
     setmetatable(t, self)
     self.__index = self
@@ -614,13 +799,15 @@ end
 --- Ticks every SmithyState. The FactionTurnStart listener calls this once per round.
 function SmithyEventDelegate:update_state_given_turn_passing()
     for i = 1, #self.smithies_state do
-        if not self.smithies_state[i].disabled then self.smithies_state[i]:update_state_given_turn_passing(self.mission_manager) end
+        if not self.smithies_state[i].disabled then self.smithies_state[i]:update_state_given_turn_passing() end
     end
+    smithy_commissions.tick(self)
 end
 
 --- Checks the sieges on a human faction's smithies at its turn start. Opens at most one defense dilemma per turn.
 --- @param faction_name string The human faction whose turn is starting.
 function SmithyEventDelegate:on_faction_turn_start(faction_name)
+    smithy_commissions.on_faction_turn_start(faction_name)
     for i = 1, #self.smithies_state do
         if self.smithies_state[i]:check_siege_at_turn_start(faction_name) then
             self.pending_dilemma_by_faction[faction_name] = i
@@ -633,10 +820,16 @@ end
 --- @param spot_info table The spot_info record for a smithy marker.
 --- @returns number The index in `smithies_state`, or nil when no smithy matches.
 function SmithyEventDelegate:find_smithy_index(spot_info)
+    return self:find_index(spot_info.zone.name, spot_info.spot_index)
+end
+
+--- Finds a SmithyState by its zone and slot.
+--- @param zone_name string The zone's region key.
+--- @param index_in_zone number The Smithy's 1-based slot in its zone.
+--- @returns number The index in `smithies_state`, or nil when no smithy matches.
+function SmithyEventDelegate:find_index(zone_name, index_in_zone)
     for i = 1, #self.smithies_state do
-        if self.smithies_state[i].zone_name == spot_info.zone.name and self.smithies_state[i].index_in_zone == spot_info.spot_index then
-            return i
-        end
+        if self.smithies_state[i].zone_name == zone_name and self.smithies_state[i].index_in_zone == index_in_zone then return i end
     end
     return nil
 end
@@ -661,6 +854,47 @@ function SmithyEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
     if smithy and smithy:trigger_dilemma_event_given_choice(dilemma_choice_and_faction_info, self.invasion_battle_manager) then
         guild_patron.donate("smithy", faction_name, self.smithies_state, smithy.coordinates)
     end
+    --- The Temper and Break room reopens after each service, and Rush the Forge reopens the forge, so the next choice comes back to the same
+    --- Smithy.
+    if smithy and (smithy.pending_room or smithy.pending_forge_offer) then self.pending_dilemma_by_faction[faction_name] = index end
+end
+
+--- Forgets a Smith's Commission whose mission ended (see features/smithy_commissions.lua).
+--- @param faction_name string The faction whose mission ended.
+--- @param mission_key string The mission key.
+--- @param outcome string "succeeded", "failed" or "cancelled".
+function SmithyEventDelegate:on_commission_ended(faction_name, mission_key, outcome)
+    smithy_commissions.on_mission_ended(faction_name, mission_key, outcome)
+end
+
+--- A lord walked onto a Fetch Star-Metal mark (see features/smithy_commissions.lua).
+--- @param character character The lord.
+--- @param marker_ref string The marker type's key.
+--- @param instance_ref string The marker's instance.
+function SmithyEventDelegate:on_mark_entered(character, marker_ref, instance_ref)
+    smithy_commissions.on_mark_entered(self, character, marker_ref, instance_ref)
+end
+
+--- Handles a faction leaving a Smithy's Work Orders. Taking an order closes the counter to that faction for `orders_cooldown` turns. Going
+--- back reopens the forge for the same lord.
+--- @param faction_name string The faction that left the counter.
+--- @param site table The closed spot offer site, with its `venue` { kind, zone, index } and `general_cqi`.
+--- @param took boolean True when an order was taken.
+function SmithyEventDelegate:orders_closed(faction_name, site, took)
+    local index = self:find_index(site.venue.zone, site.venue.index)
+    local smithy = index and self.smithies_state[index]
+    if not smithy then return end
+    if took then
+        smithy.orders_closed_until[faction_name] = cm:turn_number() + smithy_data.orders_cooldown
+        log("smithy: the Work Orders of the " .. smithy:describe() .. " are closed to " .. faction_name .. " until turn " .. smithy.orders_closed_until[faction_name])
+        return
+    end
+    local character = tower_army.character(site.general_cqi)
+    log("smithy: " .. faction_name .. " goes back to the forge of the " .. smithy:describe() .. " (lord " .. tostring(site.general_cqi) .. ")")
+    if character and smithy:is_occupied_by_same_faction(faction_name) then
+        smithy:open_forge(cm:get_faction(faction_name), character)
+        self.pending_dilemma_by_faction[faction_name] = index
+    end
 end
 
 --- Exports every SmithyState plus the delegate's own state for the save/load callbacks.
@@ -670,7 +904,8 @@ function SmithyEventDelegate:export_state_as_table()
     for i = 1, #self.smithies_state do
         table.insert(smithies_data, self.smithies_state[i]:export_state_as_table())
     end
-    return { smithies = smithies_data, pending_dilemma_by_faction = self.pending_dilemma_by_faction, patrons = guild_patron.export_state("smithy") }
+    return { smithies = smithies_data, pending_dilemma_by_faction = self.pending_dilemma_by_faction, patrons = guild_patron.export_state("smithy"),
+        commissions = smithy_commissions.export_state() }
 end
 
 --- Restores every SmithyState from a saved state and re-arms battles in flight. Saves from before the forge rework hold the smithy array
@@ -692,6 +927,8 @@ function SmithyEventDelegate:reinstate_event_if_able(previous_state)
         end
     end
     self.pending_dilemma_by_faction = previous_state.pending_dilemma_by_faction or {}
+    smithy_commissions.restore_state(previous_state.commissions)
+    smithy_commissions.rearm_battles(self)
 end
 
 --- Constructs a fresh SmithyEventDelegate wired to the given CA mission_manager and InvasionBattleManager.

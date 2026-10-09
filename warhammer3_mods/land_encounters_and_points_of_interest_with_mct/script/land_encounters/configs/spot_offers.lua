@@ -9,14 +9,14 @@
 ---   gold            Gold gained. A negative value inside a gamble outcome is a loss.
 ---   items           { rarities, count }: random items of those rarities.
 ---   unique          How many legendary items.
----   recruit         { count, tiers, unit_types }: units of the lord's culture join the army.
+---   recruit         { count, tiers, unit_types, beaten, strength }: units of the lord's culture join the army, or of the beaten army's race
+---                   with `beaten`, at `strength` percent of their strength when set.
 ---   renown          How many Regiments of Renown of the lord's culture join.
 ---   hero_rank       A freed hero of this rank joins.
 ---   xp              Experience for the lord.
 ---   army_bundle     { bundle, turns } on the lord's army.
 ---   faction_bundle  { bundle, turns } on the lord's faction.
 ---   trait           A trait the lord gains for good. Not drawn when the lord has it.
----   wound           The lord is wounded for this many turns, at once.
 ---   camp            True: the army cannot move again this turn.
 ---   heal            True: every unit is healed to full.
 ---   heal_share      Every unit regains this share of its missing strength.
@@ -25,7 +25,13 @@
 ---   guardian        A battle starts at the site, against an army that attacks the lord at once: true at the current difficulty, or a
 ---                   difficulty key, e.g. "hard". On an offer or a gamble outcome.
 ---   dividends       { per_turn, turns }: gold each turn start, shown by the `dividends_bundle_prefix` bundle for that amount.
----   incident        A site's old incident, fired as the signature reward.
+---   story           True: a site special's story shows as its result once taken (a gamble's outcome or a realm target's result shows it
+---                   instead).
+---   wound           On a gamble outcome only: the lord is wounded for this many turns, at once. Kept for Open the Sealed Door, by Steve's
+---                   choice. New offers never wound the lord.
+---   guardian_prize  Unique items paid when the guardian battle is won, shown on the offer's `_won` result.
+---   next_budget     The faction's next battle spot fight's enemy budget is multiplied by this, e.g. 1.15.
+---   cleanse         { boon, level }: our lord's worst curse is lifted, or the lord gains that boon when it has none.
 ---   gamble          A list of outcomes { weight, name, ...fields }. One is rolled when the offer is taken, and its fields apply.
 ---   realm           The realm target kind, see `M.realm_kinds`. The offer is not drawn when it has no target.
 ---   region_bundle, province_bundle, target_faction_bundle  { bundle, turns } on the realm target.
@@ -36,6 +42,8 @@
 ---   garrison_strength  Each unit of the realm target's garrison drops to this share of its strength.
 ---   reveal_turns    The realm target's region stays revealed through the shroud for this many turns, and the result lists its garrison.
 ---   count           How many realm targets.
+---   side_relations  { kind, step }: relations change with factions found from the first target faction. "target_enemy" is its nearest
+---                   enemy other than us, and "target_allies" every faction allied with it. The offer is not drawn when none is found.
 ---
 --- Tavern bar fields (pool "tavern", drawn only on the bar of a Tavern). A bar offer's `cost` steps with the campaign difficulty and is shown
 --- as a treasury card, while every other stepped field steps with the Tavern's level (Easy for level 1 up to Hard for level 3):
@@ -43,6 +51,8 @@
 ---   stake_multiplier  A gamble outcome that pays back the gold paid for the offer this many times over.
 ---   lord_health     A gamble outcome that leaves our lord's own unit at this share of its current strength.
 ---   army_report     The result lists the enemy armies within this map distance of the Tavern, instead of a garrison.
+---   ranks, max_rank Every regular unit in our army gains `ranks` ranks, skipping a unit already within `ranks` of `max_rank`.
+---   A gamble outcome may carry `spell_pool` and `spell_turns`. Its spell is rolled when the outcome lands and named on the result.
 --- Pre-battle offer fields (pool "pre_battle"). Taking one pays its cost and the battle starts with it:
 ---   budget          Multiplies the enemy army's gold budget, e.g. 0.75.
 ---   fewer_units     The enemy army fields this many fewer units.
@@ -67,6 +77,11 @@
 ---   ally_ranks      The allied army's regular units gain this many ranks.
 ---   extra_ally_units  A sized allied army fields this many more units.
 ---   ally_budget     Multiplies a full allied army's gold budget.
+---   bleed           Every unit of ours loses this much strength now, as the price.
+---   boon, curse     A boon or curse our lord gains (see `boons.grant_fields`). Only drawn while boons and curses are on.
+---   relations       Relations change, in the game's dilemma steps, with the nearest faction of the enemy army's race, when one holds a region.
+---   victory_gold    Multiplies the battle's victory gold, on top of its modifiers' change.
+---   random_modifier True: a random battle modifier is added to the fight, named by its notice in battle.
 ---
 --- A battle notice whose effect differs by difficulty carries the difficulty in its name, e.g. thin_the_ranks_medium (see `steps.notice`).
 ---
@@ -82,13 +97,19 @@
 ---   roster          Only drawn against a faction that fields one of these unit types.
 ---   max_units       Only drawn when our army has at most this many regular units.
 ---   trophy          True: a copy of the enemy's most expensive unit joins our army.
+---   budget          A stake: multiplies the enemy army's gold budget.
+---   boon            A boon our lord gains for the mission met (see `boons.grant_fields`). A race boon is about the enemy's race.
+---   fail_curse      A curse our lord gains when the mission fails or the battle is lost.
+---   spell_pool, spell_turns  An army spell rolled when the mission is drawn, which the choice names, on our army for that many turns.
+---   lift_curse      True: our lord's worst curse is lifted. Only drawn for a lord with a curse.
 ---
 --- Spoils fields (pool "spoils", drawn on the spoils pick after a won battle spot, which also draws realm offers and offers marked `spoils`):
 ---   spoils               True on an offer of another pool that the spoils pick can draw too.
 ---   gold_per_enemy_unit  Gold for each unit in the army we beat (Easy value, scaled).
 ---   battle_item          True: 1 item of the battle's own victory rarities.
 ---   captive              True: a random unit of the army we beat joins our army.
----   ransom               True: worse relations (`relations`) with the nearest faction of the beaten army's culture.
+---   beaten_kin           True: relations change (`relations`) with the nearest faction of the beaten army's race, which the result names.
+---   bleed                Every unit of ours loses this much strength now, as on a pre-battle offer. Also on a gamble outcome.
 ---   trait_points         A trait the lord gains a point of each time, growing through its levels.
 ---   lord_ranks           Ranks the lord gains.
 ---   lord_xp              Experience the lord gains.
@@ -107,6 +128,9 @@ local SPOT_BUNDLE = "land_enc_effect_spot_"
 
 --- Key prefix of the Tavern bar's drinks.
 local TAVERN_BUNDLE = SPOT_BUNDLE .. "tavern_"
+
+--- Prefix of the Smithy's Work Orders bundles.
+local SMITHY_BUNDLE = SPOT_BUNDLE .. "smithy_"
 
 --- The tower's attrition bundle, shared by the plague offers.
 local PLAGUE = shared.plague_bearer.bundle
@@ -212,8 +236,9 @@ M.fight_choice_key = "FIRST"
 ---   rival_pair       The two biggest of the 6 nearest factions, set against each other.
 ---   enemy_friends    The nearest enemy, made friendlier with your other enemies.
 ---   nearby_regions   The `count` nearest regions that are not yours.
+---   region_owner     The owner of the region the site stands in, or the nearest other faction when that region is yours.
 M.realm_kinds = { "own_region", "raise_region", "own_province", "enemy_region", "enemy_regions", "enemy_province", "enemy_capital", "friend",
-    "biggest_faction", "neighbours", "rival_pair", "enemy_friends", "nearby_regions" }
+    "biggest_faction", "neighbours", "rival_pair", "enemy_friends", "nearby_regions", "region_owner" }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,6 +268,10 @@ M.sites = {
 --- player sees their own culture's victory.
 M.spoils = { key = "spoils_of_war", tags = { "loot", "recovery" }, pools = { "spoils", "realm" }, ui_image = "land_victory" }
 
+--- A Smithy's Work Orders counter: like a Tavern's bar, a site with no signature that draws only from its own pool, goes back to the forge
+--- and shows each price as a treasury card. Its offers act at the forge level.
+M.smithy = { key = "smithy_orders", tags = {}, pools = { "smithy" }, ui_image = "land_enc_smithy_forge", leave_line = "smithy_back", price_as_card = true }
+
 --- A Tavern's bar: a site with no signature that draws only drinks and games, and is never rolled for a treasure spot. Its last choice goes
 --- back to the Tavern's hub instead of walking away, and each price shows as a treasury card that the payload charges. The picture is
 --- culture-aware.
@@ -253,20 +282,29 @@ M.tavern = { key = "tavern_bar", tags = {}, pools = { "tavern" }, ui_image = "wu
 --- Offers
 
 M.offers = {
-    --- Signature rewards of the old treasure sites: the old incident fires.
-    { key = "tomb_robbing", pool = "signature", tags = {}, incident = "land_enc_incident_tomb_robbing" },
-    { key = "abandoned_camp", pool = "signature", tags = {}, incident = "land_enc_incident_abandoned_camp" },
-    { key = "buried_relics", pool = "signature", tags = {}, incident = "land_enc_incident_buried_relics" },
-    { key = "hidden_temple", pool = "signature", tags = {}, incident = "land_enc_incident_hidden_temple" },
-    { key = "caravan_remnants", pool = "signature", tags = {}, incident = "land_enc_incident_caravan_remnants" },
-    { key = "whispers_of_the_gods", pool = "signature", tags = {}, incident = "land_enc_incident_whispers_of_the_gods" },
-    { key = "the_explorer", pool = "signature", tags = {}, incident = "land_enc_incident_the_explorer" },
-    { key = "legendary_bard", pool = "signature", tags = {}, incident = "land_enc_incident_legendary_bard" },
+    --- The site specials. Each tells its site's old story as its result. The AI's balancing bonus still fires the old incidents.
+    { key = "tomb_robbing", pool = "signature", tags = {}, items = { rarities = { "rare" }, count = 1 }, lord_xp = 2000, gamble = {
+        { 2, "spared" },
+        { 1, "haunted", curse = { "haunted", 2 } },
+    } },
+    { key = "abandoned_camp", pool = "signature", tags = {}, story = true, heal_share = S(0.5, 0.75, 1), army_bundle = { SPOT_BUNDLE .. "buy_supplies", 1 },
+        camp = true },
+    { key = "buried_relics", pool = "signature", tags = {}, story = true, camp = true,
+        items = S({ rarities = { "uncommon" }, count = 2 }, { rarities = { "uncommon" }, count = 2 }, { rarities = { "rare" }, count = 2 }) },
+    { key = "hidden_temple", pool = "signature", tags = {}, story = true, cost = STANDARD, cleanse = { "warded", 1 } },
+    { key = "caravan_remnants", pool = "signature", tags = {}, gold = 2500, lord_xp = 500, items = { rarities = { "common", "uncommon", "rare" }, count = 1 },
+        realm = "region_owner", relations = -2 },
+    { key = "whispers_of_the_gods", pool = "signature", tags = {}, army_bundle = { "land_enc_effect_whispers_of_the_gods", 3 }, spell_pool = "lore",
+        spell_turns = 3, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "sig_troubled_faithful", 5 } },
+    { key = "the_explorer", pool = "signature", tags = {}, cost = STANDARD, army_bundle = { SPOT_BUNDLE .. "sig_explorers", 5 }, realm = "nearby_regions",
+        count = 5, reveal_turns = 5 },
+    { key = "legendary_bard", pool = "signature", tags = {}, story = true, cost = STANDARD, faction_bundle = { "land_enc_effect_legendary_bard", 5 },
+        army_bundle = { SPOT_BUNDLE .. "sig_bard_song", 5 } },
 
     --- Treasure: loot.
-    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = S(1000, 1500, 2000), spoils = true },
+    { key = "take_the_gold", pool = "treasure", tags = { "loot" }, gold = S(2000, 3000, 4000), camp = true, spoils = true },
     { key = "strip_the_valuables", pool = "treasure", tags = { "loot", "curse" }, gold = S(1000, 2000, 3000), army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 3 } },
-    { key = "pry_open_the_reliquary", pool = "treasure", tags = { "loot", "curse" }, items = { rarities = { "rare" }, count = 1 }, wound = 2 },
+    { key = "pry_open_the_reliquary", pool = "treasure", tags = { "loot", "curse" }, items = { rarities = { "rare" }, count = 1 }, curse = { "haunted", 1 } },
     { key = "search_every_corner", pool = "treasure", tags = { "loot" }, items = { rarities = { "common", "uncommon", "rare" }, count = 2 }, camp = true },
     { key = "the_hidden_vault", pool = "treasure", tags = { "loot" }, cost = UNIQUE, unique = 1 },
 
@@ -285,7 +323,7 @@ M.offers = {
     } },
     --- Blessings come at the low step for 5 turns, curses last 3 turns.
     { key = "touch_the_relic", pool = "treasure", tags = { "gamble", "blessing", "curse" }, gamble = {
-        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "bless_the_banners_easy", 5 } },
+        { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "bless_the_banners", 5 } },
         { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "stoneskin_easy", 5 } },
         { 1, "blessed", army_bundle = { SPOT_BUNDLE .. "ancient_tactics", 5 } },
         { 1, "cursed", army_bundle = { SPOT_BUNDLE .. "strip_the_valuables", 3 } },
@@ -307,9 +345,12 @@ M.offers = {
     } },
 
     --- Treasure: blessings.
-    { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "leave_an_offering"), 5 } },
-    { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "bless_the_banners"), 5 } },
+    { key = "leave_an_offering", pool = "treasure", tags = { "blessing" }, bleed = 15, army_bundle = { tiered(SPOT_BUNDLE .. "leave_an_offering"), 5 } },
+    { key = "bless_the_banners", pool = "treasure", tags = { "blessing" }, cost = STANDARD, army_bundle = { tiered(SPOT_BUNDLE .. "blessed_banners"), 5 } },
     { key = "stoneskin", pool = "treasure", tags = { "blessing" }, cost = shared.stoneskin.cost, army_bundle = { tiered(SPOT_BUNDLE .. "stoneskin"), 5 } },
+    --- `spell_pool` rolls an army spell (configs/army_spells.lua) when the offer is drawn, which the choice names. The army keeps it for
+    --- `spell_turns` turns.
+    { key = "cache_of_scrolls", pool = "treasure", tags = { "blessing", "lore" }, cost = shared.STRONG, spell_pool = "all", spell_turns = 5 },
     --- The oath's price is the altar's keepers: a hard battle starts here.
     { key = "oath_at_the_altar", pool = "treasure", tags = { "blessing" }, trait = "land_enc_trait_spot_shrine_sworn", guardian = "hard" },
     --- Magical attacks are yes or no, so the price buys turns.
@@ -317,16 +358,28 @@ M.offers = {
         army_bundle = { SPOT_BUNDLE .. "enchanted_steel", S(5, 6, 7) } },
 
     --- Treasure: curses and pacts.
-    { key = "dark_bargain", pool = "treasure", tags = { "curse" }, trait = "land_enc_trait_tower_daemon_marked", wound = 5 },
+    { key = "dark_bargain", pool = "treasure", tags = { "curse" }, trait = "land_enc_trait_tower_daemon_marked", curse = { from = "treasure", level = 3 } },
     { key = "plague_bearer", pool = "treasure", tags = { "curse", "loot" }, gold = shared.plague_bearer.gold, army_bundle = { PLAGUE, shared.plague_bearer.turns } },
     { key = "bloodstained_blades", pool = "treasure", tags = { "curse" }, army_bundle = { SPOT_BUNDLE .. "bloodstained_blades", 5 } },
     { key = "feed_the_shadows", pool = "treasure", tags = { "curse" }, sacrifice = { ranks = 1 } },
     { key = "daemons_deal", pool = "treasure", tags = { "curse", "gamble" }, unique = shared.daemons_deal.unique, daemon_armies = shared.daemons_deal.armies },
 
+    --- Pacts: a boon for the lord that costs a curse (features/boons.lua). `boon` and `curse` are { key, level } or { from = a drop source }.
+    { key = "blood_pact", pool = "treasure", tags = { "pact" }, boon = shared.blood_pact.boon, curse = shared.blood_pact.curse },
+    { key = "hunters_bargain", pool = "treasure", tags = { "pact" }, boon = { "hunters_path", 2 }, curse = { "leaden_march", 1 } },
+    { key = "price_of_the_winds", pool = "treasure", tags = { "pact" }, boon = { "kindled_winds", 2 }, curse = { "wild_magic", 1 } },
+    { key = "dread_oath", pool = "treasure", tags = { "pact" }, boon = { "dread_host", 2 }, curse = { "cowards_mark", 1 } },
+    { key = "star_pact", pool = "treasure", tags = { "pact" }, boon = shared.star_pact.boon, curse = shared.star_pact.curse },
+    { key = "claim_the_cursed_relic", pool = "treasure", tags = { "pact" }, boon = { from = "treasure" }, curse = { from = "treasure" } },
+    { key = "read_the_omens", pool = "treasure", tags = { "blessing" }, cost = STANDARD, boon = { "fates_favour", 1 } },
+
     --- Treasure: recruits.
-    { key = "conscripts", pool = "treasure", tags = { "recruit" }, recruit = { count = shared.conscripts.count, tiers = shared.conscripts.tiers } },
+    { key = "conscripts", pool = "treasure", tags = { "recruit" }, recruit = { count = S(2, 2, 3), tiers = shared.conscripts.tiers, strength = 25 } },
     { key = "hire_sellswords", pool = "treasure", tags = { "recruit", "deal" }, cost = STANDARD, recruit = { count = 1, tiers = S({ 3, 4 }, { 4 }, { 4, 5 }) } },
-    { key = "free_the_prisoner", pool = "treasure", tags = { "recruit" }, hero_rank = S(1, 3, 5) },
+    { key = "free_the_prisoner", pool = "treasure", tags = { "recruit" }, hero_rank = S(3, 5, 7), gamble = {
+        { 2, "freed" },
+        { 1, "chased", guardian = true },
+    } },
     { key = "tame_the_beast", pool = "treasure", tags = { "recruit", "gamble" },
         recruit = { count = 1, tiers = S({ 1, 2, 3 }, { 2, 3, 4 }, { 3, 4, 5 }), unit_types = { "monster", "war_beast", "monstrous_infantry", "monstrous_cavalry" } } },
     { key = "regiment_of_renown", pool = "treasure", tags = { "recruit", "deal" }, cost = shared.regiment_of_renown.cost, renown = 1 },
@@ -343,16 +396,31 @@ M.offers = {
     { key = "buy_supplies", pool = "treasure", tags = { "deal", "recovery" }, cost = STANDARD, army_bundle = { SPOT_BUNDLE .. "buy_supplies", S(5, 6, 7) } },
 
     --- Treasure: lore.
-    { key = "research_scrolls", pool = "treasure", tags = { "lore" }, faction_bundle = { "land_enc_effect_tower_research_scrolls", 5 } },
-    { key = "ancient_tactics", pool = "treasure", tags = { "lore" }, army_bundle = { SPOT_BUNDLE .. "ancient_tactics", 5 } },
+    { key = "research_scrolls", pool = "treasure", tags = { "lore" }, faction_bundle = { tiered(SPOT_BUNDLE .. "scroll_research"), 5 }, realm = "own_province",
+        province_bundle = { SPOT_BUNDLE .. "scroll_heresy", 5 } },
+    { key = "ancient_tactics", pool = "treasure", tags = { "lore" }, army_bundle = { tiered(SPOT_BUNDLE .. "ancient_drills"), 5 } },
+
+    --- Treasure: new in the treasure content pass.
+    { key = "wake_the_sleeping_champion", pool = "treasure", tags = { "gamble", "loot" }, guardian = S("medium", "hard", "hard"), guardian_prize = 1 },
+    { key = "loot_the_desecrated_shrine", pool = "treasure", tags = { "lore", "curse" }, spell_pool = "lore", spell_turns = 5, curse = { "shunned_by_the_winds", 1 } },
+    { key = "chip_the_runestone", pool = "treasure", tags = { "lore" }, spell_pool = "bound", spell_turns = 5, realm = "own_province",
+        province_bundle = { SPOT_BUNDLE .. "runestone_revered", 5 } },
+    { key = "sign_the_mercenary_captain", pool = "treasure", tags = { "recruit", "deal" }, recruit = { count = 1, tiers = S({ 4 }, { 4 }, { 5 }) },
+        army_bundle = { SPOT_BUNDLE .. "captains_cut", 5 } },
+    { key = "claim_the_tainted_gold", pool = "treasure", tags = { "loot", "curse" }, gold = S(4000, 5000, 6000), curse = { "cursed_coin", 2 } },
+    { key = "raise_the_old_standard", pool = "treasure", tags = { "blessing" }, boon = { "old_oath_banner", 1 }, next_budget = 1.15 },
+    { key = "loose_the_war_dogs", pool = "treasure", tags = { "recovery" }, bleed = 10, army_bundle = { tiered(SPOT_BUNDLE .. "war_dogs"), 5 } },
+    { key = "drink_from_the_battle_well", pool = "treasure", tags = { "blessing" }, army_bundle = { tiered(SPOT_BUNDLE .. "battle_well"), 5 } },
 
     --- Realm: your own lands.
     { key = "endow_the_province", pool = "realm", tags = { "realm" }, cost = PREMIUM, realm = "own_region", points = S(50, 75, 100) },
     { key = "garrison_drill", pool = "realm", tags = { "realm" }, cost = 1500, realm = "own_region", heal_garrison = true,
         region_bundle = { SPOT_BUNDLE .. "garrison_drill", 5 } },
     { key = "raise_the_settlement", pool = "realm", tags = { "realm" }, cost = STRUCTURAL, realm = "raise_region" },
-    { key = "quell_the_unrest", pool = "realm", tags = { "realm" }, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "quell_the_unrest", 5 } },
+    { key = "quell_the_unrest", pool = "realm", tags = { "realm" }, realm = "own_province", province_bundle = { tiered(SPOT_BUNDLE .. "quell_the_unrest"), 5 } },
     { key = "bountiful_harvest", pool = "realm", tags = { "realm" }, cost = STANDARD, realm = "own_province", province_bundle = { tiered(SPOT_BUNDLE .. "bountiful_harvest"), 5 } },
+    { key = "open_the_pilgrim_road", pool = "realm", tags = { "realm" }, realm = "own_province", camp = true,
+        province_bundle = { SPOT_BUNDLE .. "pilgrim_road", 5 } },
 
     --- Realm: rivals nearby.
     { key = "stir_their_rebels", pool = "realm", tags = { "realm_others" }, cost = STANDARD, realm = "enemy_province",
@@ -363,22 +431,25 @@ M.offers = {
         region_bundle = { SPOT_BUNDLE .. "sap_their_garrison", 5 } },
     { key = "spread_the_plague", pool = "realm", tags = { "realm_others", "curse" }, realm = "enemy_regions", count = 3,
         region_bundle = { SPOT_BUNDLE .. "spread_the_plague", 5 }, army_bundle = { PLAGUE, 3 } },
-    { key = "send_gifts", pool = "realm", tags = { "realm_others", "deal" }, cost = STANDARD, realm = "friend", relations = S(1, 2, 3) },
+    { key = "send_gifts", pool = "realm", tags = { "realm_others", "deal" }, cost = STANDARD, realm = "friend", relations = S(1, 2, 3),
+        side_relations = { "target_enemy", -1 } },
+    { key = "hire_raiders", pool = "realm", tags = { "realm_others" }, cost = STRONG, realm = "enemy_region", garrison_strength = 0.7,
+        region_bundle = { SPOT_BUNDLE .. "raiders", 5 }, side_relations = { "target_allies", -1 } },
     { key = "spy_on_their_capital", pool = "realm", tags = { "realm_others", "lore" }, cost = 1500, realm = "enemy_capital", reveal_turns = 5 },
 
     --- Realm: far-off factions.
     { key = "curse_a_distant_king", pool = "realm", tags = { "realm_others", "curse" }, cost = STRONG, realm = "biggest_faction",
         target_faction_bundle = { tiered(SPOT_BUNDLE .. "curse_a_distant_king"), 5 } },
-    { key = "share_the_find", pool = "realm", tags = { "realm_others", "lore" }, realm = "neighbours", relations = 1,
-        faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 }, target_faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 } },
+    { key = "share_the_find", pool = "realm", tags = { "realm_others", "lore" }, cost = 3000, realm = "neighbours", relations = 1,
+        faction_bundle = { SPOT_BUNDLE .. "share_the_find_ours", 5 }, target_faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 } },
     { key = "point_them_at_each_other", pool = "realm", tags = { "realm_others" }, cost = PREMIUM, realm = "rival_pair", relations = -5 },
     { key = "sell_their_secrets", pool = "realm", tags = { "realm_others", "deal" }, gold = S(2000, 2500, 3000), realm = "enemy_friends", relations = 5 },
+    { key = "blackmail_a_governor", pool = "realm", tags = { "realm_others", "deal" }, gold = S(3000, 4000, 5000), realm = "region_owner", relations = -2 },
 
     --- Pre-battle: sabotage on the enemy army.
     { key = "bribe_the_guards", pool = "pre_battle", tags = { "sabotage" }, cost = shared.bribe_the_guards.cost, budget = shared.bribe_the_guards.budget },
     { key = "thin_the_ranks", pool = "pre_battle", tags = { "sabotage" }, cost = shared.thin_the_ranks.cost, fewer_units = shared.thin_the_ranks.fewer_units },
-    { key = "poison_the_stores", pool = "pre_battle", tags = { "sabotage" }, cost = shared.poison_the_stores.cost,
-        enemy_strength = shared.poison_the_stores.enemy_strength },
+    { key = "poison_the_stores", pool = "pre_battle", tags = { "sabotage" }, enemy_strength = shared.poison_the_stores.enemy_strength, relations = -2 },
     { key = "kill_the_captain", pool = "pre_battle", tags = { "sabotage" }, cost = shared.kill_the_captain.cost, no_heroes = true },
     { key = "lower_tiers_only", pool = "pre_battle", tags = { "sabotage" }, cost = shared.lower_tiers_only.cost, max_tier = shared.lower_tiers_only.max_tier },
     { key = "strip_monsters", pool = "pre_battle", tags = { "sabotage" }, cost = shared.strip_monsters.cost, strip_types = shared.strip_monsters.strip_types },
@@ -402,21 +473,37 @@ M.offers = {
         enemy_bundle = shared.lame_their_mounts.enemy_bundle, roster = shared.lame_their_mounts.roster },
     { key = "hunters_snares", pool = "pre_battle", tags = { "sabotage" }, cost = shared.hunters_snares.cost, enemy_bundle = shared.hunters_snares.enemy_bundle,
         roster = shared.hunters_snares.roster },
+    { key = "exhaust_their_camp", pool = "pre_battle", tags = { "sabotage" }, cost = shared.exhaust_the_garrison.cost, enemy_bundle = shared.exhaust_the_garrison.bundle },
+    { key = "smoke_screen", pool = "pre_battle", tags = { "sabotage" }, cost = shared.smoke_the_halls.cost, enemy_bundle = shared.smoke_the_halls.bundle,
+        roster = shared.smoke_the_halls.roster },
+    --- The tower's trick: the battle script slays the enemy lord.
+    { key = "blood_contract", pool = "pre_battle", tags = { "sabotage" }, trick = true, curse = shared.blood_contract.curse },
+    { key = "undermine_their_lines", pool = "pre_battle", tags = { "sabotage" }, budget = 0.75, bleed = 10 },
 
     --- Pre-battle: buffs on our army for this battle.
-    { key = "war_rites", pool = "pre_battle", tags = { "buff" }, cost = shared.war_rites.cost, battle_bundle = shared.war_rites.bundle },
-    { key = "whetstones_and_oil", pool = "pre_battle", tags = { "buff" }, cost = shared.whetstones_and_oil.cost, battle_bundle = shared.whetstones_and_oil.bundle },
-    { key = "warding_sigils", pool = "pre_battle", tags = { "buff" }, cost = shared.warding_sigils.cost, battle_bundle = shared.warding_sigils.bundle },
+    { key = "war_rites", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.war_rites.bundle, budget = 1.15 },
+    { key = "whetstones_and_oil", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.whetstones_and_oil.bundle, curse = { "creeping_rust", 1 } },
+    { key = "warding_sigils", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.warding_sigils.bundle, bleed = shared.warding_sigils.bleed },
+    --- Rolls an army spell when drawn, for this battle.
+    { key = "battle_scroll", pool = "pre_battle", tags = { "buff" }, cost = shared.STANDARD, spell_pool = "all" },
     { key = "fire_kissed_blades", pool = "pre_battle", tags = { "buff" }, cost = shared.fire_kissed_blades.cost, battle_bundle = shared.fire_kissed_blades.bundle },
     { key = "iron_resolve", pool = "pre_battle", tags = { "buff" }, cost = shared.iron_resolve.cost, battle_bundle = shared.iron_resolve.bundle },
-    { key = "drill_sergeant", pool = "pre_battle", tags = { "buff" }, cost = shared.drill_sergeant.cost, battle_bundle = shared.drill_sergeant.bundle },
-    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, cost = shared.call_the_winds.cost, battle_bundle = shared.call_the_winds.bundle,
-        caster = true },
+    { key = "drill_sergeant", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.drill_sergeant.bundle },
+    { key = "call_the_winds", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.call_the_winds.bundle, caster = true, curse = { "wild_magic", 1 } },
     { key = "quartermasters_cache", pool = "pre_battle", tags = { "buff" }, cost = shared.quartermasters_cache.cost,
         battle_bundle = shared.quartermasters_cache.bundle, shoots = true },
     { key = "tower_artillery", pool = "pre_battle", tags = { "buff" }, cost = shared.tower_artillery.cost, battle_bundle = shared.tower_artillery.bundle },
 
     { key = "last_ditch_oath", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.last_ditch_oath.bundle },
+    { key = "blinding_powder", pool = "pre_battle", tags = { "buff" }, cost = shared.blinding_powder.cost, battle_bundle = shared.blinding_powder.bundle },
+    { key = "hold_the_ground", pool = "pre_battle", tags = { "buff" }, cost = STRONG, battle_bundle = shared.TOWER_BUNDLE .. "hold_the_ground" },
+    { key = "berserker_brew", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.berserker_brew.bundle, budget = shared.berserker_brew.budget },
+    { key = "shadow_cloaks", pool = "pre_battle", tags = { "buff" }, cost = shared.shadow_cloaks.cost, battle_bundle = shared.shadow_cloaks.bundle },
+    { key = "tireless_tonic", pool = "pre_battle", tags = { "buff" }, battle_bundle = shared.tireless_tonic.bundle, curse = shared.tireless_tonic.curse },
+
+    --- Pre-battle: a harder fight for more victory gold.
+    { key = "raise_the_stakes", pool = "pre_battle", tags = { "stakes" }, budget = 1.25, victory_gold = 2 },
+    { key = "tempt_fate", pool = "pre_battle", tags = { "stakes" }, random_modifier = true, victory_gold = 1.5 },
 
     --- Pre-battle: allies by size, and a gamble.
     { key = "allies_in_the_dark_small", pool = "pre_battle", tags = { "allies" }, cost = shared.allies_in_the_dark_small.cost,
@@ -448,7 +535,7 @@ M.offers = {
 
     --- Spoils, picked after a won battle spot.
     { key = "strip_the_dead", pool = "spoils", tags = { "loot" }, gold_per_enemy_unit = shared.strip_the_dead.per_unit },
-    { key = "ransom_the_captain", pool = "spoils", tags = { "loot", "deal" }, gold = S(2500, 3000, 3500), ransom = true, relations = -5 },
+    { key = "ransom_the_captain", pool = "spoils", tags = { "loot", "deal" }, gold = S(2500, 3000, 3500), beaten_kin = true, relations = -5 },
     { key = "tribute_from_the_locals", pool = "spoils", tags = { "deal" }, dividends = { per_turn = 500, turns = 5 } },
     { key = "loot_the_baggage", pool = "spoils", tags = { "loot" }, battle_item = true },
     { key = "recruit_a_captive", pool = "spoils", tags = { "recruit" }, captive = true },
@@ -457,24 +544,33 @@ M.offers = {
     { key = "trophy_of_war", pool = "spoils", tags = { "loot" }, trait_points = "land_enc_trait_spot_trophy_hunter" },
     { key = "chase_the_routers", pool = "spoils", tags = { "gamble" }, gamble = {
         { 1, "won", items = { rarities = { "rare" }, count = 1 } },
-        { 1, "lost", wound = 2 },
+        { 1, "lost", bleed = 10 },
     } },
     { key = "dark_offering", pool = "spoils", tags = { "curse" }, sacrifice = { ranks = 0 }, lord_ranks = 1,
         army_bundle = { SPOT_BUNDLE .. "dark_offering", 5 } },
+    { key = "scavenge_their_scrolls", pool = "spoils", tags = { "loot" }, spell_pool = "all", spell_turns = 5 },
+    { key = "raise_their_banner", pool = "spoils", tags = { "deal" }, boon = { from = "battle" }, beaten_kin = true, relations = -2 },
+    { key = "desecrate_the_fallen", pool = "spoils", tags = { "loot", "curse" }, gold = S(3000, 4000, 5000), curse = { "haunted", 1 } },
+    { key = "press_the_survivors", pool = "spoils", tags = { "recruit" }, recruit = { count = 2, tiers = { 2, 3 }, beaten = true }, beaten_kin = true,
+        relations = -2 },
+    { key = "feast_on_the_fallen", pool = "spoils", tags = { "recovery", "curse" }, heal_share = 0.3, faction_bundle = { SPOT_BUNDLE .. "fallen_feast", 5 } },
+    { key = "blood_tithe", pool = "spoils", tags = { "curse" }, boon = { from = "battle" }, bleed = 15 },
 
-    --- The Tavern bar. Drinks last 5 turns and grow stronger with the Tavern's level, and a hangover lasts 3 turns.
+    --- The Tavern bar. Drinks last 5 turns, grow stronger with the Tavern's level and each carry a cost, and a hangover lasts 3 turns.
     { key = "fighting_spirits", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "fighting_spirits"), 5 } },
     { key = "shieldbrew", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "shieldbrew"), 5 } },
     { key = "firewater", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "firewater"), 5 } },
     { key = "marksmans_draught", pool = "tavern", tags = {}, cost = STANDARD, army_bundle = { tiered(TAVERN_BUNDLE .. "marksmans_draught"), 5 }, shoots = true },
     { key = "mystery_brew", pool = "tavern", tags = {}, cost = S(500, 750, 1000), gamble = {
-        { 1, "won", army_bundle = { tiered(TAVERN_BUNDLE .. "mystery_brew"), 5 } },
-        { 1, "lost", army_bundle = { TAVERN_BUNDLE .. "hangover", 3 } },
+        { 4, "strikes", army_bundle = { TAVERN_BUNDLE .. "blinding_strikes", 5 } },
+        { 3, "spell", spell_pool = "all", spell_turns = 5 },
+        { 3, "lost", army_bundle = { TAVERN_BUNDLE .. "hangover", 3 } },
     } },
     { key = "feast_for_the_army", pool = "tavern", tags = {}, cost = STANDARD, heal_share = S(0.5, 0.75, 1), army_bundle = { SPOT_BUNDLE .. "buy_supplies", 1 } },
     { key = "dice_with_strangers", pool = "tavern", tags = {}, cost = STANDARD, gamble = {
-        { 1, "won", stake_multiplier = 2 },
-        { 1, "lost" },
+        { 3, "won", stake_multiplier = 2 },
+        { 1, "prize", items = { rarities = { "rare" }, count = 1 } },
+        { 4, "lost", bleed = S(10, 12, 15) },
     } },
     { key = "arm_wrestle_the_champion", pool = "tavern", tags = {}, gamble = {
         { 1, "won", lord_xp = S(500, 750, 1000) },
@@ -482,6 +578,27 @@ M.offers = {
     } },
     { key = "buy_rumours", pool = "tavern", tags = {}, cost = S(1000, 1500, 2000), realm = "nearby_regions", count = S(3, 5, 7), reveal_turns = 5,
         army_report = 150 },
+    { key = "sing_the_war_chant", pool = "tavern", tags = {}, cost = STANDARD, boon = { "war_chant", 1 } },
+    { key = "spell_pedlar", pool = "tavern", tags = {}, cost = S(2000, 2500, 3000), spell_pool = S("army", "bound", "lore"), spell_turns = 5 },
+    { key = "press_gang_night", pool = "tavern", tags = { "recruit" }, recruit = { count = S(1, 2, 2), tiers = { 1, 2 } }, realm = "own_province",
+        province_bundle = { tiered(TAVERN_BUNDLE .. "press_gang"), 5 } },
+    { key = "fighting_pit", pool = "tavern", tags = {}, bleed = 25, ranks = S(1, 1, 2), max_rank = 9 },
+    { key = "smugglers_cut", pool = "tavern", tags = {}, realm = "region_owner", relations = -2, faction_bundle = { tiered(TAVERN_BUNDLE .. "smugglers_cut"), 5 } },
+    { key = "hire_a_pathfinder", pool = "tavern", tags = {}, camp = true, army_bundle = { tiered(TAVERN_BUNDLE .. "pathfinder"), 5 } },
+    { key = "blood_wine", pool = "tavern", tags = {}, bleed = S(10, 12, 15), army_bundle = { tiered(TAVERN_BUNDLE .. "blood_wine"), 5 } },
+    { key = "thiefs_mark", pool = "tavern", tags = { "pact" }, boon = { "kings_ransom", 1 }, curse = { "magpies_curse", 1 } },
+    { key = "gold_for_blood", pool = "tavern", tags = { "pact" }, boon = shared.gold_for_blood.boon, curse = shared.gold_for_blood.curse },
+
+    --- A Smithy's Work Orders. Values step with the forge level and prices with the campaign difficulty, like the bar's.
+    { key = "heavy_plate", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "heavy_plate"), 5 } },
+    { key = "honed_edges", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "honed_edges"), 5 } },
+    { key = "barbed_arrowheads", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "barbed_arrowheads"), 5 }, shoots = true },
+    { key = "shod_and_barded", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "shod_and_barded"), 5 } },
+    { key = "runesmiths_inscription", pool = "smithy", tags = {}, cost = STRONG, spell_pool = S("army", "bound", "lore"), spell_turns = 5 },
+    { key = "bloodforged_steel", pool = "smithy", tags = {}, bleed = S(15, 12, 10), items = { rarities = { "rare" }, count = 1 } },
+    { key = "cursed_masterwork", pool = "smithy", tags = { "curse" }, items = S({ rarities = { "rare" }, count = 2 }, { rarities = { "rare" }, count = 2 }, nil),
+        unique = S(nil, nil, 1), curse = { from = "smithy", level = 3, count = 2 } },
+    { key = "smiths_blessing", pool = "smithy", tags = {}, cost = STRONG, boon = { from = "smithy" } },
 
     --- Missions, tracked by the battle script under the tower's names.
     { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },
@@ -505,6 +622,12 @@ M.offers = {
     { key = "against_the_odds", pool = "mission", tags = {}, max_units = shared.against_the_odds.max_units, gold = S(2000, 2500, 3000) },
     { key = "rout_the_riders", pool = "mission", tags = {}, battle_value = shared.rout_the_riders.battle_value, roster = shared.rout_the_riders.roster,
         items = { rarities = { "rare" }, count = 1 } },
+    --- Missions that pay in boons, spells and lifted curses.
+    { key = "trial_by_fire", pool = "mission", tags = {}, budget = 1.25, boon = { from = "battle" } },
+    { key = "witch_hunt", pool = "mission", tags = {}, spell_pool = "lore", spell_turns = 5 },
+    { key = "settle_the_grudge", pool = "mission", tags = {}, boon = { "bane", 1 } },
+    { key = "penance", pool = "mission", tags = {}, lift_curse = true },
+    { key = "oath_of_victory", pool = "mission", tags = {}, battle_value = 480, boon = { from = "battle" }, fail_curse = { "cowards_mark", 1 } },
 }
 
 --- Offer key -> offer record.
@@ -532,9 +655,12 @@ function M.all_at(difficulty)
 end
 
 --- Site key -> site record, the spoils pick and the Tavern bar included.
-M.site_by_key = { [M.spoils.key] = M.spoils, [M.tavern.key] = M.tavern }
-for _, site in ipairs(M.sites) do
-    M.site_by_key[site.key] = site
+--- The sites a place opens rather than a spot: the Tavern bar and the Smithy's Work Orders.
+M.venues = { M.tavern, M.smithy }
+
+M.site_by_key = { [M.spoils.key] = M.spoils }
+for _, list in ipairs({ M.sites, M.venues }) do
+    for _, site in ipairs(list) do M.site_by_key[site.key] = site end
 end
 
 return M

@@ -138,10 +138,12 @@ end
 --- @param character character The lord the guardian attacks.
 --- @param spot_info table A spot_info record with the site's coordinates.
 --- @param difficulty string|nil The battle's difficulty, or nil for the current one.
-function BattleEventDelegate:start_guardian_battle(character, spot_info, difficulty)
+--- @param prize table|nil { offer, unique }: unique items paid when the battle is won (Wake the Sleeping Champion).
+function BattleEventDelegate:start_guardian_battle(character, spot_info, difficulty, prize)
     self.cached_player_character = character
     self.cached_event = battle_picker.pick(difficulty, { no_allies = true })
     self.cached_event.intervention = INTERCEPTION_TYPE
+    self.cached_event.win_prize = prize
     log("spot: the guardian wakes and attacks lord " .. character:command_queue_index() .. " with a " .. self.cached_event.category .. " battle at ("
         .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
     self:start_battle(spot_info)
@@ -160,14 +162,18 @@ function BattleEventDelegate:trigger_battle_avoidance_incident(spot_info)
     trigger_incident(self.cached_event.avoidance_incident, self.cached_event.avoidance_targets, spot_info, self.cached_player_character)
 end
 
---- Called by InvasionBattleManager after BattleCompleted. On player win, pays the missions met and fires the victory incident. Either way
+--- Called by InvasionBattleManager after BattleCompleted. Settles the missions (a loss fails them all), and on a player win fires the
+--- victory incident. Either way
 --- the pre-battle offers' one-battle bundles come off and everything handed to the battle script is cleared.
 --- @param player_won_battle boolean True when the player was victorious.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
     local character = self.cached_player_character
     local general_cqi = character and character.command_queue_index and character:command_queue_index() or nil
-    if player_won_battle and general_cqi then spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi) end
+    if general_cqi then
+        spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi, player_won_battle)
+        spot_battles.settle_prize(self.cached_event, character:faction():name(), general_cqi, player_won_battle)
+    end
     spot_battles.end_battle(self.cached_event, general_cqi)
     if player_won_battle then
         self:trigger_victory_incident(spot_info)
@@ -192,7 +198,7 @@ function BattleEventDelegate:trigger_victory_incident(spot_info)
     end
     self:grant_victory_items(self.cached_player_character:faction())
     self:grant_ally_rewards(self.cached_player_character, spot_info)
-    self:pay_modifier_gold(self.cached_player_character:faction())
+    self:pay_extra_gold(self.cached_player_character:faction())
     --- The spoils pick (features/spot_offers.lua) follows the victory reward when its roll hits.
     if self.cached_player_character:faction():is_human() and spot_battles.roll_spoils() then
         spot_offers.open_site(self.cached_player_character, self.cached_player_character:faction(), spoils_site, self.cached_event)
@@ -280,15 +286,18 @@ function BattleEventDelegate:trigger_victory_with_gift(character, gift, spot_inf
     cm:grant_unit_to_character(cm:char_lookup_str(character), gift)
 end
 
---- Pays the change the battle's modifiers make to its victory gold: more for harmful ones, less for helpful ones, rounded to 50.
+--- Pays the change the battle's modifiers and its raised stakes (`victory_gold`, from a pre-battle offer) make to its victory gold: more for
+--- harmful modifiers and raised stakes, less for helpful modifiers, rounded to 50.
 --- @param faction faction Our faction.
-function BattleEventDelegate:pay_modifier_gold(faction)
-    local modifiers = self.cached_event.modifiers
-    if not modifiers or #modifiers == 0 then return end
-    local base = victory_gold[self.cached_event.victory_incident] or 0
-    local change = round_gold(base * (battle_modifiers.gold_multiplier(modifiers) - 1))
+function BattleEventDelegate:pay_extra_gold(faction)
+    local event = self.cached_event
+    local multiplier = battle_modifiers.gold_multiplier(event.modifiers) * (event.victory_gold or 1)
+    if multiplier == 1 then return end
+    local base = victory_gold[event.victory_incident] or 0
+    local change = round_gold(base * (multiplier - 1))
     if change ~= 0 then cm:treasury_mod(faction:name(), change) end
-    log("spot battle: modifiers " .. table.concat(modifiers, ", ") .. " change the victory gold " .. base .. " by " .. change)
+    log("spot battle: modifiers " .. table.concat(event.modifiers or {}, ", ") .. " and stakes x" .. (event.victory_gold or 1) .. " change the victory gold "
+        .. base .. " by " .. change)
 end
 
 --- Rewards an Ally in Peril win with `ally.relations` with the ally's kin, or gold when there is none. A battle whose ally never spawned

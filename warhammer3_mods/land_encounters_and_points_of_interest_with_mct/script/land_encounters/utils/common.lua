@@ -207,6 +207,26 @@ function region_at(coordinates)
     return nil
 end
 
+--- A lord's name in the player's language, e.g. "Karl Franz". Empty when it cannot be read.
+--- @param character userdata The lord.
+--- @returns string The name.
+function lord_name(character)
+    local forename = common.get_localised_string(character:get_forename())
+    local surname = common.get_localised_string(character:get_surname())
+    return forename .. (forename ~= "" and surname ~= "" and " " or "") .. surname
+end
+
+--- Calls a function for every army of a faction that has a lord, skipping garrisons.
+--- @param faction userdata The faction.
+--- @param fn function Called with each military force.
+function each_army(faction, fn)
+    local forces = faction:military_force_list()
+    for i = 0, forces:num_items() - 1 do
+        local force = forces:item_at(i)
+        if not force:is_armed_citizenry() and force:has_general() then fn(force) end
+    end
+end
+
 --- Shows one of the LEAPOI event feed messages at a map position.
 --- @param faction_name string The faction that sees the message.
 --- @param message string The message suffix, e.g. "smithy_lost" for event_feed_strings_text_title_event_land_enc_smithy_lost.

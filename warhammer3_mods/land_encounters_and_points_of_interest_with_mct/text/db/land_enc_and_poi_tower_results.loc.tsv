@@ -13,9 +13,9 @@ campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_foe	[[col
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_bleed	[[col:yellow]]Roll the Bones:[[/col]] [[col:red]]every unit loses %s strength.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_reroll	[[col:yellow]]Reroll:[[/col]] the offers are redrawn.	false
 campaign_localised_strings_string_land_enc_tower_result_daemons_deal	[[col:yellow]]Daemon's Deal:[[/col]] [[col:green]]%s unique items[[/col]] join the haul. [[col:red]]A Chaos army will march on our capital when the delve ends.[[/col]]	false
-campaign_localised_strings_string_land_enc_tower_result_towers_favour	[[col:yellow]]Tower's Favour:[[/col]] [[col:green]]+25%% income[[/col]] from all buildings for the next 5 turns.	false
+campaign_localised_strings_string_land_enc_tower_result_towers_favour	[[col:yellow]]Tower's Favour:[[/col]] [[col:green]]more income[[/col]] from all buildings for the next 5 turns, but [[col:red]]relations with %s have soured[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_research_scrolls	[[col:yellow]]Research Scrolls:[[/col]] [[col:green]]+25%% research rate[[/col]] for the next 5 turns.	false
-campaign_localised_strings_string_land_enc_tower_result_recruitment_cache	[[col:yellow]]Recruitment Cache:[[/col]] [[col:green]]-25%% recruitment cost[[/col]] for the next 5 turns.	false
+campaign_localised_strings_string_land_enc_tower_result_recruitment_cache	[[col:yellow]]Recruitment Cache:[[/col]] [[col:green]]recruits cost 20%% less[[/col]] for the next 5 turns, but [[col:red]]every province has -10 public order[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_scout_the_floor	[[col:yellow]]Scouts report:[[/col]] %s.	false
 campaign_localised_strings_string_land_enc_tower_result_camp_in_the_tower	[[col:yellow]]Camp in the Tower:[[/col]] the army rested and [[col:green]]replenished[[/col]] overnight. The climb goes on.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_blood_tally	[[col:green]]Blood Tally met:[[/col]] +%s gold joins the haul.	false
@@ -109,3 +109,4 @@ campaign_localised_strings_string_land_enc_tower_result_mission_met_rout_the_rid
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_rout_the_riders	[[col:red]]Rout the Riders failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_rout_the_riders	[[col:yellow]]Rout the Riders was not counted:[[/col]] the battle was auto-resolved.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_set_rout_the_riders	[[col:yellow]]Rout the Riders (Mission):[[/col]] rout every [[col:yellow]]rider on the next floor within 6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_loot_the_reliquary	[[col:yellow]]Loot the Reliquary:[[/col]] [[col:green]]%s[[/col]] joins the haul, but [[col:red]]Chaos corruption spreads through every province[[/col]] for the next 5 turns.	false

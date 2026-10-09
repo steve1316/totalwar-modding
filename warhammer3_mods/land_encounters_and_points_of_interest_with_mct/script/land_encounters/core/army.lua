@@ -69,6 +69,9 @@ local Army = {
     ally_bundles = nil,
     --- An allied army only: ranks its regular units gain (Lend Them Veterans), or nil.
     ally_ranks = nil,
+    --- An encounter army only: the difficulty it was built at, and the fight's battle modifier keys, for the boons and curses the result gives.
+    difficulty = nil,
+    modifiers = nil,
     heroes = {},
     skill_overrides = {},
 }
@@ -242,6 +245,7 @@ function Army:new_from_event(event, player_subculture)
     end
 
     local army = Army:create_from(force_data)
+    army.difficulty, army.modifiers = event.difficulty, event.modifiers
     army.reinforcing_ally_armies = reinforcing_ally_armies
     army.reinforcing_enemy_armies = reinforcing_enemy_armies
 

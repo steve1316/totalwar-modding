@@ -32,6 +32,12 @@ local ALL_TIERS = { 0, 1, 2, 3, 4, 5 }
 --- Payload text of the hero's slot, followed by its rank. A unit's slot has no text: its unit card and price say it all.
 local LINE_HERO = "dummy_land_enc_tavern_hall_hero_"
 
+--- Payload text of the veteran company's slot, followed by its ranks.
+local LINE_VETERAN = "dummy_land_enc_tavern_hall_veteran_"
+
+--- Payload text of the cut-price sellsword's slot.
+local LINE_CUT = "dummy_land_enc_tavern_hall_cut"
+
 --- Payload text under a unit the army has no room for.
 local LINE_NO_ROOM = "dummy_land_enc_tavern_hall_no_room"
 
@@ -79,9 +85,15 @@ function M.roll_stock(tavern)
     end
     fill(stock.units, level.units, level.tiers, false)
     fill(stock.renown, random_range(level.renown[1], level.renown[2]), ALL_TIERS, true)
+    --- One regular unit is a veteran company and another a cut-price sellsword, kept by key so a hire before them does not move the marks.
+    local marks = {}
+    for i, key in ipairs(stock.units) do marks[i] = key end
+    marks = randomic_shuffle(marks)
+    stock.veteran, stock.cut = marks[1], marks[2]
     if level.hero_rank then stock.hero = { culture = cultures[random_number(#cultures)], rank = level.hero_rank } end
     log("tavern: the hall of the " .. tavern:describe() .. " restocks from " .. table.concat(cultures, ", ") .. ": units " .. table.concat(stock.units, ", ")
-        .. "; renown " .. table.concat(stock.renown, ", ") .. "; hero " .. (stock.hero and ("rank " .. stock.hero.rank .. " " .. stock.hero.culture) or "none"))
+        .. "; renown " .. table.concat(stock.renown, ", ") .. "; hero " .. (stock.hero and ("rank " .. stock.hero.rank .. " " .. stock.hero.culture) or "none")
+        .. "; veteran " .. tostring(stock.veteran) .. ", cut-price " .. tostring(stock.cut))
     return stock
 end
 
@@ -125,13 +137,17 @@ function M.open(tavern, faction, general_cqi, own, hired)
     end
     local force = tower_army.delving_force(general_cqi)
     local room = force and tower_army.free_slots(force) or 0
-    local treasury = faction:treasury()
+    local treasury = dilemmas.treasury(faction_name)
     local slots, choices = {}, {}
     --- Adds one slot and its choice. `key` is its unit, or nil for the hero, whose `line` describes it. A hire the treasury cannot pay still
     --- shows its price and unit, and is marked unaffordable so a click on it anyway is undone.
     local function add(kind, number, key, base, line)
         local markup = get_mct_settings().tavern_hire_markup + (kind == "renown" and tavern_data.hall.renown_extra or 0)
-        local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, price = tavern:charge(base + markup, faction_name) }
+        local mark = kind == "unit" and (key == stock.veteran and "veteran" or key == stock.cut and "cut") or nil
+        local share = mark == "veteran" and tavern_data.hall.veteran_price or mark == "cut" and tavern_data.hall.cut_price or 1
+        local slot = { choice = CHOICE_PREFIX .. kind:upper() .. "_" .. number, kind = kind, index = number, key = key, mark = mark,
+            price = tavern:charge(math.floor((base + markup) * share), faction_name) }
+        if mark then line = mark == "veteran" and LINE_VETERAN .. level.veteran_ranks or LINE_CUT end
         local choice = { key = slot.choice, lines = { line } }
         if key and room < 1 then
             choice.lines[#choice.lines + 1] = LINE_NO_ROOM
@@ -156,10 +172,26 @@ function M.open(tavern, faction, general_cqi, own, hired)
     choices[#choices + 1] = { key = BACK_CHOICE, lines = { LINE_BACK } }
     tavern.pending_hall = { general_cqi = general_cqi, own = own, slots = slots, hired = hired or 0 }
     local shown = {}
-    for _, slot in ipairs(slots) do shown[#shown + 1] = (slot.key or "hero") .. " " .. slot.price .. (slot.ok and "" or " (closed)") end
+    for _, slot in ipairs(slots) do shown[#shown + 1] = (slot.key or "hero") .. " " .. slot.price .. (slot.mark and " " .. slot.mark or "") .. (slot.ok and "" or " (closed)") end
     log("tavern: hall of the " .. tavern:describe() .. " for " .. faction_name .. " (hired " .. (hired or 0) .. ", treasury " .. treasury .. ", room " .. room
         .. "): " .. table.concat(shown, ", "))
     dilemmas.launch(M.DILEMMA, choices, faction_name)
+end
+
+--- Ranks up a hired veteran company or weakens a hired cut-price sellsword, once the payload has granted it.
+--- @param general_cqi number The lord who hired it.
+--- @param hired table The joined unit's `tower_army.unit_strengths` entry.
+--- @param mark string "veteran" or "cut".
+--- @param ranks number The veteran's ranks.
+local function finish_hire(general_cqi, hired, mark, ranks)
+    local key = hired.unit:unit_key()
+    if mark == "veteran" then
+        cm:add_experience_to_unit(hired.unit, ranks)
+        log("tavern: the veteran " .. key .. " joins lord " .. general_cqi .. "'s army with " .. ranks .. " ranks")
+    else
+        tower_army.set_strength(hired.unit, tavern_data.hall.cut_strength)
+        log("tavern: the cut-price " .. key .. " joins lord " .. general_cqi .. "'s army at " .. tavern_data.hall.cut_strength .. "% strength")
+    end
 end
 
 --- Applies a hall choice. A hire the payload granted and charged leaves the stock (a hero is freed here), and the first one of a visit closes
@@ -194,6 +226,11 @@ function M.resolve(tavern, faction_name, choice_key)
             table.remove(pending.own, slot.index)
         else
             table.remove(slot.kind == "unit" and stock.units or stock.renown, slot.index)
+        end
+        if slot.mark then
+            local ranks, mark = tavern_data.levels[tavern.level].hall.veteran_ranks, slot.mark
+            stock[slot.mark] = nil
+            tower_army.after_join(pending.general_cqi, { [slot.key] = true }, function(hired) finish_hire(pending.general_cqi, hired, mark, ranks) end)
         end
         if pending.hired == 0 then
             tavern.hall_closed_until[faction_name] = cm:turn_number() + get_mct_settings().tavern_cooldown

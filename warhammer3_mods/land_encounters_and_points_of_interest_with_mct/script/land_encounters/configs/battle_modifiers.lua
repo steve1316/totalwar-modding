@@ -67,6 +67,8 @@ Fields of each modifier:
   describes them, since the battle script picks its own units.
 - group: modifiers sharing a group (opposites) never roll together, or nil.
 - keeps_out: offer keys (spot and tower) not drawn for the battle, as they would do the same or cancel it out, or nil.
+- spell: an army spell pool (configs/army_spells.lua, e.g. "all"). Each of its sides gets a spell rolled from it with the modifiers, kept on
+  the modifier list as `spells`, and cast at no Winds of Magic cost in the battle.
 - bundle: true when it is a bundle on each of its sides for the battle, named `bundle_prefix` .. key .. "_" .. side. Without it the
   battle script (script/battle/mod/land_enc_tower_buffs.lua) plays it under its key, and its numbers live there.
 - army: for an army composition, the theme the enemy army is built from instead of a random archetype, with the archetype fields of
@@ -92,7 +94,7 @@ M.list = {
     { key = "exhausting", harm = "~", sides = ALL, bundle = true },
 
     --- Abilities granted for the battle.
-    { key = "frenzy", harm = "-", sides = { "enemy" }, bundle = true },
+    { key = "frenzy", harm = "-", sides = { "enemy" }, group = "frenzy", bundle = true },
     { key = "berserkers", harm = "~", sides = { "ours" }, bundle = true },
     { key = "regen_enemy", harm = "-", sides = { "enemy" }, group = "regeneration", bundle = true },
     { key = "regen_ours", harm = "+", sides = { "ours" }, group = "regeneration", bundle = true },
@@ -151,6 +153,14 @@ M.list = {
 
     --- Free spells, which belong to no army.
     { key = "wild_winds", harm = "~", sides = ALL },
+
+    --- Army spells rolled for the fight, effects from the effect library, and starting fatigue.
+    { key = "gift_of_the_winds", harm = "+", sides = { "ours" }, group = "spells", spell = "all" },
+    { key = "arcane_duel", harm = "~", sides = { "ours", "enemy" }, group = "spells", spell = "all" },
+    { key = "blinding_dust", harm = "~", sides = ALL, bundle = true },
+    { key = "weary_march", harm = "-", sides = { "ours" }, group = "fatigue", bundle = true },
+    { key = "spent_foe", harm = "+", sides = { "enemy" }, group = "fatigue", bundle = true },
+    { key = "bloodlust", harm = "~", sides = ALL, group = "frenzy", bundle = true },
 
     --- Morale and respawns, continued.
     { key = "enemy_last_stand", harm = "-", sides = { "enemy" }, group = "rout_lock" },

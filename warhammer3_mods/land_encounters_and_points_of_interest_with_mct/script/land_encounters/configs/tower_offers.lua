@@ -19,6 +19,9 @@ M.line_prefix = "dummy_land_enc_tower_"
 --- Line suffix of an offer the haul cannot pay, after the offer's own line, e.g. dummy_land_enc_tower_war_rites_medium_unaffordable.
 M.unaffordable_suffix = "_unaffordable"
 
+--- Prefix of every offer's choice key. The key in capitals follows, e.g. LEAPOI_TWR_WAR_RITES.
+M.choice_key_prefix = "LEAPOI_TWR_"
+
 --- Choice key of Leave on the per-floor go-deeper dilemmas. Its DB order is the highest, so Leave is always the last choice.
 M.leave_choice_key = "LEAPOI_TWR_LEAVE"
 
@@ -47,14 +50,24 @@ M.offers = {
     --- with the floor number, and `cost_share` charges that share of the haul's gold instead of a fixed cost (`cost_share_by_floor` per floor won).
     { key = "war_rites", guide_section = "battle_buffs", cost = shared.war_rites.cost, effect_bundle = shared.war_rites.bundle },
     { key = "whetstones_and_oil", guide_section = "battle_buffs", cost = shared.whetstones_and_oil.cost, effect_bundle = shared.whetstones_and_oil.bundle },
-    { key = "warding_sigils", guide_section = "battle_buffs", cost = shared.warding_sigils.cost, effect_bundle = shared.warding_sigils.bundle },
+    --- Blood Sigils: free, but every unit loses `bleed` points of strength now.
+    { key = "warding_sigils", guide_section = "battle_buffs", compose = true, effect_bundle = shared.warding_sigils.bundle, bleed = shared.warding_sigils.bleed },
     { key = "fire_kissed_blades", guide_section = "battle_buffs", cost = shared.fire_kissed_blades.cost, effect_bundle = shared.fire_kissed_blades.bundle },
     { key = "enchanted_steel", guide_section = "battle_buffs", cost = shared.enchanted_steel.cost, effect_bundle = "land_enc_effect_tower_enchanted_steel" },
     { key = "quartermasters_cache", guide_section = "battle_buffs", cost = shared.quartermasters_cache.cost, effect_bundle = shared.quartermasters_cache.bundle,
-        shoots = true },
-    { key = "drill_sergeant", guide_section = "battle_buffs", cost = shared.drill_sergeant.cost, effect_bundle = shared.drill_sergeant.bundle },
+        shoots = true, compose = true, battle_floors = 2 },
+    { key = "drill_sergeant", guide_section = "battle_buffs", compose = true, effect_bundle = shared.drill_sergeant.bundle },
     { key = "iron_resolve", guide_section = "battle_buffs", cost = shared.iron_resolve.cost, effect_bundle = shared.iron_resolve.bundle },
-    { key = "stoneskin", guide_section = "battle_buffs", cost = shared.stoneskin.cost, effect_bundle = tiered("land_enc_effect_tower_stoneskin") },
+    { key = "stoneskin", guide_section = "battle_buffs", compose = true, effect_bundle = tiered("land_enc_effect_tower_stoneskin"), next_budget = 1.1 },
+    --- Composed offers (`compose`) apply their parts in order, see `compose` in features/tower_offers.lua: a next-battle `effect_bundle` kept
+    --- for `battle_floors` floors, `bleed` (strength points every unit loses now), `next_budget`, a `boon` or `curse`, `wound_turns` (our lord
+    --- is wounded when the delve ends), `owner_relations` (relations with the tower's owner), `faction_bundle` and `army_bundle` for `turns`,
+    --- `lord_xp`, `item_rarity` (an item into the haul) and the sabotage fields.
+    { key = "blinding_powder", guide_section = "battle_buffs", compose = true, cost = shared.blinding_powder.cost, effect_bundle = shared.blinding_powder.bundle },
+    { key = "hold_the_stair", guide_section = "battle_buffs", compose = true, cost = shared.STRONG, effect_bundle = "land_enc_effect_tower_hold_the_stair" },
+    { key = "berserker_brew", guide_section = "battle_buffs", compose = true, effect_bundle = shared.berserker_brew.bundle, next_budget = shared.berserker_brew.budget },
+    { key = "shadow_cloaks", guide_section = "battle_buffs", compose = true, cost = shared.shadow_cloaks.cost, effect_bundle = shared.shadow_cloaks.bundle },
+    { key = "tireless_tonic", guide_section = "battle_buffs", compose = true, effect_bundle = shared.tireless_tonic.bundle, curse = shared.tireless_tonic.curse },
     { key = "scaling_blessing", guide_section = "battle_buffs", cost_share_by_floor = { 0.25, 0.25, 0.5, 0.5 }, per_floor = true, effect_bundle = "land_enc_effect_tower_scaling_blessing" },
     --- In-battle tricks act in the next floor's battle only. An `effect_bundle` grants a vanilla army ability or more winds of magic, and
     --- `effect_bundles` picks one of several at random. A `trick` is done by the battle script (script/battle/mod/land_enc_tower_buffs.lua),
@@ -63,6 +76,18 @@ M.offers = {
     { key = "call_the_winds", guide_section = "spells", cost = shared.call_the_winds.cost, effect_bundle = shared.call_the_winds.bundle, caster = true },
     { key = "vortex_scroll", guide_section = "spells", cost = 1500, effect_bundles = { "land_enc_effect_tower_vortex_scroll_storm_of_fire", "land_enc_effect_tower_vortex_scroll_wraith_storm",
         "land_enc_effect_tower_vortex_scroll_soul_storm" } },
+    --- Army spells: a bound spell on the army ability bar for the next battle, at no Winds of Magic cost.
+    { key = "scroll_of_banishment", guide_section = "spells", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_spell_banishment" },
+    { key = "net_of_amyntok", guide_section = "spells", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_spell_net_of_amyntok" },
+    { key = "earthblood", guide_section = "spells", compose = true, cost = shared.STANDARD, effect_bundle = "land_enc_effect_tower_spell_earthblood" },
+    { key = "curse_of_years", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_curse_of_years", curse = { "shunned_by_the_winds", 1 } },
+    { key = "the_dwellers_below", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_dwellers_below", wound_turns = 3 },
+    { key = "falling_star", guide_section = "spells", compose = true, effect_bundle = "land_enc_effect_tower_spell_falling_star", bleed = 10 },
+    --- `spell_pool` rolls a spell from that pool (configs/army_spells.lua) when the offer is drawn. The choice names it, and it is the army's
+    --- for the next battle.
+    { key = "grand_scroll", guide_section = "spells", compose = true, cost = shared.STRONG, spell_pool = "lore" },
+    { key = "bound_relic", guide_section = "spells", compose = true, cost = shared.STANDARD, spell_pool = "bound" },
+    { key = "war_horn", guide_section = "spells", compose = true, cost = shared.STANDARD, spell_pool = "army" },
     { key = "bottomless_quivers", guide_section = "tricks", cost = shared.bottomless_quivers.cost, trick = true, shoots = true },
     { key = "oath_of_no_retreat", guide_section = "tricks", cost = shared.oath_of_no_retreat.cost, trick = true },
     { key = "divine_shield", guide_section = "tricks", cost = shared.divine_shield.cost, trick = true, battle_value = shared.divine_shield.battle_value },
@@ -87,6 +112,15 @@ M.offers = {
         champion_strength = shared.cripple_their_champion.champion_strength },
     { key = "spike_the_guns", guide_section = "sabotage", cost = shared.spike_the_guns.cost, enemy_bundle = shared.spike_the_guns.enemy_bundle,
         roster = shared.spike_the_guns.roster },
+    --- Composed sabotage (`sabotage = true`) marks the next floor's army with its notice and `enemy_bundle`. `no_champion` keeps it off a
+    --- champion floor.
+    { key = "exhaust_the_garrison", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.exhaust_the_garrison.cost,
+        enemy_bundle = shared.exhaust_the_garrison.bundle },
+    { key = "foul_the_winds", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.STANDARD, enemy_bundle = "land_enc_effect_tower_fouled_winds" },
+    { key = "smoke_the_halls", guide_section = "sabotage", compose = true, sabotage = true, cost = shared.smoke_the_halls.cost, enemy_bundle = shared.smoke_the_halls.bundle,
+        roster = shared.smoke_the_halls.roster },
+    { key = "blood_contract", guide_section = "sabotage", compose = true, sabotage = true, no_champion = true, curse = shared.blood_contract.curse },
+    { key = "collapse_the_stair", guide_section = "sabotage", compose = true, next_budget = 0.75, bleed = 10 },
     { key = "bait_and_switch", guide_section = "sabotage", cost = shared.bait_and_switch.cost, next_budget = shared.bait_and_switch.budget,
         enemy_strength = shared.bait_and_switch.enemy_strength },
     { key = "lame_their_mounts", guide_section = "sabotage", cost = shared.lame_their_mounts.cost, enemy_bundle = shared.lame_their_mounts.enemy_bundle,
@@ -137,6 +171,10 @@ M.offers = {
     --- Removes the weakest regular unit and heals `heal_share` of every other unit's missing strength.
     { key = "blood_price", guide_section = "healing", heal_share = 0.5 },
     --- Gives the delving lord `lord_xp` experience.
+    { key = "blood_for_glory", guide_section = "units_and_lord", compose = true, lord_xp = S(2000, 3000, 4000), army_bundle = "land_enc_effect_tower_plague_bearer",
+        turns = 3 },
+    --- Units of the tower's race join now, like Turn a Traitor's.
+    { key = "press_the_prisoners", guide_section = "units_and_lord", compose = true, count = 2, tiers = { 2, 3 }, from_tower = true, relations = -2 },
     { key = "lessons_in_blood", guide_section = "units_and_lord", cost = shared.STRONG, lord_xp = S(2000, 3000, 4000) },
     --- Frees a hero of `rank` from the tower's faction, or of the delving faction's culture when that fails. It joins the army.
     { key = "freed_prisoner", guide_section = "units_and_lord", cost = shared.STRONG, rank = S(5, 7, 9) },
@@ -146,10 +184,14 @@ M.offers = {
     --- On clearing the tower the lord takes `trait` and the title in the `title_loc` loc key after their name. Not offered to a lord who has it.
     { key = "epithet", guide_section = "units_and_lord", trait = "land_enc_trait_tower_towerbreaker", title_loc = "campaign_localised_strings_string_land_enc_tower_epithet" },
     --- Faction offers put `effect_bundle` on the delving faction for `turns` turns.
-    { key = "towers_favour", guide_section = "faction_boons", cost = shared.STRONG, stay = true, effect_bundle = tiered("land_enc_effect_tower_towers_favour"), turns = 5 },
+    --- `relations` changes relations, in steps of 10, with the nearest faction of the tower's race. Not drawn when there is none.
+    { key = "towers_favour", guide_section = "faction_boons", compose = true, stay = true, faction_bundle = tiered("land_enc_effect_tower_towers_favour"), turns = 5,
+        relations = -2 },
     { key = "research_scrolls", guide_section = "faction_boons", cost = shared.STRONG, stay = true, effect_bundle = "land_enc_effect_tower_research_scrolls", turns = 5 },
-    { key = "recruitment_cache", guide_section = "faction_boons", cost = shared.recruitment_cache.cost, stay = true, effect_bundle = shared.recruitment_cache.bundle,
-        turns = shared.recruitment_cache.turns },
+    { key = "recruitment_cache", guide_section = "faction_boons", compose = true, stay = true, faction_bundle = "land_enc_effect_tower_recruitment_cache", turns = 5 },
+    --- `haul_item` puts an item of that rarity into the haul.
+    { key = "loot_the_reliquary", guide_section = "faction_boons", compose = true, stay = true, haul_item = "rare", faction_bundle = "land_enc_effect_tower_reliquary_corruption",
+        turns = 5 },
     --- The next floor's gold doubles when the army loses under `max_loss` strength points on it, and is lost otherwise.
     { key = "double_or_nothing", guide_section = "gambles", max_loss = 40 },
     --- Puts `effect_bundle` on the army for the rest of the delve. `items_lost` haul items are lost after every floor won from then on.
@@ -172,6 +214,11 @@ M.offers = {
     --- capital and stay until beaten. Each lands `spawn_distance` (min, max) away from the settlement of a random region in the capital's province.
     { key = "daemons_deal", guide_section = "gambles", stay = true, items = shared.daemons_deal.unique, armies = shared.daemons_deal.armies, difficulty = "hard",
         factions = { "chs", "kho", "nur", "sla", "tze" }, spawn_distance = { 10, 20 } },
+    --- Pacts: a boon for the delving lord that costs a curse (features/boons.lua), taken without leaving the floor.
+    { key = "blood_pact", guide_section = "pacts", stay = true, boon = shared.blood_pact.boon, curse = shared.blood_pact.curse },
+    { key = "gold_for_blood", guide_section = "pacts", stay = true, boon = shared.gold_for_blood.boon, curse = shared.gold_for_blood.curse },
+    { key = "star_pact", guide_section = "pacts", stay = true, boon = shared.star_pact.boon, curse = shared.star_pact.curse },
+    { key = "rust_for_iron", guide_section = "pacts", stay = true, boon = { "ironhide", 2 }, curse = { "creeping_rust", 1 } },
     --- Skips the next floor for `reward_share` of its gold and half its items, and the floor after becomes hard. Not offered when the next
     --- floor is the Master's.
     { key = "tempt_fate", guide_section = "gambles", skips = 1, reward_share = 0.5, climb_difficulty = "hard" },

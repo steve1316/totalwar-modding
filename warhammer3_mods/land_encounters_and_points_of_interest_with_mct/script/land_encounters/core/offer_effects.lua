@@ -4,6 +4,7 @@
 require("script/land_encounters/utils/random")
 
 local tower_army = require("script/land_encounters/features/tower_army")
+local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local item_pool = require("script/land_encounters/core/item_pool")
 local army_generator = require("script/land_encounters/core/army_generator")
@@ -124,7 +125,7 @@ end
 --- @param offer_key string The offer's key for the log.
 function M.log_army_change(general_cqi, offer_key)
     tower_army.log_army(general_cqi, "before " .. offer_key)
-    cm:callback(function() tower_army.log_army(general_cqi, "after " .. offer_key) end, 0.5)
+    cm:callback(function() tower_army.log_army(general_cqi, "after " .. offer_key) end, tower_army.AFTER_PAYLOAD_SECONDS)
 end
 
 --- Removes one unit from a lord's army. The game only removes by unit key, taking a copy of its own choosing, so when the army has other
@@ -178,7 +179,7 @@ function M.add_lord_xp(general_cqi, xp)
     log("offer: lord " .. general_cqi .. " gains " .. xp .. " experience")
 end
 
---- Gives `offer.ranks` ranks to `offer.count` random units that can take them.
+--- Gives `offer.ranks` ranks to `offer.count` random units that can take them, every such unit when `count` is `math.huge`.
 --- @param general_cqi number The lord's command queue index.
 --- @param offer table The offer record: `count`, `ranks` and `max_rank`.
 function M.add_ranks(general_cqi, offer)
@@ -248,8 +249,7 @@ end
 --- @param faction_name string The faction key.
 --- @returns number The treasury gold, or 0 when the faction is missing.
 function M.treasury(faction_name)
-    local faction = cm:get_faction(faction_name)
-    return faction and faction:treasury() or 0
+    return dilemmas.treasury(faction_name)
 end
 
 return M

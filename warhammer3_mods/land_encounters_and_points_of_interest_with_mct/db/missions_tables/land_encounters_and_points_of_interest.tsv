@@ -21,3 +21,6 @@ land_enc_mission_tavern_marked_3	SCRIPTED			emp/generic	rom_event_mission.png	fa
 land_enc_mission_tavern_chain_1_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
 land_enc_mission_tavern_chain_2_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
 land_enc_mission_tavern_chain_3_3	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	Contract fulfilled! The keeper pays as promised.	true
+land_enc_mission_smithy_blood_the_steel	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	The master smith is pleased. The reward is ours.	true
+land_enc_mission_smithy_test_the_steel	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	The master smith is pleased. The reward is ours.	true
+land_enc_mission_smithy_fetch_star_metal	SCRIPTED			emp/generic	rom_event_mission.png	false	false	Military		0	0	false	false	0.0000		false	The master smith is pleased. The reward is ours.	true

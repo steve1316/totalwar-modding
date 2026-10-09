@@ -12,7 +12,10 @@ local battle_dilemma_keys = require("script/land_encounters/configs/battle_categ
 local smithy_events = events.smithy
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local spot_offers = require("script/land_encounters/features/spot_offers")
+local effect_library = require("script/land_encounters/features/effect_library")
+local boons = require("script/land_encounters/features/boons")
 local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
+local smithy_commissions = require("script/land_encounters/features/smithy_commissions")
 
 --- Tavern dilemma key -> true, for the Tavern choice listener.
 local tavern_dilemma_keys = {}
@@ -40,6 +43,16 @@ M.last_round_update_turn = nil
 
 --- Registers every persistent listener. Called once at module load by the entry point.
 function M.register()
+    --- Registered first, so every other choice listener reads the treasury with the chosen price already counted as spent.
+    core:add_listener(
+        "land_enc_dilemma_charges",
+        "DilemmaChoiceMadeEvent",
+        true,
+        function(context) dilemmas.settle(context:faction():name(), context:dilemma(), context:choice_key()) end,
+        IS_PERSISTENT_LISTENER
+    )
+
+    boons.register()
 
     --- Once per round (on the first human turn), expire stale encounters, refill them, and update POI states. Every human turn, check that
     --- faction's smithy sieges.
@@ -58,6 +71,8 @@ function M.register()
             end
             M.point_of_interest_event_manager:on_faction_turn_start(context:faction():name())
             spot_offers.on_faction_turn_start(context:faction():name())
+            effect_library.apply_test_bundles(context:faction())
+            boons.on_faction_turn_start(context:faction():name())
         end,
         IS_PERSISTENT_LISTENER
     )
@@ -183,32 +198,35 @@ function M.register()
     )
 
 
-    --- Tavern contracts settle when their missions succeed, fail or are dropped from the missions panel.
-    for event, outcome in pairs({ MissionSucceeded = "succeeded", MissionFailed = "failed", MissionCancelled = "cancelled" }) do
+    --- The features that issue missions and place marked spots: Tavern contracts settle when their missions succeed, fail or are dropped
+    --- from the missions panel, and Smith's Commissions are forgotten so the faction can be offered another. A lord walking onto either's
+    --- mark starts its battle. CA's marker manager fires the mark's event with the lord and the marker.
+    local mission_features = {
+        { name = "tavern_contract", owns = tavern_contracts.is_contract_mission, mark_event = tavern_contracts.MARK_ENTERED_EVENT,
+            ended = function(...) M.point_of_interest_event_manager:on_tavern_contract_ended(...) end,
+            entered = function(...) M.point_of_interest_event_manager:on_tavern_mark_entered(...) end },
+        { name = "smithy_commission", owns = smithy_commissions.is_commission, mark_event = smithy_commissions.MARK_ENTERED_EVENT,
+            ended = function(...) M.point_of_interest_event_manager:on_smithy_commission_ended(...) end,
+            entered = function(...) M.point_of_interest_event_manager:on_smithy_mark_entered(...) end },
+    }
+    for _, feature in ipairs(mission_features) do
+        for event, outcome in pairs({ MissionSucceeded = "succeeded", MissionFailed = "failed", MissionCancelled = "cancelled" }) do
+            core:add_listener(
+                "land_enc_" .. feature.name .. "_" .. outcome,
+                event,
+                function(context) return feature.owns(context:mission():mission_record_key()) end,
+                function(context) feature.ended(context:faction():name(), context:mission():mission_record_key(), outcome) end,
+                IS_PERSISTENT_LISTENER
+            )
+        end
         core:add_listener(
-            "land_enc_tavern_contract_" .. outcome,
-            event,
-            function(context)
-                return tavern_contracts.is_contract_mission(context:mission():mission_record_key())
-            end,
-            function(context)
-                M.point_of_interest_event_manager:on_tavern_contract_ended(context:faction():name(), context:mission():mission_record_key(), outcome)
-            end,
+            "land_enc_" .. feature.name .. "_mark_entered",
+            feature.mark_event,
+            true,
+            function(context) feature.entered(context:character(), context.stored_table.marker_ref, context.stored_table.instance_ref) end,
             IS_PERSISTENT_LISTENER
         )
     end
-
-
-    --- A lord walks onto a Tavern contract's marked spot. CA's marker manager fires the event with the lord and the marker.
-    core:add_listener(
-        "land_enc_tavern_mark_entered",
-        tavern_contracts.MARK_ENTERED_EVENT,
-        true,
-        function(context)
-            M.point_of_interest_event_manager:on_tavern_mark_entered(context:character(), context.stored_table.marker_ref, context.stored_table.instance_ref)
-        end,
-        IS_PERSISTENT_LISTENER
-    )
 
 
     --- The choices each open dilemma registered as closed when it was launched (taken tower offers, Tavern and forge choices that cannot be
@@ -219,8 +237,20 @@ function M.register()
         "PanelOpenedCampaign",
         function(context) return context.string == "events" end,
         function()
-            cm:callback(function() dilemmas.grey_out_open(cm:get_local_faction_name(true)) end, 0.1)
+            cm:callback(function()
+                dilemmas.grey_out_open(cm:get_local_faction_name(true))
+                dilemmas.cap_choices()
+            end, 0.1)
         end,
+        IS_PERSISTENT_LISTENER
+    )
+
+    --- Puts a scrolled dilemma's choice grid back when the events panel closes, so the next dilemma lays out as the game made it.
+    core:add_listener(
+        "land_enc_release_dilemma_scroll",
+        "PanelClosedCampaign",
+        function(context) return context.string == "events" end,
+        function() dilemmas.release_scroll() end,
         IS_PERSISTENT_LISTENER
     )
 
