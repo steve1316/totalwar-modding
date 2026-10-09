@@ -34,9 +34,10 @@ local M = {
     --- Starts a guardian battle (Wake the Guardian, Oath at the Altar) for a lord at a map position, at a difficulty or nil for the current one.
     --- Set by the spot event manager to the battle spots' own battle start.
     start_guardian_battle = nil,
-    --- Called when a faction leaves a Tavern's bar: (faction_name, site, took), where `site` is the open site with its `tavern` { zone, index } and
-    --- `general_cqi`, and `took` is true when an offer was taken. Set by the POI manager to the Tavern delegate.
-    on_tavern_bar_closed = nil,
+    --- Venue kind ("tavern" or "smithy") -> called when a faction leaves that venue's site: (faction_name, site, took), where `site` is the
+    --- open site with its `venue` { kind, zone, index } and `general_cqi`, and `took` is true when an offer was taken. Set by the POI manager
+    --- to the Tavern and Smithy delegates.
+    on_venue_closed = {},
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,11 +358,12 @@ end
 --- @param faction faction The lord's faction.
 --- @param site table|nil The site record to open, e.g. the spoils pick, or nil to roll a treasure site.
 --- @param event table|nil The won battle's event, for the spoils pick.
---- @param tavern table|nil For a Tavern's bar: { zone, index, difficulty, price_difficulty, price_share, keys }. Its offers act at `difficulty`
---- and are priced at `price_difficulty` times `price_share`. `keys`, when set, are the offers the bar showed earlier this turn: they are shown
---- again in place of a new draw, leaving out any that are no longer eligible.
+--- @param venue table|nil For a Tavern's bar or a Smithy's Work Orders: { kind = "tavern" or "smithy", zone, index, difficulty,
+--- price_difficulty, price_share, draws }. Its offers act at `difficulty` (the venue's level) and are priced at `price_difficulty` times
+--- `price_share`. `draws` is the venue's saved faction key -> { turn, keys } map: a faction coming back the same turn sees the offers it was
+--- shown again, leaving out any that are no longer eligible, instead of a new draw.
 --- @returns table The offer keys the site shows.
-function M.open_site(character, faction, site, event, tavern)
+function M.open_site(character, faction, site, event, venue)
     local faction_name = faction:name()
     site = site or pick_site()
     local ctx = {
@@ -370,29 +372,31 @@ function M.open_site(character, faction, site, event, tavern)
         general_cqi = character:command_queue_index(),
         x = character:logical_position_x(),
         y = character:logical_position_y(),
-        difficulty = tavern and tavern.difficulty or event and event.difficulty or get_current_difficulty(),
+        difficulty = venue and venue.difficulty or event and event.difficulty or get_current_difficulty(),
         cards = {},
         targets = {},
         event = event,
     }
     local keys, signature = {}, nil
-    if tavern and tavern.keys then
-        for _, key in ipairs(tavern.keys) do
+    local shown = venue and venue.draws[faction_name]
+    if shown and shown.turn == cm:turn_number() then
+        for _, key in ipairs(shown.keys) do
             if eligible(offers_data.at(key, ctx.difficulty), ctx) then keys[#keys + 1] = key end
         end
         log("spot: " .. faction_name .. " reopens " .. site.key .. " with the offers it showed this turn: " .. table.concat(keys, ", "))
     else
         keys, signature = M.draw(site, ctx)
     end
+    if venue then venue.draws[faction_name] = { turn = cm:turn_number(), keys = keys } end
     local pending = { site = site.key, offers = keys, signature = signature, general_cqi = ctx.general_cqi, x = ctx.x, y = ctx.y,
         difficulty = ctx.difficulty, cards = {}, targets = {} }
-    --- A Tavern's bar prices each offer at the campaign difficulty times its price share, rounded to 25 gold. The debug `spot_cost` replaces
-    --- every price while it is set.
-    if tavern then
-        pending.tavern, pending.prices = { zone = tavern.zone, index = tavern.index }, {}
+    --- A venue prices each offer at the campaign difficulty times its price share, rounded to 25 gold. The debug `spot_cost` replaces every
+    --- price while it is set.
+    if venue then
+        pending.venue, pending.prices = { kind = venue.kind, zone = venue.zone, index = venue.index }, {}
         for _, key in ipairs(keys) do
-            local base = debug_config.spot_cost[1] or offers_data.at(key, tavern.price_difficulty).cost
-            if base then pending.prices[key] = math.floor(base * tavern.price_share / 25 + 0.5) * 25 end
+            local base = debug_config.spot_cost[1] or offers_data.at(key, venue.price_difficulty).cost
+            if base then pending.prices[key] = math.floor(base * venue.price_share / 25 + 0.5) * 25 end
         end
     end
     for _, key in ipairs(keys) do
@@ -525,9 +529,9 @@ end
 M.roll_outcome = roll_outcome
 
 --- Takes a choice from a faction's open site dilemma: pays the offer's cost, applies it, and shows where a realm offer landed or how a gamble
---- went. The payload already granted the offer's gold, item and unit cards, and charged a Tavern bar's price. An offer the treasury cannot pay
---- changes nothing and reopens the site. Walk away and unknown choices only close the site. Leaving a Tavern's bar either way is reported to
---- `on_tavern_bar_closed`.
+--- went. The payload already granted the offer's gold, item and unit cards, and charged a venue's price. An offer the treasury cannot pay
+--- changes nothing and reopens the site. Walk away and unknown choices only close the site. Leaving a venue's site either way is reported to
+--- `on_venue_closed`.
 --- @param faction_name string The faction that chose.
 --- @param choice_key string The chosen choice key.
 function M.take(faction_name, choice_key)
@@ -543,7 +547,8 @@ function M.take(faction_name, choice_key)
     if offer == nil then
         M.pending_by_faction[faction_name] = nil
         log("spot: " .. faction_name .. " walks away from " .. pending.site)
-        if pending.tavern and M.on_tavern_bar_closed then M.on_tavern_bar_closed(faction_name, pending, false) end
+        local closed = pending.venue and M.on_venue_closed[pending.venue.kind]
+        if closed then closed(faction_name, pending, false) end
         return
     end
     --- The button decides: one shown as unaffordable buys nothing even if the treasury has grown since, and the reopened site shows the offer
@@ -590,7 +595,8 @@ function M.take(faction_name, choice_key)
     end
     log("spot: " .. faction_name .. " took " .. offer.key .. " at " .. pending.site .. " for " .. paid .. " gold, treasury " .. before .. " -> "
         .. offer_effects.treasury(faction_name) .. " (payload cards land after this)")
-    if pending.tavern and M.on_tavern_bar_closed then M.on_tavern_bar_closed(faction_name, pending, true) end
+    local closed = pending.venue and M.on_venue_closed[pending.venue.kind]
+    if closed then closed(faction_name, pending, true) end
 end
 
 --- True when a dilemma key is a treasure site's.
@@ -652,6 +658,10 @@ end
 function M.restore_state(saved)
     saved = saved or {}
     M.pending_by_faction = saved.pending_by_faction or {}
+    --- A bar left open in a save from before venues kept its Tavern under `tavern`.
+    for _, pending in pairs(M.pending_by_faction) do
+        if pending.tavern and not pending.venue then pending.venue = { kind = "tavern", zone = pending.tavern.zone, index = pending.tavern.index } end
+    end
     M.camps = saved.camps or {}
     M.dividends = saved.dividends or {}
     M.reveals = saved.reveals or {}

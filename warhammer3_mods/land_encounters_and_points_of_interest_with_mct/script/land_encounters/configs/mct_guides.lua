@@ -21,8 +21,10 @@ M.towers_intro = "One tower stands in each map zone, held by a random faction. M
     .. "gold below is at the default Floor gold setting."
 
 --- Intro of the Smithies page guide. The per-level lines follow it.
-M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, or onto your own to pick a free item. The forge then cools for the Smithy "
-    .. "cooldown, plus extra turns at lower forge levels. Upgrade the forge for better items, a shorter cooldown and more frequent tribute. A "
+M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, or onto your own to pick one of two free items. The forge then cools for "
+    .. "the Smithy cooldown, plus extra turns at lower forge levels. While it cools, Rush the Forge ends the wait for 500 gold per turn left, "
+    .. "times the forge level. The forge's Work Orders offer three orders for the whole army, listed below, and serve you again 5 turns after "
+    .. "you take one. Upgrade the forge for better items, a shorter cooldown and more frequent tribute. A "
     .. "Smithy held by anyone else can be taken by beating its garrison, which gets harder at higher levels. Taking one from a faction you are not "
     .. "at war with costs 20 [[img:icon_diplomacy]][[/img]] relations with them. Enemies can besiege or retake yours, and AI owners upgrade theirs now and then. Every Smithy "
     .. "belongs to the Smiths' Association. A Generous Donation of 50000 gold at your own forge raises every Smithy to at least level 2 and blesses "

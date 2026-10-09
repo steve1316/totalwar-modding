@@ -431,7 +431,7 @@ function M.gain_from(character, kind, source, level)
     return key ~= nil and M.gain(character, kind, key, level)
 end
 
---- Gives a lord what an offer grants: `boon` and `curse` as { key, level } or { from = a drop source } for a random one. A race boon or
+--- Gives a lord what an offer grants: `boon` and `curse` as { key, level } or { from = a drop source, level } for a random one. A race boon or
 --- curse (Bane, Grudge) is about the enemy's race when it is known, else a random one.
 --- @param character userdata|nil The lord.
 --- @param fields table The offer or outcome record.
@@ -441,7 +441,7 @@ function M.grant_fields(character, fields, enemy)
     for _, kind in ipairs(KINDS) do
         local grant = fields[kind]
         if grant and character then
-            if grant.from then M.gain_from(character, kind, grant.from) else M.gain(character, kind, grant[1], grant[2] or 1, race) end
+            if grant.from then M.gain_from(character, kind, grant.from, grant.level) else M.gain(character, kind, grant[1], grant[2] or 1, race) end
         end
     end
 end

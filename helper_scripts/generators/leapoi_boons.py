@@ -788,7 +788,9 @@ def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict], names: Opt
                  ("boon", "treasure"): "Claim the Cursed Relic at treasure sites", ("curse", "treasure"): "Claim the Cursed Relic at treasure sites",
                  ("boon", "tower"): "the spoils of a fallen Tower champion",
                  ("boon", "tavern"): f"a finished Tavern quest chain (level {config['chain_boon_level']})",
-                 ("curse", "tavern"): "a failed or dropped Tavern contract"}
+                 ("curse", "tavern"): "a failed or dropped Tavern contract",
+                 ("boon", "smithy"): "the Smith's Blessing at a Smithy's Work Orders",
+                 ("curse", "smithy"): "a Cursed Masterwork from a Smithy's Work Orders (level 2)"}
     for kind, records in (("boon", config["boons"]), ("curse", config["curses"])):
         for record in records:
             for drop in record.get("drops", []):

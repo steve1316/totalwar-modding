@@ -276,6 +276,13 @@ SITES = {
                       "circling.\\\\n\\\\nTheir baggage stands abandoned where they broke and ran. Wagons, weapons and supplies lie scattered across "
                       "the ground, and our soldiers are already picking through them.\\\\n\\\\nBefore we march on, there is more to take from this "
                       "victory. The men have earned it, and the enemy has no further use for it."),
+    "smithy_orders": ("Work Orders",
+                      "The apprentices crowd the counter with slates in hand: plate to rivet, edges to grind, runes to cut. Every order is "
+                      "work for the whole army, done while we wait.\\\\n\\\\nThe Smiths' Association prices each job like any other, and the "
+                      "forge takes one order from us at a time.\\\\n\\\\n[[col:yellow]]By forge level:[[/col]]\\\\n- Level 1: Heavy Plate gives "
+                      "+15 armour, Honed Edges +6% weapon strength, and the runesmith cuts an army ability.\\\\n- Level 2: +20 armour, +9% "
+                      "weapon strength, and a bound spell.\\\\n- Level 3: +25 armour, +12% weapon strength, a lore spell, and the cursed "
+                      "masterwork is a legendary piece."),
     "tavern_bar": ("The Bar",
                    "The keeper leans on the bar beside barrels for every taste. Over at the tables, strangers are rolling dice, and a hulking "
                    "champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it "
@@ -530,6 +537,22 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "blood_wine": ("Blood Wine", "Drink the blood wine: [[col:green]]Regeneration[[/col]] and " + stat("+{e1}", *LEADERSHIP) + " when defending for {turns} "
                    "turns, but every unit loses [[col:red]]{bleed}% of its strength[[/col]] now."),
     "tavern_back": ("Back", "Go back to the common room."),
+    "heavy_plate": ("Heavy Plate", "Rivet heavy plate onto the army: " + stat("+{e0}", *ARMOUR) + ", but " + stat("-{e1}%", *SPEED, colour="red")
+                    + ", for 5 turns."),
+    "honed_edges": ("Honed Edges", "Grind every edge thin: " + stat("+{e0}%", *WEAPON) + ", but " + stat("-{e1}", *DEFENCE, colour="red") + ", for 5 turns."),
+    "barbed_arrowheads": ("Barbed Arrowheads", "Fit barbed heads to every arrow and bolt: " + stat("+{e0}%", *MISSILE) + ", but [[col:red]]-{e1}% "
+                          "ammunition[[/col]], for 5 turns."),
+    "shod_and_barded": ("Shod and Barded", "Shoe the mounts and bard the beasts: " + stat("+{e0}", *CHARGE) + " when attacking and "
+                        + stat("+{e1}%", *SPEED) + ", but [[col:red]]+{e2}% upkeep[[/col]], for 5 turns."),
+    "runesmiths_inscription": ("Runesmith's Inscription", "Have the runesmith cut a rune into our banners: the army spell below is ours to cast in "
+                               "any battle for the next {spell_turns} turns."),
+    "bloodforged_steel": ("Bloodforged Steel", "Quench the blade in our own blood: [[col:green]]the rare item below[[/col]], but every unit loses "
+                          "[[col:red]]{bleed}% of its strength[[/col]] now."),
+    "cursed_masterwork": ("Cursed Masterwork", "Take the masterwork no smith will sign: [[col:green]]the items below[[/col]] (a legendary piece at "
+                          "a level 3 forge), but our lord is struck by [[col:red]]a level 2 curse[[/col]]: Creeping Rust, Brittle Bones or Cursed Coin."),
+    "smiths_blessing": ("Smith's Blessing", "Have the master smith bless our lord's arms: our lord gains [[col:green]]Ironhide or Stone "
+                        "Rampart[[/col]]."),
+    "smithy_back": ("Back", "Go back to the forge."),
 }
 
 # Offer key -> its line's vanilla effect-bundle icon, reusing the icons Steve picked for the matching tower offers.
@@ -591,6 +614,9 @@ ICONS = {
     "arm_wrestle_the_champion": "experience.png", "buy_rumours": "wh2_dlc14_def_tzarkans_whispers.png", "tavern_back": "campaign_movement.png",
     "spell_pedlar": "magic_character.png", "press_gang_night": "peasant.png", "fighting_pit": "experience.png", "smugglers_cut": "cargo.png",
     "hire_a_pathfinder": "campaign_movement.png", "blood_wine": "bloodreaper.png",
+    "heavy_plate": "armour.png", "honed_edges": "weapon_damage.png", "barbed_arrowheads": "ranged_damage.png", "shod_and_barded": "charge.png",
+    "runesmiths_inscription": "magic_character.png", "bloodforged_steel": "bloodreaper.png", "cursed_masterwork": "hex_1.png",
+    "smiths_blessing": "resistance_physical.png", "smithy_back": "campaign_movement.png",
     "against_the_odds": "vigour.png", "rout_the_riders": "mount.png", "bloodbath_wager": "khorne_skulls.png", "duelists_challenge": "rampage_harsh.png", "spare_the_captain": "noble.png", "flawless_victory": "champions_rift.png",
 }
 
@@ -1242,6 +1268,19 @@ BUNDLES = {
     "tavern_blood_wine": ("force", "bloodreaper.png", "Blood Wine", "The blood wine runs hot in every vein. Wounds close as fast as they open when our warriors hold their ground.",
                           [("land_enc_lib_fx_regeneration_defending", "force_to_force_own", 1),
                            ("land_enc_lib_fx_leadership_defending", "force_to_force_own", (8, 12, 16))]),
+    "smithy_heavy_plate": ("force", "armour.png", "Heavy Plate", "The Smithy riveted heavy plate onto every warrior. Blows glance off, though the march is slower.",
+                           [("wh_main_effect_force_stat_armour", "force_to_force_own", (15, 20, 25)),
+                            ("wh_main_effect_force_stat_speed", "force_to_force_own", (-5, -8, -10))]),
+    "smithy_honed_edges": ("force", "weapon_damage.png", "Honed Edges", "Every edge in the army was ground thin at the Smithy. They bite deep, and turn a parry poorly.",
+                           [("wh_main_effect_force_stat_weapon_strength", "force_to_force_own", (6, 9, 12)),
+                            ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", (-4, -6, -8))]),
+    "smithy_barbed_arrowheads": ("force", "ranged_damage.png", "Barbed Arrowheads", "Barbed heads tear through flesh, but the fletchers could not make as many.",
+                                 [("wh_main_effect_force_stat_missile_damage", "force_to_force_own", (10, 15, 20)),
+                                  ("wh_main_effect_force_stat_ammunition", "force_to_force_own", -20)]),
+    "smithy_shod_and_barded": ("force", "charge.png", "Shod and Barded", "Iron-shod mounts and barded beasts hit like a hammer, and eat twice as much.",
+                               [("land_enc_lib_fx_charge_attacking", "force_to_force_own", (10, 15, 20)),
+                                ("wh_main_effect_force_stat_speed", "force_to_force_own", 5),
+                                ("wh_main_effect_force_all_campaign_upkeep", "force_to_force_own", 10)]),
     "tavern_hangover": ("force", "discouraged.png", "Hangover", "The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.",
                         [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
 }
@@ -1318,7 +1357,7 @@ local function encode(v)
     for k, value in pairs(v) do parts[#parts + 1] = string.format("%q", tostring(k)) .. ":" .. encode(value) end
     return "{" .. table.concat(parts, ",") .. "}"
 end
-io.write(encode({ sites = data.sites, spoils = data.spoils, tavern = data.tavern, offers = data.all_at("easy"), at = at, dividends_bundle_prefix = data.dividends_bundle_prefix,
+io.write(encode({ sites = data.sites, spoils = data.spoils, venues = data.venues, offers = data.all_at("easy"), at = at, dividends_bundle_prefix = data.dividends_bundle_prefix,
     tower_offers = tower.offers, tower_at = tower_at, tower_varies = tower_varies, notice_varies = notice_varies,
     tower_unaffordable_suffix = tower.unaffordable_suffix, tower_line_prefix = tower.line_prefix, tower_choice_key_prefix = tower.choice_key_prefix,
     tower_deeper_dilemmas = tower_deeper_dilemmas,
@@ -1541,7 +1580,7 @@ def wound_turns(config: Dict) -> List[int]:
 
 
 def all_sites(config: Dict) -> List[Dict]:
-    """Lists every site with a dilemma: the treasure sites, the spoils pick and the Tavern bar.
+    """Lists every site with a dilemma: the treasure sites, the spoils pick, the Tavern bar and the Smithy's Work Orders.
 
     Args:
         config (Dict): The loaded config.
@@ -1549,7 +1588,7 @@ def all_sites(config: Dict) -> List[Dict]:
     Returns:
         List[Dict]: The site records.
     """
-    return config["sites"] + [config["spoils"], config["tavern"]]
+    return config["sites"] + [config["spoils"]] + config["venues"]
 
 
 def build_rows(config: Dict) -> Dict[str, List[str]]:

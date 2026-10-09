@@ -193,7 +193,19 @@ function M.spot_offer_sections()
     return sections
 end
 
---- Builds the Smithies page guide: the intro, then one line per forge level with its free picks, cooldown, commission and upgrade price.
+--- Adds the name and level 1 line of every offer in a pool to a guide, e.g. the Tavern bar's or the Smithy's Work Orders.
+--- @param lines table The guide's lines, added to.
+--- @param pool string The offer pool, e.g. "tavern".
+local function add_pool_lines(lines, pool)
+    for _, offer in ipairs(spot_offers.offers) do
+        if offer.pool == pool then
+            lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
+        end
+    end
+end
+
+--- Builds the Smithies page guide: the intro, one line per forge level with its free picks, cooldown, commission and upgrade price, then the
+--- name and level 1 line of every Work Orders offer.
 --- @returns string The guide text.
 function M.smithy_text()
     local lines = { guides.smithy_intro, "" }
@@ -205,6 +217,8 @@ function M.smithy_text()
         if level.upgrade_price then facts[#facts + 1] = "upgrades for " .. level.upgrade_price .. " gold" end
         lines[#lines + 1] = guide_line("Level " .. number, join_words(facts, "and") .. ".")
     end
+    lines[#lines + 1] = ""
+    add_pool_lines(lines, "smithy")
     return table.concat(lines, "\n")
 end
 
@@ -238,11 +252,7 @@ function M.taverns_text()
         lines[#lines + 1] = guide_line("Level " .. number, "the hall hires out " .. join_words(stock, "and") .. ". " .. upgrade)
     end
     lines[#lines + 1] = ""
-    for _, offer in ipairs(spot_offers.offers) do
-        if offer.pool == "tavern" then
-            lines[#lines + 1] = guide_line(spot_offer_name(offer), loc(LINE_LOC_PREFIX .. spot_offers.line_prefix .. offer.key .. "_easy"))
-        end
-    end
+    add_pool_lines(lines, "tavern")
     return table.concat(lines, "\n")
 end
 

@@ -197,6 +197,48 @@ campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_1	Commi
 campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_2	Commission [[col:green]]a rare masterwork[[/col]] from the master blacksmith.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_commission_3	Commission [[col:green]]a pair of rare masterworks[[/col]] from the master blacksmith.	false
 campaign_payload_ui_details_description_dummy_land_enc_smithy_legendary	Commission [[col:green]]a unique piece[[/col]], one of the legendary items our faction can wield.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_orders_open	Place a work order with the apprentices: three orders to choose from, each done for the whole army.	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_orders_closed_1	[[col:red]]The apprentices are still busy with our last order for 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_orders_closed_2	[[col:red]]The apprentices are still busy with our last order for 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_orders_closed_3	[[col:red]]The apprentices are still busy with our last order for 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_orders_closed_4	[[col:red]]The apprentices are still busy with our last order for 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_orders_closed_5	[[col:red]]The apprentices are still busy with our last order for 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_1	[[col:red]]The forge is cooling: the next free piece is ready in 1 turn.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_2	[[col:red]]The forge is cooling: the next free piece is ready in 2 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_3	[[col:red]]The forge is cooling: the next free piece is ready in 3 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_4	[[col:red]]The forge is cooling: the next free piece is ready in 4 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_5	[[col:red]]The forge is cooling: the next free piece is ready in 5 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_6	[[col:red]]The forge is cooling: the next free piece is ready in 6 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_7	[[col:red]]The forge is cooling: the next free piece is ready in 7 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_8	[[col:red]]The forge is cooling: the next free piece is ready in 8 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_9	[[col:red]]The forge is cooling: the next free piece is ready in 9 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_10	[[col:red]]The forge is cooling: the next free piece is ready in 10 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_11	[[col:red]]The forge is cooling: the next free piece is ready in 11 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_12	[[col:red]]The forge is cooling: the next free piece is ready in 12 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_13	[[col:red]]The forge is cooling: the next free piece is ready in 13 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_14	[[col:red]]The forge is cooling: the next free piece is ready in 14 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_15	[[col:red]]The forge is cooling: the next free piece is ready in 15 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_16	[[col:red]]The forge is cooling: the next free piece is ready in 16 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_17	[[col:red]]The forge is cooling: the next free piece is ready in 17 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_18	[[col:red]]The forge is cooling: the next free piece is ready in 18 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_19	[[col:red]]The forge is cooling: the next free piece is ready in 19 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_20	[[col:red]]The forge is cooling: the next free piece is ready in 20 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_21	[[col:red]]The forge is cooling: the next free piece is ready in 21 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_22	[[col:red]]The forge is cooling: the next free piece is ready in 22 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_23	[[col:red]]The forge is cooling: the next free piece is ready in 23 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_24	[[col:red]]The forge is cooling: the next free piece is ready in 24 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_25	[[col:red]]The forge is cooling: the next free piece is ready in 25 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_26	[[col:red]]The forge is cooling: the next free piece is ready in 26 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_27	[[col:red]]The forge is cooling: the next free piece is ready in 27 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_28	[[col:red]]The forge is cooling: the next free piece is ready in 28 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_29	[[col:red]]The forge is cooling: the next free piece is ready in 29 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_30	[[col:red]]The forge is cooling: the next free piece is ready in 30 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_31	[[col:red]]The forge is cooling: the next free piece is ready in 31 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_32	[[col:red]]The forge is cooling: the next free piece is ready in 32 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_33	[[col:red]]The forge is cooling: the next free piece is ready in 33 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_34	[[col:red]]The forge is cooling: the next free piece is ready in 34 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_cooling_35	[[col:red]]The forge is cooling: the next free piece is ready in 35 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_smithy_rush	Pay the smiths to work through the night: the forge is ready [[col:green]]now[[/col]], with fresh free pieces on the racks.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_1	Deadline: [[col:yellow]]1 turn[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_step_deadline_1	Deadline: [[col:yellow]]1 turn[[/col]] for each step.	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_deadline_2	Deadline: [[col:yellow]]2 turns[[/col]].	false
@@ -308,6 +350,7 @@ campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_veteran_5	[[c
 campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_veteran_7	[[col:yellow]]Veteran company:[[/col]] it joins at [[col:green]]rank 7[[/col]], but costs [[col:red]]50% more[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_cut	[[col:yellow]]Cut-price sellswords:[[/col]] [[col:green]]half the price[[/col]], but they join at [[col:red]]25% strength[[/col]] and must replenish.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_tavern_back	Go back to the common room.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_smithy_back	Go back to the forge.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_unaffordable	[[col:red]]We cannot afford this.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_taken	[[col:red]]Already taken.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_avoid_consequences	[[col:yellow]]This may have unforeseen consequences.[[/col]]	false
@@ -1178,6 +1221,30 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_thiefs_mark_hard	Tak
 campaign_payload_ui_details_description_dummy_land_enc_spot_gold_for_blood_easy	Trade gold for blood: our lord gains [[col:green]]Plunderer II (+20% post-battle loot)[[/col]], and is struck by [[col:red]]Bleeding Coffers I (+5% upkeep)[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_gold_for_blood_medium	Trade gold for blood: our lord gains [[col:green]]Plunderer II (+20% post-battle loot)[[/col]], and is struck by [[col:red]]Bleeding Coffers I (+5% upkeep)[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_gold_for_blood_hard	Trade gold for blood: our lord gains [[col:green]]Plunderer II (+20% post-battle loot)[[/col]], and is struck by [[col:red]]Bleeding Coffers I (+5% upkeep)[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_heavy_plate_easy	Rivet heavy plate onto the army: [[col:green]]+15[[/col]] [[img:ui/skins/default/icon_stat_armour.png]][[/img]] armour, but [[col:red]]-5%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed, for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_heavy_plate_medium	Rivet heavy plate onto the army: [[col:green]]+20[[/col]] [[img:ui/skins/default/icon_stat_armour.png]][[/img]] armour, but [[col:red]]-8%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed, for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_heavy_plate_hard	Rivet heavy plate onto the army: [[col:green]]+25[[/col]] [[img:ui/skins/default/icon_stat_armour.png]][[/img]] armour, but [[col:red]]-10%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed, for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_honed_edges_easy	Grind every edge thin: [[col:green]]+6%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength, but [[col:red]]-4[[/col]] [[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence, for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_honed_edges_medium	Grind every edge thin: [[col:green]]+9%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength, but [[col:red]]-6[[/col]] [[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence, for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_honed_edges_hard	Grind every edge thin: [[col:green]]+12%[[/col]] [[img:ui/skins/default/icon_stat_damage.png]][[/img]] weapon strength, but [[col:red]]-8[[/col]] [[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence, for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_barbed_arrowheads_easy	Fit barbed heads to every arrow and bolt: [[col:green]]+10%[[/col]] [[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]] missile damage, but [[col:red]]-20% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] ammunition[[/col]], for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_barbed_arrowheads_medium	Fit barbed heads to every arrow and bolt: [[col:green]]+15%[[/col]] [[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]] missile damage, but [[col:red]]-20% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] ammunition[[/col]], for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_barbed_arrowheads_hard	Fit barbed heads to every arrow and bolt: [[col:green]]+20%[[/col]] [[img:ui/skins/default/icon_stat_ranged_damage.png]][[/img]] missile damage, but [[col:red]]-20% [[img:ui/skins/default/icon_stat_ammo.png]][[/img]] ammunition[[/col]], for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_shod_and_barded_easy	Shoe the mounts and bard the beasts: [[col:green]]+10[[/col]] [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]] charge bonus when attacking and [[col:green]]+5%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed, but [[col:red]]+10% upkeep[[/col]], for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_shod_and_barded_medium	Shoe the mounts and bard the beasts: [[col:green]]+15[[/col]] [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]] charge bonus when attacking and [[col:green]]+5%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed, but [[col:red]]+10% upkeep[[/col]], for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_shod_and_barded_hard	Shoe the mounts and bard the beasts: [[col:green]]+20[[/col]] [[img:ui/skins/default/icon_stat_charge_bonus.png]][[/img]] charge bonus when attacking and [[col:green]]+5%[[/col]] [[img:ui/skins/default/icon_stat_speed.png]][[/img]] speed, but [[col:red]]+10% upkeep[[/col]], for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_runesmiths_inscription_easy	Have the runesmith cut a rune into our banners: the army spell below is ours to cast in any battle for the next 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_runesmiths_inscription_medium	Have the runesmith cut a rune into our banners: the army spell below is ours to cast in any battle for the next 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_runesmiths_inscription_hard	Have the runesmith cut a rune into our banners: the army spell below is ours to cast in any battle for the next 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_bloodforged_steel_easy	Quench the blade in our own blood: [[col:green]]the rare item below[[/col]], but every unit loses [[col:red]]15% of its strength[[/col]] now.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_bloodforged_steel_medium	Quench the blade in our own blood: [[col:green]]the rare item below[[/col]], but every unit loses [[col:red]]12% of its strength[[/col]] now.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_bloodforged_steel_hard	Quench the blade in our own blood: [[col:green]]the rare item below[[/col]], but every unit loses [[col:red]]10% of its strength[[/col]] now.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_cursed_masterwork_easy	Take the masterwork no smith will sign: [[col:green]]the items below[[/col]] (a legendary piece at a level 3 forge), but our lord is struck by [[col:red]]a level 2 curse[[/col]]: Creeping Rust, Brittle Bones or Cursed Coin.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_cursed_masterwork_medium	Take the masterwork no smith will sign: [[col:green]]the items below[[/col]] (a legendary piece at a level 3 forge), but our lord is struck by [[col:red]]a level 2 curse[[/col]]: Creeping Rust, Brittle Bones or Cursed Coin.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_cursed_masterwork_hard	Take the masterwork no smith will sign: [[col:green]]the items below[[/col]] (a legendary piece at a level 3 forge), but our lord is struck by [[col:red]]a level 2 curse[[/col]]: Creeping Rust, Brittle Bones or Cursed Coin.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_smiths_blessing_easy	Have the master smith bless our lord's arms: our lord gains [[col:green]]Ironhide or Stone Rampart[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_smiths_blessing_medium	Have the master smith bless our lord's arms: our lord gains [[col:green]]Ironhide or Stone Rampart[[/col]].	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_smiths_blessing_hard	Have the master smith bless our lord's arms: our lord gains [[col:green]]Ironhide or Stone Rampart[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_headhunt_easy	[[col:yellow]]Mission:[[/col]] kill the enemy lord within [[col:yellow]]6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_headhunt_medium	[[col:yellow]]Mission:[[/col]] kill the enemy lord within [[col:yellow]]6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_headhunt_hard	[[col:yellow]]Mission:[[/col]] kill the enemy lord within [[col:yellow]]6 minutes[[/col]] for [[col:green]]a random rare item[[/col]].	false

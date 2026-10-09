@@ -121,6 +121,9 @@ local SPOT_BUNDLE = "land_enc_effect_spot_"
 --- Key prefix of the Tavern bar's drinks.
 local TAVERN_BUNDLE = SPOT_BUNDLE .. "tavern_"
 
+--- Prefix of the Smithy's Work Orders bundles.
+local SMITHY_BUNDLE = SPOT_BUNDLE .. "smithy_"
+
 --- The tower's attrition bundle, shared by the plague offers.
 local PLAGUE = shared.plague_bearer.bundle
 
@@ -256,6 +259,10 @@ M.sites = {
 --- The spoils pick after a won battle spot: a site with no signature that draws from its own pools. The picture is culture-aware, so each
 --- player sees their own culture's victory.
 M.spoils = { key = "spoils_of_war", tags = { "loot", "recovery" }, pools = { "spoils", "realm" }, ui_image = "land_victory" }
+
+--- A Smithy's Work Orders counter: like a Tavern's bar, a site with no signature that draws only from its own pool, goes back to the forge
+--- and shows each price as a treasury card. Its offers act at the forge level.
+M.smithy = { key = "smithy_orders", tags = {}, pools = { "smithy" }, ui_image = "land_enc_smithy_forge", leave_line = "smithy_back", price_as_card = true }
 
 --- A Tavern's bar: a site with no signature that draws only drinks and games, and is never rolled for a treasure spot. Its last choice goes
 --- back to the Tavern's hub instead of walking away, and each price shows as a treasury card that the payload charges. The picture is
@@ -543,6 +550,17 @@ M.offers = {
     { key = "thiefs_mark", pool = "tavern", tags = { "pact" }, boon = { "kings_ransom", 1 }, curse = { "magpies_curse", 1 } },
     { key = "gold_for_blood", pool = "tavern", tags = { "pact" }, boon = shared.gold_for_blood.boon, curse = shared.gold_for_blood.curse },
 
+    --- A Smithy's Work Orders. Values step with the forge level and prices with the campaign difficulty, like the bar's.
+    { key = "heavy_plate", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "heavy_plate"), 5 } },
+    { key = "honed_edges", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "honed_edges"), 5 } },
+    { key = "barbed_arrowheads", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "barbed_arrowheads"), 5 }, shoots = true },
+    { key = "shod_and_barded", pool = "smithy", tags = {}, cost = STANDARD, army_bundle = { tiered(SMITHY_BUNDLE .. "shod_and_barded"), 5 } },
+    { key = "runesmiths_inscription", pool = "smithy", tags = {}, cost = STRONG, spell_pool = S("army", "bound", "lore"), spell_turns = 5 },
+    { key = "bloodforged_steel", pool = "smithy", tags = {}, bleed = S(15, 12, 10), items = { rarities = { "rare" }, count = 1 } },
+    { key = "cursed_masterwork", pool = "smithy", tags = { "curse" }, items = S({ rarities = { "rare" }, count = 2 }, { rarities = { "rare" }, count = 2 }, nil),
+        unique = S(nil, nil, 1), curse = { from = "smithy", level = 2 } },
+    { key = "smiths_blessing", pool = "smithy", tags = {}, cost = STRONG, boon = { from = "smithy" } },
+
     --- Missions, tracked by the battle script under the tower's names.
     { key = "headhunt", pool = "mission", tags = {}, battle_value = 360, items = { rarities = { "rare" }, count = 1 } },
     { key = "blood_tally", pool = "mission", tags = {}, battle_value = 0.4, gold = S(1500, 2000, 2500) },
@@ -598,9 +616,12 @@ function M.all_at(difficulty)
 end
 
 --- Site key -> site record, the spoils pick and the Tavern bar included.
-M.site_by_key = { [M.spoils.key] = M.spoils, [M.tavern.key] = M.tavern }
-for _, site in ipairs(M.sites) do
-    M.site_by_key[site.key] = site
+--- The sites a place opens rather than a spot: the Tavern bar and the Smithy's Work Orders.
+M.venues = { M.tavern, M.smithy }
+
+M.site_by_key = { [M.spoils.key] = M.spoils }
+for _, list in ipairs({ M.sites, M.venues }) do
+    for _, site in ipairs(list) do M.site_by_key[site.key] = site end
 end
 
 return M

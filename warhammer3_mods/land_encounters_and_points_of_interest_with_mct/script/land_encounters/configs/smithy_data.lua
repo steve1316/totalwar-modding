@@ -41,6 +41,13 @@ M.donations = {
     { price = 100000, place_level = 3, bundle = "land_enc_effect_smithy_patron_2" },
 }
 
+--- The Work Orders counter on the forge: 3 offers drawn from the `smithy` pool (configs/spot_offers.lua), acting at the forge level. Taking
+--- one closes the counter to that faction at that Smithy for `orders_cooldown` turns.
+M.orders_cooldown = 5
+
+--- Rush the Forge, shown while the free picks cool: it ends the cooldown for `rush_price_per_turn` gold per turn left, times the forge level.
+M.rush_price_per_turn = 500
+
 --- Maximum of the MCT `smithy_cooldown` slider (the level 3 cooldown).
 M.cooldown_slider_max = 30
 
