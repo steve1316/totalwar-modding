@@ -1,5 +1,6 @@
 """Writes the LEAPOI spot offer rows: treasure site dilemmas, the pre-battle choices on battle dilemmas, choice lines, battle notices, effect
-bundles, traits and every loc string they need.
+bundles, traits and every loc string they need. It also writes the boon and curse rows, the effect library, the army spell rows with
+`configs/army_spells.lua`, and the free spell copies, from the other `leapoi_*` generators.
 
 The sites and offers come from the mod's `configs/spot_offers.lua`, read through the `lua` executable. The text lives here and follows the
 tower's reviewed house rules: names in title case, gold without separators, "our" voice, paid lines as "Pay N gold from our treasury to ...",

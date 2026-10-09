@@ -144,7 +144,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 | Call | Notes |
 |---|---|
 | `cm:apply_effect_bundle_to_region(bundle, region_key, turns)` | Own and enemy regions. |
-| `cm:apply_effect_bundle_to_faction_province(bundle, region_obj, turns)` | Own and enemy provinces. |
+| `cm:apply_effect_bundle_to_faction_province(bundle, region_obj, turns)` | Own and enemy provinces. It goes to the faction that owns the region passed in, so pass a region that faction holds (`L/features/smithy.lua:232-243`, `:266`). |
 | `cm:apply_effect_bundle(bundle, faction, turns)` | Also works on another faction. |
 | `cm:add_development_points_to_region(region_key, n)` | Enough to upgrade afterwards. |
 | `cm:instantly_set_settlement_primary_slot_level(settlement, level)` | 1-based: read-back 1 -> 2 matched the UI. Cap 5 for a province capital, 3 for a minor settlement. |
@@ -180,6 +180,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - **Immortal lords:** killing an immortal lord (`cm:kill_character_and_commanded_unit`) wounds them instead.
 - **Removing units:** `cm:remove_unit_from_character` removes by key, and the game picks which copy goes. Read the other copies' strengths first and restore them.
 - **Silent removal of scripted forces:** mute `diplomacy_faction_destroyed` and `wh_event_category_character` with `cm:disable_event_feed_events`, kill the force, then unmute after 1 s.
+- **Builder dilemmas in the event feed:** every LEAPOI menu dilemma (Tavern, forge, tower) files a World Events entry. Muting `faction_event_dilemma` with `cm:disable_event_feed_events` does not stop it, even when held until the choice is made. A probe that walked the whole UI tree to hide the entries froze the game, so never walk the full UI tree from script. The feed is left as is. `[game]`
 - **Who won:** read `cm:pending_battle_cache_faction_is_attacker/defender` and `pending_battle_cache_attacker/defender_victory`.
 - **Incidents:** they are fired only when `faction:is_human() and cm:is_human_factions_turn()`.
 - **Garrisons:** a garrison is `region:garrison_residence():army()`. Null-check it.
@@ -235,7 +236,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
   - `wh_main_effect_attribute_enable_immune_to_psychology`.
   - `wh3_dlc27_effect_attribute_enable_glorious_charge_cavalry_chaiots` (the typo "chaiots" is in the vanilla key).
   - `wh_main_effect_force_stat_enable_magic_attacks`.
-- **Army abilities:** bundles can enable them, for example `wh3_main_effect_army_ability_enable_storm_of_fire`. CA's Changeling quest battle grants one by bundle, then the battle script fires it with `army:use_special_ability(key, pos)`. Its button shows on the owner's bar, so the owner, or the AI, can fire it too. We never built this route. `[untested]`
+- **Army abilities:** bundles can enable them, for example `wh3_main_effect_army_ability_enable_storm_of_fire`. CA's Changeling quest battle grants one by bundle, then the battle script fires it with `army:use_special_ability(key, pos)`. Its button shows on the owner's bar, so the owner, or the AI, can fire it too. We never built the script-fired route. `[untested]` Army spells for the player's own bar are in 3.8.
 
 ### 3.6 The reinforcement-time effect `[game]`
 - **The effect:** `wh3_main_effect_own_reinforcement_time_percentage_mod` (scope `force_to_force_own`), shown as "Battle reinforcement time: %+n%".
@@ -263,6 +264,29 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - **Old rows:** when an offer moves to another bundle family, delete the old rows. A dead `land_enc_effect_tower_dividends` sat in the pack.
 - **Description text:** the bundle description renders above the effect lines. Keep it flavour, and put exact numbers in the battle notice.
 
+### 3.8 Army spells granted by bundle `[game]`
+- **Recipe:** a custom effect with an `army_special_abilities_tables` row puts a spell on the army ability bar (`gen/leapoi_effect_library.py:89-115`). `uses_mod` effects add casts.
+- **No Winds cost:** an army ability keeps the cost of the spell it points at. Point it at the BOUND (item) version, for example `wh3_main_spell_bound_comet_of_casandora`, and it costs nothing.
+- **Lore spells with no bound version:** `gen/leapoi_free_spells.py:46-50` copies each one the way CA makes its own `wh3_dlc27_army_*` abilities.
+  - Set uses, `initial_recharge` 60 and mana 0.
+  - The upgraded phases when the spell has them.
+  - `source_type` army, and no lore group, so lore cost effects do not touch the copy.
+  - A Blizzard copy worked in game, old saves included.
+- **Pools:** `gen/leapoi_army_spells.py` reads the lore, bound and army pools from vanilla. The script side is `L/core/army_spells.lua`.
+
+### 3.9 A custom ability phase crashes older saves `[game]`
+- **What happens:** applying a custom special ability phase crashes a save made before that phase existed. Leeching Strikes uses `land_enc_lib_jn_leech_hits`, so an offer that hands it out needs a new campaign, said in the change notes.
+- **Why the custom phase exists:** vanilla Spirit Leech on every hit tanks FPS, because its per-model effect replays on each hit. The light copy keeps only the banner marker, has no looping sound and drains less (`gen/leapoi_effect_library.py:35-45`).
+
+### 3.10 The player is the defender in LEAPOI fights `[game]`
+- Ambush and interception fights start with the spawned army attacking the player (`L/core/managers.lua:763-767`). Tower floors, Tavern contracts and Smith's Commissions use interception.
+- So "when defending" battle-context effects are the ones that apply in LEAPOI fights. Allied battles are the exception, since the player attacks (5.1).
+
+### 3.11 Countdown clocks on boon and curse bundles `[game]`
+- **How:** each boon or curse bundle is applied as a custom bundle (`cm:create_new_custom_effect_bundle`) with a clock effect added, such as "Worsens in 2 turns." (`L/features/boons.lua:114-135`).
+- **On top:** the clock effect has priority 0, the lowest, which puts it above the bundle's other effects (`gen/leapoi_boons.py:103-104`).
+- **Fallback:** if the custom bundle cannot be built, the plain bundle goes on without a clock.
+
 ---
 
 ## 4. Dilemmas, incidents, payloads, loc and tooltips
@@ -274,7 +298,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - **Lesson:** forcing offers in every test hid this, because the offer version was always the one tested.
 
 ### 4.2 Choice order, routing and labels `[game]`
-- **Order:** the vanilla `FIRST` choice always sorts first. That pins the signature offer to the top, and an ineligible one leaves no blank button. The rest follow the `order` column of `cdir_events_dilemma_choices_tables` (Avoid 999, Walk away 998).
+- **Order:** a builder dilemma lists its choices in the order they are added, not by the `order` column of `cdir_events_dilemma_choices_tables`. The forge showed Temper and Break after Leave, although their orders were 7 and 998. Add the signature offer first and Leave or Back last (`L/features/smithy.lua:470`, `L/features/tavern.lua:289`).
 - **Routing:** route choices by key, never by index.
 - **Label length:** labels over about 30 characters shrink, then get cut off. A harness test enforces 30.
 - **Restacking:** taking a mission pays its stake, greys it as "Already taken." and relaunches the same dilemma, so missions stack before Fight.
@@ -311,6 +335,7 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - One `FIRST` payload, `TEXT_DISPLAY LOOKUP[dummy_do_nothing]`.
 - Loc for the title and description.
 - **Per choice:** a choice row with an order, a `cdir_events_dilemma_choice_details` row, and the label loc `cdir_events_dilemma_choice_details_localised_choice_label_<dilemma><choice>`.
+- **Every custom choice key needs its `cdir_events_dilemma_choices_tables` row.** The choice details row points at it, and a missing one crashes the DB load at startup. The harness test `choice_keys_registered` (harness_boons) checks it. Check new rows against the vanilla tables before deploying.
 - **Row ids:** new ids continue fixed ranges.
 - **Tower rows are hand-kept:** about 43 floor rows per choice. Spot rows are generated.
 
@@ -365,6 +390,19 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - **Fallback:** vanilla rows prove that a bare name falls back to `all/`.
 - **Avoid:** `all/story_panels/dlc25_nemesis_crown`. It is placeholder art with a magenta "PH".
 - **Catalogue:** see `docs/research/80-event-pictures.md`.
+
+### 4.12 The game takes a payload's gold after every listener `[game]`
+- **What happens:** a chosen payload's gold leaves the treasury only after every `DilemmaChoiceMadeEvent` listener has run. A dilemma reopened inside the handler read the old treasury, so it offered what the faction could no longer afford.
+- **Fix:** `dilemmas.settle` runs as the first choice listener and notes the price as spent for 0.5 s (`L/core/dilemmas.lua:125-135`, `L/core/listeners.lua:48`). Every dilemma that shows prices reads `dilemmas.treasury` (`:139`), not `faction:treasury()`.
+
+### 4.13 Long choice lists need a scrolling list `[game]`
+- **The problem:** the vanilla `dilemma_list` is a grid that grows to fit its choices, with no scroll. A long list can run off the screen.
+- **Fix:** `dilemmas.cap_choices` (`L/core/dilemmas.lua:238`) runs on `PanelOpenedCampaign`. It moves the grid into a `ui/templates/listview` (from ui3.pack), sized to at most 3 rows and to the room left on the screen.
+- **Release:** `dilemmas.release_scroll` (`:223`) puts the grid back on `PanelClosedCampaign`, so the next dilemma lays out as the game made it. It works on any dilemma, not just LEAPOI's.
+
+### 4.14 Missions `[game]`
+- **One money payload:** a mission given two `money` payloads is silently dropped by the game. Add the amounts into one payload, and name the parts with a text line (`L/features/tavern_contracts.lua:361-363`).
+- **Scripted objectives:** the condition passed to `mm:add_new_scripted_objective` must be a function, never `false`. An objective that only script completes passes `function() return false end` (`:356`, `L/features/smithy_commissions.lua:113`).
 
 ---
 
@@ -658,11 +696,15 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
   - When an offer stops varying, its old tier rows stay unless removed.
   - A re-sort can look like lost rows. Check that the re-added rows match before panicking.
 - **New tables:** `write_rows` only creates loc files. New db tables need their header made by hand.
+- **Tiered bundles:** a spot bundle value written as `(easy, medium, hard)` makes one bundle per difficulty, and a `None` step leaves that effect out. An effect with a `None` step must come last, because offer lines number the effects by position (`{e0}`, `{e1}`) (`gen/update_leapoi_spot_offers.py:1324-1326`).
+- **One run writes everything:** `python -u -m generators.update_leapoi_spot_offers` (from `helper_scripts/`) also writes the rows from `leapoi_boons`, `leapoi_effect_library`, `leapoi_army_spells` and `leapoi_free_spells`, and `L/configs/army_spells.lua`. `--dry-run` prints what would change.
+- **Vanilla spell data:** `leapoi_army_spells` and `leapoi_free_spells` keep their vanilla rows in a JSON next to them. Refresh it with `python -m generators.<name> <folder of vanilla TSVs>` after a game patch or a new spell.
 - **Fail loudly:** the generators fail on a referenced bundle that was not generated, and on a varying notice with no text.
 - **Don't import `tools.simulate_leapoi_armies`:** it runs an rpfm schema update at import.
 
 ### 10.4 Test harness `[log]`
-- **Running it:** `cd tests/leapoi_harness && LEAPOI_ROOT=<worktree mod>/ sh run_all.sh`. It is local-only, with 295 tests at the end. Pointing it at the main checkout gives false failures.
+- **Running it:** `cd tests/leapoi_harness && LEAPOI_ROOT=<absolute path to the worktree mod>/ sh run_all.sh`. The path must be absolute, because each harness runs from its own folder. Pointing it at the main checkout gives false failures.
+- **Size:** it is local-only, with 426 tests across 8 harnesses: towers 173, smithy 36, taverns 67, battles 19, army 11, mct 21, spots 75, boons 24.
 - **Debug switches:** `debug_switches_off` fails while any debug switch is set. Empty them before running and before committing. Temporary short test timings also fail checks, by design.
 - **Reading failures:**
   - A suite that prints nothing has crashed, so run it alone.
@@ -685,10 +727,40 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - **Use Bandits fights** to test offers, because Battlefield fights also bring an ally.
 - **Force factions:** `force_battle_faction` picks the enemy faction, for example Bretonnia for cavalry.
 - **Temporary timings:** test timers at 30 s, then restore before committing.
-- **Debug switches** in `L/configs/debug.lua`:
-  - `spot_kind`, `force_battle_categories`, `force_spot_offers`, `force_treasure_site`, `force_offers`, `battle_event_rolls`;
-  - `force_battle_faction`, `force_battle_modifiers`, `battle_difficulty`, `spot_cost`, `realm_test`, ...
-  - They ship empty.
+- **Debug switches** in `L/configs/debug.lua`. They ship empty, as `{}`.
+
+| Switch | What it does when set |
+|---|---|
+| `force_offers` | Tower offer keys drawn first on every go-deeper dilemma. |
+| `floor_difficulty` | Tower floor -> difficulty fought instead of the floor's own. |
+| `floor_budget` | Enemy gold budget `{ min, max }` for every tower floor. |
+| `floor_sworn_units` | Tower floor -> sworn units instead of the floor's own. |
+| `floor_kill_units` | Tower floor -> weakest regular units removed after it is won, to free slots. |
+| `spot_kind` | Every encounter spot becomes `"battle"` or `"treasure"`. |
+| `force_battle_categories` | Battle category keys drawn first on every battle spot. |
+| `force_battle_modifiers` | Battle modifier keys every fight carries instead of rolling its own. |
+| `force_battle_faction` | Faction shorthand every battle spot's enemy uses, e.g. `"brt"`. |
+| `battle_difficulty` | Difficulty every battle spot uses instead of the current one. |
+| `smithy_cooldown` | Smithy free-pick cooldown in turns. |
+| `smithy_level` | Forge level every Smithy acts as. |
+| `smithy_fight_level` | Level every Smithy garrison fights at when a lord seizes it. |
+| `smithy_commission_now` | Offers a Smith's Commission every round to each player faction with none. |
+| `smithy_commission_kind` | Commission kind every Smithy offers, e.g. `"fetch_star_metal"`. |
+| `tavern_level` | Level every Tavern is set to on load. |
+| `tavern_board` | Contracts every Tavern board posts when next rolled, e.g. `"marked"`, `"chain"`. |
+| `tavern_hazard` | Hazard pay on every bounty and marked contract of a newly rolled board. |
+| `tavern_contract_mission` | Battle mission every bounty and marked contract of a newly rolled board carries. |
+| `force_spot_offers` | Spot offer keys drawn first on every treasure site, after its signature offer. |
+| `force_treasure_site` | Treasure site every treasure spot opens, e.g. `"witchs_hut"`. |
+| `battle_event_rolls` | Battle spot event rolls that always hit, e.g. `"before"`. |
+| `spot_cost` | Gold every paid site and battle offer costs, e.g. `10000` to see them unaffordable. |
+| `test_bundles` | Effect library bundles put on every human army at each turn start and on load. |
+| `test_bundles_enemy` | Effect library bundles put on every LEAPOI enemy army as it spawns. |
+| `grant_boons` | Boon keys every human lord gains at level 1 when a game loads. |
+| `grant_curses` | Curse keys every human lord gains at level 1 when a game loads. |
+| `boon_wins_per_level` | Battles won that raise a boon a level. |
+| `curse_turns_per_level` | Turns that make a curse a level worse. |
+
 - **Override at the source:** apply an override where the value is stored, not at each call site. A per-call `smithy_level` override took gold for an impossible upgrade.
 
 ### 10.7 Launch crashes `[log]`
