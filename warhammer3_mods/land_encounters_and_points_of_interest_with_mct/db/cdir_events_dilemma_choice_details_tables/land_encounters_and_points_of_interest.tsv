@@ -613,6 +613,7 @@ SIXTH	land_enc_dilemma_smithy_forge_level_3
 LEAPOI_SMT_LEAVE	land_enc_dilemma_smithy_forge_level_1		
 LEAPOI_SMT_LEAVE	land_enc_dilemma_smithy_forge_level_2		
 LEAPOI_SMT_LEAVE	land_enc_dilemma_smithy_forge_level_3		
+LEAPOI_TVN_BUY_OUT	land_enc_dilemma_tavern_board		
 LEAPOI_SPT_TOMB_ROBBING	land_enc_dilemma_site_hidden_tomb		
 LEAPOI_SPT_ABANDONED_CAMP	land_enc_dilemma_site_hidden_tomb		
 LEAPOI_SPT_BURIED_RELICS	land_enc_dilemma_site_hidden_tomb		

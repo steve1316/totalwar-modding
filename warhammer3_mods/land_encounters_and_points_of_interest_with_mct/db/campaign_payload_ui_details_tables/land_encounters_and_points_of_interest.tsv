@@ -297,6 +297,12 @@ dummy_land_enc_tavern_bar_closed_14	ui/campaign ui/effect_bundles/edict_sla_fest
 dummy_land_enc_tavern_hall_closed_14	ui/campaign ui/effect_bundles/merc_contract.png	default	0
 dummy_land_enc_tavern_bar_closed_15	ui/campaign ui/effect_bundles/edict_sla_festival_of_drinking_and_delights.png	default	0
 dummy_land_enc_tavern_hall_closed_15	ui/campaign ui/effect_bundles/merc_contract.png	default	0
+dummy_land_enc_tavern_contract_hazard	ui/campaign ui/effect_bundles/casualties.png	default	0
+dummy_land_enc_tavern_contract_spell	ui/campaign ui/effect_bundles/magic_character.png	default	0
+dummy_land_enc_tavern_contract_terms_1	ui/campaign ui/effect_bundles/dlc10_assassination_targets.png	default	0
+dummy_land_enc_tavern_contract_terms_2	ui/campaign ui/effect_bundles/dlc10_assassination_targets.png	default	0
+dummy_land_enc_tavern_contract_terms_3	ui/campaign ui/effect_bundles/dlc10_assassination_targets.png	default	0
+dummy_land_enc_tavern_contract_buy_out	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_spot_tavern_back	ui/campaign ui/effect_bundles/campaign_movement.png	default	0
 dummy_land_enc_spot_unaffordable	ui/campaign ui/effect_bundles/treasury.png	default	0
 dummy_land_enc_spot_taken	ui/campaign ui/effect_bundles/icon_blank.png	default	0

@@ -45,6 +45,10 @@ M.smithy_fight_level = {}
 M.tavern_level = {}
 --- Contracts every Tavern board posts when it is next rolled, instead of random ones, e.g. { "marked", "chain" }.
 M.tavern_board = {}
+--- Puts hazard pay on every bounty and marked contract of a board rolled while it is set, e.g. { true }.
+M.tavern_hazard = {}
+--- Battle missions every bounty and marked contract of a board rolled while it is set carries as contract terms, the first one, e.g. { "headhunt" }.
+M.tavern_contract_mission = {}
 
 --- Spot offer keys drawn first on every treasure site after its signature offer, while they are eligible, e.g. { "send_gifts", "roll_the_bones" }.
 M.force_spot_offers = {}

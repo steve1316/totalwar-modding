@@ -297,6 +297,12 @@ campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_14	[[co
 campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_14	[[col:red]]The hall will not deal with us again for 14 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_bar_closed_15	[[col:red]]The keeper will not serve us again for 15 turns.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_tavern_hall_closed_15	[[col:red]]The hall will not deal with us again for 15 turns.[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_hazard	[[col:yellow]]Hazard pay:[[/col]] [[col:green]]+50% reward gold[[/col]], but the fight carries [[col:red]]one more harmful modifier[[/col]], among those listed below.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_spell	On success, the army spell below is also ours to cast in any battle for 5 turns.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_terms_1	[[col:yellow]]Contract terms:[[/col]] meet the battle mission below in the contract's fight for [[col:green]]+1000 gold[[/col]] on top of its own reward.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_terms_2	[[col:yellow]]Contract terms:[[/col]] meet the battle mission below in the contract's fight for [[col:green]]+1500 gold[[/col]] on top of its own reward.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_terms_3	[[col:yellow]]Contract terms:[[/col]] meet the battle mission below in the contract's fight for [[col:green]]+2000 gold[[/col]] on top of its own reward.	false
+campaign_payload_ui_details_description_dummy_land_enc_tavern_contract_buy_out	Buy out the contract we hold: it ends now, the Guild keeps [[col:red]]half our deposit[[/col]], and no Tavern charges us more for it.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_tavern_back	Go back to the common room.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_unaffordable	[[col:red]]We cannot afford this.[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_taken	[[col:red]]Already taken.[[/col]]	false

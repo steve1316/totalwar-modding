@@ -456,7 +456,8 @@ local function pay_failure(offer, general)
     boons.grant_fields(general, { curse = offer.fail_curse })
 end
 
---- Works out one mission met's rewards: gold, items, or a copy of the enemy's most expensive unit, which its result grants. Ranks for the
+--- Works out one mission met's rewards: gold (with the event's `mission_bonus_gold`), items, or a copy of the enemy's most expensive unit, which its
+--- result grants. Ranks for the
 --- marked unit, our lord's experience, a boon (a race boon about the enemy's race), an army spell and a lifted curse are given here.
 --- @param offer table The mission's offer record at the battle's difficulty.
 --- @param event table The battle event.
@@ -465,7 +466,9 @@ end
 --- @param general userdata|nil Our lord.
 --- @returns table The rewards { gold, items, units } for the mission's result.
 local function pay_mission(offer, event, faction_name, general_cqi, general)
+    --- An event's `mission_bonus_gold` (a Tavern contract's terms) is paid on top of the mission's own gold.
     local gold = offer.gold
+    if event.mission_bonus_gold then gold = (gold or 0) + event.mission_bonus_gold end
     local items = {}
     if offer.items then items = item_pool.pick_items(faction_name, offer.items.rarities, offer.items.count) end
     if offer.unique then items = offer_effects.pick_unique_items(faction_name, offer.unique) end

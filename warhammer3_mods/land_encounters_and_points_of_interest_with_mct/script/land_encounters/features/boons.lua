@@ -450,11 +450,23 @@ function M.grants(offer)
     return offer.boon ~= nil or offer.curse ~= nil
 end
 
+--- Rolls one percent chance and logs it.
+--- @param what string What the roll is for.
+--- @param chance number The percent chance.
+--- @returns boolean True on a hit.
+local function roll(what, chance)
+    local hit = random_chance(chance)
+    log("boons: " .. what .. " roll at " .. chance .. "% " .. (hit and "hits" or "misses"))
+    return hit
+end
+
 --- Lets a lord choose one of a few different boons that drop from a source, on the pick dilemma.
 --- @param character userdata The lord.
 --- @param source string A `drops` source, e.g. "tower".
 --- @param count number How many boons to offer, at most one per pick choice.
-function M.offer_pick(character, source, count)
+--- @param level number|nil The level the chosen boon starts at, 1 when nil.
+function M.offer_pick(character, source, count, level)
+    level = level or 1
     if not (M.enabled() and character:faction():is_human()) then return end
     local pool = {}
     for i, key in ipairs(DROP_POOLS.boon[source] or {}) do pool[i] = key end
@@ -465,10 +477,10 @@ function M.offer_pick(character, source, count)
     if #keys == 0 then return end
     local faction_name = character:faction():name()
     local choices = {}
-    for i, key in ipairs(keys) do choices[i] = { key = data.pick_choices[i], lines = { M.line("boon", { key = key, level = 1 }) } } end
-    M.picks[faction_name] = { cqi = tostring(character:command_queue_index()), keys = keys }
+    for i, key in ipairs(keys) do choices[i] = { key = data.pick_choices[i], lines = { M.line("boon", { key = key, level = level }) } } end
+    M.picks[faction_name] = { cqi = tostring(character:command_queue_index()), keys = keys, level = level }
     common.set_context_value(data.lord_context, lord_name(character))
-    log("boons: lord " .. character:command_queue_index() .. " chooses one of " .. table.concat(keys, ", "))
+    log("boons: lord " .. character:command_queue_index() .. " chooses one of " .. table.concat(keys, ", ") .. " at level " .. level)
     dilemmas.launch(data.pick_dilemma, choices, faction_name)
 end
 
@@ -480,7 +492,7 @@ function M.on_pick_choice(faction_name, choice_key)
     M.picks[faction_name] = nil
     local character = pick and tower_army.character(tonumber(pick.cqi))
     local key = character and pick.keys[CHOICE_SLOT[choice_key] or 0]
-    if key then M.gain(character, "boon", key) end
+    if key then M.gain(character, "boon", key, pick.level) end
 end
 
 --- After a LEAPOI fight: a hard or modified win may give the lord a boon, a loss may give a curse, and each of the fight's battle modifiers
@@ -501,15 +513,6 @@ function M.on_leapoi_fight(character, won, difficulty, modifiers)
     log("boons: lord " .. cqi .. " " .. (won and "won" or "lost") .. " a " .. tostring(difficulty) .. " LEAPOI fight with modifiers "
         .. table.concat(modifiers or {}, ", ") .. " (chances: win " .. settings[data.chance_settings.win] .. "%, loss " .. settings[data.chance_settings.loss]
         .. "%, linger " .. settings[data.chance_settings.linger] .. "%)")
-    --- Rolls one chance and logs it.
-    --- @param what string What the roll is for.
-    --- @param chance number The percent chance.
-    --- @returns boolean True on a hit.
-    local function roll(what, chance)
-        local hit = random_chance(chance)
-        log("boons: " .. what .. " roll at " .. chance .. "% " .. (hit and "hits" or "misses"))
-        return hit
-    end
     if won and hard and roll("win boon", settings[data.chance_settings.win]) then
         M.gain_from(character, "boon", "battle")
     elseif not won and roll("loss curse", settings[data.chance_settings.loss]) then
@@ -541,8 +544,9 @@ function M.on_champion_lost(faction_name)
     if hit then M.gain_realm(faction_name, data.realm_curses[random_number(#data.realm_curses)]) end
 end
 
---- After a Tavern contract ends: a finished quest chain gives a Tavern boon at `chain_boon_level`, a bounty gives Bane of the hunted
---- army's race, and a failed or dropped contract may give a Tavern curse at the loss chance. A lost contract battle has already rolled its
+--- After a Tavern contract ends: a finished quest chain lets the lord choose a Tavern boon at `chain_boon_level`, a bounty gives Bane of the
+--- hunted army's race, a cull may give a Tavern boon at the win chance, and a failed or dropped contract may give a Tavern curse at the loss
+--- chance. A lost contract battle has already rolled its
 --- own curse, so this only rolls when the contract itself ends.
 --- @param character userdata|nil The lord who took the contract.
 --- @param kind string The contract kind, e.g. "bounty" or "chain".
@@ -550,11 +554,14 @@ end
 --- @param succeeded boolean True when the contract was completed.
 function M.on_contract_ended(character, kind, enemy, succeeded)
     if not (character and M.enabled()) then return end
+    local settings = get_mct_settings()
     if succeeded and kind == "chain" then
-        M.gain_from(character, "boon", "tavern", data.chain_boon_level)
+        M.offer_pick(character, "tavern", #data.pick_choices, data.chain_boon_level)
     elseif succeeded and kind == "bounty" then
         M.gain(character, "boon", "bane", 1, data.race_of_shorthand[enemy or ""])
-    elseif not succeeded and random_chance(get_mct_settings()[data.chance_settings.loss]) then
+    elseif succeeded and kind == "cull" then
+        if roll("cull boon", settings[data.chance_settings.win]) then M.gain_from(character, "boon", "tavern") end
+    elseif not succeeded and random_chance(settings[data.chance_settings.loss]) then
         M.gain_from(character, "curse", "tavern")
     end
 end

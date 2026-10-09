@@ -45,6 +45,10 @@ M.hall = {
 --- the land allows. A level 3 Tavern also posts a quest chain: its `steps` in
 --- order (a hunt, a marked spot, then a boss hunt), each against an enemy of its `difficulty`, paying its `gold` and an item of its
 --- `item_rarities`. The last step pays the deposit back with a legendary item, or frees a hero of `hero_rank` when none is left.
+--- One bounty or marked contract per board is posted for hazard pay: its gold reward times `hazard_gold`, and its fight gets one more harmful
+--- battle modifier. A bounty or marked contract has a `mission_chance` % chance of contract terms: a battle mission from `missions` for its
+--- fight, paying the level's `terms_gold` on top of the mission's own reward. A won marked spot also gives the army a spell from `spell_pool`
+--- for `spell_turns` turns, named on the contract. A held contract given up at a board loses `buy_out_share` of its deposit and no surcharge.
 M.contracts = {
     board_size = 2,
     restock_turns = 5,
@@ -53,6 +57,12 @@ M.contracts = {
     spawn_distance = 100,
     --- Turns a cull gets on top of the MCT `tavern_contract_turns` deadline, since it needs several armies beaten.
     cull_extra_turns = 5,
+    hazard_gold = 1.5,
+    mission_chance = 50,
+    missions = { "headhunt", "blood_tally", "hold_the_line", "swift_victory", "break_them", "silence_the_guns", "lords_glory", "untouchable" },
+    spell_pool = "all",
+    spell_turns = 5,
+    buy_out_share = 0.5,
     chain = {
         deposit = 4000,
         --- Turns each quest step gets on top of the MCT `tavern_contract_turns` deadline.
@@ -79,18 +89,19 @@ M.donations = {
 --- the mercenary hall's stock: `units` regular units of `tiers`, `renown` Regiments of Renown as { min, max }, a hero of `hero_rank` for
 --- `hero_price` gold before the hall's markup (none when nil), and `own` slots of the visitor's own culture, rolled for each visit.
 --- `contracts` is the board at this level: the `deposit`, an item of `item_rarities` with each reward, a bounty's `bounty_gold` reward, a
---- cull's `cull_gold` reward for beating `cull_armies` armies, a marked spot's `marked_gold` reward, and `chain` when it posts a quest chain.
+--- cull's `cull_gold` reward for beating `cull_armies` armies, a marked spot's `marked_gold` reward, the contract terms' `terms_gold`, and
+--- `chain` when it posts a quest chain.
 --- A bounty lord's army, and a marked spot's, is as hard as a battle spot at the Tavern's level.
 M.levels = {
     { upgrade_price = 10000, hall = { units = 3, tiers = { 1, 2 }, renown = { 0, 0 }, own = 1 },
         contracts = { deposit = 1000, item_rarities = { "uncommon" }, bounty_gold = 2000, cull_gold = 1500, cull_armies = 2,
-            marked_gold = 1500 } },
+            marked_gold = 1500, terms_gold = 1000 } },
     { upgrade_price = 20000, hall = { units = 4, tiers = { 1, 2, 3 }, renown = { 1, 1 }, hero_rank = 5, hero_price = 2000, own = 1 },
         contracts = { deposit = 2000, item_rarities = { "rare" }, bounty_gold = 3500, cull_gold = 3000, cull_armies = 3,
-            marked_gold = 3000 } },
+            marked_gold = 3000, terms_gold = 1500 } },
     { upgrade_price = nil, hall = { units = 5, tiers = { 1, 2, 3, 4 }, renown = { 1, 2 }, hero_rank = 10, hero_price = 3500, own = 2 },
         contracts = { deposit = 3000, item_rarities = { "rare" }, bounty_gold = 5000, cull_gold = 4500, cull_armies = 4,
-            marked_gold = 4500, chain = true } },
+            marked_gold = 4500, terms_gold = 2000, chain = true } },
 }
 
 return M

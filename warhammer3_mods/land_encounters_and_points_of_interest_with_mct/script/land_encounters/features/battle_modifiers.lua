@@ -99,12 +99,17 @@ function M.roll(fight)
     return roll_spells(picked)
 end
 
---- Rolls one more modifier onto a fight, for Tempt Fate: one `eligible` for it that the fight does not have, and not of a group it already has.
+--- Rolls one more modifier onto a fight, for Tempt Fate and hazard pay: one `eligible` for it that the fight does not have, and not of a group
+--- it already has.
 --- @param fight table The fight: `faction`, the enemy's 3-letter faction shorthand, and `difficulty`.
 --- @param keys table|nil The modifiers the fight has.
+--- @param harm string|nil Only modifiers of this harm, e.g. "-" for one that hurts us.
 --- @returns string|nil The modifier key, or nil when none is left.
-function M.roll_extra(fight, keys)
-    local pool = pool_for(fight, keys)
+function M.roll_extra(fight, keys, harm)
+    local pool = {}
+    for _, modifier in ipairs(pool_for(fight, keys)) do
+        if harm == nil or modifier.harm == harm then pool[#pool + 1] = modifier end
+    end
     local key = pool[1] and pool[random_number(#pool)].key or nil
     log("battle modifiers: rolled extra " .. tostring(key) .. " from " .. #pool .. " left")
     return key
