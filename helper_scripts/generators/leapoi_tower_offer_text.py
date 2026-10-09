@@ -25,7 +25,7 @@ MISSION = "[[col:yellow]]Mission:[[/col]] "
 
 # Said on its own line under a bundle whose effect lists units, which the game draws from the viewer's own roster rather than the army's. Loc
 # files store a line break as an escaped `\\n`, as SITE_FOOTER does.
-DISCLAIMER = "\\\\n\\\\nThe units listed below come from your own roster, but only this army's riders are affected."
+DISCLAIMER = "\\\\n\\\\nThe units these effects list come from your own roster, but only this army's riders are affected."
 
 # Icon of every army spell's bundle and battle notice.
 SPELL_ICON = "magic_character.png"
@@ -110,9 +110,9 @@ TOWER_LINES: Dict[str, Tuple[str, str]] = {
                            "is [[col:red]]wounded for {wound_turns} turns[[/col]] when the delve ends.", None),
     "falling_star": ("Call down a star: army spell [[col:green]]Comet of Casandora, 1 use[[/col]], in the next battle, but every unit loses "
                      "[[col:red]]{bleed}% of its strength[[/col]] in the blast now.", None),
-    "grand_scroll": (PAY + "read a grand scroll: the lore spell below is ours to cast in the next battle.", broke("the scroll stays rolled")),
-    "bound_relic": (PAY + "take up a bound relic: the spell below is ours to cast in the next battle.", broke("the relic stays on its plinth")),
-    "war_horn": (PAY + "sound an old war horn: the army ability below is ours to use in the next battle.", broke("the horn stays silent")),
+    "grand_scroll": (PAY + "read a grand scroll: the named lore spell is ours to cast in the next battle.", broke("the scroll stays rolled")),
+    "bound_relic": (PAY + "take up a bound relic: the named spell is ours to cast in the next battle.", broke("the relic stays on its plinth")),
+    "war_horn": (PAY + "sound an old war horn: the named army ability is ours to use in the next battle.", broke("the horn stays silent")),
     "iron_resolve": (PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] " + icon("icon_stat_morale") + " leadership and [[col:green]]immunity to fear and terror[[/col]] "
                      "in the next battle.", broke("our resolve goes unsteeled")),
     "stoneskin": ("Cast a ward of living stone: [[col:green]]+{e0}% physical resistance[[/col]] in the next battle, but the tower notices and the next "

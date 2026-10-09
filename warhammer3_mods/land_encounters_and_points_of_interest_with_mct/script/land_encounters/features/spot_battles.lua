@@ -341,6 +341,12 @@ function M.take(faction_name, choice_key, event)
     --- A mission's stake changes the enemy army as an offer does, and its rolled spell is paid from the dilemma's cards.
     event.mission_cards = pending.cards
     for _, key in ipairs(event.missions) do apply_to_event(offers_data.at(key, pending.difficulty), event) end
+    --- A stake from Raise the Old Standard makes this fight's enemy stronger, and is used up by it.
+    local stake = spot_offers.take_next_fight(faction_name)
+    if stake then
+        apply_to_event({ budget = stake }, event)
+        log("spot battle: " .. faction_name .. "'s stake makes the enemy budget x" .. stake)
+    end
     local offer = nil
     for _, key in ipairs(pending.offers) do
         if spot_offers.choice_key(key) == choice_key then offer = offers_data.at(key, pending.difficulty) end
@@ -530,6 +536,22 @@ function M.settle_missions(event, faction_name, general_cqi, won)
                 rewards.items[1] and "ancillaries_onscreen_name_" .. rewards.items[1] or nil)
         end
     end
+end
+
+--- Pays a won battle's prize (Wake the Sleeping Champion): its unique items, shown on the offer's `_won` result.
+--- @param event table The battle event, whose `win_prize` is { offer, unique } or nil.
+--- @param faction_name string Our faction key.
+--- @param general_cqi number Our lord's command queue index.
+--- @param won boolean True when our side won.
+function M.settle_prize(event, faction_name, general_cqi, won)
+    local prize = event.win_prize
+    if not (prize and won) then return end
+    local general = tower_army.character(general_cqi)
+    local position = general and { general:logical_position_x(), general:logical_position_y() } or { 0, 0 }
+    local items = offer_effects.pick_unique_items(faction_name, prize.unique)
+    log("spot battle: " .. faction_name .. " wins " .. prize.offer .. "'s prize: " .. table.concat(items, ", "))
+    spot_offers.show_result(faction_name, prize.offer .. "_won", { items = items, character = general, difficulty = event.difficulty }, position,
+        items[1] and "ancillaries_onscreen_name_" .. items[1] or nil)
 end
 
 --- Takes the one-battle bundles off our army once the battle is over, and clears everything handed to the battle script.

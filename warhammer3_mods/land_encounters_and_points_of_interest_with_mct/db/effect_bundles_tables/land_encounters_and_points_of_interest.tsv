@@ -140,6 +140,14 @@ land_enc_effect_spot_scroll_research_easy			faction	1	technology.png	true	false	
 land_enc_effect_spot_scroll_research_medium			faction	1	technology.png	true	false	true
 land_enc_effect_spot_scroll_research_hard			faction	1	technology.png	true	false	true
 land_enc_effect_spot_scroll_heresy			province	1	public_order_unhappy.png	false	false	true
+land_enc_effect_spot_runestone_revered			province	1	public_order_unhappy.png	false	false	true
+land_enc_effect_spot_captains_cut			force	1	merc_contract.png	false	false	true
+land_enc_effect_spot_war_dogs_easy			force	1	campaign_movement.png	false	false	true
+land_enc_effect_spot_war_dogs_medium			force	1	campaign_movement.png	false	false	true
+land_enc_effect_spot_war_dogs_hard			force	1	campaign_movement.png	false	false	true
+land_enc_effect_spot_battle_well_easy			force	1	melee.png	false	false	true
+land_enc_effect_spot_battle_well_medium			force	1	melee.png	false	false	true
+land_enc_effect_spot_battle_well_hard			force	1	melee.png	false	false	true
 land_enc_effect_spot_tavern_hangover			force	1	discouraged.png	false	false	true
 land_enc_effect_tower_war_rites_easy			force	1	effect_rite.png	false	false	true
 land_enc_effect_tower_war_rites_medium			force	1	effect_rite.png	false	false	true

@@ -68,6 +68,8 @@ MISSION_RESULT_IMAGE = "land_victory"
 # Picture of each result's incident, by its key after the result prefix, picked in the art pass. A result not listed shows
 # `MISSION_RESULT_IMAGE` for a mission or `RESULT_IMAGE` otherwise.
 RESULT_IMAGES = {
+    "wake_the_sleeping_champion_won": "nemesis_crown",
+    "chip_the_runestone": "winds_of_magic_change",
     "free_the_prisoner_freed": "army_morale_up",
     "free_the_prisoner_chased": "wh2_rogue_army_encountered",
     "research_scrolls": "books_of_nagash",
@@ -320,7 +322,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "caravan_remnants": ("Claim the Cargo", "Claim the cargo: [[col:green]]+{gold} gold[[/col]], [[col:green]]a random item[[/col]] and [[col:green]]+{lord_xp} "
                          "experience[[/col]] for our lord, but [[col:red]]-{relations} relations[[/col]] with the owner of this region."),
     "whispers_of_the_gods": ("Heed the Voice", "Heed the voice: our army is [[col:green]]unbreakable[[/col]] and [[col:green]]never tires[[/col]], our lord gains "
-                             "[[col:green]]+250 experience[[/col]] each turn, and the army spell below is ours, all for 3 turns, but [[col:red]]-{e0} public "
+                             "[[col:green]]+250 experience[[/col]] each turn, and the named army spell is ours, all for 3 turns, but [[col:red]]-{e0} public "
                              "order[[/col]] in our nearest province for 5 turns."),
     "the_explorer": ("Hire the Explorers", PAY + "hire the explorers: [[col:green]]+{e0}% movement range[[/col]] and [[col:green]]+{e1}% ambush "
                      "defence[[/col]] for {turns} turns, and the {count} nearest regions not our own are [[col:green]]revealed for {reveal_turns} turns[[/col]]."),
@@ -429,8 +431,8 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                            "eats the steel: our lord is struck by {curse}."),
     "warding_sigils": ("Blood Sigils", "Paint the sigils in our own blood: [[col:green]]+{e0}% ward save[[/col]] in this battle, but every unit loses "
                        "[[col:red]]{bleed}% of its strength[[/col]] now."),
-    "battle_scroll": ("Battle Scroll", PAY + "buy a battle scroll: the army spell below is ours to cast in this battle."),
-    "cache_of_scrolls": ("Cache of Scrolls", PAY + "open a cache of scrolls: the army spell below is ours to cast in any battle for the next "
+    "battle_scroll": ("Battle Scroll", PAY + "buy a battle scroll: the named army spell is ours to cast in this battle."),
+    "cache_of_scrolls": ("Cache of Scrolls", PAY + "open a cache of scrolls: the named army spell is ours to cast in any battle for the next "
                          "{spell_turns} turns."),
     "fire_kissed_blades": ("Fire-Kissed Blades", PAY + "pass our blades through the braziers: [[col:green]]flaming attacks[[/col]] for every unit in this battle."),
     "iron_resolve": ("Iron Resolve", PAY + "steel our resolve: [[col:green]]+{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership and "
@@ -496,7 +498,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "monster_slayer": ("Monster Slayer", MISSION + "destroy [[col:yellow]]every enemy monster[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
     "steadfast": ("Steadfast", MISSION + "let [[col:yellow]]no unit of ours rout[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
     "trial_by_fire": ("Trial by Fire", MISSION + "stake our pride: the enemy army is [[col:red]]{stronger}% stronger[[/col]], and a win means our lord gains {boon}."),
-    "witch_hunt": ("Witch Hunt", MISSION + "destroy [[col:yellow]]every enemy spellcaster[[/col]] for the army spell below for the next {spell_turns} turns. "
+    "witch_hunt": ("Witch Hunt", MISSION + "destroy [[col:yellow]]every enemy spellcaster[[/col]] for the named army spell for the next {spell_turns} turns. "
                    "It only counts when the enemy fields a spellcaster."),
     "settle_the_grudge": ("Settle the Grudge", MISSION + "[[col:yellow]]kill the enemy lord[[/col]], and our lord gains {boon}."),
     "penance": ("Penance", MISSION + "win without [[col:yellow]]a single unit of ours routing[[/col]], and [[col:green]]our lord's worst curse is lifted[[/col]]."),
@@ -518,7 +520,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "trophy_of_war": ("Trophy of War", "Take a trophy of war: our lord grows as a [[col:green]]Trophy Hunter[[/col]], a trait that rises with every trophy taken."),
     "chase_the_routers": ("Chase the Routers", "Chase down the routers: a 50/50 chance of [[col:green]]a random rare item[[/col]] or every unit losing "
                           "[[col:red]]10% of its strength[[/col]] in an ambush."),
-    "scavenge_their_scrolls": ("Scavenge Their Scrolls", "Scavenge their scrolls: the army spell below is ours to cast in any battle for the next "
+    "scavenge_their_scrolls": ("Scavenge Their Scrolls", "Scavenge their scrolls: the named army spell is ours to cast in any battle for the next "
                                "{spell_turns} turns."),
     "raise_their_banner": ("Raise Their Banner", "Raise their captured banner over our camp: our lord gains {boon}, but [[col:red]]-{relations} relations[[/col]] "
                            "with the nearest faction of their race."),
@@ -551,7 +553,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                                  "experience[[/col]] or is [[col:red]]hurt, losing half their remaining health[[/col]]."),
     "buy_rumours": ("Buy Rumours", "Buy the rumours of the road: the {count} nearest regions not our own are [[col:green]]revealed for {reveal_turns} "
                     "turns[[/col]], and the keeper names the enemy armies nearby."),
-    "spell_pedlar": ("The Spell Pedlar", "Buy from the spell pedlar: the army spell below is ours to cast in any battle for the next {spell_turns} turns."),
+    "spell_pedlar": ("The Spell Pedlar", "Buy from the spell pedlar: the named army spell is ours to cast in any battle for the next {spell_turns} turns."),
     "press_gang_night": ("Press-Gang Night", "Press-gang the drinkers: our army gains [[col:green]]{recruits}[[/col]] of our roster now, but "
                          "[[col:red]]-{e0} public order[[/col]] in our nearest province for {turns} turns."),
     "fighting_pit": ("The Fighting Pit", "Send our warriors into the fighting pit: every unit gains [[col:green]]{ranks}[[/col]], but loses "
@@ -563,6 +565,24 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "blood_wine": ("Blood Wine", "Drink the blood wine: [[col:green]]Regeneration[[/col]] and " + stat("+{e1}", *LEADERSHIP) + " when defending for {turns} "
                    "turns, but every unit loses [[col:red]]{bleed}% of its strength[[/col]] now."),
     "tavern_back": ("Back", "Go back to the common room."),
+    "wake_the_sleeping_champion": ("Wake the Sleeping Champion", "Wake the sleeping champion: [[col:red]]a battle starts here[[/col]] against a guard "
+                                   "stronger than this site's, and winning it takes the champion's arms, [[col:green]]a unique item[[/col]] on top of "
+                                   "the battle's loot."),
+    "loot_the_desecrated_shrine": ("Loot the Desecrated Shrine", "Loot the desecrated shrine: the named army spell is ours to cast in any battle for "
+                                   "the next {spell_turns} turns, but our lord is struck by {curse}."),
+    "chip_the_runestone": ("Chip the Runestone", "Chip the runestone: the named army spell is ours to cast in any battle for the next {spell_turns} "
+                           "turns, but the locals revere the stone, and [[col:red]]-{e0} public order[[/col]] in our nearest province for 5 turns."),
+    "sign_the_mercenary_captain": ("Sign the Mercenary Captain", "Sign the mercenary captain: [[col:green]]{recruits}[[/col]] of our own kind joins "
+                                   "our army now, but the captain's cut costs [[col:red]]+{e0}% upkeep[[/col]] for {turns} turns."),
+    "claim_the_tainted_gold": ("Claim the Tainted Gold", "Claim the tainted gold: [[col:green]]+{gold} gold[[/col]] to our treasury, but our lord is "
+                               "struck by {curse}."),
+    "raise_the_old_standard": ("Raise the Old Standard", "Raise the old standard: our lord gains {boon}, but the standard draws challengers, and "
+                               "[[col:red]]our next battle spot fight is {stronger}% stronger[[/col]]."),
+    "loose_the_war_dogs": ("Loose the War Dogs", "Loose the war dogs: [[col:green]]+{e0}% campaign movement[[/col]] and [[col:green]]+{e1}% ambush "
+                           "defence[[/col]] for 5 turns, but the beasts bite the hand that feeds them, and every unit loses [[col:red]]{bleed}% of its "
+                           "strength[[/col]] now."),
+    "drink_from_the_battle_well": ("Drink from the Battle Well", "Drink from the battle well: every unit gains [[col:green]]Frenzy[[/col]] and "
+                                   + stat("+{e1}", *ATTACK) + " when attacking, but " + stat("-{e2}", *LEADERSHIP, colour="red") + ", for 5 turns."),
     "heavy_plate": ("Heavy Plate", "Rivet heavy plate onto the army: " + stat("+{e0}", *ARMOUR) + ", but " + stat("-{e1}%", *SPEED, colour="red")
                     + ", for 5 turns."),
     "honed_edges": ("Honed Edges", "Grind every edge thin: " + stat("+{e0}%", *WEAPON) + ", but " + stat("-{e1}", *DEFENCE, colour="red") + ", for 5 turns."),
@@ -570,7 +590,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                           "ammunition[[/col]], for 5 turns."),
     "shod_and_barded": ("Shod and Barded", "Shoe the mounts and bard the beasts: " + stat("+{e0}", *CHARGE) + " when attacking and "
                         + stat("+{e1}%", *SPEED) + ", but [[col:red]]+{e2}% upkeep[[/col]], for 5 turns."),
-    "runesmiths_inscription": ("Runesmith's Inscription", "Have the runesmith cut a rune into our banners: the army spell below is ours to cast in "
+    "runesmiths_inscription": ("Runesmith's Inscription", "Have the runesmith cut a rune into our banners: the named army spell is ours to cast in "
                                "any battle for the next {spell_turns} turns."),
     "bloodforged_steel": ("Bloodforged Steel", "Quench the blade in our own blood: [[col:green]]a rare item[[/col]], but every unit loses "
                           "[[col:red]]{bleed}% of its strength[[/col]] now."),
@@ -641,6 +661,9 @@ ICONS = {
     "arm_wrestle_the_champion": "experience.png", "buy_rumours": "wh2_dlc14_def_tzarkans_whispers.png", "tavern_back": "campaign_movement.png",
     "spell_pedlar": "magic_character.png", "press_gang_night": "peasant.png", "fighting_pit": "experience.png", "smugglers_cut": "cargo.png",
     "hire_a_pathfinder": "campaign_movement.png", "blood_wine": "bloodreaper.png",
+    "wake_the_sleeping_champion": "champions_rift.png", "loot_the_desecrated_shrine": "chaos_gifts.png", "chip_the_runestone": "magic_character.png",
+    "sign_the_mercenary_captain": "merc_contract.png", "claim_the_tainted_gold": "resource_gold_idols.png", "raise_the_old_standard": "morale.png",
+    "loose_the_war_dogs": "campaign_movement.png", "drink_from_the_battle_well": "melee.png",
     "heavy_plate": "armour.png", "honed_edges": "weapon_damage.png", "barbed_arrowheads": "ranged_damage.png", "shod_and_barded": "charge.png",
     "runesmiths_inscription": "magic_character.png", "bloodforged_steel": "bloodreaper.png", "cursed_masterwork": "hex_1.png",
     "smiths_blessing": "resistance_physical.png", "smithy_back": "campaign_movement.png",
@@ -905,6 +928,17 @@ AVOID_CONSEQUENCES = ("avoid_consequences", "random_recipe.png", "[[col:yellow]]
 # or the target faction's when it holds no region. Each is also a result incident, which shows only the title and description, with the
 # place highlighted.
 MESSAGES = {
+    "wake_the_sleeping_champion_won": ("Wake the Sleeping Champion", "The Champion's Arms",
+                                       "The sleeping champion's guard is broken, and the last of them falls across the threshold of the tomb. Our "
+                                       "warriors stand panting among the dead.\\\\n\\\\nBeyond them the champion lies on a bier of black stone, "
+                                       "still and silent, armed and armoured as if for one last battle that never came.\\\\n\\\\nOur lord takes "
+                                       "the champion's arms. Whoever this was, they were a legend in their day, and their weapons have lost none of "
+                                       "their edge."),
+    "chip_the_runestone": ("Chip the Runestone", "",
+                           "A great runestone stands alone on a hill, its carvings worn but still humming with old power. Our runesmiths chip "
+                           "away a shard, and the power comes with it.\\\\n\\\\nBut the stone was revered by the people of {place}, who "
+                           "left offerings at its foot for generations. Word of what we did has spread.\\\\n\\\\nThe shard's power is ours "
+                           "to call on in battle for a while. The people's anger will take longer to fade."),
     "free_the_prisoner_freed": ("Free the Prisoner", "A Debt of Honour",
                                 "Our scouts find a prisoner chained in a hidden cell, thin and bloodied but still defiant. The jailers are nowhere "
                                 "to be seen.\\\\n\\\\nThe chains are struck off, and the prisoner swears to fight for us in thanks. It turns out "
@@ -1201,7 +1235,7 @@ MESSAGES = {
 # Message suffix -> the words its event feed message uses for {place}, which only the result incident can show by name.
 FALLBACK_PLACES = {
     "endow_the_province": "that region", "garrison_drill": "that settlement", "raise_the_settlement": "the settlement",
-    "quell_the_unrest": "the settlement", "research_scrolls": "the nearest province", "bountiful_harvest": "that region", "stir_their_rebels": "that region", "poison_their_wells": "that region",
+    "quell_the_unrest": "the settlement", "research_scrolls": "the nearest province", "chip_the_runestone": "the nearest province", "bountiful_harvest": "that region", "stir_their_rebels": "that region", "poison_their_wells": "that region",
     "sap_their_garrison": "the enemy settlement", "spread_the_plague": "that region", "buy_rumours": "that region", "press_gang_night": "our province", "smugglers_cut": "their lands", "send_gifts": "their court",
     "spy_on_their_capital": "the enemy capital", "curse_a_distant_king": "their capital", "share_the_find": "the nearest",
     "point_them_at_each_other": "that region", "sell_their_secrets": "that region", "ransom_the_captain": "their own people",
@@ -1223,7 +1257,7 @@ RESULT_LINES = {
     "gamble_with_the_hermit_lost": ("red", "The hermit keeps our {cost} gold."),
     "chase_the_routers_lost": ("red", "Every unit loses {lost_bleed}% of its strength."),
     "mystery_brew_strikes": ("green", "Blinding Strikes on our army for 5 turns."),
-    "mystery_brew_spell": ("green", "The army spell below is ours to cast for 5 turns."),
+    "mystery_brew_spell": ("green", "The named army spell is ours to cast for 5 turns."),
     "mystery_brew_lost": ("red", "A hangover on our army for {lost_turns} turns."),
     "dice_with_strangers_lost": ("red", "Our stake is lost, and every unit loses {lost_bleed}% of its strength."),
     "press_gang_night": ("red", "-{e0} public order in our nearest province for {turns} turns."),
@@ -1389,6 +1423,17 @@ BUNDLES = {
                         [("wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", (25, 30, 35))]),
     "scroll_heresy": ("province", "public_order_unhappy.png", "Heresy Preached", "Word of the scrolls' teachings has spread through the province, and the priests are furious.",
                       [("wh_main_effect_public_order_events", "province_to_province_own", -10)]),
+    "runestone_revered": ("province", "public_order_unhappy.png", "The Stone Defiled", "The locals revered the runestone we chipped, and they have not forgiven us.",
+                          [("wh_main_effect_public_order_events", "province_to_province_own", -5)]),
+    "captains_cut": ("force", "merc_contract.png", "The Captain's Cut", "The mercenary captain takes a share of every pay chest, as agreed.",
+                     [("wh_main_effect_force_all_campaign_upkeep", "force_to_force_own", 10)]),
+    "war_dogs": ("force", "campaign_movement.png", "War Dogs", "The war dogs run ahead of the column, sniffing out the short paths and every enemy lying in wait.",
+                 [("wh_main_effect_force_all_campaign_movement_range", "force_to_force_own", (20, 25, 30)),
+                  ("wh_main_effect_force_army_campaign_ambush_defence_success_chance", "force_to_force_own", 15)]),
+    "battle_well": ("force", "melee.png", "Battle Fury", "The water of the battle well burns in the blood. Our warriors crave the charge, and care little for orders.",
+                    [("wh3_dlc27_effect_ability_enable_frenzy_all", "force_to_force_own", 1),
+                     ("wh2_dlc12_effect_force_stat_melee_attack_attacking", "force_to_force_own", (8, 12, 16)),
+                     ("wh_main_effect_force_stat_leadership", "force_to_force_own", (-8, -10, -12))]),
     "tavern_hangover": ("force", "discouraged.png", "Hangover", "The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.",
                         [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
 }

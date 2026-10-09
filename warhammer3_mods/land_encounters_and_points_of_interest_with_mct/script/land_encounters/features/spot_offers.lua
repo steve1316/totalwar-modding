@@ -25,13 +25,16 @@ local M = {
     camps = {},
     --- Caravan investments still paying out: { faction, amount, turns }, paid at each of that faction's turn starts.
     dividends = {},
+    --- Faction key -> what its next battle spot fight's enemy budget is multiplied by, e.g. 1.15, from Raise the Old Standard. Used up when
+    --- it chooses to fight.
+    next_fights = {},
     --- Regions a faction keeps revealed through the shroud: { faction, region, turns }, revealed again at each of its turn starts.
     reveals = {},
     --- Sends Daemon's deal armies at a faction's capital: (faction_name, count). Set by the POI manager to the tower's sender, which owns the
     --- invasion plumbing.
     send_daemon_army = nil,
-    --- Starts a guardian battle (Wake the Guardian, Oath at the Altar) for a lord at a map position, at a difficulty or nil for the current one.
-    --- Set by the spot event manager to the battle spots' own battle start.
+    --- Starts a guardian battle (Wake the Guardian, Oath at the Altar) for a lord at a map position, at a difficulty or nil for the current one,
+    --- with a prize { offer, unique } paid when it is won, or nil. Set by the spot event manager to the battle spots' own battle start.
     start_guardian_battle = nil,
     --- Venue kind ("tavern" or "smithy") -> called when a faction leaves that venue's site: (faction_name, site, took), where `site` is the
     --- open site with its `venue` { kind, zone, index } and `general_cqi`, and `took` is true when an offer was taken. Set by the POI manager
@@ -135,7 +138,7 @@ local function eligible(offer, ctx)
     if offer.hero_rank and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
     if offer.sacrifice and #tower_army.regular_units(ctx.general_cqi) < 2 then return false end
     if offer.daemon_armies and not ctx.faction:has_home_region() then return false end
-    if gamble_has(offer, "unique") and item_pool.pick_legendary_item(ctx.faction_name) == nil then return false end
+    if (gamble_has(offer, "unique") or offer.guardian_prize) and item_pool.pick_legendary_item(ctx.faction_name) == nil then return false end
     local enemy_units = ctx.event and ctx.event.enemy_units or {}
     if (offer.gold_per_enemy_unit or offer.captive) and #enemy_units == 0 then return false end
     if offer.captive and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
@@ -406,10 +409,11 @@ end
 --- the game when hovered.
 --- @param state table { general_cqi, x, y } of the site taken.
 --- @param guardian boolean|string True for a battle at the current difficulty, or a difficulty key.
-local function wake_guardian(state, guardian)
+--- @param prize table|nil { offer, unique }: unique items paid when the battle is won (see `spot_battles.settle_prize`).
+local function wake_guardian(state, guardian, prize)
     local general = tower_army.character(state.general_cqi)
     if M.start_guardian_battle and general then
-        cm:callback(function() M.start_guardian_battle(general, state.x, state.y, type(guardian) == "string" and guardian or nil) end, 0.5)
+        cm:callback(function() M.start_guardian_battle(general, state.x, state.y, type(guardian) == "string" and guardian or nil, prize) end, 0.5)
     else
         log("spot: no guardian battle could start for lord " .. tostring(state.general_cqi))
     end
@@ -491,7 +495,13 @@ local function apply_fields(fields, offer, state, rolled)
         M.camps[#M.camps + 1] = { faction = faction_name, general_cqi = general_cqi }
         log("spot: lord " .. general_cqi .. " cannot move until the next turn")
     end
-    if fields.guardian then wake_guardian(state, fields.guardian) end
+    if fields.guardian then
+        wake_guardian(state, fields.guardian, fields.guardian_prize and { offer = offer.key, unique = fields.guardian_prize })
+    end
+    if fields.next_budget then
+        M.next_fights[faction_name] = (M.next_fights[faction_name] or 1) * fields.next_budget
+        log("spot: " .. faction_name .. "'s next battle spot fight is " .. M.next_fights[faction_name] .. " times as strong (" .. offer.key .. ")")
+    end
     if fields.dividends then
         local amount = fields.dividends.per_turn
         M.dividends[#M.dividends + 1] = { faction = faction_name, amount = amount, turns = fields.dividends.turns }
@@ -645,10 +655,19 @@ function M.on_faction_turn_start(faction_name)
     end)
 end
 
---- Exports the open site dilemmas, camps, dividends and revealed regions for the save file.
---- @returns table { pending_by_faction, camps, dividends, reveals }.
+--- Exports the open site dilemmas, camps, dividends, revealed regions and next fight stakes for the save file.
+--- @returns table { pending_by_faction, camps, dividends, reveals, next_fights }.
 function M.export_state()
-    return { pending_by_faction = M.pending_by_faction, camps = M.camps, dividends = M.dividends, reveals = M.reveals }
+    return { pending_by_faction = M.pending_by_faction, camps = M.camps, dividends = M.dividends, reveals = M.reveals, next_fights = M.next_fights }
+end
+
+--- Uses up a faction's stake on its next battle spot fight (Raise the Old Standard).
+--- @param faction_name string The faction about to fight.
+--- @returns number|nil What the enemy army's budget is multiplied by, or nil with no stake.
+function M.take_next_fight(faction_name)
+    local stake = M.next_fights[faction_name]
+    M.next_fights[faction_name] = nil
+    return stake
 end
 
 --- Restores the state saved by `M.export_state`, from the load callback. A save from before spot offers restores nothing. A camping lord is
@@ -664,6 +683,7 @@ function M.restore_state(saved)
     M.camps = saved.camps or {}
     M.dividends = saved.dividends or {}
     M.reveals = saved.reveals or {}
+    M.next_fights = saved.next_fights or {}
     if #M.camps == 0 then return end
     cm:add_first_tick_callback(function()
         for _, camp in ipairs(M.camps) do

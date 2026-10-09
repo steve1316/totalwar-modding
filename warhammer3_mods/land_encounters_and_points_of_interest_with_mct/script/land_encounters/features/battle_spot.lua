@@ -138,10 +138,12 @@ end
 --- @param character character The lord the guardian attacks.
 --- @param spot_info table A spot_info record with the site's coordinates.
 --- @param difficulty string|nil The battle's difficulty, or nil for the current one.
-function BattleEventDelegate:start_guardian_battle(character, spot_info, difficulty)
+--- @param prize table|nil { offer, unique }: unique items paid when the battle is won (Wake the Sleeping Champion).
+function BattleEventDelegate:start_guardian_battle(character, spot_info, difficulty, prize)
     self.cached_player_character = character
     self.cached_event = battle_picker.pick(difficulty, { no_allies = true })
     self.cached_event.intervention = INTERCEPTION_TYPE
+    self.cached_event.win_prize = prize
     log("spot: the guardian wakes and attacks lord " .. character:command_queue_index() .. " with a " .. self.cached_event.category .. " battle at ("
         .. spot_info.coordinates[1] .. ", " .. spot_info.coordinates[2] .. ")")
     self:start_battle(spot_info)
@@ -168,7 +170,10 @@ end
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
     local character = self.cached_player_character
     local general_cqi = character and character.command_queue_index and character:command_queue_index() or nil
-    if general_cqi then spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi, player_won_battle) end
+    if general_cqi then
+        spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi, player_won_battle)
+        spot_battles.settle_prize(self.cached_event, character:faction():name(), general_cqi, player_won_battle)
+    end
     spot_battles.end_battle(self.cached_event, general_cqi)
     if player_won_battle then
         self:trigger_victory_incident(spot_info)

@@ -280,6 +280,22 @@ effect_bundles_localised_title_land_enc_effect_spot_scroll_research_hard	Forbidd
 effect_bundles_localised_description_land_enc_effect_spot_scroll_research_hard	The scrolls found at the site are full of strange learning, and our scholars cannot put them down.	false
 effect_bundles_localised_title_land_enc_effect_spot_scroll_heresy	Heresy Preached	false
 effect_bundles_localised_description_land_enc_effect_spot_scroll_heresy	Word of the scrolls' teachings has spread through the province, and the priests are furious.	false
+effect_bundles_localised_title_land_enc_effect_spot_runestone_revered	The Stone Defiled	false
+effect_bundles_localised_description_land_enc_effect_spot_runestone_revered	The locals revered the runestone we chipped, and they have not forgiven us.	false
+effect_bundles_localised_title_land_enc_effect_spot_captains_cut	The Captain's Cut	false
+effect_bundles_localised_description_land_enc_effect_spot_captains_cut	The mercenary captain takes a share of every pay chest, as agreed.	false
+effect_bundles_localised_title_land_enc_effect_spot_war_dogs_easy	War Dogs	false
+effect_bundles_localised_description_land_enc_effect_spot_war_dogs_easy	The war dogs run ahead of the column, sniffing out the short paths and every enemy lying in wait.	false
+effect_bundles_localised_title_land_enc_effect_spot_war_dogs_medium	War Dogs	false
+effect_bundles_localised_description_land_enc_effect_spot_war_dogs_medium	The war dogs run ahead of the column, sniffing out the short paths and every enemy lying in wait.	false
+effect_bundles_localised_title_land_enc_effect_spot_war_dogs_hard	War Dogs	false
+effect_bundles_localised_description_land_enc_effect_spot_war_dogs_hard	The war dogs run ahead of the column, sniffing out the short paths and every enemy lying in wait.	false
+effect_bundles_localised_title_land_enc_effect_spot_battle_well_easy	Battle Fury	false
+effect_bundles_localised_description_land_enc_effect_spot_battle_well_easy	The water of the battle well burns in the blood. Our warriors crave the charge, and care little for orders.	false
+effect_bundles_localised_title_land_enc_effect_spot_battle_well_medium	Battle Fury	false
+effect_bundles_localised_description_land_enc_effect_spot_battle_well_medium	The water of the battle well burns in the blood. Our warriors crave the charge, and care little for orders.	false
+effect_bundles_localised_title_land_enc_effect_spot_battle_well_hard	Battle Fury	false
+effect_bundles_localised_description_land_enc_effect_spot_battle_well_hard	The water of the battle well burns in the blood. Our warriors crave the charge, and care little for orders.	false
 effect_bundles_localised_title_land_enc_effect_spot_tavern_hangover	Hangover	false
 effect_bundles_localised_description_land_enc_effect_spot_tavern_hangover	The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.	false
 effect_bundles_localised_title_land_enc_effect_tower_war_rites_easy	War Rites	false
@@ -375,17 +391,17 @@ effect_bundles_localised_description_land_enc_effect_tower_spike_the_guns_hard	S
 effect_bundles_localised_title_land_enc_effect_tower_last_ditch_oath	Last-Ditch Oath	false
 effect_bundles_localised_description_land_enc_effect_tower_last_ditch_oath	Our lord swore to stand to the last, and the army knows what it may cost.	false
 effect_bundles_localised_title_land_enc_effect_tower_lame_their_mounts_easy	Lamed Mounts	false
-effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_easy	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_easy	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units these effects list come from your own roster, but only this army's riders are affected.	false
 effect_bundles_localised_title_land_enc_effect_tower_lame_their_mounts_medium	Lamed Mounts	false
-effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_medium	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_medium	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units these effects list come from your own roster, but only this army's riders are affected.	false
 effect_bundles_localised_title_land_enc_effect_tower_lame_their_mounts_hard	Lamed Mounts	false
-effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_hard	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_description_land_enc_effect_tower_lame_their_mounts_hard	Caltrops and cut girths slow this army's cavalry and chariots in battle.\\n\\nThe units these effects list come from your own roster, but only this army's riders are affected.	false
 effect_bundles_localised_title_land_enc_effect_tower_hunters_snares_easy	Snared Charges	false
-effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_easy	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_easy	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units these effects list come from your own roster, but only this army's riders are affected.	false
 effect_bundles_localised_title_land_enc_effect_tower_hunters_snares_medium	Snared Charges	false
-effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_medium	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_medium	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units these effects list come from your own roster, but only this army's riders are affected.	false
 effect_bundles_localised_title_land_enc_effect_tower_hunters_snares_hard	Snared Charges	false
-effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_hard	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units listed below come from your own roster, but only this army's riders are affected.	false
+effect_bundles_localised_description_land_enc_effect_tower_hunters_snares_hard	Snares and pits lie in wait for this army's cavalry and chariots.\\n\\nThe units these effects list come from your own roster, but only this army's riders are affected.	false
 effect_bundles_localised_title_land_enc_effect_tower_towers_favour_easy	Tower's Favour	false
 effect_bundles_localised_description_land_enc_effect_tower_towers_favour_easy	The tower's masters speak well of us. Trade flows a little easier.	false
 effect_bundles_localised_title_land_enc_effect_tower_towers_favour_medium	Tower's Favour	false
@@ -1267,37 +1283,37 @@ effect_bundles_localised_description_land_enc_effect_spot_modifier_blood_moon_al
 effect_bundles_localised_title_land_enc_effect_spot_modifier_iron_hides_ours	Iron Hides	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_iron_hides_ours	The air is as thick as wet wool, and blows land softer than they should.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_iron_hides_enemy	Iron Hides	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_iron_hides_enemy	The air is as thick as wet wool, and blows land softer than they should.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_iron_hides_enemy	The air is as thick as wet wool, and blows land softer than they should.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_iron_hides_allies	Iron Hides	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_iron_hides_allies	The air is as thick as wet wool, and blows land softer than they should.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_iron_hides_allies	The air is as thick as wet wool, and blows land softer than they should.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_swift_winds_ours	Tailwind	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_swift_winds_ours	A strong wind at every back hurries each warrior along.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_swift_winds_enemy	Tailwind	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_swift_winds_enemy	A strong wind at every back hurries each warrior along.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_swift_winds_enemy	A strong wind at every back hurries each warrior along.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_swift_winds_allies	Tailwind	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_swift_winds_allies	A strong wind at every back hurries each warrior along.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_swift_winds_allies	A strong wind at every back hurries each warrior along.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_heavy_ground_ours	Heavy Ground	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_heavy_ground_ours	Mud and loose stone drag at every step.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_heavy_ground_enemy	Heavy Ground	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_heavy_ground_enemy	Mud and loose stone drag at every step.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_heavy_ground_enemy	Mud and loose stone drag at every step.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_heavy_ground_allies	Heavy Ground	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_heavy_ground_allies	Mud and loose stone drag at every step.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_heavy_ground_allies	Mud and loose stone drag at every step.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_thunder_charge_ours	Thunderous Charge	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_thunder_charge_ours	The ground drums underfoot, and every charge hits like thunder.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_thunder_charge_enemy	Thunderous Charge	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_thunder_charge_enemy	The ground drums underfoot, and every charge hits like thunder.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_thunder_charge_enemy	The ground drums underfoot, and every charge hits like thunder.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_thunder_charge_allies	Thunderous Charge	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_thunder_charge_allies	The ground drums underfoot, and every charge hits like thunder.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_thunder_charge_allies	The ground drums underfoot, and every charge hits like thunder.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_brittle_enemy	Brittle Blades	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_brittle_enemy	A creeping rust has eaten into this army's blades.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_brittle_enemy	A creeping rust has eaten into this army's blades.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_wards_enemy	Wards of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_wards_enemy	Old runes glow in the earth around this army and turn blows aside.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_wards_enemy	Old runes glow in the earth around this army and turn blows aside.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_gale_ours	Howling Gale	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_gale_ours	A howling gale snatches arrows and shot from the air.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_gale_enemy	Howling Gale	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_gale_enemy	A howling gale snatches arrows and shot from the air.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_gale_enemy	A howling gale snatches arrows and shot from the air.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_gale_allies	Howling Gale	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_gale_allies	A howling gale snatches arrows and shot from the air.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_gale_allies	A howling gale snatches arrows and shot from the air.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_winds_surge_ours	Surge of the Winds	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_winds_surge_ours	The Winds of Magic run high and wild over this field.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_winds_surge_enemy	Surge of the Winds	false
@@ -1307,9 +1323,9 @@ effect_bundles_localised_description_land_enc_effect_spot_modifier_winds_surge_a
 effect_bundles_localised_title_land_enc_effect_spot_modifier_exhausting_ours	Sweltering Heat	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_exhausting_ours	The heat is cruel, and every warrior tires before their time.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_exhausting_enemy	Sweltering Heat	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_exhausting_enemy	The heat is cruel, and every warrior tires before their time.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_exhausting_enemy	The heat is cruel, and every warrior tires before their time.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_exhausting_allies	Sweltering Heat	false
-effect_bundles_localised_description_land_enc_effect_spot_modifier_exhausting_allies	The heat is cruel, and every warrior tires before their time.\\n\\nThe units listed below come from your own roster, but only this army's units are affected.	false
+effect_bundles_localised_description_land_enc_effect_spot_modifier_exhausting_allies	The heat is cruel, and every warrior tires before their time.\\n\\nThe units these effects list come from your own roster, but only this army's units are affected.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_frenzy_enemy	Blood Frenzy	false
 effect_bundles_localised_description_land_enc_effect_spot_modifier_frenzy_enemy	Bloodlust runs through this army's ranks like fire.	false
 effect_bundles_localised_title_land_enc_effect_spot_modifier_berserkers_ours	Berserkers	false

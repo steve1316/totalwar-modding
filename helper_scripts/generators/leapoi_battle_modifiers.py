@@ -37,7 +37,7 @@ UNIT_LIST_EFFECTS = {
 }
 
 # Said on its own paragraph under such a bundle on another army. Loc files store a line break as an escaped `\\n`.
-DISCLAIMER = "\\\\n\\\\nThe units listed below come from your own roster, but only this army's units are affected."
+DISCLAIMER = "\\\\n\\\\nThe units these effects list come from your own roster, but only this army's units are affected."
 
 # Notice colour by harm: what helps us is green, what hurts us red, what cuts both ways yellow.
 HARM_COLOUR = {"+": "green", "-": "red", "~": "yellow"}

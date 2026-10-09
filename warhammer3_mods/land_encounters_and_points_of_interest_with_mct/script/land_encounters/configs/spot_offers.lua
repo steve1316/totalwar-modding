@@ -29,6 +29,8 @@
 ---                   instead).
 ---   wound           On a gamble outcome only: the lord is wounded for this many turns, at once. Kept for Open the Sealed Door, by Steve's
 ---                   choice. New offers never wound the lord.
+---   guardian_prize  Unique items paid when the guardian battle is won, shown on the offer's `_won` result.
+---   next_budget     The faction's next battle spot fight's enemy budget is multiplied by this, e.g. 1.15.
 ---   cleanse         { boon, level }: our lord's worst curse is lifted, or the lord gains that boon when it has none.
 ---   gamble          A list of outcomes { weight, name, ...fields }. One is rolled when the offer is taken, and its fields apply.
 ---   realm           The realm target kind, see `M.realm_kinds`. The offer is not drawn when it has no target.
@@ -395,6 +397,18 @@ M.offers = {
     { key = "research_scrolls", pool = "treasure", tags = { "lore" }, faction_bundle = { tiered(SPOT_BUNDLE .. "scroll_research"), 5 }, realm = "own_province",
         province_bundle = { SPOT_BUNDLE .. "scroll_heresy", 5 } },
     { key = "ancient_tactics", pool = "treasure", tags = { "lore" }, army_bundle = { tiered(SPOT_BUNDLE .. "ancient_drills"), 5 } },
+
+    --- Treasure: new in the treasure content pass.
+    { key = "wake_the_sleeping_champion", pool = "treasure", tags = { "gamble", "loot" }, guardian = S("medium", "hard", "hard"), guardian_prize = 1 },
+    { key = "loot_the_desecrated_shrine", pool = "treasure", tags = { "lore", "curse" }, spell_pool = "lore", spell_turns = 5, curse = { "shunned_by_the_winds", 1 } },
+    { key = "chip_the_runestone", pool = "treasure", tags = { "lore" }, spell_pool = "bound", spell_turns = 5, realm = "own_province",
+        province_bundle = { SPOT_BUNDLE .. "runestone_revered", 5 } },
+    { key = "sign_the_mercenary_captain", pool = "treasure", tags = { "recruit", "deal" }, recruit = { count = 1, tiers = S({ 4 }, { 4 }, { 5 }) },
+        army_bundle = { SPOT_BUNDLE .. "captains_cut", 5 } },
+    { key = "claim_the_tainted_gold", pool = "treasure", tags = { "loot", "curse" }, gold = S(4000, 5000, 6000), curse = { "cursed_coin", 2 } },
+    { key = "raise_the_old_standard", pool = "treasure", tags = { "blessing" }, boon = { "old_oath_banner", 1 }, next_budget = 1.15 },
+    { key = "loose_the_war_dogs", pool = "treasure", tags = { "recovery" }, bleed = 10, army_bundle = { tiered(SPOT_BUNDLE .. "war_dogs"), 5 } },
+    { key = "drink_from_the_battle_well", pool = "treasure", tags = { "blessing" }, army_bundle = { tiered(SPOT_BUNDLE .. "battle_well"), 5 } },
 
     --- Realm: your own lands.
     { key = "endow_the_province", pool = "realm", tags = { "realm" }, cost = PREMIUM, realm = "own_region", points = S(50, 75, 100) },

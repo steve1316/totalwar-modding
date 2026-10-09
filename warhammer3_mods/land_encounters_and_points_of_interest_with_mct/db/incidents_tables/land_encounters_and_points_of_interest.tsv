@@ -63,6 +63,8 @@ land_enc_incident_tavern_patron_1	false	wulfhart_hunters	false	Event		false		0.0
 land_enc_incident_tavern_patron_2	false	wulfhart_hunters	false	Event		false		0.0000	false
 land_enc_incident_smithy_patron_1	false	land_enc_smithy_forge	false	Event		false		0.0000	false
 land_enc_incident_smithy_patron_2	false	land_enc_smithy_forge	false	Event		false		0.0000	false
+land_enc_incident_spot_wake_the_sleeping_champion_won	false	nemesis_crown	false	Event		false		0.0000	false
+land_enc_incident_spot_chip_the_runestone	false	winds_of_magic_change	false	Event		false		0.0000	false
 land_enc_incident_spot_free_the_prisoner_freed	false	army_morale_up	false	Event		false		0.0000	false
 land_enc_incident_spot_free_the_prisoner_chased	false	wh2_rogue_army_encountered	false	Event		false		0.0000	false
 land_enc_incident_spot_research_scrolls	false	books_of_nagash	false	Event		false		0.0000	false

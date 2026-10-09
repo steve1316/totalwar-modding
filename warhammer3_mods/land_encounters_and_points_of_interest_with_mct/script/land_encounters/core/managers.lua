@@ -1224,8 +1224,8 @@ function SpotEventManager:new(invasion_battle_manager)
         battle_event_delegate = BattleEventDelegate:new(invasion_battle_manager)
     }
     --- A treasure site's guardian battle (Wake the Guardian, Oath at the Altar) starts the way a battle spot's does.
-    require("script/land_encounters/features/spot_offers").start_guardian_battle = function(character, x, y, difficulty)
-        t.battle_event_delegate:start_guardian_battle(character, { coordinates = { x, y } }, difficulty)
+    require("script/land_encounters/features/spot_offers").start_guardian_battle = function(character, x, y, difficulty, prize)
+        t.battle_event_delegate:start_guardian_battle(character, { coordinates = { x, y } }, difficulty, prize)
     end
     setmetatable(t, self)
     self.__index = self
