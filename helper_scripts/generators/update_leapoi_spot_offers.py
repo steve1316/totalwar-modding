@@ -138,6 +138,9 @@ RESULT_IMAGES = {
     "sap_their_garrison": "elector_invasion",
     "sell_their_secrets": "story_panels/chd_pet_blood",
     "send_gifts": "messenger",
+    "hire_raiders": "wh2_twa05_ogre_camp",
+    "open_the_pilgrim_road": "ivory_road",
+    "blackmail_a_governor": "elector_region",
     "share_the_find": "elector_diplomacy",
     "spread_the_plague": "ai_enters_nurgle_realm",
     "spy_on_their_capital": "wh2_treasure_hunt_2",
@@ -383,20 +386,31 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                        "[[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, [[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and "
                        "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for {turns} turns."),
     "raise_the_settlement": ("Raise the Settlement", PAY + "raise our nearest settlement: its [[col:green]]main building goes up one level[[/col]]."),
-    "quell_the_unrest": ("Quell the Unrest", "Quell the unrest: [[col:green]]+5 public order[[/col]] in our nearest province for 5 turns."),
+    "quell_the_unrest": ("Quell the Unrest", "Quell the unrest: [[col:green]]+{e0} public order[[/col]] in our nearest province for 5 turns, but the "
+                         "crackdown empties the markets, and [[col:red]]-{e1}% income[[/col]] there for the same 5 turns."),
+    "open_the_pilgrim_road": ("Open the Pilgrim Road", "Open the pilgrim road: [[col:green]]+{e0} growth[[/col]] and [[col:green]]+{e1} public "
+                              "order[[/col]] in our nearest province for 5 turns, but our army escorts the first pilgrims, and [[col:red]]cannot "
+                              "move again this turn[[/col]]."),
     "bountiful_harvest": ("Bountiful Harvest", PAY + "sow a bountiful harvest: [[col:green]]+{e0} growth[[/col]] and [[col:green]]+{e1}% income[[/col]] in our nearest province for 5 turns."),
     "stir_their_rebels": ("Stir Their Rebels", PAY + "stir up rebels: the nearest enemy province has [[col:green]]-{e0} public order[[/col]] for 5 turns."),
     "poison_their_wells": ("Poison Their Wells", PAY + "poison their wells: the nearest enemy region has [[col:green]]-{e0} growth[[/col]], and its armies suffer [[col:green]]attrition[[/col]] for 5 turns."),
     "sap_their_garrison": ("Sap Their Garrison", PAY + "sap their garrison: the nearest enemy settlement's garrison drops to [[col:green]]{garrison}% strength[[/col]] and has "
                            "[[col:green]]-{e0}[[/col]] [[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for {turns} turns."),
     "spread_the_plague": ("Spread the Plague", "Spread the plague: the 3 nearest enemy regions have [[col:green]]-5 public order[[/col]] and [[col:green]]-10 growth[[/col]] for 5 turns, but our army suffers [[col:red]]attrition for 3 turns[[/col]]."),
-    "send_gifts": ("Send Gifts", PAY + "send gifts: [[col:green]]+{relations} relations[[/col]] with the nearest faction we are not at war with."),
+    "send_gifts": ("Send Gifts", PAY + "send gifts: [[col:green]]+{relations} relations[[/col]] with the nearest faction we are not at war with, but "
+                   "its nearest enemy takes note, and [[col:red]]-{side_relations} relations[[/col]] with them."),
+    "hire_raiders": ("Hire Raiders", PAY + "hire raiders: the nearest enemy settlement's garrison drops to [[col:green]]{garrison}% strength[[/col]] "
+                     "and its province has [[col:green]]-{e0} public order[[/col]] for 5 turns, but word of who paid gets out, and "
+                     "[[col:red]]-{side_relations} relations[[/col]] with each of that enemy's allies."),
     "spy_on_their_capital": ("Spy on Their Capital", PAY + "spy on their capital: the nearest enemy capital is [[col:green]]revealed for {reveal_turns} turns[[/col]], "
                              "and our spies count its garrison."),
     "curse_a_distant_king": ("Curse a Distant King", PAY + "curse a distant king: the faction with the most regions has [[col:green]]-{e0}% income[[/col]] for 5 turns."),
-    "share_the_find": ("Share the Find", "Share the find: [[col:green]]+15% research rate[[/col]] for 5 turns, for us and every neighbour at peace with us, and [[col:green]]+{relations} relations[[/col]] with each of them."),
+    "share_the_find": ("Share the Find", PAY + "share the find: [[col:green]]+{faction_e0}% research rate[[/col]] for us and [[col:green]]+{target_faction_e0}%[[/col]] "
+                       "for every neighbour at peace with us, for 5 turns, and [[col:green]]+{relations} relations[[/col]] with each of them."),
     "point_them_at_each_other": ("Point Them at Each Other", PAY + "set rivals against each other: the two biggest factions near us have [[col:green]]-{relations} relations[[/col]] with each other."),
     "sell_their_secrets": ("Sell Their Secrets", "Sell their secrets: [[col:green]]+{gold} gold[[/col]] to our treasury, but the nearest enemy has [[col:red]]+{relations} relations[[/col]] with our other enemies."),
+    "blackmail_a_governor": ("Blackmail a Governor", "Blackmail the governor: [[col:green]]+{gold} gold[[/col]] to our treasury, but [[col:red]]-{relations} "
+                             "relations[[/col]] with the faction that holds this land, or with our nearest neighbour when the land is ours."),
 
     "bribe_the_guards": ("Bribe the Guards", PAY + "bribe their guards: the enemy army is [[col:green]]{weaker}% weaker[[/col]]."),
     "thin_the_ranks": ("Thin the Ranks", PAY + "thin their ranks: the enemy army fields [[col:green]]{fewer_units} fewer units[[/col]]."),
@@ -622,7 +636,8 @@ ICONS = {
     "tower_dividends": "income.png", "buy_supplies": "attrition.png",
     "research_scrolls": "technology.png", "ancient_tactics": "charge.png",
     "endow_the_province": "edict_imperial_taxation.png", "garrison_drill": "siege_defence.png", "raise_the_settlement": "exalted_hero.png",
-    "quell_the_unrest": "army_morale.png", "bountiful_harvest": "income.png", 
+    "quell_the_unrest": "army_morale.png", "bountiful_harvest": "income.png", "open_the_pilgrim_road": "devotion.png", "hire_raiders": "icon_effects_raiding.png",
+    "blackmail_a_governor": "icon_income_plus.png", 
     "stir_their_rebels": "discouraged.png", "poison_their_wells": "phase_posion.png", "sap_their_garrison": "siege_attack.png",
     "spread_the_plague": "plague.png", "send_gifts": "trade_agreement.png", "spy_on_their_capital": "cotw_reveal_shroud.png",
     "curse_a_distant_king": "hex_1.png", "share_the_find": "technology.png", "point_them_at_each_other": "subterfuge.png",
@@ -1175,6 +1190,22 @@ MESSAGES = {
                     "even true.\\\\n\\\\nThe keeper speaks too of the enemy camped nearby: {detail}. Our officers write it all down and mark their "
                     "maps by candlelight.\\\\n\\\\nWe will see those lands for some time yet. Whatever moves on those roads, we will know of it "
                     "before it reaches us."),
+    "hire_raiders": ("Hire Raiders", "",
+                     "The raiders take our gold and ride for {place}. They are hard men with no banner, and they ask no questions about who "
+                     "they are paid to hurt.\\\\n\\\\nOutlying farms burn, and the roads empty. The garrison rides out after them and comes "
+                     "back with fewer men than it took, while the raiders melt into the hills.\\\\n\\\\nThe work is done, but raiders talk "
+                     "when they drink. Before long, every court that counts that enemy as a friend knows whose gold paid for it."),
+    "open_the_pilgrim_road": ("Open the Pilgrim Road", "",
+                              "An old pilgrim road runs past {place}, overgrown and long unwalked. Our army clears it and stands guard at the "
+                              "roadside shrines while the first pilgrims set out.\\\\n\\\\nThey come in their hundreds, singing as they walk. They "
+                              "buy bread and lodging in every village they pass, and some decide to stay.\\\\n\\\\nThe towns along the road "
+                              "grow fat and content. Our soldiers spend the day guarding shrines instead of marching, but the people will "
+                              "remember who kept the road safe."),
+    "blackmail_a_governor": ("Blackmail a Governor", "",
+                             "Among the finds are letters that the governor of {place} would very much like to keep hidden. Our envoy carries "
+                             "copies to the governor's door.\\\\n\\\\nThe governor reads them in silence, then sends a servant for the "
+                             "strongbox. The gold is counted out without a word.\\\\n\\\\nThe letters are burned in front of the governor, as "
+                             "agreed. But no ruler forgives being made a fool of, and their court will remember our name for some time."),
     "send_gifts": ("Send Gifts", "",
                    "Our gifts are well received at {place}. Fine cloth, good wine and worked silver are laid before their rulers in the great "
                    "hall.\\\\n\\\\nTheir rulers speak of us more warmly now. Old suspicions do not vanish overnight, but the tone of their letters "
@@ -1237,6 +1268,7 @@ FALLBACK_PLACES = {
     "endow_the_province": "that region", "garrison_drill": "that settlement", "raise_the_settlement": "the settlement",
     "quell_the_unrest": "the settlement", "research_scrolls": "the nearest province", "chip_the_runestone": "the nearest province", "bountiful_harvest": "that region", "stir_their_rebels": "that region", "poison_their_wells": "that region",
     "sap_their_garrison": "the enemy settlement", "spread_the_plague": "that region", "buy_rumours": "that region", "press_gang_night": "our province", "smugglers_cut": "their lands", "send_gifts": "their court",
+    "hire_raiders": "the enemy settlement", "open_the_pilgrim_road": "the settlement", "blackmail_a_governor": "that land",
     "spy_on_their_capital": "the enemy capital", "curse_a_distant_king": "their capital", "share_the_find": "the nearest",
     "point_them_at_each_other": "that region", "sell_their_secrets": "that region", "ransom_the_captain": "their own people",
 }
@@ -1268,16 +1300,19 @@ RESULT_LINES = {
     "endow_the_province": ("green", "+{points} development points."),
     "garrison_drill": ("green", "Garrison healed, and +{e0} melee attack, melee defence and leadership for {turns} turns."),
     "raise_the_settlement": ("green", "Main building +1 level."),
-    "quell_the_unrest": ("green", "+{e0} public order for {turns} turns."),
+    "quell_the_unrest": ("yellow", "+{e0} public order and -{e1}% income for {turns} turns."),
+    "open_the_pilgrim_road": ("green", "+{e0} growth and +{e1} public order for {turns} turns."),
     "bountiful_harvest": ("green", "+{e0} growth and +{e1}% income for {turns} turns."),
     "stir_their_rebels": ("green", "-{e0} public order for {turns} turns."),
     "poison_their_wells": ("green", "-{e0} growth and attrition for {turns} turns."),
     "sap_their_garrison": ("green", "Garrison at {garrison}% strength, and -{e0} leadership for {turns} turns."),
     "spread_the_plague": ("green", "-{e0} public order and -{e1} growth for {turns} turns, and attrition on our army for 3 turns."),
-    "send_gifts": ("green", "+{relations} relations."),
+    "send_gifts": ("yellow", "+{relations} relations, and -{side_relations} with their nearest enemy."),
+    "hire_raiders": ("yellow", "Garrison at {garrison}% strength and -{e0} public order for {turns} turns, and -{side_relations} relations with that enemy's allies."),
+    "blackmail_a_governor": ("yellow", "-{relations} relations."),
     "spy_on_their_capital": ("green", "Revealed for {reveal_turns} turns."),
     "curse_a_distant_king": ("green", "-{e0}% income for {turns} turns."),
-    "share_the_find": ("green", "+{e0}% research rate for {turns} turns, and +{relations} relations."),
+    "share_the_find": ("green", "+{faction_e0}% research rate for {turns} turns, and +{relations} relations."),
     "point_them_at_each_other": ("green", "-{relations} relations between them."),
     "sell_their_secrets": ("yellow", "+{relations} relations between our enemies."),
     "ransom_the_captain": ("yellow", "-{relations} relations with their kin."),
@@ -1322,6 +1357,8 @@ BUNDLES = {
                           [("wh_main_effect_force_all_campaign_recruitment_cost_all", "faction_to_force_own", (-10, -20, -30))]),
     "share_the_find": ("faction", "technology.png", "Shared Knowledge", "We shared what we found with our neighbours, and their scholars sent their own notes back.",
                        [("wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", 15)]),
+    "share_the_find_ours": ("faction", "technology.png", "Shared Knowledge", "We shared what we found with our neighbours, but kept the best of it for our own scholars.",
+                            [("wh_main_effect_technology_research_rate_mod", "faction_to_faction_own", 35)]),
     "curse_a_distant_king": ("faction", "chaos_gifts.png", "Cursed Coffers", "A curse has settled on this ruler's treasury. Gold goes missing, and no one can say where.",
                              [("wh_main_effect_economy_gdp_mod_all", "faction_to_region_own", (-5, -10, -15))]),
     "garrison_drill": ("region", "siege_defence.png", "Garrison Drill", "Fresh supplies and hard drill have the defenders ready for anything.",
@@ -1331,12 +1368,18 @@ BUNDLES = {
     "poison_their_wells": ("region", "chaos_gifts.png", "Poisoned Wells", "The wells here have been fouled with carrion and filth. Anyone who drinks from them sickens.",
                            [("wh_main_effect_province_growth_events", "region_to_province_own", (-10, -20, -30)),
                             ("wh_main_effect_campaign_enable_attrition", "region_to_force_own", 1)]),
+    "raiders": ("region", "icon_effects_raiding.png", "Raiders", "Hired raiders burn the outlying farms and harry the roads. The garrison is worn thin, and the people are afraid.",
+                [("wh_main_effect_public_order_events", "region_to_province_own", -10)]),
     "sap_their_garrison": ("region", "chaos_gifts.png", "Sapped Garrison", "Spoiled stores and sickness in the barracks have the defenders shaken.",
                            [("wh_main_effect_force_stat_leadership", "region_to_force_own_regionwide_if_garrison", -10)]),
     "spread_the_plague": ("region", "chaos_gifts.png", "Plague", "Sickness spreads from house to house, and the dead are carted out each morning.",
                           [("wh_main_effect_public_order_events", "region_to_province_own", -5), ("wh_main_effect_province_growth_events", "region_to_province_own", -10)]),
-    "quell_the_unrest": ("province", "income.png", "Order Restored", "Our soldiers walked the streets and broke up the mobs. The province has settled.",
-                         [("wh_main_effect_public_order_events", "province_to_province_own", 5)]),
+    "quell_the_unrest": ("province", "income.png", "Order Restored", "Our soldiers walked the streets and broke up the mobs. The province has settled down now.",
+                         [("wh_main_effect_public_order_events", "province_to_province_own", (10, 12, 15)),
+                          ("wh_main_effect_economy_gdp_mod_all", "province_to_region_own", -10)]),
+    "pilgrim_road": ("province", "growth.png", "The Pilgrim Road", "Pilgrims walk the open road through the province, and they spend freely on the way.",
+                     [("wh_main_effect_province_growth_events", "province_to_province_own", 15),
+                      ("wh_main_effect_public_order_events", "province_to_province_own", 5)]),
     "bountiful_harvest": ("province", "income.png", "Bountiful Harvest", "The fields and herds of the province have given more than anyone hoped. The stores are full.",
                           [("wh_main_effect_province_growth_events", "province_to_province_own", (10, 20, 30)),
                            ("wh_main_effect_economy_gdp_mod_all", "province_to_region_own", (5, 10, 15))]),
@@ -1681,6 +1724,8 @@ def line_values(offer: Dict, bundles: Dict[str, Tuple]) -> Dict[str, str]:
         values["tiers"] = tiers_text(tiers)
     if "relations" in offer:
         values["relations"] = str(abs(offer["relations"]) * 10)
+    if "side_relations" in offer:
+        values["side_relations"] = str(abs(offer["side_relations"][1]) * 10)
     if "recruit" in offer:
         values["recruits"] = plural(offer["recruit"]["count"], "tier " + tiers_text(offer["recruit"]["tiers"]) + " unit")
     for kind in ("boon", "curse"):

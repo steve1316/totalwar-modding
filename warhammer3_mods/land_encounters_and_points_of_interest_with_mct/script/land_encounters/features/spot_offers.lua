@@ -191,6 +191,8 @@ local function eligible(offer, ctx)
     if offer.realm then
         local target = realm_effects.find_target(offer.realm, ctx.faction, ctx.x, ctx.y, offer.count)
         if target == nil then return false end
+        --- An offer whose relations cost would land on nobody is not drawn.
+        if offer.side_relations and not realm_effects.find_side(offer, target, ctx.faction_name) then return false end
         ctx.targets[offer.key] = target
     end
     ctx.cards[offer.key] = cards

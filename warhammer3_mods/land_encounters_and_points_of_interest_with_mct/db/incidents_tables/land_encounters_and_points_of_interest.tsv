@@ -111,6 +111,9 @@ land_enc_incident_spot_smugglers_cut	false	wh2_treasure_hunt_3	false	Event		fals
 land_enc_incident_spot_arm_wrestle_the_champion_won	false	land_victory	false	Event		false		0.0000	false
 land_enc_incident_spot_arm_wrestle_the_champion_lost	false	waaagh_up	false	Event		false		0.0000	false
 land_enc_incident_spot_buy_rumours	false	minor_cult	false	Event		false		0.0000	false
+land_enc_incident_spot_hire_raiders	false	wh2_twa05_ogre_camp	false	Event		false		0.0000	false
+land_enc_incident_spot_open_the_pilgrim_road	false	ivory_road	false	Event		false		0.0000	false
+land_enc_incident_spot_blackmail_a_governor	false	elector_region	false	Event		false		0.0000	false
 land_enc_incident_spot_send_gifts	false	messenger	false	Event		false		0.0000	false
 land_enc_incident_spot_spy_on_their_capital	false	wh2_treasure_hunt_2	false	Event		false		0.0000	false
 land_enc_incident_spot_curse_a_distant_king	false	story_panels/chd_pet_curse	false	Event		false		0.0000	false

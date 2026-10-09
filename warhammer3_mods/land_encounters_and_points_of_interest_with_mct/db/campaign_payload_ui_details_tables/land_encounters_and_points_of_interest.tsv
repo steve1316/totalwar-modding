@@ -951,6 +951,9 @@ dummy_land_enc_spot_quell_the_unrest_hard	ui/campaign ui/effect_bundles/army_mor
 dummy_land_enc_spot_bountiful_harvest_easy	ui/campaign ui/effect_bundles/income.png	default	0
 dummy_land_enc_spot_bountiful_harvest_medium	ui/campaign ui/effect_bundles/income.png	default	0
 dummy_land_enc_spot_bountiful_harvest_hard	ui/campaign ui/effect_bundles/income.png	default	0
+dummy_land_enc_spot_open_the_pilgrim_road_easy	ui/campaign ui/effect_bundles/devotion.png	default	0
+dummy_land_enc_spot_open_the_pilgrim_road_medium	ui/campaign ui/effect_bundles/devotion.png	default	0
+dummy_land_enc_spot_open_the_pilgrim_road_hard	ui/campaign ui/effect_bundles/devotion.png	default	0
 dummy_land_enc_spot_stir_their_rebels_easy	ui/campaign ui/effect_bundles/discouraged.png	default	0
 dummy_land_enc_spot_stir_their_rebels_medium	ui/campaign ui/effect_bundles/discouraged.png	default	0
 dummy_land_enc_spot_stir_their_rebels_hard	ui/campaign ui/effect_bundles/discouraged.png	default	0
@@ -966,6 +969,9 @@ dummy_land_enc_spot_spread_the_plague_hard	ui/campaign ui/effect_bundles/plague.
 dummy_land_enc_spot_send_gifts_easy	ui/campaign ui/effect_bundles/trade_agreement.png	default	0
 dummy_land_enc_spot_send_gifts_medium	ui/campaign ui/effect_bundles/trade_agreement.png	default	0
 dummy_land_enc_spot_send_gifts_hard	ui/campaign ui/effect_bundles/trade_agreement.png	default	0
+dummy_land_enc_spot_hire_raiders_easy	ui/campaign ui/effect_bundles/icon_effects_raiding.png	default	0
+dummy_land_enc_spot_hire_raiders_medium	ui/campaign ui/effect_bundles/icon_effects_raiding.png	default	0
+dummy_land_enc_spot_hire_raiders_hard	ui/campaign ui/effect_bundles/icon_effects_raiding.png	default	0
 dummy_land_enc_spot_spy_on_their_capital_easy	ui/campaign ui/effect_bundles/cotw_reveal_shroud.png	default	0
 dummy_land_enc_spot_spy_on_their_capital_medium	ui/campaign ui/effect_bundles/cotw_reveal_shroud.png	default	0
 dummy_land_enc_spot_spy_on_their_capital_hard	ui/campaign ui/effect_bundles/cotw_reveal_shroud.png	default	0
@@ -981,6 +987,9 @@ dummy_land_enc_spot_point_them_at_each_other_hard	ui/campaign ui/effect_bundles/
 dummy_land_enc_spot_sell_their_secrets_easy	ui/campaign ui/effect_bundles/assassin.png	default	0
 dummy_land_enc_spot_sell_their_secrets_medium	ui/campaign ui/effect_bundles/assassin.png	default	0
 dummy_land_enc_spot_sell_their_secrets_hard	ui/campaign ui/effect_bundles/assassin.png	default	0
+dummy_land_enc_spot_blackmail_a_governor_easy	ui/campaign ui/effect_bundles/icon_income_plus.png	default	0
+dummy_land_enc_spot_blackmail_a_governor_medium	ui/campaign ui/effect_bundles/icon_income_plus.png	default	0
+dummy_land_enc_spot_blackmail_a_governor_hard	ui/campaign ui/effect_bundles/icon_income_plus.png	default	0
 dummy_land_enc_spot_bribe_the_guards_easy	ui/campaign ui/effect_bundles/subterfuge.png	default	0
 dummy_land_enc_spot_bribe_the_guards_medium	ui/campaign ui/effect_bundles/subterfuge.png	default	0
 dummy_land_enc_spot_bribe_the_guards_hard	ui/campaign ui/effect_bundles/subterfuge.png	default	0
@@ -1546,6 +1555,15 @@ dummy_land_enc_spot_result_arm_wrestle_the_champion_lost_hard	ui/campaign ui/eff
 dummy_land_enc_spot_result_buy_rumours_easy	ui/campaign ui/effect_bundles/wh2_dlc14_def_tzarkans_whispers.png	default	0
 dummy_land_enc_spot_result_buy_rumours_medium	ui/campaign ui/effect_bundles/wh2_dlc14_def_tzarkans_whispers.png	default	0
 dummy_land_enc_spot_result_buy_rumours_hard	ui/campaign ui/effect_bundles/wh2_dlc14_def_tzarkans_whispers.png	default	0
+dummy_land_enc_spot_result_hire_raiders_easy	ui/campaign ui/effect_bundles/icon_effects_raiding.png	default	0
+dummy_land_enc_spot_result_hire_raiders_medium	ui/campaign ui/effect_bundles/icon_effects_raiding.png	default	0
+dummy_land_enc_spot_result_hire_raiders_hard	ui/campaign ui/effect_bundles/icon_effects_raiding.png	default	0
+dummy_land_enc_spot_result_open_the_pilgrim_road_easy	ui/campaign ui/effect_bundles/devotion.png	default	0
+dummy_land_enc_spot_result_open_the_pilgrim_road_medium	ui/campaign ui/effect_bundles/devotion.png	default	0
+dummy_land_enc_spot_result_open_the_pilgrim_road_hard	ui/campaign ui/effect_bundles/devotion.png	default	0
+dummy_land_enc_spot_result_blackmail_a_governor_easy	ui/campaign ui/effect_bundles/icon_income_plus.png	default	0
+dummy_land_enc_spot_result_blackmail_a_governor_medium	ui/campaign ui/effect_bundles/icon_income_plus.png	default	0
+dummy_land_enc_spot_result_blackmail_a_governor_hard	ui/campaign ui/effect_bundles/icon_income_plus.png	default	0
 dummy_land_enc_spot_result_send_gifts_easy	ui/campaign ui/effect_bundles/trade_agreement.png	default	0
 dummy_land_enc_spot_result_send_gifts_medium	ui/campaign ui/effect_bundles/trade_agreement.png	default	0
 dummy_land_enc_spot_result_send_gifts_hard	ui/campaign ui/effect_bundles/trade_agreement.png	default	0

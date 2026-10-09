@@ -42,6 +42,8 @@
 ---   garrison_strength  Each unit of the realm target's garrison drops to this share of its strength.
 ---   reveal_turns    The realm target's region stays revealed through the shroud for this many turns, and the result lists its garrison.
 ---   count           How many realm targets.
+---   side_relations  { kind, step }: relations change with factions found from the first target faction. "target_enemy" is its nearest
+---                   enemy other than us, and "target_allies" every faction allied with it. The offer is not drawn when none is found.
 ---
 --- Tavern bar fields (pool "tavern", drawn only on the bar of a Tavern). A bar offer's `cost` steps with the campaign difficulty and is shown
 --- as a treasury card, while every other stepped field steps with the Tavern's level (Easy for level 1 up to Hard for level 3):
@@ -415,8 +417,10 @@ M.offers = {
     { key = "garrison_drill", pool = "realm", tags = { "realm" }, cost = 1500, realm = "own_region", heal_garrison = true,
         region_bundle = { SPOT_BUNDLE .. "garrison_drill", 5 } },
     { key = "raise_the_settlement", pool = "realm", tags = { "realm" }, cost = STRUCTURAL, realm = "raise_region" },
-    { key = "quell_the_unrest", pool = "realm", tags = { "realm" }, realm = "own_province", province_bundle = { SPOT_BUNDLE .. "quell_the_unrest", 5 } },
+    { key = "quell_the_unrest", pool = "realm", tags = { "realm" }, realm = "own_province", province_bundle = { tiered(SPOT_BUNDLE .. "quell_the_unrest"), 5 } },
     { key = "bountiful_harvest", pool = "realm", tags = { "realm" }, cost = STANDARD, realm = "own_province", province_bundle = { tiered(SPOT_BUNDLE .. "bountiful_harvest"), 5 } },
+    { key = "open_the_pilgrim_road", pool = "realm", tags = { "realm" }, realm = "own_province", camp = true,
+        province_bundle = { SPOT_BUNDLE .. "pilgrim_road", 5 } },
 
     --- Realm: rivals nearby.
     { key = "stir_their_rebels", pool = "realm", tags = { "realm_others" }, cost = STANDARD, realm = "enemy_province",
@@ -427,16 +431,20 @@ M.offers = {
         region_bundle = { SPOT_BUNDLE .. "sap_their_garrison", 5 } },
     { key = "spread_the_plague", pool = "realm", tags = { "realm_others", "curse" }, realm = "enemy_regions", count = 3,
         region_bundle = { SPOT_BUNDLE .. "spread_the_plague", 5 }, army_bundle = { PLAGUE, 3 } },
-    { key = "send_gifts", pool = "realm", tags = { "realm_others", "deal" }, cost = STANDARD, realm = "friend", relations = S(1, 2, 3) },
+    { key = "send_gifts", pool = "realm", tags = { "realm_others", "deal" }, cost = STANDARD, realm = "friend", relations = S(1, 2, 3),
+        side_relations = { "target_enemy", -1 } },
+    { key = "hire_raiders", pool = "realm", tags = { "realm_others" }, cost = STRONG, realm = "enemy_region", garrison_strength = 0.7,
+        region_bundle = { SPOT_BUNDLE .. "raiders", 5 }, side_relations = { "target_allies", -1 } },
     { key = "spy_on_their_capital", pool = "realm", tags = { "realm_others", "lore" }, cost = 1500, realm = "enemy_capital", reveal_turns = 5 },
 
     --- Realm: far-off factions.
     { key = "curse_a_distant_king", pool = "realm", tags = { "realm_others", "curse" }, cost = STRONG, realm = "biggest_faction",
         target_faction_bundle = { tiered(SPOT_BUNDLE .. "curse_a_distant_king"), 5 } },
-    { key = "share_the_find", pool = "realm", tags = { "realm_others", "lore" }, realm = "neighbours", relations = 1,
-        faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 }, target_faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 } },
+    { key = "share_the_find", pool = "realm", tags = { "realm_others", "lore" }, cost = 3000, realm = "neighbours", relations = 1,
+        faction_bundle = { SPOT_BUNDLE .. "share_the_find_ours", 5 }, target_faction_bundle = { SPOT_BUNDLE .. "share_the_find", 5 } },
     { key = "point_them_at_each_other", pool = "realm", tags = { "realm_others" }, cost = PREMIUM, realm = "rival_pair", relations = -5 },
     { key = "sell_their_secrets", pool = "realm", tags = { "realm_others", "deal" }, gold = S(2000, 2500, 3000), realm = "enemy_friends", relations = 5 },
+    { key = "blackmail_a_governor", pool = "realm", tags = { "realm_others", "deal" }, gold = S(3000, 4000, 5000), realm = "region_owner", relations = -2 },
 
     --- Pre-battle: sabotage on the enemy army.
     { key = "bribe_the_guards", pool = "pre_battle", tags = { "sabotage" }, cost = shared.bribe_the_guards.cost, budget = shared.bribe_the_guards.budget },

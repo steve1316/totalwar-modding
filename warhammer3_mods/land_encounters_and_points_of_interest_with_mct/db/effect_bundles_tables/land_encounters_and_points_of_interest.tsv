@@ -62,6 +62,7 @@ land_enc_effect_spot_recruitment_cache_easy			faction	1	military_spending.png	tr
 land_enc_effect_spot_recruitment_cache_medium			faction	1	military_spending.png	true	false	true
 land_enc_effect_spot_recruitment_cache_hard			faction	1	military_spending.png	true	false	true
 land_enc_effect_spot_share_the_find			faction	1	technology.png	true	false	true
+land_enc_effect_spot_share_the_find_ours			faction	1	technology.png	true	false	true
 land_enc_effect_spot_curse_a_distant_king_easy			faction	1	chaos_gifts.png	true	false	true
 land_enc_effect_spot_curse_a_distant_king_medium			faction	1	chaos_gifts.png	true	false	true
 land_enc_effect_spot_curse_a_distant_king_hard			faction	1	chaos_gifts.png	true	false	true
@@ -69,9 +70,13 @@ land_enc_effect_spot_garrison_drill			region	1	siege_defence.png	false	false	tru
 land_enc_effect_spot_poison_their_wells_easy			region	1	chaos_gifts.png	false	false	true
 land_enc_effect_spot_poison_their_wells_medium			region	1	chaos_gifts.png	false	false	true
 land_enc_effect_spot_poison_their_wells_hard			region	1	chaos_gifts.png	false	false	true
+land_enc_effect_spot_raiders			region	1	icon_effects_raiding.png	false	false	true
 land_enc_effect_spot_sap_their_garrison			region	1	chaos_gifts.png	false	false	true
 land_enc_effect_spot_spread_the_plague			region	1	chaos_gifts.png	false	false	true
-land_enc_effect_spot_quell_the_unrest			province	1	income.png	false	false	true
+land_enc_effect_spot_quell_the_unrest_easy			province	1	income.png	false	false	true
+land_enc_effect_spot_quell_the_unrest_medium			province	1	income.png	false	false	true
+land_enc_effect_spot_quell_the_unrest_hard			province	1	income.png	false	false	true
+land_enc_effect_spot_pilgrim_road			province	1	growth.png	false	false	true
 land_enc_effect_spot_bountiful_harvest_easy			province	1	income.png	false	false	true
 land_enc_effect_spot_bountiful_harvest_medium			province	1	income.png	false	false	true
 land_enc_effect_spot_bountiful_harvest_hard			province	1	income.png	false	false	true
