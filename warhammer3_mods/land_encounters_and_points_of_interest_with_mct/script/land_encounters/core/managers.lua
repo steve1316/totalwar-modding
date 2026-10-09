@@ -1345,6 +1345,22 @@ function PointOfInterestEventManager:on_tavern_mark_entered(character, marker_re
     self.tavern_event_delegate:on_mark_entered(character, marker_ref, instance_ref)
 end
 
+--- Starts the battle at a Smith's Commission's Fetch Star-Metal mark when a lord walks onto it.
+--- @param character character The lord.
+--- @param marker_ref string The marker type's key.
+--- @param instance_ref string The marker's instance.
+function PointOfInterestEventManager:on_smithy_mark_entered(character, marker_ref, instance_ref)
+    self.smithy_event_delegate:on_mark_entered(character, marker_ref, instance_ref)
+end
+
+--- Forgets a Smith's Commission whose mission ended.
+--- @param faction_name string The faction whose mission ended.
+--- @param mission_key string The mission key.
+--- @param outcome string "succeeded", "failed" or "cancelled".
+function PointOfInterestEventManager:on_smithy_commission_ended(faction_name, mission_key, outcome)
+    self.smithy_event_delegate:on_commission_ended(faction_name, mission_key, outcome)
+end
+
 --- Settles a Tavern contract whose mission ended.
 --- @param faction_name string The faction whose mission ended.
 --- @param mission_key string The mission key.

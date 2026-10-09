@@ -41,6 +41,10 @@ M.smithy_cooldown = {}
 M.smithy_level = {}
 --- Level every Smithy's garrison fights at when a lord tries to seize it, instead of the forge's own, e.g. { 1 } for an easy fight.
 M.smithy_fight_level = {}
+--- Offers a Smith's Commission on every round to each player faction that holds none, instead of every MCT interval, e.g. { true }.
+M.smithy_commission_now = {}
+--- Commission kind every Smithy offers instead of a random one, e.g. { "fetch_star_metal" }.
+M.smithy_commission_kind = {}
 --- Level every Tavern is set to on load instead of its own, e.g. { 3 }.
 M.tavern_level = {}
 --- Contracts every Tavern board posts when it is next rolled, instead of random ones, e.g. { "marked", "chain" }.

@@ -18,6 +18,7 @@ local boons = require("script/land_encounters/features/boons")
 local boon_services = require("script/land_encounters/features/boon_services")
 local tower_army = require("script/land_encounters/features/tower_army")
 local spot_offers = require("script/land_encounters/features/spot_offers")
+local smithy_commissions = require("script/land_encounters/features/smithy_commissions")
 
 local Army = require("script/land_encounters/core/army")
 local OwnedPoint = require("script/land_encounters/core/owned_point")
@@ -96,9 +97,6 @@ for _, level in ipairs(smithy_data.levels) do
     LONGEST_COOLDOWN = math.max(LONGEST_COOLDOWN, smithy_data.cooldown_slider_max + level.cooldown_offset)
 end
 
---- Turns between Dark Elf smithy missions for a player owner.
-local MISSION_INTERVAL = 30
-
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Properties definition
@@ -169,9 +167,8 @@ local function room_price(base)
     return round_gold(smithy_price(base) * boons_data.owner_price_share)
 end
 
---- Runs the once-per-round smithy update: tribute or AI items, cooldowns, missions, and auto-occupation when abandoned.
---- @param mission_manager table The CA mission_manager handle used to issue missions.
-function SmithyState:update_state_given_turn_passing(mission_manager)
+--- Runs the once-per-round smithy update: the owner perks, tribute or AI items, cooldowns, and auto-occupation when abandoned.
+function SmithyState:update_state_given_turn_passing()
     self:refresh_perks()
     local controlling_faction = self:check_if_owner_is_alive_and_return_faction()
     if controlling_faction ~= nil and self:is_occupied() then
@@ -181,7 +178,6 @@ function SmithyState:update_state_given_turn_passing(mission_manager)
         self:reward_owner_faction(controlling_faction, is_player)
         if is_player then
             self:update_visit_cooldown(controlling_faction:name())
-            self:issue_mission_if_possible(controlling_faction, mission_manager)
         else
             self:try_ai_upgrade(controlling_faction, smithy_price(self:level_data().upgrade_price))
         end
@@ -288,26 +284,6 @@ function SmithyState:update_visit_cooldown(controlling_faction)
             show_ready_notice(controlling_faction, "smithy_visit_available", self.coordinates)
         end
     end
-end
-
---- Issues a Dark Elf smithy mission to the player owner every `MISSION_INTERVAL` turns. Other subcultures have no missions yet.
---- @param controlling_faction faction The player faction controlling this smithy.
---- @param mission_manager table The CA mission_manager handle used to issue missions.
-function SmithyState:issue_mission_if_possible(controlling_faction, mission_manager)
-    if self.turns_under_control % MISSION_INTERVAL ~= 0 then return end
-    local subculture_missions = smithy_data.missions_by_subculture[self.controlling_faction_subculture]
-    if subculture_missions == nil or #subculture_missions == 0 then return end
-    local smithy_mission = subculture_missions[random_number(#subculture_missions)]
-    local mm = mission_manager:new(controlling_faction:name(), smithy_mission.mission)
-    mm:set_mission_issuer("CLAN_ELDERS")
-    mm:add_new_objective("KILL_X_ENTITIES")
-    mm:add_condition("total 7500")
-    mm:set_turn_limit(15)
-    mm:set_should_whitelist(false)
-    for i = 1, #smithy_mission.ancillaries do
-        mm:add_payload("add_ancillary_to_faction_pool{ancillary_key " .. smithy_mission.ancillaries[i] .. ";}")
-    end
-    mm:trigger()
 end
 
 --- When the smithy is abandoned, assigns the owning faction of the underlying region as the new controller.
@@ -823,13 +799,15 @@ end
 --- Ticks every SmithyState. The FactionTurnStart listener calls this once per round.
 function SmithyEventDelegate:update_state_given_turn_passing()
     for i = 1, #self.smithies_state do
-        if not self.smithies_state[i].disabled then self.smithies_state[i]:update_state_given_turn_passing(self.mission_manager) end
+        if not self.smithies_state[i].disabled then self.smithies_state[i]:update_state_given_turn_passing() end
     end
+    smithy_commissions.tick(self)
 end
 
 --- Checks the sieges on a human faction's smithies at its turn start. Opens at most one defense dilemma per turn.
 --- @param faction_name string The human faction whose turn is starting.
 function SmithyEventDelegate:on_faction_turn_start(faction_name)
+    smithy_commissions.on_faction_turn_start(faction_name)
     for i = 1, #self.smithies_state do
         if self.smithies_state[i]:check_siege_at_turn_start(faction_name) then
             self.pending_dilemma_by_faction[faction_name] = i
@@ -881,6 +859,22 @@ function SmithyEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_a
     if smithy and (smithy.pending_room or smithy.pending_forge_offer) then self.pending_dilemma_by_faction[faction_name] = index end
 end
 
+--- Forgets a Smith's Commission whose mission ended (see features/smithy_commissions.lua).
+--- @param faction_name string The faction whose mission ended.
+--- @param mission_key string The mission key.
+--- @param outcome string "succeeded", "failed" or "cancelled".
+function SmithyEventDelegate:on_commission_ended(faction_name, mission_key, outcome)
+    smithy_commissions.on_mission_ended(faction_name, mission_key, outcome)
+end
+
+--- A lord walked onto a Fetch Star-Metal mark (see features/smithy_commissions.lua).
+--- @param character character The lord.
+--- @param marker_ref string The marker type's key.
+--- @param instance_ref string The marker's instance.
+function SmithyEventDelegate:on_mark_entered(character, marker_ref, instance_ref)
+    smithy_commissions.on_mark_entered(self, character, marker_ref, instance_ref)
+end
+
 --- Handles a faction leaving a Smithy's Work Orders. Taking an order closes the counter to that faction for `orders_cooldown` turns. Going
 --- back reopens the forge for the same lord.
 --- @param faction_name string The faction that left the counter.
@@ -910,7 +904,8 @@ function SmithyEventDelegate:export_state_as_table()
     for i = 1, #self.smithies_state do
         table.insert(smithies_data, self.smithies_state[i]:export_state_as_table())
     end
-    return { smithies = smithies_data, pending_dilemma_by_faction = self.pending_dilemma_by_faction, patrons = guild_patron.export_state("smithy") }
+    return { smithies = smithies_data, pending_dilemma_by_faction = self.pending_dilemma_by_faction, patrons = guild_patron.export_state("smithy"),
+        commissions = smithy_commissions.export_state() }
 end
 
 --- Restores every SmithyState from a saved state and re-arms battles in flight. Saves from before the forge rework hold the smithy array
@@ -932,6 +927,8 @@ function SmithyEventDelegate:reinstate_event_if_able(previous_state)
         end
     end
     self.pending_dilemma_by_faction = previous_state.pending_dilemma_by_faction or {}
+    smithy_commissions.restore_state(previous_state.commissions)
+    smithy_commissions.rearm_battles(self)
 end
 
 --- Constructs a fresh SmithyEventDelegate wired to the given CA mission_manager and InvasionBattleManager.

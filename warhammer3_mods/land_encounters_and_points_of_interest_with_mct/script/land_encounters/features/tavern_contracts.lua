@@ -26,6 +26,7 @@ local guild_patron = require("script/land_encounters/features/guild_patron")
 local tower_army = require("script/land_encounters/features/tower_army")
 local boons = require("script/land_encounters/features/boons")
 local army_spells = require("script/land_encounters/core/army_spells")
+local marked_spots = require("script/land_encounters/core/marked_spots")
 
 local M = {
     --- Faction key -> the contracts it holds: { key, kind, slot, step, zone, index, level, deposit, general_cqi, target, enemy, modifiers,
@@ -71,9 +72,6 @@ local MARK_TEXT = "mission_text_text_land_enc_tavern_mark"
 
 --- Marker key prefix of a marked spot, followed by the faction and the mission key. Each of its markers adds its number, e.g. `_1`.
 local MARK_PREFIX = "leapoi_tavern_mark_"
-
---- Marker infos of a marked spot in order: the one shown until the last turns, then the countdown, one marker per turn.
-local MARK_INFOS = { "invasion_marker_5", "invasion_marker_3", "invasion_marker_2", "invasion_marker_1" }
 
 --- Event a marked spot's markers fire when they run out, which CA's marker manager needs to spawn the next marker. Nothing listens for it:
 --- the mission's own deadline fails the contract.
@@ -378,49 +376,15 @@ local function issue_mission(faction_name, contract, tavern, objective, conditio
         .. contract.deposit .. " (" .. deposit_back .. " back), reward " .. gold .. " gold and " .. tostring(item or (contract.hero_reward and "a hero")) .. ", " .. turns .. " turns")
 end
 
---- The regions within `regions_away` steps of a region, itself included, in a fixed order so every multiplayer client agrees.
---- @param region region The starting region.
---- @param regions_away number How many neighbour steps to go.
---- @returns table Region interfaces.
-local function regions_near(region, regions_away)
-    local seen, found, frontier = { [region:name()] = true }, { region }, { region }
-    for _ = 1, regions_away do
-        local next_frontier = {}
-        for _, current in ipairs(frontier) do
-            local adjacent = current:adjacent_region_list()
-            for i = 0, adjacent:num_items() - 1 do
-                local other = adjacent:item_at(i)
-                if not seen[other:name()] and not other:is_abandoned() then
-                    seen[other:name()] = true
-                    found[#found + 1] = other
-                    next_frontier[#next_frontier + 1] = other
-                end
-            end
-        end
-        frontier = next_frontier
-    end
-    return found
-end
-
---- Where a contract's lord or marker appears: a random region within `spawn_regions_away` regions of the Tavern, at a valid spot as far as
---- `spawn_distance` from its settlement as the land allows, halving the distance until a spot is found, as the vanilla monster hunts do.
+--- Where a contract's lord or marker appears: within `spawn_regions_away` regions of the Tavern, as far as `spawn_distance` from that
+--- region's settlement as the land allows (see core/marked_spots.lua).
 --- @param tavern TavernState The Tavern.
 --- @param faction_key string The faction the spot must suit: the army's, or the contract holder's for a marker.
 --- @returns number|nil The map x position, or nil when no spot was found.
 --- @returns number|nil The map y position.
 --- @returns string|nil The region's key.
 local function spawn_point(tavern, faction_key)
-    local home = region_at(tavern.coordinates)
-    local regions = home and regions_near(home, tavern_data.contracts.spawn_regions_away) or {}
-    if #regions == 0 then return nil end
-    local region = regions[random_number(#regions)]
-    local distance = tavern_data.contracts.spawn_distance
-    while distance >= 1 do
-        local x, y = cm:find_valid_spawn_location_for_character_from_settlement(faction_key, region:name(), false, true, distance)
-        if x ~= -1 then return x, y, region:name() end
-        distance = math.floor(distance / 2)
-    end
-    return nil
+    return marked_spots.spawn_point(tavern.coordinates, faction_key, tavern_data.contracts.spawn_regions_away, tavern_data.contracts.spawn_distance)
 end
 
 --- The difficulty of a contract's enemy: the Tavern's level for a single contract, or the step's own for a chain.
@@ -526,23 +490,11 @@ local function mark_of(faction_name, key)
     return MARK_PREFIX .. faction_name .. "_" .. key
 end
 
---- Removes a contract's marked spot markers, their marker types and the listeners CA's marker manager set up for them, when it has any.
---- CA's own `clear_marker_type` counts a marker's instances with `#` on a keyed table, so it never despawns them (`despawn_all` does first),
---- and it leaves the listeners behind, which a later contract on the same mission slot would hear twice.
+--- Removes a contract's marked spot, when it has one (see core/marked_spots.lua).
 --- @param faction_name string The faction that holds the contract.
 --- @param key string The contract's mission key.
 local function clear_mark(faction_name, key)
-    local mark = mark_of(faction_name, key)
-    for i = 1, #MARK_INFOS do
-        local key = mark .. "_" .. i
-        local marker = Interactive_Marker_Manager:get_marker(key)
-        if marker then
-            marker:despawn_all()
-            Interactive_Marker_Manager:clear_marker_type(key)
-            core:remove_listener(key .. "AreaEntered")
-            core:remove_listener("ScriptEventMarkerCountdownCompleted" .. key)
-        end
-    end
+    marked_spots.clear(mark_of(faction_name, key))
 end
 
 --- Puts a marked spot near the Tavern, seen only by the contract holder: one marker until the last turns, then a countdown of one marker
@@ -556,18 +508,7 @@ end
 local function start_marked(tavern, faction_name, contract, turns)
     local x, y, region_key = spawn_point(tavern, faction_name)
     if x == nil then return false end
-    clear_mark(faction_name, contract.key)
-    local mark = mark_of(faction_name, contract.key)
-    local first = nil
-    for i, info in ipairs(MARK_INFOS) do
-        local duration = i == 1 and math.max(1, turns - #MARK_INFOS + 1) or 1
-        local marker = Interactive_Marker_Manager:new_marker_type(mark .. "_" .. i, info, duration, 1, faction_name)
-        if i < #MARK_INFOS then marker:add_timeout_event(MARK_COUNTDOWN_EVENT, mark .. "_" .. (i + 1)) end
-        marker:add_interaction_event(M.MARK_ENTERED_EVENT)
-        marker:despawn_on_interaction(false)
-        first = first or marker
-    end
-    first:spawn_at_location(x, y, false, true, 0)
+    marked_spots.place(mark_of(faction_name, contract.key), faction_name, x, y, turns, M.MARK_ENTERED_EVENT, MARK_COUNTDOWN_EVENT)
     log("tavern: " .. contract.key .. " for " .. faction_name .. " marks a site in " .. region_key .. " at (" .. x .. ", " .. y .. ")")
     issue_mission(faction_name, contract, tavern, "SCRIPTED", {}, turns)
     show_located_message(faction_name, "tavern_mark_spotted", { x, y })

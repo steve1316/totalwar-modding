@@ -467,6 +467,8 @@ add_setting_slider("smithy_tribute_percent", "smithies_section", "Tribute interv
     "Scales the turns between tribute items for a player's Smithy. At 100, tribute comes every " .. smithy_data.levels[1].tribute_interval
     .. " turns at forge level 1, " .. smithy_data.levels[2].tribute_interval .. " at level 2 and " .. smithy_data.levels[3].tribute_interval
     .. " at level 3. Higher means rarer tribute.", { 25, 300, 5, 0 })
+add_setting_slider("smithy_mission_interval", "smithies_section", "Commission interval (turns)",
+    "Turns between the Smith's Commissions your highest-level Smithy offers while you hold none.", { 5, 30, 1, 0 })
 add_setting_slider("smithy_ai_takeover_chance", "smithies_section", "AI takeover chance %",
     "Chance an AI army at war with a Smithy's AI owner takes it when it walks onto it.", { 0, 100, 1, 0 })
 add_setting_slider("smithy_ai_upgrade_chance", "smithies_section", "AI upgrade chance %",

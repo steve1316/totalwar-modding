@@ -10,7 +10,7 @@ local archetypes = require("script/land_encounters/configs/archetypes")
 
 --- MCT options whose key is also their `mct_settings` field, read and logged the same way by `set_mct_settings`.
 local SAME_NAMED_OPTIONS = { "enable_towers", "tower_cooldown", "tower_gold_percent", "tower_enemy_percent", "tower_offers_per_floor",
-    "tower_hidden_floor_chance", "enable_smithies", "smithy_cooldown", "smithy_price_percent", "smithy_tribute_percent", "smithy_ai_takeover_chance",
+    "tower_hidden_floor_chance", "enable_smithies", "smithy_cooldown", "smithy_price_percent", "smithy_tribute_percent", "smithy_mission_interval", "smithy_ai_takeover_chance",
     "smithy_ai_upgrade_chance", "enable_taverns", "tavern_contract_turns", "tavern_hall_restock", "tavern_hire_markup", "tavern_hires_per_visit",
     "tavern_cooldown", "tavern_penalty_percent", "tavern_penalty_turns", "tavern_ai_takeover_chance", "tavern_ai_upgrade_chance", "ready_notices",
     "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance", "enable_boons", "boon_slots", "curse_slots", "boon_win_chance", "curse_loss_chance", "linger_chance" }
@@ -70,6 +70,8 @@ local mct_settings = {
     smithy_price_percent = 100,
     --- Percent of a player Smithy's tribute interval.
     smithy_tribute_percent = 100,
+    --- Turns between Smith's Commissions offered to a player faction that holds none.
+    smithy_mission_interval = 10,
     --- Percent chance an AI army at war with a Smithy's AI owner takes it.
     smithy_ai_takeover_chance = 25,
     --- Percent chance each round that an AI owner upgrades its Smithy.

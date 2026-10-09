@@ -231,6 +231,12 @@ event_feed_strings_text_description_event_land_enc_smithy_patron_1	The Associati
 event_feed_strings_text_title_event_land_enc_smithy_patron_2	Smithy	false
 event_feed_strings_text_subtitle_event_land_enc_smithy_patron_2	Great Patron of the Association	false
 event_feed_strings_text_description_event_land_enc_smithy_patron_2	Our name is now cut into the anvil of every smithy the Association runs, for no lord has given it more. Each one has grown to its grandest, and our orders go to the front of the queue.	false
+event_feed_strings_text_title_event_land_enc_smithy_star_metal_spotted	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_star_metal_spotted	Star-Metal Found	false
+event_feed_strings_text_description_event_land_enc_smithy_star_metal_spotted	A shard of star-metal has fallen at this site. March a lord onto it and win the battle there before the countdown runs out.	false
+event_feed_strings_text_title_event_land_enc_smithy_star_metal_repelled	Smithy	false
+event_feed_strings_text_subtitle_event_land_enc_smithy_star_metal_repelled	Driven Back	false
+event_feed_strings_text_description_event_land_enc_smithy_star_metal_repelled	We were beaten at the star-metal site, but the mark still stands. We can try again before the countdown runs out.	false
 event_feed_strings_text_title_event_land_enc_spot_cast_the_lots_won	Cast the Lots	false
 event_feed_strings_text_subtitle_event_land_enc_spot_cast_the_lots_won	Fortune Smiles	false
 event_feed_strings_text_description_event_land_enc_spot_cast_the_lots_won	The lots tumble from the cup and fall in our favour. A cheer goes up from the soldiers crowded round the table, and a few coins change hands among them on side bets.\\n\\nThe stranger who offered the game scowls, but pays up all the same. There are no excuses and no talk of another round.\\n\\nA rare treasure changes hands. Some of the older soldiers mutter that luck like this is never free, but for now the treasure is ours.	false

@@ -15,6 +15,7 @@ local spot_offers = require("script/land_encounters/features/spot_offers")
 local effect_library = require("script/land_encounters/features/effect_library")
 local boons = require("script/land_encounters/features/boons")
 local tavern_contracts = require("script/land_encounters/features/tavern_contracts")
+local smithy_commissions = require("script/land_encounters/features/smithy_commissions")
 
 --- Tavern dilemma key -> true, for the Tavern choice listener.
 local tavern_dilemma_keys = {}
@@ -197,32 +198,35 @@ function M.register()
     )
 
 
-    --- Tavern contracts settle when their missions succeed, fail or are dropped from the missions panel.
-    for event, outcome in pairs({ MissionSucceeded = "succeeded", MissionFailed = "failed", MissionCancelled = "cancelled" }) do
+    --- The features that issue missions and place marked spots: Tavern contracts settle when their missions succeed, fail or are dropped
+    --- from the missions panel, and Smith's Commissions are forgotten so the faction can be offered another. A lord walking onto either's
+    --- mark starts its battle. CA's marker manager fires the mark's event with the lord and the marker.
+    local mission_features = {
+        { name = "tavern_contract", owns = tavern_contracts.is_contract_mission, mark_event = tavern_contracts.MARK_ENTERED_EVENT,
+            ended = function(...) M.point_of_interest_event_manager:on_tavern_contract_ended(...) end,
+            entered = function(...) M.point_of_interest_event_manager:on_tavern_mark_entered(...) end },
+        { name = "smithy_commission", owns = smithy_commissions.is_commission, mark_event = smithy_commissions.MARK_ENTERED_EVENT,
+            ended = function(...) M.point_of_interest_event_manager:on_smithy_commission_ended(...) end,
+            entered = function(...) M.point_of_interest_event_manager:on_smithy_mark_entered(...) end },
+    }
+    for _, feature in ipairs(mission_features) do
+        for event, outcome in pairs({ MissionSucceeded = "succeeded", MissionFailed = "failed", MissionCancelled = "cancelled" }) do
+            core:add_listener(
+                "land_enc_" .. feature.name .. "_" .. outcome,
+                event,
+                function(context) return feature.owns(context:mission():mission_record_key()) end,
+                function(context) feature.ended(context:faction():name(), context:mission():mission_record_key(), outcome) end,
+                IS_PERSISTENT_LISTENER
+            )
+        end
         core:add_listener(
-            "land_enc_tavern_contract_" .. outcome,
-            event,
-            function(context)
-                return tavern_contracts.is_contract_mission(context:mission():mission_record_key())
-            end,
-            function(context)
-                M.point_of_interest_event_manager:on_tavern_contract_ended(context:faction():name(), context:mission():mission_record_key(), outcome)
-            end,
+            "land_enc_" .. feature.name .. "_mark_entered",
+            feature.mark_event,
+            true,
+            function(context) feature.entered(context:character(), context.stored_table.marker_ref, context.stored_table.instance_ref) end,
             IS_PERSISTENT_LISTENER
         )
     end
-
-
-    --- A lord walks onto a Tavern contract's marked spot. CA's marker manager fires the event with the lord and the marker.
-    core:add_listener(
-        "land_enc_tavern_mark_entered",
-        tavern_contracts.MARK_ENTERED_EVENT,
-        true,
-        function(context)
-            M.point_of_interest_event_manager:on_tavern_mark_entered(context:character(), context.stored_table.marker_ref, context.stored_table.instance_ref)
-        end,
-        IS_PERSISTENT_LISTENER
-    )
 
 
     --- The choices each open dilemma registered as closed when it was launched (taken tower offers, Tavern and forge choices that cannot be
