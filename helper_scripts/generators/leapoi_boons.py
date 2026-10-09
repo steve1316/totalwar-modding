@@ -194,7 +194,7 @@ SMITHY_ROOM = ("Temper and Break", ["The master smith clears the anvil for {lord
                                                                "Break a curse: it is gone for good. The price grows with the curse's level.",
                                                                "Rust for Iron: a pact that hardens the army's hide and rusts its blades."]),
                                     ("Prices", ["As the owner, we pay {owner_off}% less than the smith's usual rates. The room never cools down."])],
-               "story_panels/chd_drill_blades", {"temper": "Temper This Boon", "break": "Break This Curse", "rust": "Trade Rust for Iron", "leave": "Leave"})
+               "story_panels/chd_drill_blades", {"temper": "Temper This Boon", "break": "Break This Curse", "rust": "Trade Rust for Iron", "back": "Back"})
 
 # The Tavern's hedge-witch: (title, description parts, picture, choice labels by kind).
 WITCH_ROOM = ("The Hedge-Witch", ["Behind a curtain of dried herbs, the hedge-witch looks {lord} over and smiles. Each service waits "
@@ -230,7 +230,7 @@ ROOM_LABELS = {"smithy_room": SMITHY_ROOM[0], "witch_room": "Visit the Hedge-Wit
 # (998), the hub's after the donation (5) and before Leave (998). Inside the rooms, temper then break then Rust for Iron then Leave, and
 # each curse's cleanse with its gamble.
 ROOM_OPEN_ORDER = {"smithy_room": 7, "witch_room": 6}
-TEMPER_ORDER, BREAK_ORDER, RUST_ORDER, SMITHY_LEAVE_ORDER = 1120, 1125, 1130, 1131
+TEMPER_ORDER, BREAK_ORDER, RUST_ORDER, SMITHY_BACK_ORDER = 1120, 1125, 1130, 1131
 FEED_ORDER, CLEANSE_ORDER, WITCH_BACK_ORDER = 1100, 1140, 1160
 
 # Icon of the services' lines, other than the Smithy room's.
@@ -718,7 +718,7 @@ def service_choices(config: Dict) -> List[Tuple[str, int, List[Tuple[str, str]]]
     out += [(choice, TEMPER_ORDER + i, [(smithy["dilemma"], labels["temper"])]) for i, choice in enumerate(smithy["temper_choices"])]
     out += [(choice, BREAK_ORDER + i, [(smithy["dilemma"], labels["break"])]) for i, choice in enumerate(smithy["break_choices"])]
     out += [(smithy["rust_choice"], RUST_ORDER, [(smithy["dilemma"], labels["rust"])]),
-            (smithy["leave_choice"], SMITHY_LEAVE_ORDER, [(smithy["dilemma"], labels["leave"])])]
+            (smithy["back_choice"], SMITHY_BACK_ORDER, [(smithy["dilemma"], labels["back"])])]
     for i, (feed, reweave) in enumerate(zip(witch["feed_choices"], witch["reweave_choices"])):
         out += [(feed, FEED_ORDER + 2 * i, [(witch["dilemma"], witch_labels["feed"])]),
                 (reweave, FEED_ORDER + 2 * i + 1, [(witch["dilemma"], witch_labels["reweave"])])]
@@ -790,7 +790,7 @@ def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict], names: Opt
                  ("boon", "tavern"): f"a finished Tavern quest chain (level {config['chain_boon_level']})",
                  ("curse", "tavern"): "a failed or dropped Tavern contract",
                  ("boon", "smithy"): "the Smith's Blessing at a Smithy's Work Orders",
-                 ("curse", "smithy"): "a Cursed Masterwork from a Smithy's Work Orders (level 2)"}
+                 ("curse", "smithy"): "a Cursed Masterwork from a Smithy's Work Orders (two at level 3)"}
     for kind, records in (("boon", config["boons"]), ("curse", config["curses"])):
         for record in records:
             for drop in record.get("drops", []):

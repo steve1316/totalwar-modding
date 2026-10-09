@@ -1,5 +1,7 @@
 --- Smithy data: the forge level table and the smithy missions per player subculture.
 
+local tiered = require("script/land_encounters/utils/steps").tiered
+
 local M = {}
 
 --- What each forge level (index 1-3) offers. Rarities are CA's ancillary rarities ("common", "uncommon", "rare").
@@ -8,6 +10,7 @@ local M = {}
 --- - legendary_commission: an optional second paid option - one item from configs/legendary_items.lua for `price` gold.
 --- - cooldown_offset: turns added to the MCT `smithy_cooldown` slider (the level 3 cooldown) after a free pick, before the next one.
 --- - tribute_interval: turns between tribute items for a player owner.
+--- - legendary_tribute_chance: percent chance a player's tribute is a legendary item instead (Master's Mark), or nil for none.
 --- - upgrade_price: gold to reach the next level, or nil at the top level.
 M.levels = {
     {
@@ -30,6 +33,7 @@ M.levels = {
         legendary_commission = { price = 20000 },
         cooldown_offset = 0,
         tribute_interval = 5,
+        legendary_tribute_chance = 20,
         upgrade_price = nil,
     },
 }
@@ -39,6 +43,13 @@ M.levels = {
 M.donations = {
     { price = 50000, place_level = 2, bundle = "land_enc_effect_smithy_patron_1" },
     { price = 100000, place_level = 3, bundle = "land_enc_effect_smithy_patron_2" },
+}
+
+--- The owner's perks, on while a player holds both the Smithy and its region, at the forge level: `arms_trade` raises the income of the
+--- province, and `armoury` hardens the region's garrison. Each is a tiered bundle, whose `steps[level]` is its version for that forge level.
+M.perks = {
+    arms_trade = tiered("land_enc_effect_spot_smithy_arms_trade"),
+    armoury = tiered("land_enc_effect_spot_smithy_armoury"),
 }
 
 --- The Work Orders counter on the forge: 3 offers drawn from the `smithy` pool (configs/spot_offers.lua), acting at the forge level. Taking

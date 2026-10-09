@@ -140,14 +140,14 @@ end
 --- Rooms
 
 --- Opens the Smithy's Temper and Break room for a lord: a temper per boon (showing the level it reaches), a break per curse, Rust for Iron
---- unless taken on this visit, and Leave. A charged boon or one at its highest level cannot be tempered and says why.
+--- unless taken on this visit, and Back to the forge. A charged boon or one at its highest level cannot be tempered and says why.
 --- @param character userdata The visiting lord.
 --- @param faction_name string The visiting faction.
 --- @param price function Base gold -> the gold this Smithy charges for it.
 --- @param rust_taken boolean|nil True when the lord took Rust for Iron on this visit already.
---- @param leave_line string The payload text of Leave, shared with the forge.
+--- @param back_line string The payload text of Back, shared with the forge's Work Orders.
 --- @returns table The open room to keep on the Smithy: { cqi, slots, rust_taken }.
-function M.open_smithy(character, faction_name, price, rust_taken, leave_line)
+function M.open_smithy(character, faction_name, price, rust_taken, back_line)
     local spec, record = data.smithy_room, boons.find_record(character)
     local slots, choices, add = room(dilemmas.treasury(faction_name))
     for i, boon in ipairs(record.boon) do
@@ -162,7 +162,7 @@ function M.open_smithy(character, faction_name, price, rust_taken, leave_line)
         add(spec.rust_choice, "rust", nil, nil, nil, { boons.line("boon", { key = RUST_OFFER.boon[1], level = RUST_OFFER.boon[2] }),
             boons.line("curse", { key = RUST_OFFER.curse[1], level = RUST_OFFER.curse[2] }) })
     end
-    choices[#choices + 1] = { key = spec.leave_choice, lines = { leave_line } }
+    choices[#choices + 1] = { key = spec.back_choice, lines = { back_line } }
     local open_room = launch(spec.dilemma, character, faction_name, "smithy room", slots, choices)
     open_room.rust_taken = rust_taken == true
     return open_room

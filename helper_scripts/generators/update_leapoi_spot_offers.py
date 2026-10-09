@@ -546,10 +546,11 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                         + stat("+{e1}%", *SPEED) + ", but [[col:red]]+{e2}% upkeep[[/col]], for 5 turns."),
     "runesmiths_inscription": ("Runesmith's Inscription", "Have the runesmith cut a rune into our banners: the army spell below is ours to cast in "
                                "any battle for the next {spell_turns} turns."),
-    "bloodforged_steel": ("Bloodforged Steel", "Quench the blade in our own blood: [[col:green]]the rare item below[[/col]], but every unit loses "
+    "bloodforged_steel": ("Bloodforged Steel", "Quench the blade in our own blood: [[col:green]]a rare item[[/col]], but every unit loses "
                           "[[col:red]]{bleed}% of its strength[[/col]] now."),
-    "cursed_masterwork": ("Cursed Masterwork", "Take the masterwork no smith will sign: [[col:green]]the items below[[/col]] (a legendary piece at "
-                          "a level 3 forge), but our lord is struck by [[col:red]]a level 2 curse[[/col]]: Creeping Rust, Brittle Bones or Cursed Coin."),
+    "cursed_masterwork": ("Cursed Masterwork", "Take the masterwork no smith will sign: [[col:green]]two rare items[[/col]], or [[col:green]]a "
+                          "legendary item[[/col]] at a level 3 forge, but our lord is struck by [[col:red]]two level 3 curses[[/col]] from Creeping "
+                          "Rust, Brittle Bones and Cursed Coin."),
     "smiths_blessing": ("Smith's Blessing", "Have the master smith bless our lord's arms: our lord gains [[col:green]]Ironhide or Stone "
                         "Rampart[[/col]]."),
     "smithy_back": ("Back", "Go back to the forge."),
@@ -1281,6 +1282,11 @@ BUNDLES = {
                                [("land_enc_lib_fx_charge_attacking", "force_to_force_own", (10, 15, 20)),
                                 ("wh_main_effect_force_stat_speed", "force_to_force_own", 5),
                                 ("wh_main_effect_force_all_campaign_upkeep", "force_to_force_own", 10)]),
+    "smithy_arms_trade": ("province", "income.png", "Arms Trade", "Merchants come from far away for the Smithy's steel, and their trade fills the province's coffers.",
+                          [("wh_main_effect_economy_gdp_mod_all", "province_to_province_own", (3, 6, 9))]),
+    "smithy_armoury": ("region", "icon_effects_fortify.png", "Garrison Armoury", "The Smithy arms the garrison with its best plate and shields.",
+                       [("wh_main_effect_force_stat_armour", "region_to_force_own_regionwide_if_garrison", (10, 15, 20)),
+                        ("wh_main_effect_force_stat_melee_defence", "region_to_force_own_regionwide_if_garrison", (5, 8, 10))]),
     "tavern_hangover": ("force", "discouraged.png", "Hangover", "The mystery brew tasted of old boots and worse. Half the army spent the next morning groaning.",
                         [("wh_main_effect_force_stat_leadership", "force_to_force_own", -10), ("wh_main_effect_force_stat_speed", "force_to_force_own", -10)]),
 }

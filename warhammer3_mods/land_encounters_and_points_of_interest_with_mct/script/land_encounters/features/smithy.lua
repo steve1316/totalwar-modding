@@ -38,6 +38,8 @@ local FORGE_EVENTS = {
     ["land_enc_dilemma_smithy_forge_level_2"] = true,
     ["land_enc_dilemma_smithy_forge_level_3"] = true,
 }
+--- The incident a player owner's tribute arrives through, showing the item's card.
+local TRIBUTE_INCIDENT = "land_enc_incident_smithy_tribute"
 --- The dilemma offered to a player entering an enemy-owned smithy.
 local EVENT_RECLAMATION = "land_enc_dilemma_smithy_reclamation"
 --- The fight-or-surrender dilemma offered to a besieged owner.
@@ -83,6 +85,8 @@ local PAYLOAD_TEXT_ORDERS_CLOSED = "dummy_land_enc_smithy_orders_closed_"
 local PAYLOAD_TEXT_COOLING = "dummy_land_enc_smithy_cooling_"
 --- Payload text of Rush the Forge.
 local PAYLOAD_TEXT_RUSH = "dummy_land_enc_smithy_rush"
+--- Payload text of Back to the forge, shared by the Work Orders and the Temper and Break room.
+local PAYLOAD_TEXT_BACK = offers_data.line_prefix .. offers_data.smithy.leave_line
 --- Payload text under a donation the treasury cannot pay, shared with the spot offers.
 local PAYLOAD_TEXT_UNAFFORDABLE = offers_data.unaffordable_line
 
@@ -130,6 +134,8 @@ local SmithyState = OwnedPoint.extend({
     orders_closed_until = {},
     --- Faction key -> { turn, keys }: the orders the counter showed it this turn, shown again when it comes back the same turn.
     orders_draws = {},
+    --- The owner perks on the map: { faction, level } they were put on for, or nil when none are on.
+    perks = nil,
     --- Forge level, 1 to 3. Survives ownership changes.
     level = 1,
     --- Owning faction key, or "" when unowned.
@@ -166,6 +172,7 @@ end
 --- Runs the once-per-round smithy update: tribute or AI items, cooldowns, missions, and auto-occupation when abandoned.
 --- @param mission_manager table The CA mission_manager handle used to issue missions.
 function SmithyState:update_state_given_turn_passing(mission_manager)
+    self:refresh_perks()
     local controlling_faction = self:check_if_owner_is_alive_and_return_faction()
     if controlling_faction ~= nil and self:is_occupied() then
         --- Count this turn first so periodic rewards wait a full interval instead of firing on the turn the smithy is taken.
@@ -193,10 +200,83 @@ function SmithyState:reward_owner_faction(controlling_faction, is_player)
     if is_player then interval = math.max(1, math.floor(self:level_data().tribute_interval * get_mct_settings().smithy_tribute_percent / 100 + 0.5)) end
     local offset = is_player and 0 or self.index_in_zone
     if (self.turns_under_control + offset) % interval ~= 0 then return end
-    local ancillary = item_pool.pick_items(controlling_faction:name(), self:level_data().free_pick_rarities, 1)[1]
-    if ancillary ~= nil then
+    local faction_key = controlling_faction:name()
+    local chance = is_player and self:level_data().legendary_tribute_chance
+    local ancillary = chance and random_chance(chance) and item_pool.pick_legendary_item(faction_key)
+    if ancillary then log("smithy: Master's Mark: the tribute of the " .. self:describe() .. " for " .. faction_key .. " is the legendary " .. ancillary) end
+    ancillary = ancillary or item_pool.pick_items(faction_key, self:level_data().free_pick_rarities, 1)[1]
+    if ancillary == nil then return end
+    if is_player then
+        self:send_tribute(controlling_faction, ancillary)
+    else
         cm:add_ancillary_to_faction(controlling_faction, ancillary, false)
     end
+end
+
+--- Sends a player owner its tribute through the tribute incident, which shows the item's card. When the incident cannot be built, the item
+--- goes to the faction anyway.
+--- @param faction faction The owning player faction.
+--- @param ancillary string The item's key.
+function SmithyState:send_tribute(faction, ancillary)
+    local ok, err = pcall(function()
+        local payload = cm:create_payload()
+        payload:faction_ancillary_gain(faction, ancillary)
+        local builder = cm:create_incident_builder(TRIBUTE_INCIDENT)
+        builder:set_payload(payload)
+        cm:launch_custom_incident_from_builder(builder, faction)
+    end)
+    if ok then
+        log("smithy: tribute " .. ancillary .. " from the " .. self:describe() .. " reaches " .. faction:name() .. " through its incident")
+        return
+    end
+    log("smithy: the tribute incident could not be built (" .. tostring(err) .. "), so " .. ancillary .. " goes to " .. faction:name() .. " directly")
+    cm:add_ancillary_to_faction(faction, ancillary, false)
+end
+
+--- A region of a province that a faction holds, which the faction's province bundles are put on and taken off through.
+--- @param region region A region of the province.
+--- @param faction_name string The faction key.
+--- @returns region|nil The region, or nil when the faction holds none there.
+local function held_region_in_province(region, faction_name)
+    local regions = region:province():region_list()
+    for i = 0, regions:num_items() - 1 do
+        local candidate = regions:item_at(i)
+        if candidate:owning_faction():name() == faction_name then return candidate end
+    end
+    return nil
+end
+
+--- Puts the owner perks at the forge level on while a player holds both the Smithy and its region, and takes them off otherwise: Arms Trade
+--- on the owner's share of the province, and the Garrison Armoury on the region. Runs each round, and when the owner or the level changes. A
+--- change the game refuses (e.g. while the campaign is still being set up) is logged and tried again next round.
+function SmithyState:refresh_perks()
+    if self.controlling_faction_name == "" and not self.perks then return end
+    local region = self:region()
+    if not region then return end
+    local owner = self.controlling_faction_name
+    local faction = owner ~= "" and cm:get_faction(owner)
+    local wanted = faction and faction:is_human() and region:owning_faction():name() == owner and { faction = owner, level = self.level } or nil
+    local held = self.perks
+    if (held and wanted and held.faction == wanted.faction and held.level == wanted.level) or (not held and not wanted) then return end
+    local ok, err = pcall(function()
+        local perks = smithy_data.perks
+        if held then
+            cm:remove_effect_bundle_from_region(perks.armoury.steps[held.level], region:name())
+            local own = held_region_in_province(region, held.faction)
+            if own then cm:remove_effect_bundle_from_faction_province(perks.arms_trade.steps[held.level], own) end
+        end
+        if wanted then
+            cm:apply_effect_bundle_to_region(perks.armoury.steps[wanted.level], region:name(), 0)
+            cm:apply_effect_bundle_to_faction_province(perks.arms_trade.steps[wanted.level], region, 0)
+        end
+    end)
+    local change = (held and ("level " .. held.level .. " for " .. held.faction) or "none") .. " -> " .. (wanted and ("level " .. wanted.level .. " for " .. owner) or "none")
+    if not ok then
+        log("smithy: owner perks of the " .. self:describe() .. " could not change (" .. change .. "): " .. tostring(err))
+        return
+    end
+    log("smithy: owner perks of the " .. self:describe() .. " in region " .. region:name() .. ": " .. change)
+    self.perks = wanted
 end
 
 --- Decrements the free-pick cooldown each turn and tells the player owner when the forge is ready again.
@@ -475,17 +555,23 @@ end
 --- @param character character The visiting lord.
 --- @param rust_taken boolean True when the lord took Rust for Iron on this visit already.
 function SmithyState:open_room(character, rust_taken)
-    self.pending_room = boon_services.open_smithy(character, self.controlling_faction_name, room_price, rust_taken, PAYLOAD_TEXT_LEAVE)
+    self.pending_room = boon_services.open_smithy(character, self.controlling_faction_name, room_price, rust_taken, PAYLOAD_TEXT_BACK)
 end
 
---- Applies a Temper and Break choice, then opens the room again for the same lord, or closes it on Leave.
+--- Applies a Temper and Break choice, then opens the room again for the same lord, or the forge on Back.
 --- @param choice_key string The chosen choice key.
 function SmithyState:resolve_room_choice(choice_key)
     local open_room = self.pending_room
     self.pending_room = nil
     if not open_room then return end
     local action, _, character = boon_services.resolve(open_room, self.controlling_faction_name, boons_data.smithy_room.dilemma, choice_key)
-    if action == "reopen" then self:open_room(character, open_room.rust_taken) end
+    if action == "reopen" then
+        self:open_room(character, open_room.rust_taken)
+        return
+    end
+    local lord = tower_army.character(open_room.cqi)
+    log("smithy: lord " .. tostring(open_room.cqi) .. " goes back from Temper and Break to the forge of the " .. self:describe())
+    if lord then self:open_forge(cm:get_faction(self.controlling_faction_name), lord) end
 end
 
 --- Sets the forge level (clamped to 1-3) and swaps the map marker to that level's skin.
@@ -495,6 +581,7 @@ function SmithyState:set_level(level)
     if level == self.level then return end
     self.level = level
     SmithySpot.replace_marker(self.zone_name, self.index_in_zone, self.coordinates, level)
+    self:refresh_perks()
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -593,6 +680,7 @@ function SmithyState:set_controlling_faction(faction)
     OwnedPoint.set_controlling_faction(self, faction)
     self.turns_under_control = 0
     self.orders_closed_until, self.orders_draws = {}, {}
+    self:refresh_perks()
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -617,6 +705,7 @@ function SmithyState:export_state_as_table()
         pending_room = self.pending_room or false,
         orders_closed_until = self.orders_closed_until,
         orders_draws = self.orders_draws,
+        perks = self.perks or false,
         level = self.level,
         controlling_faction_name = self.controlling_faction_name,
         controlling_faction_subculture = self.controlling_faction_subculture,
@@ -645,6 +734,7 @@ function SmithyState:reinstate(previous_state)
     --- A save from before Work Orders has no closures or draws.
     self.orders_closed_until = previous_state.orders_closed_until or {}
     self.orders_draws = previous_state.orders_draws or {}
+    self.perks = value("perks")
     self.level = previous_state.level or 1
     self.controlling_faction_name = previous_state.controlling_faction_name
     self.controlling_faction_subculture = previous_state.controlling_faction_subculture

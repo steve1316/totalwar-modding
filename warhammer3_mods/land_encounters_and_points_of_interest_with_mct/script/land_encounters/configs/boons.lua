@@ -117,7 +117,8 @@ M.smithy_room = {
     temper_choices = { "LEAPOI_BON_TEMPER_1", "LEAPOI_BON_TEMPER_2", "LEAPOI_BON_TEMPER_3", "LEAPOI_BON_TEMPER_4", "LEAPOI_BON_TEMPER_5" },
     break_choices = { "LEAPOI_BON_BREAK_1", "LEAPOI_BON_BREAK_2", "LEAPOI_BON_BREAK_3", "LEAPOI_BON_BREAK_4", "LEAPOI_BON_BREAK_5" },
     rust_choice = "LEAPOI_BON_RUST",
-    leave_choice = "LEAPOI_BON_SMITHY_LEAVE",
+    --- Goes back to the forge.
+    back_choice = "LEAPOI_BON_SMITHY_BACK",
     temper_price = 5000,
     break_price = 5000,
     rust_offer = "rust_for_iron",

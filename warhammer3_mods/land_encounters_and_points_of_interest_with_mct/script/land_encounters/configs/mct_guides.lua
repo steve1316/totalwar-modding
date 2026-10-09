@@ -27,7 +27,8 @@ M.smithy_intro = "Walk a lord onto an unclaimed Smithy to claim it, or onto your
     .. "you take one. Upgrade the forge for better items, a shorter cooldown and more frequent tribute. A "
     .. "Smithy held by anyone else can be taken by beating its garrison, which gets harder at higher levels. Taking one from a faction you are not "
     .. "at war with costs 20 [[img:icon_diplomacy]][[/img]] relations with them. Enemies can besiege or retake yours, and AI owners upgrade theirs now and then. Every Smithy "
-    .. "belongs to the Smiths' Association. A Generous Donation of 50000 gold at your own forge raises every Smithy to at least level 2 and blesses "
+    .. "While you hold both a Smithy and its region, Arms Trade raises the province's income and the Garrison Armoury arms the region's garrison, "
+    .. "more at each forge level. Every Smithy belongs to the Smiths' Association. A Generous Donation of 50000 gold at your own forge raises every Smithy to at least level 2 and blesses "
     .. "your armies' weapons for good. A second donation of 100000 gold raises every Smithy to level 3 and doubles the blessing. The prices "
     .. "below are at the default Smithy prices setting."
 

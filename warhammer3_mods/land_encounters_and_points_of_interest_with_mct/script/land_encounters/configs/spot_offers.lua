@@ -558,7 +558,7 @@ M.offers = {
     { key = "runesmiths_inscription", pool = "smithy", tags = {}, cost = STRONG, spell_pool = S("army", "bound", "lore"), spell_turns = 5 },
     { key = "bloodforged_steel", pool = "smithy", tags = {}, bleed = S(15, 12, 10), items = { rarities = { "rare" }, count = 1 } },
     { key = "cursed_masterwork", pool = "smithy", tags = { "curse" }, items = S({ rarities = { "rare" }, count = 2 }, { rarities = { "rare" }, count = 2 }, nil),
-        unique = S(nil, nil, 1), curse = { from = "smithy", level = 2 } },
+        unique = S(nil, nil, 1), curse = { from = "smithy", level = 3, count = 2 } },
     { key = "smiths_blessing", pool = "smithy", tags = {}, cost = STRONG, boon = { from = "smithy" } },
 
     --- Missions, tracked by the battle script under the tower's names.

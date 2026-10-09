@@ -414,10 +414,14 @@ end
 --- A random boon or curse that can drop from a source.
 --- @param kind string "boon" or "curse".
 --- @param source string A `drops` source, e.g. "treasure".
+--- @param exclude table|nil Keys -> true that are not picked, e.g. one already given.
 --- @returns string|nil The key, or nil when none drops there.
-function M.pick(kind, source)
-    local pool = DROP_POOLS[kind][source]
-    return pool and pool[random_number(#pool)] or nil
+function M.pick(kind, source, exclude)
+    local pool = {}
+    for _, key in ipairs(DROP_POOLS[kind][source] or {}) do
+        if not (exclude and exclude[key]) then pool[#pool + 1] = key end
+    end
+    return pool[1] and pool[random_number(#pool)] or nil
 end
 
 --- Gives a lord a random boon or curse that drops from a source.
@@ -431,7 +435,8 @@ function M.gain_from(character, kind, source, level)
     return key ~= nil and M.gain(character, kind, key, level)
 end
 
---- Gives a lord what an offer grants: `boon` and `curse` as { key, level } or { from = a drop source, level } for a random one. A race boon or
+--- Gives a lord what an offer grants: `boon` and `curse` as { key, level }, or { from = a drop source, level, count } for `count` (1 when
+--- nil) different random ones. A race boon or
 --- curse (Bane, Grudge) is about the enemy's race when it is known, else a random one.
 --- @param character userdata|nil The lord.
 --- @param fields table The offer or outcome record.
@@ -441,7 +446,18 @@ function M.grant_fields(character, fields, enemy)
     for _, kind in ipairs(KINDS) do
         local grant = fields[kind]
         if grant and character then
-            if grant.from then M.gain_from(character, kind, grant.from, grant.level) else M.gain(character, kind, grant[1], grant[2] or 1, race) end
+            if grant.from then
+                local given = {}
+                for _ = 1, grant.count or 1 do
+                    local key = M.pick(kind, grant.from, given)
+                    if key then
+                        given[key] = true
+                        M.gain(character, kind, key, grant.level or 1)
+                    end
+                end
+            else
+                M.gain(character, kind, grant[1], grant[2] or 1, race)
+            end
         end
     end
 end
