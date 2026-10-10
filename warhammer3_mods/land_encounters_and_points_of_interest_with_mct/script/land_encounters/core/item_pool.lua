@@ -5,6 +5,7 @@ require("script/land_encounters/utils/common")
 require("script/land_encounters/utils/random")
 
 local legendary_items = require("script/land_encounters/configs/legendary_items")
+local crafted_items = require("script/land_encounters/configs/crafted_items")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,6 +20,19 @@ local RARITY_WEIGHTS_BY_DIFFICULTY = {
     medium = { { "uncommon", 60 }, { "rare", 40 } },
     hard = { { "rare", 100 } },
 }
+
+--- Top-tier item lists a legendary pick draws from, pooled: the Unique (purple) and Crafted (gold) items. `enabled` names the MCT option
+--- that lets the tier drop, and `stays_unique` the one that keeps a player from being given an item of it they already own.
+local TOP_TIERS = {
+    { items = legendary_items, enabled = "unique_item_rewards", stays_unique = "unique_items_stay_unique" },
+    { items = crafted_items, enabled = "crafted_item_rewards", stays_unique = "crafted_items_stay_unique" },
+}
+
+--- Every top-tier item as { key, dlc, tier }, in one list so a pick draws from all enabled tiers at once.
+local top_items = {}
+for _, tier in ipairs(TOP_TIERS) do
+    for _, item in ipairs(tier.items) do top_items[#top_items + 1] = { key = item.key, dlc = item.dlc, tier = tier } end
+end
 
 --- Environment of the LEAPOI mod entry script, set by `M.set_script_environment`. CA's campaign globals such as
 --- `get_random_ancillary_key_for_faction` are visible there but not in the `_G` that required modules use.
@@ -77,27 +91,47 @@ function M.pick_items(faction_key, rarities, count)
     return picked
 end
 
---- Picks one legendary item from configs/legendary_items.lua that the faction can use (CA's `ancillary_is_available_to_faction`), does not own,
---- and whose DLC it has. The scan starts at a random item so every client picks the same one.
+--- Picks one legendary item: a Unique (configs/legendary_items.lua) or Crafted (configs/crafted_items.lua) item from the tiers whose MCT option
+--- lets them drop, that the faction can use (CA's `ancillary_is_available_to_faction`) and whose DLC it has. While a tier's "stays unique"
+--- option is on, an item of it the faction already owns is skipped. Both tiers share one draw, so once every Crafted item is owned only
+--- Uniques are left, and when none qualifies the caller falls back to its non-legendary reward. The scan starts at a random item so every
+--- client picks the same one.
 --- @param faction_key string The receiving faction's key.
+--- @param ... table|nil Lists of item keys already picked for the same reward (e.g. a tower haul), which are not picked again.
 --- @returns string An ancillary key, or nil when no legendary item qualifies.
-function M.pick_legendary_item(faction_key)
+function M.pick_legendary_item(faction_key, ...)
+    local settings = get_mct_settings()
     local is_available = ca_function("ancillary_is_available_to_faction")
     local faction = cm:get_faction(faction_key)
     if is_available == nil or not faction then
         out("DEBUG - item_pool: no legendary item given (CA's ancillary_is_available_to_faction or the faction is missing).")
         return nil
     end
-    local start = random_number(#legendary_items)
-    for offset = 0, #legendary_items - 1 do
-        local item = legendary_items[(start + offset - 1) % #legendary_items + 1]
-        if not faction:ancillary_exists(item.key)
+    local taken = {}
+    for i = 1, select("#", ...) do
+        for _, key in ipairs(select(i, ...) or {}) do taken[key] = true end
+    end
+    local start = random_number(#top_items)
+    for offset = 0, #top_items - 1 do
+        local item = top_items[(start + offset - 1) % #top_items + 1]
+        if settings[item.tier.enabled]
+            and not taken[item.key]
+            and not (settings[item.tier.stays_unique] and faction:ancillary_exists(item.key))
             and (item.dlc == nil or cm:faction_has_dlc_or_is_ai(item.dlc, faction_key))
             and is_available(item.key, faction_key) then
             return item.key
         end
     end
     return nil
+end
+
+--- Picks one legendary item, or an item of `fallback_rarity` standing in when none qualifies.
+--- @param faction_key string The receiving faction's key.
+--- @param fallback_rarity string The CA rarity key of the stand-in, e.g. "rare".
+--- @param ... table|nil Lists of item keys already picked for the same reward, passed to `pick_legendary_item`.
+--- @returns string An ancillary key, or nil when even the stand-in pool is dry.
+function M.pick_legendary_or(faction_key, fallback_rarity, ...)
+    return M.pick_legendary_item(faction_key, ...) or M.pick_items(faction_key, { fallback_rarity }, 1)[1]
 end
 
 --- Picks one item whose rarity is weighted by the encounter difficulty.

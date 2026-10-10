@@ -76,12 +76,13 @@ local function standard_unit(delve, standard)
 end
 M.standard_unit = standard_unit
 
---- Picks one item for a mission reward.
+--- Picks one item for a mission reward. A unique item the pool cannot supply becomes a rare, as on the floors.
 --- @param faction_name string The delving faction.
 --- @param rarities table|nil Rarities to pick from, or nil for a unique item.
+--- @param held table Item keys the delve already holds, so a unique item is not picked twice.
 --- @returns string|nil The ancillary key.
-local function reward_item(faction_name, rarities)
-    if not rarities then return item_pool.pick_legendary_item(faction_name) end
+local function reward_item(faction_name, rarities, held)
+    if not rarities then return item_pool.pick_legendary_or(faction_name, tower_data.legendary_fallback_rarity, held) end
     return item_pool.pick_items(faction_name, rarities, 1)[1]
 end
 
@@ -196,7 +197,7 @@ function M.settle(delve, faction_name, outcomes, floor)
             elseif offer.item_rarity ~= "legendary" then
                 rarities = { offer.item_rarity }
             end
-            local item = reward_item(faction_name, rarities)
+            local item = reward_item(faction_name, rarities, tower_data.held_items(delve))
             if item then tower_data.add_items(delve.haul, { item }) end
             line = result_line("mission_met_" .. offer.key)
         elseif offer.unit_ranks then

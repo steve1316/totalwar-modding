@@ -446,11 +446,11 @@ function SmithyState:open_forge(faction, character)
             offer.upgrade = add_paid(UPGRADE_KEY, smithy_price(level.upgrade_price), PAYLOAD_TEXT_UPGRADE .. self.level)
         elseif level.legendary_commission then
             local price = smithy_price(level.legendary_commission.price)
-            local legendary = treasury >= price and item_pool.pick_legendary_item(faction_key)
-            if treasury >= price and not legendary then
+            local legendary = item_pool.pick_legendary_item(faction_key)
+            if not legendary then
                 add_closed(UPGRADE_KEY, PAYLOAD_TEXT_NO_LEGENDARY)
             else
-                add_paid(UPGRADE_KEY, price, PAYLOAD_TEXT_LEGENDARY, legendary and { legendary } or nil)
+                add_paid(UPGRADE_KEY, price, PAYLOAD_TEXT_LEGENDARY, { legendary })
             end
         else
             add_closed(UPGRADE_KEY, PAYLOAD_TEXT_LEAVE)

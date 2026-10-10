@@ -241,6 +241,23 @@ add_slider("battle_chance", "configuration_section", "Battle chance %",
 add_checkbox("ready_notices", "configuration_section", "Ready notices",
     "Tells you when a Smithy you hold, or a Tower you last delved, is ready again. The notice names the region.", get_mct_settings().ready_notices)
 
+add_section("item_rewards_section", "Item Rewards", general_page,
+    "Which top-tier items LEAPOI rewards can give. Both tiers share one draw. When neither has an item left for you, Tower floors and missions"
+    .. " give a rare item instead, the Smithy and Tavern give their other rewards, and offers that promise one are not shown.")
+
+add_checkbox("unique_item_rewards", "item_rewards_section", "Unique item rewards",
+    "Lets rewards include Unique (purple) items, such as the Runefangs.", get_mct_settings().unique_item_rewards)
+add_checkbox("unique_items_stay_unique", "item_rewards_section", "Unique items stay unique",
+    "You are never given or offered a Unique item you already own. Turn off to allow copies. An AI faction owning one never blocks it.",
+    get_mct_settings().unique_items_stay_unique)
+add_checkbox("crafted_item_rewards", "item_rewards_section", "Crafted item rewards",
+    "Lets rewards include Crafted (gold) items, such as the Rocket Boots or the Helm of Khaine.", get_mct_settings().crafted_item_rewards)
+add_checkbox("crafted_items_stay_unique", "item_rewards_section", "Crafted items stay unique",
+    "You are never given or offered a Crafted item you already own. Turn off to allow copies. An AI faction owning one never blocks it.",
+    get_mct_settings().crafted_items_stay_unique)
+lock_options_by({ "unique_items_stay_unique" }, "unique_item_rewards", function(value) return not value end, "leapoi_unique_stay_lock")
+lock_options_by({ "crafted_items_stay_unique" }, "crafted_item_rewards", function(value) return not value end, "leapoi_crafted_stay_lock")
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Encounters page

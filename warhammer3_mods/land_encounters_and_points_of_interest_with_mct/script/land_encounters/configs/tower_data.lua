@@ -106,4 +106,15 @@ function M.add_items(haul, items)
     end
 end
 
+--- Items a delve already holds or has set aside (its haul, the vault's legendary and the daemons' deal), so no legendary is picked twice.
+--- @param delve table The delve.
+--- @returns table Ancillary keys.
+function M.held_items(delve)
+    local held = { delve.vault_item }
+    for _, list in ipairs({ delve.haul.items, delve.deal_items or {} }) do
+        for _, item in ipairs(list) do held[#held + 1] = item end
+    end
+    return held
+end
+
 return M

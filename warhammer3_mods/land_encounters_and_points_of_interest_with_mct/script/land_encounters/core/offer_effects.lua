@@ -102,16 +102,14 @@ end
 --- Picks distinct legendary items for a faction.
 --- @param faction_name string The faction key.
 --- @param count number How many items to pick.
+--- @param held table|nil Item keys the reward already holds (e.g. a tower haul), which are not picked again.
 --- @returns table The picked item keys, fewer than `count` when the pool runs dry.
-function M.pick_unique_items(faction_name, count)
-    local items, tries = {}, 0
-    while #items < count and tries < count * 5 do
-        tries = tries + 1
-        local item = item_pool.pick_legendary_item(faction_name)
+function M.pick_unique_items(faction_name, count, held)
+    local items = {}
+    for _ = 1, count do
+        local item = item_pool.pick_legendary_item(faction_name, held, items)
         if item == nil then break end
-        local fresh = true
-        for _, held in ipairs(items) do fresh = fresh and held ~= item end
-        if fresh then items[#items + 1] = item end
+        items[#items + 1] = item
     end
     return items
 end

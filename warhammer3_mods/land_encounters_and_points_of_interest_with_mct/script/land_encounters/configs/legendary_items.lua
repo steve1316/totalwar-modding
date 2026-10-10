@@ -1,6 +1,6 @@
 --- Legendary (purple, uniqueness 198/200) items LEAPOI may hand out: vanilla items not locked to a lord or hero type, quest, ritual, skill,
---- tech, item set or staged chain, and not tied to a lord-specific mechanic, runes, endgame or LEAPOI's own Daemonic Gift rewards. Picked by
---- Steve on 2026-09-28 from the vanilla database. Pure data - no runtime logic.
+--- tech, item set or staged chain, and not tied to a lord-specific mechanic, runes, endgame or LEAPOI's own Daemonic Gift rewards. Picked
+--- on 2026-09-28 from the vanilla database. Pure data - no runtime logic.
 --- Each entry: `key` (ancillary key) and optional `dlc` (ownership product key a player faction must own).
 
 return {
