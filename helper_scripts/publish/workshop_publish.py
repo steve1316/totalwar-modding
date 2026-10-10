@@ -25,7 +25,9 @@ from data.supported_mods import SUPPORTED_MODS
 
 PUBLISHED_STATE_DIR = f"{delta.STATE_ROOT}/published"
 WORKSHOP_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id="
-GENERAL_NOTE = "Rebuilt against the latest game patch and the latest versions of all supported mods."
+GENERAL_NOTE = "Rebuilt against the latest versions of all supported mods."
+# Change note name of the vanilla data tables. Their changing means a new game patch came out.
+BASE_GAME_NAME = "the base game"
 # Steam's change note limit (`k_cchPublishedDocumentChangeDescriptionMax`). Notes are measured in UTF-8 bytes, in case Steam counts bytes.
 CHANGE_NOTE_LIMIT = 8000
 # The TTC compat item gets a per-unit change note built from its entries instead of the list of changed mods.
@@ -39,7 +41,7 @@ PUBLISH_TEMP_DIR = f"{TEMP_DIR}/publish"
 
 # Display names for packs that are not in `SUPPORTED_MODS`.
 SPECIAL_PACK_NAMES = {
-    normalize_path(FILEPATH_TO_VANILLA_DATA_TABLES): "the base game",
+    normalize_path(FILEPATH_TO_VANILLA_DATA_TABLES): BASE_GAME_NAME,
     normalize_path(workshop_pack_path("3278112051", "!!_nanu_dynamic_rors.pack")): "Nanu's Dynamic Regiments of Renown",
 }
 
@@ -160,25 +162,28 @@ def _plural(count: int, noun: str) -> str:
     return f"{count} {noun}" if count == 1 else f"{count} {noun}s"
 
 
-def build_change_note(record: Optional[Dict[str, Any]], limit: int = CHANGE_NOTE_LIMIT) -> str:
+def build_change_note(record: Optional[Dict[str, Any]], limit: int = CHANGE_NOTE_LIMIT, patch: Optional[str] = None) -> str:
     """Build the Workshop change note from an item's pending rebuild reasons.
 
     Changed mods are listed one per `- ` dash line under an underlined headline. Dashes are used because Steam's `[list]` markup breaks the
-    change note's background into separate blocks. Past the limit, the last bullet counts the mods that did not fit.
+    change note's background into separate blocks. Past the limit, the last bullet counts the mods that did not fit. The game patch is only
+    named when the vanilla tables changed, since that only happens on a new patch.
 
     Args:
         record (Optional[Dict[str, Any]]): The item's publish record, or None if it has never been recorded.
         limit (int): Maximum note length in UTF-8 bytes.
+        patch (Optional[str]): Installed game patch number, e.g. `9.0.3`, or None if unknown.
 
     Returns:
         The change note text.
     """
-    mods = (record or {}).get("pending_mods", [])
-    general = record is None or not record.get("pack_sha") or bool(record.get("pending_general"))
+    pending = (record or {}).get("pending_mods", [])
+    mods = [mod for mod in pending if mod != BASE_GAME_NAME]
+    patch_name = (f"game patch {patch}" if patch else "the latest game patch") if BASE_GAME_NAME in pending else None
     if not mods:
-        return f"[u]Compatibility update[/u]\n\n{GENERAL_NOTE}"
-    header = f"[u]Compatibility update for {_plural(len(mods), 'updated mod')}[/u]\n"
-    footer = f"\n\nAlso {GENERAL_NOTE[0].lower()}{GENERAL_NOTE[1:]}" if general else ""
+        return "[u]Compatibility update[/u]\n\n" + (f"Rebuilt for {patch_name}." if patch_name else GENERAL_NOTE)
+    header = "[u]Compatibility update[/u]\n\nUpdated for changes in:"
+    footer = f"\n\nAlso rebuilt for {patch_name}." if patch_name else ""
     for shown in range(len(mods), -1, -1):
         bullets = [f"- {mod}" for mod in mods[:shown]]
         if shown < len(mods):
@@ -388,7 +393,7 @@ def _change_note(steam_id: str, record: Optional[Dict[str, Any]]) -> str:
         note = ttc_change_note()
     elif steam_id == VANILLA_COMPAT_STEAM_ID:
         note = vanilla_change_note()
-    return note or build_change_note(record)
+    return note or build_change_note(record, patch=game_patch_version())
 
 
 def pending_items(failed_units: List[str], steam_ids: Optional[Set[str]] = None) -> List[PendingItem]:
