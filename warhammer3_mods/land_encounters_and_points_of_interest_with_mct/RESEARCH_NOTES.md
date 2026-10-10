@@ -431,7 +431,9 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
   - We attack with the ally spawned next to us. The ally is a secondary attacker.
   - On the game's own timer, all its units march in from the map edge 75-90 s after the start.
 - **Relief column:**
-  - Our lord moves about 6 hexes back, and the ally attacks the enemy (`force_attack_of_opportunity(ally, enemy, false)`).
+  - Our lord moves near the enemy (2-4 from it), and the ally attacks the enemy (`force_attack_of_opportunity(ally, enemy, false)`).
+  - **Reach:** we only join as the reinforcement from close to the enemy. In game 5.8 from it joined (twice) and 7.1-8.1 never did (four times).
+    The old placement, 6 from our own lord, landed out of reach by chance and the battle then ran without us.
   - The ally deploys and starts the fight, and we arrive as its reinforcement (105-135 s on the game timer).
   - The ally's starting strength is set after spawn: a random 50%, 75% or 100%.
 

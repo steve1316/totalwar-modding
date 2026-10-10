@@ -417,8 +417,11 @@ local ALLY_TIMER_CUTS = { 0, 25, 50, 75, 100 }
 local ALLY_TIMER_BUNDLE_PREFIX = "land_enc_effect_spot_reinforcement_time_"
 --- Highest rank Lend Them Veterans raises an allied unit to, as Veterans' Oath caps our own.
 local ALLY_MAX_RANK = 9
---- How far off our lord is moved in a relief column, in hexes.
-local RELIEF_DISTANCE = 6
+--- Distances from the enemy our lord is placed at in a relief column, tried in order. Our army only joins the ally's battle as its
+--- reinforcement from close to the enemy: in game 5.8 joined and 7.1 or more never did.
+local RELIEF_DISTANCES = { 4, 3, 2 }
+--- Farthest our lord may stand from the enemy in a relief column and still join the ally's battle.
+local RELIEF_REACH = 5.5
 --- svr key telling the battle script to run a relief column ("scripted"): it calls our army in once the enemy reaches the ally. Mirrored in
 --- script/battle/mod.
 local RELIEF_COLUMN_SVR_KEY = "land_enc_relief_column"
@@ -750,12 +753,18 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     local enemy_force_cqi = invasion_force:get_general():military_force():command_queue_index()
                     if relief then self.core:svr_save_string(RELIEF_COLUMN_SVR_KEY, relief) end
                     if relief then
-                        --- Our lord steps back so the ally starts the fight and we are only close enough to join it.
-                        local x, y = cm:find_valid_spawn_location_for_character_from_position(player_faction_name, player_character:logical_position_x(),
-                            player_character:logical_position_y(), false, RELIEF_DISTANCE)
+                        --- Our lord moves near the enemy, so the ally starts the fight and we are close enough to join it as its reinforcement.
+                        local enemy = invasion_force:get_general()
+                        local ex, ey = enemy:logical_position_x(), enemy:logical_position_y()
+                        local x, y, reach = -1, -1, nil
+                        for _, distance in ipairs(RELIEF_DISTANCES) do
+                            x, y = cm:find_valid_spawn_location_for_character_from_position(player_faction_name, ex, ey, false, distance)
+                            reach = x ~= -1 and math.sqrt((x - ex) ^ 2 + (y - ey) ^ 2) or nil
+                            if reach and reach <= RELIEF_REACH then break end
+                        end
                         if x ~= -1 then cm:teleport_to(cm:char_lookup_str(player_character), x, y) end
-                        out("LEAPOI: relief column: our lord moved to (" .. x .. ", " .. y .. "), the ally " .. self.ally_force_cqi
-                            .. " attacks the enemy " .. enemy_force_cqi)
+                        out("LEAPOI: relief column: our lord moved to (" .. x .. ", " .. y .. "), " .. tostring(reach) .. " from the enemy, the ally "
+                            .. self.ally_force_cqi .. " attacks the enemy " .. enemy_force_cqi)
                         log_relief_state(player_character, self.ally_force_cqi, enemy_force_cqi)
                         cm:force_attack_of_opportunity(self.ally_force_cqi, enemy_force_cqi, false)
                     elseif self.event_army.intervention_type == AMBUSH_TYPE then
