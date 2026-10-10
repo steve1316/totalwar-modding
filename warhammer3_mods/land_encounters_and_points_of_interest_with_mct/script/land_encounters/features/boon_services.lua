@@ -191,7 +191,7 @@ function M.open_witch(character, faction_name, price, cooling)
             closed or cooled("reweave"))
     end
     for i, curse in ipairs(record.curse) do
-        add(spec.cleanse_choices[i], "cleanse", i, curse, price(spec.cleanse_price * curse.level), { boons.line("curse", curse) })
+        add(spec.cleanse_choices[i], "cleanse", i, curse, price(spec.cleanse_price * curse.level), { boons.line("curse", curse) }, cooled("cleanse"))
         add(spec.gamble_choices[i], "gamble", i, curse, price(spec.gamble_price * curse.level), { boons.line("curse", curse), M.line("gamble") }, cooled("gamble"))
         add(spec.blood_choices[i], "blood", i, curse, nil, { boons.line("curse", curse), M.line("blood_" .. curse.level) }, cooled("blood"))
     end
