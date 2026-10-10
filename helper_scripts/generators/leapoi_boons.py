@@ -91,9 +91,6 @@ CLOCKS: Dict[str, Tuple[str, Optional[str]]] = {
 # Icon, priority and scope of the clock effects, as vanilla dummy effects on lord bundles have them. Priority 0 hides an effect.
 CLOCK_ICON, CLOCK_PRIORITY, CLOCK_SCOPE = "turns.png", 1, "character_to_character_own"
 
-# The countdown a faction-wide bundle shows: (text, text when the count is 1), with "%n" its turns left.
-REALM_CLOCK = ("Lasts %n more turns.", "Lasts 1 more turn.")
-
 # Event -> (incident title, description parts, picture). A part is a paragraph or a (heading, lines) section. `incidents` adds `POINTER`. "{lord}" is the lord's name, read from
 # the config's `lord_context`.
 INCIDENTS: Dict[str, Tuple[str, list, str]] = {
@@ -609,20 +606,6 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
 # Rows
 
 
-def clock_text(text: str, one: Optional[str], count: int) -> str:
-    """A clock's text for a count.
-
-    Args:
-        text (str): The text with "%n" for the count.
-        one (Optional[str]): The text when the count is 1.
-        count (int): The count.
-
-    Returns:
-        str: The text.
-    """
-    return one if count == 1 and one else text.replace("%n", str(count))
-
-
 def clock_states(kind: str, record: Dict, config: Dict, level: int) -> List[Tuple[str, Optional[int]]]:
     """Every clock a boon or curse can show at a level, with each count it can reach.
 
@@ -667,8 +650,8 @@ def clocks(config: Dict) -> List[Tuple[str, str]]:
 
 
 def bundles(config: Dict) -> Dict[str, Tuple]:
-    """Every boon and curse countdown bundle per level, naming the level's effects with its clock as its only effect, and every faction-wide bundle
-    for each turn it can have left.
+    """Every boon and curse countdown bundle per level, naming the level's effects with its clock as its only effect, and every faction-wide bundle,
+    which the game counts down.
 
     Args:
         config (Dict): The boons config from the Lua dump.
@@ -687,9 +670,7 @@ def bundles(config: Dict) -> Dict[str, Tuple]:
                     key = f"{config['bundle_prefix'][kind]}{stem}_{number}_{clock}" + (f"_{count}" if count else "")
                     shaped[key] = ("character", icon, level_title(name, levels, number), shown, [(effect, CLOCK_SCOPE, count or 1)])
     for key, (name, flavour, icon, _, effects) in REALM.items():
-        for left in range(1, config["realm_turns"] + 1):
-            shown = f"{flavour}{BREAK}[[col:yellow]]{clock_text(*REALM_CLOCK, left)}[[/col]]"
-            shaped[f"{config['realm_prefix']}{key}_{left}"] = ("faction", icon, name, shown, effects)
+        shaped[config["realm_prefix"] + key] = ("faction", icon, name, flavour, effects)
     return shaped
 
 

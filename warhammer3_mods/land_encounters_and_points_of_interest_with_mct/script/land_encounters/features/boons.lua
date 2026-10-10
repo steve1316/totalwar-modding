@@ -40,7 +40,7 @@ local M = {
     pending = {},
     --- Faction key -> the boons offered on the pick dilemma: { cqi, keys }.
     picks = {},
-    --- Faction key -> faction-wide key -> the turn its bundle comes off.
+    --- Faction key -> faction-wide key -> the turn its bundle runs out. The game counts the bundle down and takes it off.
     realms = {},
 }
 
@@ -154,27 +154,6 @@ end
 local function hide(character, kind, entry)
     cm:force_remove_trait(cm:char_lookup_str(character), M.trait(kind, entry))
     if entry.shown then cm:remove_effect_bundle_from_character(entry.shown, character) end
-end
-
---- The faction-wide bundle of one key with some turns left, e.g. land_enc_effect_realm_pariah_7.
---- @param key string The faction-wide key.
---- @param turns number The turns it has left.
---- @returns string The bundle key.
-function M.realm_bundle(key, turns)
-    return data.realm_prefix .. key .. "_" .. math.max(1, math.min(turns, data.realm_turns))
-end
-
---- Puts a faction-wide bundle on a faction for its turns left, taking off the ones for every other count.
---- @param faction_name string The faction.
---- @param key string The faction-wide key.
---- @param turns number|nil The turns it has left, or nil to take it off.
-local function show_realm(faction_name, key, turns)
-    local shown = turns and M.realm_bundle(key, turns)
-    for left = 1, data.realm_turns do
-        local bundle = M.realm_bundle(key, left)
-        if bundle ~= shown then cm:remove_effect_bundle(bundle, faction_name) end
-    end
-    if shown then cm:apply_effect_bundle(shown, faction_name, 0) end
 end
 
 --- The entry for a key (and race) in a list, with its slot.
@@ -420,7 +399,8 @@ function M.on_full_choice(faction_name, choice_key)
     end
 end
 
---- Gives a faction a faction-wide boon or curse for `realm_turns` turns and says so.
+--- Gives a faction a faction-wide boon or curse for `realm_turns` turns and says so. Its bundle goes on with that duration, so the game shows
+--- the turns left and takes it off. One the faction already has starts its turns again.
 --- @param faction_name string The faction.
 --- @param key string The faction-wide key.
 function M.gain_realm(faction_name, key)
@@ -428,7 +408,9 @@ function M.gain_realm(faction_name, key)
     if not (config and M.enabled()) then return end
     M.realms[faction_name] = M.realms[faction_name] or {}
     M.realms[faction_name][key] = cm:turn_number() + data.realm_turns
-    show_realm(faction_name, key, data.realm_turns)
+    local bundle = data.realm_prefix .. key
+    cm:remove_effect_bundle(bundle, faction_name)
+    cm:apply_effect_bundle(bundle, faction_name, data.realm_turns)
     launch_line_incident(data.incident_prefix .. (config.good and "realm_boon" or "realm_curse"), data.line_prefix .. "realm_" .. key, cm:get_faction(faction_name))
     log("boons: " .. faction_name .. " gains " .. data.realm_prefix .. key .. " for " .. data.realm_turns .. " turns")
 end
@@ -662,17 +644,16 @@ local function turn_curse(character, index)
     M.gain(character, "boon", data.by_key.curse[curse.key].turns_into, 1, curse.race)
 end
 
---- Counts down a faction's faction-wide boons and curses: each one with turns left gets its clock moved on, and a finished one comes off.
+--- Logs a faction's faction-wide boons and curses with the turns each has left, and forgets the ones that ran out. The game takes their
+--- bundles off itself.
 --- @param faction_name string The faction whose turn starts.
 local function tick_realms(faction_name)
     local turn = cm:turn_number()
     for key, ends in pairs(M.realms[faction_name] or {}) do
         local left = ends - turn
         if left > 0 then
-            show_realm(faction_name, key, left)
             log("boons: " .. faction_name .. "'s " .. data.realm_prefix .. key .. " has " .. left .. " turns left")
         else
-            show_realm(faction_name, key, nil)
             M.realms[faction_name][key] = nil
             log("boons: " .. faction_name .. "'s " .. data.realm_prefix .. key .. " has run out")
         end
@@ -714,9 +695,13 @@ function M.on_faction_turn_start(faction_name)
     tick_realms(faction_name)
 end
 
---- Gives every lord of the human factions the debug `grant_boons` and `grant_curses` they do not carry yet.
+--- Gives every lord of the human factions the debug `grant_boons` and `grant_curses` they do not carry yet, and each human faction the debug
+--- `grant_realm` it does not have yet.
 local function grant_debug()
     for _, faction_name in ipairs(cm:get_human_factions()) do
+        for _, key in ipairs(debug_config.grant_realm) do
+            if not (M.realms[faction_name] and M.realms[faction_name][key]) then M.gain_realm(faction_name, key) end
+        end
         each_army(cm:get_faction(faction_name), function(force)
             local general = force:general_character()
             for kind, keys in pairs({ boon = debug_config.grant_boons, curse = debug_config.grant_curses }) do
@@ -745,7 +730,7 @@ function M.register()
     core:add_listener("land_enc_boons_full_choice", "DilemmaChoiceMadeEvent",
         function(context) return context:dilemma() == data.full_dilemma end,
         function(context) M.on_full_choice(context:faction():name(), context:choice_key()) end, true)
-    if debug_config.grant_boons[1] or debug_config.grant_curses[1] then cm:add_first_tick_callback(grant_debug) end
+    if debug_config.grant_boons[1] or debug_config.grant_curses[1] or debug_config.grant_realm[1] then cm:add_first_tick_callback(grant_debug) end
 end
 
 --- Exports the lords' boons and curses, the faction-wide ones' end turns, and any open full-slots or pick question for the save file.

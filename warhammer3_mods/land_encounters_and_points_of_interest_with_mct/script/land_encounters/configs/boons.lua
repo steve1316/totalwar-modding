@@ -52,7 +52,7 @@ M.trait_prefix = { boon = "land_enc_trait_boon_", curse = "land_enc_trait_curse_
 --- or land_enc_effect_curse_haunted_5_worst.
 M.bundle_prefix = { boon = "land_enc_effect_boon_", curse = "land_enc_effect_curse_" }
 
---- Prefix of each faction-wide bundle. The key and the turns it has left follow, e.g. land_enc_effect_realm_pariah_7.
+--- Prefix of each faction-wide bundle. The key follows, e.g. land_enc_effect_realm_pariah.
 M.realm_prefix = "land_enc_effect_realm_"
 
 --- Prefix of a boon's or curse's payload line on a dilemma choice. The kind, then the bundle name without its prefix follow, e.g.

@@ -5522,123 +5522,15 @@ effect_bundles_localised_title_land_enc_effect_curse_cursed_coin_4_worsens_5	Cur
 effect_bundles_localised_description_land_enc_effect_curse_cursed_coin_4_worsens_5	Recruits want extra pay before they will march under this lord.\\n\\n[[col:red]]+20% recruitment cost[[/col]]	false
 effect_bundles_localised_title_land_enc_effect_curse_cursed_coin_5_worst	Cursed Coin V	false
 effect_bundles_localised_description_land_enc_effect_curse_cursed_coin_5_worst	Recruits want extra pay before they will march under this lord.\\n\\n[[col:red]]+25% recruitment cost[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_1	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_1	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 1 more turn.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_2	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_2	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 2 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_3	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_3	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 3 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_4	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_4	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 4 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_5	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_5	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 5 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_6	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_6	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 6 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_7	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_7	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 7 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_8	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_8	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 8 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_9	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_9	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 9 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_comet_sign_10	Sign of the Twin-Tailed Comet	false
-effect_bundles_localised_description_land_enc_effect_realm_comet_sign_10	A comet hangs over the realm, and the Winds swell under it.\\n\\n[[col:yellow]]Lasts 10 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_1	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_1	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 1 more turn.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_2	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_2	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 2 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_3	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_3	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 3 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_4	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_4	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 4 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_5	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_5	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 5 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_6	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_6	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 6 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_7	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_7	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 7 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_8	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_8	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 8 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_9	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_9	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 9 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour_10	Favour of the Old Ones	false
-effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour_10	Scholars across the realm wake with ideas they did not have before.\\n\\n[[col:yellow]]Lasts 10 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_1	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_1	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 1 more turn.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_2	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_2	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 2 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_3	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_3	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 3 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_4	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_4	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 4 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_5	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_5	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 5 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_6	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_6	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 6 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_7	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_7	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 7 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_8	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_8	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 8 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_9	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_9	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 9 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_golden_age_10	Golden Age	false
-effect_bundles_localised_description_land_enc_effect_realm_golden_age_10	Trade flows and the harvests are rich.\\n\\n[[col:yellow]]Lasts 10 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_1	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_1	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 1 more turn.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_2	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_2	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 2 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_3	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_3	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 3 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_4	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_4	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 4 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_5	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_5	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 5 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_6	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_6	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 6 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_7	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_7	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 7 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_8	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_8	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 8 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_9	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_9	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 9 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath_10	Wrath of the Dark Gods	false
-effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath_10	The realm has caught the attention of something hungry.\\n\\n[[col:yellow]]Lasts 10 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_1	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_1	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 1 more turn.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_2	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_2	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 2 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_3	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_3	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 3 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_4	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_4	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 4 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_5	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_5	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 5 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_6	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_6	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 6 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_7	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_7	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 7 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_8	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_8	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 8 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_9	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_9	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 9 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_black_plague_10	Black Plague	false
-effect_bundles_localised_description_land_enc_effect_realm_black_plague_10	Sickness spreads from town to town.\\n\\n[[col:yellow]]Lasts 10 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_1	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_1	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 1 more turn.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_2	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_2	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 2 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_3	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_3	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 3 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_4	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_4	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 4 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_5	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_5	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 5 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_6	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_6	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 6 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_7	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_7	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 7 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_8	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_8	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 8 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_9	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_9	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 9 more turns.[[/col]]	false
-effect_bundles_localised_title_land_enc_effect_realm_pariah_10	Pariah	false
-effect_bundles_localised_description_land_enc_effect_realm_pariah_10	Envoys stop answering this realm's letters.\\n\\n[[col:yellow]]Lasts 10 more turns.[[/col]]	false
+effect_bundles_localised_title_land_enc_effect_realm_comet_sign	Sign of the Twin-Tailed Comet	false
+effect_bundles_localised_description_land_enc_effect_realm_comet_sign	A comet hangs over the realm, and the Winds swell under it.	false
+effect_bundles_localised_title_land_enc_effect_realm_old_ones_favour	Favour of the Old Ones	false
+effect_bundles_localised_description_land_enc_effect_realm_old_ones_favour	Scholars across the realm wake with ideas they did not have before.	false
+effect_bundles_localised_title_land_enc_effect_realm_golden_age	Golden Age	false
+effect_bundles_localised_description_land_enc_effect_realm_golden_age	Trade flows and the harvests are rich.	false
+effect_bundles_localised_title_land_enc_effect_realm_dark_gods_wrath	Wrath of the Dark Gods	false
+effect_bundles_localised_description_land_enc_effect_realm_dark_gods_wrath	The realm has caught the attention of something hungry.	false
+effect_bundles_localised_title_land_enc_effect_realm_black_plague	Black Plague	false
+effect_bundles_localised_description_land_enc_effect_realm_black_plague	Sickness spreads from town to town.	false
+effect_bundles_localised_title_land_enc_effect_realm_pariah	Pariah	false
+effect_bundles_localised_description_land_enc_effect_realm_pariah	Envoys stop answering this realm's letters.	false
