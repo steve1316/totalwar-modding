@@ -404,6 +404,17 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - **One money payload:** a mission given two `money` payloads is silently dropped by the game. Add the amounts into one payload, and name the parts with a text line (`L/features/tavern_contracts.lua:361-363`).
 - **Scripted objectives:** the condition passed to `mm:add_new_scripted_objective` must be a function, never `false`. An objective that only script completes passes `function() return false end` (`:356`, `L/features/smithy_commissions.lua:113`).
 
+### 4.15 Help pages, link tooltips and links in event text `[game]`
+- **Help pages are script-built.** `help_page:new(link, hpr_title(key), ...)` (CA `lib_help_pages.lua`) registers a page on its script link. Each record key is an `advice_info_texts_tables` row with loc `advice_info_texts_localised_text_<key>`. `L/features/help_pages.lua` builds the LEAPOI pages from the generated `L/configs/help_pages.lua`, and `helper_scripts/generators/leapoi_help_pages.py` writes the rows, loc and that list.
+- **CA's helpers are entry-point globals.** `help_page`, `hpr_*`, `get_link_parser`, `tooltip_patcher` and `hp_contents` are not in `_G` for required modules, so the entry point passes `getfenv(1)` in, like `core/item_pool`.
+- **Index and Home page:** the "?" index comes from `help_page_index_records_tables` (key, display_order, inset_level) with loc `help_page_index_records_text_<key>` = `[[sl:<key>]]Title[[/sl]]`, plus `get_link_parser():add_record(key, link, tooltip)`. The Home page is the global `hp_contents`, and appending `hpr_section` / `hpr_title` / `hpr_image` / `hpr_normal` / `hpr_section_index` records to `hp_contents.content` adds a card.
+- **A link tooltip needs a `ui_tooltips_tables` row** (key `tooltip_<x>`, layout `tooltip_title_and_text`). Without it, `{{tt:tooltip_<x>}}` shows raw and every hover is a script error. The text comes from `tooltip_patcher:new(key):set_layout_data(...)`.
+- **Links in incident and dilemma text never reach script.** `ComponentLinkClicked` does not fire from those panels. Only event messages (`show_message_event_located`) pass their link clicks on, so only the intro message links to pages.
+- **Plain `show_message_event` showed nothing** for LEAPOI (image 1017, with or without event feed rows). The located call shows the same text.
+- **A message with links must stay short.** At about 12 lines the panel moves the text into a scrolling view (`dy_details_slider > description_view`), where clicks on its links did nothing. At 8-9 lines the text sits in `dy_details_text`, links work and there is no gap. The generator's `INTRO_MAX_LINES` guards it. The intro's texts also have `event_feed_strings_tables` rows.
+- **A message shown during the opening cutscene is lost.** The intro waits for `ScriptEventIntroCutsceneFinished`, then for the events panel to stay closed for 2 seconds. Path to Glory holds the feed while it is open, and a message sent then is dropped.
+- **Some broken link-click runs were never explained.** While links failed, each click also set off other mods' UI errors (`!ui_vslider`, `tabletopcaps`: "supplied parent is not a ui component"). A later run with the same intro worked, after the link-click log listener changed from a filtered condition to `true`.
+
 ---
 
 ## 5. Allied armies and reinforcements

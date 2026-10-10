@@ -1,0 +1,185 @@
+key	text	tooltip
+#Loc;1;text/db/land_enc_and_poi_help_pages.loc		
+advice_info_texts_localised_text_land_enc_hp_leapoi_001	Land Encounters	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_002	Land Encounters And Points Of Interest fills the campaign map with places worth a detour. Almost everything it adds sits on the map as a marker your lords can walk onto.	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_003	What You Will Find	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_004	[[sl:land_enc_encounters]]Encounter spots[[/sl]] hold a battle or a treasure site. They come and go across every map zone.	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_005	An [[sl:land_enc_towers]]Ancient Tower[[/sl]] stands in each map zone. Climb it floor by floor for a growing haul.	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_006	[[sl:land_enc_smithies]]Smithies[[/sl]] and [[sl:land_enc_taverns]]Taverns[[/sl]] can be claimed and held. They offer items, mercenaries, contracts and services.	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_007	Your lords bring home lasting [[sl:land_enc_boons_and_curses]]boons and curses[[/sl]], and your armies can win [[sl:land_enc_army_spells]]army spells[[/sl]].	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_008	Getting Started	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_009	Send a lord in the default, channelling or ambush stance onto any marker. A dilemma always shows what is on offer before anything is spent, and almost every choice can be turned down. Early fights are easy. Enemies grow stronger from turn 15, and again from turn 25.	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_010	Making It Your Own	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_011	Every feature can be tuned or turned off in the mod's settings, which also hold a guide to every offer. See [[sl:land_enc_settings]]Settings and Compatibility[[/sl]].	false
+advice_info_texts_localised_text_land_enc_hp_leapoi_tip	What the mod adds to the campaign, and where to start.	false
+help_page_index_records_text_land_enc_leapoi	[[sl:land_enc_leapoi]]Land Encounters[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_encounters_001	Encounter Spots	false
+advice_info_texts_localised_text_land_enc_hp_encounters_002	Encounter spots are the markers scattered across each map zone. Walk a lord onto one to find out what it holds: a battle, or a treasure site.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_003	How Spots Appear	false
+advice_info_texts_localised_text_land_enc_hp_encounters_004	Each map zone keeps about 75% of its spots active at a time.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_005	A spot nobody visits fades after 10 turns. A used spot stays empty for 5 turns before the zone fills up again.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_006	When a lord steps on, the spot is a battle 70% of the time. Otherwise it is a [[sl:land_enc_treasure]]treasure site[[/sl]].	false
+advice_info_texts_localised_text_land_enc_hp_encounters_007	Only a lord in the default, channelling or ambush stance can use a spot. Anyone else just gets a message.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_008	Battles	false
+advice_info_texts_localised_text_land_enc_hp_encounters_009	A battle spot opens a dilemma naming the enemy and their faction. Choose Fight, or Avoid to walk away. Avoiding costs no gold, but some foes leave a parting gift that lingers for a few turns.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_010	Fights come in kinds, from a Skirmish or Bandits up to a Battlefield or a Daemonic Gift. The rarer kinds turn up more often on higher difficulties.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_011	Some fights are an Ally in Peril: an ally's army is beset beside you, or needs a relief column. Saving them improves [[img:icon_diplomacy]][[/img]] relations with their kin.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_012	Winning pays [[img:icon_money]][[/img]] gold and, for most fights, an item. Hard fights have a 5% chance of a legendary item.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_013	A battle can also come with offers, missions and twists. See [[sl:land_enc_battle_events]]Battle Offers and Missions[[/sl]].	false
+advice_info_texts_localised_text_land_enc_hp_encounters_014	Difficulty	false
+advice_info_texts_localised_text_land_enc_hp_encounters_015	Enemies start Easy, become Medium from turn 15 and Hard from turn 25. Their armies are built from a gold budget and an army recipe, so a fight can be a shield wall, a monster horde or a gunline. The Enemy Forces page of the mod's settings changes both.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_016	AI Factions	false
+advice_info_texts_localised_text_land_enc_hp_encounters_017	AI lords use spots too. They take a flat reward of gold, and sometimes an item, instead of fighting.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_tip	Map markers that hold a battle or a treasure site.	false
+help_page_index_records_text_land_enc_encounters	[[sl:land_enc_encounters]]Encounter Spots[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_001	Battle Offers and Missions	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_002	Many battle spots come with extra choices before the fight, and some fights carry a twist of their own.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_003	Pre-Battle Offers	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_004	30% of battle dilemmas also offer 2 ways to tip the fight: bribe guards, thin the enemy's ranks, hire allies, bless your banners or raise the stakes for a bigger prize. Each choice shows its price, in [[img:icon_money]][[/img]] gold, blood or risk. One you cannot afford is shown greyed out.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_005	Missions	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_006	The same dilemma can offer 2 missions: optional goals like keeping your lord alive or killing their champion.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_007	Taking a mission opens the dilemma again, so you can take several before you fight.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_008	Each mission met in a won battle pays its reward. Failing one usually costs nothing, but a few vows carry a curse.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_009	Missions are only judged in a battle you fight yourself. If you auto-resolve, none count, and any wager comes back.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_010	Battle Modifiers	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_011	Each fight has a 5% chance to roll battle modifiers: storms, last stands, enemy heroes, whole armies of a faction's famous units and more. Some help you, some hurt you, and some cut both ways. A harmful modifier raises the victory gold and a helpful one lowers it. The dilemma lists them before you choose.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_012	Spoils of War	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_013	After a won battle, there is a 30% chance to pick from the spoils: loot, prisoners, captured spells and more, or simply the gold.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_014	In Battle	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_015	When a fight carries buffs, missions or modifiers, a button beside the menu bar shows or hides the objectives panel that tracks them. In a battle beside an allied army, your reinforcements may arrive sooner than usual.	false
+advice_info_texts_localised_text_land_enc_hp_battle_events_tip	Offers, missions and twists that can come with a battle.	false
+help_page_index_records_text_land_enc_battle_events	[[sl:land_enc_battle_events]]Battle Offers and Missions[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_treasure_001	Treasure Sites	false
+advice_info_texts_localised_text_land_enc_hp_treasure_002	When an encounter spot is not a battle, it is a treasure site: one of 16 kinds of place, each with a story of its own.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_003	How a Site Works	false
+advice_info_texts_localised_text_land_enc_hp_treasure_004	Every site has its own special offer, plus 2 more drawn from the treasure and realm offers. Offers that suit the site come up more often.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_005	Take one, or Walk away for nothing. Prices in [[img:icon_money]][[/img]] gold rise with the encounter difficulty.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_006	Some offers cost more than gold: a curse, a tougher next fight, worse [[img:icon_diplomacy]][[/img]] relations, or a battle with a guardian.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_007	Kinds of Offer	false
+advice_info_texts_localised_text_land_enc_hp_treasure_008	Treasure: gold, items, [[sl:land_enc_army_spells]]army spells[[/sl]], [[sl:land_enc_boons_and_curses]]boons[[/sl]], and pacts that trade a curse for a stronger boon.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_009	Realm: offers that reach beyond the army, like improving a region, sending gifts to a friend or hiring raiders against an enemy. Each names its target before you choose.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_010	Guardians: wake a sleeping champion for a unique item, if you can beat it.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_011	The Sites	false
+advice_info_texts_localised_text_land_enc_hp_treasure_012	Hidden Tomb, Abandoned Camp, Buried Relics, Hidden Temple, Caravan Remnants, A Voice in the Dream, The Explorers, Legendary Bard, Ruined Shrine, Smugglers' Cache, Beast Lair, Old Battlefield, Witch's Hut, Collapsed Mine, Merchant's Wagon and Sunken Library.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_013	AI Factions	false
+advice_info_texts_localised_text_land_enc_hp_treasure_014	AI lords take a flat reward of gold, an item and a short blessing instead.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_tip	Encounter spots that hold treasure, offers and the odd guardian.	false
+help_page_index_records_text_land_enc_treasure	[[sl:land_enc_treasure]]Treasure Sites[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_towers_001	Ancient Towers	false
+advice_info_texts_localised_text_land_enc_hp_towers_002	One ancient tower stands in each map zone, held by a random faction. Delve it floor by floor for a growing haul, if your army can survive the climb.	false
+advice_info_texts_localised_text_land_enc_hp_towers_003	The Climb	false
+advice_info_texts_localised_text_land_enc_hp_towers_004	Walk a lord onto a tower and choose Enter the Tower. Each of its 5 floors is a battle somewhere new on the map.	false
+advice_info_texts_localised_text_land_enc_hp_towers_005	Each floor won adds [[img:icon_money]][[/img]] gold and items to the haul. The fewer men you lose, the more the floor pays.	false
+advice_info_texts_localised_text_land_enc_hp_towers_006	From floor 3, some of the beaten army's units swear themselves to you. The last floor holds the tower's master, guarding legendary items.	false
+advice_info_texts_localised_text_land_enc_hp_towers_007	Between Floors	false
+advice_info_texts_localised_text_land_enc_hp_towers_008	After each win, pick one of up to 4 offers to help the climb, or leave with the haul. Offers range from healing and fresh troops to [[sl:land_enc_army_spells]]army spells[[/sl]], a sealed vault, a hidden floor, or a champion to fight for a [[sl:land_enc_boons_and_curses]]boon[[/sl]]. Some are pacts with a price.	false
+advice_info_texts_localised_text_land_enc_hp_towers_009	Losing and Leaving	false
+advice_info_texts_localised_text_land_enc_hp_towers_010	Losing a floor loses the whole haul. Units already sworn to you stay.	false
+advice_info_texts_localised_text_land_enc_hp_towers_011	Leaving pays the haul in full. Beating the master lets you claim the tower's treasure.	false
+advice_info_texts_localised_text_land_enc_hp_towers_012	After any delve, the tower closes for 5 turns, then passes to a new faction.	false
+advice_info_texts_localised_text_land_enc_hp_towers_013	Champions	false
+advice_info_texts_localised_text_land_enc_hp_towers_014	A champion floor pits you against a legendary lord. Win it and your lord picks a boon, with a 3% chance to bless your whole faction for 10 turns instead. Lose it, and there is the same chance of a curse on your faction.	false
+advice_info_texts_localised_text_land_enc_hp_towers_tip	A tower in each map zone to climb for a growing haul.	false
+help_page_index_records_text_land_enc_towers	[[sl:land_enc_towers]]Ancient Towers[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_smithies_001	Smithies	false
+advice_info_texts_localised_text_land_enc_hp_smithies_002	Smithies are forges scattered across the map. Claim one and its master smith works for you: free gear, work orders for your army, and help with your boons and curses.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_003	Claiming and Holding	false
+advice_info_texts_localised_text_land_enc_hp_smithies_004	Walk a lord onto an unclaimed Smithy to claim it for free.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_005	A Smithy held by anyone else must be taken by beating its garrison, which is tougher at higher levels. Taking one from a faction you are not at war with costs 20 [[img:icon_diplomacy]][[/img]] relations with them.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_006	Enemies at war with you can besiege your Smithy. Fight them with its garrison, or surrender it. A Smithy you lose drops a level.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_007	The Forge	false
+advice_info_texts_localised_text_land_enc_hp_smithies_008	Take one of 2 free items, of better rarity at higher forge levels. The forge then cools for 5 turns or more.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_009	While it cools, Rush the Forge ends the wait for 500 [[img:icon_money]][[/img]] gold per turn left, times the forge level.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_010	Work Orders offer 3 orders for the whole army for a few turns, like heavier plate or honed edges. Taking one closes the counter for 5 turns.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_011	Commission a masterwork, or upgrade the forge for better items, a shorter cooldown and more frequent tribute.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_012	Temper and Break	false
+advice_info_texts_localised_text_land_enc_hp_smithies_013	At a Smithy you own, the smith tempers a boon one level or breaks a curse, for gold per level. Trade Rust for Iron gives a boon and a curse together, for free. See [[sl:land_enc_boons_and_curses]]Boons and Curses[[/sl]].	false
+advice_info_texts_localised_text_land_enc_hp_smithies_014	Owning a Smithy	false
+advice_info_texts_localised_text_land_enc_hp_smithies_015	Your Smithies send you an item as tribute every few turns. A level 3 forge sometimes sends a legendary one.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_016	While you hold both a Smithy and its region, Arms Trade raises the province's [[img:icon_income]][[/img]] income and the Garrison Armoury arms its garrison.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_017	Every 10 turns, your best Smithy offers a Smith's Commission: a kill count, beating armies of your nearest enemy, or winning at a marked spot, for an item named on the mission. Failing one costs nothing.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_018	The Smiths' Association	false
+advice_info_texts_localised_text_land_enc_hp_smithies_019	A Generous Donation of 50000 [[img:icon_money]][[/img]] gold at your own forge raises every Smithy to at least level 2, and blesses your armies' weapons for good. A second donation of 100000 gold raises every Smithy to level 3 and doubles the blessing.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_tip	Forges to claim for free items, work orders and smithing services.	false
+help_page_index_records_text_land_enc_smithies	[[sl:land_enc_smithies]]Smithies[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_taverns_001	Taverns	false
+advice_info_texts_localised_text_land_enc_hp_taverns_002	Each map zone has two Taverns: one run by a single race, and a neutral house open to all. Hire swords, try your luck at the bar, take contracts and visit the hedge-witch.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_003	Claiming and Visiting	false
+advice_info_texts_localised_text_land_enc_hp_taverns_004	Walk a lord onto an unclaimed Tavern to claim it, onto your own to open it, or onto an ally's or a neutral one to visit as a guest.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_005	Any Tavern you do not own can be taken by beating its garrison. Taking one from a faction you are not at war with costs 20 [[img:icon_diplomacy]][[/img]] relations.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_006	Enemies at war with you can besiege yours. A Tavern you lose drops a level.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_007	The Mercenary Hall	false
+advice_info_texts_localised_text_land_enc_hp_taverns_008	Hire units of the Tavern's race, famous regiments, a hero and a few units of your own kind. A neutral Tavern stocks two races, picked at random.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_009	Each costs its [[img:icon_money]][[/img]] recruitment cost plus 1000 gold. A veteran company costs half again as much, and a cut-price sellsword costs half but arrives at a quarter of its strength.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_010	You can hire 2 per visit, then the hall closes to your faction for 5 turns. The stock changes every 5 turns.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_011	The Bar	false
+advice_info_texts_localised_text_land_enc_hp_taverns_012	Three drinks and games are on offer each visit, each a gamble or a short-lived boost. Prices rise with the campaign's difficulty, and the owner pays a quarter less. Taking one closes the bar to your faction for 5 turns.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_013	The Contract Board	false
+advice_info_texts_localised_text_land_enc_hp_taverns_014	The Tavern Keepers' Guild posts bounties, culls and marked spots, and a three-step quest at level 3. Each takes a deposit, which comes back with the reward.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_015	You can hold 1 contract at a time. Fail or drop one and you lose the deposit, and every Guild Tavern charges you 25% more for 10 turns. Buying a contract out returns half the deposit, with no surcharge.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_016	Hazard pay offers half again the gold for one more harmful battle modifier. Contract terms add a bonus mission to the fight.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_017	The Hedge-Witch	false
+advice_info_texts_localised_text_land_enc_hp_taverns_018	The hedge-witch cleanses a curse or gambles on one, feeds a boon toward its next level, reweaves a boon, or lifts a curse with a blood rite paid in your army's strength. See [[sl:land_enc_boons_and_curses]]Boons and Curses[[/sl]].	false
+advice_info_texts_localised_text_land_enc_hp_taverns_019	The Tavern Keepers' Guild	false
+advice_info_texts_localised_text_land_enc_hp_taverns_020	A Generous Donation of 50000 [[img:icon_money]][[/img]] gold at any Tavern raises every Tavern to at least level 2 and ends the Guild's surcharge for you. It also blesses your faction's [[img:icon_income]][[/img]] income, trade and armies for good, with [[img:icon_experience]][[/img]] experience for every lord and hero each turn. A second donation of 100000 gold raises every Tavern to level 3 and doubles the blessing.	false
+advice_info_texts_localised_text_land_enc_hp_taverns_tip	Taverns to claim for mercenaries, drinks, contracts and the hedge-witch.	false
+help_page_index_records_text_land_enc_taverns	[[sl:land_enc_taverns]]Taverns[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_001	Boons and Curses	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_002	A lord can carry lasting boons and curses. Each one sits on the lord's army as an effect, with a line at the top saying when it next changes.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_003	How Boons Grow	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_004	A boon grows one level for every 5 battles the lord wins, up to level 5. Lost battles never take a level away.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_005	A charged boon does not grow. It lasts a set number of battles, then fades.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_006	Gaining a boon the lord already has raises it a level, or refills its charges.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_007	How Curses Grow	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_008	A curse worsens one level every 5 turns, up to level 5.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_009	Some curses turn into a boon after 10 turns at their worst. The rest stay until lifted.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_010	When the lord has no room for another curse, the mildest one worsens instead.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_011	Slots	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_012	A lord has 3 boon slots and 3 curse slots. A new boon on a lord with every slot full asks which one to give up. A lord who dies or leaves the faction loses them all, and AI lords get none.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_013	Where They Come From	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_014	A hard or modified win has a 3% chance to leave a boon, and a lost battle or failed contract a 3% chance to leave a curse. Each battle modifier has a 3% chance to linger as one.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_015	Pacts at [[sl:land_enc_treasure]]treasure sites[[/sl]], the [[sl:land_enc_taverns]]Tavern[[/sl]] bar and the [[sl:land_enc_towers]]Towers[[/sl]] trade a curse for a stronger boon. Tower champions and Tavern contracts give boons too.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_016	A Tower champion floor can bless or curse your whole faction for 10 turns. These take no lord's slot.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_017	Lifting Curses and Raising Boons	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_018	At a [[sl:land_enc_smithies]]Smithy[[/sl]] you own, the smith tempers a boon one level or breaks a curse.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_019	At any [[sl:land_enc_taverns]]Tavern[[/sl]], the hedge-witch cleanses a curse or gambles on one, feeds or reweaves a boon, or lifts a curse with a blood rite.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_020	These are the default numbers. The Boons and Curses page of the mod's settings changes them.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_tip	Lasting blessings and burdens your lords carry from fight to fight.	false
+help_page_index_records_text_land_enc_boons_and_curses	[[sl:land_enc_boons_and_curses]]Boons and Curses[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_001	Army Spells	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_002	An army spell lets an army cast a spell or ability in battle without spending the Winds of Magic, whoever leads it.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_003	How They Work	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_004	An army spell shows on the army as an effect, naming the spell and how many casts it has in each battle.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_005	Lore spells give 1 to 3 casts, more for cheaper spells. Bound spells and army abilities keep their own uses.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_006	Most last 5 turns. Some last only for the next battle.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_007	Over 400 can turn up, from every lore of magic, bound item and army ability in the game.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_008	Where to Find Them	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_009	[[sl:land_enc_treasure]]Treasure sites[[/sl]]: scrolls, shrines and runestones.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_010	[[sl:land_enc_battle_events]]Battles[[/sl]]: pre-battle scrolls, the Witch Hunt mission and the spoils of war.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_011	[[sl:land_enc_taverns]]Taverns[[/sl]]: the Spell Pedlar at the bar, and won marked-spot contracts.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_012	[[sl:land_enc_smithies]]Smithies[[/sl]]: the Runesmith's Inscription work order.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_013	[[sl:land_enc_towers]]Towers[[/sl]]: scrolls, relics and war horns between floors, for the next floor.	false
+advice_info_texts_localised_text_land_enc_hp_army_spells_tip	Spells and abilities an army can cast without spending the Winds of Magic.	false
+help_page_index_records_text_land_enc_army_spells	[[sl:land_enc_army_spells]]Army Spells[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_settings_001	Settings and Compatibility	false
+advice_info_texts_localised_text_land_enc_hp_settings_002	Everything in Land Encounters can be tuned through the Mod Configuration Tool (MCT). Each feature has its own page, with an in-game guide to how it works and what every offer does.	false
+advice_info_texts_localised_text_land_enc_hp_settings_003	Settings Pages	false
+advice_info_texts_localised_text_land_enc_hp_settings_004	General: how many spots are active, and how many are battles.	false
+advice_info_texts_localised_text_land_enc_hp_settings_005	Encounters: battle types, event chances, marker skins, and guides to every offer.	false
+advice_info_texts_localised_text_land_enc_hp_settings_006	Enemy Forces: difficulty, budgets, army recipes, and units from other mods.	false
+advice_info_texts_localised_text_land_enc_hp_settings_007	Towers, Smithies, Taverns, and Boons and Curses: each can be tuned or turned off. Smithies and Taverns can be removed from the map.	false
+advice_info_texts_localised_text_land_enc_hp_settings_008	Changes to the Base Game	false
+advice_info_texts_localised_text_land_enc_hp_settings_009	Dilemma layout: a dilemma with more than three rows of choices, or one too tall for your screen, shows its choices in a scrolling list. This applies to every dilemma in the game.	false
+advice_info_texts_localised_text_land_enc_hp_settings_010	Battle scripts: the mod's battle scripts load in every battle, but only act in its own fights.	false
+advice_info_texts_localised_text_land_enc_hp_settings_011	Objectives button: in the mod's fights that carry buffs, missions or modifiers, a button beside the menu bar shows or hides the objectives panel.	false
+advice_info_texts_localised_text_land_enc_hp_settings_012	Good to Know	false
+advice_info_texts_localised_text_land_enc_hp_settings_013	Works in Immortal Empires, the Realm of Chaos and The Old World, and with Immortal Empires Expanded.	false
+advice_info_texts_localised_text_land_enc_hp_settings_014	Multiplayer is untested.	false
+advice_info_texts_localised_text_land_enc_hp_settings_tip	The mod's settings pages, and what it changes in the base game.	false
+help_page_index_records_text_land_enc_settings	[[sl:land_enc_settings]]Settings and Compatibility[[/sl]]	false
+advice_info_texts_localised_text_land_enc_hp_contents_001	Land Encounters	false
+advice_info_texts_localised_text_land_enc_hp_contents_002		false
+advice_info_texts_localised_text_land_enc_hp_contents_003	Battles, treasure, Towers, Smithies and Taverns off the beaten road, and the boons and curses your lords carry home.	false
+event_feed_strings_text_title_event_land_enc_intro	Land Encounters	false
+event_feed_strings_text_subtitle_event_land_enc_intro	Places Worth a Detour	false
+event_feed_strings_text_description_event_land_enc_intro	Lords who leave the road find more than mud. Battles, treasure, an Ancient Tower, Smithies and Taverns wait in every map zone. Walk a lord onto any marker to see what it holds.\\n\\nLearn more in the help pages: [[url:script_link_land_enc_leapoi]][[tooltip:{{tt:tooltip_land_enc_leapoi}}]]Land Encounters[[/tooltip]][[/url]], [[url:script_link_land_enc_encounters]][[tooltip:{{tt:tooltip_land_enc_encounters}}]]Encounter Spots[[/tooltip]][[/url]], [[url:script_link_land_enc_towers]][[tooltip:{{tt:tooltip_land_enc_towers}}]]Ancient Towers[[/tooltip]][[/url]], [[url:script_link_land_enc_smithies]][[tooltip:{{tt:tooltip_land_enc_smithies}}]]Smithies[[/tooltip]][[/url]], [[url:script_link_land_enc_taverns]][[tooltip:{{tt:tooltip_land_enc_taverns}}]]Taverns[[/tooltip]][[/url]] and [[url:script_link_land_enc_boons_and_curses]][[tooltip:{{tt:tooltip_land_enc_boons_and_curses}}]]Boons and Curses[[/tooltip]][[/url]].	false

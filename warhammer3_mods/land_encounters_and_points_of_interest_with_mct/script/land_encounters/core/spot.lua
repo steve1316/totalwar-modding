@@ -679,4 +679,8 @@ return {
     SpotDelegate = SpotDelegate,
     PointOfInterestDelegate = PointOfInterestDelegate,
     Zone = Zone,
+    --- Turns an unused spot stays before it expires, quoted by the help pages.
+    AUTOMATIC_DEACTIVATION_COOLDOWN = AUTOMATIC_DEACTIVATION_COOLDOWN,
+    --- Turns a used spot stays empty, quoted by the help pages.
+    SPOT_TURN_ACTIVATION_COOLDOWN = SPOT_TURN_ACTIVATION_COOLDOWN,
 }

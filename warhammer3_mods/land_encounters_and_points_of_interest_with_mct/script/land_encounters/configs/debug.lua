@@ -80,6 +80,9 @@ M.grant_boons = {}
 --- Curse keys every lord of the human factions gains at level 1 when a game loads, once each, e.g. { "haunted" }.
 M.grant_curses = {}
 
+--- Shows the LEAPOI intro message to every human faction when a game loads, not only on a new campaign's first turn, e.g. { true }.
+M.intro_now = {}
+
 --- Battles won that raise a boon a level, instead of the config's, e.g. { 1 }.
 M.boon_wins_per_level = {}
 

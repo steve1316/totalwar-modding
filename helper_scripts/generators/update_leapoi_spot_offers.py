@@ -11,6 +11,7 @@ Run from `helper_scripts/`: `python -m generators.update_leapoi_spot_offers`.
 """
 
 import argparse
+import glob
 import json
 import os
 import re
@@ -23,6 +24,7 @@ from generators import leapoi_battle_modifiers as battle_modifiers
 from generators import leapoi_effect_library as effect_library
 from generators import leapoi_army_spells as army_spells
 from generators import leapoi_boons as boons
+from generators import leapoi_help_pages as help_pages
 from generators.leapoi_stat_icons import add_stat_icons
 
 MOD_ROOT = "../warhammer3_mods/land_encounters_and_points_of_interest_with_mct/"
@@ -1507,6 +1509,7 @@ TRAITS = {
 
 LUA_DUMP = r"""
 package.path = arg[1] .. "?.lua;" .. package.path
+--HELP_VALUES--
 local data = require("script/land_encounters/configs/spot_offers")
 local tower = require("script/land_encounters/configs/tower_offers")
 local steps = require("script/land_encounters/utils/steps")
@@ -1564,7 +1567,7 @@ io.write(encode({ sites = data.sites, spoils = data.spoils, venues = data.venues
     avoid_choice_key = data.avoid_choice_key,
     unaffordable_line = data.unaffordable_line, taken_line = data.taken_line, missions_context = data.missions_context,
     mission_set_loc_prefix = data.mission_set_loc_prefix, battle_dilemmas = battle_dilemmas, result_detail_context = data.result_detail_context,
-    battle_modifiers = battle_modifiers, boons = boons }))
+    battle_modifiers = battle_modifiers, boons = boons, help_values = help_values }))
 """
 
 
@@ -1579,7 +1582,8 @@ def load_config() -> Dict:
     Raises:
         subprocess.CalledProcessError: When Lua cannot load the config.
     """
-    output = subprocess.run(["lua", "-", MOD_ROOT], input=LUA_DUMP, capture_output=True, text=True, check=True).stdout
+    dump = LUA_DUMP.replace("--HELP_VALUES--", help_pages.VALUES_LUA)
+    output = subprocess.run(["lua", "-", MOD_ROOT], input=dump, capture_output=True, text=True, check=True).stdout
     config = json.loads(output)
     battle_modifiers.add_lore(config["battle_modifiers"]["list"])
     # The offers granting boons and curses take their text from the boons catalogue, as the lore armies take theirs from the config.
@@ -1951,8 +1955,8 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
         messages["mission_" + key + "_failed"] = (title, "Mission Failed", failed)
     messages["missions_untracked"] = ("Missions", "Not Counted",
                                       "The battle was fought without our watchful eyes on it. The armies clashed and the matter was settled, but nobody "
-                                      "was there to count what happened.\\n\\nSo none of our missions could be judged. No vow was kept and no "
-                                      "vow was broken, and no reward or penalty comes of them.\\n\\nAny gold we wagered on them is returned to our "
+                                      "was there to count what happened." + boons.BREAK + "So none of our missions could be judged. No vow was kept and no "
+                                      "vow was broken, and no reward or penalty comes of them." + boons.BREAK + "Any gold we wagered on them is returned to our "
                                       "treasury. Next time, our officers will have to watch the fighting closely, from the first charge to the last "
                                       "man standing.")
 
@@ -2357,6 +2361,22 @@ def check_event_lengths() -> None:
         raise SystemExit("Event descriptions that would leave a gap:\n  " + "\n  ".join(problems))
 
 
+def check_loc_newlines() -> None:
+    """Stops when any row in the mod's loc files has a single-backslash newline, which the game shows as a literal "\\n" instead of a line
+    break. Covers the hand-written rows as well as the generated ones.
+
+    Raises:
+        SystemExit: Naming every row with a single-backslash newline.
+    """
+    problems = []
+    for path in sorted(glob.glob(MOD_ROOT + "text/db/*.loc.tsv")):
+        for line in open(path, encoding="utf-8").read().splitlines()[2:]:
+            if "\\n" in line.replace(boons.NL, ""):
+                problems.append(f"{os.path.basename(path)}: {line.split(chr(9))[0]}")
+    if problems:
+        raise SystemExit("Loc rows with a single-backslash newline, which shows as a literal \\n:\n  " + "\n  ".join(problems))
+
+
 def main() -> None:
     """Loads the config, checks the text, and writes the rows."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -2370,7 +2390,9 @@ def main() -> None:
     write_victory_gold(args.dry_run)
     write_army_spells(args.dry_run)
     hook_battle_descriptions(config, args.dry_run)
+    help_pages.write(MOD_ROOT, config["help_values"], args.dry_run)
     check_event_lengths()
+    check_loc_newlines()
 
 
 if __name__ == "__main__":
