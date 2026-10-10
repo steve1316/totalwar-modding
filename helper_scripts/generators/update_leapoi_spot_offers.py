@@ -1276,6 +1276,10 @@ FALLBACK_PLACES = {
     "point_them_at_each_other": "that region", "sell_their_secrets": "that region", "ransom_the_captain": "their own people",
 }
 
+# Result -> icon of its effect line, where the line shows something other than its offer's icon does. Blackmail's offer icon is the gold
+# gain, but its line is the relations loss.
+RESULT_ICONS = {"blackmail_a_governor": "diplomacy.png"}
+
 # Result -> (colour, text) of the effect line under a result's incident, for results whose payload shows no gold, item or unit card.
 # Every mission failed gets its own line.
 RESULT_LINES = {
@@ -2076,7 +2080,7 @@ def result_icon(result: str) -> str:
     """
     if result == "missions_untracked":
         return "treasury.png"
-    return ICONS[result_key(result)]
+    return RESULT_ICONS.get(result, ICONS[result_key(result)])
 
 
 def read_labels(dilemmas: List[str], choice: str) -> Dict[str, str]:
