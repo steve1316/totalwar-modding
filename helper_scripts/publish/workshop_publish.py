@@ -167,7 +167,8 @@ def build_change_note(record: Optional[Dict[str, Any]], limit: int = CHANGE_NOTE
 
     Changed mods are listed one per `- ` dash line under an underlined headline. Dashes are used because Steam's `[list]` markup breaks the
     change note's background into separate blocks. Past the limit, the last bullet counts the mods that did not fit. The game patch is only
-    named when the vanilla tables changed, since that only happens on a new patch.
+    named when the vanilla tables changed, since that only happens on a new patch. Rebuilds not tied to a mod, and items never uploaded from
+    here, also say they were rebuilt against every supported mod, since the listed mods may not cover everything that changed.
 
     Args:
         record (Optional[Dict[str, Any]]): The item's publish record, or None if it has never been recorded.
@@ -180,10 +181,12 @@ def build_change_note(record: Optional[Dict[str, Any]], limit: int = CHANGE_NOTE
     pending = (record or {}).get("pending_mods", [])
     mods = [mod for mod in pending if mod != BASE_GAME_NAME]
     patch_name = (f"game patch {patch}" if patch else "the latest game patch") if BASE_GAME_NAME in pending else None
+    general = record is None or not record.get("pack_sha") or bool(record.get("pending_general"))
+    rebuilt_for = ([f"for {patch_name}"] if patch_name else []) + (["against the latest versions of all supported mods"] if general else [])
     if not mods:
-        return "[u]Compatibility update[/u]\n\n" + (f"Rebuilt for {patch_name}." if patch_name else GENERAL_NOTE)
+        return "[u]Compatibility update[/u]\n\n" + (f"Rebuilt {' and '.join(rebuilt_for)}." if rebuilt_for else GENERAL_NOTE)
     header = "[u]Compatibility update[/u]\n\nUpdated for changes in:"
-    footer = f"\n\nAlso rebuilt for {patch_name}." if patch_name else ""
+    footer = f"\n\nAlso rebuilt {' and '.join(rebuilt_for)}." if rebuilt_for else ""
     for shown in range(len(mods), -1, -1):
         bullets = [f"- {mod}" for mod in mods[:shown]]
         if shown < len(mods):
