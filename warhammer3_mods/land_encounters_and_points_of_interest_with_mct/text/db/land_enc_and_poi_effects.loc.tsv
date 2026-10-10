@@ -506,15 +506,13 @@ effects_description_land_enc_lib_fx_weapon_strength_vs_beastmen	Weapon strength:
 effects_description_land_enc_lib_fx_melee_attack_vs_beastmen	Melee attack: %+n when fighting against the Beastmen	false
 effects_description_land_enc_lib_fx_weapon_strength_vs_chaos_dwarfs	Weapon strength: %+n% when fighting against the Chaos Dwarfs	false
 effects_description_land_enc_lib_fx_melee_attack_vs_chaos_dwarfs	Melee attack: %+n when fighting against the Chaos Dwarfs	false
-effects_description_land_enc_clock_lasts	[[col:yellow]]Lasts %n battles.[[/col]]	false
-effects_description_land_enc_clock_lasts_one	[[col:yellow]]Lasts 1 battle.[[/col]]	false
+effects_description_land_enc_clock_lasts	[[col:yellow]]Lasts %n more battles.[[/col]]	false
+effects_description_land_enc_clock_lasts_one	[[col:yellow]]Lasts 1 more battle.[[/col]]	false
 effects_description_land_enc_clock_upgrades	[[col:yellow]]Upgrades in %n won battles.[[/col]]	false
 effects_description_land_enc_clock_upgrades_one	[[col:yellow]]Upgrades in 1 won battle.[[/col]]	false
 effects_description_land_enc_clock_worsens	[[col:yellow]]Worsens in %n turns.[[/col]]	false
 effects_description_land_enc_clock_worsens_one	[[col:yellow]]Worsens in 1 turn.[[/col]]	false
 effects_description_land_enc_clock_becomes	[[col:yellow]]Becomes a boon in %n turns.[[/col]]	false
 effects_description_land_enc_clock_becomes_one	[[col:yellow]]Becomes a boon in 1 turn.[[/col]]	false
-effects_description_land_enc_clock_realm	[[col:yellow]]Lasts %n turns.[[/col]]	false
-effects_description_land_enc_clock_realm_one	[[col:yellow]]Lasts 1 turn.[[/col]]	false
 effects_description_land_enc_clock_strongest	[[col:yellow]]At its strongest, and lasts for good.[[/col]]	false
 effects_description_land_enc_clock_worst	[[col:yellow]]At its worst, and lasts until lifted.[[/col]]	false

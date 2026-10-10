@@ -282,10 +282,11 @@ These were proven by the realm test (2026-10-02): each call ran under `pcall` wi
 - Ambush and interception fights start with the spawned army attacking the player (`L/core/managers.lua:763-767`). Tower floors, Tavern contracts and Smith's Commissions use interception.
 - So "when defending" battle-context effects are the ones that apply in LEAPOI fights. Allied battles are the exception, since the player attacks (5.1).
 
-### 3.11 Countdown clocks on boon and curse bundles `[game]`
-- **How:** each boon or curse bundle is applied as a custom bundle (`cm:create_new_custom_effect_bundle`) with a clock effect added, such as "Worsens in 2 turns." (`L/features/boons.lua:114-135`).
-- **On top:** the clock effect has priority 0, the lowest, which puts it above the bundle's other effects (`gen/leapoi_boons.py:103-104`).
-- **Fallback:** if the custom bundle cannot be built, the plain bundle goes on without a clock.
+### 3.11 Boons and curses are traits with a countdown bundle `[game]`
+- **Effects added to a custom bundle by script never show.** A clock effect added with `bundle:add_effect` on `cm:create_new_custom_effect_bundle` applied without error, but the army's effect tooltip listed only the bundle's database effects, on every scope tried (`character_to_character_own`, `character_to_force_own`, `character_to_force_own_unseen`).
+- **Now:** each boon or curse is a trait (`land_enc_trait_boon_<key>`) whose levels carry its effects, so the traits panel shows its level segments and each level's effects on hover. Level n has n threshold points, and the script sets a level by removing the trait and adding n points with no message (`L/features/boons.lua` `show`). The entry keeps `trait_level` so the trait is only set again when the level changes.
+- **Countdown:** a generated bundle per level, clock and count (`land_enc_effect_boon_<key>_2_upgrades_3`, `..._5_worst`), titled with the level and naming its effects in the description, sits in the army's effects. Its only effect is a clock effect (`land_enc_clock_upgrades`, "Upgrades in %n won battles.") set in the database with the count as its value, scope `character_to_character_own` and priority 1, as vanilla's dummy effects on lord bundles. **An effect with priority 0 is hidden** in tooltips (1514 vanilla helper effects use it). The first try used 0 and only the bundle's description showed. `character_to_force_own` would also add "(all units in army)" under the line. **A bundle with no effects does not show on the army at all** (tested): vanilla's information-only bundles likewise carry a `_dummy` effect with text and no bonus value.
+- **Faction-wide ones** stay bundles, one per turn left (`land_enc_effect_realm_<key>_<turns>`), swapped each turn.
 
 ---
 

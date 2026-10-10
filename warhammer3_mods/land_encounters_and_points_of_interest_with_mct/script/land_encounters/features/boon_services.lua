@@ -121,7 +121,7 @@ end
 --- @param entry table|nil The entry.
 --- @returns string The name, or "" for none.
 local function title(kind, entry)
-    return entry and common.get_localised_string("effect_bundles_localised_title_" .. boons.bundle(kind, entry)) or ""
+    return entry and common.get_localised_string("character_trait_levels_onscreen_name_" .. boons.trait(kind, entry) .. "_" .. entry.level) or ""
 end
 
 --- Keeps a service's result line for the room's next opening, with the names filled in.

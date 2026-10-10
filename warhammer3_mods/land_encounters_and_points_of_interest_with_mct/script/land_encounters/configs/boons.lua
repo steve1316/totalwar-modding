@@ -43,29 +43,28 @@ M.chain_boon_level = 2
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Naming
 
---- Prefix of a lord's boon and curse bundles. The key, the race for a rolled one, and the level follow, e.g. land_enc_effect_boon_bane_dwarfs_3.
+--- Prefix of a lord's boon and curse traits. The key and the race for a rolled one follow, e.g. land_enc_trait_boon_bane_dwarfs. The trait's
+--- levels are the boon's or curse's levels and carry its effects.
+M.trait_prefix = { boon = "land_enc_trait_boon_", curse = "land_enc_trait_curse_" }
+
+--- Prefix of a lord's boon and curse countdown bundles, which show in the army's effects naming the level's effects, with the clock as their only
+--- effect. The key, the race for a rolled one, the level, the clock's name and its count follow, e.g. land_enc_effect_boon_bane_dwarfs_2_upgrades_3,
+--- or land_enc_effect_curse_haunted_5_worst.
 M.bundle_prefix = { boon = "land_enc_effect_boon_", curse = "land_enc_effect_curse_" }
 
---- Prefix of each faction-wide bundle. The key follows.
+--- Prefix of each faction-wide bundle. The key and the turns it has left follow, e.g. land_enc_effect_realm_pariah_7.
 M.realm_prefix = "land_enc_effect_realm_"
 
 --- Prefix of a boon's or curse's payload line on a dilemma choice. The kind, then the bundle name without its prefix follow, e.g.
 --- dummy_land_enc_boon_bloodsworn_3.
 M.line_prefix = "dummy_land_enc_"
 
---- Prefix of the clock effects: the line at the top of a boon's or curse's bundle saying how long it lasts or when it changes, e.g. "Worsens in
---- 3 turns.". The clock's name follows, then "_one" when a counted clock reads 1, e.g. land_enc_clock_worsens_one.
+--- Prefix of the clock effects: the line a countdown bundle shows, e.g. "Worsens in 3 turns.", with the count as its value. The clock's name
+--- follows, then "_one" when a counted clock reads 1, e.g. land_enc_clock_worsens_one. A bundle with no effects does not show on the army.
 M.clock_prefix = "land_enc_clock_"
-
---- Clocks that show a count: battles a charged boon lasts, won battles until a boon upgrades, turns until a curse worsens or becomes its
---- boon, and turns a faction-wide one lasts.
-M.counted_clocks = { "lasts", "upgrades", "worsens", "becomes", "realm" }
 
 --- Clocks with a fixed text: a boon at its top level, and a curse at its worst that never turns.
 M.fixed_clocks = { "strongest", "worst" }
-
---- Scope of a clock effect on a lord's bundle and on a faction-wide one.
-M.clock_scope = { character = "character_to_character_own", faction = "faction_to_faction_own_unseen" }
 
 --- Prefix of the incidents that tell the player about a lord's boons and curses. The event follows: boon_gained, boon_grew, boon_lost,
 --- curse_gained, curse_worse, curse_lifted, curse_turned, curse_shifted (a failed gamble), realm_boon, realm_curse, and the services' own:
@@ -218,6 +217,11 @@ M.realm = {
 M.by_key = { boon = {}, curse = {} }
 for _, record in ipairs(M.boons) do M.by_key.boon[record.key] = record end
 for _, record in ipairs(M.curses) do M.by_key.curse[record.key] = record end
+
+--- Clocks that show a count (battles a charged boon lasts, won battles until a boon upgrades, turns until a curse worsens or becomes its boon)
+--- -> the highest count each shows, so a countdown bundle exists for every count from 1 up. Filled below for `lasts`.
+M.clock_counts = { lasts = 1, upgrades = M.wins_per_level, worsens = M.turns_per_level, becomes = M.turns_to_turn }
+for _, record in ipairs(M.boons) do M.clock_counts.lasts = math.max(M.clock_counts.lasts, record.charges or 0) end
 
 --- Key -> faction-wide record, and the keys of the faction-wide blessings and curses, filled below.
 M.realm_by_key = {}

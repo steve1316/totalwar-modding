@@ -1964,7 +1964,7 @@ def build_rows(config: Dict) -> Dict[str, List[str]]:
                                       "treasury. Next time, our officers will have to watch the fighting closely, from the first charge to the last "
                                       "man standing.")
 
-    for key, (icon, levels) in TRAITS.items():
+    for key, (icon, levels) in {**TRAITS, **boons.traits(config["boons"])}.items():
         add(table("character_traits_tables"), key, 0, "false", 999, icon, 1, "", "false")
         add(table("trait_info_tables"), key)
         for number, (points, name, colour, explanation, effects) in enumerate(levels, 1):

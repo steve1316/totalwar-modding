@@ -291,8 +291,8 @@ PAGES: Dict[str, Tuple[str, str, List[Tuple[str, str]]]] = {
     ]),
     "boons_and_curses": ("Boons and Curses", "Lasting blessings and burdens your lords carry from fight to fight.", [
         ("title", "Boons and Curses"),
-        ("leader", "A lord can carry lasting boons and curses. Each one sits on the lord's army as an effect, with a line at the top saying "
-                   "when it next changes."),
+        ("leader", "A lord can carry lasting boons and curses. Each one is a trait on the lord, whose levels you can hover to see what they "
+                   "do, and an icon in the army's effects says when it next changes."),
         ("heading", "How Boons Grow"),
         ("bullet", "A boon grows one level for every {wins} battles the lord wins, up to level {max}. Lost battles never take a level away."),
         ("bullet", "A charged boon does not grow. It lasts a set number of battles, then fades."),

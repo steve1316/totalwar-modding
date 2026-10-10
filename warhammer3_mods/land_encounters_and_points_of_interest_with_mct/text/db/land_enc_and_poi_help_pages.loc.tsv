@@ -125,7 +125,7 @@ advice_info_texts_localised_text_land_enc_hp_taverns_020	A Generous Donation of 
 advice_info_texts_localised_text_land_enc_hp_taverns_tip	Taverns to claim for mercenaries, drinks, contracts and the hedge-witch.	false
 help_page_index_records_text_land_enc_taverns	[[sl:land_enc_taverns]]Taverns[[/sl]]	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_001	Boons and Curses	false
-advice_info_texts_localised_text_land_enc_hp_boons_and_curses_002	A lord can carry lasting boons and curses. Each one sits on the lord's army as an effect, with a line at the top saying when it next changes.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_002	A lord can carry lasting boons and curses. Each one is a trait on the lord, whose levels you can hover to see what they do, and an icon in the army's effects says when it next changes.	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_003	How Boons Grow	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_004	A boon grows one level for every 5 battles the lord wins, up to level 5. Lost battles never take a level away.	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_005	A charged boon does not grow. It lasts a set number of battles, then fades.	false

@@ -77,20 +77,22 @@ CURSE_GONE = ("What changed", ["The curse is gone for good, with every level it 
 FACTION_WIDE = ("Faction-wide", ["It touches the whole faction, not one lord, and takes no lord's slot.",
                                  "It lasts {realm_turns} turns, then passes."])
 
-# Clock name (configs/boons.lua `counted_clocks` and `fixed_clocks`) -> (text, text when the count is 1). The clock is the line at the top of
-# a boon's or curse's bundle, and "%n" is its count, set by the script. A fixed clock has no count.
+# Clock name (configs/boons.lua `clock_counts` keys and `fixed_clocks`) -> (text, text when the count is 1). The clock is the countdown a boon's
+# or curse's bundle shows in the army's effects, with "%n" its count. A fixed clock has no count.
 CLOCKS: Dict[str, Tuple[str, Optional[str]]] = {
-    "lasts": ("Lasts %n battles.", "Lasts 1 battle."),
+    "lasts": ("Lasts %n more battles.", "Lasts 1 more battle."),
     "upgrades": ("Upgrades in %n won battles.", "Upgrades in 1 won battle."),
     "worsens": ("Worsens in %n turns.", "Worsens in 1 turn."),
     "becomes": ("Becomes a boon in %n turns.", "Becomes a boon in 1 turn."),
-    "realm": ("Lasts %n turns.", "Lasts 1 turn."),
     "strongest": ("At its strongest, and lasts for good.", None),
     "worst": ("At its worst, and lasts until lifted.", None),
 }
 
-# Icon and priority of the clock effects. The lowest priority puts the clock above the bundle's other effects.
-CLOCK_ICON, CLOCK_PRIORITY = "turns.png", 0
+# Icon, priority and scope of the clock effects, as vanilla dummy effects on lord bundles have them. Priority 0 hides an effect.
+CLOCK_ICON, CLOCK_PRIORITY, CLOCK_SCOPE = "turns.png", 1, "character_to_character_own"
+
+# The countdown a faction-wide bundle shows: (text, text when the count is 1), with "%n" its turns left.
+REALM_CLOCK = ("Lasts %n more turns.", "Lasts 1 more turn.")
 
 # Event -> (incident title, description parts, picture). A part is a paragraph or a (heading, lines) section. `incidents` adds `POINTER`. "{lord}" is the lord's name, read from
 # the config's `lord_context`.
@@ -99,7 +101,7 @@ INCIDENTS: Dict[str, Tuple[str, list, str]] = {
         "Something has changed in {lord}'s army, and for the better. Every warrior can feel it.",
         "Blades strike truer and shields hold firmer, and the soldiers march with their heads high. Whatever touched them on the field has stayed, and "
         "every victory will make it stronger.",
-        ("What it means", ["The boon shows on the army's effects, with a line counting the battles to its next level.",
+        ("What it means", ["The boon is listed with the lord's traits, and an icon in the army's effects counts the battles to its next level.",
                           "It stays until the lord falls, leaves the faction, or gives it up for another."])],
         "ursun_claimed"),
     "boon_grew": ("The Boon Grows", [
@@ -118,7 +120,7 @@ INCIDENTS: Dict[str, Tuple[str, list, str]] = {
     "curse_gained": ("A Curse Takes Hold", [
         "A shadow has fallen over {lord}'s army, and it will not lift on its own.",
         "The soldiers mutter at night and look over their shoulders on the march. Something followed them from the field, and it is patient.",
-        ("What it means", ["The curse shows on the army's effects, with a line counting the turns until it worsens.",
+        ("What it means", ["The curse is listed with the lord's traits, and an icon in the army's effects counts the turns until it worsens.",
                           "It stays until it is lifted, or until the lord falls or leaves the faction."])],
         "ai_wins_soul"),
     "curse_worse": ("The Curse Deepens", [
@@ -579,7 +581,7 @@ def race_levels(key: str, race: str) -> List[Level]:
                  f"-50 relations with {name}"], (diplomacy, FACTION, [-10, -20, -30, -40, -50]))
 
 
-def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Level]]]:
+def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Level], Dict]]:
     """Every boon or curse as it is bundled: one variant per race for a rolled one.
 
     Args:
@@ -587,7 +589,7 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
         config (Dict): The boons config from the Lua dump.
 
     Returns:
-        List[Tuple]: (bundle stem without level, name, flavour, icon, levels) per variant.
+        List[Tuple]: (bundle stem without level, name, flavour, icon, levels, config record) per variant.
     """
     catalogue = BOONS if kind == "boon" else CURSES
     out = []
@@ -596,9 +598,9 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
         name, flavour, icon, levels = catalogue[key]
         if record.get("race"):
             for race in config["races"]:
-                out.append((f"{key}_{race}", name.format(race=library.RACES[race][0]), flavour, icon, race_levels(key, race)))
+                out.append((f"{key}_{race}", name.format(race=library.RACES[race][0]), flavour, icon, race_levels(key, race), record))
         else:
-            out.append((key, name, flavour, icon, levels))
+            out.append((key, name, flavour, icon, levels, record))
     return out
 
 
@@ -607,46 +609,44 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
 # Rows
 
 
-def bundles(config: Dict) -> Dict[str, Tuple]:
-    """Every boon, curse and faction-wide bundle, in the generator's bundle shape.
+def clock_text(text: str, one: Optional[str], count: int) -> str:
+    """A clock's text for a count.
 
     Args:
-        config (Dict): The boons config from the Lua dump.
+        text (str): The text with "%n" for the count.
+        one (Optional[str]): The text when the count is 1.
+        count (int): The count.
 
     Returns:
-        Dict[str, Tuple]: Bundle key -> (target, icon, title, description, [(effect, scope, value)]).
+        str: The text.
     """
-    shaped = {}
-    for kind in ("boon", "curse"):
-        for stem, name, flavour, icon, levels in variants(kind, config):
-            for number, (text, effects) in enumerate(levels, 1):
-                title = level_title(name, levels, number)
-                shown = flavour if len(levels) == 1 else f"{flavour}{BREAK}Level {number} of {len(levels)}."
-                shaped[f"{config['bundle_prefix'][kind]}{stem}_{number}"] = ("character", icon, title, shown, effects)
-    for key, (name, flavour, icon, _, effects) in REALM.items():
-        shaped[config["realm_prefix"] + key] = ("faction", icon, name, flavour, effects)
-    return shaped
+    return one if count == 1 and one else text.replace("%n", str(count))
 
 
-def lines(config: Dict) -> List[Tuple[str, str, str]]:
-    """The payload line of every boon and curse level and every faction-wide effect, which dilemmas and incidents show.
+def clock_states(kind: str, record: Dict, config: Dict, level: int) -> List[Tuple[str, Optional[int]]]:
+    """Every clock a boon or curse can show at a level, with each count it can reach.
 
     Args:
+        kind (str): "boon" or "curse".
+        record (Dict): The boon or curse record from the config.
         config (Dict): The boons config from the Lua dump.
+        level (int): The level.
 
     Returns:
-        List[Tuple[str, str, str]]: (payload key, icon, text).
+        List[Tuple[str, Optional[int]]]: (clock name, count, or None for a fixed clock).
     """
-    out = []
-    for kind, colour in (("boon", "green"), ("curse", "red")):
-        for stem, name, _, icon, levels in variants(kind, config):
-            for number, (text, _) in enumerate(levels, 1):
-                level = "" if len(levels) == 1 else f" (level {number} of {len(levels)})"
-                out.append((f"{config['line_prefix']}{kind}_{stem}_{number}", icon, f"[[col:{colour}]]{name}{level}: {text}[[/col]]"))
-    good = {r["key"]: r.get("good") for r in config["realm"]}
-    for key, (name, _, icon, text, _) in REALM.items():
-        out.append((f"{config['line_prefix']}realm_{key}", icon, f"[[col:{'green' if good[key] else 'red'}]]{name}: {text}, for {config['realm_turns']} turns[[/col]]"))
-    return out
+    counts = config["clock_counts"]
+    if record.get("charges"):
+        name = "lasts"
+    elif level < config["max_level"]:
+        name = "upgrades" if kind == "boon" else "worsens"
+    elif kind == "boon":
+        return [("strongest", None)]
+    elif record.get("turns_into"):
+        name = "becomes"
+    else:
+        return [("worst", None)]
+    return [(name, n) for n in range(1, counts[name] + 1)]
 
 
 def clocks(config: Dict) -> List[Tuple[str, str]]:
@@ -663,6 +663,81 @@ def clocks(config: Dict) -> List[Tuple[str, str]]:
         out.append((config["clock_prefix"] + name, f"[[col:yellow]]{text}[[/col]]"))
         if one:
             out.append((config["clock_prefix"] + name + "_one", f"[[col:yellow]]{one}[[/col]]"))
+    return out
+
+
+def bundles(config: Dict) -> Dict[str, Tuple]:
+    """Every boon and curse countdown bundle per level, naming the level's effects with its clock as its only effect, and every faction-wide bundle
+    for each turn it can have left.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        Dict[str, Tuple]: Bundle key -> (target, icon, title, description, [(effect, scope, value)]).
+    """
+    shaped = {}
+    for kind in ("boon", "curse"):
+        colour = "green" if kind == "boon" else "red"
+        for stem, name, flavour, icon, levels, record in variants(kind, config):
+            for number, (text, _) in enumerate(levels, 1):
+                shown = f"{flavour}{BREAK}[[col:{colour}]]{text}[[/col]]"
+                for clock, count in clock_states(kind, record, config, number):
+                    effect = config["clock_prefix"] + clock + ("_one" if count == 1 else "")
+                    key = f"{config['bundle_prefix'][kind]}{stem}_{number}_{clock}" + (f"_{count}" if count else "")
+                    shaped[key] = ("character", icon, level_title(name, levels, number), shown, [(effect, CLOCK_SCOPE, count or 1)])
+    for key, (name, flavour, icon, _, effects) in REALM.items():
+        for left in range(1, config["realm_turns"] + 1):
+            shown = f"{flavour}{BREAK}[[col:yellow]]{clock_text(*REALM_CLOCK, left)}[[/col]]"
+            shaped[f"{config['realm_prefix']}{key}_{left}"] = ("faction", icon, name, shown, effects)
+    return shaped
+
+
+def traits(config: Dict) -> Dict[str, Tuple]:
+    """Every boon and curse as a trait whose levels carry its effects, in the generator's trait shape.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        Dict[str, Tuple]: Trait key -> (icon, [(points, name, flavour, rule, [(effect, scope, value)])]). A level's points are its number, so the
+        script sets a level by adding that many points.
+    """
+    shaped = {}
+    for kind in ("boon", "curse"):
+        for stem, name, flavour, _, levels, record in variants(kind, config):
+            if record.get("charges"):
+                rule = f"Lasts {record['charges']} battles, then fades."
+            elif kind == "boon":
+                rule = f"Grows a level for every {config['wins_per_level']} won battles, up to level {config['max_level']}."
+            else:
+                rule = f"Worsens a level every {config['turns_per_level']} turns, up to level {config['max_level']}."
+                if record.get("turns_into"):
+                    rule += f" After {config['turns_to_turn']} turns at its worst, it becomes {BOONS[record['turns_into']][0].replace('{race}', 'the same race')}."
+            shaped[config["trait_prefix"][kind] + stem] = ("trait_good" if kind == "boon" else "trait_bad",
+                                                           [(number, level_title(name, levels, number), flavour, rule, effects)
+                                                            for number, (_, effects) in enumerate(levels, 1)])
+    return shaped
+
+
+def lines(config: Dict) -> List[Tuple[str, str, str]]:
+    """The payload line of every boon and curse level and every faction-wide effect, which dilemmas and incidents show.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        List[Tuple[str, str, str]]: (payload key, icon, text).
+    """
+    out = []
+    for kind, colour in (("boon", "green"), ("curse", "red")):
+        for stem, name, _, icon, levels, _ in variants(kind, config):
+            for number, (text, _) in enumerate(levels, 1):
+                level = "" if len(levels) == 1 else f" (level {number} of {len(levels)})"
+                out.append((f"{config['line_prefix']}{kind}_{stem}_{number}", icon, f"[[col:{colour}]]{name}{level}: {text}[[/col]]"))
+    good = {r["key"]: r.get("good") for r in config["realm"]}
+    for key, (name, _, icon, text, _) in REALM.items():
+        out.append((f"{config['line_prefix']}realm_{key}", icon, f"[[col:{'green' if good[key] else 'red'}]]{name}: {text}, for {config['realm_turns']} turns[[/col]]"))
     return out
 
 
@@ -909,9 +984,9 @@ def owned_prefixes(config: Dict) -> List[str]:
     Returns:
         List[str]: The prefixes.
     """
-    return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"],
-                                                      config["smithy_room"]["dilemma"], config["witch_room"]["dilemma"], config["result_prefix"],
-                                                      config["guide_prefix"], config["clock_prefix"]]
+    return (list(config["bundle_prefix"].values()) + list(config["trait_prefix"].values())
+            + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"], config["smithy_room"]["dilemma"],
+               config["witch_room"]["dilemma"], config["result_prefix"], config["guide_prefix"], config["clock_prefix"]]
             + config["pick_choices"]
             + [config["line_prefix"] + kind + "_" for kind in ("boon", "curse", "realm")] + config["full_choices"]
             + [config["incident_prefix"] + event for event in INCIDENTS])
@@ -940,9 +1015,10 @@ def problems(config: Dict) -> List[str]:
             if charges and not levels[0][0].endswith(f"for {charges} battles"):
                 found.append(f"{record['key']} text does not say {charges} battles")
     found += [f"race {race} differs" for race in sorted(set(config["races"]) ^ set(library.RACES))]
-    found += [f"clock {name} differs" for name in sorted(set(config["counted_clocks"] + config["fixed_clocks"]) ^ set(CLOCKS))]
-    found += [f"clock {name} should {'' if name in config['counted_clocks'] else 'not '}have a count" for name, (text, one) in CLOCKS.items()
-              if (one is not None) != (name in config["counted_clocks"]) or ("%n" in text) != (one is not None)]
+    counted = config["clock_counts"]
+    found += [f"clock {name} differs" for name in sorted((set(counted) | set(config["fixed_clocks"])) ^ set(CLOCKS))]
+    found += [f"clock {name} should {'' if name in counted else 'not '}have a count" for name, (text, one) in CLOCKS.items()
+              if (one is not None) != (name in counted) or ("%n" in text) != (one is not None)]
     found += [f"faction-wide {key} differs" for key in sorted({r["key"] for r in config["realm"]} ^ set(REALM))]
     texts = {**incidents(config), **{"dilemma " + name: text for name, text in dilemmas(config).items()}}
     found += [f"{name} description fills {shown_lines(text[1])} lines, not {MIN_LINES}-{MAX_LINES}" for name, text in texts.items()
