@@ -13,7 +13,9 @@ local SAME_NAMED_OPTIONS = { "enable_towers", "tower_cooldown", "tower_gold_perc
     "tower_hidden_floor_chance", "enable_smithies", "smithy_cooldown", "smithy_price_percent", "smithy_tribute_percent", "smithy_mission_interval", "smithy_ai_takeover_chance",
     "smithy_ai_upgrade_chance", "enable_taverns", "tavern_contract_turns", "tavern_hall_restock", "tavern_hire_markup", "tavern_hires_per_visit",
     "tavern_cooldown", "tavern_penalty_percent", "tavern_penalty_turns", "tavern_ai_takeover_chance", "tavern_ai_upgrade_chance", "ready_notices",
-    "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance", "enable_boons", "boon_slots", "curse_slots", "boon_win_chance", "curse_loss_chance", "linger_chance" }
+    "spawn_percentage", "battle_chance", "pre_battle_chance", "spoils_chance", "battle_modifier_chance", "enable_boons", "boon_slots", "curse_slots",
+    "boon_win_chance", "curse_loss_chance", "linger_chance", "unique_item_rewards",
+    "unique_items_stay_unique", "crafted_item_rewards", "crafted_items_stay_unique" }
 
 --- Default settings. The MctInitialized listener overwrites these at first_tick with the user's
 --- finalized MCT option values via set_mct_settings.
@@ -78,6 +80,14 @@ local mct_settings = {
     smithy_ai_upgrade_chance = 5,
     --- Tell the player when a Smithy or Tower is ready again.
     ready_notices = true,
+    --- Unique (purple) items can drop as legendary rewards.
+    unique_item_rewards = true,
+    --- A player is never given or offered a Unique item they already own.
+    unique_items_stay_unique = true,
+    --- Crafted (gold) items can drop as legendary rewards.
+    crafted_item_rewards = true,
+    --- A player is never given or offered a Crafted item they already own.
+    crafted_items_stay_unique = true,
     spawn_percentage = 0.75,
     --- Percent chance that a battle spot starts a battle instead of giving treasure.
     battle_chance = 70,

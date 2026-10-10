@@ -138,14 +138,15 @@ local function eligible(offer, ctx)
     if offer.hero_rank and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
     if offer.sacrifice and #tower_army.regular_units(ctx.general_cqi) < 2 then return false end
     if offer.daemon_armies and not ctx.faction:has_home_region() then return false end
-    if (gamble_has(offer, "unique") or offer.guardian_prize) and item_pool.pick_legendary_item(ctx.faction_name) == nil then return false end
     local enemy_units = ctx.event and ctx.event.enemy_units or {}
     if (offer.gold_per_enemy_unit or offer.captive) and #enemy_units == 0 then return false end
     if offer.captive and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
+    if (gamble_has(offer, "unique") or offer.guardian_prize) and item_pool.pick_legendary_item(ctx.faction_name, ctx.shown_items) == nil then return false end
 
     local cards = {}
-    --- Units another offer on this dilemma already shows are left out, so no unit is offered twice.
+    --- Units and legendary items another offer on this dilemma already shows are left out, so none is offered twice.
     ctx.shown_units = ctx.shown_units or {}
+    ctx.shown_items = ctx.shown_items or {}
     if offer.recruit then
         local shorthand = offer.recruit.beaten and (ctx.event or {}).faction or offer_effects.culture_shorthand(ctx.faction_name)
         cards.units = offer_effects.pick_recruits(ctx.general_cqi, shorthand, offer.recruit, ctx.shown_units)
@@ -156,7 +157,7 @@ local function eligible(offer, ctx)
         if #cards.units < offer.renown then return false end
     end
     if offer.unique then
-        cards.items = offer_effects.pick_unique_items(ctx.faction_name, offer.unique)
+        cards.items = offer_effects.pick_unique_items(ctx.faction_name, offer.unique, ctx.shown_items)
         if #cards.items < offer.unique then return false end
     end
     if offer.items then
@@ -178,6 +179,7 @@ local function eligible(offer, ctx)
     end
     if offer.spell_pool then cards.spell = army_spells.roll(offer.spell_pool) end
     for _, key in ipairs(cards.units or {}) do ctx.shown_units[key] = true end
+    for _, key in ipairs(cards.items or {}) do ctx.shown_items[#ctx.shown_items + 1] = key end
     if offer.gold_per_enemy_unit then cards.gold = offer.gold_per_enemy_unit * #enemy_units end
     if offer.beaten_kin then
         --- Looked up once per draw, since it walks every region on the map.

@@ -156,20 +156,14 @@ local function army_budget_text(budget, multiplier)
     return budget[1] .. "-" .. budget[2] .. " x" .. multiplier
 end
 
---- Picks one legendary item, or a rare standing in when the pool cannot supply one.
---- @param faction_name string The delving faction.
---- @returns string|nil An ancillary key, or nil when even the rare pool is dry.
-local function pick_legendary_or_fallback(faction_name)
-    return item_pool.pick_legendary_item(faction_name) or item_pool.pick_items(faction_name, { tower_data.legendary_fallback_rarity }, 1)[1]
-end
-
 --- Picks a floor's items: its rarities, or legendary items with a rare standing in for each one the pool cannot supply. `rarity_shift`
 --- raises each rarity by that many steps (a Treasure map), where a rare becomes a legendary.
 --- @param faction_name string The delving faction.
 --- @param floor table The floor record from `tower_data.floors`.
 --- @param rarity_shift number|nil Rarity steps to raise the floor's items by.
+--- @param held table Item keys the delve already holds, so a legendary item is never picked twice for one haul.
 --- @returns table Ancillary keys.
-local function pick_floor_items(faction_name, floor, rarity_shift)
+local function pick_floor_items(faction_name, floor, rarity_shift, held)
     if not floor.legendary_count and not rarity_shift then
         return item_pool.pick_items(faction_name, floor.item_rarities, floor.item_count)
     end
@@ -182,14 +176,15 @@ local function pick_floor_items(faction_name, floor, rarity_shift)
         local items = {}
         for _ = 1, floor.item_count do
             local rarity = rarities[random_number(#rarities)]
-            local item = rarity == "legendary" and pick_legendary_or_fallback(faction_name) or item_pool.pick_items(faction_name, { rarity }, 1)[1]
+            local item = rarity == "legendary" and item_pool.pick_legendary_or(faction_name, tower_data.legendary_fallback_rarity, held, items)
+                or item_pool.pick_items(faction_name, { rarity }, 1)[1]
             if item then items[#items + 1] = item end
         end
         return items
     end
     local items = {}
     for _ = 1, floor.legendary_count do
-        local item = item_pool.pick_legendary_item(faction_name)
+        local item = item_pool.pick_legendary_item(faction_name, held, items)
         if item then items[#items + 1] = item end
     end
     local missing = floor.legendary_count - #items
@@ -680,7 +675,7 @@ function TowerEventDelegate:add_floor_rewards(faction_name, delve)
     log("tower: floor " .. delve.floor .. " won: strength " .. tostring(before) .. " -> " .. tostring(after) .. " (loss " .. loss .. "), gold x"
         .. gold_multiplier .. " = +" .. gold .. ", haul now " .. delve.haul.gold .. " gold")
     delve.climb[#delve.climb + 1] = { floor = delve.floor, difficulty = floor.difficulty, state = "cleared", bonus = next_floor.bonus }
-    local items = pick_floor_items(faction_name, floor, next_floor.rarity_shift)
+    local items = pick_floor_items(faction_name, floor, next_floor.rarity_shift, tower_data.held_items(delve))
     tower_data.add_items(delve.haul, items)
     log("tower: floor " .. delve.floor .. " items: " .. (#items > 0 and table.concat(items, ", ") or "none"))
     --- A Hellforge pact costs haul items for every floor won after it.
