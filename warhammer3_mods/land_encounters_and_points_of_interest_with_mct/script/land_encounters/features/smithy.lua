@@ -496,8 +496,8 @@ function SmithyState:open_orders(faction_name, general_cqi)
 end
 
 --- Applies a forge choice. The dilemma payload already granted the items and charged the gold, so only the cooldown and level change here.
---- Work Orders and the Temper and Break room open their own dilemmas, and Rush the Forge ends the cooldown and opens the full forge again. A
---- paid donation is handed back to the delegate, which raises every Smithy.
+--- Work Orders and the Temper and Break room open their own dilemmas. Rush the Forge ends the cooldown and opens the full forge again, and a
+--- free pick starts the cooldown and opens the cooling forge. A paid donation is handed back to the delegate, which raises every Smithy.
 --- @param dilemma_key string The forge dilemma's key.
 --- @param choice_key string The chosen choice key.
 --- @returns boolean True when the faction paid for a Generous Donation.
@@ -514,12 +514,13 @@ function SmithyState:resolve_forge_choice(dilemma_key, choice_key)
     elseif choice_key == RUSH_KEY and offer.rush then
         log("smithy: " .. faction_name .. " rushes the forge of the " .. self:describe() .. ", " .. self.visit_cooldown .. " turns early")
         self.visit_cooldown = 0
-        local character = tower_army.character(offer.general_cqi)
-        if character then self:open_forge(cm:get_faction(faction_name), character) end
+        self:open_forge_for(offer.general_cqi)
     elseif choice_key == ORDERS_KEY and offer.orders then
         self:open_orders(faction_name, offer.general_cqi)
     elseif offer.free_picks[choice_key] then
         self.visit_cooldown = self:free_pick_cooldown()
+        log("smithy: " .. faction_name .. " took a free pick, the forge of the " .. self:describe() .. " cools for " .. self.visit_cooldown .. " turns")
+        self:open_forge_for(offer.general_cqi)
     elseif choice_key == UPGRADE_KEY and offer.upgrade then
         self:set_level(self.level + 1)
         self:show_message(faction_name, "smithy_levelled_up_level_" .. self.level)
@@ -545,9 +546,17 @@ function SmithyState:resolve_room_choice(choice_key)
         self:open_room(character, open_room.rust_taken)
         return
     end
-    local lord = tower_army.character(open_room.cqi)
     log("smithy: lord " .. tostring(open_room.cqi) .. " goes back from Temper and Break to the forge of the " .. self:describe())
-    if lord then self:open_forge(cm:get_faction(self.controlling_faction_name), lord) end
+    self:open_forge_for(open_room.cqi)
+end
+
+--- Opens the forge for the owner's lord with the given command queue index, if that lord still exists.
+--- @param general_cqi number The lord's command queue index.
+--- @returns boolean True when the forge opened.
+function SmithyState:open_forge_for(general_cqi)
+    local character = tower_army.character(general_cqi)
+    if character then self:open_forge(cm:get_faction(self.controlling_faction_name), character) end
+    return character ~= nil
 end
 
 --- Sets the forge level (clamped to 1-3) and swaps the map marker to that level's skin.
@@ -889,10 +898,8 @@ function SmithyEventDelegate:orders_closed(faction_name, site, took)
         log("smithy: the Work Orders of the " .. smithy:describe() .. " are closed to " .. faction_name .. " until turn " .. smithy.orders_closed_until[faction_name])
         return
     end
-    local character = tower_army.character(site.general_cqi)
     log("smithy: " .. faction_name .. " goes back to the forge of the " .. smithy:describe() .. " (lord " .. tostring(site.general_cqi) .. ")")
-    if character and smithy:is_occupied_by_same_faction(faction_name) then
-        smithy:open_forge(cm:get_faction(faction_name), character)
+    if smithy:is_occupied_by_same_faction(faction_name) and smithy:open_forge_for(site.general_cqi) then
         self.pending_dilemma_by_faction[faction_name] = index
     end
 end
