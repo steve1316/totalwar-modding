@@ -2104,12 +2104,12 @@ campaign_payload_ui_details_description_dummy_land_enc_curse_cursed_coin_2	[[col
 campaign_payload_ui_details_description_dummy_land_enc_curse_cursed_coin_3	[[col:red]]Cursed Coin (level 3 of 5): +15% [[img:icon_money]][[/img]] recruitment cost[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_curse_cursed_coin_4	[[col:red]]Cursed Coin (level 4 of 5): +20% [[img:icon_money]][[/img]] recruitment cost[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_curse_cursed_coin_5	[[col:red]]Cursed Coin (level 5 of 5): +25% [[img:icon_money]][[/img]] recruitment cost[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_realm_comet_sign	[[col:green]]Sign of the Twin-Tailed Comet: Every army: +5 Winds of Magic reserve per turn, for 10 turns[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_realm_old_ones_favour	[[col:green]]Favour of the Old Ones: +15% [[img:icon_tech]][[/img]] research rate, for 10 turns[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_realm_golden_age	[[col:green]]Golden Age: +10% [[img:icon_income]][[/img]] income from all buildings, +10 [[img:icon_public_order]][[/img]] public order, for 10 turns[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_realm_dark_gods_wrath	[[col:red]]Wrath of the Dark Gods: +10 Chaos corruption and -10 [[img:icon_public_order]][[/img]] public order in every province, for 10 turns[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_realm_black_plague	[[col:red]]Black Plague: -10 [[img:icon_growth]][[/img]] growth in every province, for 10 turns[[/col]]	false
-campaign_payload_ui_details_description_dummy_land_enc_realm_pariah	[[col:red]]Pariah: -20 [[img:icon_diplomacy]][[/img]] relations with every faction, for 10 turns[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_realm_comet_sign	[[col:green]]Sign of the Twin-Tailed Comet: Every army: +5 Winds of Magic reserve per turn, for 5 turns[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_realm_old_ones_favour	[[col:green]]Favour of the Old Ones: +15% [[img:icon_tech]][[/img]] research rate, for 5 turns[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_realm_golden_age	[[col:green]]Golden Age: +10% [[img:icon_income]][[/img]] income from all buildings, +10 [[img:icon_public_order]][[/img]] public order, for 5 turns[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_realm_dark_gods_wrath	[[col:red]]Wrath of the Dark Gods: +10 Chaos corruption and -10 [[img:icon_public_order]][[/img]] public order in every province, for 5 turns[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_realm_black_plague	[[col:red]]Black Plague: -10 [[img:icon_growth]][[/img]] growth in every province, for 5 turns[[/col]]	false
+campaign_payload_ui_details_description_dummy_land_enc_realm_pariah	[[col:red]]Pariah: -20 [[img:icon_diplomacy]][[/img]] relations with every faction, for 5 turns[[/col]]	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_smithy_room	Visit the master smith to [[col:green]]temper a boon[[/col]] or [[col:green]]break a curse[[/col]], each paid from our treasury.	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_room	Seek out the hedge-witch in the back room, who can [[col:green]]feed or reweave a boon[[/col]], and [[col:green]]lift a curse[[/col]] for gold, a gamble or blood.	false
 campaign_payload_ui_details_description_dummy_land_enc_boon_service_witch_nothing	[[col:red]]This lord carries no boon or curse for the hedge-witch to work on.[[/col]]	false

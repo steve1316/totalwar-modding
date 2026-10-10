@@ -78,7 +78,7 @@ advice_info_texts_localised_text_land_enc_hp_towers_010	Losing a floor loses the
 advice_info_texts_localised_text_land_enc_hp_towers_011	Leaving pays the haul in full. Beating the master lets you claim the tower's treasure.	false
 advice_info_texts_localised_text_land_enc_hp_towers_012	After any delve, the tower closes for 5 turns, then passes to a new faction.	false
 advice_info_texts_localised_text_land_enc_hp_towers_013	Champions	false
-advice_info_texts_localised_text_land_enc_hp_towers_014	A champion floor pits you against a legendary lord. Win it and your lord picks a boon, with a 3% chance to bless your whole faction for 10 turns instead. Lose it, and there is the same chance of a curse on your faction.	false
+advice_info_texts_localised_text_land_enc_hp_towers_014	A champion floor pits you against a legendary lord. Win it and your lord picks a boon, with a 3% chance to bless your whole faction for 5 turns instead. Lose it, and there is the same chance of a curse on your faction.	false
 advice_info_texts_localised_text_land_enc_hp_towers_tip	A tower in each map zone to climb for a growing haul.	false
 help_page_index_records_text_land_enc_towers	[[sl:land_enc_towers]]Ancient Towers[[/sl]]	false
 advice_info_texts_localised_text_land_enc_hp_smithies_001	Smithies	false
@@ -139,7 +139,7 @@ advice_info_texts_localised_text_land_enc_hp_boons_and_curses_012	A lord has 3 b
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_013	Where They Come From	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_014	A hard or modified win has a 3% chance to leave a boon, and a lost battle or failed contract a 3% chance to leave a curse. Each battle modifier has a 3% chance to linger as one.	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_015	Pacts at [[sl:land_enc_treasure]]treasure sites[[/sl]], the [[sl:land_enc_taverns]]Tavern[[/sl]] bar and the [[sl:land_enc_towers]]Towers[[/sl]] trade a curse for a stronger boon. Tower champions and Tavern contracts give boons too.	false
-advice_info_texts_localised_text_land_enc_hp_boons_and_curses_016	A Tower champion floor can bless or curse your whole faction for 10 turns. These take no lord's slot.	false
+advice_info_texts_localised_text_land_enc_hp_boons_and_curses_016	A Tower champion floor can bless or curse your whole faction for 5 turns. These take no lord's slot.	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_017	Lifting Curses and Raising Boons	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_018	At a [[sl:land_enc_smithies]]Smithy[[/sl]] you own, the smith tempers a boon one level or breaks a curse.	false
 advice_info_texts_localised_text_land_enc_hp_boons_and_curses_019	At any [[sl:land_enc_taverns]]Tavern[[/sl]], the hedge-witch cleanses a curse or gambles on one, feeds or reweaves a boon, or lifts a curse with a blood rite.	false

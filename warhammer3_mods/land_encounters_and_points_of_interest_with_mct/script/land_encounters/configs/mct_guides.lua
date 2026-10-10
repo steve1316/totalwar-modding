@@ -70,7 +70,7 @@ M.boons_intro = "A lord can carry lasting boons and curses. A boon grows one lev
     .. "mildest one worse instead. Gaining one the lord already carries raises it a level. A lord who dies or leaves the faction loses them all, "
     .. "and AI lords get none.\n\n"
     .. "By default a hard or modified LEAPOI win, a lost LEAPOI battle and each battle modifier of a fight each have a 3% chance to leave a boon "
-    .. "or curse. The sliders above change these chances. A Tower champion floor has a 3% chance to bless the whole faction for 10 turns "
+    .. "or curse. The sliders above change these chances. A Tower champion floor has a 3% chance to bless the whole faction for 5 turns "
     .. "when won, or curse it when lost. Pacts at treasure sites, the Tavern bar and the Tower trade a curse for a stronger "
     .. "boon. At a Smithy you own, the smith tempers a boon one level or breaks a curse. At any Tavern, the hedge-witch cleanses a curse, or "
     .. "gambles on one: half the time it lifts, otherwise it becomes another curse. The hedge-witch can also feed or reweave "

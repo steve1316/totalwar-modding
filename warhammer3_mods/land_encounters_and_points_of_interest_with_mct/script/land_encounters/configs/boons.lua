@@ -19,8 +19,8 @@ M.turns_per_level = 5
 --- Turns a curse spends at `max_level` before one with a `turns_into` boon becomes it.
 M.turns_to_turn = 10
 
---- Turns a faction-wide boon or curse lasts. The script counts them and takes the bundle off, so its clock and the bundle agree.
-M.realm_turns = 10
+--- Turns a faction-wide boon or curse lasts. Its bundle goes on with this duration, and the game counts it down.
+M.realm_turns = 5
 
 --- MCT setting keys: the switch, and the slots a lord has for boons and for curses.
 M.enable_setting = "enable_boons"
