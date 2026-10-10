@@ -398,10 +398,13 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- The battle
 
---- Readies our army for the battle the event describes: puts its one-battle bundles on and starts our units at `own_strength`.
+--- Readies our army for a new battle the event describes: clears the last battle's reports, puts its one-battle bundles on and starts our
+--- units at `own_strength`.
 --- @param event table The battle event.
 --- @param general_cqi number Our lord's command queue index.
 function M.prepare_battle(event, general_cqi)
+    --- Only a new battle clears the last one's reports. Re-arming after the post-battle reload must keep what the battle just reported.
+    tower_missions.clear_reports()
     for _, bundle in ipairs(event.battle_bundles or {}) do tower_army.apply_bundle(general_cqi, bundle) end
     for _, bundle in ipairs(battle_modifiers.bundles(event.modifiers, "ours")) do tower_army.apply_bundle(general_cqi, bundle) end
     if event.own_strength then
@@ -447,7 +450,6 @@ function M.hand_to_battle(event, army)
     for _, name in ipairs(battle_modifiers.notices(event.modifiers)) do names[#names + 1] = name end
     log("spot battle: battle names: " .. (#names > 0 and table.concat(names, ", ") or "none") .. ", mission targets: " .. table.concat(targets, ", ")
         .. ", night terrors: " .. table.concat(terrors, ", "))
-    tower_missions.clear_reports()
     core:svr_save_string(BATTLE_BUFFS_SVR_KEY, table.concat(names, ","))
     core:svr_save_string(MISSION_TARGETS_SVR_KEY, table.concat(targets, ","))
     core:svr_save_string(NIGHT_TERRORS_SVR_KEY, table.concat(terrors, ","))
