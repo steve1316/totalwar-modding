@@ -125,7 +125,9 @@ function BattleEventDelegate:start_battle(spot_info)
     --- Kept on the event, so the ally's culture is known after a load, when the army is built again with another ally.
     local ally = offensive_army.reinforcing_ally_armies[1]
     self.cached_event.ally_faction = ally and ally.faction or nil
-    spot_battles.prepare_battle(self.cached_event, self.cached_player_character:command_queue_index())
+    --- Kept on the event too, since the campaign scripts reload after the battle and the lord is needed to settle its missions and prize.
+    self.cached_event.general_cqi = self.cached_player_character:command_queue_index()
+    spot_battles.prepare_battle(self.cached_event, self.cached_event.general_cqi)
     self.invasion_battle_manager:generate_battle(offensive_army, self.cached_player_character, spot_info.coordinates)
     --- Handed over once the army is generated, since Night terrors and the missions pick targets from its units.
     spot_battles.hand_to_battle(self.cached_event, offensive_army)
@@ -454,8 +456,9 @@ function BattleEventDelegate:export_state_as_a_table(spot_info)
 end
 
 
---- Restores any in-flight battle from a saved campaign state. Older saves also hold a "battle_generator" entry, which is ignored, and a
---- cached event without the picker's fields, which gets the current difficulty, a random faction and the MCT battle-type pick.
+--- Restores any in-flight battle from a saved campaign state, with the lord who fought it from the event's `general_cqi`. Older saves also
+--- hold a "battle_generator" entry, which is ignored, and a cached event without the picker's fields, which gets the current difficulty, a
+--- random faction and the MCT battle-type pick.
 --- @param previous_state table A record previously produced by export_state_as_a_table.
 function BattleEventDelegate:reinstate_event_if_able(previous_state)
     self.is_triggered = previous_state["battle_event_delegate_is_triggered"]
@@ -467,6 +470,10 @@ function BattleEventDelegate:reinstate_event_if_able(previous_state)
             self.cached_event.intervention = pick_intervention_type()
         end
         local spot_info = previous_state["battle_event_delegate_spot_info"]
+        local general = self.cached_event.general_cqi and cm:get_character_by_cqi(self.cached_event.general_cqi)
+        local found = general and not general:is_null_interface()
+        if found then self.cached_player_character = general end
+        log("spot battle: restored the battle of lord " .. tostring(self.cached_event.general_cqi) .. (found and "" or " (lord not found)"))
 
         local offensive_army = self:get_offensive_army()
         self.invasion_battle_manager:set_auxiliary_army_for_reset(offensive_army)
