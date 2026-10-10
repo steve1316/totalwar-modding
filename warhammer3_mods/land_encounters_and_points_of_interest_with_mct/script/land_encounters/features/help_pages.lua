@@ -25,18 +25,19 @@ local RECORD_LOC = "advice_info_texts_localised_text_"
 --- Saved value set once the intro message has been shown.
 local INTRO_SHOWN = "land_enc_intro_shown"
 
---- Seconds the notification panel must stay closed before the intro message shows. A message sent while the game's own Path to Glory
---- or another notification is open is dropped.
-local INTRO_DELAY = 2
+--- Seconds after the game's last start-of-campaign message closes before the intro shows. The next one opens within about 0.3 s of the
+--- last closing, and an intro shown while they still come keeps coming back each time the panel reopens.
+local INTRO_DELAY = 0.5
 
---- Name of the callback that shows the intro message, so a panel opening can cancel it.
+--- Seconds after the opening cutscene to wait for the game's first message before showing the intro anyway.
+local INTRO_FIRST_WAIT = 5
+
+--- Name of the callback that shows the intro message, so a message opening can cancel it.
 local INTRO_TIMER = "land_enc_intro_timer"
 
---- Listeners that only live until the intro message has shown: the panel watchers while it waits, and the turn 2 fallback.
+--- Listeners that only live until the intro has shown: the panel watchers while it waits, and the turn 2 fallback for a campaign with no
+--- opening cutscene.
 local INTRO_LISTENERS = { "land_enc_intro_panel_opened", "land_enc_intro_panel_closed", "land_enc_intro_fallback" }
-
---- True while the intro message waits for the notification panel to stay closed.
-local intro_waiting = false
 
 --- Where the intro message points on the map: the faction leader, else the faction's home settlement, else the map origin. The plain
 --- `show_message_event` call never showed the message in game, even with event feed string rows, while the located one does.
@@ -58,7 +59,7 @@ end
 local function show_intro()
     if cm:get_saved_value(INTRO_SHOWN) and not debug_config.intro_now[1] then return end
     cm:set_saved_value(INTRO_SHOWN, true)
-    intro_waiting = false
+    cm:remove_callback(INTRO_TIMER)
     for _, name in ipairs(INTRO_LISTENERS) do core:remove_listener(name) end
     for _, faction_name in ipairs(cm:get_human_factions()) do
         local x, y = intro_position(cm:get_faction(faction_name))
@@ -67,18 +68,16 @@ local function show_intro()
     end
 end
 
---- Shows the intro message once the notification panel has stayed closed for `INTRO_DELAY` seconds, starting the wait again on each close.
---- The panel watchers are added on the first call and removed once the message shows.
-local function queue_intro()
-    if not intro_waiting then
-        intro_waiting = true
-        core:add_listener("land_enc_intro_panel_opened", "PanelOpenedCampaign", function(context) return context.string == "events" end,
-            function() cm:remove_callback(INTRO_TIMER) end, true)
-        core:add_listener("land_enc_intro_panel_closed", "PanelClosedCampaign", function(context) return context.string == "events" end,
-            queue_intro, true)
-    end
-    cm:remove_callback(INTRO_TIMER)
-    cm:callback(show_intro, INTRO_DELAY, INTRO_TIMER)
+--- Waits for the game's start-of-campaign messages after the opening cutscene: each one closing starts an `INTRO_DELAY` timer that the next
+--- opening cancels, so the intro shows just after the last. With no message within `INTRO_FIRST_WAIT`, it shows anyway.
+local function wait_for_messages()
+    core:add_listener("land_enc_intro_panel_opened", "PanelOpenedCampaign", function(context) return context.string == "events" end,
+        function() cm:remove_callback(INTRO_TIMER) end, true)
+    core:add_listener("land_enc_intro_panel_closed", "PanelClosedCampaign", function(context) return context.string == "events" end, function()
+        cm:remove_callback(INTRO_TIMER)
+        cm:callback(show_intro, INTRO_DELAY, INTRO_TIMER)
+    end, true)
+    cm:callback(show_intro, INTRO_FIRST_WAIT, INTRO_TIMER)
 end
 
 --- Registers every page on its link, with its index entry's link and its tooltip, and adds the LEAPOI card to the game's Home page.
@@ -124,7 +123,7 @@ function M.register(env)
         add_pages(env)
         --- The debug switch shows the intro on a loaded save. A new campaign shows it after the opening cutscene anyway.
         if debug_config.intro_now[1] and not cm:is_new_game() then
-            queue_intro()
+            show_intro()
         elseif not cm:get_saved_value(INTRO_SHOWN) then
             --- Multiplayer, and a campaign without an opening cutscene, show the intro at the start of turn 2.
             core:add_listener("land_enc_intro_fallback", "FactionTurnStart", function(context)
@@ -135,11 +134,11 @@ function M.register(env)
             end, true)
         end
     end)
-    --- The intro follows the game's opening cutscene and its own messages. Not in multiplayer, where each player's panels open and close at
-    --- their own pace.
+    --- The intro follows the opening cutscene and the game's own messages. Not in multiplayer, where each player closes them at their own
+    --- pace, so it shows at the start of turn 2 there.
     core:add_listener("land_enc_intro_after_cutscene", "ScriptEventIntroCutsceneFinished", function() return not cm:is_multiplayer() end, function()
-        log("help pages: the opening cutscene finished, the intro message follows once the notifications are closed")
-        queue_intro()
+        log("help pages: the opening cutscene finished, the intro message follows the game's own messages")
+        wait_for_messages()
     end, true)
     core:add_listener("land_enc_help_link_clicked", "ComponentLinkClicked", true, function(context)
         log("help pages: link clicked: " .. tostring(context.string))
