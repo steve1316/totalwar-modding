@@ -252,8 +252,7 @@ add_checkbox("intervention_ambush", "battle_engagement_section", "Ambush battles
     "Some encounter battles are ambushes: the enemy army is hidden and the battle cannot be retreated from before it starts. Harder. Nascent "
     .. "Rebellion and Surprise Attack battles always use it when it is enabled.", false)
 add_checkbox("intervention_interception", "battle_engagement_section", "Interception battles",
-    "Encounter battles are interceptions: the enemy army is visible and the battle cannot be declined from the dilemma, but standard battle "
-    .. "mechanics apply. This is the default.", true)
+    "Encounter battles are interceptions: the enemy army is visible and standard battle mechanics apply. This is the default.", true)
 add_checkbox("intervention_allied_reinforcements", "battle_engagement_section", "Allied reinforcement battles",
     "Some encounter battles let you attack with allied reinforcements available. Easier. Battlefield battles always use it when it is enabled.", true)
 

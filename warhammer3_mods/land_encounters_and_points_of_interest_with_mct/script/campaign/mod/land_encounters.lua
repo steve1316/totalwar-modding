@@ -49,6 +49,9 @@ local listeners = require("script/land_encounters/core/listeners")
 require("script/land_encounters/core/item_pool").set_script_environment(getfenv and getfenv(1) or nil)
 local save_load = require("script/land_encounters/core/save_load")
 
+--- The LEAPOI help pages use CA's help page helpers, which only this file's environment sees.
+require("script/land_encounters/features/help_pages").register(getfenv and getfenv(1) or nil)
+
 --- Save/load callbacks must register at module-load (BEFORE CA's LoadingGame fires).
 save_load.register()
 

@@ -18,7 +18,7 @@ Run everything from inside `helper_scripts/`. `update.py` is run directly, and e
 | --- | --- |
 | `core/` | Shared plumbing: `utilities.py`, `pipeline.py`, `extract_cache.py`, `delta.py`. |
 | `data/` | Hand-kept registries: `supported_mods.py`, `dynamic_rors_effects.py`. |
-| `generators/` | The pack builders `update.py` runs: `update_dynamic_rors.py`, `update_double_unit_size.py`, `update_modified_attribute_mods.py`, `process_main_units_tables.py`, `update_ttc_compat.py`. |
+| `generators/` | The pack builders `update.py` runs: `update_dynamic_rors.py`, `update_double_unit_size.py`, `update_modified_attribute_mods.py`, `process_main_units_tables.py`, `update_ttc_compat.py`. Also the LEAPOI generators, run by hand (see `generators/update_leapoi_spot_offers.py` below). |
 | `ttc/` | The TTC compat model and file IO: `ttc_classifier.py`, `ttc_data.py`, `ttc_compat_io.py`. |
 | `publish/` | Steam Workshop uploads: `workshop_publish.py` and the Node uploader in `workshop_publisher/`. |
 | `tools/` | Scripts run by hand: codegen helpers, translation checks, the LEAPOI simulators (`simulate_leapoi_armies.py`, `leapoi_sim/`). `update.py` also calls the effect sync in `update_dynamic_ror_effects.py`. |
@@ -59,6 +59,16 @@ Processes vanilla `db.pack` plus every mod in `SUPPORTED_MODS` whose `modified_a
 
 ### `generators/process_main_units_tables.py`
 Generates `factions_data.lua` and `factions_data.json` for the Land Encounters and Points of Interest mod. Reads vanilla and modded `main_units_tables`, `faction_agent_permitted_subtypes_tables`, `character_skill_node_set_items_tables`, `character_skill_node_sets_tables`, and `character_skill_nodes_tables` for every supported mod, classifies each unit into a faction/tier/caste, and writes the Lua file straight into the Land Encounters mod folder under `../warhammer3_mods/`, then injects it back into the Workshop `.pack`.
+
+### `generators/update_leapoi_spot_offers.py` (LEAPOI)
+Writes the generated db and loc rows of the Land Encounters and Points of Interest mod, plus its `configs/army_spells.lua` and `configs/victory_gold.lua`. `update.py` does not run it. Run `python -u -m generators.update_leapoi_spot_offers` (`--dry-run` to preview). It pulls in the other LEAPOI modules:
+- `leapoi_tower_offer_text.py`: tower offer text, bundles and notices that change with difficulty.
+- `leapoi_battle_modifiers.py`: battle modifier text and bundles.
+- `leapoi_boons.py`: boon and curse bundles, lines, incidents and dilemmas.
+- `leapoi_effect_library.py`: custom effects and the trial bundles the debug switches apply.
+- `leapoi_army_spells.py`: the army spell pools, kept in `leapoi_army_spells.json`. Refresh with `python -m generators.leapoi_army_spells <vanilla TSV folder>`.
+- `leapoi_free_spells.py`: free army copies of lore spells, kept in `leapoi_free_spells.json`. Refresh with `python -m generators.leapoi_free_spells <vanilla TSV folder>`.
+- `leapoi_stat_icons.py`: puts stat icons in front of stat names in dilemma lines.
 
 ### `tools/update_dynamic_ror_effects.py`
 Codegen helper. Extracts `unit_purchasable_effects_tables` from Nanu's parent pack (Steam ID `3278112051`), diffs the keys against `SUPPORTED_EFFECTS` in `dynamic_rors_effects.py`, categorizes any new ones via regex pattern matching, and rewrites `dynamic_rors_effects.py` in place to add them. Also reshuffles entries currently in `misc` if they can now be properly classified. Re-run whenever the parent mod adds new effect bundles. Not part of `update.py`.

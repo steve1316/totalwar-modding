@@ -1,0 +1,12 @@
+key	display_order	inset_level	is_battle	enabled
+#help_page_index_records_tables;2;db/help_page_index_records_tables/land_encounters_and_points_of_interest				
+land_enc_leapoi	1800	0	false	true
+land_enc_encounters	1801	1	false	true
+land_enc_battle_events	1802	1	false	true
+land_enc_treasure	1803	1	false	true
+land_enc_towers	1804	1	false	true
+land_enc_smithies	1805	1	false	true
+land_enc_taverns	1806	1	false	true
+land_enc_boons_and_curses	1807	1	false	true
+land_enc_army_spells	1808	1	false	true
+land_enc_settings	1809	1	false	true

@@ -64,110 +64,145 @@ BREAK = NL + NL
 LINE_CHARS = 45
 MIN_LINES, MAX_LINES = 10, 18
 
-# Rule sections shared by the descriptions: (heading, bullet lines). "{wins}", "{max}", "{turns}", "{turns_to_turn}" and "{realm_turns}" are
-# filled from the config.
-BOON_GROWTH = ("How boons grow", ["A boon grows one level for every {wins} battles this lord wins, up to level {max}.",
-                                  "Lost battles do not count, but they never take a level away.",
-                                  "A charged boon does not grow. It lasts a set number of battles, then fades.",
-                                  "Gaining a boon this lord already has raises it a level, or refills its charges."])
-BOON_GROWTH_SHORT = (BOON_GROWTH[0], BOON_GROWTH[1][:2])
-CURSE_GROWTH = ("How curses grow", ["A curse worsens one level every {turns} turns, up to level {max}.",
-                                    "Some curses turn into a boon after {turns_to_turn} turns at their worst. The rest stay until lifted.",
-                                    "When this lord has no room for another curse, the mildest one worsens instead."])
-BOON_SOURCES = ("Where boons come from", ["A win in a hard LEAPOI battle, or one with battle modifiers",
-                                          "A battle modifier that lingers after the fight",
-                                          "A fallen tower champion",
-                                          "Tavern bounties and quest chains",
-                                          "Pacts at treasure spots, Towers and Taverns"])
-CURSE_SOURCES = ("Where curses come from", ["A lost LEAPOI battle", "A battle modifier that lingers after the fight", "A failed Tavern contract",
-                                            "Pacts and cursed relics, which trade a curse for power"])
-SLOTS = "How many boons and curses a lord can carry is set on the Boons and Curses page of the mod's settings. A lord who dies or leaves " \
-        "the faction loses them all."
-LIFTING = ("Lifting other curses", ["At a Smithy we own, the master smith breaks a curse. The price grows with its level.",
-                                     "At any Tavern, the hedge-witch cleanses a curse for less, or gambles on one for less still.",
-                                     "Some curses turn into a boon after {turns_to_turn} turns at their worst, so enduring one can pay off."])
-REALM = ("Faction-wide", ["It touches the whole faction, not one lord, and takes no lord's slot.", "It lasts {realm_turns} turns, then passes."])
+# Rule section shared by the pick and full-slots dilemmas: (heading, bullet lines). "{wins}" and "{max}" are filled from the config.
+BOON_GROWTH_SHORT = ("How boons grow", ["A boon grows one level for every {wins} battles this lord wins, up to level {max}.",
+                                        "Lost battles do not count, but they never take a level away."])
 
-# Clock name (configs/boons.lua `counted_clocks` and `fixed_clocks`) -> (text, text when the count is 1). The clock is the line at the top of
-# a boon's or curse's bundle, and "%n" is its count, set by the script. A fixed clock has no count.
+# The line `incidents` ends every boon and curse notice with. The rules it points to are on the Boons and Curses help page
+# (leapoi_help_pages.py).
+POINTER = "How boons and curses work: Land Encounters, Boons and Curses, in the help pages."
+
+# Notice sections shared by several events: a lifted curse, and a faction-wide effect.
+CURSE_GONE = ("What changed", ["The curse is gone for good, with every level it had gained."])
+FACTION_WIDE = ("Faction-wide", ["It touches the whole faction, not one lord, and takes no lord's slot.",
+                                 "It lasts {realm_turns} turns, then passes."])
+
+# Clock name (configs/boons.lua `clock_counts` keys and `fixed_clocks`) -> (text, text when the count is 1). The clock is the countdown a boon's
+# or curse's bundle shows in the army's effects, with "%n" its count. A fixed clock has no count.
 CLOCKS: Dict[str, Tuple[str, Optional[str]]] = {
-    "lasts": ("Lasts %n battles.", "Lasts 1 battle."),
+    "lasts": ("Lasts %n more battles.", "Lasts 1 more battle."),
     "upgrades": ("Upgrades in %n won battles.", "Upgrades in 1 won battle."),
     "worsens": ("Worsens in %n turns.", "Worsens in 1 turn."),
     "becomes": ("Becomes a boon in %n turns.", "Becomes a boon in 1 turn."),
-    "realm": ("Lasts %n turns.", "Lasts 1 turn."),
     "strongest": ("At its strongest, and lasts for good.", None),
     "worst": ("At its worst, and lasts until lifted.", None),
 }
 
-# Icon and priority of the clock effects. The lowest priority puts the clock above the bundle's other effects.
-CLOCK_ICON, CLOCK_PRIORITY = "turns.png", 0
+# Icon, priority and scope of the clock effects, as vanilla dummy effects on lord bundles have them. Priority 0 hides an effect.
+CLOCK_ICON, CLOCK_PRIORITY, CLOCK_SCOPE = "turns.png", 1, "character_to_character_own"
 
-# Event -> (incident title, description parts, picture). A part is a paragraph or a rule section. "{lord}" is the lord's name, read from
+# Event -> (incident title, description parts, picture). A part is a paragraph or a (heading, lines) section. `incidents` adds `POINTER`. "{lord}" is the lord's name, read from
 # the config's `lord_context`.
 INCIDENTS: Dict[str, Tuple[str, list, str]] = {
-    "boon_gained": ("A Boon Is Won", ["Something has changed in {lord}'s army, and for the better. Every warrior can feel it.", BOON_GROWTH, SLOTS],
-                    "ursun_claimed"),
-    "boon_grew": ("The Boon Grows", ["Another victory, and {lord}'s army has grown stronger for it.", BOON_GROWTH], "victory"),
-    "boon_lost": ("A Boon Fades", ["Whatever gave {lord}'s army its edge is gone now.",
-                                   ("Why boons fade", ["A charged boon fades after its last battle.",
-                                                       "A boon given up to make room for a new one is gone for good, with every level it gained."]),
-                                   BOON_SOURCES], "attrition_mountain"),
-    "curse_gained": ("A Curse Takes Hold", ["A shadow has fallen over {lord}'s army, and it will not lift on its own.", CURSE_GROWTH, SLOTS],
-                     "ai_wins_soul"),
-    "curse_worse": ("The Curse Deepens", ["The curse on {lord}'s army grows heavier with every passing day.", CURSE_GROWTH, CURSE_SOURCES],
-                    "attrition_vampire_territory"),
-    "curse_lifted": ("A Curse Is Lifted", ["The weight on {lord}'s army is gone at last.",
-                                           ("What changed", ["The curse is gone for good, with every level it had gained."]), LIFTING], "rift_entered"),
-    "curse_shifted": ("The Gamble Fails", ["The hedge-witch's bones fell badly. The curse on {lord}'s army has not lifted. It has become something else.",
-                                           ("What changed", ["The gamble failed. The new curse keeps the old one's level.",
-                                                             "Its clock starts again, so it worsens {turns} turns from now.",
-                                                             "A lord who gambles must wait {cooldown} turns to gamble at that Tavern again."]),
-                                           (CURSE_GROWTH[0], CURSE_GROWTH[1][:2])], "chaos_doom_tide"),
-    "gamble_won": ("The Gamble Pays Off", ["The hedge-witch's bones fell well. The curse on {lord}'s army is gone, for a fraction of the usual price.",
-                                           ("The gamble", ["It paid off. The curse is gone for good, with every level it had gained.",
-                                                           "A lord who gambles must wait {cooldown} turns to gamble at that Tavern again."]),
-                                           LIFTING], "winds_of_magic_change"),
-    "curse_cleansed": ("Cleansed by the Hedge-Witch", ["Bitter smoke, a muttered word and a pinch of grave dust, and the curse on {lord}'s army is gone.",
-                                                       ("What changed", ["The curse is gone for good, with every level it had gained."]),
-                                                       LIFTING], "rift_entered"),
-    "curse_broken": ("The Curse Is Broken", ["Hammer and fire have done what prayer could not. The curse on {lord}'s army is broken.",
-                                             ("What changed", ["The curse is gone for good, with every level it had gained."]),
-                                             LIFTING], "rift_entered"),
-    "boon_tempered": ("Tempered at the Forge", ["The master smith has worked the blessing on {lord}'s army into the steel itself. It burns brighter now.",
-                                                ("What changed", ["The boon rose one level, and its effects grow with it."]),
-                                                BOON_GROWTH], "army_morale_up"),
-    "boon_fed": ("Fed by the Hedge-Witch", ["The hedge-witch burned a lock of {lord}'s hair with bitter herbs. The blessing on the army drank it in "
-                                            "and grew.",
-                                            ("What changed", ["The witch's feeding pushed the boon over the edge. It rose one level.",
-                                                              "Its count of won battles starts again from nothing."]),
-                                            BOON_GROWTH_SHORT], "army_morale_up"),
-    "boon_rewoven": ("The Weave Holds", ["The hedge-witch pulled the threads of {lord}'s blessing apart and wove them tighter. It held.",
-                                         ("What changed", ["The boon rose one level.",
-                                                           "A lord who reweaves must wait {service_cooldown} turns to use that service at that Tavern again."]),
-                                         BOON_GROWTH], "winds_of_magic_change"),
-    "boon_shifted": ("The Weave Shifts", ["The hedge-witch's threads slipped. The blessing on {lord}'s army is still there, but it is not the one it was.",
-                                          ("What changed", ["The reweave failed. The new boon keeps the old one's level.",
-                                                            "Its count of won battles starts again from nothing.",
-                                                            "A lord who reweaves must wait {service_cooldown} turns to use that service at that Tavern again."]),
-                                          BOON_GROWTH_SHORT], "chaos_doom_tide"),
-    "blood_rite": ("A Blood Rite", ["The hedge-witch asked for no gold, only blood. {lord}'s soldiers gave it, and the curse washed out with it.",
-                                    ("What it cost", ["The army bled {blood}% of its strength for each level the curse had.",
-                                                      "A lord who works a blood rite must wait {service_cooldown} turns to work another at that Tavern."]),
-                                    ("What changed", ["The curse is gone for good, with every level it had gained."])], "rift_entered"),
-    "rust_struck": ("Rust for Iron", ["The smith's bargain is struck. {lord}'s army is harder to wound now, but rust has crept into its blades.",
-                                      ("The pact", ["The boon and the curse came together.",
-                                                    "The boon grows with victories, and the curse worsens with time, like any other."]),
-                                      BOON_GROWTH_SHORT, ("How curses grow", CURSE_GROWTH[1][:1])], "carnage_weapons"),
-    "curse_turned": ("The Curse Turns", ["{lord}'s army has carried its curse so long that it has become something else.",
-                                         ("What it became", ["The curse is gone, and its boon takes its place at level 1.",
-                                                             "If this lord has no room for it, another boon must be given up to keep it."]),
-                                         BOON_GROWTH_SHORT], "sword_of_khaine"),
-    "realm_boon": ("A Blessing on the Realm", ["Good fortune has settled over the whole realm, though it will not last forever.", REALM,
-                                               ("Where blessings come from", ["A fallen tower champion, now and then, in place of its boons"])],
-                   "winds_of_magic_change"),
-    "realm_curse": ("A Curse on the Realm", ["A darkness has fallen over the whole realm. It will pass, in time.", REALM, CURSE_SOURCES],
-                    "chaos_doom_tide"),
+    "boon_gained": ("A Boon Is Won", [
+        "Something has changed in {lord}'s army, and for the better. Every warrior can feel it.",
+        "Blades strike truer and shields hold firmer, and the soldiers march with their heads high. Whatever touched them on the field has stayed, and "
+        "every victory will make it stronger.",
+        ("What it means", ["The boon is listed with the lord's traits, and an icon in the army's effects counts the battles to its next level.",
+                          "It stays until the lord falls, leaves the faction, or gives it up for another."])],
+        "ursun_claimed"),
+    "boon_grew": ("The Boon Grows", [
+        "Another victory, and {lord}'s army has grown stronger for it.",
+        "The veterans tell the story of the battle around the fires, and each telling makes the blessing on them burn brighter. The recruits listen, "
+        "and believe.",
+        ("What changed", ["The boon rose one level, and its effects grow with it.",
+                         "Its count of won battles starts again toward the next level."])],
+        "victory"),
+    "boon_lost": ("A Boon Fades", [
+        "Whatever gave {lord}'s army its edge is gone now.",
+        "The soldiers still fight, but something has gone out of them. They remember how it felt, and they want it back.",
+        ("Why boons fade", ["A charged boon fades after its last battle.",
+                           "A boon given up to make room for a new one is gone for good, with every level it gained."])],
+        "attrition_mountain"),
+    "curse_gained": ("A Curse Takes Hold", [
+        "A shadow has fallen over {lord}'s army, and it will not lift on its own.",
+        "The soldiers mutter at night and look over their shoulders on the march. Something followed them from the field, and it is patient.",
+        ("What it means", ["The curse is listed with the lord's traits, and an icon in the army's effects counts the turns until it worsens.",
+                          "It stays until it is lifted, or until the lord falls or leaves the faction."])],
+        "ai_wins_soul"),
+    "curse_worse": ("The Curse Deepens", [
+        "The curse on {lord}'s army grows heavier with every passing day.",
+        "Fewer soldiers laugh at the fires now, and the sick lists grow longer. Whatever festers in the ranks has dug its roots in deeper, and it will "
+        "not wait forever.",
+        ("What changed", ["The curse sank one level, and its effects grow with it.",
+                         "Its clock starts again toward the next level."])],
+        "attrition_vampire_territory"),
+    "curse_lifted": ("A Curse Is Lifted", [
+        "The weight on {lord}'s army is gone at last.",
+        "The soldiers sleep through the night for the first time in weeks, and the camp is loud with songs again.",
+        CURSE_GONE],
+        "rift_entered"),
+    "curse_shifted": ("The Gamble Fails", [
+        "The hedge-witch's bones fell badly. The curse on {lord}'s army has not lifted. It has become something else.",
+        ("What changed", ["The gamble failed. The new curse keeps the old one's level.",
+                         "Its clock starts again, so it worsens {turns} turns from now.",
+                         "A lord who gambles must wait {cooldown} turns to gamble at that Tavern again."])],
+        "chaos_doom_tide"),
+    "gamble_won": ("The Gamble Pays Off", [
+        "The hedge-witch's bones fell well. The curse on {lord}'s army is gone, for a fraction of the usual price.",
+        ("The gamble", ["It paid off. The curse is gone for good, with every level it had gained.",
+                       "A lord who gambles must wait {cooldown} turns to gamble at that Tavern again."])],
+        "winds_of_magic_change"),
+    "curse_cleansed": ("Cleansed by the Hedge-Witch", [
+        "Bitter smoke, a muttered word and a pinch of grave dust, and the curse on {lord}'s army is gone.",
+        "The witch pockets the coin without a word and turns back to the pot. The soldiers do not look back as they leave.",
+        CURSE_GONE],
+        "rift_entered"),
+    "curse_broken": ("The Curse Is Broken", [
+        "Hammer and fire have done what prayer could not. The curse on {lord}'s army is broken.",
+        "The smith quenches the last blade and holds it to the light. Whatever clung to the steel is gone, and the ring of the metal is clean again.",
+        CURSE_GONE],
+        "rift_entered"),
+    "boon_tempered": ("Tempered at the Forge", [
+        "The master smith has worked the blessing on {lord}'s army into the steel itself. It burns brighter now.",
+        "Every blade has been folded again, every rivet set anew. The soldiers test their edges and grin.",
+        ("What changed", ["The boon rose one level, and its effects grow with it."])],
+        "army_morale_up"),
+    "boon_fed": ("Fed by the Hedge-Witch", [
+        "The hedge-witch burned a lock of {lord}'s hair with bitter herbs. The blessing on the army drank it in and grew.",
+        ("What changed", ["The witch's feeding pushed the boon over the edge. It rose one level.",
+                         "Its count of won battles starts again from nothing."])],
+        "army_morale_up"),
+    "boon_rewoven": ("The Weave Holds", [
+        "The hedge-witch pulled the threads of {lord}'s blessing apart and wove them tighter. It held.",
+        ("What changed", ["The boon rose one level.",
+                         "A lord who reweaves must wait {service_cooldown} turns to use that service at that Tavern again."])],
+        "winds_of_magic_change"),
+    "boon_shifted": ("The Weave Shifts", [
+        "The hedge-witch's threads slipped. The blessing on {lord}'s army is still there, but it is not the one it was.",
+        ("What changed", ["The reweave failed. The new boon keeps the old one's level.",
+                         "Its count of won battles starts again from nothing.",
+                         "A lord who reweaves must wait {service_cooldown} turns to use that service at that Tavern again."])],
+        "chaos_doom_tide"),
+    "blood_rite": ("A Blood Rite", [
+        "The hedge-witch asked for no gold, only blood. {lord}'s soldiers gave it, and the curse washed out with it.",
+        ("What it cost", ["The army bled {blood}% of its strength for each level the curse had.",
+                         "A lord who works a blood rite must wait {service_cooldown} turns to work another at that Tavern."]),
+        CURSE_GONE],
+        "rift_entered"),
+    "rust_struck": ("Rust for Iron", [
+        "The smith's bargain is struck. {lord}'s army is harder to wound now, but rust has crept into its blades.",
+        "The armour sits heavy and sure on every shoulder. The edges, though, dull a little more each day.",
+        ("The pact", ["The boon and the curse came together.",
+                     "The boon grows with victories, and the curse worsens with time, like any other."])],
+        "carnage_weapons"),
+    "curse_turned": ("The Curse Turns", [
+        "{lord}'s army has carried its curse so long that it has become something else.",
+        "What once gnawed at the soldiers now hardens them. They have learned to live with the thing, and then to use it.",
+        ("What it became", ["The curse is gone, and its boon takes its place at level 1.",
+                           "If this lord has no room for it, another boon must be given up to keep it."])],
+        "sword_of_khaine"),
+    "realm_boon": ("A Blessing on the Realm", [
+        "Good fortune has settled over the whole realm, though it will not last forever.",
+        "Harvests come in early, roads stay dry and the coffers fill faster than the clerks can count. The priests call it a sign. The generals call it"
+        " a chance.",
+        FACTION_WIDE],
+        "winds_of_magic_change"),
+    "realm_curse": ("A Curse on the Realm", [
+        "A darkness has fallen over the whole realm. It will pass, in time.",
+        "Wells sour, messengers go missing and the omens are poor wherever the priests look. The people wait for it to end.",
+        FACTION_WIDE],
+        "chaos_doom_tide"),
 }
 
 # Display order of the full-slots dilemma's first choice in cdir_events_dilemma_choices. The others follow it, the new boon's last.
@@ -543,7 +578,7 @@ def race_levels(key: str, race: str) -> List[Level]:
                  f"-50 relations with {name}"], (diplomacy, FACTION, [-10, -20, -30, -40, -50]))
 
 
-def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Level]]]:
+def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Level], Dict]]:
     """Every boon or curse as it is bundled: one variant per race for a rolled one.
 
     Args:
@@ -551,7 +586,7 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
         config (Dict): The boons config from the Lua dump.
 
     Returns:
-        List[Tuple]: (bundle stem without level, name, flavour, icon, levels) per variant.
+        List[Tuple]: (bundle stem without level, name, flavour, icon, levels, config record) per variant.
     """
     catalogue = BOONS if kind == "boon" else CURSES
     out = []
@@ -560,9 +595,9 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
         name, flavour, icon, levels = catalogue[key]
         if record.get("race"):
             for race in config["races"]:
-                out.append((f"{key}_{race}", name.format(race=library.RACES[race][0]), flavour, icon, race_levels(key, race)))
+                out.append((f"{key}_{race}", name.format(race=library.RACES[race][0]), flavour, icon, race_levels(key, race), record))
         else:
-            out.append((key, name, flavour, icon, levels))
+            out.append((key, name, flavour, icon, levels, record))
     return out
 
 
@@ -571,46 +606,30 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
 # Rows
 
 
-def bundles(config: Dict) -> Dict[str, Tuple]:
-    """Every boon, curse and faction-wide bundle, in the generator's bundle shape.
+def clock_states(kind: str, record: Dict, config: Dict, level: int) -> List[Tuple[str, Optional[int]]]:
+    """Every clock a boon or curse can show at a level, with each count it can reach.
 
     Args:
+        kind (str): "boon" or "curse".
+        record (Dict): The boon or curse record from the config.
         config (Dict): The boons config from the Lua dump.
+        level (int): The level.
 
     Returns:
-        Dict[str, Tuple]: Bundle key -> (target, icon, title, description, [(effect, scope, value)]).
+        List[Tuple[str, Optional[int]]]: (clock name, count, or None for a fixed clock).
     """
-    shaped = {}
-    for kind in ("boon", "curse"):
-        for stem, name, flavour, icon, levels in variants(kind, config):
-            for number, (text, effects) in enumerate(levels, 1):
-                title = level_title(name, levels, number)
-                shown = flavour if len(levels) == 1 else f"{flavour}{BREAK}Level {number} of {len(levels)}."
-                shaped[f"{config['bundle_prefix'][kind]}{stem}_{number}"] = ("character", icon, title, shown, effects)
-    for key, (name, flavour, icon, _, effects) in REALM.items():
-        shaped[config["realm_prefix"] + key] = ("faction", icon, name, flavour, effects)
-    return shaped
-
-
-def lines(config: Dict) -> List[Tuple[str, str, str]]:
-    """The payload line of every boon and curse level and every faction-wide effect, which dilemmas and incidents show.
-
-    Args:
-        config (Dict): The boons config from the Lua dump.
-
-    Returns:
-        List[Tuple[str, str, str]]: (payload key, icon, text).
-    """
-    out = []
-    for kind, colour in (("boon", "green"), ("curse", "red")):
-        for stem, name, _, icon, levels in variants(kind, config):
-            for number, (text, _) in enumerate(levels, 1):
-                level = "" if len(levels) == 1 else f" (level {number} of {len(levels)})"
-                out.append((f"{config['line_prefix']}{kind}_{stem}_{number}", icon, f"[[col:{colour}]]{name}{level}: {text}[[/col]]"))
-    good = {r["key"]: r.get("good") for r in config["realm"]}
-    for key, (name, _, icon, text, _) in REALM.items():
-        out.append((f"{config['line_prefix']}realm_{key}", icon, f"[[col:{'green' if good[key] else 'red'}]]{name}: {text}, for {config['realm_turns']} turns[[/col]]"))
-    return out
+    counts = config["clock_counts"]
+    if record.get("charges"):
+        name = "lasts"
+    elif level < config["max_level"]:
+        name = "upgrades" if kind == "boon" else "worsens"
+    elif kind == "boon":
+        return [("strongest", None)]
+    elif record.get("turns_into"):
+        name = "becomes"
+    else:
+        return [("worst", None)]
+    return [(name, n) for n in range(1, counts[name] + 1)]
 
 
 def clocks(config: Dict) -> List[Tuple[str, str]]:
@@ -630,6 +649,79 @@ def clocks(config: Dict) -> List[Tuple[str, str]]:
     return out
 
 
+def bundles(config: Dict) -> Dict[str, Tuple]:
+    """Every boon and curse countdown bundle per level, naming the level's effects with its clock as its only effect, and every faction-wide bundle,
+    which the game counts down.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        Dict[str, Tuple]: Bundle key -> (target, icon, title, description, [(effect, scope, value)]).
+    """
+    shaped = {}
+    for kind in ("boon", "curse"):
+        colour = "green" if kind == "boon" else "red"
+        for stem, name, flavour, icon, levels, record in variants(kind, config):
+            for number, (text, _) in enumerate(levels, 1):
+                shown = f"{flavour}{BREAK}[[col:{colour}]]{text}[[/col]]"
+                for clock, count in clock_states(kind, record, config, number):
+                    effect = config["clock_prefix"] + clock + ("_one" if count == 1 else "")
+                    key = f"{config['bundle_prefix'][kind]}{stem}_{number}_{clock}" + (f"_{count}" if count else "")
+                    shaped[key] = ("character", icon, level_title(name, levels, number), shown, [(effect, CLOCK_SCOPE, count or 1)])
+    for key, (name, flavour, icon, _, effects) in REALM.items():
+        shaped[config["realm_prefix"] + key] = ("faction", icon, name, flavour, effects)
+    return shaped
+
+
+def traits(config: Dict) -> Dict[str, Tuple]:
+    """Every boon and curse as a trait whose levels carry its effects, in the generator's trait shape.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        Dict[str, Tuple]: Trait key -> (icon, [(points, name, flavour, rule, [(effect, scope, value)])]). A level's points are its number, so the
+        script sets a level by adding that many points.
+    """
+    shaped = {}
+    for kind in ("boon", "curse"):
+        for stem, name, flavour, _, levels, record in variants(kind, config):
+            if record.get("charges"):
+                rule = f"Lasts {record['charges']} battles, then fades."
+            elif kind == "boon":
+                rule = f"Grows a level for every {config['wins_per_level']} won battles, up to level {config['max_level']}."
+            else:
+                rule = f"Worsens a level every {config['turns_per_level']} turns, up to level {config['max_level']}."
+                if record.get("turns_into"):
+                    rule += f" After {config['turns_to_turn']} turns at its worst, it becomes {BOONS[record['turns_into']][0].replace('{race}', 'the same race')}."
+            shaped[config["trait_prefix"][kind] + stem] = ("trait_good" if kind == "boon" else "trait_bad",
+                                                           [(number, level_title(name, levels, number), flavour, rule, effects)
+                                                            for number, (_, effects) in enumerate(levels, 1)])
+    return shaped
+
+
+def lines(config: Dict) -> List[Tuple[str, str, str]]:
+    """The payload line of every boon and curse level and every faction-wide effect, which dilemmas and incidents show.
+
+    Args:
+        config (Dict): The boons config from the Lua dump.
+
+    Returns:
+        List[Tuple[str, str, str]]: (payload key, icon, text).
+    """
+    out = []
+    for kind, colour in (("boon", "green"), ("curse", "red")):
+        for stem, name, _, icon, levels, _ in variants(kind, config):
+            for number, (text, _) in enumerate(levels, 1):
+                level = "" if len(levels) == 1 else f" (level {number} of {len(levels)})"
+                out.append((f"{config['line_prefix']}{kind}_{stem}_{number}", icon, f"[[col:{colour}]]{name}{level}: {text}[[/col]]"))
+    good = {r["key"]: r.get("good") for r in config["realm"]}
+    for key, (name, _, icon, text, _) in REALM.items():
+        out.append((f"{config['line_prefix']}realm_{key}", icon, f"[[col:{'green' if good[key] else 'red'}]]{name}: {text}, for {config['realm_turns']} turns[[/col]]"))
+    return out
+
+
 def describe(parts: list, config: Dict, event: str) -> str:
     """Writes a description from its parts, with the rules and the lord's name filled in.
 
@@ -644,7 +736,7 @@ def describe(parts: list, config: Dict, event: str) -> str:
     lord = f'[[col:yellow]]{{{{CcoCampaignEvent{event}:ScriptObjectContext("{config["lord_context"]}").StringValue}}}}[[/col]]'
     witch = config["witch_room"]
     values = {"lord": lord, "wins": config["wins_per_level"], "max": config["max_level"], "turns": config["turns_per_level"],
-              "turns_to_turn": config["turns_to_turn"], "realm_turns": config["realm_turns"], "lift": witch["gamble_lift_chance"],
+              "realm_turns": config["realm_turns"], "lift": witch["gamble_lift_chance"],
               "cooldown": witch["cooldowns"]["gamble"], "owner_off": round((1 - config["owner_price_share"]) * 100), "feed_wins": witch["feed_wins"],
               "rise": witch["reweave_rise_chance"], "blood": witch["blood_bleed"], "service_cooldown": max(witch["cooldowns"].values())}
     shown = [part if isinstance(part, str) else f"[[col:yellow]]{part[0]}[[/col]]" + "".join(NL + "- " + line for line in part[1]) for part in parts]
@@ -660,7 +752,8 @@ def shown_lines(description: str) -> int:
     Returns:
         int: The line count.
     """
-    plain = re.sub(r"\[\[/?col[^\]]*\]\]|\{\{[^}]*\}\}", "Lordname", description)
+    plain = re.sub(r"\[\[/?(?:url|tooltip|img)[^\]]*\]\]", "", description)
+    plain = re.sub(r"\[\[/?col[^\]]*\]\]|\{\{[^}]*\}\}", "Lordname", plain)
     return sum(max(1, -(-len(line) // LINE_CHARS)) for line in plain.split(NL))
 
 
@@ -673,7 +766,7 @@ def incidents(config: Dict) -> Dict[str, Tuple[str, str, str]]:
     Returns:
         Dict[str, Tuple[str, str, str]]: Event -> (title, description, picture).
     """
-    return {event: (title, describe(parts, config, "Incident"), image) for event, (title, parts, image) in INCIDENTS.items()}
+    return {event: (title, describe(parts + [POINTER], config, "Incident"), image) for event, (title, parts, image) in INCIDENTS.items()}
 
 
 def dilemmas(config: Dict) -> Dict[str, Tuple[str, str, str]]:
@@ -872,9 +965,9 @@ def owned_prefixes(config: Dict) -> List[str]:
     Returns:
         List[str]: The prefixes.
     """
-    return (list(config["bundle_prefix"].values()) + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"],
-                                                      config["smithy_room"]["dilemma"], config["witch_room"]["dilemma"], config["result_prefix"],
-                                                      config["guide_prefix"], config["clock_prefix"]]
+    return (list(config["bundle_prefix"].values()) + list(config["trait_prefix"].values())
+            + [config["realm_prefix"], config["full_dilemma"], config["full_new_choice"], config["pick_dilemma"], config["smithy_room"]["dilemma"],
+               config["witch_room"]["dilemma"], config["result_prefix"], config["guide_prefix"], config["clock_prefix"]]
             + config["pick_choices"]
             + [config["line_prefix"] + kind + "_" for kind in ("boon", "curse", "realm")] + config["full_choices"]
             + [config["incident_prefix"] + event for event in INCIDENTS])
@@ -903,9 +996,10 @@ def problems(config: Dict) -> List[str]:
             if charges and not levels[0][0].endswith(f"for {charges} battles"):
                 found.append(f"{record['key']} text does not say {charges} battles")
     found += [f"race {race} differs" for race in sorted(set(config["races"]) ^ set(library.RACES))]
-    found += [f"clock {name} differs" for name in sorted(set(config["counted_clocks"] + config["fixed_clocks"]) ^ set(CLOCKS))]
-    found += [f"clock {name} should {'' if name in config['counted_clocks'] else 'not '}have a count" for name, (text, one) in CLOCKS.items()
-              if (one is not None) != (name in config["counted_clocks"]) or ("%n" in text) != (one is not None)]
+    counted = config["clock_counts"]
+    found += [f"clock {name} differs" for name in sorted((set(counted) | set(config["fixed_clocks"])) ^ set(CLOCKS))]
+    found += [f"clock {name} should {'' if name in counted else 'not '}have a count" for name, (text, one) in CLOCKS.items()
+              if (one is not None) != (name in counted) or ("%n" in text) != (one is not None)]
     found += [f"faction-wide {key} differs" for key in sorted({r["key"] for r in config["realm"]} ^ set(REALM))]
     texts = {**incidents(config), **{"dilemma " + name: text for name, text in dilemmas(config).items()}}
     found += [f"{name} description fills {shown_lines(text[1])} lines, not {MIN_LINES}-{MAX_LINES}" for name, text in texts.items()
