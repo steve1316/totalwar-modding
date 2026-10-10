@@ -148,7 +148,7 @@ M.witch_room = {
     feed_wins = 2,
     reweave_price = 1000,
     reweave_rise_chance = 50,
-    cooldowns = { feed = 5, reweave = 5, gamble = 5, blood = 5 },
+    cooldowns = { cleanse = 5, feed = 5, reweave = 5, gamble = 5, blood = 5 },
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

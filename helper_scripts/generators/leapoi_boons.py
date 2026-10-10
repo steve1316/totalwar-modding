@@ -288,7 +288,7 @@ SERVICE_LINES = {
 }
 
 # What each hedge-witch service's cooldown line says the witch will not do again: service -> words.
-COOLING_WORDS = {"gamble": "gamble with", "feed": "feed a boon for", "reweave": "reweave a boon for", "blood": "work a blood rite for"}
+COOLING_WORDS = {"cleanse": "cleanse a curse for", "gamble": "gamble with", "feed": "feed a boon for", "reweave": "reweave a boon for", "blood": "work a blood rite for"}
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -2123,6 +2123,11 @@ dummy_land_enc_boon_service_blood_2	ui/campaign ui/effect_bundles/fractured_mind
 dummy_land_enc_boon_service_blood_3	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
 dummy_land_enc_boon_service_blood_4	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
 dummy_land_enc_boon_service_blood_5	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_cleanse_cooling_1	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_cleanse_cooling_2	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_cleanse_cooling_3	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_cleanse_cooling_4	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
+dummy_land_enc_boon_service_cleanse_cooling_5	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
 dummy_land_enc_boon_service_gamble_cooling_1	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
 dummy_land_enc_boon_service_gamble_cooling_2	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
 dummy_land_enc_boon_service_gamble_cooling_3	ui/campaign ui/effect_bundles/fractured_mind.png	default	0
