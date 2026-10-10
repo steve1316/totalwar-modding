@@ -6,7 +6,6 @@ require("script/land_encounters/utils/random")
 local tower_army = require("script/land_encounters/features/tower_army")
 local dilemmas = require("script/land_encounters/core/dilemmas")
 local tower_lords = require("script/land_encounters/features/tower_lords")
-local item_pool = require("script/land_encounters/core/item_pool")
 local army_generator = require("script/land_encounters/core/army_generator")
 local Army = require("script/land_encounters/core/army")
 
@@ -97,21 +96,6 @@ function M.pick_renown(general_cqi, faction_name, count, exclude)
     for key in pairs(exclude or {}) do fielded[key] = true end
     for _, entry in ipairs(tower_army.unit_strengths(general_cqi)) do fielded[entry.unit:unit_key()] = true end
     return shorthand and army_generator.pick_units(shorthand, { 0, 1, 2, 3, 4, 5 }, nil, count, { renown = true, exclude = fielded }) or {}
-end
-
---- Picks distinct legendary items for a faction.
---- @param faction_name string The faction key.
---- @param count number How many items to pick.
---- @param held table|nil Item keys the reward already holds (e.g. a tower haul), which are not picked again.
---- @returns table The picked item keys, fewer than `count` when the pool runs dry.
-function M.pick_unique_items(faction_name, count, held)
-    local items = {}
-    for _ = 1, count do
-        local item = item_pool.pick_legendary_item(faction_name, held, items)
-        if item == nil then break end
-        items[#items + 1] = item
-    end
-    return items
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////

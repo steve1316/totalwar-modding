@@ -12,7 +12,7 @@ campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_gold	[[co
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_foe	[[col:yellow]]Roll the Bones:[[/col]] [[col:red]]the next army is 20%% stronger.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_roll_the_bones_bleed	[[col:yellow]]Roll the Bones:[[/col]] [[col:red]]every unit loses %s strength.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_reroll	[[col:yellow]]Reroll:[[/col]] the offers are redrawn.	false
-campaign_localised_strings_string_land_enc_tower_result_daemons_deal	[[col:yellow]]Daemon's Deal:[[/col]] [[col:green]]%s unique items[[/col]] join the haul. [[col:red]]A Chaos army will march on our capital when the delve ends.[[/col]]	false
+campaign_localised_strings_string_land_enc_tower_result_daemons_deal	[[col:yellow]]Daemon's Deal:[[/col]] [[col:green]]%s Unique or Crafted items[[/col]] join the haul. [[col:red]]A Chaos army will march on our capital when the delve ends.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_towers_favour	[[col:yellow]]Tower's Favour:[[/col]] [[col:green]]more income[[/col]] from all buildings for the next 5 turns, but [[col:red]]relations with %s have soured[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_research_scrolls	[[col:yellow]]Research Scrolls:[[/col]] [[col:green]]+25%% research rate[[/col]] for the next 5 turns.	false
 campaign_localised_strings_string_land_enc_tower_result_recruitment_cache	[[col:yellow]]Recruitment Cache:[[/col]] [[col:green]]recruits cost 20%% less[[/col]] for the next 5 turns, but [[col:red]]every province has -10 public order[[/col]].	false
@@ -28,7 +28,7 @@ campaign_localised_strings_string_land_enc_tower_result_mission_met_trophy_hunt	
 campaign_localised_strings_string_land_enc_tower_result_mission_met_silence_the_guns	[[col:green]]Silence the Guns met:[[/col]] a rare item joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_untouchable	[[col:green]]Untouchable met:[[/col]] our lord gains +2000 experience.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_bloodbath_wager	[[col:green]]Bloodbath Wager won:[[/col]] +%s gold joins the haul.	false
-campaign_localised_strings_string_land_enc_tower_result_mission_met_duelists_challenge	[[col:green]]Duellist's Challenge met:[[/col]] a unique item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_duelists_challenge	[[col:green]]Duellist's Challenge met:[[/col]] a Unique or Crafted item joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_rival_won	[[col:red]]Rival Delvers:[[/col]] the rivals out-killed us %s to %s and took %s gold and %s items.	false
 campaign_localised_strings_string_land_enc_tower_result_rival_lost	[[col:green]]Rival Delvers:[[/col]] we out-killed the rivals %s to %s and keep the spoils.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_blood_tally	[[col:red]]Blood Tally failed.[[/col]]	false
@@ -63,7 +63,7 @@ campaign_localised_strings_string_land_enc_tower_result_mission_untracked_bloodb
 campaign_localised_strings_string_land_enc_tower_result_mission_set_bloodbath_wager	[[col:yellow]]Bloodbath Wager (Mission):[[/col]] wager [[col:yellow]]1000 gold[[/col]] from the haul and kill [[col:yellow]]80%%[[/col]] of the next army's soldiers for [[col:green]]+3000 gold[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_duelists_challenge	[[col:red]]Duellist's Challenge failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_duelists_challenge	[[col:yellow]]Duellist's Challenge was not counted:[[/col]] the battle was auto-resolved.	false
-campaign_localised_strings_string_land_enc_tower_result_mission_set_duelists_challenge	[[col:yellow]]Duellist's Challenge (Mission):[[/col]] challenge the next floor's lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a unique item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_duelists_challenge	[[col:yellow]]Duellist's Challenge (Mission):[[/col]] challenge the next floor's lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a Unique or Crafted item[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_rival_untracked	[[col:yellow]]Rival Delvers:[[/col]] the battle was auto-resolved, so no kills were counted and we keep the spoils.	false
 campaign_localised_strings_string_land_enc_tower_climb_floor	Floor %d (%s)	false
 campaign_localised_strings_string_land_enc_tower_climb_master	Floor %d (%s), the Master of the Tower	false
@@ -80,10 +80,10 @@ campaign_localised_strings_string_land_enc_tower_result_mission_met_spare_the_ca
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_spare_the_captain	[[col:red]]Spare the Captain failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_spare_the_captain	[[col:yellow]]Spare the Captain was not counted:[[/col]] the battle was auto-resolved.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_set_spare_the_captain	[[col:yellow]]Spare the Captain (Mission):[[/col]] win with the [[col:yellow]]next floor's lord still alive[[/col]] for [[col:green]]a ransom[[/col]].	false
-campaign_localised_strings_string_land_enc_tower_result_mission_met_flawless_victory	[[col:green]]Flawless Victory met:[[/col]] a unique item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_flawless_victory	[[col:green]]Flawless Victory met:[[/col]] a Unique or Crafted item joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_flawless_victory	[[col:red]]Flawless Victory failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_flawless_victory	[[col:yellow]]Flawless Victory was not counted:[[/col]] the battle was auto-resolved.	false
-campaign_localised_strings_string_land_enc_tower_result_mission_set_flawless_victory	[[col:yellow]]Flawless Victory (Mission):[[/col]] win the next floor [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_flawless_victory	[[col:yellow]]Flawless Victory (Mission):[[/col]] win the next floor [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a Unique or Crafted item[[/col]].	false
 
 campaign_localised_strings_string_land_enc_tower_result_mission_met_lords_glory	[[col:green]]Lord's Glory met:[[/col]] a rare item joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_lords_glory	[[col:red]]Lord's Glory failed.[[/col]]	false
@@ -97,10 +97,10 @@ campaign_localised_strings_string_land_enc_tower_result_mission_met_steadfast	[[
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_steadfast	[[col:red]]Steadfast failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_steadfast	[[col:yellow]]Steadfast was not counted:[[/col]] the battle was auto-resolved.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_set_steadfast	[[col:yellow]]Steadfast (Mission):[[/col]] let [[col:yellow]]no unit of ours rout[[/col]] on the next floor for [[col:green]]+50%% of the floor's gold[[/col]].	false
-campaign_localised_strings_string_land_enc_tower_result_mission_met_decapitate	[[col:green]]Decapitate met:[[/col]] a unique item joins the haul.	false
+campaign_localised_strings_string_land_enc_tower_result_mission_met_decapitate	[[col:green]]Decapitate met:[[/col]] a Unique or Crafted item joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_decapitate	[[col:red]]Decapitate failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_decapitate	[[col:yellow]]Decapitate was not counted:[[/col]] the battle was auto-resolved.	false
-campaign_localised_strings_string_land_enc_tower_result_mission_set_decapitate	[[col:yellow]]Decapitate (Mission):[[/col]] kill [[col:yellow]]the next floor's lord and every hero[[/col]] for [[col:green]]a unique item[[/col]].	false
+campaign_localised_strings_string_land_enc_tower_result_mission_set_decapitate	[[col:yellow]]Decapitate (Mission):[[/col]] kill [[col:yellow]]the next floor's lord and every hero[[/col]] for [[col:green]]a Unique or Crafted item[[/col]].	false
 campaign_localised_strings_string_land_enc_tower_result_mission_met_against_the_odds	[[col:green]]Against the Odds met:[[/col]] +%s gold joins the haul.	false
 campaign_localised_strings_string_land_enc_tower_result_mission_failed_against_the_odds	[[col:red]]Against the Odds failed.[[/col]]	false
 campaign_localised_strings_string_land_enc_tower_result_mission_untracked_against_the_odds	[[col:yellow]]Against the Odds was not counted:[[/col]] the battle was auto-resolved.	false

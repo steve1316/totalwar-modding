@@ -324,13 +324,13 @@ end
 --- @returns number The reward gold.
 --- @returns number The deposit paid back, 0 for a chain's earlier steps.
 --- @returns string|nil The item key, or nil when none could be picked.
---- @returns boolean True for a chain's end with no legendary item left, which frees a hero instead.
+--- @returns boolean True for a chain's end with not even a rare item left to stand in for its legendary item, which frees a hero instead.
 local function reward(faction_name, contract)
     if contract.kind == "chain" then
         local steps = tavern_data.contracts.chain.steps
         local step = steps[contract.step]
         if contract.step < #steps then return step.gold, 0, item_pool.pick_items(faction_name, step.item_rarities, 1)[1], false end
-        local item = item_pool.pick_legendary_item(faction_name)
+        local item = item_pool.pick_legendary_or(faction_name)
         return step.gold, contract.deposit, item, item == nil
     end
     local level = tavern_data.levels[contract.level].contracts

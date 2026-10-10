@@ -141,7 +141,7 @@ local function eligible(offer, ctx)
     local enemy_units = ctx.event and ctx.event.enemy_units or {}
     if (offer.gold_per_enemy_unit or offer.captive) and #enemy_units == 0 then return false end
     if offer.captive and not offer_effects.has_room(ctx.general_cqi, 1) then return false end
-    if (gamble_has(offer, "unique") or offer.guardian_prize) and item_pool.pick_legendary_item(ctx.faction_name, ctx.shown_items) == nil then return false end
+    if (gamble_has(offer, "unique") or offer.guardian_prize) and item_pool.pick_legendary_or(ctx.faction_name, ctx.shown_items) == nil then return false end
 
     local cards = {}
     --- Units and legendary items another offer on this dilemma already shows are left out, so none is offered twice.
@@ -157,7 +157,7 @@ local function eligible(offer, ctx)
         if #cards.units < offer.renown then return false end
     end
     if offer.unique then
-        cards.items = offer_effects.pick_unique_items(ctx.faction_name, offer.unique, ctx.shown_items)
+        cards.items = item_pool.pick_legendary_items(ctx.faction_name, offer.unique, ctx.shown_items)
         if #cards.items < offer.unique then return false end
     end
     if offer.items then
@@ -440,7 +440,7 @@ local function apply_fields(fields, offer, state, rolled)
         if fields.gold then rewards.gold = fields.gold end
         if fields.stake_multiplier then rewards.gold = state.paid * fields.stake_multiplier end
         if fields.items then rewards.items = item_pool.pick_items(faction_name, fields.items.rarities, fields.items.count) end
-        if fields.unique then rewards.items = offer_effects.pick_unique_items(faction_name, fields.unique) end
+        if fields.unique then rewards.items = item_pool.pick_legendary_items(faction_name, fields.unique) end
         log("spot: " .. offer.key .. " rolls gold " .. tostring(rewards.gold) .. ", items " .. table.concat(rewards.items, ", "))
     end
     if fields.army_bundle then tower_army.apply_bundle(general_cqi, fields.army_bundle[1], fields.army_bundle[2]) end

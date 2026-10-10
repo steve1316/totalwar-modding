@@ -21,6 +21,9 @@ local RARITY_WEIGHTS_BY_DIFFICULTY = {
     hard = { { "rare", 100 } },
 }
 
+--- Rarity that stands in for a legendary item when neither tier has one left for the faction.
+local LEGENDARY_FALLBACK_RARITY = "rare"
+
 --- Top-tier item lists a legendary pick draws from, pooled: the Unique (purple) and Crafted (gold) items. `enabled` names the MCT option
 --- that lets the tier drop, and `stays_unique` the one that keeps a player from being given an item of it they already own.
 local TOP_TIERS = {
@@ -94,8 +97,9 @@ end
 --- Picks one legendary item: a Unique (configs/legendary_items.lua) or Crafted (configs/crafted_items.lua) item from the tiers whose MCT option
 --- lets them drop, that the faction can use (CA's `ancillary_is_available_to_faction`) and whose DLC it has. While a tier's "stays unique"
 --- option is on, an item of it the faction already owns is skipped. Both tiers share one draw, so once every Crafted item is owned only
---- Uniques are left, and when none qualifies the caller falls back to its non-legendary reward. The scan starts at a random item so every
---- client picks the same one.
+--- Uniques are left. A reward that promises a legendary item picks through `pick_legendary_or` or `pick_legendary_items`, which add the rare
+--- stand-in, and a chance roll on another reward calls this directly and keeps its base reward on nil. The scan starts at a random item so
+--- every client picks the same one.
 --- @param faction_key string The receiving faction's key.
 --- @param ... table|nil Lists of item keys already picked for the same reward (e.g. a tower haul), which are not picked again.
 --- @returns string An ancillary key, or nil when no legendary item qualifies.
@@ -125,13 +129,41 @@ function M.pick_legendary_item(faction_key, ...)
     return nil
 end
 
---- Picks one legendary item, or an item of `fallback_rarity` standing in when none qualifies.
+--- Picks the rare items that stand in for legendary items none is left of.
 --- @param faction_key string The receiving faction's key.
---- @param fallback_rarity string The CA rarity key of the stand-in, e.g. "rare".
+--- @param count number How many stand-ins to pick.
+--- @returns table Distinct ancillary keys, fewer than `count` when the rare pool runs dry.
+local function pick_stand_ins(faction_key, count)
+    return M.pick_items(faction_key, { LEGENDARY_FALLBACK_RARITY }, count)
+end
+
+--- Picks one legendary item, or a rare item standing in when none qualifies.
+--- @param faction_key string The receiving faction's key.
 --- @param ... table|nil Lists of item keys already picked for the same reward, passed to `pick_legendary_item`.
---- @returns string An ancillary key, or nil when even the stand-in pool is dry.
-function M.pick_legendary_or(faction_key, fallback_rarity, ...)
-    return M.pick_legendary_item(faction_key, ...) or M.pick_items(faction_key, { fallback_rarity }, 1)[1]
+--- @returns string An ancillary key, or nil when even the rare pool is dry.
+--- @returns boolean True when the key is a rare stand-in.
+function M.pick_legendary_or(faction_key, ...)
+    local legendary = M.pick_legendary_item(faction_key, ...)
+    if legendary then return legendary, false end
+    return pick_stand_ins(faction_key, 1)[1], true
+end
+
+--- Picks `count` distinct legendary items, with a rare item standing in for each one that cannot be found.
+--- @param faction_key string The receiving faction's key.
+--- @param count number How many items to pick.
+--- @param ... table|nil Lists of item keys already picked for the same reward, passed to `pick_legendary_item`.
+--- @returns table Ancillary keys, fewer than `count` only when the rare pool runs dry too.
+function M.pick_legendary_items(faction_key, count, ...)
+    local items = {}
+    for _ = 1, count do
+        local item = M.pick_legendary_item(faction_key, items, ...)
+        if item == nil then break end
+        items[#items + 1] = item
+    end
+    if #items < count then
+        for _, item in ipairs(pick_stand_ins(faction_key, count - #items)) do items[#items + 1] = item end
+    end
+    return items
 end
 
 --- Picks one item whose rarity is weighted by the encounter difficulty.

@@ -242,8 +242,8 @@ add_checkbox("ready_notices", "configuration_section", "Ready notices",
     "Tells you when a Smithy you hold, or a Tower you last delved, is ready again. The notice names the region.", get_mct_settings().ready_notices)
 
 add_section("item_rewards_section", "Item Rewards", general_page,
-    "Which top-tier items LEAPOI rewards can give. Both tiers share one draw. When neither has an item left for you, Tower floors and missions"
-    .. " give a rare item instead, the Smithy and Tavern give their other rewards, and offers that promise one are not shown.")
+    "Which top-tier items LEAPOI rewards can give. Both tiers share one draw. When neither has an item left for you, every reward that"
+    .. " promises one gives a rare item instead.")
 
 add_checkbox("unique_item_rewards", "item_rewards_section", "Unique item rewards",
     "Lets rewards include Unique (purple) items, such as the Runefangs.", get_mct_settings().unique_item_rewards)

@@ -299,7 +299,7 @@ SITES = {
                       "forge takes one order from us at a time.\\\\n\\\\n[[col:yellow]]By forge level:[[/col]]\\\\n- Level 1: Heavy Plate gives "
                       "+15 armour, Honed Edges +6% weapon strength, and the runesmith cuts an army ability.\\\\n- Level 2: +20 armour, +9% "
                       "weapon strength, and a bound spell.\\\\n- Level 3: +25 armour, +12% weapon strength, a lore spell, and the cursed "
-                      "masterwork is a legendary piece."),
+                      "masterwork is a Unique or Crafted piece."),
     "tavern_bar": ("The Bar",
                    "The keeper leans on the bar beside barrels for every taste. Over at the tables, strangers are rolling dice, and a hulking "
                    "champion waits for anyone brave enough to lock arms with them.\\\\n\\\\nThe barkeep turns to us: \"What'll it "
@@ -342,13 +342,13 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "pry_open_the_reliquary": ("Pry Open the Reliquary", "Pry open the reliquary: [[col:green]]a random rare item[[/col]], but the reliquary's ghost "
                                "follows, and our lord is struck by {curse}."),
     "search_every_corner": ("Search Every Corner", "Search every corner: [[col:green]]2 random items[[/col]], but our army [[col:red]]cannot move again this turn[[/col]]."),
-    "the_hidden_vault": ("Open the Hidden Vault", PAY + "open the hidden vault: [[col:green]]1 unique item[[/col]]."),
+    "the_hidden_vault": ("Open the Hidden Vault", PAY + "open the hidden vault: [[col:green]]1 Unique or Crafted item[[/col]]."),
     "cast_the_lots": ("Cast the Lots", "Cast the lots: a 50/50 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]losing {lost_gold} gold[[/col]]."),
     "drink_from_the_spring": ("Drink from the Spring", "Drink from the spring: a 50/50 chance every unit is [[col:green]]healed to full[[/col]] or our army suffers [[col:red]]attrition for {lost_turns} turns[[/col]]."),
-    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 unique item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]]."),
+    "open_the_sealed_door": ("Open the Sealed Door", "Open the sealed door: a 50/50 chance of [[col:green]]1 Unique or Crafted item[[/col]] or our lord [[col:red]]wounded for 3 turns[[/col]]."),
     "wake_the_guardian": ("Wake the Guardian", "Wake the guardian: a 60/40 chance of [[col:green]]a random rare item[[/col]] or [[col:red]]it attacks[[/col]] and a battle starts here."),
     "touch_the_relic": ("Touch the Relic", "Touch the relic: our army gets a random [[col:green]]blessing for 5 turns[[/col]] or [[col:red]]curse for 3 turns[[/col]]."),
-    "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 unique item[[/col]]."),
+    "gamble_with_the_hermit": ("Gamble with the Hermit", PAY + "gamble with the hermit: a 1 in 3 chance of [[col:green]]1 Unique or Crafted item[[/col]]."),
     "leave_an_offering": ("Leave a Blood Offering", "Leave a blood offering: [[col:green]]+{e0}% ward save[[/col]] for our army for 5 turns, but every unit "
                           "loses [[col:red]]{bleed}% of its strength[[/col]] now."),
     "bless_the_banners": ("Bless the Banners", PAY + "bless our banners: " + stat("+{e0}", *ATTACK) + " and " + stat("+{e1}", *LEADERSHIP) + ", and "
@@ -366,7 +366,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "plague_bearer": ("Take the Cursed Hoard", "Take the cursed hoard: [[col:green]]+{gold} gold[[/col]] to our treasury, but our army suffers [[col:red]]attrition for {turns} turns[[/col]]."),
     "bloodstained_blades": ("Take the Bloodstained Blades", "Take up the bloodstained blades: " + stat("+20", *ATTACK) + ", but " + stat("-20", *DEFENCE, colour="red") + " for 5 turns."),
     "feed_the_shadows": ("Feed the Shadows", "Feed the shadows: sacrifice our [[col:red]]weakest unit[[/col]], and every other unit [[col:green]]gains 1 rank[[/col]]."),
-    "daemons_deal": ("Strike a Daemon's Deal", "Strike a daemon's deal: [[col:green]]{unique} unique items[[/col]] now, but [[col:red]]{daemon_armies}[[/col]] on our capital."),
+    "daemons_deal": ("Strike a Daemon's Deal", "Strike a daemon's deal: [[col:green]]{unique} Unique or Crafted items[[/col]] now, but [[col:red]]{daemon_armies}[[/col]] on our capital."),
     "conscripts": ("Recruit the Survivors", "Recruit the survivors: [[col:green]]{recruits}[[/col]] of our own kind join our army now, but at "
                    "[[col:red]]25% strength[[/col]], and must replenish."),
     "hire_sellswords": ("Hire Sellswords", PAY + "hire sellswords: [[col:green]]a random tier {tiers} unit[[/col]] of our own kind joins our army now."),
@@ -508,9 +508,9 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "trophy_hunt": ("Trophy Hunt", MISSION + "destroy the enemy's [[col:yellow]]most expensive unit[[/col]], and [[col:green]]a copy joins our army[[/col]]."),
     "silence_the_guns": ("Silence the Guns", MISSION + "destroy every enemy [[col:yellow]]missile and artillery unit within 5 minutes[[/col]] for [[col:green]]a random rare item[[/col]]."),
     "bloodbath_wager": ("Bloodbath Wager", MISSION + "wager [[col:yellow]]{cost} gold[[/col]] from our treasury and kill [[col:yellow]]75%[[/col]] of the enemy's soldiers for [[col:green]]+{gold} gold[[/col]]."),
-    "duelists_challenge": ("Duellist's Challenge", MISSION + "challenge the enemy lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "duelists_challenge": ("Duellist's Challenge", MISSION + "challenge the enemy lord and [[col:yellow]]kill them in battle[[/col]] for [[col:green]]a Unique or Crafted item[[/col]]."),
     "spare_the_captain": ("Spare the Captain", MISSION + "win with the [[col:yellow]]enemy lord still alive[[/col]], and ransom them for [[col:green]]+{gold} gold[[/col]]."),
-    "flawless_victory": ("Flawless Victory", MISSION + "win [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "flawless_victory": ("Flawless Victory", MISSION + "win [[col:yellow]]without losing a single unit[[/col]] for [[col:green]]a Unique or Crafted item[[/col]]."),
     "lords_glory": ("Lord's Glory", MISSION + "our lord kills [[col:yellow]]{battle_value} enemy soldiers[[/col]] for [[col:green]]a random rare item[[/col]]."),
     "monster_slayer": ("Monster Slayer", MISSION + "destroy [[col:yellow]]every enemy monster[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
     "steadfast": ("Steadfast", MISSION + "let [[col:yellow]]no unit of ours rout[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
@@ -521,7 +521,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "penance": ("Penance", MISSION + "win without [[col:yellow]]a single unit of ours routing[[/col]], and [[col:green]]our lord's worst curse is lifted[[/col]]."),
     "oath_of_victory": ("Oath of Victory", MISSION + "win within [[col:yellow]]{minutes} minutes[[/col]] and our lord gains {boon}. Fail, and our lord is "
                         "struck by {fail_curse}."),
-    "decapitate": ("Decapitate", MISSION + "kill [[col:yellow]]the enemy lord and every hero[[/col]] for [[col:green]]a unique item[[/col]]."),
+    "decapitate": ("Decapitate", MISSION + "kill [[col:yellow]]the enemy lord and every hero[[/col]] for [[col:green]]a Unique or Crafted item[[/col]]."),
     "against_the_odds": ("Against the Odds", MISSION + "win [[col:yellow]]while the enemy outnumbers us[[/col]] for [[col:green]]+{gold} gold[[/col]]."),
     "rout_the_riders": ("Rout the Riders", MISSION + "rout every enemy [[col:yellow]]cavalry and chariot unit within {minutes} minutes[[/col]] for [[col:green]]a random rare item[[/col]]."),
     "untouchable": ("Untouchable", MISSION + "keep our lord [[col:yellow]]above half health[[/col]] to the end of the battle, and they earn "
@@ -583,7 +583,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
                    "turns, but every unit loses [[col:red]]{bleed}% of its strength[[/col]] now."),
     "tavern_back": ("Back", "Go back to the common room."),
     "wake_the_sleeping_champion": ("Wake the Sleeping Champion", "Wake the sleeping champion: [[col:red]]a battle starts here[[/col]] against a guard "
-                                   "stronger than this site's, and winning it takes the champion's arms, [[col:green]]a unique item[[/col]] on top of "
+                                   "stronger than this site's, and winning it takes the champion's arms, [[col:green]]a Unique or Crafted item[[/col]] on top of "
                                    "the battle's loot."),
     "loot_the_desecrated_shrine": ("Loot the Desecrated Shrine", "Loot the desecrated shrine: the named army spell is ours to cast in any battle for "
                                    "the next {spell_turns} turns, but our lord is struck by {curse}."),
@@ -612,7 +612,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "bloodforged_steel": ("Bloodforged Steel", "Quench the blade in our own blood: [[col:green]]a rare item[[/col]], but every unit loses "
                           "[[col:red]]{bleed}% of its strength[[/col]] now."),
     "cursed_masterwork": ("Cursed Masterwork", "Take the masterwork no smith will sign: [[col:green]]two rare items[[/col]], or [[col:green]]a "
-                          "legendary item[[/col]] at a level 3 forge, but our lord is struck by [[col:red]]two level 3 curses[[/col]] from Creeping "
+                          "Unique or Crafted item[[/col]] at a level 3 forge, but our lord is struck by [[col:red]]two level 3 curses[[/col]] from Creeping "
                           "Rust, Brittle Bones and Cursed Coin."),
     "smiths_blessing": ("Smith's Blessing", "Have the master smith bless our lord's arms: our lord gains [[col:green]]Ironhide or Stone "
                         "Rampart[[/col]]."),
@@ -775,7 +775,7 @@ MISSION_MESSAGES = {
     "duelists_challenge": ("Duellist's Challenge",
                            "Our lord met theirs blade to blade and struck them down. The fighting nearby slowed as soldiers on both sides turned to "
                            "watch.\\\\n\\\\nIt was not a clean fight, and our lord did not come away unmarked. But when it ended, only one of them "
-                           "was still standing.\\\\n\\\\nA unique item is pried from the fallen lord's grip. It is ours now, and our lord carries "
+                           "was still standing.\\\\n\\\\nA Unique or Crafted item is pried from the fallen lord's grip. It is ours now, and our lord carries "
                            "the tale with it.",
                            "Our lord did not slay theirs, and the challenge goes unanswered. We sought them out on the field, but the duel never "
                            "ended as it should.\\\\n\\\\nPerhaps the press of bodies kept them apart. Perhaps another blade found the enemy lord "
@@ -814,7 +814,7 @@ MISSION_MESSAGES = {
     "decapitate": ("Decapitate",
                    "Their lord and every one of their heroes lie dead. We hunted their leaders across the field, one after another, until none were "
                    "left to give orders.\\\\n\\\\nWithout them, the rest of their army was a mob. It broke soon after, and few of them made it "
-                   "far.\\\\n\\\\nSearching the bodies, we turn up a unique item. It is a fine prize for a hard day's hunting.",
+                   "far.\\\\n\\\\nSearching the bodies, we turn up a Unique or Crafted item. It is a fine prize for a hard day's hunting.",
                    "Some of their leaders escaped the slaughter. We meant to cut off the head of their army, but not every blow found its "
                    "mark.\\\\n\\\\nOne or more of them slipped away in the confusion, guarded by loyal troops or simply lucky. They will lead again, "
                    "and they will remember us.\\\\n\\\\nThere is no prize for a hunt left unfinished. We will meet the survivors again, and next "
@@ -848,7 +848,7 @@ MISSION_MESSAGES = {
     "flawless_victory": ("Flawless Victory",
                          "Not a single unit of ours was lost. The enemy struck at us again and again, and every company came home.\\\\n\\\\nThe "
                          "sergeants called the roll after the battle and found every banner still in its place. Few armies can say as "
-                         "much.\\\\n\\\\nSongs of the flawless victory spread far, and a unique item is ours. It is a rare day when war asks nothing "
+                         "much.\\\\n\\\\nSongs of the flawless victory spread far, and a Unique or Crafted item is ours. It is a rare day when war asks nothing "
                          "of us.",
                          "One of our units fell before the end, and there will be no songs of a flawless victory. We came close, but close does not "
                          "count.\\\\n\\\\nThe enemy found one company and did not let go until it was gone. The rest of the army fought on and won "

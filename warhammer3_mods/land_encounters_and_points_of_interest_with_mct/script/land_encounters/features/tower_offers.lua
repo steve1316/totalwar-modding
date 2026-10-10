@@ -491,11 +491,11 @@ local HANDLERS = {
     tower_vault = {
         --- The legendary is picked once per delve when the vault is first considered, so the offer only shows when one qualifies.
         eligible = function(ctx)
-            ctx.delve.vault_item = ctx.delve.vault_item or item_pool.pick_legendary_item(ctx.faction_name, tower_data.held_items(ctx.delve))
+            ctx.delve.vault_item = ctx.delve.vault_item or item_pool.pick_legendary_or(ctx.faction_name, tower_data.held_items(ctx.delve))
             return ctx.delve.vault_item ~= nil
         end,
         apply = function(_, ctx)
-            local item = ctx.delve.vault_item or item_pool.pick_legendary_item(ctx.faction_name, tower_data.held_items(ctx.delve))
+            local item = ctx.delve.vault_item or item_pool.pick_legendary_or(ctx.faction_name, tower_data.held_items(ctx.delve))
             ctx.delve.vault_item = nil
             if not item then return end
             tower_data.add_items(ctx.delve.haul, { item })
@@ -758,7 +758,7 @@ local HANDLERS = {
         eligible = function(ctx, offer)
             --- Cleared first so the last draw's deal items do not count as held for this pick.
             ctx.delve.deal_items = nil
-            ctx.delve.deal_items = offer_effects.pick_unique_items(ctx.faction_name, offer.items, tower_data.held_items(ctx.delve))
+            ctx.delve.deal_items = item_pool.pick_legendary_items(ctx.faction_name, offer.items, tower_data.held_items(ctx.delve))
             return #ctx.delve.deal_items == offer.items
         end,
         apply = function(offer, ctx)

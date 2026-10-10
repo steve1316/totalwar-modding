@@ -479,7 +479,7 @@ local function pay_mission(offer, event, faction_name, general_cqi, general)
     if event.mission_bonus_gold then gold = (gold or 0) + event.mission_bonus_gold end
     local items = {}
     if offer.items then items = item_pool.pick_items(faction_name, offer.items.rarities, offer.items.count) end
-    if offer.unique then items = offer_effects.pick_unique_items(faction_name, offer.unique) end
+    if offer.unique then items = item_pool.pick_legendary_items(faction_name, offer.unique) end
     if offer.battle_item then items = item_pool.pick_items(faction_name, (event.victory_items or {}).rarities or offers_data.default_battle_rarities, 1) end
     if offer.unit_ranks then
         local entry = event.standard and tower_missions.standard_unit({ general_cqi = general_cqi }, event.standard)
@@ -550,7 +550,7 @@ function M.settle_prize(event, faction_name, general_cqi, won)
     if not (prize and won) then return end
     local general = tower_army.character(general_cqi)
     local position = general and { general:logical_position_x(), general:logical_position_y() } or { 0, 0 }
-    local items = offer_effects.pick_unique_items(faction_name, prize.unique)
+    local items = item_pool.pick_legendary_items(faction_name, prize.unique)
     log("spot battle: " .. faction_name .. " wins " .. prize.offer .. "'s prize: " .. table.concat(items, ", "))
     spot_offers.show_result(faction_name, prize.offer .. "_won", { items = items, character = general, difficulty = event.difficulty }, position,
         items[1] and "ancillaries_onscreen_name_" .. items[1] or nil)
