@@ -225,7 +225,7 @@ function BattleEventDelegate:grant_victory_items(faction)
         rewards = item_pool.pick_items(faction:name(), victory_items.rarities, victory_items.count)
     end
     if self.cached_event.difficulty == "hard" and random_chance(battle_categories.hard_legendary_chance) then
-        table.insert(rewards, item_pool.pick_legendary_item(faction:name()))
+        table.insert(rewards, (item_pool.pick_legendary_or(faction:name())))
     end
     for _, ancillary in ipairs(rewards) do
         cm:add_ancillary_to_faction(faction, ancillary, false)

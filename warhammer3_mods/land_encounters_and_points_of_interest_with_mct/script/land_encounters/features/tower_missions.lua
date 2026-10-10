@@ -82,7 +82,7 @@ M.standard_unit = standard_unit
 --- @param held table Item keys the delve already holds, so a unique item is not picked twice.
 --- @returns string|nil The ancillary key.
 local function reward_item(faction_name, rarities, held)
-    if not rarities then return item_pool.pick_legendary_or(faction_name, tower_data.legendary_fallback_rarity, held) end
+    if not rarities then return (item_pool.pick_legendary_or(faction_name, held)) end
     return item_pool.pick_items(faction_name, rarities, 1)[1]
 end
 

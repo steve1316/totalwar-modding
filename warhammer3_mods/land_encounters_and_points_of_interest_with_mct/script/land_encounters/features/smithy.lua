@@ -446,11 +446,14 @@ function SmithyState:open_forge(faction, character)
             offer.upgrade = add_paid(UPGRADE_KEY, smithy_price(level.upgrade_price), PAYLOAD_TEXT_UPGRADE .. self.level)
         elseif level.legendary_commission then
             local price = smithy_price(level.legendary_commission.price)
-            local legendary = item_pool.pick_legendary_item(faction_key)
-            if not legendary then
-                add_closed(UPGRADE_KEY, PAYLOAD_TEXT_NO_LEGENDARY)
+            local item, stood_in = item_pool.pick_legendary_or(faction_key)
+            if not item then
+                add_closed(UPGRADE_KEY, PAYLOAD_TEXT_LEAVE)
+            elseif stood_in then
+                --- With no legendary left, a rare piece stands in at the level's normal commission price.
+                add_paid(UPGRADE_KEY, smithy_price(level.commission.price), PAYLOAD_TEXT_NO_LEGENDARY, { item })
             else
-                add_paid(UPGRADE_KEY, price, PAYLOAD_TEXT_LEGENDARY, { legendary })
+                add_paid(UPGRADE_KEY, price, PAYLOAD_TEXT_LEGENDARY, { item })
             end
         else
             add_closed(UPGRADE_KEY, PAYLOAD_TEXT_LEAVE)

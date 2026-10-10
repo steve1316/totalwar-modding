@@ -24,7 +24,7 @@ advice_info_texts_localised_text_land_enc_hp_encounters_008	Battles	false
 advice_info_texts_localised_text_land_enc_hp_encounters_009	A battle spot opens a dilemma naming the enemy and their faction. Choose Fight, or Avoid to walk away. Avoiding costs no gold, but some foes leave a parting gift that lingers for a few turns.	false
 advice_info_texts_localised_text_land_enc_hp_encounters_010	Fights come in kinds, from a Skirmish or Bandits up to a Battlefield or a Daemonic Gift. The rarer kinds turn up more often on higher difficulties.	false
 advice_info_texts_localised_text_land_enc_hp_encounters_011	Some fights are an Ally in Peril: an ally's army is beset beside you, or needs a relief column. Saving them improves [[img:icon_diplomacy]][[/img]] relations with their kin.	false
-advice_info_texts_localised_text_land_enc_hp_encounters_012	Winning pays [[img:icon_money]][[/img]] gold and, for most fights, an item. Hard fights have a 5% chance of a legendary item.	false
+advice_info_texts_localised_text_land_enc_hp_encounters_012	Winning pays [[img:icon_money]][[/img]] gold and, for most fights, an item. Hard fights have a 5% chance of a Unique or Crafted item.	false
 advice_info_texts_localised_text_land_enc_hp_encounters_013	A battle can also come with offers, missions and twists. See [[sl:land_enc_battle_events]]Battle Offers and Missions[[/sl]].	false
 advice_info_texts_localised_text_land_enc_hp_encounters_014	Difficulty	false
 advice_info_texts_localised_text_land_enc_hp_encounters_015	Enemies start Easy, become Medium from turn 15 and Hard from turn 25. Their armies are built from a gold budget and an army recipe, so a fight can be a shield wall, a monster horde or a gunline. The Enemy Forces page of the mod's settings changes both.	false
@@ -58,7 +58,7 @@ advice_info_texts_localised_text_land_enc_hp_treasure_006	Some offers cost more 
 advice_info_texts_localised_text_land_enc_hp_treasure_007	Kinds of Offer	false
 advice_info_texts_localised_text_land_enc_hp_treasure_008	Treasure: gold, items, [[sl:land_enc_army_spells]]army spells[[/sl]], [[sl:land_enc_boons_and_curses]]boons[[/sl]], and pacts that trade a curse for a stronger boon.	false
 advice_info_texts_localised_text_land_enc_hp_treasure_009	Realm: offers that reach beyond the army, like improving a region, sending gifts to a friend or hiring raiders against an enemy. Each names its target before you choose.	false
-advice_info_texts_localised_text_land_enc_hp_treasure_010	Guardians: wake a sleeping champion for a unique item, if you can beat it.	false
+advice_info_texts_localised_text_land_enc_hp_treasure_010	Guardians: wake a sleeping champion for a Unique or Crafted item, if you can beat it.	false
 advice_info_texts_localised_text_land_enc_hp_treasure_011	The Sites	false
 advice_info_texts_localised_text_land_enc_hp_treasure_012	Hidden Tomb, Abandoned Camp, Buried Relics, Hidden Temple, Caravan Remnants, A Voice in the Dream, The Explorers, Legendary Bard, Ruined Shrine, Smugglers' Cache, Beast Lair, Old Battlefield, Witch's Hut, Collapsed Mine, Merchant's Wagon and Sunken Library.	false
 advice_info_texts_localised_text_land_enc_hp_treasure_013	AI Factions	false
@@ -70,7 +70,7 @@ advice_info_texts_localised_text_land_enc_hp_towers_002	One ancient tower stands
 advice_info_texts_localised_text_land_enc_hp_towers_003	The Climb	false
 advice_info_texts_localised_text_land_enc_hp_towers_004	Walk a lord onto a tower and choose Enter the Tower. Each of its 5 floors is a battle somewhere new on the map.	false
 advice_info_texts_localised_text_land_enc_hp_towers_005	Each floor won adds [[img:icon_money]][[/img]] gold and items to the haul. The fewer men you lose, the more the floor pays.	false
-advice_info_texts_localised_text_land_enc_hp_towers_006	From floor 3, some of the beaten army's units swear themselves to you. The last floor holds the tower's master, guarding legendary items.	false
+advice_info_texts_localised_text_land_enc_hp_towers_006	From floor 3, some of the beaten army's units swear themselves to you. The last floor holds the tower's master, guarding Unique or Crafted items.	false
 advice_info_texts_localised_text_land_enc_hp_towers_007	Between Floors	false
 advice_info_texts_localised_text_land_enc_hp_towers_008	After each win, pick one of up to 4 offers to help the climb, or leave with the haul. Offers range from healing and fresh troops to [[sl:land_enc_army_spells]]army spells[[/sl]], a sealed vault, a hidden floor, or a champion to fight for a [[sl:land_enc_boons_and_curses]]boon[[/sl]]. Some are pacts with a price.	false
 advice_info_texts_localised_text_land_enc_hp_towers_009	Losing and Leaving	false
@@ -95,7 +95,7 @@ advice_info_texts_localised_text_land_enc_hp_smithies_011	Commission a masterwor
 advice_info_texts_localised_text_land_enc_hp_smithies_012	Temper and Break	false
 advice_info_texts_localised_text_land_enc_hp_smithies_013	At a Smithy you own, the smith tempers a boon one level or breaks a curse, for gold per level. Trade Rust for Iron gives a boon and a curse together, for free. See [[sl:land_enc_boons_and_curses]]Boons and Curses[[/sl]].	false
 advice_info_texts_localised_text_land_enc_hp_smithies_014	Owning a Smithy	false
-advice_info_texts_localised_text_land_enc_hp_smithies_015	Your Smithies send you an item as tribute every few turns. A level 3 forge sometimes sends a legendary one.	false
+advice_info_texts_localised_text_land_enc_hp_smithies_015	Your Smithies send you an item as tribute every few turns. A level 3 forge sometimes sends a Unique or Crafted one.	false
 advice_info_texts_localised_text_land_enc_hp_smithies_016	While you hold both a Smithy and its region, Arms Trade raises the province's [[img:icon_income]][[/img]] income and the Garrison Armoury arms its garrison.	false
 advice_info_texts_localised_text_land_enc_hp_smithies_017	Every 10 turns, your best Smithy offers a Smith's Commission: a kill count, beating armies of your nearest enemy, or winning at a marked spot, for an item named on the mission. Failing one costs nothing.	false
 advice_info_texts_localised_text_land_enc_hp_smithies_018	The Smiths' Association	false

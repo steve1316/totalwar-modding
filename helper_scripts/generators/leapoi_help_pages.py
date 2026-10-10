@@ -145,7 +145,7 @@ PAGES: Dict[str, Tuple[str, str, List[Tuple[str, str]]]] = {
         ("bullet", "Some fights are an Ally in Peril: an ally's army is beset beside you, or needs a relief column. Saving them improves "
                    + REL + " relations with their kin."),
         ("bullet", "Winning pays " + GOLD + " gold and, for most fights, an item. Hard fights have a {legendary_chance}% chance of a "
-                   "legendary item."),
+                   "Unique or Crafted item."),
         ("bullet", "A battle can also come with offers, missions and twists. See " + link("battle_events", "Battle Offers and Missions") + "."),
         ("heading", "Difficulty"),
         ("text", "Enemies start Easy, become Medium from turn {medium_turn} and Hard from turn {hard_turn}. Their armies are built from a gold "
@@ -192,7 +192,7 @@ PAGES: Dict[str, Tuple[str, str, List[Tuple[str, str]]]] = {
                    "that trade a curse for a stronger boon."),
         ("bullet", "Realm: offers that reach beyond the army, like improving a region, sending gifts to a friend or hiring raiders against "
                    "an enemy. Each names its target before you choose."),
-        ("bullet", "Guardians: wake a sleeping champion for a unique item, if you can beat it."),
+        ("bullet", "Guardians: wake a sleeping champion for a Unique or Crafted item, if you can beat it."),
         ("heading", "The Sites"),
         ("text", "Hidden Tomb, Abandoned Camp, Buried Relics, Hidden Temple, Caravan Remnants, A Voice in the Dream, The Explorers, Legendary "
                  "Bard, Ruined Shrine, Smugglers' Cache, Beast Lair, Old Battlefield, Witch's Hut, Collapsed Mine, Merchant's Wagon and "
@@ -208,7 +208,7 @@ PAGES: Dict[str, Tuple[str, str, List[Tuple[str, str]]]] = {
         ("bullet", "Walk a lord onto a tower and choose Enter the Tower. Each of its {floors} floors is a battle somewhere new on the map."),
         ("bullet", "Each floor won adds " + GOLD + " gold and items to the haul. The fewer men you lose, the more the floor pays."),
         ("bullet", "From floor 3, some of the beaten army's units swear themselves to you. The last floor holds the tower's master, "
-                   "guarding legendary items."),
+                   "guarding Unique or Crafted items."),
         ("heading", "Between Floors"),
         ("text", "After each win, pick one of up to {tower_offers} offers to help the climb, or leave with the haul. Offers range from "
                  "healing and fresh troops to " + link("army_spells", "army spells") + ", a sealed vault, a hidden floor, or a champion to "
@@ -243,7 +243,7 @@ PAGES: Dict[str, Tuple[str, str, List[Tuple[str, str]]]] = {
         ("text", "At a Smithy you own, the smith tempers a boon one level or breaks a curse, for gold per level. Trade Rust for Iron gives a "
                  "boon and a curse together, for free. See " + link("boons_and_curses", "Boons and Curses") + "."),
         ("heading", "Owning a Smithy"),
-        ("bullet", "Your Smithies send you an item as tribute every few turns. A level 3 forge sometimes sends a legendary one."),
+        ("bullet", "Your Smithies send you an item as tribute every few turns. A level 3 forge sometimes sends a Unique or Crafted one."),
         ("bullet", "While you hold both a Smithy and its region, Arms Trade raises the province's " + INCOME + " income and the Garrison "
                    "Armoury arms its garrison."),
         ("bullet", "Every {commission_interval} turns, your best Smithy offers a Smith's Commission: a kill count, beating armies of your "

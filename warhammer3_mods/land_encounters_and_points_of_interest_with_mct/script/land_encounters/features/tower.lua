@@ -176,24 +176,13 @@ local function pick_floor_items(faction_name, floor, rarity_shift, held)
         local items = {}
         for _ = 1, floor.item_count do
             local rarity = rarities[random_number(#rarities)]
-            local item = rarity == "legendary" and item_pool.pick_legendary_or(faction_name, tower_data.legendary_fallback_rarity, held, items)
+            local item = rarity == "legendary" and item_pool.pick_legendary_or(faction_name, held, items)
                 or item_pool.pick_items(faction_name, { rarity }, 1)[1]
             if item then items[#items + 1] = item end
         end
         return items
     end
-    local items = {}
-    for _ = 1, floor.legendary_count do
-        local item = item_pool.pick_legendary_item(faction_name, held, items)
-        if item then items[#items + 1] = item end
-    end
-    local missing = floor.legendary_count - #items
-    if missing > 0 then
-        for _, item in ipairs(item_pool.pick_items(faction_name, { tower_data.legendary_fallback_rarity }, missing)) do
-            items[#items + 1] = item
-        end
-    end
-    return items
+    return item_pool.pick_legendary_items(faction_name, floor.legendary_count, held)
 end
 
 --- Builds the choice that pays the whole haul: its gold and items as the payload, plus `tower_data.unit_overflow_gold` for each sworn unit

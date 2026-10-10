@@ -45,9 +45,6 @@ M.performance = {
 --- Floor gold is rounded to a multiple of this.
 M.gold_step = 50
 
---- Rarity that stands in for a legendary item the pool cannot supply.
-M.legendary_fallback_rarity = "rare"
-
 --- Gold paid for each sworn unit that does not fit in the delving army.
 M.unit_overflow_gold = 500
 

@@ -95,7 +95,7 @@ function M.towers_text()
     for number, floor in ipairs(tower_data.floors) do
         local rewards = { floor.gold .. " gold" }
         if floor.legendary_count then
-            table.insert(rewards, floor.legendary_count .. " legendary items")
+            table.insert(rewards, floor.legendary_count .. " Unique or Crafted items")
         elseif floor.item_count then
             table.insert(rewards, items_phrase(floor.item_count, floor.item_rarities))
         end
@@ -213,9 +213,9 @@ function M.smithy_text()
         local facts = { "free picks of " .. join_words(level.free_pick_rarities, "or") .. " items" }
         if level.cooldown_offset > 0 then facts[#facts + 1] = level.cooldown_offset .. " extra cooldown turns" end
         facts[#facts + 1] = "a commission of " .. items_phrase(level.commission.count, level.commission.rarities) .. " for " .. level.commission.price .. " gold"
-        if level.legendary_commission then facts[#facts + 1] = "a legendary item for " .. level.legendary_commission.price .. " gold" end
+        if level.legendary_commission then facts[#facts + 1] = "a Unique or Crafted item for " .. level.legendary_commission.price .. " gold" end
         if level.upgrade_price then facts[#facts + 1] = "upgrades for " .. level.upgrade_price .. " gold" end
-        if level.legendary_tribute_chance then facts[#facts + 1] = "a " .. level.legendary_tribute_chance .. "% chance each tribute is a legendary item" end
+        if level.legendary_tribute_chance then facts[#facts + 1] = "a " .. level.legendary_tribute_chance .. "% chance each tribute is a Unique or Crafted item" end
         lines[#lines + 1] = guide_line("Level " .. number, join_words(facts, "and") .. ".")
     end
     lines[#lines + 1] = ""
