@@ -94,6 +94,8 @@ class UnitRow:
     fire_slot: bool
     # True when the set has `COMBAT_READY`, which on-foot firing needs to avoid a T-pose.
     combat_ready: bool
+    # True when the set fires on foot but has no `COMBAT_READY`, so the unit T-poses after firing.
+    tpose_risk: bool
     # Cast slot a new fire slot would borrow from, or empty when the set has none.
     cast_slot: str
     # True when the unit's attribute group has `fire_whilst_moving`.
@@ -283,7 +285,8 @@ def unit_kind(anim_set: AnimSet, names: Dict[int, str]) -> str:
         `rider`, `flyer` or `foot`.
     """
     slot_names = {names.get(slot.slot_id, "") for slot in anim_set.slots}
-    if anim_set.mount or "RIDER_STAND" in slot_names:
+    # Chariot and war machine sets (`_wm_`) have no mount or RIDER_STAND but cast and fire through the rider slots.
+    if anim_set.mount or "RIDER_STAND" in slot_names or "_wm_" in anim_set.name:
         return "rider"
     return "flyer" if "FLY_STAND" in slot_names else "foot"
 
@@ -349,19 +352,25 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, Tuple
     rows = []
     for key, caste in caste_of.items():
         land_row = land[key]
+        # A mount listed under a base that is not itself a lord or hero row is its own base.
+        base = base_of.get(key, key)
+        if base not in caste_of:
+            base = key
         faction = unit_faction(key, groups.get(unit_of[key], set()))
         guess, source = guess_missile(key, caste, features[key], faction, votes, faction_votes, missile_set, lores)
         vanilla_set, glf_set = sets.get(land_row["man_animation"], (None, None))
         kind = unit_kind(vanilla_set, names) if vanilla_set else ""
         live = glf_set or vanilla_set
         slot_names = {names.get(slot.slot_id, "") for slot in live.slots} if live else set()
+        fire_slot = bool(kind) and FIRE_SLOT[kind] in slot_names
+        combat_ready = "COMBAT_READY" in slot_names
         rows.append(
             UnitRow(
                 key=key,
                 name=loc.get(LOC_NAME_PREFIX + key, key),
                 faction=faction,
                 caste=caste,
-                base=base_of.get(key, key),
+                base=base,
                 mount=mount_of.get(key, ""),
                 anim_set=land_row["man_animation"],
                 kind=kind,
@@ -370,8 +379,9 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, Tuple
                 glf_missile=glf_missiles.get(key, ""),
                 guess=guess,
                 guess_source=source,
-                fire_slot=bool(kind) and FIRE_SLOT[kind] in slot_names,
-                combat_ready="COMBAT_READY" in slot_names,
+                fire_slot=fire_slot,
+                combat_ready=combat_ready,
+                tpose_risk=fire_slot and kind != "rider" and not combat_ready,
                 cast_slot=next((name for name in CAST_SLOTS.get(kind, []) if name in slot_names), ""),
                 fwm_attribute=land_row["attribute_group"] in fwm_groups,
                 fwm_slots=bool(kind) and all(name in slot_names for name in FWM_SLOTS[kind]),
@@ -413,6 +423,28 @@ def seed_selection(catalog: Catalog) -> Dict:
     return {"units": units, "ignore": []}
 
 
+def load_selection() -> Dict:
+    """Read the saved selection, or an empty one.
+
+    Returns:
+        The selection with `units` and `ignore`.
+    """
+    if not os.path.exists(SELECTION_PATH):
+        return {"units": {}, "ignore": []}
+    with open(SELECTION_PATH, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def write_selection(selection: Dict) -> None:
+    """Save a selection with sorted keys so git diffs stay small.
+
+    Args:
+        selection (Dict): The selection with `units` and `ignore`.
+    """
+    with open(SELECTION_PATH, "w", encoding="utf-8") as f:
+        json.dump(selection, f, indent=1, sort_keys=True)
+
+
 def report_lines(catalog: Catalog) -> List[str]:
     """Summarise the catalog per faction.
 
@@ -431,7 +463,7 @@ def report_lines(catalog: Catalog) -> List[str]:
         glf = sum(1 for row in rows if row.glf_missile)
         missing = [row for row in rows if row.is_caster and not row.glf_missile]
         no_set = sum(1 for row in rows if not row.kind)
-        risk = sum(1 for row in rows if row.glf_missile and row.kind != "rider" and row.fire_slot and not row.combat_ready)
+        risk = sum(1 for row in rows if row.glf_missile and row.tpose_risk)
         lines.append(f"{faction:22} {len(rows):5}  {glf:3}  {len(missing):15}  {no_set:6}  {risk:11}")
     lines.append("")
     lines.append("Casters GLF does not cover (key | kind | cast slot | guess | source):")
@@ -465,8 +497,7 @@ def main():
             if os.path.exists(SELECTION_PATH):
                 logging.info(f"{SELECTION_PATH} already exists. Not seeding.")
             else:
-                with open(SELECTION_PATH, "w", encoding="utf-8") as f:
-                    json.dump(seed_selection(catalog), f, indent=1, sort_keys=True)
+                write_selection(seed_selection(catalog))
                 logging.info(f"Seeded {SELECTION_PATH}.")
     finally:
         clear_temp_root()
