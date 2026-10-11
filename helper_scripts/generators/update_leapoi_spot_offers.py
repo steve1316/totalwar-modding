@@ -1360,6 +1360,8 @@ BUNDLES = {
                             [("wh_main_effect_force_stat_melee_attack", "force_to_force_own", 20), ("wh_main_effect_force_stat_melee_defence", "force_to_force_own", -20)]),
     "buy_supplies": ("force", "supplies.png", "Well Supplied", "A full baggage train rides with the army. No one goes hungry on the march.",
                      [("wh_main_effect_force_army_campaign_attrition_all_immunity", "force_to_force_own", 1)]),
+    "enemy_supplied": ("force", "supplies.png", "Well Provisioned", "This army marched out with all it needs. It loses no one to the road.",
+                       [("wh_main_effect_force_army_campaign_attrition_all_immunity", "force_to_force_own", 1)]),
     "recruitment_cache": ("faction", "military_spending.png", "Smugglers' Cache", "Smugglers left a hidden store of arms and kit behind. New recruits can be outfitted for far less.",
                           [("wh_main_effect_force_all_campaign_recruitment_cost_all", "faction_to_force_own", (-10, -20, -30))]),
     "share_the_find": ("faction", "technology.png", "Shared Knowledge", "We shared what we found with our neighbours, and their scholars sent their own notes back.",

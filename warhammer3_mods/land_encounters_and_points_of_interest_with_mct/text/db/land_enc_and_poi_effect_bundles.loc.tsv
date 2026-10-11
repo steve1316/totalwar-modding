@@ -116,6 +116,8 @@ effect_bundles_localised_title_land_enc_effect_spot_bloodstained_blades	Bloodsta
 effect_bundles_localised_description_land_enc_effect_spot_bloodstained_blades	Our warriors took up blades found still stained with old blood. They cut deep, and no one wants to clean them.	false
 effect_bundles_localised_title_land_enc_effect_spot_buy_supplies	Well Supplied	false
 effect_bundles_localised_description_land_enc_effect_spot_buy_supplies	A full baggage train rides with the army. No one goes hungry on the march.	false
+effect_bundles_localised_title_land_enc_effect_spot_enemy_supplied	Well Provisioned	false
+effect_bundles_localised_description_land_enc_effect_spot_enemy_supplied	This army marched out with all it needs. It loses no one to the road.	false
 effect_bundles_localised_title_land_enc_effect_spot_recruitment_cache_easy	Smugglers' Cache	false
 effect_bundles_localised_description_land_enc_effect_spot_recruitment_cache_easy	Smugglers left a hidden store of arms and kit behind. New recruits can be outfitted for far less.	false
 effect_bundles_localised_title_land_enc_effect_spot_recruitment_cache_medium	Smugglers' Cache	false

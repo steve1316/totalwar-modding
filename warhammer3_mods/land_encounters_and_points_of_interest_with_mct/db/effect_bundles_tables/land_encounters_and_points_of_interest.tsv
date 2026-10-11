@@ -58,6 +58,7 @@ land_enc_effect_spot_leave_an_offering_hard			force	1	temples_of_the_old_ones.pn
 land_enc_effect_spot_enchanted_steel			force	1	hellforged.png	false	false	true
 land_enc_effect_spot_bloodstained_blades			force	1	dlc10_blood_voyage.png	false	false	true
 land_enc_effect_spot_buy_supplies			force	1	supplies.png	false	false	true
+land_enc_effect_spot_enemy_supplied			force	1	supplies.png	false	false	true
 land_enc_effect_spot_recruitment_cache_easy			faction	1	military_spending.png	true	false	true
 land_enc_effect_spot_recruitment_cache_medium			faction	1	military_spending.png	true	false	true
 land_enc_effect_spot_recruitment_cache_hard			faction	1	military_spending.png	true	false	true
