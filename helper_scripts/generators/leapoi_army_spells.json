@@ -1368,12 +1368,6 @@
    "uses": 1
   },
   {
-   "id": "bound_015",
-   "name": "Death Frenzy",
-   "source": "wh2_dlc16_spell_bound_death_frenzy",
-   "uses": 1
-  },
-  {
    "id": "bound_016",
    "name": "Flesh to Stone",
    "source": "wh2_dlc16_spell_bound_flesh_to_stone",
@@ -1704,30 +1698,6 @@
    "uses": 2
   },
   {
-   "id": "bound_071",
-   "name": "Curse of Years",
-   "source": "wh3_dlc29_spell_bound_curse_of_years",
-   "uses": 2
-  },
-  {
-   "id": "bound_072",
-   "name": "Eye for an Eye",
-   "source": "wh3_dlc29_spell_bound_eye_jabber",
-   "uses": -1
-  },
-  {
-   "id": "bound_073",
-   "name": "Invocation of Nehek",
-   "source": "wh3_dlc29_spell_bound_invocation_of_nehek",
-   "uses": 2
-  },
-  {
-   "id": "bound_074",
-   "name": "Okkam's Mindrazor",
-   "source": "wh3_dlc29_spell_bound_okkams_mindrazor",
-   "uses": 2
-  },
-  {
    "id": "bound_075",
    "name": "Irresistible Plague!",
    "source": "wh3_dlc29_spell_bound_plague",
@@ -1738,18 +1708,6 @@
    "name": "Plaguemaster",
    "source": "wh3_dlc29_spell_bound_plaguemaster",
    "uses": 2
-  },
-  {
-   "id": "bound_077",
-   "name": "Ferocious Fury of Ulric",
-   "source": "wh3_dlc29_spell_bound_prayer_ferocious_fury_of_ulric",
-   "uses": -1
-  },
-  {
-   "id": "bound_078",
-   "name": "Fury of Ulric",
-   "source": "wh3_dlc29_spell_bound_prayer_fury_of_ulric",
-   "uses": -1
   },
   {
    "id": "bound_079",
@@ -1932,18 +1890,6 @@
    "uses": 2
   },
   {
-   "id": "bound_109",
-   "name": "Call of Tor",
-   "source": "wh3_twa07_spell_bound_call_of_tor",
-   "uses": -1
-  },
-  {
-   "id": "bound_110",
-   "name": "Heart of Winter",
-   "source": "wh3_twa08_spell_bound_heart_of_winter_elemental_bear_ror",
-   "uses": 1
-  },
-  {
    "id": "bound_111",
    "name": "Searing Doom",
    "source": "wh3_twa08_spell_bound_searing_doom",
@@ -1968,28 +1914,10 @@
    "uses": 4
   },
   {
-   "id": "bound_115",
-   "name": "Grand Hammer of Sigmar",
-   "source": "wh_dlc04_spell_bound_hammer_of_sigmar_upgraded",
-   "uses": -1
-  },
-  {
    "id": "bound_116",
    "name": "Net of Amyntok",
    "source": "wh_dlc04_spell_bound_net_of_amyntok",
    "uses": 3
-  },
-  {
-   "id": "bound_117",
-   "name": "Grand Shield of Faith",
-   "source": "wh_dlc04_spell_bound_shield_of_faith_upgraded",
-   "uses": -1
-  },
-  {
-   "id": "bound_118",
-   "name": "Grand Soulfire",
-   "source": "wh_dlc04_spell_bound_soulfire_upgraded",
-   "uses": -1
   },
   {
    "id": "bound_119",
@@ -2022,28 +1950,10 @@
    "uses": 4
   },
   {
-   "id": "bound_124",
-   "name": "Hammer of Sigmar",
-   "source": "wh_main_spell_bound_hammer_of_sigmar",
-   "uses": -1
-  },
-  {
    "id": "bound_125",
    "name": "Piercing Bolts of Burning",
    "source": "wh_main_spell_bound_piercing_bolts_of_burning",
    "uses": 4
-  },
-  {
-   "id": "bound_126",
-   "name": "Shield of Faith",
-   "source": "wh_main_spell_bound_shield_of_faith",
-   "uses": -1
-  },
-  {
-   "id": "bound_127",
-   "name": "Soulfire",
-   "source": "wh_main_spell_bound_soulfire",
-   "uses": -1
   },
   {
    "id": "bound_128",
@@ -2857,6 +2767,41 @@
    "source": "wh_main_spell_vampires_vanhels_danse_macabre",
    "uses": 3,
    "winds": 4
+  },
+  {
+   "id": "lore_116",
+   "name": "Death Frenzy",
+   "source": "wh2_main_spell_ruin_death_frenzy",
+   "uses": 3,
+   "winds": 6
+  },
+  {
+   "id": "lore_117",
+   "name": "Heart of Winter",
+   "source": "wh3_main_spell_ice_heart_of_winter",
+   "uses": 1,
+   "winds": 22
+  },
+  {
+   "id": "lore_118",
+   "name": "Okkam's Mindrazor",
+   "source": "wh_dlc05_spell_shadow_okkams_mindrazor",
+   "uses": 3,
+   "winds": 8
+  },
+  {
+   "id": "lore_119",
+   "name": "Curse of Years",
+   "source": "wh_main_spell_vampires_curse_of_years",
+   "uses": 2,
+   "winds": 10
+  },
+  {
+   "id": "lore_120",
+   "name": "Invocation of Nehek",
+   "source": "wh_main_spell_vampires_invocation_of_nehek",
+   "uses": 3,
+   "winds": 7
   }
  ]
 }

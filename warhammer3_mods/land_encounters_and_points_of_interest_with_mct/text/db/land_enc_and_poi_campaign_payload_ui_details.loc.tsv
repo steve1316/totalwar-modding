@@ -2263,6 +2263,11 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_112	[[col
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_113	[[col:green]]Army spell: Glittering Robe[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_114	[[col:green]]Army spell: Raise Dead[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_115	[[col:green]]Army spell: Vanhel's Danse Macabre[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_116	[[col:green]]Army spell: Death Frenzy[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_117	[[col:green]]Army spell: Heart of Winter[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_118	[[col:green]]Army spell: Okkam's Mindrazor[[/col]], 3 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_119	[[col:green]]Army spell: Curse of Years[[/col]], 2 casts in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_120	[[col:green]]Army spell: Invocation of Nehek[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_001	[[col:green]]Army spell: Arnzipal's Black Horror[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_002	[[col:green]]Army spell: Assault of Stone[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_003	[[col:green]]Army spell: Blast[[/col]], 1 cast in each battle.	false
@@ -2277,7 +2282,6 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_011	[[co
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_012	[[col:green]]Army spell: Warp-Fireball[[/col]], 4 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_013	[[col:green]]Army spell: Gaze of Nagash[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_014	[[col:green]]Army spell: Wind of Death[[/col]], 1 cast in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_015	[[col:green]]Army spell: Death Frenzy[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_016	[[col:green]]Army spell: Flesh to Stone[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_017	[[col:green]]Army spell: Regrowth[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_018	[[col:green]]Army spell: Lesser Raise Dead[[/col]], 1 cast in each battle.	false
@@ -2333,14 +2337,8 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_067	[[co
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_068	[[col:green]]Army spell: Transformation of Kadon[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_069	[[col:green]]Army spell: Fog of the Damned[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_070	[[col:green]]Army spell: Lesser Awakening from the Grave[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_071	[[col:green]]Army spell: Curse of Years[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_072	[[col:green]]Army spell: Eye for an Eye[[/col]], no limit on casts.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_073	[[col:green]]Army spell: Invocation of Nehek[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_074	[[col:green]]Army spell: Okkam's Mindrazor[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_075	[[col:green]]Army spell: Irresistible Plague![[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_076	[[col:green]]Army spell: Plaguemaster[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_077	[[col:green]]Army spell: Ferocious Fury of Ulric[[/col]], no limit on casts.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_078	[[col:green]]Army spell: Fury of Ulric[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_079	[[col:green]]Army spell: Skitterleap[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_080	[[col:green]]Army spell: The Dreaded Thirteenth Spell[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_081	[[col:green]]Army spell: The Soulstealer[[/col]], 1 cast in each battle.	false
@@ -2371,25 +2369,17 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_105	[[co
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_106	[[col:green]]Army spell: The Fate of Bjuna[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_107	[[col:green]]Army spell: Transmutation of Lead[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_108	[[col:green]]Army spell: Wall of Wind & Fire[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_109	[[col:green]]Army spell: Call of Tor[[/col]], no limit on casts.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_110	[[col:green]]Army spell: Heart of Winter[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_111	[[col:green]]Army spell: Searing Doom[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_112	[[col:green]]Army spell: The Withering[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_113	[[col:green]]Army spell: The Amber Spear[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_114	[[col:green]]Army spell: Viletide[[/col]], 4 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_115	[[col:green]]Army spell: Grand Hammer of Sigmar[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_116	[[col:green]]Army spell: Net of Amyntok[[/col]], 3 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_117	[[col:green]]Army spell: Grand Shield of Faith[[/col]], no limit on casts.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_118	[[col:green]]Army spell: Grand Soulfire[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_119	[[col:green]]Army spell: Vindictive Glare[[/col]], 4 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_120	[[col:green]]Army spell: Birona's Timewarp[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_121	[[col:green]]Army spell: Book of Arkhan[[/col]], 4 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_122	[[col:green]]Army spell: Chain Lightning[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_123	[[col:green]]Army spell: Fireball[[/col]], 4 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_124	[[col:green]]Army spell: Hammer of Sigmar[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_125	[[col:green]]Army spell: Piercing Bolts of Burning[[/col]], 4 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_126	[[col:green]]Army spell: Shield of Faith[[/col]], no limit on casts.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_127	[[col:green]]Army spell: Soulfire[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_128	[[col:green]]Army spell: Staff of Damnation[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_001	[[col:green]]Army spell: Legionary Barrage[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_002	[[col:green]]Army spell: Rictus Clanstone[[/col]], 3 casts in each battle.	false

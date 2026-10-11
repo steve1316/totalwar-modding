@@ -193,9 +193,23 @@ def uses_text(uses: int) -> str:
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Refresh
 
+def needs_caster(row: Dict[str, str]) -> bool:
+    """True for an ability that can only act on or around the unit casting it: it targets no enemy, friend or ground. An army spell has no
+    caster, so such a spell does nothing from the army ability bar (e.g. the bound Curse of Years, which only turns on its caster's aura).
+
+    Args:
+        row (Dict[str, str]): The ability's unit_special_abilities row.
+
+    Returns:
+        bool: True when it needs a caster.
+    """
+    return not any(row[column] == "true" for column in ("target_enemies", "target_friends", "target_ground"))
+
+
 def refresh(folder: str) -> None:
     """Keeps every pool's spells, read from extracted vanilla TSVs. A spell's name is its English screen name, and a spell whose name is
-    already in the pool is left out.
+    already in the pool is left out. A bound spell that needs a caster is left out, so its lore spell joins the lore pool instead. A spell
+    already kept keeps its id, and a new one is numbered after the pool's last, so the ids in a save keep naming the same spells.
 
     Args:
         folder (str): The folder holding the vanilla TSVs.
@@ -214,7 +228,7 @@ def refresh(folder: str) -> None:
         mana, uses = float(r["mana_cost"] or 0), int(float(r["num_uses"] or 0))
         if r["passive"] == "true" or key in hidden or not name:
             continue
-        if "_bound_" in key and mana == 0 and uses != 0:
+        if "_bound_" in key and mana == 0 and uses != 0 and not needs_caster(r):
             pool, entry = "bound", {"source": key, "name": name, "uses": uses}
         elif key in army_key and mana == 0 and uses != 0 and not SCRIPTED.search(key):
             pool, entry = "army", {"source": key, "name": name, "uses": uses, "army": army_key[key]}
@@ -227,12 +241,19 @@ def refresh(folder: str) -> None:
             pools[pool][name.lower()] = entry
     bound_names = set(pools["bound"])
     pools["lore"] = {n: e for n, e in pools["lore"].items() if n not in bound_names}
+    old = load() if os.path.exists(DATA) else {}
     out = {}
     for pool in POOLS:
+        old_ids = {spell["source"]: spell["id"] for spell in old.get(pool, [])}
+        last = max((int(i.rsplit("_", 1)[1]) for i in old_ids.values()), default=0)
         spells = sorted(pools[pool].values(), key=lambda e: e["source"])
-        for number, spell in enumerate(spells, 1):
-            spell["id"] = f"{pool}_{number:03d}"
-        out[pool] = spells
+        for spell in spells:
+            if spell["source"] in old_ids:
+                spell["id"] = old_ids[spell["source"]]
+            else:
+                last += 1
+                spell["id"] = f"{pool}_{last:03d}"
+        out[pool] = sorted(spells, key=lambda e: e["id"])
     json.dump(out, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
     print(f"kept {', '.join(f'{len(out[p])} {p}' for p in POOLS)} spells in {DATA}")
 

@@ -94,7 +94,6 @@ ARMY_SPELLS: Dict[str, Tuple[str, str, str]] = {
     "banishment": ("wh3_main_spell_bound_banishment", "1700181002", "Banishment"),
     "net_of_amyntok": ("wh_dlc04_spell_bound_net_of_amyntok", "1700181003", "Net of Amyntok"),
     "earthblood": ("wh3_main_spell_bound_earth_blood", "1700181004", "Earthblood"),
-    "curse_of_years": ("wh3_dlc29_spell_bound_curse_of_years", "1700181005", "Curse of Years"),
     "dwellers_below": ("wh3_main_spell_bound_the_dwellers_below", "1700181006", "The Dwellers Below"),
 }
 # Every pool spell (generators/leapoi_army_spells.py) is an army spell too: a lore spell points at its free copy, a bound spell at itself. CA's
@@ -104,6 +103,9 @@ for _number, _spell in enumerate(_pools["lore"], 1):
     ARMY_SPELLS[_spell["id"]] = (free_spells.key(_spell["id"]), str(army_spells.LORE_ID_BASE + _number), _spell["name"])
 for _number, _spell in enumerate(_pools["bound"], 1):
     ARMY_SPELLS[_spell["id"]] = (_spell["source"], str(army_spells.BOUND_ID_BASE + _number), _spell["name"])
+# The Book of Years offer casts the lore pool's free Curse of Years. The bound one only turns on its caster's aura, and an army spell has no caster.
+_curse = next(_spell for _spell in _pools["lore"] if _spell["source"] == "wh_main_spell_vampires_curse_of_years")
+ARMY_SPELLS["curse_of_years"] = (free_spells.key(_curse["id"]), "1700181005", "Curse of Years")
 for _spell, (_bound, _unique_id, _spell_name) in ARMY_SPELLS.items():
     CUSTOM_EFFECTS[_spell + "_army_ability"] = ("magic.png", "battle", f'Army ability: "{_spell_name}"', [
         ("army_special_abilities_tables", ("{jn}", _bound, _unique_id, "false")),
