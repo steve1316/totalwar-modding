@@ -376,7 +376,7 @@ BOONS: Dict[str, Tuple[str, str, str, List[Level]]] = {
     "dread_host": ("Dread Host", "Stories of this army walk ahead of it.", "attribute_causes_terror.png", ramp(
         ["Every unit causes fear", "Fear, +5 leadership", "Fear, +10 leadership", "Every unit causes terror, +10 leadership", "Terror, +15 leadership"],
         (FEAR, F, [1, 1, 1, N, N]), (TERROR, F, [N, N, N, 1, 1]), (LEAD, F, [N, 5, 10, 10, 15]))),
-    "bane": ("Bane of {race}", "The lord has learned exactly how to make this enemy hurt the most.", "weapon_damage.png", []),
+    "bane": ("Bane of {race}", "The lord has learned exactly how to make this enemy hurt the most. Only wins against armies of {race} make it grow.", "weapon_damage.png", []),
     "death_touched": ("Death-Touched", "The dead that haunted this army now march with it.", "icon_necromantic_power.png", ramp(
         ["Immune to psychology", "Immune to psychology, causes fear", "+5 leadership, causes fear", "+10 leadership, causes fear",
          "+10 leadership, causes terror"],
@@ -595,7 +595,8 @@ def variants(kind: str, config: Dict) -> List[Tuple[str, str, str, str, List[Lev
         name, flavour, icon, levels = catalogue[key]
         if record.get("race"):
             for race in config["races"]:
-                out.append((f"{key}_{race}", name.format(race=library.RACES[race][0]), flavour, icon, race_levels(key, race), record))
+                race_name = library.RACES[race][0]
+                out.append((f"{key}_{race}", name.format(race=race_name), flavour.format(race=race_name), icon, race_levels(key, race), record))
         else:
             out.append((key, name, flavour, icon, levels, record))
     return out
@@ -690,7 +691,8 @@ def traits(config: Dict) -> Dict[str, Tuple]:
             if record.get("charges"):
                 rule = f"Lasts {record['charges']} battles, then fades."
             elif kind == "boon":
-                rule = f"Grows a level for every {config['wins_per_level']} won battles, up to level {config['max_level']}."
+                against = " against that race" if record.get("race") else ""
+                rule = f"Grows a level for every {config['wins_per_level']} won battles{against}, up to level {config['max_level']}."
             else:
                 rule = f"Worsens a level every {config['turns_per_level']} turns, up to level {config['max_level']}."
                 if record.get("turns_into"):
@@ -941,6 +943,8 @@ def guide(config: Dict, offers: List[Dict], tower_offers: List[Dict], names: Opt
             text = f"[[col:yellow]]{name}[[/col]]: {effects(levels)}"
             if record.get("race"):
                 text += " The race is rolled when it is gained."
+                if kind == "boon":
+                    text += " Only wins against armies of that race make it grow."
             if record.get("turns_into"):
                 text += f" Turns into {BOONS[record['turns_into']][0].replace('{race}', 'the same race')} after {config['turns_to_turn']} turns at level {config['max_level']}."
             sources = found.get((kind, record["key"]), [])
