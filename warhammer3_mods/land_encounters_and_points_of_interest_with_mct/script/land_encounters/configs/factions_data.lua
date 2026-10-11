@@ -1823,7 +1823,6 @@ return {
                     {land_unit="wh2_dlc15_hef_veh_lion_chariot_of_chrace_0", origin="vanilla", recruitment_cost=1250, multiplayer_cost=1250},
                     {land_unit="wh3_dlc27_hef_veh_skycutter_bolt_thrower", origin="vanilla", recruitment_cost=1400, multiplayer_cost=1400},
                     {land_unit="wh3_dlc27_hef_veh_skycutter_bows", origin="vanilla", recruitment_cost=1150, multiplayer_cost=1150},
-                    {land_unit="wh3_dlc27_hef_veh_skycutter_ror", origin="vanilla", recruitment_cost=1300, multiplayer_cost=1300, is_renown=true},
                     {land_unit="low_hef_cav_dragon_legion_caledorian_chariot_0", origin="@LOW_Dragon_Princes_Legion", recruitment_cost=1100, multiplayer_cost=1100},
                     {land_unit="ghs_main_wm_hef_veh_flying_waystone", origin="ghs_great_harmony", recruitment_cost=2000, multiplayer_cost=2000},
                     {land_unit="wh3_dlc27_hef_veh_skycutter_bolt_thrower_ete", origin="pwner1_wh3_ete_unit_pack", recruitment_cost=4600, multiplayer_cost=4600},
