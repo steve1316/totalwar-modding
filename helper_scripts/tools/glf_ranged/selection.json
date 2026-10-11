@@ -1536,6 +1536,36 @@
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
+  "wh3_dlc29_vmp_cha_neferata": {
+   "fwm": false,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_barded_nightmare": {
+   "fwm": false,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_coven_throne": {
+   "fwm": false,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_dread_abyssal": {
+   "fwm": false,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_hellsteed": {
+   "fwm": false,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_zombie_dragon": {
+   "fwm": false,
+   "missile": "",
+   "ranged": true
+  },
   "wh3_main_cth_cha_alchemist_0": {
    "fwm": false,
    "missile": "glf_mage_hero_metal_missile",
