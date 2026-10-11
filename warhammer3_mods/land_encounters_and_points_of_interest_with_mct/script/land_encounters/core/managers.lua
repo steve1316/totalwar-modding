@@ -722,6 +722,9 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     local new_invasion_hero_agent = cm:create_agent(self.event_army.faction, hero_object.agent_type, hero_object.agent_subtype, agent_x, agent_y)
 
                     out("DEBUG - new_invasion_hero_agent spawned with cqi: " .. new_invasion_hero_agent:command_queue_index())
+                    --- A new agent starts at rank 1, where most of its skills are still locked, so it gets the lord's level before its skills.
+                    cm:add_agent_experience(cm:char_lookup_str(new_invasion_hero_agent), self.event_army.lord.level, true)
+                    out("LEAPOI: invasion hero " .. hero_object.agent_subtype .. " raised to level " .. self.event_army.lord.level .. " before its skills")
                     for temp_hero_agent_subtype, skill_override in pairs(skill_overrides) do
                         if hero_object.agent_subtype == temp_hero_agent_subtype then
                             out("DEBUG - adding skills to invasion force hero " .. temp_hero_agent_subtype .. " of cqi " .. new_invasion_hero_agent:command_queue_index())
