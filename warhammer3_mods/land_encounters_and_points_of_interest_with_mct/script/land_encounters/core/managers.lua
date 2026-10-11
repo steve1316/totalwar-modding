@@ -54,6 +54,9 @@ local faction_shorthand_key_to_full_key = {
     vmp = "wh_main_vmp_vampire_counts_qb1",
 }
 
+--- Keeps a spawned enemy army out of attrition, so it reaches the fight as strong as it was made.
+local NO_ATTRITION_BUNDLE = "land_enc_effect_spot_enemy_supplied"
+
 --- Recursively prints any Lua value to `out()` for debugging.
 --- @param tbl any The value to print. Non-tables are stringified directly.
 --- @param indent number Current indent depth. Defaults to 0 when nil.
@@ -614,6 +617,7 @@ function InvasionBattleManager:create_enemy_reinforcements_before_attack(player_
 
     invasion:start_invasion(
         function(invasion_force)
+            cm:apply_effect_bundle_to_force(NO_ATTRITION_BUNDLE, invasion_force:get_general():military_force():command_queue_index(), 0)
             --- Force war with this faction for the player.
             local call_player_allies_to_war = false
             local call_faction_allies_to_war = false
@@ -718,6 +722,9 @@ function InvasionBattleManager:main_attacker_attacks_player_and_allies(player_ch
                     local new_invasion_hero_agent = cm:create_agent(self.event_army.faction, hero_object.agent_type, hero_object.agent_subtype, agent_x, agent_y)
 
                     out("DEBUG - new_invasion_hero_agent spawned with cqi: " .. new_invasion_hero_agent:command_queue_index())
+                    --- A new agent starts at rank 1, where most of its skills are still locked, so it gets the lord's level before its skills.
+                    cm:add_agent_experience(cm:char_lookup_str(new_invasion_hero_agent), self.event_army.lord.level, true)
+                    out("LEAPOI: invasion hero " .. hero_object.agent_subtype .. " raised to level " .. self.event_army.lord.level .. " before its skills")
                     for temp_hero_agent_subtype, skill_override in pairs(skill_overrides) do
                         if hero_object.agent_subtype == temp_hero_agent_subtype then
                             out("DEBUG - adding skills to invasion force hero " .. temp_hero_agent_subtype .. " of cqi " .. new_invasion_hero_agent:command_queue_index())
@@ -836,12 +843,13 @@ function InvasionBattleManager:rank_up_lore_units(force, army)
     out("LEAPOI: " .. ranked .. " lore units of the enemy army gain " .. ranks .. " ranks")
 end
 
---- Puts the event army's `sabotage` on its spawned force: each of `enemy_bundles`, every unit but the characters at `enemy_strength` of full
---- strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left alone. The debug
---- `test_bundles_enemy` bundles go on every army.
+--- Readies a spawned enemy force: no attrition, then the event army's `sabotage`: each of `enemy_bundles`, every unit but the characters at
+--- `enemy_strength` of full strength, and its most expensive unit at `champion_strength` when that is lower. Armies without sabotage are left
+--- alone. The debug `test_bundles_enemy` bundles go on every army.
 --- @param force military_force The spawned invasion force.
 --- @param army Army The army it was built from.
 function InvasionBattleManager:weaken_invasion_force(force, army)
+    cm:apply_effect_bundle_to_force(NO_ATTRITION_BUNDLE, force:command_queue_index(), 0)
     local sabotage = army.sabotage or {}
     for _, bundle in ipairs(sabotage.enemy_bundles or {}) do
         cm:apply_effect_bundle_to_force(bundle, force:command_queue_index(), 0)

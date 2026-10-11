@@ -616,18 +616,42 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Time and battles
 
+--- The races the lord's side fought in the battle that just ended, from the game's record of it. A faction whose subculture has no race is
+--- left out.
+--- @param character userdata The lord.
+--- @returns table Race -> true.
+local function enemy_races(character)
+    local races = {}
+    local attacker = cm:pending_battle_cache_faction_is_attacker(character:faction():name())
+    local count = attacker and cm:pending_battle_cache_num_defenders() or cm:pending_battle_cache_num_attackers()
+    local get = attacker and cm.pending_battle_cache_get_defender or cm.pending_battle_cache_get_attacker
+    for i = 1, count do
+        local _, _, faction_name = get(cm, i)
+        local faction = faction_name and cm:get_faction(faction_name)
+        --- The shorthand as in `Army.faction_shorthand_for_subculture`, which boons cannot require (core/army requires core/managers, which requires boons).
+        local race = faction and data.race_of_shorthand[faction:subculture():match("sc_(%w+)_") or ""]
+        if race then races[race] = true end
+    end
+    return races
+end
+
 --- After a lord's battle: each charged boon spends a battle and ends on its last, and on a win every other boon counts it, rising a level
---- every `wins_per_level` wins.
+--- every `wins_per_level` wins. A race boon (Bane) only counts a win against its race.
 --- @param character userdata The lord.
 --- @param won boolean True when the lord won.
 function M.on_battle_completed(character, won)
     local record = M.lords[tostring(character:command_queue_index())]
     if not record then return end
+    local races = nil
     for i = #record.boon, 1, -1 do
         local boon = record.boon[i]
+        if won and boon.race then races = races or enemy_races(character) end
         if boon.charges then
             boon.charges = boon.charges - 1
             if boon.charges <= 0 then M.remove(character, "boon", i, "boon_lost") else show(character, "boon", boon) end
+        elseif won and boon.race and not races[boon.race] then
+            log("boons: lord " .. character:command_queue_index() .. "'s " .. M.bundle("boon", boon) .. " does not count a win against "
+                .. (next(races) and table.concat(sorted_keys(races), ", ") or "no known race"))
         elseif won then
             M.add_wins(character, boon, 1)
         end

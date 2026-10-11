@@ -523,6 +523,34 @@
      "wh_main_spell_lil_waaagh_curse_of_da_bad_moon_upgraded"
     ]
    ],
+   "wh_main_spell_vampires_invocation_of_nehek": [
+    [
+     "hp_replenish_cap_reached",
+     "wh_main_spell_vampires_invocation_of_nehek"
+    ],
+    [
+     "living_unit",
+     "wh_main_spell_vampires_invocation_of_nehek"
+    ],
+    [
+     "on_a_platform",
+     "wh_main_spell_vampires_invocation_of_nehek"
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek_upgraded": [
+    [
+     "hp_replenish_cap_reached",
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded"
+    ],
+    [
+     "living_unit",
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded"
+    ],
+    [
+     "on_a_platform",
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded"
+    ]
+   ],
    "wh_main_spell_vampires_raise_dead": [
     [
      "climbing_manning_eq_on_platform",
@@ -858,6 +886,26 @@
      "false",
      "true",
      "wh2_main_spell_plague_wither_upgraded"
+    ]
+   ],
+   "wh2_main_spell_ruin_death_frenzy": [
+    [
+     "1",
+     "wh2_main_spell_ruin_death_frenzy",
+     "true",
+     "true",
+     "false",
+     "wh2_main_spell_ruin_death_frenzy"
+    ]
+   ],
+   "wh2_main_spell_ruin_death_frenzy_upgraded": [
+    [
+     "1",
+     "wh2_main_spell_ruin_death_frenzy_upgraded",
+     "true",
+     "true",
+     "false",
+     "wh2_main_spell_ruin_death_frenzy"
     ]
    ],
    "wh2_main_spell_ruin_howling_warpgale": [
@@ -1254,6 +1302,74 @@
      "true",
      "false",
      "wh3_main_spell_ice_frost_blades_upgraded"
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter": [
+    [
+     "1",
+     "wh3_main_spell_ice_heart_of_winter",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_1"
+    ],
+    [
+     "2",
+     "wh3_main_spell_ice_heart_of_winter",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_2"
+    ],
+    [
+     "3",
+     "wh3_main_spell_ice_heart_of_winter",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_3"
+    ],
+    [
+     "4",
+     "wh3_main_spell_ice_heart_of_winter",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_4"
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter_upgraded": [
+    [
+     "1",
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_upgraded_1"
+    ],
+    [
+     "2",
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_upgraded_2"
+    ],
+    [
+     "3",
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_upgraded_3"
+    ],
+    [
+     "4",
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "false",
+     "false",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter_upgraded_4"
     ]
    ],
    "wh3_main_spell_ice_ice_sheet": [
@@ -1688,6 +1804,26 @@
      "wh_dlc05_spell_shadow_melkoths_mystifying_miasma_upgraded"
     ]
    ],
+   "wh_dlc05_spell_shadow_okkams_mindrazor": [
+    [
+     "1",
+     "wh_dlc05_spell_shadow_okkams_mindrazor",
+     "true",
+     "true",
+     "false",
+     "wh_dlc05_spell_shadow_okkams_mindrazor"
+    ]
+   ],
+   "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded": [
+    [
+     "1",
+     "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded",
+     "true",
+     "true",
+     "false",
+     "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded"
+    ]
+   ],
    "wh_main_spell_big_waaagh_ere_we_go": [
     [
      "1",
@@ -1876,6 +2012,36 @@
      "true",
      "false",
      "wh_main_spell_metal_glittering_robe_upgraded"
+    ]
+   ],
+   "wh_main_spell_vampires_curse_of_years": [
+    [
+     "1",
+     "wh_main_spell_vampires_curse_of_years",
+     "false",
+     "false",
+     "true",
+     "wh_main_spell_vampires_curse_of_years"
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek": [
+    [
+     "1",
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "true",
+     "true",
+     "false",
+     "wh_main_spell_vampires_invocation_of_nehek"
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek_upgraded": [
+    [
+     "1",
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "true",
+     "true",
+     "false",
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded"
     ]
    ],
    "wh_main_spell_vampires_vanhels_danse_macabre": [
@@ -2879,6 +3045,38 @@
      "false"
     ]
    ],
+   "wh2_main_spell_ruin_death_frenzy": [
+    [
+     "wh2_main_spell_ruin_death_frenzy",
+     "true",
+     "wh2_main_spell_ruin_death_frenzy",
+     "wh2_main_spell_ruin_death_frenzy_upgraded",
+     "wh_type_augment",
+     "spell_previews/ruin/wh2_main_spell_ruin_death_frenzy",
+     "wh_main_anc_group_uncommon",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
+   "wh2_main_spell_ruin_death_frenzy_upgraded": [
+    [
+     "wh2_main_spell_ruin_death_frenzy_upgraded",
+     "true",
+     "wh2_main_spell_ruin_death_frenzy",
+     "",
+     "wh_type_augment",
+     "spell_previews/ruin/wh2_main_spell_ruin_death_frenzy",
+     "wh_main_anc_group_uncommon",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
    "wh2_main_spell_ruin_howling_warpgale": [
     [
      "wh2_main_spell_ruin_howling_warpgale",
@@ -3736,6 +3934,38 @@
      "wh_type_augment",
      "spell_previews/ice/wh3_main_ice_ice_frost_blade",
      "wh_main_anc_group_uncommon",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter": [
+    [
+     "wh3_main_spell_ice_heart_of_winter",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter",
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "wh_type_area_of_direct_damage",
+     "spell_previews/ice/wh3_main_ice_heart_of_winter",
+     "wh_main_anc_group_rare",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter_upgraded": [
+    [
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "true",
+     "wh3_main_spell_ice_heart_of_winter",
+     "",
+     "wh_type_area_of_direct_damage",
+     "spell_previews/ice/wh3_main_ice_heart_of_winter",
+     "wh_main_anc_group_rare",
      "true",
      "false",
      "spell",
@@ -4815,6 +5045,38 @@
      "false"
     ]
    ],
+   "wh_dlc05_spell_shadow_okkams_mindrazor": [
+    [
+     "wh_dlc05_spell_shadow_okkams_mindrazor",
+     "true",
+     "wh_dlc05_spell_shadow_okkams_mindrazor",
+     "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded",
+     "wh_type_augment",
+     "spell_previews/shadows/wh_dlc05_spell_shadows_okkams_mindrazor",
+     "wh_main_anc_group_rare",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
+   "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded": [
+    [
+     "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded",
+     "true",
+     "wh_dlc05_spell_shadow_okkams_mindrazor",
+     "",
+     "wh_type_area_of_augments",
+     "spell_previews/shadows/wh_dlc05_spell_shadows_okkams_mindrazor",
+     "wh_main_anc_group_rare",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
    "wh_main_spell_big_waaagh_brain_bursta": [
     [
      "wh_main_spell_big_waaagh_brain_bursta",
@@ -5311,6 +5573,54 @@
      "false"
     ]
    ],
+   "wh_main_spell_vampires_curse_of_years": [
+    [
+     "wh_main_spell_vampires_curse_of_years",
+     "true",
+     "wh_main_spell_vampires_curse_of_years",
+     "",
+     "wh_type_area_of_hexes",
+     "spell_previews/vampire/wh3_dlc29_spell_vampires_curse_of_years",
+     "wh_main_anc_group_rare",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek": [
+    [
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "true",
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "wh_type_regeneration",
+     "spell_previews/vampire/wh3_dlc29_spell_vampires_invocation_of_nehek",
+     "wh_main_anc_group_common",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek_upgraded": [
+    [
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "true",
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "",
+     "wh_type_area_of_regeneration",
+     "spell_previews/vampire/wh3_dlc29_spell_vampires_invocation_of_nehek",
+     "wh_main_anc_group_common",
+     "true",
+     "false",
+     "spell",
+     "",
+     "false"
+    ]
+   ],
    "wh_main_spell_vampires_raise_dead": [
     [
      "wh_main_spell_vampires_raise_dead",
@@ -5401,7 +5711,7 @@
    "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded": [
     [
      "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded",
-     "wh2_main_spell_upgraded_reloading"
+     "wh3_dlc23_spell_upgraded_duration"
     ]
    ],
    "wh2_dlc09_spell_nehekhara_sakhmets_incantation_of_the_skullstorm": [
@@ -5439,7 +5749,7 @@
    "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded": [
     [
      "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded",
-     "wh_main_spell_upgraded_melee_attack"
+     "wh_main_spell_upgraded_added_effect_range"
     ]
    ],
    "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance": [
@@ -6114,6 +6424,12 @@
      "wh_main_spell_upgraded_damage"
     ]
    ],
+   "wh2_main_spell_ruin_death_frenzy_upgraded": [
+    [
+     "wh2_main_spell_ruin_death_frenzy_upgraded",
+     "wh_main_spell_upgraded_added_effect_range"
+    ]
+   ],
    "wh2_main_spell_ruin_howling_warpgale_upgraded": [
     [
      "wh2_main_spell_ruin_howling_warpgale_upgraded",
@@ -6580,6 +6896,22 @@
     [
      "wh3_main_spell_ice_frost_blades_upgraded",
      "wh_main_spell_upgraded_melee_damage"
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter": [
+    [
+     "wh3_main_spell_ice_heart_of_winter",
+     "wh_dlc08_direct_damage_medium_unit"
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter_upgraded": [
+    [
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "wh_dlc08_direct_damage_medium_unit"
+    ],
+    [
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "wh_main_spell_upgraded_damage"
     ]
    ],
    "wh3_main_spell_ice_ice_maidens_kiss": [
@@ -7068,6 +7400,12 @@
      "wh_main_spell_upgraded_cast_range"
     ]
    ],
+   "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded": [
+    [
+     "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded",
+     "wh_main_spell_upgraded_added_effect_range"
+    ]
+   ],
    "wh_main_spell_big_waaagh_brain_bursta": [
     [
      "wh_main_spell_big_waaagh_brain_bursta",
@@ -7349,6 +7687,38 @@
    "wh_main_spell_metal_glittering_robe_upgraded": [
     [
      "wh_main_spell_metal_glittering_robe_upgraded",
+     "wh_main_spell_upgraded_added_effect_range"
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek": [
+    [
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "wh_main_all_replenish"
+    ],
+    [
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "wh_main_all_resurrect"
+    ],
+    [
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "wh_main_all_resurrect_hp"
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek_upgraded": [
+    [
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "wh_main_all_replenish"
+    ],
+    [
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "wh_main_all_resurrect"
+    ],
+    [
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "wh_main_all_resurrect_hp"
+    ],
+    [
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
      "wh_main_spell_upgraded_added_effect_range"
     ]
    ],
@@ -7844,7 +8214,7 @@
    "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded": [
     [
      "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded",
-     "32.0000",
+     "64.0000",
      "43.0000",
      "-1",
      "0.0000",
@@ -8091,7 +8461,7 @@
      "",
      "",
      "cast_up_long",
-     "15.0000",
+     "13.0000",
      "0.0000",
      "wh_abilities_generic_debuff",
      "wh_abilities_generic_debuff",
@@ -8147,7 +8517,7 @@
      "38.0000",
      "51.0000",
      "-1",
-     "35.0000",
+     "55.0000",
      "false",
      "0",
      "-1",
@@ -8166,7 +8536,7 @@
      "",
      "",
      "cast_up_long",
-     "21.0000",
+     "17.0000",
      "0.0000",
      "wh_abilities_generic_debuff",
      "wh_abilities_generic_debuff",
@@ -8220,7 +8590,7 @@
     [
      "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance",
      "22.0000",
-     "38.0000",
+     "45.0000",
      "-1",
      "0.0000",
      "false",
@@ -8241,7 +8611,7 @@
      "",
      "",
      "cast_up_medium",
-     "10.0000",
+     "9.0000",
      "0.0000",
      "wh_abilities_generic_direct_damage_no_ring",
      "wh_abilities_generic_direct_damage_no_ring",
@@ -8295,7 +8665,7 @@
     [
      "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance_upgraded",
      "22.0000",
-     "38.0000",
+     "45.0000",
      "-1",
      "0.0000",
      "false",
@@ -8316,7 +8686,7 @@
      "",
      "",
      "cast_up_medium",
-     "13.0000",
+     "12.0000",
      "0.0000",
      "wh_abilities_generic_direct_damage_no_ring",
      "wh_abilities_generic_direct_damage_no_ring",
@@ -11955,6 +12325,156 @@
      "false",
      "damage_aoe",
      "2",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh2_main_spell_ruin_death_frenzy": [
+    [
+     "wh2_main_spell_ruin_death_frenzy",
+     "28.0000",
+     "43.0000",
+     "-1",
+     "0.0000",
+     "true",
+     "1",
+     "0",
+     "false",
+     "0.0000",
+     "",
+     "true",
+     "false",
+     "false",
+     "200.0000",
+     "false",
+     "false",
+     "3.0000",
+     "false",
+     "3813",
+     "",
+     "",
+     "cast_forward_medium",
+     "6.0000",
+     "0.0000",
+     "wh_abilities_generic_buff_no_ring",
+     "wh_abilities_generic_buff_no_ring",
+     "",
+     "",
+     "",
+     "0.0000",
+     "",
+     "augment_melee",
+     "wh2_main_spell_ruin_death_frenzy",
+     "ruin_medium",
+     "vo_battle_special_ability_spell_cast_positive",
+     "150.0000",
+     "0.0000",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "true",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "buff_unit",
+     "1",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh2_main_spell_ruin_death_frenzy_upgraded": [
+    [
+     "wh2_main_spell_ruin_death_frenzy_upgraded",
+     "28.0000",
+     "43.0000",
+     "-1",
+     "35.0000",
+     "true",
+     "-1",
+     "0",
+     "false",
+     "0.0000",
+     "",
+     "true",
+     "false",
+     "true",
+     "200.0000",
+     "false",
+     "false",
+     "3.0000",
+     "false",
+     "3921",
+     "",
+     "",
+     "cast_forward_medium",
+     "10.0000",
+     "0.0000",
+     "wh_abilities_generic_buff",
+     "wh_abilities_generic_buff",
+     "",
+     "",
+     "",
+     "0.5000",
+     "wh_main_generic_miscast",
+     "augment_melee",
+     "wh2_main_spell_ruin_death_frenzy_upgraded",
+     "ruin_medium",
+     "vo_battle_special_ability_spell_cast_positive",
+     "150.0000",
+     "0.0000",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "true",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "buff_unit",
+     "1",
      "false",
      "1.0000",
      "",
@@ -16005,6 +16525,156 @@
      "false",
      "buff_unit",
      "1",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "Ice",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter": [
+    [
+     "wh3_main_spell_ice_heart_of_winter",
+     "32.0000",
+     "54.0000",
+     "-1",
+     "30.0000",
+     "false",
+     "0",
+     "-1",
+     "true",
+     "0.0000",
+     "",
+     "false",
+     "false",
+     "true",
+     "100.0000",
+     "false",
+     "false",
+     "5.0000",
+     "false",
+     "2127562107",
+     "",
+     "",
+     "cast_up_long",
+     "22.0000",
+     "0.0000",
+     "wh_abilities_generic_direct_damage",
+     "wh_abilities_generic_direct_damage",
+     "wh3_main_ice_heart_of_winter",
+     "",
+     "",
+     "0.0000",
+     "",
+     "direct_damage_multi_entity_area",
+     "wh3_main_ability_modular",
+     "ice_long",
+     "vo_battle_special_ability_spell_cast_wef_life",
+     "50.0000",
+     "150.0000",
+     "",
+     "",
+     "",
+     "false",
+     "true",
+     "true",
+     "false",
+     "",
+     "",
+     "",
+     "false",
+     "true",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "damage_aoe",
+     "3",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "Ice",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh3_main_spell_ice_heart_of_winter_upgraded": [
+    [
+     "wh3_main_spell_ice_heart_of_winter_upgraded",
+     "32.0000",
+     "54.0000",
+     "-1",
+     "30.0000",
+     "false",
+     "0",
+     "-1",
+     "true",
+     "0.0000",
+     "",
+     "false",
+     "false",
+     "true",
+     "100.0000",
+     "false",
+     "false",
+     "5.0000",
+     "false",
+     "511684298",
+     "",
+     "",
+     "cast_up_long",
+     "26.0000",
+     "0.0000",
+     "wh_abilities_generic_direct_damage",
+     "wh_abilities_generic_direct_damage",
+     "wh3_main_ice_heart_of_winter",
+     "",
+     "",
+     "0.5000",
+     "wh_main_generic_miscast",
+     "direct_damage_multi_entity_area",
+     "wh3_main_ability_modular",
+     "ice_long",
+     "vo_battle_special_ability_spell_cast_wef_life",
+     "50.0000",
+     "150.0000",
+     "",
+     "",
+     "",
+     "false",
+     "true",
+     "true",
+     "false",
+     "",
+     "",
+     "",
+     "false",
+     "true",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "damage_aoe",
+     "3",
      "false",
      "1.0000",
      "",
@@ -21041,6 +21711,156 @@
      ""
     ]
    ],
+   "wh_dlc05_spell_shadow_okkams_mindrazor": [
+    [
+     "wh_dlc05_spell_shadow_okkams_mindrazor",
+     "32.0000",
+     "46.0000",
+     "-1",
+     "0.0000",
+     "true",
+     "1",
+     "0",
+     "false",
+     "0.0000",
+     "",
+     "true",
+     "false",
+     "false",
+     "200.0000",
+     "false",
+     "false",
+     "5.0000",
+     "false",
+     "3292",
+     "",
+     "",
+     "cast_up_long",
+     "8.0000",
+     "0.0000",
+     "wh_abilities_generic_buff_no_ring",
+     "wh_abilities_generic_buff_no_ring",
+     "",
+     "",
+     "",
+     "0.0000",
+     "",
+     "augment_melee",
+     "wh_dlc05_spell_shadow_okkams_mindrazor",
+     "shadow_long",
+     "vo_battle_special_ability_spell_cast_wef_shadow",
+     "200.0000",
+     "0.0000",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "true",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "buff_unit",
+     "1",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded": [
+    [
+     "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded",
+     "32.0000",
+     "46.0000",
+     "-1",
+     "35.0000",
+     "true",
+     "-1",
+     "0",
+     "true",
+     "0.0000",
+     "",
+     "true",
+     "false",
+     "true",
+     "200.0000",
+     "false",
+     "false",
+     "5.0000",
+     "false",
+     "3300",
+     "",
+     "",
+     "cast_up_long",
+     "14.0000",
+     "0.0000",
+     "wh_abilities_generic_buff",
+     "wh_abilities_generic_buff",
+     "",
+     "",
+     "",
+     "0.5000",
+     "wh_main_death_miscast",
+     "augment_melee_area",
+     "wh_dlc05_spell_shadow_okkams_mindrazor_upgraded",
+     "shadow_long",
+     "vo_battle_special_ability_spell_cast_wef_shadow",
+     "200.0000",
+     "0.0000",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "true",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "buff_unit",
+     "3",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ],
    "wh_main_spell_big_waaagh_brain_bursta": [
     [
      "wh_main_spell_big_waaagh_brain_bursta",
@@ -23359,6 +24179,231 @@
      "1.0000",
      "",
      "false",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh_main_spell_vampires_curse_of_years": [
+    [
+     "wh_main_spell_vampires_curse_of_years",
+     "35.0000",
+     "47.0000",
+     "-1",
+     "35.0000",
+     "false",
+     "0",
+     "-1",
+     "true",
+     "0.0000",
+     "",
+     "false",
+     "true",
+     "true",
+     "200.0000",
+     "false",
+     "false",
+     "5.0000",
+     "false",
+     "586",
+     "",
+     "",
+     "cast_up_long",
+     "10.0000",
+     "0.0000",
+     "wh_abilities_generic_debuff",
+     "",
+     "",
+     "",
+     "",
+     "0.0000",
+     "",
+     "hex_melee_area",
+     "wh_main_spell_vampires_curse_of_years",
+     "vampires_long",
+     "vo_battle_special_ability_spell_cast_negative",
+     "200.0000",
+     "0.0000",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "false",
+     "",
+     "wh3_dlc29_lore_of_vampires_curse_of_years_ring",
+     "",
+     "false",
+     "false",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "debuff_unit",
+     "3",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek": [
+    [
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "18.0000",
+     "30.0000",
+     "-1",
+     "0.0000",
+     "true",
+     "1",
+     "0",
+     "false",
+     "0.0000",
+     "",
+     "true",
+     "false",
+     "false",
+     "200.0000",
+     "false",
+     "false",
+     "1.0000",
+     "false",
+     "597",
+     "",
+     "",
+     "cast_up_short",
+     "7.0000",
+     "0.0000",
+     "wh_abilities_generic_regeneration_no_ring",
+     "wh_abilities_generic_regeneration_no_ring",
+     "",
+     "",
+     "",
+     "0.0000",
+     "",
+     "healing",
+     "wh_main_spell_vampires_invocation_of_nehek",
+     "vampires_short",
+     "vo_battle_special_ability_spell_cast_positive",
+     "50.0000",
+     "50.0000",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "true",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "buff_unit",
+     "1",
+     "false",
+     "1.0000",
+     "",
+     "true",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ],
+   "wh_main_spell_vampires_invocation_of_nehek_upgraded": [
+    [
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "18.0000",
+     "30.0000",
+     "-1",
+     "35.0000",
+     "true",
+     "4",
+     "0",
+     "false",
+     "0.0000",
+     "",
+     "true",
+     "false",
+     "true",
+     "200.0000",
+     "false",
+     "false",
+     "1.0000",
+     "false",
+     "2407",
+     "",
+     "",
+     "cast_up_short",
+     "13.0000",
+     "0.0000",
+     "wh_abilities_generic_regeneration",
+     "wh_abilities_generic_regeneration",
+     "",
+     "",
+     "",
+     "0.5000",
+     "wh_main_death_miscast",
+     "healing_area",
+     "wh_main_spell_vampires_invocation_of_nehek_upgraded",
+     "vampires_short",
+     "vo_battle_special_ability_spell_cast_positive",
+     "50.0000",
+     "50.0000",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "true",
+     "",
+     "",
+     "",
+     "false",
+     "false",
+     "false",
+     "false",
+     "false",
+     "",
+     "",
+     "false",
+     "false",
+     "true",
+     "-1.0000",
+     "false",
+     "buff_unit",
+     "3",
+     "false",
+     "1.0000",
+     "",
+     "true",
      "",
      "",
      "",

@@ -45,6 +45,11 @@ MOD_FOLDERS_TO_EXTRACT = [
 ]
 
 
+# Units their authors never finished, vanilla or modded: in the tables but not recruitable in game, with no card art, description or abilities.
+# Matched against the main_units `unit` or `land_unit` key. They never enter the army data.
+UNFINISHED_UNITS = {"wh3_dlc27_hef_veh_skycutter_ror"}
+
+
 # Per-faction unit bucket structure. Each faction's `units` dict holds one entry per tier, and each tier holds one list per caste category.
 TIER_NAMES = [f"tier_{i}" for i in range(6)]
 UNIT_CATEGORIES = ["melee_infantry", "missile_infantry", "melee_cavalry", "missile_cavalry", "monstrous_infantry", "monstrous_cavalry", "chariot", "warmachine", "war_beast", "monster", "generic", "lord", "hero"]
@@ -362,6 +367,9 @@ def tsv_to_faction_data(
     try:
         # Iterate over each unit row in the DataFrame
         for _, row in df_main_units_tables.iterrows():
+            if row["unit"] in UNFINISHED_UNITS or row["land_unit"] in UNFINISHED_UNITS:
+                logging.info(f"Skipping unfinished unit '{row['land_unit']}' from {mod['package_name']}.")
+                continue
             if default_faction:
                 # Handle comma-delimited faction list
                 if "," in default_faction:
