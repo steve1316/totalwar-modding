@@ -440,7 +440,7 @@ def _read_schema_file(revision: Optional[str]) -> str:
     return subprocess.run(["git", "-C", SCHEMAS_DIR, "show", f"{revision}:{SLOT_IDS_FILE}"], capture_output=True, text=True, check=True).stdout
 
 
-def _load_vanilla_sets() -> Dict[str, bytes]:
+def load_vanilla_sets() -> Dict[str, bytes]:
     """Extract the vanilla animation tables and collect every set by path.
 
     Raises:
@@ -544,7 +544,7 @@ def main():
 
         with open(GLF_ANIMPACK_PATH, "rb") as f:
             glf_files = read_animpack(f.read())
-        vanilla_sets = _load_vanilla_sets()
+        vanilla_sets = load_vanilla_sets()
         _check_round_trip(dict(glf_files), "GLF")
         _check_round_trip(vanilla_sets, "vanilla")
         logging.info(f"All {len(glf_files)} GLF sets and every vanilla set round-trip.")
