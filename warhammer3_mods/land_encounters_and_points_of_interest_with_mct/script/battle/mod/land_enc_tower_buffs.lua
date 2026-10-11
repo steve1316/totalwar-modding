@@ -337,7 +337,18 @@ local function hunt(hunted, routing_counts, lost, none)
             for _, sunit in ipairs(ctx.theirs) do
                 if hunted(sunit.unit) then m.hunted[#m.hunted + 1] = sunit end
             end
-            if #m.hunted == 0 then m.state = none or "failed" end
+            local marked = {}
+            for _, sunit in ipairs(m.hunted) do marked[#marked + 1] = sunit.unit:type() end
+            log("mission " .. m.key .. " marks " .. #m.hunted .. " of " .. #ctx.theirs .. " enemy units: " .. table.concat(marked, ", "))
+            if #m.hunted == 0 then
+                local seen = {}
+                for _, sunit in ipairs(ctx.theirs) do
+                    local unit = sunit.unit
+                    seen[#seen + 1] = unit:type() .. " (" .. tostring(unit:unit_class()) .. (unit:is_cavalry() and ", cavalry" or "") .. (unit:is_chariot() and ", chariot" or "") .. ")"
+                end
+                log("mission " .. m.key .. " found none among: " .. table.concat(seen, ", "))
+                m.state = none or "failed"
+            end
         end,
         tick = function(m, ctx)
             local left = 0
