@@ -12,6 +12,7 @@ import time
 from typing import Dict, List, Optional, Tuple
 
 from core import delta
+from core.extract_cache import cache_enabled
 from core.pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
 from core.utilities import clear_temp_root, setup_script_logging
 from ttc import ttc_classifier, ttc_compat_io, ttc_data
@@ -23,6 +24,8 @@ REPORT_PATH = "./reports/ttc_review.md"
 SUMMARY_PATH = f"{delta.STATE_ROOT}/ttc_summary.json"
 # Unit key to the mod that last defined it, so entries for a temporarily unsubscribed mod are never removed.
 OWNER_HISTORY_PATH = f"{delta.STATE_ROOT}/ttc_unit_owners.json"
+# Last trained classifier, reused when its training inputs have not changed.
+MODEL_CACHE_PATH = f"{delta.STATE_ROOT}/ttc_model.pkl"
 
 
 def write_auto_files(assignments: Dict[str, Dict[str, List[Tuple[str, str, Optional[int]]]]], mod_names: Dict[str, str]) -> List[str]:
@@ -154,9 +157,13 @@ def main() -> int:
     Returns:
         Process exit code: 0 on success, 1 if confident picks miss the accuracy bar.
     """
+    start = time.time()
     data = ttc_data.load_all()
+    logging.info(f"TTC compat: loaded {len(data.stats)} units and {len(data.labels)} existing caps in {time.time() - start:.0f}s.")
     context = ttc_classifier.PeerContext(data.stats, data.labels)
-    model, metrics = ttc_classifier.train(ttc_classifier.training_set(data), ttc_classifier.training_groups(data), context)
+    # `update.py --no-cache` retrains from scratch too.
+    cache_path = MODEL_CACHE_PATH if cache_enabled() else None
+    model, metrics = ttc_classifier.train(ttc_classifier.training_set(data), ttc_classifier.training_groups(data), context, cache_path)
     metrics_line = (
         f"held-out exact {metrics.exact:.1%}, category {metrics.category:.1%}, confident {metrics.confident:.1%} "
         f"on {metrics.confident_share:.1%} of entries (threshold {metrics.threshold:.3f}), unseen-mod exact {metrics.unseen_mod_exact:.1%}"
