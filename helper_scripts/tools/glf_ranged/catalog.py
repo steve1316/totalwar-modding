@@ -34,6 +34,8 @@ VANILLA_TABLES = [
     "special_ability_groups_to_units_junctions_tables",
     "unit_attributes_to_groups_junctions_tables",
     "units_to_groupings_military_permissions_tables",
+    "land_units_to_battle_personalities_junctions_tables",
+    "battle_personalities_tables",
 ]
 GLF_LAND_UNITS = f"{GLF_MOD_DIR}/db/land_units_tables/!!!1a_glf_battle_mage_dante.tsv"
 GLF_MISSILES = f"{GLF_MOD_DIR}/db/missile_weapons_tables/glf_battle_mage.tsv"
@@ -44,8 +46,8 @@ FWM_ATTRIBUTE = "fire_whilst_moving"
 GENERIC_MISSILE = re.compile(r"^glf_mage_(lord|hero)_(.+)_missile$")
 # A named GLF missile, e.g. `glf_emp_balthasar_gelt_missile`, captures the name after the race code.
 SPECIAL_MISSILE = re.compile(r"^glf_[a-z]+_(.+)_missile$")
-# Slots each unit kind needs to fire, and to fire while moving.
-FIRE_SLOT = {"foot": "FIRE_LEVEL", "flyer": "FIRE_LEVEL", "rider": "RIDER_FIRE_FORWARD_LEVEL"}
+# Slots that let a set fire, whatever the unit kind, and the slots each kind needs to fire while moving.
+FIRE_SLOT_NAMES = {"FIRE_LEVEL", "RIDER_FIRE_FORWARD_LEVEL"}
 FWM_SLOTS = {"foot": ["MOVING_FIRE_FORWARD_LEVEL"], "flyer": ["MOVING_FIRE_FORWARD_LEVEL"], "rider": ["RIDER_FIRE_LEFT_LEVEL", "RIDER_FIRE_RIGHT_LEVEL"]}
 # Cast slots a fire slot can borrow its animation from, best first.
 CAST_SLOTS = {
@@ -90,7 +92,7 @@ class UnitRow:
     guess: str
     # Why `guess` was picked.
     guess_source: str
-    # True when the set GLF or vanilla ships has the unit kind's fire slot.
+    # True when the set GLF or vanilla ships has a fire slot.
     fire_slot: bool
     # True when the set has `COMBAT_READY`, which on-foot firing needs to avoid a T-pose.
     combat_ready: bool
@@ -107,6 +109,23 @@ class UnitRow:
 
 
 @dataclass
+class SetEntry:
+    """One animation set as vanilla and GLF ship it."""
+
+    # Path inside the animpack, e.g. `animations/database/battle/bin/hu1_empire_staff_and_sword.bin`.
+    path: str
+    # The vanilla set.
+    vanilla: AnimSet
+    # GLF's copy of the set, or None when GLF does not ship it.
+    glf: Optional[AnimSet]
+
+    @property
+    def live(self) -> AnimSet:
+        """The set the game uses with GLF loaded."""
+        return self.glf or self.vanilla
+
+
+@dataclass
 class Catalog:
     """Every vanilla lord and hero row plus the choices the GUI offers."""
 
@@ -114,6 +133,20 @@ class Catalog:
     units: List[UnitRow]
     # Every GLF missile weapon key.
     missiles: List[str]
+
+
+@dataclass
+class Inputs:
+    """Everything the catalog is built from, kept for the generator."""
+
+    # Vanilla table name to rows.
+    tables: Dict[str, List[Dict[str, str]]]
+    # Animation set name to its vanilla and GLF copies.
+    sets: Dict[str, SetEntry]
+    # Slot name by id.
+    names: Dict[int, str]
+    # The built catalog.
+    catalog: Catalog
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,16 +201,16 @@ def load_names() -> Dict[str, str]:
     return names
 
 
-def load_sets() -> Dict[str, Tuple[AnimSet, Optional[AnimSet]]]:
+def load_sets() -> Dict[str, SetEntry]:
     """Load each animation set as vanilla ships it and as GLF ships it.
 
     Returns:
-        Set name to (vanilla set, GLF set or None).
+        Set name to its entry.
     """
     vanilla = {path: parse_set(data) for path, data in load_vanilla_sets().items() if path.startswith(ANIMPACK_BIN_FOLDER) and path.endswith(".bin")}
     with open(GLF_ANIMPACK_PATH, "rb") as f:
         glf = {path: parse_set(data) for path, data in read_animpack(f.read())}
-    return {anim_set.name: (anim_set, glf.get(path)) for path, anim_set in vanilla.items()}
+    return {anim_set.name: SetEntry(path, anim_set, glf.get(path)) for path, anim_set in vanilla.items()}
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,12 +324,12 @@ def unit_kind(anim_set: AnimSet, names: Dict[int, str]) -> str:
     return "flyer" if "FLY_STAND" in slot_names else "foot"
 
 
-def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, Tuple[AnimSet, Optional[AnimSet]]], loc: Dict[str, str], glf_rows: List[Dict[str, str]], missiles: List[str], names: Dict[int, str]) -> Catalog:
+def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEntry], loc: Dict[str, str], glf_rows: List[Dict[str, str]], missiles: List[str], names: Dict[int, str]) -> Catalog:
     """Build one row per vanilla lord and hero land unit.
 
     Args:
         tables (Dict[str, List[Dict[str, str]]]): Vanilla tables from `load_vanilla_tables`.
-        sets (Dict[str, Tuple[AnimSet, Optional[AnimSet]]]): Animation sets from `load_sets`.
+        sets (Dict[str, SetEntry]): Animation sets from `load_sets`.
         loc (Dict[str, str]): Loc key to text.
         glf_rows (List[Dict[str, str]]): GLF's land_units rows.
         missiles (List[str]): Every GLF missile key.
@@ -358,11 +391,11 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, Tuple
             base = key
         faction = unit_faction(key, groups.get(unit_of[key], set()))
         guess, source = guess_missile(key, caste, features[key], faction, votes, faction_votes, missile_set, lores)
-        vanilla_set, glf_set = sets.get(land_row["man_animation"], (None, None))
-        kind = unit_kind(vanilla_set, names) if vanilla_set else ""
-        live = glf_set or vanilla_set
+        entry = sets.get(land_row["man_animation"])
+        kind = unit_kind(entry.vanilla, names) if entry else ""
+        live = entry.live if entry else None
         slot_names = {names.get(slot.slot_id, "") for slot in live.slots} if live else set()
-        fire_slot = bool(kind) and FIRE_SLOT[kind] in slot_names
+        fire_slot = bool(FIRE_SLOT_NAMES & slot_names)
         combat_ready = "COMBAT_READY" in slot_names
         rows.append(
             UnitRow(
@@ -392,17 +425,27 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, Tuple
     return Catalog(rows, missiles)
 
 
+def load_inputs() -> Inputs:
+    """Load every input and build the catalog.
+
+    Returns:
+        The inputs and the catalog.
+    """
+    with open(f"{SCHEMAS_DIR}/{SLOT_IDS_FILE}", encoding="utf-8") as f:
+        names = load_slot_ids(f.read())
+    glf_rows = load_tsv_data(GLF_LAND_UNITS)[0]
+    missiles = [row["key"] for row in load_tsv_data(GLF_MISSILES)[0]]
+    tables, sets = load_vanilla_tables(), load_sets()
+    return Inputs(tables, sets, names, build_catalog(tables, sets, load_names(), glf_rows, missiles, names))
+
+
 def load_catalog() -> Catalog:
     """Load every input and build the catalog.
 
     Returns:
         The catalog.
     """
-    with open(f"{SCHEMAS_DIR}/{SLOT_IDS_FILE}", encoding="utf-8") as f:
-        names = load_slot_ids(f.read())
-    glf_rows = load_tsv_data(GLF_LAND_UNITS)[0]
-    missiles = [row["key"] for row in load_tsv_data(GLF_MISSILES)[0]]
-    return build_catalog(load_vanilla_tables(), load_sets(), load_names(), glf_rows, missiles, names)
+    return load_inputs().catalog
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
