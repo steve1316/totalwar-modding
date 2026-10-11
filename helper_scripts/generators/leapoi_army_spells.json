@@ -232,13 +232,6 @@
    "uses": 2
   },
   {
-   "army": "wh2_dlc15_army_abilities_oath_of_replenishment_upgraded",
-   "id": "army_034",
-   "name": "Oath of Replenishment",
-   "source": "wh2_dlc15_army_abilities_oath_of_replenishment_upgraded",
-   "uses": 4
-  },
-  {
    "army": "wh2_dlc15_army_abilities_skarsniks_big_waaagh",
    "id": "army_035",
    "name": "Skarsnik's Big Waaagh!",
@@ -258,13 +251,6 @@
    "name": "Summon the Sentinels",
    "source": "wh2_dlc15_army_abilities_summon_the_sentinels",
    "uses": 2
-  },
-  {
-   "army": "wh2_dlc15_army_abilities_summon_the_sentinels_upgraded",
-   "id": "army_038",
-   "name": "Summon the Sentinels",
-   "source": "wh2_dlc15_army_abilities_summon_the_sentinels_upgraded",
-   "uses": 4
   },
   {
    "army": "wh2_dlc15_army_abilities_unleash_the_winds",
@@ -631,13 +617,6 @@
    "uses": 1
   },
   {
-   "army": "wh3_dlc23_army_abilities_tower_ballistics_upgraded_toz",
-   "id": "army_091",
-   "name": "Dreadquake Battery",
-   "source": "wh3_dlc23_army_abilities_tower_ballistics_upgraded_toz",
-   "uses": 1
-  },
-  {
    "army": "wh3_dlc23_army_abilities_wrath_of_zharr",
    "id": "army_092",
    "name": "Wrath of Zharr",
@@ -720,13 +699,6 @@
    "name": "Blood God's Shackles",
    "source": "wh3_dlc26_army_abilities_blood_gods_shackles",
    "uses": 1
-  },
-  {
-   "army": "wh3_dlc26_army_abilities_blood_gods_shackles_upgraded",
-   "id": "army_104",
-   "name": "Blood God's Shackles",
-   "source": "wh3_dlc26_army_abilities_blood_gods_shackles_upgraded",
-   "uses": 2
   },
   {
    "army": "wh3_dlc26_army_abilities_boiling_cauldron",
@@ -915,13 +887,6 @@
    "id": "army_131",
    "name": "Ryze: Grave Guard",
    "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_grave_guard",
-   "uses": 2
-  },
-  {
-   "army": "wh3_dlc29_army_abilities_ryze_the_grave_call_grave_guard_endless",
-   "id": "army_132",
-   "name": "Ryze: Grave Guard",
-   "source": "wh3_dlc29_army_abilities_ryze_the_grave_call_grave_guard_endless",
    "uses": 2
   },
   {
@@ -1668,12 +1633,6 @@
    "uses": 2
   },
   {
-   "id": "bound_066",
-   "name": "Fireball",
-   "source": "wh3_dlc27_spell_bound_fireball_upgraded",
-   "uses": 6
-  },
-  {
    "id": "bound_067",
    "name": "Doom & Darkness",
    "source": "wh3_dlc27_spell_bound_runecaller_death_doom_and_darkness",
@@ -1731,12 +1690,6 @@
    "id": "bound_082",
    "name": "Breath of Darkness",
    "source": "wh3_dlc29_spell_bound_undeath_morkharn_breath_of_darkness",
-   "uses": 2
-  },
-  {
-   "id": "bound_083",
-   "name": "Breath of Darkness",
-   "source": "wh3_dlc29_spell_bound_undeath_morkharn_breath_of_darkness_upgraded",
    "uses": 2
   },
   {
@@ -1995,15 +1948,15 @@
    "id": "lore_005",
    "name": "Usekhp's Incantation of Desiccation",
    "source": "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation",
-   "uses": 1,
-   "winds": 15
+   "uses": 2,
+   "winds": 13
   },
   {
    "id": "lore_006",
    "name": "Usirian's Incantation of Vengeance",
    "source": "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance",
    "uses": 2,
-   "winds": 10
+   "winds": 9
   },
   {
    "id": "lore_007",

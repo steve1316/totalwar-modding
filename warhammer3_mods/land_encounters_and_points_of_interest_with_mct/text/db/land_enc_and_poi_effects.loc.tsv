@@ -215,7 +215,6 @@ effects_description_land_enc_lib_fx_bound_062_army_ability	Army ability: "The Bu
 effects_description_land_enc_lib_fx_bound_063_army_ability	Army ability: "Bonecrusher"	false
 effects_description_land_enc_lib_fx_bound_064_army_ability	Army ability: "Trollguts"	false
 effects_description_land_enc_lib_fx_bound_065_army_ability	Army ability: "Acquiescence"	false
-effects_description_land_enc_lib_fx_bound_066_army_ability	Army ability: "Fireball"	false
 effects_description_land_enc_lib_fx_bound_067_army_ability	Army ability: "Doom & Darkness"	false
 effects_description_land_enc_lib_fx_bound_068_army_ability	Army ability: "Transformation of Kadon"	false
 effects_description_land_enc_lib_fx_bound_069_army_ability	Army ability: "Fog of the Damned"	false
@@ -226,7 +225,6 @@ effects_description_land_enc_lib_fx_bound_079_army_ability	Army ability: "Skitte
 effects_description_land_enc_lib_fx_bound_080_army_ability	Army ability: "The Dreaded Thirteenth Spell"	false
 effects_description_land_enc_lib_fx_bound_081_army_ability	Army ability: "The Soulstealer"	false
 effects_description_land_enc_lib_fx_bound_082_army_ability	Army ability: "Breath of Darkness"	false
-effects_description_land_enc_lib_fx_bound_083_army_ability	Army ability: "Breath of Darkness"	false
 effects_description_land_enc_lib_fx_bound_084_army_ability	Army ability: "The Hand of Dust"	false
 effects_description_land_enc_lib_fx_bound_085_army_ability	Army ability: "The Abyssal Swarm"	false
 effects_description_land_enc_lib_fx_bound_086_army_ability	Army ability: "Master of Lightning"	false
@@ -298,11 +296,9 @@ effects_description_land_enc_lib_fx_army_030_army_ability	Army ability: "Grom's 
 effects_description_land_enc_lib_fx_army_031_army_ability	Army ability: "Grom's Waaagh!"	false
 effects_description_land_enc_lib_fx_army_032_army_ability	Army ability: "Invocation of Ending"	false
 effects_description_land_enc_lib_fx_army_033_army_ability	Army ability: "Oath of Replenishment"	false
-effects_description_land_enc_lib_fx_army_034_army_ability	Army ability: "Oath of Replenishment"	false
 effects_description_land_enc_lib_fx_army_035_army_ability	Army ability: "Skarsnik's Big Waaagh!"	false
 effects_description_land_enc_lib_fx_army_036_army_ability	Army ability: "Skarsnik's Waaagh!"	false
 effects_description_land_enc_lib_fx_army_037_army_ability	Army ability: "Summon the Sentinels"	false
-effects_description_land_enc_lib_fx_army_038_army_ability	Army ability: "Summon the Sentinels"	false
 effects_description_land_enc_lib_fx_army_039_army_ability	Army ability: "Unleash the Winds"	false
 effects_description_land_enc_lib_fx_army_040_army_ability	Army ability: "Waaagh!"	false
 effects_description_land_enc_lib_fx_army_041_army_ability	Army ability: "Wurrzag's Big Waaagh!"	false
@@ -355,7 +351,6 @@ effects_description_land_enc_lib_fx_army_087_army_ability	Army ability: "Armour 
 effects_description_land_enc_lib_fx_army_088_army_ability	Army ability: "Doom of Hashut"	false
 effects_description_land_enc_lib_fx_army_089_army_ability	Army ability: "Guns of Zharr"	false
 effects_description_land_enc_lib_fx_army_090_army_ability	Army ability: "Dreadquake Battery"	false
-effects_description_land_enc_lib_fx_army_091_army_ability	Army ability: "Dreadquake Battery"	false
 effects_description_land_enc_lib_fx_army_092_army_ability	Army ability: "Wrath of Zharr"	false
 effects_description_land_enc_lib_fx_army_093_army_ability	Army ability: "Blood & Fireborn"	false
 effects_description_land_enc_lib_fx_army_094_army_ability	Army ability: "Bjuna Bombard"	false
@@ -368,7 +363,6 @@ effects_description_land_enc_lib_fx_army_100_army_ability	Army ability: "Spirit 
 effects_description_land_enc_lib_fx_army_101_army_ability	Army ability: "Spirit of Grungni"	false
 effects_description_land_enc_lib_fx_army_102_army_ability	Army ability: "Call the Miners"	false
 effects_description_land_enc_lib_fx_army_103_army_ability	Army ability: "Blood God's Shackles"	false
-effects_description_land_enc_lib_fx_army_104_army_ability	Army ability: "Blood God's Shackles"	false
 effects_description_land_enc_lib_fx_army_105_army_ability	Army ability: "Boiling Cauldron"	false
 effects_description_land_enc_lib_fx_army_106_army_ability	Army ability: "Foot of Gork"	false
 effects_description_land_enc_lib_fx_army_107_army_ability	Army ability: "Gorbad's Big Waaagh!"	false
@@ -396,7 +390,6 @@ effects_description_land_enc_lib_fx_army_128_army_ability	Army ability: "Summon 
 effects_description_land_enc_lib_fx_army_129_army_ability	Army ability: "Summon Plague Drones (Death's heads)"	false
 effects_description_land_enc_lib_fx_army_130_army_ability	Army ability: "Ryze: Crypt Horrors"	false
 effects_description_land_enc_lib_fx_army_131_army_ability	Army ability: "Ryze: Grave Guard"	false
-effects_description_land_enc_lib_fx_army_132_army_ability	Army ability: "Ryze: Grave Guard"	false
 effects_description_land_enc_lib_fx_army_133_army_ability	Army ability: "Ryze: Khemrian Warsphinx"	false
 effects_description_land_enc_lib_fx_army_134_army_ability	Army ability: "Ryze: Khemric Titan"	false
 effects_description_land_enc_lib_fx_army_135_army_ability	Army ability: "Ryze: Mournguls"	false

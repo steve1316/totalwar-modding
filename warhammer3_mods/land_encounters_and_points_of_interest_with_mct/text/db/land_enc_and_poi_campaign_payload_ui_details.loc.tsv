@@ -2152,7 +2152,7 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_001	[[col
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_002	[[col:green]]Army spell: Neru's Incantation of Protection[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_003	[[col:green]]Army spell: Ptra's Incantation of Righteous Smiting[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_004	[[col:green]]Army spell: Sakhmet's Incantation of the Skullstorm[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_005	[[col:green]]Army spell: Usekhp's Incantation of Desiccation[[/col]], 1 cast in each battle.	false
+campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_005	[[col:green]]Army spell: Usekhp's Incantation of Desiccation[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_006	[[col:green]]Army spell: Usirian's Incantation of Vengeance[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_007	[[col:green]]Army spell: Denizens of the Deep[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_lore_008	[[col:green]]Army spell: Vangheist's Revenge[[/col]], 1 cast in each battle.	false
@@ -2332,7 +2332,6 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_062	[[co
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_063	[[col:green]]Army spell: Bonecrusher[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_064	[[col:green]]Army spell: Trollguts[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_065	[[col:green]]Army spell: Acquiescence[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_066	[[col:green]]Army spell: Fireball[[/col]], 6 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_067	[[col:green]]Army spell: Doom & Darkness[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_068	[[col:green]]Army spell: Transformation of Kadon[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_069	[[col:green]]Army spell: Fog of the Damned[[/col]], 2 casts in each battle.	false
@@ -2343,7 +2342,6 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_079	[[co
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_080	[[col:green]]Army spell: The Dreaded Thirteenth Spell[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_081	[[col:green]]Army spell: The Soulstealer[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_082	[[col:green]]Army spell: Breath of Darkness[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_083	[[col:green]]Army spell: Breath of Darkness[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_084	[[col:green]]Army spell: The Hand of Dust[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_085	[[col:green]]Army spell: The Abyssal Swarm[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_bound_086	[[col:green]]Army spell: Master of Lightning[[/col]], 3 casts in each battle.	false
@@ -2414,11 +2412,9 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_030	[[col
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_031	[[col:green]]Army spell: Grom's Waaagh![[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_032	[[col:green]]Army spell: Invocation of Ending[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_033	[[col:green]]Army spell: Oath of Replenishment[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_034	[[col:green]]Army spell: Oath of Replenishment[[/col]], 4 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_035	[[col:green]]Army spell: Skarsnik's Big Waaagh![[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_036	[[col:green]]Army spell: Skarsnik's Waaagh![[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_037	[[col:green]]Army spell: Summon the Sentinels[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_038	[[col:green]]Army spell: Summon the Sentinels[[/col]], 4 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_039	[[col:green]]Army spell: Unleash the Winds[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_040	[[col:green]]Army spell: Waaagh![[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_041	[[col:green]]Army spell: Wurrzag's Big Waaagh![[/col]], no limit on casts.	false
@@ -2471,7 +2467,6 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_087	[[col
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_088	[[col:green]]Army spell: Doom of Hashut[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_089	[[col:green]]Army spell: Guns of Zharr[[/col]], no limit on casts.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_090	[[col:green]]Army spell: Dreadquake Battery[[/col]], 1 cast in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_091	[[col:green]]Army spell: Dreadquake Battery[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_092	[[col:green]]Army spell: Wrath of Zharr[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_093	[[col:green]]Army spell: Blood & Fireborn[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_094	[[col:green]]Army spell: Bjuna Bombard[[/col]], 1 cast in each battle.	false
@@ -2484,7 +2479,6 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_100	[[col
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_101	[[col:green]]Army spell: Spirit of Grungni[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_102	[[col:green]]Army spell: Call the Miners[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_103	[[col:green]]Army spell: Blood God's Shackles[[/col]], 1 cast in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_104	[[col:green]]Army spell: Blood God's Shackles[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_105	[[col:green]]Army spell: Boiling Cauldron[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_106	[[col:green]]Army spell: Foot of Gork[[/col]], 3 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_107	[[col:green]]Army spell: Gorbad's Big Waaagh![[/col]], no limit on casts.	false
@@ -2512,7 +2506,6 @@ campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_128	[[col
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_129	[[col:green]]Army spell: Summon Plague Drones (Death's heads)[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_130	[[col:green]]Army spell: Ryze: Crypt Horrors[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_131	[[col:green]]Army spell: Ryze: Grave Guard[[/col]], 2 casts in each battle.	false
-campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_132	[[col:green]]Army spell: Ryze: Grave Guard[[/col]], 2 casts in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_133	[[col:green]]Army spell: Ryze: Khemrian Warsphinx[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_134	[[col:green]]Army spell: Ryze: Khemric Titan[[/col]], 1 cast in each battle.	false
 campaign_payload_ui_details_description_dummy_land_enc_spot_spell_army_135	[[col:green]]Army spell: Ryze: Mournguls[[/col]], 2 casts in each battle.	false

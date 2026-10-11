@@ -56,6 +56,13 @@ land_enc_effect_tower_spell_bound_118			force	1	magic_character.png	false	false	
 land_enc_effect_tower_spell_bound_124			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_126			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_127			force	1	magic_character.png	false	false	true
+land_enc_effect_tower_spell_bound_066			force	1	magic_character.png	false	false	true
+land_enc_effect_tower_spell_bound_083			force	1	magic_character.png	false	false	true
+land_enc_effect_tower_spell_army_034			force	1	magic_character.png	false	false	true
+land_enc_effect_tower_spell_army_038			force	1	magic_character.png	false	false	true
+land_enc_effect_tower_spell_army_091			force	1	magic_character.png	false	false	true
+land_enc_effect_tower_spell_army_104			force	1	magic_character.png	false	false	true
+land_enc_effect_tower_spell_army_132			force	1	magic_character.png	false	false	true
 land_enc_effect_spot_reinforcement_time_25			force	1	military.png	false	false	true
 land_enc_effect_spot_reinforcement_time_50			force	1	military.png	false	false	true
 land_enc_effect_spot_reinforcement_time_75			force	1	military.png	false	false	true
@@ -414,7 +421,6 @@ land_enc_effect_tower_spell_bound_062			force	1	magic_character.png	false	false	
 land_enc_effect_tower_spell_bound_063			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_064			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_065			force	1	magic_character.png	false	false	true
-land_enc_effect_tower_spell_bound_066			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_067			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_068			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_069			force	1	magic_character.png	false	false	true
@@ -425,7 +431,6 @@ land_enc_effect_tower_spell_bound_079			force	1	magic_character.png	false	false	
 land_enc_effect_tower_spell_bound_080			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_081			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_082			force	1	magic_character.png	false	false	true
-land_enc_effect_tower_spell_bound_083			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_084			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_085			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_bound_086			force	1	magic_character.png	false	false	true
@@ -496,11 +501,9 @@ land_enc_effect_tower_spell_army_030			force	1	magic_character.png	false	false	t
 land_enc_effect_tower_spell_army_031			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_032			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_033			force	1	magic_character.png	false	false	true
-land_enc_effect_tower_spell_army_034			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_035			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_036			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_037			force	1	magic_character.png	false	false	true
-land_enc_effect_tower_spell_army_038			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_039			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_040			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_041			force	1	magic_character.png	false	false	true
@@ -553,7 +556,6 @@ land_enc_effect_tower_spell_army_087			force	1	magic_character.png	false	false	t
 land_enc_effect_tower_spell_army_088			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_089			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_090			force	1	magic_character.png	false	false	true
-land_enc_effect_tower_spell_army_091			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_092			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_093			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_094			force	1	magic_character.png	false	false	true
@@ -566,7 +568,6 @@ land_enc_effect_tower_spell_army_100			force	1	magic_character.png	false	false	t
 land_enc_effect_tower_spell_army_101			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_102			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_103			force	1	magic_character.png	false	false	true
-land_enc_effect_tower_spell_army_104			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_105			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_106			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_107			force	1	magic_character.png	false	false	true
@@ -594,7 +595,6 @@ land_enc_effect_tower_spell_army_128			force	1	magic_character.png	false	false	t
 land_enc_effect_tower_spell_army_129			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_130			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_131			force	1	magic_character.png	false	false	true
-land_enc_effect_tower_spell_army_132			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_133			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_134			force	1	magic_character.png	false	false	true
 land_enc_effect_tower_spell_army_135			force	1	magic_character.png	false	false	true

@@ -5711,7 +5711,7 @@
    "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded": [
     [
      "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded",
-     "wh2_main_spell_upgraded_reloading"
+     "wh3_dlc23_spell_upgraded_duration"
     ]
    ],
    "wh2_dlc09_spell_nehekhara_sakhmets_incantation_of_the_skullstorm": [
@@ -5749,7 +5749,7 @@
    "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded": [
     [
      "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation_upgraded",
-     "wh_main_spell_upgraded_melee_attack"
+     "wh_main_spell_upgraded_added_effect_range"
     ]
    ],
    "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance": [
@@ -8214,7 +8214,7 @@
    "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded": [
     [
      "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting_upgraded",
-     "32.0000",
+     "64.0000",
      "43.0000",
      "-1",
      "0.0000",
@@ -8461,7 +8461,7 @@
      "",
      "",
      "cast_up_long",
-     "15.0000",
+     "13.0000",
      "0.0000",
      "wh_abilities_generic_debuff",
      "wh_abilities_generic_debuff",
@@ -8517,7 +8517,7 @@
      "38.0000",
      "51.0000",
      "-1",
-     "35.0000",
+     "55.0000",
      "false",
      "0",
      "-1",
@@ -8536,7 +8536,7 @@
      "",
      "",
      "cast_up_long",
-     "21.0000",
+     "17.0000",
      "0.0000",
      "wh_abilities_generic_debuff",
      "wh_abilities_generic_debuff",
@@ -8590,7 +8590,7 @@
     [
      "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance",
      "22.0000",
-     "38.0000",
+     "45.0000",
      "-1",
      "0.0000",
      "false",
@@ -8611,7 +8611,7 @@
      "",
      "",
      "cast_up_medium",
-     "10.0000",
+     "9.0000",
      "0.0000",
      "wh_abilities_generic_direct_damage_no_ring",
      "wh_abilities_generic_direct_damage_no_ring",
@@ -8665,7 +8665,7 @@
     [
      "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance_upgraded",
      "22.0000",
-     "38.0000",
+     "45.0000",
      "-1",
      "0.0000",
      "false",
@@ -8686,7 +8686,7 @@
      "",
      "",
      "cast_up_medium",
-     "13.0000",
+     "12.0000",
      "0.0000",
      "wh_abilities_generic_direct_damage_no_ring",
      "wh_abilities_generic_direct_damage_no_ring",
