@@ -66,6 +66,16 @@ FIRE_ANIM_OVERRIDES = {
     "hu1e_dlc24_bi1_eagle_mage_hero": "animations/battle/humanoid01e/rider/eagle/attacks/hu1e_dlc24_bi1_eagle_mage_hero_astromancer_attack_01.anim",
     "hu17_skaven_eshin_staff_and_sword": "CAST_SPELL_UP_SHORT",
     "hu1_settra_wm_tomb_chariot01_2handed_halberd": "RIDER_CAST_SPELL_FORWARD_SHORT",
+    # Dieter Helsnicht's Manticore casts are standing casts and no seated Manticore or dragon cast exists. The seated horse cast lifted him off the
+    # seat, so he fires from his seated stand.
+    "hu1_dlc29_dieter_bc3_manticore_wb_staff_and_sword": "STAND",
+    # Neferata's short cast runs 8s with the shot at 1s, so she froze for 7s after each shot. On foot she uses her 6s medium cast (shot at 3s), and
+    # mounted she uses her seated swings, or her seated hover on the Zombie Dragon, which has neither a seated cast nor a seated swing.
+    "hu1ba_dlc29_vmp_neferata_staff_and_sword": "CAST_SPELL_FORWARD_MEDIUM",
+    "hu1ba_dlc29_vmp_hr1_warhorse_neferata_staff_and_sword": "animations/battle/humanoid01ba/neferata/rider/horse01/attacks/hu1ba_hr1_neferata_rider1_attack_02.anim",
+    "hu1ba_dlc29_vmp_hr1_hellsteed_neferata_sword_and_staff": "animations/battle/humanoid01ba/neferata/rider/horse01/attacks/hu1ba_hr1_neferata_rider1_attack_02.anim",
+    "hu1ba_dlc29_vmp_bc3c_dread_abyssal_neferata_staff_and_sword": "animations/battle/humanoid01ba/neferata/rider/bc3c/dread_abyssal/attacks/hu1ba_bc3c_sfsw_neferata_rider1_attack_01.anim",
+    "hu1ba_dlc29_vmp_dr1_zombie_dragon_wb_neferata_sword_and_staff": "STAND",
 }
 # Set name to a set whose fire slots it borrows, for riders with no usable cast. The Skink Priest on a Stegadon throws like the skink crew
 # beside him, whose seated throws cover forward, left, right and back (2026-10-12).
