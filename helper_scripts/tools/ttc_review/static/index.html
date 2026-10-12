@@ -241,7 +241,8 @@ async function load() {
 }
 function setState(next) {
   state = next;
-  for (const key of Object.keys(queue)) if (state.units[key]?.source !== "auto") delete queue[key];
+  // Only auto picks and hand file caps can be changed.
+  for (const key of Object.keys(queue)) if (!["auto", "hand"].includes(state.units[key]?.source)) delete queue[key];
   write(QUEUE_KEY, queue);
   if (mod && !Object.values(state.units).some(u => u.mod === mod)) mod = "";
   pickCulture(culture || read(RACE_KEY, null));
@@ -373,7 +374,7 @@ function panelHtml(u, other) {
     <div class="p-head">Stats</div>${stats}
     <div class="p-head">Abilities</div><div class="abilities">${abilityIcons(u.abilities)}</div>
     ${other ? `<div class="vs">${esc(other.name)}</div><div class="abilities">${abilityIcons(other.abilities)}</div>` : ""}
-    ${u.pick && u.key === selected ? pickHtml(u) : ""}`;
+    ${u.key !== selected ? "" : u.pick ? pickHtml(u) : state.units[u.key]?.source === "hand" ? editHtml(u) : ""}`;
 }
 
 function recruitHtml(buildings) {
@@ -388,15 +389,29 @@ function capHtml(u) {
 }
 
 // Cap controls for an auto pick: confirm it, take the runner-up or a lookalike's cap, or set one by hand. Nothing is written until Save.
+// Category and weight buttons plus the queued change, shared by auto picks and hand file caps.
+function customHtml(key, current) {
+  const q = queue[key], custom = q || parse(current);
+  return `<div class="row"><span class="seg">${["core", "special", "rare"].map(c => `<button data-act="cat" data-v="${c}" class="${q && q.category === c ? "on" : ""}">${c}</button>`).join("")}</span>
+      <span class="seg">${[1, 2, 3, 4, 5].map(w => `<button data-act="weight" data-v="${w}" ${custom.category === "core" ? "disabled" : ""} class="${q && q.weight === w ? "on" : ""}">${w}</button>`).join("")}</span></div>
+    ${q ? `<div class="row"><span class="queued-note">Queued: ${esc(fmt(q))}</span><button class="btn" data-act="undo">Undo</button></div>` : ""}`;
+}
+
+// A cap already saved to a hand file can be changed again. Saving replaces its line in that file.
+function editHtml(u) {
+  return `<div class="capbox" data-key="${esc(u.key)}">
+    <div class="src">Saved in a hand file · change it below and save to replace it</div>
+    ${customHtml(u.key, state.units[u.key].label)}
+  </div>`;
+}
+
 function pickHtml(u) {
-  const p = u.pick, q = queue[u.key], custom = q || parse(p.pick);
+  const p = u.pick;
   return `<div class="capbox" data-key="${esc(u.key)}">
     <div class="src">${esc(p.mod)} · confidence ${p.confidence.toFixed(2)}${p.confident ? "" : " (low)"}</div>
     <div class="row"><span class="lbl"><img src="${gems(p.pick)}" alt="">${esc(p.pick)}</span><button class="btn" data-act="use" data-v="${esc(p.pick)}">Confirm</button>
       <span class="lbl"><img src="${gems(p.runner_up)}" alt="">${esc(p.runner_up)}</span><button class="btn" data-act="use" data-v="${esc(p.runner_up)}">Use runner-up</button></div>
-    <div class="row"><span class="seg">${["core", "special", "rare"].map(c => `<button data-act="cat" data-v="${c}" class="${q && q.category === c ? "on" : ""}">${c}</button>`).join("")}</span>
-      <span class="seg">${[1, 2, 3, 4, 5].map(w => `<button data-act="weight" data-v="${w}" ${custom.category === "core" ? "disabled" : ""} class="${q && q.weight === w ? "on" : ""}">${w}</button>`).join("")}</span></div>
-    ${q ? `<div class="row"><span class="queued-note">Queued: ${esc(fmt(q))}</span><button class="btn" data-act="undo">Undo</button></div>` : ""}
+    ${customHtml(u.key, p.pick)}
     ${p.lookalikes.length ? `<div class="src">Lookalikes (hover to compare, click to use their cap)</div><div class="looks">${p.lookalikes.map(l =>
       `<button data-act="use" data-v="${esc(l.label)}" data-look="${esc(l.key)}"><img src="${gems(l.label)}" alt="">${esc(l.name)} <span class="lbl">${esc(l.label)}</span></button>`).join("")}</div>` : ""}
   </div>`;

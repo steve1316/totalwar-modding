@@ -568,6 +568,8 @@ class ReviewSession:
     saved: int
     # Units without card art in any pack, which the browser hides like the generator ignores them. Empty when some pack could not be listed.
     cardless: Set[str]
+    # Unit key to the hand file its cap is in, so a saved cap can be edited again in place.
+    hand_entry_paths: Dict[str, str]
     # Unit key to its built panel details, filled on first use.
     details: Dict[str, dict]
 
@@ -579,6 +581,7 @@ class ReviewSession:
         hand_paths: Dict[str, str],
         owners: Dict[str, str],
         cardless: Optional[Set[str]] = None,
+        hand_entry_paths: Optional[Dict[str, str]] = None,
     ):
         """Hold the session state and place auto picks the custom battle permissions miss.
 
@@ -589,9 +592,10 @@ class ReviewSession:
             hand_paths (Dict[str, str]): Package name to its existing hand file path.
             owners (Dict[str, str]): Unit key to the display name of the mod that adds it.
             cardless (Optional[Set[str]]): Units to hide because no pack has card art for them.
+            hand_entry_paths (Optional[Dict[str, str]]): Unit key to the hand file its cap is in.
         """
         self.catalog, self.labels, self.picks, self.hand_paths, self.owners, self.saved, self.details = catalog, labels, picks, hand_paths, owners, 0, {}
-        self.cardless = cardless or set()
+        self.cardless, self.hand_entry_paths = cardless or set(), hand_entry_paths or {}
         self.rosters = {culture: dict(units) for culture, units in catalog.culture_units.items()}
         listed = {key for units in self.rosters.values() for key in units}
         # The race code in a culture key names its faction, e.g. `wh_dlc05_wef_wood_elves` is Wood Elves.
@@ -683,7 +687,9 @@ class ReviewSession:
         return result
 
     def save(self, changes: List[dict]) -> List[str]:
-        """Write picks to each mod's hand file under the unit's faction comment.
+        """Write caps to the hand files under the unit's faction comment.
+
+        An auto pick goes to its mod's hand file. A cap already in a hand file is edited in place, replacing its line.
 
         Args:
             changes (List[dict]): `{key, category, weight}` per unit. `weight` is ignored for `core`.
@@ -692,33 +698,39 @@ class ReviewSession:
             Names of the hand files written.
 
         Raises:
-            ValueError: A change names a unit without an auto pick, or an unknown category or weight.
+            ValueError: A change names a unit without an auto pick or hand entry, or an unknown category or weight.
         """
         # Hand file path to `(mod name for a new file's header, faction to entries)`.
         files: Dict[str, Tuple[str, Dict[str, List[Tuple[str, str, Optional[int]]]]]] = {}
-        labels = {}
+        written: Dict[str, Tuple[str, str]] = {}
         for change in changes:
-            pick = self.picks.get(change.get("key"))
-            category, weight = change.get("category"), change.get("weight")
-            if pick is None:
-                raise ValueError(f"{change.get('key')} has no auto pick to confirm.")
+            key, category, weight = change.get("key"), change.get("category"), change.get("weight")
+            pick = self.picks.get(key)
+            if pick is None and key not in self.hand_entry_paths:
+                raise ValueError(f"{key} has no auto pick or hand entry to edit.")
             if category not in CATEGORIES:
-                raise ValueError(f"{pick['key']}: unknown category {category}.")
+                raise ValueError(f"{key}: unknown category {category}.")
             if category == "core":
                 weight = None
             elif not isinstance(weight, int) or not 1 <= weight <= MAX_WEIGHT:
-                raise ValueError(f"{pick['key']}: weight must be 1-{MAX_WEIGHT}.")
-            path = self.hand_paths.get(pick["package"]) or ttc_compat_io.hand_file_path(pick["package"])
-            files.setdefault(path, (pick["mod"], {}))[1].setdefault(pick["faction"], []).append((pick["key"], category, weight))
-            labels[pick["key"]] = ttc_data.label_of(category, weight)
+                raise ValueError(f"{key}: weight must be 1-{MAX_WEIGHT}.")
+            if pick:
+                path, header, faction = self.hand_paths.get(pick["package"]) or ttc_compat_io.hand_file_path(pick["package"]), pick["mod"], pick["faction"]
+            else:
+                # The line already exists, so the faction comment only matters if the file was edited by hand since.
+                stats = self.catalog.stats.get(key)
+                path, header, faction = self.hand_entry_paths[key], os.path.basename(self.hand_entry_paths[key]), ttc_data.unit_faction(key, stats.groups if stats else set())
+            files.setdefault(path, (header, {}))[1].setdefault(faction, []).append((key, category, weight))
+            written[key] = (ttc_data.label_of(category, weight), path)
         for path, (header, groups) in files.items():
             ttc_compat_io.add_entries(path, header, groups)
             entries = sum(len(entries) for entries in groups.values())
             logging.info(f"TTC review: wrote {entries} entries to {os.path.basename(path)}.")
-        for key, label in labels.items():
-            del self.picks[key]
+        for key, (label, path) in written.items():
+            self.picks.pop(key, None)
             self.labels[key] = (label, "hand")
-        self.saved += len(labels)
+            self.hand_entry_paths[key] = path
+        self.saved += len(written)
         return sorted(os.path.basename(path) for path in files)
 
 
@@ -758,4 +770,5 @@ def load_session() -> ReviewSession:
     script_buildings = load_script_unlocks({row["level_name"] for row in tables["building_levels_tables"] if row.get("level_name")})
     logging.info(f"TTC review: {len(script_buildings)} units unlocked by building scripts.")
     unit_catalog = UnitCatalog(data.stats, ttc_data.load_loc_names(LOC_PREFIXES), tables, art, data.unit_cards, script_buildings)
-    return ReviewSession(unit_catalog, labels, picks, hand_paths, owners, cardless)
+    hand_entry_paths = {key: os.path.join(ttc_compat_io.HAND_DIR, source) for key, source in data.label_sources.items() if label_source(source) == "hand"}
+    return ReviewSession(unit_catalog, labels, picks, hand_paths, owners, cardless, hand_entry_paths)

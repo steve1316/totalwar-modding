@@ -238,6 +238,20 @@ def test_save_writes_each_pick_under_its_faction_and_marks_it_hand(tmp_path, mon
     assert session.picks == {} and session.saved == 2
 
 
+def test_saved_and_existing_hand_caps_can_be_edited_again_in_place(tmp_path, monkeypatch):
+    monkeypatch.setattr(ttc_compat_io, "HAND_DIR", str(tmp_path))
+    existing = tmp_path / "!!!!!!!other.lua"
+    existing.write_text('local caps = {\n    -- Wood Elves\n    {"wef_guard", "core"},\n}\n')
+    session = catalog.ReviewSession(make_catalog(), {"wef_guard": ("core,1", "hand")}, {"rory_welf_small_wolf": pick("rory_welf_small_wolf")}, {}, {},
+                                    hand_entry_paths={"wef_guard": str(existing)})
+    session.save([{"key": "rory_welf_small_wolf", "category": "special", "weight": 2}])
+    session.save([{"key": "rory_welf_small_wolf", "category": "rare", "weight": 1}, {"key": "wef_guard", "category": "special", "weight": 3}])
+    text = (tmp_path / "!!!!!!!calm_animals.lua").read_text()
+    assert '{"rory_welf_small_wolf", "rare", 1},' in text and "special" not in text
+    assert existing.read_text() == 'local caps = {\n    -- Wood Elves\n    {"wef_guard", "special", 3},\n}\n'
+    assert session.cap("wef_guard") == {"label": "special,3", "source": "hand", "review": False}
+
+
 def test_save_rejects_bad_changes():
     session = catalog.ReviewSession(make_catalog(), {"wef_guard": ("core,1", "hand")}, {"k": pick("k")}, {}, {})
     for change in ({"key": "wef_guard", "category": "core"}, {"key": "k", "category": "epic"}, {"key": "k", "category": "rare", "weight": 0}):
