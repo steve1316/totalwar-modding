@@ -2,9 +2,6 @@
 local caps = {
     -- wh_main_group_greenskins
     {"als_squig_bitey", "core"},
-    {"als_squig_flappy", "core"},
-    {"als_squig_flappy_big", "special", 1},
-    {"als_squig_great_cave", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")
