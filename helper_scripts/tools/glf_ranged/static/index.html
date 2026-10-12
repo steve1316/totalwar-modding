@@ -19,6 +19,9 @@
   button { padding:4px 10px; border:1px solid var(--line); border-radius:6px; background:var(--side); color:var(--fg); cursor:pointer; }
   button.primary { background:var(--add); color:#fff; border-color:transparent; }
   #status { color:var(--muted); }
+  #report { margin:6px 0 10px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; }
+  #report summary { cursor:pointer; font-weight:600; }
+  #report pre { max-height:320px; overflow:auto; font-size:11px; margin:6px 0 0; }
   .wrap { display:flex; min-height:calc(100vh - var(--hdr, 50px)); }
   nav { width:210px; flex:none; background:var(--side); border-right:1px solid var(--line); padding:8px; overflow-y:auto; max-height:calc(100vh - var(--hdr, 50px)); position:sticky; top:var(--hdr, 50px); }
   nav div { display:flex; justify-content:space-between; padding:4px 6px; border-radius:5px; cursor:pointer; }
@@ -59,11 +62,11 @@
   <label><input type="checkbox" id="onlyChanged"> only changed</label>
   <span style="flex:1"></span>
   <span id="status">Loading...</span>
-  <button class="primary" id="save">Save</button>
+  <button class="primary" id="save" title="Save the picks and write them into the GLF pack. Close the game first.">Save &amp; apply</button>
 </header>
 <div class="wrap">
   <nav id="factions"></nav>
-  <main><table><thead><tr><th>Card</th><th>Unit</th><th>Kind</th><th>Status</th><th>Missile</th><th>Ranged</th><th>FWM</th><th>Ignore</th><th>Key</th></tr></thead><tbody id="rows"></tbody></table></main>
+  <main><details id="report" hidden><summary id="reportSummary"></summary><pre id="reportText"></pre></details><table><thead><tr><th>Card</th><th>Unit</th><th>Kind</th><th>Status</th><th>Missile</th><th>Ranged</th><th>FWM</th><th>Ignore</th><th>Key</th></tr></thead><tbody id="rows"></tbody></table></main>
 </div>
 <script>
 const S = { units: [], byKey: {}, groups: {}, byFaction: {}, missileOptions: '', sel: {}, ignore: new Set(), baseMissile: {}, initial: '', initialSel: null, faction: '' };
@@ -243,13 +246,28 @@ document.getElementById('tickAll').addEventListener('click', () => {
 });
 
 document.getElementById('save').addEventListener('click', async () => {
+  const status = document.getElementById('status');
+  const button = document.getElementById('save');
   const missing = Object.keys(S.sel).filter(k => S.sel[k].ranged && !missileFor(S.byKey[k].base));
-  if (missing.length) { document.getElementById('status').textContent = `Pick a missile for ${missing.length} unit(s) first`; return; }
-  const response = await fetch('/api/selection', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: snapshot() });
-  const result = await response.json();
-  if (!response.ok) { document.getElementById('status').textContent = 'Save failed: ' + result.error; return; }
-  markSaved();
-  render();
+  if (missing.length) { status.textContent = `Pick a missile for ${missing.length} unit(s) first`; return; }
+  button.disabled = true;
+  status.textContent = 'Applying... (about 15 seconds)';
+  const sent = JSON.parse(snapshot());
+  const sentMissiles = { ...S.baseMissile };
+  try {
+    const response = await fetch('/api/apply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(sent) });
+    const result = await response.json();
+    if (!response.ok) { status.textContent = 'Apply failed: ' + result.error; return; }
+    // Reload so the status badges show what is now in the pack.
+    await loadState();
+    const report = document.getElementById('report');
+    document.getElementById('reportSummary').textContent = 'Applied: ' + result.report.split('\n')[0];
+    document.getElementById('reportText').textContent = result.report;
+    report.hidden = false;
+  } finally {
+    button.disabled = false;
+  }
+});
 });
 
 // Pin the table header and faction list right under the page header, whatever its height.
@@ -261,8 +279,10 @@ fitHeader();
 
 window.addEventListener('beforeunload', e => { if (snapshot() !== S.initial) e.preventDefault(); });
 
-(async () => {
+// Load the catalog and saved selection from the server, keeping the faction in view.
+async function loadState() {
   const state = await (await fetch('/api/state')).json();
+  Object.assign(S, { byKey: {}, groups: {}, byFaction: {}, baseMissile: {} });
   // Quest battle and boss copies never get ranged support, so they are not shown.
   S.units = state.units.filter(r => !r.special_copy);
   S.missileOptions = state.missiles.map(m => `<option value="${m}">${missileLabel(m)}</option>`).join('');
@@ -275,9 +295,11 @@ window.addEventListener('beforeunload', e => { if (snapshot() !== S.initial) e.p
   S.ignore = new Set(state.selection.ignore || []);
   Object.entries(S.sel).forEach(([k, v]) => { if (v.missile && S.byKey[k]) S.baseMissile[S.byKey[k].base] = S.baseMissile[S.byKey[k].base] || v.missile; });
   markSaved();
-  S.faction = Object.keys(S.groups).map(b => S.byKey[b].faction).sort()[0];
+  S.faction = S.faction || Object.keys(S.groups).map(b => S.byKey[b].faction).sort()[0];
   render();
-})();
+}
+
+loadState();
 </script>
 </body>
 </html>

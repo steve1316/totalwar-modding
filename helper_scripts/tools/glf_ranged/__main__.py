@@ -11,17 +11,23 @@ import argparse
 import json
 import logging
 import os
+import subprocess
+import sys
+import threading
 import webbrowser
 from dataclasses import asdict
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Dict
 
 from core.utilities import clear_temp_root, setup_script_logging
-from tools.glf_ranged import catalog
+from tools.glf_ranged import catalog, generate
 
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 # Filled once at start so page loads do not rebuild the catalog.
 STATE: Dict = {}
+# Log of the last apply run, and a lock so only one apply runs at a time.
+APPLY_LOG = "./_diag/glf_ranged_apply.log"
+APPLY_LOCK = threading.Lock()
 # Land unit key to its extracted card image path, filled at start.
 CARDS: Dict[str, str] = {}
 
@@ -64,6 +70,46 @@ def load_state() -> None:
     CARDS.clear()
     CARDS.update({row.key: os.path.join(catalog.CARDS_DIR, row.card) for row in built.units if row.card})
     logging.info(f"Catalog ready with {len(built.units)} units, {len(CARDS)} with card art.")
+
+
+def game_running() -> bool:
+    """Tell whether Warhammer 3 is running, which keeps its packs locked.
+
+    Returns:
+        True when `Warhammer3.exe` is in the task list.
+    """
+    tasks = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Warhammer3.exe"], capture_output=True, text=True).stdout
+    return "warhammer3.exe" in tasks.lower()
+
+
+def apply_selection(body: Dict) -> Dict:
+    """Save a selection, run the generator with `--deploy`, and reload the catalog so the page shows the new status.
+
+    Args:
+        body (Dict): The selection, as for `save_selection`.
+
+    Raises:
+        ValueError: If the selection is invalid, the game is running, another apply is running, or the generator fails.
+
+    Returns:
+        The save result plus the generator report.
+    """
+    if game_running():
+        raise ValueError("Close Warhammer 3 first. The game locks the GLF pack.")
+    if not APPLY_LOCK.acquire(blocking=False):
+        raise ValueError("An apply is already running.")
+    try:
+        saved = save_selection(body)
+        with open(APPLY_LOG, "w", encoding="utf-8") as log:
+            run = subprocess.run([sys.executable, "-u", "-m", "tools.glf_ranged.generate", "--deploy"], stdout=log, stderr=subprocess.STDOUT)
+        if run.returncode != 0:
+            raise ValueError(f"The generator failed. See {APPLY_LOG}.")
+        with open(generate.REPORT_PATH, encoding="utf-8") as f:
+            report = f.read()
+        load_state()
+        return {**saved, "report": report}
+    finally:
+        APPLY_LOCK.release()
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -112,13 +158,14 @@ class Handler(BaseHTTPRequestHandler):
             self._json(404, {"error": "not found"})
 
     def do_POST(self):
-        """Saves a selection."""
-        if self.path != "/api/selection":
+        """Saves a selection, or saves and applies it."""
+        routes = {"/api/selection": save_selection, "/api/apply": apply_selection}
+        if self.path not in routes:
             self._json(404, {"error": "not found"})
             return
         try:
             body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
-            self._json(200, save_selection(body))
+            self._json(200, routes[self.path](body))
         except ValueError as error:
             self._json(400, {"error": str(error)})
 
