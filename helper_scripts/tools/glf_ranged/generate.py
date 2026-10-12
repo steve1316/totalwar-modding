@@ -76,6 +76,8 @@ FIRE_ANIM_OVERRIDES = {
     "hu1ba_dlc29_vmp_hr1_hellsteed_neferata_sword_and_staff": "animations/battle/humanoid01ba/neferata/rider/horse01/attacks/hu1ba_hr1_neferata_rider1_attack_02.anim",
     "hu1ba_dlc29_vmp_bc3c_dread_abyssal_neferata_staff_and_sword": "animations/battle/humanoid01ba/neferata/rider/bc3c/dread_abyssal/attacks/hu1ba_bc3c_sfsw_neferata_rider1_attack_01.anim",
     "hu1ba_dlc29_vmp_dr1_zombie_dragon_wb_neferata_sword_and_staff": "STAND",
+    # Bloab Rotspawned's Bilespurter casts are his standing casts and none of his seated attacks shows a clear swing, so he fires with the first one.
+    "hu13f_dlc29_bloab_hu18e_pox_maggoth_scythe": "animations/battle/humanoid13f/bloab_scythe/rider/attack/hu13f_bloab_poxmaggoth_attack_01.anim",
 }
 # Set name to a set whose fire slots it borrows, for riders with no usable cast. The Skink Priest on a Stegadon throws like the skink crew
 # beside him, whose seated throws cover forward, left, right and back (2026-10-12).
