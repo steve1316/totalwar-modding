@@ -38,7 +38,7 @@ PEER_COST_WINDOW = 0.1
 CV_FOLDS = 5
 
 
-def _number(value: str) -> float:
+def parse_number(value: str) -> float:
     """Parse a table value as a number.
 
     Args:
@@ -100,9 +100,9 @@ class PeerContext:
             if unit.land:
                 self._by_signature[_signature(unit)].append(key)
             self._by_stem[_stem(key)].append(key)
-            self._labeled_by_caste[unit.main.get("caste", "")].append((_number(unit.main.get("multiplayer_cost", "")), self.labels[key], key))
+            self._labeled_by_caste[unit.main.get("caste", "")].append((parse_number(unit.main.get("multiplayer_cost", "")), self.labels[key], key))
         for unit in stats.values():
-            self._peer_costs[(unit.main.get("caste", ""), unit.main.get("tier", ""))].append(_number(unit.main.get("multiplayer_cost", "")))
+            self._peer_costs[(unit.main.get("caste", ""), unit.main.get("tier", ""))].append(parse_number(unit.main.get("multiplayer_cost", "")))
         for costs in self._peer_costs.values():
             costs.sort()
 
@@ -116,20 +116,20 @@ class PeerContext:
             Feature name to value.
         """
         key = stats.key
-        cost = _number(stats.main.get("multiplayer_cost", ""))
+        cost = parse_number(stats.main.get("multiplayer_cost", ""))
         candidates = [c for c in self._by_signature.get(_signature(stats), []) if c != key] if stats.land else []
         candidates += [c for c in self._by_stem.get(_stem(key), []) if c != key and c not in candidates]
         features: Dict[str, float] = {"has_counterpart": 0.0}
         if candidates:
-            best = min(candidates, key=lambda c: (abs(_number(self.stats[c].main.get("multiplayer_cost", "")) - cost), c))
+            best = min(candidates, key=lambda c: (abs(parse_number(self.stats[c].main.get("multiplayer_cost", "")) - cost), c))
             category, _, weight = self.labels[best].partition(",")
             features.update(
                 {
                     "has_counterpart": 1.0,
                     f"counterpart={self.labels[best]}": 1.0,
                     "counterpart_rank": float(CATEGORY_RANK.get(category, 0)),
-                    "counterpart_weight": _number(weight),
-                    "cost_vs_counterpart": cost / max(_number(self.stats[best].main.get("multiplayer_cost", "")), 1.0),
+                    "counterpart_weight": parse_number(weight),
+                    "cost_vs_counterpart": cost / max(parse_number(self.stats[best].main.get("multiplayer_cost", "")), 1.0),
                 }
             )
         costs = self._peer_costs.get((stats.main.get("caste", ""), stats.main.get("tier", "")), [])
@@ -138,7 +138,7 @@ class PeerContext:
         peers = [label for peer_cost, label, other in self._labeled_by_caste.get(stats.main.get("caste", ""), []) if other != key and abs(peer_cost - cost) <= window]
         if peers:
             features["peer_mean_rank"] = float(np.mean([CATEGORY_RANK.get(label.split(",")[0], 0) for label in peers]))
-            features["peer_mean_weight"] = float(np.mean([_number(label.partition(",")[2]) for label in peers]))
+            features["peer_mean_weight"] = float(np.mean([parse_number(label.partition(",")[2]) for label in peers]))
         return features
 
 
@@ -153,9 +153,9 @@ def feature_dict(stats: UnitStats, context: Optional[PeerContext] = None) -> Dic
         Feature name to value. Categorical values become `name=value` indicator features.
     """
     main, land = stats.main, stats.land
-    features: Dict[str, float] = {name: _number(main.get(name, "")) for name in NUMERIC_MAIN}
-    features.update({name: _number(land.get(name, "")) for name in NUMERIC_LAND})
-    features["num_mounts"] = _number(land.get("num_mounts", ""))
+    features: Dict[str, float] = {name: parse_number(main.get(name, "")) for name in NUMERIC_MAIN}
+    features.update({name: parse_number(land.get(name, "")) for name in NUMERIC_LAND})
+    features["num_mounts"] = parse_number(land.get("num_mounts", ""))
     features["cost_per_man"] = features["multiplayer_cost"] / max(features["num_men"], 1.0)
     features["is_high_threat"] = 1.0 if main.get("is_high_threat") == "true" else 0.0
     features[f"ui_group={main.get('ui_unit_group_land', '')}"] = 1.0

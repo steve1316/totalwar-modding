@@ -15,13 +15,15 @@ from core import delta
 from core.extract_cache import cache_enabled
 from core.pipeline import add_folder_to_pack, reset_pack_folders, workshop_pack_path
 from core.utilities import clear_temp_root, setup_script_logging
-from ttc import ttc_classifier, ttc_compat_io, ttc_data
+from ttc import ttc_cards, ttc_classifier, ttc_compat_io, ttc_data
 
 STEAM_ID = "3310629727"
 PACK_PATH = workshop_pack_path(STEAM_ID, "!!!!!!!yet_another_tabletopcaps_compat.pack")
 SCRIPT_SOURCE = "../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script"
 REPORT_PATH = "./reports/ttc_review.md"
 SUMMARY_PATH = f"{delta.STATE_ROOT}/ttc_summary.json"
+# Every auto pick, confident or not, for the `tools.ttc_review` unit browser.
+AUTO_PICKS_PATH = f"{delta.STATE_ROOT}/ttc_auto_picks.json"
 # Unit key to the mod that last defined it, so entries for a temporarily unsubscribed mod are never removed.
 OWNER_HISTORY_PATH = f"{delta.STATE_ROOT}/ttc_unit_owners.json"
 # Last trained classifier, reused when its training inputs have not changed.
@@ -96,15 +98,18 @@ def write_report(text: str) -> None:
         f.write(text)
 
 
-def render_report(metrics_line: str, counts: Dict[str, int], review_rows: List[tuple], removed: List[Tuple[str, str]], missing_mods: List[str]) -> str:
+def render_report(
+    metrics_line: str, counts: Dict[str, int], review_rows: List[dict], removed: List[Tuple[str, str]], missing_mods: List[str], ignored: List[str]
+) -> str:
     """Render the after-action report.
 
     Args:
         metrics_line (str): Held-out accuracy summary.
         counts (Dict[str, int]): `labeled`, `targets`, `confident`, `review` and `removed` counts.
-        review_rows (List[tuple]): `(mod, key, name, pick, confidence, runner_up, cost, caste, class, num_men, lookalikes)` per low-confidence unit.
+        review_rows (List[dict]): Review record per low-confidence unit, as written to `REVIEW_DATA_PATH`.
         removed (List[Tuple[str, str]]): `(hand file name, removed line)` pairs.
         missing_mods (List[str]): Supported mods that are not installed.
+        ignored (List[str]): Recruitable units left out because no pack ships card art for them.
 
     Returns:
         Markdown text.
@@ -128,13 +133,18 @@ def render_report(metrics_line: str, counts: Dict[str, int], review_rows: List[t
         "| Mod | Unit | Name | Pick | Confidence | Runner-up | Cost | Caste | Class | Men | Lookalikes |",
         "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
-    for mod, key, name, pick, confidence, runner_up, cost, caste, cls, men, lookalikes in review_rows:
-        looks = ", ".join(f"{k} ({label})" for k, label in lookalikes)
+    for row in review_rows:
+        looks = ", ".join(f"{k} ({label})" for k, label in row["lookalikes"])
         # A `|` in a loc name would split the table cell.
-        name = name.replace("|", "\\|")
-        lines.append(f"| {mod} | {key} | {name} | {pick} | {confidence:.2f} | {runner_up} | {cost} | {caste} | {cls} | {men} | {looks} |")
+        name = row["name"].replace("|", "\\|")
+        lines.append(
+            f"| {row['mod']} | {row['key']} | {name} | {row['pick']} | {row['confidence']:.2f} | {row['runner_up']} | {row['cost']} | {row['caste']} "
+            f"| {row['class']} | {row['men']} | {looks} |"
+        )
     lines += ["", "## Removed hand entries", ""]
     lines += [f"- {name}: `{line.strip()}`" for name, line in removed] or ["- (none)"]
+    lines += ["", "## Ignored units (no card art in any pack)", ""]
+    lines += [f"- {key}" for key in ignored] or ["- (none)"]
     lines += ["", "## Supported mods not installed", ""]
     lines += [f"- {name}" for name in missing_mods] or ["- (none)"]
     return "\n".join(lines) + "\n"
@@ -177,8 +187,11 @@ def main() -> int:
         return 1
 
     step_start = time.time()
+    # Units without card art in any pack are unfinished, so they get no cap.
+    cardless = ttc_cards.cardless_units(data, ttc_cards.card_packs()) or set()
     targets = ttc_data.select_targets(data.mod_units, data.vanilla_keys, data.permissions, set(data.labels))
     targets.update(ttc_data.select_vanilla_targets(data.vanilla_units, data.permissions, set(data.labels)))
+    targets = {key: package for key, package in targets.items() if key not in cardless}
     keys = sorted(targets)
     non_core = [ttc_data.is_regiment_of_renown(key, data.stats[key].main, targets[key]) for key in keys]
     predictions = model.predict([data.stats[key] for key in keys], non_core)
@@ -187,32 +200,35 @@ def main() -> int:
     unsure_keys = [key for key, prediction in zip(keys, predictions) if not prediction.confident]
     lookalikes = dict(zip(unsure_keys, model.nearest_labeled_many([data.stats[key] for key in unsure_keys])))
     loc_names = ttc_data.load_loc_names()
-    review_names = ttc_data.unit_names(unsure_keys, data.stats, loc_names)
+    pick_names = ttc_data.unit_names(keys, data.stats, loc_names)
     assignments: Dict[str, Dict[str, List[Tuple[str, str, Optional[int]]]]] = {}
-    review_rows = []
+    auto_picks = []
     for key, prediction in zip(keys, predictions):
         package_name = targets[key]
         stats = data.stats[key]
         group = sorted(stats.groups)[0] if stats.groups else "unknown"
         category, weight = _split(prediction.label)
         assignments.setdefault(package_name, {}).setdefault(group, []).append((key, category, weight))
-        if not prediction.confident:
-            review_rows.append(
-                (
-                    data.mod_names.get(package_name, package_name),
-                    key,
-                    review_names[key],
-                    prediction.label,
-                    prediction.confidence,
-                    prediction.runner_up,
-                    stats.main.get("multiplayer_cost", ""),
-                    stats.main.get("caste", ""),
-                    stats.land.get("class", ""),
-                    stats.main.get("num_men", ""),
-                    lookalikes[key],
-                )
-            )
-    review_rows.sort(key=lambda row: (row[0], row[1]))
+        auto_picks.append(
+            {
+                "mod": data.mod_names.get(package_name, package_name),
+                "package": package_name,
+                "key": key,
+                "name": pick_names[key],
+                "faction": ttc_data.package_unit_faction(key, package_name, stats.groups),
+                "pick": prediction.label,
+                "confident": prediction.confident,
+                "confidence": round(prediction.confidence, 3),
+                "runner_up": prediction.runner_up,
+                "cost": stats.main.get("multiplayer_cost", ""),
+                "caste": stats.main.get("caste", ""),
+                "class": stats.land.get("class", ""),
+                "men": stats.main.get("num_men", ""),
+                "lookalikes": lookalikes.get(key, []),
+            }
+        )
+    auto_picks.sort(key=lambda row: (row["mod"], row["key"]))
+    review_rows = [row for row in auto_picks if not row["confident"]]
     write_auto_files(assignments, data.mod_names)
     logging.info(f"TTC compat: wrote auto files and found lookalikes for {len(review_rows)} review rows in {time.time() - step_start:.0f}s.")
     step_start = time.time()
@@ -221,6 +237,10 @@ def main() -> int:
     file_mod = {path: ttc_data.hand_file_mod(path, package_names) for path in data.hand_entries}
     history = ttc_data.merge_owner_history(delta._read_json(OWNER_HISTORY_PATH) or {}, data.units_by_mod)
     stale = ttc_data.stale_hand_entries(data.hand_entries, file_mod, data.installed, data.units_by_mod, data.vanilla_keys, history)
+    for path, entries in data.hand_entries.items():
+        cardless_keys = {entry.key for entry in entries if entry.key in cardless}
+        if cardless_keys:
+            stale.setdefault(path, set()).update(cardless_keys)
     removed = []
     for path, keys_to_remove in sorted(stale.items()):
         removed += [(os.path.basename(path), line) for line in ttc_compat_io.remove_lines(path, keys_to_remove)]
@@ -228,16 +248,18 @@ def main() -> int:
     confident_count = sum(1 for p in predictions if p.confident)
     counts = {"labeled": metrics.n, "targets": len(keys), "confident": confident_count, "review": len(review_rows), "removed": len(removed)}
     skipped_mods = data.missing_mods + [f"{name} (main_units_tables unreadable, check the rpfm schema)" for name in data.unreadable_mods]
-    write_report(render_report(metrics_line, counts, review_rows, removed, skipped_mods))
+    ignored = sorted(key for key in cardless if data.permissions.get(key))
+    write_report(render_report(metrics_line, counts, review_rows, removed, skipped_mods, ignored))
     os.makedirs(os.path.dirname(SUMMARY_PATH), exist_ok=True)
     with open(SUMMARY_PATH, "w", encoding="utf-8") as f:
         json.dump({"auto": len(keys), "review": len(review_rows), "removed": len(removed), "report": REPORT_PATH}, f)
+    delta._write_json(AUTO_PICKS_PATH, auto_picks)
     delta._write_json(OWNER_HISTORY_PATH, history)
 
     file_mods = {os.path.basename(path): data.mod_names[package] for path, package in file_mod.items() if package in data.mod_names}
     file_mods.update({os.path.basename(ttc_compat_io.auto_file_path(package)): data.mod_names.get(package, package) for package in assignments})
-    # The hand-written vanilla file is not tied to a mod pack, so name it like its auto file.
-    file_mods[os.path.basename(ttc_compat_io.auto_file_path(ttc_data.VANILLA_PACKAGE)).replace("_auto.lua", ".lua")] = ttc_data.VANILLA_NAME
+    # The hand-written vanilla file is not tied to a mod pack, so map it by name.
+    file_mods[os.path.basename(ttc_compat_io.hand_file_path(ttc_data.VANILLA_PACKAGE))] = ttc_data.VANILLA_NAME
     logging.info(f"TTC compat: wrote the review report and pruned stale hand entries in {time.time() - step_start:.0f}s.")
     step_start = time.time()
     entries = collect_entries(file_mods)
