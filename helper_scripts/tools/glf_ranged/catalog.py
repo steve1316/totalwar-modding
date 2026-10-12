@@ -38,6 +38,9 @@ CARDS_FOLDER = "ui/portraits/units"
 CARDS_STAMP = ".ui_pack_stamp"
 # The game and DLC prefix of a unit key, e.g. `wh2_dlc15_`.
 GAME_PREFIX = re.compile(r"^wh\d*_(main|dlc\d+|pro\d+|cp\d+|twa\d+|survival)_")
+# Quest battle and boss copies of a lord or hero, which never get ranged support and are hidden in the picker (2026-10-12). `qb` can also sit
+# mid-key, e.g. `wh3_dlc29_qb_brt_cha_lord_warhorse`. Greenskin Big Bosses are real heroes, so `_big_boss` does not count.
+SPECIAL_COPY = re.compile(r"(?<!_big)_(qb|boss)(_\d+)?$|_qb_", re.IGNORECASE)
 # A trailing variant number on a unit key, e.g. `_1` in `wh_dlc07_brt_cha_damsel_beasts_1`.
 VARIANT_NUMBER = re.compile(r"_\d+$")
 # The race and `mnt_` part of a mount key, and trailing parts that do not name the mount, e.g. `brt_mnt_` and `_deprecated`.
@@ -130,6 +133,8 @@ class UnitRow:
     set_shared_with: List[str] = field(default_factory=list)
     # Path of the unit card image inside `CARDS_DIR`, or empty when none was found or cards were not loaded.
     card: str = ""
+    # True for quest battle (`_qb`) and boss (`_boss`) copies, which never get ranged support.
+    special_copy: bool = False
 
 
 @dataclass
@@ -563,6 +568,7 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
                 fwm_attribute=land_row["attribute_group"] in fwm_groups,
                 fwm_slots=bool(kind) and all(name in slot_names for name in FWM_SLOTS[kind]),
                 set_shared_with=sorted(other for other in users[land_row["man_animation"]] if other != key),
+                special_copy=bool(SPECIAL_COPY.search(key)),
             )
         )
     subtypes_of: Dict[str, List[str]] = collections.defaultdict(list)

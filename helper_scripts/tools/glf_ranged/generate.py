@@ -561,7 +561,8 @@ def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple
     result = Result()
     rows = {row.key: row for row in inputs.catalog.units}
     ignore = set(selection.get("ignore", []))
-    ticked = {key: entry for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key not in ignore and key in rows}
+    ticked = {key: entry for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key not in ignore and key in rows and not rows[key].special_copy}
+    result.skipped += [f"{key}: quest battle or boss copy" for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key in rows and rows[key].special_copy]
 
     # Missile per ticked unit: the saved choice, else the guess.
     missiles = {}

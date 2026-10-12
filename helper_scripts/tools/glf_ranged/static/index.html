@@ -263,7 +263,8 @@ window.addEventListener('beforeunload', e => { if (snapshot() !== S.initial) e.p
 
 (async () => {
   const state = await (await fetch('/api/state')).json();
-  S.units = state.units;
+  // Quest battle and boss copies never get ranged support, so they are not shown.
+  S.units = state.units.filter(r => !r.special_copy);
   S.missileOptions = state.missiles.map(m => `<option value="${m}">${missileLabel(m)}</option>`).join('');
   S.units.forEach(r => {
     S.byKey[r.key] = r;
