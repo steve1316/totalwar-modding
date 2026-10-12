@@ -79,6 +79,23 @@ def test_details_match_the_in_game_panel():
     assert details["card"] == "ui/units/icons/rory_welf_small_wolf.png" and not details["hp_estimate"]
 
 
+def test_missile_stats_show_only_for_units_that_shoot():
+    # Ungor Raiders: 22 ammunition, 115 range, 12 + 1 missile damage. A cannon's engine weapon adds its explosion.
+    cat = make_catalog(
+        missile_weapons_tables=[{"key": "ungor_bow", "default_projectile": "ungor_arrow"}, {"key": "cannon", "default_projectile": "cannon_ball"}],
+        projectiles_tables=[
+            {"key": "ungor_arrow", "damage": "12", "ap_damage": "1", "effective_range": "115"},
+            {"key": "cannon_ball", "damage": "88", "ap_damage": "352", "effective_range": "450", "explosion_type": "boom"},
+        ],
+        projectiles_explosions_tables=[{"key": "boom", "detonation_damage": "10", "detonation_damage_ap": "5"}],
+        battlefield_engines_tables=[{"key": "great_cannon", "missile_weapon": "cannon"}],
+    )
+    assert cat.missile_stats({"primary_missile_weapon": "ungor_bow", "primary_ammo": "22"}) == {"ammunition": 22, "range": 115, "missile_strength": 13}
+    assert cat.missile_stats({"engine": "great_cannon", "primary_ammo": "20"}) == {"ammunition": 20, "range": 450, "missile_strength": 455}
+    assert cat.missile_stats(WOLF_LAND) == {}
+    assert "range" not in cat.details("rory_welf_small_wolf")["stats"]
+
+
 def test_mounted_units_use_the_mount_speed_and_add_its_hp():
     wolf = make_catalog(mounts_tables=[{"key": "warhorse", "entity": "horse"}])
     wolf.stats["rory_welf_small_wolf"].land = {**WOLF_LAND, "mount": "warhorse", "num_mounts": "48"}

@@ -186,10 +186,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 <div class="toast" id="toast"></div>
 <script>
 const QUEUE_KEY = "ttc-browser-queue", RACE_KEY = "ttc-browser-race", MOD_KEY = "ttc-browser-mod";
-// Unit panel rows in the in-game order, with each stat's icon and the value a full bar stands for.
+// Unit panel rows in the in-game order, with each stat's icon and the value a full bar stands for. The missile rows only show for units that shoot.
 const STATS = [["armour", "Armour", "icon_stat_armour", 200], ["leadership", "Leadership", "icon_stat_morale", 100], ["speed", "Speed", "icon_stat_speed", 120],
   ["melee_attack", "Melee Attack", "icon_stat_attack", 120], ["melee_defence", "Melee Defence", "icon_stat_defence", 120],
-  ["weapon_strength", "Weapon Strength", "icon_stat_damage", 800], ["charge_bonus", "Charge Bonus", "icon_stat_charge_bonus", 150]];
+  ["weapon_strength", "Weapon Strength", "icon_stat_damage", 800], ["charge_bonus", "Charge Bonus", "icon_stat_charge_bonus", 150],
+  ["ammunition", "Ammunition", "icon_stat_ammo", 50], ["range", "Range", "icon_stat_range", 200], ["missile_strength", "Missile Strength", "icon_stat_ranged_damage", 150]];
 const SOURCES = {base: "TTC base list", hand: "Hand file", mod: "Mod author's own cap", auto: "Auto pick"};
 let state = null, culture = null, selected = null, hovered = null, reviewsOnly = false;
 const closed = new Set(), details = new Map();
@@ -353,7 +354,7 @@ function cmpHtml(value, other) {
 function panelHtml(u, other) {
   const s = u.stats, o = other ? other.stats : {}, listed = state.units[u.key];
   const icon = listed && listed.icon ? `<img src="${art(listed.icon)}" alt="">` : "";
-  const stats = STATS.map(([k, name, img, max]) => `<div class="stat"><img src="${skin(img)}" alt=""><span>${name}</span><span class="v">${s[k]}</span>
+  const stats = STATS.filter(([k]) => s[k] !== undefined).map(([k, name, img, max]) => `<div class="stat"><img src="${skin(img)}" alt=""><span>${name}</span><span class="v">${s[k]}</span>
     ${cmpHtml(s[k], o[k])}${barHtml(s[k], o[k], max)}</div>`).join("");
   const abilityIcons = list => list.length ? list.map(a => a.icon ? `<img loading="lazy" src="${art(a.icon)}" title="${esc(a.name)}" alt="${esc(a.name)}">`
     : `<span class="noicon" title="${esc(a.key)}">${esc(a.name)}</span>`).join("") : '<span class="none">No abilities</span>';

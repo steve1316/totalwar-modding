@@ -36,6 +36,9 @@ DETAIL_TABLES = [
     "building_units_allowed_tables",
     "building_levels_tables",
     "building_culture_variants_tables",
+    "missile_weapons_tables",
+    "projectiles_tables",
+    "projectiles_explosions_tables",
 ]
 GAME_DATA_DIR = os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES)
 ABILITY_NAME_PREFIX = "unit_abilities_onscreen_name_"
@@ -72,6 +75,9 @@ SKIN_FILES = [
         "icon_stat_defence",
         "icon_stat_damage",
         "icon_stat_charge_bonus",
+        "icon_stat_ammo",
+        "icon_stat_range",
+        "icon_stat_ranged_damage",
     )
 ]
 ART_DIR = "./_diag/ttc_review_art"
@@ -258,6 +264,12 @@ class UnitCatalog:
     mounts: Dict[str, Dict[str, str]]
     # Battlefield engine key to row.
     engines: Dict[str, Dict[str, str]]
+    # Missile weapon key to row (its default projectile).
+    missile_weapons: Dict[str, Dict[str, str]]
+    # Projectile key to row (damage, armour-piercing damage, range, explosion).
+    projectiles: Dict[str, Dict[str, str]]
+    # Projectile explosion key to row (detonation damage).
+    explosions: Dict[str, Dict[str, str]]
     # Unit key to the card name its first `unit_variants_tables` row uses.
     unit_cards: Dict[str, str]
     # Ability key to row.
@@ -304,6 +316,9 @@ class UnitCatalog:
         self.armour = _index(tables["unit_armour_types_tables"])
         self.mounts = _index(tables["mounts_tables"])
         self.engines = _index(tables["battlefield_engines_tables"])
+        self.missile_weapons = _index(tables["missile_weapons_tables"])
+        self.projectiles = _index(tables["projectiles_tables"])
+        self.explosions = _index(tables["projectiles_explosions_tables"])
         self.abilities = _index(tables["unit_abilities_tables"])
         self.groupings = _index(tables["ui_unit_groupings_tables"])
         self.parents = _index(tables["ui_unit_group_parents_tables"])
@@ -460,6 +475,26 @@ class UnitCatalog:
             "cost": int(parse_number(main.get("multiplayer_cost"))),
         }
 
+    def missile_stats(self, land: Dict[str, str]) -> Dict[str, int]:
+        """Build the panel's missile rows for a unit that shoots.
+
+        Missile Strength is the projectile's damage plus armour-piercing damage, plus its explosion's when it has one. Artillery and chariots with
+        a gun take the weapon from their battlefield engine.
+
+        Args:
+            land (Dict[str, str]): The unit's `land_units_tables` row.
+
+        Returns:
+            `ammunition`, `range` and `missile_strength`, or an empty dict when the unit has no missile weapon.
+        """
+        weapon = land.get("primary_missile_weapon") or self.engines.get(land.get("engine", ""), {}).get("missile_weapon", "")
+        projectile = self.projectiles.get(self.missile_weapons.get(weapon, {}).get("default_projectile", ""))
+        if not projectile:
+            return {}
+        explosion = self.explosions.get(projectile.get("explosion_type", ""), {})
+        damage = sum(parse_number(row.get(column)) for row, column in ((projectile, "damage"), (projectile, "ap_damage"), (explosion, "detonation_damage"), (explosion, "detonation_damage_ap")))
+        return {"ammunition": int(parse_number(land.get("primary_ammo"))), "range": int(parse_number(projectile.get("effective_range"))), "missile_strength": int(damage)}
+
     def details(self, key: str) -> dict:
         """Build the in-game panel numbers for one unit.
 
@@ -507,6 +542,7 @@ class UnitCatalog:
                 "melee_defence": int(parse_number(land.get("melee_defence"))),
                 "weapon_strength": int(parse_number(weapon.get("damage")) + parse_number(weapon.get("ap_damage"))),
                 "charge_bonus": int(parse_number(land.get("charge_bonus"))),
+                **self.missile_stats(land),
             },
             "abilities": abilities,
             "buildings": self.buildings(key),
