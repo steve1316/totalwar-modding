@@ -482,7 +482,9 @@ def unit_kind(anim_set: AnimSet, names: Dict[int, str]) -> str:
     """
     slot_names = {names.get(slot.slot_id, "") for slot in anim_set.slots}
     # Chariot and war machine sets (`_wm_`) have no mount or RIDER_STAND but cast and fire through the rider slots.
-    if anim_set.mount or "RIDER_STAND" in slot_names or "_wm_" in anim_set.name:
+    # Sets that only cast through rider slots, e.g. the Wu Xing War Compass, are ridden too.
+    rider_only = any(name in slot_names for name in CAST_SLOTS["rider"]) and not any(name in slot_names for name in CAST_SLOTS["foot"])
+    if anim_set.mount or "RIDER_STAND" in slot_names or "_wm_" in anim_set.name or rider_only:
         return "rider"
     return "flyer" if "FLY_STAND" in slot_names else "foot"
 
