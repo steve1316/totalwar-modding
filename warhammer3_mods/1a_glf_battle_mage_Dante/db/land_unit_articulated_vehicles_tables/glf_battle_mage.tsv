@@ -5,3 +5,4 @@ glf_wh_dlc03_bst_razorgor_chariot		vmp_black_coach_01			glf_wh_dlc03_vehicle_bst
 glf_wh_main_chs_chariot_horse		vmp_black_coach_01			glf_wh_main_vehicle_chs_chariot_articulation	1.8000	2	0	false
 glf_wh_dlc04_vmp_corpse_cart		vmp_black_coach_01			glf_wh_dlc04_vehicle_vmp_corpse_cart_articulation	1.5000	2	0	false
 glf_wh3_main_vehicle_war_compass		vmp_black_coach_01			glf_wh3_main_cth_veh_war_compass_articulation	3.2000	2	0	false
+glf_wh_dlc01_chs_chariot_gorebeast		vmp_black_coach_01			glf_wh_dlc01_veh_chs_chariot_gorebeast_articulation	1.8000	2	0	false
