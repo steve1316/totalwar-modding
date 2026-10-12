@@ -38,6 +38,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   padding: 3px 28px 3px 12px; min-width: 240px; }
 .select-mod { display: grid; gap: 6px; font-size: .85rem; text-shadow: 0 1px 3px #000; }
 .select-mod select { min-width: 280px; max-width: 460px; }
+/* The open list uses the page's dark style, with the active mod filter in gold so it is easy to spot. */
+.select-mod option { background: #241312; color: var(--ink); font-weight: 400; }
+.select-mod option.current { background: #8a2a1f; color: var(--gold); font-weight: 700; }
 .review-nav { margin-left: auto; display: flex; gap: 10px; align-items: center; font-size: .9rem; text-shadow: 0 1px 2px #000; }
 .review-nav b { color: var(--review); font-family: var(--mono); }
 .btn { background: linear-gradient(#5b1714, #360b0a); border: 1px solid #a8442f; border-radius: 3px; padding: 3px 12px; font-size: .88rem; }
@@ -263,7 +266,8 @@ function renderMods() {
   }
   const names = Object.keys(counts).sort((a, b) => (a !== VANILLA) - (b !== VANILLA) || a.localeCompare(b));
   const sel = document.getElementById("mod-select");
-  sel.innerHTML = '<option value="">All mods</option>' + names.map(n => `<option value="${esc(n)}">${esc(n)} (${counts[n].units} units${counts[n].reviews ? `, ${counts[n].reviews} to review` : ""})</option>`).join("");
+  const option = (value, text) => `<option value="${esc(value)}"${value === mod ? ' class="current"' : ""}>${value === mod ? "▶ " : ""}${esc(text)}</option>`;
+  sel.innerHTML = option("", "All mods") + names.map(n => option(n, `${n} (${counts[n].units} units${counts[n].reviews ? `, ${counts[n].reviews} to review` : ""})`)).join("");
   sel.value = mod;
 }
 
@@ -491,6 +495,7 @@ document.getElementById("race-select").addEventListener("change", e => {
 document.getElementById("mod-select").addEventListener("change", e => {
   mod = e.target.value; write(MOD_KEY, mod);
   pickCulture(culture);
+  renderMods();
   resetView();
 });
 document.getElementById("reviews-only").addEventListener("click", () => { reviewsOnly = !reviewsOnly; renderRaces(); renderList(); });
