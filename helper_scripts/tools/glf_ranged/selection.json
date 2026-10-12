@@ -1241,8 +1241,13 @@
    "missile": "glf_tze_vilitch_missile",
    "ranged": true
   },
+  "wh3_dlc24_cth_cha_astromancer_great_moon_bird": {
+   "fwm": true,
+   "missile": "glf_mage_hero_heavens_missile",
+   "ranged": true
+  },
   "wh3_dlc24_cth_cha_yuan_bo_human": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
@@ -1557,62 +1562,67 @@
    "ranged": true
   },
   "wh3_main_cth_cha_alchemist_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_alchemist_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_astromancer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_astromancer_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_heavens_missile",
+   "ranged": true
+  },
+  "wh3_main_cth_cha_astromancer_2": {
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yang_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yang_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yang_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yang_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yang_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yang_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yin_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yin_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yin_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yin_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yin_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yin_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_iron_dragon_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cth_iron_dragon_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_storm_dragon_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cth_storm_dragon_missile",
    "ranged": true
   },
