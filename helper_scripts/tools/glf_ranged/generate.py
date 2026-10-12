@@ -682,6 +682,11 @@ def update_personalities(missiles: Dict[str, str], rows: Dict[str, catalog.UnitR
     for junction in inputs.tables["land_units_to_battle_personalities_junctions_tables"]:
         if junction["attach"] == AUTONOMOUS_RIDER:
             users[junction["battle_personality"]].add(junction["land_unit"])
+    # Crews that carry their own weapon in vanilla, e.g. the skinks on Mazdamundi's Stegadon, keep it rather than firing the lord's spell.
+    for key in list(personalities.rows):
+        if vanilla_personalities.get(key, {}).get("battle_entity_stats") and personalities.get(key, "battle_entity_stats").startswith("glf_"):
+            del personalities.rows[key]
+            result.personalities.append(f"removed armed crew {key}")
     for key, units in sorted(users.items()):
         ticked_units = sorted(unit for unit in units if unit in missiles)
         if key in personalities.rows:
@@ -692,6 +697,9 @@ def update_personalities(missiles: Dict[str, str], rows: Dict[str, catalog.UnitR
                 personalities.set(key, "battle_entity_stats", missiles[ticked_units[0]])
                 result.personalities.append(f"changed {key}")
         elif any(unit in result.added for unit in ticked_units):
+            if vanilla_personalities[key]["battle_entity_stats"]:
+                result.personalities.append(f"left armed crew {key} alone")
+                continue
             if not units <= rows.keys():
                 result.personalities.append(f"left shared {key} alone")
                 continue
