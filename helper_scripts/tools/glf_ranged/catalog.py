@@ -61,6 +61,9 @@ VANILLA_TABLES = [
     "land_units_to_battle_personalities_junctions_tables",
     "battle_personalities_tables",
     "campaign_character_art_sets_tables",
+    "battle_entities_tables",
+    "land_unit_articulated_vehicles_tables",
+    "articulation_nodes_in_land_articulated_vehicles_tables",
 ]
 GLF_LAND_UNITS = f"{GLF_MOD_DIR}/db/land_units_tables/!!!1a_glf_battle_mage_dante.tsv"
 GLF_MISSILES = f"{GLF_MOD_DIR}/db/missile_weapons_tables/glf_battle_mage.tsv"
@@ -219,6 +222,20 @@ def load_vanilla_tables() -> Dict[str, List[Dict[str, str]]]:
         if not tables[table]:
             raise FileNotFoundError(f"Vanilla {table} could not be extracted")
     return tables
+
+
+def vanilla_layout(table: str) -> Tuple[List[str], int]:
+    """Read the column order and version of a vanilla table extracted by `load_vanilla_tables`, for writing new GLF files of it.
+
+    Args:
+        table (str): Table name, one of `VANILLA_TABLES`.
+
+    Returns:
+        The column names and the table version.
+    """
+    path = sorted(glob.glob(f"{SCRATCH}/vanilla/{table}/**/*.tsv", recursive=True))[0]
+    _, header, version_info = load_tsv_data(path)
+    return list(header), int(version_info.split(";")[1])
 
 
 def load_names() -> Dict[str, str]:

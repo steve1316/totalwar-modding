@@ -18,7 +18,7 @@ import re
 import statistics
 import time
 from dataclasses import dataclass, field, replace
-from typing import Dict, Iterable, List, Optional, Set, Tuple
+from typing import Callable, Dict, Iterable, List, Optional, Set, Tuple
 
 from core.pipeline import SCHEMA_RON_PATH
 from core.utilities import TEMP_DIR, clear_temp_root, log_elapsed_time, run_rpfm_cli, setup_script_logging
@@ -68,6 +68,11 @@ SHOOT_SOURCES = [
 ]
 ATTRIBUTE_JUNCTIONS_TSV = f"{GLF_MOD_DIR}/db/unit_attributes_to_groups_junctions_tables/glf_battle_mage.tsv"
 ATTRIBUTE_GROUPS_TSV = f"{GLF_MOD_DIR}/db/unit_attributes_groups_tables/glf_battle_mage.tsv"
+ENTITIES_TSV = f"{GLF_MOD_DIR}/db/battle_entities_tables/glf_battle_mage.tsv"
+VEHICLES_TSV = f"{GLF_MOD_DIR}/db/land_unit_articulated_vehicles_tables/glf_battle_mage.tsv"
+NODES_TSV = f"{GLF_MOD_DIR}/db/articulation_nodes_in_land_articulated_vehicles_tables/glf_battle_mage.tsv"
+# Firing arc that vanilla units which fire while moving almost always have, so they can shoot at targets off to the side or behind.
+FULL_ARC = "360.0000"
 # Combat-ready slots and the movement slots they copy, so an on-foot unit has a stance to return to after firing.
 COMBAT_READY_SOURCES = [
     ("COMBAT_READY", "STAND"),
@@ -290,6 +295,8 @@ class Result:
     manual: List[str] = field(default_factory=list)
     # Land unit keys given the fire-whilst-moving attribute, with the group it went on.
     fwm: List[str] = field(default_factory=list)
+    # Chariot units given a full firing arc, with the GLF chariot they now use.
+    arcs: List[str] = field(default_factory=list)
 
 
 def fire_defaults(inputs: catalog.Inputs, files: GameFiles) -> Dict[str, Tuple[float, Tuple[float, float, float]]]:
@@ -637,6 +644,55 @@ def update_attributes(fwm_units: Set[str], missiles: Dict[str, str], inputs: cat
     return junctions, groups
 
 
+def update_chariot_arcs(fwm_units: Set[str], missiles: Dict[str, str], inputs: catalog.Inputs, land: TsvFile, result: Result, layout: Callable[[str], Tuple[List[str], int]] = catalog.vanilla_layout) -> List[TsvFile]:
+    """Give chariot units ticked for fire whilst moving a full firing arc, through a GLF copy of their chariot.
+
+    A chariot unit's firing arc appears to come from the chariot's own body, so a chariot whose body is under 360 gets a GLF copy of its record,
+    `glf_<key>`, with its articulation nodes and a 360 copy of its body. The rider and draught mount stay vanilla: copying either stopped the chariot
+    firing, and a chariot record copied without its articulation nodes crashed the game (both 2026-10-12). GLF owns these tables outright, so they
+    are rebuilt from the selection on every run, and an unticked chariot goes back to its vanilla record.
+
+    Args:
+        fwm_units (Set[str]): Land units ticked for fire whilst moving.
+        missiles (Dict[str, str]): Every ticked land unit, whose GLF rows are in `land`.
+        inputs (catalog.Inputs): Catalog inputs.
+        land (TsvFile): GLF's land units table, edited in place when a unit moves to a GLF chariot or back.
+        result (Result): Collects the chariots widened.
+        layout (Callable[[str], Tuple[List[str], int]]): Reads a vanilla table's columns and version.
+
+    Returns:
+        The battle entities, articulated vehicles and articulation nodes tables.
+    """
+    entities = TsvFile.create(ENTITIES_TSV, "battle_entities_tables", *reversed(layout("battle_entities_tables")))
+    vehicles = TsvFile.create(VEHICLES_TSV, "land_unit_articulated_vehicles_tables", *reversed(layout("land_unit_articulated_vehicles_tables")))
+    nodes = TsvFile.create(NODES_TSV, "articulation_nodes_in_land_articulated_vehicles_tables", *reversed(layout("articulation_nodes_in_land_articulated_vehicles_tables")))
+    vanilla_entities = {row["key"]: row for row in inputs.tables["battle_entities_tables"]}
+    vanilla_vehicles = {row["key"]: row for row in inputs.tables["land_unit_articulated_vehicles_tables"]}
+    vanilla_nodes = collections.defaultdict(list)
+    for row in inputs.tables["articulation_nodes_in_land_articulated_vehicles_tables"]:
+        vanilla_nodes[row["land_unit_articulated_vehicle"]].append(row)
+    vanilla_land = {row["key"]: row for row in inputs.tables["land_units_tables"]}
+
+    for key in sorted(missiles):
+        record = vanilla_land[key]["articulated_record"]
+        wanted = record
+        vehicle = vanilla_vehicles.get(record)
+        if key in fwm_units and vehicle and vanilla_nodes.get(record):
+            body = vehicle["articulated_entity"]
+            if body in vanilla_entities and float(vanilla_entities[body]["fire_arc_close"]) < float(FULL_ARC):
+                wanted = f"glf_{record}"
+                if wanted not in vehicles.rows:
+                    entities.add({**vanilla_entities[body], "key": f"glf_{body}", "fire_arc_close": FULL_ARC})
+                    vehicles.add({**vehicle, "key": wanted, "articulated_entity": f"glf_{body}"})
+                    for node in vanilla_nodes[record]:
+                        nodes.add({**node, "land_unit_articulated_vehicle": wanted})
+                result.arcs.append(f"{key}: {wanted}")
+        # Only touch the column for chariots ticked for fire whilst moving, or ones pointed at a GLF chariot before.
+        if record and (wanted != record or land.get(key, "articulated_record").startswith("glf_")):
+            land.set(key, "articulated_record", wanted)
+    return [entities, vehicles, nodes]
+
+
 def patch_sets(missiles: Dict[str, str], fwm_units: Set[str], ticked: Dict[str, Dict], rows: Dict[str, catalog.UnitRow], inputs: catalog.Inputs, files: GameFiles, result: Result) -> Dict[str, AnimSet]:
     """Add the fire and combat-ready slots each ticked unit's animation set is missing.
 
@@ -720,8 +776,9 @@ def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple
     personalities, stats = update_personalities(missiles, rows, inputs, result)
     fwm_units = {key for key in missiles if ticked[key].get("fwm")}
     junctions, groups = update_attributes(fwm_units, missiles, inputs, land, result)
+    chariot_tables = update_chariot_arcs(fwm_units, missiles, inputs, land, result)
     changed_sets = patch_sets(missiles, fwm_units, ticked, rows, inputs, files, result)
-    return result, [land, personalities, stats, junctions, groups], changed_sets
+    return result, [land, personalities, stats, junctions, groups, *chariot_tables], changed_sets
 
 
 def write_outputs(result: Result, tables: List[TsvFile], changed_sets: Dict[str, AnimSet]) -> List[str]:
@@ -797,7 +854,7 @@ def report_lines(result: Result) -> List[str]:
         Report lines.
     """
     lines = [f"Units added {len(result.added)}, removed {len(result.removed)}, missile changed {len(result.changed)}, skipped {len(result.skipped)}"]
-    for label, values in (("added", result.added), ("removed", result.removed), ("changed", result.changed), ("skipped", result.skipped), ("personalities", result.personalities), ("fire whilst moving", result.fwm)):
+    for label, values in (("added", result.added), ("removed", result.removed), ("changed", result.changed), ("skipped", result.skipped), ("personalities", result.personalities), ("fire whilst moving", result.fwm), ("full firing arc", result.arcs)):
         lines += [f"  {label}: {value}" for value in values]
     lines.append(f"\nSets patched {len(result.sets)}")
     lines += [f"  {name}: {', '.join(slots)}" for name, slots in sorted(result.sets.items())]
