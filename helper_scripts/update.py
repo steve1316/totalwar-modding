@@ -15,6 +15,8 @@ Usage:
     python update.py --no-cache  Rebuild every pack from a cold rpfm extraction.
 
 The rpfm schemas are updated first so tables changed by a game patch can still be read. Pass `--no-schema-update` to skip that.
+
+Every run overwrites `run.log` at the repo root with a start timestamp, then everything logged by this script and the generators it runs.
 """
 
 import argparse
@@ -22,34 +24,60 @@ import logging
 import os
 import signal
 import subprocess
+import sys
 import time
-from typing import Dict, List, Optional
+from datetime import datetime
+from typing import Dict, List, Optional, TextIO
 
 from core import delta
 from core.extract_cache import prune_cache
-from core.utilities import log_elapsed_time, run_rpfm_cli, setup_script_logging
+from core.utilities import LOG_FORMAT, log_elapsed_time, run_rpfm_cli, setup_script_logging
 from tools import update_dynamic_ror_effects
 from tools.update_dynamic_ror_effects import EffectSync
 from publish import workshop_publish
 
 
 RUN_REPORT_PATH = f"{delta.PENDING_DIR}/run_report.jsonl"
+# Log of the latest run, overwritten each time.
+RUN_LOG_PATH = "../run.log"
 # Nanu's effect list, synced from his pack before the staleness check. Units that read it rebuild when the sync changes it.
 EFFECTS_FILE = update_dynamic_ror_effects.DYNAMIC_RORS_EFFECTS_FILE
 
 
-def run_script(cmd: List[str], env: Dict[str, str]) -> int:
-    """Run a script and return its exit code, forwarding Ctrl+C to it.
+def open_run_log() -> TextIO:
+    """Set up logging, then overwrite `RUN_LOG_PATH` with a start timestamp and send every log record and crash traceback to it as well as the console.
+
+    Returns:
+        The open run log, so child script output can be copied into it.
+    """
+    setup_script_logging()
+    run_log = open(RUN_LOG_PATH, "w", encoding="utf-8", buffering=1)
+    run_log.write(f"Run started {datetime.now():%Y-%m-%d %H:%M:%S}\n\n")
+    handler = logging.StreamHandler(run_log)
+    handler.setFormatter(logging.Formatter(LOG_FORMAT))
+    logging.getLogger().addHandler(handler)
+    sys.excepthook = lambda *exc_info: logging.critical("update.py crashed", exc_info=exc_info)
+    return run_log
+
+
+def run_script(cmd: List[str], env: Dict[str, str], run_log: TextIO) -> int:
+    """Run a script and return its exit code, copying its output to the console and the run log, and forwarding Ctrl+C to it.
 
     Args:
         cmd (List[str]): The command to run.
         env (Dict[str, str]): Environment variables for the child process.
+        run_log (TextIO): The open run log from `open_run_log`.
 
     Returns:
         The exit code of the script.
     """
-    p = subprocess.Popen(cmd, env=env)
+    # Unbuffered UTF-8 so lines arrive live and mod names with non-ASCII characters do not break the pipe.
+    env = {**env, "PYTHONUNBUFFERED": "1", "PYTHONIOENCODING": "utf-8"}
+    p = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace")
     try:
+        for line in p.stdout:
+            sys.stdout.write(line)
+            run_log.write(line)
         return p.wait()
     except KeyboardInterrupt:
         p.send_signal(signal.SIGINT)
@@ -163,7 +191,7 @@ def log_summary(
 
 
 if __name__ == "__main__":
-    setup_script_logging()
+    run_log = open_run_log()
     start_time = time.time()
 
     parser = argparse.ArgumentParser()
@@ -235,7 +263,7 @@ if __name__ == "__main__":
             env = {**os.environ, "DELTA_ACCESS_LOG": access_log, "DELTA_REPORT": RUN_REPORT_PATH, "DELTA_SKIP_UNCHANGED": "1"}
 
             logging.info(f"Rebuilding {unit.name}: python {' '.join(unit.command + workers_args)}")
-            exit_code = run_script(["python", *unit.command, *workers_args], env)
+            exit_code = run_script(["python", *unit.command, *workers_args], env, run_log)
             if exit_code == 0:
                 delta.commit_unit(unit, access_log)
             else:
