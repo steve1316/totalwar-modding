@@ -20,12 +20,14 @@ from typing import Dict, List, Optional, Set, Tuple
 from core.extract_cache import cached_pack_extract
 from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR, clear_temp_root, load_tsv_data, log_elapsed_time, setup_script_logging
 from tools.glf_rebuild_animpack import GLF_ANIMPACK_PATH, GLF_MOD_DIR, SCHEMAS_DIR, SLOT_IDS_FILE, AnimSet, load_slot_ids, load_vanilla_sets, parse_set, read_animpack
-from ttc.ttc_data import LOC_NAME_PREFIX, VANILLA_LOC_PACK, read_loc_names, unit_faction
+from ttc.ttc_data import LOC_NAME_PREFIX, LOC_REFERENCE_PATTERN, VANILLA_LOC_PACK, read_loc_names, unit_faction
 
 TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
 SELECTION_PATH = os.path.join(TOOL_DIR, "selection.json")
 REPORT_PATH = "./_diag/glf_ranged_report.txt"
 SCRATCH = f"{TEMP_DIR}/glf_ranged"
+# Loc key prefix of agent subtype names, which some unit names refer to.
+SUBTYPE_NAME_PREFIX = "agent_subtypes_onscreen_name_override_"
 VANILLA_TABLES = [
     "main_units_tables",
     "land_units_tables",
@@ -197,7 +199,8 @@ def load_names() -> Dict[str, str]:
     names: Dict[str, str] = {}
     dest = f"{SCRATCH}/loc"
     cached_pack_extract(VANILLA_LOC_PACK, "text", dest, capture_output=True)
-    read_loc_names(dest, names)
+    # Some unit names point at agent subtype names, so those are loaded too.
+    read_loc_names(dest, names, (LOC_NAME_PREFIX, SUBTYPE_NAME_PREFIX))
     return names
 
 
@@ -216,6 +219,22 @@ def load_sets() -> Dict[str, SetEntry]:
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Catalog
+
+
+def display_name(key: str, loc: Dict[str, str]) -> str:
+    """Look up a unit's in-game name, following `{{tr:...}}` references to other loc entries a few levels deep.
+
+    Args:
+        key (str): Land unit key.
+        loc (Dict[str, str]): Loc key to text.
+
+    Returns:
+        The name, or the key when no loc text names the unit.
+    """
+    name = loc.get(LOC_NAME_PREFIX + key, key)
+    for _ in range(3):
+        name = LOC_REFERENCE_PATTERN.sub(lambda match: loc.get(match.group(1), match.group(0)), name)
+    return name
 
 
 def missile_family(missile: str) -> str:
@@ -400,7 +419,7 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
         rows.append(
             UnitRow(
                 key=key,
-                name=loc.get(LOC_NAME_PREFIX + key, key),
+                name=display_name(key, loc),
                 faction=faction,
                 caste=caste,
                 base=base,
