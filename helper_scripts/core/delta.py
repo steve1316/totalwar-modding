@@ -27,6 +27,8 @@ PENDING_DIR = f"{STATE_ROOT}/pending"
 WATCHES_STATE_PATH = f"{STATE_ROOT}/watches.json"
 # Unit key to its mod and in-game name for every entry in the TTC compat pack, written by `update_ttc_compat.py` for its change notes.
 TTC_ENTRIES_PATH = f"{STATE_ROOT}/ttc_entries.json"
+# GLF Battle Mage lords and heroes whose stats were brought up to vanilla since the last upload, for its change note.
+GLF_PENDING_PATH = f"{STATE_ROOT}/glf_battle_mage_pending.json"
 
 # Code every unit depends on. Unit-specific scripts are added per unit below.
 SHARED_CODE_FILES = ["core/utilities.py", "core/pipeline.py", "data/supported_mods.py"]
@@ -108,6 +110,14 @@ UNITS: List[Unit] = [
         [Output("3310629727", "!!!!!!!yet_another_tabletopcaps_compat.pack")],
         ["generators/update_ttc_compat.py", "ttc/ttc_classifier.py", "ttc/ttc_data.py", "ttc/ttc_compat_io.py"],
         ["../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script/ttc/!!!!!!!*.lua"],
+    ),
+    # Hand-made mod whose lord and hero rows are copies of vanilla rows, refreshed from vanilla on every run.
+    Unit(
+        "glf_battle_mage",
+        ["-m", "tools.glf_ranged.generate", "--deploy"],
+        [Output("3387635246", "!!!1a_glf_battle_mage_Dante.pack")],
+        ["tools/glf_ranged/generate.py", "tools/glf_ranged/catalog.py", "tools/glf_ranged/anim_meta.py", "tools/glf_rebuild_animpack.py"],
+        ["tools/glf_ranged/selection.json"],
     ),
 ]
 

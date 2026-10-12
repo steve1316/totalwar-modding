@@ -734,3 +734,14 @@ def test_vanilla_compat_note_is_general_when_patch_is_unknown(state_dir, monkeyp
     items = workshop_publish.pending_items([], {output.steam_id})
 
     assert items[0].change_note == GENERAL
+
+
+def test_glf_change_note_names_the_patch_and_refreshed_units(tmp_path):
+    pending = tmp_path / "glf_pending.json"
+    pending.write_text(json.dumps({"refreshed": ["Arkhan the Black", "Fimir Balefiend"]}), encoding="utf-8")
+    note = workshop_publish.glf_change_note({"pending_mods": ["the base game"]}, str(pending), patch="7.2.0")
+    assert note == "[u]Game patch update[/u]\n\n- Updated for game patch 7.2.0.\n- Brought 2 lords and heroes up to their new stats: Arkhan the Black, Fimir Balefiend."
+
+
+def test_glf_change_note_falls_back_when_nothing_vanilla_changed(tmp_path):
+    assert workshop_publish.glf_change_note({"pending_mods": []}, str(tmp_path / "missing.json"), patch="7.2.0") is None

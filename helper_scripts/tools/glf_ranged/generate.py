@@ -12,6 +12,7 @@ builds on the animation sets GLF ships.
 
 import argparse
 import collections
+import json
 import logging
 import os
 import re
@@ -20,6 +21,7 @@ import time
 from dataclasses import dataclass, field, replace
 from typing import Callable, Dict, Iterable, List, Optional, Set, Tuple
 
+from core import delta
 from core.pipeline import SCHEMA_RON_PATH
 from core.utilities import TEMP_DIR, clear_temp_root, log_elapsed_time, run_rpfm_cli, setup_script_logging
 from data.supported_mods import SUPPORTED_MODS
@@ -45,6 +47,7 @@ STATS_TSV = f"{GLF_MOD_DIR}/db/battle_entity_stats_tables/glf_battle_mage.tsv"
 REPORT_PATH = "./_diag/glf_ranged_generate_report.txt"
 FILES_DIR = f"{TEMP_DIR}/glf_ranged_files"
 GLF_PACKAGE = "!!!1a_glf_battle_mage_Dante.pack"
+GLF_STEAM_ID = "3387635246"
 # Columns a new GLF land unit row changes from vanilla, besides the missile.
 NEW_UNIT_COLUMNS = {"primary_ammo": "20", "ai_usage_group": "hybrid_mage_highvalue"}
 # Columns GLF owns in each table it copies from vanilla. Every other column follows vanilla, so a CA balance patch reaches GLF's rows. Values that
@@ -1103,7 +1106,7 @@ def write_outputs(result: Result, tables: List[TsvFile], changed_sets: Dict[str,
 
 
 def deploy(written: List[str]) -> None:
-    """Copy written files into the subscribed GLF pack.
+    """Copy written files into the subscribed GLF pack, through `delta.publish_pack` so `update.py` sees whether the pack changed.
 
     Args:
         written (List[str]): Mod-folder paths of the files to copy.
@@ -1114,12 +1117,42 @@ def deploy(written: List[str]) -> None:
     pack = next(mod["path"] for mod in SUPPORTED_MODS if mod["package_name"] == GLF_PACKAGE)
     if not os.path.exists(pack):
         raise FileNotFoundError(pack)
-    args = ["pack", "add", "--pack-path", pack, "--tsv-to-binary", SCHEMA_RON_PATH]
-    for local in written:
-        folder = os.path.dirname(os.path.relpath(local, GLF_MOD_DIR)).replace("\\", "/")
-        args += ["-f", f"{local};{folder}/"]
-    run_rpfm_cli(args, capture_output=True)
-    logging.info(f"Deployed {len(written)} files to {pack}.")
+
+    def write_pack() -> None:
+        """Add the written files to the pack."""
+        if not written:
+            return
+        args = ["pack", "add", "--pack-path", pack, "--tsv-to-binary", SCHEMA_RON_PATH]
+        for local in written:
+            folder = os.path.dirname(os.path.relpath(local, GLF_MOD_DIR)).replace("\\", "/")
+            args += ["-f", f"{local};{folder}/"]
+        run_rpfm_cli(args, capture_output=True)
+        logging.info(f"Deployed {len(written)} files to {pack}.")
+
+    delta.publish_pack(GLF_STEAM_ID, pack, GLF_MOD_DIR, write_pack)
+
+
+def record_refreshed(result: Result, rows: Dict[str, catalog.UnitRow], path: Optional[str] = None) -> None:
+    """Add the lords and heroes whose stats were brought up to vanilla to the pending list the GLF change note reads.
+
+    Args:
+        result (Result): The generation result.
+        rows (Dict[str, catalog.UnitRow]): Catalog rows by key, for display names.
+        path (Optional[str]): Pending list path. Defaults to `delta.GLF_PENDING_PATH`.
+    """
+    path = path or delta.GLF_PENDING_PATH
+    keys = {line.split(":")[0] for line in result.refreshed}
+    names = {rows[key].name for key in keys if key in rows}
+    if not names:
+        return
+    pending = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            pending = json.load(f)
+    pending["refreshed"] = sorted(set(pending.get("refreshed", [])) | names)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(pending, f, indent=1, sort_keys=True)
 
 
 def report_lines(result: Result) -> List[str]:
@@ -1165,7 +1198,8 @@ def main():
             return
         written = write_outputs(result, tables, changed_sets)
         logging.info(f"Wrote {len(written)} files.")
-        if args.deploy and written:
+        record_refreshed(result, {row.key: row for row in inputs.catalog.units})
+        if args.deploy:
             deploy(written)
     finally:
         clear_temp_root()

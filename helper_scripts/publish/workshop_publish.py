@@ -34,6 +34,10 @@ CHANGE_NOTE_LIMIT = 8000
 TTC_STEAM_ID = "3310629727"
 # The leftover vanilla Dynamic RoR item only follows vanilla data, so its change note names the game patch instead.
 VANILLA_COMPAT_STEAM_ID = "3532864014"
+# Workshop ID of GLF Battle Mage, whose lord and hero rows are refreshed from vanilla.
+GLF_STEAM_ID = "3387635246"
+# Most lord and hero names listed in the GLF change note before the rest are counted.
+GLF_NOTE_NAMES = 20
 # The game exe, whose file version is the patch number, e.g. `9.0.0.0` for patch 9.0.
 GAME_EXE_PATH = os.path.join(os.path.dirname(os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES)), "Warhammer3.exe")
 PUBLISHER_DIR = "./publish/workshop_publisher"
@@ -381,6 +385,29 @@ def vanilla_change_note() -> Optional[str]:
     return f"[u]Compatibility update[/u]\n\nUpdated vanilla game data up to patch {version}."
 
 
+def glf_change_note(record: Optional[Dict[str, Any]], path: Optional[str] = None, patch: Optional[str] = None) -> Optional[str]:
+    """Build GLF Battle Mage's change note from the game patch and the lords and heroes whose stats were brought up to vanilla.
+
+    Args:
+        record (Optional[Dict[str, Any]]): The item's publish record, or None if it has never been recorded.
+        path (Optional[str]): Pending list path. Defaults to `delta.GLF_PENDING_PATH`.
+        patch (Optional[str]): Installed game patch number, e.g. `9.0.3`, or None if unknown.
+
+    Returns:
+        The change note, or None when nothing vanilla changed, so the general note is used.
+    """
+    pending = delta._read_json(path or delta.GLF_PENDING_PATH) or {}
+    names = pending.get("refreshed", [])
+    if not names and not (record or {}).get("pending_mods"):
+        return None
+    lines = [f"- Updated for {f'game patch {patch}' if patch else 'the latest game patch'}."]
+    if names:
+        shown = ", ".join(names[:GLF_NOTE_NAMES]) + (f" and {len(names) - GLF_NOTE_NAMES} more" if len(names) > GLF_NOTE_NAMES else "")
+        count = "1 lord or hero" if len(names) == 1 else f"{len(names)} lords and heroes"
+        lines.append(f"- Brought {count} up to their new stats: {shown}.")
+    return "[u]Game patch update[/u]\n\n" + "\n".join(lines)
+
+
 def _change_note(steam_id: str, record: Optional[Dict[str, Any]]) -> str:
     """Pick the change note for an item, using the TTC or vanilla note where they apply and the rebuild-reasons note otherwise.
 
@@ -396,6 +423,8 @@ def _change_note(steam_id: str, record: Optional[Dict[str, Any]]) -> str:
         note = ttc_change_note()
     elif steam_id == VANILLA_COMPAT_STEAM_ID:
         note = vanilla_change_note()
+    elif steam_id == GLF_STEAM_ID:
+        note = glf_change_note(record, patch=game_patch_version())
     return note or build_change_note(record, patch=game_patch_version())
 
 
@@ -448,6 +477,8 @@ def mark_published(output: delta.Output, change_note: str, pack_sha: str) -> Non
     _write_record(output.steam_id, record)
     if output.steam_id == TTC_STEAM_ID and os.path.exists(delta.TTC_ENTRIES_PATH):
         shutil.copyfile(delta.TTC_ENTRIES_PATH, _ttc_snapshot_path())
+    if output.steam_id == GLF_STEAM_ID and os.path.exists(delta.GLF_PENDING_PATH):
+        os.remove(delta.GLF_PENDING_PATH)
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////

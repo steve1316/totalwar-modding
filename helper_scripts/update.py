@@ -186,7 +186,6 @@ def log_summary(
         logging.info(f"  3012881957 reduce_winds_of_magic_cost - vanilla tables changed: {', '.join(reduce_winds_changed)}")
     else:
         logging.info("  3012881957 reduce_winds_of_magic_cost - no vanilla trait table changes")
-    logging.info("  3387635246 !!!1a_glf_battle_mage_Dante - upstream Battle Mage mod is not installed, so it is not tracked")
     logging.info("=" * 100)
 
 
