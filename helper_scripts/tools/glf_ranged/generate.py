@@ -415,6 +415,38 @@ def marked_ref(ref: AnimRef, header: AnimHeader, files: GameFiles, defaults: Dic
     return AnimRef(ref.anim, new_path, ref.sound)
 
 
+def mark_fire_slots(anim_set: AnimSet, ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> List[str]:
+    """Point fire slots whose meta has no fire marker at a GLF copy of the meta with one.
+
+    Firing on the move spawns no projectile without the marker, e.g. the Fimir Balefiend, though firing in place still works.
+
+    Args:
+        anim_set (AnimSet): Set to change in place.
+        ids (Dict[str, int]): Slot id by name.
+        files (GameFiles): File reader.
+        defaults (Dict): Fire defaults from `fire_defaults`.
+        override (Optional[List[float]]): Fire marker override from the selection, or None.
+        result (Result): Collects fire metas written.
+
+    Returns:
+        The changed slot names, each marked `(fire marker)`.
+    """
+    names = {slot_id: name for name, slot_id in ids.items()}
+    changed = []
+    for i, slot in enumerate(anim_set.slots):
+        name = names.get(slot.slot_id, "")
+        if not FIRE_FAMILY.match(name) or not slot.refs:
+            continue
+        ref = slot.refs[0]
+        meta = files.read(ref.meta) if ref.meta else None
+        anim = files.read(ref.anim)
+        if (meta and read_fire_pos(meta)) or anim is None:
+            continue
+        anim_set.slots[i] = replace(slot, refs=[marked_ref(ref, read_anim_header(anim), files, defaults, override, result)])
+        changed.append(f"{name} (fire marker)")
+    return changed
+
+
 def use_fire_anim_override(anim_set: AnimSet, ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> List[str]:
     """Point every fire slot of a set listed in `FIRE_ANIM_OVERRIDES` at its chosen animation.
 
@@ -571,6 +603,8 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
             added += copy_slots(anim_set, COMBAT_READY_SOURCES, ids, present)
     for kind in sorted(fwm_kinds):
         added += add_moving_fire(anim_set, kind, ids, present, files, defaults, override, result)
+    if fwm_kinds:
+        added += mark_fire_slots(anim_set, ids, files, defaults, override, result)
     added += use_fire_anim_override(anim_set, ids, files, defaults, override, result)
     return added
 
