@@ -49,6 +49,8 @@ VANILLA_TABLES = [
 GLF_LAND_UNITS = f"{GLF_MOD_DIR}/db/land_units_tables/!!!1a_glf_battle_mage_dante.tsv"
 GLF_MISSILES = f"{GLF_MOD_DIR}/db/missile_weapons_tables/glf_battle_mage.tsv"
 CHARACTER_CASTES = {"lord", "hero"}
+# Sort order of the castes in the picker.
+CASTE_ORDER = {"lord": 0, "hero": 1}
 ANIMPACK_BIN_FOLDER = "animations/database/battle/bin"
 FWM_ATTRIBUTE = "fire_whilst_moving"
 # A generic GLF missile, e.g. `glf_mage_lord_life_missile`, captures the lore.
@@ -138,7 +140,7 @@ class SetEntry:
 class Catalog:
     """Every vanilla lord and hero row plus the choices the GUI offers."""
 
-    # Rows in faction, then base unit, then key order.
+    # Rows by faction, then lords before heroes, then the base unit's name, with each base unit's mounts after it.
     units: List[UnitRow]
     # Every GLF missile weapon key.
     missiles: List[str]
@@ -466,7 +468,10 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
                 set_shared_with=sorted(other for other in users[land_row["man_animation"]] if other != key),
             )
         )
-    rows.sort(key=lambda row: (row.faction, row.base, row.key != row.base, row.key))
+    # Within a faction: lords then heroes, each by the base unit's in-game name so versions of one character (e.g. every Damsel) sit together. A
+    # base unit's mounts follow it in key order.
+    by_key = {row.key: row for row in rows}
+    rows.sort(key=lambda row: (row.faction, CASTE_ORDER.get(by_key[row.base].caste, 9), by_key[row.base].name.lower(), row.base, row.key != row.base, row.key))
     return Catalog(rows, missiles)
 
 
