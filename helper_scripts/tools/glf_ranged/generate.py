@@ -57,6 +57,17 @@ FIRE_SLOTS = {
 }
 # Slots that play a fire animation, checked for animations that face backwards.
 FIRE_FAMILY = re.compile(r"^(FIRE_|MOVING_FIRE_|RIDER_FIRE_|RIDER_SHOOT_TURN_)")
+# Shoot stance slots and the slots they copy, which vanilla units that fire while moving on foot also have.
+SHOOT_SOURCES = [
+    ("SHOOT_STAND", "STAND"),
+    ("SHOOT_STAND_IDLE_1", "STAND_IDLE_1"),
+    ("SHOOT_READY", "STAND"),
+    ("SHOOT_READY_IDLE_1", "STAND_IDLE_1"),
+    ("SHOOT_WALK_1", "WALK_1"),
+    ("SHOOT_RUN_1", "RUN_1"),
+]
+ATTRIBUTE_JUNCTIONS_TSV = f"{GLF_MOD_DIR}/db/unit_attributes_to_groups_junctions_tables/glf_battle_mage.tsv"
+ATTRIBUTE_GROUPS_TSV = f"{GLF_MOD_DIR}/db/unit_attributes_groups_tables/glf_battle_mage.tsv"
 # Combat-ready slots and the movement slots they copy, so an on-foot unit has a stance to return to after firing.
 COMBAT_READY_SOURCES = [
     ("COMBAT_READY", "STAND"),
@@ -123,6 +134,23 @@ class TsvFile:
         rows = {line.split("\t")[0]: line.split("\t") for line in lines[2:] if line}
         return cls(path, newline, lines[0].split("\t"), lines[:2], rows, trailing)
 
+    @classmethod
+    def create(cls, path: str, table: str, version: int, header: List[str]) -> "TsvFile":
+        """Start an empty table TSV in RPFM's layout, for a table GLF does not ship yet.
+
+        Args:
+            path (str): File path. Its name without `.tsv` becomes the table file name in the pack.
+            table (str): Table name, e.g. `unit_attributes_groups_tables`.
+            version (int): Table version.
+            header (List[str]): Column names.
+
+        Returns:
+            The empty file.
+        """
+        name = os.path.splitext(os.path.basename(path))[0]
+        version_line = f"#{table};{version};db/{table}/{name}" + "\t" * (len(header) - 1)
+        return cls(path, "\r\n", header, ["\t".join(header), version_line], {}, True)
+
     def set(self, key: str, column: str, value: str) -> None:
         """Change one cell.
 
@@ -146,13 +174,14 @@ class TsvFile:
         return self.rows[key][self.header.index(column)]
 
     def add(self, row: Dict[str, str]) -> None:
-        """Add a row from a dict, in this file's column order.
+        """Add a row from a dict, in this file's column order. Rows are keyed by their first column, or by every column when the first repeats.
 
         Args:
             row (Dict[str, str]): Column name to value. Missing columns are left empty.
         """
         values = [row.get(column, "") for column in self.header]
-        self.rows[values[0]] = values
+        key = values[0] if values[0] not in self.rows else "\t".join(values)
+        self.rows[key] = values
 
     def text(self) -> str:
         """Render the file.
@@ -259,6 +288,8 @@ class Result:
     metas: Dict[str, bytes] = field(default_factory=dict)
     # Sets that could not get a fire slot, with why.
     manual: List[str] = field(default_factory=list)
+    # Land unit keys given the fire-whilst-moving attribute, with the group it went on.
+    fwm: List[str] = field(default_factory=list)
 
 
 def fire_defaults(inputs: catalog.Inputs, files: GameFiles) -> Dict[str, Tuple[float, Tuple[float, float, float]]]:
@@ -388,12 +419,13 @@ def replace_backwards_fire(anim_set: AnimSet, ids: Dict[str, int], files: GameFi
     return swapped
 
 
-def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> List[str]:
-    """Add the fire slots and combat-ready slots a set is missing.
+def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result, fwm_kinds: Set[str] = frozenset()) -> List[str]:
+    """Add the fire, combat-ready and fire-while-moving slots a set is missing.
 
     Args:
         anim_set (AnimSet): Set to change in place.
         kinds (Set[str]): Unit kinds of the ticked units using the set.
+        fwm_kinds (Set[str]): Unit kinds of the units using the set that should fire while moving.
         ids (Dict[str, int]): Slot id by name.
         files (GameFiles): File reader.
         defaults (Dict): Fire defaults from `fire_defaults`.
@@ -412,19 +444,83 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
         missing = [] if fires else [name for name in FIRE_SLOTS[kind] if ids[name] not in present]
         if missing:
             found = find_fire_ref(anim_set, kind, ids, files, defaults, override, result)
-            if found is None:
-                result.manual.append(f"{anim_set.name} ({kind}): no forward-facing cast animation")
-            else:
-                cast, ref = found
-                for name in missing:
-                    anim_set.slots.append(replace(cast, slot_id=ids[name], weapon_bools=ALL_WEAPONS, refs=[ref]))
-                    present.add(ids[name])
-                added += missing
+            added += add_fire_slots(anim_set, missing, found, ids, present, result, kind)
         if kind != "rider" and ids["COMBAT_READY"] not in present and ids["FIRE_LEVEL"] in present:
-            pairs = [(target, source) for target, source in COMBAT_READY_SOURCES if ids[target] not in present and ids[source] in present]
-            apply_patches(anim_set, pairs, ids)
-            present |= {ids[target] for target, _ in pairs}
-            added += [target for target, _ in pairs]
+            added += copy_slots(anim_set, COMBAT_READY_SOURCES, ids, present)
+    for kind in sorted(fwm_kinds):
+        added += add_moving_fire(anim_set, kind, ids, present, files, defaults, override, result)
+    return added
+
+
+def add_fire_slots(anim_set: AnimSet, names: List[str], found: Optional[Tuple[Slot, AnimRef]], ids: Dict[str, int], present: Set[int], result: Result, label: str) -> List[str]:
+    """Add fire slots that all play one fire animation, or note the set for a manual animation when there is none.
+
+    Args:
+        anim_set (AnimSet): Set to change in place.
+        names (List[str]): Slot names to add.
+        found (Optional[Tuple[Slot, AnimRef]]): Slot to copy blend and weight from, and the animation to play, or None when none was found.
+        ids (Dict[str, int]): Slot id by name.
+        present (Set[int]): Slot ids in the set, updated in place.
+        result (Result): Collects sets that need a manual animation.
+        label (str): What the slots are for, used in the manual note.
+
+    Returns:
+        The slot names added.
+    """
+    if found is None:
+        result.manual.append(f"{anim_set.name} ({label}): no forward-facing cast animation")
+        return []
+    template, ref = found
+    for name in names:
+        anim_set.slots.append(replace(template, slot_id=ids[name], weapon_bools=ALL_WEAPONS, refs=[ref]))
+        present.add(ids[name])
+    return names
+
+
+def copy_slots(anim_set: AnimSet, pairs: List[Tuple[str, str]], ids: Dict[str, int], present: Set[int]) -> List[str]:
+    """Add each missing target slot as a copy of its source slot, when the set has the source.
+
+    Args:
+        anim_set (AnimSet): Set to change in place.
+        pairs (List[Tuple[str, str]]): (target slot, source slot) names.
+        ids (Dict[str, int]): Slot id by name.
+        present (Set[int]): Slot ids in the set, updated in place.
+
+    Returns:
+        The slot names added.
+    """
+    pairs = [(target, source) for target, source in pairs if ids[target] not in present and ids[source] in present]
+    apply_patches(anim_set, pairs, ids)
+    present |= {ids[target] for target, _ in pairs}
+    return [target for target, _ in pairs]
+
+
+def add_moving_fire(anim_set: AnimSet, kind: str, ids: Dict[str, int], present: Set[int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> List[str]:
+    """Add the slots a unit kind needs to fire while moving, reusing the set's own fire animation.
+
+    Args:
+        anim_set (AnimSet): Set to change in place.
+        kind (str): `foot`, `rider` or `flyer`.
+        ids (Dict[str, int]): Slot id by name.
+        present (Set[int]): Slot ids in the set, updated in place.
+        files (GameFiles): File reader.
+        defaults (Dict): Fire defaults from `fire_defaults`.
+        override (Optional[List[float]]): Fire marker override from the selection, or None.
+        result (Result): Collects fire metas and sets that need a manual animation.
+
+    Returns:
+        The slot names added.
+    """
+    added = []
+    missing = [name for name in catalog.FWM_SLOTS[kind] if ids[name] not in present]
+    if missing:
+        fire = next((slot for slot in anim_set.slots if slot.slot_id == ids[FIRE_SLOTS[kind][0]] and slot.refs), None)
+        found = (fire, fire.refs[0]) if fire else find_fire_ref(anim_set, kind, ids, files, defaults, override, result)
+        added += add_fire_slots(anim_set, missing, found, ids, present, result, f"{kind}, fire whilst moving")
+        if found is None:
+            return added
+    if kind != "rider":
+        added += copy_slots(anim_set, SHOOT_SOURCES, ids, present)
     return added
 
 
@@ -501,11 +597,52 @@ def update_personalities(missiles: Dict[str, str], rows: Dict[str, catalog.UnitR
     return personalities, stats
 
 
-def patch_sets(missiles: Dict[str, str], ticked: Dict[str, Dict], rows: Dict[str, catalog.UnitRow], inputs: catalog.Inputs, files: GameFiles, result: Result) -> Dict[str, AnimSet]:
+def update_attributes(fwm_units: Set[str], missiles: Dict[str, str], inputs: catalog.Inputs, land: TsvFile, result: Result) -> Tuple[TsvFile, TsvFile]:
+    """Give units ticked for fire whilst moving the vanilla attribute that allows it.
+
+    A unit whose attribute group is shared with other units gets its own `glf_<unit>` group, a copy of the vanilla group plus the attribute, so the
+    other units do not gain it. GLF owns both tables outright, so they are rebuilt from the selection on every run.
+
+    Args:
+        fwm_units (Set[str]): Land units ticked for fire whilst moving.
+        missiles (Dict[str, str]): Every ticked land unit, whose GLF rows are in `land`.
+        inputs (catalog.Inputs): Catalog inputs.
+        land (TsvFile): GLF's land units table, edited in place when a unit moves to its own group or back.
+        result (Result): Collects the units given the attribute.
+
+    Returns:
+        The attribute junctions and attribute groups tables.
+    """
+    junctions = TsvFile.create(ATTRIBUTE_JUNCTIONS_TSV, "unit_attributes_to_groups_junctions_tables", 2, ["attribute", "attribute_group"])
+    groups = TsvFile.create(ATTRIBUTE_GROUPS_TSV, "unit_attributes_groups_tables", 0, ["group_name"])
+    vanilla_group = {row["key"]: row["attribute_group"] for row in inputs.tables["land_units_tables"]}
+    members = collections.Counter(vanilla_group.values())
+    attributes = collections.defaultdict(list)
+    for row in inputs.tables["unit_attributes_to_groups_junctions_tables"]:
+        attributes[row["attribute_group"]].append(row["attribute"])
+    for key in sorted(missiles):
+        base = vanilla_group[key]
+        group = base
+        if key in fwm_units and catalog.FWM_ATTRIBUTE not in attributes[base]:
+            if members[base] > 1:
+                group = f"glf_{key}"
+                groups.add({"group_name": group})
+                for attribute in attributes[base]:
+                    junctions.add({"attribute": attribute, "attribute_group": group})
+            junctions.add({"attribute": catalog.FWM_ATTRIBUTE, "attribute_group": group})
+            result.fwm.append(f"{key} on {group}")
+        # Only touch the group column for units ticked for fire whilst moving, or ones moved to a GLF group before.
+        if group != base or land.get(key, "attribute_group").startswith("glf_"):
+            land.set(key, "attribute_group", group)
+    return junctions, groups
+
+
+def patch_sets(missiles: Dict[str, str], fwm_units: Set[str], ticked: Dict[str, Dict], rows: Dict[str, catalog.UnitRow], inputs: catalog.Inputs, files: GameFiles, result: Result) -> Dict[str, AnimSet]:
     """Add the fire and combat-ready slots each ticked unit's animation set is missing.
 
     Args:
         missiles (Dict[str, str]): Ticked land unit to its missile.
+        fwm_units (Set[str]): Ticked land units that should fire while moving.
         ticked (Dict[str, Dict]): Ticked land unit to its selection entry, for `fire_pos` overrides.
         rows (Dict[str, catalog.UnitRow]): Catalog rows by key.
         inputs (catalog.Inputs): Catalog inputs.
@@ -518,9 +655,12 @@ def patch_sets(missiles: Dict[str, str], ticked: Dict[str, Dict], rows: Dict[str
     ids = {name: slot_id for slot_id, name in inputs.names.items()}
     defaults = fire_defaults(inputs, files)
     kinds_by_set = collections.defaultdict(set)
+    fwm_kinds_by_set = collections.defaultdict(set)
     overrides: Dict[str, List[float]] = {}
     for key in missiles:
         kinds_by_set[rows[key].anim_set].add(rows[key].kind)
+        if key in fwm_units:
+            fwm_kinds_by_set[rows[key].anim_set].add(rows[key].kind)
         if ticked[key].get("fire_pos"):
             overrides[rows[key].anim_set] = ticked[key]["fire_pos"]
     # Fetch every cast and fire animation the patched sets might use or check, in one batch per pack.
@@ -540,14 +680,14 @@ def patch_sets(missiles: Dict[str, str], ticked: Dict[str, Dict], rows: Dict[str
             result.manual.append(f"{set_name}: not a vanilla animation set")
             continue
         anim_set = replace(entry.live, slots=list(entry.live.slots))
-        added = patch_set(anim_set, kinds, ids, files, defaults, overrides.get(set_name), result)
+        added = patch_set(anim_set, kinds, ids, files, defaults, overrides.get(set_name), result, fwm_kinds_by_set[set_name])
         if added:
             result.sets[set_name] = added
             changed_sets[entry.path] = anim_set
     return changed_sets
 
 
-def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple[Result, TsvFile, TsvFile, TsvFile, Dict[str, AnimSet]]:
+def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple[Result, List[TsvFile], Dict[str, AnimSet]]:
     """Work out every change for the selection without writing anything.
 
     Args:
@@ -556,13 +696,14 @@ def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple
         files (GameFiles): File reader.
 
     Returns:
-        The result, the edited land units, personalities and stats tables, and the changed sets by animpack path.
+        The result, the edited tables, and the changed sets by animpack path.
     """
     result = Result()
     rows = {row.key: row for row in inputs.catalog.units}
     ignore = set(selection.get("ignore", []))
     ticked = {key: entry for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key not in ignore and key in rows and not rows[key].special_copy}
     result.skipped += [f"{key}: quest battle or boss copy" for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key in rows and rows[key].special_copy]
+    result.skipped += [f"{key}: fire whilst moving needs Ranged ticked" for key, entry in selection.get("units", {}).items() if entry.get("fwm") and not entry.get("ranged")]
 
     # Missile per ticked unit: the saved choice, else the guess.
     missiles = {}
@@ -577,8 +718,10 @@ def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple
 
     land = update_land_units(missiles, rows, inputs, result)
     personalities, stats = update_personalities(missiles, rows, inputs, result)
-    changed_sets = patch_sets(missiles, ticked, rows, inputs, files, result)
-    return result, land, personalities, stats, changed_sets
+    fwm_units = {key for key in missiles if ticked[key].get("fwm")}
+    junctions, groups = update_attributes(fwm_units, missiles, inputs, land, result)
+    changed_sets = patch_sets(missiles, fwm_units, ticked, rows, inputs, files, result)
+    return result, [land, personalities, stats, junctions, groups], changed_sets
 
 
 def write_outputs(result: Result, tables: List[TsvFile], changed_sets: Dict[str, AnimSet]) -> List[str]:
@@ -594,8 +737,13 @@ def write_outputs(result: Result, tables: List[TsvFile], changed_sets: Dict[str,
     """
     written = []
     for table in tables:
-        with open(table.path, encoding="utf-8", newline="") as f:
-            before = f.read()
+        before = None
+        if os.path.exists(table.path):
+            with open(table.path, encoding="utf-8", newline="") as f:
+                before = f.read()
+        if before is None and not table.rows:
+            continue
+        os.makedirs(os.path.dirname(table.path), exist_ok=True)
         text = table.text()
         if text != before:
             with open(table.path, "w", encoding="utf-8", newline="") as f:
@@ -649,7 +797,7 @@ def report_lines(result: Result) -> List[str]:
         Report lines.
     """
     lines = [f"Units added {len(result.added)}, removed {len(result.removed)}, missile changed {len(result.changed)}, skipped {len(result.skipped)}"]
-    for label, values in (("added", result.added), ("removed", result.removed), ("changed", result.changed), ("skipped", result.skipped), ("personalities", result.personalities)):
+    for label, values in (("added", result.added), ("removed", result.removed), ("changed", result.changed), ("skipped", result.skipped), ("personalities", result.personalities), ("fire whilst moving", result.fwm)):
         lines += [f"  {label}: {value}" for value in values]
     lines.append(f"\nSets patched {len(result.sets)}")
     lines += [f"  {name}: {', '.join(slots)}" for name, slots in sorted(result.sets.items())]
@@ -672,7 +820,7 @@ def main():
     try:
         inputs = catalog.load_inputs()
         files = GameFiles()
-        result, land, personalities, stats, changed_sets = generate(inputs, catalog.load_selection(), files)
+        result, tables, changed_sets = generate(inputs, catalog.load_selection(), files)
         os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
         with open(REPORT_PATH, "w", encoding="utf-8") as f:
             f.write("\n".join(report_lines(result)) + "\n")
@@ -680,7 +828,7 @@ def main():
         if args.dry_run:
             logging.info("Dry run: nothing written.")
             return
-        written = write_outputs(result, [land, personalities, stats], changed_sets)
+        written = write_outputs(result, tables, changed_sets)
         logging.info(f"Wrote {len(written)} files.")
         if args.deploy and written:
             deploy(written)

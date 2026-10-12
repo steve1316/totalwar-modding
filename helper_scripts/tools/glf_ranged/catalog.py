@@ -68,14 +68,16 @@ CHARACTER_CASTES = {"lord", "hero"}
 # Sort order of the castes in the picker.
 CASTE_ORDER = {"lord": 0, "hero": 1}
 ANIMPACK_BIN_FOLDER = "animations/database/battle/bin"
-FWM_ATTRIBUTE = "fire_whilst_moving"
+# Unit attribute that lets a unit fire while moving, for infantry and cavalry alike.
+FWM_ATTRIBUTE = "mounted_fire_move"
 # A generic GLF missile, e.g. `glf_mage_lord_life_missile`, captures the lore.
 GENERIC_MISSILE = re.compile(r"^glf_mage_(lord|hero)_(.+)_missile$")
 # A named GLF missile, e.g. `glf_emp_balthasar_gelt_missile`, captures the name after the race code.
 SPECIAL_MISSILE = re.compile(r"^glf_[a-z]+_(.+)_missile$")
 # Slots that let a set fire, whatever the unit kind, and the slots each kind needs to fire while moving.
 FIRE_SLOT_NAMES = {"FIRE_LEVEL", "RIDER_FIRE_FORWARD_LEVEL"}
-FWM_SLOTS = {"foot": ["MOVING_FIRE_FORWARD_LEVEL"], "flyer": ["MOVING_FIRE_FORWARD_LEVEL"], "rider": ["RIDER_FIRE_LEFT_LEVEL", "RIDER_FIRE_RIGHT_LEVEL"]}
+MOVING_FIRE_SLOTS = ["MOVING_FIRE_FORWARD_LEVEL", "MOVING_FIRE_LEFT_LEVEL", "MOVING_FIRE_RIGHT_LEVEL", "MOVING_FIRE_BACKWARD_LEVEL"]
+FWM_SLOTS = {"foot": MOVING_FIRE_SLOTS, "flyer": MOVING_FIRE_SLOTS, "rider": ["RIDER_FIRE_LEFT_LEVEL", "RIDER_FIRE_RIGHT_LEVEL", "RIDER_FIRE_BACK_LEVEL"]}
 # Cast slots a fire slot can borrow its animation from, best first.
 CAST_SLOTS = {
     "foot": ["CAST_SPELL_UP_SHORT", "CAST_SPELL_FORWARD_SHORT", "CAST_SPELL_UP_MEDIUM", "CAST_SPELL_FORWARD_MEDIUM", "CAST_SPELL_UP_LONG", "CAST_SPELL_FORWARD_LONG"],
