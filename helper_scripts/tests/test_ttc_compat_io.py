@@ -45,3 +45,41 @@ def test_remove_lines_keeps_every_other_byte(tmp_path):
 
 def test_auto_file_path_strips_bangs_and_extension():
     assert os.path.basename(io_.auto_file_path("!!!1a_glf_unit_expansion.pack")) == "!!!!!!!1a_glf_unit_expansion_auto.lua"
+
+
+def test_hand_file_path_drops_the_auto_suffix():
+    assert os.path.basename(io_.hand_file_path("!!!1a_glf_unit_expansion.pack")) == "!!!!!!!1a_glf_unit_expansion.lua"
+    assert os.path.basename(io_.hand_file_path("vanilla")) == "!!!!!!!vanilla.lua"
+
+
+def test_add_entries_appends_to_a_group_and_fixes_the_missing_comma(tmp_path):
+    original = '-- mod\r\nlocal caps = {\r\n    -- Kislev\r\n    {"a_unit", "core", 1}\r\n}\r\n\r\nlocal ttc = nil'
+    path = tmp_path / "x.lua"
+    path.write_bytes(original.encode())
+    io_.add_entries(str(path), "mod", {"Kislev": [("b_unit", "special", 2)]})
+    expected = '-- mod\r\nlocal caps = {\r\n    -- Kislev\r\n    {"a_unit", "core", 1},\r\n    {"b_unit", "special", 2},\r\n}\r\n\r\nlocal ttc = nil'
+    assert path.read_bytes().decode() == expected
+
+
+def test_add_entries_inserts_before_the_next_group_and_adds_new_groups(tmp_path):
+    original = 'local caps = {\n    -- Empire\n    {"e1", "core"},\n\n    -- Kislev\n    {"k1", "rare", 1}, -- note\n}\n'
+    path = tmp_path / "x.lua"
+    path.write_text(original)
+    io_.add_entries(str(path), "mod", {"Empire": [("e2", "rare", 3)], "Norsca": [("n1", "core", None)]})
+    expected = 'local caps = {\n    -- Empire\n    {"e1", "core"},\n    {"e2", "rare", 3},\n\n    -- Kislev\n    {"k1", "rare", 1}, -- note\n    -- Norsca\n    {"n1", "core"},\n}\n'
+    assert path.read_text() == expected
+
+
+def test_add_entries_replaces_a_key_already_in_the_file(tmp_path):
+    path = tmp_path / "x.lua"
+    path.write_text('local caps = {\n    -- Empire\n    {"e1", "core"}, -- old\n}\n')
+    io_.add_entries(str(path), "mod", {"Kislev": [("e1", "special", 2)]})
+    assert path.read_text() == 'local caps = {\n    -- Empire\n    {"e1", "special", 2},\n}\n'
+
+
+def test_add_entries_creates_a_missing_file(tmp_path):
+    path = tmp_path / "!!!!!!!new_mod.lua"
+    io_.add_entries(str(path), "New Mod", {"Kislev": [("k1", "special", 1)]})
+    text = path.read_text()
+    assert text.startswith("-- New Mod\nlocal caps = {\n    -- Kislev\n    {\"k1\", \"special\", 1},\n}\n")
+    assert "ttc.add_unit_list(caps, true)" in text

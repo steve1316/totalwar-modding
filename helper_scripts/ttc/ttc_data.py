@@ -15,7 +15,7 @@ from data.supported_mods import SUPPORTED_MODS
 from ttc.ttc_compat_io import TtcEntry, hand_files, parse_ttc_file, parse_ttc_text
 
 BASE_TTC_PACK = workshop_pack_path("3386989556", "groovy_ttc.pack")
-UNIT_TABLES = ["main_units_tables", "land_units_tables", "units_to_groupings_military_permissions_tables"]
+UNIT_TABLES = ["main_units_tables", "land_units_tables", "units_to_groupings_military_permissions_tables", "unit_variants_tables"]
 EXCLUDED_CASTES = {"lord", "hero"}
 # `ror` as its own word in a unit key or mod name marks a Regiment of Renown, without matching words like `horror`.
 RENOWN_PATTERN = re.compile(r"(^|_)ror(_|\d|$)")
@@ -139,6 +139,8 @@ class TtcData:
     mod_labeled_keys: Set[str] = field(default_factory=set)
     # Installed supported mods whose `main_units_tables` could not be read, so they are not trusted for stale-entry removal.
     unreadable_mods: List[str] = field(default_factory=list)
+    # Unit key to the card name its first `unit_variants_tables` row uses, for finding units without card art.
+    unit_cards: Dict[str, str] = field(default_factory=dict)
 
 
 def label_of(category: str, weight: Optional[int]) -> str:
@@ -174,12 +176,13 @@ def mod_ttc_entries(root: str) -> Dict[str, str]:
     return labels
 
 
-def read_loc_names(folder: str, names: Dict[str, str]) -> None:
-    """Add the unit onscreen names from every loc TSV under a folder, keeping names already found.
+def read_loc_names(folder: str, names: Dict[str, str], prefixes: Tuple[str, ...] = (LOC_NAME_PREFIX,)) -> None:
+    """Add the loc texts whose keys start with one of `prefixes` from every loc TSV under a folder, keeping names already found.
 
     Args:
         folder (str): Folder holding extracted or source `.loc.tsv` files.
         names (Dict[str, str]): Loc key to text, updated in place.
+        prefixes (Tuple[str, ...]): Loc key prefixes to keep. Defaults to unit names.
     """
     for path in sorted(glob.glob(f"{folder}/**/*.tsv", recursive=True)):
         try:
@@ -188,12 +191,15 @@ def read_loc_names(folder: str, names: Dict[str, str]) -> None:
             continue
         for row in rows:
             key, text = row.get("key", ""), " ".join(row.get("text", "").split())
-            if key.startswith(LOC_NAME_PREFIX) and text:
+            if key.startswith(prefixes) and text:
                 names.setdefault(key, text)
 
 
-def load_loc_names() -> Dict[str, str]:
-    """Load unit onscreen names from the repo's English translation mods, then each installed supported mod, then vanilla.
+def load_loc_names(prefixes: Tuple[str, ...] = (LOC_NAME_PREFIX,)) -> Dict[str, str]:
+    """Load loc texts from the repo's English translation mods, then each installed supported mod, then vanilla.
+
+    Args:
+        prefixes (Tuple[str, ...]): Loc key prefixes to keep. Defaults to unit names.
 
     Returns:
         Loc key to text, the first source to name a key winning.
@@ -201,14 +207,60 @@ def load_loc_names() -> Dict[str, str]:
     names: Dict[str, str] = {}
     for folder in sorted(glob.glob(TRANSLATION_MODS_GLOB)):
         if TRANSLATION_MOD_PATTERN.search(os.path.basename(folder)):
-            read_loc_names(folder, names)
-    packs = [mod["path"] for mod in SUPPORTED_MODS if mod["path"] and os.path.exists(mod["path"])]
+            read_loc_names(folder, names, prefixes)
+    packs = [mod["path"] for mod in installed_mods()]
     for pack_path in packs + [VANILLA_LOC_PACK]:
         # Read the loc files in place. Copying ~4,000 files out of the cache every run costs seconds of file I/O.
         with extracted_tree(pack_path, "text") as folder:
             if folder:
-                read_loc_names(folder, names)
+                read_loc_names(folder, names, prefixes)
     return names
+
+
+def resolve_loc(text: str, loc: Dict[str, str]) -> Optional[str]:
+    """Follow `{{tr:...}}` references in a loc text a few levels deep.
+
+    Args:
+        text (str): Loc text.
+        loc (Dict[str, str]): Loc key to text.
+
+    Returns:
+        The resolved text, or None when a reference cannot be resolved.
+    """
+    for _ in range(3):
+        text = LOC_REFERENCE_PATTERN.sub(lambda match: loc.get(match.group(1), match.group(0)), text)
+    return None if LOC_REFERENCE_PATTERN.search(text) else text
+
+
+def loc_name(prefix: str, key: str, loc: Dict[str, str], default: Optional[str] = None) -> str:
+    """Look up one loc text by prefix and key, following `{{tr:...}}` references.
+
+    Args:
+        prefix (str): Loc key prefix, e.g. `cultures_name_`.
+        key (str): Record key.
+        loc (Dict[str, str]): Loc key to text.
+        default (Optional[str]): Returned when no loc text names the key. Defaults to the key.
+
+    Returns:
+        The text, or the default.
+    """
+    return resolve_loc(loc.get(prefix + key, ""), loc) or (key if default is None else default)
+
+
+def unit_name(key: str, stats: Dict[str, UnitStats], loc: Dict[str, str]) -> str:
+    """Look up the in-game name of one unit, which hangs off its `land_unit`.
+
+    Args:
+        key (str): Unit key.
+        stats (Dict[str, UnitStats]): Unit key to stats.
+        loc (Dict[str, str]): Loc key to text.
+
+    Returns:
+        The name, falling back to the key when no loc text names it.
+    """
+    land_unit = stats[key].main.get("land_unit", "") if key in stats else ""
+    name = loc.get(LOC_NAME_PREFIX + land_unit) or loc.get(LOC_NAME_PREFIX + key) or key
+    return resolve_loc(name, loc) or key
 
 
 def unit_names(keys: Iterable[str], stats: Dict[str, UnitStats], loc: Dict[str, str]) -> Dict[str, str]:
@@ -222,15 +274,7 @@ def unit_names(keys: Iterable[str], stats: Dict[str, UnitStats], loc: Dict[str, 
     Returns:
         Unit key to name, falling back to the key when no loc text names it.
     """
-    names = {}
-    for key in keys:
-        land_unit = stats[key].main.get("land_unit", "") if key in stats else ""
-        name = loc.get(LOC_NAME_PREFIX + land_unit) or loc.get(LOC_NAME_PREFIX + key) or key
-        # Follow `{{tr:...}}` references a few levels deep, and fall back to the key when one cannot be resolved.
-        for _ in range(3):
-            name = LOC_REFERENCE_PATTERN.sub(lambda match: loc.get(match.group(1), match.group(0)), name)
-        names[key] = key if LOC_REFERENCE_PATTERN.search(name) else name
-    return names
+    return {key: unit_name(key, stats, loc) for key in keys}
 
 
 def faction_of(key: str) -> str:
@@ -280,6 +324,41 @@ def unit_faction(key: str, groups: Set[str]) -> str:
         return faction
     votes = collections.Counter(filter(None, (_group_faction(group) for group in groups)))
     return min(votes.items(), key=lambda item: (-item[1], item[0]))[0] if votes else "Other"
+
+
+def package_unit_faction(key: str, package_name: str, groups: Set[str]) -> str:
+    """Name the faction of a unit from a mod pack or from vanilla.
+
+    Args:
+        key (str): Unit key.
+        package_name (str): Package name of the mod that defines it, or `VANILLA_PACKAGE`.
+        groups (Set[str]): Military groups that can recruit the unit.
+
+    Returns:
+        The faction name. Vanilla units use only the race code in their key.
+    """
+    return faction_of(key) if package_name == VANILLA_PACKAGE else unit_faction(key, groups)
+
+
+def installed_mods() -> List[dict]:
+    """List the supported mods whose pack is on disk.
+
+    Returns:
+        `SUPPORTED_MODS` entries in their usual order.
+    """
+    return [mod for mod in SUPPORTED_MODS if mod["path"] and os.path.exists(mod["path"])]
+
+
+def pack_tag(package_name: str) -> str:
+    """Name a mod pack's scratch folder.
+
+    Args:
+        package_name (str): The mod's `.pack` filename.
+
+    Returns:
+        Folder-safe name.
+    """
+    return package_name.replace(".pack", "").replace(" ", "_")
 
 
 def table_readable(folder: str) -> bool:
@@ -463,19 +542,20 @@ def _rows(folder: str) -> List[Dict[str, str]]:
     return rows
 
 
-def _load_tables(pack_path: str, tag: str, vanilla: bool) -> Dict[str, List[Dict[str, str]]]:
-    """Extract the unit tables from one pack through the extraction cache.
+def load_tables(pack_path: str, tag: str, vanilla: bool, table_names: List[str] = UNIT_TABLES) -> Dict[str, List[Dict[str, str]]]:
+    """Extract db tables from one pack through the extraction cache.
 
     Args:
         pack_path (str): Pack to read.
         tag (str): Scratch folder name.
         vanilla (bool): Read the vanilla `data__` files instead of whole table folders.
+        table_names (List[str]): Tables to read. Defaults to the unit tables.
 
     Returns:
         Table name to rows.
     """
     tables = {}
-    for table in UNIT_TABLES:
+    for table in table_names:
         dest = f"{SCRATCH}/{tag}/{table}"
         if vanilla:
             cached_pack_extract(pack_path, f"db/{table}/data__", dest, source_kind="file")
@@ -527,8 +607,11 @@ def load_all() -> TtcData:
         for row in tables["units_to_groupings_military_permissions_tables"]:
             if row.get("unit"):
                 data.permissions.setdefault(row["unit"], set()).add(row.get("military_group", ""))
+        for row in tables["unit_variants_tables"]:
+            if row.get("unit") and row.get("unit_card"):
+                data.unit_cards.setdefault(row["unit"], row["unit_card"])
 
-    vanilla = _load_tables(FILEPATH_TO_VANILLA_DATA_TABLES, "vanilla", vanilla=True)
+    vanilla = load_tables(FILEPATH_TO_VANILLA_DATA_TABLES, "vanilla", vanilla=True)
     data.vanilla_units = vanilla["main_units_tables"]
     data.vanilla_keys = {row["unit"] for row in data.vanilla_units if row.get("unit")}
     data.mod_names[VANILLA_PACKAGE] = VANILLA_NAME
@@ -540,8 +623,8 @@ def load_all() -> TtcData:
         if not os.path.exists(mod["path"]):
             data.missing_mods.append(mod["package_name"])
             continue
-        tag = mod["package_name"].replace(".pack", "").replace(" ", "_")
-        tables = _load_tables(mod["path"], tag, vanilla=False)
+        tag = pack_tag(mod["package_name"])
+        tables = load_tables(mod["path"], tag, vanilla=False)
         main_units_dir = f"{SCRATCH}/{tag}/main_units_tables"
         if os.path.exists(main_units_dir) and not table_readable(main_units_dir):
             logging.warning(f"Could not read main_units_tables from {mod['package_name']}. Its units are skipped and its hand entries are left alone.")

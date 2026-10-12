@@ -180,6 +180,10 @@ def _add_related(
     return entry
 
 
+# Folder Steam downloads Warhammer 3 Workshop items into, one subfolder per item ID.
+WORKSHOP_ROOT = f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710"
+
+
 def workshop_pack_path(steam_id: str, pack_name: str) -> str:
     """Return the on-disk path for a Steam Workshop pack file.
 

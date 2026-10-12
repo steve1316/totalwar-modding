@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TTC Unit Browser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout copied from the in-game Unit & Spell Browser (ui/common ui/spell_browser.twui.xml): a race strip with Select Race, the culture's category
+   sections two per row (itemsperrow=2), nine 45x100 cards per section row, and the unit panel on the right. Art is the game's own, served from /art/. */
+:root {
+  --bg: #170d12; --panel-edge: #6b5233; --ink: #e9dfcf; --muted: #a8998a; --line: #3e2a2c;
+  --gold: #d8a640; --bar: #d1a440; --bar-bg: #2b2120;
+  --up: #7fcf6a; --down: #e0705a; --review: #ffcc40; --queued: #6fe08a;
+  --serif: "Libre Caslon Text", Georgia, serif; --mono: "IBM Plex Mono", Consolas, monospace;
+  --card-w: 64px; --card-h: 139px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: radial-gradient(ellipse at 50% 0%, #2a1520 0%, var(--bg) 60%) fixed, var(--bg); color: var(--ink); font-family: var(--serif); font-size: 15px;
+  display: grid; grid-template-rows: auto auto 1fr auto; overflow: hidden; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+.title { text-align: center; padding: 10px 0 6px; }
+.title h1 { display: inline-block; margin: 0; font-size: 1.35rem; font-weight: 400; padding: 4px 48px; border: 1px solid var(--panel-edge);
+  background: linear-gradient(#2a1d17, #120c0b); clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%); }
+
+.race { position: relative; height: 100px; background-color: #2b1d22; background-size: cover; background-position: center; display: flex; align-items: center;
+  gap: 24px; padding: 0 24px 0 12%; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.race::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,6,8,.85) 0%, rgba(10,6,8,.3) 45%, rgba(10,6,8,.6) 100%); }
+.race > * { position: relative; }
+.race-name { font-size: 1.15rem; text-shadow: 0 1px 3px #000; }
+.select-race { display: grid; gap: 6px; }
+.select-race select, .select-mod select { font: inherit; font-size: .9rem; color: var(--ink); background: linear-gradient(#7a1a17, #4a0d0c); border: 1px solid #c2553b; border-radius: 3px;
+  padding: 3px 28px 3px 12px; min-width: 240px; }
+.select-mod { display: grid; gap: 6px; font-size: .85rem; text-shadow: 0 1px 3px #000; }
+.select-mod select { min-width: 280px; max-width: 460px; }
+.review-nav { margin-left: auto; display: flex; gap: 10px; align-items: center; font-size: .9rem; text-shadow: 0 1px 2px #000; }
+.review-nav b { color: var(--review); font-family: var(--mono); }
+.btn { background: linear-gradient(#5b1714, #360b0a); border: 1px solid #a8442f; border-radius: 3px; padding: 3px 12px; font-size: .88rem; }
+.btn:hover { border-color: var(--gold); }
+.btn:disabled { opacity: .4; cursor: default; border-color: var(--line); }
+.btn.on { background: linear-gradient(#8a2a1f, #571310); border-color: var(--gold); }
+
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 14px; padding: 12px 18px 0; min-height: 0; }
+.list { overflow-y: auto; min-height: 0; padding-right: 6px; scrollbar-color: #7a2a20 #1a1012; }
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px; align-items: start; }
+.col { display: grid; gap: 4px; align-content: start; }
+.section-head { display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 10px; font-size: 1.05rem; background: linear-gradient(#5f1210, #3c0909);
+  border: 1px solid #a8302a; cursor: pointer; user-select: none; }
+.section-head .toggle { width: 18px; height: 18px; display: grid; place-items: center; border: 1px solid #c2553b; background: #2a0606; font-size: .8rem; line-height: 1; }
+.section-head img { width: 24px; height: 24px; }
+.section-head .count { margin-left: auto; font-family: var(--mono); font-size: .75rem; color: var(--review); }
+.roster { display: grid; grid-template-columns: repeat(9, var(--card-w)); gap: 4px 2px; padding: 6px 0 8px 2px; }
+.section.closed .roster { display: none; }
+
+.card { position: relative; width: var(--card-w); height: var(--card-h); padding: 0; border: 0; background: url("/art/ui/skins/default/unit_card_background.png") center / 100% 100%; }
+.card .art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card .ph { position: absolute; inset: 0; display: grid; place-items: center; padding: 4px; font-size: .6rem; color: var(--muted); text-align: center; word-break: break-word;
+  background: linear-gradient(#2a2024, #151012); }
+.card .frame { position: absolute; inset: 0; background: center / 100% 100% no-repeat; pointer-events: none; }
+.card:hover .frame { background-image: url("/art/ui/skins/default/unit_card_hover.png"); }
+.card.selected .frame { background-image: url("/art/ui/skins/default/unit_card_selected.png"); }
+.card .gems { position: absolute; top: -6px; right: -8px; width: 38px; height: 38px; pointer-events: none; filter: drop-shadow(0 1px 2px #000); }
+.card .weight { position: absolute; top: 18px; right: -4px; font: 600 .75rem var(--mono); color: #fff; text-shadow: 0 0 3px #000; pointer-events: none; }
+.card .cat { position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%); width: 38px; height: 38px; display: grid; place-items: center;
+  background: url("/art/ui/skins/default/unit_card_semicircle.png") center / 100% 100% no-repeat; pointer-events: none; }
+.card .cat.renown { background-image: url("/art/ui/skins/default/unit_card_semicircle_renown.png"); }
+.card .cat img { width: 22px; height: 22px; margin-top: 8px; }
+.card.review { outline: 2px solid var(--review); outline-offset: 1px; box-shadow: 0 0 10px 1px rgba(255, 204, 64, .55); }
+.card .badge { position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%;
+  background: var(--review); border: 1.5px solid #1a0f00; color: #1a0f00; font: 900 14px/1 Arial, sans-serif; box-shadow: 0 1px 4px rgba(0,0,0,.9);
+  pointer-events: none; }
+.card.queued { outline: 2px solid var(--queued); outline-offset: 1px; box-shadow: 0 0 8px rgba(111, 224, 138, .5); }
+.card.queued .badge { background: var(--queued); }
+.card.nocap .art { filter: grayscale(.6) brightness(.8); }
+/* Base game units shown for comparison under a mod filter. */
+.card.context { opacity: .5; }
+.card.context:hover, .card.context.selected { opacity: 1; }
+
+.panel { align-self: start; overflow-x: hidden; background: linear-gradient(#211819, #151011); border: 1px solid var(--panel-edge); border-radius: 3px; padding: 0 0 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.6); max-height: 100%; overflow-y: auto; }
+.panel.empty { padding: 30px 16px; color: var(--muted); text-align: center; font-size: .9rem; }
+.vs { display: flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: .8rem; color: var(--muted); background: rgba(255,255,255,.04); border-bottom: 1px solid var(--line); }
+.vs b { color: var(--ink); font-weight: 400; }
+.vs img { width: 18px; height: 18px; }
+.p-title { text-align: center; padding: 10px 12px 8px; font-size: 1.3rem; border-bottom: 1px solid var(--line); }
+.p-sub { display: flex; align-items: center; gap: 8px; padding: 6px 12px; color: var(--muted); font-size: .95rem; }
+.p-sub img { width: 26px; height: 26px; }
+.p-top { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 6px 12px 10px; }
+.p-top .art { width: 96px; height: 208px; object-fit: cover; border: 1px solid var(--line); background: url("/art/ui/skins/default/unit_card_background.png") center / 100% 100%; }
+.hp { margin-top: 8px; }
+.hp-bar { position: relative; height: 18px; background: #1e2a0e; border: 1px solid #44561f; }
+.hp-fill { position: absolute; inset: 0; }
+.hp-fill .fill { background: linear-gradient(#a6dc3a, #5b9a1a); }
+/* Stripes keep the extra HP readable against the green base. */
+.hp-fill .gain { background: repeating-linear-gradient(135deg, #e8ff9a 0 4px, #7fbf2a 4px 8px); }
+.hp-bar b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 3px; font: 500 .78rem var(--mono); color: #fff; text-shadow: 0 0 3px #000; }
+.hp-bar b img { width: 12px; height: 12px; }
+.hp-bar b .cmp { font-size: .78rem; background: rgba(0,0,0,.75); border-radius: 3px; padding: 0 4px; margin-left: 4px; }
+.men { display: flex; align-items: center; gap: 4px; margin-top: 6px; font-size: .85rem; }
+.men img { width: 16px; height: 16px; }
+.meta { font-size: .88rem; color: var(--muted); margin-top: 5px; line-height: 1.35; overflow-wrap: anywhere; }
+.p-head { display: flex; align-items: center; gap: 8px; margin: 8px 6px 3px; padding: 3px 10px; background: linear-gradient(#5f1210, #3c0909); border: 1px solid #a8302a; font-size: 1.02rem; }
+.stat { display: grid; grid-template-columns: 22px 1fr 38px 38px 110px; gap: 8px; align-items: center; padding: 3px 12px; font-size: 1rem; }
+.stat:nth-child(odd) { background: rgba(255,255,255,.025); }
+.stat img { width: 22px; height: 22px; }
+.stat .v { text-align: right; font-family: var(--mono); font-size: .95rem; }
+.bar { position: relative; height: 9px; background: var(--bar-bg); border: 1px solid #000; overflow: hidden; }
+.bar span, .hp-fill span { position: absolute; top: 0; bottom: 0; left: 0; }
+.bar .fill { background: var(--bar); }
+.bar .loss, .hp-fill .loss { background: var(--down); }
+.bar .gain { background: var(--up); }
+.cmp { text-align: right; font-family: var(--mono); font-size: .95rem; }
+.cmp.up { color: var(--up); } .cmp.down { color: var(--down); }
+.abilities { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 10px; }
+.abilities img { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #5a4a30; background: #000; }
+.abilities .noicon { font-size: .72rem; color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 2px 5px; }
+.abilities .none { font-size: .78rem; color: var(--muted); }
+
+.recruit { display: grid; gap: 4px; padding: 5px 12px 8px; font-size: .92rem; }
+.recruit div { display: flex; align-items: center; gap: 6px; }
+.recruit img { width: 34px; height: 34px; border: 1px solid var(--line); background: #000; }
+.recruit .muted { color: var(--muted); }
+.capbox { margin: 8px 6px 0; padding: 8px; border: 1px solid var(--line); background: rgba(0,0,0,.25); display: grid; gap: 7px; font-size: .85rem; }
+.capbox .src { color: var(--muted); font-size: .8rem; }
+.capbox .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.capbox .lbl { font-family: var(--mono); font-size: .8rem; display: inline-flex; align-items: center; gap: 2px; }
+.capbox .lbl img { width: 20px; height: 20px; }
+.seg { display: inline-flex; border: 1px solid #a8442f; border-radius: 3px; overflow: hidden; }
+.seg button { border: 0; background: #2a0d0b; padding: 2px 8px; font-size: .8rem; }
+.seg button.on { background: #8a2a1f; }
+.seg button:disabled { opacity: .35; cursor: default; }
+.looks { display: grid; gap: 3px; }
+.looks button { display: flex; gap: 6px; align-items: center; text-align: left; background: none; border: 1px solid transparent; padding: 2px 4px; font-size: .8rem; }
+.looks button:hover { border-color: var(--line); background: rgba(255,255,255,.04); }
+.looks img { width: 18px; height: 18px; }
+.queued-note { color: var(--queued); font-family: var(--mono); font-size: .8rem; }
+
+.foot { display: flex; justify-content: center; align-items: center; gap: 14px; padding: 8px 0 12px; }
+.save { position: relative; width: 56px; height: 56px; border-radius: 50%; border: 2px solid #c98a3a; background: radial-gradient(circle at 40% 35%, #a33a1c, #4a1009 70%);
+  font-size: 1.6rem; color: #f3d9a0; box-shadow: 0 0 12px rgba(0,0,0,.8); }
+.save:disabled { opacity: .45; cursor: default; }
+.save .n { position: absolute; top: -6px; right: -10px; min-width: 22px; height: 22px; border-radius: 11px; background: var(--queued); color: #082210;
+  font: 700 .75rem/22px var(--mono); padding: 0 5px; }
+.foot .hint { color: var(--muted); font-size: .8rem; }
+.toast { position: fixed; bottom: 86px; left: 50%; transform: translateX(-50%); background: #241a16; border: 1px solid var(--gold); padding: 10px 16px; border-radius: 4px;
+  max-width: min(720px, 92vw); display: none; z-index: 10; font-size: .9rem; }
+.toast.err { border-color: var(--down); }
+.loading { padding: 40px; color: var(--muted); text-align: center; }
+@media (max-width: 1700px) { :root { --card-w: 54px; --card-h: 117px; } .main { grid-template-columns: minmax(0, 1fr) 380px; } }
+@media (max-width: 1100px) {
+  body { overflow: auto; } .main { grid-template-columns: 1fr; } .cols { grid-template-columns: 1fr; } .race { padding: 0 16px; flex-wrap: wrap; height: auto; min-height: 100px; }
+  .roster { grid-template-columns: repeat(auto-fill, var(--card-w)); }
+}
+</style>
+</head>
+<body>
+<div class="title"><h1>Unit Browser</h1></div>
+<div class="race" id="race">
+  <div class="select-race">
+    <span class="race-name" id="race-name">Loading...</span>
+    <select id="race-select" aria-label="Select Race"></select>
+  </div>
+  <label class="select-mod">Mod
+    <select id="mod-select" aria-label="Show units added by one mod"></select>
+  </label>
+  <div class="review-nav">
+    <span id="review-count"></span>
+    <button class="btn" id="reviews-only" title="Only show sections with units to review">Reviews only</button>
+    <button class="btn" id="next-review" title="Select the next unit to review (N)">Next review</button>
+  </div>
+</div>
+<div class="main">
+  <div class="list" id="list"><div class="loading">Loading the rosters...</div></div>
+  <div class="panel empty" id="panel">Select a unit.</div>
+</div>
+<div class="foot">
+  <span class="hint">N next review · C confirm pick · R use runner-up</span>
+  <button class="save" id="save" title="Save queued caps to the hand files" disabled>✓<span class="n" id="save-n" hidden>0</span></button>
+  <span class="hint" id="saved-note"></span>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const QUEUE_KEY = "ttc-browser-queue", RACE_KEY = "ttc-browser-race", MOD_KEY = "ttc-browser-mod";
+// Unit panel rows in the in-game order, with each stat's icon and the value a full bar stands for.
+const STATS = [["armour", "Armour", "icon_stat_armour", 200], ["leadership", "Leadership", "icon_stat_morale", 100], ["speed", "Speed", "icon_stat_speed", 120],
+  ["melee_attack", "Melee Attack", "icon_stat_attack", 120], ["melee_defence", "Melee Defence", "icon_stat_defence", 120],
+  ["weapon_strength", "Weapon Strength", "icon_stat_damage", 800], ["charge_bonus", "Charge Bonus", "icon_stat_charge_bonus", 150]];
+const SOURCES = {base: "TTC base list", hand: "Hand file", mod: "Mod author's own cap", auto: "Auto pick"};
+let state = null, culture = null, selected = null, hovered = null, reviewsOnly = false;
+const closed = new Set(), details = new Map();
+let queue = read(QUEUE_KEY, {}), mod = read(MOD_KEY, "");
+
+function read(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch (e) { return fallback; }
+}
+function write(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* storage blocked, the value just lives for this tab */ }
+}
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const art = path => path ? "/art/" + encodeURI(path) : "";
+const skin = name => art(`ui/skins/default/${name}.png`);
+function parse(label) {
+  const [category, weight] = String(label).split(",");
+  return {category, weight: category === "core" ? null : Number(weight || 1)};
+}
+const fmt = c => c.category === "core" ? "core" : `${c.category},${c.weight}`;
+// TTC's own recruitment gems: one green gem for core, one to three blue or purple gems for the weight.
+function gems(label) {
+  if (!label) return "";
+  const {category, weight} = parse(label);
+  const file = category === "core" ? "common_units" : `${category}_units_${Math.min(weight, 3)}`;
+  return art(`ui/custom/recruitment_controls/${file}.png`);
+}
+// With a mod picked, its units are shown next to the base game units for comparison, in the races that mod adds units to. Review counts and
+// Next review only cover the mod's own units.
+const VANILLA = "Vanilla + DLC";
+const inMod = key => !mod || state.units[key].mod === mod;
+const shown = key => inMod(key) || state.units[key].mod === VANILLA;
+const raceUnits = c => c.sections.flatMap(s => s.units).filter(inMod);
+const visibleCultures = () => state.cultures.filter(c => raceUnits(c).length);
+const openReview = key => state.units[key].review && !queue[key];
+function capOf(key) {
+  const u = state.units[key];
+  return queue[key] ? fmt(queue[key]) : u.label;
+}
+
+function toast(text, err) {
+  const el = document.getElementById("toast");
+  el.textContent = text; el.className = "toast" + (err ? " err" : ""); el.style.display = "block";
+  clearTimeout(toast.t); toast.t = setTimeout(() => el.style.display = "none", err ? 8000 : 4000);
+}
+
+async function load() {
+  setState(await (await fetch("/api/state")).json());
+}
+function setState(next) {
+  state = next;
+  for (const key of Object.keys(queue)) if (state.units[key]?.source !== "auto") delete queue[key];
+  write(QUEUE_KEY, queue);
+  if (mod && !Object.values(state.units).some(u => u.mod === mod)) mod = "";
+  pickCulture(culture || read(RACE_KEY, null));
+  renderAll();
+}
+// Keep the wanted race when it has units under the current mod filter, otherwise the first race with reviews, otherwise the first race.
+function pickCulture(wanted) {
+  const races = visibleCultures();
+  culture = (races.find(c => c.key === wanted) || races.find(c => raceUnits(c).some(openReview)) || races[0]).key;
+}
+const current = () => state.cultures.find(c => c.key === culture);
+
+function renderMods() {
+  const counts = {};
+  for (const [key, u] of Object.entries(state.units)) {
+    const c = counts[u.mod || "Unknown"] ??= {units: 0, reviews: 0};
+    c.units++; c.reviews += openReview(key);
+  }
+  const names = Object.keys(counts).sort((a, b) => (a !== VANILLA) - (b !== VANILLA) || a.localeCompare(b));
+  const sel = document.getElementById("mod-select");
+  sel.innerHTML = '<option value="">All mods</option>' + names.map(n => `<option value="${esc(n)}">${esc(n)} (${counts[n].units} units${counts[n].reviews ? `, ${counts[n].reviews} to review` : ""})</option>`).join("");
+  sel.value = mod;
+}
+
+function renderRaces() {
+  const c = current(), sel = document.getElementById("race-select");
+  sel.innerHTML = visibleCultures().map(x => {
+    const reviews = raceUnits(x).filter(openReview).length;
+    return `<option value="${esc(x.key)}">${esc(x.name)}${reviews ? ` (${reviews} to review)` : ""}</option>`;
+  }).join("");
+  sel.value = c.key;
+  document.getElementById("race-name").textContent = c.name;
+  document.getElementById("race").style.backgroundImage = c.banner ? `url("${art(c.banner)}")` : "";
+  const open = raceUnits(c).filter(openReview).length;
+  // A unit several races can field is counted once in the total.
+  const total = Object.keys(state.units).filter(k => inMod(k) && openReview(k)).length;
+  document.getElementById("review-count").innerHTML = `<b>${open}</b> to review here · ${total} total`;
+  document.getElementById("reviews-only").classList.toggle("on", reviewsOnly);
+}
+
+function cardHtml(key) {
+  const u = state.units[key], label = capOf(key), q = queue[key];
+  const cls = ["card", u.review ? "review" : "", q ? "queued" : "", label ? "" : "nocap", key === selected ? "selected" : "", mod && !inMod(key) ? "context" : ""].join(" ");
+  const weight = label && parse(label).weight > 3 ? `<span class="weight">${parse(label).weight}</span>` : "";
+  return `<button class="${cls}" data-key="${esc(key)}" title="${esc(u.name)}${label ? ` (${esc(label)})` : " (no cap)"}">
+    ${u.card ? `<img class="art" loading="lazy" src="${art(u.card)}" alt="">` : `<span class="ph">${esc(u.name)}</span>`}
+    <span class="frame"></span>
+    ${label ? `<img class="gems" src="${gems(label)}" alt="">${weight}` : ""}
+    ${u.review || q ? `<span class="badge">${q ? "✓" : "?"}</span>` : ""}
+    <span class="cat${u.renown ? " renown" : ""}">${u.icon ? `<img src="${art(u.icon)}" alt="">` : ""}</span>
+  </button>`;
+}
+
+// Sections fill the two columns alternately, like the browser's list with two items per row.
+function renderList() {
+  const cols = [[], []];
+  let i = 0;
+  for (const section of current().sections) {
+    const s = {...section, units: section.units.filter(shown)};
+    const reviews = s.units.filter(k => inMod(k) && openReview(k)).length;
+    if (!s.units.length || (reviewsOnly && !s.units.some(k => inMod(k) && state.units[k].review))) continue;
+    const isClosed = closed.has(culture + "/" + s.key);
+    cols[i++ % 2].push(`<div class="section${isClosed ? " closed" : ""}" data-section="${esc(s.key)}">
+      <div class="section-head"><span class="toggle">${isClosed ? "+" : "−"}</span>${s.icon ? `<img src="${art(s.icon)}" alt="">` : ""}<span>${esc(s.name)}</span>
+        ${reviews ? `<span class="count">${reviews} ?</span>` : ""}</div>
+      <div class="roster">${s.units.map(cardHtml).join("")}</div></div>`);
+  }
+  const list = document.getElementById("list"), top = list.scrollTop;
+  list.innerHTML = cols[0].length ? `<div class="cols"><div class="col">${cols[0].join("")}</div><div class="col">${cols[1].join("")}</div></div>`
+    : '<div class="loading">No units to review here.</div>';
+  list.scrollTop = top;
+}
+
+function renderFoot() {
+  const n = Object.keys(queue).length, badge = document.getElementById("save-n");
+  document.getElementById("save").disabled = !n;
+  badge.hidden = !n; badge.textContent = n;
+  document.getElementById("saved-note").textContent = state.saved ? `${state.saved} saved this session` : "";
+}
+
+async function unit(key) {
+  if (!details.has(key)) details.set(key, fetch(`/api/unit/${encodeURIComponent(key)}`).then(r => r.ok ? r.json() : null));
+  return details.get(key);
+}
+
+// One panel: the selected unit, or the hovered unit when nothing is selected. Hovering another unit while one is selected draws that unit's
+// numbers into the selected unit's bars.
+async function renderPanels() {
+  const panel = document.getElementById("panel");
+  const main = selected ? await unit(selected) : hovered ? await unit(hovered) : null;
+  const other = selected && hovered && hovered !== selected ? await unit(hovered) : null;
+  if (!main) { panel.className = "panel empty"; panel.textContent = "Select a unit."; return; }
+  panel.className = "panel";
+  panel.innerHTML = panelHtml(main, other);
+}
+
+// The bar keeps the selected unit's value in yellow up to the smaller of the two. When the compared unit is lower, the part it lacks turns red. When
+// it is higher, the bar runs on past in green.
+function barHtml(value, other, max, cls = "bar") {
+  const pct = v => Math.min(100, Math.max(0, v / max * 100));
+  if (other === undefined || other === value) return `<span class="${cls}"><span class="fill" style="width:${pct(value)}%"></span></span>`;
+  const low = pct(Math.min(value, other)), high = pct(Math.max(value, other));
+  return `<span class="${cls}"><span class="fill" style="width:${low}%"></span><span class="${other < value ? "loss" : "gain"}" style="left:${low}%;width:${high - low}%"></span></span>`;
+}
+function cmpHtml(value, other) {
+  if (other === undefined) return '<span class="cmp"></span>';
+  return `<span class="cmp ${other > value ? "up" : other < value ? "down" : ""}">${other}</span>`;
+}
+
+function panelHtml(u, other) {
+  const s = u.stats, o = other ? other.stats : {}, listed = state.units[u.key];
+  const icon = listed && listed.icon ? `<img src="${art(listed.icon)}" alt="">` : "";
+  const stats = STATS.map(([k, name, img, max]) => `<div class="stat"><img src="${skin(img)}" alt=""><span>${name}</span><span class="v">${s[k]}</span>
+    ${cmpHtml(s[k], o[k])}${barHtml(s[k], o[k], max)}</div>`).join("");
+  const abilityIcons = list => list.length ? list.map(a => a.icon ? `<img loading="lazy" src="${art(a.icon)}" title="${esc(a.name)}" alt="${esc(a.name)}">`
+    : `<span class="noicon" title="${esc(a.key)}">${esc(a.name)}</span>`).join("") : '<span class="none">No abilities</span>';
+  const otherLabel = other && (state.units[other.key] ? capOf(other.key) : other.cap.label);
+  // HP has no fixed maximum, so its bar is scaled to the larger of the two units.
+  const hpMax = Math.max(s.hp, o.hp || 0, 1);
+  return `<div class="p-title">${esc(u.name)}</div>
+    ${other ? `<div class="vs">Comparing with <b>${esc(other.name)}</b>${otherLabel ? `<img src="${gems(otherLabel)}" alt=""><span>${esc(otherLabel)}</span>` : ""}</div>` : ""}
+    <div class="p-sub">${icon}<span>${esc(u.caste)} · ${esc(u.class)} · tier ${s.tier} · ${esc(u.cost)} cost</span></div>
+    <div class="p-top">${u.card ? `<img class="art" src="${art(u.card)}" alt="">` : '<div class="art"></div>'}<div>
+      <div class="meta">${esc(u.key)}</div>
+      <div class="hp"><div class="hp-bar">${barHtml(s.hp, o.hp, hpMax, "hp-fill")}<b><img src="${skin("icon_stat_health_noframe")}" alt="">${u.hp_estimate ? "~" : ""}${s.hp}${other ? cmpHtml(s.hp, o.hp) : ""}</b></div></div>
+      <div class="men"><img src="${skin("icon_entity_small")}" alt="">${s.men}${other ? cmpHtml(s.men, o.men) : ""}</div>
+      ${capHtml(u)}</div></div>
+    <div class="p-head">Recruited from</div>${recruitHtml(u.buildings)}
+    <div class="p-head">Stats</div>${stats}
+    <div class="p-head">Abilities</div><div class="abilities">${abilityIcons(u.abilities)}</div>
+    ${other ? `<div class="vs">${esc(other.name)}</div><div class="abilities">${abilityIcons(other.abilities)}</div>` : ""}
+    ${u.pick && u.key === selected ? pickHtml(u) : ""}`;
+}
+
+function recruitHtml(buildings) {
+  if (!buildings.length) return '<div class="recruit"><span class="muted">No building (recruited by script or other means)</span></div>';
+  return `<div class="recruit">${buildings.map(b => `<div>${b.icon ? `<img src="${art(b.icon)}" alt="">` : ""}<span>${b.name && b.name !== b.chain ? `${esc(b.name)} <span class="muted">· ${esc(b.chain)} · tier ${b.tier}</span>` : `${esc(b.chain)} <span class="muted">· tier ${b.tier}</span>`}${b.script ? ' <span class="muted">(via script)</span>' : ""}</span></div>`).join("")}</div>`;
+}
+
+function capHtml(u) {
+  const label = state.units[u.key] ? capOf(u.key) : u.cap.label;
+  const src = u.cap.source ? SOURCES[u.cap.source] : "No cap";
+  return `<div class="meta">${label ? `<span class="lbl"><img src="${gems(label)}" alt="">${esc(label)}</span>` : ""} ${esc(src)}${u.cap.review ? " · needs review" : ""}</div>`;
+}
+
+// Cap controls for an auto pick: confirm it, take the runner-up or a lookalike's cap, or set one by hand. Nothing is written until Save.
+function pickHtml(u) {
+  const p = u.pick, q = queue[u.key], custom = q || parse(p.pick);
+  return `<div class="capbox" data-key="${esc(u.key)}">
+    <div class="src">${esc(p.mod)} · confidence ${p.confidence.toFixed(2)}${p.confident ? "" : " (low)"}</div>
+    <div class="row"><span class="lbl"><img src="${gems(p.pick)}" alt="">${esc(p.pick)}</span><button class="btn" data-act="use" data-v="${esc(p.pick)}">Confirm</button>
+      <span class="lbl"><img src="${gems(p.runner_up)}" alt="">${esc(p.runner_up)}</span><button class="btn" data-act="use" data-v="${esc(p.runner_up)}">Use runner-up</button></div>
+    <div class="row"><span class="seg">${["core", "special", "rare"].map(c => `<button data-act="cat" data-v="${c}" class="${q && q.category === c ? "on" : ""}">${c}</button>`).join("")}</span>
+      <span class="seg">${[1, 2, 3, 4, 5].map(w => `<button data-act="weight" data-v="${w}" ${custom.category === "core" ? "disabled" : ""} class="${q && q.weight === w ? "on" : ""}">${w}</button>`).join("")}</span></div>
+    ${q ? `<div class="row"><span class="queued-note">Queued: ${esc(fmt(q))}</span><button class="btn" data-act="undo">Undo</button></div>` : ""}
+    ${p.lookalikes.length ? `<div class="src">Lookalikes (hover to compare, click to use their cap)</div><div class="looks">${p.lookalikes.map(l =>
+      `<button data-act="use" data-v="${esc(l.label)}" data-look="${esc(l.key)}"><img src="${gems(l.label)}" alt="">${esc(l.name)} <span class="lbl">${esc(l.label)}</span></button>`).join("")}</div>` : ""}
+  </div>`;
+}
+
+function select(key) {
+  selected = key; hovered = null;
+  renderList(); renderPanels();
+}
+function renderAll() {
+  renderMods(); renderRaces(); renderList(); renderFoot(); renderPanels();
+}
+// A new race or mod filter starts from the top with nothing selected.
+function resetView() {
+  selected = hovered = null;
+  renderRaces(); renderList(); renderPanels();
+  document.getElementById("list").scrollTop = 0;
+}
+function setHovered(key) {
+  if (key !== hovered) { hovered = key; renderPanels(); }
+}
+function setQueue(key, pick) {
+  if (pick) queue[key] = pick; else delete queue[key];
+  write(QUEUE_KEY, queue);
+  renderAll();
+}
+function nextReview() {
+  const keys = raceUnits(current()).filter(openReview);
+  if (!keys.length) { toast("Nothing left to review for this race."); return; }
+  const key = keys[(keys.indexOf(selected) + 1) % keys.length] || keys[0];
+  const section = current().sections.find(s => s.units.includes(key));
+  closed.delete(culture + "/" + section.key);
+  select(key);
+  document.querySelector(`.card[data-key="${CSS.escape(key)}"]`)?.scrollIntoView({block: "center", behavior: "smooth"});
+}
+
+document.getElementById("list").addEventListener("click", e => {
+  const card = e.target.closest(".card");
+  if (card) { select(card.dataset.key); return; }
+  const head = e.target.closest(".section-head");
+  if (head) {
+    const id = culture + "/" + head.parentElement.dataset.section;
+    closed.has(id) ? closed.delete(id) : closed.add(id);
+    renderList();
+  }
+});
+document.getElementById("list").addEventListener("mouseover", e => {
+  const card = e.target.closest(".card");
+  if (card) setHovered(card.dataset.key);
+});
+// Leaving the roster or a lookalike ends the comparison.
+document.getElementById("list").addEventListener("mouseleave", () => setHovered(null));
+document.getElementById("panel").addEventListener("mouseover", e => {
+  const look = e.target.closest("[data-look]");
+  if (look) setHovered(look.dataset.look);
+});
+document.getElementById("panel").addEventListener("mouseout", e => {
+  if (e.target.closest("[data-look]") && !e.relatedTarget?.closest?.("[data-look]")) setHovered(null);
+});
+document.getElementById("panel").addEventListener("click", e => {
+  const btn = e.target.closest("[data-act]");
+  if (!btn || !selected) return;
+  // The unit's current auto pick is the starting point for the custom category and weight buttons.
+  const q = queue[selected], pick = parse(state.units[selected].label);
+  const act = btn.dataset.act, v = btn.dataset.v;
+  if (act === "use") setQueue(selected, parse(v));
+  else if (act === "cat") setQueue(selected, {category: v, weight: v === "core" ? null : (q && q.weight) || pick.weight || 1});
+  else if (act === "weight") {
+    const category = (q && q.category) || pick.category;
+    if (category !== "core") setQueue(selected, {category, weight: Number(v)});
+  } else if (act === "undo") setQueue(selected, null);
+});
+document.getElementById("race-select").addEventListener("change", e => {
+  culture = e.target.value; write(RACE_KEY, culture);
+  resetView();
+});
+document.getElementById("mod-select").addEventListener("change", e => {
+  mod = e.target.value; write(MOD_KEY, mod);
+  pickCulture(culture);
+  resetView();
+});
+document.getElementById("reviews-only").addEventListener("click", () => { reviewsOnly = !reviewsOnly; renderRaces(); renderList(); });
+document.getElementById("next-review").addEventListener("click", nextReview);
+document.addEventListener("keydown", async e => {
+  if (e.target.closest?.("input, select, textarea") || e.ctrlKey || e.metaKey || e.altKey) return;
+  const key = e.key.toLowerCase();
+  if (key === "n") nextReview();
+  else if ((key === "c" || key === "r") && selected) {
+    const u = await unit(selected);
+    if (u && u.pick) setQueue(selected, parse(key === "c" ? u.pick.pick : u.pick.runner_up));
+  }
+});
+
+document.getElementById("save").addEventListener("click", async () => {
+  const changes = Object.entries(queue).map(([key, q]) => ({key, category: q.category, weight: q.weight}));
+  if (!changes.length) return;
+  document.getElementById("save").disabled = true;
+  try {
+    const res = await fetch("/api/save", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({changes})});
+    const body = await res.json();
+    if (!res.ok) { toast(`Save failed: ${body.error}`, true); renderFoot(); return; }
+    queue = {}; write(QUEUE_KEY, queue);
+    for (const c of changes) details.delete(c.key);
+    setState(body.state);
+    toast(`Saved ${changes.length} caps to ${body.files.join(", ")}`);
+  } catch (err) {
+    toast(`Save failed: ${err}`, true); renderFoot();
+  }
+});
+load().catch(err => toast(`Could not load: ${err}`, true));
+</script>
+</body>
+</html>

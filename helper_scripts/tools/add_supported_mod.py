@@ -21,6 +21,7 @@ from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 from core.extract_cache import cached_pack_extract
+from core.pipeline import WORKSHOP_ROOT
 from core.utilities import STEAM_LIBRARY_DRIVE, TEMP_DIR, load_tsv_data, run_rpfm_cli
 from data.supported_mods import SUPPORTED_MODS
 from generators.process_main_units_tables import faction_keys
@@ -37,7 +38,6 @@ VARIANT_SUFFIX = re.compile(r"_\d+$")
 # Castes the LEAPOI generator reads lord and hero overrides for.
 CHARACTER_CASTES = ("lord", "hero")
 # Folder Steam downloads Warhammer 3 Workshop items into, one subfolder per Workshop ID.
-WORKSHOP_ROOT = f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710"
 # Indent of one `SUPPORTED_MODS` element in the registry file.
 ENTRY_INDENT = "    "
 # Registry file the new entry is appended to.
