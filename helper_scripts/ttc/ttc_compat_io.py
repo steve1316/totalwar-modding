@@ -197,6 +197,28 @@ def add_entries(path: str, header: str, groups: Dict[str, List[Tuple[str, str, O
         f.write((newline.join(lines) + ending).encode("utf-8"))
 
 
+def set_header(path: str, header: str) -> bool:
+    """Make a compat file's first line the `-- <header>` comment, replacing an existing first-line comment.
+
+    Args:
+        path (str): Compat file to edit.
+        header (str): Header text, usually the mod's display name.
+
+    Returns:
+        True when the file changed.
+    """
+    with open(path, "rb") as f:
+        text = f.read().decode("utf-8")
+    newline = "\r\n" if "\r\n" in text else "\n"
+    first, _, rest = text.partition("\n")
+    updated = f"-- {header}{newline}" + (rest if first.startswith("--") else text)
+    if updated == text:
+        return False
+    with open(path, "wb") as f:
+        f.write(updated.encode("utf-8"))
+    return True
+
+
 def remove_lines(path: str, keys: Set[str]) -> List[str]:
     """Delete the lines holding entries for the given keys, leaving every other byte untouched.
 

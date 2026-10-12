@@ -4,6 +4,7 @@ Hand files are authoritative. Auto entries go to `!!!!!!!<mod>_auto.lua`, low-co
 `script/` folder is packed into the TTC compat Workshop pack. Nothing is written if confident picks miss the accuracy bar.
 """
 
+import collections
 import glob
 import json
 import logging
@@ -150,6 +151,31 @@ def render_report(
     return "\n".join(lines) + "\n"
 
 
+def name_hand_files(data: ttc_data.TtcData, file_mod: Dict[str, Optional[str]], owners: Dict[str, str]) -> None:
+    """Put each hand file's mod display name in its first-line comment, instead of the pack name.
+
+    A file maps to its mod by file name, or else by the mod that defines most of its units. The vanilla file gets `VANILLA_NAME`. A file that maps to
+    no mod keeps its header.
+
+    Args:
+        data (ttc_data.TtcData): Loaded TTC data, for the hand entries and mod names.
+        file_mod (Dict[str, Optional[str]]): Hand file path to the package its name matches.
+        owners (Dict[str, str]): Unit key to the package that defines it.
+    """
+    vanilla_file = os.path.basename(ttc_compat_io.hand_file_path(ttc_data.VANILLA_PACKAGE))
+    renamed = []
+    for path, entries in sorted(data.hand_entries.items()):
+        package = file_mod.get(path)
+        if not package and os.path.basename(path) != vanilla_file:
+            votes = collections.Counter(owners[entry.key] for entry in entries if entry.key in owners)
+            package = votes.most_common(1)[0][0] if votes else None
+        name = ttc_data.VANILLA_NAME if os.path.basename(path) == vanilla_file else data.mod_names.get(package or "")
+        if name and ttc_compat_io.set_header(path, name):
+            renamed.append(os.path.basename(path))
+    if renamed:
+        logging.info(f"TTC compat: named the mod in the header of {len(renamed)} hand files.")
+
+
 def _split(label: str) -> Tuple[str, Optional[int]]:
     """Split a label into category and weight.
 
@@ -244,6 +270,7 @@ def main() -> int:
     removed = []
     for path, keys_to_remove in sorted(stale.items()):
         removed += [(os.path.basename(path), line) for line in ttc_compat_io.remove_lines(path, keys_to_remove)]
+    name_hand_files(data, file_mod, history)
 
     confident_count = sum(1 for p in predictions if p.confident)
     counts = {"labeled": metrics.n, "targets": len(keys), "confident": confident_count, "review": len(review_rows), "removed": len(removed)}

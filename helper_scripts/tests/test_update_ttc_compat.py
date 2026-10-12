@@ -58,3 +58,17 @@ def test_report_is_not_rewritten_when_only_the_timestamp_changes(tmp_path, monke
     gen.write_report("# TTC compat review\n\nGenerated 2026-09-25 15:00:00 by `update_ttc_compat.py`.\n\nrow b\n")
     assert "15:00:00" in report.read_text()
     assert "row b" in report.read_text()
+
+
+def test_name_hand_files_uses_the_file_name_then_the_units_owner(tmp_path, monkeypatch):
+    from ttc import ttc_data
+    monkeypatch.setattr(ttc_compat_io, "HAND_DIR", str(tmp_path))
+    named, guessed, vanilla, unknown = (tmp_path / f"!!!!!!!{n}.lua" for n in ("ovn_albion", "Great_Harmony_Sentinel", "vanilla", "nobody"))
+    for path in (named, guessed, vanilla, unknown):
+        path.write_text(f"-- {path.stem}\nlocal caps = {{\n}}\n")
+    data = ttc_data.TtcData()
+    data.mod_names = {"ovn_albion.pack": "Albion", "ghs_great_harmony.pack": "Great Harmony Sentinel"}
+    entry = lambda key: ttc_compat_io.TtcEntry(key, "core", None, 3)
+    data.hand_entries = {str(named): [], str(guessed): [entry("ghs_a"), entry("ghs_b")], str(vanilla): [], str(unknown): [entry("lost")]}
+    gen.name_hand_files(data, {str(named): "ovn_albion.pack"}, {"ghs_a": "ghs_great_harmony.pack", "ghs_b": "ghs_great_harmony.pack"})
+    assert [p.read_text().splitlines()[0] for p in (named, guessed, vanilla, unknown)] == ["-- Albion", "-- Great Harmony Sentinel", "-- Vanilla + DLC", "-- !!!!!!!nobody"]

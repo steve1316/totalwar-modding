@@ -83,3 +83,15 @@ def test_add_entries_creates_a_missing_file(tmp_path):
     text = path.read_text()
     assert text.startswith("-- New Mod\nlocal caps = {\n    -- Kislev\n    {\"k1\", \"special\", 1},\n}\n")
     assert "ttc.add_unit_list(caps, true)" in text
+
+
+def test_set_header_replaces_the_first_comment_and_keeps_line_endings(tmp_path):
+    path = tmp_path / "x.lua"
+    path.write_bytes(b"-- ovn_albion\r\nlocal caps = {\r\n}\r\n")
+    assert io_.set_header(str(path), "Albion")
+    assert path.read_bytes() == b"-- Albion\r\nlocal caps = {\r\n}\r\n"
+    assert not io_.set_header(str(path), "Albion")
+    bare = tmp_path / "y.lua"
+    bare.write_text("local caps = {\n}\n")
+    assert io_.set_header(str(bare), "Mod")
+    assert bare.read_text() == "-- Mod\nlocal caps = {\n}\n"
