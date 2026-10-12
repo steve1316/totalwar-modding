@@ -372,7 +372,7 @@
    "ranged": true
   },
   "wh2_dlc14_skv_cha_eshin_sorcerer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_skv_eshin_sorcerer_missile",
    "ranged": true
   },
@@ -1022,22 +1022,37 @@
    "ranged": true
   },
   "wh2_main_skv_cha_grey_seer_plague_0": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_skv_grey_seer_plague_missile",
+   "ranged": true
+  },
+  "wh2_main_skv_cha_grey_seer_plague_1": {
+   "fwm": true,
    "missile": "glf_skv_grey_seer_plague_missile",
    "ranged": true
   },
   "wh2_main_skv_cha_grey_seer_ruin_0": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_skv_grey_seer_ruin_missile",
+   "ranged": true
+  },
+  "wh2_main_skv_cha_grey_seer_ruin_1": {
+   "fwm": true,
    "missile": "glf_skv_grey_seer_ruin_missile",
    "ranged": true
   },
   "wh2_main_skv_cha_lord_skrolk": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_skv_lord_skrolk_missile",
    "ranged": true
   },
   "wh2_main_skv_cha_plague_priest_0": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_skv_plague_priest_missile",
+   "ranged": true
+  },
+  "wh2_main_skv_cha_plague_priest_2": {
+   "fwm": true,
    "missile": "glf_skv_plague_priest_missile",
    "ranged": true
   },
@@ -1307,7 +1322,7 @@
    "ranged": true
   },
   "wh3_dlc20_nur_cha_festus": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_nur_festus_missile",
    "ranged": true
   },
@@ -1442,22 +1457,22 @@
    "ranged": true
   },
   "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain_razorgor_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain_tuskgor_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh3_dlc25_nur_cha_fimir_balefiend_shadow_chieftain": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
@@ -1622,6 +1637,31 @@
    "ranged": true
   },
   "wh3_dlc27_nor_cha_shaman_sorcerer_metal_2_summoned": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_lord_skrolk_cauldron": {
+   "fwm": true,
+   "missile": "glf_skv_lord_skrolk_missile",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_plague_priest_cauldron": {
+   "fwm": true,
+   "missile": "glf_skv_plague_priest_missile",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_thanquol": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_thanquol_boneripper_warpfire_braziers": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_thanquol_boneripper_warpfire_projectors": {
    "fwm": true,
    "missile": "",
    "ranged": true
@@ -1807,7 +1847,7 @@
    "ranged": true
   },
   "wh3_main_ogr_cha_firebelly_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
@@ -2614,6 +2654,16 @@
   "wh_main_nor_cha_chaos_sorcerer_2": {
    "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
+   "ranged": true
+  },
+  "wh_main_teb_cha_wizard_0": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh_main_teb_cha_wizard_1": {
+   "fwm": true,
+   "missile": "",
    "ranged": true
   },
   "wh_main_vmp_cha_heinrich_kemmler": {
