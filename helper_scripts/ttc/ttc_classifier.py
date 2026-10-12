@@ -288,9 +288,25 @@ class Model:
         Returns:
             `(unit key, label)` pairs, closest first.
         """
-        vector = (self.vectorizer.transform([feature_dict(stats, self.context)]) - self._mean) / self._scale
-        distances = np.sqrt(((self._labeled_matrix - vector) ** 2).sum(axis=1))
-        return [(self.labeled[i][0].key, self.labeled[i][1]) for i in np.argsort(distances, kind="stable")[:k]]
+        return self.nearest_labeled_many([stats], k)[0]
+
+    def nearest_labeled_many(self, stats_list: List[UnitStats], k: int = 3) -> List[List[Tuple[str, str]]]:
+        """Find the lookalikes of many units at once. The features of all units are vectorized in one call, which is much faster than one call per unit.
+
+        Args:
+            stats_list (List[UnitStats]): The units to compare.
+            k (int): Number of lookalikes per unit. Defaults to 3.
+
+        Returns:
+            One list of `(unit key, label)` pairs per unit, closest first.
+        """
+        if not stats_list:
+            return []
+        vectors = (self.vectorizer.transform([feature_dict(stats, self.context) for stats in stats_list]) - self._mean) / self._scale
+        # Squared distances as |a|^2 + |b|^2 - 2ab, so one matrix product covers every pair.
+        squared = (vectors**2).sum(axis=1)[:, None] + (self._labeled_matrix**2).sum(axis=1)[None, :] - 2 * vectors @ self._labeled_matrix.T
+        order = np.argsort(np.maximum(squared, 0), axis=1, kind="stable")[:, :k]
+        return [[(self.labeled[i][0].key, self.labeled[i][1]) for i in row] for row in order]
 
 
 def _wilson_lower_bound(successes: int, total: int, z: float = 1.645) -> float:

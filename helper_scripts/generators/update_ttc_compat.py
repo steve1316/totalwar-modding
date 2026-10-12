@@ -174,11 +174,16 @@ def main() -> int:
         write_report(f"# TTC compat review\n\nFAILED: {metrics_line}. Confident picks must reach {ttc_classifier.CONFIDENT_ACCURACY_BAR:.0%}.\n")
         return 1
 
+    step_start = time.time()
     targets = ttc_data.select_targets(data.mod_units, data.vanilla_keys, data.permissions, set(data.labels))
     targets.update(ttc_data.select_vanilla_targets(data.vanilla_units, data.permissions, set(data.labels)))
     keys = sorted(targets)
     non_core = [ttc_data.is_regiment_of_renown(key, data.stats[key].main, targets[key]) for key in keys]
     predictions = model.predict([data.stats[key] for key in keys], non_core)
+    logging.info(f"TTC compat: classified {len(keys)} units in {time.time() - step_start:.0f}s.")
+    step_start = time.time()
+    unsure_keys = [key for key, prediction in zip(keys, predictions) if not prediction.confident]
+    lookalikes = dict(zip(unsure_keys, model.nearest_labeled_many([data.stats[key] for key in unsure_keys])))
     assignments: Dict[str, Dict[str, List[Tuple[str, str, Optional[int]]]]] = {}
     review_rows = []
     for key, prediction in zip(keys, predictions):
@@ -199,11 +204,13 @@ def main() -> int:
                     stats.main.get("caste", ""),
                     stats.land.get("class", ""),
                     stats.main.get("num_men", ""),
-                    model.nearest_labeled(stats),
+                    lookalikes[key],
                 )
             )
     review_rows.sort(key=lambda row: (row[0], row[1]))
     write_auto_files(assignments, data.mod_names)
+    logging.info(f"TTC compat: wrote auto files and found lookalikes for {len(review_rows)} review rows in {time.time() - step_start:.0f}s.")
+    step_start = time.time()
 
     package_names = [name for name, _ in data.mod_units] + data.missing_mods
     file_mod = {path: ttc_data.hand_file_mod(path, package_names) for path in data.hand_entries}
@@ -226,6 +233,8 @@ def main() -> int:
     file_mods.update({os.path.basename(ttc_compat_io.auto_file_path(package)): data.mod_names.get(package, package) for package in assignments})
     # The hand-written vanilla file is not tied to a mod pack, so name it like its auto file.
     file_mods[os.path.basename(ttc_compat_io.auto_file_path(ttc_data.VANILLA_PACKAGE)).replace("_auto.lua", ".lua")] = ttc_data.VANILLA_NAME
+    logging.info(f"TTC compat: wrote the review report and pruned stale hand entries in {time.time() - step_start:.0f}s.")
+    step_start = time.time()
     entries = collect_entries(file_mods)
     names = ttc_data.unit_names(entries, data.stats, ttc_data.load_loc_names())
     records = {key: {"mod": mod, "name": names[key]} for key, mod in entries.items()}
@@ -235,6 +244,7 @@ def main() -> int:
         else:
             record["faction"] = ttc_data.unit_faction(key, data.permissions.get(key, set()))
     delta._write_json(delta.TTC_ENTRIES_PATH, records)
+    logging.info(f"TTC compat: named {len(records)} entries from the loc files in {time.time() - step_start:.0f}s.")
 
     def write_pack() -> None:
         """Replace the pack's `script/` folder with the regenerated compat files."""
