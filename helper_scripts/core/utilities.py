@@ -23,6 +23,8 @@ SCHEMA_PATH = "./schemas/schema_wh3.json"
 
 # Root for every transient folder produced by the helper scripts (vanilla/modded extractions, compat-pack build dirs, etc.).
 TEMP_DIR = "./temp"
+# Timestamped log line format used by the compat-pack scripts.
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
 
 # Each culture's base recruitment group in `units_to_groupings_military_permissions_tables`, keyed by culture shorthand (e.g. `wef`).
 CULTURE_MILITARY_GROUPS = {
@@ -106,11 +108,11 @@ def run_parallel(
     return results
 
 
-def setup_script_logging(log_format: str = "%(asctime)s - %(levelname)s - %(message)s") -> None:
+def setup_script_logging(log_format: str = LOG_FORMAT) -> None:
     """Configure root logging with the given format. The level is INFO unless the `LOG_LEVEL` environment variable says otherwise, e.g. `LOG_LEVEL=DEBUG`.
 
     Args:
-        log_format (str): Format string passed through to `logging.basicConfig`. Defaults to `"%(asctime)s - %(levelname)s - %(message)s"`.
+        log_format (str): Format string passed through to `logging.basicConfig`. Defaults to `LOG_FORMAT`.
     """
     logging.basicConfig(format=log_format, level=os.environ.get("LOG_LEVEL", "INFO").upper())
 
