@@ -337,17 +337,17 @@
    "ranged": true
   },
   "wh2_dlc11_cst_cha_cylostra_direfin_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cst_cylostra_missile",
    "ranged": true
   },
   "wh2_dlc11_cst_cha_cylostra_direfin_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cst_cylostra_missile",
    "ranged": true
   },
   "wh2_dlc11_vmp_cha_heinrich_kemmler_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_heinrich_kemmler_missile",
    "ranged": true
   },
@@ -1197,22 +1197,22 @@
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze_disc": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
@@ -1242,22 +1242,22 @@
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze_disc": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
@@ -1352,12 +1352,12 @@
    "ranged": true
   },
   "wh3_dlc20_tze_cha_cultist_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_dlc20_tze_cha_vilitch": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tze_vilitch_missile",
    "ranged": true
   },
@@ -1392,12 +1392,17 @@
    "ranged": true
   },
   "wh3_dlc24_tze_cha_changeling": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_chs_lord_of_change_missile",
    "ranged": true
   },
+  "wh3_dlc24_tze_cha_changeling_quest_battle": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh3_dlc24_tze_cha_changeling_summoned_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_chs_lord_of_change_missile",
    "ranged": true
   },
@@ -1771,6 +1776,71 @@
    "missile": "",
    "ranged": true
   },
+  "wh3_dlc29_vmp_cha_dieter_helsnicht": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_dieter_helsnicht_undead_manticore": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_barded_nightmare": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart_balefire": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart_lodestone": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_hellsteed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_barded_nightmare": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart_balefire": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart_lodestone": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh3_dlc29_vmp_cha_neferata": {
    "fwm": true,
    "missile": "",
@@ -1782,22 +1852,22 @@
    "ranged": true
   },
   "wh3_dlc29_vmp_cha_neferata_coven_throne": {
-   "fwm": false,
+   "fwm": true,
    "missile": "",
    "ranged": true
   },
   "wh3_dlc29_vmp_cha_neferata_dread_abyssal": {
-   "fwm": false,
+   "fwm": true,
    "missile": "",
    "ranged": true
   },
   "wh3_dlc29_vmp_cha_neferata_hellsteed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "",
    "ranged": true
   },
   "wh3_dlc29_vmp_cha_neferata_zombie_dragon": {
-   "fwm": false,
+   "fwm": true,
    "missile": "",
    "ranged": true
   },
@@ -1972,38 +2042,48 @@
    "ranged": true
   },
   "wh3_main_pro_tze_cha_cultist_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_pro_tze_cha_cultist_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_cultist_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_cultist_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_exalted_lord_of_change_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_exalted_lord_of_change_tzeentch_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_kairos_fateweaver_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tze_kairos_fateweaver_missile",
+   "ranged": true
+  },
+  "wh3_pro10_tze_cha_cultist_0": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_survival_tze_cha_exalted_lord_of_change_tzeentch": {
+   "fwm": true,
+   "missile": "",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_0": {
@@ -2212,42 +2292,42 @@
    "ranged": true
   },
   "wh_dlc04_vmp_cha_helman_ghorst_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_helman_ghorst_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_helman_ghorst_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_helman_ghorst_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_master_necromancer_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_master_necromancer_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_master_necromancer_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_necromancer_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_necromancer_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_necromancer_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
@@ -2772,32 +2852,32 @@
    "ranged": true
   },
   "wh_main_vmp_cha_heinrich_kemmler": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_heinrich_kemmler_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_master_necromancer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_master_necromancer_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_master_necromancer_5": {
-   "fwm": false,
-   "missile": "glf_mage_hero_vampire_missile",
+   "fwm": true,
+   "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_necromancer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_necromancer_5": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   }
