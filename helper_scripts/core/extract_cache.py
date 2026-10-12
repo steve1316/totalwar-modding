@@ -26,9 +26,13 @@ import uuid
 from typing import Any, Dict, Iterator, List, Optional
 
 
-# The main checkout's `.git` folder, which every worktree shares. Empty when git is unavailable or this is not a checkout.
-_GIT_COMMON_DIR = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"], capture_output=True, text=True).stdout.strip() if shutil.which("git") else ""
 LOCAL_CACHE_ROOT = "./extract_cache"
+# The main checkout's `.git` folder, which every worktree shares. Empty when the root is set by hand, git is unavailable or this is not a checkout.
+_GIT_COMMON_DIR = (
+    subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"], capture_output=True, text=True).stdout.strip()
+    if not os.environ.get("EXTRACT_CACHE_ROOT") and shutil.which("git")
+    else ""
+)
 CACHE_ROOT = os.environ.get("EXTRACT_CACHE_ROOT") or (f"{os.path.dirname(_GIT_COMMON_DIR)}/helper_scripts/extract_cache" if _GIT_COMMON_DIR else LOCAL_CACHE_ROOT)
 OBJECTS_ROOT = f"{CACHE_ROOT}/objects"
 # Staging stays local and relative because rpfm cannot parse a drive-letter path after the `;` separator.
@@ -43,8 +47,8 @@ _LOCK = threading.Lock()
 _MANIFEST: Optional[Dict[str, Dict[str, Any]]] = None
 _RUN_MEMO: Dict[str, str] = {}
 _TOOLCHAIN_HASH: Optional[str] = None
-# Cache hits, misses and rpfm time for the summary logged at exit.
-_STATS = {"hits": 0, "misses": 0, "rpfm_calls": 0, "rpfm_seconds": 0.0}
+# Cache hits, misses and rpfm time for the summary logged at exit. Every miss is one rpfm call.
+_STATS = {"hits": 0, "misses": 0, "rpfm_seconds": 0.0}
 
 
 def cache_enabled() -> bool:
@@ -215,7 +219,6 @@ def _run_extract(pack_path: str, source_kind: str, source: str, tables_as_tsv: b
     start = time.time()
     result = subprocess.run(args, capture_output=True, text=True, errors="replace")
     with _LOCK:
-        _STATS["rpfm_calls"] += 1
         _STATS["rpfm_seconds"] += time.time() - start
     return result
 
@@ -314,9 +317,10 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
         with open(meta_path, "r", encoding="utf-8") as f:
             meta = json.load(f)
         _warn_binary(pack_path, meta.get("binary_tables", []))
-        # Mark the entry as used so `prune_cache` in another worktree keeps it.
+        # Mark the entry as used so `prune_cache` in another worktree keeps it. Once a day is enough for a week-long grace period.
         try:
-            os.utime(meta_path)
+            if time.time() - os.path.getmtime(meta_path) > 24 * 3600:
+                os.utime(meta_path)
         except OSError:
             pass
         with _LOCK:
@@ -328,7 +332,7 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
     staging = f"{STAGING_ROOT}/{uuid.uuid4().hex}"
     os.makedirs(STAGING_ROOT, exist_ok=True)
     process = _run_extract(pack_path, source_kind, source, tables_as_tsv, staging)
-    return_code, rpfm_output = process.returncode, (process.stderr or process.stdout).strip()
+    return_code = process.returncode
     produced = os.path.exists(staging)
     binary_tables = _binary_tables(staging, tables_as_tsv)
     _warn_binary(pack_path, binary_tables)
@@ -358,7 +362,7 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
         result["tree"] = tree
         result.pop("staging")
     elif return_code != 0:
-        logging.warning(f"rpfm exited with {return_code} extracting {source} from {os.path.basename(pack_path)}. The result was not cached. rpfm said: {rpfm_output[-500:]}")
+        logging.warning(f"rpfm exited with {return_code} extracting {source} from {os.path.basename(pack_path)}. The result was not cached. rpfm said: {(process.stderr or process.stdout).strip()[-500:]}")
     return result
 
 
@@ -462,24 +466,26 @@ def _rmtree(path: str) -> None:
     shutil.rmtree(full_path, ignore_errors=True)
 
 
-def _used_recently(path: str) -> bool:
+def _used_recently(entry_dir: str) -> bool:
     """Check whether a cache entry was written or read within `PRUNE_GRACE_SECONDS`. Reads refresh the entry's `meta.json` mtime.
 
     Args:
-        path (str): An entry's `meta.json`, or the entry folder when the meta is missing.
+        entry_dir (str): The entry folder. Its own mtime counts when the meta is missing, e.g. while another process is still writing it.
 
     Returns:
-        True if the path changed recently. A missing path counts as unused.
+        True if the entry changed recently.
     """
-    try:
-        return time.time() - os.path.getmtime(path) < PRUNE_GRACE_SECONDS
-    except OSError:
-        return False
+    for path in (f"{entry_dir}/meta.json", entry_dir):
+        try:
+            if time.time() - os.path.getmtime(path) < PRUNE_GRACE_SECONDS:
+                return True
+        except OSError:
+            pass
+    return False
 
 
 def prune_cache(keep_pack_shas: List[str]) -> int:
-    """Delete cached extractions for packs whose hash is no longer referenced, entries made with an older rpfm schema or exe, and entries that are neither
-    db tables nor loc text.
+    """Delete cached extractions for packs whose hash is no longer referenced and entries made with an older rpfm schema or exe.
 
     The cache is shared between worktrees, so anything used within `PRUNE_GRACE_SECONDS` is kept even when this worktree no longer needs it.
 
@@ -498,7 +504,7 @@ def prune_cache(keep_pack_shas: List[str]) -> int:
     for name in os.listdir(OBJECTS_ROOT):
         pack_dir = f"{OBJECTS_ROOT}/{name}"
         if name not in keep:
-            if not any(_used_recently(f"{pack_dir}/{entry}/meta.json") or _used_recently(f"{pack_dir}/{entry}") for entry in os.listdir(pack_dir)):
+            if not any(_used_recently(f"{pack_dir}/{entry}") for entry in os.listdir(pack_dir)):
                 _rmtree(pack_dir)
                 removed += 1
             continue
@@ -507,11 +513,10 @@ def prune_cache(keep_pack_shas: List[str]) -> int:
             try:
                 with open(meta_path, "r", encoding="utf-8") as f:
                     meta = json.load(f)
-                # Loc `text` extractions are kept too, since TTC reads every mod's loc files on each run.
-                outdated = meta.get("toolchain") != current_toolchain or not meta.get("source", "").startswith(("db/", "text"))
+                outdated = meta.get("toolchain") != current_toolchain
             except (FileNotFoundError, json.JSONDecodeError):
                 outdated = True
-            if outdated and not _used_recently(meta_path) and not _used_recently(f"{pack_dir}/{entry}"):
+            if outdated and not _used_recently(f"{pack_dir}/{entry}"):
                 _rmtree(f"{pack_dir}/{entry}")
     return removed
 
@@ -520,7 +525,7 @@ def log_cache_summary() -> None:
     """Log how many extractions this process served from the cache and how long rpfm took for the rest."""
     if _STATS["hits"] or _STATS["misses"]:
         logging.info(
-            f"Extract cache: {_STATS['hits']} hit(s), {_STATS['misses']} miss(es), {_STATS['rpfm_calls']} rpfm call(s) taking {_STATS['rpfm_seconds']:.0f}s."
+            f"Extract cache: {_STATS['hits']} hit(s), {_STATS['misses']} miss(es) extracted by rpfm in {_STATS['rpfm_seconds']:.0f}s."
         )
 
 

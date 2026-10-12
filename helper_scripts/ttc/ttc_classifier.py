@@ -253,6 +253,7 @@ class Model:
         self._mean = matrix.mean(axis=0)
         self._scale = matrix.std(axis=0) + 1e-9
         self._labeled_matrix = (matrix - self._mean) / self._scale
+        self._labeled_norms = (self._labeled_matrix**2).sum(axis=1)
 
     def predict(self, stats_list: List[UnitStats], non_core: Optional[List[bool]] = None) -> List[Prediction]:
         """Classify units.
@@ -304,7 +305,7 @@ class Model:
             return []
         vectors = (self.vectorizer.transform([feature_dict(stats, self.context) for stats in stats_list]) - self._mean) / self._scale
         # Squared distances as |a|^2 + |b|^2 - 2ab, so one matrix product covers every pair.
-        squared = (vectors**2).sum(axis=1)[:, None] + (self._labeled_matrix**2).sum(axis=1)[None, :] - 2 * vectors @ self._labeled_matrix.T
+        squared = (vectors**2).sum(axis=1)[:, None] + self._labeled_norms[None, :] - 2 * vectors @ self._labeled_matrix.T
         order = np.argsort(np.maximum(squared, 0), axis=1, kind="stable")[:, :k]
         return [[(self.labeled[i][0].key, self.labeled[i][1]) for i in row] for row in order]
 

@@ -601,7 +601,6 @@ if __name__ == "__main__":
             for idx, mod in process_order:
                 if mod["package_name"] == "vanilla":
                     logging.info(f"Processing vanilla units...")
-                    unmatched_units["vanilla"] = []
                     factions_data = tsv_to_faction_data(
                         mod,
                         factions_data,
@@ -613,7 +612,7 @@ if __name__ == "__main__":
                         df_character_skill_nodes_vanilla,
                         recruit_groups=recruit_groups,
                         dropped_units=dropped_units,
-                        unmatched_units=unmatched_units["vanilla"],
+                        unmatched_units=unmatched_units.setdefault("vanilla", []),
                     )
                     continue
 
