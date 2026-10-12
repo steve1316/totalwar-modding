@@ -566,7 +566,8 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
         entry = sets.get(land_row["man_animation"])
         kind = unit_kind(entry.vanilla, names) if entry else ""
         live = entry.live if entry else None
-        slot_names = {names.get(slot.slot_id, "") for slot in live.slots} if live else set()
+        # Slots with no animation do not play, e.g. the empty rider fire slots of the Skink Priest on a Stegadon.
+        slot_names = {names.get(slot.slot_id, "") for slot in live.slots if slot.refs} if live else set()
         fire_slot = bool(FIRE_SLOT_NAMES & slot_names)
         combat_ready = "COMBAT_READY" in slot_names
         rows.append(

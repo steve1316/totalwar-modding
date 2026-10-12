@@ -541,12 +541,16 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
         The slot names added.
     """
     added = []
+    names = {slot_id: name for name, slot_id in ids.items()}
+    # Fire slots with no animation never play, so they are dropped and filled again below.
+    empty = {slot.slot_id for slot in anim_set.slots if not slot.refs and FIRE_FAMILY.match(names.get(slot.slot_id, ""))}
+    anim_set.slots[:] = [slot for slot in anim_set.slots if slot.slot_id not in empty]
     added += replace_backwards_fire(anim_set, ids, files, defaults, override, result)
     added += replace_standing_rider_fire(anim_set, ids, files, defaults, override, result)
     present = {slot.slot_id for slot in anim_set.slots}
-    # A set that already fires through any fire slot keeps GLF's choice of slots.
-    fires = any(ids[name] in present for name in catalog.FIRE_SLOT_NAMES)
     for kind in sorted(kinds):
+        # A set that already fires through any fire slot keeps GLF's choice of slots, unless this kind's own slot was left empty.
+        fires = ids[FIRE_SLOTS[kind][0]] in present or (ids[FIRE_SLOTS[kind][0]] not in empty and any(ids[name] in present for name in catalog.FIRE_SLOT_NAMES))
         missing = [] if fires else [name for name in FIRE_SLOTS[kind] if ids[name] not in present]
         if missing:
             found = find_fire_ref(anim_set, kind, ids, files, defaults, override, result)
