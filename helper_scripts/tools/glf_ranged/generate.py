@@ -62,6 +62,11 @@ FIRE_FAMILY = re.compile(r"^(FIRE_|MOVING_FIRE_|RIDER_FIRE_|RIDER_SHOOT_TURN_)")
 FIRE_ANIM_OVERRIDES = {
     "hu1e_dlc24_bi1_eagle_mage_hero": "animations/battle/humanoid01e/rider/eagle/attacks/hu1e_dlc24_bi1_eagle_mage_hero_astromancer_attack_01.anim",
 }
+# Set name to a set whose fire slots it borrows, for riders with no usable cast. The Skink Priest on a Stegadon throws like the skink crew
+# beside him, whose seated throws cover forward, left, right and back (2026-10-12).
+FIRE_SLOT_DONORS = {
+    "hu7_skink_hq1_stegadon_wb_staff_and_club": "hu7_skink_hq1_stegadon_wb_javelin",
+}
 # Shoot stance slots and the slots they copy, which vanilla units that fire while moving on foot also have.
 SHOOT_SOURCES = [
     ("SHOOT_STAND", "STAND"),
@@ -524,13 +529,14 @@ def replace_standing_rider_fire(anim_set: AnimSet, ids: Dict[str, int], files: G
     return [f"{names[anim_set.slots[i].slot_id]} (was standing)" for i in standing]
 
 
-def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result, fwm_kinds: Set[str] = frozenset()) -> List[str]:
+def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result, fwm_kinds: Set[str] = frozenset(), donor: Optional[AnimSet] = None) -> List[str]:
     """Add the fire, combat-ready and fire-while-moving slots a set is missing.
 
     Args:
         anim_set (AnimSet): Set to change in place.
         kinds (Set[str]): Unit kinds of the ticked units using the set.
         fwm_kinds (Set[str]): Unit kinds of the units using the set that should fire while moving.
+        donor (Optional[AnimSet]): Set from `FIRE_SLOT_DONORS` whose fire slots fill the ones this set lacks, or None.
         ids (Dict[str, int]): Slot id by name.
         files (GameFiles): File reader.
         defaults (Dict): Fire defaults from `fire_defaults`.
@@ -545,6 +551,12 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
     # Fire slots with no animation never play, so they are dropped and filled again below.
     empty = {slot.slot_id for slot in anim_set.slots if not slot.refs and FIRE_FAMILY.match(names.get(slot.slot_id, ""))}
     anim_set.slots[:] = [slot for slot in anim_set.slots if slot.slot_id not in empty]
+    present = {slot.slot_id for slot in anim_set.slots}
+    if donor is not None:
+        copies = [slot for slot in donor.slots if slot.refs and FIRE_FAMILY.match(names.get(slot.slot_id, "")) and slot.slot_id not in present]
+        anim_set.slots += copies
+        present |= {slot.slot_id for slot in copies}
+        added += [f"{names[slot.slot_id]} (from {donor.name})" for slot in copies]
     added += replace_backwards_fire(anim_set, ids, files, defaults, override, result)
     added += replace_standing_rider_fire(anim_set, ids, files, defaults, override, result)
     present = {slot.slot_id for slot in anim_set.slots}
@@ -848,7 +860,8 @@ def patch_sets(missiles: Dict[str, str], fwm_units: Set[str], ticked: Dict[str, 
             result.manual.append(f"{set_name}: not a vanilla animation set")
             continue
         anim_set = replace(entry.live, slots=list(entry.live.slots))
-        added = patch_set(anim_set, kinds, ids, files, defaults, overrides.get(set_name), result, fwm_kinds_by_set[set_name])
+        donor = inputs.sets.get(FIRE_SLOT_DONORS.get(set_name, ""))
+        added = patch_set(anim_set, kinds, ids, files, defaults, overrides.get(set_name), result, fwm_kinds_by_set[set_name], donor.vanilla if donor else None)
         if added:
             result.sets[set_name] = added
             changed_sets[entry.path] = anim_set
