@@ -49,6 +49,8 @@ GLF_PACKAGE = "!!!1a_glf_battle_mage_Dante.pack"
 NEW_UNIT_COLUMNS = {"primary_ammo": "20", "ai_usage_group": "hybrid_mage_highvalue"}
 # Junction attach type for riders on monster mounts, whose personality needs GLF's missile stats to fire.
 AUTONOMOUS_RIDER = "autonomous_rider"
+# Junction attach type for a hero carried as an officer, e.g. Settra on his Warsphinx, who fires like an autonomous rider.
+OFFICER = "officer"
 # Fire slots each unit kind needs, all filled with the same cast animation.
 FIRE_SLOTS = {
     "foot": ["FIRE_LEVEL"],
@@ -615,6 +617,10 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
         missing = [] if fires else [name for name in FIRE_SLOTS[kind] if ids[name] not in present]
         if missing:
             found = find_fire_ref(anim_set, kind, ids, files, defaults, override, result)
+            # A hero standing on a war machine with no rider cast, e.g. Settra on his Warsphinx, fires with his on-foot fire animation.
+            fire_level = next((slot for slot in anim_set.slots if slot.slot_id == ids["FIRE_LEVEL"] and slot.refs), None)
+            if found is None and own_slots and kind == "rider" and fire_level is not None:
+                found = fire_level, fire_level.refs[0]
             added += add_fire_slots(anim_set, missing, found, ids, present, result, kind)
         if kind != "rider" and ids["COMBAT_READY"] not in present and ids["FIRE_LEVEL"] in present:
             added += copy_slots(anim_set, COMBAT_READY_SOURCES, ids, present)
@@ -747,7 +753,8 @@ def update_personalities(missiles: Dict[str, str], rows: Dict[str, catalog.UnitR
     vanilla_personalities = {row["key"]: row for row in inputs.tables["battle_personalities_tables"]}
     users = collections.defaultdict(set)
     for junction in inputs.tables["land_units_to_battle_personalities_junctions_tables"]:
-        if junction["attach"] == AUTONOMOUS_RIDER:
+        hero = vanilla_personalities.get(junction["battle_personality"], {}).get("autonomous_rider_hero") == "true"
+        if junction["attach"] == AUTONOMOUS_RIDER or (junction["attach"] == OFFICER and hero):
             users[junction["battle_personality"]].add(junction["land_unit"])
     # Crews that carry their own weapon in vanilla, e.g. the skinks on Mazdamundi's Stegadon, keep it rather than firing the lord's spell.
     for key in list(personalities.rows):
@@ -891,7 +898,7 @@ def patch_sets(missiles: Dict[str, str], fwm_units: Set[str], ticked: Dict[str, 
     hero_rider_sets = collections.defaultdict(set)
     for junction in inputs.tables["land_units_to_battle_personalities_junctions_tables"]:
         personality = personalities.get(junction["battle_personality"], {})
-        if junction["attach"] == AUTONOMOUS_RIDER and personality.get("autonomous_rider_hero") == "true" and not personality.get("battle_entity_stats"):
+        if junction["attach"] in (AUTONOMOUS_RIDER, OFFICER) and personality.get("autonomous_rider_hero") == "true" and not personality.get("battle_entity_stats"):
             hero_rider_sets[junction["land_unit"]].add(personality["man_animations_table"])
     overrides: Dict[str, List[float]] = {}
     for key in missiles:
