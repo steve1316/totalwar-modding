@@ -57,10 +57,12 @@ FIRE_SLOTS = {
 }
 # Slots that play a fire animation, checked for animations that face backwards.
 FIRE_FAMILY = re.compile(r"^(FIRE_|MOVING_FIRE_|RIDER_FIRE_|RIDER_SHOOT_TURN_)")
-# Set name to the animation its fire slots play instead of a cast, for riders whose only casts stand them up. The Astromancer's Great Moon Bird
-# casts are his on-foot casts, so he fires with his seated staff swing (2026-10-12).
+# Set name to what its fire slots play instead: an animation path, or the name of a slot in the set whose animation and meta to reuse.
+# The Astromancer's Great Moon Bird casts are his on-foot casts, so he fires with his seated staff swing. GLF's Eshin Sorcerer fired with the generic
+# Skaven cast, whose meta docks his weapon in the wrong place, so he fires with his own cast (2026-10-12).
 FIRE_ANIM_OVERRIDES = {
     "hu1e_dlc24_bi1_eagle_mage_hero": "animations/battle/humanoid01e/rider/eagle/attacks/hu1e_dlc24_bi1_eagle_mage_hero_astromancer_attack_01.anim",
+    "hu17_skaven_eshin_staff_and_sword": "CAST_SPELL_UP_SHORT",
 }
 # Set name to a set whose fire slots it borrows, for riders with no usable cast. The Skink Priest on a Stegadon throws like the skink crew
 # beside him, whose seated throws cover forward, left, right and back (2026-10-12).
@@ -466,6 +468,12 @@ def use_fire_anim_override(anim_set: AnimSet, ids: Dict[str, int], files: GameFi
         return []
     names = {slot_id: name for name, slot_id in ids.items()}
     meta_path = os.path.splitext(anim_path)[0] + ".anm.meta"
+    if anim_path in ids:
+        source = next((slot for slot in anim_set.slots if slot.slot_id == ids[anim_path] and slot.refs), None)
+        if source is None:
+            result.manual.append(f"{anim_set.name}: fire animation override slot {anim_path} is empty")
+            return []
+        anim_path, meta_path = source.refs[0].anim, source.refs[0].meta
     files.prefetch([anim_path, meta_path])
     anim = files.read(anim_path)
     if anim is None:
