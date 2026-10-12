@@ -63,6 +63,7 @@ FIRE_FAMILY = re.compile(r"^(FIRE_|MOVING_FIRE_|RIDER_FIRE_|RIDER_SHOOT_TURN_)")
 FIRE_ANIM_OVERRIDES = {
     "hu1e_dlc24_bi1_eagle_mage_hero": "animations/battle/humanoid01e/rider/eagle/attacks/hu1e_dlc24_bi1_eagle_mage_hero_astromancer_attack_01.anim",
     "hu17_skaven_eshin_staff_and_sword": "CAST_SPELL_UP_SHORT",
+    "hu1_settra_wm_tomb_chariot01_2handed_halberd": "RIDER_CAST_SPELL_FORWARD_SHORT",
 }
 # Set name to a set whose fire slots it borrows, for riders with no usable cast. The Skink Priest on a Stegadon throws like the skink crew
 # beside him, whose seated throws cover forward, left, right and back (2026-10-12).
@@ -376,6 +377,13 @@ def find_fire_ref(anim_set: AnimSet, kind: str, ids: Dict[str, int], files: Game
         The cast slot and the reference the fire slots should use, or None when no cast animation faces forward.
     """
     by_id = {slot.slot_id: slot for slot in anim_set.slots}
+    # A slot named in `FIRE_ANIM_OVERRIDES` is used as is, since it was checked in game.
+    chosen = FIRE_ANIM_OVERRIDES.get(anim_set.name, "")
+    if ids.get(chosen) in by_id and by_id[ids[chosen]].refs:
+        slot = by_id[ids[chosen]]
+        anim = files.read(slot.refs[0].anim)
+        if anim is not None:
+            return slot, marked_ref(slot.refs[0], read_anim_header(anim), files, defaults, override, result)
     candidates = [by_id[ids[name]] for name in catalog.CAST_SLOTS[kind] if ids.get(name) in by_id and by_id[ids[name]].refs]
     files.prefetch(path for slot in candidates for path in (slot.refs[0].anim, slot.refs[0].meta))
     for slot in candidates:
