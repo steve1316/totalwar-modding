@@ -1,8 +1,9 @@
-"""Tests for the extraction cache: quiet rpfm failures and the shared-cache prune grace period."""
+"""Tests for the extraction cache: cache hits, quiet rpfm failures, in-place reads and the shared-cache prune grace period."""
 
 import os
 import subprocess
 import time
+from pathlib import Path
 
 import pytest
 
@@ -66,3 +67,11 @@ def test_prune_keeps_entries_another_worktree_used_recently(cache, tmp_path):
     assert ec.prune_cache([]) == 1
     assert not (objects / "old").exists()
     assert (objects / "recent").exists()
+
+
+def test_extracted_tree_reads_the_cache_in_place(cache, tmp_path):
+    with ec.extracted_tree(cache["pack"], "db/a_tables") as folder:
+        assert tmp_path / "objects" in Path(folder).parents
+        assert open(f"{folder}/db/a_tables/mod.tsv", encoding="utf-8").read() == "db/a_tables"
+    with ec.extracted_tree(str(tmp_path / "no.pack"), "db/a_tables") as folder:
+        assert folder is None

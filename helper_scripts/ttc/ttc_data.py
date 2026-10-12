@@ -8,7 +8,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Set, Tuple
 
-from core.extract_cache import cached_pack_extract
+from core.extract_cache import cached_pack_extract, extracted_tree
 from core.pipeline import workshop_pack_path
 from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR, load_tsv_data
 from data.supported_mods import SUPPORTED_MODS
@@ -202,11 +202,12 @@ def load_loc_names() -> Dict[str, str]:
     for folder in sorted(glob.glob(TRANSLATION_MODS_GLOB)):
         if TRANSLATION_MOD_PATTERN.search(os.path.basename(folder)):
             read_loc_names(folder, names)
-    packs = [(mod["package_name"], mod["path"]) for mod in SUPPORTED_MODS if mod["path"] and os.path.exists(mod["path"])]
-    for tag, pack_path in packs + [("vanilla_local_en", VANILLA_LOC_PACK)]:
-        dest = f"{SCRATCH}/loc/{tag.replace('.pack', '').replace(' ', '_')}"
-        cached_pack_extract(pack_path, "text", dest)
-        read_loc_names(dest, names)
+    packs = [mod["path"] for mod in SUPPORTED_MODS if mod["path"] and os.path.exists(mod["path"])]
+    for pack_path in packs + [VANILLA_LOC_PACK]:
+        # Read the loc files in place. Copying ~4,000 files out of the cache every run costs seconds of file I/O.
+        with extracted_tree(pack_path, "text") as folder:
+            if folder:
+                read_loc_names(folder, names)
     return names
 
 

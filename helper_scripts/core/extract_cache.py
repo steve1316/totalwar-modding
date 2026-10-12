@@ -13,6 +13,7 @@ unless the `EXTRACT_CACHE_ROOT` environment variable points somewhere else.
 """
 
 import atexit
+import contextlib
 import hashlib
 import json
 import logging
@@ -22,7 +23,7 @@ import subprocess
 import threading
 import time
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Iterator, List, Optional
 
 
 # The main checkout's `.git` folder, which every worktree shares. Empty when git is unavailable or this is not a checkout.
@@ -381,6 +382,48 @@ def extraction_content_sha(pack_path: str, source: str, source_kind: str = "fold
     return result["content_sha"]
 
 
+def _extract_and_record(pack_path: str, source: str, source_kind: str, tables_as_tsv: bool) -> Optional[Dict[str, Any]]:
+    """Run `ensure_extracted` and record the access for `delta.py`.
+
+    Args:
+        pack_path (str): Path to the `.pack` file.
+        source (str): Pack-relative path being extracted.
+        source_kind (str): `folder` or `file`.
+        tables_as_tsv (bool): Whether tables are converted to TSV.
+
+    Returns:
+        The `ensure_extracted` result, or None if the pack does not exist.
+    """
+    access = {"pack": normalize_path(pack_path) if pack_path else "", "source": source, "source_kind": source_kind, "tables_as_tsv": tables_as_tsv}
+    result = ensure_extracted(pack_path, source, source_kind, tables_as_tsv)
+    if result is None:
+        _record_access({**access, "missing": True})
+    else:
+        _record_access({**access, "pack_sha": result["pack_sha"], "content_sha": result["content_sha"]})
+    return result
+
+
+@contextlib.contextmanager
+def extracted_tree(pack_path: str, source: str, source_kind: str = "folder", tables_as_tsv: bool = True) -> Iterator[Optional[str]]:
+    """Serve an extraction for reading straight from the cache instead of copying it. The caller must not change the folder.
+
+    Args:
+        pack_path (str): Path to the `.pack` file.
+        source (str): Pack-relative path being extracted.
+        source_kind (str): `folder` or `file`. Defaults to `folder`.
+        tables_as_tsv (bool): Whether tables are converted to TSV. Defaults to True.
+
+    Yields:
+        A folder laid out like a `cached_pack_extract` destination, or None when the pack is missing or has nothing at `source`.
+    """
+    result = _extract_and_record(pack_path, source, source_kind, tables_as_tsv)
+    try:
+        yield (result["tree"] or result["staging"]) if result and result["produced"] else None
+    finally:
+        if result and result.get("staging"):
+            _rmtree(result["staging"])
+
+
 def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str = "folder", tables_as_tsv: bool = True) -> None:
     """Drop-in replacement for `rpfm_cli pack extract` that serves unchanged packs from the cache.
 
@@ -393,12 +436,9 @@ def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str
         source_kind (str): `folder` or `file`. Defaults to `folder`.
         tables_as_tsv (bool): Whether tables are converted to TSV. Defaults to True.
     """
-    access = {"pack": normalize_path(pack_path) if pack_path else "", "source": source, "source_kind": source_kind, "tables_as_tsv": tables_as_tsv}
-    result = ensure_extracted(pack_path, source, source_kind, tables_as_tsv)
+    result = _extract_and_record(pack_path, source, source_kind, tables_as_tsv)
     if result is None:
-        _record_access({**access, "missing": True})
         return
-    _record_access({**access, "pack_sha": result["pack_sha"], "content_sha": result["content_sha"]})
 
     # rpfm leaves no destination folder when the pack has nothing at `source`, and callers rely on that to detect missing tables.
     if not result["produced"]:
@@ -438,7 +478,8 @@ def _used_recently(path: str) -> bool:
 
 
 def prune_cache(keep_pack_shas: List[str]) -> int:
-    """Delete cached extractions for packs whose hash is no longer referenced, entries made with an older rpfm schema or exe, and non-table entries.
+    """Delete cached extractions for packs whose hash is no longer referenced, entries made with an older rpfm schema or exe, and entries that are neither
+    db tables nor loc text.
 
     The cache is shared between worktrees, so anything used within `PRUNE_GRACE_SECONDS` is kept even when this worktree no longer needs it.
 
@@ -466,7 +507,8 @@ def prune_cache(keep_pack_shas: List[str]) -> int:
             try:
                 with open(meta_path, "r", encoding="utf-8") as f:
                     meta = json.load(f)
-                outdated = meta.get("toolchain") != current_toolchain or not meta.get("source", "").startswith("db/")
+                # Loc `text` extractions are kept too, since TTC reads every mod's loc files on each run.
+                outdated = meta.get("toolchain") != current_toolchain or not meta.get("source", "").startswith(("db/", "text"))
             except (FileNotFoundError, json.JSONDecodeError):
                 outdated = True
             if outdated and not _used_recently(meta_path) and not _used_recently(f"{pack_dir}/{entry}"):
