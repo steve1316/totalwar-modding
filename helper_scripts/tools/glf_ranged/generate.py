@@ -47,6 +47,13 @@ FILES_DIR = f"{TEMP_DIR}/glf_ranged_files"
 GLF_PACKAGE = "!!!1a_glf_battle_mage_Dante.pack"
 # Columns a new GLF land unit row changes from vanilla, besides the missile.
 NEW_UNIT_COLUMNS = {"primary_ammo": "20", "ai_usage_group": "hybrid_mage_highvalue"}
+# Columns GLF owns in each table it copies from vanilla. Every other column follows vanilla, so a CA balance patch reaches GLF's rows. Values that
+# start with `glf_`, e.g. GLF attribute groups and chariot copies, are kept too.
+OWNED_COLUMNS = {
+    "land_units_tables": ["primary_missile_weapon", "primary_ammo", "ai_usage_group"],
+    "battle_personalities_tables": ["battle_entity_stats"],
+}
+GLF_PREFIX = "glf_"
 # Junction attach type for riders on monster mounts, whose personality needs GLF's missile stats to fire.
 AUTONOMOUS_RIDER = "autonomous_rider"
 # Junction attach type for a hero carried as an officer, e.g. Settra on his Warsphinx, who fires like an autonomous rider.
@@ -324,6 +331,10 @@ class Result:
     fwm: List[str] = field(default_factory=list)
     # Chariot units given a full firing arc, with the GLF chariot they now use.
     arcs: List[str] = field(default_factory=list)
+    # Rows brought up to the current vanilla values, with the columns that changed.
+    refreshed: List[str] = field(default_factory=list)
+    # Tables whose layout was moved to the current vanilla version, with the old and new version.
+    relaid: List[str] = field(default_factory=list)
 
 
 def fire_defaults(inputs: catalog.Inputs, files: GameFiles) -> Dict[str, Tuple[float, Tuple[float, float, float]]]:
@@ -719,6 +730,37 @@ def add_moving_fire(anim_set: AnimSet, kind: str, ids: Dict[str, int], present: 
     return added
 
 
+def refresh_from_vanilla(tsv: TsvFile, table: str, vanilla: Dict[str, Dict[str, str]], result: Result, layout: Callable[[str], Tuple[List[str], int]] = catalog.vanilla_layout) -> None:
+    """Bring GLF's copies of vanilla rows up to the current vanilla values and table layout, keeping the columns GLF owns.
+
+    Args:
+        tsv (TsvFile): GLF's table, changed in place.
+        table (str): Table name, a key of `OWNED_COLUMNS`.
+        vanilla (Dict[str, Dict[str, str]]): Current vanilla rows by key.
+        result (Result): Collects the refreshed rows and any layout change.
+        layout (Callable[[str], Tuple[List[str], int]]): Reads a vanilla table's columns and version. Tests pass a stub.
+    """
+    header, version = layout(table)
+    old_version = tsv.head_lines[1].split(";")[1] if len(tsv.head_lines) > 1 else ""
+    if header != tsv.header or old_version != str(version):
+        name = tsv.head_lines[1].split("\t")[0].split(";")[2]
+        tsv.head_lines = ["\t".join(header), f"#{table};{version};{name}" + "\t" * (len(header) - 1)]
+        result.relaid.append(f"{table}: version {old_version} to {version}")
+    old_header, tsv.header = tsv.header, header
+    owned = set(OWNED_COLUMNS[table])
+    for key, values in list(tsv.rows.items()):
+        old = dict(zip(old_header, values))
+        row = vanilla.get(old.get(header[0], key))
+        if row is None:
+            tsv.rows[key] = [old.get(column, "") for column in header]
+            continue
+        new = {column: old[column] if column in old and (column in owned or old[column].startswith(GLF_PREFIX)) else row.get(column, "") for column in header}
+        changed = [column for column in header if column in old and new[column] != old[column]]
+        if changed:
+            result.refreshed.append(f"{key}: {', '.join(changed)}")
+        tsv.rows[key] = [new[column] for column in header]
+
+
 def update_land_units(missiles: Dict[str, str], rows: Dict[str, catalog.UnitRow], inputs: catalog.Inputs, result: Result) -> TsvFile:
     """Add, update and remove GLF land unit rows to match the ticked units.
 
@@ -733,6 +775,7 @@ def update_land_units(missiles: Dict[str, str], rows: Dict[str, catalog.UnitRow]
     """
     land = TsvFile.load(catalog.GLF_LAND_UNITS)
     vanilla_land = {row["key"]: row for row in inputs.tables["land_units_tables"]}
+    refresh_from_vanilla(land, "land_units_tables", vanilla_land, result)
     for key in list(land.rows):
         if key not in missiles and key in rows:
             del land.rows[key]
@@ -766,6 +809,7 @@ def update_personalities(missiles: Dict[str, str], rows: Dict[str, catalog.UnitR
     personalities = TsvFile.load(PERSONALITIES_TSV)
     stats = TsvFile.load(STATS_TSV)
     vanilla_personalities = {row["key"]: row for row in inputs.tables["battle_personalities_tables"]}
+    refresh_from_vanilla(personalities, "battle_personalities_tables", vanilla_personalities, result)
     users = collections.defaultdict(set)
     for junction in inputs.tables["land_units_to_battle_personalities_junctions_tables"]:
         hero = vanilla_personalities.get(junction["battle_personality"], {}).get("autonomous_rider_hero") == "true"
@@ -1087,8 +1131,8 @@ def report_lines(result: Result) -> List[str]:
     Returns:
         Report lines.
     """
-    lines = [f"Units added {len(result.added)}, removed {len(result.removed)}, missile changed {len(result.changed)}, skipped {len(result.skipped)}"]
-    for label, values in (("added", result.added), ("removed", result.removed), ("changed", result.changed), ("skipped", result.skipped), ("personalities", result.personalities), ("fire whilst moving", result.fwm), ("full firing arc", result.arcs)):
+    lines = [f"Units added {len(result.added)}, removed {len(result.removed)}, missile changed {len(result.changed)}, skipped {len(result.skipped)}, refreshed from vanilla {len(result.refreshed)}"]
+    for label, values in (("table layout", result.relaid), ("refreshed", result.refreshed), ("added", result.added), ("removed", result.removed), ("changed", result.changed), ("skipped", result.skipped), ("personalities", result.personalities), ("fire whilst moving", result.fwm), ("full firing arc", result.arcs)):
         lines += [f"  {label}: {value}" for value in values]
     lines.append(f"\nSets patched {len(result.sets)}")
     lines += [f"  {name}: {', '.join(slots)}" for name, slots in sorted(result.sets.items())]
