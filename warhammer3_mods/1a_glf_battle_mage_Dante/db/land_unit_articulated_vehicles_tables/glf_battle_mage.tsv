@@ -2,4 +2,5 @@ key	ammo_caisson_entity	ammo_caisson_destruction	ammo_caisson_model	ammo_caisson
 #land_unit_articulated_vehicles_tables;6;db/land_unit_articulated_vehicles_tables/glf_battle_mage									
 glf_wh2_dlc17_bst_tuskgor_chariot		vmp_black_coach_01			glf_wh2_dlc17_veh_bst_tuskgor_chariot_articulation	2.0000	2	0	false
 glf_wh_dlc03_bst_razorgor_chariot		vmp_black_coach_01			glf_wh_dlc03_vehicle_bst_chariot_razorgor_articulation	1.8000	2	0	false
+glf_wh_main_chs_chariot_horse		vmp_black_coach_01			glf_wh_main_vehicle_chs_chariot_articulation	1.8000	2	0	false
 glf_wh3_main_vehicle_war_compass		vmp_black_coach_01			glf_wh3_main_cth_veh_war_compass_articulation	3.2000	2	0	false

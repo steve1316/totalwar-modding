@@ -1532,83 +1532,98 @@
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
+   "ranged": true
+  },
+  "wh3_dlc27_nor_cha_shaman_sorcerer_death_2_summoned": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc27_nor_cha_shaman_sorcerer_fire_2_summoned": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc27_nor_cha_shaman_sorcerer_metal_2_summoned": {
+   "fwm": true,
+   "missile": "",
    "ranged": true
   },
   "wh3_dlc29_vmp_cha_neferata": {
@@ -1967,12 +1982,17 @@
    "ranged": true
   },
   "wh_dlc01_nor_cha_chaos_sorcerer_lord_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc01_nor_cha_chaos_sorcerer_lord_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_metal_missile",
+   "ranged": true
+  },
+  "wh_dlc01_nor_cha_chaos_sorcerer_lord_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
@@ -2337,67 +2357,67 @@
    "ranged": true
   },
   "wh_dlc08_nor_cha_arzik_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_nor_arzik_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_fimir_balefiend_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_fimir_balefiend_shadow_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_kihar_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_slaanesh_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_fire_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_fire_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_metal_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_metal_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
@@ -2582,12 +2602,17 @@
    "ranged": true
   },
   "wh_main_nor_cha_chaos_sorcerer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_main_nor_cha_chaos_sorcerer_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_metal_missile",
+   "ranged": true
+  },
+  "wh_main_nor_cha_chaos_sorcerer_2": {
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
