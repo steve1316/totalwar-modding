@@ -938,6 +938,30 @@ def patch_sets(missiles: Dict[str, str], fwm_units: Set[str], ticked: Dict[str, 
     return changed_sets
 
 
+def follow_twins(selection: Dict, rows: Dict[str, catalog.UnitRow]) -> Dict:
+    """Give each quest battle, boss and custom battle copy the picks of its campaign twin, e.g. Neferata in custom battles fires like in the campaign.
+
+    Args:
+        selection (Dict): The saved selection.
+        rows (Dict[str, catalog.UnitRow]): Catalog rows by key.
+
+    Returns:
+        A copy of the selection where every copy with a twin has the twin's entry, with the twin's guessed missile filled in, and its ignore state.
+    """
+    units = dict(selection.get("units", {}))
+    ignore = set(selection.get("ignore", []))
+    for key, row in rows.items():
+        if not row.twin:
+            continue
+        units.pop(key, None)
+        ignore.discard(key)
+        if row.twin in units:
+            units[key] = {**units[row.twin], "missile": units[row.twin].get("missile") or rows[row.twin].guess}
+        if row.twin in ignore:
+            ignore.add(key)
+    return {**selection, "units": units, "ignore": sorted(ignore)}
+
+
 def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple[Result, List[TsvFile], Dict[str, AnimSet]]:
     """Work out every change for the selection without writing anything.
 
@@ -951,9 +975,9 @@ def generate(inputs: catalog.Inputs, selection: Dict, files: GameFiles) -> Tuple
     """
     result = Result()
     rows = {row.key: row for row in inputs.catalog.units}
+    selection = follow_twins(selection, rows)
     ignore = set(selection.get("ignore", []))
-    ticked = {key: entry for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key not in ignore and key in rows and not rows[key].special_copy}
-    result.skipped += [f"{key}: quest battle or boss copy" for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key in rows and rows[key].special_copy]
+    ticked = {key: entry for key, entry in selection.get("units", {}).items() if entry.get("ranged") and key not in ignore and key in rows}
     result.skipped += [f"{key}: fire whilst moving needs Ranged ticked" for key, entry in selection.get("units", {}).items() if entry.get("fwm") and not entry.get("ranged")]
 
     # Missile per ticked unit: the saved choice, else the guess.

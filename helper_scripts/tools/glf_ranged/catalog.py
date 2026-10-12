@@ -40,9 +40,11 @@ CARDS_FOLDER = "ui/portraits/units"
 CARDS_STAMP = ".ui_pack_stamp"
 # The game and DLC prefix of a unit key, e.g. `wh2_dlc15_`.
 GAME_PREFIX = re.compile(r"^wh\d*_(main|dlc\d+|pro\d+|cp\d+|twa\d+|survival)_")
-# Quest battle and boss copies of a lord or hero, which never get ranged support and are hidden in the picker (2026-10-12). `qb` can also sit
-# mid-key, e.g. `wh3_dlc29_qb_brt_cha_lord_warhorse`. Greenskin Big Bosses are real heroes, so `_big_boss` does not count.
-SPECIAL_COPY = re.compile(r"(?<!_big)_(qb|boss)(_\d+)?$|_qb_", re.IGNORECASE)
+# Quest battle, boss and custom battle copies of a lord or hero, e.g. `_0_qb`, `_boss` or `_mp`. They follow their campaign twin and are hidden in
+# the picker (2026-10-12). `qb` can also sit mid-key, e.g. `wh_dlc01_chs_cha_qb_lord_of_change_0`. Greenskin Big Bosses are real heroes, so
+# `_big_boss` does not count.
+COPY_SUFFIX = re.compile(r"(?<!_big)_(qb|boss|mp)(_\d+)?$", re.IGNORECASE)
+COPY_INFIX = "_qb_"
 # A trailing variant number on a unit key, e.g. `_1` in `wh_dlc07_brt_cha_damsel_beasts_1`.
 VARIANT_NUMBER = re.compile(r"_\d+$")
 # The race and `mnt_` part of a mount key, and trailing parts that do not name the mount, e.g. `brt_mnt_` and `_deprecated`.
@@ -140,8 +142,8 @@ class UnitRow:
     set_shared_with: List[str] = field(default_factory=list)
     # Path of the unit card image inside `CARDS_DIR`, or empty when none was found or cards were not loaded.
     card: str = ""
-    # True for quest battle (`_qb`) and boss (`_boss`) copies, which never get ranged support.
-    special_copy: bool = False
+    # For a quest battle, boss or custom battle copy, the campaign unit whose picks it follows. Empty for every other unit.
+    twin: str = ""
 
 
 @dataclass
@@ -367,6 +369,53 @@ def display_name(key: str, loc: Dict[str, str]) -> str:
     return name
 
 
+def is_copy(key: str) -> bool:
+    """Tell whether a unit key is a quest battle, boss or custom battle copy.
+
+    Args:
+        key (str): Land unit key.
+
+    Returns:
+        True for keys like `wh2_dlc12_lzd_lzd_cha_kroak_0_boss` or `wh3_dlc29_vmp_cha_neferata_mp`.
+    """
+    return bool(COPY_SUFFIX.search(key)) or COPY_INFIX in key.lower()
+
+
+def find_twins(caste_of: Dict[str, str]) -> Dict[str, str]:
+    """Match each quest battle, boss and custom battle copy to the campaign unit it copies.
+
+    The copy key without its copy part is tried as is and with `_0`, then the same without the game prefix, which only counts when one unit matches,
+    e.g. `wh_dlc06_emp_cha_captain_0_boss` to `wh_main_emp_cha_captain_0`.
+
+    Args:
+        caste_of (Dict[str, str]): Lord and hero land unit to its caste.
+
+    Returns:
+        Copy key to its twin. Copies with no twin of the same caste are left out.
+    """
+    by_stem: Dict[str, List[str]] = collections.defaultdict(list)
+    for key in caste_of:
+        if not is_copy(key):
+            by_stem[GAME_PREFIX.sub("", key).lower()].append(key)
+    twins = {}
+    for key, caste in caste_of.items():
+        if not is_copy(key):
+            continue
+        stripped = [COPY_SUFFIX.sub("", key), re.sub(COPY_INFIX, "_", key, count=1, flags=re.IGNORECASE)]
+        candidates = [stem for stem in stripped if stem != key]
+        candidates += [stem + "_0" for stem in candidates]
+        twin = next((stem for stem in candidates if stem in caste_of and not is_copy(stem) and caste_of[stem] == caste), "")
+        if not twin:
+            for stem in candidates:
+                hits = [other for other in by_stem.get(GAME_PREFIX.sub("", stem).lower(), []) if caste_of[other] == caste]
+                if len(hits) == 1:
+                    twin = hits[0]
+                    break
+        if twin:
+            twins[key] = twin
+    return twins
+
+
 def mount_name(mount: str) -> str:
     """Turn a mount key into the `mount_<name>` form the picker shows for mount icons.
 
@@ -521,6 +570,7 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
             mount_of[key] = mount_name(land[key]["mount"])
     # A version whose base is not a lord or hero row is its own base.
     base_of = {key: base for key, base in base_of.items() if base in caste_of}
+    twins = find_twins(caste_of)
     groups: Dict[str, Set[str]] = collections.defaultdict(set)
     for row in tables["units_to_groupings_military_permissions_tables"]:
         groups[row["unit"]].add(row["military_group"])
@@ -592,7 +642,7 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
                 fwm_attribute=land_row["attribute_group"] in fwm_groups,
                 fwm_slots=bool(kind) and all(name in slot_names for name in FWM_SLOTS[kind]),
                 set_shared_with=sorted(other for other in users[land_row["man_animation"]] if other != key),
-                special_copy=bool(SPECIAL_COPY.search(key)),
+                twin=twins.get(key, ""),
             )
         )
     subtypes_of: Dict[str, List[str]] = collections.defaultdict(list)

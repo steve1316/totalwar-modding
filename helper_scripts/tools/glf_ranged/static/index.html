@@ -353,8 +353,8 @@ window.addEventListener('beforeunload', e => { if (snapshot() !== S.initial) e.p
 async function loadState() {
   const state = await (await fetch('/api/state')).json();
   Object.assign(S, { byKey: {}, groups: {}, byFaction: {}, baseMissile: {} });
-  // Quest battle and boss copies never get ranged support, so they are not shown.
-  S.units = state.units.filter(r => !r.special_copy);
+  // Quest battle, boss and custom battle copies follow their campaign twin, so they are not shown.
+  S.units = state.units.filter(r => !r.twin);
   S.missileOptions = state.missiles.map(m => `<option value="${m}">${missileLabel(m)}</option>`).join('');
   S.units.forEach(r => {
     S.byKey[r.key] = r;
