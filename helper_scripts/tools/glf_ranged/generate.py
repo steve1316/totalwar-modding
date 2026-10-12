@@ -426,6 +426,46 @@ def replace_backwards_fire(anim_set: AnimSet, ids: Dict[str, int], files: GameFi
     return swapped
 
 
+def is_rider_anim(path: str) -> bool:
+    """Tell whether an animation is a seated rider animation, from its folder.
+
+    Args:
+        path (str): Animation path.
+
+    Returns:
+        True when the path is under a `rider` folder.
+    """
+    return "/rider/" in path.replace("\\", "/").lower()
+
+
+def replace_standing_rider_fire(anim_set: AnimSet, ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> List[str]:
+    """Point rider fire slots that play a standing cast at the set's seated rider cast, so the rider does not stand up on the mount to fire.
+
+    Sets with no seated rider cast are left alone, since vanilla uses the standing cast for those riders too.
+
+    Args:
+        anim_set (AnimSet): Set to change in place.
+        ids (Dict[str, int]): Slot id by name.
+        files (GameFiles): File reader.
+        defaults (Dict): Fire defaults from `fire_defaults`.
+        override (Optional[List[float]]): Fire marker override from the selection, or None.
+        result (Result): Collects fire metas written.
+
+    Returns:
+        The swapped slot names, each marked `(was standing)`.
+    """
+    names = {slot_id: name for name, slot_id in ids.items()}
+    standing = [i for i, slot in enumerate(anim_set.slots) if FIRE_FAMILY.match(names.get(slot.slot_id, "")) and names[slot.slot_id].startswith("RIDER_") and slot.refs and not is_rider_anim(slot.refs[0].anim)]
+    if not standing:
+        return []
+    found = find_fire_ref(anim_set, "rider", ids, files, defaults, override, result)
+    if found is None or not is_rider_anim(found[1].anim):
+        return []
+    for i in standing:
+        anim_set.slots[i] = replace(anim_set.slots[i], refs=[found[1]])
+    return [f"{names[anim_set.slots[i].slot_id]} (was standing)" for i in standing]
+
+
 def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result, fwm_kinds: Set[str] = frozenset()) -> List[str]:
     """Add the fire, combat-ready and fire-while-moving slots a set is missing.
 
@@ -444,6 +484,7 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
     """
     added = []
     added += replace_backwards_fire(anim_set, ids, files, defaults, override, result)
+    added += replace_standing_rider_fire(anim_set, ids, files, defaults, override, result)
     present = {slot.slot_id for slot in anim_set.slots}
     # A set that already fires through any fire slot keeps GLF's choice of slots.
     fires = any(ids[name] in present for name in catalog.FIRE_SLOT_NAMES)
