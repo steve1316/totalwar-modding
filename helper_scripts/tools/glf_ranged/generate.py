@@ -561,7 +561,7 @@ def replace_standing_rider_fire(anim_set: AnimSet, ids: Dict[str, int], files: G
     return [f"{names[anim_set.slots[i].slot_id]} (was standing)" for i in standing]
 
 
-def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result, fwm_kinds: Set[str] = frozenset(), donor: Optional[AnimSet] = None) -> List[str]:
+def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result, fwm_kinds: Set[str] = frozenset(), donor: Optional[AnimSet] = None, own_slots: bool = False) -> List[str]:
     """Add the fire, combat-ready and fire-while-moving slots a set is missing.
 
     Args:
@@ -569,6 +569,7 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
         kinds (Set[str]): Unit kinds of the ticked units using the set.
         fwm_kinds (Set[str]): Unit kinds of the units using the set that should fire while moving.
         donor (Optional[AnimSet]): Set from `FIRE_SLOT_DONORS` whose fire slots fill the ones this set lacks, or None.
+        own_slots (bool): Only count each kind's own fire slot as firing, for sets a lord rides a war machine with.
         ids (Dict[str, int]): Slot id by name.
         files (GameFiles): File reader.
         defaults (Dict): Fire defaults from `fire_defaults`.
@@ -594,7 +595,7 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
     present = {slot.slot_id for slot in anim_set.slots}
     for kind in sorted(kinds):
         # A set that already fires through any fire slot keeps GLF's choice of slots, unless this kind's own slot was left empty.
-        fires = ids[FIRE_SLOTS[kind][0]] in present or (ids[FIRE_SLOTS[kind][0]] not in empty and any(ids[name] in present for name in catalog.FIRE_SLOT_NAMES))
+        fires = ids[FIRE_SLOTS[kind][0]] in present or (not own_slots and ids[FIRE_SLOTS[kind][0]] not in empty and any(ids[name] in present for name in catalog.FIRE_SLOT_NAMES))
         missing = [] if fires else [name for name in FIRE_SLOTS[kind] if ids[name] not in present]
         if missing:
             found = find_fire_ref(anim_set, kind, ids, files, defaults, override, result)
@@ -870,11 +871,22 @@ def patch_sets(missiles: Dict[str, str], fwm_units: Set[str], ticked: Dict[str, 
     defaults = fire_defaults(inputs, files)
     kinds_by_set = collections.defaultdict(set)
     fwm_kinds_by_set = collections.defaultdict(set)
+    personalities = {row["key"]: row for row in inputs.tables["battle_personalities_tables"]}
+    hero_rider_sets = collections.defaultdict(set)
+    for junction in inputs.tables["land_units_to_battle_personalities_junctions_tables"]:
+        personality = personalities.get(junction["battle_personality"], {})
+        if junction["attach"] == AUTONOMOUS_RIDER and personality.get("autonomous_rider_hero") == "true" and not personality.get("battle_entity_stats"):
+            hero_rider_sets[junction["land_unit"]].add(personality["man_animations_table"])
     overrides: Dict[str, List[float]] = {}
     for key in missiles:
         kinds_by_set[rows[key].anim_set].add(rows[key].kind)
         if key in fwm_units:
             fwm_kinds_by_set[rows[key].anim_set].add(rows[key].kind)
+        # A lord riding a war machine, e.g. Lord Skrolk on his Cauldron, animates from his rider personality's set, which fires as a rider.
+        for set_name in hero_rider_sets.get(key, ()):
+            kinds_by_set[set_name].add("rider")
+            if key in fwm_units:
+                fwm_kinds_by_set[set_name].add("rider")
         if ticked[key].get("fire_pos"):
             overrides[rows[key].anim_set] = ticked[key]["fire_pos"]
     # Fetch every cast and fire animation the patched sets might use or check, in one batch per pack.
@@ -895,7 +907,8 @@ def patch_sets(missiles: Dict[str, str], fwm_units: Set[str], ticked: Dict[str, 
             continue
         anim_set = replace(entry.live, slots=list(entry.live.slots))
         donor = inputs.sets.get(FIRE_SLOT_DONORS.get(set_name, ""))
-        added = patch_set(anim_set, kinds, ids, files, defaults, overrides.get(set_name), result, fwm_kinds_by_set[set_name], donor.vanilla if donor else None)
+        own_slots = any(set_name in sets for sets in hero_rider_sets.values())
+        added = patch_set(anim_set, kinds, ids, files, defaults, overrides.get(set_name), result, fwm_kinds_by_set[set_name], donor.vanilla if donor else None, own_slots)
         if added:
             result.sets[set_name] = added
             changed_sets[entry.path] = anim_set
