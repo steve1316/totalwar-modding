@@ -7,6 +7,8 @@ local caps = {
     {"bst_inf_centigors_great_sword", "rare", 1},
     {"bst_inf_centigors_throwing_axes_mnur", "rare", 1},
     {"bst_inf_khorngors_dule_axe", "special", 1},
+    {"bst_cav_doom_tzaangors_archer", "special", 2},
+    {"bst_cav_doom_tzaangors", "special", 2},
     -- Bretonnia
     {"haven_praetorian", "special", 1},
     {"haven_squire", "special", 1},
@@ -120,6 +122,11 @@ local caps = {
     {"emp_inf_nuln_ironsides_morr_repeaters", "special", 2},
     {"emp_inf_sterntower_marksmen", "core"},
     {"emp_inf_bronzeballs", "special", 1},
+    {"emp_inf_deaths_heads", "core"},
+    {"emp_inf_sigmar_dule_axe", "special", 2},
+    {"emp_inf_sigmar_oathsworn", "special", 2},
+    {"emp_inf_sigmar_thunderbolt_archers", "special", 2},
+    {"emp_inf_sigmar_crossbow_axe", "special", 2},
     -- Nurgle
     {"nur_inf_plague_cultist", "core"},
     {"chs_inf_death_guard_mnur", "rare", 1},

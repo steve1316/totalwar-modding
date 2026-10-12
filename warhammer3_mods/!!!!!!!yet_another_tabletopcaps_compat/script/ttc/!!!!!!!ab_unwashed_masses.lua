@@ -9,6 +9,14 @@ local caps = {
     {"gnob_mon_arachnarok_spider", "rare", 3},
     {"gnob_ror_kings_treasure_guards", "core", 1},
     {"gnob_mon_lava_spiders", "core", 1},
+    -- Ogre Kingdoms
+    {"gnob_inf_fighters", "core"},
+    {"gnob_inf_lucky_gits", "special", 1},
+    {"gnob_inf_manbiters", "special", 1},
+    -- Other
+    {"gnob_inf_ogrebiters", "special", 1},
+    {"gnob_cav_pigback_riders_javelin", "core"},
+    {"gnob_mon_rhinox_riders", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

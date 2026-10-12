@@ -8,6 +8,8 @@ local caps = {
     {"derpy_gp_rocket_turret", "rare", 1},
     {"derpy_gp_triplecannon_turret", "rare", 1},
     {"derpy_gp_tankette_tracks", "special", 3},
+    {"derpy_dwf_eng_tank", "rare", 3},
+    {"derpy_dwf_eng_tankette", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

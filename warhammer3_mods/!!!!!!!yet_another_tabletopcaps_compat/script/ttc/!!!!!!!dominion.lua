@@ -45,6 +45,11 @@ local caps = {
     {"dom_carryall_01", "special", 2},
     {"dom_soldat_0", "core", 1},
     {"dom_heat_gun", "special", 2},
+    -- Other
+    {"dom_nightshade", "special", 1},
+    {"dom_shadowfire", "special", 2},
+    -- Kislev
+    {"ksl_urbem_eversorem", "rare", 3},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

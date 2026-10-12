@@ -8,6 +8,13 @@ local caps = {
     {"driblex_brt_royal_lake_guard_halberd", "rare", 1},
     {"driblex_brt_royal_lake_guard_longbow", "special", 2},
     {"driblex_brt_royal_lake_guard_thunderlancers", "rare", 2},
+    {"driblex_brt_royal_lake_guard_trebuchet_cluster", "rare", 2},
+    {"driblex_brt_royal_lake_guard_trebuchet_sunflare", "rare", 2},
+    {"driblex_brt_royal_lake_guard_crossbow", "special", 2},
+    {"driblex_brt_royal_lake_guard_2h_sword", "rare", 1},
+    {"driblex_brt_royal_lake_guard_spears", "rare", 1},
+    {"driblex_brt_royal_lake_guard_1h_hammer", "rare", 1},
+    {"driblex_brt_royal_lake_guard_circle_mages_support", "rare", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

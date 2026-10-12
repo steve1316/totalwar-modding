@@ -9,6 +9,8 @@ local caps = {
     {"cst_ghostship", "rare", 3},
     {"cst_harkonship_third", "rare", 3},
     {"harkonship_test_jericho", "rare", 3},
+    {"cst_spectral", "rare", 3},
+    {"cst_boarding", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

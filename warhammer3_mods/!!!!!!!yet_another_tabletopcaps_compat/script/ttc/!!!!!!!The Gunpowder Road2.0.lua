@@ -1,0 +1,24 @@
+-- The Gunpowder Road
+local caps = {
+    -- Grand Cathay
+    {"wh3_main_cth_inf_cyjuntuan_dunche", "special", 2},
+    {"wh3_main_cth_inf_cyjuntuan_halberd", "core"},
+    {"wh3_main_cth_inf_dragon_guard_lihuaqiang0", "rare", 1},
+    {"wh3_main_cth_inf_jade_warrior_rocket_battery", "special", 1},
+    {"wh3_main_cth_inf_jade_warrior_sanyanchong_0", "special", 1},
+    {"wh3_main_cth_inf_niaochong_gunners_0", "core"},
+    {"wh3_main_cth_inf_peasant_huochong_0", "core"},
+    {"wh3_main_cth_inf_sanjieshenji_gunners_0", "special", 1},
+    {"wh3_main_cth_inf_xunleichong_0", "special", 2},
+    {"wh3_main_cth_juma", "core"},
+    {"wh3_main_cth_juma_dunpai", "core"},
+    {"wh3_main_cth_veh_sky_junk_ror", "special", 3},
+    {"wh3_main_cth_veh_sky_lantern_ror", "special", 1},
+}
+
+local ttc = core:get_static_object("tabletopcaps")
+if ttc then
+    ttc.add_setup_callback(function()
+        ttc.add_unit_list(caps, true)
+    end)
+end

@@ -30,6 +30,7 @@ local caps = {
     -- Lizardmen
     {"CLE_Sotek_Scion", "rare", 3},
     {"CLE_double_bastiladon", "special", 2},
+    {"CLE_lzd_vultures", "core"},
     -- Nurgle
     {"CLE_Patient_Zero", "special", 1},
     {"CLE_Blight_Dragon", "rare", 2},
@@ -45,6 +46,7 @@ local caps = {
     {"CLE_Ghrond_Librarian", "rare", 2},
     -- Empire
     {"Chasslo_Chamon_Destroyer", "rare", 3},
+    {"Chasslo_Fireloques_Ferlangen", "special", 1},
     -- Vampire Coast
     {"CLE_Jaego_Faithful", "special", 2},
     {"CLE_Carcassone_Damned_Knight", "special", 1},
@@ -59,6 +61,16 @@ local caps = {
     {"Chasslo_Azazel_Flagellants", "core"},
     {"Chasslo_Great_Oak_Mordheim", "rare", 3},
     {"Chasslo_Doomspeakers", "special", 2},
+    {"Chasslo_Pale_Maidens", "rare", 1},
+    {"Chasslo_dancing_beauties", "special", 2},
+    -- Beastmen
+    {"Chasslo_Blood_seekers", "special", 2},
+    -- Grand Cathay
+    {"Chasslo_Goldtooth_guard", "special", 2},
+    -- High Elves
+    {"Chasslo_Drachenhole_dragon", "rare", 3},
+    -- Greenskins
+    {"Chasslo_Soqotra_Pirates", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

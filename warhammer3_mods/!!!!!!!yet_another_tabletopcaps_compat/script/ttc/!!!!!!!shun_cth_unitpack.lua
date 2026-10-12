@@ -6,6 +6,11 @@ local caps = {
     {"shun_jade_lancers_ror", "special", 1},
     {"shun_veh_sky_junk_moonfire_ror", "special", 3},
     {"cth_samurai_shun", "core", 1},
+    {"shun_tribe_huntsmen", "core"},
+    {"shun_eastern_provinces_shieldmaidens", "special", 1},
+    {"shun_azurestone_guardian", "special", 3},
+    {"shun_dragon_guard_skirmisher", "special", 1},
+    {"shun_longma_skirmisher_ror", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

@@ -35,6 +35,7 @@ local caps = {
     {"wh3_dlc27_hef_inf_ships_company", "core", 1},
     {"wh3_dlc27_hef_veh_skycutter_bolt_thrower", "special", 2},
     {"wh3_dlc27_hef_veh_skycutter_bows", "special", 2},
+    {"wh2_dlc15_hef_mon_forest_dragon_0", "rare", 2},
     -- Khorne
     {"wh3_dlc26_kho_inf_wrathmongers", "special", 3},
     {"wh3_dlc26_kho_mon_bloodbeast_of_khorne", "special", 2},
@@ -46,6 +47,7 @@ local caps = {
     {"wh3_dlc26_kho_inf_wrathmongers_ror", "special", 3},
     {"wh3_dlc26_kho_veh_skullcannon_ror", "rare", 2},
     {"wh2_dlc17_bst_mon_ghorgon_boss_0", "rare", 3},
+    {"wh3_main_pro_kho_inf_flesh_hounds_of_khorne_simaergul_0", "special", 2},
     -- Ogre Kingdoms
     {"wh3_dlc26_ogr_inf_eshin_maneater_ror", "special", 2},
     {"wh3_dlc26_ogr_mon_blood_vultures", "core", 1},
@@ -105,6 +107,18 @@ local caps = {
     {"wh3_dlc27_sla_mon_preyton_ror", "special", 2},
     -- Warriors of Chaos
     {"wh3_dlc27_woc_mon_chimera_ror", "rare", 2},
+    -- Nurgle
+    {"wh3_main_nur_inf_forsaken_0_warriors", "core"},
+    -- Skaven
+    {"wh2_dlc14_skv_inf_stormvermin_1_summoned", "special", 1},
+    {"wh3_dlc29_skv_inf_skavenslaves_vermintide", "core"},
+    {"wh3_dlc29_skv_inf_skavenslave_spearmen_vermintide", "core"},
+    {"wh3_dlc29_skv_inf_clanrat_spearmen_vermintide", "core"},
+    {"wh3_dlc29_skv_inf_clanrats_vermintide", "core"},
+    {"wh3_dlc29_skv_inf_skavenslave_slingers_vermintide", "core"},
+    -- Vampire Coast
+    {"wh2_dlc11_cst_cav_knights_errant_2", "core"},
+    {"wh2_dlc11_cst_mon_rotting_prometheans_summoned_0", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

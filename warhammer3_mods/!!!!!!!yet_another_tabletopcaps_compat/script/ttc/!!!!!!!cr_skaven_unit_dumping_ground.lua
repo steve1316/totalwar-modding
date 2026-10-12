@@ -1,0 +1,26 @@
+-- Moulder's Menagerie (Chimaerats, Stormfiends, and More!)
+local caps = {
+    -- Skaven
+    {"cr_skv_mon_aberrations_0", "special", 1},
+    {"cr_skv_mon_armoured_rat_ogre_0", "special", 2},
+    {"cr_skv_mon_burrowing_behemoth_0", "rare", 2},
+    {"cr_skv_mon_chimaerat_0", "rare", 3},
+    {"cr_skv_mon_giant_rats_0", "core"},
+    {"cr_skv_mon_stormfiend_0", "rare", 2},
+    {"cr_skv_mon_stormfiend_1", "rare", 2},
+    {"cr_skv_mon_stormfiend_2", "rare", 2},
+    {"cr_skv_mon_stormfiend_3", "rare", 2},
+    {"cr_skv_mon_stormfiend_4", "rare", 2},
+    {"cr_skv_mon_stormfiend_5", "rare", 2},
+    {"cr_skv_mon_stormfiend_6", "rare", 2},
+    {"cr_skv_mon_stormfiend_ror_tech_lab_0", "rare", 2},
+    {"cr_skv_mon_stormfiend_ror_tech_lab_1", "rare", 2},
+    {"cr_skv_mon_stormfiend_ror_tech_lab_2", "rare", 2},
+}
+
+local ttc = core:get_static_object("tabletopcaps")
+if ttc then
+    ttc.add_setup_callback(function()
+        ttc.add_unit_list(caps, true)
+    end)
+end

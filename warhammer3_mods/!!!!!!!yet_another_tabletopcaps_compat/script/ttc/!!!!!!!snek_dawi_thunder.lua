@@ -5,6 +5,18 @@ local caps = {
     {"snek_dwf_grudgesolvers", "special", 2},
     {"snek_dwf_ironguard", "special", 2},
     {"snek_dwf_drop_chopper_regiment", "special", 2},
+    {"snek_dwf_plow", "special", 2},
+    {"snek_dwf_bombard", "special", 1},
+    {"snek_dwf_breaker_cannon", "special", 2},
+    {"snek_dwf_thunder_cannon", "rare", 2},
+    {"snek_dwf_tank", "rare", 3},
+    {"snek_dwf_iron_thunderers", "special", 1},
+    {"snek_dwf_mountaineers", "special", 2},
+    {"snek_dwf_sappers", "special", 2},
+    {"snek_dwf_githammers", "special", 2},
+    {"snek_dwf_expeditionaries", "special", 2},
+    {"snek_dwf_crank_gunners", "special", 3},
+    {"snek_dwf_drop_chopper", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

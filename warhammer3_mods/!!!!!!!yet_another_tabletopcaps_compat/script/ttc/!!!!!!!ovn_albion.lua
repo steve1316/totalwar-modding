@@ -3,6 +3,7 @@ local caps = {
     -- Albion
     {"calm_alb_crow", "core", 1},
     {"calm_alb_raven", "core", 1},
+    {"albion_feral_gryphon_summon", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

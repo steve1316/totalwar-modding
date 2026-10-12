@@ -5,6 +5,9 @@ local caps = {
     {"als_squig_tomb", "special", 1},
     {"als_squig_spike", "special", 1},
     {"als_squig_gas", "special", 1},
+    {"als_squig_flappy", "core"},
+    {"als_squig_great_cave", "special", 2},
+    {"als_squig_flappy_big", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

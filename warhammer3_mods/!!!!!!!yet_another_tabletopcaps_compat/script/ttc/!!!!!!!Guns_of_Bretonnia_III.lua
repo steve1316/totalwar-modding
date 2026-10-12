@@ -23,6 +23,11 @@ local caps = {
     {"bret_musketeers", "special", 1},
     {"bret_mounted_pistoliers", "special", 2},
     {"bret_longbowmen", "special", 2},
+    {"bret_templars", "special", 2},
+    {"bret_templars_crimson", "special", 2},
+    {"bret_musketeers_special", "special", 2},
+    {"bret_hellwagon", "rare", 2},
+    {"bret_art_grand_battery", "rare", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

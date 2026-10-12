@@ -1,0 +1,23 @@
+-- Animals for Wood Elves
+local caps = {
+    -- Wood Elves
+    {"rory_wef_lake_dragon", "rare", 3},
+    {"rory_welf_bear", "special", 2},
+    {"rory_welf_boar", "special", 1},
+    {"rory_welf_elk", "special", 1},
+    {"rory_welf_giant_boar", "special", 2},
+    {"rory_welf_great_stag", "special", 2},
+    {"rory_welf_grey_wolf", "special", 2},
+    {"rory_welf_griffon", "rare", 2},
+    {"rory_welf_pegasus", "special", 1},
+    {"rory_welf_small_wolf", "special", 1},
+    {"rory_welf_tiger", "special", 2},
+    {"rory_welf_wildcat", "special", 1},
+}
+
+local ttc = core:get_static_object("tabletopcaps")
+if ttc then
+    ttc.add_setup_callback(function()
+        ttc.add_unit_list(caps, true)
+    end)
+end

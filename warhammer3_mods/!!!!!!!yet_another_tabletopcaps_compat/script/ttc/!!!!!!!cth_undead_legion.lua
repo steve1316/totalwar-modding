@@ -2,6 +2,9 @@
 local caps = {
     -- Vampire Counts
     {"cth_ghost_01", "special", 2},
+    -- Grand Cathay
+    {"cth_buddha", "rare", 2},
+    {"cth_legion", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

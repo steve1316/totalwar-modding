@@ -130,6 +130,12 @@ local caps = {
     {"motm_tainted_ogr_inf_maneaters_0", "special", 2},
     {"motm_tainted_ogr_inf_maneaters", "special", 2},
     {"motm_tainted_ogr_mon_ogre_spawns_tzeentch", "rare", 1},
+    {"singe_ogk_irongut_ironfists", "core"},
+    {"singe_ogk_irongut_dual", "core"},
+    {"motm_hollowbellies_ror", "special", 2},
+    {"singe_ogk_rhinox_herd", "core"},
+    {"singe_ogk_mournfang_pack", "special", 2},
+    {"singe_ogk_rocketspitters", "special", 2},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

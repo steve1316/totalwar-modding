@@ -9,6 +9,7 @@ local caps = {
     {"phy_dwf_clockwork_thunderers_ror", "special", 2},
     {"phy_dwf_shard_dragon_ror", "rare", 3},
     {"phy_dwf_shard_dragon_collar", "rare", 3},
+    {"phy_dwf_shard_dragon_summon", "rare", 3},
 }
 
 local ttc = core:get_static_object("tabletopcaps")

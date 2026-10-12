@@ -1,0 +1,14 @@
+-- Kislev Units
+local caps = {
+    -- Kislev
+    {"cf_kislevite_warrior_horse", "core"},
+    {"cf_ungol_brute", "special", 2},
+    {"cf_ungol_horse_raiders", "core"},
+}
+
+local ttc = core:get_static_object("tabletopcaps")
+if ttc then
+    ttc.add_setup_callback(function()
+        ttc.add_unit_list(caps, true)
+    end)
+end

@@ -6,6 +6,8 @@ local caps = {
     {"def_black_lion", "special", 2},
     {"def_drake", "rare", 2},
     {"def_witch_knights", "core"},
+    {"hawk_summoned", "special", 1},
+    {"wolf_summoned", "special", 1},
 }
 
 local ttc = core:get_static_object("tabletopcaps")
