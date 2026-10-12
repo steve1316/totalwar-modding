@@ -4,7 +4,8 @@ GLF ships a full copy of each caster's vanilla animation set (`.bin`) with firin
 game. CA also renumbers slot ids now and then, which silently moves GLF's slots onto the wrong actions. For every set in the GLF animpack this:
 1. Translates GLF's slot ids into the current numbering (`--source-ids-rev` names the schemas commit whose numbering the pack was saved with).
 2. Starts from the current vanilla set and adds back what GLF added or deliberately changed.
-3. Applies the per-set fixes in `SLOT_PATCHES`.
+
+Fire and combat-ready slots for new units, and fixes for fire animations that face backwards, come from `tools.glf_ranged.generate`.
 
 Usage:
     cd helper_scripts && python -u -m tools.glf_rebuild_animpack --dry-run > _diag/glf_anims_dry.log 2>&1
@@ -17,6 +18,7 @@ import re
 import struct
 import subprocess
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field, replace
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -39,25 +41,6 @@ REPORT_PATH = "./_diag/glf_rebuild_animpack_report.txt"
 GLF_FIRING_SLOTS = re.compile(r"^(FIRE_|MOVING_FIRE_|RIDER_FIRE_|RIDER_SHOOT_|SHOOT_|AIM_|COMBAT_READY|FLY_COMBAT_READY|RIDER_COMBAT_READY)")
 # Weapon bools GLF's firing and combat-ready slots use, so they match the unit in any weapon state.
 ALL_WEAPONS = 0x3F
-
-# Per-set fixes applied after the merge, as (target slot, slot whose animations it copies). A target that exists is replaced, otherwise added.
-SLOT_PATCHES: Dict[str, List[Tuple[str, str]]] = {
-    # Yuan Bo fired with Zhao Ming's cast and had no combat-ready slots, so he T-posed after firing. His long cast (in the MEDIUM slot) marks FIRE_POS.
-    # His short cast is not used: its animroot is turned 180 degrees, so he fired backwards with no projectile.
-    "hu1e_dlc24_yuan_bo_dragon_jade.bin": [
-        ("FIRE_LEVEL", "CAST_SPELL_FORWARD_MEDIUM"),
-        ("COMBAT_READY", "STAND"),
-        ("COMBAT_READY_MOVE_1", "WALK_1"),
-        ("COMBAT_READY_MOVE_2", "RUN_1"),
-        ("COMBAT_READY_MOVE_3", "RUN_2"),
-        ("COMBAT_READY_STEP_FORWARD", "STEP_FORWARD"),
-        ("COMBAT_READY_STEP_BACK", "STEP_BACKWARD"),
-        ("COMBAT_READY_STEP_LEFT", "STEP_LEFT"),
-        ("COMBAT_READY_STEP_RIGHT", "STEP_RIGHT"),
-        ("COMBAT_READY_TURN_LEFT_90", "TURN_LEFT_90"),
-        ("COMBAT_READY_TURN_RIGHT_90", "TURN_RIGHT_90"),
-    ],
-}
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,7 +123,7 @@ class MergeReport:
 # Binary format
 
 
-class _Reader:
+class ByteReader:
     """Little-endian reader over a byte buffer."""
 
     def __init__(self, data: bytes):
@@ -182,7 +165,7 @@ class _Reader:
         return value
 
 
-def _pack_string(value: str) -> bytes:
+def pack_string(value: str) -> bytes:
     """Encode a u16-length-prefixed UTF-8 string.
 
     Args:
@@ -204,7 +187,7 @@ def read_animpack(data: bytes) -> List[Tuple[str, bytes]]:
     Returns:
         (path, bytes) pairs in file order.
     """
-    reader = _Reader(data)
+    reader = ByteReader(data)
     files = []
     for _ in range(reader.unpack("<I")):
         path = reader.string()
@@ -223,7 +206,7 @@ def write_animpack(files: List[Tuple[str, bytes]]) -> bytes:
     """
     out = [struct.pack("<I", len(files))]
     for path, data in files:
-        out.append(_pack_string(path) + struct.pack("<I", len(data)) + data)
+        out.append(pack_string(path) + struct.pack("<I", len(data)) + data)
     return b"".join(out)
 
 
@@ -239,7 +222,7 @@ def parse_set(data: bytes) -> AnimSet:
     Returns:
         The parsed set.
     """
-    reader = _Reader(data)
+    reader = ByteReader(data)
     version, sub_version = reader.unpack("<I"), reader.unpack("<I")
     if version != 4:
         raise ValueError(f"unsupported set version {version}.{sub_version}")
@@ -263,11 +246,11 @@ def write_set(anim_set: AnimSet) -> bytes:
         The `.bin` bytes.
     """
     out = [struct.pack("<II", anim_set.version, anim_set.sub_version)]
-    out += [_pack_string(s) for s in (anim_set.name, anim_set.mount, anim_set.unknown, anim_set.skeleton, anim_set.locomotion)]
+    out += [pack_string(s) for s in (anim_set.name, anim_set.mount, anim_set.unknown, anim_set.skeleton, anim_set.locomotion)]
     out.append(struct.pack("<HI", anim_set.flag, len(anim_set.slots)))
     for slot in anim_set.slots:
         out.append(struct.pack("<IffIBI", slot.slot_id, slot.blend_in, slot.weight, slot.weapon_bools, slot.flag, len(slot.refs)))
-        out += [_pack_string(ref.anim) + _pack_string(ref.meta) + _pack_string(ref.sound) for ref in slot.refs]
+        out += [pack_string(ref.anim) + pack_string(ref.meta) + pack_string(ref.sound) for ref in slot.refs]
     return b"".join(out)
 
 
@@ -440,7 +423,7 @@ def _read_schema_file(revision: Optional[str]) -> str:
     return subprocess.run(["git", "-C", SCHEMAS_DIR, "show", f"{revision}:{SLOT_IDS_FILE}"], capture_output=True, text=True, check=True).stdout
 
 
-def _load_vanilla_sets() -> Dict[str, bytes]:
+def load_vanilla_sets() -> Dict[str, bytes]:
     """Extract the vanilla animation tables and collect every set by path.
 
     Raises:
@@ -465,16 +448,33 @@ def _load_vanilla_sets() -> Dict[str, bytes]:
     return sets
 
 
+def list_vanilla_files() -> Dict[str, Tuple[str, str]]:
+    """List every file in the vanilla asset packs, reading the packs in parallel.
+
+    Returns:
+        Lowercase path to (pack name, path as the pack spells it). The first pack in `VANILLA_ASSET_PACKS` wins.
+    """
+
+    def listing(pack: str) -> List[str]:
+        output = run_rpfm_cli(["pack", "list", "--pack-path", f"{VANILLA_DATA_DIR}\\{pack}"], capture_output=True, text=True).stdout
+        return [line.strip() for line in output.splitlines() if line.strip()]
+
+    with ThreadPoolExecutor(len(VANILLA_ASSET_PACKS)) as pool:
+        listings = list(pool.map(listing, VANILLA_ASSET_PACKS))
+    files: Dict[str, Tuple[str, str]] = {}
+    for pack, paths in zip(VANILLA_ASSET_PACKS, listings):
+        for path in paths:
+            files.setdefault(path.lower(), (pack, path))
+    return files
+
+
 def _known_paths() -> Set[str]:
     """List every file in the vanilla packs and the GLF mod folder.
 
     Returns:
         Lowercase file paths.
     """
-    paths = set()
-    for pack in VANILLA_ASSET_PACKS:
-        listing = run_rpfm_cli(["pack", "list", "--pack-path", f"{VANILLA_DATA_DIR}\\{pack}"], capture_output=True, text=True).stdout
-        paths.update(line.strip().lower() for line in listing.splitlines() if line.strip())
+    paths = set(list_vanilla_files())
     for root, _, files in os.walk(GLF_MOD_DIR):
         for name in files:
             paths.add(os.path.relpath(os.path.join(root, name), GLF_MOD_DIR).replace("\\", "/").lower())
@@ -497,7 +497,7 @@ def _check_round_trip(files: Dict[str, bytes], label: str) -> None:
 
 
 def _rebuild_set(path: str, glf_data: bytes, vanilla_data: bytes, source_names: Dict[int, str], names: Dict[int, str]) -> Tuple[bytes, List[str], Set[AnimRef]]:
-    """Rebuild one GLF set from its vanilla set and apply its patches.
+    """Rebuild one GLF set from its vanilla set.
 
     Args:
         path (str): Set path in the animpack.
@@ -507,23 +507,19 @@ def _rebuild_set(path: str, glf_data: bytes, vanilla_data: bytes, source_names: 
         names (Dict[int, str]): Slot name by id in the current numbering.
 
     Returns:
-        The new set bytes, its report lines, and the animations in slots that came from GLF or a patch.
+        The new set bytes, its report lines, and the animations in slots that came from GLF.
     """
     ids_by_name = {name: slot_id for slot_id, name in names.items()}
     glf = parse_set(glf_data)
     translate_ids(glf, source_names, ids_by_name)
     merged, report = merge_set(glf, parse_set(vanilla_data), names)
     file_name = path.split("/")[-1]
-    patches = SLOT_PATCHES.get(file_name, [])
-    apply_patches(merged, patches, ids_by_name)
-    patched = [target for target, _ in patches]
-
-    glf_ids = {ids_by_name[name] for name in report.glf_added + report.glf_kept + patched}
+    glf_ids = {ids_by_name[name] for name in report.glf_added + report.glf_kept}
     refs = {ref for slot in merged.slots if slot.slot_id in glf_ids for ref in slot.refs}
     slot_ids = {slot.slot_id for slot in merged.slots}
     risk = "  [FIRE_LEVEL without COMBAT_READY]" if ids_by_name["FIRE_LEVEL"] in slot_ids and ids_by_name["COMBAT_READY"] not in slot_ids else ""
     lines = [f"{file_name}: gained {len(report.gained)}, GLF added {len(report.glf_added)}, GLF kept {len(report.glf_kept)}{risk}"]
-    for label, values in (("header", report.header_changes), ("GLF kept", report.glf_kept), ("vanilla over GLF", report.vanilla_kept), ("patched", patched)):
+    for label, values in (("header", report.header_changes), ("GLF kept", report.glf_kept), ("vanilla over GLF", report.vanilla_kept)):
         if values:
             lines.append(f"    {label}: {', '.join(values)}")
     return write_set(merged), lines, refs
@@ -544,7 +540,7 @@ def main():
 
         with open(GLF_ANIMPACK_PATH, "rb") as f:
             glf_files = read_animpack(f.read())
-        vanilla_sets = _load_vanilla_sets()
+        vanilla_sets = load_vanilla_sets()
         _check_round_trip(dict(glf_files), "GLF")
         _check_round_trip(vanilla_sets, "vanilla")
         logging.info(f"All {len(glf_files)} GLF sets and every vanilla set round-trip.")

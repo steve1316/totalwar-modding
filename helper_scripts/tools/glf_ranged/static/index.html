@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GLF Ranged Picker</title>
+<style>
+  :root { --bg:#fafafa; --fg:#1d1d1f; --muted:#6b6b70; --line:rgba(0,0,0,.12); --side:#f0f0f3; --hi:rgba(60,120,255,.16);
+          --ok:#2e7d32; --warn:#b8860b; --bad:#c62828; --mute:#8a8a8f; --add:#1565c0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181b; --fg:#e8e8ea; --muted:#9a9aa0; --line:rgba(255,255,255,.12); --side:#1f2024; --hi:rgba(90,140,255,.22);
+            --ok:#4caf50; --warn:#e0a100; --bad:#ef5350; --mute:#77777d; --add:#64a0ff; color-scheme:dark; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:13px/1.4 system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--fg); }
+  header { position:sticky; top:0; z-index:2; display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; padding:10px 16px; background:var(--bg); border-bottom:1px solid var(--line); }
+  header h1 { font-size:15px; margin:0 12px 0 0; }
+  header label { cursor:pointer; color:var(--muted); }
+  header input[type=search] { padding:4px 8px; border:1px solid var(--line); border-radius:6px; background:transparent; color:var(--fg); min-width:200px; }
+  button { padding:4px 10px; border:1px solid var(--line); border-radius:6px; background:var(--side); color:var(--fg); cursor:pointer; }
+  button.primary { background:var(--add); color:#fff; border-color:transparent; }
+  #status { color:var(--muted); }
+  #report { margin:6px 0 10px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; }
+  #report summary { cursor:pointer; font-weight:600; }
+  #report pre { max-height:320px; overflow:auto; font-size:11px; margin:6px 0 0; }
+  .wrap { display:flex; min-height:calc(100vh - var(--hdr, 50px)); }
+  nav { width:210px; flex:none; background:var(--side); border-right:1px solid var(--line); padding:8px; overflow-y:auto; max-height:calc(100vh - var(--hdr, 50px)); position:sticky; top:var(--hdr, 50px); }
+  nav div { display:flex; justify-content:space-between; padding:4px 6px; border-radius:5px; cursor:pointer; }
+  nav div.on { background:var(--hi); font-weight:600; }
+  nav .count { color:var(--bad); font-size:11px; }
+  nav .count.zero { color:var(--mute); }
+  nav .edited { color:var(--add); font-size:11px; }
+  /* Edited rows: strong for unsaved page changes, soft for changes applied locally but not published to the Workshop. */
+  tr.edit-unsaved td { background:rgba(224,161,0,.22); }
+  tr.edit-unsaved td:first-child { box-shadow:inset 3px 0 0 var(--warn); }
+  tr.edit-unpublished td { background:var(--hi); }
+  tr.edit-unpublished td:first-child { box-shadow:inset 3px 0 0 var(--add); }
+  main { flex:1; min-width:0; padding:8px 16px 40px; }
+  table { border-collapse:collapse; width:100%; }
+  th, td { padding:4px 6px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; vertical-align:middle; }
+  th { position:sticky; top:var(--hdr, 50px); background:var(--bg); font-weight:600; color:var(--muted); font-size:12px; }
+  tr.base td { font-weight:600; border-top:2px solid var(--line); }
+  tr.variant td:first-child { padding-left:24px; font-weight:400; }
+  tr.ignored td { opacity:.45; }
+  td.key { color:var(--muted); font-size:11px; font-weight:400; max-width:220px; overflow:hidden; text-overflow:ellipsis; }
+  .badge { display:inline-block; font-size:10px; padding:1px 7px; border-radius:9px; margin-right:3px; color:#fff; font-weight:600; }
+  .ok { background:var(--ok); } .warn { background:var(--warn); } .bad { background:var(--bad); } .mute { background:var(--mute); } .add { background:var(--add); }
+  select { max-width:240px; font-size:12px; background:transparent; color:var(--fg); border:1px solid var(--line); border-radius:4px; }
+  select option { background:var(--bg); }
+  .guess { font-size:11px; color:var(--muted); font-weight:400; }
+  .reason { display:inline-block; max-width:170px; overflow:hidden; text-overflow:ellipsis; vertical-align:middle; }
+  .empty { color:var(--muted); padding:20px; }
+  /* Unit cards are 60x130 in game. They show at half size and grow to full size on hover. */
+  .card { display:block; width:30px; height:65px; border-radius:3px; object-fit:cover; transition:transform .12s; transform-origin:left center; }
+  .card:hover { transform:scale(2); position:relative; z-index:3; box-shadow:0 4px 14px rgba(0,0,0,.45); }
+  .card.none { display:flex; align-items:center; justify-content:center; background:var(--side); color:var(--muted); font-size:10px; font-weight:600; border:1px dashed var(--line); }
+  td.cardcell { padding:2px 6px; width:30px; }
+  td.unit { white-space:normal; min-width:180px; max-width:320px; }
+  td.status { white-space:normal; max-width:190px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>GLF Ranged Picker</h1>
+  <input type="search" id="search" placeholder="Search all factions...">
+  <button id="tickAll">Tick all casters</button>
+  <label><input type="checkbox" id="hideIgnored" checked> hide ignored</label>
+  <label><input type="checkbox" id="onlyMissing"> only not supported</label>
+  <label><input type="checkbox" id="onlyChanged"> only edited</label>
+  <span style="flex:1"></span>
+  <span id="status">Loading...</span>
+  <button id="markPublished" title="After uploading to the Workshop, record the saved picks as published and clear the soft highlights.">Mark as published</button>
+  <button class="primary" id="save" title="Save the picks and write them into the GLF pack. Close the game first.">Save &amp; apply</button>
+</header>
+<div class="wrap">
+  <nav id="factions"></nav>
+  <main><details id="report" hidden><summary id="reportSummary"></summary><pre id="reportText"></pre></details><table><thead><tr><th>Card</th><th>Unit</th><th>Kind</th><th>Status</th><th>Missile</th><th>Ranged</th><th>FWM</th><th>Ignore</th><th>Key</th></tr></thead><tbody id="rows"></tbody></table></main>
+</div>
+<script>
+const S = { units: [], byKey: {}, groups: {}, byFaction: {}, missileOptions: '', sel: {}, ignore: new Set(), baseMissile: {}, initial: '', initialSel: null, faction: '' };
+
+// Turn `glf_mage_lord_fire_missile` into `fire (lord)` and `glf_hef_teclis_missile` into `teclis`.
+function missileLabel(key) {
+  const generic = key.match(/^glf_mage_(lord|hero)_(.+)_missile$/);
+  if (generic) return `${generic[2]} (${generic[1]})`;
+  const special = key.match(/^glf_[a-z]+_(.+)_missile$/i);
+  return special ? special[1] : key;
+}
+
+// Turn a mount icon name like `mount_barded_ithilmar_steed` into `Barded Ithilmar Steed`.
+function mountLabel(icon) {
+  return icon.replace(/^mount_/, '').split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+// Selection as sorted JSON, so the same choices always compare equal.
+function snapshot() {
+  const units = {};
+  Object.keys(S.sel).sort().forEach(k => (units[k] = { fwm: S.sel[k].fwm, missile: S.sel[k].missile, ranged: S.sel[k].ranged }));
+  return JSON.stringify({ units, ignore: [...S.ignore].sort() });
+}
+
+// Remember the current selection as saved, for the unsaved check and the "only changed" filter.
+function markSaved() {
+  S.initial = snapshot();
+  const parsed = JSON.parse(S.initial);
+  S.initialSel = { units: parsed.units, ignore: new Set(parsed.ignore) };
+}
+
+function missileFor(base) {
+  return S.baseMissile[base] || S.byKey[base].guess || '';
+}
+
+function isTicked(key, flag) {
+  return !!(S.sel[key] && S.sel[key][flag]);
+}
+
+function setFlag(key, flag, on) {
+  const entry = S.sel[key] || { ranged: false, fwm: false, missile: '' };
+  entry[flag] = on;
+  entry.missile = S.baseMissile[S.byKey[key].base] || '';
+  if (!entry.ranged && !entry.fwm) delete S.sel[key]; else S.sel[key] = entry;
+}
+
+function hasMissile(row) {
+  return !!(row.glf_missile || row.vanilla_missile);
+}
+
+function badges(row) {
+  const out = [];
+  if (S.ignore.has(row.key)) return '<span class="badge mute">Ignored</span>';
+  if (!row.kind) return '<span class="badge bad">No anim set</span>';
+  const ranged = isTicked(row.key, 'ranged');
+  if (ranged && !row.glf_missile) out.push('<span class="badge add">Will add</span>');
+  if (!ranged && row.glf_missile) out.push('<span class="badge bad">Will remove</span>');
+  if (hasMissile(row) && row.fire_slot) out.push(`<span class="badge ok">${row.glf_missile ? 'Ranged' : 'Vanilla ranged'}</span>`);
+  if (ranged || hasMissile(row)) {
+    if (!row.fire_slot) out.push(row.cast_slot ? '<span class="badge warn">No fire slot</span>' : '<span class="badge bad">No cast anim</span>');
+    if (row.tpose_risk) out.push('<span class="badge warn">T-pose risk</span>');
+  }
+  if (ranged && !missileFor(row.base)) out.push('<span class="badge bad">Pick a missile</span>');
+  if (row.fwm_attribute) out.push('<span class="badge ok">FWM</span>');
+  if (!hasMissile(row) && !ranged) out.push('<span class="badge mute">Not supported</span>');
+  return out.join('');
+}
+
+function missileCell(row) {
+  if (row.key !== row.base) return '<span class="guess">same as base</span>';
+  const chosen = S.baseMissile[row.key] || '';
+  const auto = row.guess ? `auto: ${missileLabel(row.guess)}` : 'pick a missile';
+  // The shared options are built once at load. `render` sets each select's value afterwards.
+  return `<select data-missile="${row.key}" title="${chosen || row.guess}"><option value="">${auto}</option>${S.missileOptions}</select> <span class="guess reason" title="${row.guess_source}">${row.guess_source}</span>`;
+}
+
+// A placeholder with the unit's initials, for units the game has no card art for.
+function placeholderHtml(row) {
+  const initials = row.name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+  return `<div class="card none" title="${row.name} (${row.key}) - no card art">${initials}</div>`;
+}
+
+// The unit card image, falling back to the placeholder when there is none or it fails to load. Mount variants share the base unit's art, so
+// only the base row shows it.
+function cardHtml(row) {
+  if (row.key !== row.base) return '';
+  if (!row.card) return placeholderHtml(row);
+  return `<img class="card" loading="lazy" src="/card/${row.key}.png" alt="" title="${row.name} (${row.key})" data-key="${row.key}" onerror="this.outerHTML = placeholderHtml(S.byKey[this.dataset.key])">`;
+}
+
+function rowHtml(row) {
+  const isBase = row.key === row.base;
+  const variants = isBase ? (S.groups[row.key] || []).length - 1 : 0;
+  const label = isBase ? `${row.name} <span class="guess">${row.caste}${variants ? ` +${variants} mount${variants > 1 ? 's' : ''}` : ''}</span>` : (row.mount ? mountLabel(row.mount) : row.name);
+  const ignored = S.ignore.has(row.key);
+  const edit = changed(row.key) ? ' edit-unsaved' : unpublished(row.key) ? ' edit-unpublished' : '';
+  return `<tr class="${isBase ? 'base' : 'variant'}${ignored ? ' ignored' : ''}${edit}">
+    <td class="cardcell">${cardHtml(row)}</td><td class="unit">${label}</td><td>${row.kind || '-'}</td><td class="status">${badges(row)}</td><td>${missileCell(row)}</td>
+    ${['ranged', 'fwm'].map(flag => `<td><input type="checkbox" data-flag="${flag}" data-key="${row.key}" ${flag === 'fwm' && isBase && variants ? 'title="Ctrl-click to set every mount too"' : ''} ${isTicked(row.key, flag) ? 'checked' : ''} ${ignored ? 'disabled' : ''}></td>`).join('')}
+    <td><input type="checkbox" data-ignore="${row.key}" ${ignored ? 'checked' : ''}></td>
+    <td class="key" title="${row.key}">${row.key}</td></tr>`;
+}
+
+function missingCount(rows) {
+  return rows.filter(r => r.is_caster && !hasMissile(r) && !isTicked(r.key, 'ranged') && !S.ignore.has(r.key)).length;
+}
+
+function renderFactions() {
+  document.getElementById('factions').innerHTML = Object.keys(S.byFaction).sort().map(f => {
+    const n = missingCount(S.byFaction[f]);
+    const edited = S.byFaction[f].filter(r => changed(r.key) || unpublished(r.key)).length;
+    const editedHtml = edited ? `<span class="edited" title="Rows not published to the Workshop yet">${edited} edited</span> ` : '';
+    return `<div data-faction="${f}" class="${f === S.faction ? 'on' : ''}"><span>${f}</span><span>${editedHtml}<span class="count ${n ? '' : 'zero'}">${n ? n + ' missing' : 'done'}</span></span></div>`;
+  }).join('');
+}
+
+// True when a unit's choices differ between the current page and a saved selection (`units` plus an `ignore` set).
+function differs(key, saved) {
+  const now = S.sel[key], was = saved.units[key];
+  const same = (!now && !was) || (now && was && now.ranged === was.ranged && now.fwm === was.fwm && (now.missile || '') === (was.missile || ''));
+  return !same || S.ignore.has(key) !== saved.ignore.has(key);
+}
+
+// Changed in the page but not saved and applied yet.
+function changed(key) {
+  return differs(key, S.initialSel);
+}
+
+// Different from what is on the Workshop, saved or not.
+function unpublished(key) {
+  return differs(key, S.published);
+}
+
+function groupVisible(group) {
+  const hideIgnored = document.getElementById('hideIgnored').checked;
+  const onlyMissing = document.getElementById('onlyMissing').checked;
+  const onlyChanged = document.getElementById('onlyChanged').checked;
+  return group.filter(r => {
+    if (hideIgnored && S.ignore.has(r.key)) return false;
+    if (onlyMissing && hasMissile(r)) return false;
+    if (onlyChanged && !unpublished(r.key) && !changed(r.key)) return false;
+    return true;
+  });
+}
+
+function render() {
+  const query = document.getElementById('search').value.trim().toLowerCase();
+  const bases = Object.keys(S.groups).filter(b => query
+    ? S.groups[b].some(r => r.name.toLowerCase().includes(query) || r.key.includes(query))
+    : S.byKey[b].faction === S.faction);
+  const html = bases.map(b => groupVisible(S.groups[b]).map(rowHtml).join('')).join('');
+  document.getElementById('rows').innerHTML = html || '<tr><td colspan="9" class="empty">Nothing to show with these filters.</td></tr>';
+  document.querySelectorAll('select[data-missile]').forEach(select => (select.value = S.baseMissile[select.dataset.missile] || ''));
+  renderFactions();
+  const dirty = snapshot() !== S.initial;
+  document.getElementById('status').textContent = dirty ? 'Unsaved changes' : `Saved: ${Object.keys(S.sel).length} units, ${S.ignore.size} ignored`;
+}
+
+// The `change` event does not carry modifier keys, so remember whether Ctrl was held on the click that caused it.
+let ctrlHeld = false;
+document.addEventListener('click', e => { ctrlHeld = e.ctrlKey; }, true);
+
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.flag) {
+    const row = S.byKey[t.dataset.key];
+    // A Ranged tick on the base unit sets every mount variant that is not ignored. An FWM tick only does so with Ctrl held.
+    const wholeGroup = row.key === row.base && (t.dataset.flag === 'ranged' || ctrlHeld);
+    const keys = wholeGroup ? S.groups[row.key].map(r => r.key).filter(k => !S.ignore.has(k)) : [row.key];
+    keys.forEach(k => setFlag(k, t.dataset.flag, t.checked));
+    // Firing while moving needs ranged support: ticking it ticks Ranged, and unticking Ranged unticks it.
+    if (t.dataset.flag === 'fwm' && t.checked) keys.forEach(k => setFlag(k, 'ranged', true));
+    if (t.dataset.flag === 'ranged' && !t.checked) keys.forEach(k => setFlag(k, 'fwm', false));
+  } else if (t.dataset.ignore) {
+    const key = t.dataset.ignore;
+    if (t.checked) { S.ignore.add(key); delete S.sel[key]; } else S.ignore.delete(key);
+  } else if (t.dataset.missile) {
+    const base = t.dataset.missile;
+    S.baseMissile[base] = t.value;
+    S.groups[base].forEach(r => { if (S.sel[r.key]) S.sel[r.key].missile = t.value; });
+  }
+  render();
+});
+
+document.getElementById('factions').addEventListener('click', e => {
+  const div = e.target.closest('[data-faction]');
+  if (!div) return;
+  S.faction = div.dataset.faction;
+  document.getElementById('search').value = '';
+  render();
+});
+
+document.getElementById('search').addEventListener('input', render);
+
+document.getElementById('tickAll').addEventListener('click', () => {
+  S.units.filter(r => r.faction === S.faction && r.is_caster && !S.ignore.has(r.key) && r.kind && missileFor(r.base)).forEach(r => setFlag(r.key, 'ranged', true));
+  render();
+});
+
+// The page edits made after `sent` was posted: changed unit entries (null when unticked), ignore changes, and missile picks.
+function editsSince(sent, sentMissiles) {
+  const now = JSON.parse(snapshot());
+  const keys = new Set([...Object.keys(now.units), ...Object.keys(sent.units)]);
+  const units = {};
+  keys.forEach(k => { if (JSON.stringify(now.units[k] || null) !== JSON.stringify(sent.units[k] || null)) units[k] = now.units[k] || null; });
+  const ignore = {};
+  new Set([...now.ignore, ...sent.ignore]).forEach(k => { if (now.ignore.includes(k) !== sent.ignore.includes(k)) ignore[k] = now.ignore.includes(k); });
+  const missiles = {};
+  Object.keys({ ...S.baseMissile, ...sentMissiles }).forEach(b => { if ((S.baseMissile[b] || '') !== (sentMissiles[b] || '')) missiles[b] = S.baseMissile[b] || ''; });
+  return { units, ignore, missiles };
+}
+
+// Put edits from `editsSince` back on top of freshly loaded state. They show as unsaved until the next apply.
+function reapplyEdits(edits) {
+  Object.entries(edits.units).forEach(([k, entry]) => { if (entry) S.sel[k] = entry; else delete S.sel[k]; });
+  Object.entries(edits.ignore).forEach(([k, on]) => { if (on) S.ignore.add(k); else S.ignore.delete(k); });
+  Object.assign(S.baseMissile, edits.missiles);
+  render();
+}
+
+document.getElementById('save').addEventListener('click', async () => {
+  const status = document.getElementById('status');
+  const button = document.getElementById('save');
+  const missing = Object.keys(S.sel).filter(k => S.sel[k].ranged && !missileFor(S.byKey[k].base));
+  if (missing.length) { status.textContent = `Pick a missile for ${missing.length} unit(s) first`; return; }
+  button.disabled = true;
+  status.textContent = 'Applying... (about 15 seconds)';
+  const sent = JSON.parse(snapshot());
+  const sentMissiles = { ...S.baseMissile };
+  try {
+    const response = await fetch('/api/apply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(sent) });
+    const result = await response.json();
+    if (!response.ok) { status.textContent = 'Apply failed: ' + result.error; return; }
+    // Reload so the status badges show what is now in the pack, then put back anything edited while the apply ran.
+    const edits = editsSince(sent, sentMissiles);
+    await loadState();
+    reapplyEdits(edits);
+    const report = document.getElementById('report');
+    document.getElementById('reportSummary').textContent = 'Applied: ' + result.report.split('\n')[0];
+    document.getElementById('reportText').textContent = result.report;
+    report.hidden = false;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+// Two clicks are needed, so a stray click cannot clear the highlights.
+let confirmTimer = null;
+document.getElementById('markPublished').addEventListener('click', async () => {
+  const button = document.getElementById('markPublished');
+  const status = document.getElementById('status');
+  if (snapshot() !== S.initial) { status.textContent = 'Save & apply first. Only saved picks can be marked as published.'; return; }
+  if (!confirmTimer) {
+    button.textContent = 'Click again to confirm';
+    confirmTimer = setTimeout(() => { button.textContent = 'Mark as published'; confirmTimer = null; }, 4000);
+    return;
+  }
+  clearTimeout(confirmTimer);
+  confirmTimer = null;
+  button.textContent = 'Mark as published';
+  const response = await fetch('/api/published', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+  if (!response.ok) { status.textContent = 'Marking failed: ' + (await response.json()).error; return; }
+  await loadState();
+  status.textContent = 'Marked as published.';
+});
+
+// Pin the table header and faction list right under the page header, whatever its height.
+function fitHeader() {
+  document.documentElement.style.setProperty('--hdr', document.querySelector('header').offsetHeight + 'px');
+}
+window.addEventListener('resize', fitHeader);
+fitHeader();
+
+window.addEventListener('beforeunload', e => { if (snapshot() !== S.initial) e.preventDefault(); });
+
+// Load the catalog and saved selection from the server, keeping the faction in view.
+async function loadState() {
+  const state = await (await fetch('/api/state')).json();
+  Object.assign(S, { byKey: {}, groups: {}, byFaction: {}, baseMissile: {} });
+  // Quest battle, boss and custom battle copies follow their campaign twin, so they are not shown.
+  S.units = state.units.filter(r => !r.twin);
+  S.missileOptions = state.missiles.map(m => `<option value="${m}">${missileLabel(m)}</option>`).join('');
+  S.units.forEach(r => {
+    S.byKey[r.key] = r;
+    (S.groups[r.base] = S.groups[r.base] || []).push(r);
+    (S.byFaction[r.faction] = S.byFaction[r.faction] || []).push(r);
+  });
+  S.sel = state.selection.units || {};
+  S.ignore = new Set(state.selection.ignore || []);
+  S.published = { units: state.published.units || {}, ignore: new Set(state.published.ignore || []) };
+  Object.entries(S.sel).forEach(([k, v]) => { if (v.missile && S.byKey[k]) S.baseMissile[S.byKey[k].base] = S.baseMissile[S.byKey[k].base] || v.missile; });
+  markSaved();
+  S.faction = S.faction || Object.keys(S.groups).map(b => S.byKey[b].faction).sort()[0];
+  render();
+}
+
+loadState();
+</script>
+</body>
+</html>

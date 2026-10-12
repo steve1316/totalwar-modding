@@ -91,6 +91,14 @@ Adds a downloaded Workshop mod to `SUPPORTED_MODS` from its link: `python -m too
 ### `tools/glf_inner_join.py`
 Patches the GLF Unit Expansion mod's `land_units_tables` by inner-joining its rows against vanilla `land_units_tables` (from `data/db.pack`), then overriding `man_animation`, `primary_missile_weapon`, `primary_ammo`, and `ai_usage_group` on each row with the GLF mod's values. Extracts both sides via `rpfm_cli`, merges in-memory, and writes the result back into the GLF `.pack`. Defaults to `!!!1a_glf_unit_expansion.pack`; pass `--pack <package_name>` to target a different mod from `SUPPORTED_MODS`.
 
+### `tools/glf_rebuild_animpack.py`
+Rebuilds the GLF Battle Mage animpack on top of the current vanilla animation sets, keeping GLF's own fire slots. Run it after a game patch, before `tools.glf_ranged.generate`. Pass `--source-ids-rev <schemas commit>` when CA renumbered the animation slot ids since the pack was last saved, and `--dry-run` to only write the report.
+
+### `tools/glf_ranged/` (GLF Battle Mage ranged lords and heroes)
+`python -m tools.glf_ranged` opens a local picker page listing every vanilla lord and hero by faction, with card art, mount variants, ranged status and an ignore list. Tick Ranged and Fire Whilst Moving per unit (Ctrl-click a base unit's FWM tick to set every mount), then Save & apply writes the picks into the GLF pack. Close the game first. Rows stay highlighted until Mark as published is clicked after a Workshop upload.
+
+`python -m tools.glf_ranged.generate [--dry-run] [--deploy]` does the same from `selection.json` without the page. It writes the land units, rider personalities, fire whilst moving attribute, full firing arc chariots, fire slots and fire markers, and reports to `_diag/glf_ranged_generate_report.txt`. `--deploy` also copies the changed files into the subscribed Workshop pack. Findings, per-unit fixes and the original Dev Notes are in `warhammer3_mods/1a_glf_battle_mage_Dante/RESEARCH_NOTES.md`.
+
 ### `tools/check_translations.py`
 Validates English translation packs against their original-language source packs. Reads the localization `text/db/` tables from a hardcoded list of `(mod_path, translation_path)` pairs at the top of the file, then reports missing keys, placeholder strings (`???`), and inconsistencies. Manual setup required: edit the list to point at the pack pairs you want to audit. Not used by any orchestrator.
 
