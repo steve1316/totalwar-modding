@@ -244,6 +244,9 @@ document.addEventListener('change', e => {
     const wholeGroup = row.key === row.base && (t.dataset.flag === 'ranged' || ctrlHeld);
     const keys = wholeGroup ? S.groups[row.key].map(r => r.key).filter(k => !S.ignore.has(k)) : [row.key];
     keys.forEach(k => setFlag(k, t.dataset.flag, t.checked));
+    // Firing while moving needs ranged support: ticking it ticks Ranged, and unticking Ranged unticks it.
+    if (t.dataset.flag === 'fwm' && t.checked) keys.forEach(k => setFlag(k, 'ranged', true));
+    if (t.dataset.flag === 'ranged' && !t.checked) keys.forEach(k => setFlag(k, 'fwm', false));
   } else if (t.dataset.ignore) {
     const key = t.dataset.ignore;
     if (t.checked) { S.ignore.add(key); delete S.sel[key]; } else S.ignore.delete(key);
