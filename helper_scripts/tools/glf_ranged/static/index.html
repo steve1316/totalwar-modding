@@ -28,6 +28,12 @@
   nav div.on { background:var(--hi); font-weight:600; }
   nav .count { color:var(--bad); font-size:11px; }
   nav .count.zero { color:var(--mute); }
+  nav .edited { color:var(--add); font-size:11px; }
+  /* Edited rows: strong for unsaved page changes, soft for changes applied locally but not published to the Workshop. */
+  tr.edit-unsaved td { background:rgba(224,161,0,.22); }
+  tr.edit-unsaved td:first-child { box-shadow:inset 3px 0 0 var(--warn); }
+  tr.edit-unpublished td { background:var(--hi); }
+  tr.edit-unpublished td:first-child { box-shadow:inset 3px 0 0 var(--add); }
   main { flex:1; min-width:0; padding:8px 16px 40px; }
   table { border-collapse:collapse; width:100%; }
   th, td { padding:4px 6px; border-bottom:1px solid var(--line); text-align:left; white-space:nowrap; vertical-align:middle; }
@@ -59,9 +65,10 @@
   <button id="tickAll">Tick all casters</button>
   <label><input type="checkbox" id="hideIgnored" checked> hide ignored</label>
   <label><input type="checkbox" id="onlyMissing"> only not supported</label>
-  <label><input type="checkbox" id="onlyChanged"> only changed</label>
+  <label><input type="checkbox" id="onlyChanged"> only edited</label>
   <span style="flex:1"></span>
   <span id="status">Loading...</span>
+  <button id="markPublished" title="After uploading to the Workshop, record the saved picks as published and clear the soft highlights.">Mark as published</button>
   <button class="primary" id="save" title="Save the picks and write them into the GLF pack. Close the game first.">Save &amp; apply</button>
 </header>
 <div class="wrap">
@@ -162,7 +169,8 @@ function rowHtml(row) {
   const variants = isBase ? (S.groups[row.key] || []).length - 1 : 0;
   const label = isBase ? `${row.name} <span class="guess">${row.caste}${variants ? ` +${variants} mount${variants > 1 ? 's' : ''}` : ''}</span>` : (row.mount ? mountLabel(row.mount) : row.name);
   const ignored = S.ignore.has(row.key);
-  return `<tr class="${isBase ? 'base' : 'variant'}${ignored ? ' ignored' : ''}">
+  const edit = changed(row.key) ? ' edit-unsaved' : unpublished(row.key) ? ' edit-unpublished' : '';
+  return `<tr class="${isBase ? 'base' : 'variant'}${ignored ? ' ignored' : ''}${edit}">
     <td class="cardcell">${cardHtml(row)}</td><td class="unit">${label}</td><td>${row.kind || '-'}</td><td class="status">${badges(row)}</td><td>${missileCell(row)}</td>
     ${['ranged', 'fwm'].map(flag => `<td><input type="checkbox" data-flag="${flag}" data-key="${row.key}" ${isTicked(row.key, flag) ? 'checked' : ''} ${ignored ? 'disabled' : ''}></td>`).join('')}
     <td><input type="checkbox" data-ignore="${row.key}" ${ignored ? 'checked' : ''}></td>
@@ -176,15 +184,27 @@ function missingCount(rows) {
 function renderFactions() {
   document.getElementById('factions').innerHTML = Object.keys(S.byFaction).sort().map(f => {
     const n = missingCount(S.byFaction[f]);
-    return `<div data-faction="${f}" class="${f === S.faction ? 'on' : ''}"><span>${f}</span><span class="count ${n ? '' : 'zero'}">${n ? n + ' missing' : 'done'}</span></div>`;
+    const edited = S.byFaction[f].filter(r => changed(r.key) || unpublished(r.key)).length;
+    const editedHtml = edited ? `<span class="edited" title="Rows not published to the Workshop yet">${edited} edited</span> ` : '';
+    return `<div data-faction="${f}" class="${f === S.faction ? 'on' : ''}"><span>${f}</span><span>${editedHtml}<span class="count ${n ? '' : 'zero'}">${n ? n + ' missing' : 'done'}</span></span></div>`;
   }).join('');
 }
 
-// True when a unit's choices differ from the last saved selection.
+// True when a unit's choices differ between the current page and a saved selection (`units` plus an `ignore` set).
+function differs(key, saved) {
+  const now = S.sel[key], was = saved.units[key];
+  const same = (!now && !was) || (now && was && now.ranged === was.ranged && now.fwm === was.fwm && (now.missile || '') === (was.missile || ''));
+  return !same || S.ignore.has(key) !== saved.ignore.has(key);
+}
+
+// Changed in the page but not saved and applied yet.
 function changed(key) {
-  const now = S.sel[key], was = S.initialSel.units[key];
-  const same = (!now && !was) || (now && was && now.ranged === was.ranged && now.fwm === was.fwm && now.missile === was.missile);
-  return !same || S.ignore.has(key) !== S.initialSel.ignore.has(key);
+  return differs(key, S.initialSel);
+}
+
+// Different from what is on the Workshop, saved or not.
+function unpublished(key) {
+  return differs(key, S.published);
 }
 
 function groupVisible(group) {
@@ -194,7 +214,7 @@ function groupVisible(group) {
   return group.filter(r => {
     if (hideIgnored && S.ignore.has(r.key)) return false;
     if (onlyMissing && hasMissile(r)) return false;
-    if (onlyChanged && !changed(r.key)) return false;
+    if (onlyChanged && !unpublished(r.key) && !changed(r.key)) return false;
     return true;
   });
 }
@@ -268,6 +288,25 @@ document.getElementById('save').addEventListener('click', async () => {
     button.disabled = false;
   }
 });
+
+// Two clicks are needed, so a stray click cannot clear the highlights.
+let confirmTimer = null;
+document.getElementById('markPublished').addEventListener('click', async () => {
+  const button = document.getElementById('markPublished');
+  const status = document.getElementById('status');
+  if (snapshot() !== S.initial) { status.textContent = 'Save & apply first. Only saved picks can be marked as published.'; return; }
+  if (!confirmTimer) {
+    button.textContent = 'Click again to confirm';
+    confirmTimer = setTimeout(() => { button.textContent = 'Mark as published'; confirmTimer = null; }, 4000);
+    return;
+  }
+  clearTimeout(confirmTimer);
+  confirmTimer = null;
+  button.textContent = 'Mark as published';
+  const response = await fetch('/api/published', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+  if (!response.ok) { status.textContent = 'Marking failed: ' + (await response.json()).error; return; }
+  await loadState();
+  status.textContent = 'Marked as published.';
 });
 
 // Pin the table header and faction list right under the page header, whatever its height.
@@ -293,6 +332,7 @@ async function loadState() {
   });
   S.sel = state.selection.units || {};
   S.ignore = new Set(state.selection.ignore || []);
+  S.published = { units: state.published.units || {}, ignore: new Set(state.published.ignore || []) };
   Object.entries(S.sel).forEach(([k, v]) => { if (v.missile && S.byKey[k]) S.baseMissile[S.byKey[k].base] = S.baseMissile[S.byKey[k].base] || v.missile; });
   markSaved();
   S.faction = S.faction || Object.keys(S.groups).map(b => S.byKey[b].faction).sort()[0];

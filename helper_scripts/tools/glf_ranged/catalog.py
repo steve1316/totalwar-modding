@@ -25,6 +25,8 @@ from ttc.ttc_data import LOC_NAME_PREFIX, LOC_REFERENCE_PATTERN, VANILLA_LOC_PAC
 
 TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
 SELECTION_PATH = os.path.join(TOOL_DIR, "selection.json")
+# The selection as of the last Workshop upload, so the picker can highlight what is not published yet.
+PUBLISHED_PATH = os.path.join(TOOL_DIR, "published.json")
 REPORT_PATH = "./_diag/glf_ranged_report.txt"
 SCRATCH = f"{TEMP_DIR}/glf_ranged"
 # Loc key prefix of agent subtype names, which some unit names refer to.
@@ -635,25 +637,30 @@ def seed_selection(catalog: Catalog) -> Dict:
     return {"units": units, "ignore": []}
 
 
-def load_selection() -> Dict:
-    """Read the saved selection, or an empty one.
+def load_selection(path: Optional[str] = None) -> Dict:
+    """Read a saved selection, or an empty one.
+
+    Args:
+        path (Optional[str]): `PUBLISHED_PATH` for the selection as last published. Defaults to `SELECTION_PATH`.
 
     Returns:
         The selection with `units` and `ignore`.
     """
-    if not os.path.exists(SELECTION_PATH):
+    path = path or SELECTION_PATH
+    if not os.path.exists(path):
         return {"units": {}, "ignore": []}
-    with open(SELECTION_PATH, encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def write_selection(selection: Dict) -> None:
+def write_selection(selection: Dict, path: Optional[str] = None) -> None:
     """Save a selection with sorted keys so git diffs stay small.
 
     Args:
         selection (Dict): The selection with `units` and `ignore`.
+        path (Optional[str]): `PUBLISHED_PATH` for the selection as last published. Defaults to `SELECTION_PATH`.
     """
-    with open(SELECTION_PATH, "w", encoding="utf-8") as f:
+    with open(path or SELECTION_PATH, "w", encoding="utf-8") as f:
         json.dump(selection, f, indent=1, sort_keys=True)
 
 

@@ -66,7 +66,7 @@ def load_state() -> None:
         built = catalog.load_catalog(cards=True)
     finally:
         clear_temp_root()
-    STATE.update(units=[asdict(row) for row in built.units], missiles=built.missiles, selection=catalog.load_selection())
+    STATE.update(units=[asdict(row) for row in built.units], missiles=built.missiles, selection=catalog.load_selection(), published=catalog.load_selection(catalog.PUBLISHED_PATH))
     CARDS.clear()
     CARDS.update({row.key: os.path.join(catalog.CARDS_DIR, row.card) for row in built.units if row.card})
     logging.info(f"Catalog ready with {len(built.units)} units, {len(CARDS)} with card art.")
@@ -110,6 +110,21 @@ def apply_selection(body: Dict) -> Dict:
         return {**saved, "report": report}
     finally:
         APPLY_LOCK.release()
+
+
+def mark_published(body: Dict) -> Dict:
+    """Record the saved selection as what is on the Workshop, after an upload.
+
+    Args:
+        body (Dict): Unused. The saved selection on disk is what gets recorded, never unsaved page edits.
+
+    Returns:
+        A short result for the page.
+    """
+    selection = catalog.load_selection()
+    catalog.write_selection(selection, catalog.PUBLISHED_PATH)
+    STATE["published"] = selection
+    return {"published": len(selection["units"])}
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -159,7 +174,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         """Saves a selection, or saves and applies it."""
-        routes = {"/api/selection": save_selection, "/api/apply": apply_selection}
+        routes = {"/api/selection": save_selection, "/api/apply": apply_selection, "/api/published": mark_published}
         if self.path not in routes:
             self._json(404, {"error": "not found"})
             return
