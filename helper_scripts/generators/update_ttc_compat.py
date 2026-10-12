@@ -102,7 +102,7 @@ def render_report(metrics_line: str, counts: Dict[str, int], review_rows: List[t
     Args:
         metrics_line (str): Held-out accuracy summary.
         counts (Dict[str, int]): `labeled`, `targets`, `confident`, `review` and `removed` counts.
-        review_rows (List[tuple]): `(mod, key, pick, confidence, runner_up, cost, caste, class, num_men, lookalikes)` per low-confidence unit.
+        review_rows (List[tuple]): `(mod, key, name, pick, confidence, runner_up, cost, caste, class, num_men, lookalikes)` per low-confidence unit.
         removed (List[Tuple[str, str]]): `(hand file name, removed line)` pairs.
         missing_mods (List[str]): Supported mods that are not installed.
 
@@ -125,12 +125,14 @@ def render_report(metrics_line: str, counts: Dict[str, int], review_rows: List[t
         "",
         "To confirm or fix a pick, copy its line from the mod's `_auto.lua` into the mod's hand file and adjust it. It then counts as a hand entry.",
         "",
-        "| Mod | Unit | Pick | Confidence | Runner-up | Cost | Caste | Class | Men | Lookalikes |",
-        "|---|---|---|---|---|---|---|---|---|---|",
+        "| Mod | Unit | Name | Pick | Confidence | Runner-up | Cost | Caste | Class | Men | Lookalikes |",
+        "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
-    for mod, key, pick, confidence, runner_up, cost, caste, cls, men, lookalikes in review_rows:
+    for mod, key, name, pick, confidence, runner_up, cost, caste, cls, men, lookalikes in review_rows:
         looks = ", ".join(f"{k} ({label})" for k, label in lookalikes)
-        lines.append(f"| {mod} | {key} | {pick} | {confidence:.2f} | {runner_up} | {cost} | {caste} | {cls} | {men} | {looks} |")
+        # A `|` in a loc name would split the table cell.
+        name = name.replace("|", "\\|")
+        lines.append(f"| {mod} | {key} | {name} | {pick} | {confidence:.2f} | {runner_up} | {cost} | {caste} | {cls} | {men} | {looks} |")
     lines += ["", "## Removed hand entries", ""]
     lines += [f"- {name}: `{line.strip()}`" for name, line in removed] or ["- (none)"]
     lines += ["", "## Supported mods not installed", ""]
@@ -184,6 +186,8 @@ def main() -> int:
     step_start = time.time()
     unsure_keys = [key for key, prediction in zip(keys, predictions) if not prediction.confident]
     lookalikes = dict(zip(unsure_keys, model.nearest_labeled_many([data.stats[key] for key in unsure_keys])))
+    loc_names = ttc_data.load_loc_names()
+    review_names = ttc_data.unit_names(unsure_keys, data.stats, loc_names)
     assignments: Dict[str, Dict[str, List[Tuple[str, str, Optional[int]]]]] = {}
     review_rows = []
     for key, prediction in zip(keys, predictions):
@@ -197,6 +201,7 @@ def main() -> int:
                 (
                     data.mod_names.get(package_name, package_name),
                     key,
+                    review_names[key],
                     prediction.label,
                     prediction.confidence,
                     prediction.runner_up,
@@ -236,7 +241,7 @@ def main() -> int:
     logging.info(f"TTC compat: wrote the review report and pruned stale hand entries in {time.time() - step_start:.0f}s.")
     step_start = time.time()
     entries = collect_entries(file_mods)
-    names = ttc_data.unit_names(entries, data.stats, ttc_data.load_loc_names())
+    names = ttc_data.unit_names(entries, data.stats, loc_names)
     records = {key: {"mod": mod, "name": names[key]} for key, mod in entries.items()}
     for key, record in records.items():
         if record["mod"] == ttc_data.VANILLA_NAME:

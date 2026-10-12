@@ -20,11 +20,11 @@ def test_report_lists_review_rows_and_removals():
     text = gen.render_report(
         metrics_line="held-out exact 90.0%",
         counts={"labeled": 10, "targets": 3, "confident": 2, "review": 1, "removed": 1},
-        review_rows=[("New Mod", "k1", "rare,2", 0.41, "special,2", "900", "monster", "mon", "1", [("x", "rare,2"), ("y", "rare,3"), ("z", "special,2")])],
+        review_rows=[("New Mod", "k1", "Big | Beast", "rare,2", 0.41, "special,2", "900", "monster", "mon", "1", [("x", "rare,2"), ("y", "rare,3"), ("z", "special,2")])],
         removed=[("!!!!!!!hand_mod.lua", '    {"gone", "rare", 1},')],
         missing_mods=["missing.pack"],
     )
-    assert "| New Mod | k1 | rare,2 | 0.41 | special,2 | 900 | monster | mon | 1 | x (rare,2), y (rare,3), z (special,2) |" in text
+    assert "| New Mod | k1 | Big \\| Beast | rare,2 | 0.41 | special,2 | 900 | monster | mon | 1 | x (rare,2), y (rare,3), z (special,2) |" in text
     assert '!!!!!!!hand_mod.lua: `{"gone", "rare", 1},`' in text
     assert "missing.pack" in text
 
