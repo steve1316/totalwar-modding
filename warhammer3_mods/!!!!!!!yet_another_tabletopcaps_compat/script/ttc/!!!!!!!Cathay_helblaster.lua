@@ -1,4 +1,4 @@
--- Cathay_helblaster
+-- Eustace's Cathay Artillery Pack
 local caps = {
     -- Grand Cathay
     {"veh_cth_monitor", "special", 3},

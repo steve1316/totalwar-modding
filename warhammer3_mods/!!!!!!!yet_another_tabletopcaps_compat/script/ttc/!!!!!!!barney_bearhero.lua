@@ -1,4 +1,4 @@
--- !barney_bearhero
+-- Norlaf - The Elven Berserker 2.0
 local caps = {
     -- Kislev
     {"hef_frost_phoenix_guard", "special", 2},

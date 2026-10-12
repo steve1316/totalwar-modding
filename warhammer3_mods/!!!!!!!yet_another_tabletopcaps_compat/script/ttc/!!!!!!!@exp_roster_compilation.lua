@@ -1,4 +1,4 @@
--- @exp_roster_compilation
+-- Expanded Roster Compilation
 local caps = {
     -- Chaos Dwarfs
     {"deco_chd_gnoblar_slaves", "core"},

@@ -1,4 +1,4 @@
--- Chasslo_Landmarks_IEE
+-- Landmarks of Eternity-Immortal Empire Expanded edition [Reworked]
 local caps = {
     -- Skaven
     {"ChassloIEE_BlackClaws", "special", 1},

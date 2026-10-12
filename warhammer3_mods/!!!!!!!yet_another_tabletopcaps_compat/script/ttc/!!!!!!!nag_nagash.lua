@@ -1,4 +1,4 @@
--- nag_nagash
+-- Legions of Nagash
 local caps = {
     -- Undead Legions
 }

@@ -1,4 +1,4 @@
--- Zerooz_All_Units
+-- [Zerooz] 兵种合集
 -- Unit keys are different than the ones in main_units_table.
 local caps = {
     -- Beastmen

@@ -1,4 +1,4 @@
--- cf-Ksl-units
+-- Kislev Units
 local caps = {
     -- Kislev
     {"cf_ungol_warrior_drunk", "core"},

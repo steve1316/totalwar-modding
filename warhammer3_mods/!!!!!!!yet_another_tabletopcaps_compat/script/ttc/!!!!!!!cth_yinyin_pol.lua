@@ -1,4 +1,4 @@
--- cth_yinyin_pol
+-- Roar of the Jade Sea : Yin-Yin, the Sea Dragon
 local caps = {
     -- Vampire Coast
     {"npn_umibozu", "rare", 3},

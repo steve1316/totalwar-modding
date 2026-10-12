@@ -1,4 +1,4 @@
--- !!!phy_runic_units.pack
+-- Runic Units
 local caps = {
     -- Dwarfs
     {"phy_dwf_rune_guardian", "rare", 1},

@@ -1,4 +1,4 @@
--- thm_gnomes
+-- Gnomes
 local caps = {
     -- Wood Elves
     {"hilldwf_gnome_badger_riders", "core"},

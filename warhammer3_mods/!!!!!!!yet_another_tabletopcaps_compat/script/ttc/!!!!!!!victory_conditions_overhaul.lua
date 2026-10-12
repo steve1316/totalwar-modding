@@ -1,4 +1,4 @@
--- victory_conditions_overhaul
+-- Victory Conditions Overhaul
 local caps = {
     -- Vampire Coast
     {"vco_unit_sartosa_exile_knight", "core", 1},

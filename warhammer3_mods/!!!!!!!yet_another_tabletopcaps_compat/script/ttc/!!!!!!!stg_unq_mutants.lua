@@ -1,4 +1,4 @@
--- stg_unq_mutants
+-- Mutants and Cults (STS)
 local caps = {
     -- Beastmen
     {"stg_chos_unq_mutants_bst", "core", 1},

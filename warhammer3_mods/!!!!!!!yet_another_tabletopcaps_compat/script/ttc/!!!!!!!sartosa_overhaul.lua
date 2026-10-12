@@ -1,4 +1,4 @@
--- sartosa_overhaul
+-- Nanu's Pirates of Sartosa Overhaul
 local caps = {
     -- Vampire Coast
     {"sartosa_pirate_artillery_culverin", "special", 2},

@@ -1,4 +1,4 @@
--- scm_skaven_clans
+-- Skaven Clans - Blood for the Blood God!
 local caps = {
     -- Skaven
     {"str_gnaw_giant_rats", "core"},

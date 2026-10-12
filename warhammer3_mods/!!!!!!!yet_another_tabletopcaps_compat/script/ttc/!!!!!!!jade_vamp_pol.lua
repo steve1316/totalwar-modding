@@ -1,4 +1,4 @@
--- jade_vamp_pol
+-- The Jade-Blooded Vampires: Curse of Nongchang
 local caps = {
     -- Jade-Blooded Vampires
     {"jbv_nugui_01", "special", 2},

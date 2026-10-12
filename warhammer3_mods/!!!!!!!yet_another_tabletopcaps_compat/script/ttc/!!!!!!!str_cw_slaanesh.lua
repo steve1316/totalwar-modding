@@ -1,4 +1,4 @@
--- str_cw_slaanesh
+-- Chaos Mortals of Slaanesh
 local caps = {
     -- Slaanesh
     {"str_cw_slaanesh_shield", "core"},

@@ -1,4 +1,4 @@
--- derpy_um_mecha_dogs
+-- Dawi-Zharr Daemachina
 local caps = {
     -- Chaos Dwarfs
     {"chd_mecha_dog_flamer", "rare", 2},

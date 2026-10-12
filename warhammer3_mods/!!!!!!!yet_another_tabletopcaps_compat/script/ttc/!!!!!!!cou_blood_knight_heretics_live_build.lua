@@ -1,4 +1,4 @@
--- !!!cou_blood_knight_heretics_live_build
+-- Champions Of Undeath: Blood Knight Heretics
 local caps = {
     -- Vampire Counts
     {"cou_kho_blood_dragons_cav", "rare", 2},

@@ -1,4 +1,4 @@
--- @xou_high_elves
+-- [BETA] Sons of Asuryan - Dragon Mages
 local caps = {
     -- High Elves
     {"cot_hef_inf_wardancers", "core", 1},

@@ -1,4 +1,4 @@
--- !!kuresh_mercs1
+-- Mercenaries of Khuresh
 local caps = {
     -- Kuresh Mercenaries
     {"kou_ace_km_pyrenaga", "rare", 2},

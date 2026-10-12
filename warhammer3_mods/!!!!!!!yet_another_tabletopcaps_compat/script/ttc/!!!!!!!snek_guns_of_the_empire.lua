@@ -1,4 +1,4 @@
--- snek_guns_of_the_empire
+-- Guns of the Empire
 local caps = {
     -- Empire
     {"snek_emp_gote_inf_juggernauts", "special", 3},

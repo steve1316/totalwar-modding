@@ -1,4 +1,4 @@
--- sug_flying_sword_tze_chosen
+-- Chosen of Tzeentch (Psychic Greatswords) - 奸奇神选者（念力剑）
 local caps = {
     -- Tzeentch
     {"wh3_dlc20mod_chs_inf_chosen_mtze_flyingswords", "special", 2},

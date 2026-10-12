@@ -1,4 +1,4 @@
--- scm_totn
+-- SCM: Tribes of the North
 local caps = {
     -- Norsca
     {"nor_longship_ror", "rare", 3},

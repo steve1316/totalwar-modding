@@ -1,4 +1,4 @@
--- cf_ksl_frost_dragon
+-- Frost Dragon
 local caps = {
     -- Kislev
     {"cf_ksl_frost_dragon", "rare", 3},

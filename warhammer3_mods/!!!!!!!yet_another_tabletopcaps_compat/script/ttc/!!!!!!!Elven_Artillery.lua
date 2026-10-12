@@ -1,4 +1,4 @@
--- Elven_Artillery
+-- Elven Artillery
 local caps = {
     -- High Elves
     {"phoenix_cannon", "rare", 2},

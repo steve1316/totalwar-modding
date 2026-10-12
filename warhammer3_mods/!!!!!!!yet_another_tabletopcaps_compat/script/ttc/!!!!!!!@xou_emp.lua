@@ -1,4 +1,4 @@
--- @xou_emp
+-- Sigmar's Heirs, an Empire Overhaul
 local caps = {
     -- Empire
     {"emp_inf_stevedore", "core", 1},

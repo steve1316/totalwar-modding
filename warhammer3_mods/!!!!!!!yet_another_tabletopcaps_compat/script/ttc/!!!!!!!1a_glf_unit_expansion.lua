@@ -1,4 +1,4 @@
--- 1a_glf_unit_expansion
+-- [GLF] Unit Expansion金花兵种拓展
 local caps = {
     -- Bretonnia
     {"glf_brt_royal_knights_of_the_realm", "special", 2},

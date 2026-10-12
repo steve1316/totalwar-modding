@@ -1,4 +1,4 @@
--- derpy_ksl_tanks
+-- Kislev Tanks
 local caps = {
     -- Kislev
     {"derpy_ksl_warshed_cannon", "rare", 2},

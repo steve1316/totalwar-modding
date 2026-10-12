@@ -1,4 +1,4 @@
--- snek_dawi_thunder
+-- Dawi Thunder
 local caps = {
     -- Dwarfs
     {"snek_dwf_cycle", "special", 2},

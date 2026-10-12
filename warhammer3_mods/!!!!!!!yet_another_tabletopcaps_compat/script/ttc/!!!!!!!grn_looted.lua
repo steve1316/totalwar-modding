@@ -1,4 +1,4 @@
--- derpy_grn_looted
+-- Da Greenskin Looted Arsenal BETA
 local caps = {
     -- Greenskins
     {"derpy_grn_looted_dwf_tank_ror", "rare", 3},

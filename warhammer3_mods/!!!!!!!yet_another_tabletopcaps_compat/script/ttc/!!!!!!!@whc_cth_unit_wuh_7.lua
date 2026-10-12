@@ -1,4 +1,4 @@
--- @whc_cth_unit_wuh_7
+-- Whc's Cathay unit pack:【War under Heaven】
 local caps = {
     -- Grand Cathay
     {"cth_south_songyuan_cav_jade", "special", 1},

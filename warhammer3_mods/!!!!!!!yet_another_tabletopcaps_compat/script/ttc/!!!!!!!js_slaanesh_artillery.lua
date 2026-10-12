@@ -1,4 +1,4 @@
--- js_slaanesh_artillery
+-- JS Slaanesh Artillery - Daemonic Firepower
 local caps = {
     -- Slaanesh
     {"js_sla_soul_bombers", "core", 1},

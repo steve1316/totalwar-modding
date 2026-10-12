@@ -1,4 +1,4 @@
--- Guns_of_Bretonnia_III
+-- Guns of Bretonnia 3
 local caps = {
     -- Bretonnia
     {"bret_pavisiers", "special", 2},

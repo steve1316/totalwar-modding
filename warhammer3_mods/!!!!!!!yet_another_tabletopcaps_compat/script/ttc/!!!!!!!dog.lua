@@ -1,4 +1,4 @@
--- dog
+-- vampire coasttt ships
 local caps = {
     -- Vampire Coast
     {"cst_corsairs", "special", 1},

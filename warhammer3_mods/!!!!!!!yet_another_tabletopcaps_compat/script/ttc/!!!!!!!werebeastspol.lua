@@ -1,4 +1,4 @@
--- werebeastspol
+-- Children of the Woods (Immortal Empires Edition)
 local caps = {
     -- Wood Elves
     {"celebrant_wef01", "core"},

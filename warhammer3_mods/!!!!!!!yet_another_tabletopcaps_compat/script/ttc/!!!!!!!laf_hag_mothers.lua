@@ -1,4 +1,4 @@
--- laf_hag_mothers
+-- Lost & Found Kislev: Hag Mothers
 local caps = {
     -- Kislev
     {"laf_ksl_mon_treeman_0", "rare", 3},

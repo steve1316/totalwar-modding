@@ -1,4 +1,4 @@
--- GMD_NURGLE_TANK
+-- GMD Plague Tank V2.0
 local caps = {
     -- Nurgle
     {"gmd_nur_tank", "rare", 3},

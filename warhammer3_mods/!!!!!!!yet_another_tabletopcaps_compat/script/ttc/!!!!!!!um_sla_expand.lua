@@ -1,4 +1,4 @@
--- um_sla_expand and sla_beast_expand
+-- Slaanesh Beast Expand - Update Goz & Mez
 local caps = {
     -- Slaanesh
     {"sla_slaangor", "core"},

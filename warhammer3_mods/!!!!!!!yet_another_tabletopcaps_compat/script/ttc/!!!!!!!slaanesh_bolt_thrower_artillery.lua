@@ -1,4 +1,4 @@
--- slaanesh_bolt_thrower_artillery
+-- Slaanesh artillery - dark elf reaper bolt thrower
 local caps = {
     -- Slaanesh
     {"gow_new_sla_art_reaper_bolt_thrower_0", "rare", 1},

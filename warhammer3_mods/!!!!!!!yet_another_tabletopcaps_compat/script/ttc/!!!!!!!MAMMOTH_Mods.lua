@@ -1,4 +1,4 @@
--- MAMMOTH_Mods
+-- MAMMOTH MODS
 local caps = {
     -- Norsca
     {"zerg_nor_full_armoured_mammoth", "rare", 3},

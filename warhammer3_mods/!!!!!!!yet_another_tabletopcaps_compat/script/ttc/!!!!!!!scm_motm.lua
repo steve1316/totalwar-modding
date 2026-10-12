@@ -1,4 +1,4 @@
--- scm_motm
+-- SCM Might of the Maw
 local caps = {
     -- Ogre Kingdoms
     {"hrothgul_gorgers", "special", 2},

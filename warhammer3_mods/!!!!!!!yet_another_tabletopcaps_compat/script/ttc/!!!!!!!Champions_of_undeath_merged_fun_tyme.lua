@@ -1,4 +1,4 @@
--- !!!!!!Champions_of_undeath_merged_fun_tyme
+-- Champions Of Undeath: Conquest Of The Blood Dragons
 local caps = {
     -- Vampire Coast
     {"vmp_teb_marines", "rare", 1},

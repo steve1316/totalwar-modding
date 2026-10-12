@@ -1,4 +1,4 @@
--- Zayli_Complete_Mod_Compilation
+-- Lily's Bretonnia Mod Compilation: All-in-one
 local caps = {
     -- Bretonnia
     {"zayli_peasant_bowmen_ror_1", "core", 1},

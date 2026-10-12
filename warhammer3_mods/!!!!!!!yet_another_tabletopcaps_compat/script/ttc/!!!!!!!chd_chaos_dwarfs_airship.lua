@@ -1,4 +1,4 @@
--- chd_chaos_dwarfs_airship
+-- Chaos Dwarf Aerial Supremacy - Two Flying units
 local caps = {
     -- Chaos Dwarfs
     {"wh3_main_cth_veh_sky_junk_0_chd", "special", 2},

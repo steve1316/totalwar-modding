@@ -1,4 +1,4 @@
--- Nurgle_Chargers
+-- Nurgle Rotting Chargers (and Walkers) - New units for Nurgle and for Beastmen
 local caps = {
     -- Nurgle
     {"pox_walker", "core"},

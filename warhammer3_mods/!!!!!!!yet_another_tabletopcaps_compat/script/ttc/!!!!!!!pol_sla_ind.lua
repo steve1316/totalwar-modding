@@ -1,4 +1,4 @@
--- pol_sla_ind
+-- The Sect of Akhalee - Temple of Blood [For IEE]
 local caps = {
     -- Slaanesh
     {"sla_rajput_1", "core"},

@@ -1,4 +1,4 @@
--- derpy_gunpowder_units
+-- Dawi Gunpowder Units
 local caps = {
     -- Dwarfs
     {"derpy_gp_8mm_turret", "special", 3},

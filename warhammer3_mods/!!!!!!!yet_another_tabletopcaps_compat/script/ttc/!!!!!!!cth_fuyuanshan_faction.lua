@@ -1,4 +1,4 @@
--- cth_fuyuanshan_faction
+-- Dragon General Fu Yuanshan:Faction Overhaul【Reforged】/龙将傅远山:震旦新派系【重铸版】
 local caps = {
     -- Grand Cathay
     {"cth_fys_peasant_firelancer", "core"},

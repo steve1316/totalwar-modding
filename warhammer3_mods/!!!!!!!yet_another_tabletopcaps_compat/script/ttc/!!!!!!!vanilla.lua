@@ -63,7 +63,6 @@ local caps = {
     -- Norsca
     {"wh_dlc08_vmp_mon_terrorgheist_boss", "rare", 3},
     {"wh_dlc08_grn_mon_arachnarok_spider_boss", "rare", 3},
-    {"wh_dlc08_nor_mon_frost_wyrm_boss", "rare", 3},
     {"wh_dlc08_grn_mon_giant_boss", "rare", 3},
     {"wh_dlc08_chs_mon_dragon_ogre_shaggoth_boss", "rare", 3},
     {"wh_dlc08_wef_forest_dragon_boss", "rare", 3},

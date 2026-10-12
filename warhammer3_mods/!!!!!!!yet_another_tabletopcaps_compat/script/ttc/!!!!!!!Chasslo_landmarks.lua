@@ -1,4 +1,4 @@
--- Chasslo_landmarks
+-- Landmarks of Eternity
 local caps = {
     -- Wood Elves
     {"CLE_Oreon_Warband", "rare", 1},

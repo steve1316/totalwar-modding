@@ -1,4 +1,4 @@
--- ovn_albion
+-- OvN Lost Factions: Albion
 local caps = {
     -- Albion
     {"calm_alb_crow", "core", 1},

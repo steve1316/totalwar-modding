@@ -1,4 +1,4 @@
--- !alshua_go_squig_or_go_home
+-- Go Squig or Go Home!
 local caps = {
     -- Greenskins
     {"als_squig_horned", "special", 1},

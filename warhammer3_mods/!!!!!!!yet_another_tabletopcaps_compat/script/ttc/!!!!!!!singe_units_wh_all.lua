@@ -1,4 +1,4 @@
--- singe_units_wh_all
+-- Singe's Unit Compilation
 local caps = {
     -- Bretonnia
     {"brt_questing_wardens", "special", 2},

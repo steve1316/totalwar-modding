@@ -1,4 +1,4 @@
--- UD_Deithland_Machines
+-- Empire Steam Suits
 local caps = {
     -- Empire
     {"emp_steamsuits_volley", "special", 2},

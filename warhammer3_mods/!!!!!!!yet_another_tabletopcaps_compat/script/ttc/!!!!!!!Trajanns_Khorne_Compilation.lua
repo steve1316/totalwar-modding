@@ -1,4 +1,4 @@
--- Trajanns_Khorne_Compilation
+-- Trajann's Khorne Mods Compilation
 local caps = {
     -- Chaos Dwarfs
     {"traj_khazdrakk_ror", "rare", 1},

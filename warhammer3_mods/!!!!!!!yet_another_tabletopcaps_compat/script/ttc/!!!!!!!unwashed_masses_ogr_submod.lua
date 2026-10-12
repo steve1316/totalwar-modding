@@ -1,4 +1,4 @@
--- !!!_unwashed_masses_ogr_submod
+-- Gnoblar Hordes - The Unwashed Masses
 local caps = {
     -- Gnoblar Hordes
     {"gnob_inf_rustbuckets", "special", 1},

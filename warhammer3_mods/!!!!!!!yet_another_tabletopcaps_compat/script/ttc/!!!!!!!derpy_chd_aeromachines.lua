@@ -1,4 +1,4 @@
--- derpy_chd_aeromachines
+-- Dawi-Zharr Whirlwinds
 local caps = {
     -- Chaos Dwarfs
     {"derpy_chd_gyro_05_rocket", "special", 2},

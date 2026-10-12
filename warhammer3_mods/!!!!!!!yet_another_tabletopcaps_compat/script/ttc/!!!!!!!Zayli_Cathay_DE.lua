@@ -1,4 +1,4 @@
--- Zayli_Cathay_DE
+-- Lily's Cathay DE Overhaul + Unit Pack
 local caps = {
     -- Grand Cathay
     {"zayli_cth_peasants", "core", 1},

@@ -1,4 +1,4 @@
--- psgo_brinewight
+-- Vampire Coast Unit Pack: Rise of the Brinewight
 local caps = {
     -- Vampire Coast
     {"kys_und_necro_zombie", "core", 1},

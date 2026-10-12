@@ -1,4 +1,4 @@
--- unitsofnaggarothsamarai
+-- Units of Naggaroth (Dark Elf unit expansion)
 local caps = {
     -- Dark Elves
     {"glory_archers", "special", 1},

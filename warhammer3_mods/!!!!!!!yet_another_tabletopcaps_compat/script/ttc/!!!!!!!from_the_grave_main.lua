@@ -1,4 +1,4 @@
--- from_the_grave_main
+-- From the Grave - Vampire Counts custom expansion
 local caps = {
     -- Vampire Counts
     {"kys_und_necro_zombie", "core", 1},

@@ -1,4 +1,4 @@
--- The_Gunpowder_Road2.0
+-- The Gunpowder Road
 local caps = {
     -- Grand Cathay
     {"cth_juma", "core", 1},

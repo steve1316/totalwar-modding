@@ -1,4 +1,4 @@
--- Trajanns_Sentinels
+-- Trajann's Sentinels Compilation
 local caps = {
     -- Tomb Kings
     {"traj_gurrash_ushabti", "special", 2},

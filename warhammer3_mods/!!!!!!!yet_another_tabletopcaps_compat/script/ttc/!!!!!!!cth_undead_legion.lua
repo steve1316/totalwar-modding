@@ -1,4 +1,4 @@
--- cth_undead_legion
+-- Dead of the Orient - Immortal Empires
 local caps = {
     -- Vampire Counts
     {"cth_ghost_01", "special", 2},

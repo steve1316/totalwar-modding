@@ -1,4 +1,4 @@
--- ror_all
+-- Regiments of Renown - All Factions by Pwner1
 -- Warning: This mod does not keep the same key name between land_units_tables and main_units_tables db and the keys from the main_units_tables db needs to be used.
 local caps = {
     -- Nurgle

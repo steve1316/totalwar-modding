@@ -1,4 +1,4 @@
--- derpy_emp_tanks
+-- Empire Tanks
 local caps = {
     -- Empire
     {"derpy_emp_tank_bulwark", "rare", 3},

@@ -1,4 +1,4 @@
--- Bretonnia_Royal_Lake_Guard
+-- Bretonnian Royal Lake Guard - New Elite Units for Bretonnia
 local caps = {
     -- Bretonnia
     {"driblex_brt_royal_lake_guard_trebuchet_starbreaker", "rare", 2},

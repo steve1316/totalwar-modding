@@ -1,4 +1,4 @@
--- loupi_twelve_realms_IE
+-- The Twelve Realms - Wood Elves
 local caps = {
     -- Misc
     {"loupi_wildkin", "special", 2},

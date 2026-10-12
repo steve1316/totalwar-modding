@@ -1,4 +1,4 @@
--- fairlight_beta
+-- Sir Fairlight of House Excalibur - A Bretonnia Campaign
 local caps = {
     -- Bretonnia
     {"ML_Fairlight_LL_brt_armored_sergeants", "special", 1},

@@ -1,4 +1,4 @@
--- pwner1_wh3_ete_unit_pack
+-- Super Units - All Factions Compilation - End Times Escalation
 local caps = {
     -- Beastmen
     {"wh_main_brt_art_cow_trebuchet", "rare", 1},
@@ -56,7 +56,6 @@ local caps = {
     {"wh3_dlc23_chd_mon_bale_taurus_ror_ete", "rare", 2},
     {"wh3_dlc23_chd_cav_bull_centaurs_greatweapons_ete", "rare", 2},
     {"wh3_dlc23_chd_mon_bale_taurus_ete", "rare", 2},
-    {"ghs_main_chd_mon_siege_armour_giant", "rare", 2},
     {"wh3_dlc23_chd_veh_iron_daemon_ror_1dreadquake", "rare", 2},
     {"wh3_dlc23_chd_veh_deathshrieker_rocket_launcher_ete", "rare", 2},
     {"wh3_dlc23_chd_inf_chaos_dwarf_warriors_ete", "rare", 2},

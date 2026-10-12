@@ -1,4 +1,4 @@
--- UC_Deithland_Troops
+-- Deithland Series: The Reiksmarines
 local caps = {
     -- Empire
     {"emp_reiksmarines_shotguns", "special", 1},

@@ -1,4 +1,4 @@
--- jvj_kadon
+-- Kadons Scrolls of Binding
 local caps = {
     -- Misc
     {"kadon_kin_chaos_dragon", "rare", 3},

@@ -1,4 +1,4 @@
--- Kossar_Riflemen_Unit
+-- Kislev Kossar Riflemen Units
 local caps = {
     -- Kislev
     {"wh3_dlc24_ksl_inf_kislevite_warriors_rifle", "core", 1},

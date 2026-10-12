@@ -1,4 +1,4 @@
--- obsidian_lustria_rises
+-- Lustria Rises - Lizardmen Overhaul
 local caps = {
     -- Lizardmen
     {"obsidian_lzd_inf_skink_altar_guardians", "core", 1},

@@ -1,4 +1,4 @@
--- 17C_Deithland_Main
+-- Deithland: An Empire Roster Overhaul
 local caps = {
     -- Empire
     {"emp_deithguard_axelocks", "special", 1},

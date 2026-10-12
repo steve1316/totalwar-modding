@@ -1,4 +1,4 @@
--- scm_beasts_most_foul
+-- SCM's Beasts Most Foul
 local caps = {
     -- Khorne
     {"khorngor_shld", "special", 1},

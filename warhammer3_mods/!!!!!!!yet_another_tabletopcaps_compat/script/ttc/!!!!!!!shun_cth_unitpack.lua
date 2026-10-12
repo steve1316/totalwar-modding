@@ -1,4 +1,4 @@
--- shun_cth_unitpack
+-- Shunraiki's Cathay Unit Pack
 local caps = {
     -- Grand Cathay
     {"shun_jade_warriors_ror", "core", 1},

@@ -1,4 +1,4 @@
--- !landmarks_of_legend_wh3
+-- Landmarks of Legend
 local caps = {
     -- Bretonnia
     {"braconniers", "core"},

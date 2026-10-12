@@ -1,4 +1,4 @@
--- ovn_araby
+-- OvN Lost Factions: Araby
 local caps = {
     -- Araby
     {"ovn_arb_mon_book_djinn", "core", 1},

@@ -1,4 +1,4 @@
--- cow_trebuchet_three
+-- The Cow Trebuchet (WH3 Edition)
 local caps = {
     -- Bretonnia
     {"wh_main_brt_art_cow_trebuchet", "rare", 1},

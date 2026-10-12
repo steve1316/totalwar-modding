@@ -1,4 +1,4 @@
--- ab_unwashed_masses
+-- Gnoblar Hordes - The Unwashed Masses
 local caps = {
     -- Ogres
     {"gnob_inf_powder_sniffers", "core"},

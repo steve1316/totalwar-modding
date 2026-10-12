@@ -1,4 +1,4 @@
--- dominion
+-- Vlad's Dominion Faction Project
 local caps = {
     -- Dominion
     {"dom_vol_legion_01", "core"},

@@ -1,4 +1,4 @@
--- stompies_new_artefacts
+-- New Legendary Lord and Hero Artefacts Warhammer 3
 local caps = {
     -- Lizardmen
     {"stompies_quango", "rare", 3},

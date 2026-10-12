@@ -1,4 +1,4 @@
--- calm_kislev_erengrad
+-- Calm Kislev Erengrad
 local caps = {
     -- Kislev
     {"calm_hajduks", "core", 1},

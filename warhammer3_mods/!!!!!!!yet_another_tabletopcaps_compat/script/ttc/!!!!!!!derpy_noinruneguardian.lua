@@ -1,4 +1,4 @@
--- !derpy_noinruneguardian
+-- Rune Golems
 local caps = {
     -- Dwarfs
     {"derpy_expi_dwarf_rune_golem", "rare", 3},

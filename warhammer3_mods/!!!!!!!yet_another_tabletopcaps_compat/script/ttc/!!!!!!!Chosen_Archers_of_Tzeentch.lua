@@ -1,4 +1,4 @@
--- Chosen_Archers_of_Tzeentch
+-- Chosen Archers of Tzeentch
 local caps = {
     -- Tzeentch
     {"Chosen_Archers_of_Tzeentch", "special", 2},

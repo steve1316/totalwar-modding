@@ -1,4 +1,4 @@
--- ab_mixu_legendary_lords
+-- Mixu's Legendary Lords
 local caps = {
     -- Empire
     {"mixu_emp_mon_promethean_riders", "special", 3},

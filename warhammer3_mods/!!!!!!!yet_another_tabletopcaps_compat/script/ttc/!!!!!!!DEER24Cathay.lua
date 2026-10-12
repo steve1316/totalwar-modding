@@ -1,4 +1,4 @@
--- DEER24Cathay
+-- [DEER24/震旦] 与龙同行 (Cathay Units Patch：Walk with the Dragon）
 local caps = {
     -- Grand Cathay
     {"wwd_jinjun_huben", "rare", 2},

@@ -1,4 +1,4 @@
--- ovn_grudgebringers
+-- OvN Lost Factions: Grudgebringers
 local caps = {
     -- Grudgebringers
     {"wh_main_emp_inf_handgunners_ovn_gru", "special", 1},

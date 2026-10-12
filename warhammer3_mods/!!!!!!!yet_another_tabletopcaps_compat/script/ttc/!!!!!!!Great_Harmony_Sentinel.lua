@@ -1,4 +1,4 @@
--- Great_Harmony_Sentinel
+-- 万世天朝/Great Harmony Sentinel Overhaul Beta
 local caps = {
     -- Wood Elves
     {"ghs_main_wef_cav_wild_hunter_knight", "rare", 1},
@@ -17,7 +17,6 @@ local caps = {
     {"ghs_main_chd_mon_kdaai_destroyer_beasts", "rare", 3},
     {"ghs_main_chd_mon_kdaai_destroyer_wings", "rare", 3},
     {"ghs_main_chd_mon_kdaai_firestirke", "special", 2},
-    {"ghs_main_chd_mon_siege_armour_giant", "rare", 2},
     -- Dwarfs
     {"ghs_comb_dwf_art_mortar", "special", 2},
     {"ghs_comb_dwf_dwf_inf_dwarf_warrior_spear", "core", 1},

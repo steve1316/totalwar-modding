@@ -1,4 +1,4 @@
--- AM_HelfuryMachineGunsFIXED
+-- Helfury Machine Gun/Gatling Gun - Rearmed and Reuploaded
 local caps = {
     -- Empire
     {"wh_main_emp_art_machine_gun", "special", 3},

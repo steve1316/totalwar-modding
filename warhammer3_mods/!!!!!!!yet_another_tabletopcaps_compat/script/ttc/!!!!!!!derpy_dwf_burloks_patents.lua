@@ -1,4 +1,4 @@
--- derpy_dwf_burloks_patents
+-- Dawi Gunships
 local caps = {
     -- Dwarfs
     {"derpy_gyro_gunship_rifle", "special", 2},
