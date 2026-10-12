@@ -2,1597 +2,1952 @@
  "ignore": [],
  "units": {
   "wh2_dlc09_tmb_cha_arkhan_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_arkhan_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_arkhan_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_arkhan_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_arkhan_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_arkhan_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_khatep_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_khatep_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_khatep_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_khatep_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_khatep_2": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_tmb_khatep_missile",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_khatep_3": {
+   "fwm": true,
    "missile": "glf_tmb_khatep_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_light_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_light_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_nehekhara_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nehekhara_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_nehekhara_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nehekhara_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_shadow_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_shadow_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
+  "wh2_dlc09_tmb_cha_settra_0": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_settra_1": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_settra_2": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_settra_3": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh2_dlc10_def_cha_sorceress_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_death_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_beasts_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_beasts_5": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_dark_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_dark_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_dark_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_dark_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_dark_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_dark_5": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_death_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_death_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_death_5": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_fire_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_fire_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_fire_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_fire_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_fire_5": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_shadow_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_shadow_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_shadow_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_shadow_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_shadow_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_def_cha_supreme_sorceress_shadow_5": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_alarielle_the_radiant_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_hef_alarielle_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_alarielle_the_radiant_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_hef_alarielle_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_alarielle_the_radiant_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_hef_alarielle_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_alarielle_the_radiant_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_hef_alarielle_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_mage_heavens_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_mage_heavens_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_mage_heavens_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_mage_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_mage_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_dlc10_hef_cha_mage_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_dlc11_cst_cha_cylostra_direfin_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cst_cylostra_missile",
    "ranged": true
   },
   "wh2_dlc11_cst_cha_cylostra_direfin_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cst_cylostra_missile",
    "ranged": true
   },
   "wh2_dlc11_vmp_cha_heinrich_kemmler_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_heinrich_kemmler_missile",
    "ranged": true
   },
-  "wh2_dlc12_lzd_lzd_cha_kroak_0": {
-   "fwm": false,
-   "missile": "glf_lzd_lord_kroak_missile",
+  "wh2_dlc12_lzd_cha_skink_priest_beasts_4": {
+   "fwm": true,
+   "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
-  "wh2_dlc12_lzd_lzd_cha_kroak_0_boss": {
-   "fwm": false,
+  "wh2_dlc12_lzd_cha_skink_priest_heavens_4": {
+   "fwm": true,
+   "missile": "glf_mage_hero_heavens_missile",
+   "ranged": true
+  },
+  "wh2_dlc12_lzd_lzd_cha_kroak_0": {
+   "fwm": true,
    "missile": "glf_lzd_lord_kroak_missile",
    "ranged": true
   },
   "wh2_dlc13_lzd_cha_slann_mage_priest_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc13_lzd_cha_slann_mage_priest_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc13_lzd_cha_slann_mage_priest_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc13_lzd_cha_slann_mage_priest_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc13_lzd_cha_slann_mage_priest_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh2_dlc13_lzd_cha_slann_mage_priest_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc14_skv_cha_eshin_sorcerer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_skv_eshin_sorcerer_missile",
    "ranged": true
   },
   "wh2_dlc15_grn_cha_river_troll_hag_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_beasts_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_beasts_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_beasts_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_beasts_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_death_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_death_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_death_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_death_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_death_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_fire_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_fire_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_fire_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_fire_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_fire_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_heavens_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_heavens_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_heavens_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_heavens_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_heavens_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_heavens_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_high_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_high_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_high_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_high_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_high_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_high_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_life_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_life_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_life_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_life_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_life_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_light_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_light_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_light_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_light_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_light_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_light_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_light_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_light_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_light_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_light_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_metal_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_metal_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_metal_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_metal_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_metal_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_shadows_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_shadows_missile",
+   "ranged": true
+  },
+  "wh2_dlc15_hef_cha_archmage_shadows_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_shadows_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_archmage_shadows_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_fire_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_fire_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_fire_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_metal_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_mage_metal_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh2_dlc15_hef_cha_teclis_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_hef_teclis_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_ancient_treeman_coeddil_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_wef_coeddil_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_ariel_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_wef_ariel_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_malicious_ancient_treeman_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_malicious_ancient_treeman_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_malicious_ancient_treeman_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_dark_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_dark_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_dark_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_dark_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_dark_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_high_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_high_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_high_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_high_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_life_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_life_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_life_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc16_wef_cha_spellweaver_shadows_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_dlc17_bst_cha_bray_shaman_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_dlc17_bst_cha_bray_shaman_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc17_bst_cha_bray_shaman_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_dlc17_bst_cha_bray_shaman_wild_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh2_main_def_cha_morathi_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_def_morathi_missile",
    "ranged": true
   },
   "wh2_main_def_cha_morathi_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_def_morathi_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_dark_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_dark_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_dark_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_dark_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_dark_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_dark_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_dark_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_dark_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_fire_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_fire_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_fire_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_shadow_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_shadow_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_shadow_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_main_def_cha_sorceress_shadow_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_high_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_high_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_high_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_high_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_high_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_high_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_life_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_life_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_light_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_light_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_mage_light_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_teclis_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_hef_teclis_missile",
    "ranged": true
   },
   "wh2_main_hef_cha_teclis_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_hef_teclis_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_lord_mazdamundi_0": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_lzd_lord_mazdamundi_missile",
+   "ranged": true
+  },
+  "wh2_main_lzd_cha_lord_mazdamundi_1": {
+   "fwm": true,
    "missile": "glf_lzd_lord_mazdamundi_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_skink_priest_0_summoned": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_skink_priest_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_skink_priest_beasts_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_beasts_missile",
+   "ranged": true
+  },
+  "wh2_main_lzd_cha_skink_priest_beasts_2": {
+   "fwm": true,
+   "missile": "glf_mage_hero_beasts_missile",
+   "ranged": true
+  },
+  "wh2_main_lzd_cha_skink_priest_beasts_3": {
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_skink_priest_heavens_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_skink_priest_heavens_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_heavens_missile",
+   "ranged": true
+  },
+  "wh2_main_lzd_cha_skink_priest_heavens_2": {
+   "fwm": true,
+   "missile": "glf_mage_hero_heavens_missile",
+   "ranged": true
+  },
+  "wh2_main_lzd_cha_skink_priest_heavens_3": {
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_slann_mage_priest_campaign_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_slann_mage_priest_heavens_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh2_main_lzd_cha_slann_mage_priest_high_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_high_missile",
    "ranged": true
   },
-  "wh2_main_lzd_cha_slann_mage_priest_life_0_qb": {
-   "fwm": false,
-   "missile": "glf_mage_lord_life_missile",
-   "ranged": true
-  },
   "wh2_main_lzd_cha_slann_mage_priest_light_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_light_missile",
    "ranged": true
   },
   "wh2_main_skv_cha_grey_seer_plague_0": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_skv_grey_seer_plague_missile",
+   "ranged": true
+  },
+  "wh2_main_skv_cha_grey_seer_plague_1": {
+   "fwm": true,
    "missile": "glf_skv_grey_seer_plague_missile",
    "ranged": true
   },
   "wh2_main_skv_cha_grey_seer_ruin_0": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_skv_grey_seer_ruin_missile",
+   "ranged": true
+  },
+  "wh2_main_skv_cha_grey_seer_ruin_1": {
+   "fwm": true,
    "missile": "glf_skv_grey_seer_ruin_missile",
    "ranged": true
   },
   "wh2_main_skv_cha_lord_skrolk": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_skv_lord_skrolk_missile",
    "ranged": true
   },
   "wh2_main_skv_cha_plague_priest_0": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_skv_plague_priest_missile",
+   "ranged": true
+  },
+  "wh2_main_skv_cha_plague_priest_2": {
+   "fwm": true,
    "missile": "glf_skv_plague_priest_missile",
    "ranged": true
   },
   "wh2_pro07_emp_cha_wizard_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_pro07_emp_cha_wizard_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_pro07_emp_cha_wizard_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_pro07_emp_cha_wizard_death_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_wild_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_wild_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_wild_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_wild_missile",
    "ranged": true
   },
   "wh2_twa04_bst_cha_great_bray_shaman_wild_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_wild_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_death_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_fire_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_death_mnur": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_death_mnur_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_death_mnur_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_death_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_fire_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze_disc": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_metal_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_nurgle_mnur": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_nurgle_mnur_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_nurgle_mnur_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_shadows_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze_disc": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_lord_tzeentch_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_metal_mtze": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_metal_mtze_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_metal_mtze_disc": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_metal_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_metal_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_shadows_msla": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_shadows_msla_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_shadows_msla_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_shadows_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_slaanesh_msla": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_slaanesh_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_slaanesh_msla_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_slaanesh_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_slaanesh_msla_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_slaanesh_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_tzeentch_missile",
    "ranged": true
   },
   "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_tzeentch_missile",
    "ranged": true
   },
-  "wh3_dlc20_chs_cha_daemon_prince_mtze": {
-   "fwm": false,
-   "missile": "glf_mage_lord_metal_missile",
-   "ranged": true
-  },
   "wh3_dlc20_nur_cha_festus": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_nur_festus_missile",
    "ranged": true
   },
   "wh3_dlc20_tze_cha_cultist_mtze_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_dlc20_tze_cha_vilitch": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tze_vilitch_missile",
    "ranged": true
   },
+  "wh3_dlc24_cth_cha_astromancer_great_moon_bird": {
+   "fwm": true,
+   "missile": "glf_mage_hero_heavens_missile",
+   "ranged": true
+  },
   "wh3_dlc24_cth_cha_yuan_bo_human": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh3_dlc24_ksl_cha_ice_witch_ice_frost_wyrm": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_ice_missile",
    "ranged": true
   },
   "wh3_dlc24_ksl_cha_ice_witch_tempest_frost_wyrm": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tempest_missile",
    "ranged": true
   },
   "wh3_dlc24_ksl_cha_katarin_frost_wyrm": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_ksl_katarin_missile",
    "ranged": true
   },
   "wh3_dlc24_ksl_cha_katarin_ice_court_sled": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_ksl_katarin_missile",
    "ranged": true
   },
   "wh3_dlc24_tze_cha_changeling": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_chs_lord_of_change_missile",
    "ranged": true
   },
+  "wh3_dlc24_tze_cha_changeling_quest_battle": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh3_dlc24_tze_cha_changeling_summoned_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_chs_lord_of_change_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_death_mnur": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_death_mnur_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_death_mnur_rot_beast": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_death_mnur_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_lord_death_mnur_rot_beast": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_lord_nurgle_mnur_rot_beast": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_nurgle_mnur": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_nurgle_mnur_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_nurgle_mnur_rot_beast": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc25_chs_cha_chaos_sorcerer_nurgle_mnur_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nurgle_missile",
    "ranged": true
   },
   "wh3_dlc25_emp_cha_elspeth_von_draken": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc25_emp_cha_elspeth_von_draken_carmine_dragon": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc25_emp_cha_elspeth_von_draken_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc25_emp_cha_wizard_metal": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc25_emp_cha_wizard_metal_pegasus": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc25_emp_cha_wizard_metal_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain_razorgor_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain_tuskgor_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh3_dlc25_nur_cha_fimir_balefiend_shadow_chieftain": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh3_dlc26_grn_cha_savage_orc_great_shaman": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_big_waaagh_missile",
    "ranged": true
   },
   "wh3_dlc26_grn_cha_savage_orc_great_shaman_boar": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_big_waaagh_missile",
    "ranged": true
   },
   "wh3_dlc26_grn_cha_savage_orc_great_shaman_wyvern": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_big_waaagh_missile",
    "ranged": true
   },
+  "wh3_dlc27_chs_cha_chaos_sorcerer_shadows_msla_daemonic_steed": {
+   "fwm": true,
+   "missile": "glf_mage_hero_shadows_missile",
+   "ranged": true
+  },
+  "wh3_dlc27_chs_cha_chaos_sorcerer_slaanesh_msla_daemonic_steed": {
+   "fwm": true,
+   "missile": "glf_mage_hero_slaanesh_missile",
+   "ranged": true
+  },
   "wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla_daemonic_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_slaanesh_missile",
    "ranged": true
   },
   "wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla_chaos_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_slaanesh_missile",
    "ranged": true
   },
   "wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla_daemonic_steed": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_slaanesh_missile",
    "ranged": true
   },
   "wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla_warshrine": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_slaanesh_missile",
    "ranged": true
   },
   "wh3_dlc27_hef_cha_mist_mage": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_hef_cha_mist_mage_eagle": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_hef_cha_mist_mage_skycutter": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless_chariot": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless_mammoth": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh3_dlc27_nor_cha_sayl_the_faithless_warhorse": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
+  "wh3_dlc27_nor_cha_shaman_sorcerer_death_2_summoned": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc27_nor_cha_shaman_sorcerer_fire_2_summoned": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc27_nor_cha_shaman_sorcerer_metal_2_summoned": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_chs_cha_bloab": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_chs_cha_bloab_bilespurter": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_lord_skrolk_cauldron": {
+   "fwm": true,
+   "missile": "glf_skv_lord_skrolk_missile",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_plague_priest_cauldron": {
+   "fwm": true,
+   "missile": "glf_skv_plague_priest_missile",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_thanquol": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_thanquol_boneripper_warpfire_braziers": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_skv_cha_thanquol_boneripper_warpfire_projectors": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_dread_abyssal": {
+   "fwm": true,
+   "missile": "glf_tmb_arkhan_missile",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_the_black_mp": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_the_black_skeletal_steed_mp": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_the_black_skeleton_chariot_mp": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_death": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_death_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_light": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_light_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_nehekhara": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_nehekhara_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_shadow": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_shadow_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_undeath_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_priest_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_priest_undeath_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_dieter_helsnicht": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_dieter_helsnicht_undead_manticore": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_barded_nightmare": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart_balefire": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart_lodestone": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_master_necromancer_undeath_hellsteed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_barded_nightmare": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart_balefire": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart_lodestone": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_barded_nightmare": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_coven_throne": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_dread_abyssal": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_hellsteed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_vmp_cha_neferata_zombie_dragon": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh3_main_cth_cha_alchemist_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_alchemist_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_astromancer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_astromancer_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_heavens_missile",
+   "ranged": true
+  },
+  "wh3_main_cth_cha_astromancer_2": {
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yang_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yang_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yang_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yang_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yang_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yang_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yin_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yin_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yin_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yin_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_dragon_blooded_shugengan_lord_yin_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_yin_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_iron_dragon_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cth_iron_dragon_missile",
    "ranged": true
   },
   "wh3_main_cth_cha_storm_dragon_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_cth_storm_dragon_missile",
    "ranged": true
   },
@@ -1607,902 +1962,997 @@
    "ranged": true
   },
   "wh3_main_ksl_cha_frost_maiden_ice_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_ice_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_frost_maiden_ice_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_ice_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_frost_maiden_ice_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_ice_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_frost_maiden_tempest_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_tempest_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_frost_maiden_tempest_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_tempest_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_frost_maiden_tempest_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_tempest_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_ice_witch_ice_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_ice_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_ice_witch_ice_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_ice_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_ice_witch_ice_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_ice_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_ice_witch_tempest_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tempest_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_ice_witch_tempest_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tempest_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_ice_witch_tempest_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tempest_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_katarin_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_ksl_katarin_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_katarin_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_ksl_katarin_missile",
    "ranged": true
   },
   "wh3_main_ksl_cha_katarin_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_ksl_katarin_missile",
    "ranged": true
   },
   "wh3_main_ogr_cha_firebelly_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
+  "wh3_main_pro_ksl_cha_frost_maiden_ice_0": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_main_pro_ksl_cha_frost_maiden_ice_1": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_main_pro_ksl_cha_frost_maiden_ice_2": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh3_main_pro_tze_cha_cultist_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_pro_tze_cha_cultist_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_cultist_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_cultist_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_exalted_lord_of_change_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_exalted_lord_of_change_tzeentch_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_tzeentch_missile",
    "ranged": true
   },
   "wh3_main_tze_cha_kairos_fateweaver_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tze_kairos_fateweaver_missile",
    "ranged": true
   },
+  "wh3_pro10_tze_cha_cultist_0": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_survival_tze_cha_exalted_lord_of_change_tzeentch": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_death_8": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_fire_8": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_10": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_12": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_13": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_death_missile",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_7": {
+   "fwm": true,
+   "missile": "glf_mage_lord_death_missile",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_8": {
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_9": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_death_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_fire_10": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_fire_12": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_fire_13": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_fire_missile",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_lord_fire_7": {
+   "fwm": true,
+   "missile": "glf_mage_lord_fire_missile",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_lord_fire_8": {
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_fire_9": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_fire_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_metal_10": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_metal_12": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_metal_13": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_metal_missile",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_lord_metal_7": {
+   "fwm": true,
+   "missile": "glf_mage_lord_metal_missile",
+   "ranged": true
+  },
+  "wh_dlc01_chs_cha_chaos_sorcerer_lord_metal_8": {
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_metal_9": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_shadows_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_lord_shadows_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_shadows_missile",
    "ranged": true
   },
+  "wh_dlc01_chs_cha_chaos_sorcerer_metal_8": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh_dlc01_chs_cha_chaos_sorcerer_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_chs_cha_chaos_sorcerer_shadows_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc01_nor_cha_chaos_sorcerer_lord_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc01_nor_cha_chaos_sorcerer_lord_1": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_lord_metal_missile",
+   "ranged": true
+  },
+  "wh_dlc01_nor_cha_chaos_sorcerer_lord_2": {
+   "fwm": true,
    "missile": "glf_mage_lord_metal_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_wild_0": {
-   "fwm": false,
-   "missile": "glf_mage_hero_wild_missile",
-   "ranged": true
-  },
-  "wh_dlc03_bst_cha_bray_shaman_wild_0_qb": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_bray_shaman_wild_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_wild_missile",
    "ranged": true
   },
   "wh_dlc03_bst_cha_malagor_the_dark_omen_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_bst_malagor_the_dark_omen_missile",
    "ranged": true
   },
   "wh_dlc03_emp_cha_wizard_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc03_emp_cha_wizard_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc03_emp_cha_wizard_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc03_emp_cha_wizard_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc03_emp_cha_wizard_beasts_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_helman_ghorst_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_helman_ghorst_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_helman_ghorst_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_helman_ghorst_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_master_necromancer_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_master_necromancer_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_master_necromancer_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_necromancer_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_necromancer_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
   "wh_dlc04_vmp_cha_necromancer_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
   "wh_dlc05_bst_cha_morghur_0": {
-   "fwm": false,
-   "missile": "glf_bst_morghur_missile",
-   "ranged": true
-  },
-  "wh_dlc05_bst_cha_morghur_0_boss": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_bst_morghur_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_life_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_life_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_life_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc05_emp_cha_wizard_shadows_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_ancient_treeman_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_life_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_life_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_life_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_shadows_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_shadows_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_shadows_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc05_wef_cha_spellsinger_shadows_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc06_chs_cha_chaos_sorcerer_death_9": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc06_chs_cha_chaos_sorcerer_fire_9": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc06_chs_cha_chaos_sorcerer_metal_9": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_dlc06_grn_cha_skarsnik_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_grn_skarsnik_missile",
    "ranged": true
   },
   "wh_dlc06_grn_cha_wurrzag_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_grn_wurrzag_missile",
    "ranged": true
   },
   "wh_dlc06_grn_cha_wurrzag_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_grn_wurrzag_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_life_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_life_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_life_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_damsel_life_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_fay_enchantress_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_brt_fay_enchantress_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_fay_enchantress_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_brt_fay_enchantress_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_life_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_beasts_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_beasts_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_beasts_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_beasts_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_beasts_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_heavens_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_heavens_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_heavens_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh_dlc07_brt_cha_prophetess_heavens_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_heavens_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_arzik_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_nor_arzik_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_fimir_balefiend_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_fimir_balefiend_shadow_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_kihar_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_slaanesh_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_death_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_fire_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_fire_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_metal_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_dlc08_nor_cha_shaman_sorcerer_metal_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_main_brt_cha_damsel_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_brt_cha_damsel_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_brt_cha_damsel_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_brt_cha_damsel_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_death_10": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_death_11": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_death_missile",
+   "ranged": true
+  },
+  "wh_main_chs_cha_chaos_sorcerer_death_7": {
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_fire_10": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_fire_11": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_fire_missile",
+   "ranged": true
+  },
+  "wh_main_chs_cha_chaos_sorcerer_fire_7": {
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_metal_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_metal_10": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_main_chs_cha_chaos_sorcerer_metal_11": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_mage_hero_metal_missile",
+   "ranged": true
+  },
+  "wh_main_chs_cha_chaos_sorcerer_metal_7": {
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_main_chs_cha_lord_of_change_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_chs_lord_of_change_missile",
    "ranged": true
   },
   "wh_main_emp_cha_balthasar_gelt_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_emp_balthasar_gelt_missile",
    "ranged": true
   },
   "wh_main_emp_cha_balthasar_gelt_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_emp_balthasar_gelt_missile",
    "ranged": true
   },
   "wh_main_emp_cha_balthasar_gelt_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_emp_balthasar_gelt_missile",
    "ranged": true
   },
   "wh_main_emp_cha_balthasar_gelt_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_emp_balthasar_gelt_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_fire_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_fire_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_fire_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_fire_3": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_fire_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_heavens_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_heavens_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_heavens_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_heavens_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_heavens_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_light_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_light_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_light_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh_main_emp_cha_wizard_light_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh_main_grn_cha_goblin_great_shaman_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_lil_waaagh_missile",
    "ranged": true
   },
   "wh_main_grn_cha_goblin_great_shaman_1": {
-   "fwm": false,
-   "missile": "glf_mage_hero_lil_waaagh_missile",
+   "fwm": true,
+   "missile": "glf_mage_lord_lil_waaagh_missile",
    "ranged": true
   },
   "wh_main_grn_cha_goblin_great_shaman_2": {
-   "fwm": false,
-   "missile": "glf_mage_hero_lil_waaagh_missile",
+   "fwm": true,
+   "missile": "glf_mage_lord_lil_waaagh_missile",
    "ranged": true
   },
   "wh_main_grn_cha_night_goblin_shaman": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_lil_waaagh_missile",
    "ranged": true
   },
   "wh_main_grn_cha_orc_shaman_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_big_waaagh_missile",
    "ranged": true
   },
   "wh_main_grn_cha_orc_shaman_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_big_waaagh_missile",
    "ranged": true
   },
   "wh_main_nor_cha_chaos_sorcerer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
   "wh_main_nor_cha_chaos_sorcerer_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_metal_missile",
    "ranged": true
   },
+  "wh_main_nor_cha_chaos_sorcerer_2": {
+   "fwm": true,
+   "missile": "glf_mage_hero_metal_missile",
+   "ranged": true
+  },
+  "wh_main_teb_cha_wizard_0": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh_main_teb_cha_wizard_1": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
   "wh_main_vmp_cha_heinrich_kemmler": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_vmp_heinrich_kemmler_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_master_necromancer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_master_necromancer_4": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_master_necromancer_5": {
-   "fwm": false,
-   "missile": "glf_mage_hero_vampire_missile",
+   "fwm": true,
+   "missile": "glf_mage_lord_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_necromancer_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   },
   "wh_main_vmp_cha_necromancer_5": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_vampire_missile",
    "ranged": true
   }
