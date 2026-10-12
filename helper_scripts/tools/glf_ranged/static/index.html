@@ -265,6 +265,27 @@ document.getElementById('tickAll').addEventListener('click', () => {
   render();
 });
 
+// The page edits made after `sent` was posted: changed unit entries (null when unticked), ignore changes, and missile picks.
+function editsSince(sent, sentMissiles) {
+  const now = JSON.parse(snapshot());
+  const keys = new Set([...Object.keys(now.units), ...Object.keys(sent.units)]);
+  const units = {};
+  keys.forEach(k => { if (JSON.stringify(now.units[k] || null) !== JSON.stringify(sent.units[k] || null)) units[k] = now.units[k] || null; });
+  const ignore = {};
+  new Set([...now.ignore, ...sent.ignore]).forEach(k => { if (now.ignore.includes(k) !== sent.ignore.includes(k)) ignore[k] = now.ignore.includes(k); });
+  const missiles = {};
+  Object.keys({ ...S.baseMissile, ...sentMissiles }).forEach(b => { if ((S.baseMissile[b] || '') !== (sentMissiles[b] || '')) missiles[b] = S.baseMissile[b] || ''; });
+  return { units, ignore, missiles };
+}
+
+// Put edits from `editsSince` back on top of freshly loaded state. They show as unsaved until the next apply.
+function reapplyEdits(edits) {
+  Object.entries(edits.units).forEach(([k, entry]) => { if (entry) S.sel[k] = entry; else delete S.sel[k]; });
+  Object.entries(edits.ignore).forEach(([k, on]) => { if (on) S.ignore.add(k); else S.ignore.delete(k); });
+  Object.assign(S.baseMissile, edits.missiles);
+  render();
+}
+
 document.getElementById('save').addEventListener('click', async () => {
   const status = document.getElementById('status');
   const button = document.getElementById('save');
@@ -278,8 +299,10 @@ document.getElementById('save').addEventListener('click', async () => {
     const response = await fetch('/api/apply', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(sent) });
     const result = await response.json();
     if (!response.ok) { status.textContent = 'Apply failed: ' + result.error; return; }
-    // Reload so the status badges show what is now in the pack.
+    // Reload so the status badges show what is now in the pack, then put back anything edited while the apply ran.
+    const edits = editsSince(sent, sentMissiles);
     await loadState();
+    reapplyEdits(edits);
     const report = document.getElementById('report');
     document.getElementById('reportSummary').textContent = 'Applied: ' + result.report.split('\n')[0];
     document.getElementById('reportText').textContent = result.report;
