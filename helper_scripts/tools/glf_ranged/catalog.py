@@ -28,6 +28,13 @@ REPORT_PATH = "./_diag/glf_ranged_report.txt"
 SCRATCH = f"{TEMP_DIR}/glf_ranged"
 # Loc key prefix of agent subtype names, which some unit names refer to.
 SUBTYPE_NAME_PREFIX = "agent_subtypes_onscreen_name_override_"
+# The game and DLC prefix of a unit key, e.g. `wh2_dlc15_`.
+GAME_PREFIX = re.compile(r"^wh\d*_(main|dlc\d+|pro\d+|cp\d+|twa\d+|survival)_")
+# A trailing variant number on a unit key, e.g. `_1` in `wh_dlc07_brt_cha_damsel_beasts_1`.
+VARIANT_NUMBER = re.compile(r"_\d+$")
+# The race and `mnt_` part of a mount key, and trailing parts that do not name the mount, e.g. `brt_mnt_` and `_deprecated`.
+MOUNT_PREFIX = re.compile(r"^[a-z]{2,4}_mnt_")
+MOUNT_SUFFIX = re.compile(r"(_(deprecated|360|\d+))+$")
 VANILLA_TABLES = [
     "main_units_tables",
     "land_units_tables",
@@ -237,6 +244,20 @@ def display_name(key: str, loc: Dict[str, str]) -> str:
     return name
 
 
+def mount_name(mount: str) -> str:
+    """Turn a mount key into the `mount_<name>` form the picker shows for mount icons.
+
+    Args:
+        mount (str): `mounts` key, e.g. `wh_main_brt_mnt_warhorse_deprecated`, or empty.
+
+    Returns:
+        E.g. `mount_warhorse`, or empty when there is no mount.
+    """
+    if not mount:
+        return ""
+    return "mount_" + MOUNT_SUFFIX.sub("", MOUNT_PREFIX.sub("", GAME_PREFIX.sub("", mount)))
+
+
 def missile_family(missile: str) -> str:
     """Reduce a GLF missile to its lore for generic missiles, or keep a named special as is.
 
@@ -365,6 +386,14 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
     for row in tables["units_custom_battle_mounts_tables"]:
         base_of[row["mounted_unit"]] = row["base_unit"]
         mount_of[row["mounted_unit"]] = os.path.splitext(os.path.basename(row["icon_name"]))[0]
+    # Versions missing from the custom battle mounts list, e.g. `wh_dlc07_brt_cha_damsel_beasts_1`, join the same character's `_0` unit.
+    for key in caste_of:
+        first = VARIANT_NUMBER.sub("_0", key)
+        if key not in base_of and first != key and caste_of.get(first) == caste_of[key]:
+            base_of[key] = first
+            mount_of[key] = mount_name(land[key]["mount"])
+    # A version whose base is not a lord or hero row is its own base.
+    base_of = {key: base for key, base in base_of.items() if base in caste_of}
     groups: Dict[str, Set[str]] = collections.defaultdict(set)
     for row in tables["units_to_groupings_military_permissions_tables"]:
         groups[row["unit"]].add(row["military_group"])
@@ -404,10 +433,7 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
     rows = []
     for key, caste in caste_of.items():
         land_row = land[key]
-        # A mount listed under a base that is not itself a lord or hero row is its own base.
         base = base_of.get(key, key)
-        if base not in caste_of:
-            base = key
         faction = unit_faction(key, groups.get(unit_of[key], set()))
         guess, source = guess_missile(key, caste, features[key], faction, votes, faction_votes, missile_set, lores)
         entry = sets.get(land_row["man_animation"])
