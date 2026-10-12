@@ -692,6 +692,9 @@ def add_moving_fire(anim_set: AnimSet, kind: str, ids: Dict[str, int], present: 
         The slot names added.
     """
     added = []
+    # A ridden set that already fires on the move through the moving fire slots, e.g. the Tzeentch Sorcerer's Disc, needs nothing more.
+    if kind == "rider" and all(ids[name] in present for name in catalog.MOVING_FIRE_SLOTS):
+        return added
     missing = [name for name in catalog.FWM_SLOTS[kind] if ids[name] not in present]
     if missing:
         fire = next((slot for slot in anim_set.slots if slot.slot_id == ids[FIRE_SLOTS[kind][0]] and slot.refs), None)
