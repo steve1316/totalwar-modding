@@ -63,3 +63,15 @@ effect_bundles_localised_title_deer_court_famous_1	Radiance of the First Achieve
 effect_bundles_localised_title_deer_court_famous_2	Radiance of the Second Achievement	true
 effect_bundles_localised_title_deer_court_famous_3	Radiance of the Third Achievement	true
 ui_text_replacements_localised_text_deer_court_unlock_text_pointer	The Royal Court is now open!\\n\\nYou may appoint characters under your command to office, granting bonuses to their armies and your faction.	true
+effect_bundles_localised_description_deer_court_tenure_buff_2	This character has been entrusted with an official post. The Leadership of armies under their command is increased by 2.	true
+effect_bundles_localised_description_deer_court_tenure_buff_4	This character has been entrusted with an official post. The Leadership of armies under their command is increased by 4.	true
+effect_bundles_localised_description_deer_court_tenure_buff_6	This character has been entrusted with an official post. The Leadership of armies under their command is increased by 6.	true
+effect_bundles_localised_description_deer_court_tenure_debuff_2	This character has long served in our ranks without receiving an official post, and morale has grown low. The Leadership of armies under their command is reduced by 2.	true
+effect_bundles_localised_description_deer_court_tenure_debuff_4	This character has long remained in our ranks without receiving an official post, and resentment has deepened. The Leadership of armies under their command is reduced by 4.	true
+effect_bundles_localised_description_deer_court_tenure_debuff_6	This character has long remained in our ranks without ever receiving an official post, and has grown estranged in heart. The Leadership of armies under their command is reduced by 6.	true
+effect_bundles_localised_title_deer_court_tenure_buff_2	Entrusted with Office	true
+effect_bundles_localised_title_deer_court_tenure_buff_4	Entrusted with Office II	true
+effect_bundles_localised_title_deer_court_tenure_buff_6	Entrusted with Office III	true
+effect_bundles_localised_title_deer_court_tenure_debuff_2	Idle in the Ranks	true
+effect_bundles_localised_title_deer_court_tenure_debuff_4	Idle in the Ranks II	true
+effect_bundles_localised_title_deer_court_tenure_debuff_6	Idle in the Ranks III	true

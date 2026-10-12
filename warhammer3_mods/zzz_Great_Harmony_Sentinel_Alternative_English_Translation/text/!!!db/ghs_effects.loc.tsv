@@ -205,7 +205,7 @@ effects_description_ghs_ability_cth_jade_blood_snake	Learn skill: [Jade Blood El
 effects_description_ghs_ability_cth_rune_spell_magic	Learn skill: [Weng Chang's Spirit Hall]	true
 effects_description_ghs_ability_cth_rune_spell_regeneration	Learn skill: [Withered Wood Reborn]	true
 effects_description_ghs_ability_cth_rune_spell_resistance	Learn skill: [Endless Life]	true
-effects_description_ghs_chs_archaon_background_scaling_weapon	[[col:orange]]'Slayer of Kings': Weapon Strength, Charge Bonus, Hit Points, Speed: +%n% per experience rank[[/col]]	true
+effects_description_ghs_chs_archaon_background_scaling_weapon	[[col:orange]]'Slayer of Kings': Bonus vs. Large, Weapon Strength, Charge Bonus, Hit Points, Speed: +%n% per experience rank[[/col]]	true
 effects_description_ghs_cth_cha_wangque_enchanted_item	'Mirror of the Cassia Soul' skill upgraded to: 'Mirror of the Cassia Soul - Moonlight'	true
 effects_description_ghs_cth_cha_yangxing_enchanted_item	Unlocks skill: 'Dragon God's Contempt'	true
 effects_description_ghs_def_background_scaling_hellebron	[[col:orange]]'Fanatic Devotion to Khaine': Weapon Strength: +%n% per experience rank for Hag Hellebron, Death Hags, and Khainite Assassins[[/col]]	true
@@ -267,3 +267,5 @@ effects_description_wh3_main_skill_grn_ironskin_background_scaling	[[col:orange]
 effects_description_wh_dlc07_lord_passive_mist_of_the_lady	Green Knight unlocks skill: Mist of the Lady	true
 effects_description_wh_main_lord_passive_beloved_son_of_bretonnia	Green Knight unlocks skill: 'Beloved Son of Bretonnia'	true
 effects_description_wh_main_lord_passive_the_ladys_champion	Green Knight unlocks skill: 'The Lady's Champion'	true
+effects_description_ghs_chs_undead_background_scaling_weapon	[[col:orange]]'Lord of the Undead': Bonus vs. Large, Weapon Strength, Charge Bonus, Hit Points, Speed: %+n% per experience rank gained[[/col]]	true
+effects_description_wh3_dlc27_effect_ability_enable_secret_of_hoeth_spellcasters_hef	Passive skill: High Elf spellcaster units gain 'Secret of Hoeth'.	true

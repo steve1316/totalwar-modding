@@ -210,7 +210,7 @@ land_units_onscreen_name_ghs_main_lzd_cha_slann_fire	Slann Mage-Priest (Lore of 
 land_units_onscreen_name_ghs_main_lzd_cha_slann_heaven	Slann Mage-Priest (Lore of Life)	false
 land_units_onscreen_name_ghs_main_lzd_cha_slann_high	Slann Mage-Priest (High Magic)	false
 land_units_onscreen_name_ghs_main_lzd_cha_slann_life	Slann Mage-Priest (Lore of Heavens)	false
-land_units_onscreen_name_ghs_main_lzd_cha_slann_light	Slann Mage-Priest (Lore of Fire)	false
+land_units_onscreen_name_ghs_main_lzd_cha_slann_light	Slann Mage-Priest (Lore of Light)	false
 land_units_onscreen_name_ghs_main_lzd_cha_slann_campagin	Slann Mage-Priest	false
 land_units_onscreen_name_ghs_main_ogr_mon_greasus_treasure	[Goldtooth] Greasus	false
 land_units_onscreen_name_ghs_main_chd_mon_kdaai_destroyer_doombull	K'daai Conqueror	false
@@ -306,3 +306,7 @@ land_units_onscreen_name_ghs_main_cth_inf_iron_dragon_modao	An Xi Iron Guard	tru
 land_units_onscreen_name_ghs_main_cth_inf_iron_dragon_modao_ror	Mo Dao Bodhisattva	true
 land_units_onscreen_name_ghs_main_lzd_vulcan_salamander	Volcanic Spinebeast	true
 land_units_onscreen_name_ghs_wm_hef_dragonship	Dragonsail Warship	true
+land_units_onscreen_name_ghs_main_lzd_cha_slann_beast	Slann Mage-Priest (Lore of Beasts)	true
+land_units_onscreen_name_ghs_main_lzd_cha_slann_death	Slann Mage-Priest (Lore of Death)	true
+land_units_onscreen_name_ghs_main_lzd_cha_slann_metal	Slann Mage-Priest (Lore of Metal)	true
+land_units_onscreen_name_ghs_main_lzd_cha_slann_shadow	Slann Mage-Priest (Lore of Shadow)	true

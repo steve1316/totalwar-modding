@@ -17,15 +17,15 @@ unit_description_short_texts_text_emp_inf_deaths_heads	The halberdiers known as 
 land_units_onscreen_name_emp_cav_gryph_knights	Gryph Knights	true
 unit_description_short_texts_text_emp_cav_gryph_knights	The Empire's true Gryph Knights, not chickens!!!!	true
 land_units_onscreen_name_emp_inf_sigmar_guards	Sigmar Guards	true
-unit_description_short_texts_text_emp_inf_sigmar_guards	Priests who guard the Cathedral of Sigmar, defending it with the power of thunder.	true
-land_units_onscreen_name_emp_inf_sigmar_attaker	Sigmar Attackers	true
-unit_description_short_texts_text_emp_inf_sigmar_attaker	Priests who guard the Cathedral of Sigmar, enchanting their spears with thunder to pierce through their foes.	true
+unit_description_short_texts_text_emp_inf_sigmar_guards	Hammer in one hand, shield in the other, they are the temple guardians of Sigmar's Cathedral. When faith teeters on the brink of collapse, the Storm God sends down thunder to shatter the darkness around them and heal his faithful servants.	true
+land_units_onscreen_name_emp_inf_sigmar_attaker	Sigmar Enforcers	true
+unit_description_short_texts_text_emp_inf_sigmar_attaker	The spear is Sigmar's law, the shield his verdict. Any foe who dares break the line will be pinned before judgement is passed.	true
 land_units_onscreen_name_emp_inf_sigmar_destroyer	Sigmar Destroyers	true
-unit_description_short_texts_text_emp_inf_sigmar_destroyer	Elite guardians of the innermost sanctum of the Cathedral of Sigmar, who wield thunderous hammers to annihilate all evil.	true
-land_units_onscreen_name_emp_inf_sigmar_marksmen	Sigmar Chastisers	true
-unit_description_short_texts_text_emp_inf_sigmar_marksmen	They fire thunderous bolts from specialized heavy crossbows, and when necessary, summon natural falcons to aid their marksmanship.	true
-land_units_onscreen_name_emp_mon_eagles_summoned	Talon Falcons	true
-unit_description_short_texts_text_emp_mon_eagles_summoned	Followers of Taal summon magical war eagles to aid them in battle.	true
+unit_description_short_texts_text_emp_inf_sigmar_destroyer	Elite guardians of the innermost sanctum of the Cathedral of Sigmar, wielding great warhammers that carry Sigmar's fury. In their dying moments, the sky tears open and thunder purges all evil, and they rise anew amid the storm.	true
+land_units_onscreen_name_emp_inf_sigmar_marksmen	Sigmar Skywatchers	true
+unit_description_short_texts_text_emp_inf_sigmar_marksmen	Wielding heavy repeater crossbows with a storm eagle perched upon their shoulder, these marksmen send their eagles soaring aloft to mark targets for their allies—any foe within the eagle's sight cannot escape Sigmar's judgement.	true
+land_units_onscreen_name_emp_mon_eagles_summoned	Storm Eagle	true
+unit_description_short_texts_text_emp_mon_eagles_summoned	The storm eagle is the eye of the Sigmar Skywatchers. It circles high above the battlefield, granting nearby allied ranged units bonuses to range and accuracy. Wherever the eagle's gaze falls, Sigmar's judgement follows.	true
 land_units_onscreen_name_emp_cav_dual_pistols_demigryph_knights	Demigryph Knight Patrol	true
 unit_description_short_texts_text_emp_cav_dual_pistols_demigryph_knights	Demigryph Knights who patrol with dual pistols, striking enemies from a distance.	true
 land_units_onscreen_name_emp_cav_long_sword_demigryph_knights	Demigryph Knight Slayers	true
@@ -46,3 +46,11 @@ land_units_onscreen_name_emp_inf_ostland_salamanders	Ostland Salamanders	true
 unit_description_short_texts_text_emp_inf_ostland_salamanders	Among the stubborn folk of Ostland, these warriors follow the one called Volkmar, mercilessly destroying approaching enemies with weapons of fire.	true
 land_units_onscreen_name_emp_inf_nuln_ironsides_repeaters	Nuln Ironsides (Repeaters)	true
 land_units_onscreen_name_emp_inf_nuln_ironsides_morr_repeaters	Amethyst Ironsides (Repeaters)	true
+land_units_onscreen_name_emp_inf_sigmar_crossbow_axe	Sigmar Vanguards	true
+land_units_onscreen_name_emp_inf_sigmar_dule_axe	Sigmar Annihilators	true
+land_units_onscreen_name_emp_inf_sigmar_oathsworn	Sigmar Oathsworn	true
+land_units_onscreen_name_emp_inf_sigmar_thunderbolt_archers	Sigmar Thunderbolt Archers	true
+unit_description_short_texts_text_emp_inf_sigmar_crossbow_axe	Crossbow bolts clear the path, the axe finishes the work. They are the vanguard of Sigmar's wrath. Even surrounded and on the brink of death, the sky will split open for them—thunder falls, enemies are reduced to ash, and the Vanguards rise once more to press onward.	true
+unit_description_short_texts_text_emp_inf_sigmar_dule_axe	They cast aside their shields for the killing efficiency of twin axes. When their blood runs dry, Sigmar's thunder falls for them, charring the heretics around them to ash and granting these berserkers rebirth amid the lightning.	true
+unit_description_short_texts_text_emp_inf_sigmar_oathsworn	They have sworn a soul-oath to their lord, offering flesh as shield and thunder as vow. As long as the Oathsworn stand, Sigmar's chosen shall not fall.	true
+unit_description_short_texts_textemp_inf_sigmar_thunderbolt_archers	Three-shot repeaters, arrows like thunder. Storm eagles circle overhead, guiding Sigmar's archers on the path of judgement.	true

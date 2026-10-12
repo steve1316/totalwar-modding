@@ -8,7 +8,7 @@ effects_description_wh2_khalida_force_stat_missile_ap_skeleton_archer	Skeleton A
 effects_description_wh2_khatep_effect_attribute_spell_mastery_mage_heirotitan	Unlocks attribute for accompanying Liche Priests and Hierotitan units: Mastery of Elemental Winds	true
 effects_description_wh3_skrag_enable_bloodgreed	Predator units unlock skill: 'Bloodgreed'	true
 effects_description_wh3_greasus_enable_ironguts_guardian	Ironguts and Maneaters units unlock skill: 'Guardian'	true
-effects_description_wh3_greasus_stat_ironguts_xp_bonus	For every rank gained, Ironguts and Maneaters units gain %+n% Speed and Melee Armour-Piercing Weapon Damage	true
+effects_description_wh3_greasus_stat_ironguts_xp_bonus	[[col:orange]]'Goldtooth's Guard': For every rank gained, Ironguts and Maneaters units gain %+n% Physical Resistance, Speed and Melee Armour-Piercing Weapon Damage[[/col]]	true
 effects_description_wh2_tiktaqto_terradon_ripperdactyl_coatl	Terradon, Ripperdactyl and Coatl units unlock skill: 'Swift as the Wind'	true
 effects_description_wh2_mazdamundi_slann_barrier_health_add	Mazdamundi and accompanying Slann Mage-Priests' Ward Barrier Hit Points: %+n	true
 effects_description_wh2_mazdamundi_slann_barrier_replenish_delay_mod	Mazdamundi and accompanying Slann Mage-Priests' Ward Barrier Replenish Delay: %+n%	true
@@ -16,11 +16,12 @@ effects_description_wh2_mazdamundi_slann_barrier_replenish_rate_mod	Mazdamundi a
 effects_description_wh3_katarin_effect_stat_missile_ap_damage_ksl_ice_guard	Ice Guard, Sisterhood of the Frost Bear, Snow Eagle Knights Missile Armour-Piercing Damage: %+n%	true
 effects_description_wh3_katarin_ice_witch_barrier_health_add	Tzarina Katarin, Ice Witches and Frost Maidens' Ward Barrier Hit Points: %+n	true
 effects_description_wh3_katarin_effect_attribute_spell_mastery_mage_elemental_bear	Unlocks attribute for Tzarina Katarin, Ice Witches, Frost Maidens and Elemental Bear units: Mastery of Elemental Winds	true
-effects_description_wh3_boris_stat_tzar_guard_xp_bonus	For every rank gained, War Bear Riders, Tzar Guard and Kreml Guard units gain %+n% Weapon Strength, Speed and Charge Bonus	true
+effects_description_wh3_boris_stat_tzar_guard_xp_bonus	[[col:orange]]'Tzar's Royal Guard': For every rank gained, War Bear Riders, Tzar Guard and Kreml Guard units gain %+n% Weapon Strength, Speed and Charge Bonus[[/col]]	true
 effects_description_wh3_fay_effect_attribute_spell_mastery_prophetess	Unlocks attribute for the Fay Enchantress, Prophetess and Damsel: Mastery of Elemental Winds	true
 effects_description_wh3_fay_prophetess_barrier_health_add	Fay Enchantress, Prophetess and Damsel Ward Barrier Hit Points: %+n	true
 effects_description_wh3_golgfag_stat_maneater_xp_bonus	[[col:orange]]'Mightiest of Mercenaries': For every rank gained, Golgfag's Maneater units gain %+n% Leadership, Melee Attack and Defence, Armour, Speed and Armour-Piercing Melee Damage[[/col]]	true
 effects_description_wh3_imrik_stat_dragon_prince_xp_bonus	[[col:orange]]'Glory of Caledor': For every rank gained, Imrik's Dragon Prince and Dragon units gain %+n% Physical Resistance, Speed and Weapon Armour-Piercing Damage[[/col]]	true
 effects_description_wh3_miaoying_enable_dig_in	Cathayan ranged units unlock skill: 'Dig In'	true
 effects_description_wh3_repanse_enable_dig_in	Trebuchet units unlock skill: 'Dig In'	true
-effects_description_wh3_repanse_stat_peasant_xp_bonus	For every rank gained, Peasant Mob, Men-at-Arms, Spearmen, Grail Reliquae, Battle Pilgrims and Squires on Foot units gain %+n% Physical Resistance, Weapon Strength, Melee Attack and Defence, Charge Bonus	true
+effects_description_wh3_repanse_stat_peasant_xp_bonus	[[col:orange]]'Fighting for the People': For every rank gained, Peasant Mob, Men-at-Arms, Spearmen, Grail Reliquae, Battle Pilgrims and Squires on Foot units gain %+n% Physical Resistance, Weapon Strength, Melee Attack and Defence, Charge Bonus[[/col]]	true
+effects_description_wh3_nagash_stat_morghast_xp_bonus	[[col:orange]]'Wings of the Death God': Nagash's Morghast units gain Melee Attack, Melee Defence, Leadership, Armour-Piercing Melee Damage and Ward Save %+n per rank gained[[/col]]	true

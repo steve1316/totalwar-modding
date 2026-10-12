@@ -8,14 +8,10 @@ special_ability_phases_onscreen_name_unit_passive_protect_shield	[[img:stage_one
 special_ability_phases_onscreen_name_unit_passive_protect_shield_buff	[[img:stage_two]][[/img]]Stage 2	true
 special_ability_phases_onscreen_name_unit_passive_honour_of_light	[[img:stage_one]][[/img]]Stage 1	true
 special_ability_phases_onscreen_name_unit_passive_honour_of_light_buff	[[img:stage_two]][[/img]]Stage 2	true
-unit_abilities_onscreen_name_unit_ability_summon_eagle	Eye of Talsyn	true
-unit_abilities_tooltip_text_unit_ability_summon_eagle	Summon a war eagle to join the battle.	true
+unit_abilities_onscreen_name_unit_ability_summon_eagle	Eye of the Storm	true
+unit_abilities_tooltip_text_unit_ability_summon_eagle	Wherever the storm eagle's gaze falls, Sigmar's judgement follows.	true
 unit_abilities_onscreen_name_unit_ability_hunter_mark	Hunter's Mark	true
 unit_abilities_tooltip_text_unit_ability_hunter_mark	Mark the enemy's position, making it easier for the Chastisers to hit their target.	true
-effects_description_effect_unit_cap_emp_inf_sigmar_guards	Unit Capacity: Sigmar Guards %+n	true
-effects_description_effect_unit_cap_emp_inf_sigmar_attaker	Unit Capacity: Sigmar Attackers %+n	true
-effects_description_effect_unit_cap_emp_inf_sigmar_destroyer	Unit Capacity: Sigmar Destroyers %+n	true
-effects_description_effect_unit_cap_emp_inf_sigmar_marksmen	Unit Capacity: Sigmar Chastisers %+n	false
 unit_abilities_onscreen_name_unit_ability_ultra_charge	Ultra Charge	true
 unit_abilities_tooltip_text_unit_ability_ultra_charge	Ultimate Warriors unlock their body's hidden potential, gaining stronger charge and attack power.	true
 unit_abilities_onscreen_name_unit_ability_angel_jugement	Angel's Judgement	true
@@ -24,5 +20,18 @@ special_ability_phases_onscreen_name_unit_passive_blood_and_honor_buff	[[img:sta
 special_ability_phases_onscreen_name_unit_passive_blood_and_honor_debuff	[[img:stage_two]][[/img]]Stage 2	true
 unit_abilities_onscreen_name_unit_ability_vengeful_blood	Blood Vengeance	false
 unit_abilities_tooltip_text_unit_ability_vengeful_blood	The Vengeful Blades have sworn a blood oath, to slay every evil in the world.	false
-unit_abilities_onscreen_name_unit_sigemar_punishment	Sigmar's Chastisement	false
-unit_abilities_tooltip_text_unit_sigemar_punishment	Warriors devoted to Sigmar unleash a flame of the soul upon the enemies around them.	false
+effects_description_effect_unit_cap_emp_inf_dark_angel	Unit Capacity: Dark Judgement %+n	true
+effects_description_effect_unit_cap_emp_inf_nordland_ultimate_warrior	Unit Capacity: Nordland Ultimate Warriors %+n	true
+effects_description_effect_unit_cap_emp_inf_ostland_salamanders	Unit Capacity: Ostland Salamanders %+n	true
+unit_abilities_additional_ui_effects_localised_text_unit_storm_stride	The Sons of Sigmar teleport to a chosen location within range	true
+unit_abilities_additional_ui_effects_localised_text_unit_storm_stride_vortex	The Sons of Sigmar strike enemies hard upon arrival	true
+unit_abilities_onscreen_name_unit_ability_oathbound_sacrifice	Oathbound Sacrifice	true
+unit_abilities_onscreen_name_unit_ability_stormstrike	Storm Strike	true
+unit_abilities_onscreen_name_unit_sigemar_punishment_I	Thunder Reforged	true
+unit_abilities_onscreen_name_unit_sigemar_punishment_II	Thunder Reforged	true
+unit_abilities_onscreen_name_unit_storm_stride	Storm Stride	true
+unit_abilities_tooltip_text_unit_ability_oathbound_sacrifice	Tears open the sacrificial leather on their chest, letting the thunder oath pour forth.	true
+unit_abilities_tooltip_text_unit_ability_stormstrike	Sigmar's chosen become the storm, crashing into enemy ranks with thunderous force.	true
+unit_abilities_tooltip_text_unit_sigemar_punishment_I	Reforges the souls of fallen warriors with thunder.	true
+unit_abilities_tooltip_text_unit_sigemar_punishment_II	Reforges the souls of fallen warriors with thunder.	true
+unit_abilities_tooltip_text_unit_storm_stride	Becomes lightning, tearing across the battlefield, and arrives behind the enemy in an instant.	true

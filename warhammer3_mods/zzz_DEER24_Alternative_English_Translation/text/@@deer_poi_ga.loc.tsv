@@ -1,0 +1,16 @@
+key	text	tooltip
+#Loc;1;text/@@deer_poi_ga.loc		
+campaign_interactable_marker_infos_name_deer_poi_ga_marker_armory	Armory	true
+campaign_interactable_marker_infos_name_deer_poi_ga_marker_granary	Granary	true
+campaign_interactable_marker_infos_tooltip_deer_poi_ga_marker_armory	Provincial Armory: Garrisoned by a permanent defense force. Defeat the garrison to capture it. The occupying faction will gain bonuses to damage and armour within this province.	true
+campaign_interactable_marker_infos_tooltip_deer_poi_ga_marker_granary	Provincial Granary: Garrisoned by a permanent defense force. Defeat the garrison to capture it. The occupying faction will gain a casualty replenishment rate bonus within this province.	true
+campaign_payload_ui_details_description_deer_poi_ga_incident_armory	Our forces have routed the armory's defenders and taken over this bastion of weaponry, ensuring our arms and armor are beyond reproach!	true
+campaign_payload_ui_details_description_deer_poi_ga_incident_granary	Our forces have routed the granary's defenders and seized this storehouse of grain, ensuring the unimpeded flow of provisions!	true
+effect_bundles_localised_description_deer_poi_ga_armory_buff	This army can replenish its equipment from the local armory.	true
+effect_bundles_localised_description_deer_poi_ga_granary_buff	This army can replenish its supplies from the local granary.	true
+effect_bundles_localised_title_deer_poi_ga_armory_buff	Armory Equipment	true
+effect_bundles_localised_title_deer_poi_ga_granary_buff	Granary Supply Lines	true
+incidents_localised_description_deer_poi_ga_incident_armory	Our forces have routed the armory's defenders and taken over this bastion of weaponry, ensuring our arms and armor are beyond reproach!	true
+incidents_localised_description_deer_poi_ga_incident_granary	Our forces have routed the granary's defenders and seized this storehouse of grain, ensuring the unimpeded flow of provisions!	true
+incidents_localised_title_deer_poi_ga_incident_armory	Armory Seized	true
+incidents_localised_title_deer_poi_ga_incident_granary	Granary Seized	true

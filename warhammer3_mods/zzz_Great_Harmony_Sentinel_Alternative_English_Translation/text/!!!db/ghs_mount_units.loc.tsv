@@ -2,12 +2,6 @@ key	text	tooltip
 #Loc;1;text/!!!db/ghs_mount_units.loc		
 land_units_onscreen_name_ghs_lzd_mon_giant_ripperdactyl_old_blood	Saurus Oldblood	false
 land_units_onscreen_name_ghs_lzd_mon_giant_ripperdactyl_scar_veteran	Saurus Scar-Veteran	false
-land_units_onscreen_name_slann_light	Slann Mage-Priest (Lore of Light)	true
-land_units_onscreen_name_slann_life	Slann Mage-Priest (Lore of Life)	true
-land_units_onscreen_name_slann_high	Slann Mage-Priest (High Magic)	true
-land_units_onscreen_name_slann_heaven	Slann Mage-Priest (Lore of Heavens)	true
-land_units_onscreen_name_slann_fire	Slann Mage-Priest (Lore of Fire)	true
-land_units_onscreen_name_slann_campagin	Slann Mage-Priest	true
 units_custom_battle_mounts_localised_description_wh_main_dwf_cha_master_engineer_0ghs_dwf_missile_mecha	The prototypes of these war machines can be traced back to the exploration boom of the Golden Age, but as swarms of engineers and miners were overwhelmed by the Greenskin tide, they too were buried deep beneath the rubble—until recent excavations brought them back into the light. Now, the survivors of that ancient calamity have mounted these refurbished, mass-produced machines, ready to settle the score with the greenskins and ratkin scum alike.	true
 units_custom_battle_mounts_mount_name_wh_main_dwf_cha_master_engineer_0ghs_dwf_missile_mecha	Vengeance Reckoner Mech (Multi-Barrel Rune Gun)	true
 units_custom_battle_mounts_mount_name_wh2_dlc09_tmb_cha_liche_priest_death_0ghs_main_tmb_cha_eagle_mage1	Withered Vulture	false
@@ -21,3 +15,21 @@ units_custom_battle_mounts_mount_name_ghs_main_cha_cth_zhaowangghs_main_cha_cth_
 units_custom_battle_mounts_mount_name_ghs_main_cth_cha_xiaoxiaoghs_main_cth_cha_xiaoxiao_1	Crimson Charcoal Fire Steed	false
 units_custom_battle_mounts_localised_description_ghs_cth_cha_wangqueghs_cth_cha_wangque_bird	[Mirror Bloom] and [Shadowdance] are inseparable companions of the Great Moon Luan. Legend holds they are a part of the Moon Empress's power; upon hearing the cry of these two birds, the Black Jade Crow Warden can commune with the Wind of Yin and transform into the divine bird Yue Zhuo.	true
 units_custom_battle_mounts_mount_name_ghs_cth_cha_wangqueghs_cth_cha_wangque_bird	[Mirror Bloom]	true
+units_custom_battle_mounts_localised_description_wh2_dlc13_lzd_cha_slann_mage_priest_beasts_0ghs_main_lzd_cha_slann_beast	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_dlc13_lzd_cha_slann_mage_priest_death_0ghs_main_lzd_cha_slann_death	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_dlc13_lzd_cha_slann_mage_priest_fire_0ghs_main_lzd_cha_slann_fire	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_dlc13_lzd_cha_slann_mage_priest_life_0ghs_main_lzd_cha_slann_life	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_dlc13_lzd_cha_slann_mage_priest_metal_0ghs_main_lzd_cha_slann_metal	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_dlc13_lzd_cha_slann_mage_priest_shadows_0ghs_main_lzd_cha_slann_shadow	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_main_lzd_cha_slann_mage_priest_heavens_0ghs_main_lzd_cha_slann_heaven	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_main_lzd_cha_slann_mage_priest_high_0ghs_main_lzd_cha_slann_high	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_localised_description_wh2_main_lzd_cha_slann_mage_priest_light_0ghs_main_lzd_cha_slann_light	The fiercest and largest of their kind, only the most ancient among them possess the bearing to operate the Engine of the Gods.	true
+units_custom_battle_mounts_mount_name_wh2_dlc13_lzd_cha_slann_mage_priest_beasts_0ghs_main_lzd_cha_slann_beast	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_dlc13_lzd_cha_slann_mage_priest_death_0ghs_main_lzd_cha_slann_death	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_dlc13_lzd_cha_slann_mage_priest_fire_0ghs_main_lzd_cha_slann_fire	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_dlc13_lzd_cha_slann_mage_priest_life_0ghs_main_lzd_cha_slann_life	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_dlc13_lzd_cha_slann_mage_priest_metal_0ghs_main_lzd_cha_slann_metal	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_dlc13_lzd_cha_slann_mage_priest_shadows_0ghs_main_lzd_cha_slann_shadow	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_main_lzd_cha_slann_mage_priest_heavens_0ghs_main_lzd_cha_slann_heaven	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_main_lzd_cha_slann_mage_priest_high_0ghs_main_lzd_cha_slann_high	Ancient Stegadon (Engine of the Gods)	true
+units_custom_battle_mounts_mount_name_wh2_main_lzd_cha_slann_mage_priest_light_0ghs_main_lzd_cha_slann_light	Ancient Stegadon (Engine of the Gods)	true
