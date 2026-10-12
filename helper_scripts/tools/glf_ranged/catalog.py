@@ -13,12 +13,13 @@ import json
 import logging
 import os
 import re
+import shutil
 import time
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 from core.extract_cache import cached_pack_extract
-from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR, clear_temp_root, load_tsv_data, log_elapsed_time, setup_script_logging
+from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES, TEMP_DIR, clear_temp_root, load_tsv_data, log_elapsed_time, run_rpfm_cli, setup_script_logging
 from tools.glf_rebuild_animpack import GLF_ANIMPACK_PATH, GLF_MOD_DIR, SCHEMAS_DIR, SLOT_IDS_FILE, AnimSet, load_slot_ids, load_vanilla_sets, parse_set, read_animpack
 from ttc.ttc_data import LOC_NAME_PREFIX, LOC_REFERENCE_PATTERN, VANILLA_LOC_PACK, read_loc_names, unit_faction
 
@@ -28,6 +29,13 @@ REPORT_PATH = "./_diag/glf_ranged_report.txt"
 SCRATCH = f"{TEMP_DIR}/glf_ranged"
 # Loc key prefix of agent subtype names, which some unit names refer to.
 SUBTYPE_NAME_PREFIX = "agent_subtypes_onscreen_name_override_"
+# The pack holding unit card images and the portrait settings that name them.
+VANILLA_UI_PACK = os.path.join(os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES), "ui.pack")
+PORTRAIT_SETTINGS = "ui/portraits/portholes/portrait_settings__.bin"
+# Where unit card images are kept between runs, the `ui.pack` folder they come from, and the file recording which `ui.pack` they came from.
+CARDS_DIR = "./_diag/glf_ranged_cards"
+CARDS_FOLDER = "ui/portraits/units"
+CARDS_STAMP = ".ui_pack_stamp"
 # The game and DLC prefix of a unit key, e.g. `wh2_dlc15_`.
 GAME_PREFIX = re.compile(r"^wh\d*_(main|dlc\d+|pro\d+|cp\d+|twa\d+|survival)_")
 # A trailing variant number on a unit key, e.g. `_1` in `wh_dlc07_brt_cha_damsel_beasts_1`.
@@ -35,6 +43,8 @@ VARIANT_NUMBER = re.compile(r"_\d+$")
 # The race and `mnt_` part of a mount key, and trailing parts that do not name the mount, e.g. `brt_mnt_` and `_deprecated`.
 MOUNT_PREFIX = re.compile(r"^[a-z]{2,4}_mnt_")
 MOUNT_SUFFIX = re.compile(r"(_(deprecated|360|\d+))+$")
+# Trailing variant parts of a unit key that copies share with the original, e.g. `_1`, `_qb`, `_boss` or `_MP`.
+VARIANT_SUFFIX = re.compile(r"(_(\d+|qb|boss|mp|summoned))+$", re.IGNORECASE)
 VANILLA_TABLES = [
     "main_units_tables",
     "land_units_tables",
@@ -45,6 +55,7 @@ VANILLA_TABLES = [
     "units_to_groupings_military_permissions_tables",
     "land_units_to_battle_personalities_junctions_tables",
     "battle_personalities_tables",
+    "campaign_character_art_sets_tables",
 ]
 GLF_LAND_UNITS = f"{GLF_MOD_DIR}/db/land_units_tables/!!!1a_glf_battle_mage_dante.tsv"
 GLF_MISSILES = f"{GLF_MOD_DIR}/db/missile_weapons_tables/glf_battle_mage.tsv"
@@ -117,6 +128,8 @@ class UnitRow:
     fwm_slots: bool
     # Other lord and hero units that use the same animation set.
     set_shared_with: List[str] = field(default_factory=list)
+    # Path of the unit card image inside `CARDS_DIR`, or empty when none was found or cards were not loaded.
+    card: str = ""
 
 
 @dataclass
@@ -211,6 +224,88 @@ def load_names() -> Dict[str, str]:
     # Some unit names point at agent subtype names, so those are loaded too.
     read_loc_names(dest, names, (LOC_NAME_PREFIX, SUBTYPE_NAME_PREFIX))
     return names
+
+
+def ensure_cards() -> Dict[str, str]:
+    """Extract the unit card images unless `CARDS_DIR` already matches the installed `ui.pack`, then index them.
+
+    Returns:
+        Lowercase file name, e.g. `hef_teclis_0.png`, to its path inside `CARDS_DIR`. The first path in sorted order wins.
+    """
+    info = os.stat(VANILLA_UI_PACK)
+    stamp = f"{info.st_size}:{int(info.st_mtime)}"
+    stamp_path = os.path.join(CARDS_DIR, CARDS_STAMP)
+    current = ""
+    if os.path.exists(stamp_path):
+        with open(stamp_path, encoding="utf-8") as f:
+            current = f.read()
+    if current != stamp:
+        shutil.rmtree(CARDS_DIR, ignore_errors=True)
+        os.makedirs(CARDS_DIR)
+        logging.info("Extracting unit card images from ui.pack...")
+        run_rpfm_cli(["pack", "extract", "--pack-path", VANILLA_UI_PACK, "-F", f"{CARDS_FOLDER};{CARDS_DIR}"], capture_output=True)
+        with open(stamp_path, "w", encoding="utf-8") as f:
+            f.write(stamp)
+    files: Dict[str, str] = {}
+    for path in sorted(glob.glob(f"{CARDS_DIR}/**/*.png", recursive=True)):
+        files.setdefault(os.path.basename(path).lower(), os.path.relpath(path, CARDS_DIR).replace("\\", "/"))
+    return files
+
+
+def load_portraits() -> Dict[str, str]:
+    """Read the vanilla portrait settings and note each art set's first portrait file name.
+
+    Returns:
+        Art set id to the lowercase file name of its portrait, e.g. `hef_teclis_0.png`. Unit cards share these names.
+    """
+    folder = f"{SCRATCH}/portraits"
+    cached_pack_extract(VANILLA_UI_PACK, PORTRAIT_SETTINGS, folder, source_kind="file", tables_as_tsv=False, capture_output=True)
+    json_path = f"{folder}/portrait_settings.json"
+    run_rpfm_cli(["portrait-settings", "to-json", "-b", f"{folder}/{PORTRAIT_SETTINGS}", "-j", json_path], capture_output=True)
+    if not os.path.exists(json_path):
+        logging.warning("Portrait settings could not be read. Unit cards will be missing.")
+        return {}
+    with open(json_path, encoding="utf-8") as f:
+        entries = json.load(f)["entries"]
+    names = {}
+    for entry in entries:
+        diffuse = next((variant["file_diffuse"] for variant in entry["variants"] if variant["file_diffuse"]), "")
+        if diffuse:
+            names[entry["id"]] = os.path.basename(diffuse.replace("\\", "/")).lower()
+    return names
+
+
+def unit_cards(keys: Iterable[str], base_of: Dict[str, str], subtypes_of: Dict[str, List[str]], art_sets_of: Dict[str, List[str]], portraits: Dict[str, str], card_files: Dict[str, str]) -> Dict[str, str]:
+    """Find each unit's card image through its agent subtype and art set, accepting only images the game ships.
+
+    A unit with no card of its own borrows its base unit's card, then the card of a unit with the same key apart from trailing variant parts, then a
+    card whose file name matches the key without its game prefix and `cha_`, e.g. `brt_alberic_bordeleaux` for `wh_dlc07_brt_cha_alberic_bordeleaux_0`.
+
+    Args:
+        keys (Iterable[str]): Land unit keys.
+        base_of (Dict[str, str]): Mount variant to its base unit.
+        subtypes_of (Dict[str, List[str]]): Land unit to the agent subtypes that use it.
+        art_sets_of (Dict[str, List[str]]): Agent subtype to its art set ids.
+        portraits (Dict[str, str]): Art set id to portrait file name, from `load_portraits`.
+        card_files (Dict[str, str]): Card file name to its path, from `ensure_cards`.
+
+    Returns:
+        Land unit key to card path inside `CARDS_DIR`, or empty when none was found.
+    """
+    keys = list(keys)
+    own = {key: next((card_files[portraits[art]] for subtype in subtypes_of.get(key, []) for art in art_sets_of.get(subtype, []) if portraits.get(art) in card_files), "") for key in keys}
+    by_stem: Dict[str, str] = {}
+    for key in keys:
+        if own[key]:
+            by_stem.setdefault(VARIANT_SUFFIX.sub("", key), own[key])
+    by_file = {}
+    for name, path in sorted(card_files.items()):
+        by_file.setdefault(VARIANT_SUFFIX.sub("", os.path.splitext(name)[0]), path)
+
+    def by_name(key: str) -> str:
+        return by_file.get(VARIANT_SUFFIX.sub("", GAME_PREFIX.sub("", key).replace("_cha_", "_")).lower(), "")
+
+    return {key: own[key] or own.get(base_of.get(key, ""), "") or by_stem.get(VARIANT_SUFFIX.sub("", key), "") or by_name(key) for key in keys}
 
 
 def load_sets() -> Dict[str, SetEntry]:
@@ -366,7 +461,7 @@ def unit_kind(anim_set: AnimSet, names: Dict[int, str]) -> str:
     return "flyer" if "FLY_STAND" in slot_names else "foot"
 
 
-def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEntry], loc: Dict[str, str], glf_rows: List[Dict[str, str]], missiles: List[str], names: Dict[int, str]) -> Catalog:
+def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEntry], loc: Dict[str, str], glf_rows: List[Dict[str, str]], missiles: List[str], names: Dict[int, str], portraits: Dict[str, str], card_files: Dict[str, str]) -> Catalog:
     """Build one row per vanilla lord and hero land unit.
 
     Args:
@@ -376,6 +471,8 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
         glf_rows (List[Dict[str, str]]): GLF's land_units rows.
         missiles (List[str]): Every GLF missile key.
         names (Dict[int, str]): Slot name by id.
+        portraits (Dict[str, str]): Art set id to portrait file name, from `load_portraits`.
+        card_files (Dict[str, str]): Card file name to its path, from `ensure_cards`.
 
     Returns:
         The catalog.
@@ -468,6 +565,15 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
                 set_shared_with=sorted(other for other in users[land_row["man_animation"]] if other != key),
             )
         )
+    subtypes_of: Dict[str, List[str]] = collections.defaultdict(list)
+    for row in tables["agent_subtypes_tables"]:
+        subtypes_of[row["associated_unit_override"]].append(row["key"])
+    art_sets_of: Dict[str, List[str]] = collections.defaultdict(list)
+    for row in tables["campaign_character_art_sets_tables"]:
+        art_sets_of[row["agent_subtype"]].append(row["art_set_id"])
+    cards = unit_cards(caste_of, base_of, subtypes_of, art_sets_of, portraits, card_files)
+    for row in rows:
+        row.card = cards[row.key]
     # Within a faction: lords then heroes, each by the base unit's in-game name so versions of one character (e.g. every Damsel) sit together. A
     # base unit's mounts follow it in key order.
     by_key = {row.key: row for row in rows}
@@ -475,8 +581,11 @@ def build_catalog(tables: Dict[str, List[Dict[str, str]]], sets: Dict[str, SetEn
     return Catalog(rows, missiles)
 
 
-def load_inputs() -> Inputs:
+def load_inputs(cards: bool = False) -> Inputs:
     """Load every input and build the catalog.
+
+    Args:
+        cards (bool): Also find each unit's card image, extracting the images from `ui.pack` when needed. Only the picker shows them.
 
     Returns:
         The inputs and the catalog.
@@ -486,16 +595,20 @@ def load_inputs() -> Inputs:
     glf_rows = load_tsv_data(GLF_LAND_UNITS)[0]
     missiles = [row["key"] for row in load_tsv_data(GLF_MISSILES)[0]]
     tables, sets = load_vanilla_tables(), load_sets()
-    return Inputs(tables, sets, names, build_catalog(tables, sets, load_names(), glf_rows, missiles, names))
+    portraits, card_files = (load_portraits(), ensure_cards()) if cards else ({}, {})
+    return Inputs(tables, sets, names, build_catalog(tables, sets, load_names(), glf_rows, missiles, names, portraits, card_files))
 
 
-def load_catalog() -> Catalog:
+def load_catalog(cards: bool = False) -> Catalog:
     """Load every input and build the catalog.
+
+    Args:
+        cards (bool): Also find each unit's card image.
 
     Returns:
         The catalog.
     """
-    return load_inputs().catalog
+    return load_inputs(cards).catalog
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////

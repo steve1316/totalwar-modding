@@ -3,7 +3,8 @@
 Usage:
     cd helper_scripts && python -m tools.glf_ranged [--port 8766] [--no-browser]
 
-The catalog is built once at start. Saving writes `tools/glf_ranged/selection.json`.
+The catalog is built once at start. Saving writes `tools/glf_ranged/selection.json`. Unit card images are extracted from `ui.pack` into
+`_diag/glf_ranged_cards/` on the first start, and again whenever the game updates `ui.pack`.
 """
 
 import argparse
@@ -21,6 +22,8 @@ from tools.glf_ranged import catalog
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 # Filled once at start so page loads do not rebuild the catalog.
 STATE: Dict = {}
+# Land unit key to its extracted card image path, filled at start.
+CARDS: Dict[str, str] = {}
 
 
 def save_selection(body: Dict) -> Dict:
@@ -51,21 +54,34 @@ def save_selection(body: Dict) -> Dict:
     return {"saved": len(selection["units"]), "ignored": len(selection["ignore"])}
 
 
+def load_state() -> None:
+    """Build the catalog and fill `STATE` and `CARDS` for the page."""
+    try:
+        built = catalog.load_catalog(cards=True)
+    finally:
+        clear_temp_root()
+    STATE.update(units=[asdict(row) for row in built.units], missiles=built.missiles, selection=catalog.load_selection())
+    CARDS.clear()
+    CARDS.update({row.key: os.path.join(catalog.CARDS_DIR, row.card) for row in built.units if row.card})
+    logging.info(f"Catalog ready with {len(built.units)} units, {len(CARDS)} with card art.")
+
+
 class Handler(BaseHTTPRequestHandler):
     """Serves the page and the catalog, and saves selections."""
 
-    def _send(self, code: int, body: bytes, content_type: str):
+    def _send(self, code: int, body: bytes, content_type: str, cache: str = "no-store"):
         """Sends a complete response.
 
         Args:
             code (int): HTTP status code.
             body (bytes): Response body.
             content_type (str): Content-Type header value.
+            cache (str): Cache-Control header value. Card images are cached for a day; everything else is always fresh.
         """
         self.send_response(code)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Cache-Control", cache)
         self.end_headers()
         self.wfile.write(body)
 
@@ -85,6 +101,13 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(200, f.read(), "text/html; charset=utf-8")
         elif self.path == "/api/state":
             self._json(200, STATE)
+        elif self.path.startswith("/card/") and self.path.endswith(".png"):
+            path = CARDS.get(self.path[len("/card/") : -len(".png")])
+            if path is None:
+                self._json(404, {"error": "no card"})
+                return
+            with open(path, "rb") as f:
+                self._send(200, f.read(), "image/png", cache="max-age=86400")
         else:
             self._json(404, {"error": "not found"})
 
@@ -111,12 +134,7 @@ def main():
     args = parser.parse_args()
 
     setup_script_logging()
-    try:
-        built = catalog.load_catalog()
-    finally:
-        clear_temp_root()
-    STATE.update(units=[asdict(row) for row in built.units], missiles=built.missiles, selection=catalog.load_selection())
-    logging.info(f"Catalog ready with {len(built.units)} units.")
+    load_state()
 
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     url = f"http://127.0.0.1:{args.port}/"

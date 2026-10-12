@@ -32,13 +32,21 @@
   tr.base td { font-weight:600; border-top:2px solid var(--line); }
   tr.variant td:first-child { padding-left:24px; font-weight:400; }
   tr.ignored td { opacity:.45; }
-  td.key { color:var(--muted); font-size:11px; font-weight:400; }
+  td.key { color:var(--muted); font-size:11px; font-weight:400; max-width:220px; overflow:hidden; text-overflow:ellipsis; }
   .badge { display:inline-block; font-size:10px; padding:1px 7px; border-radius:9px; margin-right:3px; color:#fff; font-weight:600; }
   .ok { background:var(--ok); } .warn { background:var(--warn); } .bad { background:var(--bad); } .mute { background:var(--mute); } .add { background:var(--add); }
   select { max-width:240px; font-size:12px; background:transparent; color:var(--fg); border:1px solid var(--line); border-radius:4px; }
   select option { background:var(--bg); }
   .guess { font-size:11px; color:var(--muted); font-weight:400; }
+  .reason { display:inline-block; max-width:170px; overflow:hidden; text-overflow:ellipsis; vertical-align:middle; }
   .empty { color:var(--muted); padding:20px; }
+  /* Unit cards are 60x130 in game. They show at half size and grow to full size on hover. */
+  .card { display:block; width:30px; height:65px; border-radius:3px; object-fit:cover; transition:transform .12s; transform-origin:left center; }
+  .card:hover { transform:scale(2); position:relative; z-index:3; box-shadow:0 4px 14px rgba(0,0,0,.45); }
+  .card.none { display:flex; align-items:center; justify-content:center; background:var(--side); color:var(--muted); font-size:10px; font-weight:600; border:1px dashed var(--line); }
+  td.cardcell { padding:2px 6px; width:30px; }
+  td.unit { white-space:normal; min-width:180px; max-width:320px; }
+  td.status { white-space:normal; max-width:190px; }
 </style>
 </head>
 <body>
@@ -55,7 +63,7 @@
 </header>
 <div class="wrap">
   <nav id="factions"></nav>
-  <main><table><thead><tr><th>Unit</th><th>Kind</th><th>Status</th><th>Missile</th><th>Ranged</th><th>FWM</th><th>Ignore</th><th>Key</th></tr></thead><tbody id="rows"></tbody></table></main>
+  <main><table><thead><tr><th>Card</th><th>Unit</th><th>Kind</th><th>Status</th><th>Missile</th><th>Ranged</th><th>FWM</th><th>Ignore</th><th>Key</th></tr></thead><tbody id="rows"></tbody></table></main>
 </div>
 <script>
 const S = { units: [], byKey: {}, groups: {}, byFaction: {}, missileOptions: '', sel: {}, ignore: new Set(), baseMissile: {}, initial: '', initialSel: null, faction: '' };
@@ -129,7 +137,21 @@ function missileCell(row) {
   const chosen = S.baseMissile[row.key] || '';
   const auto = row.guess ? `auto: ${missileLabel(row.guess)}` : 'pick a missile';
   // The shared options are built once at load. `render` sets each select's value afterwards.
-  return `<select data-missile="${row.key}" title="${chosen || row.guess}"><option value="">${auto}</option>${S.missileOptions}</select> <span class="guess">${row.guess_source}</span>`;
+  return `<select data-missile="${row.key}" title="${chosen || row.guess}"><option value="">${auto}</option>${S.missileOptions}</select> <span class="guess reason" title="${row.guess_source}">${row.guess_source}</span>`;
+}
+
+// A placeholder with the unit's initials, for units the game has no card art for.
+function placeholderHtml(row) {
+  const initials = row.name.split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+  return `<div class="card none" title="${row.name} (${row.key}) - no card art">${initials}</div>`;
+}
+
+// The unit card image, falling back to the placeholder when there is none or it fails to load. Mount variants share the base unit's art, so
+// only the base row shows it.
+function cardHtml(row) {
+  if (row.key !== row.base) return '';
+  if (!row.card) return placeholderHtml(row);
+  return `<img class="card" loading="lazy" src="/card/${row.key}.png" alt="" title="${row.name} (${row.key})" data-key="${row.key}" onerror="this.outerHTML = placeholderHtml(S.byKey[this.dataset.key])">`;
 }
 
 function rowHtml(row) {
@@ -138,10 +160,10 @@ function rowHtml(row) {
   const label = isBase ? `${row.name} <span class="guess">${row.caste}${variants ? ` +${variants} mount${variants > 1 ? 's' : ''}` : ''}</span>` : (row.mount ? mountLabel(row.mount) : row.name);
   const ignored = S.ignore.has(row.key);
   return `<tr class="${isBase ? 'base' : 'variant'}${ignored ? ' ignored' : ''}">
-    <td>${label}</td><td>${row.kind || '-'}</td><td>${badges(row)}</td><td>${missileCell(row)}</td>
+    <td class="cardcell">${cardHtml(row)}</td><td class="unit">${label}</td><td>${row.kind || '-'}</td><td class="status">${badges(row)}</td><td>${missileCell(row)}</td>
     ${['ranged', 'fwm'].map(flag => `<td><input type="checkbox" data-flag="${flag}" data-key="${row.key}" ${isTicked(row.key, flag) ? 'checked' : ''} ${ignored ? 'disabled' : ''}></td>`).join('')}
     <td><input type="checkbox" data-ignore="${row.key}" ${ignored ? 'checked' : ''}></td>
-    <td class="key">${row.key}</td></tr>`;
+    <td class="key" title="${row.key}">${row.key}</td></tr>`;
 }
 
 function missingCount(rows) {
@@ -180,7 +202,7 @@ function render() {
     ? S.groups[b].some(r => r.name.toLowerCase().includes(query) || r.key.includes(query))
     : S.byKey[b].faction === S.faction);
   const html = bases.map(b => groupVisible(S.groups[b]).map(rowHtml).join('')).join('');
-  document.getElementById('rows').innerHTML = html || '<tr><td colspan="8" class="empty">Nothing to show with these filters.</td></tr>';
+  document.getElementById('rows').innerHTML = html || '<tr><td colspan="9" class="empty">Nothing to show with these filters.</td></tr>';
   document.querySelectorAll('select[data-missile]').forEach(select => (select.value = S.baseMissile[select.dataset.missile] || ''));
   renderFactions();
   const dirty = snapshot() !== S.initial;
