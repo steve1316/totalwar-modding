@@ -1739,7 +1739,7 @@ SUPPORTED_MODS = [
         "package_name": "cth_yinyin_pol.pack",
         "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/2989226363/cth_yinyin_pol.pack",
         "modified_attributes": ["melee", "ranged_arc", "velocity"],
-        "pattern_overrides": {},
+        "pattern_overrides": {"npn": "cth"},
     },
     {
         "name": "Dead's Jade Army Expansion",
@@ -1870,6 +1870,7 @@ SUPPORTED_MODS = [
             "phoenix_": "hef",
             "dark_": "def",
             "death_": "def",
+            "dread_": "def",
         },
     },
     {
@@ -2537,6 +2538,7 @@ SUPPORTED_MODS = [
             "*_nur_*": "nur",
             "*_sla_*": "sla",
             "*_chos_*": "chs",
+            "*_chaos_*": "chs",
         },
     },
     {
@@ -2732,6 +2734,8 @@ SUPPORTED_MODS = [
             "*_vc_*": "vmp",
             "*_we_*": "wef",
             "*_zpotvc_*": "cst",
+            "great_falcons": "brt",
+            "singe_sk_": "skv",
         },
     },
     {
@@ -2809,6 +2813,11 @@ SUPPORTED_MODS = [
             "*_skv_*": "skv",
             "*_grn_*": "grn",
             "*_chs_*": "chs",
+            "1wyrm": "nor",
+            "1dae": "chs",
+            "12dae": "chs",
+            "3manticore": "chs",
+            "4dragon": "chs",
         },
     },
 ]

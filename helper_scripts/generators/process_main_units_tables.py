@@ -88,6 +88,27 @@ def is_in_main_roster(unit_key: str, faction: str, renown: bool, recruit_groups:
     return (renown and "_boss" not in unit_key) or main_group in recruit_groups.get(unit_key, set())
 
 
+def match_faction(land_unit: str, faction_keys: List[Dict[str, str]], substring_match: bool) -> Optional[str]:
+    """Find the culture of a land unit from the faction key patterns.
+
+    By default a key must appear as a whole `_`-separated token, so `hef` matches both `wh2_main_hef_inf_spearmen_0` and a mod's `hef_cha_prince`.
+
+    Args:
+        land_unit (str): The main_units `land_unit` key.
+        faction_keys (List[Dict[str, str]]): Pattern to culture key mappings, checked in order.
+        substring_match (bool): Match a pattern anywhere in the key instead of as a whole token.
+
+    Returns:
+        The culture key of the first matching pattern, or None if nothing matched.
+    """
+    padded = f"_{land_unit}_"
+    for faction in faction_keys:
+        for key, value in faction.items():
+            if (key in land_unit) if substring_match else (f"_{key}_" in padded):
+                return value
+    return None
+
+
 def build_recruit_groups(permission_table: pd.DataFrame) -> Dict[str, Set[str]]:
     """Turn vanilla's `units_to_groupings_military_permissions_tables` into a unit lookup.
 
@@ -153,7 +174,7 @@ def extract_mod_dataframes(mod: Dict) -> Optional[Dict[str, pd.DataFrame]]:
     scratch_root = f"{TEMP_DIR}/{folder_name}"
     os.makedirs(scratch_root, exist_ok=True)
 
-    logging.info(f"Extracting mod data from {mod['package_name']}...")
+    logging.debug(f"Extracting mod data from {mod['package_name']}...")
     for folder in MOD_FOLDERS_TO_EXTRACT:
         cached_pack_extract(mod["path"], folder, f"{scratch_root}/")
 
@@ -339,6 +360,7 @@ def tsv_to_faction_data(
     do_not_use_underscore_pattern: bool = False,
     recruit_groups: Optional[Dict[str, Set[str]]] = None,
     dropped_units: Optional[Dict[str, List[str]]] = None,
+    unmatched_units: Optional[List[str]] = None,
 ):
     """Transform TSV data into structured faction data dictionary.
 
@@ -358,6 +380,7 @@ def tsv_to_faction_data(
         recruit_groups (Optional[Dict[str, Set[str]]]): Unit key to the military groups that can recruit it. When given, regular vanilla units
             outside their culture's main roster are left out. See `is_in_main_roster`. Mod units are never filtered.
         dropped_units (Optional[Dict[str, List[str]]]): Culture key to the units left out by the main roster filter, filled in for the summary log.
+        unmatched_units (Optional[List[str]]): Filled in with the land units no faction key matched, for the caller to report.
 
     Returns:
         Updated factions data with new units and skills.
@@ -376,20 +399,13 @@ def tsv_to_faction_data(
                     faction_values = [faction.strip() for faction in default_faction.split(",")]
                 else:
                     faction_values = [default_faction]
-            elif do_not_use_underscore_pattern:
-                faction_key, faction_value = next(
-                    ((key, faction[key]) for faction in faction_keys for key in faction if f"{key}" in row["land_unit"]), (None, None)
-                )
-                faction_values = [faction_value] if faction_value else []
             else:
-                faction_key, faction_value = next(
-                    ((key, faction[key]) for faction in faction_keys for key in faction if f"_{key}_" in row["land_unit"]),
-                    (None, None),
-                )
+                faction_value = match_faction(row["land_unit"], faction_keys, do_not_use_underscore_pattern)
                 faction_values = [faction_value] if faction_value else []
 
-            if not faction_values or all(faction_value is None for faction_value in faction_values):
-                logging.warning(f"No valid faction key found for land unit '{row['land_unit']}'")
+            if not faction_values:
+                if unmatched_units is not None:
+                    unmatched_units.append(row["land_unit"])
                 continue
 
             # Process the unit for each faction
@@ -402,7 +418,7 @@ def tsv_to_faction_data(
                     logging.warning(f"Faction key '{faction_value}' not recognized for land unit '{row['land_unit']}'")
                     continue
 
-                logging.info(f"Processing {row['land_unit']} for faction {faction_value}...")
+                logging.debug(f"Processing {row['land_unit']} for faction {faction_value}...")
 
                 # Initialize the faction and tier if they don't exist.
                 if faction_value not in factions_data:
@@ -494,7 +510,9 @@ if __name__ == "__main__":
     setup_script_logging()
     start_time = time.time()
 
-    args = make_common_argparser(include_reset=False).parse_args()
+    parser = make_common_argparser(include_reset=False)
+    parser.add_argument("--print-package-names", action="store_true", help="Print the supported package names for the LEAPOI MCT settings list.")
+    args = parser.parse_args()
 
     ensure_temp_dir()
 
@@ -547,9 +565,10 @@ if __name__ == "__main__":
             list_of_supported_package_names: List[str] = []
             mods_to_extract: List[Tuple[int, Dict]] = []
             process_order: List[Tuple[int, Dict]] = []
+            ignored_mods: List[str] = []
             for idx, mod in enumerate(SUPPORTED_MODS):
                 if "ignore_generation" in mod and mod["ignore_generation"]:
-                    logging.info(f"Skipping {mod['package_name']} because it is marked to be ignored.")
+                    ignored_mods.append(mod["package_name"])
                     continue
                 list_of_supported_package_names.append(mod["package_name"].replace(".pack", ""))
                 if mod["path"] and not os.path.exists(mod["path"]):
@@ -558,6 +577,8 @@ if __name__ == "__main__":
                 process_order.append((idx, mod))
                 if mod["package_name"] != "vanilla":
                     mods_to_extract.append((idx, mod))
+
+            logging.info(f"Skipping {len(ignored_mods)} mod(s) marked ignore_generation: {', '.join(ignored_mods)}")
 
             # Parallel extraction: each worker writes only to its own `temp/<folder_name>/` scratch and returns loaded dataframes. The vanilla mod is not extracted; the serial pass uses the pre-loaded vanilla dataframes.
             logging.info(f"Extracting {len(mods_to_extract)} mods with {args.workers} worker thread(s).")
@@ -574,6 +595,7 @@ if __name__ == "__main__":
 
             recruit_groups = build_recruit_groups(df_recruit_permissions_vanilla)
             dropped_units: Dict[str, List[str]] = {}
+            unmatched_units: Dict[str, List[str]] = {}
 
             # Serial merge pass in original SUPPORTED_MODS order so `factions_data`, `faction_keys`, and the in-tier list ordering stay deterministic (the lists in `factions_data[faction]["units"][tier][category]` are append-only and order-sensitive).
             for idx, mod in process_order:
@@ -590,6 +612,7 @@ if __name__ == "__main__":
                         df_character_skill_nodes_vanilla,
                         recruit_groups=recruit_groups,
                         dropped_units=dropped_units,
+                        unmatched_units=unmatched_units.setdefault("vanilla", []),
                     )
                     continue
 
@@ -598,16 +621,16 @@ if __name__ == "__main__":
                     # Worker skipped (missing path was caught earlier, so this branch only fires if `extract_mod_dataframes` returned None for a mod whose path went missing between pre-filter and extraction).
                     continue
 
-                logging.info(f"Now processing {mod['package_name']}...")
+                logging.debug(f"Now processing {mod['package_name']}...")
 
                 default_faction = None
                 do_not_use_underscore_pattern = False
                 pattern_overrides = mod["pattern_overrides"]
                 if "*" in pattern_overrides:
                     default_faction = pattern_overrides["*"]
-                    logging.info(f"Pattern is the wildcard itself so we will use '{default_faction}' for all units in this mod.")
+                    logging.debug(f"Pattern is the wildcard itself so we will use '{default_faction}' for all units in this mod.")
                 elif any("*" in key for key in pattern_overrides):
-                    logging.info(f"Pattern is a wildcard pattern, so we will not use the underscore pattern.")
+                    logging.debug(f"Pattern is a wildcard pattern, so we will not use the underscore pattern.")
                     do_not_use_underscore_pattern = True
 
                 # If the mod has a factions_override field, add the contents to faction_keys. Mutation of the shared `faction_keys` list persists across mods, matching the pre-parallel behavior.
@@ -635,6 +658,7 @@ if __name__ == "__main__":
                     do_not_use_underscore_pattern=do_not_use_underscore_pattern,
                     recruit_groups=recruit_groups,
                     dropped_units=dropped_units,
+                    unmatched_units=unmatched_units.setdefault(mod["package_name"], []),
                 )
 
                 # Release this mod's dataframes now that they've been merged so the merge pass keeps a flat memory footprint.
@@ -646,6 +670,15 @@ if __name__ == "__main__":
                 logging.info(f"Main roster filter left {len(dropped_units[faction])} unit(s) out of {faction}: {', '.join(sorted(dropped_units[faction]))}")
             for faction in sorted(set(factions_data) - set(CULTURE_MILITARY_GROUPS)):
                 logging.warning(f"{faction} has no base recruitment group in CULTURE_MILITARY_GROUPS, so its vanilla units were not filtered.")
+
+            # Vanilla units of unsupported cultures (daemons, Border Princes, neutral characters) are expected to match nothing. A mod unit should always match.
+            for package_name, units in unmatched_units.items():
+                if not units:
+                    continue
+                if package_name == "vanilla":
+                    logging.info(f"Left out {len(units)} vanilla unit(s) that belong to no supported culture: {', '.join(units)}")
+                else:
+                    logging.warning(f"No faction key matched {len(units)} unit(s) in {package_name}. Add a `pattern_overrides` entry for them: {', '.join(units)}")
 
             # Write output files.
             # ------------------------------------------------------------------
@@ -693,8 +726,9 @@ if __name__ == "__main__":
         logging.info(f"Failed mods: {FAILED_MODS}")
 
     # Output the list of supported mod package names to be updated in mct_settings.lua.
-    print(f'\t"!cr_immortal_empires_expanded", -- Immortal Empires Expanded')
-    for package_name in list_of_supported_package_names:
-        print(f'\t"{package_name}",')
+    if args.print_package_names:
+        print(f'\t"!cr_immortal_empires_expanded", -- Immortal Empires Expanded')
+        for package_name in list_of_supported_package_names:
+            print(f'\t"{package_name}",')
 
     log_elapsed_time("processing all main_units_tables .tsv files", start_time)

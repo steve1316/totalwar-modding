@@ -72,3 +72,25 @@ def test_vanilla_units_outside_the_main_roster_are_dropped():
 
 def test_mod_units_follow_supported_mods_placement_unfiltered():
     assert _pool_units("some_mod.pack") == (["wh2_dlc16_wef_mon_harpies_0"], {})
+
+
+def test_faction_key_matches_at_the_start_and_end_of_a_unit_key():
+    keys = [{"hef": "hef"}, {"tze": "tze"}]
+    assert pmu.match_faction("wh2_main_hef_inf_spearmen_0", keys, False) == "hef"
+    assert pmu.match_faction("hef_cha_prince_caledor", keys, False) == "hef"
+    assert pmu.match_faction("marauder_hunters_tze", keys, False) == "tze"
+
+
+def test_faction_key_must_be_a_whole_token_unless_substring_matching():
+    keys = [{"def": "def"}]
+    assert pmu.match_faction("wh_main_emp_inf_defenders", keys, False) is None
+    assert pmu.match_faction("wh_main_emp_inf_defenders", keys, True) == "def"
+
+
+def test_unmatched_units_are_collected_instead_of_warned():
+    units = pd.DataFrame([{"unit": "teb_captain", "land_unit": "wh_main_teb_cha_captain_0", "tier": 1, "caste": "lord"}])
+    empty = pd.DataFrame()
+    unmatched = []
+    data = pmu.tsv_to_faction_data({"package_name": "vanilla"}, {}, [{"emp": "emp"}], units, empty, empty, empty, empty, unmatched_units=unmatched)
+    assert data == {}
+    assert unmatched == ["wh_main_teb_cha_captain_0"]

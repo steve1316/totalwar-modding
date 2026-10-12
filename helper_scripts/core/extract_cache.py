@@ -1,14 +1,19 @@
 """Content-addressed cache for `rpfm_cli pack extract` results.
 
 Every db table extraction is keyed by the SHA-256 of the source pack plus the rpfm toolchain (schema + exe) and the extract arguments. An unchanged pack is
-served from `extract_cache/` with a file copy instead of an rpfm subprocess. Non-table extractions such as `variantmeshes` are not stored because their model
+served from the cache with a file copy instead of an rpfm subprocess. Non-table extractions such as `variantmeshes` are not stored because their model
 files would take tens of GB for little time saved, but they are still hashed and recorded. Pack hashes are remembered in a manifest so a pack is only rehashed when its size or
 mtime changes.
 
 Set the `EXTRACT_CACHE=0` environment variable to bypass reading and writing cache entries. When `DELTA_ACCESS_LOG` is set, every extraction is appended to
 that file as a JSON line so `delta.py` can later tell which packs and tables a script actually depended on.
+
+The cache is shared by every git worktree of the repo, so a new worktree does not start cold. It lives in the main checkout's `helper_scripts/extract_cache/`
+unless the `EXTRACT_CACHE_ROOT` environment variable points somewhere else.
 """
 
+import atexit
+import contextlib
 import hashlib
 import json
 import logging
@@ -18,20 +23,32 @@ import subprocess
 import threading
 import time
 import uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Iterator, List, Optional
 
 
-CACHE_ROOT = "./extract_cache"
+LOCAL_CACHE_ROOT = "./extract_cache"
+# The main checkout's `.git` folder, which every worktree shares. Empty when the root is set by hand, git is unavailable or this is not a checkout.
+_GIT_COMMON_DIR = (
+    subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"], capture_output=True, text=True).stdout.strip()
+    if not os.environ.get("EXTRACT_CACHE_ROOT") and shutil.which("git")
+    else ""
+)
+CACHE_ROOT = os.environ.get("EXTRACT_CACHE_ROOT") or (f"{os.path.dirname(_GIT_COMMON_DIR)}/helper_scripts/extract_cache" if _GIT_COMMON_DIR else LOCAL_CACHE_ROOT)
 OBJECTS_ROOT = f"{CACHE_ROOT}/objects"
-STAGING_ROOT = f"{CACHE_ROOT}/staging"
+# Staging stays local and relative because rpfm cannot parse a drive-letter path after the `;` separator.
+STAGING_ROOT = f"{LOCAL_CACHE_ROOT}/staging"
 MANIFEST_PATH = f"{CACHE_ROOT}/pack_hashes.json"
 RPFM_CLI_PATH = "./rpfm_cli.exe"
 SCHEMA_RON_PATH = "./schemas/schema_wh3.ron"
+# `prune_cache` keeps anything used this recently, since another worktree with different packs or a different schema may still need it.
+PRUNE_GRACE_SECONDS = 7 * 24 * 3600
 
 _LOCK = threading.Lock()
 _MANIFEST: Optional[Dict[str, Dict[str, Any]]] = None
 _RUN_MEMO: Dict[str, str] = {}
 _TOOLCHAIN_HASH: Optional[str] = None
+# Cache hits, misses and rpfm time for the summary logged at exit. Every miss is one rpfm call.
+_STATS = {"hits": 0, "misses": 0, "rpfm_seconds": 0.0}
 
 
 def cache_enabled() -> bool:
@@ -182,8 +199,8 @@ def _entry_dir(pack_sha: str, source_kind: str, source: str, tables_as_tsv: bool
     return f"{OBJECTS_ROOT}/{pack_sha[:24]}/{arg_key[:24]}"
 
 
-def _run_extract(pack_path: str, source_kind: str, source: str, tables_as_tsv: bool, staging: str, capture_output: bool) -> int:
-    """Run one rpfm extraction into a staging directory.
+def _run_extract(pack_path: str, source_kind: str, source: str, tables_as_tsv: bool, staging: str) -> subprocess.CompletedProcess:
+    """Run one rpfm extraction into a staging directory. rpfm's output is captured so its startup banner stays out of the logs.
 
     Args:
         pack_path (str): Path to the `.pack` file.
@@ -191,16 +208,19 @@ def _run_extract(pack_path: str, source_kind: str, source: str, tables_as_tsv: b
         source (str): Pack-relative path being extracted.
         tables_as_tsv (bool): Whether tables are converted to TSV.
         staging (str): Relative destination directory. rpfm cannot parse drive-letter paths after the `;` separator.
-        capture_output (bool): Capture rpfm's stdout/stderr instead of inheriting them.
 
     Returns:
-        The rpfm exit code.
+        The finished rpfm process, with its output as text.
     """
     args = [RPFM_CLI_PATH, "--game", "warhammer_3", "pack", "extract", "--pack-path", pack_path]
     if tables_as_tsv:
         args += ["--tables-as-tsv", SCHEMA_RON_PATH]
     args += [f"--{source_kind}-path", f"{source};{staging}"]
-    return subprocess.run(args, capture_output=capture_output).returncode
+    start = time.time()
+    result = subprocess.run(args, capture_output=True, text=True, errors="replace")
+    with _LOCK:
+        _STATS["rpfm_seconds"] += time.time() - start
+    return result
 
 
 def _record_access(record: Dict[str, Any]) -> None:
@@ -265,11 +285,14 @@ def _move_tree(source: str, destination: str) -> None:
             return
         except PermissionError:
             time.sleep(0.2 * (attempt + 1))
+        except OSError:
+            # The shared cache can be on another drive than the local staging folder, which `os.replace` cannot cross.
+            break
     shutil.copytree(source, destination)
     shutil.rmtree(source, ignore_errors=True)
 
 
-def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", tables_as_tsv: bool = True, capture_output: bool = False) -> Optional[Dict[str, Any]]:
+def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", tables_as_tsv: bool = True) -> Optional[Dict[str, Any]]:
     """Make sure an extraction exists in the cache and return its metadata, running rpfm only on a cache miss.
 
     Args:
@@ -277,7 +300,6 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
         source (str): Pack-relative path being extracted, e.g. `db/land_units_tables`.
         source_kind (str): `folder` or `file`. Defaults to `folder`.
         tables_as_tsv (bool): Whether tables are converted to TSV. Defaults to True.
-        capture_output (bool): Capture rpfm's stdout/stderr. Defaults to False.
 
     Returns:
         A dict with `pack_sha`, `content_sha`, `produced` (whether rpfm created the destination) and `tree` (cached tree path, or None when the result
@@ -295,11 +317,22 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
         with open(meta_path, "r", encoding="utf-8") as f:
             meta = json.load(f)
         _warn_binary(pack_path, meta.get("binary_tables", []))
+        # Mark the entry as used so `prune_cache` in another worktree keeps it. Once a day is enough for a week-long grace period.
+        try:
+            if time.time() - os.path.getmtime(meta_path) > 24 * 3600:
+                os.utime(meta_path)
+        except OSError:
+            pass
+        with _LOCK:
+            _STATS["hits"] += 1
         return {"pack_sha": pack_sha, "content_sha": meta["content_sha"], "produced": meta["produced"], "tree": f"{entry}/tree"}
 
+    with _LOCK:
+        _STATS["misses"] += 1
     staging = f"{STAGING_ROOT}/{uuid.uuid4().hex}"
     os.makedirs(STAGING_ROOT, exist_ok=True)
-    return_code = _run_extract(pack_path, source_kind, source, tables_as_tsv, staging, capture_output)
+    process = _run_extract(pack_path, source_kind, source, tables_as_tsv, staging)
+    return_code = process.returncode
     produced = os.path.exists(staging)
     binary_tables = _binary_tables(staging, tables_as_tsv)
     _warn_binary(pack_path, binary_tables)
@@ -329,7 +362,7 @@ def ensure_extracted(pack_path: str, source: str, source_kind: str = "folder", t
         result["tree"] = tree
         result.pop("staging")
     elif return_code != 0:
-        logging.warning(f"rpfm exited with {return_code} extracting {source} from {os.path.basename(pack_path)}. The result was not cached.")
+        logging.warning(f"rpfm exited with {return_code} extracting {source} from {os.path.basename(pack_path)}. The result was not cached. rpfm said: {(process.stderr or process.stdout).strip()[-500:]}")
     return result
 
 
@@ -345,7 +378,7 @@ def extraction_content_sha(pack_path: str, source: str, source_kind: str = "fold
     Returns:
         The content hash, or None if the pack does not exist.
     """
-    result = ensure_extracted(pack_path, source, source_kind, tables_as_tsv, capture_output=True)
+    result = ensure_extracted(pack_path, source, source_kind, tables_as_tsv)
     if result is None:
         return None
     if result.get("staging"):
@@ -353,7 +386,49 @@ def extraction_content_sha(pack_path: str, source: str, source_kind: str = "fold
     return result["content_sha"]
 
 
-def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str = "folder", tables_as_tsv: bool = True, capture_output: bool = False) -> None:
+def _extract_and_record(pack_path: str, source: str, source_kind: str, tables_as_tsv: bool) -> Optional[Dict[str, Any]]:
+    """Run `ensure_extracted` and record the access for `delta.py`.
+
+    Args:
+        pack_path (str): Path to the `.pack` file.
+        source (str): Pack-relative path being extracted.
+        source_kind (str): `folder` or `file`.
+        tables_as_tsv (bool): Whether tables are converted to TSV.
+
+    Returns:
+        The `ensure_extracted` result, or None if the pack does not exist.
+    """
+    access = {"pack": normalize_path(pack_path) if pack_path else "", "source": source, "source_kind": source_kind, "tables_as_tsv": tables_as_tsv}
+    result = ensure_extracted(pack_path, source, source_kind, tables_as_tsv)
+    if result is None:
+        _record_access({**access, "missing": True})
+    else:
+        _record_access({**access, "pack_sha": result["pack_sha"], "content_sha": result["content_sha"]})
+    return result
+
+
+@contextlib.contextmanager
+def extracted_tree(pack_path: str, source: str, source_kind: str = "folder", tables_as_tsv: bool = True) -> Iterator[Optional[str]]:
+    """Serve an extraction for reading straight from the cache instead of copying it. The caller must not change the folder.
+
+    Args:
+        pack_path (str): Path to the `.pack` file.
+        source (str): Pack-relative path being extracted.
+        source_kind (str): `folder` or `file`. Defaults to `folder`.
+        tables_as_tsv (bool): Whether tables are converted to TSV. Defaults to True.
+
+    Yields:
+        A folder laid out like a `cached_pack_extract` destination, or None when the pack is missing or has nothing at `source`.
+    """
+    result = _extract_and_record(pack_path, source, source_kind, tables_as_tsv)
+    try:
+        yield (result["tree"] or result["staging"]) if result and result["produced"] else None
+    finally:
+        if result and result.get("staging"):
+            _rmtree(result["staging"])
+
+
+def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str = "folder", tables_as_tsv: bool = True) -> None:
     """Drop-in replacement for `rpfm_cli pack extract` that serves unchanged packs from the cache.
 
     The result in `dest` matches what rpfm would have produced: files are merged into `dest`, and `dest` is not created when the pack has nothing at `source`.
@@ -364,14 +439,10 @@ def cached_pack_extract(pack_path: str, source: str, dest: str, source_kind: str
         dest (str): Local destination directory.
         source_kind (str): `folder` or `file`. Defaults to `folder`.
         tables_as_tsv (bool): Whether tables are converted to TSV. Defaults to True.
-        capture_output (bool): Capture rpfm's stdout/stderr on a cache miss. Defaults to False.
     """
-    access = {"pack": normalize_path(pack_path) if pack_path else "", "source": source, "source_kind": source_kind, "tables_as_tsv": tables_as_tsv}
-    result = ensure_extracted(pack_path, source, source_kind, tables_as_tsv, capture_output)
+    result = _extract_and_record(pack_path, source, source_kind, tables_as_tsv)
     if result is None:
-        _record_access({**access, "missing": True})
         return
-    _record_access({**access, "pack_sha": result["pack_sha"], "content_sha": result["content_sha"]})
 
     # rpfm leaves no destination folder when the pack has nothing at `source`, and callers rely on that to detect missing tables.
     if not result["produced"]:
@@ -395,8 +466,28 @@ def _rmtree(path: str) -> None:
     shutil.rmtree(full_path, ignore_errors=True)
 
 
+def _used_recently(entry_dir: str) -> bool:
+    """Check whether a cache entry was written or read within `PRUNE_GRACE_SECONDS`. Reads refresh the entry's `meta.json` mtime.
+
+    Args:
+        entry_dir (str): The entry folder. Its own mtime counts when the meta is missing, e.g. while another process is still writing it.
+
+    Returns:
+        True if the entry changed recently.
+    """
+    for path in (f"{entry_dir}/meta.json", entry_dir):
+        try:
+            if time.time() - os.path.getmtime(path) < PRUNE_GRACE_SECONDS:
+                return True
+        except OSError:
+            pass
+    return False
+
+
 def prune_cache(keep_pack_shas: List[str]) -> int:
-    """Delete cached extractions for packs whose hash is no longer referenced, entries made with an older rpfm schema or exe, and non-table entries.
+    """Delete cached extractions for packs whose hash is no longer referenced and entries made with an older rpfm schema or exe.
+
+    The cache is shared between worktrees, so anything used within `PRUNE_GRACE_SECONDS` is kept even when this worktree no longer needs it.
 
     Args:
         keep_pack_shas (List[str]): Full pack SHA-256 digests that are still in use.
@@ -404,6 +495,7 @@ def prune_cache(keep_pack_shas: List[str]) -> int:
     Returns:
         The number of pack groups removed.
     """
+    _rmtree(STAGING_ROOT)
     if not os.path.exists(OBJECTS_ROOT):
         return 0
     keep = {sha[:24] for sha in keep_pack_shas}
@@ -412,17 +504,29 @@ def prune_cache(keep_pack_shas: List[str]) -> int:
     for name in os.listdir(OBJECTS_ROOT):
         pack_dir = f"{OBJECTS_ROOT}/{name}"
         if name not in keep:
-            _rmtree(pack_dir)
-            removed += 1
+            if not any(_used_recently(f"{pack_dir}/{entry}") for entry in os.listdir(pack_dir)):
+                _rmtree(pack_dir)
+                removed += 1
             continue
         for entry in os.listdir(pack_dir):
+            meta_path = f"{pack_dir}/{entry}/meta.json"
             try:
-                with open(f"{pack_dir}/{entry}/meta.json", "r", encoding="utf-8") as f:
+                with open(meta_path, "r", encoding="utf-8") as f:
                     meta = json.load(f)
-                outdated = meta.get("toolchain") != current_toolchain or not meta.get("source", "").startswith("db/")
+                outdated = meta.get("toolchain") != current_toolchain
             except (FileNotFoundError, json.JSONDecodeError):
                 outdated = True
-            if outdated:
+            if outdated and not _used_recently(f"{pack_dir}/{entry}"):
                 _rmtree(f"{pack_dir}/{entry}")
-    _rmtree(STAGING_ROOT)
     return removed
+
+
+def log_cache_summary() -> None:
+    """Log how many extractions this process served from the cache and how long rpfm took for the rest."""
+    if _STATS["hits"] or _STATS["misses"]:
+        logging.info(
+            f"Extract cache: {_STATS['hits']} hit(s), {_STATS['misses']} miss(es) extracted by rpfm in {_STATS['rpfm_seconds']:.0f}s."
+        )
+
+
+atexit.register(log_cache_summary)

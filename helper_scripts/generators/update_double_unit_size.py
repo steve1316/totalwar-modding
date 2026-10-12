@@ -371,7 +371,7 @@ if __name__ == "__main__":
                 package_name = package_name[:-1]
             scratch_root = f"{TEMP_DIR}/{package_name}"
 
-            logging.info(f"Processing mod: {mod['package_name']}")
+            logging.debug(f"Processing mod: {mod['package_name']}")
             tracker = DuplicateTracker()
 
             # Extract and load all the required and optional tables needed for this mod into the per-mod scratch dir.

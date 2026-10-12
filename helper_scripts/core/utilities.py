@@ -1,6 +1,7 @@
 """Utility functions for Total War Warhammer 3 modding."""
 
 import argparse
+import atexit
 import pandas as pd
 import subprocess
 import os
@@ -64,6 +65,10 @@ DATA_START_ROW = 2
 _SCHEMA_CACHE: Dict[str, Dict] = {}
 _SCHEMA_CACHE_LOCK = threading.Lock()
 
+# Columns added to outdated TSV files, keyed by (table, added columns), with the number of files upgraded. Logged once at exit instead of per file.
+_SCHEMA_UPGRADES: Dict[tuple, int] = {}
+_SCHEMA_UPGRADES_LOCK = threading.Lock()
+
 
 def run_parallel(
     items: Iterable[Any],
@@ -102,12 +107,21 @@ def run_parallel(
 
 
 def setup_script_logging(log_format: str = "%(asctime)s - %(levelname)s - %(message)s") -> None:
-    """Configure root logging at INFO level with the given format. Default matches the timestamped format used by the compat-pack scripts.
+    """Configure root logging with the given format. The level is INFO unless the `LOG_LEVEL` environment variable says otherwise, e.g. `LOG_LEVEL=DEBUG`.
 
     Args:
         log_format (str): Format string passed through to `logging.basicConfig`. Defaults to `"%(asctime)s - %(levelname)s - %(message)s"`.
     """
-    logging.basicConfig(format=log_format, level=logging.INFO)
+    logging.basicConfig(format=log_format, level=os.environ.get("LOG_LEVEL", "INFO").upper())
+
+
+def log_schema_upgrade_summary() -> None:
+    """Log one line per table and column set that outdated TSV files were upgraded with during this process."""
+    for (table_name, columns), count in sorted(_SCHEMA_UPGRADES.items()):
+        logging.info(f"Upgraded {count} {table_name} file(s) to the latest schema by adding: {', '.join(columns)}.")
+
+
+atexit.register(log_schema_upgrade_summary)
 
 
 def log_elapsed_time(label: str, start_time: float) -> None:
@@ -212,7 +226,7 @@ def extract_tsv_data(table_name: str, temp_root: str = TEMP_DIR) -> str:
     dest = f"{temp_root}/vanilla_{table_name}"
     cached_pack_extract(FILEPATH_TO_VANILLA_DATA_TABLES, f"db/{table_name}/data__", dest, source_kind="file")
 
-    logging.info(f'TSV file "{table_name}" successfully extracted.')
+    logging.debug(f'TSV file "{table_name}" successfully extracted.')
     return dest
 
 
@@ -227,9 +241,9 @@ def extract_modded_tsv_data(table_name: str, packfile_path: str, extract_path: s
     cached_pack_extract(packfile_path, f"db/{table_name}", extract_path)
 
     if not os.path.exists(extract_path):
-        logging.warning(f"No TSV file(s) for \"{table_name}\" found in {extract_path} for the mod \"{packfile_path.split('/')[-1]}\".")
+        logging.debug(f"No TSV file(s) for \"{table_name}\" found in {extract_path} for the mod \"{packfile_path.split('/')[-1]}\".")
     else:
-        logging.info(f"TSV file(s) for \"{table_name}\" successfully extracted to {extract_path} for the mod \"{packfile_path.split('/')[-1]}\".")
+        logging.debug(f"TSV file(s) for \"{table_name}\" successfully extracted to {extract_path} for the mod \"{packfile_path.split('/')[-1]}\".")
 
 
 def load_tsv_data(file_path: str):
@@ -308,7 +322,7 @@ def load_multiple_tsv_data(folder_path: str, table_name: str = None, schema_path
     if skipped_count > 0:
         logging.info(f"Loaded a total of {len(merged_data)} unique rows for {folder_path} (skipped {skipped_count} outdated file(s)).")
     else:
-        logging.info(f"Loaded a total of {len(merged_data)} unique rows for {folder_path}.")
+        logging.debug(f"Loaded a total of {len(merged_data)} unique rows for {folder_path}.")
     return merged_data, headers, version_info
 
 
@@ -342,7 +356,7 @@ def read_and_clean_tsv(tsv_file_path: str, table_type: str, allowed_patterns: Li
             df = df[df["key"].str.contains("|".join(allowed_patterns))]
         df = df[~df["key"].str.contains("dummy")]
 
-    logging.info(f"TSV file '{tsv_file_path}' successfully read and cleaned for table '{table_type}'.")
+    logging.debug(f"TSV file '{tsv_file_path}' successfully read and cleaned for table '{table_type}'.")
     return df
 
 
@@ -903,11 +917,11 @@ def update_single_tsv_file_to_latest_version(file_path: str, table_name: str, sc
             logging.debug(f"File {os.path.basename(file_path)} is already at version {current_version} (latest is {latest_version}).")
             return True
         elif table_name == "main_units_tables" and current_version < latest_version:
-            logging.info(
+            logging.debug(
                 f"Updating {os.path.basename(file_path)} from version {current_version} to {latest_version} but will keep the current version number as is."
             )
         else:
-            logging.info(f"Updating {os.path.basename(file_path)} from version {current_version} to {latest_version}.")
+            logging.debug(f"Updating {os.path.basename(file_path)} from version {current_version} to {latest_version}.")
 
         # Create a mapping of field names to their default values and ca_order.
         field_defaults = {}
@@ -928,7 +942,10 @@ def update_single_tsv_file_to_latest_version(file_path: str, table_name: str, sc
         # Add missing columns to each data row with default values.
         missing_columns = set(ordered_headers) - set(headers)
         if missing_columns:
-            logging.info(f"Adding {len(missing_columns)} missing column(s): {', '.join(sorted(missing_columns))}.")
+            logging.debug(f"Adding {len(missing_columns)} missing column(s) to {os.path.basename(file_path)}: {', '.join(sorted(missing_columns))}.")
+            upgrade_key = (table_name, tuple(sorted(missing_columns)))
+            with _SCHEMA_UPGRADES_LOCK:
+                _SCHEMA_UPGRADES[upgrade_key] = _SCHEMA_UPGRADES.get(upgrade_key, 0) + 1
             for row in data:
                 for col in missing_columns:
                     row[col] = field_defaults[col]
@@ -958,7 +975,7 @@ def update_single_tsv_file_to_latest_version(file_path: str, table_name: str, sc
                 ordered_values = [str(row.get(header, "")) for header in ordered_headers]
                 f.write("\t".join(ordered_values) + "\n")
 
-        logging.info(f"Successfully updated {os.path.basename(file_path)}.")
+        logging.debug(f"Successfully updated {os.path.basename(file_path)}.")
         return True
 
     except Exception as e:

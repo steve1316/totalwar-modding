@@ -190,7 +190,7 @@ def map_files(campaign: dict) -> Optional[Dict[str, str]]:
     dest = os.path.join(CACHE_DIR, key)
     detail = campaign["minimap"][:-len("_minimap.png")] + ".dds"
     for name in (campaign["minimap"], "prebattle_map.png", detail):
-        cached_pack_extract(pack, f"{folder}/{name}", dest, source_kind="file", tables_as_tsv=False, capture_output=True)
+        cached_pack_extract(pack, f"{folder}/{name}", dest, source_kind="file", tables_as_tsv=False)
     files = {"minimap": os.path.join(dest, folder, campaign["minimap"]), "prebattle": os.path.join(dest, folder, "prebattle_map.png")}
     if os.path.isfile(os.path.join(dest, folder, detail)):
         files["detail_dds"] = os.path.join(dest, folder, detail)

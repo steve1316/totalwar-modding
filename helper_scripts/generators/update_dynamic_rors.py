@@ -692,7 +692,7 @@ if __name__ == "__main__":
             Returns:
                 A `ModExtractResult` if extraction yielded the three required tables, otherwise None (mod is silently dropped).
             """
-            logging.info(f"Extracting the mod: {mod['package_name']}")
+            logging.debug(f"Extracting the mod: {mod['package_name']}")
             folder_name = clean_folder_name(mod["package_name"])
             scratch_root = f"{TEMP_DIR}/{folder_name}"
 

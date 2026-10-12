@@ -450,7 +450,7 @@ def check_reduce_winds_tables(commit: bool) -> List[str]:
         previous = watches.get(key)
         if previous and previous["pack_sha"] == vanilla_sha:
             continue
-        result = ensure_extracted(FILEPATH_TO_VANILLA_DATA_TABLES, f"db/{table_name}/data__", "file", True, capture_output=True)
+        result = ensure_extracted(FILEPATH_TO_VANILLA_DATA_TABLES, f"db/{table_name}/data__", "file", True)
         if result is None:
             continue
         if previous and previous["content_sha"] != result["content_sha"]:

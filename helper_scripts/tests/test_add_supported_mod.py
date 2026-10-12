@@ -332,7 +332,7 @@ def test_lord_hero_candidates_drops_subtypes_without_a_skill_set_in_the_pack():
 
 
 def test_read_table_refuses_a_table_rpfm_could_not_decode(monkeypatch):
-    def fake_extract(pack_path, source, dest, capture_output=False):
+    def fake_extract(pack_path, source, dest):
         os.makedirs(dest, exist_ok=True)
         with open(os.path.join(dest, "data__"), "wb") as fh:
             fh.write(b"\x00binary")
@@ -343,7 +343,7 @@ def test_read_table_refuses_a_table_rpfm_could_not_decode(monkeypatch):
 
 
 def test_read_table_returns_nothing_for_a_table_the_pack_lacks(monkeypatch):
-    monkeypatch.setattr(asm, "cached_pack_extract", lambda pack_path, source, dest, capture_output=False: None)
+    monkeypatch.setattr(asm, "cached_pack_extract", lambda pack_path, source, dest: None)
     assert asm.read_table("x.pack", "units_to_groupings_military_permissions_tables") == []
 
 

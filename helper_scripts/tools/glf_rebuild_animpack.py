@@ -449,7 +449,7 @@ def _load_vanilla_sets() -> Dict[str, bytes]:
     Returns:
         Set bytes by path. A set in several animpacks takes the last one.
     """
-    cached_pack_extract(f"{VANILLA_DATA_DIR}\\{VANILLA_TABLES_PACK}", VANILLA_TABLES_FOLDER, EXTRACT_DIR, tables_as_tsv=False, capture_output=True)
+    cached_pack_extract(f"{VANILLA_DATA_DIR}\\{VANILLA_TABLES_PACK}", VANILLA_TABLES_FOLDER, EXTRACT_DIR, tables_as_tsv=False)
     folder = f"{EXTRACT_DIR}/{VANILLA_TABLES_FOLDER}"
     animpacks = sorted(f for f in os.listdir(folder) if f.endswith(".animpack")) if os.path.isdir(folder) else []
     if not animpacks:
