@@ -219,7 +219,7 @@ def load_vanilla_tables() -> Dict[str, List[Dict[str, str]]]:
     tables = {}
     for table in VANILLA_TABLES:
         dest = f"{SCRATCH}/vanilla/{table}"
-        cached_pack_extract(FILEPATH_TO_VANILLA_DATA_TABLES, f"db/{table}/data__", dest, source_kind="file", capture_output=True)
+        cached_pack_extract(FILEPATH_TO_VANILLA_DATA_TABLES, f"db/{table}/data__", dest, source_kind="file")
         tables[table] = _rows(dest)
         if not tables[table]:
             raise FileNotFoundError(f"Vanilla {table} could not be extracted")
@@ -248,7 +248,7 @@ def load_names() -> Dict[str, str]:
     """
     names: Dict[str, str] = {}
     dest = f"{SCRATCH}/loc"
-    cached_pack_extract(VANILLA_LOC_PACK, "text", dest, capture_output=True)
+    cached_pack_extract(VANILLA_LOC_PACK, "text", dest)
     # Some unit names point at agent subtype names, so those are loaded too.
     read_loc_names(dest, names, (LOC_NAME_PREFIX, SUBTYPE_NAME_PREFIX))
     return names
@@ -271,7 +271,7 @@ def ensure_cards() -> Dict[str, str]:
         shutil.rmtree(CARDS_DIR, ignore_errors=True)
         os.makedirs(CARDS_DIR)
         logging.info("Extracting unit card images from ui.pack...")
-        run_rpfm_cli(["pack", "extract", "--pack-path", VANILLA_UI_PACK, "-F", f"{CARDS_FOLDER};{CARDS_DIR}"], capture_output=True)
+        run_rpfm_cli(["pack", "extract", "--pack-path", VANILLA_UI_PACK, "-F", f"{CARDS_FOLDER};{CARDS_DIR}"])
         with open(stamp_path, "w", encoding="utf-8") as f:
             f.write(stamp)
     files: Dict[str, str] = {}
@@ -287,9 +287,9 @@ def load_portraits() -> Dict[str, str]:
         Art set id to the lowercase file name of its portrait, e.g. `hef_teclis_0.png`. Unit cards share these names.
     """
     folder = f"{SCRATCH}/portraits"
-    cached_pack_extract(VANILLA_UI_PACK, PORTRAIT_SETTINGS, folder, source_kind="file", tables_as_tsv=False, capture_output=True)
+    cached_pack_extract(VANILLA_UI_PACK, PORTRAIT_SETTINGS, folder, source_kind="file", tables_as_tsv=False)
     json_path = f"{folder}/portrait_settings.json"
-    run_rpfm_cli(["portrait-settings", "to-json", "-b", f"{folder}/{PORTRAIT_SETTINGS}", "-j", json_path], capture_output=True)
+    run_rpfm_cli(["portrait-settings", "to-json", "-b", f"{folder}/{PORTRAIT_SETTINGS}", "-j", json_path])
     if not os.path.exists(json_path):
         logging.warning("Portrait settings could not be read. Unit cards will be missing.")
         return {}
