@@ -16,6 +16,9 @@ emp_engineer_retinue_4	0	0	20	10	1.0000	sword	sword		1	1.0000	1.0000	0.0000	fals
 emp_general_retinue_1	0	15	20	60	3.0000	sword	sword	medium	3	0.5000	1.0000	0.0000	false		0	10	4.5000		false
 emp_general_retinue_2	0	15	25	50	3.0000	sword	sword	medium	3	0.5000	1.0000	0.0000	false		0	10	4.5000		false
 emp_general_retinue_3	20	0	20	30	3.0000	lance	spear	large	4	1.0000	1.0000	0.0000	false		0	10	5.0000		false
+emp_priest_of_ulric_retinue_1	0	0	20	50	3.0000	axe	axe_2h	medium	3	0.5000	1.0000	0.0000	false		0	10	4.5000		false
+emp_priest_of_ulric_retinue_2	0	0	30	60	1.0000	axe	hammer	medium	3	0.5000	1.0000	0.0000	false	wh2_dlc12_unit_contact_sundered_armour	0	10	4.5000		false
+emp_priest_of_ulric_retinue_3	0	0	30	60	3.0000	axe	hammer	medium	2	0.5000	1.0000	0.0000	false		0	10	4.5000		false
 emp_warrior_priest_retinue_1	0	0	40	40	3.0000	axe	hammer	medium	2	0.5000	1.0000	0.0000	true		0	10	3.5000		false
 emp_warrior_priest_retinue_2	0	10	40	40	3.0000	axe	hammer	medium	3	0.5000	1.0000	0.0000	true		0	10	3.5000		false
 emp_warrior_priest_retinue_3	0	0	40	40	3.0000	axe	hammer	medium	2	0.5000	1.0000	0.0000	true		0	10	4.0000		false

@@ -50,6 +50,10 @@ wh3_dlc27_hef_mon_merwyrm_ete	30	0	275	425	15.0000	axe	creatures_big	very_large	
 wh3_dlc27_hef_sea_elemental_ete	0	20	175	300	9.0000	knife	creatures_claws	large	6	1.7000	1.0000	0.0000	false		6	6	4.0000		false
 wh3_dlc27_nor_cha_fimir_noble_mace_ete	0	15	100	350	5.0000	axe	club_huge	large	5	1.0000	1.0000	0.0000	true	wh3_dlc23_contact_armour_destruction	0	10	4.0000		false
 wh3_dlc27_nor_kurgan_great_axe_ete	0	0	120	275	4.0000	axe	axe_2h	large	5	1.0000	1.0000	0.0000	false		0	10	4.0000		false
+wh3_dlc29_chs_cha_orghotts_dual_axe_ete	0	20	140	300	3.0000	axe	axe_medium	medium	5	1.8000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	10	4.0000		false
+wh3_dlc29_chs_maggoth_whippermaw_ete	15	0	170	370	7.0000	axe	creatures_claws	large	6	1.8000	1.0000	0.0000	true	wh_main_unit_contact_poison	5	5	4.2000		false
+wh3_dlc29_vmp_mon_dread_abyssal_ete	0	0	160	400	4.0000	axe	creatures_big	large	5	1.0000	0.7500	0.0000	true	wh2_pro08_unit_contact_dampen	2	2	3.8000		false
+wh3_dlc29_vmp_morghast_dual_sword_ete	0	15	150	300	3.0000	sword	sword_medium	large	6	1.0000	1.0000	0.0000	true		0	10	4.0000		false
 wh3_main_ogr_hammer_sword_tyrant_ete_ror	30	0	100	330	5.0000	sword	sword_medium	medium	5	1.5000	1.0000	0.0000	false		0	10	4.0000		false
 wh_dlc01_chs_dragon_ete	0	0	140	410	8.0000	axe	creatures_claws	large	6	1.0000	0.7500	10.0000	true	wh_main_unit_contact_morale	0	3	3.8000		false
 wh_dlc03_bst_bestigor_great_axe_ete	20	0	130	350	4.0000	axe	axe_medium	large	4	2.0000	0.7500	0.0000	false		0	10	3.8000		false

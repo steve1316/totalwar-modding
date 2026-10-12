@@ -278,8 +278,8 @@ wh2_main_hef_great_eagle	0	0	234	156	7.0000	axe	creatures_claws	large	4	1.0000	1
 wh2_main_hef_greataxe	0	0	9	25	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.2		false
 wh2_main_hef_greataxe_ror	0	0	9	25	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.2		false
 wh2_main_hef_greatsword	0	14	12	28	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
-wh2_main_hef_halberd	20	0	11	25	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	false		0	10	2.45		false
-wh2_main_hef_halberd_ror	20	0	11	25	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	true		0	10	2.45		false
+wh2_main_hef_halberd	20	0	12	28	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	false		0	10	2.45		false
+wh2_main_hef_halberd_ror	20	0	12	28	2.0000	spear	halberd		1	1.0000	0.5000	0.0000	true		0	10	2.45		false
 wh2_main_hef_hero_great_eagle	0	0	252	168	7.0000	axe	creatures_claws	large	4	1.0000	0.7500	0.0000	false		0	3	2.0		false
 wh2_main_hef_ithilmar_chariot	0	24	38	16	5.0000	axe	creatures_claws	very_large	4	1.0000	1.0000	0.0000	false		2	2	2.0		false
 wh2_main_hef_lance	0	0	23	9	1.0000	lance	spear		1	1.0000	0.5000	0.0000	false		0	10	2.5		false
@@ -547,7 +547,7 @@ wh3_dlc25_dwf_garagrim_axe_dual	0	15	120	300	3.0000	axe	axe	medium	4	1.0000	1.25
 wh3_dlc25_dwf_hammerers_grudge_unit	0	0	14	41	1.0000	axe	hammer_dwarf		1	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	2.1		false
 wh3_dlc25_dwf_malakai	0	0	280	120	3.0000	axe	hammer_dwarf	medium	4	1.0000	0.7500	0.0000	false		0	10	2.0		false
 wh3_dlc25_dwf_slayer_axe_dual_armour_sunder	24	0	32	16	1.0000	axe	axe		1	0.3000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.15		false
-wh3_dlc25_dwf_slayer_pirate_sword	0	0	21	7	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.1		false
+wh3_dlc25_dwf_slayer_pirate_sword	0	0	23	9	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.1		false
 wh3_dlc25_dwf_veh_thunderbarge	0	0	150	350	10.0000	spear	spear	large	5	1.5000	1.0000	0.0000	false		0	0	1.9		false
 wh3_dlc25_emp_carmine_dragon	0	0	150	350	8.0000	axe	creatures_claws	large	6	1.0000	1.0000	0.0000	true		0	10	1.9		false
 wh3_dlc25_emp_cav_knights_of_the_black_rose	0	8	28	12	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
@@ -577,7 +577,7 @@ wh3_dlc25_nur_rot_knight_ror	10	0	23	41	4.0000	lance	spear	small	4	0.4000	0.7500
 wh3_dlc25_nur_staff_maggmawr	0	0	215	95	3.0000	sword	staff	medium	3	1.0000	0.7500	0.0000	true		0	10	2.0		false
 wh3_dlc25_nurgle_soul_grinder_ror	0	0	135	315	13.0000	sword	sword_huge	large	5	1.0000	1.0000	0.0000	true	wh3_dlc25_unit_contact_erosion	0	10	2.0		false
 wh3_dlc26_chs_inf_chosen_mkho_ror	26	0	15	31	2.0000	spear	halberd		1	1.0000	0.5000	1.0000	true	wh2_dlc12_unit_contact_flammable	0	10	2.15		false
-wh3_dlc26_grn_cav_mangler_squig	0	20	38	90	6.0000	sword	creatures_claws	medium	4	1.8000	1.2500	0.0000	false		0	10	1.6		false
+wh3_dlc26_grn_cav_mangler_squig	0	20	40	100	6.0000	sword	creatures_claws	medium	4	1.8000	1.2500	0.0000	false		0	10	1.6		false
 wh3_dlc26_grn_cha_gorbad_axe	0	0	100	380	4.0000	axe	axe	medium	5	1.5000	0.7500	0.0000	false		0	10	2.1		false
 wh3_dlc26_grn_cha_night_goblin_big_boss	0	0	200	140	3.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 wh3_dlc26_grn_cha_night_goblin_big_boss_squig	0	0	140	200	3.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
@@ -649,7 +649,7 @@ wh3_dlc27_nor_cha_sayl_chariot	0	26	120	220	5.0000	axe	creatures_claws	very_larg
 wh3_dlc27_nor_cha_sayl_staff	0	0	270	110	4.0000	axe	staff	medium	4	1.5000	0.7500	0.0000	true		0	10	2.0		false
 wh3_dlc27_nor_chimera	0	0	240	280	6.0000	axe	creatures_claws	large	5	1.0000	1.2500	1.0000	true	wh_main_unit_contact_poison	0	3	1.8		false
 wh3_dlc27_nor_inf_chaos_marauders_great_weapons_ror	0	0	7	23	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false	wh_main_unit_contact_poison	0	10	2.3		false
-wh3_dlc27_nor_kurgan_dual_axe	0	15	28	14	4.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
+wh3_dlc27_nor_kurgan_dual_axe	0	15	26	11	4.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
 wh3_dlc27_nor_kurgan_great_axe	0	0	13	29	4.0000	axe	axe_2h		1	1.0000	1.0000	0.0000	false		0	10	2.0		false
 wh3_dlc27_nor_mon_cursd_ettin_fist	0	0	300	350	5.0000	axe	unarmed	medium	7	1.7000	1.0000	0.0000	false		0	10	1.5		false
 wh3_dlc27_nor_mon_cursd_ettin_fist_runecaller	0	0	300	250	5.0000	axe	unarmed	medium	7	1.7000	1.0000	0.0000	true		0	10	1.5		false
@@ -704,10 +704,10 @@ wh3_dlc29_emp_cav_knights_of_the_white_wolf_ror	0	10	22	28	3.0000	axe	hammer	med
 wh3_dlc29_emp_hammer_seneschal_of_the_white_wolf	0	0	140	330	3.0000	axe	hammer	medium	5	1.0000	0.7500	0.0000	false		0	10	2.0		false
 wh3_dlc29_emp_hurricanum	0	0	140	70	1.0000	axe	unarmed	very_large	4	1.0000	0.7500	0.0000	true		2	2	2.0		false
 wh3_dlc29_emp_inf_hunting_hounds_bite	0	0	16	4	1.0000	sword	creatures_claws		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
-wh3_dlc29_emp_inf_teutogen_guard_ror_dual_axes	0	10	15	30	1.0000	axe	axe		1	1.0000	0.7500	0.0000	false	wh2_dlc12_unit_contact_sundered_armour	0	10	2.1		false
+wh3_dlc29_emp_inf_teutogen_guard_ror_dual_axes	0	10	15	32	1.0000	axe	axe		1	1.0000	0.7500	0.0000	false	wh2_dlc12_unit_contact_sundered_armour	0	10	2.1		false
 wh3_dlc29_emp_inf_warriors_of_ulric_dual_swords	0	6	23	7	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.25		false
 wh3_dlc29_emp_lance_knights_panther	9	0	30	10	1.0000	lance	spear		1	1.0000	0.5000	0.0000	false		0	10	2.15		false
-wh3_dlc29_emp_teutogen_guard_hammer	0	0	15	30	1.0000	axe	hammer		1	1.0000	0.7500	0.0000	false	wh2_dlc12_unit_contact_sundered_armour	0	10	2.1		false
+wh3_dlc29_emp_teutogen_guard_hammer	0	0	15	32	1.0000	axe	hammer		1	1.0000	0.7500	0.0000	false	wh2_dlc12_unit_contact_sundered_armour	0	10	2.1		false
 wh3_dlc29_emp_wolf_kin_axe	0	0	12	27	3.0000	axe	axe_2h		1	1.0000	1.0000	0.0000	false		0	10	2.15		false
 wh3_dlc29_mon_great_spined_chaos_beast	0	0	290	155	6.0000	axe	creatures_claws	large	4	1.0000	1.2500	0.0000	false		0	3	1.8		false
 wh3_dlc29_skv_cauldron_of_a_thousand_poxes	0	0	150	50	6.0000	axe	creatures_claws	very_large	4	1.6000	0.7500	0.0000	false	wh2_main_unit_contact_plague_monk_censer_morale	0	10	2.0		false
@@ -733,8 +733,8 @@ wh3_dlc29_tmb_tomb_herald_sword	0	0	240	160	3.0000	sword	sword	small	4	1.0000	0.
 wh3_dlc29_tmb_ushabti_sepulchrex_dual_swords	0	15	22	57	2.0000	sword	sword_medium	medium	4	1.0000	0.7500	0.0000	true		0	0	1.9		false
 wh3_dlc29_vmp_coven_throne	0	20	80	200	3.0000	axe	unarmed	very_large	4	1.0000	0.7500	0.0000	true		4	4	2.0		false
 wh3_dlc29_vmp_drakenhof_templars_lance	10	0	30	26	2.0000	lance	spear		1	1.0000	0.5000	0.0000	false		0	10	2.55		false
-wh3_dlc29_vmp_lahmian_maidens_dual_swords	0	15	50	25	2.0000	sword	sword	medium	3	1.4000	0.7500	0.0000	false	wh3_dlc29_vmp_handmaiden_dual_swords_contact_group	0	10	2.0		false
-wh3_dlc29_vmp_lahmian_maidens_sword_and_magic	0	0	50	25	2.0000	sword	sword	medium	3	1.4000	0.7500	0.0000	true	wh3_dlc29_vmp_handmaiden_sword_and_magic_contact_group	0	10	2.0		false
+wh3_dlc29_vmp_lahmian_maidens_dual_swords	0	15	50	25	2.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	false	wh3_dlc29_vmp_handmaiden_dual_swords_contact_group	0	10	2.0		false
+wh3_dlc29_vmp_lahmian_maidens_sword_and_magic	0	0	50	25	2.0000	sword	sword	medium	3	1.0000	0.7500	0.0000	true	wh3_dlc29_vmp_handmaiden_sword_and_magic_contact_group	0	10	2.0		false
 wh3_dlc29_vmp_mon_dread_abyssal	0	0	160	400	4.0000	axe	creatures_big	large	5	1.0000	0.7500	0.0000	false		2	2	1.9		false
 wh3_dlc29_vmp_morghast_dual_sword	0	30	36	84	2.0000	sword	sword_medium	medium	4	1.0000	0.7500	0.0000	false		0	10	1.9		false
 wh3_dlc29_vmp_morghast_halberd	30	0	36	84	2.0000	axe	axe	medium	3	1.2000	1.0000	0.0000	false		0	10	2.0		false
@@ -899,7 +899,7 @@ wh3_main_sla_furies_claws	0	0	8	24	1.0000	axe	creatures_claws		1	1.0000	0.7500	0
 wh3_main_sla_heartseekers_claws	0	0	14	38	1.0000	axe	creatures_claws		1	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	0	2.0		false
 wh3_main_sla_hellflayer	0	30	20	50	7.0000	axe	creatures_claws	very_large	2	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	2	2	2.0		false
 wh3_main_sla_hellstriders_hellscourge_whip	0	0	33	7	2.0000	sword	whip		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	0	2.3		false
-wh3_main_sla_hellstriders_spear_claw	10	0	20	10	2.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	0	2.35		false
+wh3_main_sla_hellstriders_spear_claw	10	0	20	8	2.0000	spear	spear		1	1.0000	0.5000	0.0000	false	wh_main_unit_contact_poison	0	0	2.35		false
 wh3_main_sla_keeper_of_secrets_sword	0	0	125	375	12.0000	sword	sword_huge	large	5	1.0000	0.7500	0.0000	true		0	10	2.0		false
 wh3_main_sla_marauders_hellscourge_whip	0	0	26	4	2.0000	sword	whip		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 wh3_main_sla_marauders_spear_claw	15	0	20	5	1.0000	spear	spear		1	1.0000	0.5000	0.0000	false		0	10	2.05		false
@@ -910,7 +910,7 @@ wh3_main_sla_seeker_chariot_alluress	0	25	95	280	7.0000	axe	creatures_claws	very
 wh3_main_sla_seeker_chariot_herald	0	25	100	300	7.0000	axe	creatures_claws	very_large	4	1.0000	0.7500	0.0000	true	wh_main_unit_contact_poison	4	4	2.0		false
 wh3_main_sla_seekers_claws	0	0	14	26	1.0000	axe	creatures_claws		1	1.0000	1.0000	0.0000	true	wh_main_unit_contact_poison	0	0	2.0		false
 wh3_main_sla_soul_grinder	35	0	155	365	13.0000	sword	sword_huge	large	5	1.0000	0.7500	0.0000	true	wh3_main_unit_contact_soporific_musk	0	10	2.0		false
-wh3_main_sla_tongue_fiends	0	0	25	55	4.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	true	wh3_main_unit_contact_soporific_musk	0	10	2.0		false
+wh3_main_sla_tongue_fiends	0	0	25	55	4.0000	axe	creatures_claws	medium	4	1.0000	1.2500	0.0000	true	wh3_main_unit_contact_soporific_musk	0	10	2.2		false
 wh3_main_tmb_claws_ghouls	0	0	40	10	1.0000	sword	creatures_claws		1	1.0000	0.7500	0.0000	false	wh_main_unit_contact_poison	0	10	2.0		false
 wh3_main_tmb_fell_bats	0	0	20	7	1.0000	knife	creatures_claws		1	1.0000	0.2500	0.0000	false		0	10	2.0		false
 wh3_main_tmb_scythe_hexwraith	0	0	0	53	1.0000	axe	halberd		1	1.0000	1.0000	10.0000	true	wh_dlc08_unit_contact_frostbite	0	10	2.0		false

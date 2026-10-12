@@ -2,10 +2,9 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!!!50meleeattackspeed_compat_jade_vamp_pol_IotM
 hef_magister	0	12	95	280	3.0000	sword	sword	medium	6	1.0000	1.0000	0.0000	true		0	10	2.0		false
 hef_poleaxe	6	0	11	23	3.0000	axe	axe		3	1.0000	1.2500	0.0000	false		0	10	2.2		false
-jbv_diaosigui	0	0	0	240	5.0000	axe	halberd	very_large	14	3.0000	1.2500	0.0000	true	jbv_ghost_choke	0	10	1.6		false
 jbv_doctor	0	0	0	355	3.0000	sword	club_huge	very_large	12	1.0000	1.0000	0.0000	true	jbv2_ghost_poison	0	10	2.0		false
 jbv_islanders	15	0	0	27	4.0000	spear	spear_ghost	medium	3	1.0000	0.7500	0.0000	true		0	10	2.2		false
-jbv_lady_yayi	0	0	0	520	9.0000	axe	spear_ghost	very_large	15	3.0000	1.5000	0.0000	true	jbv2_ghost_poison_2	0	10	2.0		false
+jbv_lady_yayi	0	0	0	600	9.0000	axe	spear_ghost	very_large	15	3.0000	1.5000	0.0000	true	jbv2_ghost_poison_2	0	10	2.0		false
 jbv_nurses	9	0	0	24	3.0000	spear	halberd	medium	3	1.0000	0.7500	10.0000	true	jbv2_ghost_flame	0	10	1.9		false
 jbv_nurses_2	0	20	0	42	1.5000	knife	spear_ghost	small	2	1.0000	0.7500	0.0000	true	jbv2_hollowness	0	10	0.5		false
 jbv_patient_man	0	6	0	400	5.0000	axe	spear_ghost	large	9	3.0000	1.5000	0.0000	true	jbv2_fracture	0	10	1.5		false

@@ -30,7 +30,7 @@ mixu_emp_cha_witch_doctor	0	0	210	90	4.0000	sword	sword	medium	6	1.0000	0.7500	0
 mixu_glaive_gorehoof	22	0	140	260	3.0000	axe	axe	medium	6	1.0000	1.0000	0.0000	false		0	10	2.0		false
 mixu_great_axe_emp_horned_hunters	0	10	10	26	1.0000	sword	sword		1	1.0000	0.7500	0.0000	false		0	10	2.15		false
 mixu_greataxe_hef_korhil	25	0	160	300	3.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	false		0	10	2.0		false
-mixu_greatsword_def_ossian_guard	0	14	13	29	3.0000	sword	sword		4	1.0000	1.0000	0.0000	false	mixu_LL_unit_contact_maimed	0	10	2.15		false
+mixu_greatsword_def_ossian_guard	0	14	14	32	3.0000	sword	sword		4	1.0000	1.0000	0.0000	false	mixu_LL_unit_contact_maimed	0	10	2.15		false
 mixu_greatsword_def_tullaris	0	30	170	300	3.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	false		0	10	2.0		false
 mixu_gyrocopter_dwf_engineer	0	0	120	40	3.0000	axe	unarmed	large	4	1.0000	1.0000	0.0000	false		0	10	1.6		false
 mixu_gyrocopter_dwf_grimm	0	0	160	80	3.0000	axe	unarmed	large	8	1.0000	1.0000	0.0000	false		0	10	1.6		false

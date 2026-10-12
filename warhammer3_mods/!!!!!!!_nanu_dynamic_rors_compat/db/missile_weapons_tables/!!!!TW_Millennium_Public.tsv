@@ -1,5 +1,6 @@
 key	precursor	default_projectile	audio_type	use_secondary_ammo_pool	hide_secondary_range_ammo_statistics_ui
 #missile_weapons_tables;12;db/missile_weapons_tables/!!!!TW_Millennium_Public
+wh_twm_dwf_repeater_rifle_ml	false	wh_twm_dwf_repeater_rifle_ml_bullet	none	false	false
 wh_twm_emp_12_shotgun_short	false	wh_twm_emp_12_shotgun_short_shell	repeater_rifle	false	false
 wh_twm_emp_13,25mm_mg	false	wh_twm_emp_13,25mm_mg_bullet		false	false
 wh_twm_emp_13,25mm_rifle	false	wh_twm_emp_13,25mm_rifle_bullet	deck_gunner_cannon	false	false

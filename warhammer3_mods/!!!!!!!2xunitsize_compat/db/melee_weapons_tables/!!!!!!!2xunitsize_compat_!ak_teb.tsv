@@ -38,7 +38,7 @@ teb_roc_kotss	0	0	21	13	1.0000	sword	sword		1	1.0000	1.0000	5.0000	true	teb_cont
 teb_roc_organ	24	0	9	29	1.0000	axe	axe		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 teb_sartosan_pirates	0	0	22	5	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	teb_dirty_fighting	0	10	4.0000		false
 teb_shieldbearers	18	0	21	13	2.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	4.2000	teb_shieldbearers	false
-teb_sisters	22	0	12	20	2.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	4.2000		false
+teb_sisters	22	0	12	20	3.0000	spear	spear		1	1.0000	1.0000	0.0000	false	teb_counterbonus_contact	0	10	4.0000		false
 teb_swash	0	0	26	8	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	teb_dirty_fighting	0	10	4.0000		false
 teb_tank	0	18	30	70	4.0000	axe	unarmed	very_large	4	0.5000	1.0000	0.0000	false		4	4	7.0000		false
 teb_templar_lord	30	0	230	210	3.0000	spear	spear	medium	5	1.0000	1.0000	0.0000	false		0	10	4.0000		false

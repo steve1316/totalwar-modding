@@ -3,7 +3,7 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 hkrul_aelfric	0	0	340	175	3.0000	sword	sword	medium	8	1.6000	1.2500	0.0000	false	wh_dlc08_unit_contact_frostbite	0	10	2.0		false
 hkrul_burlok	0	0	290	155	3.0000	axe	axe	medium	6	1.0000	1.2500	0.0000	false		0	10	2.0		false
 hkrul_dolmance	0	0	300	145	3.0000	sword	sword	medium	8	1.0000	1.0000	0.0000	false		0	10	2.0		false
-hkrul_engra	0	0	165	400	2.0000	sword	sword	large	30	2.4000	1.2500	1.0000	true	wh_main_unit_contact_morale	0	10	1.9		false
+hkrul_engra	0	0	170	400	2.0000	sword	sword	large	30	2.4000	1.2500	1.0000	true	wh_main_unit_contact_morale	0	10	1.9		false
 hkrul_hroth	0	0	150	315	7.0000	sword	sword	medium	7	1.0000	1.2500	0.0000	false		0	10	2.0		false
 hkrul_karitamen	0	0	205	95	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false	wh_dlc06_unit_contact_sundered_armour	0	10	2.0		false
 hkrul_orghotts	0	0	340	130	3.0000	axe	axe	medium	8	1.8000	1.2500	0.0000	false	wh_main_unit_contact_poison	0	10	1.9		false
@@ -11,12 +11,12 @@ hkrul_rhobb	0	0	110	350	3.0000	axe	axe	medium	7	1.0000	1.2500	0.0000	false		0	10
 hkrul_sceolan	0	0	230	255	2.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	true		0	10	1.9		false
 hkrul_slaurith	0	25	110	370	2.0000	sword	sword_huge	large	8	1.3000	1.2500	0.0000	false		0	10	1.9		false
 hkrul_spew_rider	0	0	140	340	10.0000	axe	axe	medium	8	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	4	2	1.9		false
-hkrul_thorgar	0	20	325	185	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	2.0		false
-hkrul_thorgar_daemon_prince	0	20	200	400	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	true		0	10	2.0		false
+hkrul_thorgar	0	25	325	185	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	2.0		false
+hkrul_thorgar_daemon_prince	0	25	200	400	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	true		0	10	2.0		false
 hkrul_valbrand	0	30	105	385	2.0000	sword	sword_huge	large	8	1.3000	1.2500	10.0000	false		0	10	1.9		false
 hkrul_volrik	0	30	290	150	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	2.0		false
 hkrul_vroth	35	0	300	120	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	2.0		false
-hkrul_zach	0	25	270	135	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false		0	10	2.0		false
+hkrul_zach	0	25	275	135	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false		0	10	2.0		false
 rhox_lccp_vmp_giant	0	0	250	550	6.0000	axe	club_huge	large	11	1.7000	1.2500	0.0000	false		0	10	2.0		false
 wh_gatekeepers_dao	24	0	11	25	2.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	false		0	10	2.45		false
 wh_torinubar_magic_wave	0	0	205	60	1.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	true		0	10	2.0		false

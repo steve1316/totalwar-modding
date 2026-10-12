@@ -1,12 +1,6 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!!!!!2xunitsize_compat_nag_nagash
 cr_nag_carrion_mount	VariantMeshes\wh_variantmodels\bi1b\nag\nag_carrion_mount\tech	tmb_carrion		1.0000	0.6500	0.0000	
-nag_abyssal_ashigaroth	VariantMeshes\wh_variantmodels\bc2\emp\emp_imperial_griffon\tech	nag_abyssal_ashigaroth		1.0000	1.6670	0.0000	
-nag_abyssal_nagadron	VariantMeshes\wh_variantmodels\bc2\emp\emp_imperial_griffon\tech	nag_abyssal_nagadron		1.0000	1.6670	0.0000	
-nag_abyssal_razarak	VariantMeshes\wh_variantmodels\bc2\emp\emp_imperial_griffon\tech	nag_abyssal_razarak		1.0000	1.6670	0.0000	
-nag_doom_knights_steed		nag_doom_knights_steed		1.0000	1.0000	0.0000	
 nag_druthor_terrorgheist	VariantMeshes\wh_variantmodels\bi2\vmp\vmp_terrorgheist\tech	nag_druthor_terrorgheist		1.0000	1.0000	0.0000	
-nag_lon_mortis_sphinx	VariantMeshes\wh_variantmodels\bc1\nag\nag_lon_mortis_sphinx\tech	nag_lon_mortis_sphinx		1.0000	1.0000	0.0500	
-nag_nagashi_knights_steed		nag_nagashi_knights_steed		1.0000	1.0000	0.0000	
 nag_undead_chariot_horse		tmb_skeletal_steed_base		1.0000	1.0000	0.0500	
 nag_virion_plague_cart_horse		nag_virion_plague_cart_horse		1.0000	1.0000	0.0500	

@@ -1,5 +1,6 @@
 group_name
 #unit_attributes_groups_tables;0;db/unit_attributes_groups_tables/!!!@exp_roster_compilation
+dec_drakenhof
 dec_ember_drake
 dec_giantbreakers
 dec_gouge_horns
@@ -14,7 +15,6 @@ deco_chd_acolytes
 deco_chd_annihilators
 deco_chd_ogre_slaves
 deco_chd_quarrellers
-deco_chd_siege_giant
 deco_chd_zealots
 deco_forest_goblin_spears
 deco_forest_goblin_swords

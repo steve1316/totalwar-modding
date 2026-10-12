@@ -10,12 +10,12 @@ hkrul_rhobb	0	0	110	350	3.0000	axe	axe	medium	7	1.0000	1.2500	0.0000	false		0	10
 hkrul_sceolan	0	0	230	255	2.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	true		0	10	3.8000		false
 hkrul_slaurith	0	25	110	370	2.0000	sword	sword_huge	large	8	1.3000	1.2500	0.0000	false		0	10	3.8000		false
 hkrul_spew_rider	0	0	140	340	10.0000	axe	axe	medium	8	1.0000	1.2500	0.0000	false	wh_main_unit_contact_poison	4	2	3.8000		false
-hkrul_thorgar	0	20	325	185	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	4.0000		false
-hkrul_thorgar_daemon_prince	0	20	200	400	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	true		0	10	4.0000		false
+hkrul_thorgar	0	25	325	185	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	4.0000		false
+hkrul_thorgar_daemon_prince	0	25	200	400	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	true		0	10	4.0000		false
 hkrul_valbrand	0	30	105	385	2.0000	sword	sword_huge	large	8	1.3000	1.2500	10.0000	false		0	10	3.8000		false
 hkrul_volrik	0	30	290	150	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	4.0000		false
 hkrul_vroth	35	0	300	120	3.0000	axe	axe	large	8	1.0000	1.2500	0.0000	false		0	10	4.0000		false
-hkrul_zach	0	25	270	135	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false		0	10	4.0000		false
+hkrul_zach	0	25	275	135	3.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	false		0	10	4.0000		false
 rhox_lccp_vmp_giant	0	0	250	550	6.0000	axe	club_huge	large	11	1.7000	1.2500	0.0000	false		0	10	4.0000		false
 wh_gatekeepers_dao	24	0	11	25	2.0000	sword	sword	medium	4	1.0000	1.0000	0.0000	false		0	10	4.9000		false
 wh_torinubar_magic_wave	0	0	205	60	1.0000	sword	sword	medium	5	1.0000	1.0000	0.0000	true		0	10	4.0000		false

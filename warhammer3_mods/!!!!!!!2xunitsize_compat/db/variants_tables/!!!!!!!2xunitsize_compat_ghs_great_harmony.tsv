@@ -75,12 +75,6 @@ lzd_skink_carnosaur	VariantMeshes\wh_variantmodels\rp3b\lzd\lzd_troglodon\tech	l
 lzd_skink_salamander	animations/techpack/ghs_lzd_salamander_skink/tech	lzd_skink_salamander		1.2000	1.2000	0.0000	
 phoenix_guard_champion_phoenix	VariantMeshes\wh_variantmodels\bi1\hef\hef_great_eagle\tech	ghs_hef_flamespire_phoenix_mount		1.0000	1.1500	0.0000	
 phoenix_guard_champion_steed		ghs_hef_phoenix_champion_steed		1.0000	1.1500	0.0000	
-slann_campagin_mnt	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	lzd_stegadon_slann_campagin		1.6500	1.0000	0.0000	
-slann_fire_mnt	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	lzd_stegadon_slann_fire		1.6500	1.0000	0.0000	
-slann_heaven_mnt	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	lzd_stegadon_slann_heaven		1.6500	1.0000	0.0000	
-slann_high_mnt	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	lzd_stegadon_slann_high		1.6500	1.0000	0.0000	
-slann_life_mnt	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	lzd_stegadon_slann_life		1.6500	1.0000	0.0000	
-slann_light_mnt	VariantMeshes\wh_variantmodels\hq1\lzd\lzd_stegadon\tech	lzd_stegadon_slann_light		1.6500	1.0000	0.0000	
 tmb_mnt_construct_elephant	VariantMeshes/wh_variantmodels/hq3/nor/nor_war_mammoth/tech	tmb_mnt_construct_elephant		1.0000	1.0000	0.0000	
 tmb_mnt_great_carrion	VariantMeshes\wh_variantmodels\bi1\hef\hef_great_eagle\tech	tmb_mnt_great_carrion		1.0000	1.1000	0.0000	
 tmb_mnt_stone_dragon	VariantMeshes\wh_variantmodels\dr1\vmp\vmp_zombie_dragon\tech	tmb_mnt_stone_dragon		1.0000	1.1000	0.0000	

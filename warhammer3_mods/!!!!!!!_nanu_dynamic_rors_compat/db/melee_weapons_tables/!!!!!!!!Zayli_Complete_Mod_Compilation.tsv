@@ -2,13 +2,10 @@ key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_t
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!!!!Zayli_Complete_Mod_Compilation
 brt_royal_longbow_sword	0	0	17	6	0.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 brt_royal_spear	15	0	21	6	1.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	5.4000		false
-wh_dlc07_brt_squire_sword_great	0	12	11	26	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.1000		false
 wh_main_brt_giant_mace	0	0	13	24	1.0000	axe	hammer		1	1.0000	1.2500	0.0000	false		0	10	5.5000		false
-wh_main_brt_hammer	0	0	22	8	1.0000	axe	hammer		1	1.0000	1.2500	0.0000	false		0	10	4.3000		false
 wh_main_brt_kotr_sword	0	8	30	7	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
 wh_main_brt_royal_halberd	16	0	9	22	1.0000	spear	halberd		1	1.0000	0.7500	0.0000	false		0	10	5.4000		false
-wh_main_brt_sword_short	0	0	19	3	0.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
-wh_main_zayli_axe_2h	0	0	10	18	0.0000	axe	axe_2h		1	1.0000	1.0000	0.0000	false		0	10	5.8000		false
+wh_main_zayli_axe_2h	0	0	9	18	0.0000	axe	axe_2h		1	1.0000	1.0000	0.0000	false		0	10	5.8000		false
 zayli_brt_2h_hammer	0	0	10	24	0.0000	axe	hammer		1	1.0000	1.5000	0.0000	false	zayli_contact_shocked	0	10	5.8000		false
 zayli_brt_men_at_arms_halberd_1h	16	0	7	21	1.0000	spear	halberd		1	1.0000	0.5000	0.0000	false		0	10	5.5000		false
 zayli_brt_royal_sword	0	0	20	10	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.3000		false

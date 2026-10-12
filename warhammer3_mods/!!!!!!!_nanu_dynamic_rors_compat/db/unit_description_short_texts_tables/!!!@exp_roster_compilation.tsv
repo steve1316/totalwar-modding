@@ -1,6 +1,7 @@
 key
 #unit_description_short_texts_tables;0;db/unit_description_short_texts_tables/!!!@exp_roster_compilation
 dec_bestigor_dual_axe
+dec_drakenhof
 dec_ember_drake
 dec_giantbreakers
 dec_gor_great_axe
@@ -15,7 +16,6 @@ dec_magma_dragon
 dec_ogre_bulls_gw
 dec_reapers
 dec_rhinox_bull
-dec_spirit_host
 dec_tower_masters
 deco_armored_colossal_squig
 deco_avelorn_maidens
@@ -29,7 +29,6 @@ deco_chd_naphtha
 deco_chd_ogre_slaves
 deco_chd_quarrellers
 deco_chd_ravagers
-deco_chd_siege_giant
 deco_chd_zealots
 deco_doom_prophets
 deco_dryads_willow

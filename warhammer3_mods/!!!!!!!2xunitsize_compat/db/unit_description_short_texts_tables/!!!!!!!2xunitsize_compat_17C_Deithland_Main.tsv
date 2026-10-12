@@ -12,6 +12,7 @@ emp_cinderbell
 emp_cinderwind_arbalests
 emp_cofferglare
 emp_cofferglare_small
+emp_crannequiniers
 emp_culverin
 emp_danzigers
 emp_deithguard_axelocks
@@ -27,6 +28,11 @@ emp_gottzorn_flame
 emp_gottzorn_knellgun
 emp_grendelgun
 emp_hellbores
+emp_hessmarines_bayonets
+emp_hessmarines_grenadiers
+emp_hessmarines_gunshields
+emp_hessmarines_mounted
+emp_hessmarines_poleaxes
 emp_knellgun
 emp_mortar_muskets
 emp_mountain_gun
@@ -36,6 +42,8 @@ emp_pyretitans_autodragon
 emp_pyretitans_halberd
 emp_pyretitans_mortar
 emp_pyretitans_zweishot
+emp_starknight_anthony
+emp_starknight_teutonic
 emp_tillerguns
 emp_vinderbane
 emp_vinderbane_armored

@@ -1,3 +1,6 @@
 key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!Trajanns_Khorne_Compilation
+traj_kho_end_times_boneripper_warpfire_braziers	giant	monster_beasts
+traj_kho_end_times_dread_abyssal	giant	monster_beasts
+traj_kho_end_times_maggoth	giant	monster_beasts
 traj_kho_razordon_ancient	wh2_dlc17_lzd_razordon	missile_monster_beasts

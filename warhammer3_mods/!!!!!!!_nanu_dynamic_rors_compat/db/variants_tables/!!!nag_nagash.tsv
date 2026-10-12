@@ -1,5 +1,4 @@
 variant_name	tech_folder	variant_filename	low_poly_filename	mount_scale	scale	scale_variation	super_low_poly_filename
 #variants_tables;6;db/variants_tables/!!!nag_nagash
 cr_nag_carrion_mount	VariantMeshes\wh_variantmodels\bi1b\nag\nag_carrion_mount\tech	tmb_carrion		1.0000	0.6500	0.0000	
-nag_nagashi_knights_steed		nag_nagashi_knights_steed		1.0000	1.0000	0.0000	
 nag_undead_chariot_horse		tmb_skeletal_steed_base		1.0000	1.0000	0.0500	

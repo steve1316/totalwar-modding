@@ -1,6 +1,5 @@
 key	skeleton
 #battle_animations_table_tables;0;db/battle_animations_table_tables/!!!Zerooz_All_Units
-bi1_small_eagle	bird01
 def_cav_shadow_maiden	humanoid01b
 def_mon_shadow_lifetaker	snake02
 emp_cav_gryph_knights	humanoid01
@@ -17,8 +16,12 @@ hu13_plague_ogres_cannon	humanoid13
 hu1_empire_bc2_crossbow	humanoid01
 hu1_empire_dark_angel	humanoid01
 hu1_empire_ultimate_warrior	humanoid01
+hu1_inf_sigmar_crossbow_axe	humanoid01
+hu1_inf_sigmar_dule_axe	humanoid01
 hu1_plague_cultist	humanoid01
 hu1_plague_cultist_hr1_warhorse	humanoid01
+hu1_sigmar_oathsworn	humanoid01
+hu1_sigmar_thunderbolt_archers	humanoid01
 hu1_sunrider_hr1_warhorse_lance_sword_shield	humanoid01
 hu1_tza_change_of_thousand_sons	humanoid01
 hu1b_bi1_hef_cav_skyraider_of_eternal	humanoid01b

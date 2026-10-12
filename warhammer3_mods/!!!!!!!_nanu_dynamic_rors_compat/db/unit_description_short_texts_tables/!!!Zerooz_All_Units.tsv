@@ -40,7 +40,6 @@ emp_cav_dual_pistols_demigryph_knights
 emp_cav_gryph_knights
 emp_cav_knight_of_the_raven
 emp_cav_knight_of_white_wolf
-emp_cav_long_sword_demigryph_knights
 emp_inf_bronzeballs
 emp_inf_dark_angel
 emp_inf_deaths_heads
@@ -49,15 +48,17 @@ emp_inf_nordland_seahawks
 emp_inf_nordland_ultimate_warrior
 emp_inf_nuln_ironsides_heavy_armor
 emp_inf_ostland_salamanders
-emp_inf_reiksguard
 emp_inf_sigmar_attaker
+emp_inf_sigmar_crossbow_axe
 emp_inf_sigmar_destroyer
+emp_inf_sigmar_dule_axe
 emp_inf_sigmar_guards
 emp_inf_sigmar_marksmen
+emp_inf_sigmar_oathsworn
+emp_inf_sigmar_thunderbolt_archers
 emp_inf_sons_of_the_reik
 emp_inf_sterntower_marksmen
 emp_inf_vengeful_blades
-emp_mon_eagles_summoned
 haven_crossbowman
 haven_paladin
 haven_praetorian

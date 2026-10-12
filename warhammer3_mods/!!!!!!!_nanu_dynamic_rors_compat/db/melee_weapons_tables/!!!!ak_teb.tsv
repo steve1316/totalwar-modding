@@ -15,7 +15,7 @@ teb_light_scouts	0	0	20	6	2.0000	lance	spear		1	1.0000	0.7500	0.0000	false		0	10
 teb_noble_retinue	10	0	28	12	1.0000	lance	spear		1	1.0000	1.0000	0.0000	false		0	10	5.1000		false
 teb_pike	20	0	18	8	3.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	4.0000		false
 teb_shieldbearers	18	0	21	13	2.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	4.2000	teb_shieldbearers	false
-teb_sisters	22	0	12	20	2.0000	spear	spear		1	1.0000	1.0000	0.0000	false		0	10	4.2000		false
+teb_sisters	22	0	12	20	3.0000	spear	spear		1	1.0000	1.0000	0.0000	false	teb_counterbonus_contact	0	10	4.0000		false
 teb_swash	0	0	26	8	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false	teb_dirty_fighting	0	10	4.0000		false
 teb_tank	0	18	30	70	4.0000	axe	unarmed	very_large	4	0.5000	1.0000	0.0000	false		4	4	7.0000		false
 teb_vespero	0	12	21	11	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	3.8000		false

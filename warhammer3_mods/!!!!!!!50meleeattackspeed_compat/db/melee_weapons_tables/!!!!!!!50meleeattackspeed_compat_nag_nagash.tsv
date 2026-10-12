@@ -1,21 +1,15 @@
 key	bonus_v_large	bonus_v_infantry	damage	ap_damage	weapon_length	melee_weapon_type	audio_type	splash_attack_target_size	splash_attack_max_attacks	splash_attack_power_multiplier	building_damage_multiplier	ignition_amount	is_magical	contact_phase	collision_attack_max_targets	collision_attack_max_targets_cooldown	melee_attack_interval	scaling_damage	is_spell
 #melee_weapons_tables;25;db/melee_weapons_tables/!!!!!!!50meleeattackspeed_compat_nag_nagash
-BAKnag_nagashi_guard_halb	20	0	10	22	2.0000	spear	halberd		4	1.0000	1.0000	0.0000	false		0	10	2.45		false
 nag_bone_golems	0	8	60	30	2.0000	axe	club_medium	medium	5	1.1000	1.0000	0.0000	false		0	10	2.0		false
 nag_burning_dead_axes	0	6	30	9	1.0000	sword	sword		1	1.0000	1.0000	20.0000	true		0	10	2.0		false
 nag_doomed_legion_axe	0	10	34	14	1.0000	axe	axe		1	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	1.9		false
 nag_kalledria_harp	0	10	0	240	3.0000	lance	dlc15_troll_hag_net	very_large	10	2.0000	1.0000	0.0000	true		0	10	2.25		false
 nag_morghasts	0	0	60	120	2.0000	axe	axe	medium	6	1.2000	1.0000	0.0000	false		0	10	2.0		false
-nag_nagash_boss	15	0	180	320	5.0000	sword	sword	large	7	1.0000	1.0000	0.0000	true		0	10	2.0		false
-nag_nagashi_doom_lance	0	0	15	38	0.0000	lance	spear		1	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	2.55		false
 nag_nagashi_guard	0	8	30	14	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	2.2		false
 nag_nagashi_guard_halb	8	0	16	28	2.0000	spear	halberd		4	1.0000	1.0000	0.0000	false		0	10	2.45		false
-nag_nagashi_lance	0	0	12	38	1.0000	lance	spear		1	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	2.55		false
 nag_revenants_magical_wightblade	0	0	16	36	1.0000	sword	sword		1	1.0000	1.0000	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	2.0		false
 nag_sand_crawlies	12	0	28	18	3.0000	axe	creatures_claws	small	2	1.0000	1.0000	0.0000	false		0	10	2.0	wh2_dlc14_skv_cha_snikch	false
 nag_skeleton_reaper_scythe	0	8	12	16	1.0000	axe	halberd	small	1	1.0000	1.0000	0.0000	false		0	10	2.15		false
-nag_spectre_swarm	0	0	0	28	3.0000	sword	creatures_claws	medium	3	1.0000	1.0000	0.0000	true	nag_contact_slownado	0	10	2.15		false
-nag_spirit_hosts	0	0	0	16	1.0000	sword	creatures_claws		1	1.0000	1.0000	0.0000	true		0	10	2.15		false
+nag_undead_chariot	12	0	10	24	5.0000	axe	creatures_claws	very_large	3	1.0000	0.7500	0.0000	false		2	2	2.0		false
 nag_virion_magical_scythe	0	15	18	60	1.0000	axe	unarmed	very_large	4	1.0000	1.0000	0.0000	true		3	2	2.0		false
 nag_warp_ghouls	0	0	40	13	3.0000	axe	creatures_claws	small	1	1.0000	1.0000	0.0000	true	nag_warp_ghouls_poison	0	10	2.0		false
-vigpro_grn_choppa_dual_big_uns	0	8	29	13	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	1.95		false

@@ -2,9 +2,5 @@ key	icon	parent_group
 #ui_unit_groupings_tables;1;db/ui_unit_groupings_tables/!!!!!!!2xunitsize_compat_nag_nagash
 cavalry_flying_scythe	vmp_cavalry_scythe	cavalry_chariots
 nag_bone_colossus	giant	constructs
-nag_morghast	nag_morghast	heroes_agents
 nag_revenants	wh_main_vmp_champion	infantry
-nag_spirits	nag_spirit	infantry
 nag_warp_ghouls	wh2_dlc11_cst_mourngul_haunter	monster_beasts
-wizard_undeath	nag_lore_undeath	heroes_agents
-wizard_undeath_cavalry	nag_lore_undeath	heroes_agents

@@ -4,17 +4,10 @@ nag_bone_golems	0	8	60	30	2.0000	axe	club_medium	medium	5	1.1000	1.0000	0.0000	f
 nag_burning_dead_axes	0	6	30	9	1.0000	sword	sword		1	1.0000	1.0000	20.0000	true		0	10	4.0000		false
 nag_doomed_legion_axe	0	10	34	14	1.0000	axe	axe		1	1.0000	1.2500	0.0000	true	wh2_pro08_unit_contact_dampen	0	10	3.8000		false
 nag_kalledria_harp	0	10	0	240	3.0000	lance	dlc15_troll_hag_net	very_large	10	2.0000	1.0000	0.0000	true		0	10	4.5000		false
-nag_morghasts	0	0	60	120	2.0000	axe	axe	medium	6	1.2000	1.0000	0.0000	false		0	10	4.0000		false
-nag_nagash_boss	15	0	180	320	5.0000	sword	sword	large	7	1.0000	1.0000	0.0000	true		0	10	4.0000		false
-nag_nagashi_doom_lance	0	0	15	38	0.0000	lance	spear		1	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	5.1000		false
 nag_nagashi_guard	0	8	30	14	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	4.4000		false
 nag_nagashi_guard_halb	8	0	16	28	2.0000	spear	halberd		4	1.0000	1.0000	0.0000	false		0	10	4.9000		false
-nag_nagashi_lance	0	0	12	38	1.0000	lance	spear		1	1.0000	0.7500	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	5.1000		false
 nag_revenants_magical_wightblade	0	0	16	36	1.0000	sword	sword		1	1.0000	1.0000	0.0000	true	wh_dlc08_unit_contact_frostbite	0	10	4.0000		false
 nag_sand_crawlies	12	0	28	18	3.0000	axe	creatures_claws	small	2	1.0000	1.0000	0.0000	false		0	10	4.0000	wh2_dlc14_skv_cha_snikch	false
 nag_skeleton_reaper_scythe	0	8	12	16	1.0000	axe	halberd	small	1	1.0000	1.0000	0.0000	false		0	10	4.3000		false
-nag_spectre_swarm	0	0	0	28	3.0000	sword	creatures_claws	medium	3	1.0000	1.0000	0.0000	true	nag_contact_slownado	0	10	4.3000		false
-nag_spirit_hosts	0	0	0	16	1.0000	sword	creatures_claws		1	1.0000	1.0000	0.0000	true		0	10	4.3000		false
 nag_virion_magical_scythe	0	15	18	60	1.0000	axe	unarmed	very_large	4	1.0000	1.0000	0.0000	true		3	2	4.0000		false
 nag_warp_ghouls	0	0	40	13	3.0000	axe	creatures_claws	small	1	1.0000	1.0000	0.0000	true	nag_warp_ghouls_poison	0	10	4.0000		false
-vigpro_grn_choppa_dual_big_uns	0	8	29	13	1.0000	sword	sword		1	1.0000	1.0000	0.0000	false		0	10	3.9000		false
