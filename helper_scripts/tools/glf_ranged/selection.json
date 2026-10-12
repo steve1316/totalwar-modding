@@ -2,73 +2,98 @@
  "ignore": [],
  "units": {
   "wh2_dlc09_tmb_cha_arkhan_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_arkhan_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_arkhan_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_arkhan_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_arkhan_2": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_arkhan_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_khatep_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_khatep_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_khatep_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_tmb_khatep_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_khatep_2": {
-   "fwm": false,
+   "fwm": true,
+   "missile": "glf_tmb_khatep_missile",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_khatep_3": {
+   "fwm": true,
    "missile": "glf_tmb_khatep_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_death_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_death_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_death_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_light_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_light_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_light_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_nehekhara_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nehekhara_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_nehekhara_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_nehekhara_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_shadow_0": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
    "ranged": true
   },
   "wh2_dlc09_tmb_cha_liche_priest_shadow_1": {
-   "fwm": false,
+   "fwm": true,
    "missile": "glf_mage_hero_shadows_missile",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_settra_0": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_settra_1": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_settra_2": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh2_dlc09_tmb_cha_settra_3": {
+   "fwm": true,
+   "missile": "",
    "ranged": true
   },
   "wh2_dlc10_def_cha_sorceress_beasts_0": {
@@ -1662,6 +1687,86 @@
    "ranged": true
   },
   "wh3_dlc29_skv_cha_thanquol_boneripper_warpfire_projectors": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_dread_abyssal": {
+   "fwm": true,
+   "missile": "glf_tmb_arkhan_missile",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_the_black_mp": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_the_black_skeletal_steed_mp": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_arkhan_the_black_skeleton_chariot_mp": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_death": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_death_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_light": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_light_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_nehekhara": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_nehekhara_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_shadow": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_shadow_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_high_priest_undeath_skeletal_steed": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_priest_undeath": {
+   "fwm": true,
+   "missile": "",
+   "ranged": true
+  },
+  "wh3_dlc29_tmb_cha_liche_priest_undeath_skeletal_steed": {
    "fwm": true,
    "missile": "",
    "ranged": true
