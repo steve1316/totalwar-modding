@@ -526,7 +526,7 @@ def read_table(pack_path: str, table: str) -> List[Dict[str, str]]:
     """
     dest = f"{SCRATCH}/{table}"
     shutil.rmtree(dest, ignore_errors=True)
-    cached_pack_extract(pack_path, f"db/{table}", dest, capture_output=True)
+    cached_pack_extract(pack_path, f"db/{table}", dest)
     if os.path.isdir(dest) and not table_readable(dest):
         raise RuntimeError(f"rpfm could not decode {table} in {pack_path}. Update the rpfm schema (`python update.py` does it first) and try again.")
     rows: List[Dict[str, str]] = []

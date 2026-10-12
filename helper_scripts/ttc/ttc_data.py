@@ -205,7 +205,7 @@ def load_loc_names() -> Dict[str, str]:
     packs = [(mod["package_name"], mod["path"]) for mod in SUPPORTED_MODS if mod["path"] and os.path.exists(mod["path"])]
     for tag, pack_path in packs + [("vanilla_local_en", VANILLA_LOC_PACK)]:
         dest = f"{SCRATCH}/loc/{tag.replace('.pack', '').replace(' ', '_')}"
-        cached_pack_extract(pack_path, "text", dest, capture_output=True)
+        cached_pack_extract(pack_path, "text", dest)
         read_loc_names(dest, names)
     return names
 
@@ -477,9 +477,9 @@ def _load_tables(pack_path: str, tag: str, vanilla: bool) -> Dict[str, List[Dict
     for table in UNIT_TABLES:
         dest = f"{SCRATCH}/{tag}/{table}"
         if vanilla:
-            cached_pack_extract(pack_path, f"db/{table}/data__", dest, source_kind="file", capture_output=True)
+            cached_pack_extract(pack_path, f"db/{table}/data__", dest, source_kind="file")
         else:
-            cached_pack_extract(pack_path, f"db/{table}", dest, capture_output=True)
+            cached_pack_extract(pack_path, f"db/{table}", dest)
         tables[table] = _rows(dest)
     return tables
 
@@ -492,7 +492,7 @@ def load_all() -> TtcData:
         for a key wins.
     """
     data = TtcData()
-    cached_pack_extract(BASE_TTC_PACK, "script/ttc", f"{SCRATCH}/base", tables_as_tsv=False, capture_output=True)
+    cached_pack_extract(BASE_TTC_PACK, "script/ttc", f"{SCRATCH}/base", tables_as_tsv=False)
     base_list = f"{SCRATCH}/base/script/ttc/ttc_vanilla_units.lua"
     if os.path.exists(base_list):
         with open(base_list, "r", encoding="utf-8", errors="replace") as f:
@@ -548,7 +548,7 @@ def load_all() -> TtcData:
             continue
         scripts_root = f"{SCRATCH}/{tag}/scripts"
         for source in ("script/ttc", "script/campaign/mod"):
-            cached_pack_extract(mod["path"], source, scripts_root, tables_as_tsv=False, capture_output=True)
+            cached_pack_extract(mod["path"], source, scripts_root, tables_as_tsv=False)
         for key, label in mod_ttc_entries(scripts_root).items():
             data.mod_labeled_keys.add(key)
             if key not in data.labels:
