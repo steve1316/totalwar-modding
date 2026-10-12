@@ -24,7 +24,7 @@ from core.pipeline import SCHEMA_RON_PATH
 from core.utilities import TEMP_DIR, clear_temp_root, log_elapsed_time, run_rpfm_cli, setup_script_logging
 from data.supported_mods import SUPPORTED_MODS
 from tools.glf_ranged import catalog
-from tools.glf_ranged.anim_meta import FirePos, add_fire_pos, faces_backward, faces_forward, read_anim_header, read_fire_pos
+from tools.glf_ranged.anim_meta import AnimHeader, FirePos, add_fire_pos, faces_backward, faces_forward, read_anim_header, read_fire_pos
 from tools.glf_rebuild_animpack import (
     ALL_WEAPONS,
     GLF_ANIMPACK_PATH,
@@ -57,6 +57,11 @@ FIRE_SLOTS = {
 }
 # Slots that play a fire animation, checked for animations that face backwards.
 FIRE_FAMILY = re.compile(r"^(FIRE_|MOVING_FIRE_|RIDER_FIRE_|RIDER_SHOOT_TURN_)")
+# Set name to the animation its fire slots play instead of a cast, for riders whose only casts stand them up. The Astromancer's Great Moon Bird
+# casts are his on-foot casts, so he fires with his seated staff swing (2026-10-12).
+FIRE_ANIM_OVERRIDES = {
+    "hu1e_dlc24_bi1_eagle_mage_hero": "animations/battle/humanoid01e/rider/eagle/attacks/hu1e_dlc24_bi1_eagle_mage_hero_astromancer_attack_01.anim",
+}
 # Shoot stance slots and the slots they copy, which vanilla units that fire while moving on foot also have.
 SHOOT_SOURCES = [
     ("SHOOT_STAND", "STAND"),
@@ -374,18 +379,71 @@ def find_fire_ref(anim_set: AnimSet, kind: str, ids: Dict[str, int], files: Game
         header = read_anim_header(anim)
         if not faces_forward(header):
             continue
-        meta = files.read(ref.meta) if ref.meta else None
-        if override is None and meta and read_fire_pos(meta):
-            return slot, ref
-        new_path = fire_meta_path(ref.anim)
-        if override is not None:
-            fire = FirePos(override[0], tuple(override[1:4]))
-        else:
-            ratio, position = defaults.get(header.skeleton, defaults["*"])
-            fire = FirePos(round(ratio * header.length, 3), position)
-        result.metas[new_path] = add_fire_pos(meta, fire)
-        return slot, AnimRef(ref.anim, new_path, ref.sound)
+        return slot, marked_ref(ref, header, files, defaults, override, result)
     return None
+
+
+def marked_ref(ref: AnimRef, header: AnimHeader, files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> AnimRef:
+    """Make sure an animation has a fire marker, writing a GLF copy of its meta with one when it does not.
+
+    Args:
+        ref (AnimRef): The animation, meta and sound to fire with.
+        header (AnimHeader): The animation's header.
+        files (GameFiles): File reader.
+        defaults (Dict): Fire defaults from `fire_defaults`.
+        override (Optional[List[float]]): `[time, x, y, z]` from the selection, or None.
+        result (Result): Collects fire metas written.
+
+    Returns:
+        The reference the fire slots should use.
+    """
+    meta = files.read(ref.meta) if ref.meta else None
+    if override is None and meta and read_fire_pos(meta):
+        return ref
+    new_path = fire_meta_path(ref.anim)
+    if override is not None:
+        fire = FirePos(override[0], tuple(override[1:4]))
+    else:
+        ratio, position = defaults.get(header.skeleton, defaults["*"])
+        fire = FirePos(round(ratio * header.length, 3), position)
+    result.metas[new_path] = add_fire_pos(meta, fire)
+    return AnimRef(ref.anim, new_path, ref.sound)
+
+
+def use_fire_anim_override(anim_set: AnimSet, ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> List[str]:
+    """Point every fire slot of a set listed in `FIRE_ANIM_OVERRIDES` at its chosen animation.
+
+    Args:
+        anim_set (AnimSet): Set to change in place.
+        ids (Dict[str, int]): Slot id by name.
+        files (GameFiles): File reader.
+        defaults (Dict): Fire defaults from `fire_defaults`.
+        override (Optional[List[float]]): Fire marker override from the selection, or None.
+        result (Result): Collects fire metas written.
+
+    Returns:
+        The changed slot names, each marked `(override)`.
+    """
+    anim_path = FIRE_ANIM_OVERRIDES.get(anim_set.name)
+    if anim_path is None:
+        return []
+    names = {slot_id: name for name, slot_id in ids.items()}
+    meta_path = os.path.splitext(anim_path)[0] + ".anm.meta"
+    files.prefetch([anim_path, meta_path])
+    anim = files.read(anim_path)
+    if anim is None:
+        result.manual.append(f"{anim_set.name}: fire animation override {anim_path} not found")
+        return []
+    header = read_anim_header(anim)
+    changed = []
+    for i, slot in enumerate(anim_set.slots):
+        name = names.get(slot.slot_id, "")
+        if FIRE_FAMILY.match(name) and slot.refs and slot.refs[0].anim != anim_path:
+            sound = slot.refs[0].sound
+            ref = marked_ref(AnimRef(anim_path, meta_path if files.read(meta_path) is not None else "", sound), header, files, defaults, override, result)
+            anim_set.slots[i] = replace(slot, refs=[ref])
+            changed.append(f"{name} (override)")
+    return changed
 
 
 def replace_backwards_fire(anim_set: AnimSet, ids: Dict[str, int], files: GameFiles, defaults: Dict, override: Optional[List[float]], result: Result) -> List[str]:
@@ -497,6 +555,7 @@ def patch_set(anim_set: AnimSet, kinds: Set[str], ids: Dict[str, int], files: Ga
             added += copy_slots(anim_set, COMBAT_READY_SOURCES, ids, present)
     for kind in sorted(fwm_kinds):
         added += add_moving_fire(anim_set, kind, ids, present, files, defaults, override, result)
+    added += use_fire_anim_override(anim_set, ids, files, defaults, override, result)
     return added
 
 
