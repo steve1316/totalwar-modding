@@ -6,16 +6,23 @@ Confidence cutoffs are tuned by 5-fold cross-validation so held-out confident pi
 import argparse
 import bisect
 import collections
+import hashlib
+import logging
+import os
+import pickle
 import re
 import sys
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
+from joblib import parallel_config
 import numpy as np
+import sklearn
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, cross_val_predict
 
+from core.extract_cache import file_sha256
 from ttc.ttc_data import UnitStats
 
 CONFIDENT_ACCURACY_BAR = 0.95
@@ -27,6 +34,8 @@ STEM_NOISE = {"wh", "wh2", "wh3", "main", "dlc", "ror", "twa", "pro", "ie", "glf
 STEM_NOISE_PATTERN = re.compile(r"dlc\d+|twa\d+|pro\d+")
 # Labeled units within this share of a unit's cost count as its priced peers.
 PEER_COST_WINDOW = 0.1
+# Cross-validation folds. They are fitted at once, each worker with an even share of the CPU threads.
+CV_FOLDS = 5
 
 
 def _number(value: str) -> float:
@@ -322,7 +331,66 @@ def _pick_threshold(confidences: np.ndarray, correct: np.ndarray) -> float:
     return float("inf")
 
 
-def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = None, context: Optional[PeerContext] = None) -> Tuple[Model, Metrics]:
+def _training_hash(vectorizer: DictVectorizer, matrix: np.ndarray, original: List[str], groups: Optional[List[str]]) -> str:
+    """Hash everything a training run reads, so an unchanged run can reuse the saved model.
+
+    Args:
+        vectorizer (DictVectorizer): Fitted feature vectorizer.
+        matrix (np.ndarray): Feature matrix of the labeled units.
+        original (List[str]): Original label per unit.
+        groups (Optional[List[str]]): Label source per unit, or None.
+
+    Returns:
+        The hex digest.
+    """
+    digest = hashlib.sha256(sklearn.__version__.encode())
+    digest.update(file_sha256(__file__).encode())
+    digest.update("\n".join(vectorizer.get_feature_names_out()).encode())
+    digest.update(np.ascontiguousarray(matrix).tobytes())
+    digest.update("\n".join(original).encode())
+    digest.update("\n".join(groups or []).encode())
+    return digest.hexdigest()
+
+
+def _load_cached_model(cache_path: str, input_hash: str) -> Optional[dict]:
+    """Read a saved model if it was trained on the same inputs.
+
+    Args:
+        cache_path (str): Saved model file.
+        input_hash (str): Hash of the current training inputs.
+
+    Returns:
+        The saved `estimator` and `metrics`, or None when the file is missing, unreadable or from different inputs.
+    """
+    try:
+        with open(cache_path, "rb") as f:
+            cached = pickle.load(f)
+    except FileNotFoundError:
+        return None
+    except Exception as e:
+        logging.warning(f"TTC classifier: could not read the saved model ({e}). Training again.")
+        return None
+    return cached if cached.get("hash") == input_hash else None
+
+
+def _save_cached_model(cache_path: str, input_hash: str, estimator: HistGradientBoostingClassifier, metrics: Metrics) -> None:
+    """Atomically save a trained model with the hash of its inputs.
+
+    Args:
+        cache_path (str): Destination file.
+        input_hash (str): Hash of the training inputs.
+        estimator (HistGradientBoostingClassifier): Fitted model.
+        metrics (Metrics): Its held-out metrics.
+    """
+    os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+    with open(f"{cache_path}.tmp", "wb") as f:
+        pickle.dump({"hash": input_hash, "estimator": estimator, "metrics": metrics}, f)
+    os.replace(f"{cache_path}.tmp", cache_path)
+
+
+def train(
+    labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = None, context: Optional[PeerContext] = None, cache_path: Optional[str] = None
+) -> Tuple[Model, Metrics]:
     """Cross-validate to pick the confidence threshold, then fit the final model on every entry.
 
     Args:
@@ -330,6 +398,8 @@ def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = No
         groups (Optional[List[str]]): Label source per unit. When given, a second cross-validation keeps each source in one fold to report how well
             units from a mod the model has never seen are predicted. It does not change the threshold.
         context (Optional[PeerContext]): Adds counterpart and peer features, mirroring how caps are priced by hand.
+        cache_path (Optional[str]): File to save the trained model in. A later run with the same features, labels and code reuses it instead of
+            training again.
 
     Returns:
         The trained model and its held-out metrics.
@@ -338,17 +408,28 @@ def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = No
     targets = np.array(merge_rare_labels(original))
     vectorizer = DictVectorizer(sparse=False)
     matrix = vectorizer.fit_transform([feature_dict(stats, context) for stats, _ in labeled])
+    input_hash = _training_hash(vectorizer, matrix, original, groups) if cache_path else ""
+    cached = _load_cached_model(cache_path, input_hash) if cache_path else None
+    if cached:
+        logging.info("TTC classifier: features, labels and code are unchanged. Reusing the saved model.")
+        return Model(vectorizer, cached["estimator"], cached["metrics"].threshold, labeled, context), cached["metrics"]
+
     estimator = HistGradientBoostingClassifier(random_state=0)
-    probabilities = cross_val_predict(estimator, matrix, targets, cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=0), method="predict_proba")
+    logging.info(f"TTC classifier: cross-validating on {len(labeled)} entries with {matrix.shape[1]} features (1/3)...")
     classes = np.unique(targets)
+    truth = np.array(original)
     unseen_mod_exact = None
-    if groups is not None:
-        folds = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=0)
-        grouped = cross_val_predict(estimator, matrix, targets, groups=groups, cv=folds, method="predict_proba")
-        unseen_mod_exact = float((classes[grouped.argmax(axis=1)] == np.array(original)).mean())
+    # Without a cap every worker starts one thread per CPU and they slow each other down.
+    with parallel_config(backend="loky", inner_max_num_threads=max(1, (os.cpu_count() or 1) // CV_FOLDS)):
+        folds = StratifiedKFold(n_splits=CV_FOLDS, shuffle=True, random_state=0)
+        probabilities = cross_val_predict(estimator, matrix, targets, cv=folds, method="predict_proba", n_jobs=CV_FOLDS)
+        if groups is not None:
+            logging.info("TTC classifier: cross-validating with each mod held out whole (2/3)...")
+            folds = StratifiedGroupKFold(n_splits=CV_FOLDS, shuffle=True, random_state=0)
+            grouped = cross_val_predict(estimator, matrix, targets, groups=groups, cv=folds, method="predict_proba", n_jobs=CV_FOLDS)
+            unseen_mod_exact = float((classes[grouped.argmax(axis=1)] == truth).mean())
     picks = classes[probabilities.argmax(axis=1)]
     confidences = probabilities.max(axis=1)
-    truth = np.array(original)
     correct = picks == truth
     threshold = _pick_threshold(confidences, correct)
     mask = confidences >= threshold
@@ -361,8 +442,11 @@ def train(labeled: List[Tuple[UnitStats, str]], groups: Optional[List[str]] = No
         n=len(labeled),
         unseen_mod_exact=unseen_mod_exact,
     )
+    logging.info("TTC classifier: fitting the final model (3/3)...")
     estimator.fit(matrix, targets)
-    return Model(vectorizer, estimator, threshold, labeled, context), metrics
+    if cache_path:
+        _save_cached_model(cache_path, input_hash, estimator, metrics)
+    return Model(vectorizer, estimator, metrics.threshold, labeled, context), metrics
 
 
 def training_groups(data) -> List[str]:
