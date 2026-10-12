@@ -66,6 +66,22 @@ def is_renown(row: Dict[str, Any]) -> bool:
     return str(row.get("is_renown", "")).lower() == "true"
 
 
+def unit_tier(row: Dict[str, Any]) -> str:
+    """Turn a main_units row's `tier` into a `TIER_NAMES` key, clamping values outside 0-5 that some mod authors typo (e.g. 1600).
+
+    Args:
+        row (Dict[str, Any]): The main_units row.
+
+    Returns:
+        The tier key, e.g. `tier_3`.
+    """
+    tier = int(row["tier"])
+    clamped = min(max(tier, 0), len(TIER_NAMES) - 1)
+    if clamped != tier:
+        logging.warning(f"Clamped out-of-range tier {tier} to {clamped} for land unit '{row['land_unit']}'")
+    return f"tier_{clamped}"
+
+
 def is_in_main_roster(unit_key: str, faction: str, renown: bool, recruit_groups: Dict[str, Set[str]]) -> bool:
     """Decide whether a regular vanilla unit belongs in a culture's random army pool.
 
@@ -408,6 +424,8 @@ def tsv_to_faction_data(
                     unmatched_units.append(row["land_unit"])
                 continue
 
+            tier = unit_tier(row)
+
             # Process the unit for each faction
             for faction_value in faction_values:
                 if faction_value is None:
@@ -425,7 +443,6 @@ def tsv_to_faction_data(
                     factions_data[faction_value] = {"units": {tier: {cat: [] for cat in UNIT_CATEGORIES} for tier in TIER_NAMES}}
 
                 # Save the unit data.
-                tier = f"tier_{int(row['tier'])}"
                 caste_category = row["caste"]
                 if caste_category in factions_data[faction_value]["units"][tier]:
                     # Lords and heroes are saved into their own lists below. Regular vanilla units must be in the culture's main roster.

@@ -94,3 +94,9 @@ def test_unmatched_units_are_collected_instead_of_warned():
     data = pmu.tsv_to_faction_data({"package_name": "vanilla"}, {}, [{"emp": "emp"}], units, empty, empty, empty, empty, unmatched_units=unmatched)
     assert data == {}
     assert unmatched == ["wh_main_teb_cha_captain_0"]
+
+
+def test_out_of_range_tier_is_clamped():
+    assert pmu.unit_tier({"land_unit": "ok", "tier": "3"}) == "tier_3"
+    assert pmu.unit_tier({"land_unit": "ete_ror", "tier": "1600"}) == "tier_5"
+    assert pmu.unit_tier({"land_unit": "neg", "tier": "-2"}) == "tier_0"
