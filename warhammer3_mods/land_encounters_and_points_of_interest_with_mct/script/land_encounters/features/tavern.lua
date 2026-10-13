@@ -402,7 +402,7 @@ function TavernState:offer_capture(faction, character)
     self.pending_capture = true
     self:show_capture_terms(faction)
     log("tavern: " .. faction:name() .. " may seize the " .. self:describe() .. " from " .. self.controlling_faction_name)
-    cm:trigger_dilemma(faction:name(), EVENT_CAPTURE)
+    dilemmas.trigger(faction:name(), EVENT_CAPTURE)
 end
 
 --- Sets the level (clamped to 1-3) and swaps the map marker to that level's skin.

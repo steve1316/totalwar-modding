@@ -33,6 +33,11 @@ local M = {
     charges_by_faction = {},
     --- Faction key -> gold a just-answered choice charged that the game has not taken from the treasury yet. Cleared a moment later.
     unsettled = {},
+    --- Faction key -> dilemma key -> true for each LEAPOI dilemma shown and not answered yet. Saved. A battle started under an open dilemma
+    --- locks the campaign, so the tower waits on these.
+    open_by_faction = {},
+    --- Called with a faction key a moment after it answers a dilemma and has no LEAPOI dilemma left open. The tower sets it.
+    when_clear = function() end,
 }
 
 --- The choice keys of a dilemma in order, as the DB names them.
@@ -98,7 +103,47 @@ function M.launch(key, choices, faction_name)
     set_entry(M.charges_by_faction, faction_name, key, next(charges) and charges or nil)
     set_entry(M.closed_by_faction, faction_name, key, #closed > 0 and closed or nil)
     set_entry(M.refunds_by_faction, faction_name, key, next(refunds) and refunds or nil)
+    M.mark_open(faction_name, key)
     cm:launch_custom_dilemma_from_builder(builder, faction)
+end
+
+--- Notes a dilemma as shown to a faction until it is answered. `M.launch` and `M.trigger` do it themselves.
+--- @param faction_name string The faction key.
+--- @param key string The dilemma key.
+function M.mark_open(faction_name, key)
+    set_entry(M.open_by_faction, faction_name, key, true)
+end
+
+--- Shows a dilemma built in the DB (not by script) and notes it as open, see `M.mark_open`.
+--- @param faction_name string The faction key.
+--- @param key string The dilemma key.
+function M.trigger(faction_name, key)
+    cm:trigger_dilemma(faction_name, key)
+    M.mark_open(faction_name, key)
+end
+
+--- True while a faction has a LEAPOI dilemma open.
+--- @param faction_name string The faction key.
+--- @returns boolean True when one is open.
+function M.any_open(faction_name)
+    return next(M.open_by_faction[faction_name] or {}) ~= nil
+end
+
+--- The keys of a faction's open LEAPOI dilemmas, sorted.
+--- @param faction_name string The faction key.
+--- @returns table The dilemma keys.
+function M.open_keys(faction_name)
+    return sorted_keys(M.open_by_faction[faction_name] or {})
+end
+
+--- At a human faction's turn start: forgets its open dilemmas, since a turn cannot end with one open. The tower then closes a delve whose
+--- step one of them held, as it does any delve left from last turn.
+--- @param faction_name string The faction whose turn starts.
+function M.on_faction_turn_start(faction_name)
+    if not M.any_open(faction_name) then return end
+    log("dilemmas: " .. faction_name .. " starts its turn with " .. table.concat(M.open_keys(faction_name), ", ")
+        .. " still marked open, forgetting them")
+    M.open_by_faction[faction_name] = nil
 end
 
 --- Finds the slot a choice key belongs to, for a dilemma built from slots (records with a `choice` key and an `ok` flag).
@@ -123,6 +168,11 @@ end
 --- @param dilemma_key string The answered dilemma's key.
 --- @param choice_key string The chosen choice key.
 function M.settle(faction_name, dilemma_key, choice_key)
+    if (M.open_by_faction[faction_name] or {})[dilemma_key] then
+        set_entry(M.open_by_faction, faction_name, dilemma_key, nil)
+        --- After every other listener, since one may open the next dilemma.
+        cm:callback(function() if not M.any_open(faction_name) then M.when_clear(faction_name) end end, 0)
+    end
     local charges = (M.charges_by_faction[faction_name] or {})[dilemma_key]
     if charges == nil then return end
     set_entry(M.charges_by_faction, faction_name, dilemma_key, nil)
@@ -294,10 +344,10 @@ end
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Saves
 
---- Exports the registered closed choices and refunds for the save file.
---- @returns table { closed_by_faction, refunds_by_faction }.
+--- Exports the registered closed choices, refunds and open dilemmas for the save file.
+--- @returns table { closed_by_faction, refunds_by_faction, open_by_faction }.
 function M.export_state()
-    return { closed_by_faction = M.closed_by_faction, refunds_by_faction = M.refunds_by_faction }
+    return { closed_by_faction = M.closed_by_faction, refunds_by_faction = M.refunds_by_faction, open_by_faction = M.open_by_faction }
 end
 
 --- Restores the state saved by `M.export_state`, from the load callback. A save from before the registry restores nothing.
@@ -306,6 +356,7 @@ function M.restore_state(saved)
     saved = saved or {}
     M.closed_by_faction = saved.closed_by_faction or {}
     M.refunds_by_faction = saved.refunds_by_faction or {}
+    M.open_by_faction = saved.open_by_faction or {}
 end
 
 return M

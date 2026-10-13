@@ -6,6 +6,7 @@
 require("script/land_encounters/utils/common")
 
 local realm_effects = require("script/land_encounters/core/realm_effects")
+local dilemmas = require("script/land_encounters/core/dilemmas")
 local Army = require("script/land_encounters/core/army")
 
 local FIRST_OPTION = 0
@@ -233,7 +234,7 @@ function OwnedPoint:check_siege_at_turn_start(faction_name)
         return false
     end
     self:log_siege(faction_name .. " must fight for or surrender the " .. self:describe() .. " besieged by " .. tostring(self.besieging_faction_name))
-    cm:trigger_dilemma(faction_name, self.SIEGE.defense_event)
+    dilemmas.trigger(faction_name, self.SIEGE.defense_event)
     return true
 end
 

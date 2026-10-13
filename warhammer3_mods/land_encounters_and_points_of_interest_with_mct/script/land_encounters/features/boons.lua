@@ -40,8 +40,13 @@ local M = {
     pending = {},
     --- Faction key -> the boons offered on the pick dilemma: { cqi, keys }.
     picks = {},
+    --- Faction key -> boon dilemmas waiting for the open one to be answered, oldest first: { kind = "full", cqi, entry } or
+    --- { kind = "pick", cqi, keys, level }. Only one is open at a time, since a second would replace the first one's record.
+    queued = {},
     --- Faction key -> faction-wide key -> the turn its bundle runs out. The game counts the bundle down and takes it off.
     realms = {},
+    --- Called with a faction key once it has answered its last open boon dilemma. The tower sets it to go on with a delve that waited.
+    when_answered = function() end,
 }
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,6 +57,13 @@ local M = {
 --- @returns boolean True when enabled.
 function M.enabled()
     return get_mct_settings()[data.enable_setting] ~= false
+end
+
+--- True while a faction has a full-slots or pick dilemma open.
+--- @param faction_name string The faction key.
+--- @returns boolean True while one waits for an answer.
+function M.asking(faction_name)
+    return M.pending[faction_name] ~= nil or M.picks[faction_name] ~= nil or #(M.queued[faction_name] or {}) > 0
 end
 
 --- How many boons or curses a lord can carry.
@@ -329,10 +341,10 @@ local function add(character, kind, entry, event)
     notify(event, character, kind, entry)
 end
 
---- Asks which boon a lord with full slots gives up for a new one: one choice per boon they carry, then the new one.
+--- Opens the dilemma asking which boon a lord with full slots gives up for a new one: one choice per boon they carry, then the new one.
 --- @param character userdata The lord.
 --- @param entry table The new boon's entry.
-local function ask_full(character, entry)
+local function open_full(character, entry)
     local faction_name = character:faction():name()
     local choices = {}
     for i, boon in ipairs(record_of(character).boon) do choices[#choices + 1] = { key = data.full_choices[i], lines = { M.line("boon", boon) } } end
@@ -341,6 +353,56 @@ local function ask_full(character, entry)
     common.set_context_value(data.lord_context, lord_name(character))
     log("boons: lord " .. character:command_queue_index() .. " has full boon slots, asking which to give up for " .. M.bundle("boon", entry))
     dilemmas.launch(data.full_dilemma, choices, faction_name)
+end
+
+--- Opens the dilemma letting a lord choose one of a few boons.
+--- @param character userdata The lord.
+--- @param keys table The boon keys offered, at most one per pick choice.
+--- @param level number The level the chosen boon starts at.
+local function open_pick(character, keys, level)
+    local faction_name = character:faction():name()
+    local choices = {}
+    for i, key in ipairs(keys) do choices[i] = { key = data.pick_choices[i], lines = { M.line("boon", { key = key, level = level }) } } end
+    M.picks[faction_name] = { cqi = tostring(character:command_queue_index()), keys = keys, level = level }
+    common.set_context_value(data.lord_context, lord_name(character))
+    log("boons: lord " .. character:command_queue_index() .. " chooses one of " .. table.concat(keys, ", ") .. " at level " .. level)
+    dilemmas.launch(data.pick_dilemma, choices, faction_name)
+end
+
+--- Opens a faction's oldest waiting boon dilemma, unless one is open already. A lord who is gone has its question dropped.
+--- @param faction_name string The faction key.
+local function open_next(faction_name)
+    local queue = M.queued[faction_name] or {}
+    while M.pending[faction_name] == nil and M.picks[faction_name] == nil and #queue > 0 do
+        local question = table.remove(queue, 1)
+        local character = tower_army.character(tonumber(question.cqi))
+        if character and question.kind == "full" then
+            open_full(character, question.entry)
+        elseif character then
+            open_pick(character, question.keys, question.level)
+        end
+    end
+end
+
+--- Queues a boon dilemma for a lord's faction and opens it now when no other boon dilemma is open.
+--- @param character userdata The lord.
+--- @param question table The question, see `M.queued`, without its `cqi`.
+local function ask(character, question)
+    local faction_name = character:faction():name()
+    question.cqi = tostring(character:command_queue_index())
+    M.queued[faction_name] = M.queued[faction_name] or {}
+    table.insert(M.queued[faction_name], question)
+    if M.pending[faction_name] or M.picks[faction_name] then
+        log("boons: lord " .. question.cqi .. "'s " .. question.kind .. " dilemma waits for the open boon dilemma")
+    end
+    open_next(faction_name)
+end
+
+--- After a boon dilemma is answered: opens the next waiting one, or tells `M.when_answered` once none is left. A gained boon can ask again.
+--- @param faction_name string The faction that answered.
+local function settle(faction_name)
+    open_next(faction_name)
+    if not M.asking(faction_name) then M.when_answered(faction_name) end
 end
 
 --- Gives a lord a boon or curse. One they already carry rises a level instead (a charged boon gets its battles back). A new boon with full
@@ -370,7 +432,7 @@ function M.gain(character, kind, key, level, race, event)
         return true, entry
     end
     if kind == "boon" then
-        ask_full(character, entry)
+        ask(character, { kind = "full", entry = entry })
         return true
     end
     local mildest = nil
@@ -387,16 +449,16 @@ function M.on_full_choice(faction_name, choice_key)
     local pending = M.pending[faction_name]
     M.pending[faction_name] = nil
     local character = pending and tower_army.character(tonumber(pending.cqi))
-    if not character then return end
-    if choice_key == data.full_new_choice then
-        log("boons: lord " .. pending.cqi .. " refuses " .. M.bundle("boon", pending.entry))
-        return
+    if character then
+        local slot = CHOICE_SLOT[choice_key]
+        if choice_key == data.full_new_choice then
+            log("boons: lord " .. pending.cqi .. " refuses " .. M.bundle("boon", pending.entry))
+        elseif slot then
+            M.remove(character, "boon", slot, "boon_lost")
+            add(character, "boon", pending.entry)
+        end
     end
-    local slot = CHOICE_SLOT[choice_key]
-    if slot then
-        M.remove(character, "boon", slot, "boon_lost")
-        add(character, "boon", pending.entry)
-    end
+    settle(faction_name)
 end
 
 --- Gives a faction a faction-wide boon or curse for `realm_turns` turns and says so. Its bundle goes on with that duration, so the game shows
@@ -521,13 +583,7 @@ function M.offer_pick(character, source, count, level)
         if i <= math.min(count, #data.pick_choices) then keys[i] = key end
     end
     if #keys == 0 then return end
-    local faction_name = character:faction():name()
-    local choices = {}
-    for i, key in ipairs(keys) do choices[i] = { key = data.pick_choices[i], lines = { M.line("boon", { key = key, level = level }) } } end
-    M.picks[faction_name] = { cqi = tostring(character:command_queue_index()), keys = keys, level = level }
-    common.set_context_value(data.lord_context, lord_name(character))
-    log("boons: lord " .. character:command_queue_index() .. " chooses one of " .. table.concat(keys, ", ") .. " at level " .. level)
-    dilemmas.launch(data.pick_dilemma, choices, faction_name)
+    ask(character, { kind = "pick", keys = keys, level = level })
 end
 
 --- Resolves the pick dilemma: the lord gains the chosen boon.
@@ -539,6 +595,7 @@ function M.on_pick_choice(faction_name, choice_key)
     local character = pick and tower_army.character(tonumber(pick.cqi))
     local key = character and pick.keys[CHOICE_SLOT[choice_key] or 0]
     if key then M.gain(character, "boon", key, pick.level) end
+    settle(faction_name)
 end
 
 --- After a LEAPOI fight: a hard or modified win may give the lord a boon, a loss may give a curse, and each of the fight's battle modifiers
@@ -760,7 +817,7 @@ end
 --- Exports the lords' boons and curses, the faction-wide ones' end turns, and any open full-slots or pick question for the save file.
 --- @returns table The state.
 function M.export_state()
-    return { lords = M.lords, pending = M.pending, picks = M.picks, realms = M.realms }
+    return { lords = M.lords, pending = M.pending, picks = M.picks, queued = M.queued, realms = M.realms }
 end
 
 --- Restores the lords' boons and curses from the save file. A save from before boons restores none.
@@ -770,6 +827,7 @@ function M.restore_state(saved)
     M.lords = saved.lords or {}
     M.pending = saved.pending or {}
     M.picks = saved.picks or {}
+    M.queued = saved.queued or {}
     M.realms = saved.realms or {}
 end
 
