@@ -1976,6 +1976,7 @@ SUPPORTED_MODS = [
         "name": "The Jade-Blooded Vampires: Islanders of the Moon",
         "package_name": "jade_vamp_pol_IotM.pack",
         "path": f"{STEAM_LIBRARY_DRIVE}/SteamLibrary/steamapps/workshop/content/1142710/3032432016/jade_vamp_pol_IotM.pack",
+        "parent_mods": ["jade_vamp_pol.pack"],
         "modified_attributes": ["melee", "ranged_arc", "velocity"],
         "ignore_generation": True,
         "pattern_overrides": {"*": "cth"},

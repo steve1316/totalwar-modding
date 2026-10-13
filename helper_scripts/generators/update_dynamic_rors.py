@@ -23,9 +23,11 @@ from core.delta import publish_pack
 from core.pipeline import (
     DuplicateTracker,
     add_folder_to_pack,
+    add_parent_mod_rows,
     clean_folder_name,
     cleanup_modded_folders,
     extract_and_load_table_data,
+    fail_on_broken_links,
     load_vanilla_keys,
     make_new_data_buckets,
     reset_pack_folders,
@@ -700,6 +702,7 @@ if __name__ == "__main__":
             if table_data is None:
                 cleanup_modded_folders(scratch_root=scratch_root)
                 return None
+            add_parent_mod_rows(mod, SUPPORTED_MODS, table_data, scratch_root)
 
             units_to_factions_mapping = {data["unit"]: data["military_group"] for data in table_data["units_to_groupings_military_permissions_tables"].values()}
             main_units_mapping = {data["unit"]: data for data in table_data["main_units_tables"].values()}
@@ -861,6 +864,7 @@ if __name__ == "__main__":
                 reset_pack_folders(compat_pack_path)
             add_folder_to_pack(compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat;")
 
+        fail_on_broken_links("../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat", vanilla_keys)
         publish_pack("3513364573", compat_pack_path, "../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat", write_compat_pack)
 
     finally:

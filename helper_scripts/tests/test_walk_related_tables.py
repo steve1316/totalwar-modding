@@ -1,6 +1,9 @@
 """Tests that `walk_land_unit_to_related_tables` ships every row a compat pack needs to load on its own."""
 
-from core.pipeline import DuplicateTracker, TABLE_CONFIGS, drop_vanilla_rows, make_new_data_buckets, walk_land_unit_to_related_tables
+import pytest
+
+import core.pipeline as pipeline
+from core.pipeline import DuplicateTracker, TABLE_CONFIGS, add_parent_mod_rows, drop_vanilla_rows, fail_on_broken_links, make_new_data_buckets, walk_land_unit_to_related_tables
 
 
 def _table_data(**tables):
@@ -103,3 +106,44 @@ def test_drop_vanilla_rows_keeps_only_mod_keys():
     rows = [{"vortex_key": "vanilla_vortex"}, {"vortex_key": "mod_vortex"}]
     assert drop_vanilla_rows(rows, "battle_vortexs_tables", {"battle_vortexs_tables": {"vanilla_vortex"}}) == [{"vortex_key": "mod_vortex"}]
     assert drop_vanilla_rows([{"key": "mod_display"}], "projectile_displays_tables", {}) == [{"key": "mod_display"}]
+
+
+def test_ships_the_battle_entity_a_unit_borrows_from_its_parent_mod(monkeypatch):
+    """A unit whose `man_entity` lives only in its parent mod must ship that row, or new campaigns crash on the dangling reference."""
+    parent_data = _table_data(battle_entities_tables={"jbv_wraith": {"key": "jbv_wraith", "type": "giant"}, "jbv2_nurse": {"key": "jbv2_nurse", "type": "parent"}})
+    parent_data["battle_entities_tables_headers"] = ["key", "type"]
+    parent_data["battle_entities_tables_version_info"] = "#battle_entities_tables;39;db/battle_entities_tables/parent"
+    monkeypatch.setattr(pipeline, "extract_and_load_table_data", lambda *args, **kwargs: parent_data)
+    monkeypatch.setattr(pipeline, "cleanup_modded_folders", lambda **kwargs: None)
+
+    table_data = _table_data(battle_entities_tables={"jbv2_nurse": {"key": "jbv2_nurse", "type": "child"}})
+    table_data["battle_entities_tables_headers"] = ["type", "key"]
+    mod = {"package_name": "jade_vamp_pol_IotM.pack", "path": "child.pack", "parent_mods": ["jade_vamp_pol.pack"]}
+    add_parent_mod_rows(mod, [mod, {"package_name": "jade_vamp_pol.pack", "path": "parent.pack"}], table_data, "scratch")
+
+    new_data = make_new_data_buckets("jbv_wraith")
+    walk_land_unit_to_related_tables(
+        data={"key": "jbv_wraith", "man_entity": "jbv_wraith"},
+        main_unit_data={"unit": "jbv_wraith"},
+        table_data=table_data,
+        tracker=DuplicateTracker(),
+        new_data=new_data,
+        land_units_by_key={},
+        vanilla_keys={},
+    )
+
+    assert [row["key"] for row in new_data["battle_entities"]] == ["jbv_wraith"]
+    assert table_data["battle_entities_tables"]["jbv2_nurse"]["type"] == "child"
+
+
+def test_build_stops_on_a_broken_link_but_not_a_tolerated_one(tmp_path):
+    """A land unit whose `man_entity` is missing must stop the build. A missing `attribute_group` only warns."""
+    folder = tmp_path / "db" / "land_units_tables"
+    folder.mkdir(parents=True)
+    (folder / "!!!mod.tsv").write_text(
+        "key\tman_entity\tattribute_group\n#land_units_tables;54;db/land_units_tables/!!!mod\njbv_wraith\tjbv_wraith\tmissing_group\n", encoding="utf-8"
+    )
+
+    with pytest.raises(RuntimeError, match="1 broken link"):
+        fail_on_broken_links(str(tmp_path), vanilla_keys={})
+    fail_on_broken_links(str(tmp_path), vanilla_keys={"battle_entities_tables": {"jbv_wraith"}})
