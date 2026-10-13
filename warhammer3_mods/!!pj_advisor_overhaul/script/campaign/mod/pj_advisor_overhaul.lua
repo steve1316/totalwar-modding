@@ -6,8 +6,9 @@
 --- chosen pair (its bodyguard unit and uniform are the pair's). The pairs come from `PJ_ADVISOR_OVERHAUL_RIGS`, which
 --- generators/pj_advisor_units.py writes into pj_advisor_overhaul_rigs.lua.
 ---
---- The button and the picker options are this script's own components, direct children of the UI root. The script never adds anything to a vanilla
---- panel. It only reads the character panel, and it only ever changes or destroys a component it found by its own unique name.
+--- With `INJECT_BUTTON` on, the button is a child of a vanilla row: the character panel's bottom-right buttons, or the hover strip over the
+--- selected Advisor's unit card on the map. With it off, the button is a direct child of the UI root, placed over those spots. The picker options
+--- are always direct children of the UI root. The script only ever changes or destroys a component it found by its own unique name.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,6 +22,9 @@ local TAG = "pj_advisor_overhaul"
 
 --- When true the Advisor may change his loadout only once per turn.
 local ONE_CHANGE_PER_TURN = false
+
+--- When true the button is made inside the vanilla button rows (`PANEL_ROW_PATH`, `STRIP_PATH`). When false it is a UI root child placed over them.
+local INJECT_BUTTON = true
 
 --- Name of the Change Loadout button.
 local BUTTON_NAME = TAG .. "_loadout_button"
@@ -120,8 +124,16 @@ local PANEL = "character_details_panel"
 --- Child of the panel whose context is the character it shows. Read only.
 local PANEL_CONTEXT_HOLDER = "character_context_parent"
 
---- Path from the panel to its bottom-right row of round buttons (rename, event feed). Read only, for the button's spot.
+--- Path from the panel to its bottom-right row of square buttons (replace, event feed, rename). With `INJECT_BUTTON` on the button is made in it,
+--- else it is only read for the button's spot.
 local PANEL_ROW_PATH = { "character_context_parent", "holder_br", "bottom_buttons" }
+
+--- The same row as `PANEL_ROW_PATH`, from the UI root. With `INJECT_BUTTON` on the button is made in it.
+local ROW_PATH = { "character_details_panel", "character_context_parent", "holder_br", "bottom_buttons" }
+
+--- Path from the UI root to the button strip over the hovered unit card (Disband, Rename). The game shows it and moves it on hover. With
+--- `INJECT_BUTTON` on, the button is made in it while the local Advisor is selected on his own.
+local STRIP_PATH = { "units_panel", "main_units_panel", "button_group_unit" }
 
 --- Fallback spot on the panel when its button row cannot be read: pixels from the panel's right edge to the button's left edge.
 local PANEL_FALLBACK_RIGHT = 420
@@ -166,6 +178,10 @@ local selected_cqi = nil
 
 --- CQI of the Advisor the shown button belongs to, or nil when the button is hidden.
 local button_cqi = nil
+
+--- Path from the UI root to the parent the button was made in (`ROW_PATH` or `STRIP_PATH`), or nil when it is a UI root child or not made.
+--- Only the path is kept. The button is found again by name under it each time, since the game may rebuild the parent.
+local button_path = nil
 
 --- Option component name -> { kind, key, enabled } for the open picker. Empty when the picker is closed.
 local picker_options = {}
@@ -562,23 +578,23 @@ local function find_path(parent, path)
 	return uic
 end
 
---- Finds one of this script's components, a direct child of the UI root with exactly this name.
---- @param name string The component's name.
---- @returns UIC|nil The component, or nil when it does not exist.
-local function find_own(name)
-	local root = ui_root()
-	if not root then
+--- Finds a direct child of a component with exactly this name.
+--- @param parent UIC|nil The component to look under.
+--- @param name string The child's name.
+--- @returns UIC|nil The child, or nil when it does not exist.
+local function find_child(parent, name)
+	if not parent then
 		return nil
 	end
 	local ok, count = pcall(function()
-		return root:ChildCount()
+		return parent:ChildCount()
 	end)
 	if not ok or type(count) ~= "number" then
 		return nil
 	end
 	for i = 0, count - 1 do
 		local found, address = pcall(function()
-			return root:Find(i)
+			return parent:Find(i)
 		end)
 		local child = found and wrap_named(address, name)
 		if child then
@@ -588,12 +604,20 @@ local function find_own(name)
 	return nil
 end
 
---- Destroys one of this script's components if it exists. Nothing but a root child with exactly this name is touched.
+--- Finds one of this script's components, a direct child of the UI root with exactly this name.
+--- @param name string The component's name.
+--- @returns UIC|nil The component, or nil when it does not exist.
+local function find_own(name)
+	return find_child(ui_root(), name)
+end
+
+--- Destroys one of this script's components under a parent if it exists. Nothing but a direct child with exactly this name is touched.
+--- @param parent UIC|nil The parent it was made in.
 --- @param name string The component's name.
 --- @param why string Why, for the log.
 --- @returns boolean True when a component was destroyed.
-local function destroy_own(name, why)
-	local uic = find_own(name)
+local function destroy_child(parent, name, why)
+	local uic = find_child(parent, name)
 	if not uic then
 		return false
 	end
@@ -613,19 +637,27 @@ local function destroy_own(name, why)
 	return ok
 end
 
---- Creates one of this script's components under the UI root and checks the game gave back exactly that component.
+--- Destroys one of this script's UI root children if it exists.
+--- @param name string The component's name.
+--- @param why string Why, for the log.
+--- @returns boolean True when a component was destroyed.
+local function destroy_own(name, why)
+	return destroy_child(ui_root(), name, why)
+end
+
+--- Creates one of this script's components under a parent and checks the game gave back exactly that component.
+--- @param parent UIC|nil The parent.
 --- @param name string The new component's name.
 --- @param template string The layout file.
 --- @returns UIC|nil The component, or nil when it could not be made.
-local function create_own(name, template)
-	local root = ui_root()
-	if not root then
-		log("create " .. name .. ": no UI root")
+local function create_child(parent, name, template)
+	if not parent then
+		log("create " .. name .. ": no parent")
 		return nil
 	end
-	destroy_own(name, "made again")
+	destroy_child(parent, name, "made again")
 	local ok, address = pcall(function()
-		return root:CreateComponent(name, template)
+		return parent:CreateComponent(name, template)
 	end)
 	if not ok then
 		log("create " .. name .. " from " .. template .. " raised: " .. tostring(address))
@@ -642,6 +674,34 @@ local function create_own(name, template)
 		return nil
 	end
 	return UIComponent(address)
+end
+
+--- Creates one of this script's components under the UI root.
+--- @param name string The new component's name.
+--- @param template string The layout file.
+--- @returns UIC|nil The component, or nil when it could not be made.
+local function create_own(name, template)
+	local root = ui_root()
+	if not root then
+		log("create " .. name .. ": no UI root")
+		return nil
+	end
+	return create_child(root, name, template)
+end
+
+--- The parent the button was made in: the UI root, or the vanilla row at `button_path`, found again by name.
+--- @returns UIC|nil The parent, or nil when it is gone.
+local function button_parent()
+	if not button_path then
+		return ui_root()
+	end
+	return find_path(ui_root(), button_path)
+end
+
+--- The Change Loadout button, found again by name under its parent.
+--- @returns UIC|nil The button, or nil when it does not exist.
+local function find_button()
+	return find_child(button_parent(), BUTTON_NAME)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -718,7 +778,7 @@ end
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 local function open_picker(character)
 	close_picker("reopened")
-	local button = find_own(BUTTON_NAME)
+	local button = find_button()
 	if not button then
 		log("loadout picker: the button is gone, not opening")
 		return
@@ -788,12 +848,13 @@ local function note_decision(why, outcome)
 	log("loadout button " .. outcome .. " (check: " .. why .. ")")
 end
 
---- Removes the button and the picker.
+--- Removes the button and the picker. An injected button is looked up by name under its row, so a row the game rebuilt is left alone.
 --- @param why string Why, for the log.
 local function hide_button(why)
 	close_picker(why)
-	destroy_own(BUTTON_NAME, why)
+	destroy_child(button_parent(), BUTTON_NAME, why)
 	button_cqi = nil
+	button_path = nil
 end
 
 --- Removes the button and the picker and logs the decision.
@@ -896,11 +957,143 @@ local function map_position(width, height)
 	return FALLBACK_LEFT, math.max(0, screen_height - FALLBACK_BOTTOM - height), "screen fallback"
 end
 
+--- Logs the injected button's size next to its first vanilla sibling's, and lays the row out again when the button sits on a shown sibling.
+--- @param parent UIC The row the button is in.
+--- @param button UIC The button.
+--- @param created boolean Whether the button was just made, so its size is logged once.
+--- @returns string The button's spot, for the log.
+local function check_row_layout(parent, button, created)
+	local own = read_bounds(button)
+	if not own then
+		return "unreadable spot"
+	end
+	local overlap = nil
+	local first = nil
+	local ok, count = pcall(function()
+		return parent:ChildCount()
+	end)
+	for i = 0, (ok and type(count) == "number") and count - 1 or -1 do
+		local found, address = pcall(function()
+			return parent:Find(i)
+		end)
+		local child = found and address and UIComponent(address)
+		local id = component_id(child)
+		if id and id ~= BUTTON_NAME then
+			local bounds = read_bounds(child)
+			if bounds then
+				first = first or (id .. " " .. bounds.w .. "x" .. bounds.h)
+				if bounds.visible and bounds.x == own.x and bounds.y == own.y then
+					overlap = id
+				end
+			end
+		end
+	end
+	if created then
+		log("injected button size " .. own.w .. "x" .. own.h .. ", first vanilla sibling " .. tostring(first))
+	end
+	if overlap then
+		log_call(component_id(parent) or "parent", "Layout, the button sits on " .. overlap)
+		local laid, err = pcall(function()
+			parent:Layout()
+		end)
+		if not laid then
+			log("Layout failed: " .. tostring(err))
+		end
+		own = read_bounds(button) or own
+	end
+	return own.x .. "," .. own.y
+end
+
+--- The selected army's button strip over the hovered unit card, read only. The strip itself is hidden until a card is hovered, so only the
+--- units panel has to be shown.
+--- @returns UIC|nil The strip, or nil when the units panel is missing or hidden.
+local function find_strip()
+	local units = find_named(ui_root(), STRIP_PATH[1])
+	local bounds = units and read_bounds(units)
+	if not bounds or not bounds.visible then
+		return nil
+	end
+	return find_path(ui_root(), STRIP_PATH)
+end
+
+--- Makes or updates the button inside a vanilla row: the character panel's bottom-right row, or the unit card hover strip on the map. The row's
+--- layout places it, so it is never moved, raised or made top-most. It is found by name first, so there is never a second copy.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param panel UIC|nil The character panel when the button goes on it, or nil for the map strip.
+--- @param why string What asked for the check, for the log.
+local function show_injected(character, panel, why)
+	local cqi = character:command_queue_index()
+	if picker_cqi and picker_cqi ~= cqi then
+		close_picker("another Advisor shown")
+	end
+	local path = panel and ROW_PATH or STRIP_PATH
+	local where = path[#path]
+	if button_path ~= path then
+		hide_button("moved to " .. where)
+	end
+	local parent
+	if panel then
+		parent = find_path(panel, PANEL_ROW_PATH)
+	else
+		parent = find_strip()
+	end
+	if not parent then
+		set_hidden(why, where .. " is missing or hidden")
+		return
+	end
+	local priority = UI_PRIORITY
+	if panel then
+		local ok, panel_priority = pcall(function()
+			return panel:Priority()
+		end)
+		if ok and type(panel_priority) == "number" then
+			priority = math.max(priority, panel_priority + PANEL_PRIORITY_BONUS)
+		end
+	end
+	local button = find_child(parent, BUTTON_NAME)
+	local created = false
+	if not button then
+		log_call(BUTTON_NAME, "CreateComponent " .. BUTTON_TEMPLATE .. " in " .. where)
+		button = create_child(parent, BUTTON_NAME, BUTTON_TEMPLATE)
+		if not button then
+			set_hidden(why, "the button could not be made in " .. where)
+			return
+		end
+		created = true
+	end
+	button_path = path
+	local used = used_this_turn(cqi)
+	local ok, result = pcall(function()
+		log_call(BUTTON_NAME, "SetImagePath " .. BUTTON_ICON .. " " .. BUTTON_ICON_INDEX)
+		button:SetImagePath(BUTTON_ICON, BUTTON_ICON_INDEX)
+		local state = used and "inactive" or "active"
+		log_call(BUTTON_NAME, "SetState " .. state)
+		button:SetState(state)
+		log_call(BUTTON_NAME, "SetTooltipText " .. (used and "button_used" or "button"))
+		button:SetTooltipText(ui_text(used and "button_used" or "button"), true)
+		log_call(BUTTON_NAME, "SetVisible true")
+		button:SetVisible(true)
+		return check_row_layout(parent, button, created)
+	end)
+	if not ok then
+		set_hidden(why, "button set up failed: " .. tostring(result))
+		return
+	end
+	button_cqi = cqi
+	ui_priority = priority
+	note_decision(why, "shown for cqi " .. cqi .. " in " .. where .. " at " .. result .. ", picker priority " .. priority
+		.. (used and ", locked for this turn" or ""))
+end
+
 --- Makes or updates the button for the local Advisor.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @param panel UIC|nil The character panel when the button goes on it, or nil for the map spot.
 --- @param why string What asked for the check, for the log.
 local function show_button(character, panel, why)
+	if INJECT_BUTTON then
+		show_injected(character, panel, why)
+		return
+	end
 	local cqi = character:command_queue_index()
 	if picker_cqi and picker_cqi ~= cqi then
 		close_picker("another Advisor shown")
@@ -1036,6 +1229,11 @@ local function refresh(why)
 		set_hidden(why, "local Advisor selected, but " .. over .. " is open")
 		return
 	end
+	if INJECT_BUTTON and character:is_embedded_in_military_force() then
+		-- The hover strip is shared by every card of the army, so an embedded Advisor gets no strip button.
+		set_hidden(why, "selected Advisor cqi " .. selected_cqi .. " is embedded, and the unit card strip is shared by the whole army")
+		return
+	end
 	show_button(character, nil, why)
 end
 
@@ -1096,6 +1294,16 @@ local function reselect(cqi)
 		end)
 		log("reselect cqi " .. cqi .. ": Select " .. (ok and "sent" or ("failed: " .. tostring(err))))
 	end, RESELECT_MS, RESELECT_NAME)
+end
+
+--- Selects the Advisor again after a switch from the unit card strip, so the map card shows his new unit. It sends `Select` while he is still
+--- selected, without clearing first: clearing closed the units panel and rebuilt the strip, which then sat one button low until the mouse moved.
+--- @param cqi number The Advisor's command queue index.
+local function select_again(cqi)
+	local ok, err = pcall(function()
+		common.call_context_command("CcoCampaignCharacter", tostring(cqi), "Select")
+	end)
+	log("reselect cqi " .. cqi .. ": Select without clearing " .. (ok and "sent" or ("failed: " .. tostring(err))))
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1169,6 +1377,13 @@ core:add_listener(
 	function(context)
 		local panel = tostring(context.string)
 		log("PanelClosedCampaign " .. panel)
+		if panel == STRIP_PATH[1] and button_path == STRIP_PATH then
+			-- The button stays in the strip: the reselect after a loadout change closes and reopens the units panel, and adding the button back
+			-- while the strip is shown made the strip grow down over the card. The next refresh removes it if the Advisor is no longer selected.
+			guarded("units panel close", function()
+				close_picker("the units panel closed")
+			end)
+		end
 		if panel == PANEL then
 			panel_open = false
 			guarded("panel close", function()
@@ -1294,7 +1509,11 @@ core:add_listener(
 		end
 		choose_pair(character, weapon, mount)
 		if is_local_advisor(character) then
-			reselect(character:command_queue_index())
+			if button_path == STRIP_PATH then
+				select_again(character:command_queue_index())
+			else
+				reselect(character:command_queue_index())
+			end
 			schedule_refresh("loadout changed")
 		end
 	end,

@@ -189,6 +189,26 @@ staff shot.
   draw priority the panel's plus 50 (at least 200). If that row cannot be read, it goes 420 px left of the panel's right edge and 120 px above its
   bottom. On the map it sits above the right end of `hud_campaign > info_panel_background`, with a screen fallback of 16 px from the left and
   420 px above the bottom. The log names the rule used. `[untested]`
+- **Button inside vanilla rows (`INJECT_BUTTON`, on by default, 2026-10-13).** The button is made with `CreateComponent(name, square_medium_button)`
+  as a child of a vanilla row, and the row's layout places it. It is never moved, raised or made top-most. Setting `INJECT_BUTTON = false` brings
+  back the UI root button above. Both rows line it up in game. `[game]`
+  - **Character panel:** `character_details_panel > character_context_parent > holder_br > bottom_buttons`. The row is a `HorizontalList`
+    (`sizetocontent`, no gap, anchored right) of 55x55 `square_medium_button`s: `button_replace_general`, `button_event_feed`, `button_view_tree`,
+    `button_rename`, `button_save_character`. Our button goes at the right end. Run2 already made a button here and clicked it with no error. `[data]`
+  - **Map:** `units_panel > main_units_panel > button_group_unit`, the strip over the hovered unit card. It is one shared component, hidden by
+    default, shown and moved by the game's `UpgradePopupCallback`. Its `List` layout is one 77 px column, so our button stacks with Disband. It is
+    only made while the local Advisor is selected on his own. An embedded Advisor gets none, since the strip serves every card. `[data]`
+  - **Get or create:** the script keeps only the parent's path. Each check finds the parent again by name, then looks for our button by exact `Id()`
+    among its direct children, and creates it only when missing. It never keeps a handle, so a rebuilt row is simply re-added on the next check
+    (`CharacterSelected`, `PanelOpenedCampaign`, panel clicks). Hiding destroys only a direct child with our exact name under that path. The
+    `units_panel` closing only closes the picker: the strip is rebuilt with the panel anyway. `[game]`
+  - **Strip placement:** the game places the strip over the card from its size when it appears, and only corrects it when the mouse moves. A
+    button added by script to a rebuilt strip left it one button (55 px) low until then. Moving it with `MoveTo` (the game put it back) and
+    `Layout()` did not help. The fix is to never rebuild it: after a switch from the strip, the script sends `Select` for the still-selected
+    Advisor without `ClearSelection`. That refreshes the map card and leaves the strip alone. `ClearSelection` closes the units panel and
+    rebuilds the strip. It is still used after a switch in the character panel, once the panel closes, when the mouse is not over the card. `[game]`
+  - **Picker:** the options stay UI root children, placed from the button's screen position. On the map they stay open after the mouse leaves
+    the strip and the strip hides. If our button lands on a shown sibling, the row's `Layout()` is called and logged. `[game]`
 - **Cause: a `%` in loc text read through `common.get_localised_string` (runs 1 and 4-8, fixed in run9).** Deferring the click (run6) and short option
   names (run8) changed nothing. The log always stops right after the first option's "created ... got Id" line. The next step reads
   `pj_advisor_overhaul_ui_weapon_option`, whose loc text was `Weapon: %s`. After that, `out` stops writing for every script and `is_uicomponent`
