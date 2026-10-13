@@ -1,0 +1,102 @@
+{
+ "weapons": {
+  "staff_and_sword": {
+   "name": "Staff and Sword",
+   "description": "The Advisor fights with his sword and channels spells through his staff, as he always has.",
+   "icon": "wh3_dlc27_item_abilities_staff_of_the_masque.png",
+   "shield": "none",
+   "props": {
+    "weapon_2": [
+     "be_prop_1",
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
+     "audio_melee_weapon_type:sword"
+    ],
+    "weapon_5": [
+     "be_prop_5",
+     "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2",
+     "audio_melee_weapon_type:staff"
+    ]
+   },
+   "sets": {
+    "foot": "hu1_pr8_amethyst_staff_and_sword",
+    "warhorse": "hu1_empire_hr1_warhorse_staff_and_sword",
+    "pegasus": "hu1_empire_hr1_pegasus_staff_and_sword",
+    "disc": "hu1_pj_advisor_disc01_staff_and_sword"
+   }
+  },
+  "sword_and_shield": {
+   "name": "Sword and Shield",
+   "description": "The Advisor trades his staff for a knight's shield. He casts with his free hand and holds the line in melee.",
+   "campaign_set": "cam_hu1_empire_sword_and_shield",
+   "campaign_rider_sets": {
+    "warhorse": "cam_hu1_empire_hr1_warhorse_lance_sword_shield",
+    "pegasus": "cam_hu1_empire_hr1_warhorse_lance_sword_shield"
+   },
+   "icon": "wh_dlc07_lord_abilities_lions_shield.png",
+   "shield": "wh_missile_block_35_metal",
+   "props": {
+    "weapon_2": [
+     "be_prop_1",
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
+     "audio_melee_weapon_type:sword"
+    ],
+    "shield": [
+     "be_prop_2",
+     "VariantMeshes/VariantMeshDefinitions/emp_general_shield_1h_set1.VariantMeshDefinition",
+     ""
+    ]
+   },
+   "sets": {
+    "foot": "hu1_pj_advisor_sword_and_shield",
+    "warhorse": "hu1_pj_advisor_hr1_warhorse_sword_and_shield",
+    "pegasus": "hu1_pj_advisor_hr1_pegasus_sword_and_shield"
+   }
+  }
+ },
+ "mounts": {
+  "foot": {
+   "name": "On Foot",
+   "description": "The Advisor walks to war.",
+   "icon": "ui/campaign ui/mounts/mount_none.png",
+   "ancillary_type": "wh_main_anc_mount_warhorse",
+   "skill_icon": "character_movement.png"
+  },
+  "warhorse": {
+   "name": "Barded Warhorse",
+   "description": "A heavy Imperial warhorse in barding, bred for the charge.",
+   "template": "wh2_pro07_emp_cha_wizard_death_3",
+   "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
+   "icon": "ui/campaign ui/mounts/mount_barded_warhorse.png",
+   "ancillary_type": "wh_main_anc_mount_barded_warhorse",
+   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword"
+  },
+  "pegasus": {
+   "name": "Imperial Pegasus",
+   "description": "A winged steed of the Empire.",
+   "template": "wh2_pro07_emp_cha_wizard_death_2",
+   "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
+   "icon": "ui/campaign ui/mounts/mount_imperial_pegasus.png",
+   "ancillary_type": "wh_main_anc_mount_imperial_pegasus",
+   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword",
+   "existing_unit": "pj_advisor_mount_warhorse",
+   "existing_skill": "pj_advisor_mount_warhorse",
+   "existing_ancillary": "pj_advisor_mount_warhorse"
+  },
+  "disc": {
+   "name": "Disc of Tzeentch",
+   "description": "A daemonic disc that carries the Advisor through the skies, bound to him by the raven's bargain.",
+   "template": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc",
+   "template_foot": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze",
+   "icon": "ui/campaign ui/mounts/mount_disc_of_tzeentch.png",
+   "ancillary_type": "wh3_main_anc_mount_disc_of_tzeentch",
+   "campaign_rider_set": "cam_hu1_pr8_amethyst_staff_and_sword",
+   "variant_props": {
+    "weapon_4": [
+     "be_prop_4",
+     "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel",
+     "equipment"
+    ]
+   }
+  }
+ }
+}

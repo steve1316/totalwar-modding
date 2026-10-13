@@ -1,0 +1,5 @@
+campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_rank
+#character_skill_level_details_tables;1;db/character_skill_level_details_tables/pj_advisor_overhaul_units						
+		1	pj_advisor_choose_weapon_sword_and_shield		x	1
+		1	pj_advisor_choose_mount_warhorse		x	1
+		1	pj_advisor_choose_mount_disc		x	1

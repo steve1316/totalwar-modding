@@ -1,0 +1,6 @@
+key	skeleton
+#battle_animations_table_tables;0;db/battle_animations_table_tables/pj_advisor_overhaul_units	
+hu1_pj_advisor_disc01_staff_and_sword	humanoid01
+hu1_pj_advisor_sword_and_shield	humanoid01
+hu1_pj_advisor_hr1_warhorse_sword_and_shield	humanoid01
+hu1_pj_advisor_hr1_pegasus_sword_and_shield	humanoid01

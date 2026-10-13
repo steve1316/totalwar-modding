@@ -1,0 +1,33 @@
+key	text	tooltip
+#Loc;1;text/db/pj_advisor_overhaul_units.loc		
+ancillaries_onscreen_name_pj_advisor_rig_staff_and_sword_foot	Staff and Sword, On Foot	true
+ancillaries_colour_text_pj_advisor_rig_staff_and_sword_foot	The Advisor fights with his sword and channels spells through his staff, as he always has. The Advisor walks to war.	true
+land_units_onscreen_name_pj_advisor_staff_and_sword_warhorse	The Advisor (Staff and Sword, Barded Warhorse)	true
+ancillaries_onscreen_name_pj_advisor_rig_staff_and_sword_warhorse	Staff and Sword, Barded Warhorse	true
+ancillaries_colour_text_pj_advisor_rig_staff_and_sword_warhorse	The Advisor fights with his sword and channels spells through his staff, as he always has. A heavy Imperial warhorse in barding, bred for the charge.	true
+ancillaries_onscreen_name_pj_advisor_rig_staff_and_sword_pegasus	Staff and Sword, Imperial Pegasus	true
+ancillaries_colour_text_pj_advisor_rig_staff_and_sword_pegasus	The Advisor fights with his sword and channels spells through his staff, as he always has. A winged steed of the Empire.	true
+land_units_onscreen_name_pj_advisor_staff_and_sword_disc	The Advisor (Staff and Sword, Disc of Tzeentch)	true
+ancillaries_onscreen_name_pj_advisor_rig_staff_and_sword_disc	Staff and Sword, Disc of Tzeentch	true
+ancillaries_colour_text_pj_advisor_rig_staff_and_sword_disc	The Advisor fights with his sword and channels spells through his staff, as he always has. A daemonic disc that carries the Advisor through the skies, bound to him by the raven's bargain.	true
+land_units_onscreen_name_pj_advisor_sword_and_shield_foot	The Advisor (Sword and Shield, On Foot)	true
+ancillaries_onscreen_name_pj_advisor_rig_sword_and_shield_foot	Sword and Shield, On Foot	true
+ancillaries_colour_text_pj_advisor_rig_sword_and_shield_foot	The Advisor trades his staff for a knight's shield. He casts with his free hand and holds the line in melee. The Advisor walks to war.	true
+land_units_onscreen_name_pj_advisor_sword_and_shield_warhorse	The Advisor (Sword and Shield, Barded Warhorse)	true
+ancillaries_onscreen_name_pj_advisor_rig_sword_and_shield_warhorse	Sword and Shield, Barded Warhorse	true
+ancillaries_colour_text_pj_advisor_rig_sword_and_shield_warhorse	The Advisor trades his staff for a knight's shield. He casts with his free hand and holds the line in melee. A heavy Imperial warhorse in barding, bred for the charge.	true
+land_units_onscreen_name_pj_advisor_sword_and_shield_pegasus	The Advisor (Sword and Shield, Imperial Pegasus)	true
+ancillaries_onscreen_name_pj_advisor_rig_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
+ancillaries_colour_text_pj_advisor_rig_sword_and_shield_pegasus	The Advisor trades his staff for a knight's shield. He casts with his free hand and holds the line in melee. A winged steed of the Empire.	true
+pj_advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
+pj_advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
+character_skills_localised_name_pj_advisor_choose_weapon_sword_and_shield	Sword and Shield	true
+character_skills_localised_description_pj_advisor_choose_weapon_sword_and_shield	The Advisor trades his staff for a knight's shield. He casts with his free hand and holds the line in melee.\\n\\nUnlocks this weapon for the Advisor's loadout. Switch to it with the Change Loadout button in his character panel.	true
+pj_advisor_overhaul_ui_mount_foot	On Foot	true
+pj_advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
+pj_advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
+pj_advisor_overhaul_ui_mount_disc	Disc of Tzeentch	true
+character_skills_localised_name_pj_advisor_choose_mount_warhorse	Barded Warhorse	true
+character_skills_localised_description_pj_advisor_choose_mount_warhorse	A heavy Imperial warhorse in barding, bred for the charge.\\n\\nUnlocks this mount for the Advisor's loadout. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_pj_advisor_choose_mount_disc	Disc of Tzeentch	true
+character_skills_localised_description_pj_advisor_choose_mount_disc	A daemonic disc that carries the Advisor through the skies, bound to him by the raven's bargain.\\n\\nUnlocks this mount for the Advisor's loadout. Switch to it with the Change Loadout button in his character panel.	true

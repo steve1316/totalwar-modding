@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anim Viewer</title>
+<style>
+  :root { --bg: #14161a; --panel: #1d2026; --line: #2c3038; --text: #d8dbe0; --muted: #8a909a; --on: #3a4558;
+          --sat: env(safe-area-inset-top, 0px); --sab: env(safe-area-inset-bottom, 0px); --sal: env(safe-area-inset-left, 0px); --sar: env(safe-area-inset-right, 0px); }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, sans-serif; overflow: hidden; }
+  #view { position: fixed; inset: 0; }
+  #view canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+  #info { position: fixed; top: calc(var(--sat) + 8px); left: calc(var(--sal) + 10px); right: calc(var(--sar) + 10px); display: flex; gap: 6px;
+          flex-wrap: wrap; font-size: 12px; pointer-events: none; }
+  #info span { background: rgba(20,22,26,.8); padding: 3px 8px; border-radius: 4px; word-break: break-all; }
+  #status { position: fixed; top: 45%; left: 0; right: 0; text-align: center; color: var(--muted); pointer-events: none; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(29,32,38,.95); border-top: 1px solid var(--line);
+         padding: 6px calc(var(--sar) + 8px) calc(var(--sab) + 6px) calc(var(--sal) + 8px); display: flex; flex-direction: column; gap: 6px; }
+  .row { display: flex; gap: 6px; align-items: center; }
+  .row.wrap { flex-wrap: wrap; }
+  button, select { min-height: 44px; min-width: 44px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px;
+                   padding: 0 12px; font: inherit; cursor: pointer; }
+  button.on { background: var(--on); border-color: #56627a; }
+  .row.wrap button, .row.wrap select { padding: 0 10px; }
+  #sideChips button:not(.on) { color: var(--muted) !important; }
+  #unit { width: 100%; font-size: 15px; font-weight: 600; text-overflow: ellipsis; }
+  #frame { flex: 1; min-width: 0; height: 44px; accent-color: #8aa4d6; }
+  #fnum { min-width: 58px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 12px; }
+  #drawer { position: fixed; left: 0; right: 0; bottom: 0; height: 70vh; background: var(--panel); border-top: 1px solid var(--line);
+            border-radius: 14px 14px 0 0; display: flex; flex-direction: column; transform: translateY(105%); transition: transform .2s ease; z-index: 10;
+            padding: 0 calc(var(--sar) + 8px) var(--sab) calc(var(--sal) + 8px); }
+  #drawer.open { transform: none; }
+  #drawer header { display: flex; gap: 8px; align-items: center; padding: 10px 0; }
+  #drawer h1 { font-size: 15px; margin: 0; flex: 1; }
+  .unitinfo { color: var(--muted); font-size: 11px; word-break: break-all; padding-bottom: 6px; }
+  #search { min-height: 44px; padding: 0 12px; background: var(--bg); border: 1px solid var(--line); color: var(--text); border-radius: 8px; font: inherit;
+            width: 100%; }
+  #slots { overflow: auto; flex: 1; padding: 6px 0 10px; -webkit-overflow-scrolling: touch; }
+  #slots button { display: flex; justify-content: space-between; align-items: center; width: 100%; text-align: left; background: none; border: 0;
+                  border-radius: 6px; min-height: 44px; }
+  #slots button.on { background: var(--on); }
+  #slots .tag { font-size: 11px; color: var(--muted); }
+  #scrim { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 9; display: none; }
+  #scrim.open { display: block; }
+  @media (min-width: 900px) {
+    #view, .bar, #info { left: 320px; }
+    #drawer { top: 0; right: auto; width: 320px; height: auto; transform: none; border-radius: 0; border-top: 0; border-right: 1px solid var(--line);
+              padding-top: var(--sat); }
+    #slotsBtn, #closeDrawer, #scrim { display: none !important; }
+  }
+</style>
+<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
+</head>
+<body>
+<div id="view"></div>
+<div id="info"></div>
+<div id="status">Loading...</div>
+<div class="bar">
+  <div class="row"><select id="unit" aria-label="Unit"></select></div>
+  <div class="row">
+    <button id="slotsBtn" aria-label="Slots">Slots</button>
+    <button id="play" aria-label="Play or pause">Pause</button>
+    <input type="range" id="frame" min="0" max="0" value="0" aria-label="Frame">
+    <span id="fnum">0/0</span>
+  </div>
+  <div class="row wrap">
+    <select id="speed" aria-label="Speed"><option value="0.25">0.25x</option><option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="2">2x</option></select>
+    <select id="layout" aria-label="Layout"><option value="side">Side by side</option><option value="overlay">Overlay</option></select>
+    <span id="sideChips" class="row"></span>
+    <button class="chip on" data-key="models">Models</button>
+    <button class="chip" data-key="bones">Bones</button>
+    <button class="chip" data-key="props">Props</button>
+    <button id="close" aria-label="Close-up on the rider">Close-up</button>
+  </div>
+</div>
+<div id="scrim"></div>
+<aside id="drawer">
+  <header><h1 id="title">Anim Viewer</h1><button id="closeDrawer" aria-label="Close">Close</button></header>
+  <div class="unitinfo" id="sets"></div>
+  <input id="search" placeholder="Filter slots (e.g. CAST, FLY, STAND)" autocomplete="off">
+  <div id="slots"></div>
+</aside>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const $ = id => document.getElementById(id);
+const view = $("view");
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+view.append(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x14161a);
+const camera = new THREE.PerspectiveCamera(40, 1, 0.01, 200);
+const controls = new OrbitControls(camera, renderer.domElement);
+scene.add(new THREE.GridHelper(10, 20, 0x3a3f48, 0x262a31));
+scene.add(new THREE.HemisphereLight(0xffffff, 0x404048, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(2, 4, 3); scene.add(sun);
+
+const state = { models: true, bones: false, props: false, hidden: new Set() };
+const status = $("status");
+const manifest = await (await fetch("manifest.json")).json();
+// The open entry, its rigs (one per side) and the current slot. `time` is in seconds.
+let entry = null, rigs = [], current = null, playing = true, time = 0, frames = 1, fps = 20, box = null, closeBox = null, closeUp = false;
+// Close-up camera tracking: the point followed last frame and this frame.
+const followed = new THREE.Vector3(), seen = new THREE.Vector3();
+
+// A comparison on a portrait screen with "side by side" splits the view into a top (source) and bottom (retargeted) half.
+const isCompare = () => !!entry && entry.kind === "compare";
+let split = false;
+function resize() {
+  const w = view.clientWidth, h = view.clientHeight;
+  split = isCompare() && $("layout").value === "side" && w < h;
+  renderer.setSize(w, h, false); camera.aspect = w / (split ? h / 2 : h); camera.updateProjectionMatrix();
+}
+// Pull the camera back until the entry (both sides when side by side) fits the view width as well as its height.
+function frameCamera() {
+  followed.set(0, 0, 0);
+  const tanY = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const b = (closeUp && closeBox) || box || { cx: 0, cy: 1, cz: 0, w: 1.4, h: 2, d: 1 };
+  const sideBySide = isCompare() && $("layout").value === "side" && !split && !closeUp;
+  const halfW = sideBySide ? 2.6 : Math.max(b.w, b.d) / 2 + 0.3, halfH = b.h / 2 + 0.3;
+  const distance = Math.max(halfH / tanY, halfW / (tanY * camera.aspect)) + Math.max(b.w, b.d) / 4;
+  // The close-up looks from the rider's left and a little above, where the shield and the staff hand are.
+  if (closeUp && closeBox) camera.position.set(b.cx + distance * 0.9, b.cy + halfH * 0.5, b.cz + distance * 0.45);
+  else camera.position.set(b.cx + distance * 0.5, b.cy + halfH * 0.4, b.cz + distance * 0.87);
+  controls.target.set(sideBySide ? 0 : b.cx, b.cy, b.cz); controls.update();
+}
+// Keep the canvas above the control bar so nothing is drawn behind it.
+const bar = document.querySelector(".bar");
+new ResizeObserver(() => { view.style.bottom = bar.offsetHeight + "px"; resize(); frameCamera(); }).observe(bar);
+window.addEventListener("resize", () => { resize(); frameCamera(); });
+$("layout").onchange = () => { resize(); frameCamera(); };
+
+// Animation bundles: each bone of each frame is 7 int16 values (position * scale, quaternion * 32767).
+const bundles = new Map(), anims = new Map();
+function getBundle(i) {
+  if (!bundles.has(i)) bundles.set(i, fetch(manifest.bundles[i]).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }));
+  return bundles.get(i);
+}
+async function getAnim(id) {
+  if (id === undefined || id === null) return null;
+  if (!anims.has(id)) anims.set(id, (async () => {
+    const a = manifest.anims[id], rig = manifest.rigs[a.rig], buffer = await getBundle(a.bundle);
+    const raw = new Int16Array(buffer, a.offset, a.frames * rig.length * 7), data = new Float32Array(raw.length);
+    for (let i = 0; i < raw.length; i += 7) {
+      for (let k = 0; k < 3; k++) data[i + k] = raw[i + k] * a.scale;
+      for (let k = 3; k < 7; k++) data[i + k] = raw[i + k] / 32767;
+    }
+    return { bones: rig, fps: a.fps, frames: a.frames, data, index: new Map(rig.map((b, i) => [b[0], i])) };
+  })());
+  return anims.get(id);
+}
+
+// Skinned models, loaded once each. Bones are flat children of the model group and get world transforms straight from the animation.
+const models = new Map();
+function getModel(url) {
+  if (!models.has(url)) models.set(url, loadModel(url).catch(e => { console.error("model", url, e); return null; }));
+  return models.get(url);
+}
+async function loadModel(url) {
+  const doc = await (await fetch(url)).json();
+  const buffer = await (await fetch(url.replace(/[^/]+$/, doc.bin))).arrayBuffer();
+  const bones = doc.bones.map(name => { const b = new THREE.Bone(); b.name = name; return b; });
+  const inverses = doc.inverse_bind.map(m => new THREE.Matrix4().fromArray(m));
+  // Start every bone at its bind pose.
+  inverses.forEach((m, i) => new THREE.Matrix4().copy(m).invert().decompose(bones[i].position, bones[i].quaternion, bones[i].scale));
+  const skeleton = new THREE.Skeleton(bones, inverses);
+  const group = new THREE.Group();
+  bones.forEach(b => group.add(b));
+  const loader = new THREE.TextureLoader(), textures = new Map();
+  for (const m of doc.meshes) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(buffer, m.position, m.count * 3), 3));
+    g.setAttribute("normal", new THREE.BufferAttribute(new Float32Array(buffer, m.normal, m.count * 3), 3));
+    g.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(buffer, m.uv, m.count * 2), 2));
+    g.setIndex(new THREE.BufferAttribute(new Uint16Array(buffer, m.index, m.index_count), 1));
+    const mat = new THREE.MeshLambertMaterial({ color: m.texture ? 0xffffff : 0x9a9aa2, side: THREE.DoubleSide });
+    if (m.texture) {
+      if (!textures.has(m.texture)) {
+        const t = loader.load(url.replace(/[^/]+$/, m.texture)); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; textures.set(m.texture, t);
+      }
+      mat.map = textures.get(m.texture);
+      if (m.alpha) mat.alphaTest = 0.5;
+    }
+    let mesh;
+    if (m.skinned) {
+      g.setAttribute("skinIndex", new THREE.BufferAttribute(new Uint16Array(buffer, m.skin_index, m.count * 4), 4));
+      g.setAttribute("skinWeight", new THREE.BufferAttribute(new Float32Array(buffer, m.skin_weight, m.count * 4), 4));
+      mesh = new THREE.SkinnedMesh(g, mat);
+      mesh.bind(skeleton, new THREE.Matrix4());
+      group.add(mesh);
+    } else {
+      // Props sit in the local space of their attach bone.
+      mesh = new THREE.Mesh(g, mat);
+      const bone = bones[doc.bones.indexOf(m.attach)];
+      (bone || group).add(mesh);
+    }
+    mesh.name = m.slot;
+    mesh.frustumCulled = false;
+  }
+  return { group, bones, missing: doc.missing };
+}
+
+// One side: bone lines, joints, prop gizmos, disc ring and the optional model, all driven by the current animation.
+class Rig {
+  constructor(side) {
+    this.side = side; this.color = new THREE.Color(side.color); this.group = new THREE.Group(); this.lines = new THREE.Group();
+    this.group.add(this.lines); scene.add(this.group);
+  }
+  dispose() { if (this.model) this.group.remove(this.model.group); scene.remove(this.group); }
+  setModel(model) { this.model = model; if (model) this.group.add(model.group); this.bind(); }
+  load(anim) {
+    this.lines.clear(); this.anim = anim; this.segs = []; this.joints = []; this.props = [];
+    if (!anim) { this.bind(); return; }
+    const names = anim.bones.map(b => b[0]);
+    const mat = new THREE.LineBasicMaterial({ color: this.color });
+    const jointGeo = new THREE.SphereGeometry(0.012, 6, 4), jointMat = new THREE.MeshBasicMaterial({ color: this.color });
+    anim.bones.forEach(([name, parent], i) => {
+      if (name.startsWith("be_prop_")) {
+        const g = new THREE.Group();
+        g.add(new THREE.AxesHelper(name === "be_prop_4" ? 0.25 : 0.18));
+        if (name === "be_prop_4") {
+          g.add(new THREE.Mesh(new THREE.RingGeometry(0.55, 0.62, 40), new THREE.MeshBasicMaterial({ color: 0xc78bff, side: THREE.DoubleSide, transparent: true, opacity: 0.55 })));
+        }
+        this.lines.add(g); this.props.push([i, g]); return;
+      }
+      if (parent >= 0 && !names[parent].startsWith("animroot")) {
+        const geo = new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(6), 3));
+        this.lines.add(new THREE.Line(geo, mat)); this.segs.push([i, parent, geo]);
+      }
+      const j = new THREE.Mesh(jointGeo, jointMat); this.lines.add(j); this.joints.push([i, j]);
+    });
+    this.bind();
+  }
+  // Map model bones to animation bones by name.
+  bind() { this.map = this.model && this.anim ? this.model.bones.map(b => this.anim.index.get(b.name) ?? -1) : null; }
+  // Poses the rig at a time in seconds. Each side loops on its own length, so a mount idle keeps going under a longer rider cast.
+  pose(seconds, offsetX) {
+    const a = this.anim; if (!a) return;
+    const f = Math.floor(seconds * a.fps) % a.frames, n = a.bones.length, d = a.data, at = (i, k) => d[(f * n + i) * 7 + k];
+    this.group.position.x = offsetX;
+    for (const [i, parent, geo] of this.segs) {
+      const p = geo.attributes.position.array;
+      for (let k = 0; k < 3; k++) { p[k] = at(parent, k); p[3 + k] = at(i, k); }
+      geo.attributes.position.needsUpdate = true; geo.computeBoundingSphere();
+    }
+    for (const [i, j] of this.joints) { j.position.set(at(i, 0), at(i, 1), at(i, 2)); j.visible = state.bones; }
+    for (const [i, g] of this.props) { g.visible = state.props; g.position.set(at(i, 0), at(i, 1), at(i, 2)); g.quaternion.set(at(i, 3), at(i, 4), at(i, 5), at(i, 6)); }
+    this.lines.children.forEach(c => { if (c.isLine) c.visible = state.bones; });
+    if (this.model) {
+      this.model.group.visible = state.models;
+      this.model.bones.forEach((b, k) => { const i = this.map[k]; if (i >= 0) { b.position.set(at(i, 0), at(i, 1), at(i, 2)); b.quaternion.set(at(i, 3), at(i, 4), at(i, 5), at(i, 6)); } });
+    }
+  }
+}
+
+// Unit picker.
+const unitSel = $("unit");
+manifest.entries.forEach((e, i) => { const o = document.createElement("option"); o.value = i; o.textContent = e.name; unitSel.append(o); });
+unitSel.onchange = () => openEntry(+unitSel.value);
+
+// Side toggles: Rider / Mount, or Source / Retargeted.
+function renderSideChips() {
+  const host = $("sideChips"); host.innerHTML = "";
+  if (entry.sides.length < 2) return;
+  for (const side of entry.sides) {
+    const b = document.createElement("button");
+    b.textContent = side.label; b.style.color = side.color; b.classList.toggle("on", !state.hidden.has(side.key));
+    b.onclick = () => { state.hidden.has(side.key) ? state.hidden.delete(side.key) : state.hidden.add(side.key); renderSideChips(); };
+    host.append(b);
+  }
+}
+
+// Bounding box of every bone in the first frame of the given animations.
+function measure(list, bodyOnly = false) {
+  const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+  for (const a of list) {
+    if (!a) continue;
+    for (let i = 0; i < a.bones.length; i++) {
+      if (bodyOnly && /^(animroot|be_prop_)/.test(a.bones[i][0])) continue;
+      for (let k = 0; k < 3; k++) { const v = a.data[i * 7 + k]; min[k] = Math.min(min[k], v); max[k] = Math.max(max[k], v); }
+    }
+  }
+  if (!isFinite(min[0])) return null;
+  if (!bodyOnly) min[1] = Math.min(min[1], 0);
+  return { cx: (min[0] + max[0]) / 2, cy: (min[1] + max[1]) / 2, cz: (min[2] + max[2]) / 2, w: max[0] - min[0], h: max[1] - min[1], d: max[2] - min[2] };
+}
+
+// Close-up: frames the first side's body (rider or source) without the mount or the root, to check props in the hands.
+$("close").onclick = () => { closeUp = !closeUp; $("close").classList.toggle("on", closeUp); frameCamera(); };
+
+// In close-up the camera follows the first side's root bone, so a rider lunging or a disc drifting stays in view.
+function follow() {
+  const r = rigs[0], a = r && r.anim; if (!a || !a.index.has("root")) return;
+  const i = a.index.get("root"), n = a.bones.length, rootAt = (f, k) => a.data[(f * n + i) * 7 + k];
+  // The framing was measured on frame 0, so a fresh close-up starts from there.
+  if (followed.lengthSq() === 0) followed.set(rootAt(0, 0) + r.group.position.x, rootAt(0, 1) + 0.25, rootAt(0, 2));
+  const f = Math.floor(time * a.fps) % a.frames;
+  seen.set(rootAt(f, 0) + r.group.position.x, rootAt(f, 1) + 0.25, rootAt(f, 2));
+  const delta = seen.clone().sub(followed); camera.position.add(delta); controls.target.add(delta);
+  followed.copy(seen);
+}
+
+// Opens a gallery entry: builds its rigs, loads its models and plays a slot (STAND by default).
+async function openEntry(index, slotName) {
+  entry = manifest.entries[index]; unitSel.value = index;
+  const mine = entry;
+  rigs.forEach(r => r.dispose());
+  rigs = entry.sides.map(side => new Rig(side));
+  current = null; state.hidden.clear(); renderSideChips();
+  $("layout").hidden = !isCompare();
+  $("title").textContent = entry.name;
+  $("sets").innerHTML = (entry.info || entry.sets).map(line => `<div>${line}</div>`).join("");
+  status.textContent = "Loading...";
+  const loaded = await Promise.all(entry.sides.map(side => side.model ? getModel(side.model) : null));
+  if (entry !== mine) return;
+  rigs.forEach((r, i) => r.setModel(loaded[i]));
+  const first = entry.slots.find(s => s.slot === slotName) || entry.slots.find(s => s.slot === "STAND") || entry.slots[0];
+  const firstAnims = await Promise.all(entry.sides.map(side => getAnim(first.anims[side.key])));
+  box = measure(firstAnims); closeBox = measure(firstAnims.slice(0, 1), true);
+  resize(); frameCamera();
+  await select(first);
+}
+
+const slotsEl = $("slots"), drawer = $("drawer"), scrim = $("scrim");
+function openDrawer(open) { drawer.classList.toggle("open", open); scrim.classList.toggle("open", open); }
+$("slotsBtn").onclick = () => openDrawer(true);
+$("closeDrawer").onclick = () => openDrawer(false);
+scrim.onclick = () => openDrawer(false);
+function slotTag(s) {
+  if (isCompare()) return (s.anims.source !== undefined ? "S" : "-") + (s.anims.target !== undefined ? "R" : "-");
+  return s.slots && s.slots.mount ? `mount ${s.slots.mount}` : "";
+}
+function renderList(filter) {
+  slotsEl.innerHTML = "";
+  for (const s of entry.slots) {
+    if (filter && !s.slot.toLowerCase().includes(filter.toLowerCase())) continue;
+    const b = document.createElement("button");
+    b.innerHTML = `<span>${s.slot}</span><span class="tag">${slotTag(s)}</span>`;
+    if (current === s) b.classList.add("on");
+    b.onclick = () => { select(s); openDrawer(false); };
+    slotsEl.append(b);
+  }
+}
+$("search").oninput = e => renderList(e.target.value);
+
+async function select(s) {
+  current = s; renderList($("search").value);
+  status.textContent = "Loading...";
+  const list = await Promise.all(entry.sides.map(side => getAnim(s.anims[side.key])));
+  if (current !== s) return;
+  status.textContent = "";
+  rigs.forEach((r, i) => r.load(list[i]));
+  const main = list.find(a => a);
+  frames = main ? main.frames : 1; fps = main ? main.fps : 20; time = 0;
+  $("frame").max = frames - 1;
+  $("info").innerHTML = `<span><b>${entry.name}</b> - <b>${s.slot}</b></span>` + entry.sides.map((side, i) => s.paths[side.key]
+    ? `<span style="color:${side.color}">${s.slots ? s.slots[side.key] + ": " : ""}${s.paths[side.key].split("/").pop()} (${list[i].frames}f)</span>` : "").join("");
+  history.replaceState(null, "", `#u=${manifest.entries.indexOf(entry)}&s=${s.slot}`);
+}
+
+const playBtn = $("play");
+function setPlaying(p) { playing = p; playBtn.textContent = playing ? "Pause" : "Play"; }
+playBtn.onclick = () => setPlaying(!playing);
+$("frame").oninput = e => { time = (+e.target.value + 0.5) / fps; setPlaying(false); };
+function syncChips() { document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", state[c.dataset.key])); }
+document.querySelectorAll(".chip").forEach(c => c.onclick = () => { state[c.dataset.key] = !state[c.dataset.key]; syncChips(); });
+const step = delta => { time = (Math.min(frames - 1, Math.max(0, Math.floor(time * fps) + delta)) + 0.5) / fps; setPlaying(false); };
+window.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+  if (e.code === "Space") { e.preventDefault(); playBtn.click(); }
+  if (e.code === "ArrowRight") step(1);
+  if (e.code === "ArrowLeft") step(-1);
+});
+
+const clock = new THREE.Clock();
+function tick() {
+  const dt = clock.getDelta();
+  if (playing && current) time = (time + dt * +$("speed").value) % (frames / fps);
+  const offset = isCompare() && $("layout").value === "side" && !split ? 1.3 : 0;
+  rigs.forEach((r, i) => r.pose(time, isCompare() ? (i ? offset : -offset) : 0));
+  const frame = Math.min(frames - 1, Math.floor(time * fps));
+  $("frame").value = frame;
+  $("fnum").textContent = `${frame}/${frames - 1}`;
+  if (closeUp) follow();
+  controls.update();
+  const w = view.clientWidth, h = view.clientHeight, shown = r => !state.hidden.has(r.side.key) && !!r.anim;
+  if (split) {
+    renderer.setScissorTest(true);
+    rigs.forEach((rig, k) => {
+      rigs.forEach(other => other.group.visible = other === rig && shown(rig));
+      const y = k === 0 ? h / 2 : 0;
+      renderer.setViewport(0, y, w, h / 2); renderer.setScissor(0, y, w, h / 2); renderer.render(scene, camera);
+    });
+    renderer.setScissorTest(false);
+  } else {
+    rigs.forEach(r => r.group.visible = shown(r));
+    renderer.setViewport(0, 0, w, h); renderer.render(scene, camera);
+  }
+  requestAnimationFrame(tick);
+}
+// Hooks for scripted checks (Playwright).
+window.viewer = { camera, controls, frameCamera, get rigs() { return rigs; }, get entry() { return entry; }, openEntry, select, manifest,
+                  setFrame: f => { time = (f + 0.5) / fps; setPlaying(false); } };
+const params = new URLSearchParams(location.hash.slice(1));
+const startIndex = Math.min(manifest.entries.length - 1, Math.max(0, +(params.get("u") || 0)));
+openEntry(startIndex, params.get("s"));
+tick();
+</script>
+</body>
+</html>
