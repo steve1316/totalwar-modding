@@ -96,6 +96,12 @@ local CLICK_NAME = TAG .. "_loadout_click"
 --- and crashed the game (runs 1, 4 and 5), so clicks only schedule their work.
 local CLICK_MS = 50
 
+--- Name of the one-shot real-time callback that selects the Advisor again after a loadout change.
+local RESELECT_NAME = TAG .. "_loadout_reselect"
+
+--- Delay in milliseconds between clearing the selection and selecting the Advisor again.
+local RESELECT_MS = 100
+
 --- Panels that open under or next to the button without hiding it. Vanilla blocking panels and `events` hide it straight away.
 local KEEP_BUTTON_PANELS = {
 	--- The character panel, which the button sits on while it shows the Advisor.
@@ -167,8 +173,15 @@ local picker_options = {}
 --- CQI of the Advisor the open picker belongs to, or nil when it is closed.
 local picker_cqi = nil
 
+--- Names of this script's components registered as top-most, so each is unregistered before it is destroyed. Without top-most the panel's own
+--- bottom-right buttons (Salvage) drew over the lowest option.
+local topmost = {}
+
 --- Whether the character panel is open, from `PanelOpenedCampaign` and `PanelClosedCampaign`.
 local panel_open = false
+
+--- CQI of an Advisor whose loadout changed while the character panel was open, so he is selected again once it closes. Nil when none waits.
+local pending_reselect = nil
 
 --- Draw priority of the shown button. The picker options use the same.
 local ui_priority = UI_PRIORITY
@@ -584,6 +597,15 @@ local function destroy_own(name, why)
 	if not uic then
 		return false
 	end
+	if topmost[name] then
+		topmost[name] = nil
+		local removed, remove_err = pcall(function()
+			uic:RemoveTopMost()
+		end)
+		if not removed then
+			log("RemoveTopMost on " .. name .. " failed: " .. tostring(remove_err))
+		end
+	end
 	local ok, err = pcall(function()
 		uic:Destroy()
 	end)
@@ -674,12 +696,15 @@ local function add_option(kind, item, state)
 	local ok, err = pcall(function()
 		log_call(name, "SetImagePath " .. icon .. " " .. BUTTON_ICON_INDEX)
 		option:SetImagePath(icon, BUTTON_ICON_INDEX)
-		log_call(name, "SetTooltipText " .. label)
+		log_call(name, "SetTooltipText " .. label .. "||" .. reason)
 		option:SetTooltipText(label .. "||" .. reason, true)
 		log_call(name, "SetState " .. ui_state)
 		option:SetState(ui_state)
 		log_call(name, "PropagatePriority " .. ui_priority)
 		option:PropagatePriority(ui_priority)
+		log_call(name, "RegisterTopMost")
+		option:RegisterTopMost()
+		topmost[name] = true
 	end)
 	if not ok then
 		log("option " .. name .. " set up failed: " .. tostring(err))
@@ -912,6 +937,11 @@ local function show_button(character, panel, why)
 		button:SetState(used and "inactive" or "active")
 		button:SetTooltipText(ui_text(used and "button_used" or "button"), true)
 		button:PropagatePriority(priority)
+		if not topmost[BUTTON_NAME] then
+			-- The HUD unit panel opens over the map spot, so the button stays on top to remain clickable.
+			button:RegisterTopMost()
+			topmost[BUTTON_NAME] = true
+		end
 		button:SetVisible(true)
 		return x .. "," .. y .. " (" .. rule .. ")"
 	end)
@@ -1041,6 +1071,33 @@ local function after_click(what, step)
 	end, CLICK_MS, CLICK_NAME)
 end
 
+--- Selects the Advisor again after his loadout changed on the map, so the HUD unit card shows his new unit. Without it the card stayed stale
+--- until he was deselected and selected by hand. While the character panel is open it waits until the panel closes. Skipped when he is not the
+--- selected character.
+--- @param cqi number The Advisor's command queue index.
+local function reselect(cqi)
+	if panel_open then
+		pending_reselect = cqi
+		log("reselect cqi " .. cqi .. " waits for the character panel to close")
+		return
+	end
+	if selected_cqi ~= cqi then
+		log("reselect cqi " .. cqi .. " skipped: he is not selected")
+		return
+	end
+	local cleared, clear_err = pcall(function()
+		CampaignUI.ClearSelection()
+	end)
+	log("reselect cqi " .. cqi .. ": ClearSelection " .. (cleared and "ok" or ("failed: " .. tostring(clear_err))))
+	cm:remove_real_callback(RESELECT_NAME)
+	cm:real_callback(function()
+		local ok, err = pcall(function()
+			common.call_context_command("CcoCampaignCharacter", tostring(cqi), "Select")
+		end)
+		log("reselect cqi " .. cqi .. ": Select " .. (ok and "sent" or ("failed: " .. tostring(err))))
+	end, RESELECT_MS, RESELECT_NAME)
+end
+
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Listeners
@@ -1117,6 +1174,15 @@ core:add_listener(
 			guarded("panel close", function()
 				set_hidden("panel " .. panel .. " closed", "the character panel closed")
 			end)
+			if pending_reselect then
+				local cqi = pending_reselect
+				pending_reselect = nil
+				cm:real_callback(function()
+					guarded("reselect", function()
+						reselect(cqi)
+					end)
+				end, RESELECT_MS, RESELECT_NAME .. "_after_panel")
+			end
 		end
 		schedule_refresh("panel " .. panel .. " closed")
 	end,
@@ -1228,6 +1294,7 @@ core:add_listener(
 		end
 		choose_pair(character, weapon, mount)
 		if is_local_advisor(character) then
+			reselect(character:command_queue_index())
 			schedule_refresh("loadout changed")
 		end
 	end,

@@ -243,6 +243,16 @@ staff shot.
   back. Sword and shield now uses `cam_hu1_empire_sword_and_shield`. When mounted, it uses `cam_hu1_empire_hr1_warhorse_lance_sword_shield`, through
   `campaign_mount_animation_set_overrides` rows for both character sets. Panel, map and mounted map pose all confirmed. `[game]`
 
+- **Vanilla unit comparison from the picker failed (2026-10-13).** Options built from a copy of `square_medium_button`, with the hover-only
+  `ContextPinChild` block from `chaos_gifts.twui.xml` and `SetContextObject(cco("CcoMainUnitRecord", unit))`, did show the unit in the HUD panel.
+  But it showed no comparison highlighting, and it listed every ability and spell the Advisor could ever have (the record, not his unit). With
+  the unit panel pinned, the map Change Loadout button could not be clicked either. `USE_UNIT_CONTEXT` is now false. The main button is
+  registered top-most so the unit panel can't cover it. `[game]`
+
+- **No hover events for script components (2026-10-13).** A live preview test listened for `ComponentMouseOn` to equip the hovered pair. The
+  whole run logged zero `ComponentMouseOn` events, even with the picker open over the character panel. Scripts can't see hovers on our picker
+  options, so live preview is dropped and the test code removed. `[game]`
+
 ### Mount rows
 
 | Mount | `mounts` key | campaign_mounts | icon |
