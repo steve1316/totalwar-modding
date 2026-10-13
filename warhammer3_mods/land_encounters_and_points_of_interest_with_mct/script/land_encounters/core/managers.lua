@@ -557,6 +557,11 @@ end
 --- @param spot_coordinates table A {x, y} table for the spot center.
 --- @returns boolean True when find_location_for_character_to_spawn returns valid coordinates.
 function InvasionBattleManager:can_generate_battle(offensive_army, spot_coordinates)
+    --- An army with no units cannot be fought: the game's army manager fails on it and the battle never starts.
+    if offensive_army and #(offensive_army.units_pool or {}) == 0 then
+        out("DEBUG - can_generate_battle: the " .. tostring(offensive_army.faction) .. " army has no units")
+        return false
+    end
     if offensive_army then
         out("DEBUG - can_generate_battle checking if we can find a location to spawn the army")
         local x, y = self:find_location_for_character_to_spawn(offensive_army.faction, spot_coordinates)

@@ -18,7 +18,7 @@ local tower_offers = require("script/land_encounters/features/tower_offers")
 local battle_modifiers = require("script/land_encounters/features/battle_modifiers")
 local offer_effects = require("script/land_encounters/core/offer_effects")
 local army_generator = require("script/land_encounters/core/army_generator")
-local launch_dilemma = require("script/land_encounters/core/dilemmas").launch
+local dilemmas = require("script/land_encounters/core/dilemmas")
 local debug_config = require("script/land_encounters/configs/debug")
 local tower_lords = require("script/land_encounters/features/tower_lords")
 local tower_missions = require("script/land_encounters/features/tower_missions")
@@ -41,6 +41,9 @@ local EVENT_ENTER = "land_enc_dilemma_tower_enter"
 local EVENT_DEEPER = "land_enc_dilemma_tower_deeper"
 --- One-choice dilemma that pays the full haul after the last floor.
 local EVENT_CLAIM = "land_enc_dilemma_tower_claim"
+
+--- Start of every tower dilemma key.
+local TOWER_DILEMMA_PREFIX = "land_enc_dilemma_tower"
 
 --- Prefix of a floor army's invasion id. The delving faction's key follows, so each human faction has its own floor army.
 local FLOOR_INVASION_PREFIX = "tower_invasion_"
@@ -190,7 +193,7 @@ end
 --- @param choice_key string The choice key, e.g. "LEAPOI_TWR_LEAVE".
 --- @param line string The `dummy_` key describing the choice.
 --- @param haul table The delve's haul.
---- @returns table A choice record for `launch_dilemma`.
+--- @returns table A choice record for `dilemmas.launch`.
 local function payout_choice(choice_key, line, haul)
     local lines = { line }
     if haul.joined > 0 then lines[2] = "dummy_land_enc_tower_units_joined_" .. math.min(haul.joined, MOST_JOINED_LINE) end
@@ -327,6 +330,8 @@ function TowerEventDelegate:initialize(zones, saved)
     self.pending_dilemma_by_faction = saved.pending_dilemma_by_faction or {}
     self.dividends = saved.dividends or {}
     self.wounds = saved.wounds or {}
+    self.returns = saved.returns or {}
+    core:add_listener("land_enc_tower_return_lords", "ScriptEventPlayerBattleSequenceCompleted", true, function() self:return_lords() end, true)
     self:sync_markers()
 end
 
@@ -369,6 +374,7 @@ end
 --- floor's choice reopens.
 --- @param faction_name string The human faction whose turn is starting.
 function TowerEventDelegate:on_faction_turn_start(faction_name)
+    self:return_lords()
     for i = #self.dividends, 1, -1 do
         local dividend = self.dividends[i]
         if dividend.faction == faction_name then
@@ -433,7 +439,7 @@ function TowerEventDelegate:trigger_event(area_and_character_info, spot_info)
     if tower.echoes[faction_name] then
         enter_lines = { "dummy_land_enc_tower_held_by_" .. tower.faction, "dummy_land_enc_tower_echoes", "dummy_land_enc_tower_descend_floor_2" }
     end
-    launch_dilemma(EVENT_ENTER, {
+    dilemmas.launch(EVENT_ENTER, {
         { key = "FIRST", lines = enter_lines },
         { key = "SECOND", lines = { "dummy_land_enc_tower_walk_away" } },
     }, faction_name)
@@ -460,6 +466,8 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             zone_name = pending.zone_name, general_cqi = pending.general_cqi, floor = echoed and 2 or 1,
             haul = { gold = echoed and tower_data.floor_gold(tower_data.floors[1].gold) or 0, items = {}, units = {}, joined = 0 }, offers = {}, taken = {}, results = {},
             climb = echoed and { { floor = 1, difficulty = tower_data.floors[1].difficulty, state = "skipped" } } or {},
+            --- The heroes the faction has now. Only heroes that arrive during the delve are sent to the tower with the lord.
+            heroes_before = tower_battlefields.hero_set(faction_name),
         }
         self:launch_floor(faction_name)
     elseif key:sub(1, #EVENT_DEEPER + 7) == EVENT_DEEPER .. "_floor_" then
@@ -506,6 +514,7 @@ end
 --- spawn point ends it without a cooldown on floor 1, and as leaving on later floors.
 --- @param faction_name string The delving faction.
 function TowerEventDelegate:launch_floor(faction_name)
+    if self:wait_for_dilemmas(faction_name, "floor") then return end
     local delve = self.delves[faction_name]
     local tower = self:tower_in_zone(delve.zone_name)
     local general = tower_army.character(delve.general_cqi)
@@ -528,6 +537,7 @@ function TowerEventDelegate:launch_floor(faction_name)
     local battlefield = tower_battlefields.pick(faction_name, self.battlefield_spots, delve.last_battlefield or tower.coordinates)
     local spot = battlefield or { general:logical_position_x(), general:logical_position_y() }
     local ibm = self.invasion_battle_manager
+    --- An army with no units is turned away here too, like one with no spawn point.
     if not ibm:can_generate_battle(army, spot) then
         if delve.floor == 1 then
             self.delves[faction_name] = nil
@@ -541,10 +551,18 @@ function TowerEventDelegate:launch_floor(faction_name)
     log("tower: launching floor " .. delve.floor .. " (" .. difficulty .. ", budget " .. army_budget_text(budget, budget_multiplier) .. ", faction "
         .. tostring(next_floor.faction or tower.faction) .. (next_floor.bonus and ", hidden floor" or "") .. ") against lord " .. delve.general_cqi
         .. ", next-floor changes " .. tower_offers.describe_next_floor(next_floor))
-    if battlefield then tower_battlefields.move_lord(general, battlefield) end
+    if battlefield then tower_battlefields.move_lord(general, battlefield, faction_name, tower.coordinates, delve.heroes_before) end
     delve.last_battlefield = spot
     log("tower: floor " .. delve.floor .. " is fought at " .. spot[1] .. ", " .. spot[2] .. (battlefield and "" or ", where the lord stands"))
-    ibm:generate_battle(army, general, spot)
+    --- A battle that fails to start leaves the lord on its battlefield with nothing to fight, so the delve ends and the lord goes back. This
+    --- catches errors raised while the battle is set up, not ones in the invasion callbacks that run later.
+    local started, problem = pcall(function() ibm:generate_battle(army, general, spot) end)
+    if not started then
+        log("tower: floor " .. delve.floor .. " battle failed to start (" .. tostring(problem) .. "), ending the delve")
+        self:pay_haul(faction_name, delve)
+        self:end_delve(faction_name, "tower_left")
+        return
+    end
     delve.in_battle = true
     local ally = army.reinforcing_ally_armies and army.reinforcing_ally_armies[1]
     --- Kept so a floor re-armed after a reload still removes the allied army.
@@ -585,6 +603,12 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
     local budget = #debug_config.floor_budget == 2 and debug_config.floor_budget or tower_data.budget_by_difficulty[difficulty]
     local budget_multiplier = (next_floor.budget or 1) * get_mct_settings().tower_enemy_percent / 100
     local sabotage = tower_offers.sabotage_options(next_floor)
+    --- The `floor_unit_types` test switch, as the set the army generator takes. `floor_unit_keys` goes as it is.
+    local only_types = nil
+    if #debug_config.floor_unit_types > 0 then
+        only_types = {}
+        for _, unit_type in ipairs(debug_config.floor_unit_types) do only_types[unit_type] = true end
+    end
     --- A sized allied army (Allies in the dark): its lord and a set number of regular units, with gold to buy them all.
     local ally_options = nil
     if type(next_floor.ally) == "table" then
@@ -605,6 +629,8 @@ function TowerEventDelegate:floor_army(faction_name, floor_number)
         max_tier = sabotage.max_tier,
         min_tier = sabotage.min_tier,
         strip_types = sabotage.strip_types,
+        only_types = only_types,
+        only_key_parts = #debug_config.floor_unit_keys > 0 and debug_config.floor_unit_keys or nil,
         lord_subtype = sabotage.lord_subtype,
         ally_options = ally_options,
         ally_bundles = battle_modifiers.bundles(delve.modifiers, "allies"),
@@ -708,6 +734,21 @@ function TowerEventDelegate:swear_in_units(delve)
     end
 end
 
+--- Spawns the `spawn_hero_beside_lord` test switch's unique heroes beside the delving lord once the battle sequence ends, as a quest finished
+--- mid-delve does.
+--- @param faction_name string The delving faction.
+--- @param general_cqi number The delving lord's command queue index.
+function TowerEventDelegate:debug_spawn_heroes(faction_name, general_cqi)
+    if #debug_config.spawn_hero_beside_lord == 0 then return end
+    core:add_listener("land_enc_tower_debug_spawn_hero", "ScriptEventPlayerBattleSequenceCompleted", true, function()
+        local faction_cqi = cm:get_faction(faction_name):command_queue_index()
+        for _, subtype in ipairs(debug_config.spawn_hero_beside_lord) do
+            cm:spawn_unique_agent_at_character(faction_cqi, subtype, general_cqi, true)
+            log("tower: debug spawns " .. subtype .. " beside lord " .. general_cqi)
+        end
+    end, false)
+end
+
 --- Resolves a floor battle and ends any one-battle effects bought for it. A loss ends the delve and forfeits the haul, and a lost champion
 --- floor may curse the whole faction (features/boons.lua). A win adds the floor to
 --- the haul, then offers the claim after the last floor, or draws this floor's offers and opens its go-deeper dilemma.
@@ -732,6 +773,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     local results = tower_missions.settle(delve, faction_name, outcomes, floor)
     self:swear_in_units(delve)
     self:debug_kill_units(delve)
+    self:debug_spawn_heroes(faction_name, delve.general_cqi)
     tower_lords.add_trait(delve.general_cqi, tower_data.climber_trait, 1, false)
     if delve.floor >= #tower_data.floors then
         --- The claim shows the last floor's results and the whole climb.
@@ -740,7 +782,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
         tower_offers.show_climb(delve)
         local claim = payout_choice("FIRST", "dummy_land_enc_tower_claim", delve.haul)
         if tower_data.floors[delve.floor].freed_hero_rank then claim.lines[#claim.lines + 1] = "dummy_land_enc_tower_freed_hero" end
-        launch_dilemma(EVENT_CLAIM, { claim }, faction_name)
+        dilemmas.launch(EVENT_CLAIM, { claim }, faction_name)
         return
     end
     --- The next floor's battle modifiers, rolled before its offers so they can keep some out.
@@ -750,10 +792,40 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     self:launch_deeper(faction_name)
 end
 
+--- Holds a delve's next step while its faction has a LEAPOI dilemma open or a boon dilemma waiting. A battle started under an open dilemma
+--- locks the campaign, so the floor and the go-deeper dilemma wait for every answer, see `resume_after_dilemmas`.
+--- @param faction_name string The delving faction.
+--- @param step string "floor" or "deeper", the step that waits.
+--- @returns boolean True when the step waits.
+function TowerEventDelegate:wait_for_dilemmas(faction_name, step)
+    --- The tower's own dilemmas are left out: a delve opens one at a time, and the one answered is the one that led here.
+    local others = {}
+    for _, key in ipairs(dilemmas.open_keys(faction_name)) do
+        if key:sub(1, #TOWER_DILEMMA_PREFIX) ~= TOWER_DILEMMA_PREFIX then others[#others + 1] = key end
+    end
+    if not boons.asking(faction_name) and #others == 0 then return false end
+    self.delves[faction_name].after_dilemmas = step
+    local open = #others > 0 and table.concat(others, ", ") or "a boon dilemma waiting its turn"
+    log("tower: " .. faction_name .. " has a dilemma open (" .. open .. "), the " .. step .. " step waits for its answer")
+    return true
+end
+
+--- Goes on with a delve whose next step waited on open dilemmas, once the faction has answered them. Waits again if one is still open.
+--- @param faction_name string The faction that answered.
+function TowerEventDelegate:resume_after_dilemmas(faction_name)
+    local delve = self.delves[faction_name]
+    local step = delve and delve.after_dilemmas
+    if not step then return end
+    delve.after_dilemmas = nil
+    log("tower: " .. faction_name .. " answered its dilemmas, going on with the " .. step .. " step")
+    if step == "floor" then self:launch_floor(faction_name) else self:launch_deeper(faction_name) end
+end
+
 --- Opens the current floor's go-deeper dilemma: Climb, the drawn offers, then Leave with the haul. Its description shows this floor's
 --- stay-offer results and the climb so far.
 --- @param faction_name string The delving faction.
 function TowerEventDelegate:launch_deeper(faction_name)
+    if self:wait_for_dilemmas(faction_name, "deeper") then return end
     local delve = self.delves[faction_name]
     tower_offers.show_results(delve)
     tower_offers.show_climb(delve)
@@ -763,7 +835,7 @@ function TowerEventDelegate:launch_deeper(faction_name)
         choices[#choices + 1] = tower_offers.choice(offer_key, delve, next_floor)
     end
     choices[#choices + 1] = payout_choice(tower_offers.LEAVE, "dummy_land_enc_tower_leave", delve.haul)
-    launch_dilemma(EVENT_DEEPER .. "_floor_" .. delve.floor, choices, faction_name)
+    dilemmas.launch(EVENT_DEEPER .. "_floor_" .. delve.floor, choices, faction_name)
 end
 
 --- Sends a Daemon's deal army at the delving faction's capital: an army of a random Chaos faction from the `daemons_deal` offer, spawned
@@ -825,6 +897,21 @@ function TowerEventDelegate:reroll_faction(tower)
     log("tower: " .. tower.zone_name .. " is now held by " .. tower.faction .. " (was " .. tostring(was) .. ")")
 end
 
+--- Moves the lords of ended delves back beside their towers once no battle is being processed, since a lord moved during a battle sequence
+--- stays where it was. Run when a delve ends, when a battle sequence ends and at each turn start, so a lord left waiting still goes back.
+function TowerEventDelegate:return_lords()
+    if next(self.returns) == nil then return end
+    if cm:is_processing_battle() then
+        log("tower: a battle is being processed, " .. table.concat(sorted_keys(self.returns), ", ") .. " wait to bring their lords back")
+        return
+    end
+    for _, faction_name in ipairs(sorted_keys(self.returns)) do
+        local way = self.returns[faction_name]
+        self.returns[faction_name] = nil
+        tower_battlefields.return_lord(way.general_cqi, faction_name, way.coordinates, way.known)
+    end
+end
+
 --- Pays a delve's haul from script, for a delve that ends without its Leave or claim dilemma: its gold, its items, and the overflow gold of each
 --- sworn unit still waiting for room.
 --- @param faction_name string The delving faction.
@@ -850,15 +937,10 @@ function TowerEventDelegate:end_delve(faction_name, outcome, in_battle_sequence)
     tower_offers.end_delve_effects(delve)
     local tower = self:tower_in_zone(delve.zone_name)
     self.delves[faction_name] = nil
-    if in_battle_sequence then
-        --- Touching the lord during the battle sequence leaves the game on a stale pre-battle screen.
-        core:add_listener("land_enc_tower_return_lord_" .. delve.general_cqi, "ScriptEventPlayerBattleSequenceCompleted", true, function()
-            tower_battlefields.return_lord(delve.general_cqi, faction_name, tower.coordinates)
-        end, false)
-    else
-        --- Before the freed hero, who is placed beside the lord.
-        tower_battlefields.return_lord(delve.general_cqi, faction_name, tower.coordinates)
-    end
+    --- Kept in the save until the lord is moved, see `return_lords`. A battle's result waits for its sequence to end. Anything else goes now,
+    --- before the freed hero, who is placed beside the lord.
+    self.returns[faction_name] = { general_cqi = delve.general_cqi, coordinates = tower.coordinates, known = delve.heroes_before }
+    if not in_battle_sequence then self:return_lords() end
     tower.cooldown = get_mct_settings().tower_cooldown
     tower.last_delver = faction_name
     log("tower: " .. tower.zone_name .. " closed for " .. tower.cooldown .. " turns, last delver " .. faction_name)
@@ -885,24 +967,26 @@ end
 --- Save and load
 
 --- Exports the towers, delves in progress, open enter dilemmas, dividends still paying and pending wounds for the save file.
---- @returns table { towers, delves, pending_dilemma_by_faction, dividends, wounds }.
+--- @returns table { towers, delves, pending_dilemma_by_faction, dividends, wounds, returns }.
 function TowerEventDelegate:export_state_as_table()
     local towers = {}
     for i, tower in ipairs(self.towers) do
         towers[i] = tower:export()
     end
     return { towers = towers, delves = self.delves, pending_dilemma_by_faction = self.pending_dilemma_by_faction, dividends = self.dividends,
-        wounds = self.wounds }
+        wounds = self.wounds, returns = self.returns }
 end
 
 --- Builds an empty delegate. `initialize` places or restores the towers once the zones exist.
 --- @param invasion_battle_manager InvasionBattleManager The shared invasion battle manager.
 --- @returns TowerEventDelegate The new delegate.
 function TowerEventDelegate:new(invasion_battle_manager)
-    local t = { towers = {}, delves = {}, pending_dilemma_by_faction = {}, dividends = {}, wounds = {}, battlefield_spots = {},
+    local t = { towers = {}, delves = {}, pending_dilemma_by_faction = {}, dividends = {}, wounds = {}, returns = {}, battlefield_spots = {},
         invasion_battle_manager = invasion_battle_manager }
     setmetatable(t, self)
     self.__index = self
+    boons.when_answered = function(faction_name) t:resume_after_dilemmas(faction_name) end
+    dilemmas.when_clear = function(faction_name) t:resume_after_dilemmas(faction_name) end
     return t
 end
 

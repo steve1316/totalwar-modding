@@ -3,6 +3,7 @@
 require("script/land_encounters/utils/random")
 
 local factions_data = require("script/land_encounters/configs/factions_data")
+local hero_art_sets = require("script/land_encounters/configs/hero_art_sets")
 local tower_army = require("script/land_encounters/features/tower_army")
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,12 +62,17 @@ function M.free_hero(general_cqi, faction_name, shorthands, rank)
             local hero = heroes[random_number(#heroes)]
             local agent = cm:create_agent(faction_name, hero.agent_type, hero.agent_subtype, x, y)
             if agent and not agent:is_null_interface() then
-                cm:add_agent_experience(cm:char_lookup_str(agent), rank, true)
+                local lookup = cm:char_lookup_str(agent)
+                --- A hero of another culture would take a model of the player's culture, so it is given one of its own.
+                local art_sets = hero_art_sets[hero.agent_subtype]
+                local art_set = art_sets and art_sets[random_number(#art_sets)]
+                if art_set then cm:add_unit_model_overrides(lookup, art_set) end
+                cm:add_agent_experience(lookup, rank, true)
                 local force = tower_army.delving_force(general_cqi)
                 local joined = force ~= nil and tower_army.free_slots(force) > 0
                 if joined then cm:embed_agent_in_force(agent, force) end
-                log("tower: freed a rank " .. rank .. " " .. hero.agent_subtype .. " (" .. shorthand .. ") for " .. faction_name .. ", "
-                    .. (joined and "joined the army" or "waits beside the army"))
+                log("tower: freed a rank " .. rank .. " " .. hero.agent_subtype .. " (" .. shorthand .. ") for " .. faction_name .. " with art set "
+                    .. tostring(art_set) .. ", " .. (joined and "joined the army" or "waits beside the army"))
                 return hero.agent_subtype
             end
             log("tower: could not create a " .. hero.agent_subtype .. " hero for " .. faction_name)

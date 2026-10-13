@@ -323,7 +323,7 @@ function SmithyState:trigger_event(area_and_character_info)
                 self.visiting_enemy_character = visiting_character
                 self.visiting_enemy_faction_name = visiting_faction:name()
                 self:show_capture_terms(visiting_faction)
-                cm:trigger_dilemma(visiting_faction:name(), EVENT_RECLAMATION)
+                dilemmas.trigger(visiting_faction:name(), EVENT_RECLAMATION)
                 return true
             end
             self:show_message(visiting_faction:name(), "smithy_encountered")

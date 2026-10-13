@@ -68,6 +68,7 @@ Writes the generated db and loc rows of the Land Encounters and Points of Intere
 - `leapoi_effect_library.py`: custom effects and the trial bundles the debug switches apply.
 - `leapoi_army_spells.py`: the army spell pools, kept in `leapoi_army_spells.json`. Refresh with `python -m generators.leapoi_army_spells <vanilla TSV folder>`.
 - `leapoi_free_spells.py`: free army copies of lore spells, kept in `leapoi_free_spells.json`. Refresh with `python -m generators.leapoi_free_spells <vanilla TSV folder>`.
+- `leapoi_hero_art_sets.py`: run on its own, not pulled in. Writes `configs/hero_art_sets.lua`, the vanilla art sets a freed hero is dressed in. Rerun with `python -m generators.leapoi_hero_art_sets` after a game patch adds heroes.
 - `leapoi_stat_icons.py`: puts stat icons in front of stat names in dilemma lines.
 
 ### `tools/ttc_review` (TTC unit browser)

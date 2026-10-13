@@ -6,6 +6,9 @@ local M = {}
 --- Tower offer keys drawn first on every go-deeper dilemma while they are eligible, e.g. { "blood_price", "veterans_oath" }.
 M.force_offers = {}
 
+--- The one floor whose go-deeper dilemma gets `force_offers`, instead of every floor, e.g. { 3 }.
+M.force_offers_floor = {}
+
 --- Tower floor number -> difficulty key fought instead of the floor's own, e.g. { [1] = "easy", [2] = "easy", [3] = "easy", [4] = "easy" }.
 M.floor_difficulty = {}
 
@@ -18,6 +21,17 @@ M.floor_sworn_units = {}
 --- Tower floor number -> how many of the delving army's weakest regular units are removed after that floor is won, to free slots for offers
 --- that need room, e.g. { [1] = 1, [2] = 1, [3] = 1, [4] = 1 }.
 M.floor_kill_units = {}
+
+--- Unit types every tower floor army fields alone, instead of its own mix, e.g. { "melee_cavalry", "missile_cavalry", "monstrous_cavalry" } for a
+--- mission that counts riders.
+M.floor_unit_types = {}
+
+--- Unit key parts a tower floor army may also field under `floor_unit_types`, or alone when that is empty, e.g. { "demigryph" }.
+M.floor_unit_keys = {}
+
+--- Unique hero subtypes spawned beside the delving lord once a won tower floor's battle sequence ends, as a quest finished mid-delve does,
+--- e.g. { "wh3_dlc25_emp_theodore_bruckner" }.
+M.spawn_hero_beside_lord = {}
 
 --- Spot kind every encounter spot becomes instead of rolling the MCT battle chance, either { "battle" } or { "treasure" }.
 M.spot_kind = {}
