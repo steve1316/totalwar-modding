@@ -232,7 +232,7 @@ M.offers = {
     { key = "soft_landing", guide_section = "the_climb", reward_share = 0.5, climb_difficulty = "lower" },
     --- The next floor is led by one of the tower faction's legendary lords (configs/tower_champions.lua) that no human faction holds, with no
     --- heroes and a small guard (`fewer_units` off the cap, tiers `min_tier` and up). Its gold is multiplied by `next_gold`.
-    { key = "tower_champion", guide_section = "the_climb", next_gold = 1.5, no_heroes = true, fewer_units = 13, min_tier = 4, climb_difficulty = "champion" },
+    { key = "tower_champion", guide_section = "the_climb", next_gold = 1.5, no_heroes = true, fewer_units = 9, min_tier = 4, climb_difficulty = "champion" },
     --- This tower remembers the faction: its later delves here start on floor 2 with floor 1's base gold in the haul.
     { key = "echoes_of_the_climb", guide_section = "the_climb" },
     --- Builds the next floor's army now and lists its units. The floor is fought against that army unless a later offer changes the floor.

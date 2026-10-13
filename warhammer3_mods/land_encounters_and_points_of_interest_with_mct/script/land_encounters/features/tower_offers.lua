@@ -779,7 +779,10 @@ local HANDLERS = {
             return ctx.delve.champion ~= nil
         end,
         apply = function(offer, ctx)
-            change_next_floor(ctx.delve, { champion = ctx.delve.champion, gold = offer.next_gold, sabotage = offer.key })
+            --- The guard is bought on the hard budget, so it is not a handful of units on an easy or medium floor.
+            local record = copy_floor(tower_data.floors[ctx.delve.floor + 1])
+            record.difficulty = DIFFICULTY_KEYS[#DIFFICULTY_KEYS]
+            change_next_floor(ctx.delve, { champion = ctx.delve.champion, gold = offer.next_gold, sabotage = offer.key, record = record })
         end,
     },
     echoes_of_the_climb = {
