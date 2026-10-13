@@ -827,7 +827,7 @@ function M.choice_key(offer)
 end
 
 --- Draws up to the MCT `tower_offers_per_floor` eligible offers with `random_number`, so every multiplayer client draws the same ones. Eligible offers in
---- the debug `force_offers` list (configs/debug.lua) are drawn first. The offers are priced and sized at the next floor's difficulty, which
+--- the debug `force_offers` list (configs/debug.lua) are drawn first, on the `force_offers_floor` floor alone when it is set. The offers are priced and sized at the next floor's difficulty, which
 --- the delve keeps until the next draw.
 --- @param delve table The delve record.
 --- @param faction_name string The delving faction.
@@ -856,7 +856,8 @@ function M.draw(delve, faction_name, tower)
     for _, name in ipairs(group_names) do pool[#pool + 1] = groups[name][random_number(#groups[name])] end
     local limit = get_mct_settings().tower_offers_per_floor
     local picked, count = {}, 0
-    for _, key in ipairs(debug_config.force_offers) do
+    local forced_floor = debug_config.force_offers_floor[1]
+    for _, key in ipairs((forced_floor == nil or forced_floor == delve.floor) and debug_config.force_offers or {}) do
         for i, pooled in ipairs(pool) do
             if pooled == key and count < limit then
                 picked[table.remove(pool, i)] = true
