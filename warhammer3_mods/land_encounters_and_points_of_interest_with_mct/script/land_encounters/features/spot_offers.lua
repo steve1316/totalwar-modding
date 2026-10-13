@@ -649,6 +649,7 @@ function M.on_faction_turn_start(faction_name)
             if general then
                 tower_army.remove_bundle(camp.general_cqi, offers_data.camp_bundle)
                 cm:enable_movement_for_character(cm:char_lookup_str(general))
+                log("spot: lord " .. camp.general_cqi .. " can move again")
             end
         end
     end
