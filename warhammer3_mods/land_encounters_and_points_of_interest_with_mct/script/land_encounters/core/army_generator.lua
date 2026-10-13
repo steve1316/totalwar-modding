@@ -32,6 +32,13 @@ local ROLES = { "frontline", "missile", "cavalry", "monsters", "artillery" }
 --- Tier keys in factions_data, lowest first.
 local TIER_NAMES = { "tier_0", "tier_1", "tier_2", "tier_3", "tier_4", "tier_5" }
 
+--- Options that narrow which units an army may buy, in the order they are dropped when they leave an army with no units: the test switches
+--- first, then what the player bought (stripped types, tier limits, fewer units).
+local UNIT_FILTER_PASSES = {
+    { "only_types", "only_key_parts" },
+    { "strip_types", "min_tier", "max_tier", "fewer_units" },
+}
+
 --- Every unit-type bucket a force makeup holds.
 local UNIT_TYPES = {
     "melee_infantry",
@@ -119,6 +126,17 @@ local function meets_requirement(pools, record)
     return record.requires == nil or #pools[record.requires] >= record.requires_count
 end
 
+--- True when an archetype has a share in a role the pools can buy from, so its army is not left empty once a filter strips roles.
+--- @param pools table Role pools, as `build_role_pools` makes them.
+--- @param archetype table The archetype record.
+--- @returns boolean True when it can buy something.
+local function can_fill(pools, archetype)
+    for role, share in pairs(archetype.shares) do
+        if share > 0 and #pools[role] > 0 then return true end
+    end
+    return false
+end
+
 --- Builds per-role pools of the faction's buyable units across the tiers from `min_tier` to `max_tier`. Each unit appears once, from its first
 --- enabled listing. Tiers and unit types are walked in a fixed order so every multiplayer client builds identical pools.
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
@@ -174,7 +192,7 @@ local function pick_archetype(pools, requested_keys)
     end
     local candidates, requested_candidates = {}, {}
     for _, archetype in ipairs(archetypes.list) do
-        if enabled[archetype.key] and meets_requirement(pools, archetype) then
+        if enabled[archetype.key] and meets_requirement(pools, archetype) and can_fill(pools, archetype) then
             table.insert(candidates, archetype)
             if requested[archetype.key] then table.insert(requested_candidates, archetype) end
         end
@@ -344,12 +362,15 @@ end
 --- Generation
 
 --- Builds a force makeup for the faction and difficulty by spending a rolled gold budget on a spine and then on the archetype's roles.
+--- An army its unit filters (`UNIT_FILTER_PASSES`) leave with no units is built again without them, a pass at a time.
 --- @param difficulty_key string The difficulty key ("easy", "medium" or "hard").
 --- @param faction_shorthand_key string A 3-letter faction shorthand.
 --- @param options table Optional overrides: `archetype_keys` (preferred archetypes), `budget_multiplier` (scales the budget), the tower's
 --- sabotage and champion (`no_heroes`, `fewer_units` taken off the unit cap, `max_tier` and `min_tier` for the unit tiers, and `lord_subtype`
 --- for the lord), `unit_count` (an exact number of regular units, for a sized allied army) and `budget_range` ({min, max} gold that replaces the
---- difficulty's MCT range), `strip_types` (a set of unit types the army fields none of, e.g. { war_beast = true }), and `composition` (a
+--- difficulty's MCT range), `strip_types` (a set of unit types the army fields none of, e.g. { war_beast = true }), `only_types` (a set of unit
+--- types) and `only_key_parts` (unit key parts) for the test switches that keep only units of those types or with those parts in their key,
+--- and `composition` (a
 --- battle modifier's army theme, an archetype-like record with `key`, `shares` and `price_mode` that replaces the rolled archetype, or for a
 --- lore army with `units`, which fill `lore_share` of the army's unit slots on a budget multiplied by `lore_budget`, the spine and other
 --- slots coming from the rolled archetype, see configs/battle_modifiers.lua).
@@ -366,6 +387,19 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
     local pools = build_role_pools(faction_shorthand_key, origins, options.max_tier, options.min_tier)
     --- A stripped unit type buys nothing. A role it empties gives its share to the other roles, as for a role the faction cannot field.
     if options.strip_types then pools = filter_pools(pools, function(unit) return not options.strip_types[unit.unit_type] end) end
+    if options.only_types or options.only_key_parts then
+        local only_types = options.only_types or {}
+        --- Escaped into patterns, since the game crashes on a plain-text find.
+        local patterns = {}
+        for i, part in ipairs(options.only_key_parts or {}) do patterns[i] = part:gsub("%p", "%%%0") end
+        pools = filter_pools(pools, function(unit)
+            if only_types[unit.unit_type] then return true end
+            for _, pattern in ipairs(patterns) do
+                if unit.land_unit:find(pattern) then return true end
+            end
+            return false
+        end)
+    end
     local composition = options.composition
     local lore = composition and composition.units and composition or nil
     local archetype = (composition and not lore) and composition or pick_archetype(pools, options.archetype_keys)
@@ -424,6 +458,24 @@ function M.generate(difficulty_key, faction_shorthand_key, options)
 
     local spent = budget - army.budget_left
     local bought = unit_slots - army.slots_left
+    --- An army with no units cannot be fought: the game's army manager fails on it and the battle never starts.
+    if bought == 0 then
+        for _, pass in ipairs(UNIT_FILTER_PASSES) do
+            local relaxed, dropped = {}, {}
+            for field, value in pairs(options) do relaxed[field] = value end
+            for _, key in ipairs(pass) do
+                if relaxed[key] ~= nil then
+                    relaxed[key] = nil
+                    dropped[#dropped + 1] = key
+                end
+            end
+            if #dropped > 0 then
+                out("INFO - The " .. faction_shorthand_key .. " (" .. difficulty_key .. ") army has no units under " .. table.concat(dropped, ", ")
+                    .. ", building it again without them.")
+                return M.generate(difficulty_key, faction_shorthand_key, relaxed)
+            end
+        end
+    end
     local kind = lore and (lore.key .. " (with " .. archetype.key .. ")") or archetype.key
     out("INFO - Generated a " .. kind .. " army for " .. faction_shorthand_key .. " (" .. difficulty_key .. "): spent " .. spent .. " of " .. budget .. " gold on " .. bought .. " units.")
     local makeup = { lord = lord, heroes = heroes, units = army.units, archetype = lore and lore.key or archetype.key, budget = budget, spent = spent }
