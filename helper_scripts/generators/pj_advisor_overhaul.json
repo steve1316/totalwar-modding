@@ -1,0 +1,1822 @@
+{
+ "lores": {
+  "wh2_dlc09_lore_nehekhara": {
+   "effects": {
+    "cooldown": [
+     "wh2_dlc09_effect_ability_cooldown_djafs_incantation_of_cursed_blades",
+     "wh2_dlc09_effect_ability_cooldown_djafs_incantation_of_cursed_blades_upgraded",
+     "wh2_dlc09_effect_ability_cooldown_nerus_incantation_of_protection",
+     "wh2_dlc09_effect_ability_cooldown_nerus_incantation_of_protection_upgraded",
+     "wh2_dlc09_effect_ability_cooldown_ptras_incantation_of_righteous_smiting",
+     "wh2_dlc09_effect_ability_cooldown_ptras_incantation_of_righteous_smiting_upgraded",
+     "wh2_dlc09_effect_ability_cooldown_sakhmets_incantation_of_the_skullstorm",
+     "wh2_dlc09_effect_ability_cooldown_sakhmets_incantation_of_the_skullstorm_upgraded",
+     "wh2_dlc09_effect_ability_cooldown_usekhps_incantation_of_desiccation",
+     "wh2_dlc09_effect_ability_cooldown_usekhps_incantation_of_desiccation_upgraded",
+     "wh2_dlc09_effect_ability_cooldown_usirians_incantation_of_vengeance",
+     "wh2_dlc09_effect_ability_cooldown_usirians_incantation_of_vengeance_upgraded"
+    ],
+    "cost": [
+     "wh2_dlc09_effect_ability_wom_cost_djafs_incantation_of_cursed_blades",
+     "wh2_dlc09_effect_ability_wom_cost_djafs_incantation_of_cursed_blades_upgraded",
+     "wh2_dlc09_effect_ability_wom_cost_nerus_incantation_of_protection",
+     "wh2_dlc09_effect_ability_wom_cost_nerus_incantation_of_protection_upgraded",
+     "wh2_dlc09_effect_ability_wom_cost_ptras_incantation_of_righteous_smiting",
+     "wh2_dlc09_effect_ability_wom_cost_ptras_incantation_of_righteous_smiting_upgraded",
+     "wh2_dlc09_effect_ability_wom_cost_sakhmets_incantation_of_the_skullstorm",
+     "wh2_dlc09_effect_ability_wom_cost_sakhmets_incantation_of_the_skullstorm_upgraded",
+     "wh2_dlc09_effect_ability_wom_cost_usekhps_incantation_of_desiccation",
+     "wh2_dlc09_effect_ability_wom_cost_usekhps_incantation_of_desiccation_upgraded",
+     "wh2_dlc09_effect_ability_wom_cost_usirians_incantation_of_vengeance",
+     "wh2_dlc09_effect_ability_wom_cost_usirians_incantation_of_vengeance_upgraded"
+    ],
+    "enable": [
+     "wh2_dlc09_effect_ability_enable_djafs_incantation_of_cursed_blades",
+     "wh2_dlc09_effect_ability_enable_nerus_incantation_of_protection",
+     "wh2_dlc09_effect_ability_enable_ptras_incantation_of_righteous_smiting",
+     "wh2_dlc09_effect_ability_enable_sakhmets_incantation_of_the_skullstorm",
+     "wh2_dlc09_effect_ability_enable_the_restless_dead",
+     "wh2_dlc09_effect_ability_enable_usekhps_incantation_of_desiccation",
+     "wh2_dlc09_effect_ability_enable_usirians_incantation_of_vengeance"
+    ],
+    "overcast": [
+     "wh2_dlc09_effect_ability_overcast_djafs_incantation_of_cursed_blades",
+     "wh2_dlc09_effect_ability_overcast_nerus_incantation_of_protection",
+     "wh2_dlc09_effect_ability_overcast_ptras_incantation_of_righteous_smiting",
+     "wh2_dlc09_effect_ability_overcast_sakhmets_incantation_of_the_skullstorm",
+     "wh2_dlc09_effect_ability_overcast_usekhps_incantation_of_desiccation",
+     "wh2_dlc09_effect_ability_overcast_usirians_incantation_of_vengeance"
+    ]
+   },
+   "icon": "wh2_dlc09_lore_nehekhara.png",
+   "sort": 20,
+   "spells": [
+    "wh2_dlc09_lore_passive_the_restless_dead",
+    "wh2_dlc09_spell_nehekhara_djafs_incantation_of_cursed_blades",
+    "wh2_dlc09_spell_nehekhara_nerus_incantation_of_protection",
+    "wh2_dlc09_spell_nehekhara_ptras_incantation_of_righteous_smiting",
+    "wh2_dlc09_spell_nehekhara_sakhmets_incantation_of_the_skullstorm",
+    "wh2_dlc09_spell_nehekhara_usekhps_incantation_of_desiccation",
+    "wh2_dlc09_spell_nehekhara_usirians_incantation_of_vengeance"
+   ]
+  },
+  "wh2_dlc11_lore_deep": {
+   "effects": {
+    "cooldown": [
+     "wh2_dlc11_effect_ability_cooldown_denizens_of_the_deep",
+     "wh2_dlc11_effect_ability_cooldown_fog_of_the_damned",
+     "wh2_dlc11_effect_ability_cooldown_ghost_ship",
+     "wh2_dlc11_effect_ability_cooldown_krakens_pull",
+     "wh2_dlc11_effect_ability_cooldown_spiteful_shot",
+     "wh2_dlc11_effect_ability_cooldown_tidecall",
+     "wh3_dlc29_effect_ability_cooldown_ghost_ship_and_upgraded"
+    ],
+    "cost": [
+     "wh2_dlc11_effect_ability_wom_cost_denizens_of_the_deep",
+     "wh2_dlc11_effect_ability_wom_cost_fog_of_the_damned",
+     "wh2_dlc11_effect_ability_wom_cost_fog_of_the_damned_upgrade",
+     "wh2_dlc11_effect_ability_wom_cost_ghost_ship",
+     "wh2_dlc11_effect_ability_wom_cost_ghost_ship_upgrade",
+     "wh2_dlc11_effect_ability_wom_cost_krakens_pull",
+     "wh2_dlc11_effect_ability_wom_cost_krakens_pull_upgrade",
+     "wh2_dlc11_effect_ability_wom_cost_spiteful_shot",
+     "wh2_dlc11_effect_ability_wom_cost_spiteful_shot_upgrade",
+     "wh2_dlc11_effect_ability_wom_cost_tidecall",
+     "wh2_dlc11_effect_ability_wom_cost_tidecall_upgrade",
+     "wh3_dlc29_effect_ability_wom_cost_ghost_ship_and_upgraded"
+    ],
+    "enable": [
+     "wh2_dlc11_effect_ability_enable_denizens_of_the_deep",
+     "wh2_dlc11_effect_ability_enable_fog_of_the_damned",
+     "wh2_dlc11_effect_ability_enable_ghost_ship",
+     "wh2_dlc11_effect_ability_enable_kiss_of_the_deep",
+     "wh2_dlc11_effect_ability_enable_krakens_pull",
+     "wh2_dlc11_effect_ability_enable_spiteful_shot",
+     "wh2_dlc11_effect_ability_enable_tidecall"
+    ],
+    "overcast": [
+     "wh2_dlc11_effect_ability_overcast_fog_of_the_damned",
+     "wh2_dlc11_effect_ability_overcast_ghost_ship",
+     "wh2_dlc11_effect_ability_overcast_krakens_pull",
+     "wh2_dlc11_effect_ability_overcast_spiteful_shot",
+     "wh2_dlc11_effect_ability_overcast_tidecall"
+    ]
+   },
+   "icon": "wh2_dlc11_lore_deeps.png",
+   "sort": 21,
+   "spells": [
+    "wh2_dlc11_lore_passive_kiss_of_the_deep",
+    "wh2_dlc11_spell_deep_denizens_of_the_deep",
+    "wh2_dlc11_spell_deep_fog_of_the_damned",
+    "wh2_dlc11_spell_deep_ghost_ship",
+    "wh2_dlc11_spell_deep_krakens_pull",
+    "wh2_dlc11_spell_deep_spiteful_shot",
+    "wh2_dlc11_spell_deep_tidecall"
+   ]
+  },
+  "wh2_dlc14_lore_stealth": {
+   "effects": {
+    "cooldown": [
+     "wh2_dlc14_effect_magic_stealth_cooldown_armour_of_darkness",
+     "wh2_dlc14_effect_magic_stealth_cooldown_black_whirlwind",
+     "wh2_dlc14_effect_magic_stealth_cooldown_brittle_bone",
+     "wh2_dlc14_effect_magic_stealth_cooldown_skitterleap",
+     "wh2_dlc14_effect_magic_stealth_cooldown_veil_of_shadows",
+     "wh2_dlc14_effect_magic_stealth_cooldown_warp_stars",
+     "wh2_main_effect_ability_cooldown_skitterleap"
+    ],
+    "cost": [
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_armour_of_darkness",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_armour_of_darkness_upgraded",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_black_whirlwind",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_black_whirlwind_upgraded",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_brittle_bone",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_brittle_bone_upgraded",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_skitterleap",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_skitterleap_upgraded",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_veil_of_shadows",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_veil_of_shadows_upgraded",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_warp_stars",
+     "wh2_dlc14_effect_magic_stealth_reduce_wom_cost_warp_stars_upgraded",
+     "wh2_main_effect_ability_wom_cost_skitterleap",
+     "wh2_main_effect_ability_wom_cost_skitterleap_upgrade"
+    ],
+    "enable": [
+     "wh2_dlc14_effect_magic_stealth_enable_armour_of_darkness",
+     "wh2_dlc14_effect_magic_stealth_enable_black_whirlwind",
+     "wh2_dlc14_effect_magic_stealth_enable_brittle_bone",
+     "wh2_dlc14_effect_magic_stealth_enable_skitterleap",
+     "wh2_dlc14_effect_magic_stealth_enable_toxic_rain_lore_attribute",
+     "wh2_dlc14_effect_magic_stealth_enable_veil_of_shadows",
+     "wh2_dlc14_effect_magic_stealth_enable_warp_stars",
+     "wh2_main_effect_ability_enable_skitterleap"
+    ],
+    "overcast": [
+     "wh2_dlc14_effect_magic_stealth_enable_armour_of_darkness_upgraded",
+     "wh2_dlc14_effect_magic_stealth_enable_black_whirlwind_upgraded",
+     "wh2_dlc14_effect_magic_stealth_enable_brittle_bone_upgraded",
+     "wh2_dlc14_effect_magic_stealth_enable_skitterleap_upgraded",
+     "wh2_dlc14_effect_magic_stealth_enable_veil_of_shadows_upgraded",
+     "wh2_dlc14_effect_magic_stealth_enable_warp_stars_upgraded",
+     "wh2_main_effect_ability_overcast_skitterleap"
+    ]
+   },
+   "icon": "wh2_dlc14_skill_all_magic_stealth_02_toxic_rain_lore_attribute.png",
+   "sort": 18,
+   "spells": [
+    "wh2_dlc14_lore_passive_toxic_rain",
+    "wh2_dlc14_spell_stealth_armour_of_darkness",
+    "wh2_dlc14_spell_stealth_black_whirlwind",
+    "wh2_dlc14_spell_stealth_brittle_bone",
+    "wh2_dlc14_spell_stealth_veil_of_shadows",
+    "wh2_dlc14_spell_stealth_warp_stars",
+    "wh2_main_spell_ruin_skitterleap"
+   ]
+  },
+  "wh2_dlc17_lore_rune": {
+   "effects": {
+    "cooldown": [
+     "wh2_dlc17_effect_cooldown_mod_rune_of_breaking",
+     "wh2_dlc17_effect_cooldown_mod_rune_of_negation",
+     "wh2_dlc17_effect_cooldown_mod_rune_of_oath_and_steel",
+     "wh2_dlc17_effect_cooldown_mod_rune_of_slowness",
+     "wh2_dlc17_effect_cooldown_mod_rune_of_speed",
+     "wh2_dlc17_effect_cooldown_mod_rune_of_wrath_&_ruin"
+    ],
+    "cost": [],
+    "enable": [
+     "wh2_dlc17_effect_ability_enable_rune_of_breaking",
+     "wh2_dlc17_effect_ability_enable_rune_of_slowness",
+     "wh2_dlc17_effect_ability_enable_rune_of_speed",
+     "wh_main_effect_ability_enable_rune_of_negation",
+     "wh_main_effect_ability_enable_rune_of_oath_and_steel",
+     "wh_main_effect_ability_enable_rune_of_wrath_&_ruin"
+    ],
+    "overcast": [
+     "wh2_dlc17_effect_ability_enable_master_rune_of_breaking",
+     "wh2_dlc17_effect_ability_enable_master_rune_of_negation",
+     "wh2_dlc17_effect_ability_enable_master_rune_of_slowness",
+     "wh2_dlc17_effect_ability_enable_master_rune_of_speed",
+     "wh_dlc06_effect_ability_enable_master_rune_of_oath_and_steel",
+     "wh_dlc06_effect_ability_enable_master_rune_of_wrath_&_ruin"
+    ]
+   },
+   "icon": "wh_dlc06_lord_passive_locus_of_power.png",
+   "sort": 25,
+   "spells": [
+    "wh2_dlc17_rune_abilities_rune_of_breaking",
+    "wh2_dlc17_rune_abilities_rune_of_slowness",
+    "wh2_dlc17_rune_abilities_rune_of_speed",
+    "wh_main_rune_abilities_rune_of_negation",
+    "wh_main_rune_abilities_rune_of_oath_and_steel",
+    "wh_main_rune_abilities_rune_of_wrath_and_ruin"
+   ]
+  },
+  "wh2_main_lore_dark_magic": {
+   "effects": {
+    "cooldown": [
+     "wh2_main_effect_ability_cooldown_bladewind",
+     "wh2_main_effect_ability_cooldown_chillwind",
+     "wh2_main_effect_ability_cooldown_doombolt",
+     "wh2_main_effect_ability_cooldown_power_of_darkness",
+     "wh2_main_effect_ability_cooldown_soul_stealer",
+     "wh2_main_effect_ability_cooldown_word_of_pain"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_bladewind",
+     "wh2_main_effect_ability_wom_cost_bladewind_upgraded",
+     "wh2_main_effect_ability_wom_cost_chillwind",
+     "wh2_main_effect_ability_wom_cost_chillwind_upgraded",
+     "wh2_main_effect_ability_wom_cost_doombolt",
+     "wh2_main_effect_ability_wom_cost_doombolt_upgraded",
+     "wh2_main_effect_ability_wom_cost_power_of_darkness",
+     "wh2_main_effect_ability_wom_cost_soulstealer",
+     "wh2_main_effect_ability_wom_cost_word_of_pain",
+     "wh2_main_effect_ability_wom_cost_word_of_pain_upgraded"
+    ],
+    "enable": [
+     "wh2_main_effect_ability_enable_bladewind",
+     "wh2_main_effect_ability_enable_chillwind",
+     "wh2_main_effect_ability_enable_doombolt",
+     "wh2_main_effect_ability_enable_power_of_darkness",
+     "wh2_main_effect_ability_enable_power_of_darkness_hidden",
+     "wh2_main_effect_ability_enable_soul_stealer",
+     "wh2_main_effect_ability_enable_spiteful_conjuration",
+     "wh2_main_effect_ability_enable_word_of_pain"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_bladewind",
+     "wh2_main_effect_ability_overcast_chillwind",
+     "wh2_main_effect_ability_overcast_doombolt",
+     "wh2_main_effect_ability_overcast_word_of_pain"
+    ]
+   },
+   "icon": "wh2_main_lore_passive_spiteful_conjuration.png",
+   "sort": 15,
+   "spells": [
+    "wh2_main_lore_passive_spiteful_conjuration",
+    "wh2_main_spell_dark_magic_bladewind",
+    "wh2_main_spell_dark_magic_chillwind",
+    "wh2_main_spell_dark_magic_doombolt",
+    "wh2_main_spell_dark_magic_power_of_darkness",
+    "wh2_main_spell_dark_magic_soul_stealer",
+    "wh2_main_spell_dark_magic_word_of_pain"
+   ]
+  },
+  "wh2_main_lore_high_magic": {
+   "effects": {
+    "cooldown": [
+     "wh2_main_effect_ability_cooldown_apotheosis",
+     "wh2_main_effect_ability_cooldown_arcane_unforging",
+     "wh2_main_effect_ability_cooldown_fiery_convocation",
+     "wh2_main_effect_ability_cooldown_hand_of_glory",
+     "wh2_main_effect_ability_cooldown_soul_quench",
+     "wh2_main_effect_ability_cooldown_tempest"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_apotheosis",
+     "wh2_main_effect_ability_wom_cost_apotheosis_upgraded",
+     "wh2_main_effect_ability_wom_cost_arcane_unforging",
+     "wh2_main_effect_ability_wom_cost_arcane_unforging_upgraded",
+     "wh2_main_effect_ability_wom_cost_fiery_convocation",
+     "wh2_main_effect_ability_wom_cost_fiery_convocation_upgraded",
+     "wh2_main_effect_ability_wom_cost_hand_of_glory",
+     "wh2_main_effect_ability_wom_cost_hand_of_glory_upgraded",
+     "wh2_main_effect_ability_wom_cost_soul_quench",
+     "wh2_main_effect_ability_wom_cost_soul_quench_upgraded",
+     "wh2_main_effect_ability_wom_cost_tempest",
+     "wh2_main_effect_ability_wom_cost_tempest_upgraded"
+    ],
+    "enable": [
+     "wh2_main_effect_ability_enable_apotheosis",
+     "wh2_main_effect_ability_enable_arcane_unforging",
+     "wh2_main_effect_ability_enable_fiery_convocation",
+     "wh2_main_effect_ability_enable_hand_of_glory",
+     "wh2_main_effect_ability_enable_shield_of_saphery",
+     "wh2_main_effect_ability_enable_soul_quench",
+     "wh2_main_effect_ability_enable_tempest"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_apotheosis",
+     "wh2_main_effect_ability_overcast_arcane_unforging",
+     "wh2_main_effect_ability_overcast_fiery_convocation",
+     "wh2_main_effect_ability_overcast_hand_of_glory",
+     "wh2_main_effect_ability_overcast_soul_quench",
+     "wh2_main_effect_ability_overcast_tempest"
+    ]
+   },
+   "icon": "wh2_main_lore_passive_shield_of_saphery.png",
+   "sort": 14,
+   "spells": [
+    "wh2_main_lore_passive_shield_of_saphery",
+    "wh2_main_spell_high_magic_apotheosis",
+    "wh2_main_spell_high_magic_arcane_unforging",
+    "wh2_main_spell_high_magic_fiery_convocation",
+    "wh2_main_spell_high_magic_hand_of_glory",
+    "wh2_main_spell_high_magic_soul_quench",
+    "wh2_main_spell_high_magic_tempest"
+   ]
+  },
+  "wh2_main_lore_plague": {
+   "effects": {
+    "cooldown": [
+     "wh2_main_effect_ability_cooldown_bless_with_filth",
+     "wh2_main_effect_ability_cooldown_pestilent_birth",
+     "wh2_main_effect_ability_cooldown_pestilent_breath",
+     "wh2_main_effect_ability_cooldown_plague",
+     "wh2_main_effect_ability_cooldown_vermintide",
+     "wh2_main_effect_ability_cooldown_wither"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_bless_with_filth",
+     "wh2_main_effect_ability_wom_cost_bless_with_filth_upgraded",
+     "wh2_main_effect_ability_wom_cost_pestilent_birth",
+     "wh2_main_effect_ability_wom_cost_pestilent_breath",
+     "wh2_main_effect_ability_wom_cost_pestilent_breath_upgraded",
+     "wh2_main_effect_ability_wom_cost_plague",
+     "wh2_main_effect_ability_wom_cost_plague_upgraded",
+     "wh2_main_effect_ability_wom_cost_vermintide",
+     "wh2_main_effect_ability_wom_cost_wither",
+     "wh2_main_effect_ability_wom_cost_wither_upgraded"
+    ],
+    "enable": [
+     "wh2_main_effect_ability_enable_bless_with_filth",
+     "wh2_main_effect_ability_enable_pestilent_birth",
+     "wh2_main_effect_ability_enable_pestilent_breath",
+     "wh2_main_effect_ability_enable_plague",
+     "wh2_main_effect_ability_enable_plague_rash",
+     "wh2_main_effect_ability_enable_vermintide",
+     "wh2_main_effect_ability_enable_wither"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_bless_with_filth",
+     "wh2_main_effect_ability_overcast_pestilent_breath",
+     "wh2_main_effect_ability_overcast_plague",
+     "wh2_main_effect_ability_overcast_wither"
+    ]
+   },
+   "icon": "wh2_main_lore_passive_plague_rash.png",
+   "sort": 17,
+   "spells": [
+    "wh2_main_lore_passive_plague_rash",
+    "wh2_main_spell_plague_bless_with_filth",
+    "wh2_main_spell_plague_pestilent_birth",
+    "wh2_main_spell_plague_pestilent_breath",
+    "wh2_main_spell_plague_plague",
+    "wh2_main_spell_plague_vermintide",
+    "wh2_main_spell_plague_wither"
+   ]
+  },
+  "wh2_main_lore_ruin": {
+   "effects": {
+    "cooldown": [
+     "wh2_main_effect_ability_cooldown_cracks_call",
+     "wh2_main_effect_ability_cooldown_death_frenzy",
+     "wh2_main_effect_ability_cooldown_howling_warpgale",
+     "wh2_main_effect_ability_cooldown_skaven_scorch",
+     "wh2_main_effect_ability_cooldown_warp_lightning",
+     "wh2_main_effect_magic_ruin_cooldown_flensing_ruin"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_cracks_call",
+     "wh2_main_effect_ability_wom_cost_cracks_call_upgrade",
+     "wh2_main_effect_ability_wom_cost_death_frenzy",
+     "wh2_main_effect_ability_wom_cost_death_frenzy_upgrade",
+     "wh2_main_effect_ability_wom_cost_howling_warpgale",
+     "wh2_main_effect_ability_wom_cost_howling_warpgale_upgrade",
+     "wh2_main_effect_ability_wom_cost_skaven_scorch",
+     "wh2_main_effect_ability_wom_cost_skaven_scorch_upgrade",
+     "wh2_main_effect_ability_wom_cost_warp_lightning",
+     "wh2_main_effect_ability_wom_cost_warp_lightning_upgrade",
+     "wh2_main_effect_magic_ruin_reduce_wom_cost_flensing_ruin",
+     "wh2_main_effect_magic_ruin_reduce_wom_cost_flensing_ruin_upgrade"
+    ],
+    "enable": [
+     "wh2_main_effect_ability_enable_cracks_call",
+     "wh2_main_effect_ability_enable_death_frenzy",
+     "wh2_main_effect_ability_enable_howling_warpgale",
+     "wh2_main_effect_ability_enable_musk_of_fear",
+     "wh2_main_effect_ability_enable_skaven_scorch",
+     "wh2_main_effect_ability_enable_warp_lightning",
+     "wh2_main_effect_magic_ruin_enable_flensing_ruin"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_cracks_call",
+     "wh2_main_effect_ability_overcast_death_frenzy",
+     "wh2_main_effect_ability_overcast_howling_warpgale",
+     "wh2_main_effect_ability_overcast_skaven_scorch",
+     "wh2_main_effect_ability_overcast_warp_lightning",
+     "wh2_main_effect_magic_ruin_enable_flensing_ruin_upgrade"
+    ]
+   },
+   "icon": "wh2_main_lore_passive_musk_of_fear.png",
+   "sort": 16,
+   "spells": [
+    "wh2_dlc14_spell_ruin_flensing_ruin",
+    "wh2_main_lore_passive_musk_of_fear",
+    "wh2_main_spell_ruin_cracks_call",
+    "wh2_main_spell_ruin_death_frenzy",
+    "wh2_main_spell_ruin_howling_warpgale",
+    "wh2_main_spell_ruin_scorch",
+    "wh2_main_spell_ruin_warp_lightning"
+   ]
+  },
+  "wh3_dlc23_lore_hashut": {
+   "effects": {
+    "cooldown": [
+     "wh3_dlc23_effect_ability_cooldown_ash_storm",
+     "wh3_dlc23_effect_ability_cooldown_burning_wrath",
+     "wh3_dlc23_effect_ability_cooldown_curse_of_hashut",
+     "wh3_dlc23_effect_ability_cooldown_dark_subjugation",
+     "wh3_dlc23_effect_ability_cooldown_flames_of_azgorh",
+     "wh3_dlc23_effect_ability_cooldown_hell_hammer"
+    ],
+    "cost": [
+     "wh3_dlc23_effect_ability_wom_cost_ash_storm",
+     "wh3_dlc23_effect_ability_wom_cost_ash_storm_upgraded",
+     "wh3_dlc23_effect_ability_wom_cost_burning_wrath",
+     "wh3_dlc23_effect_ability_wom_cost_burning_wrath_upgraded",
+     "wh3_dlc23_effect_ability_wom_cost_curse_of_hashut",
+     "wh3_dlc23_effect_ability_wom_cost_curse_of_hashut_upgraded",
+     "wh3_dlc23_effect_ability_wom_cost_dark_subjugation",
+     "wh3_dlc23_effect_ability_wom_cost_dark_subjugation_upgraded",
+     "wh3_dlc23_effect_ability_wom_cost_flames_of_azgorh",
+     "wh3_dlc23_effect_ability_wom_cost_flames_of_azgorh_upgraded",
+     "wh3_dlc23_effect_ability_wom_cost_hell_hammer",
+     "wh3_dlc23_effect_ability_wom_cost_hell_hammer_upgraded"
+    ],
+    "enable": [
+     "wh3_dlc23_effect_ability_enable_ash_storm",
+     "wh3_dlc23_effect_ability_enable_burning_wrath",
+     "wh3_dlc23_effect_ability_enable_curse_of_hashut",
+     "wh3_dlc23_effect_ability_enable_dark_subjugation",
+     "wh3_dlc23_effect_ability_enable_flames_of_azgorh",
+     "wh3_dlc23_effect_ability_enable_hell_hammer",
+     "wh3_dlc23_effect_ability_enable_killing_fire"
+    ],
+    "overcast": [
+     "wh3_dlc23_effect_ability_enable_ash_storm_upgraded",
+     "wh3_dlc23_effect_ability_enable_burning_wrath_upgraded",
+     "wh3_dlc23_effect_ability_enable_curse_of_hashut_upgraded",
+     "wh3_dlc23_effect_ability_enable_dark_subjugation_upgraded",
+     "wh3_dlc23_effect_ability_enable_flames_of_azgorh_upgraded",
+     "wh3_dlc23_effect_ability_enable_hell_hammer_upgraded"
+    ]
+   },
+   "icon": "wh3_dlc23_lore_passive_killing_fire.png",
+   "sort": 26,
+   "spells": [
+    "wh3_dlc23_lore_passive_killing_fire",
+    "wh3_dlc23_spell_hashut_ash_storm",
+    "wh3_dlc23_spell_hashut_burning_wrath",
+    "wh3_dlc23_spell_hashut_curse_of_hashut",
+    "wh3_dlc23_spell_hashut_dark_subjugation",
+    "wh3_dlc23_spell_hashut_flames_of_azgorh",
+    "wh3_dlc23_spell_hashut_hell_hammer"
+   ]
+  },
+  "wh3_dlc24_lore_hag": {
+   "effects": {
+    "cooldown": [
+     "wh3_dlc24_effect_ability_cooldown_curse_of_the_ancient_witch",
+     "wh3_dlc24_effect_ability_cooldown_cursed_cauldron",
+     "wh3_dlc24_effect_ability_cooldown_malediction_of_madness",
+     "wh3_dlc24_effect_ability_cooldown_the_forbidden_fens",
+     "wh3_dlc24_effect_ability_cooldown_vengeance_of_spirits",
+     "wh3_dlc24_effect_ability_cooldown_witchbrew"
+    ],
+    "cost": [
+     "wh3_dlc24_effect_ability_wom_cost_curse_of_the_ancient_witch",
+     "wh3_dlc24_effect_ability_wom_cost_curse_of_the_ancient_witch_upgraded",
+     "wh3_dlc24_effect_ability_wom_cost_cursed_cauldron",
+     "wh3_dlc24_effect_ability_wom_cost_cursed_cauldron_upgraded",
+     "wh3_dlc24_effect_ability_wom_cost_malediction_of_madness",
+     "wh3_dlc24_effect_ability_wom_cost_malediction_of_madness_upgraded",
+     "wh3_dlc24_effect_ability_wom_cost_the_forbidden_fens",
+     "wh3_dlc24_effect_ability_wom_cost_the_forbidden_fens_upgraded",
+     "wh3_dlc24_effect_ability_wom_cost_vengeance_of_spirits",
+     "wh3_dlc24_effect_ability_wom_cost_vengeance_of_spirits_upgraded",
+     "wh3_dlc24_effect_ability_wom_cost_witchbrew",
+     "wh3_dlc24_effect_ability_wom_cost_witchbrew_upgraded"
+    ],
+    "enable": [
+     "wh3_dlc24_effect_ability_enable_curse_of_the_ancient_witch",
+     "wh3_dlc24_effect_ability_enable_cursed_cauldron",
+     "wh3_dlc24_effect_ability_enable_fate_of_interlopers",
+     "wh3_dlc24_effect_ability_enable_malediction_of_madness",
+     "wh3_dlc24_effect_ability_enable_the_forbidden_fens",
+     "wh3_dlc24_effect_ability_enable_vengeance_of_spirits",
+     "wh3_dlc24_effect_ability_enable_witchbrew"
+    ],
+    "overcast": [
+     "wh3_dlc24_effect_ability_overcast_curse_of_the_ancient_witch",
+     "wh3_dlc24_effect_ability_overcast_cursed_cauldron",
+     "wh3_dlc24_effect_ability_overcast_malediction_of_madness",
+     "wh3_dlc24_effect_ability_overcast_the_forbidden_fens",
+     "wh3_dlc24_effect_ability_overcast_vengeance_of_spirits",
+     "wh3_dlc24_effect_ability_overcast_witchbrew"
+    ]
+   },
+   "icon": "wh3_dlc24_lore_passive_fate_of_interlopers.png",
+   "sort": 33,
+   "spells": [
+    "wh3_dlc24_lore_passive_fate_of_interlopers",
+    "wh3_dlc24_spell_hags_curse_of_the_ancient_witch",
+    "wh3_dlc24_spell_hags_cursed_cauldron",
+    "wh3_dlc24_spell_hags_malediction_of_madness",
+    "wh3_dlc24_spell_hags_the_forbidden_fens",
+    "wh3_dlc24_spell_hags_vengeance_of_spirits",
+    "wh3_dlc24_spell_hags_witchbrew"
+   ]
+  },
+  "wh3_dlc27_lore_mists": {
+   "effects": {
+    "cooldown": [
+     "wh3_dlc27_effect_ability_cooldown_flensing_haar",
+     "wh3_dlc27_effect_ability_cooldown_ladrielles_shroud",
+     "wh3_dlc27_effect_ability_cooldown_mathlanns_spite",
+     "wh3_dlc27_effect_ability_cooldown_mistress_of_the_deeps",
+     "wh3_dlc27_effect_ability_cooldown_the_writhing_mist",
+     "wh3_dlc27_effect_ability_cooldown_walk_between_worlds"
+    ],
+    "cost": [
+     "wh3_dlc27_effect_ability_wom_cost_flensing_haar",
+     "wh3_dlc27_effect_ability_wom_cost_flensing_haar_upgraded",
+     "wh3_dlc27_effect_ability_wom_cost_ladrielles_shroud",
+     "wh3_dlc27_effect_ability_wom_cost_ladrielles_shroud_upgraded",
+     "wh3_dlc27_effect_ability_wom_cost_mathlanns_spite",
+     "wh3_dlc27_effect_ability_wom_cost_mathlanns_spite_upgraded",
+     "wh3_dlc27_effect_ability_wom_cost_mistress_of_the_deeps",
+     "wh3_dlc27_effect_ability_wom_cost_the_writhing_mist",
+     "wh3_dlc27_effect_ability_wom_cost_the_writhing_mist_upgraded",
+     "wh3_dlc27_effect_ability_wom_cost_walk_between_worlds",
+     "wh3_dlc27_effect_ability_wom_cost_walk_between_worlds_upgraded"
+    ],
+    "enable": [
+     "wh3_dlc27_effect_ability_enable_flensing_haar",
+     "wh3_dlc27_effect_ability_enable_ladrielles_shroud",
+     "wh3_dlc27_effect_ability_enable_mathlanns_spite",
+     "wh3_dlc27_effect_ability_enable_mistress_of_the_deeps",
+     "wh3_dlc27_effect_ability_enable_obscuring_haze",
+     "wh3_dlc27_effect_ability_enable_the_writhing_mist",
+     "wh3_dlc27_effect_ability_enable_walk_between_worlds"
+    ],
+    "overcast": [
+     "wh3_dlc27_effect_ability_overcast_flensing_haar",
+     "wh3_dlc27_effect_ability_overcast_ladrielles_shroud",
+     "wh3_dlc27_effect_ability_overcast_mathlanns_spite",
+     "wh3_dlc27_effect_ability_overcast_the_writhing_mist",
+     "wh3_dlc27_effect_ability_overcast_walk_between_worlds"
+    ]
+   },
+   "icon": "wh3_dlc27_lore_passive_obscuring_mist.png",
+   "sort": 35,
+   "spells": [
+    "wh3_dlc27_lore_passive_obscuring_mists",
+    "wh3_dlc27_spell_mists_flensing_haar",
+    "wh3_dlc27_spell_mists_ladrielles_shroud",
+    "wh3_dlc27_spell_mists_mathlanns_spite",
+    "wh3_dlc27_spell_mists_mistress_of_the_deeps",
+    "wh3_dlc27_spell_mists_the_writhing_mist",
+    "wh3_dlc27_spell_mists_walk_between_worlds"
+   ]
+  },
+  "wh3_dlc29_lore_undeath": {
+   "effects": {
+    "cooldown": [
+     "wh3_dlc29_effect_ability_cooldown_abyssal_swarm",
+     "wh3_dlc29_effect_ability_cooldown_breath_of_darkness",
+     "wh3_dlc29_effect_ability_cooldown_dark_raiders",
+     "wh3_dlc29_effect_ability_cooldown_dark_raiders_and_upgraded",
+     "wh3_dlc29_effect_ability_cooldown_hand_of_dust",
+     "wh3_dlc29_effect_ability_cooldown_harbringer",
+     "wh3_dlc29_effect_ability_cooldown_morkharn_breath_of_darkness",
+     "wh3_dlc29_effect_ability_cooldown_razkhar_the_abyssal_swarm",
+     "wh3_dlc29_effect_ability_cooldown_soulstealer"
+    ],
+    "cost": [
+     "wh3_dlc29_effect_ability_wom_cost_abyssal_swarm",
+     "wh3_dlc29_effect_ability_wom_cost_abyssal_swarm_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_akararan_the_dark_riders_and_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_breath_of_darkness",
+     "wh3_dlc29_effect_ability_wom_cost_breath_of_darkness_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_dark_raiders",
+     "wh3_dlc29_effect_ability_wom_cost_dark_raiders_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_hand_of_dust",
+     "wh3_dlc29_effect_ability_wom_cost_hand_of_dust_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_harbringer",
+     "wh3_dlc29_effect_ability_wom_cost_soulstealer",
+     "wh3_dlc29_effect_ability_wom_cost_soulstealer_upgraded"
+    ],
+    "enable": [
+     "wh3_dlc29_effect_ability_enable_akararan_dark_raiders",
+     "wh3_dlc29_effect_ability_enable_kandorak_harbringer",
+     "wh3_dlc29_effect_ability_enable_khizaar_soulstealer",
+     "wh3_dlc29_effect_ability_enable_morkharn_breath_of_darkness",
+     "wh3_dlc29_effect_ability_enable_raise_the_dead",
+     "wh3_dlc29_effect_ability_enable_raise_the_dead_hidden",
+     "wh3_dlc29_effect_ability_enable_razkhar_abyssal_swarm",
+     "wh3_dlc29_effect_ability_enable_sulekhim_hand_of_dust"
+    ],
+    "overcast": [
+     "wh3_dlc29_effect_ability_enable_akararan_dark_raiders_upgraded",
+     "wh3_dlc29_effect_ability_enable_kandorak_harbringer_upgraded",
+     "wh3_dlc29_effect_ability_enable_khizaar_soulstealer_upgraded",
+     "wh3_dlc29_effect_ability_enable_morkharn_breath_of_darkness_upgraded",
+     "wh3_dlc29_effect_ability_enable_morkharn_breath_of_darkness_upgraded_hidden",
+     "wh3_dlc29_effect_ability_enable_razkhar_abyssal_swarm_upgraded",
+     "wh3_dlc29_effect_ability_enable_razkhar_abyssal_swarm_upgraded_hidden",
+     "wh3_dlc29_effect_ability_enable_sulekhim_hand_of_dust_upgraded"
+    ]
+   },
+   "icon": "wh3_dlc29_lore_passive_raise_the_dead.png",
+   "sort": 0,
+   "spells": [
+    "wh3_dlc29_lore_passive_raise_the_dead",
+    "wh3_dlc29_spell_undeath_akararan_the_dark_riders",
+    "wh3_dlc29_spell_undeath_kandorak_the_harbinger",
+    "wh3_dlc29_spell_undeath_khizaar_the_soulstealer",
+    "wh3_dlc29_spell_undeath_morkharn_breath_of_darkness",
+    "wh3_dlc29_spell_undeath_razkhar_the_abyssal_swarm",
+    "wh3_dlc29_spell_undeath_sulekhim_hand_of_dust"
+   ]
+  },
+  "wh3_main_lore_nurgle": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_blight_boil",
+     "wh3_main_effect_ability_cooldown_curse_of_the_leper",
+     "wh3_main_effect_ability_cooldown_fleshy_abundance",
+     "wh3_main_effect_ability_cooldown_miasma_of_pestilence",
+     "wh3_main_effect_ability_cooldown_rancid_visitations",
+     "wh3_main_effect_ability_cooldown_stream_of_corruption"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_blight_boil",
+     "wh3_main_effect_ability_wom_cost_blight_boil_upgraded",
+     "wh3_main_effect_ability_wom_cost_curse_of_the_leper",
+     "wh3_main_effect_ability_wom_cost_curse_of_the_leper_upgraded",
+     "wh3_main_effect_ability_wom_cost_fleshy_abundance",
+     "wh3_main_effect_ability_wom_cost_fleshy_abundance_upgraded",
+     "wh3_main_effect_ability_wom_cost_miasma_of_pestilence",
+     "wh3_main_effect_ability_wom_cost_miasma_of_pestilence_upgraded",
+     "wh3_main_effect_ability_wom_cost_rancid_visitations",
+     "wh3_main_effect_ability_wom_cost_rancid_visitations_upgraded",
+     "wh3_main_effect_ability_wom_cost_stream_of_corruption",
+     "wh3_main_effect_ability_wom_cost_stream_of_corruption_upgraded"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_blight_boil",
+     "wh3_main_effect_ability_enable_children_of_nurgle",
+     "wh3_main_effect_ability_enable_curse_of_the_leper",
+     "wh3_main_effect_ability_enable_fleshy_abundance",
+     "wh3_main_effect_ability_enable_miasma_of_pestilence",
+     "wh3_main_effect_ability_enable_rancid_visitations",
+     "wh3_main_effect_ability_enable_stream_of_corruption"
+    ],
+    "overcast": [
+     "wh3_main_effect_ability_overcast_blight_boil",
+     "wh3_main_effect_ability_overcast_curse_of_the_leper",
+     "wh3_main_effect_ability_overcast_fleshy_abundance",
+     "wh3_main_effect_ability_overcast_miasma_of_pestilence",
+     "wh3_main_effect_ability_overcast_rancid_visitations",
+     "wh3_main_effect_ability_overcast_stream_of_corruption"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_children_of_nurgle.png",
+   "sort": 27,
+   "spells": [
+    "wh3_main_lore_passive_children_of_nurgle",
+    "wh3_main_spell_nurgle_curse_of_the_leper",
+    "wh3_main_spell_nurgle_fleshy_abundance",
+    "wh3_main_spell_nurgle_miasma_of_pestilence",
+    "wh3_main_spell_nurgle_pestilent_pustule",
+    "wh3_main_spell_nurgle_rancid_visitations",
+    "wh3_main_spell_nurgle_stream_of_corruption"
+   ]
+  },
+  "wh3_main_lore_of_great_maw": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_bonecrusher",
+     "wh3_main_effect_ability_cooldown_braingobbler",
+     "wh3_main_effect_ability_cooldown_bullgorger",
+     "wh3_main_effect_ability_cooldown_the_maw",
+     "wh3_main_effect_ability_cooldown_toothcracker",
+     "wh3_main_effect_ability_cooldown_trollguts"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_bonecrusher",
+     "wh3_main_effect_ability_wom_cost_bonecrusher_upgraded",
+     "wh3_main_effect_ability_wom_cost_braingobbler",
+     "wh3_main_effect_ability_wom_cost_braingobbler_upgraded",
+     "wh3_main_effect_ability_wom_cost_bullgorger",
+     "wh3_main_effect_ability_wom_cost_bullgorger_upgraded",
+     "wh3_main_effect_ability_wom_cost_the_maw",
+     "wh3_main_effect_ability_wom_cost_the_maw_upgraded",
+     "wh3_main_effect_ability_wom_cost_toothcracker",
+     "wh3_main_effect_ability_wom_cost_toothcracker_upgraded",
+     "wh3_main_effect_ability_wom_cost_trollguts",
+     "wh3_main_effect_ability_wom_cost_trollguts_upgraded"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_bloodgruel",
+     "wh3_main_effect_ability_enable_bonecrusher",
+     "wh3_main_effect_ability_enable_braingobbler",
+     "wh3_main_effect_ability_enable_bullgorger",
+     "wh3_main_effect_ability_enable_the_maw",
+     "wh3_main_effect_ability_enable_toothcracker",
+     "wh3_main_effect_ability_enable_trollguts"
+    ],
+    "overcast": [
+     "wh3_main_effect_ability_overcast_bonecrusher",
+     "wh3_main_effect_ability_overcast_braingobbler",
+     "wh3_main_effect_ability_overcast_bullgorger",
+     "wh3_main_effect_ability_overcast_the_maw",
+     "wh3_main_effect_ability_overcast_toothcracker",
+     "wh3_main_effect_ability_overcast_trollguts"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_bloodgruel.png",
+   "sort": 30,
+   "spells": [
+    "wh3_main_lore_passive_bloodgruel",
+    "wh3_main_spell_great_maw_bonecrusher",
+    "wh3_main_spell_great_maw_braingobbler",
+    "wh3_main_spell_great_maw_bullgorger",
+    "wh3_main_spell_great_maw_the_maw",
+    "wh3_main_spell_great_maw_toothcracker",
+    "wh3_main_spell_great_maw_trollguts"
+   ]
+  },
+  "wh3_main_lore_of_ice": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_crystal_heart_of_winter",
+     "wh3_main_effect_ability_cooldown_crystal_sanctuary",
+     "wh3_main_effect_ability_cooldown_death_frost",
+     "wh3_main_effect_ability_cooldown_frost_blades",
+     "wh3_main_effect_ability_cooldown_ice_maidens_kiss",
+     "wh3_main_effect_ability_cooldown_ice_sheet"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_crystal_sanctuary",
+     "wh3_main_effect_ability_wom_cost_crystal_sanctuary_upgraded",
+     "wh3_main_effect_ability_wom_cost_death_frost",
+     "wh3_main_effect_ability_wom_cost_death_frost_upgraded",
+     "wh3_main_effect_ability_wom_cost_frost_blades",
+     "wh3_main_effect_ability_wom_cost_frost_blades_upgraded",
+     "wh3_main_effect_ability_wom_cost_heart_of_winter",
+     "wh3_main_effect_ability_wom_cost_heart_of_winter_upgraded",
+     "wh3_main_effect_ability_wom_cost_ice_maidens_kiss",
+     "wh3_main_effect_ability_wom_cost_ice_maidens_kiss_upgraded",
+     "wh3_main_effect_ability_wom_cost_ice_sheet"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_crystal_sanctuary",
+     "wh3_main_effect_ability_enable_death_frost",
+     "wh3_main_effect_ability_enable_frost_blades",
+     "wh3_main_effect_ability_enable_frost_shield",
+     "wh3_main_effect_ability_enable_heart_of_winter",
+     "wh3_main_effect_ability_enable_ice_maidens_kiss",
+     "wh3_main_effect_ability_enable_ice_sheet"
+    ],
+    "overcast": [
+     "wh3_main_effect_ability_overcast_crystal_sanctuary",
+     "wh3_main_effect_ability_overcast_death_frost",
+     "wh3_main_effect_ability_overcast_frost_blades",
+     "wh3_main_effect_ability_overcast_heart_of_winter",
+     "wh3_main_effect_ability_overcast_ice_maidens_kiss"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_frost_shield.png",
+   "sort": 31,
+   "spells": [
+    "wh3_main_lore_passive_frost_shield",
+    "wh3_main_spell_ice_crystal_sanctuary",
+    "wh3_main_spell_ice_death_frost",
+    "wh3_main_spell_ice_frost_blades",
+    "wh3_main_spell_ice_heart_of_winter",
+    "wh3_main_spell_ice_ice_maidens_kiss",
+    "wh3_main_spell_ice_ice_sheet"
+   ]
+  },
+  "wh3_main_lore_of_tempest": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_biting_wind",
+     "wh3_main_effect_ability_cooldown_blizzard",
+     "wh3_main_effect_ability_cooldown_gust_of_true_flight",
+     "wh3_main_effect_ability_cooldown_hailstorm",
+     "wh3_main_effect_ability_cooldown_hawks_of_miska",
+     "wh3_main_effect_ability_cooldown_swiftwing"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_biting_wind",
+     "wh3_main_effect_ability_wom_cost_biting_wind_upgraded",
+     "wh3_main_effect_ability_wom_cost_blizzard",
+     "wh3_main_effect_ability_wom_cost_blizzard_upgraded",
+     "wh3_main_effect_ability_wom_cost_gust_of_true_flight",
+     "wh3_main_effect_ability_wom_cost_gust_of_true_flight_upgraded",
+     "wh3_main_effect_ability_wom_cost_hailstorm",
+     "wh3_main_effect_ability_wom_cost_hailstorm_upgraded",
+     "wh3_main_effect_ability_wom_cost_hawks_of_miska",
+     "wh3_main_effect_ability_wom_cost_hawks_of_miska_upgraded",
+     "wh3_main_effect_ability_wom_cost_swiftwing",
+     "wh3_main_effect_ability_wom_cost_swiftwing_upgraded"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_biting_wind",
+     "wh3_main_effect_ability_enable_blizzard",
+     "wh3_main_effect_ability_enable_freezing_winds",
+     "wh3_main_effect_ability_enable_gust_of_true_flight",
+     "wh3_main_effect_ability_enable_hailstorm",
+     "wh3_main_effect_ability_enable_hawks_of_miska",
+     "wh3_main_effect_ability_enable_swiftwing"
+    ],
+    "overcast": [
+     "wh3_main_effect_ability_overcast_biting_wind",
+     "wh3_main_effect_ability_overcast_blizzard",
+     "wh3_main_effect_ability_overcast_gust_of_true_flight",
+     "wh3_main_effect_ability_overcast_hailstorm",
+     "wh3_main_effect_ability_overcast_hawks_of_miska",
+     "wh3_main_effect_ability_overcast_swiftwing"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_freezing_winds.png",
+   "sort": 32,
+   "spells": [
+    "wh3_main_lore_passive_freezing_winds",
+    "wh3_main_spell_tempest_biting_wind",
+    "wh3_main_spell_tempest_blizzard",
+    "wh3_main_spell_tempest_gust_of_true_flight",
+    "wh3_main_spell_tempest_hailstorm",
+    "wh3_main_spell_tempest_hawks_of_miska",
+    "wh3_main_spell_tempest_swiftwing"
+   ]
+  },
+  "wh3_main_lore_of_yang": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_constellation_of_the_dragon",
+     "wh3_main_effect_ability_cooldown_dragons_breath",
+     "wh3_main_effect_ability_cooldown_jade_shield",
+     "wh3_main_effect_ability_cooldown_might_of_heaven_and_earth",
+     "wh3_main_effect_ability_cooldown_stone_ground_stance",
+     "wh3_main_effect_ability_cooldown_wall_of_wind_and_fire"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_constellation_of_the_dragon",
+     "wh3_main_effect_ability_wom_cost_constellation_of_the_dragon_upgraded",
+     "wh3_main_effect_ability_wom_cost_dragons_breath",
+     "wh3_main_effect_ability_wom_cost_dragons_breath_upgraded",
+     "wh3_main_effect_ability_wom_cost_jade_shield",
+     "wh3_main_effect_ability_wom_cost_jade_shield_upgraded",
+     "wh3_main_effect_ability_wom_cost_might_of_heaven_and_earth",
+     "wh3_main_effect_ability_wom_cost_might_of_heaven_and_earth_upgraded",
+     "wh3_main_effect_ability_wom_cost_stone_ground_stance",
+     "wh3_main_effect_ability_wom_cost_stone_ground_stance_upgraded",
+     "wh3_main_effect_ability_wom_cost_wall_of_wind_and_fire",
+     "wh3_main_effect_ability_wom_cost_wall_of_wind_and_fire_upgraded"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_constellation_of_the_dragon",
+     "wh3_main_effect_ability_enable_dragons_breath",
+     "wh3_main_effect_ability_enable_jade_shield",
+     "wh3_main_effect_ability_enable_might_of_heaven_and_earth",
+     "wh3_main_effect_ability_enable_stone_ground_stance",
+     "wh3_main_effect_ability_enable_strength_of_yang",
+     "wh3_main_effect_ability_enable_wall_of_wind_and_fire"
+    ],
+    "overcast": [
+     "wh3_dlc24_effect_ability_overcast_yuan_human_jade_shield",
+     "wh3_main_effect_ability_overcast_constellation_of_the_dragon",
+     "wh3_main_effect_ability_overcast_constellation_of_the_dragon_iron_dragon",
+     "wh3_main_effect_ability_overcast_dragons_breath",
+     "wh3_main_effect_ability_overcast_jade_shield",
+     "wh3_main_effect_ability_overcast_might_of_heaven_and_earth",
+     "wh3_main_effect_ability_overcast_stone_ground_stance",
+     "wh3_main_effect_ability_overcast_wall_of_wind_and_fire",
+     "wh3_main_effect_ability_overcast_wall_of_wind_and_fire_dragon"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_strength_of_yang.png",
+   "sort": 34,
+   "spells": [
+    "wh3_main_lore_passive_strength_of_yang",
+    "wh3_main_spell_yang_constellation_of_the_dragon",
+    "wh3_main_spell_yang_dragons_breath",
+    "wh3_main_spell_yang_jade_shield",
+    "wh3_main_spell_yang_might_of_heaven_and_earth",
+    "wh3_main_spell_yang_stone_ground_stance",
+    "wh3_main_spell_yang_wall_of_wind_and_fire"
+   ]
+  },
+  "wh3_main_lore_of_yin": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_ancestral_warriors",
+     "wh3_main_effect_ability_cooldown_blossom_wind",
+     "wh3_main_effect_ability_cooldown_cloak_of_jet",
+     "wh3_main_effect_ability_cooldown_missile_mirror",
+     "wh3_main_effect_ability_cooldown_storm_of_shadows",
+     "wh3_main_effect_ability_cooldown_talons_of_night"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_ancestral_warriors",
+     "wh3_main_effect_ability_wom_cost_ancestral_warriors_upgraded",
+     "wh3_main_effect_ability_wom_cost_blossom_wind",
+     "wh3_main_effect_ability_wom_cost_blossom_wind_upgraded",
+     "wh3_main_effect_ability_wom_cost_cloak_of_jet",
+     "wh3_main_effect_ability_wom_cost_cloak_of_jet_upgraded",
+     "wh3_main_effect_ability_wom_cost_missile_mirror",
+     "wh3_main_effect_ability_wom_cost_missile_mirror_upgraded",
+     "wh3_main_effect_ability_wom_cost_storm_of_shadows",
+     "wh3_main_effect_ability_wom_cost_storm_of_shadows_upgraded",
+     "wh3_main_effect_ability_wom_cost_talons_of_night",
+     "wh3_main_effect_ability_wom_cost_talons_of_night_upgraded"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_ancestral_warriors",
+     "wh3_main_effect_ability_enable_blossom_wind",
+     "wh3_main_effect_ability_enable_cloak_of_jet",
+     "wh3_main_effect_ability_enable_missile_mirror",
+     "wh3_main_effect_ability_enable_power_of_yin",
+     "wh3_main_effect_ability_enable_storm_of_shadows",
+     "wh3_main_effect_ability_enable_talons_of_night"
+    ],
+    "overcast": [
+     "wh3_dlc24_effect_ability_overcast_yuan_human_blossom_wind",
+     "wh3_dlc24_effect_ability_overcast_yuan_human_talons_of_night",
+     "wh3_main_effect_ability_overcast_ancestral_warriors",
+     "wh3_main_effect_ability_overcast_blossom_wind",
+     "wh3_main_effect_ability_overcast_cloak_of_jet",
+     "wh3_main_effect_ability_overcast_missile_mirror",
+     "wh3_main_effect_ability_overcast_missile_mirror_dragon",
+     "wh3_main_effect_ability_overcast_storm_of_shadows",
+     "wh3_main_effect_ability_overcast_storm_of_shadows_dragon",
+     "wh3_main_effect_ability_overcast_talons_of_night"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_power_of_yin.png",
+   "sort": 35,
+   "spells": [
+    "wh3_main_lore_passive_power_of_yin",
+    "wh3_main_spell_yin_ancestral_warriors",
+    "wh3_main_spell_yin_blossom_wind",
+    "wh3_main_spell_yin_cloak_of_jet",
+    "wh3_main_spell_yin_missile_mirror",
+    "wh3_main_spell_yin_storm_of_shadows",
+    "wh3_main_spell_yin_talons_of_night"
+   ]
+  },
+  "wh3_main_lore_slaanesh": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_acquiescence",
+     "wh3_main_effect_ability_cooldown_hysterical_frenzy",
+     "wh3_main_effect_ability_cooldown_lash_of_slaanesh",
+     "wh3_main_effect_ability_cooldown_pavane_of_slaanesh",
+     "wh3_main_effect_ability_cooldown_phantasmagoria",
+     "wh3_main_effect_ability_cooldown_slicing_shards"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_acquiescence",
+     "wh3_main_effect_ability_wom_cost_acquiescence_upgraded",
+     "wh3_main_effect_ability_wom_cost_hysterical_frenzy",
+     "wh3_main_effect_ability_wom_cost_hysterical_frenzy_upgraded",
+     "wh3_main_effect_ability_wom_cost_lash_of_slaanesh",
+     "wh3_main_effect_ability_wom_cost_lash_of_slaanesh_upgraded",
+     "wh3_main_effect_ability_wom_cost_pavane_of_slaanesh",
+     "wh3_main_effect_ability_wom_cost_pavane_of_slaanesh_upgraded",
+     "wh3_main_effect_ability_wom_cost_phantasmagoria",
+     "wh3_main_effect_ability_wom_cost_phantasmagoria_upgraded",
+     "wh3_main_effect_ability_wom_cost_slicing_shards",
+     "wh3_main_effect_ability_wom_cost_slicing_shards_upgraded"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_acquiescence",
+     "wh3_main_effect_ability_enable_blissful_rapture",
+     "wh3_main_effect_ability_enable_hysterical_frenzy",
+     "wh3_main_effect_ability_enable_phantasmagoria",
+     "wh3_main_effect_ability_enable_slaanesh_acquiescence",
+     "wh3_main_effect_ability_enable_slaanesh_lash_of_slaanesh",
+     "wh3_main_effect_ability_enable_slaanesh_pavane_of_slaanesh",
+     "wh3_main_effect_ability_enable_slicing_shards"
+    ],
+    "overcast": [
+     "wh3_main_effect_ability_overcast_acquiescence",
+     "wh3_main_effect_ability_overcast_hysterical_frenzy",
+     "wh3_main_effect_ability_overcast_lash_of_slaanesh",
+     "wh3_main_effect_ability_overcast_pavane_of_slaanesh",
+     "wh3_main_effect_ability_overcast_phantasmagoria",
+     "wh3_main_effect_ability_overcast_slicing_shards"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_blissful_rapture.png",
+   "sort": 29,
+   "spells": [
+    "wh3_main_lore_passive_blissful_rapture",
+    "wh3_main_spell_slaanesh_acquiescence",
+    "wh3_main_spell_slaanesh_hysterical_frenzy",
+    "wh3_main_spell_slaanesh_lash_of_slaanesh",
+    "wh3_main_spell_slaanesh_pavane_of_slaanesh",
+    "wh3_main_spell_slaanesh_phantasmagoria",
+    "wh3_main_spell_slaanesh_slicing_shards"
+   ]
+  },
+  "wh3_main_lore_tzeentch": {
+   "effects": {
+    "cooldown": [
+     "wh3_main_effect_ability_cooldown_blue_fire_of_tzeentch",
+     "wh3_main_effect_ability_cooldown_glean_magic",
+     "wh3_main_effect_ability_cooldown_infernal_gateway",
+     "wh3_main_effect_ability_cooldown_pink_fire_of_tzeentch",
+     "wh3_main_effect_ability_cooldown_treason_of_tzeentch",
+     "wh3_main_effect_ability_cooldown_tzeentchs_firestorm"
+    ],
+    "cost": [
+     "wh3_main_effect_ability_wom_cost_blue_fire_of_tzeentch",
+     "wh3_main_effect_ability_wom_cost_blue_fire_of_tzeentch_upgraded",
+     "wh3_main_effect_ability_wom_cost_glean_magic",
+     "wh3_main_effect_ability_wom_cost_glean_magic_upgraded",
+     "wh3_main_effect_ability_wom_cost_infernal_gateway",
+     "wh3_main_effect_ability_wom_cost_infernal_gateway_upgraded",
+     "wh3_main_effect_ability_wom_cost_pink_fire_of_tzeentch",
+     "wh3_main_effect_ability_wom_cost_pink_fire_of_tzeentch_upgraded",
+     "wh3_main_effect_ability_wom_cost_treason_of_tzeentch",
+     "wh3_main_effect_ability_wom_cost_treason_of_tzeentch_upgraded",
+     "wh3_main_effect_ability_wom_cost_tzeentchs_firestorm",
+     "wh3_main_effect_ability_wom_cost_tzeentchs_firestorm_upgraded"
+    ],
+    "enable": [
+     "wh3_main_effect_ability_enable_fires_of_change",
+     "wh3_main_effect_ability_enable_glean_magic",
+     "wh3_main_effect_ability_enable_infernal_gateway",
+     "wh3_main_effect_ability_enable_tzeentch_blue_fire_of_tzeentch",
+     "wh3_main_effect_ability_enable_tzeentch_pink_fire_of_tzeentch",
+     "wh3_main_effect_ability_enable_tzeentch_treason_of_tzeentch",
+     "wh3_main_effect_ability_enable_tzeentch_tzeentchs_firestorm"
+    ],
+    "overcast": [
+     "wh3_dlc24_effect_ability_overcast_blue_fire_of_tzeentch_changeling",
+     "wh3_dlc24_effect_ability_overcast_glean_magic_changeling",
+     "wh3_dlc24_effect_ability_overcast_infernal_gateway_changeling",
+     "wh3_dlc24_effect_ability_overcast_pink_fire_of_tzeentch_changeling",
+     "wh3_dlc24_effect_ability_overcast_treason_of_tzeentch_changeling",
+     "wh3_dlc24_effect_ability_overcast_tzeentchs_firestorm_changeling",
+     "wh3_main_effect_ability_overcast_blue_fire_of_tzeentch",
+     "wh3_main_effect_ability_overcast_glean_magic",
+     "wh3_main_effect_ability_overcast_infernal_gateway",
+     "wh3_main_effect_ability_overcast_pink_fire_of_tzeentch",
+     "wh3_main_effect_ability_overcast_treason_of_tzeentch",
+     "wh3_main_effect_ability_overcast_tzeentchs_firestorm"
+    ]
+   },
+   "icon": "wh3_main_lore_passive_fires_of_change.png",
+   "sort": 28,
+   "spells": [
+    "wh3_main_lore_passive_fires_of_change",
+    "wh3_main_spell_tzeentch_blue_fire_of_tzeentch",
+    "wh3_main_spell_tzeentch_glean_magic",
+    "wh3_main_spell_tzeentch_infernal_gateway",
+    "wh3_main_spell_tzeentch_pink_fire_of_tzeentch",
+    "wh3_main_spell_tzeentch_treason_of_tzeentch",
+    "wh3_main_spell_tzeentch_tzeentchs_firestorm"
+   ]
+  },
+  "wh_dlc03_lore_beasts": {
+   "effects": {
+    "cooldown": [
+     "wh_dlc03_effect_ability_cooldown_flock_of_doom",
+     "wh_dlc03_effect_ability_cooldown_panns_impenetrable_pelt",
+     "wh_dlc03_effect_ability_cooldown_the_amber_spear",
+     "wh_dlc03_effect_ability_cooldown_the_curse_of_anraheir",
+     "wh_dlc03_effect_ability_cooldown_wyssans_wildform"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_curse_of_anraheir",
+     "wh2_main_effect_ability_wom_cost_curse_of_anraheir_upgraded",
+     "wh2_main_effect_ability_wom_cost_flock_of_doom",
+     "wh2_main_effect_ability_wom_cost_flock_of_doom_upgraded",
+     "wh2_main_effect_ability_wom_cost_panns_impenetrable_pelt",
+     "wh2_main_effect_ability_wom_cost_panns_impenetrable_pelt_upgraded",
+     "wh2_main_effect_ability_wom_cost_the_amber_spear",
+     "wh2_main_effect_ability_wom_cost_the_amber_spear_upgraded",
+     "wh2_main_effect_ability_wom_cost_wyssans_wildform",
+     "wh2_main_effect_ability_wom_cost_wyssans_wildform_upgraded",
+     "wh_dlc03_effect_ability_wom_cost_transformation_of_kadon"
+    ],
+    "enable": [
+     "wh_dlc03_effect_ability_enable_flock_of_doom",
+     "wh_dlc03_effect_ability_enable_panns_impenetrable_pelt",
+     "wh_dlc03_effect_ability_enable_the_amber_spear",
+     "wh_dlc03_effect_ability_enable_the_curse_of_anraheir",
+     "wh_dlc03_effect_ability_enable_transformation_of_kadon",
+     "wh_dlc03_effect_ability_enable_wild_heart",
+     "wh_dlc03_effect_ability_enable_wyssans_wildform"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_flock_of_doom",
+     "wh2_main_effect_ability_overcast_panns_impenetrable_pelt",
+     "wh2_main_effect_ability_overcast_the_amber_spear",
+     "wh2_main_effect_ability_overcast_the_curse_of_anraheir",
+     "wh2_main_effect_ability_overcast_wyssans_wildform"
+    ]
+   },
+   "icon": "wh_dlc03_lore_passive_wild_heart.png",
+   "sort": 10,
+   "spells": [
+    "wh_dlc03_lore_passive_wild_heart",
+    "wh_dlc03_spell_beasts_flock_of_doom",
+    "wh_dlc03_spell_beasts_panns_impenetrable_pelt",
+    "wh_dlc03_spell_beasts_the_amber_spear",
+    "wh_dlc03_spell_beasts_the_curse_of_anraheir",
+    "wh_dlc03_spell_beasts_transformation_of_kadon",
+    "wh_dlc03_spell_beasts_wyssans_wildform"
+   ]
+  },
+  "wh_dlc03_lore_wild": {
+   "effects": {
+    "cooldown": [
+     "wh_dlc03_effect_ability_cooldown_bray_scream",
+     "wh_dlc03_effect_ability_cooldown_devolve",
+     "wh_dlc03_effect_ability_cooldown_mantle_of_ghorok",
+     "wh_dlc03_effect_ability_cooldown_savage_dominion",
+     "wh_dlc03_effect_ability_cooldown_traitor_kin",
+     "wh_dlc03_effect_ability_cooldown_viletide",
+     "wh_dlc03_effect_magic_wild_cooldown_mantle_of_ghorok"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_bray_scream",
+     "wh2_main_effect_ability_wom_cost_bray_scream_upgraded",
+     "wh2_main_effect_ability_wom_cost_devolve",
+     "wh2_main_effect_ability_wom_cost_devolve_upgraded",
+     "wh2_main_effect_ability_wom_cost_mantle_of_ghorok",
+     "wh2_main_effect_ability_wom_cost_savage_dominion",
+     "wh2_main_effect_ability_wom_cost_traitor_kin",
+     "wh2_main_effect_ability_wom_cost_traitor_kin_upgraded",
+     "wh2_main_effect_ability_wom_cost_viletide",
+     "wh2_main_effect_ability_wom_cost_viletide_upgraded",
+     "wh2_main_effect_magic_wild_reduce_wom_cost_mantle_of_ghorok"
+    ],
+    "enable": [
+     "wh_dlc03_effect_ability_enable_bestial_surge",
+     "wh_dlc03_effect_ability_enable_bray_scream",
+     "wh_dlc03_effect_ability_enable_devolve",
+     "wh_dlc03_effect_ability_enable_mantle_of_ghorok",
+     "wh_dlc03_effect_ability_enable_savage_dominion",
+     "wh_dlc03_effect_ability_enable_traitor_kin",
+     "wh_dlc03_effect_ability_enable_viletide",
+     "wh_dlc03_effect_magic_wild_enable_mantle_of_ghorok"
+    ],
+    "overcast": [
+     "wh2_dlc17_effect_magic_wild_enable_mantle_of_ghorok_upgraded",
+     "wh2_main_effect_ability_overcast_bray_scream",
+     "wh2_main_effect_ability_overcast_devolve",
+     "wh2_main_effect_ability_overcast_traitor_kin",
+     "wh2_main_effect_ability_overcast_viletide"
+    ]
+   },
+   "icon": "wh_dlc03_lore_passive_bestial_surge.png",
+   "sort": 9,
+   "spells": [
+    "wh_dlc03_lore_passive_bestial_surge",
+    "wh_dlc03_spell_wild_bray_scream",
+    "wh_dlc03_spell_wild_devolve",
+    "wh_dlc03_spell_wild_mantle_of_ghorok",
+    "wh_dlc03_spell_wild_savage_dominion",
+    "wh_dlc03_spell_wild_traitor_kin",
+    "wh_dlc03_spell_wild_viletide"
+   ]
+  },
+  "wh_dlc05_lore_life": {
+   "effects": {
+    "cooldown": [
+     "wh_dlc05_effect_ability_cooldown_awakening_of_the_wood",
+     "wh_dlc05_effect_ability_cooldown_earth_blood",
+     "wh_dlc05_effect_ability_cooldown_flesh_to_stone",
+     "wh_dlc05_effect_ability_cooldown_regrowth",
+     "wh_dlc05_effect_ability_cooldown_shield_of_thorns",
+     "wh_dlc05_effect_ability_cooldown_the_dwellers_below"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_awakening_of_the_wood",
+     "wh2_main_effect_ability_wom_cost_dwellers_below",
+     "wh2_main_effect_ability_wom_cost_dwellers_below_upgraded",
+     "wh2_main_effect_ability_wom_cost_earth_blood",
+     "wh2_main_effect_ability_wom_cost_earth_blood_upgraded",
+     "wh2_main_effect_ability_wom_cost_flesh_to_stone",
+     "wh2_main_effect_ability_wom_cost_flesh_to_stone_upgraded",
+     "wh2_main_effect_ability_wom_cost_regrowth",
+     "wh2_main_effect_ability_wom_cost_regrowth_upgraded",
+     "wh2_main_effect_ability_wom_cost_shield_of_thorns",
+     "wh2_main_effect_ability_wom_cost_shield_of_thorns_upgraded"
+    ],
+    "enable": [
+     "wh_dlc05_effect_ability_enable_awakening_of_the_wood",
+     "wh_dlc05_effect_ability_enable_earth_blood",
+     "wh_dlc05_effect_ability_enable_flesh_to_stone",
+     "wh_dlc05_effect_ability_enable_life_bloom",
+     "wh_dlc05_effect_ability_enable_regrowth",
+     "wh_dlc05_effect_ability_enable_shield_of_thorns",
+     "wh_dlc05_effect_ability_enable_the_dwellers_below"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_dwellers_below",
+     "wh2_main_effect_ability_overcast_earth_blood",
+     "wh2_main_effect_ability_overcast_flesh_to_stone",
+     "wh2_main_effect_ability_overcast_regrowth",
+     "wh2_main_effect_ability_overcast_shield_of_thorns",
+     "wh3_main_effect_ability_overcast_earth_blood_dragon",
+     "wh3_main_effect_ability_overcast_flesh_to_stone_dragon",
+     "wh3_main_effect_ability_overcast_regrowth_dragon"
+    ]
+   },
+   "icon": "wh_dlc05_spell_life_life_bloom.png",
+   "sort": 11,
+   "spells": [
+    "wh_dlc05_lore_passive_life_bloom",
+    "wh_dlc05_spell_life_awakening_of_the_wood",
+    "wh_dlc05_spell_life_earth_blood",
+    "wh_dlc05_spell_life_flesh_to_stone",
+    "wh_dlc05_spell_life_regrowth",
+    "wh_dlc05_spell_life_shield_of_thorns",
+    "wh_dlc05_spell_life_the_dwellers_below"
+   ]
+  },
+  "wh_dlc05_lore_shadows": {
+   "effects": {
+    "cooldown": [
+     "wh3_dlc29_effect_ability_cooldown_pit_of_shades_and_upgraded",
+     "wh_dlc05_effect_ability_cooldown_enfeebling_foe",
+     "wh_dlc05_effect_ability_cooldown_melkoths_mystifying_miasma",
+     "wh_dlc05_effect_ability_cooldown_okkams_mindrazor",
+     "wh_dlc05_effect_ability_cooldown_penumbral_pendulum",
+     "wh_dlc05_effect_ability_cooldown_pit_of_shades",
+     "wh_dlc05_effect_ability_cooldown_the_withering"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_melkoths_enfeebling_foe",
+     "wh2_main_effect_ability_wom_cost_melkoths_enfeebling_foe_upgraded",
+     "wh2_main_effect_ability_wom_cost_melkoths_mystifying_miasma",
+     "wh2_main_effect_ability_wom_cost_melkoths_mystifying_miasma_upgraded",
+     "wh2_main_effect_ability_wom_cost_okkams_mindrazor",
+     "wh2_main_effect_ability_wom_cost_okkams_mindrazor_upgraded",
+     "wh2_main_effect_ability_wom_cost_penumbral_pendulum",
+     "wh2_main_effect_ability_wom_cost_penumbral_pendulum_upgraded",
+     "wh2_main_effect_ability_wom_cost_pit_of_shades",
+     "wh2_main_effect_ability_wom_cost_pit_of_shades_upgraded",
+     "wh2_main_effect_ability_wom_cost_the_withering",
+     "wh2_main_effect_ability_wom_cost_the_withering_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_pit_of_shades_and_upgraded"
+    ],
+    "enable": [
+     "wh_dlc05_effect_ability_enable_enfeebling_foe",
+     "wh_dlc05_effect_ability_enable_melkoths_mystifying_miasma",
+     "wh_dlc05_effect_ability_enable_okkams_mindrazor",
+     "wh_dlc05_effect_ability_enable_penumbral_pendulum",
+     "wh_dlc05_effect_ability_enable_pit_of_shades",
+     "wh_dlc05_effect_ability_enable_smoke_and_mirrors",
+     "wh_dlc05_effect_ability_enable_the_withering"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_melkoths_enfeebling_foe",
+     "wh2_main_effect_ability_overcast_melkoths_mystifying_miasma",
+     "wh2_main_effect_ability_overcast_okkams_mindrazor",
+     "wh2_main_effect_ability_overcast_penumbral_pendulum",
+     "wh2_main_effect_ability_overcast_pit_of_shades",
+     "wh2_main_effect_ability_overcast_the_withering"
+    ]
+   },
+   "icon": "wh_dlc05_lore_passive_smoke_and_mirrors.png",
+   "sort": 8,
+   "spells": [
+    "wh_dlc05_lore_passive_smoke_and_mirrors",
+    "wh_dlc05_spell_shadow_melkoths_mystifying_miasma",
+    "wh_dlc05_spell_shadow_okkams_mindrazor",
+    "wh_dlc05_spell_shadow_pit_of_shades",
+    "wh_dlc05_spell_shadow_the_enfeebling_foe",
+    "wh_dlc05_spell_shadow_the_penumbral_pendulum",
+    "wh_dlc05_spell_shadow_the_withering"
+   ]
+  },
+  "wh_main_lore_big_waaagh": {
+   "effects": {
+    "cooldown": [
+     "wh2_dlc15_effect_magic_big_waaagh_cooldown_foot_of_gork_all",
+     "wh_main_effect_ability_cooldown_brain_bursta",
+     "wh_main_effect_ability_cooldown_eadbutt",
+     "wh_main_effect_ability_cooldown_ere_we_go",
+     "wh_main_effect_ability_cooldown_fists_of_gork",
+     "wh_main_effect_ability_cooldown_foot_of_gork",
+     "wh_main_effect_ability_cooldown_gaze_of_mork"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_brain_bursta",
+     "wh2_main_effect_ability_wom_cost_brain_bursta_upgraded",
+     "wh2_main_effect_ability_wom_cost_eadbutt",
+     "wh2_main_effect_ability_wom_cost_eadbutt_upgraded",
+     "wh2_main_effect_ability_wom_cost_ere_we_go",
+     "wh2_main_effect_ability_wom_cost_fists_of_gork",
+     "wh2_main_effect_ability_wom_cost_foot_of_gork",
+     "wh2_main_effect_ability_wom_cost_foot_of_gork_upgraded",
+     "wh2_main_effect_ability_wom_cost_gaze_of_mork",
+     "wh2_main_effect_ability_wom_cost_gaze_of_mork_upgraded"
+    ],
+    "enable": [
+     "wh_main_effect_ability_enable_brain_bursta",
+     "wh_main_effect_ability_enable_eadbutt",
+     "wh_main_effect_ability_enable_ere_we_go",
+     "wh_main_effect_ability_enable_fists_of_gork",
+     "wh_main_effect_ability_enable_foot_of_gork",
+     "wh_main_effect_ability_enable_gaze_of_mork",
+     "wh_main_effect_ability_enable_power_of_da_waaagh"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_brain_bursta",
+     "wh2_main_effect_ability_overcast_eadbutt",
+     "wh2_main_effect_ability_overcast_foot_of_gork",
+     "wh2_main_effect_ability_overcast_gaze_of_mork"
+    ]
+   },
+   "icon": "wh_main_lore_passive_power_of_da_waaagh.png",
+   "sort": 1,
+   "spells": [
+    "wh_main_lore_passive_power_of_da_waaagh",
+    "wh_main_spell_big_waaagh_brain_bursta",
+    "wh_main_spell_big_waaagh_eadbutt",
+    "wh_main_spell_big_waaagh_ere_we_go",
+    "wh_main_spell_big_waaagh_fists_of_gork",
+    "wh_main_spell_big_waaagh_foot_of_gork",
+    "wh_main_spell_big_waaagh_gaze_of_mork"
+   ]
+  },
+  "wh_main_lore_death": {
+   "effects": {
+    "cooldown": [
+     "wh_dlc04_effect_ability_cooldown_doom_and_darknes_strigoi",
+     "wh_dlc04_effect_ability_cooldown_soulblight_strigoi",
+     "wh_dlc04_effect_ability_cooldown_spirit_leech_strigoi",
+     "wh_main_effect_ability_cooldown_aspect_of_the_dreadknight",
+     "wh_main_effect_ability_cooldown_doom_and_darkness",
+     "wh_main_effect_ability_cooldown_soulblight",
+     "wh_main_effect_ability_cooldown_spirit_leech",
+     "wh_main_effect_ability_cooldown_the_fate_of_bjuna",
+     "wh_main_effect_ability_cooldown_the_purple_sun_of_xereus"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_aspect_of_the_dreadknight",
+     "wh2_main_effect_ability_wom_cost_aspect_of_the_dreadknight_upgraded",
+     "wh2_main_effect_ability_wom_cost_doom_and_darkness",
+     "wh2_main_effect_ability_wom_cost_doom_and_darkness_upgraded",
+     "wh2_main_effect_ability_wom_cost_soulblight",
+     "wh2_main_effect_ability_wom_cost_soulblight_upgraded",
+     "wh2_main_effect_ability_wom_cost_spirit_leech",
+     "wh2_main_effect_ability_wom_cost_spirit_leech_upgraded",
+     "wh2_main_effect_ability_wom_cost_the_fate_of_bjuna",
+     "wh2_main_effect_ability_wom_cost_the_purple_sun_of_xereus",
+     "wh2_main_effect_ability_wom_cost_the_purple_sun_of_xereus_upgraded"
+    ],
+    "enable": [
+     "wh_dlc04_effect_ability_enable_doom_and_darkness_strigoi",
+     "wh_dlc04_effect_ability_enable_soulblight_strigoi",
+     "wh_dlc04_effect_ability_enable_spirit_leech_strigoi",
+     "wh_main_effect_ability_enable_aspect_of_the_dreadknight",
+     "wh_main_effect_ability_enable_doom_and_darkness",
+     "wh_main_effect_ability_enable_life-leeching",
+     "wh_main_effect_ability_enable_soulblight",
+     "wh_main_effect_ability_enable_soulblight_hidden",
+     "wh_main_effect_ability_enable_spirit_leech",
+     "wh_main_effect_ability_enable_the_fate_of_bjuna",
+     "wh_main_effect_ability_enable_the_purple_sun_of_xereus"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_aspect_of_the_dreadknight",
+     "wh2_main_effect_ability_overcast_doom_and_darkness",
+     "wh2_main_effect_ability_overcast_soulblight",
+     "wh2_main_effect_ability_overcast_spirit_leech",
+     "wh2_main_effect_ability_overcast_the_purple_sun_of_xereus"
+    ]
+   },
+   "icon": "wh_main_lore_passive_life_leeching.png",
+   "sort": 5,
+   "spells": [
+    "wh_main_lore_passive_life_leeching",
+    "wh_main_spell_death_aspect_of_the_dreadknight",
+    "wh_main_spell_death_doom_and_darkness",
+    "wh_main_spell_death_soulblight",
+    "wh_main_spell_death_spirit_leech",
+    "wh_main_spell_death_the_fate_of_bjuna",
+    "wh_main_spell_death_the_purple_sun_of_xereus"
+   ]
+  },
+  "wh_main_lore_fire": {
+   "effects": {
+    "cooldown": [
+     "wh_main_effect_ability_cooldown_cascading_fire_cloak",
+     "wh_main_effect_ability_cooldown_fireball",
+     "wh_main_effect_ability_cooldown_flame_storm",
+     "wh_main_effect_ability_cooldown_flaming_sword_of_rhuin",
+     "wh_main_effect_ability_cooldown_piercing_bolts_of_burning",
+     "wh_main_effect_ability_cooldown_the_burning_head"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_cascading_fire_cloak",
+     "wh2_main_effect_ability_wom_cost_fireball",
+     "wh2_main_effect_ability_wom_cost_fireball_upgraded",
+     "wh2_main_effect_ability_wom_cost_flame_storm",
+     "wh2_main_effect_ability_wom_cost_flame_storm_upgraded",
+     "wh2_main_effect_ability_wom_cost_flaming_sword_of_rhuin",
+     "wh2_main_effect_ability_wom_cost_flaming_sword_of_rhuin_upgraded",
+     "wh2_main_effect_ability_wom_cost_piercing_bolts_of_burning",
+     "wh2_main_effect_ability_wom_cost_piercing_bolts_of_burning_upgraded",
+     "wh2_main_effect_ability_wom_cost_the_burning_head",
+     "wh2_main_effect_ability_wom_cost_the_burning_head_upgraded"
+    ],
+    "enable": [
+     "wh_main_effect_ability_enable_cascading_fire_cloak",
+     "wh_main_effect_ability_enable_fireball",
+     "wh_main_effect_ability_enable_flame_storm",
+     "wh_main_effect_ability_enable_flaming_sword_of_rhuin",
+     "wh_main_effect_ability_enable_kindleflame",
+     "wh_main_effect_ability_enable_piercing_bolts_of_burning",
+     "wh_main_effect_ability_enable_the_burning_head"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_fireball",
+     "wh2_main_effect_ability_overcast_flame_storm",
+     "wh2_main_effect_ability_overcast_flaming_sword_of_rhuin",
+     "wh2_main_effect_ability_overcast_piercing_bolts_of_burning",
+     "wh2_main_effect_ability_overcast_the_burning_head"
+    ]
+   },
+   "icon": "wh_main_lore_passive_kindleflame.png",
+   "sort": 4,
+   "spells": [
+    "wh_main_lore_passive_kindleflame",
+    "wh_main_spell_fire_cascading_fire_cloak",
+    "wh_main_spell_fire_fireball",
+    "wh_main_spell_fire_flame_storm",
+    "wh_main_spell_fire_flaming_sword_of_rhuin",
+    "wh_main_spell_fire_piercing_bolts_of_burning",
+    "wh_main_spell_fire_the_burning_head"
+   ]
+  },
+  "wh_main_lore_heavens": {
+   "effects": {
+    "cooldown": [
+     "wh_main_effect_ability_cooldown_chain_lightning",
+     "wh_main_effect_ability_cooldown_comet_of_casandora",
+     "wh_main_effect_ability_cooldown_curse_of_the_midnight_wind",
+     "wh_main_effect_ability_cooldown_harmonic_convergence",
+     "wh_main_effect_ability_cooldown_urannons_thunderbolt",
+     "wh_main_effect_ability_cooldown_wind_blast"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_chain_lightning",
+     "wh2_main_effect_ability_wom_cost_comet_of_casandora",
+     "wh2_main_effect_ability_wom_cost_comet_of_casandora_upgraded",
+     "wh2_main_effect_ability_wom_cost_curse_of_the_midnight_wind",
+     "wh2_main_effect_ability_wom_cost_curse_of_the_midnight_wind_upgraded",
+     "wh2_main_effect_ability_wom_cost_harmonic_convergence",
+     "wh2_main_effect_ability_wom_cost_harmonic_convergence_upgraded",
+     "wh2_main_effect_ability_wom_cost_urannons_thunderbolt",
+     "wh2_main_effect_ability_wom_cost_urannons_thunderbolt_upgraded",
+     "wh2_main_effect_ability_wom_cost_wind_blast",
+     "wh2_main_effect_ability_wom_cost_wind_blast_upgraded"
+    ],
+    "enable": [
+     "wh_main_effect_ability_enable_chain_lightning",
+     "wh_main_effect_ability_enable_comet_of_casandora",
+     "wh_main_effect_ability_enable_curse_of_the_midnight_wind",
+     "wh_main_effect_ability_enable_harmonic_convergence",
+     "wh_main_effect_ability_enable_roiling_skies",
+     "wh_main_effect_ability_enable_urannons_thunderbolt",
+     "wh_main_effect_ability_enable_wind_blast"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_comet_of_casandora",
+     "wh2_main_effect_ability_overcast_curse_of_the_midnight_wind",
+     "wh2_main_effect_ability_overcast_harmonic_convergence",
+     "wh2_main_effect_ability_overcast_urannons_thunderbolt",
+     "wh2_main_effect_ability_overcast_wind_blast"
+    ]
+   },
+   "icon": "wh_main_lore_passive_roiling_skies.png",
+   "sort": 3,
+   "spells": [
+    "wh_main_lore_passive_roiling_skies",
+    "wh_main_spell_heavens_chain_lightning",
+    "wh_main_spell_heavens_comet_of_casandora",
+    "wh_main_spell_heavens_curse_of_the_midnight_wind",
+    "wh_main_spell_heavens_harmonic_convergence",
+    "wh_main_spell_heavens_urannons_thunderbolt",
+    "wh_main_spell_heavens_wind_blast"
+   ]
+  },
+  "wh_main_lore_light": {
+   "effects": {
+    "cooldown": [
+     "wh_main_effect_ability_cooldown_banishment",
+     "wh_main_effect_ability_cooldown_bironas_timewarp",
+     "wh_main_effect_ability_cooldown_light_of_battle",
+     "wh_main_effect_ability_cooldown_net_of_amyntok",
+     "wh_main_effect_ability_cooldown_phas_protection",
+     "wh_main_effect_ability_cooldown_shems_burning_gaze"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_banishment",
+     "wh2_main_effect_ability_wom_cost_banishment_upgraded",
+     "wh2_main_effect_ability_wom_cost_bironas_timewarp",
+     "wh2_main_effect_ability_wom_cost_bironas_timewarp_upgraded",
+     "wh2_main_effect_ability_wom_cost_light_of_battle",
+     "wh2_main_effect_ability_wom_cost_light_of_battle_upgraded",
+     "wh2_main_effect_ability_wom_cost_net_of_amyntok",
+     "wh2_main_effect_ability_wom_cost_net_of_amyntok_upgraded",
+     "wh2_main_effect_ability_wom_cost_phas_protection",
+     "wh2_main_effect_ability_wom_cost_phas_protection_upgraded",
+     "wh2_main_effect_ability_wom_cost_shems_burning_gaze",
+     "wh2_main_effect_ability_wom_cost_shems_burning_gaze_upgraded"
+    ],
+    "enable": [
+     "wh_main_effect_ability_enable_banishment",
+     "wh_main_effect_ability_enable_bironas_timewarp",
+     "wh_main_effect_ability_enable_exorcism",
+     "wh_main_effect_ability_enable_light_of_battle",
+     "wh_main_effect_ability_enable_net_of_amyntok",
+     "wh_main_effect_ability_enable_phas_protection",
+     "wh_main_effect_ability_enable_shems_burning_gaze"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_banishment",
+     "wh2_main_effect_ability_overcast_bironas_timewarp",
+     "wh2_main_effect_ability_overcast_light_of_battle",
+     "wh2_main_effect_ability_overcast_net_of_amyntok",
+     "wh2_main_effect_ability_overcast_phas_protection",
+     "wh2_main_effect_ability_overcast_shems_burning_gaze",
+     "wh3_dlc24_effect_ability_overcast_yuan_human_net_of_amyntok",
+     "wh3_dlc24_effect_ability_overcast_yuan_human_shems_burning_gaze"
+    ]
+   },
+   "icon": "wh_main_lore_passive_exorcism.png",
+   "sort": 2,
+   "spells": [
+    "wh_main_lore_passive_exorcism",
+    "wh_main_spell_light_banishment",
+    "wh_main_spell_light_bironas_timewarp",
+    "wh_main_spell_light_light_of_battle",
+    "wh_main_spell_light_net_of_amyntok",
+    "wh_main_spell_light_phas_protection",
+    "wh_main_spell_light_shems_burning_gaze"
+   ]
+  },
+  "wh_main_lore_lil_waaagh": {
+   "effects": {
+    "cooldown": [
+     "wh_main_effect_ability_cooldown_curse_of_da_bad_moon",
+     "wh_main_effect_ability_cooldown_gorkll_fix_it",
+     "wh_main_effect_ability_cooldown_itchy_nuisance",
+     "wh_main_effect_ability_cooldown_night_shroud",
+     "wh_main_effect_ability_cooldown_sneaky_stabbin",
+     "wh_main_effect_ability_cooldown_vindictive_glare"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_curse_of_da_bad_moon",
+     "wh2_main_effect_ability_wom_cost_curse_of_da_bad_moon_upgraded",
+     "wh2_main_effect_ability_wom_cost_gorkll_fix_it",
+     "wh2_main_effect_ability_wom_cost_itchy_nuisance",
+     "wh2_main_effect_ability_wom_cost_night_shroud",
+     "wh2_main_effect_ability_wom_cost_night_shroud_upgraded",
+     "wh2_main_effect_ability_wom_cost_sneaky_stabbin",
+     "wh2_main_effect_ability_wom_cost_vindictive_glare",
+     "wh2_main_effect_ability_wom_cost_vindictive_glare_upgraded"
+    ],
+    "enable": [
+     "wh_main_effect_ability_enable_curse_of_da_bad_moon",
+     "wh_main_effect_ability_enable_gorkll_fix_it",
+     "wh_main_effect_ability_enable_itchy_nuisance",
+     "wh_main_effect_ability_enable_night_shroud",
+     "wh_main_effect_ability_enable_sneaky_stabbin",
+     "wh_main_effect_ability_enable_sneaky_stealin",
+     "wh_main_effect_ability_enable_vindictive_glare"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_curse_of_da_bad_moon",
+     "wh2_main_effect_ability_overcast_night_shroud",
+     "wh2_main_effect_ability_overcast_vindictive_glare"
+    ]
+   },
+   "icon": "wh_main_lore_passive_sneaky_stealin.png",
+   "sort": 0,
+   "spells": [
+    "wh_main_lore_passive_sneaky_stealin",
+    "wh_main_spell_lil_waaagh_curse_of_da_bad_moon",
+    "wh_main_spell_lil_waaagh_gorkll_fix_it",
+    "wh_main_spell_lil_waaagh_itchy_nuisance",
+    "wh_main_spell_lil_waaagh_night_shroud",
+    "wh_main_spell_lil_waaagh_sneaky_stabbin",
+    "wh_main_spell_lil_waaagh_vindictive_glare"
+   ]
+  },
+  "wh_main_lore_metal": {
+   "effects": {
+    "cooldown": [
+     "wh_main_effect_ability_cooldown_final_transmutation",
+     "wh_main_effect_ability_cooldown_gehennas_golden_hounds",
+     "wh_main_effect_ability_cooldown_glittering_robe",
+     "wh_main_effect_ability_cooldown_plague_of_rust",
+     "wh_main_effect_ability_cooldown_searing_doom",
+     "wh_main_effect_ability_cooldown_transmutation_of_lead"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_final_transmutation",
+     "wh2_main_effect_ability_wom_cost_final_transmutation_upgraded",
+     "wh2_main_effect_ability_wom_cost_gehennas_golden_hounds",
+     "wh2_main_effect_ability_wom_cost_gehennas_golden_hounds_upgraded",
+     "wh2_main_effect_ability_wom_cost_glittering_robe",
+     "wh2_main_effect_ability_wom_cost_glittering_robe_upgraded",
+     "wh2_main_effect_ability_wom_cost_plague_of_rust",
+     "wh2_main_effect_ability_wom_cost_plague_of_rust_upgraded",
+     "wh2_main_effect_ability_wom_cost_searing_doom",
+     "wh2_main_effect_ability_wom_cost_searing_doom_upgraded",
+     "wh2_main_effect_ability_wom_cost_transmutation_of_lead",
+     "wh2_main_effect_ability_wom_cost_transmutation_of_lead_upgraded"
+    ],
+    "enable": [
+     "wh_main_effect_ability_enable_final_transmutation",
+     "wh_main_effect_ability_enable_gehennas_golden_hounds",
+     "wh_main_effect_ability_enable_glittering_robe",
+     "wh_main_effect_ability_enable_metalshifting",
+     "wh_main_effect_ability_enable_plague_of_rust",
+     "wh_main_effect_ability_enable_searing_doom",
+     "wh_main_effect_ability_enable_transmutation_of_lead"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_final_transmutation",
+     "wh2_main_effect_ability_overcast_gehennas_golden_hounds",
+     "wh2_main_effect_ability_overcast_glittering_robe",
+     "wh2_main_effect_ability_overcast_plague_of_rust",
+     "wh2_main_effect_ability_overcast_searing_doom",
+     "wh2_main_effect_ability_overcast_transmutation_of_lead",
+     "wh3_main_effect_ability_overcast_final_transmutation_dragon",
+     "wh3_main_effect_ability_overcast_glittering_robe_dragon",
+     "wh3_main_effect_ability_overcast_plague_of_rust_dragon"
+    ]
+   },
+   "icon": "wh_main_lore_passive_metalshifting.png",
+   "sort": 7,
+   "spells": [
+    "wh_main_lore_passive_metalshifting",
+    "wh_main_spell_metal_final_transmutation",
+    "wh_main_spell_metal_gehennas_golden_hounds",
+    "wh_main_spell_metal_glittering_robe",
+    "wh_main_spell_metal_plague_of_rust",
+    "wh_main_spell_metal_searing_doom",
+    "wh_main_spell_metal_transmutation_of_lead"
+   ]
+  },
+  "wh_main_lore_vampires": {
+   "effects": {
+    "cooldown": [
+     "wh3_dlc29_effect_ability_cooldown_gaze_of_nagash_and_upgraded",
+     "wh3_dlc29_effect_ability_cooldown_raise_dead",
+     "wh3_dlc29_effect_ability_cooldown_wind_of_death_and_upgraded",
+     "wh3_dlc29_effect_ability_enable_invocation_of_nehek",
+     "wh_dlc04_effect_ability_cooldown_gaze_of_nagash_strigoi",
+     "wh_dlc04_effect_ability_cooldown_invocation_of_nehek_strigoi",
+     "wh_main_effect_ability_cooldown_curse_of_years",
+     "wh_main_effect_ability_cooldown_gaze_of_nagash",
+     "wh_main_effect_ability_cooldown_invocation_of_nehek",
+     "wh_main_effect_ability_cooldown_raise_dead",
+     "wh_main_effect_ability_cooldown_vanhels_danse_macabre",
+     "wh_main_effect_ability_cooldown_wind_of_death"
+    ],
+    "cost": [
+     "wh2_main_effect_ability_wom_cost_curse_of_years",
+     "wh2_main_effect_ability_wom_cost_gaze_of_nagash",
+     "wh2_main_effect_ability_wom_cost_gaze_of_nagash_upgraded",
+     "wh2_main_effect_ability_wom_cost_invocation_of_nehek",
+     "wh2_main_effect_ability_wom_cost_invocation_of_nehek_upgraded",
+     "wh2_main_effect_ability_wom_cost_raise_dead",
+     "wh2_main_effect_ability_wom_cost_raise_dead_upgraded",
+     "wh2_main_effect_ability_wom_cost_vanhels_danse_macabre",
+     "wh2_main_effect_ability_wom_cost_vanhels_danse_macabre_upgraded",
+     "wh2_main_effect_ability_wom_cost_wind_of_death",
+     "wh2_main_effect_ability_wom_cost_wind_of_death_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_gaze_of_nagash_and_upgraded",
+     "wh3_dlc29_effect_ability_wom_cost_wind_of_death_and_upgraded"
+    ],
+    "enable": [
+     "wh_dlc04_effect_ability_enable_gaze_of_nagash_strigoi",
+     "wh_dlc04_effect_ability_enable_invocation_of_nehek_strigoi",
+     "wh_main_effect_ability_enable_curse_of_undeath",
+     "wh_main_effect_ability_enable_curse_of_undeath_hidden",
+     "wh_main_effect_ability_enable_curse_of_years",
+     "wh_main_effect_ability_enable_gaze_of_nagash",
+     "wh_main_effect_ability_enable_gaze_of_nagash_hidden",
+     "wh_main_effect_ability_enable_invocation_of_nehek",
+     "wh_main_effect_ability_enable_raise_dead",
+     "wh_main_effect_ability_enable_vanhels_danse_macabre",
+     "wh_main_effect_ability_enable_wind_of_death"
+    ],
+    "overcast": [
+     "wh2_main_effect_ability_overcast_gaze_of_nagash",
+     "wh2_main_effect_ability_overcast_invocation_of_nehek",
+     "wh2_main_effect_ability_overcast_raise_dead",
+     "wh2_main_effect_ability_overcast_vanhels_danse_macabre",
+     "wh2_main_effect_ability_overcast_wind_of_death"
+    ]
+   },
+   "icon": "wh_main_lore_passive_the_curse_of_undeath.png",
+   "sort": 6,
+   "spells": [
+    "wh_main_lore_passive_the_curse_of_undeath",
+    "wh_main_spell_vampires_curse_of_years",
+    "wh_main_spell_vampires_gaze_of_nagash",
+    "wh_main_spell_vampires_invocation_of_nehek",
+    "wh_main_spell_vampires_raise_dead",
+    "wh_main_spell_vampires_vanhels_danse_macabre",
+    "wh_main_spell_vampires_wind_of_death"
+   ]
+  }
+ },
+ "tables": {
+  "character_skill_level_details_tables": {
+   "header": [
+    "campaign_key",
+    "faction_key",
+    "level",
+    "skill_key",
+    "subculture_key",
+    "image_path",
+    "unlocked_at_rank"
+   ],
+   "version": "1"
+  },
+  "character_skill_level_to_effects_junctions_tables": {
+   "header": [
+    "character_skill_key",
+    "effect_key",
+    "level",
+    "effect_scope",
+    "value"
+   ],
+   "version": "1"
+  },
+  "character_skill_node_set_items_tables": {
+   "header": [
+    "set",
+    "item",
+    "mod_disabled"
+   ],
+   "version": "0"
+  },
+  "character_skill_nodes_skill_locks_tables": {
+   "header": [
+    "character_skill",
+    "character_skill_node",
+    "level"
+   ],
+   "version": "0"
+  },
+  "character_skill_nodes_tables": {
+   "header": [
+    "key",
+    "campaign_key",
+    "character_skill_key",
+    "faction_key",
+    "indent",
+    "tier",
+    "subculture",
+    "points_on_creation",
+    "required_num_parents",
+    "visible_in_ui"
+   ],
+   "version": "6"
+  },
+  "character_skills_tables": {
+   "header": [
+    "key",
+    "image_path",
+    "localised_description",
+    "localised_name",
+    "unlocked_at_rank",
+    "is_background_skill",
+    "is_female_only_background_skill",
+    "is_male_only_background_skill",
+    "background_weighting",
+    "influence_cost"
+   ],
+   "version": "5"
+  },
+  "special_ability_groups_to_units_junctions_tables": {
+   "header": [
+    "ability_group",
+    "unit",
+    "group_page_order"
+   ],
+   "version": "1"
+  }
+ }
+}
