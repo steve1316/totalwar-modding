@@ -170,11 +170,16 @@ end
 --- @param player_won_battle boolean True when the player was victorious.
 --- @param spot_info table A spot_info record for the triggering spot.
 function BattleEventDelegate:trigger_event_given_battle_result(player_won_battle, spot_info)
-    local character = self.cached_player_character
-    local general_cqi = character and character.command_queue_index and character:command_queue_index() or nil
-    if general_cqi then
+    --- Look the lord up again by cqi. The battle may have killed him, and using a handle to a dead character crashes the game.
+    local general_cqi = self.cached_event.general_cqi
+    local character = general_cqi and cm:get_character_by_cqi(general_cqi)
+    if character and character:is_null_interface() then character = nil end
+    self.cached_player_character = character
+    if character then
         spot_battles.settle_missions(self.cached_event, character:faction():name(), general_cqi, player_won_battle)
         spot_battles.settle_prize(self.cached_event, character:faction():name(), general_cqi, player_won_battle)
+    else
+        log("spot battle: lord " .. tostring(general_cqi) .. " did not survive the battle, so its missions and prize are skipped")
     end
     spot_battles.end_battle(self.cached_event, general_cqi)
     if player_won_battle then
