@@ -201,10 +201,11 @@ end
 --- @returns region The region interface, or nil when the position has none.
 function region_at(coordinates)
     local region_data = cm:get_region_data_at_position(coordinates[1], coordinates[2])
-    if region_data and not region_data:is_null_interface() and region_data:region() ~= nil then
-        return region_data:region()
-    end
-    return nil
+    if not region_data or region_data:is_null_interface() then return nil end
+    --- Some land outside every region gives a null region, not nil. Calling a region method on it is a script error.
+    local region = region_data:region()
+    if not region or region:is_null_interface() then return nil end
+    return region
 end
 
 --- A lord's name in the player's language, e.g. "Karl Franz". Empty when it cannot be read.

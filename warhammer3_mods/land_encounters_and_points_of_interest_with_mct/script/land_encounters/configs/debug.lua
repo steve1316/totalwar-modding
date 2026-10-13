@@ -53,6 +53,8 @@ M.smithy_cooldown = {}
 
 --- Forge level every Smithy acts as instead of its own, e.g. { 3 }.
 M.smithy_level = {}
+--- Takes every Smithy from its owner when a game loads, so an unowned Smithy's round update runs, e.g. { true }.
+M.smithy_abandon = {}
 --- Level every Smithy's garrison fights at when a lord tries to seize it, instead of the forge's own, e.g. { 1 } for an easy fight.
 M.smithy_fight_level = {}
 --- Offers a Smith's Commission on every round to each player faction that holds none, instead of every MCT interval, e.g. { true }.

@@ -796,6 +796,14 @@ function SmithyEventDelegate:sync_markers(points_of_interest)
             log("smithy: debug smithy_level sets the " .. smithy.zone_name .. " smithy from level " .. smithy.level .. " to " .. forced_level)
             smithy.level = forced_level
         end
+        if debug_config.smithy_abandon[1] and smithy.controlling_faction_name ~= "" then
+            log("smithy: debug smithy_abandon takes the " .. smithy.zone_name .. " smithy " .. smithy.index_in_zone .. " from " .. smithy.controlling_faction_name)
+            smithy.controlling_faction_name, smithy.controlling_faction_subculture, smithy.turns_under_control = "", "", 0
+        end
+        if not smithy:region() then
+            log("smithy: " .. smithy.zone_name .. " smithy " .. smithy.index_in_zone .. " at " .. smithy.coordinates[1] .. ", " .. smithy.coordinates[2]
+                .. " is outside every region, owner '" .. smithy.controlling_faction_name .. "'")
+        end
         local zone = points_of_interest[smithy.zone_name]
         local entry = zone and zone.smithies and zone.smithies[smithy.index_in_zone]
         smithy.disabled = entry ~= nil and entry.disabled == true
