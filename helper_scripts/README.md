@@ -116,7 +116,7 @@ Shared module used by `update_dynamic_rors.py` and `update_double_unit_size.py`.
 Generic TSV/RPFM/schema helpers shared across every script. Exposes `TEMP_DIR`, `extract_tsv_data` (vanilla extraction), `extract_modded_tsv_data` (modded extraction), `load_tsv_data` / `load_multiple_tsv_data`, schema-version migration via `update_single_tsv_file_to_latest_version`, and the `_SCHEMA_CACHE` (lock-guarded for thread-safe access).
 
 ### `data/supported_mods.py`
-Registry. A single module-level list `SUPPORTED_MODS` of ~166 dict entries with `name`, `package_name`, `path`, `modified_attributes`, and optional `pattern_overrides` / `character_overrides` / `ignore_generation`. Pure data, no logic.
+Registry. A single module-level list `SUPPORTED_MODS` of ~166 dict entries with `name`, `package_name`, `path`, `modified_attributes`, and optional `pattern_overrides` / `character_overrides` / `ignore_generation` / `parent_mods` (packages whose rows the mod borrows). Pure data, no logic.
 
 ### `data/dynamic_rors_effects.py`
 Catalog. A single module-level dict `SUPPORTED_EFFECTS` mapping ~30 categories to lists of `nanu_dynamic_ror_*` effect-bundle keys (~7,000 effects total). Consumed by `update_dynamic_rors.py`'s `process_unit_by_category` function. Edited by hand or via `update_dynamic_ror_effects.py`.

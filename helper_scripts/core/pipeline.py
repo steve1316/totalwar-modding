@@ -81,6 +81,49 @@ OPTIONAL_TABLES: List[Tuple[str, str]] = [
 # Table name -> bucket name, the reverse of `OPTIONAL_TABLES`.
 TABLE_BUCKETS: Dict[str, str] = {table_name: bucket_name for bucket_name, table_name in OPTIONAL_TABLES}
 
+# Every link a compat unit's rows follow, as (table, column, target table), in walk order. `walk_land_unit_to_related_tables` ships rows along these and
+# `fail_on_broken_links` checks them, since a link with no row in the compat or vanilla crashes the game.
+RELATED_LINKS: List[Tuple[str, str, str]] = [
+    ("main_units_tables", "land_unit", "land_units_tables"),
+    ("main_units_tables", "ui_unit_group_land", "ui_unit_groupings_tables"),
+    ("ui_unit_groupings_tables", "parent_group", "ui_unit_group_parents_tables"),
+    ("land_units_tables", "historical_description_text", "unit_description_historical_texts_tables"),
+    ("land_units_tables", "man_animation", "battle_animations_table_tables"),
+    ("land_units_tables", "man_entity", "battle_entities_tables"),
+    ("land_units_tables", "mount", "mounts_tables"),
+    ("mounts_tables", "entity", "battle_entities_tables"),
+    ("mounts_tables", "variant", "variants_tables"),
+    ("land_units_tables", "primary_melee_weapon", "melee_weapons_tables"),
+    ("melee_weapons_tables", "scaling_damage", "projectiles_scaling_damages_tables"),
+    ("land_units_tables", "primary_missile_weapon", "missile_weapons_tables"),
+    ("missile_weapons_tables", "default_projectile", "projectiles_tables"),
+    ("projectiles_tables", "spawned_vortex", "battle_vortexs_tables"),
+    ("projectiles_tables", "projectile_shot_type_display", "projectile_shot_type_displays_tables"),
+    # The game rejects a projectile whose scaling_damage row is missing, so ship it with the projectile.
+    ("projectiles_tables", "scaling_damage", "projectiles_scaling_damages_tables"),
+    ("land_units_tables", "short_description_text", "unit_description_short_texts_tables"),
+    ("land_units_tables", "attribute_group", "unit_attributes_groups_tables"),
+    ("land_units_tables", "engine", "battlefield_engines_tables"),
+    ("battlefield_engines_tables", "battle_entity", "battle_entities_tables"),
+    ("land_units_tables", "spacing", "unit_spacings_tables"),
+    ("land_units_tables", "first_person", "first_person_engines_tables"),
+    ("land_units_tables", "articulated_record", "land_unit_articulated_vehicles_tables"),
+    ("land_unit_articulated_vehicles_tables", "articulated_entity", "battle_entities_tables"),
+]
+
+# Source table -> its (column, target table) links, in walk order.
+LINKS_BY_SOURCE: Dict[str, List[Tuple[str, str]]] = {}
+for _source, _column, _target in RELATED_LINKS:
+    LINKS_BY_SOURCE.setdefault(_source, []).append((_column, _target))
+
+# Links the game has loaded fine with when broken (the 2026-09-28 build shipped some from the mods themselves). These only log a warning.
+TOLERATED_LINKS: Set[Tuple[str, str]] = {
+    ("land_units_tables", "attribute_group"),
+    ("land_units_tables", "articulated_record"),
+    ("land_units_tables", "short_description_text"),
+    ("land_units_tables", "historical_description_text"),
+}
+
 
 def modded_folders_for(scratch_root: str) -> List[str]:
     """Return the list of `modded_*` scratch folders that live under `scratch_root`.
@@ -312,6 +355,82 @@ def extract_and_load_table_data(
     return mappings
 
 
+def add_parent_mod_rows(mod: Dict[str, Any], supported_mods: List[Dict[str, Any]], table_data: Dict[str, Any], scratch_root: str) -> None:
+    """Fill in the related rows a mod borrows from its `parent_mods`, so its units do not ship pointing at rows the compat lacks.
+
+    Only the related tables are merged, so the parent's own units are not shipped under this mod. A key the mod already has keeps the mod's row.
+
+    Args:
+        mod (Dict[str, Any]): Entry from `SUPPORTED_MODS`. Its optional `parent_mods` lists the parents' `package_name` values.
+        supported_mods (List[Dict[str, Any]]): The full `SUPPORTED_MODS` list, used to find each parent's pack path.
+        table_data (Dict[str, Any]): The mod's mapping from `extract_and_load_table_data`. Mutated in place.
+        scratch_root (str): The mod's scratch folder. Parents are extracted under it.
+
+    Raises:
+        KeyError: If a `parent_mods` entry is not a `package_name` in `supported_mods`.
+    """
+    paths_by_package = {m["package_name"]: m["path"] for m in supported_mods}
+    related_configs = [cfg for cfg in TABLE_CONFIGS if cfg["table_name"] in TABLE_BUCKETS]
+
+    for parent_package in mod.get("parent_mods", []):
+        parent_root = f"{scratch_root}/parent_{clean_folder_name(parent_package)}"
+        parent_data = extract_and_load_table_data(paths_by_package[parent_package], related_configs, scratch_root=parent_root)
+        cleanup_modded_folders(scratch_root=parent_root)
+
+        for table_name in TABLE_BUCKETS:
+            parent_rows = parent_data.get(table_name)
+            if not parent_rows:
+                continue
+            headers_key, version_key = f"{table_name}_headers", f"{table_name}_version_info"
+            if headers_key not in table_data:
+                table_data[headers_key] = parent_data[headers_key]
+                table_data[version_key] = parent_data[version_key]
+            elif set(table_data[headers_key]) != set(parent_data[headers_key]):
+                logging.warning(f"Skipping {parent_package} rows for {table_name} in {mod['package_name']}: the two packs have different columns.")
+                continue
+            for key, row in parent_rows.items():
+                table_data[table_name].setdefault(key, row)
+
+
+def fail_on_broken_links(output_root: str, vanilla_keys: Dict[str, Set[str]]) -> None:
+    """Stop the build before the pack is written when a compat row's `RELATED_LINKS` value has no row in the compat or vanilla. `TOLERATED_LINKS` only warn.
+
+    This reads the written output, not the walk, because a row one mod lacks can still be shipped by another mod in the same compat.
+
+    Args:
+        output_root (str): Generated compat folder, e.g. `../warhammer3_mods/!!!!!!!_nanu_dynamic_rors_compat`.
+        vanilla_keys (Dict[str, Set[str]]): Table name -> vanilla primary keys, from `load_vanilla_keys`.
+
+    Raises:
+        RuntimeError: If any link outside `TOLERATED_LINKS` is broken. If the missing row is in another supported mod, add that mod to `parent_mods`.
+    """
+    rows_by_table: Dict[str, List[Tuple[str, Dict[str, Any]]]] = {}
+    for table_name in {table for source, _, target in RELATED_LINKS for table in (source, target)}:
+        folder = f"{output_root}/db/{table_name}"
+        rows_by_table[table_name] = []
+        if os.path.isdir(folder):
+            for file_name in sorted(f for f in os.listdir(folder) if f.endswith(".tsv")):
+                rows, _, _ = load_tsv_data(f"{folder}/{file_name}")
+                rows_by_table[table_name] += [(file_name, row) for row in rows]
+
+    fatal = 0
+    for table_name, column, target_table in RELATED_LINKS:
+        target_field = TABLE_KEY_FIELDS[target_table]
+        known = {row[target_field] for _, row in rows_by_table[target_table]} | vanilla_keys.get(target_table, set())
+        for file_name, row in rows_by_table[table_name]:
+            value = row.get(column)
+            if not value or value in known:
+                continue
+            line = f"{table_name}.{column} -> {target_table}: {value} [{file_name}]"
+            if (table_name, column) in TOLERATED_LINKS:
+                logging.warning(f"Broken link the game tolerates: {line}")
+            else:
+                logging.error(f"Broken link: {line}")
+                fatal += 1
+    if fatal:
+        raise RuntimeError(f"{fatal} broken link(s) in {output_root}. If a missing row lives in another supported mod, add that mod to `parent_mods`.")
+
+
 def make_new_data_buckets(key: str, with_purchasable_effects: bool = False) -> Dict[str, Any]:
     """Build the empty `new_data` dict for one land_unit, with one bucket per optional table.
 
@@ -330,6 +449,23 @@ def make_new_data_buckets(key: str, with_purchasable_effects: bool = False) -> D
     for bucket_key, _ in OPTIONAL_TABLES:
         buckets[bucket_key] = []
     return buckets
+
+
+def _add_linked_rows(table_name: str, row: Dict[str, Any], add: Callable[..., Optional[Dict[str, Any]]]) -> None:
+    """Ship the rows `row` links to through `LINKS_BY_SOURCE`, then the rows those link to.
+
+    Args:
+        table_name (str): Table `row` belongs to.
+        row (Dict[str, Any]): Row to follow the links of.
+        add (Callable[..., Optional[Dict[str, Any]]]): `_add_related` with the walk's state bound.
+    """
+    for column, target_table in LINKS_BY_SOURCE.get(table_name, []):
+        # The walk starts from the land unit, so the main unit's link to it is only checked, never followed.
+        if target_table == "land_units_tables":
+            continue
+        linked_row = add(column, row, target_table)
+        if linked_row is not None:
+            _add_linked_rows(target_table, linked_row, add)
 
 
 def walk_land_unit_to_related_tables(
@@ -362,52 +498,14 @@ def walk_land_unit_to_related_tables(
     if not _is_vanilla_key("main_units_tables", main_unit_data.get("unit"), vanilla_keys):
         if tracker.should_add("main_units_tables", main_unit_data):
             new_data["main_units"].append(main_unit_data)
-        ui_unit_grouping_data = add("ui_unit_group_land", main_unit_data, "ui_unit_groupings_tables")
-        if ui_unit_grouping_data is not None:
-            add("parent_group", ui_unit_grouping_data, "ui_unit_group_parents_tables")
+        _add_linked_rows("main_units_tables", main_unit_data, add)
 
     # Vanilla's own land unit and everything it points at already exist.
     if _is_vanilla_key("land_units_tables", data.get("key"), vanilla_keys):
         return
     if tracker.should_add("land_units_tables", data):
         new_data["land_units"].append(data)
-
-    add("historical_description_text", data, "unit_description_historical_texts_tables")
-    add("man_animation", data, "battle_animations_table_tables")
-    add("man_entity", data, "battle_entities_tables")
-
-    mount_data = add("mount", data, "mounts_tables")
-    if mount_data is not None:
-        add("entity", mount_data, "battle_entities_tables")
-        add("variant", mount_data, "variants_tables")
-
-    melee_weapon_data = add("primary_melee_weapon", data, "melee_weapons_tables")
-    if melee_weapon_data is not None:
-        add("scaling_damage", melee_weapon_data, "projectiles_scaling_damages_tables")
-
-    missile_weapon_data = add("primary_missile_weapon", data, "missile_weapons_tables")
-    if missile_weapon_data is not None:
-        projectile_entry = add("default_projectile", missile_weapon_data, "projectiles_tables")
-        if projectile_entry is not None:
-            add("spawned_vortex", projectile_entry, "battle_vortexs_tables")
-            add("projectile_shot_type_display", projectile_entry, "projectile_shot_type_displays_tables")
-            # The game rejects a projectile whose scaling_damage row is missing, so ship it with the projectile.
-            add("scaling_damage", projectile_entry, "projectiles_scaling_damages_tables")
-
-    add("short_description_text", data, "unit_description_short_texts_tables")
-    add("attribute_group", data, "unit_attributes_groups_tables")
-
-    engine_data = add("engine", data, "battlefield_engines_tables")
-    if engine_data is not None:
-        add("battle_entity", engine_data, "battle_entities_tables")
-
-    add("spacing", data, "unit_spacings_tables")
-    add("first_person", data, "first_person_engines_tables")
-
-    articulated_vehicle_data = add("articulated_record", data, "land_unit_articulated_vehicles_tables")
-    if articulated_vehicle_data is not None:
-        add("articulated_entity", articulated_vehicle_data, "battle_entities_tables")
-
+    _add_linked_rows("land_units_tables", data, add)
 
 
 def _replace_version_info_filename(version_info: str, new_filename: str) -> str:

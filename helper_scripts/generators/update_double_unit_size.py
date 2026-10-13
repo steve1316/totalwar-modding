@@ -28,8 +28,10 @@ from core.delta import publish_pack
 from core.pipeline import (
     DuplicateTracker,
     add_folder_to_pack,
+    add_parent_mod_rows,
     cleanup_modded_folders,
     extract_and_load_table_data,
+    fail_on_broken_links,
     load_vanilla_keys,
     make_new_data_buckets,
     reset_pack_folders,
@@ -379,6 +381,7 @@ if __name__ == "__main__":
             if table_data is None:
                 cleanup_modded_folders(scratch_root=scratch_root)
                 return
+            add_parent_mod_rows(mod, SUPPORTED_MODS, table_data, scratch_root)
 
             # This script doubles unit sizes, so mods without main_units_tables AND land_units_tables have nothing to process.
             if "main_units_tables_headers" not in table_data or "land_units_tables_headers" not in table_data:
@@ -496,6 +499,7 @@ if __name__ == "__main__":
                 reset_pack_folders(compat_pack_path)
             add_folder_to_pack(compat_pack_path, f"../warhammer3_mods/{MODDED_TABLE_NAME};")
 
+        fail_on_broken_links(f"../warhammer3_mods/{MODDED_TABLE_NAME}", vanilla_keys)
         publish_pack("3621939685", compat_pack_path, f"../warhammer3_mods/{MODDED_TABLE_NAME}", write_compat_pack)
 
     finally:
