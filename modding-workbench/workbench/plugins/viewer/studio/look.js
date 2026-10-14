@@ -26,7 +26,7 @@ const words = key => key.replace(/_\d+$/, "").split("_").filter(Boolean).map(w =
 export class LookTab {
   constructor(studio) {
     // `adding` is "outfit" or "piece" while its model search is open, `filter` its search text, `hovering` the search hit he is trying on.
-    this.studio = studio; this.adding = null; this.filter = ""; this.hovering = null;
+    this.studio = studio; this.adding = null; this.filter = ""; this.hovering = null; this.searches = 0;
     this.look = studio.manifest.editor && studio.manifest.editor.look;
     // The models a search lists, by name.
     this.models = this.look ? [...this.look.models].sort((a, b) => stem(a).localeCompare(stem(b))) : [];
@@ -92,25 +92,34 @@ export class LookTab {
     box.innerHTML = `<input class="attrSearch" placeholder="Search the game's humanoid models (hat, helmet, cape, wizard...)" value="${esc(this.filter)}">
       <div class="note look-count"></div><div class="hits look-hits"></div>`;
     const input = box.querySelector("input"), hits = box.querySelector(".hits"), count = box.querySelector(".look-count");
-    let found = [], shown = 0;
-    // Adds the next rows of the found models.
+    // A spacer below the built rows stands in for the rest, so the list is its full height from the start and the scrollbar keeps still.
+    let found = [], shown = 0, spacer = null;
+    // Adds the next rows of the found models, then sizes the spacer by the rows' measured height.
     const more = () => {
       const rows = found.slice(shown, shown + LIST_CHUNK);
       shown += rows.length;
-      hits.insertAdjacentHTML("beforeend", rows.map(p => `<button class="look-hit" data-model="${esc(p)}"><img class="thumb" data-thumb="${esc(p)}" alt="">
+      spacer.insertAdjacentHTML("beforebegin", rows.map(p => `<button class="look-hit" data-model="${esc(p)}"><img class="thumb" data-thumb="${esc(p)}" alt="">
         <span><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(3, -1).join("/"))}</span></span></button>`).join(""));
+      const step = (spacer.offsetTop - hits.firstElementChild.offsetTop) / shown;
+      spacer.style.height = `${Math.max(0, (found.length - shown) * step)}px`;
       this.thumbs.fill(hits);
     };
+    // Builds rows until they reach past the bottom of the view, however far it was scrolled or dragged.
+    const fillView = () => { while (shown < found.length && spacer.offsetTop - hits.scrollTop < hits.clientHeight + 400) more(); };
     const list = () => {
       // New rows replace the hovered one without a mouseleave.
       this.hover(null);
       this.filter = input.value; const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
       found = this.models.filter(p => terms.every(w => p.includes(w))); shown = 0;
       count.textContent = `${found.length} of ${this.models.length} models. Rest the pointer on one for a second to try it on.`;
-      hits.innerHTML = found.length ? "" : '<div class="note">No model matches.</div>';
-      hits.scrollTop = 0; more();
+      hits.innerHTML = found.length ? '<div class="look-spacer"></div>' : '<div class="note">No model matches.</div>';
+      spacer = hits.querySelector(".look-spacer");
+      hits.scrollTop = 0;
+      // The first rows wait until the list is on the page, where the rows can be measured. A newer search drops the wait.
+      const search = ++this.searches;
+      setTimeout(() => { if (search === this.searches && spacer) { more(); fillView(); } });
     };
-    hits.onscroll = () => { if (shown < found.length && hits.scrollTop + hits.clientHeight > hits.scrollHeight - 400) more(); };
+    hits.onscroll = () => { if (spacer) fillView(); };
     // One listener for every row, the ones added later included.
     const row = e => e.target.closest && e.target.closest("[data-model]");
     hits.onclick = e => { const b = row(e); if (b) this.pick(f, b.dataset.model); };

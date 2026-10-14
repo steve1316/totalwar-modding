@@ -209,7 +209,8 @@
   img.thumb.missing { opacity: .3; }
   .picker .hits button.look-hit { display: flex; justify-content: flex-start; align-items: center; gap: 10px; text-align: left; min-height: 72px; }
   .look-hit > span { display: flex; flex-direction: column; min-width: 0; word-break: break-all; }
-  .picker .look-hits { max-height: 55vh; overflow: auto; display: flex; flex-direction: column; gap: 4px; }
+  .picker .look-hits { position: relative; max-height: 55vh; overflow: auto; display: flex; flex-direction: column; gap: 4px; }
+  .look-spacer { flex: none; }
   .picker .look-hits button.look-hit { flex: none; }
   .look-count { padding: 0 4px 4px; }
   .picker { margin: 0 6px 8px; padding: 6px; border: 1px solid var(--line); border-radius: 4px; background: rgba(0,0,0,.25); }
