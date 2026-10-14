@@ -12,11 +12,16 @@ Then open `http://<this PC's LAN address>:8765/`. There is no login, so keep it 
 
 ## Tabs
 
-- **Viewer**: the open project's 3D gallery. Every unit form plays its animation slots, with bones, props and a close-up.
-  - **Vs vanilla** stands each form's vanilla equivalent beside it. **Stats** opens the in-game unit panel with the vanilla numbers drawn into
-    the bars.
-  - **Adjust** slides weapons along their grip and moves the hands live, saves the values into the project's registry, then rebuilds and deploys.
-- **Portrait**: the 3D portrait camera, previewed in the in-game porthole frame and saved into the registry.
+- **Workbench**: the open project's studio.
+  - **Left:** its forms, grouped by weapon with each mount under it (references such as vanilla units and retarget checks last), and the
+    animation slots. On a phone these are two drop-downs above the stage.
+  - **Stage:** **Battle** plays the form in 3D with Vs vanilla (its vanilla equivalent beside it), Models, Bones, Props and Close-up.
+    **Portrait** shows the 3D portrait camera in the in-game porthole frame, with the vanilla reference beside it.
+  - **Inspector tabs:** **Stats** (the in-game unit panel with the vanilla numbers drawn into the bars), **Adjust** (slide weapons along their
+    grip and move the hands, live), **Portrait** (camera sliders, presets, hood). Edit and Skills come next. On a phone the inspector is a sheet
+    below the stage: tap the handle for half or most of the screen.
+  - **Bar:** playback, then one **Save** for every tab's edits, **Undo**, **Rebuild** (saves first, then runs the project's rebuild job),
+    **Deploy** and the job **Log**.
 - **Unit Browser**: the TTC unit browser, a copy of the in-game Unit & Spell Browser for reviewing TTC caps. It builds its data the first time it is
   opened, and needs `helper_scripts/delta_state/ttc_auto_picks.json` from `update.py`.
 
@@ -37,7 +42,8 @@ See `projects/advisor_overhaul.json`. The project picker sits at the right of th
 | `workbench/__main__.py` | starts the server from the repo's `helper_scripts`, whose libraries the plugins import |
 | `workbench/server.py` | routing, shared files (`/static/`), and the tab strip data (`/api/nav`) |
 | `workbench/projects.py` | project configs, their jobs, and reading and saving tuning values |
-| `workbench/plugins/` | one package per tab group. A plugin has a URL `key`, `tabs()`, and `get` and `post` handlers. Add new ones in `make_plugins` |
+| `workbench/plugins/` | one package per tab. A plugin has a URL `key`, `tabs()`, and `get` and `post` handlers. Add new ones in `make_plugins` |
+| `workbench/plugins/viewer/studio/` | the Workbench page's modules: `main.js` (layout and wiring), `stage.js` (Battle), `portrait.js` (Portrait stage and tab), `stats.js`, `adjust.js` and `jobs.js`. A new inspector tab is a module with `render(container)` added to `TABS` in `main.js` |
 | `workbench/static/` | the tab strip, and the in-game unit panel (`unit_panel.js` and `.css`) whose numbers come from `helper_scripts/ttc/unit_panel.py` |
 
 A project's gallery is exported by its own generator with `helper_scripts/tools/anim_viewer/exporter.py`.

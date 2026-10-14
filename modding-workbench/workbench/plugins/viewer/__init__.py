@@ -1,6 +1,7 @@
-"""The Viewer tab: a project's 3D gallery (models, animations, the vanilla comparison and unit panels), its Adjust panel, and the portrait camera page.
+"""The Workbench tab: a project's studio. Forms and slots, a Battle stage (3D models and animations, with each form's vanilla equivalent) and a
+Portrait stage (the porthole camera), inspector tabs (Stats, Adjust, Portrait, more to come) and a bar to save, rebuild and deploy.
 
-The pages are served from this folder. A project's gallery data (exported by `tools.anim_viewer.exporter`) is served under
+The page is `index.html` with its modules in `studio/`, served from this folder. A project's gallery data (exported by `tools.anim_viewer.exporter`) is served under
 `/viewer/p/<project>/data/`, and its tuning and job routes under `/viewer/p/<project>/api/`:
 - `GET tuning`: the tuning values, the weapon models that may get an offset, and the job state. `POST tuning`: saves values into the registry.
 - `POST run/<job>`: starts one of the project's jobs (rebuild, deploy). `GET job`: the job state and the end of its log.
@@ -26,7 +27,7 @@ PAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class Viewer:
-    """The Viewer plugin."""
+    """The Workbench plugin."""
 
     # URL prefix.
     key = "viewer"
@@ -38,7 +39,7 @@ class Viewer:
 
     def tabs(self) -> List[Tuple[str, str]]:
         """The tab strip entries."""
-        return [("Viewer", "/viewer/"), ("Portrait", "/viewer/portrait.html")]
+        return [("Workbench", "/viewer/")]
 
     def project_route(self, handler, route: str) -> Tuple[Project, str]:
         """Splits `p/<project>/<rest>`, answering 404 for an unknown project.
