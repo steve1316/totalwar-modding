@@ -33,9 +33,10 @@ LOG_TAIL = 12
 # Largest size accepted for a prop offset or hand shift number, in metres.
 LIMITS = {"prop_offsets": 0.3, "hand_shift": 0.05}
 
-# Largest number, and longest text, an Edit tab value may be.
+# Largest number, longest text, and largest object (as JSON) an edit may be.
 EDIT_NUMBER_LIMIT = 1000000
-EDIT_TEXT_LIMIT = 200
+EDIT_TEXT_LIMIT = 2000
+EDIT_OBJECT_LIMIT = 50000
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +126,7 @@ def path_matches(path: str, pattern: str) -> bool:
 
 
 def edit_value(value: Any) -> Any:
-    """Checks an Edit tab value: a number, a short text, a list of short texts, or None (remove the value).
+    """Checks an edit's value: a number, a text, a list of texts, an object (such as a planned skill, kept small), or None (remove the value).
 
     Args:
         value (Any): The value sent.
@@ -142,7 +143,9 @@ def edit_value(value: Any) -> Any:
         return int(value) if float(value).is_integer() else round(float(value), 4)
     if isinstance(value, list) and all(isinstance(v, str) and len(v) <= EDIT_TEXT_LIMIT for v in value):
         return value
-    raise ValueError(f"bad value {value!r}")
+    if isinstance(value, dict) and len(json.dumps(value)) <= EDIT_OBJECT_LIMIT:
+        return value
+    raise ValueError(f"bad value {str(value)[:80]}")
 
 
 def numbers(value: Any, count: int, limit: float) -> List[float]:
@@ -271,8 +274,10 @@ class Project:
     # Tuning value -> its dotted path in the registry (`prop_offsets`, `hand_shift`, `camera_head`), plus `prop_sources`: dotted paths, `*` for
     # every value of a map, to the prop slot maps whose models may get an offset.
     tuning: Dict[str, Any]
-    # Dotted path patterns (`*` for any one key) of the registry values the Edit tab may set.
+    # Dotted path patterns (`*` for any one key) of the registry values the Edit and Skills tabs may set.
     editable: List[str]
+    # Dotted paths of registry values the page reads as they are (such as the planned skills).
+    readable: List[str]
     # The project's running or last job.
     job: Job = field(init=False, repr=False)
 
@@ -293,7 +298,7 @@ class Project:
         root = os.path.normpath(os.path.join(REPO_ROOT, config["checkout"], config.get("helper_scripts", "helper_scripts")))
         return cls(key=os.path.basename(path)[:-len(".json")], name=config["name"], root=root, registry=os.path.join(root, config["registry"]),
                    gallery=os.path.join(root, config["gallery"]), gallery_next=os.path.join(root, config["gallery_next"]), jobs=config["jobs"],
-                   tuning=config.get("tuning", {}), editable=config.get("editable", []))
+                   tuning=config.get("tuning", {}), editable=config.get("editable", []), readable=config.get("readable", []))
 
     def read_registry(self) -> Dict:
         """The registry as it is on disk."""
@@ -323,12 +328,14 @@ class Project:
             registry (Optional[Dict]): The registry, read from disk when None.
 
         Returns:
-            Dict[str, Any]: `prop_offsets`, `hand_shift`, `camera_head` (each only when the config names it) and `props`.
+            Dict[str, Any]: `prop_offsets`, `hand_shift`, `camera_head` (each only when the config names it), `props`, and `registry`: each
+            `readable` path -> its value (None when missing).
         """
         registry = registry if registry is not None else self.read_registry()
         values = {name: get_path(registry, path) if name != "prop_offsets" else (each_path(registry, path) or [{}])[0]
                   for name, path in self.tuning.items() if name != "prop_sources"}
         values["props"] = self.props(registry)
+        values["registry"] = {path: (each_path(registry, path) or [None])[0] for path in self.readable}
         return values
 
     def save_tuning(self, changes: Dict[str, Any]) -> Dict[str, Any]:

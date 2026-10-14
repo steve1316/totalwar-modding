@@ -6,6 +6,7 @@ import { EditTab } from "./edit.js";
 import { BattleStage } from "./stage.js";
 import { Jobs } from "./jobs.js";
 import { PortraitStage } from "./portrait.js";
+import { SkillsTab } from "./skills.js";
 import { StatsTab } from "./stats.js";
 
 const $ = id => document.getElementById(id);
@@ -37,13 +38,15 @@ const studio = {
     tabs.edit.saved();
     studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
     if (manifest.portrait) portrait.resetToSaved();
-    tabs.adjust.applyLive(); renderTab(); studio.changed();
+    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); studio.changed();
   },
+  // Opens the Skills tab (a skill was picked on the tree).
+  openSkills() { if (tab !== "skills") selectTab("skills", true); else if (phone.matches && sheet === "peek") setSheet("half"); },
   // Drops every unsaved edit.
   undo() {
     studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
     if (manifest.portrait) portrait.resetToSaved();
-    tabs.adjust.applyLive(); renderTab(); studio.changed();
+    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); studio.changed();
   },
 };
 studio.stage = new BattleStage($("battle"), studio.getAnim, DATA);
@@ -53,7 +56,8 @@ const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studi
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Inspector tabs
 
-const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) }, edit: new EditTab(studio) };
+const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) }, edit: new EditTab(studio),
+               skills: new SkillsTab($("skillsStage"), studio) };
 // Tab order and labels. Tabs without a module yet are shown greyed out.
 const TABS = [["stats", "Stats"], ["adjust", "Adjust"], ["portrait", "Portrait"], ["edit", "Edit"], ["skills", "Skills"]];
 let tab = "stats";
@@ -65,10 +69,10 @@ function renderTabs() {
 function renderTab() {
   if (tabs[tab]) tabs[tab].render($("inspBody"));
 }
-// Picks a tab. The Portrait tab shows the Portrait stage, and the other tabs the Battle stage.
+// Picks a tab. The Portrait and Skills tabs show their own stage, and the other tabs the Battle stage.
 async function selectTab(key, fromUser = false) {
   tab = key; renderTabs();
-  if (key === "portrait") await setMode("portrait"); else if (mode === "portrait") await setMode("battle");
+  if (key === "portrait" || key === "skills") await setMode(key); else if (mode !== "battle") await setMode("battle");
   renderTab();
   if (fromUser && phone.matches && sheet === "peek") setSheet("half");
   writeHash();
@@ -88,15 +92,20 @@ async function setMode(next) {
   // The portrait loads first, so the playback loop never runs it half loaded.
   if (next === "portrait") await portrait.start();
   mode = next;
-  $("battle").hidden = $("battleTools").hidden = $("info").hidden = mode !== "battle"; $("portraitStage").hidden = mode !== "portrait";
+  $("battle").hidden = $("battleTools").hidden = $("info").hidden = mode !== "battle";
+  $("portraitStage").hidden = mode !== "portrait"; $("skillsStage").hidden = mode !== "skills";
+  $("bar").classList.toggle("noplay", mode === "skills");
   document.querySelectorAll("[data-mode]").forEach(b => b.classList.toggle("on", b.dataset.mode === mode));
   if (mode === "portrait") {
     if (times.portrait === null) times.portrait = portrait.startTime;
-    if (tab !== "portrait") { tab = "portrait"; renderTabs(); renderTab(); }
+  } else if (mode === "skills") {
+    tabs.skills.renderTree();
   } else {
     stage.resize(); stage.frameCamera();
-    if (tab === "portrait") { tab = "stats"; renderTabs(); renderTab(); }
   }
+  // The stage and its tab go together.
+  const wanted = mode === "battle" ? (tab === "portrait" || tab === "skills" ? "stats" : tab) : mode;
+  if (tab !== wanted) { tab = wanted; renderTabs(); renderTab(); }
   playing = mode === "battle"; syncPlay(); writeHash();
 }
 document.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
@@ -193,7 +202,7 @@ async function selectSlot(slot) {
 // Time in seconds on each stage. The portrait starts paused on its calibration frame.
 const times = { battle: 0, portrait: null };
 let playing = true;
-const active = () => mode === "portrait" ? portrait : stage;
+const active = () => mode === "portrait" ? portrait : mode === "skills" ? null : stage;
 function syncPlay() { $("play").textContent = playing ? "Pause" : "Play"; }
 $("play").onclick = () => { playing = !playing; syncPlay(); };
 $("frame").oninput = e => { times[mode] = (+e.target.value + 0.5) / active().fps; playing = false; syncPlay(); };

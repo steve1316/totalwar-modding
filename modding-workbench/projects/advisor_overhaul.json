@@ -30,6 +30,8 @@
   "weapons.*.missile.projectile.*",
   "weapons.*.missile.ammo",
   "weapons.*.attributes",
-  "weapons.*.attributes_removed"
- ]
+  "weapons.*.attributes_removed",
+  "skills.*"
+ ],
+ "readable": ["skills"]
 }
