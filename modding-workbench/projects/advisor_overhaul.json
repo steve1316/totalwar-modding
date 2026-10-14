@@ -24,6 +24,8 @@
   "prop_sources": ["weapons.*.props", "mounts.*.variant_props", "weapons.*.forms.*.props"]
  },
  "editable": [
+  "weapons.*",
+  "weapons.*.retarget.*",
   "weapons.*.stats.*",
   "weapons.*.forms.*.*",
   "weapons.*.melee.*",
@@ -37,5 +39,5 @@
   "weapons.*.forms.*.props.*",
   "skills.*"
  ],
- "readable": ["skills"]
+ "readable": ["skills", "weapons"]
 }

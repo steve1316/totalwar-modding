@@ -4,6 +4,7 @@ import { animLoader } from "../viewer_common.js";
 import { AdjustTab } from "./adjust.js";
 import { BattleStage } from "./stage.js";
 import { Jobs } from "./jobs.js";
+import { NewForm } from "./new_form.js";
 import { PortraitStage } from "./portrait.js";
 import { SkillsTab } from "./skills.js";
 import { StatsTab } from "./stats.js";
@@ -37,7 +38,7 @@ const studio = {
     tabs.stats.saved();
     studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
     if (manifest.portrait) portrait.resetToSaved();
-    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); studio.changed();
+    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
   },
   // Opens the Skills tab (a skill was picked on the tree).
   openSkills() { if (tab !== "skills") selectTab("skills", true); else if (phone.matches && sheet === "peek") setSheet("half"); },
@@ -45,7 +46,7 @@ const studio = {
   undo() {
     studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
     if (manifest.portrait) portrait.resetToSaved();
-    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); studio.changed();
+    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
   },
 };
 studio.stage = new BattleStage($("battle"), studio.getAnim, DATA);
@@ -57,6 +58,8 @@ const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studi
 
 const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
                skills: new SkillsTab($("skillsStage"), studio) };
+// The New form dialog, which also lists the forms not in the gallery yet.
+const newForm = new NewForm(studio, () => renderForms());
 // Tab order and labels. Tabs without a module yet are shown greyed out.
 const TABS = [["stats", "Stats"], ["adjust", "Adjust"], ["portrait", "Portrait"], ["skills", "Skills"]];
 let tab = "stats";
@@ -148,14 +151,30 @@ manifest.entries.forEach((e, i) => {
 });
 let entryIndex = 0, slotFilter = "";
 
+// Forms not in the gallery yet (new, or waiting for retargeting) go under their weapon, greyed, and open it in the New form dialog.
+const WAITING_TAGS = { rebuild: "after a rebuild", retarget: "needs retargeting", handoff: "with Claude" };
 function renderForms() {
-  $("forms").innerHTML = [...groups].map(([group, items]) => `<div class="grp">${esc(group)}</div>`
-    + items.map(it => `<button data-i="${it.index}" class="${it.index === entryIndex ? "on" : ""}">${esc(it.label)}</button>`).join("")).join("");
-  $("forms").querySelectorAll("button").forEach(b => b.onclick = () => openEntry(+b.dataset.i));
+  const waiting = new Map();
+  for (const w of newForm.waiting()) { if (!waiting.has(w.name)) waiting.set(w.name, []); waiting.get(w.name).push(w); }
+  const names = [...new Set([...groups.keys(), ...waiting.keys()])], mountName = m => newForm.data.mounts[m].name;
+  $("forms").innerHTML = names.map(group => `<div class="grp">${esc(group)}</div>`
+    + (groups.get(group) || []).map(it => `<button data-i="${it.index}" class="${it.index === entryIndex ? "on" : ""}">${esc(it.label)}</button>`).join("")
+    + (waiting.get(group) || []).map(w => `<button class="waiting" data-w="${esc(w.weapon)}"><span>${esc(mountName(w.mount))}</span><span class="tag">${WAITING_TAGS[w.state]}</span></button>`).join("")).join("")
+    + (newForm.enabled() ? '<button class="add" data-new>+ New form</button>' : "");
+  $("forms").querySelectorAll("button[data-i]").forEach(b => b.onclick = () => openEntry(+b.dataset.i));
+  $("forms").querySelectorAll("button[data-w]").forEach(b => b.onclick = () => newForm.openWeapon(b.dataset.w));
+  const add = $("forms").querySelector("[data-new]");
+  if (add) add.onclick = () => newForm.openNew();
   $("formSel").innerHTML = [...groups].map(([group, items]) => `<optgroup label="${esc(group)}">`
-    + items.map(it => `<option value="${it.index}" ${it.index === entryIndex ? "selected" : ""}>${esc(group === "Gallery" ? it.label : `${group} · ${it.label}`)}</option>`).join("") + "</optgroup>").join("");
+    + items.map(it => `<option value="${it.index}" ${it.index === entryIndex ? "selected" : ""}>${esc(group === "Gallery" ? it.label : `${group} · ${it.label}`)}</option>`).join("") + "</optgroup>").join("")
+    + (newForm.enabled() ? `<optgroup label="New forms">${[...waiting.values()].flat().map(w => `<option value="w:${esc(w.weapon)}">${esc(w.name)} · ${esc(mountName(w.mount))} (${WAITING_TAGS[w.state]})</option>`).join("")}
+      <option value="new">+ New form</option></optgroup>` : "");
 }
-$("formSel").onchange = () => openEntry(+$("formSel").value);
+$("formSel").onchange = () => {
+  const value = $("formSel").value;
+  if (value === "new") newForm.openNew(); else if (value.startsWith("w:")) newForm.openWeapon(value.slice(2)); else { openEntry(+value); return; }
+  renderForms();
+};
 
 function slotTag(s) {
   if (stage.isCompare()) return (s.anims.source !== undefined ? "S" : "-") + (s.anims.target !== undefined ? "R" : "-");
