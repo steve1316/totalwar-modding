@@ -43,6 +43,10 @@ ART_FOLDER = "art"
 PROP_PACKS = re.compile(r"^variants\d*\.pack$")
 PROP_FOLDER = re.compile(r"/wh_variantmodels/.*/[^/]*props[^/]*/")
 
+# The folder of the humanoid01 models the Look tab picks outfits and pieces from. Props and dismemberment stumps are left out.
+LOOK_FOLDER = re.compile(r"/wh_variantmodels/hu1/")
+LOOK_SKIPPED = re.compile(r"blood_pack")
+
 # The skeleton every form's set must be on. A set on another skeleton needs retargeting first.
 FORM_SKELETON = "humanoid01"
 
@@ -225,7 +229,8 @@ class PanelBuilder:
             Dict: `weapon`, `mount`, `stats` (`STAT_COLUMNS` and `armour`), `melee` (with its current `key`), `melee_template`, `own_melee` (whether
             the weapon has its own melee weapon yet), `missile` (or None, with `ammo`), `overrides` (the fields its form sets), and the weapon's
             `attributes`, `attributes_removed`, `abilities` and `abilities_removed`, `props` (prop slot -> [bone, model, metadata] as the form uses
-            them), `prop_overrides` (the slots its form sets) and `mount_props` (the slots its mount fills, such as the disc).
+            them), `prop_overrides` (the slots its form sets), `mount_props` (the slots its mount fills, such as the disc) and `look` (the
+            weapon's `body`, `hood` and `pieces`, shared by all its mounts).
         """
         land = self.land[self.main[key]["land_unit"]]
         num = lambda value: float(value) if value not in ("", None) else 0.0
@@ -243,6 +248,7 @@ class PanelBuilder:
                 "props": dict(weapon["props"], **registry["mounts"][mount_key].get("variant_props", {}), **weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
                 "prop_overrides": sorted(weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
                 "mount_props": sorted(registry["mounts"][mount_key].get("variant_props", {})),
+                "look": {"body": weapon.get("body", registry["model"]["body"]), "hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {})},
                 "attributes_removed": weapon.get("attributes_removed", []), "abilities": weapon.get("abilities", []),
                 "abilities_removed": weapon.get("abilities_removed", [])}
 
@@ -349,7 +355,8 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
     Returns:
         Tuple[Dict[str, Dict], Dict[str, str], Dict]: Panels by unit key, Advisor unit key -> vanilla unit key, and the Edit and Skills tabs' data
         (`forms`: unit key -> `PanelBuilder.form_values`, `attributes` and `abilities`: the attribute and ability catalogs, `skills`: the skill
-        catalog, the fixed weapon and mount skills and the names of their rows, and `new_form`: `PanelBuilder.new_form_data`).
+        catalog, the fixed weapon and mount skills and the names of their rows, `new_form`: `PanelBuilder.new_form_data`, `prop_models`: the
+        weapon models a slot may swap to, and `look`: the Look tab's outfits, head and piece models).
     """
     pairs_to_vanilla = comparisons(registry)
     builder = PanelBuilder(load_tables(), load_loc())
@@ -362,7 +369,13 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
         builder.note_art(path)
     fixed = [{"row": f["row"], "tier": f["tier"], "name": f["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{f['icon']}"), "kind": f["kind"]} for f in fixed_skills(registry)]
     # The weapon models a prop slot may switch to: every vanilla model in a props folder.
-    editor["prop_models"] = sorted(p for p in AssetSource([], [], PROP_PACKS).index if p.endswith(".wsmodel") and PROP_FOLDER.search(p))
+    models = AssetSource([], [], PROP_PACKS).index
+    editor["prop_models"] = sorted(p for p in models if p.endswith(".wsmodel") and PROP_FOLDER.search(p))
+    # The Look tab: his outfits (slot -> model), his head with and without the hood, and the humanoid models a piece can be.
+    head = registry["model"]["heads"][registry["model"]["head"]]
+    editor["look"] = {"bodies": {k: {slot: piece[0] for slot, piece in body.items()} for k, body in registry["model"]["bodies"].items()},
+                      "head": {"hooded": head["hooded"][0], "hoodless": head.get("hoodless", [""])[0]},
+                      "models": sorted(p for p in models if p.endswith(".wsmodel") and LOOK_FOLDER.search(p) and not PROP_FOLDER.search(p) and not LOOK_SKIPPED.search(p))}
     editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": {"0": "Weapons", "1": "Mounts"}}
     editor["new_form"] = builder.new_form_data(registry, sets)
     print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes, {len(editor['abilities'])} abilities")

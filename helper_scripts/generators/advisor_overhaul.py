@@ -17,6 +17,9 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
 - `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away. `abilities` and `abilities_removed` do
   the same for unit abilities.
 
+How a weapon looks on every one of its mounts (all optional, written by the workbench's Look tab): `body` picks his outfit from `model.bodies`,
+`hood` false takes his hood off (when his head has a hoodless model), and `pieces` adds models such as a hat: slot -> [model, metadata...].
+
 New weapons made with the workbench's New form dialog are marked `workbench`. Their `sets` hold only `humanoid01` sets, which build as they are.
 A set picked from another skeleton waits in `retarget` (mount -> `set`, `skeleton`, and `handoff` and `note` once it is handed to Claude) until it
 is retargeted into a set of his own and moved to `sets`. A weapon with no sets yet is left out of the build.
@@ -870,7 +873,8 @@ def build() -> None:
                                                                              "rider_animation_set": rider, "vfx_filter_override": "0"})
         texts.append((f"ancillaries_onscreen_name_{ancillary}", f"{weapon['name']}, {mount['name']}"))
         texts.append((f"ancillaries_colour_text_{ancillary}", f"{weapon['description']} {mount['description']}"))
-        variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {}), **form_props))
+        look = {"hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {})}
+        variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {}), **form_props), look)
 
     for variant in variants:
         rows["variants_tables"].append({"variant_name": variant, "variant_filename": variant, "mount_scale": "1.0000", "scale": "1.1500", "scale_variation": "0.0000"})
@@ -972,23 +976,24 @@ def prop_copy_path(path: str) -> str:
     return f"{PROP_FOLDER}/{os.path.basename(path).lower()}"
 
 
-def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict]]) -> None:
+def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> None:
     """Writes one variant mesh definition per weapon (and per weapon on a prop mount such as the disc): his model pieces, the dismemberment stumps
     and the props.
 
     Args:
-        model (Dict): The registry's `model` (the bodies, the head switches with their heads, and stumps).
-        variants (Dict[str, Tuple[str, Dict]]): Variant name -> (key of its body in `model.bodies`, slot -> (attach point, model, metadata)).
+        model (Dict): The registry's `model` (the bodies, the heads, and stumps).
+        variants (Dict[str, Tuple[str, Dict, Dict]]): Variant name -> (key of its body in `model.bodies`, slot -> (attach point, model, metadata),
+            and its look: `hood` and `pieces`, slot -> [model, metadata...]).
     """
     folder = os.path.join(MOD, "variantmeshes", "variantmeshdefinitions")
     os.makedirs(folder, exist_ok=True)
     slots = {"weapon_1": "be_prop_0", "weapon_2": "be_prop_1", "shield": "be_prop_2", "weapon_3": "be_prop_3", "weapon_4": "be_prop_4", "weapon_5": "be_prop_5"}
-    # The head goes right after the body's first slot, like in vanilla variants. A head with no hoodless model keeps its own when the hood is off.
     head = model["heads"][model["head"]]
-    head_piece = ("head", head["hooded"] if model["hood"] else head.get("hoodless", head["hooded"]))
-    for name, (body_key, props) in variants.items():
+    for name, (body_key, props, look) in variants.items():
+        # The head goes right after the body's first slot, like in vanilla variants. A head with no hoodless model keeps its own when the hood is off.
+        head_piece = ("head", head["hooded"] if look["hood"] else head.get("hoodless", head["hooded"]))
         body = list(model["bodies"][body_key].items())
-        pieces = dict([body[0], head_piece] + body[1:])
+        pieces = dict([body[0], head_piece] + body[1:] + list(look["pieces"].items()))
         lines = ["<VARIANT_MESH>"]
         for slot, (mesh, *meta) in pieces.items():
             tail = "".join(f"<META_DATA>{m}</META_DATA>" for m in meta)
