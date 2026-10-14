@@ -1,5 +1,5 @@
 // The Adjust inspector tab: one card per weapon the open form holds, where the weapon's model can be swapped and slid along its grip, then his
-// hands. Everything shows live on the stage. The exported models already carry the saved grip and hand values (`manifest.tuning`), so the live
+// hands. A swap is for the open form only. Everything shows live on the stage. The exported models already carry the saved grip and hand values (`manifest.tuning`), so the live
 // view moves each part by the difference from them. A swapped model is exported on the spot (`api/prop`) and put on its bone until a rebuild
 // bakes it in. The Jobs bar saves the edits.
 import * as THREE from "three";
@@ -17,16 +17,16 @@ const MODEL_HITS = 20;
 // Words in a model's file name -> what the card calls the weapon, first match wins.
 const KINDS = [["shield", "Shield"], ["staff", "Staff"], ["disc", "Disc"], ["greatsword", "Greatsword"], ["sword_2h", "Greatsword"], ["2h", "Two-handed weapon"],
   ["sword", "Sword"], ["bow", "Bow"], ["arrow", "Arrows"], ["axe", "Axe"], ["hammer", "Hammer"], ["mace", "Mace"], ["spear", "Spear"], ["lance", "Lance"],
-  ["halberd", "Halberd"], ["whip", "Whip"], ["dagger", "Dagger"], ["book", "Book"], ["banner", "Banner"]];
+  ["halberd", "Halberd"], ["whip", "Whip"], ["dagger", "Dagger"], ["book", "Book"], ["banner", "Banner"], ["chalice", "Chalice"]];
 
 // What the card calls the weapon in a slot.
 const kindOf = model => (KINDS.find(([word]) => stem(model).includes(word)) || [null, "Weapon"])[1];
 
 export class AdjustTab {
   constructor(studio) {
-    // `picking` is the slot whose model picker is open, `scope` where a swap goes ("form" or "weapon"), `fine` the slots showing the y and z
+    // `picking` is the slot whose model picker is open, `fine` the slots showing the y and z
     // sliders. `twin` caches the vanilla equivalent's models, `previews` the exported preview models, `loading` and `failed` each slot's preview.
-    this.studio = studio; this.picking = null; this.scope = "form"; this.filter = ""; this.fine = new Set();
+    this.studio = studio; this.picking = null; this.filter = ""; this.fine = new Set();
     this.twin = new Map(); this.previews = new Map(); this.loading = new Set(); this.failed = new Map();
   }
 
@@ -131,20 +131,15 @@ export class AdjustTab {
   // Redraws the tab when it is open.
   refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "adjust") setTimeout(() => this.render(body)); }
 
-  // The model picker of one slot: whether the swap is for this form or every form of the weapon, the vanilla equivalent's models, and a search
-  // of every vanilla weapon model.
+  // The model picker of one slot: the vanilla equivalent's models, and a search of every vanilla weapon model. The pick is this form's own.
   picker(entry, f, slot, prop) {
-    const { esc } = window.UnitPanel, box = document.createElement("div"), weaponName = entry.name.split(" - ")[0], formName = entry.name.split(" - ")[1] || "";
+    const { esc } = window.UnitPanel, box = document.createElement("div");
     box.className = "picker";
-    box.innerHTML = `<div class="note">Use the new model on</div><div class="tools seg"><button data-scope="form" class="${this.scope === "form" ? "on" : ""}">${esc(formName)} only</button>
-      <button data-scope="weapon" class="${this.scope === "weapon" ? "on" : ""}">every ${esc(weaponName)} form</button></div>
-      <div class="twin note">Loading the vanilla equivalent's models...</div>
+    box.innerHTML = `<div class="twin note">Loading the vanilla equivalent's models...</div>
       <input class="attrSearch" placeholder="Search the game's weapon models (staff, tzeentch, whip...)" value="${esc(this.filter)}"><div class="hits"></div>`;
     const choose = model => {
-      const path = this.scope === "form" ? `weapons.${f.weapon}.forms.${f.mount}.props.${slot}` : `weapons.${f.weapon}.props.${slot}`;
-      this.studio.edits.registry[path] = [prop[0], model, prop[2] || ""]; this.picking = null; this.studio.changed(); this.applyLive(); this.refresh();
+      this.studio.edits.registry[`weapons.${f.weapon}.forms.${f.mount}.props.${slot}`] = [prop[0], model, prop[2] || ""]; this.picking = null; this.studio.changed(); this.applyLive(); this.refresh();
     };
-    box.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { this.scope = b.dataset.scope; box.querySelectorAll("[data-scope]").forEach(x => x.classList.toggle("on", x === b)); });
     this.twinProps(entry).then(list => {
       const vanilla = entry.versus && this.studio.manifest.panels && this.studio.manifest.panels[entry.versus], twin = box.querySelector(".twin");
       twin.innerHTML = list.length ? `<div>${esc(vanilla ? vanilla.name : "The vanilla equivalent")} holds:</div>` + list.map(([, , model]) =>
@@ -184,12 +179,10 @@ export class AdjustTab {
     return this.twin.get(side.model);
   }
 
-  // Where a slot's model comes from, in words.
+  // Whether a slot's swap is saved yet, in words.
   origin(f, slot, pending) {
-    const p = { ...this.studio.savedRegistry, ...this.studio.edits.registry }, own = `weapons.${f.weapon}.forms.${f.mount}.props.${slot}`;
-    const saved = !(own in this.studio.edits.registry) && !(`weapons.${f.weapon}.props.${slot}` in this.studio.edits.registry);
-    if (!pending) return f.prop_overrides.includes(slot) ? "This form's own model." : "";
-    return `${own in p ? "This form only" : "Every form of the weapon"}. ${saved ? "Saved: Rebuild to put it in the mod." : "Not saved yet."}`;
+    if (!pending) return "";
+    return `weapons.${f.weapon}.forms.${f.mount}.props.${slot}` in this.studio.edits.registry ? "Not saved yet." : "Saved: Rebuild to put it in the mod.";
   }
 
   // Builds the tab: a card per weapon slot, then his hands.
