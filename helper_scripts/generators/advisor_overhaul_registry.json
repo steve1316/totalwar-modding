@@ -76,6 +76,7 @@
    "name": "Staff and Sword",
    "description": "A walking staff for his spells and a plain Imperial blade for anything that gets too close.",
    "icon": "wh3_dlc27_item_abilities_staff_of_the_masque.png",
+   "picker_icon": "ui/campaign ui/skills/item_weapon.png",
    "shield": "none",
    "props": {
     "weapon_2": [
@@ -105,6 +106,7 @@
     "pegasus": "cam_hu1_empire_hr1_warhorse_lance_sword_shield"
    },
    "icon": "wh_dlc07_lord_abilities_lions_shield.png",
+   "picker_icon": "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png",
    "shield": "wh_missile_block_35_metal",
    "props": {
     "weapon_2": [
@@ -130,6 +132,7 @@
    "name": "On Foot",
    "description": "He walks, as he always has.",
    "icon": "ui/campaign ui/mounts/mount_none.png",
+   "picker_icon": "ui/campaign ui/skills/character_bonus_vs_infantry.png",
    "ancillary_type": "wh_main_anc_mount_warhorse",
    "skill_icon": "character_movement.png"
   },
@@ -139,6 +142,7 @@
    "template": "wh2_pro07_emp_cha_wizard_death_3",
    "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
    "icon": "ui/campaign ui/mounts/mount_barded_warhorse.png",
+   "picker_icon": "ui/campaign ui/skills/mount_barded_warhorse.png",
    "ancillary_type": "wh_main_anc_mount_barded_warhorse",
    "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword"
   },
@@ -148,6 +152,7 @@
    "template": "wh2_pro07_emp_cha_wizard_death_2",
    "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
    "icon": "ui/campaign ui/mounts/mount_imperial_pegasus.png",
+   "picker_icon": "ui/campaign ui/skills/mount_imperial_pegasus.png",
    "ancillary_type": "wh_main_anc_mount_imperial_pegasus",
    "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword"
   },
@@ -157,6 +162,7 @@
    "template": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc",
    "template_foot": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze",
    "icon": "ui/campaign ui/mounts/mount_disc_of_tzeentch.png",
+   "picker_icon": "ui/campaign ui/skills/mount_disc_of_tzeentch.png",
    "ancillary_type": "wh3_main_anc_mount_disc_of_tzeentch",
    "campaign_rider_set": "cam_hu1_pr8_amethyst_staff_and_sword",
    "variant_props": {

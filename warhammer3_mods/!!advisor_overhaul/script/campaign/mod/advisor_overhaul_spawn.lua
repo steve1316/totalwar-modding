@@ -10,9 +10,6 @@
 --- The Advisor's agent type.
 local AGENT_TYPE = "wizard"
 
---- The Advisor's agent subtype.
-local SUBTYPE = "advisor_overhaul_advisor"
-
 --- Prefix of every log line and saved value.
 local TAG = "advisor_overhaul_spawn"
 
@@ -39,17 +36,11 @@ local function done_key(faction_key)
 	return TAG .. "_done_" .. faction_key
 end
 
---- Whether the faction already has an Advisor.
+--- Whether the faction already has an Advisor. Uses the loadout script's listing, read when called since script load order is not promised.
 --- @param faction FACTION_SCRIPT_INTERFACE The faction.
 --- @returns boolean True when one of its characters is an Advisor.
 local function has_advisor(faction)
-	local characters = faction:character_list()
-	for i = 0, characters:num_items() - 1 do
-		if characters:item_at(i):character_subtype_key() == SUBTYPE then
-			return true
-		end
-	end
-	return false
+	return #ADVISOR_OVERHAUL.faction_advisors(faction) > 0
 end
 
 --- A free spot next to the faction leader, or next to the home settlement when the leader is not on the map.
@@ -102,7 +93,8 @@ local function spawn_for(faction_key)
 		log(faction_key .. ": " .. how .. ", no Advisor spawned")
 		return
 	end
-	local advisor = cm:create_agent(faction_key, AGENT_TYPE, SUBTYPE, x, y, true)
+	-- The subtype comes from the generated data, read when called since script load order is not promised.
+	local advisor = cm:create_agent(faction_key, AGENT_TYPE, ADVISOR_OVERHAUL_RIGS.subtype, x, y, true)
 	if not advisor or advisor:is_null_interface() then
 		log(faction_key .. ": create_agent failed at " .. x .. "," .. y .. " (" .. how .. ")")
 		return
@@ -110,7 +102,7 @@ local function spawn_for(faction_key)
 	local lookup = cm:char_lookup_str(advisor)
 	cm:set_character_immortality(lookup, true)
 	cm:replenish_action_points(lookup)
-	local name = ADVISOR_OVERHAUL_RIGS and ADVISOR_OVERHAUL_RIGS.name
+	local name = ADVISOR_OVERHAUL_RIGS.name
 	if name then
 		cm:change_character_localised_name(advisor, name, "", "", "")
 	end

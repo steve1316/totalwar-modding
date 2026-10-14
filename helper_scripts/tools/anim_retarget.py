@@ -14,6 +14,8 @@ Bones only the target has keep their bind pose. Bones only the source has are dr
 import math
 from typing import Dict, Iterable, List, Optional, Tuple
 
+import numpy as np
+
 from tools.anim_file import Animation, Bone, Quat, Vec3
 
 # Bones whose translation is copied from the source as is.
@@ -65,13 +67,31 @@ def _qrot(q: Quat, v: Vec3) -> Vec3:
     return (x, y, z)
 
 
-def _compose(parent: Transform, local: Transform) -> Transform:
+def compose(parent: Transform, local: Transform) -> Transform:
+    """Places a local transform under its parent's world transform.
+
+    Args:
+        parent (Transform): The parent's world transform.
+        local (Transform): The transform relative to the parent.
+
+    Returns:
+        Transform: The world transform.
+    """
     rotation = _qnorm(_qmul(parent[0], local[0]))
     offset = _qrot(parent[0], local[1])
     return rotation, tuple(parent[1][k] + offset[k] for k in range(3))
 
 
-def _relative(anchor: Transform, world: Transform) -> Transform:
+def relative(anchor: Transform, world: Transform) -> Transform:
+    """The inverse of `compose`: a world transform seen from an anchor's world transform.
+
+    Args:
+        anchor (Transform): The anchor's world transform.
+        world (Transform): The world transform to express.
+
+    Returns:
+        Transform: The transform relative to the anchor.
+    """
     inverse = _qconj(anchor[0])
     return _qnorm(_qmul(inverse, world[0])), _qrot(inverse, tuple(world[1][k] - anchor[1][k] for k in range(3)))
 
@@ -87,15 +107,43 @@ def _blend(a: Transform, b: Transform, weight: float) -> Transform:
     return rotation, tuple(a[1][k] * (1 - weight) + b[1][k] * weight for k in range(3))
 
 
-def _world(anim: Animation, skeleton: Animation, frame: int) -> List[Transform]:
-    """World transforms of every bone of one frame, using the skeleton's bind pose for bones without data."""
+def world_pose(anim: Animation, skeleton: Animation, frame: int) -> List[Transform]:
+    """World transforms of every bone of one frame, using the skeleton's bind pose for bones without data.
+
+    Args:
+        anim (Animation): The animation.
+        skeleton (Animation): Its skeleton's bind pose.
+        frame (int): The frame index.
+
+    Returns:
+        List[Transform]: One world transform per bone.
+    """
     out: List[Transform] = []
     for index, bone in enumerate(anim.bones):
         rotation = anim.rotations[frame][index] or skeleton.rotations[0][index]
         translation = anim.translations[frame][index] or skeleton.translations[0][index]
         local = (_qnorm(rotation), translation)
-        out.append(local if bone.parent < 0 else _compose(out[bone.parent], local))
+        out.append(local if bone.parent < 0 else compose(out[bone.parent], local))
     return out
+
+
+def quat_matrix(quat: Quat, position: Vec3) -> np.ndarray:
+    """4x4 matrix (column vectors) from a rotation and a position.
+
+    Args:
+        quat (Quat): The rotation quaternion (x, y, z, w).
+        position (Vec3): The position.
+
+    Returns:
+        np.ndarray: The matrix.
+    """
+    x, y, z, w = quat
+    m = np.eye(4)
+    m[:3, :3] = [[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+                 [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+                 [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]]
+    m[:3, 3] = position
+    return m
 
 
 def _anchor_props(source: Animation, source_skeleton: Animation, target: Animation, target_skeleton: Animation) -> None:
@@ -105,7 +153,7 @@ def _anchor_props(source: Animation, source_skeleton: Animation, target: Animati
     props = [b.name for b in target.bones if b.name.startswith("be_prop_") and b.name not in FIXED_PROPS and b.name in source_index]
     anchors = [name for name in ANCHOR_BONES if name in source_index and name in target_index]
     frames = len(source.rotations)
-    source_worlds = [_world(source, source_skeleton, frame) for frame in range(frames)]
+    source_worlds = [world_pose(source, source_skeleton, frame) for frame in range(frames)]
 
     # One anchor per prop for the whole animation, so a prop never jumps between hands mid-swing.
     def mean_distance(prop: str, anchor: str) -> float:
@@ -118,20 +166,20 @@ def _anchor_props(source: Animation, source_skeleton: Animation, target: Animati
     held = {prop: min(math.dist(world[source_index[prop]][1], world[source_index[chosen[prop]]][1]) for world in source_worlds) for prop in props}
     for frame in range(frames):
         source_world = source_worlds[frame]
-        target_world = _world(target, target_skeleton, frame)
+        target_world = world_pose(target, target_skeleton, frame)
         for prop in props:
             s_prop, t_prop = source_index[prop], target_index[prop]
             if source.translations[frame][s_prop] is None or source.rotations[frame][s_prop] is None:
                 continue
             anchor = chosen[prop]
             prop_world = source_world[s_prop]
-            in_hand = _compose(target_world[target_index[anchor]], _relative(source_world[source_index[anchor]], prop_world))
-            on_root = _compose(target_world[target_index[RELEASE_ANCHOR]], _relative(source_world[source_index[RELEASE_ANCHOR]], prop_world))
+            in_hand = compose(target_world[target_index[anchor]], relative(source_world[source_index[anchor]], prop_world))
+            on_root = compose(target_world[target_index[RELEASE_ANCHOR]], relative(source_world[source_index[RELEASE_ANCHOR]], prop_world))
             gap = math.dist(prop_world[1], source_world[source_index[anchor]][1]) - held[prop]
             weight = min(1.0, max(0.0, (gap - RELEASE_START) / (RELEASE_END - RELEASE_START)))
             new_world = _blend(in_hand, on_root, weight)
             parent = target.bones[t_prop].parent
-            local = _relative(target_world[parent], new_world) if parent >= 0 else new_world
+            local = relative(target_world[parent], new_world) if parent >= 0 else new_world
             target.rotations[frame][t_prop] = local[0]
             target.translations[frame][t_prop] = local[1]
 

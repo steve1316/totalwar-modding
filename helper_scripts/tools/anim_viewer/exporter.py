@@ -13,17 +13,18 @@ from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
+from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
-from tools.anim_retarget import _world
-from tools.anim_viewer.models import AssetSource, _norm, export_model
+from tools.anim_retarget import world_pose
+from tools.anim_viewer.models import export_model
 from tools.glf_rebuild_animpack import AnimSet, load_slot_ids, parse_set, read_animpack
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
 
-# The viewer pages shipped next to this script: the gallery and the portrait camera preview.
-PAGES = [os.path.join(os.path.dirname(os.path.abspath(__file__)), name) for name in ("index.html", "portrait.html")]
+# The viewer files shipped next to this script: the gallery, the portrait camera preview and the model and animation loading they share.
+PAGES = [os.path.join(os.path.dirname(os.path.abspath(__file__)), name) for name in ("index.html", "portrait.html", "viewer_common.js")]
 
 # Slot id names.
 SLOT_IDS = "./schemas/anim_ids_warhammer_3.csv"
@@ -67,7 +68,7 @@ def export_anim(anim: Animation, skeleton: Animation) -> Tuple[bytes, float]:
     Returns:
         Tuple[bytes, float]: The int16 bytes (frames x bones x 7) and the position scale.
     """
-    world = np.array([[(*position, *rotation) for rotation, position in _world(anim, skeleton, frame)] for frame in range(len(anim.rotations))])
+    world = np.array([[(*position, *rotation) for rotation, position in world_pose(anim, skeleton, frame)] for frame in range(len(anim.rotations))])
     scale = max(float(np.abs(world[..., :3]).max()), 1e-4) / 32767
     out = np.empty(world.shape, np.int16)
     out[..., :3] = np.round(world[..., :3] / scale)
@@ -151,7 +152,7 @@ class Exporter:
         Raises:
             FileNotFoundError: When no folder or pack has it.
         """
-        data = self.assets.fetch([path]).get(_norm(path))
+        data = self.assets.fetch([path]).get(norm(path))
         if data is None:
             raise FileNotFoundError(path)
         return data
@@ -213,7 +214,7 @@ class Exporter:
         return self.models[key]
 
     def write(self) -> None:
-        """Writes the bundles, the manifest and the pages."""
+        """Writes the bundles, the manifest, the pages and their shared script."""
         for index, bundle in enumerate(self.bundles):
             with open(os.path.join(self.out, "anims", f"bundle_{index:02d}.bin"), "wb") as f:
                 f.write(bundle)

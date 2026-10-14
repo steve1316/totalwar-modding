@@ -86,6 +86,7 @@
 <script type="module">
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { animLoader, loadModel } from "./viewer_common.js";
 
 const $ = id => document.getElementById(id);
 const view = $("view");
@@ -136,76 +137,15 @@ new ResizeObserver(() => { view.style.bottom = bar.offsetHeight + "px"; resize()
 window.addEventListener("resize", () => { resize(); frameCamera(); });
 $("layout").onchange = () => { resize(); frameCamera(); };
 
-// Animation bundles: each bone of each frame is 7 int16 values (position * scale, quaternion * 32767).
-const bundles = new Map(), anims = new Map();
-function getBundle(i) {
-  if (!bundles.has(i)) bundles.set(i, fetch(manifest.bundles[i]).then(r => { if (!r.ok) throw new Error(r.status); return r.arrayBuffer(); }));
-  return bundles.get(i);
-}
-async function getAnim(id) {
-  if (id === undefined || id === null) return null;
-  if (!anims.has(id)) anims.set(id, (async () => {
-    const a = manifest.anims[id], rig = manifest.rigs[a.rig], buffer = await getBundle(a.bundle);
-    const raw = new Int16Array(buffer, a.offset, a.frames * rig.length * 7), data = new Float32Array(raw.length);
-    for (let i = 0; i < raw.length; i += 7) {
-      for (let k = 0; k < 3; k++) data[i + k] = raw[i + k] * a.scale;
-      for (let k = 3; k < 7; k++) data[i + k] = raw[i + k] / 32767;
-    }
-    return { bones: rig, fps: a.fps, frames: a.frames, data, index: new Map(rig.map((b, i) => [b[0], i])) };
-  })());
-  return anims.get(id);
-}
+// Animations, each decoded once.
+const getAnim = animLoader(manifest);
 
-// Skinned models, loaded once each. Bones are flat children of the model group and get world transforms straight from the animation.
+// Models with their props, loaded once each.
 const models = new Map();
 function getModel(url) {
   if (!models.has(url)) models.set(url, loadModel(url).catch(e => { console.error("model", url, e); return null; }));
   return models.get(url);
 }
-async function loadModel(url) {
-  const doc = await (await fetch(url)).json();
-  const buffer = await (await fetch(url.replace(/[^/]+$/, doc.bin))).arrayBuffer();
-  const bones = doc.bones.map(name => { const b = new THREE.Bone(); b.name = name; return b; });
-  const inverses = doc.inverse_bind.map(m => new THREE.Matrix4().fromArray(m));
-  // Start every bone at its bind pose.
-  inverses.forEach((m, i) => new THREE.Matrix4().copy(m).invert().decompose(bones[i].position, bones[i].quaternion, bones[i].scale));
-  const skeleton = new THREE.Skeleton(bones, inverses);
-  const group = new THREE.Group();
-  bones.forEach(b => group.add(b));
-  const loader = new THREE.TextureLoader(), textures = new Map();
-  for (const m of doc.meshes) {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(buffer, m.position, m.count * 3), 3));
-    g.setAttribute("normal", new THREE.BufferAttribute(new Float32Array(buffer, m.normal, m.count * 3), 3));
-    g.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(buffer, m.uv, m.count * 2), 2));
-    g.setIndex(new THREE.BufferAttribute(new Uint16Array(buffer, m.index, m.index_count), 1));
-    const mat = new THREE.MeshLambertMaterial({ color: m.texture ? 0xffffff : 0x9a9aa2, side: THREE.DoubleSide });
-    if (m.texture) {
-      if (!textures.has(m.texture)) {
-        const t = loader.load(url.replace(/[^/]+$/, m.texture)); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; textures.set(m.texture, t);
-      }
-      mat.map = textures.get(m.texture);
-      if (m.alpha) mat.alphaTest = 0.5;
-    }
-    let mesh;
-    if (m.skinned) {
-      g.setAttribute("skinIndex", new THREE.BufferAttribute(new Uint16Array(buffer, m.skin_index, m.count * 4), 4));
-      g.setAttribute("skinWeight", new THREE.BufferAttribute(new Float32Array(buffer, m.skin_weight, m.count * 4), 4));
-      mesh = new THREE.SkinnedMesh(g, mat);
-      mesh.bind(skeleton, new THREE.Matrix4());
-      group.add(mesh);
-    } else {
-      // Props sit in the local space of their attach bone.
-      mesh = new THREE.Mesh(g, mat);
-      const bone = bones[doc.bones.indexOf(m.attach)];
-      (bone || group).add(mesh);
-    }
-    mesh.name = m.slot;
-    mesh.frustumCulled = false;
-  }
-  return { group, bones, missing: doc.missing };
-}
-
 // One side: bone lines, joints, prop gizmos, disc ring and the optional model, all driven by the current animation.
 class Rig {
   constructor(side) {

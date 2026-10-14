@@ -1,7 +1,7 @@
 """Export a source animation set and its retargeted copy for the viewer, and serve it.
 
 Pairs the two sets slot by slot and writes them as one comparison entry (see `tools.anim_viewer.exporter`). All URLs are relative, so the folder
-can also be hosted as static files. For the Advisor unit gallery use `python -m tools.anim_viewer.gallery`.
+can also be hosted as static files. For the Advisor unit gallery use `python -m generators.advisor_overhaul_gallery`.
 
 Usage (from helper_scripts):
     python -m tools.anim_viewer --source-set <source .bin> --source-root <folder of source .anim files>
@@ -17,8 +17,8 @@ import functools
 import http.server
 import sys
 
+from core.asset_source import AssetSource
 from tools.anim_viewer.exporter import Exporter, compare_entry, load_set
-from tools.anim_viewer.models import AssetSource
 
 
 def serve(folder: str, port: int, host: str = "localhost") -> None:

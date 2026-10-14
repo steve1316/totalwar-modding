@@ -28,8 +28,6 @@ FORMAT_CINEMATIC = 4
 
 # Texture type ids used in the rmv2 material header.
 TEXTURE_DIFFUSE = 0
-TEXTURE_NORMAL = 1
-TEXTURE_MASK = 3
 TEXTURE_BASE_COLOUR = 27
 
 # File header: magic, version, lod count, 128-byte skeleton name.

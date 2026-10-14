@@ -14,28 +14,26 @@ match, and every other bone keeps its vertices in place (moving the 9-64 cm robe
 
 The hoodless head drops the hood, which is its own piece of the head mesh (no shared vertices, its own texture islands). A full scalp and the
 hair cards sit under it. The vanilla files are read and written with `tools.rmv2_file`, which keeps every other byte, and the models point at the
-vanilla Advisor's materials and textures. Run it before `generators.advisor_overhaul`.
+vanilla Advisor's materials and textures. The vanilla files come through `core.asset_source`, which caches pack listings and extracts. Run it
+before `generators.advisor_overhaul`.
 
 Usage:
     python -m generators.advisor_overhaul_model [--preview]
 
-`--preview` also writes the body without the arm and leg move, plus a variant using it, into the anim viewer gallery's preview folder.
+`--preview` also writes the body without the arm and leg move, plus a variant using it, into the Advisor gallery's preview folder.
 """
 
 import argparse
 import os
 import re
-import shutil
 import sys
 from typing import Dict, List, Tuple
 
 import numpy as np
 
-from core.utilities import run_rpfm_cli
+from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
-from tools.anim_retarget import _world
-from tools.anim_viewer.models import _quat_matrix
-from tools.glf_rebuild_animpack import VANILLA_DATA_DIR
+from tools.anim_retarget import quat_matrix, world_pose
 from tools.rmv2_file import Mesh, read_rmv2, set_attachment_points, set_positions, set_skin, write_rmv2
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,30 +43,30 @@ from tools.rmv2_file import Mesh, read_rmv2, set_attachment_points, set_position
 # The mod source folder.
 MOD = "../warhammer3_mods/!!advisor_overhaul"
 
-# Where the vanilla files are extracted to while building.
-EXTRACT = "./temp/advisor_overhaul_model"
+# The vanilla packs holding the skeletons and models below.
+VANILLA_PACKS = re.compile(r"^(anim2|variants|variants4)\.pack$")
 
-# The anim viewer gallery's preview folder, written by `--preview`.
+# The Advisor gallery's preview folder, written by `--preview`. Each variant mesh definition in it becomes a "Preview: <name>" entry.
 PREVIEWS = "./temp/anim_viewer_gallery_previews"
 
 # The vanilla skeletons: the Advisor's own and the one the mod's hero uses.
-SOURCE_SKELETON = ("anim2.pack", "animations/skeletons/advisor01.anim")
-TARGET_SKELETON = ("anim2.pack", "animations/skeletons/humanoid01.anim")
+SOURCE_SKELETON = "animations/skeletons/advisor01.anim"
+TARGET_SKELETON = "animations/skeletons/humanoid01.anim"
 
 # A vanilla humanoid01 mesh whose attachment points (one per humanoid01 bone) the new models copy: the Grey Wizard body.
-POINTS_MODEL = ("variants4.pack", "variantmeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/body/emp_grey_wizard_body_01.rigid_model_v2")
+POINTS_MODEL = "variantmeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/body/emp_grey_wizard_body_01.rigid_model_v2"
 
 # Folder of the vanilla Advisor's materials.
 MATERIALS = "VariantMeshes/wh_variantmodels/hu1/misc/misc_advisor/materials"
 
-# Each model built: output name -> (pack, vanilla model, material per mesh part, drop the hood).
+# Each model built: output name -> (vanilla model, material per mesh part, drop the hood).
 MODELS = {
-    "advisor_overhaul_body_01": ("variants.pack", "variantmeshes/wh_variantmodels/ad1/misc/misc_advisor_body_01_ad1.rigid_model_v2",
+    "advisor_overhaul_body_01": ("variantmeshes/wh_variantmodels/ad1/misc/misc_advisor_body_01_ad1.rigid_model_v2",
                                  [f"{MATERIALS}/misc_advisor_body_01_weighted4_alpha_off.xml.material"], False),
-    "advisor_overhaul_head_01": ("variants.pack", "variantmeshes/wh_variantmodels/ad1/misc/misc_advisor_head_01_ad1.rigid_model_v2",
+    "advisor_overhaul_head_01": ("variantmeshes/wh_variantmodels/ad1/misc/misc_advisor_head_01_ad1.rigid_model_v2",
                                  [f"{MATERIALS}/misc_advisor_head_01_weighted4_alpha_off.xml.material",
                                   f"{MATERIALS}/misc_advisor_head_01_weighted4_alpha_on.xml.material"], False),
-    "advisor_overhaul_head_01_hoodless": ("variants.pack", "variantmeshes/wh_variantmodels/ad1/misc/misc_advisor_head_01_ad1.rigid_model_v2",
+    "advisor_overhaul_head_01_hoodless": ("variantmeshes/wh_variantmodels/ad1/misc/misc_advisor_head_01_ad1.rigid_model_v2",
                                           [f"{MATERIALS}/misc_advisor_head_01_weighted4_alpha_off.xml.material",
                                            f"{MATERIALS}/misc_advisor_head_01_weighted4_alpha_on.xml.material"], True),
 }
@@ -102,29 +100,6 @@ MOVED_BONES = r"^(upperarm|lowerarm|hand|finger|thumb|upperleg|lowerleg|foot|toe
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Helpers
-
-
-def extract(files: List[Tuple[str, str]]) -> Dict[str, bytes]:
-    """Extracts vanilla files into `EXTRACT`.
-
-    Args:
-        files (List[Tuple[str, str]]): (pack name, game path) pairs.
-
-    Returns:
-        Dict[str, bytes]: Contents by game path.
-
-    Raises:
-        SystemExit: When a file is not in its pack.
-    """
-    out: Dict[str, bytes] = {}
-    for pack, path in files:
-        target = os.path.join(EXTRACT, path)
-        if not os.path.exists(target):
-            run_rpfm_cli(["pack", "extract", "--pack-path", os.path.join(VANILLA_DATA_DIR, pack), "--file-path", f"{path};{EXTRACT}"], capture_output=True)
-        if not os.path.exists(target):
-            sys.exit(f"{path} is not in {pack}")
-        out[path] = open(target, "rb").read()
-    return out
 
 
 def quantise(weights: np.ndarray) -> np.ndarray:
@@ -166,9 +141,9 @@ class Rig:
     def __init__(self, source: Animation, target: Animation):
         self.source, self.target = source, target
         names = {b.name: i for i, b in enumerate(target.bones)}
-        source_world, target_world = _world(source, source, 0), _world(target, target, 0)
-        source_bind = [_quat_matrix(q, p) for q, p in source_world]
-        target_bind = [_quat_matrix(q, p) for q, p in target_world]
+        source_world, target_world = world_pose(source, source, 0), world_pose(target, target, 0)
+        source_bind = [quat_matrix(q, p) for q, p in source_world]
+        target_bind = [quat_matrix(q, p) for q, p in target_world]
 
         def gap(index: int) -> float:
             return float(np.linalg.norm(np.subtract(source_world[index][1], target_world[names[source.bones[index].name]][1])))
@@ -327,10 +302,10 @@ def write_preview(rig: Rig, files: Dict[str, bytes]) -> None:
 
     Args:
         rig (Rig): The bone map and moves.
-        files (Dict[str, bytes]): The extracted vanilla files.
+        files (Dict[str, bytes]): The vanilla files by normalised path.
     """
-    pack, source, materials, _ = MODELS["advisor_overhaul_body_01"]
-    data, _ = rerig(files[source], rig, files[POINTS_MODEL[1]], False, move=False)
+    source, materials, _ = MODELS["advisor_overhaul_body_01"]
+    data, _ = rerig(files[norm(source)], rig, files[norm(POINTS_MODEL)], False, move=False)
     folder = f"{OUTPUT}_preview"
     write_model(PREVIEWS, folder, "advisor_overhaul_body_01_unmoved", data, materials)
     variant = os.path.join(MOD, "variantmeshes", "variantmeshdefinitions", "advisor_overhaul_staff_and_sword.variantmeshdefinition")
@@ -346,14 +321,14 @@ def build(preview: bool) -> None:
     Args:
         preview (bool): Also write the unmoved body preview for the gallery.
     """
-    files = extract([SOURCE_SKELETON, TARGET_SKELETON, POINTS_MODEL] + [(pack, source) for pack, source, _, _ in MODELS.values()])
-    rig = Rig(read_anim(files[SOURCE_SKELETON[1]]), read_anim(files[TARGET_SKELETON[1]]))
+    files = AssetSource([], [], VANILLA_PACKS).fetch_all([SOURCE_SKELETON, TARGET_SKELETON, POINTS_MODEL] + [source for source, _, _ in MODELS.values()])
+    rig = Rig(read_anim(files[norm(SOURCE_SKELETON)]), read_anim(files[norm(TARGET_SKELETON)]))
     print("bind gaps over 1 cm of bones both skeletons have:")
     for name, gap in rig.gaps:
         if gap > 0.01:
             print(f"  {name:>24} {gap * 100:6.2f} cm")
-    for name, (pack, source, materials, hoodless) in MODELS.items():
-        data, totals = rerig(files[source], rig, files[POINTS_MODEL[1]], hoodless)
+    for name, (source, materials, hoodless) in MODELS.items():
+        data, totals = rerig(files[norm(source)], rig, files[norm(POINTS_MODEL)], hoodless)
         write_model(MOD, OUTPUT, name, data, materials)
         print(f"wrote {name} ({len(data)} bytes)")
         for (source_bone, target_bone), weight in sorted(totals.items(), key=lambda item: -item[1]):
@@ -361,10 +336,9 @@ def build(preview: bool) -> None:
                 print(f"  {source_bone:>28} -> {target_bone:<20} {weight:8.1f}")
     if preview:
         write_preview(rig, files)
-    shutil.rmtree(EXTRACT, ignore_errors=True)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--preview", action="store_true", help="also write the unmoved body preview for the anim viewer gallery")
+    parser.add_argument("--preview", action="store_true", help="also write the unmoved body preview for the Advisor gallery")
     build(parser.parse_args().preview)

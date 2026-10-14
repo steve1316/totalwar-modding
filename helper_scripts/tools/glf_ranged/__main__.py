@@ -19,7 +19,7 @@ from dataclasses import asdict
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Dict
 
-from core.utilities import clear_temp_root, setup_script_logging
+from core.utilities import clear_temp_root, game_running, setup_script_logging
 from tools.glf_ranged import catalog, generate
 
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
@@ -70,16 +70,6 @@ def load_state() -> None:
     CARDS.clear()
     CARDS.update({row.key: os.path.join(catalog.CARDS_DIR, row.card) for row in built.units if row.card})
     logging.info(f"Catalog ready with {len(built.units)} units, {len(CARDS)} with card art.")
-
-
-def game_running() -> bool:
-    """Tell whether Warhammer 3 is running, which keeps its packs locked.
-
-    Returns:
-        True when `Warhammer3.exe` is in the task list.
-    """
-    tasks = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Warhammer3.exe"], capture_output=True, text=True).stdout
-    return "warhammer3.exe" in tasks.lower()
 
 
 def apply_selection(body: Dict) -> Dict:

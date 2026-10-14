@@ -12,31 +12,20 @@ import json
 import os
 import re
 import xml.etree.ElementTree as ElementTree
-from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass, field
-from typing import Dict, Iterable, List, Optional, Tuple
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 from PIL import Image
 
-from core.utilities import run_rpfm_cli
+from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation
-from tools.anim_retarget import _world
-from tools.glf_rebuild_animpack import VANILLA_DATA_DIR
+from tools.anim_retarget import quat_matrix, world_pose
 from tools.rmv2_file import FORMAT_STATIC, TEXTURE_BASE_COLOUR, TEXTURE_DIFFUSE, read_material_xml, read_rmv2, read_wsmodel
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
-
-# Cache of pack listings and extracted files, shared between runs.
-CACHE_DIR = "./_diag/anim_viewer_cache"
-
-# Vanilla packs searched for models and textures.
-VANILLA_PACK_PATTERN = re.compile(r"^(variants|models|warmachines|commontextures|data\.pack)")
-
-# Files per rpfm extract call (Windows command-line limit).
-EXTRACT_BATCH = 20
 
 # Largest texture side kept in the viewer.
 MAX_TEXTURE = 1024
@@ -68,121 +57,6 @@ class Part:
     attach: Optional[str] = None
 
 
-@dataclass
-class AssetSource:
-    """Looks files up in loose folders, then mod packs, then the vanilla packs, and extracts them on demand."""
-
-    # Loose folders searched first.
-    folders: List[str]
-    # Packs searched next, in order.
-    packs: List[str]
-    # Lowercase path to (pack path, path as the pack spells it).
-    index: Dict[str, Tuple[str, str]] = field(default_factory=dict)
-    # Lowercase path to a file in the loose folders.
-    loose: Dict[str, str] = field(default_factory=dict)
-
-    def __post_init__(self):
-        for folder in reversed(self.folders):
-            for root, _, names in os.walk(folder):
-                for name in names:
-                    full = os.path.join(root, name)
-                    self.loose[_norm(os.path.relpath(full, folder))] = full
-        vanilla = sorted(os.path.join(VANILLA_DATA_DIR, n) for n in os.listdir(VANILLA_DATA_DIR) if n.endswith(".pack") and VANILLA_PACK_PATTERN.match(n))
-        packs = self.packs + vanilla
-        with ThreadPoolExecutor(8) as pool:
-            listings = list(pool.map(_list_pack, packs))
-        for pack, paths in zip(packs, listings):
-            for path in paths:
-                self.index.setdefault(path.lower(), (pack, path))
-
-    def fetch(self, paths: Iterable[str]) -> Dict[str, bytes]:
-        """Reads files by game path, extracting from packs in batches.
-
-        Args:
-            paths (Iterable[str]): Game paths, any case and slash style.
-
-        Returns:
-            Dict[str, bytes]: Contents by the normalised (lowercase, forward slash) path. Missing files are left out.
-        """
-        found: Dict[str, bytes] = {}
-        wanted: Dict[str, List[Tuple[str, str]]] = {}
-        for raw in paths:
-            path = _norm(raw)
-            if not path or path in found:
-                continue
-            if path in self.loose:
-                found[path] = open(self.loose[path], "rb").read()
-                continue
-            if path not in self.index:
-                continue
-            pack, spelled = self.index[path]
-            target = os.path.join(_pack_cache(pack), spelled)
-            if os.path.exists(target):
-                found[path] = open(target, "rb").read()
-            else:
-                wanted.setdefault(pack, []).append((path, spelled))
-        for pack, items in wanted.items():
-            dest = _pack_cache(pack)
-            for start in range(0, len(items), EXTRACT_BATCH):
-                args = ["pack", "extract", "--pack-path", pack]
-                for _, spelled in items[start:start + EXTRACT_BATCH]:
-                    args += ["--file-path", f"{spelled};{dest}"]
-                run_rpfm_cli(args, capture_output=True)
-            for path, spelled in items:
-                target = os.path.join(dest, spelled)
-                if os.path.exists(target):
-                    found[path] = open(target, "rb").read()
-        return found
-
-
-# //////////////////////////////////////////////////////////////////////////////////////////////////
-# //////////////////////////////////////////////////////////////////////////////////////////////////
-# Helpers
-
-
-def _norm(path: str) -> str:
-    """Normalises a game path: lowercase, forward slashes, no leading slash."""
-    return path.strip().replace("\\", "/").lstrip("/").lower()
-
-
-def _pack_cache(pack: str) -> str:
-    """Extract folder of one pack inside the cache."""
-    key = hashlib.sha1(os.path.abspath(pack).lower().encode()).hexdigest()[:10]
-    return os.path.join(CACHE_DIR, "files", f"{os.path.basename(pack)}_{key}")
-
-
-def _list_pack(pack: str) -> List[str]:
-    """Lists a pack's files, cached by pack size and modified time.
-
-    Args:
-        pack (str): Pack path.
-
-    Returns:
-        List[str]: File paths inside the pack.
-    """
-    stat = os.stat(pack)
-    cache = os.path.join(CACHE_DIR, "listings", f"{os.path.basename(pack)}_{stat.st_size}_{int(stat.st_mtime)}.txt")
-    if os.path.exists(cache):
-        return open(cache, encoding="utf-8").read().splitlines()
-    output = run_rpfm_cli(["pack", "list", "--pack-path", pack], capture_output=True, text=True).stdout
-    paths = [line.strip() for line in output.splitlines() if line.strip()]
-    os.makedirs(os.path.dirname(cache), exist_ok=True)
-    with open(cache, "w", encoding="utf-8") as f:
-        f.write("\n".join(paths))
-    return paths
-
-
-def _quat_matrix(quat, position) -> np.ndarray:
-    """4x4 matrix (column vectors) from a quaternion (x, y, z, w) and a position."""
-    x, y, z, w = quat
-    m = np.eye(4)
-    m[:3, :3] = [[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
-                 [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
-                 [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]]
-    m[:3, 3] = position
-    return m
-
-
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Variant resolution
@@ -204,7 +78,7 @@ def resolve_variant(variant: str, source: AssetSource) -> List[Part]:
     if os.path.exists(variant):
         text = open(variant, "rb").read()
     else:
-        text = source.fetch([variant]).get(_norm(variant))
+        text = source.fetch([variant]).get(norm(variant))
         if text is None:
             raise FileNotFoundError(variant)
     parts: Dict[str, Part] = {}
@@ -284,13 +158,13 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
 
     # Stage 1: models. A wsmodel names its rmv2 and the material XML of each part. A bare rmv2 uses the wsmodel next to it if any.
     for part in parts:
-        sibling = re.sub(r"\.rigid_model_v2$", ".wsmodel", _norm(part.model))
-        if sibling != _norm(part.model) and (sibling in source.index or sibling in source.loose):
+        sibling = re.sub(r"\.rigid_model_v2$", ".wsmodel", norm(part.model))
+        if sibling != norm(part.model) and (sibling in source.index or sibling in source.loose):
             part.model = sibling
     files = source.fetch(p.model for p in parts)
     geometry: Dict[str, Tuple[str, Dict[Tuple[int, int], str]]] = {}
     for part in parts:
-        path = _norm(part.model)
+        path = norm(part.model)
         if path not in files:
             missing.append(part.model)
         elif path.endswith(".wsmodel"):
@@ -302,19 +176,19 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
     # Stage 2: meshes and their base colour textures.
     meshes = []
     for part in parts:
-        path = _norm(part.model)
+        path = norm(part.model)
         if path not in geometry:
             continue
         rmv2_path, materials = geometry[path]
-        if _norm(rmv2_path) not in files:
+        if norm(rmv2_path) not in files:
             missing.append(rmv2_path)
             continue
-        model = read_rmv2(files[_norm(rmv2_path)], max_lods=1)
+        model = read_rmv2(files[norm(rmv2_path)], max_lods=1)
         for index, mesh in enumerate(model.lods[0]):
             texture, alpha_hint = None, False
             material_path = materials.get((0, index))
-            if material_path and _norm(material_path) in files:
-                slots = read_material_xml(files[_norm(material_path)].decode("utf-8-sig", "replace"))
+            if material_path and norm(material_path) in files:
+                slots = read_material_xml(files[norm(material_path)].decode("utf-8-sig", "replace"))
                 texture = next((slots[s] for s in BASE_COLOUR_SLOTS if slots.get(s)), None)
                 alpha_hint = "alpha_on" in material_path.lower()
             if not texture:
@@ -324,7 +198,7 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
 
     # Stage 3: write the buffers, images and the json.
     names = [b.name for b in skeleton.bones]
-    inverse = [np.linalg.inv(_quat_matrix(q, p)) for q, p in _world(skeleton, skeleton, 0)]
+    inverse = [np.linalg.inv(quat_matrix(q, p)) for q, p in world_pose(skeleton, skeleton, 0)]
     blob = bytearray()
     texture_files: Dict[str, Tuple[str, bool]] = {}
     entries = []
@@ -353,24 +227,24 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
             entry["skin_index"] = put(bones.astype("<u2"))
             entry["skin_weight"] = put(weights.astype("<f4"))
         entry["index"] = put(mesh.indices.astype("<u2"))
-        if texture and _norm(texture) in images:
-            if _norm(texture) not in texture_files:
+        if texture and norm(texture) in images:
+            if norm(texture) not in texture_files:
                 try:
                     # Images are named after their game path, so models sharing a texture share one file.
-                    stem = "tex_" + hashlib.sha1(_norm(texture).encode()).hexdigest()[:12]
+                    stem = "tex_" + hashlib.sha1(norm(texture).encode()).hexdigest()[:12]
                     done = [e for e in ("jpg", "png") if os.path.exists(os.path.join(folder, f"{stem}.{e}"))]
                     if done:
                         name, alpha = f"{stem}.{done[0]}", done[0] == "png"
                     else:
-                        data, ext, alpha = _texture_image(images[_norm(texture)])
+                        data, ext, alpha = _texture_image(images[norm(texture)])
                         name = f"{stem}.{ext}"
                         with open(os.path.join(folder, name), "wb") as f:
                             f.write(data)
-                    texture_files[_norm(texture)] = (name, alpha)
+                    texture_files[norm(texture)] = (name, alpha)
                 except Exception as error:
                     missing.append(f"{texture} ({error})")
-                    texture_files[_norm(texture)] = ("", False)
-            name, alpha = texture_files[_norm(texture)]
+                    texture_files[norm(texture)] = ("", False)
+            name, alpha = texture_files[norm(texture)]
             if name:
                 entry["texture"] = name
                 entry["alpha"] = alpha or alpha_hint

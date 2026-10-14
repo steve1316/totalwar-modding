@@ -10,24 +10,24 @@ Derived sets copy a vanilla `humanoid01` set under a new name with two fixes. Na
 sword-and-shield horse sets play foot casts in their rider cast slots, so the rider sinks into the mount). And the cast animations, which are
 staff-and-sword ones that put the shield on his back, get copies that hold the shield on his left hand the way his stand does.
 
+The vanilla files come through `core.asset_source`, which caches pack listings and extracts.
+
 Usage:
     python -m generators.advisor_overhaul_anims
 """
 
-import collections
 import copy
 import os
 import re
 import shutil
-import struct
 import sys
 from typing import Dict, List
 
-from core.utilities import run_rpfm_cli
+from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim, write_anim
-from tools.anim_retarget import Transform, _compose, _relative, _world, retarget
-from tools.glf_rebuild_animpack import (SCHEMAS_DIR, SLOT_IDS_FILE, VANILLA_DATA_DIR, AnimRef, list_vanilla_files, load_slot_ids, load_vanilla_sets,
-                                        parse_set, write_animpack, write_set)
+from tools.anim_retarget import Transform, compose, relative, retarget, world_pose
+from tools.glf_rebuild_animpack import (SCHEMAS_DIR, SLOT_IDS_FILE, AnimRef, Slot, load_slot_ids, load_vanilla_sets, pack_string, parse_set, write_animpack,
+                                        write_set)
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,8 +36,8 @@ from tools.glf_rebuild_animpack import (SCHEMAS_DIR, SLOT_IDS_FILE, VANILLA_DATA
 # The mod source folder.
 MOD = "../warhammer3_mods/!!advisor_overhaul"
 
-# Where vanilla animation files are extracted to while building.
-EXTRACT = "./temp/advisor_overhaul_anims"
+# The vanilla packs holding the animations, metas and skeletons, first match wins: anim.pack, anim2.pack, anim_3.pack and data.pack.
+VANILLA_PACKS = re.compile(r"^(anim.*|data)\.pack$")
 
 # The animpack every new set goes into, relative to the mod folder.
 ANIMPACK = "animations/database/battle/bin/advisor_overhaul.animpack"
@@ -79,37 +79,10 @@ PIN_ANCHOR = "hand_left"
 # Paths of `.anim` files named inside a meta.
 ANIM_PATH = re.compile(rb"animations/[\w/\.-]+?\.anim")
 
-# Most paths one rpfm call extracts. More overflows the Windows command line.
-BATCH = 20
-
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Build
-
-
-def extract(paths: List[str], files: Dict) -> None:
-    """Extracts vanilla files into the extract folder.
-
-    Args:
-        paths (List[str]): Pack paths in any case.
-        files (Dict): The vanilla file listing from `list_vanilla_files`.
-
-    Raises:
-        SystemExit: When a path is in no vanilla pack.
-    """
-    by_pack = collections.defaultdict(list)
-    for path in paths:
-        if path.lower() not in files:
-            raise SystemExit(f"{path} is in no vanilla pack")
-        pack, spelled = files[path.lower()]
-        by_pack[pack].append(spelled)
-    for pack, spelled in by_pack.items():
-        for start in range(0, len(spelled), BATCH):
-            args = ["pack", "extract", "--pack-path", f"{VANILLA_DATA_DIR}\\{pack}"]
-            for path in spelled[start:start + BATCH]:
-                args += ["--file-path", f"{path};{EXTRACT}"]
-            run_rpfm_cli(args, capture_output=True)
 
 
 def renamed_path(path: str, folder: str, prefix: str) -> str:
@@ -141,12 +114,53 @@ def repoint(data: bytes, renamed: Dict[str, str]) -> bytes:
         bytes: The changed meta.
     """
     for old, new in renamed.items():
-        old_bytes, new_bytes = old.encode(), new.encode()
-        data = data.replace(struct.pack("<H", len(old_bytes)) + old_bytes, struct.pack("<H", len(new_bytes)) + new_bytes)
+        data = data.replace(pack_string(old), pack_string(new))
     return data
 
 
-def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, prefix: str, files: Dict) -> bytes:
+def write_copies(name: str, anims: Dict[str, bytes], metas: Dict[str, bytes], folder: str, prefix: str, slots: List[Slot]) -> int:
+    """Writes a new set's animations into the mod folder, copies each meta that splices one of them with the path pointed at the copy, and points
+    the slots at the copies.
+
+    Args:
+        name (str): The new set's name, for errors.
+        anims (Dict[str, bytes]): Source animation path -> the new animation file.
+        metas (Dict[str, bytes]): Meta path -> the vanilla meta file, for every meta the slots name.
+        folder (str): Output folder, relative to the mod folder.
+        prefix (str): Short prefix marking the copies.
+        slots (List[Slot]): The slots whose references are pointed at the copies, changed in place.
+
+    Returns:
+        int: How many metas were copied.
+
+    Raises:
+        SystemExit: When two animations map to the same file name.
+    """
+    renamed: Dict[str, str] = {}
+    os.makedirs(os.path.join(MOD, folder), exist_ok=True)
+    for path, data in anims.items():
+        renamed[path] = renamed_path(path, folder, prefix)
+        with open(os.path.join(MOD, renamed[path]), "wb") as f:
+            f.write(data)
+    if len(set(renamed.values())) != len(renamed):
+        raise SystemExit(f"{name}: two animations map to the same file name")
+
+    # Only a meta that splices a copied animation needs a copy. The rest keep their vanilla path.
+    new_metas: Dict[str, str] = {}
+    for meta, data in metas.items():
+        changed = repoint(data, renamed)
+        if changed != data:
+            new_metas[meta] = f"{folder}/meta/{os.path.basename(meta)}"
+            os.makedirs(os.path.join(MOD, folder, "meta"), exist_ok=True)
+            with open(os.path.join(MOD, new_metas[meta]), "wb") as f:
+                f.write(changed)
+
+    for slot in slots:
+        slot.refs = [AnimRef(renamed.get(r.anim, r.anim), new_metas.get(r.meta, r.meta), r.sound) for r in slot.refs]
+    return len(new_metas)
+
+
+def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, prefix: str, assets: AssetSource) -> bytes:
     """Retargets one vanilla set and writes its animations and metas into the mod folder.
 
     Args:
@@ -155,7 +169,7 @@ def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, 
         source_skeleton (str): The vanilla set's skeleton.
         folder (str): Output folder for the retargeted files, relative to the mod folder.
         prefix (str): Short prefix marking the copies.
-        files (Dict): The vanilla file listing.
+        assets (AssetSource): The vanilla packs.
 
     Returns:
         bytes: The new set `.bin`.
@@ -164,40 +178,20 @@ def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, 
     anims = sorted({r.anim for slot in source.slots for r in slot.refs if r.anim})
     metas = sorted({r.meta for slot in source.slots for r in slot.refs if r.meta})
     skeletons = [f"animations/skeletons/{source_skeleton}.anim", f"animations/skeletons/{TARGET_SKELETON}.anim"]
-    extract(anims + metas + skeletons, files)
-    meta_data = {m: open(os.path.join(EXTRACT, m), "rb").read() for m in metas}
+    files = assets.fetch_all(anims + metas + skeletons)
+    meta_data = {m: files[norm(m)] for m in metas}
     spliced = sorted({p.decode() for data in meta_data.values() for p in ANIM_PATH.findall(data)} - set(anims))
-    extract(spliced, files)
+    files.update(assets.fetch_all(spliced))
 
-    def load(path: str):
-        return read_anim(open(os.path.join(EXTRACT, path), "rb").read())
+    def load(path: str) -> Animation:
+        return read_anim(files[norm(path)])
 
     source_bind, target_bind = load(skeletons[0]), load(skeletons[1])
-    renamed: Dict[str, str] = {}
-    for path in anims + spliced:
-        renamed[path] = renamed_path(path, folder, prefix)
-        data = write_anim(retarget(load(path), source_bind, target_bind, TARGET_SKELETON))
-        os.makedirs(os.path.join(MOD, folder), exist_ok=True)
-        with open(os.path.join(MOD, renamed[path]), "wb") as f:
-            f.write(data)
-    if len(set(renamed.values())) != len(renamed):
-        raise SystemExit(f"{name}: two animations map to the same file name")
-
-    new_metas: Dict[str, str] = {}
-    for meta, data in meta_data.items():
-        changed = repoint(data, renamed)
-        if changed == data:
-            continue
-        new_metas[meta] = f"{folder}/meta/{os.path.basename(meta)}"
-        os.makedirs(os.path.join(MOD, folder, "meta"), exist_ok=True)
-        with open(os.path.join(MOD, new_metas[meta]), "wb") as f:
-            f.write(changed)
-
+    retargeted = {path: write_anim(retarget(load(path), source_bind, target_bind, TARGET_SKELETON)) for path in anims + spliced}
     new = copy.deepcopy(source)
     new.name, new.skeleton = name, TARGET_SKELETON
-    for slot in new.slots:
-        slot.refs = [AnimRef(renamed.get(r.anim, r.anim), new_metas.get(r.meta, r.meta), r.sound) for r in slot.refs]
-    print(f"{name}: {len(new.slots)} slots, {len(anims)} animations + {len(spliced)} spliced retargeted, {len(new_metas)} metas repointed")
+    copied = write_copies(name, retargeted, meta_data, folder, prefix, new.slots)
+    print(f"{name}: {len(new.slots)} slots, {len(anims)} animations + {len(spliced)} spliced retargeted, {copied} metas repointed")
     return write_set(new)
 
 
@@ -218,13 +212,13 @@ def pin_prop(anim: Animation, skeleton: Animation, offset: Transform) -> None:
     prop, anchor = index[PIN_PROP], index[PIN_ANCHOR]
     parent = anim.bones[prop].parent
     for frame in range(len(anim.rotations)):
-        world = _world(anim, skeleton, frame)
-        pinned = _compose(world[anchor], offset)
-        local = _relative(world[parent], pinned) if parent >= 0 else pinned
+        world = world_pose(anim, skeleton, frame)
+        pinned = compose(world[anchor], offset)
+        local = relative(world[parent], pinned) if parent >= 0 else pinned
         anim.rotations[frame][prop], anim.translations[frame][prop] = local
 
 
-def build_derived(name: str, base_data: bytes, donor_data: bytes, folder: str, prefix: str, files: Dict, names: Dict[int, str]) -> bytes:
+def build_derived(name: str, base_data: bytes, donor_data: bytes, folder: str, prefix: str, assets: AssetSource, names: Dict[int, str]) -> bytes:
     """Copies a vanilla set, swaps in the donor's slots and pins the prop in its cast animations, writing the new animations into the mod folder.
 
     Args:
@@ -233,7 +227,7 @@ def build_derived(name: str, base_data: bytes, donor_data: bytes, folder: str, p
         donor_data (bytes): The vanilla set `.bin` whose `DONOR_SLOTS` replace the base's, or empty for none.
         folder (str): Output folder for the pinned animations, relative to the mod folder.
         prefix (str): Short prefix marking the copies.
-        files (Dict): The vanilla file listing.
+        assets (AssetSource): The vanilla packs.
         names (Dict[int, str]): Slot names by id.
 
     Returns:
@@ -271,41 +265,23 @@ def build_derived(name: str, base_data: bytes, donor_data: bytes, folder: str, p
     anims = sorted({r.anim for slot in pinned_slots for r in slot.refs if r.anim})
     metas = sorted({r.meta for slot in pinned_slots for r in slot.refs if r.meta})
     skeleton_path = f"animations/skeletons/{TARGET_SKELETON}.anim"
-    extract(sorted(set(anims + metas + [reference, skeleton_path])), files)
+    files = assets.fetch_all(sorted(set(anims + metas + [reference, skeleton_path])))
 
     def load(path: str) -> Animation:
-        return read_anim(open(os.path.join(EXTRACT, path), "rb").read())
+        return read_anim(files[norm(path)])
 
     skeleton = load(skeleton_path)
-    stand_world = _world(load(reference), skeleton, 0)
+    stand_world = world_pose(load(reference), skeleton, 0)
     index = {bone.name: i for i, bone in enumerate(skeleton.bones)}
-    offset = _relative(stand_world[index[PIN_ANCHOR]], stand_world[index[PIN_PROP]])
+    offset = relative(stand_world[index[PIN_ANCHOR]], stand_world[index[PIN_PROP]])
 
-    renamed: Dict[str, str] = {}
-    os.makedirs(os.path.join(MOD, folder), exist_ok=True)
+    pinned: Dict[str, bytes] = {}
     for path in anims:
         anim = load(path)
         pin_prop(anim, skeleton, offset)
-        renamed[path] = renamed_path(path, folder, prefix)
-        with open(os.path.join(MOD, renamed[path]), "wb") as f:
-            f.write(write_anim(anim))
-    if len(set(renamed.values())) != len(renamed):
-        raise SystemExit(f"{name}: two animations map to the same file name")
-
-    # Only a meta that splices the original animation needs a copy.
-    new_metas: Dict[str, str] = {}
-    for meta in metas:
-        data = open(os.path.join(EXTRACT, meta), "rb").read()
-        changed = repoint(data, renamed)
-        if changed != data:
-            new_metas[meta] = f"{folder}/meta/{os.path.basename(meta)}"
-            os.makedirs(os.path.join(MOD, folder, "meta"), exist_ok=True)
-            with open(os.path.join(MOD, new_metas[meta]), "wb") as f:
-                f.write(changed)
-
-    for slot in pinned_slots:
-        slot.refs = [AnimRef(renamed.get(r.anim, r.anim), new_metas.get(r.meta, r.meta), r.sound) for r in slot.refs]
-    print(f"{name}: {len(new.slots)} slots, {swapped} from the donor, {len(anims)} animations pinned to {PIN_ANCHOR}, {len(new_metas)} metas repointed")
+        pinned[path] = write_anim(anim)
+    copied = write_copies(name, pinned, {m: files[norm(m)] for m in metas}, folder, prefix, pinned_slots)
+    print(f"{name}: {len(new.slots)} slots, {swapped} from the donor, {len(anims)} animations pinned to {PIN_ANCHOR}, {copied} metas repointed")
     return write_set(new)
 
 
@@ -313,20 +289,16 @@ def build() -> None:
     """Builds every set in `SETS` and `DERIVED_SETS` into the mod's animpack."""
     vanilla = {os.path.basename(path)[:-4]: data for path, data in load_vanilla_sets().items() if path.startswith(SET_FOLDER) and path.endswith(".bin")}
     names = load_slot_ids(open(f"{SCHEMAS_DIR}/{SLOT_IDS_FILE}", encoding="utf-8").read())
-    files = list_vanilla_files()
-    shutil.rmtree(EXTRACT, ignore_errors=True)
+    assets = AssetSource([], [], VANILLA_PACKS)
     entries = []
-    try:
-        for name, (source, skeleton, folder, prefix) in SETS.items():
-            shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
-            data = build_set(name, vanilla[source], skeleton, folder, prefix, files)
-            entries.append((f"{SET_FOLDER}/{name}.bin", data))
-        for name, (base, donor, folder, prefix) in DERIVED_SETS.items():
-            shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
-            data = build_derived(name, vanilla[base], vanilla[donor] if donor else b"", folder, prefix, files, names)
-            entries.append((f"{SET_FOLDER}/{name}.bin", data))
-    finally:
-        shutil.rmtree(EXTRACT, ignore_errors=True)
+    for name, (source, skeleton, folder, prefix) in SETS.items():
+        shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
+        data = build_set(name, vanilla[source], skeleton, folder, prefix, assets)
+        entries.append((f"{SET_FOLDER}/{name}.bin", data))
+    for name, (base, donor, folder, prefix) in DERIVED_SETS.items():
+        shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
+        data = build_derived(name, vanilla[base], vanilla[donor] if donor else b"", folder, prefix, assets, names)
+        entries.append((f"{SET_FOLDER}/{name}.bin", data))
     os.makedirs(os.path.dirname(os.path.join(MOD, ANIMPACK)), exist_ok=True)
     with open(os.path.join(MOD, ANIMPACK), "wb") as f:
         f.write(write_animpack(entries))

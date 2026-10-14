@@ -301,16 +301,17 @@ staff shot.
     they keep it. A panel in the vanilla blocking list hides it at once.
   - Every check is one 300 ms `cm:real_callback`, replaced by any newer request. There is no polling. A selected general with the Advisor
     embedded is not handled. Clicking the Advisor's own hero card already fires `CharacterSelected` with his CQI (run3 log).
-- **Logging.** Every `CharacterSelected` logs CQI, subtype, faction, local Advisor and embedded. Every `PanelOpenedCampaign` / `PanelClosedCampaign`
-  logs its name and whether it hides the button. Every check logs one `loadout button shown ... at x,y (rule)` or `loadout button hidden: <reason>`
+- **Logging.** Every `CharacterSelected` logs CQI, subtype, faction, local Advisor and embedded. A `PanelOpenedCampaign` / `PanelClosedCampaign`
+  logs its name and whether it hides the button, but only for the character panel, `units_panel`, a panel that hides the button, or any panel
+  while the button is shown (trimmed 2026-10-13). Every check logs one `loadout button shown ... at x,y (rule)` or `loadout button hidden: <reason>`
   line. Checks started by clicks in the panel log only when the decision changes. `[untested]`
 - **Where it sits.** On the character panel it sits left of `character_context_parent > holder_br > bottom_buttons`, vertically centred on it, with
   draw priority the panel's plus 50 (at least 200). If that row cannot be read, it goes 420 px left of the panel's right edge and 120 px above its
   bottom. On the map it sits above the right end of `hud_campaign > info_panel_background`, with a screen fallback of 16 px from the left and
-  420 px above the bottom. The log names the rule used. `[untested]`
-- **Button inside vanilla rows (`INJECT_BUTTON`, on by default, 2026-10-13).** The button is made with `CreateComponent(name, square_medium_button)`
-  as a child of a vanilla row, and the row's layout places it. It is never moved, raised or made top-most. Setting `INJECT_BUTTON = false` brings
-  back the UI root button above. Both rows line it up in game. `[game]`
+  420 px above the bottom. The log names the rule used. Removed 2026-10-13: only the button inside vanilla rows below is left. `[untested]`
+- **Button inside vanilla rows (2026-10-13).** The button is made with `CreateComponent(name, square_medium_button)`
+  as a child of a vanilla row, and the row's layout places it. It is never moved, raised or made top-most. Both rows line it up in
+  game, so the UI root button above (`INJECT_BUTTON = false`) was removed. `[game]`
   - **Character panel:** `character_details_panel > character_context_parent > holder_br > bottom_buttons`. The row is a `HorizontalList`
     (`sizetocontent`, no gap, anchored right) of 55x55 `square_medium_button`s: `button_replace_general`, `button_event_feed`, `button_view_tree`,
     `button_rename`, `button_save_character`. Our button goes at the right end. Run2 already made a button here and clicked it with no error. `[data]`
@@ -428,9 +429,9 @@ staff shot.
   - The rigs use `turns_before_swap_allowed` 0.
   - A swap returns the old rig to the pool (`force_remove_ancillary(char, rig, true, true)`).
   - Pool sync, run after every apply: the pool holds one copy of each unlocked pair's rig that no Advisor wears, and no locked rig. A worn rig is
-    never removed from the faction. Each rig gets a log line with the faction item list count, read through `common.get_context_value` for the
-    log only.
-  - Reconcile, run at first tick, at turn start, on a weapon or mount skill, on `CharacterAncillaryGained` for a rig, and from a
+    never removed from the faction. Each sync logs one line naming the rigs it added or removed, or "no change". When several Advisors of a
+    faction are reconciled together, the pool is synced once afterwards.
+  - Reconcile, run at first tick (every human faction), at turn start (that faction's Advisors), on a weapon or mount skill, on `CharacterAncillaryGained` for a rig, and from a
     `advisor_overhaul_reconcile:<cqi>` UI trigger. Exactly one worn rig of an unlocked pair becomes his saved choice ("loadout taken from the
     worn rig"). No rig ("None"), a locked rig or several put back the saved pair, taking the pool copy first.
   - A click inside `ancillary_selector_mount` checks the worn rig 500 ms later, read only. If it no longer matches the saved pair, it sends the UI

@@ -10,29 +10,18 @@ each run. The mod source lives at `../warhammer3_mods/!!advisor_overhaul`. `--pa
 import argparse
 import logging
 import os
-import subprocess
 import sys
 
-from core.utilities import run_rpfm_cli, STEAM_LIBRARY_DRIVE
+from core.pipeline import SCHEMA_RON_PATH
+from core.utilities import STEAM_LIBRARY_DRIVE, game_running, run_rpfm_cli
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
 PACK_PATH = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\common\\Total War WARHAMMER III\\data\\!!advisor_overhaul.pack"
 MOD_SOURCE = "../warhammer3_mods/!!advisor_overhaul"
-SCHEMA_RON_PATH = "./schemas/schema_wh3.ron"
 
 # Top-level mod folders that should be packed. RESEARCH_NOTES.md is skipped.
 FOLDERS = ["db", "script", "text", "ui", "variantmeshes", "animations"]
-
-
-def game_running() -> bool:
-    """Checks whether Warhammer 3 is running, since it locks its data packs.
-
-    Returns:
-        bool: True when Warhammer3.exe is in the task list.
-    """
-    result = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Warhammer3.exe"], capture_output=True, text=True)
-    return "Warhammer3.exe" in result.stdout
 
 
 def main() -> int:

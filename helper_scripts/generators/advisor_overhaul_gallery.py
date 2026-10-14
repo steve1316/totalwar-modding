@@ -1,16 +1,17 @@
-"""Export the Advisor unit gallery for the animation viewer: every weapon and mount pair with its model, props, mount and animations.
+"""Export the Advisor Overhaul gallery for the animation viewer: every weapon and mount pair with its model, props, mount and animations.
 
-Each pair of the units registry becomes one entry. The rider uses the pair's land unit animation set and its variant (from the generated
+Each pair of the generator's registry becomes one entry. The rider uses the pair's land unit animation set and its variant (from the generated
 agent uniforms). A mounted pair also gets the mount from the land unit's `mount` key: the mount's own animation set and model. Rider slots are
 named `RIDER_<slot>` and play next to the mount's `<slot>`. Both animations are authored around the same origin, so the rider needs no attach
 bone. His default look comes first (on foot, and on the Pegasus), then the hoodless head, then every pair. A vanilla reference hero, the vanilla
-campaign Advisor on his own skeleton and the disc retarget comparison are added as extra entries. Any variant mesh definition left in `PREVIEWS`
-(with the models it needs under the same folder) becomes a preview entry, for trying looks without touching the mod. None are shown when it is empty.
+campaign Advisor on his own skeleton and a comparison for each retargeted set of `generators.advisor_overhaul_anims` are added as extra
+entries. Any variant mesh definition left in `PREVIEWS` (with the models it needs under the same folder) becomes a preview entry, for trying looks
+without touching the mod. None are shown when it is empty.
 The export also carries the data of `portrait.html`: his hooded and hoodless looks and a vanilla Grey Wizard in the porthole idle animation, with
 the registry's head camera, so the campaign portrait camera can be tuned without restarting the game.
 
 Usage (from helper_scripts):
-    python -u -m tools.anim_viewer.gallery [--out _diag/anim_viewer_next] [--serve 8767] [--host 127.0.0.1]
+    python -u -m generators.advisor_overhaul_gallery --out ./_diag/anim_viewer_next [--serve 8767] [--host 127.0.0.1]
 """
 
 import argparse
@@ -20,36 +21,30 @@ import os
 import sys
 from typing import Dict, List, Optional, Tuple
 
-from core.extract_cache import cached_pack_extract
-from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES, load_tsv_data
+from core.asset_source import VANILLA_DATA_DIR, AssetSource
+from core.utilities import extract_tsv_data, load_tsv_data
+from generators import advisor_overhaul_anims as anims
+from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, REGISTRY, pairs, uniform_key, unit_key
+from generators.advisor_overhaul_model import PREVIEWS
 from tools.anim_viewer.__main__ import serve
 from tools.anim_viewer.exporter import Exporter, compare_entry, first_refs
-from tools.anim_viewer.models import AssetSource
-from tools.glf_rebuild_animpack import VANILLA_DATA_DIR, AnimSet, load_vanilla_sets, parse_set, read_animpack
+from tools.glf_rebuild_animpack import AnimSet, load_vanilla_sets, parse_set, read_animpack
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
 
-# Generated mod folder and its animation pack.
-MOD = "../warhammer3_mods/!!advisor_overhaul"
-MOD_ANIMPACK = f"{MOD}/animations/database/battle/bin/advisor_overhaul.animpack"
-
-# The units registry: weapons, mounts and their animation sets.
-REGISTRY = "./generators/advisor_overhaul_registry.json"
-
-# Start of every unit and uniform key of the mod.
-PREFIX = "advisor_overhaul"
+# The mod's animation pack.
+MOD_ANIMPACK = f"{MOD}/{anims.ANIMPACK}"
 
 # Folder of animation set files inside packs.
-SET_FOLDER = "animations/database/battle/bin"
+SET_FOLDER = anims.SET_FOLDER
 
 # Vanilla packs holding the `.anim` files and skeletons.
 ANIM_PACKS = ("anim.pack", "anim2.pack", "anim_3.pack")
 
-# Vanilla tables read for mounts, variants and the reference units, and where they are extracted.
+# Vanilla tables read for mounts, variants and the reference units.
 VANILLA_TABLES = ("land_units_tables", "mounts_tables", "variants_tables", "unit_variants_tables")
-VANILLA_EXTRACT = "./temp/anim_viewer_gallery_db"
 
 # Slots exported for every unit. A mounted rider plays `RIDER_<slot>`.
 SLOTS = ["STAND", "WALK_1", "RUN_1", "CHARGE", "ATTACK_1", "ATTACK_2", "ATTACK_3", "ATTACK_4", "CAST_SPELL_FORWARD_SHORT", "CAST_SPELL_FORWARD_MEDIUM",
@@ -62,13 +57,14 @@ FLY_SLOTS = ["FLY_STAND", "FLY_WALK_1", "FLY_ATTACK_1"]
 REFERENCE_UNITS = {"wh_main_emp_cha_captain_0": "Vanilla: Empire Captain - Sword and Shield",
                    "wh2_pro07_emp_cha_wizard_death_3": "Vanilla: Amethyst Wizard - Barded Warhorse"}
 
-# The disc retarget comparison: the vanilla Tzeentch sorcerer's set and model against the Advisor's disc set.
-DISC_SOURCE_SET = "hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword"
-DISC_SOURCE_VARIANT = "variantmeshes/variantmeshdefinitions/dae_tze_chaos_sorcerer_disc.variantmeshdefinition"
-DISC_TARGET_SET = "hu1_advisor_overhaul_disc01_staff_and_sword"
+# Retarget comparisons: vanilla source set of a retargeted set -> (entry name, the vanilla model it is shown on). A set missing here is compared
+# without a source model.
+COMPARE_SOURCES = {"hu1c_wh3_dlc20_tzeentch_sorcerer_wm_disc01_staff_sword": (
+    "Disc retarget: Tzeentch sorcerer vs Advisor", "variantmeshes/variantmeshdefinitions/dae_tze_chaos_sorcerer_disc.variantmeshdefinition")}
 
-# The look checks: the slots of his default look on foot and mounted, the folder for the hoodless variant, and the vanilla campaign Advisor
-# (variant, skeleton and its animations by slot name).
+# The look checks: the mount of his mounted default look, the slots of his default look on foot and mounted, the folder for the hoodless variant,
+# and the vanilla campaign Advisor (variant, skeleton and its animations by slot name).
+LOOK_MOUNT = "pegasus"
 LOOK_SLOTS = ["STAND", "WALK_1", "RUN_1", "CAST_SPELL_FORWARD_SHORT", "CAST_SPELL_UP_LONG", "ATTACK_1"]
 LOOK_MOUNTED_SLOTS = ["STAND", "CAST_SPELL_FORWARD_SHORT", "FLY_STAND", "FLY_WALK_1"]
 LOOK_VARIANTS = "./temp/anim_viewer_gallery_looks"
@@ -78,20 +74,17 @@ ADVISOR_ANIMS = {"PORTHOLE_IDLE": "animations/battle/advisor01/porthole/ad1_port
                  "HARVEST_IDLE": "animations/cinematic/library/anim/advisor01/realm_win_igc/harvest/idle/advisor01_rwin_harvest_idle.anim",
                  "REVEAL_WALK": "animations/cinematic/library/anim/advisor01/realm_win_igc/reveal/walk/advisor01_rwin_reveal_walk.anim"}
 
-# Portrait camera preview: the porthole idle animation, the vanilla reference (label, variant, art set) and its head camera values.
+# Portrait camera preview: the porthole idle animation, the vanilla reference's label and the head camera fields shown. The reference's art set,
+# variant and camera come from the vanilla portrait entry kept in the generator's snapshot.
 PORTHOLE_ANIM = "animations/battle/humanoid01/unarmed/porthole/hu1_un_porthole_idle_01.anim"
-PORTRAIT_REFERENCE = ("Vanilla Grey Wizard", "variantmeshes/variantmeshdefinitions/emp_shadow_wizard_campaign_01.variantmeshdefinition",
-                      "wh_dlc05_art_set_emp_grey_wizard_01")
-PORTRAIT_REFERENCE_CAMERA = {"z": 1.0, "y": 0.03, "yaw": 0.0, "pitch": 0.0, "fov": 30.0}
+PORTRAIT_REFERENCE_LABEL = "Vanilla Grey Wizard"
+CAMERA_FIELDS = ("z", "y", "yaw", "pitch", "fov")
 
 # Head camera values tried in game, oldest first, with what each showed. The page offers them as presets.
 PORTRAIT_ROUNDS = [({"z": 1.0, "y": 0.05, "yaw": 0.0, "pitch": 0.0, "fov": 30.0}, "looked up at him"),
                    ({"z": 1.0, "y": 0.12, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}, "level, but small and low"),
                    ({"z": 0.8, "y": 0.06, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}, "better, face a bit low"),
                    ({"z": 0.8, "y": 0.03, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}, "face centred, slightly too close")]
-
-# Folder of throwaway preview variants (and any loose models they use). Each `.variantmeshdefinition` in it gets a "Preview: <name>" entry.
-PREVIEWS = "./temp/anim_viewer_gallery_previews"
 
 # Slots left out of the disc comparison to keep the export small: matched combat, portholes and all but the first death.
 COMPARE_SKIP = r"^(RIDER_)?(COMBAT_|PORTHOLE|PERSISTENT|STAND_NO_WEAPON|DEATH_(?!STAND_1$)|DEATH_SHOOT|KNOCKBACK|KNOCKDOWN|HIT_REACTION_STAND_[2-9])"
@@ -123,15 +116,12 @@ def read_table(folder: str, table: str) -> List[Dict[str, str]]:
 
 
 def vanilla_tables() -> Dict[str, List[Dict[str, str]]]:
-    """Extracts and reads the vanilla tables the gallery needs.
+    """Reads the vanilla tables the gallery needs, through the extract cache.
 
     Returns:
         Dict[str, List[Dict[str, str]]]: Rows by table.
     """
-    for table in VANILLA_TABLES:
-        if not os.path.isdir(os.path.join(VANILLA_EXTRACT, "db", table)):
-            cached_pack_extract(FILEPATH_TO_VANILLA_DATA_TABLES, f"db/{table}", VANILLA_EXTRACT)
-    return {table: read_table(VANILLA_EXTRACT, table) for table in VANILLA_TABLES}
+    return {table: load_tsv_data(f"{extract_tsv_data(table)}/db/{table}/data__.tsv")[0] for table in VANILLA_TABLES}
 
 
 def load_sets() -> Dict[str, AnimSet]:
@@ -275,8 +265,10 @@ def portrait_data(exporter: Exporter, registry: Dict, hooded: str, hoodless: Opt
     looks = [{"name": "Hooded", "model": exporter.model(hooded, "humanoid01")}]
     if hoodless:
         looks.append({"name": "Hoodless", "model": exporter.model(hoodless, "humanoid01")})
-    label, variant, art_set = PORTRAIT_REFERENCE
-    reference = {"name": label, "art_set": art_set, "model": exporter.model(variant, "humanoid01"), "camera": PORTRAIT_REFERENCE_CAMERA}
+    vanilla = json.load(open(DATA, encoding="utf-8"))["portraits"]["portholes"]
+    variant = variant_path(vanilla["variants"][0]["filename"])
+    camera = {field: vanilla["camera_settings_head"][field] for field in CAMERA_FIELDS}
+    reference = {"name": PORTRAIT_REFERENCE_LABEL, "art_set": vanilla["id"], "model": exporter.model(variant, "humanoid01"), "camera": camera}
     exporter.portrait = {"anim": exporter.anim(PORTHOLE_ANIM), "anim_path": PORTHOLE_ANIM, "camera": registry["portrait"]["camera_head"],
                          "looks": [look for look in looks if look["model"]], "reference": reference if reference["model"] else None,
                          "rounds": [{"camera": camera, "note": note} for camera, note in PORTRAIT_ROUNDS]}
@@ -301,28 +293,29 @@ def build(out: str) -> Exporter:
     packs = [os.path.join(VANILLA_DATA_DIR, p) for p in ANIM_PACKS]
     exporter = Exporter(out, AssetSource([MOD] + ([PREVIEWS] if os.path.isdir(PREVIEWS) else []), packs))
 
-    def pair_variant(key: str) -> str:
-        return variant_path(variants[uniforms[key]["battle_filename"]]["variant_filename"])
+    def pair_variant(weapon: str, mount: str) -> str:
+        return variant_path(variants[uniforms[uniform_key(weapon, mount)]["battle_filename"]]["variant_filename"])
 
-    foot_key, mounted_key = f"{PREFIX}_staff_and_sword_foot", f"{PREFIX}_staff_and_sword_pegasus"
+    foot_key, mounted_key = unit_key(DEFAULT_WEAPON, DEFAULT_MOUNT), unit_key(DEFAULT_WEAPON, LOOK_MOUNT)
     mount_set, mount_variant = mount_parts(land_units[mounted_key]["mount"], tables, sets)
-    hoodless = look_entries(exporter, registry, (sets[land_units[foot_key]["man_animation"]], pair_variant(foot_key)),
-                            (registry["mounts"]["pegasus"]["name"], sets[land_units[mounted_key]["man_animation"]], pair_variant(mounted_key), mount_set, mount_variant))
+    hoodless = look_entries(exporter, registry, (sets[land_units[foot_key]["man_animation"]], pair_variant(DEFAULT_WEAPON, DEFAULT_MOUNT)),
+                            (registry["mounts"][LOOK_MOUNT]["name"], sets[land_units[mounted_key]["man_animation"]], pair_variant(DEFAULT_WEAPON, LOOK_MOUNT),
+                             mount_set, mount_variant))
 
-    for weapon, mount in [(w, m) for w, item in registry["weapons"].items() for m in registry["mounts"] if m in item["sets"]]:
-        key = f"{PREFIX}_{weapon}_{mount}"
+    for weapon, mount in pairs(registry):
+        key = unit_key(weapon, mount)
         row = land_units[key]
         set_name = row["man_animation"]
         if set_name != registry["weapons"][weapon]["sets"][mount]:
             print(f"warning: {key} land unit plays {set_name}, registry says {registry['weapons'][weapon]['sets'][mount]}")
-        variant = variants[uniforms[key]["battle_filename"]]["variant_filename"]
+        variant = variants[uniforms[uniform_key(weapon, mount)]["battle_filename"]]["variant_filename"]
         mount_set, mount_variant = mount_parts(row["mount"], tables, sets) if row["mount"] else (None, None)
         name = f"{registry['weapons'][weapon]['name']} - {registry['mounts'][mount]['name']}"
         info = [f"unit {key}", f"rider set {set_name}", f"variant {variant}"] + ([f"mount {row['mount']} ({mount_set.name})"] if mount_set else [])
         unit_entry(exporter, name, sets[set_name], variant_path(variant), mount_set, mount_variant, info)
 
     advisor_entry(exporter)
-    portrait_data(exporter, registry, pair_variant(foot_key), hoodless)
+    portrait_data(exporter, registry, pair_variant(DEFAULT_WEAPON, DEFAULT_MOUNT), hoodless)
     for variant in sorted(glob.glob(os.path.join(PREVIEWS, "*.variantmeshdefinition"))):
         name = os.path.basename(variant)[:-len(".variantmeshdefinition")]
         unit_entry(exporter, f"Preview: {name}", sets[land_units[foot_key]["man_animation"]], variant, None, None, [f"preview variant {variant}"], LOOK_SLOTS)
@@ -335,10 +328,12 @@ def build(out: str) -> Exporter:
         info = [f"unit {key}", f"rider set {row['man_animation']}", f"variant {variant}"] + ([f"mount {row['mount']} ({mount_set.name})"] if mount_set else [])
         unit_entry(exporter, name, sets[row["man_animation"]], variant_path(variant), mount_set, mount_variant, info)
 
-    disc_variant = variant_path(variants[uniforms[f"{PREFIX}_staff_and_sword_disc"]["battle_filename"]]["variant_filename"])
-    entry = compare_entry(exporter, "Disc retarget: Tzeentch sorcerer vs Advisor", sets[DISC_SOURCE_SET], sets[DISC_TARGET_SET],
-                          {"source": DISC_SOURCE_VARIANT, "target": disc_variant}, skip=COMPARE_SKIP)
-    print(f"{entry['name']}: {len(entry['slots'])} slots")
+    # One comparison per retargeted set, shown on the first pair that plays it.
+    for target_set, (source_set, *_) in anims.SETS.items():
+        name, source_variant = COMPARE_SOURCES.get(source_set, (f"Retarget: {source_set} vs {target_set}", None))
+        target_variant = next((pair_variant(w, m) for w, m in pairs(registry) if registry["weapons"][w]["sets"][m] == target_set), None)
+        entry = compare_entry(exporter, name, sets[source_set], sets[target_set], {"source": source_variant, "target": target_variant}, skip=COMPARE_SKIP)
+        print(f"{entry['name']}: {len(entry['slots'])} slots")
     exporter.write()
     return exporter
 

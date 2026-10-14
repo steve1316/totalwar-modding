@@ -72,6 +72,7 @@
 </main>
 <script type="module">
 import * as THREE from "three";
+import { animLoader, loadModel } from "./viewer_common.js";
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,47 +101,10 @@ if (!data) { $("status").textContent = "This export has no portrait data. Rebuil
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Loading
 
-// Decodes one animation: each bone of each frame is 7 int16 values (world position * scale, world quaternion * 32767).
-async function loadAnim(id) {
-  const a = manifest.anims[id], rig = manifest.rigs[a.rig];
-  const buffer = await (await fetch(manifest.bundles[a.bundle])).arrayBuffer();
-  const raw = new Int16Array(buffer, a.offset, a.frames * rig.length * 7), values = new Float32Array(raw.length);
-  for (let i = 0; i < raw.length; i += 7) {
-    for (let k = 0; k < 3; k++) values[i + k] = raw[i + k] * a.scale;
-    for (let k = 3; k < 7; k++) values[i + k] = raw[i + k] / 32767;
-  }
-  return { fps: a.fps, frames: a.frames, count: rig.length, values, index: new Map(rig.map((b, i) => [b[0], i])) };
-}
-
-// Loads a skinned model. Rigid props (weapons) are left out, the porthole does not show them.
+// Loads a model once, without its rigid props (weapons): the porthole does not show them.
 const models = new Map();
-function loadModel(url) {
-  if (!models.has(url)) models.set(url, (async () => {
-    const doc = await (await fetch(url)).json();
-    const buffer = await (await fetch(url.replace(/[^/]+$/, doc.bin))).arrayBuffer();
-    const bones = doc.bones.map(name => { const b = new THREE.Bone(); b.name = name; return b; });
-    const inverses = doc.inverse_bind.map(m => new THREE.Matrix4().fromArray(m));
-    inverses.forEach((m, i) => new THREE.Matrix4().copy(m).invert().decompose(bones[i].position, bones[i].quaternion, bones[i].scale));
-    const skeleton = new THREE.Skeleton(bones, inverses), group = new THREE.Group(), loader = new THREE.TextureLoader();
-    bones.forEach(b => group.add(b));
-    for (const m of doc.meshes.filter(m => m.skinned)) {
-      const g = new THREE.BufferGeometry();
-      g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(buffer, m.position, m.count * 3), 3));
-      g.setAttribute("normal", new THREE.BufferAttribute(new Float32Array(buffer, m.normal, m.count * 3), 3));
-      g.setAttribute("uv", new THREE.BufferAttribute(new Float32Array(buffer, m.uv, m.count * 2), 2));
-      g.setIndex(new THREE.BufferAttribute(new Uint16Array(buffer, m.index, m.index_count), 1));
-      g.setAttribute("skinIndex", new THREE.BufferAttribute(new Uint16Array(buffer, m.skin_index, m.count * 4), 4));
-      g.setAttribute("skinWeight", new THREE.BufferAttribute(new Float32Array(buffer, m.skin_weight, m.count * 4), 4));
-      const mat = new THREE.MeshLambertMaterial({ color: m.texture ? 0xffffff : 0x9a9aa2, side: THREE.DoubleSide });
-      if (m.texture) {
-        const t = loader.load(url.replace(/[^/]+$/, m.texture)); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace;
-        mat.map = t; if (m.alpha) mat.alphaTest = 0.5;
-      }
-      const mesh = new THREE.SkinnedMesh(g, mat);
-      mesh.bind(skeleton, new THREE.Matrix4()); mesh.frustumCulled = false; group.add(mesh);
-    }
-    return { group, bones };
-  })());
+function getModel(url) {
+  if (!models.has(url)) models.set(url, loadModel(url, { props: false }));
   return models.get(url);
 }
 
@@ -184,7 +148,7 @@ class Porthole {
     const size = Math.round(this.host.clientWidth);
     if (size && size !== this.size) { this.size = size; this.renderer.setSize(size, size, false); }
     if (this.model) {
-      const base = frame * anim.count * 7, d = anim.values;
+      const base = frame * anim.count * 7, d = anim.data;
       this.model.bones.forEach((b, k) => {
         const i = this.map[k]; if (i < 0) return;
         const o = base + i * 7; b.position.set(d[o], d[o + 1], d[o + 2]); b.quaternion.set(d[o + 3], d[o + 4], d[o + 5], d[o + 6]);
@@ -203,9 +167,9 @@ function backdrop() {
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-const anim = await loadAnim(data.anim);
+const anim = await animLoader(manifest)(data.anim);
 const headIndex = anim.index.get("head");
-const head0 = new THREE.Vector3(anim.values[headIndex * 7], anim.values[headIndex * 7 + 1], anim.values[headIndex * 7 + 2]);
+const head0 = new THREE.Vector3(anim.data[headIndex * 7], anim.data[headIndex * 7 + 1], anim.data[headIndex * 7 + 2]);
 const mine = new Porthole($("mine")), ref = new Porthole($("ref"));
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -252,7 +216,7 @@ let look = 0;
 async function setLook(i) {
   look = i;
   [...$("looks").children].forEach((b, k) => b.classList.toggle("on", k === i));
-  mine.setModel(await loadModel(data.looks[i].model));
+  mine.setModel(await getModel(data.looks[i].model));
   setValues({});
 }
 data.looks.forEach((l, i) => { const b = document.createElement("button"); b.textContent = l.name; b.onclick = () => setLook(i); $("looks").append(b); });
@@ -263,7 +227,7 @@ if (data.reference) {
   $("refCap").textContent = `${data.reference.name}: z ${fmt(c.z)}  y ${fmt(c.y)}  pitch ${fmt(c.pitch)}`;
   $("refBtn").onclick = async () => {
     const show = $("refFig").hidden; $("refFig").hidden = !show; $("refBtn").classList.toggle("on", show);
-    if (show && !ref.model) { ref.setModel(await loadModel(data.reference.model)); ref.setCamera(c); }
+    if (show && !ref.model) { ref.setModel(await getModel(data.reference.model)); ref.setCamera(c); }
   };
 } else $("refBtn").hidden = true;
 

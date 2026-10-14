@@ -8,25 +8,19 @@
 ---
 --- The rigs he does not wear sit in the faction pool, so the character panel's Mount box lists them. A pick there is read back from the worn rig.
 ---
---- With `INJECT_BUTTON` on, the button is a child of a vanilla row: the character panel's bottom-right buttons, or the hover strip over the
---- selected Advisor's unit card on the map. With it off, the button is a direct child of the UI root, placed over those spots. The picker options
---- are always direct children of the UI root. The script only ever changes or destroys a component it found by its own unique name.
+--- The button is a child of a vanilla row: the character panel's bottom-right buttons, or the hover strip over the selected Advisor's unit card on
+--- the map. The picker options are direct children of the UI root. The script only ever changes or destroys a component it found by its own
+--- unique name.
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Settings
-
---- The Advisor's agent subtype.
-local SUBTYPE = "advisor_overhaul_advisor"
 
 --- Prefix of every log line and saved value.
 local TAG = "advisor_overhaul"
 
 --- When true the Advisor may change his loadout only once per turn.
 local ONE_CHANGE_PER_TURN = false
-
---- When true the button is made inside the vanilla button rows (`PANEL_ROW_PATH`, `STRIP_PATH`). When false it is a UI root child placed over them.
-local INJECT_BUTTON = true
 
 --- Name of the Change Loadout button.
 local BUTTON_NAME = TAG .. "_loadout_button"
@@ -40,45 +34,11 @@ local BUTTON_TEMPLATE = "ui/templates/square_medium_button"
 --- Image index of the icon in `BUTTON_TEMPLATE`.
 local BUTTON_ICON_INDEX = 0
 
---- Icon of the Change Loadout button (ui2.pack).
+--- Icon of the Change Loadout button (ui2.pack), also used by a picker option whose item has no icon.
 local BUTTON_ICON = "ui/skins/default/icon_swap.png"
-
---- Icon of each picker option, by kind and item key (all in ui.pack). An item missing here uses `BUTTON_ICON`.
-local OPTION_ICONS = {
-	--- Weapon icons.
-	weapon = {
-		--- Staff and Sword: the vanilla weapon item icon.
-		staff_and_sword = "ui/campaign ui/skills/item_weapon.png",
-		--- Sword and Shield: a shield ability icon.
-		sword_and_shield = "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png",
-	},
-	--- Mount icons.
-	mount = {
-		--- On Foot: the bonus vs infantry icon.
-		foot = "ui/campaign ui/skills/character_bonus_vs_infantry.png",
-		--- Barded Warhorse.
-		warhorse = "ui/campaign ui/skills/mount_barded_warhorse.png",
-		--- Imperial Pegasus.
-		pegasus = "ui/campaign ui/skills/mount_imperial_pegasus.png",
-		--- Disc of Tzeentch.
-		disc = "ui/campaign ui/skills/mount_disc_of_tzeentch.png",
-	},
-}
 
 --- State of the option he already uses. It is one of `BUTTON_TEMPLATE`'s states (active, down, down_off, hover, inactive), the pressed look.
 local CURRENT_STATE = "down"
-
---- Path from the UI root to the character info panel at the bottom left, which the button sits on top of.
-local ANCHOR_PATH = { "hud_campaign", "info_panel_background" }
-
---- Pixels between the button and the info panel.
-local BUTTON_GAP = 6
-
---- Fallback spot when the info panel cannot be read: pixels from the screen's left edge.
-local FALLBACK_LEFT = 16
-
---- Fallback spot when the info panel cannot be read: pixels from the screen's bottom edge to the button's bottom.
-local FALLBACK_BOTTOM = 420
 
 --- Pixels between picker options.
 local OPTION_GAP = 4
@@ -126,22 +86,18 @@ local PANEL = "character_details_panel"
 --- Child of the panel whose context is the character it shows. Read only.
 local PANEL_CONTEXT_HOLDER = "character_context_parent"
 
---- Path from the panel to its bottom-right row of square buttons (replace, event feed, rename). With `INJECT_BUTTON` on the button is made in it,
---- else it is only read for the button's spot.
+--- Path from the panel to its bottom-right row of square buttons (replace, event feed, rename). The button is made in it.
 local PANEL_ROW_PATH = { "character_context_parent", "holder_br", "bottom_buttons" }
 
---- The same row as `PANEL_ROW_PATH`, from the UI root. With `INJECT_BUTTON` on the button is made in it.
-local ROW_PATH = { "character_details_panel", "character_context_parent", "holder_br", "bottom_buttons" }
+--- The same row as `PANEL_ROW_PATH`, from the UI root: `PANEL` followed by `PANEL_ROW_PATH`.
+local ROW_PATH = { PANEL }
+for _, name in ipairs(PANEL_ROW_PATH) do
+	table.insert(ROW_PATH, name)
+end
 
---- Path from the UI root to the button strip over the hovered unit card (Disband, Rename). The game shows it and moves it on hover. With
---- `INJECT_BUTTON` on, the button is made in it while the local Advisor is selected on his own.
+--- Path from the UI root to the button strip over the hovered unit card (Disband, Rename). The game shows it and moves it on hover. The button is
+--- made in it while the local Advisor is selected on his own.
 local STRIP_PATH = { "units_panel", "main_units_panel", "button_group_unit" }
-
---- Fallback spot on the panel when its button row cannot be read: pixels from the panel's right edge to the button's left edge.
-local PANEL_FALLBACK_RIGHT = 420
-
---- Fallback spot on the panel when its button row cannot be read: pixels from the panel's bottom edge to the button's top edge.
-local PANEL_FALLBACK_BOTTOM = 120
 
 --- Draw priority added on top of the panel's own, so the button and picker draw over it.
 local PANEL_PRIORITY_BONUS = 50
@@ -151,9 +107,6 @@ local TRIGGER_PREFIX = TAG .. "_loadout:"
 
 --- Start of the UI trigger string that asks every client to read the Advisor's worn rig again, after a pick in the panel's Mount box.
 local RECONCILE_PREFIX = TAG .. "_reconcile:"
-
---- Start of every pair's mount ancillary key.
-local RIG_PREFIX = "advisor_overhaul_rig_"
 
 --- The character panel's Mount box list (ui3.pack character_details_panel_details.twui.xml). A click inside it may pick a rig or "None".
 local MOUNT_BOX = "ancillary_selector_mount"
@@ -199,7 +152,7 @@ local selected_cqi = nil
 --- CQI of the Advisor the shown button belongs to, or nil when the button is hidden.
 local button_cqi = nil
 
---- Path from the UI root to the parent the button was made in (`ROW_PATH` or `STRIP_PATH`), or nil when it is a UI root child or not made.
+--- Path from the UI root to the parent the button was made in (`ROW_PATH` or `STRIP_PATH`), or nil when it is not made.
 --- Only the path is kept. The button is found again by name under it each time, since the game may rebuild the parent.
 local button_path = nil
 
@@ -225,6 +178,12 @@ local ui_priority = UI_PRIORITY
 --- The last show or hide decision, so the log gets one line each time it changes.
 local last_decision = nil
 
+--- Unlock skill key -> { kind, key } of the item it unlocks, built once from the generated lists by `skill_items`.
+local unlock_skills = nil
+
+--- Every rig ancillary key, sorted, built once by `rig_keys`.
+local sorted_rigs = nil
+
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -234,6 +193,13 @@ local last_decision = nil
 --- @returns table The `ADVISOR_OVERHAUL_RIGS` table.
 local function rig_data()
 	return ADVISOR_OVERHAUL_RIGS
+end
+
+--- Whether a character is an Advisor, of any faction.
+--- @param character CHARACTER_SCRIPT_INTERFACE The character.
+--- @returns boolean True when his subtype is the Advisor's.
+local function is_advisor(character)
+	return character:character_subtype_key() == rig_data().subtype
 end
 
 --- Writes one log line to script_log.
@@ -265,6 +231,28 @@ local function changed_turn_key(cqi)
 	return TAG .. "_loadout_turn_" .. cqi
 end
 
+--- The Advisor's saved weapon and mount, or the defaults when nothing is saved. Not checked against what he has unlocked.
+--- @param cqi number The Advisor's command queue index.
+--- @returns string The weapon key.
+--- @returns string The mount key.
+local function saved_pair(cqi)
+	local rigs = rig_data()
+	return cm:get_saved_value(choice_key(cqi, "weapon")) or rigs.default_weapon, cm:get_saved_value(choice_key(cqi, "mount")) or rigs.default_mount
+end
+
+--- Saves the Advisor's weapon and mount.
+--- @param cqi number The Advisor's command queue index.
+--- @param weapon string The weapon key.
+--- @param mount string The mount key.
+--- @param mark_turn boolean Whether this counts as his change for this turn.
+local function save_pair(cqi, weapon, mount, mark_turn)
+	cm:set_saved_value(choice_key(cqi, "weapon"), weapon)
+	cm:set_saved_value(choice_key(cqi, "mount"), mount)
+	if mark_turn then
+		cm:set_saved_value(changed_turn_key(cqi), cm:model():turn_number())
+	end
+end
+
 --- The item list of a kind.
 --- @param kind string `weapon` or `mount`.
 --- @returns table The `weapons` or `mounts` list of `ADVISOR_OVERHAUL_RIGS`.
@@ -274,15 +262,39 @@ end
 
 --- A picker option's component name: the prefix, `w` or `m`, and the item's place in its list, e.g. `aolo_w1`.
 --- @param kind string `weapon` or `mount`.
---- @param item table The item row.
+--- @param index number The item's place in its list.
 --- @returns string The name.
-local function option_name(kind, item)
-	for i, row in ipairs(items_of(kind)) do
-		if row.key == item.key then
-			return OPTION_PREFIX .. string.sub(kind, 1, 1) .. i
+local function option_name(kind, index)
+	return OPTION_PREFIX .. string.sub(kind, 1, 1) .. index
+end
+
+--- The item each unlock skill unlocks, built from the generated weapon and mount lists on first use.
+--- @returns table Unlock skill key -> { kind, key }.
+local function skill_items()
+	if not unlock_skills then
+		unlock_skills = {}
+		for _, kind in ipairs({ "weapon", "mount" }) do
+			for _, item in ipairs(items_of(kind)) do
+				if item.skill ~= "" then
+					unlock_skills[item.skill] = { kind = kind, key = item.key }
+				end
+			end
 		end
 	end
-	return OPTION_PREFIX .. string.sub(kind, 1, 1) .. "0"
+	return unlock_skills
+end
+
+--- Every rig ancillary key, sorted, so the pool sync and its log run in a fixed order. Built on first use.
+--- @returns table The ancillary keys.
+local function rig_keys()
+	if not sorted_rigs then
+		sorted_rigs = {}
+		for ancillary in pairs(rig_data().rigs) do
+			table.insert(sorted_rigs, ancillary)
+		end
+		table.sort(sorted_rigs)
+	end
+	return sorted_rigs
 end
 
 --- Finds a weapon or mount by key.
@@ -336,8 +348,7 @@ end
 local function current_pair(character)
 	local rigs = rig_data()
 	local cqi = character:command_queue_index()
-	local weapon = cm:get_saved_value(choice_key(cqi, "weapon")) or rigs.default_weapon
-	local mount = cm:get_saved_value(choice_key(cqi, "mount")) or rigs.default_mount
+	local weapon, mount = saved_pair(cqi)
 	local weapon_item, mount_item = find_item("weapon", weapon), find_item("mount", mount)
 	if not weapon_item or not is_unlocked(character, weapon_item) then
 		log("cqi " .. cqi .. " saved weapon " .. weapon .. " is unknown or locked, using " .. rigs.default_weapon)
@@ -386,12 +397,11 @@ end
 --- @returns string|nil The weapon key, or nil when it is not a rig.
 --- @returns string|nil The mount key.
 local function rig_pair(ancillary)
-	for pair, key in pairs(rig_data().ancillaries) do
-		if key == ancillary then
-			return string.match(pair, "^([^|]+)|([^|]+)$")
-		end
+	local pair = rig_data().rigs[ancillary]
+	if not pair then
+		return nil, nil
 	end
-	return nil, nil
+	return pair.weapon, pair.mount
 end
 
 --- Whether the Advisor has unlocked both items of a pair.
@@ -409,12 +419,11 @@ end
 --- @returns table The ancillary keys.
 local function worn_rigs(character)
 	local worn = {}
-	for _, ancillary in pairs(rig_data().ancillaries) do
+	for _, ancillary in ipairs(rig_keys()) do
 		if character:has_ancillary(ancillary) then
 			table.insert(worn, ancillary)
 		end
 	end
-	table.sort(worn)
 	return worn
 end
 
@@ -426,7 +435,7 @@ local function faction_advisors(faction)
 	local characters = faction:character_list()
 	for i = 0, characters:num_items() - 1 do
 		local character = characters:item_at(i)
-		if character:character_subtype_key() == SUBTYPE then
+		if is_advisor(character) then
 			table.insert(found, character)
 		end
 	end
@@ -446,35 +455,24 @@ local function worn_by_any(advisors, ancillary)
 	return false
 end
 
---- Whether an unworn copy of an ancillary sits in the faction's pool: the faction owns it and no Advisor wears it. False whenever an Advisor wears
---- it, since `ancillary_exists` cannot tell a pool copy from the worn one.
+--- Whether the faction owns an ancillary, worn or in its pool. `ancillary_exists` cannot tell a pool copy from a worn one.
 --- @param faction FACTION_SCRIPT_INTERFACE The faction.
---- @param advisors table The faction's Advisors.
 --- @param ancillary string The ancillary key.
---- @returns boolean True when a copy is in the pool.
-local function in_pool(faction, advisors, ancillary)
-	if worn_by_any(advisors, ancillary) then
-		return false
-	end
+--- @returns boolean True when the faction owns it.
+local function faction_owns(faction, ancillary)
 	local ok, exists = pcall(function()
 		return faction:ancillary_exists(ancillary)
 	end)
 	return ok and exists == true
 end
 
---- How many copies of an ancillary the faction's item list holds, read from the UI context for the log only. Nothing is decided on it.
+--- Whether an unworn copy of an ancillary sits in the faction's pool: the faction owns it and no Advisor wears it.
 --- @param faction FACTION_SCRIPT_INTERFACE The faction.
+--- @param advisors table The faction's Advisors.
 --- @param ancillary string The ancillary key.
---- @returns string The count, or `unreadable`.
-local function list_count(faction, ancillary)
-	local ok, count = pcall(function()
-		return common.get_context_value("CcoCampaignFaction", tostring(faction:command_queue_index()),
-			"AncillaryList.Filter(AncillaryRecordContext.Key == \"" .. ancillary .. "\").Size")
-	end)
-	if ok and count ~= nil then
-		return tostring(count)
-	end
-	return "unreadable"
+--- @returns boolean True when a copy is in the pool.
+local function in_pool(faction, advisors, ancillary)
+	return not worn_by_any(advisors, ancillary) and faction_owns(faction, ancillary)
 end
 
 --- Makes the faction's pool hold one copy of every unlocked pair's rig that no Advisor wears, and no locked pair's rig. The
@@ -486,67 +484,53 @@ local function sync_pool(faction, why)
 	if #advisors == 0 then
 		return
 	end
-	local keys = {}
-	for _, ancillary in pairs(rig_data().ancillaries) do
-		table.insert(keys, ancillary)
-	end
-	table.sort(keys)
-	log_call("CcoCampaignFaction " .. faction:command_queue_index(), "get_context_value item list counts, for the log")
-	for _, ancillary in ipairs(keys) do
-		local weapon, mount = rig_pair(ancillary)
-		local unlocked = false
-		for _, advisor in ipairs(advisors) do
-			unlocked = unlocked or (weapon ~= nil and pair_unlocked(advisor, weapon, mount))
+	local changes = {}
+	for _, ancillary in ipairs(rig_keys()) do
+		-- A worn rig is left alone.
+		if not worn_by_any(advisors, ancillary) then
+			local weapon, mount = rig_pair(ancillary)
+			local unlocked = false
+			for _, advisor in ipairs(advisors) do
+				unlocked = unlocked or pair_unlocked(advisor, weapon, mount)
+			end
+			local pooled = faction_owns(faction, ancillary)
+			if unlocked and not pooled then
+				cm:add_ancillary_to_faction(faction, ancillary, true)
+				table.insert(changes, "added " .. ancillary)
+			elseif not unlocked and pooled then
+				cm:force_remove_ancillary_from_faction(faction, ancillary)
+				table.insert(changes, "removed " .. ancillary)
+			end
 		end
-		local before = list_count(faction, ancillary)
-		local pooled = in_pool(faction, advisors, ancillary)
-		local action
-		if worn_by_any(advisors, ancillary) then
-			action = "worn, left alone"
-		elseif unlocked and not pooled then
-			cm:add_ancillary_to_faction(faction, ancillary, true)
-			action = "added to the pool"
-		elseif not unlocked and pooled then
-			cm:force_remove_ancillary_from_faction(faction, ancillary)
-			action = "removed from the pool"
-		else
-			action = pooled and "in the pool, kept" or "not in the pool, kept"
-		end
-		log("pool " .. faction:name() .. " (" .. why .. ") " .. ancillary .. ": unlocked " .. tostring(unlocked) .. ", in pool " .. tostring(pooled)
-			.. ", " .. action .. ", list count " .. before .. " -> " .. list_count(faction, ancillary))
 	end
+	log("pool " .. faction:name() .. " (" .. why .. "): " .. (#changes > 0 and table.concat(changes, ", ") or "no change"))
 end
 
 --- Equips the mount ancillary of the Advisor's current pair. Every other pair's rig goes back to the faction pool, so the Mount box lists it. The
---- pair is saved back, so a choice a respec took away does not return when he learns the skill again. Also sets his weapon's art set and syncs the
---- pool.
+--- pair is saved back, so a choice a respec took away does not return when he learns the skill again. Also sets his weapon's art set. The caller
+--- syncs the pool.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @returns boolean True when an ancillary was equipped or removed.
 local function apply_pair(character)
-	local rigs = rig_data()
 	local weapon, mount = current_pair(character)
 	local cqi = character:command_queue_index()
 	local faction = character:faction()
-	cm:set_saved_value(choice_key(cqi, "weapon"), weapon)
-	cm:set_saved_value(choice_key(cqi, "mount"), mount)
-	local wanted = rigs.ancillaries[weapon .. "|" .. mount]
+	save_pair(cqi, weapon, mount, false)
+	local wanted = rig_data().ancillaries[weapon .. "|" .. mount]
 	apply_art_set(character, weapon)
 	if not wanted then
 		log("cqi " .. cqi .. " has no unit for " .. weapon .. " on " .. mount .. ", nothing equipped")
-		sync_pool(faction, "cqi " .. cqi .. " applied")
 		return false
 	end
 	local stale = {}
-	for _, ancillary in pairs(rigs.ancillaries) do
+	for _, ancillary in ipairs(rig_keys()) do
 		if ancillary ~= wanted and character:has_ancillary(ancillary) then
 			table.insert(stale, ancillary)
 		end
 	end
 	if character:has_ancillary(wanted) and #stale == 0 then
-		sync_pool(faction, "cqi " .. cqi .. " applied")
 		return false
 	end
-	table.sort(stale)
 	for _, ancillary in ipairs(stale) do
 		-- A rig goes back to the pool, so the Mount box lists it.
 		cm:force_remove_ancillary(character, ancillary, true, true)
@@ -562,22 +546,19 @@ local function apply_pair(character)
 	end
 	log("cqi " .. cqi .. " now " .. weapon .. " on " .. mount .. " (" .. wanted .. "), returned or removed: " .. table.concat(stale, ", ")
 		.. ", pool copy taken: " .. tostring(from_pool) .. ", has it now: " .. tostring(character:has_ancillary(wanted)))
-	sync_pool(faction, "cqi " .. cqi .. " applied")
 	return true
 end
 
 --- Reads which rig the Advisor wears and makes it his loadout, so a pick in the character panel's Mount box sticks. With exactly one worn rig of an
 --- unlocked pair, that pair is saved as his choice. With none (the Mount box's "None"), a locked one or several, the saved pair is equipped again.
---- Runs from game events and UI triggers only, so every client saves the same values.
+--- Runs from game events and UI triggers only, so every client saves the same values. The caller syncs the pool.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @param why string What asked for it, for the log.
 --- @returns boolean True when his loadout or ancillaries changed.
-local function reconcile(character, why)
-	local rigs = rig_data()
+local function reconcile_pair(character, why)
 	local cqi = character:command_queue_index()
 	local worn = worn_rigs(character)
-	local saved_weapon = cm:get_saved_value(choice_key(cqi, "weapon")) or rigs.default_weapon
-	local saved_mount = cm:get_saved_value(choice_key(cqi, "mount")) or rigs.default_mount
+	local saved_weapon, saved_mount = saved_pair(cqi)
 	local changed = false
 	local weapon, mount = nil, nil
 	if #worn == 1 then
@@ -590,9 +571,7 @@ local function reconcile(character, why)
 				.. " (check: " .. why .. ")")
 		else
 			if differs then
-				cm:set_saved_value(choice_key(cqi, "weapon"), weapon)
-				cm:set_saved_value(choice_key(cqi, "mount"), mount)
-				cm:set_saved_value(changed_turn_key(cqi), cm:model():turn_number())
+				save_pair(cqi, weapon, mount, true)
 				changed = true
 			end
 			log("cqi " .. cqi .. " loadout taken from the worn rig " .. worn[1] .. ": " .. weapon .. " on " .. mount
@@ -609,17 +588,33 @@ local function reconcile(character, why)
 	return changed or equipped
 end
 
+--- Reconciles one Advisor and syncs his faction's pool.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param why string What asked for it, for the log.
+--- @returns boolean True when his loadout or ancillaries changed.
+local function reconcile(character, why)
+	local changed = reconcile_pair(character, why)
+	sync_pool(character:faction(), why)
+	return changed
+end
+
+--- Reconciles every living Advisor of a faction, then syncs its pool once.
+--- @param faction FACTION_SCRIPT_INTERFACE The faction.
+--- @param why string What asked for it, for the log.
+local function reconcile_faction(faction, why)
+	for _, character in ipairs(faction_advisors(faction)) do
+		if not character:is_wounded() then
+			reconcile_pair(character, why)
+		end
+	end
+	sync_pool(faction, why)
+end
+
 --- Reconciles every living Advisor of every human faction.
 --- @param why string What asked for it, for the log.
 local function apply_all(why)
 	for _, faction_key in ipairs(cm:get_human_factions()) do
-		local characters = cm:get_faction(faction_key):character_list()
-		for i = 0, characters:num_items() - 1 do
-			local character = characters:item_at(i)
-			if character:character_subtype_key() == SUBTYPE and not character:is_wounded() then
-				reconcile(character, why)
-			end
-		end
+		reconcile_faction(cm:get_faction(faction_key), why)
 	end
 end
 
@@ -663,10 +658,9 @@ local function choose_pair(character, weapon, mount)
 		log("cqi " .. cqi .. " change refused: " .. reason)
 		return
 	end
-	cm:set_saved_value(choice_key(cqi, "weapon"), weapon)
-	cm:set_saved_value(choice_key(cqi, "mount"), mount)
-	cm:set_saved_value(changed_turn_key(cqi), cm:model():turn_number())
+	save_pair(cqi, weapon, mount, true)
 	apply_pair(character)
+	sync_pool(character:faction(), "cqi " .. cqi .. " picked " .. weapon .. " on " .. mount)
 	local new_weapon, new_mount = current_pair(character)
 	log("cqi " .. cqi .. " loadout is now " .. new_weapon .. " on " .. new_mount .. " (turn " .. cm:model():turn_number() .. ")")
 end
@@ -698,14 +692,6 @@ local function item_name(item)
 	return text
 end
 
---- Joins two label parts with a space.
---- @param first string The first part.
---- @param second string The second part.
---- @returns string The label.
-local function join_label(first, second)
-	return first .. " " .. second
-end
-
 --- Whether a character is an Advisor of the local player's faction.
 --- @param character CHARACTER_SCRIPT_INTERFACE|nil|boolean The character, or nil or false when there is none.
 --- @returns boolean True for the local player's Advisor.
@@ -713,7 +699,7 @@ local function is_local_advisor(character)
 	if not character then
 		return false
 	end
-	return character:character_subtype_key() == SUBTYPE and character:faction():name() == cm:get_local_faction_name(true)
+	return is_advisor(character) and character:faction():name() == cm:get_local_faction_name(true)
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -821,13 +807,6 @@ local function find_child(parent, name)
 	return nil
 end
 
---- Finds one of this script's components, a direct child of the UI root with exactly this name.
---- @param name string The component's name.
---- @returns UIC|nil The component, or nil when it does not exist.
-local function find_own(name)
-	return find_child(ui_root(), name)
-end
-
 --- Destroys one of this script's components under a parent if it exists. Nothing but a direct child with exactly this name is touched.
 --- @param parent UIC|nil The parent it was made in.
 --- @param name string The component's name.
@@ -906,11 +885,11 @@ local function create_own(name, template)
 	return create_child(root, name, template)
 end
 
---- The parent the button was made in: the UI root, or the vanilla row at `button_path`, found again by name.
---- @returns UIC|nil The parent, or nil when it is gone.
+--- The vanilla row the button was made in, found again by name at `button_path`.
+--- @returns UIC|nil The row, or nil when the button is not made or the row is gone.
 local function button_parent()
 	if not button_path then
-		return ui_root()
+		return nil
 	end
 	return find_path(ui_root(), button_path)
 end
@@ -942,10 +921,10 @@ end
 --- Adds one picker option: an icon button made from the same layout as the Change Loadout button, with its label in the tooltip.
 --- @param kind string `weapon` or `mount`.
 --- @param item table The item row.
+--- @param name string The option's component name, from `option_name`.
 --- @param state string `current`, `pick` or `blocked`.
 --- @returns UIC|nil The option, or nil when it could not be made.
-local function add_option(kind, item, state)
-	local name = option_name(kind, item)
+local function add_option(kind, item, name, state)
 	log_call(name, "CreateComponent " .. BUTTON_TEMPLATE)
 	local option = create_own(name, BUTTON_TEMPLATE)
 	if not option then
@@ -953,15 +932,15 @@ local function add_option(kind, item, state)
 	end
 	-- Registered before it is set up, so `close_picker` removes it if a later step fails.
 	picker_options[name] = { kind = kind, key = item.key, enabled = state == "pick" }
-	local label = join_label(ui_text(kind), item_name(item))
+	local label = ui_text(kind) .. " " .. item_name(item)
 	local reason = ui_text("pick")
 	if state == "current" then
-		label = join_label(label, ui_text("current"))
+		label = label .. " " .. ui_text("current")
 		reason = ui_text("in_use")
 	elseif state == "blocked" then
 		reason = ui_text(kind .. "_blocked")
 	end
-	local icon = OPTION_ICONS[kind] and OPTION_ICONS[kind][item.key] or BUTTON_ICON
+	local icon = item.icon or BUTTON_ICON
 	local ui_state = state == "current" and CURRENT_STATE or state == "blocked" and "inactive" or "active"
 	local ok, err = pcall(function()
 		log_call(name, "SetImagePath " .. icon .. " " .. BUTTON_ICON_INDEX)
@@ -998,18 +977,19 @@ local function open_picker(character)
 	local columns = {}
 	for _, kind in ipairs({ "weapon", "mount" }) do
 		local column, shown = {}, {}
-		for _, item in ipairs(items_of(kind)) do
+		for index, item in ipairs(items_of(kind)) do
 			if is_unlocked(character, item) then
 				local is_current = item.key == (kind == "weapon" and weapon or mount)
 				local fits = kind == "weapon" and has_unit(item.key, mount) or kind == "mount" and has_unit(weapon, item.key)
 				local state = is_current and "current" or fits and "pick" or "blocked"
-				local option = add_option(kind, item, state)
+				local name = option_name(kind, index)
+				local option = add_option(kind, item, name, state)
 				if not option then
 					log("loadout picker not opened: option " .. kind .. " " .. item.key .. " could not be made")
 					close_picker("option " .. kind .. " " .. item.key .. " could not be made")
 					return
 				end
-				table.insert(column, { name = option_name(kind, item), uic = option })
+				table.insert(column, { name = name, uic = option })
 				table.insert(shown, item.key .. "=" .. state)
 			end
 		end
@@ -1124,49 +1104,6 @@ local function panel_character(panel)
 	return character, "the panel shows " .. character:character_subtype_key() .. " cqi " .. cqi
 end
 
---- Where the button goes on the character panel: left of its bottom-right button row, else a fixed offset from the panel's corner.
---- @param panel UIC The character panel.
---- @param width number The button's width.
---- @param height number The button's height.
---- @returns number|nil The x position, or nil when the panel cannot be read either.
---- @returns number|nil The y position.
---- @returns string|nil Which rule placed it, for the log.
-local function panel_position(panel, width, height)
-	local row = find_path(panel, PANEL_ROW_PATH)
-	local bounds = row and read_bounds(row)
-	if bounds and bounds.visible then
-		return math.max(0, bounds.x - width - BUTTON_GAP), math.max(0, bounds.y + math.floor((bounds.h - height) / 2)),
-			"left of the panel's button row at " .. bounds.x .. "," .. bounds.y .. " size " .. bounds.w .. "x" .. bounds.h
-	end
-	bounds = read_bounds(panel)
-	if bounds then
-		return math.max(0, bounds.x + bounds.w - PANEL_FALLBACK_RIGHT), math.max(0, bounds.y + bounds.h - PANEL_FALLBACK_BOTTOM), "panel fallback"
-	end
-	return nil
-end
-
---- Where the button goes on the map: on top of the right end of the character info panel, or a fixed spot when that panel cannot be read.
---- @param width number The button's width.
---- @param height number The button's height.
---- @returns number The x position.
---- @returns number The y position.
---- @returns string Which rule placed it, for the log.
-local function map_position(width, height)
-	local root = ui_root()
-	local anchor = find_path(root, ANCHOR_PATH)
-	local bounds = anchor and read_bounds(anchor)
-	if bounds and bounds.visible then
-		return math.max(0, bounds.x + bounds.w - width), math.max(0, bounds.y - height - BUTTON_GAP), "on " .. ANCHOR_PATH[#ANCHOR_PATH]
-	end
-	local ok, _, screen_height = pcall(function()
-		return root:Dimensions()
-	end)
-	if not ok or type(screen_height) ~= "number" then
-		screen_height = 1080
-	end
-	return FALLBACK_LEFT, math.max(0, screen_height - FALLBACK_BOTTOM - height), "screen fallback"
-end
-
 --- Logs the injected button's size next to its first vanilla sibling's, and lays the row out again when the button sits on a shown sibling.
 --- @param parent UIC The row the button is in.
 --- @param button UIC The button.
@@ -1226,12 +1163,12 @@ local function find_strip()
 	return find_path(ui_root(), STRIP_PATH)
 end
 
---- Makes or updates the button inside a vanilla row: the character panel's bottom-right row, or the unit card hover strip on the map. The row's
---- layout places it, so it is never moved, raised or made top-most. It is found by name first, so there is never a second copy.
+--- Makes or updates the button for the local Advisor inside a vanilla row: the character panel's bottom-right row, or the unit card hover strip on
+--- the map. The row's layout places it, so it is never moved, raised or made top-most. It is found by name first, so there is never a second copy.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
 --- @param panel UIC|nil The character panel when the button goes on it, or nil for the map strip.
 --- @param why string What asked for the check, for the log.
-local function show_injected(character, panel, why)
+local function show_button(character, panel, why)
 	local cqi = character:command_queue_index()
 	if picker_cqi and picker_cqi ~= cqi then
 		close_picker("another Advisor shown")
@@ -1293,69 +1230,6 @@ local function show_injected(character, panel, why)
 	ui_priority = priority
 	note_decision(why, "shown for cqi " .. cqi .. " in " .. where .. " at " .. result .. ", picker priority " .. priority
 		.. (used and ", locked for this turn" or ""))
-end
-
---- Makes or updates the button for the local Advisor.
---- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
---- @param panel UIC|nil The character panel when the button goes on it, or nil for the map spot.
---- @param why string What asked for the check, for the log.
-local function show_button(character, panel, why)
-	if INJECT_BUTTON then
-		show_injected(character, panel, why)
-		return
-	end
-	local cqi = character:command_queue_index()
-	if picker_cqi and picker_cqi ~= cqi then
-		close_picker("another Advisor shown")
-	end
-	local priority = UI_PRIORITY
-	if panel then
-		local ok, panel_priority = pcall(function()
-			return panel:Priority()
-		end)
-		if ok and type(panel_priority) == "number" then
-			priority = math.max(priority, panel_priority + PANEL_PRIORITY_BONUS)
-		end
-	end
-	local button = find_own(BUTTON_NAME)
-	if not button then
-		button = create_own(BUTTON_NAME, BUTTON_TEMPLATE)
-		if not button then
-			set_hidden(why, "the button could not be made")
-			return
-		end
-	end
-	local used = used_this_turn(cqi)
-	local ok, result = pcall(function()
-		button:SetImagePath(BUTTON_ICON, BUTTON_ICON_INDEX)
-		local width, height = button:Dimensions()
-		local x, y, rule
-		if panel then
-			x, y, rule = panel_position(panel, width, height)
-		end
-		if not x then
-			x, y, rule = map_position(width, height)
-		end
-		button:MoveTo(x, y)
-		button:SetState(used and "inactive" or "active")
-		button:SetTooltipText(ui_text(used and "button_used" or "button"), true)
-		button:PropagatePriority(priority)
-		if not topmost[BUTTON_NAME] then
-			-- The HUD unit panel opens over the map spot, so the button stays on top to remain clickable.
-			button:RegisterTopMost()
-			topmost[BUTTON_NAME] = true
-		end
-		button:SetVisible(true)
-		return x .. "," .. y .. " (" .. rule .. ")"
-	end)
-	if not ok then
-		set_hidden(why, "button set up failed: " .. tostring(result))
-		return
-	end
-	button_cqi = cqi
-	ui_priority = priority
-	note_decision(why, "shown for cqi " .. cqi .. (panel and " on the character panel" or " on the map") .. " at " .. result .. ", priority "
-		.. priority .. (used and ", locked for this turn" or ""))
 end
 
 --- Names of the open blocking panels and the event panel, read from the vanilla campaign UI manager.
@@ -1426,7 +1300,7 @@ local function refresh(why)
 		set_hidden(why, selected_cqi and ("selected cqi " .. selected_cqi .. " is not found") or "nothing selected")
 		return
 	end
-	if character:character_subtype_key() ~= SUBTYPE then
+	if not is_advisor(character) then
 		set_hidden(why, "selected cqi " .. selected_cqi .. " is a " .. character:character_subtype_key() .. ", not an Advisor")
 		return
 	end
@@ -1439,7 +1313,7 @@ local function refresh(why)
 		set_hidden(why, "local Advisor selected, but " .. over .. " is open")
 		return
 	end
-	if INJECT_BUTTON and character:is_embedded_in_military_force() then
+	if character:is_embedded_in_military_force() then
 		-- The hover strip is shared by every card of the army, so an embedded Advisor gets no strip button.
 		set_hidden(why, "selected Advisor cqi " .. selected_cqi .. " is embedded, and the unit card strip is shared by the whole army")
 		return
@@ -1479,6 +1353,17 @@ local function after_click(what, step)
 	end, CLICK_MS, CLICK_NAME)
 end
 
+--- Sends `Select` for the Advisor without clearing the selection first. After a switch from the unit card strip it refreshes the map card while he
+--- is still selected: clearing closed the units panel and rebuilt the strip, which then sat one button low until the mouse moved. `reselect`
+--- calls it once the selection is cleared.
+--- @param cqi number The Advisor's command queue index.
+local function select_again(cqi)
+	local ok, err = pcall(function()
+		common.call_context_command("CcoCampaignCharacter", tostring(cqi), "Select")
+	end)
+	log("reselect cqi " .. cqi .. ": Select " .. (ok and "sent" or ("failed: " .. tostring(err))))
+end
+
 --- Selects the Advisor again after his loadout changed on the map, so the HUD unit card shows his new unit. Without it the card stayed stale
 --- until he was deselected and selected by hand. While the character panel is open it waits until the panel closes. Skipped when he is not the
 --- selected character.
@@ -1499,21 +1384,8 @@ local function reselect(cqi)
 	log("reselect cqi " .. cqi .. ": ClearSelection " .. (cleared and "ok" or ("failed: " .. tostring(clear_err))))
 	cm:remove_real_callback(RESELECT_NAME)
 	cm:real_callback(function()
-		local ok, err = pcall(function()
-			common.call_context_command("CcoCampaignCharacter", tostring(cqi), "Select")
-		end)
-		log("reselect cqi " .. cqi .. ": Select " .. (ok and "sent" or ("failed: " .. tostring(err))))
+		select_again(cqi)
 	end, RESELECT_MS, RESELECT_NAME)
-end
-
---- Selects the Advisor again after a switch from the unit card strip, so the map card shows his new unit. It sends `Select` while he is still
---- selected, without clearing first: clearing closed the units panel and rebuilt the strip, which then sat one button low until the mouse moved.
---- @param cqi number The Advisor's command queue index.
-local function select_again(cqi)
-	local ok, err = pcall(function()
-		common.call_context_command("CcoCampaignCharacter", tostring(cqi), "Select")
-	end)
-	log("reselect cqi " .. cqi .. ": Select without clearing " .. (ok and "sent" or ("failed: " .. tostring(err))))
 end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1591,6 +1463,42 @@ end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Event helpers
+
+--- Reads one of this script's UI triggers and checks it: it must name an Advisor of the faction that sent it.
+--- @param context table The `UITrigger` event context.
+--- @param prefix string The trigger's prefix, `TRIGGER_PREFIX` or `RECONCILE_PREFIX`.
+--- @param pattern string Pattern for the rest of the trigger. Its first capture is the Advisor's cqi.
+--- @param label string The trigger's name, for the log.
+--- @returns CHARACTER_SCRIPT_INTERFACE|nil The Advisor, or nil when the trigger is refused.
+--- @returns string|nil The pattern's second capture.
+--- @returns string|nil The pattern's third capture.
+local function read_trigger(context, prefix, pattern, label)
+	local trigger = context:trigger()
+	local cqi, first, second = string.match(string.sub(trigger, #prefix + 1), pattern)
+	local character = cqi and cm:get_character_by_cqi(tonumber(cqi))
+	if not character or not is_advisor(character) then
+		log(label .. " " .. trigger .. " names no Advisor")
+		return nil
+	end
+	if character:faction():command_queue_index() ~= context:faction_cqi() then
+		log(label .. " " .. trigger .. " came from another faction (cqi " .. tostring(context:faction_cqi()) .. ")")
+		return nil
+	end
+	return character, first, second
+end
+
+--- Whether a panel opening or closing is worth a log line: the character panel, the units panel, a panel that hides the button, or any panel
+--- while the button is shown.
+--- @param panel string The panel name.
+--- @param hides boolean Whether it hides the button.
+--- @returns boolean True when it is logged.
+local function worth_logging(panel, hides)
+	return panel == PANEL or panel == STRIP_PATH[1] or hides or button_cqi ~= nil
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Listeners
 
 core:add_listener(
@@ -1642,7 +1550,9 @@ core:add_listener(
 			panel_open = true
 		end
 		local hides = hides_on_open(panel)
-		log("PanelOpenedCampaign " .. panel .. (hides and ", hides the button" or ", keeps the button"))
+		if worth_logging(panel, hides) then
+			log("PanelOpenedCampaign " .. panel .. (hides and ", hides the button" or ", keeps the button"))
+		end
 		if hides then
 			guarded("panel open", function()
 				set_hidden("panel " .. panel .. " opened", "panel " .. panel .. " opened")
@@ -1659,7 +1569,9 @@ core:add_listener(
 	true,
 	function(context)
 		local panel = tostring(context.string)
-		log("PanelClosedCampaign " .. panel)
+		if worth_logging(panel, false) then
+			log("PanelClosedCampaign " .. panel)
+		end
 		if panel == STRIP_PATH[1] and button_path == STRIP_PATH then
 			-- The button stays in the strip: the reselect after a loadout change closes and reopens the units panel, and adding the button back
 			-- while the strip is shown made the strip grow down over the card. The next refresh removes it if the Advisor is no longer selected.
@@ -1675,11 +1587,9 @@ core:add_listener(
 			if pending_reselect then
 				local cqi = pending_reselect
 				pending_reselect = nil
-				cm:real_callback(function()
-					guarded("reselect", function()
-						reselect(cqi)
-					end)
-				end, RESELECT_MS, RESELECT_NAME .. "_after_panel")
+				guarded("reselect", function()
+					reselect(cqi)
+				end)
 			end
 		end
 		schedule_refresh("panel " .. panel .. " closed")
@@ -1779,15 +1689,8 @@ core:add_listener(
 		return string.sub(context:trigger(), 1, #TRIGGER_PREFIX) == TRIGGER_PREFIX
 	end,
 	function(context)
-		local trigger = context:trigger()
-		local cqi, weapon, mount = string.match(string.sub(trigger, #TRIGGER_PREFIX + 1), "^(%d+):([^:]+):([^:]+)$")
-		local character = cqi and cm:get_character_by_cqi(tonumber(cqi))
-		if not character or character:character_subtype_key() ~= SUBTYPE then
-			log("loadout trigger " .. trigger .. " names no Advisor")
-			return
-		end
-		if character:faction():command_queue_index() ~= context:faction_cqi() then
-			log("loadout trigger " .. trigger .. " came from another faction (cqi " .. tostring(context:faction_cqi()) .. ")")
+		local character, weapon, mount = read_trigger(context, TRIGGER_PREFIX, "^(%d+):([^:]+):([^:]+)$", "loadout trigger")
+		if not character then
 			return
 		end
 		choose_pair(character, weapon, mount)
@@ -1807,8 +1710,7 @@ core:add_listener(
 	TAG .. "_ancillary_gained",
 	"CharacterAncillaryGained",
 	function(context)
-		local ancillary = tostring(context:ancillary())
-		return context:character():character_subtype_key() == SUBTYPE and string.sub(ancillary, 1, #RIG_PREFIX) == RIG_PREFIX
+		return is_advisor(context:character()) and rig_data().rigs[tostring(context:ancillary())] ~= nil
 	end,
 	function(context)
 		local character = context:character()
@@ -1824,7 +1726,8 @@ core:add_listener(
 	TAG .. "_mount_box_click",
 	"ComponentLClickUp",
 	function()
-		return panel_open
+		-- Cheap checks first, so most clicks never walk the parents: the panel must show the local Advisor, which shows the button in its row.
+		return panel_open and button_cqi ~= nil and button_path == ROW_PATH
 	end,
 	function(context)
 		if not in_mount_box(context.component) then
@@ -1846,15 +1749,8 @@ core:add_listener(
 		return string.sub(context:trigger(), 1, #RECONCILE_PREFIX) == RECONCILE_PREFIX
 	end,
 	function(context)
-		local trigger = context:trigger()
-		local cqi = tonumber(string.match(string.sub(trigger, #RECONCILE_PREFIX + 1), "^(%d+)$"))
-		local character = cqi and cm:get_character_by_cqi(cqi)
-		if not character or character:character_subtype_key() ~= SUBTYPE then
-			log("reconcile trigger " .. trigger .. " names no Advisor")
-			return
-		end
-		if character:faction():command_queue_index() ~= context:faction_cqi() then
-			log("reconcile trigger " .. trigger .. " came from another faction (cqi " .. tostring(context:faction_cqi()) .. ")")
+		local character = read_trigger(context, RECONCILE_PREFIX, "^(%d+)$", "reconcile trigger")
+		if not character then
 			return
 		end
 		local changed = reconcile(character, "Mount box pick")
@@ -1867,18 +1763,17 @@ core:add_listener(
 	TAG .. "_skill_unlock",
 	"CharacterSkillPointAllocated",
 	function(context)
-		return context:character():character_subtype_key() == SUBTYPE
+		return is_advisor(context:character())
 	end,
 	function(context)
 		local character = context:character()
 		local skill = context:skill_point_spent_on()
-		local rigs = rig_data()
-		local weapon, mount = rigs.weapon_skills[skill], rigs.mount_skills[skill]
-		if not weapon and not mount then
+		local unlocked = skill_items()[skill]
+		if not unlocked then
 			return
 		end
 		local cqi = character:command_queue_index()
-		log("cqi " .. cqi .. " unlocked " .. (weapon and ("weapon " .. weapon) or ("mount " .. mount)) .. ", unlocked weapons: "
+		log("cqi " .. cqi .. " unlocked " .. unlocked.kind .. " " .. unlocked.key .. ", unlocked weapons: "
 			.. unlocked_list(character, "weapon") .. ", unlocked mounts: " .. unlocked_list(character, "mount"))
 		-- The newly unlocked pairs go into the pool.
 		reconcile(character, "skill " .. skill)
@@ -1898,7 +1793,7 @@ core:add_listener(
 		return context:faction():is_human()
 	end,
 	function(context)
-		apply_all("turn start of " .. context:faction():name())
+		reconcile_faction(context:faction(), "turn start of " .. context:faction():name())
 		if context:faction():name() == cm:get_local_faction_name(true) then
 			schedule_refresh("turn start")
 		end
@@ -1922,6 +1817,12 @@ core:add_listener(
 	end,
 	true
 )
+
+--- Helpers the spawn script shares. It reads them when it runs, since script load order is not promised.
+ADVISOR_OVERHAUL = {
+	--- Lists the Advisors of a faction.
+	faction_advisors = faction_advisors,
+}
 
 cm:add_first_tick_callback(function()
 	-- advisor_overhaul_spawn.lua spawns the Advisors on the first tick of a new campaign, so this waits until they exist.

@@ -13,9 +13,9 @@ portrait camera) follows the vanilla Grey Wizard. His 2D portrait, unit card and
 `portrait`). The stats are placeholders until they are tuned.
 
 The weapons, mounts and model pieces are in advisor_overhaul_registry.json. The vanilla rows this reads are kept in advisor_overhaul.json. Refresh
-it from a folder of vanilla TSVs after a game patch (it also reads the vanilla portrait settings from ui.pack):
+it after a game patch. It reads the vanilla tables from db.pack and the vanilla portrait settings from ui.pack, both through the extract cache:
 
-    python -m generators.advisor_overhaul --refresh _diag/vanilla_all/db
+    python -m generators.advisor_overhaul --refresh
 
 Build:
 
@@ -25,14 +25,14 @@ Build:
 import argparse
 import json
 import os
-import shutil
 import sys
 import zlib
 from typing import Dict, List, Tuple
 
 from PIL import Image
 
-from core.utilities import STEAM_LIBRARY_DRIVE, load_tsv_data, run_rpfm_cli
+from core.extract_cache import cached_pack_extract
+from core.utilities import STEAM_LIBRARY_DRIVE, extract_tsv_data, load_tsv_data, run_rpfm_cli
 from generators import advisor_overhaul_anims as anims
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +51,7 @@ MOD = "../warhammer3_mods/!!advisor_overhaul"
 # File name of every table and loc file this generator writes.
 FILE = "advisor_overhaul"
 
-# The vanilla pack holding the portrait settings, and where the refresh and the build extract portrait files to.
+# The vanilla pack holding the portrait settings, and where the refresh and the build extract portrait files to (through the extract cache).
 UI_PACK = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\common\\Total War WARHAMMER III\\data\\ui.pack"
 PORTRAIT_EXTRACT = "./temp/advisor_overhaul_portraits"
 
@@ -164,55 +164,59 @@ def vanilla_portraits(art_set: str) -> Dict:
     Raises:
         SystemExit: When a folder has no entry for the art set.
     """
-    shutil.rmtree(PORTRAIT_EXTRACT, ignore_errors=True)
     out: Dict = {}
-    try:
-        for folder in PORTRAIT_FOLDERS:
-            path = f"ui/portraits/{folder}/portrait_settings__.bin"
-            run_rpfm_cli(["pack", "extract", "--pack-path", UI_PACK, "--file-path", f"{path};{PORTRAIT_EXTRACT}"], capture_output=True)
-            json_path = os.path.join(PORTRAIT_EXTRACT, f"{folder}.json")
-            run_rpfm_cli(["portrait-settings", "to-json", "--bin-path", os.path.join(PORTRAIT_EXTRACT, path), "--json-path", json_path], capture_output=True)
-            settings = json.load(open(json_path, encoding="utf-8"))
-            entry = next((e for e in settings["entries"] if e["id"] == art_set), None)
-            if entry is None:
-                raise SystemExit(f"no vanilla {folder} portrait entry for {art_set}")
-            out["version"] = settings["version"]
-            out[folder] = entry
-    finally:
-        shutil.rmtree(PORTRAIT_EXTRACT, ignore_errors=True)
+    for folder in PORTRAIT_FOLDERS:
+        path = f"ui/portraits/{folder}/portrait_settings__.bin"
+        cached_pack_extract(UI_PACK, path, PORTRAIT_EXTRACT, source_kind="file", tables_as_tsv=False)
+        json_path = os.path.join(PORTRAIT_EXTRACT, f"{folder}.json")
+        run_rpfm_cli(["portrait-settings", "to-json", "--bin-path", os.path.join(PORTRAIT_EXTRACT, path), "--json-path", json_path], capture_output=True)
+        settings = json.load(open(json_path, encoding="utf-8"))
+        os.remove(json_path)
+        entry = next((e for e in settings["entries"] if e["id"] == art_set), None)
+        if entry is None:
+            raise SystemExit(f"no vanilla {folder} portrait entry for {art_set}")
+        out["version"] = settings["version"]
+        out[folder] = entry
     return out
 
 
-def refresh(folder: str) -> None:
-    """Keeps the vanilla rows the build reads and every written table's header and version.
+def read_vanilla(table: str) -> Tuple[List[Dict[str, str]], List[str], str]:
+    """Reads one vanilla table from db.pack, through the extract cache.
 
     Args:
-        folder (str): The folder holding `<table>/data__.tsv`.
-    """
-    def read(table: str) -> Tuple[List[Dict[str, str]], List[str], str]:
-        return load_tsv_data(os.path.join(folder, table, "data__.tsv"))
+        table (str): The table name.
 
+    Returns:
+        Tuple[List[Dict[str, str]], List[str], str]: The rows, the header and the version line.
+    """
+    return load_tsv_data(f"{extract_tsv_data(table)}/db/{table}/data__.tsv")
+
+
+def refresh() -> None:
+    """Keeps the vanilla rows the build reads and every written table's header and version."""
     registry = json.load(open(REGISTRY, encoding="utf-8"))
     units = {m[k] for m in registry["mounts"].values() for k in ("template", "template_foot") if k in m} | {FOOT_TEMPLATE}
     data: Dict = {"tables": {}, "templates": {}}
+    loaded: Dict[str, List[Dict[str, str]]] = {}
     for table in TABLES:
-        rows, header, version = read(table)
+        rows, header, version = read_vanilla(table)
+        loaded[table] = rows
         data["tables"][table] = {"header": header, "version": version.split("\t")[0].split(";")[1]}
         if table in TEMPLATE_TABLES and table != "unit_attributes_to_groups_junctions_tables":
             data["templates"][table] = [r for r in rows if r[TEMPLATE_TABLES[table]] in units]
     groups = {r["attribute_group"] for r in data["templates"]["land_units_tables"]}
-    data["templates"]["unit_attributes_to_groups_junctions_tables"] = [r for r in read("unit_attributes_to_groups_junctions_tables")[0]
+    data["templates"]["unit_attributes_to_groups_junctions_tables"] = [r for r in loaded["unit_attributes_to_groups_junctions_tables"]
                                                                        if r["attribute_group"] in groups]
-    data["agent_subtypes"] = {r["key"]: r for r in read("agent_subtypes_tables")[0] if r["key"] in (STATS_SUBTYPE, LOOK_SUBTYPE)}
-    data["node_set"] = next(r for r in read("character_skill_node_sets_tables")[0] if r["agent_subtype_key"] == STATS_SUBTYPE)
-    data["art"] = next(r for r in read("campaign_character_arts_tables")[0] if r["art_set_id"] == LOOK_ART_SET)
-    data["factions"] = sorted({r["faction"] for r in read("faction_agent_permitted_subtypes_tables")[0]})
+    data["agent_subtypes"] = {r["key"]: r for r in loaded["agent_subtypes_tables"] if r["key"] in (STATS_SUBTYPE, LOOK_SUBTYPE)}
+    data["node_set"] = next(r for r in loaded["character_skill_node_sets_tables"] if r["agent_subtype_key"] == STATS_SUBTYPE)
+    data["art"] = next(r for r in loaded["campaign_character_arts_tables"] if r["art_set_id"] == LOOK_ART_SET)
+    data["factions"] = sorted({r["faction"] for r in loaded["faction_agent_permitted_subtypes_tables"]})
     mounts = {r["mount"] for r in data["templates"]["land_units_tables"] if r["mount"]}
-    data["mount_animations"] = {r["key"]: r["animation"] for r in read("mounts_tables")[0] if r["key"] in mounts}
-    culture_rows = read("culture_to_battle_animation_tables_tables")[0]
+    data["mount_animations"] = {r["key"]: r["animation"] for r in read_vanilla("mounts_tables")[0] if r["key"] in mounts}
+    culture_rows = loaded["culture_to_battle_animation_tables_tables"]
     data["culture_packs"] = sorted({r["culture_pack"] for r in culture_rows if r["culture_pack"]})
     data["culture_animations"] = sorted(f"{r['battle_animations_table']}|{r['culture_pack']}" for r in culture_rows)
-    data["vanilla_names"] = sorted(r["id"] for r in read("names_tables")[0])
+    data["vanilla_names"] = sorted(r["id"] for r in loaded["names_tables"])
     data["portraits"] = vanilla_portraits(LOOK_ART_SET)
     json.dump(data, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
     print(f"kept {len(data['templates']['land_units_tables'])} template units, {len(data['factions'])} factions in {DATA}")
@@ -234,6 +238,44 @@ def unit_key(weapon: str, mount: str) -> str:
         str: The unit key.
     """
     return f"{PREFIX}_{weapon}_{mount}"
+
+
+def rig_key(weapon: str, mount: str) -> str:
+    """The hidden mount ancillary that gives him a pair's unit.
+
+    Args:
+        weapon (str): Weapon key.
+        mount (str): Mount key.
+
+    Returns:
+        str: The ancillary key.
+    """
+    return f"{PREFIX}_rig_{weapon}_{mount}"
+
+
+def uniform_key(weapon: str, mount: str) -> str:
+    """The agent uniform of a pair.
+
+    Args:
+        weapon (str): Weapon key.
+        mount (str): Mount key.
+
+    Returns:
+        str: The uniform name.
+    """
+    return f"{PREFIX}_{weapon}_{mount}"
+
+
+def foot_variant(weapon: str) -> str:
+    """The variant of a weapon on foot. The campaign map, the character panel and the portraits use it on every mount.
+
+    Args:
+        weapon (str): Weapon key.
+
+    Returns:
+        str: The variant name, also its variant mesh definition's file name.
+    """
+    return f"{PREFIX}_{weapon}"
 
 
 def weapon_art_set(weapon: str) -> str:
@@ -444,7 +486,7 @@ def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) 
             "agent_subtype": SUBTYPE, "campaign_map_scale": "1.0000", "prebattle_separation_offset": "0.0000",
         })
         rows["campaign_character_arts_tables"].append(dict(data["art"], id=str(zlib.crc32(art_set.encode()) & 0x7FFFFFFF), art_set_id=art_set,
-                                                           uniform=f"{PREFIX}_{weapon_key}_{DEFAULT_MOUNT}",
+                                                           uniform=uniform_key(weapon_key, DEFAULT_MOUNT),
                                                            land_animation=weapon.get("campaign_set", CAMPAIGN_ANIMATION)))
 
 
@@ -473,9 +515,9 @@ def build() -> None:
         weapon, mount = registry["weapons"][weapon_key], registry["mounts"][mount_key]
         key = unit_key(weapon_key, mount_key)
         template = mount.get("template", FOOT_TEMPLATE)
-        ancillary = f"{PREFIX}_rig_{weapon_key}_{mount_key}"
-        uniform = f"{PREFIX}_{weapon_key}_{mount_key}"
-        variant = f"{PREFIX}_{weapon_key}" + ("_" + mount_key if "variant_props" in mount else "")
+        ancillary = rig_key(weapon_key, mount_key)
+        uniform = uniform_key(weapon_key, mount_key)
+        variant = foot_variant(weapon_key) + ("_" + mount_key if "variant_props" in mount else "")
         combos.append((weapon_key, mount_key, ancillary))
 
         rows["land_units_tables"].append(land_unit(key, weapon, weapon["sets"][mount_key], mount, template_units, advisor))
@@ -510,8 +552,8 @@ def build() -> None:
             rows["campaign_character_uniform_ancillary_junctions_tables"].append({"ancillary": ancillary, "art_set": art_set, "uniform": uniform})
         # The campaign map model and the character panel model show the weapon. Both use the weapon's foot variant, so mount props such as the disc
         # stay out of them.
-        rows["agent_uniforms_tables"].append({"uniform_name": uniform, "filename": f"{PREFIX}_{weapon_key}", "battle_filename": variant,
-                                              "campaign_porthole_filename": f"{PREFIX}_{weapon_key}"})
+        rows["agent_uniforms_tables"].append({"uniform_name": uniform, "filename": foot_variant(weapon_key), "battle_filename": variant,
+                                              "campaign_porthole_filename": foot_variant(weapon_key)})
         if "campaign_rider_set" in mount and mount_key != DEFAULT_MOUNT:
             # Both his foot set and the weapon's own campaign set get the rider pose.
             rider = weapon.get("campaign_rider_sets", {}).get(mount_key, mount["campaign_rider_set"])
@@ -539,7 +581,9 @@ def build() -> None:
     for table, table_rows in rows.items():
         write(table, table_rows, specs[table])
     write_variants(registry["model"], variants)
-    write_portraits(data["portraits"], registry["portrait"], [weapon_art_set(w) for w in registry["weapons"]] + [f"{PREFIX}_{w}" for w in registry["weapons"]])
+    # Art set entries show their weapon's foot variant. Campaign variant entries show their own.
+    portrait_ids = [(weapon_art_set(w), foot_variant(w)) for w in registry["weapons"]] + [(foot_variant(w), foot_variant(w)) for w in registry["weapons"]]
+    write_portraits(data["portraits"], registry["portrait"], portrait_ids)
     write_portrait_images(registry["portrait"])
     write_script(registry, combos)
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
@@ -653,27 +697,24 @@ def portrait_path(portrait: Dict) -> str:
     return f"UI/Portraits/Portholes/no_culture/{portrait['image']}.png"
 
 
-def write_portraits(portraits: Dict, portrait: Dict, ids: List[str]) -> None:
+def write_portraits(portraits: Dict, portrait: Dict, ids: List[Tuple[str, str]]) -> None:
     """Writes portrait settings for his art sets and campaign variants: the vanilla Grey Wizard's body camera, the registry's head camera and his
     own portrait image under each id. Without them a character on a new art set has no portrait.
 
     Args:
         portraits (Dict): The kept vanilla entries (`version` and one entry per portrait folder).
         portrait (Dict): The registry's `portrait`.
-        ids (List[str]): The ids to write entries for. Ids that are campaign variants also name that variant.
+        ids (List[Tuple[str, str]]): (entry id, variant file name) per entry to write.
 
     Raises:
         SystemExit: When rpfm_cli cannot write a file.
     """
-    variant_ids = {i for i in ids if not i.startswith(f"{PREFIX}_art_")}
     for folder in PORTRAIT_FOLDERS:
         entries = []
-        for entry_id in ids:
+        for entry_id, filename in ids:
             entry = json.loads(json.dumps(portraits[folder]))
             entry["id"] = entry_id
             entry["camera_settings_head"].update(portrait["camera_head"])
-            # Art set entries show the default weapon's variant. Variant entries show their own.
-            filename = entry_id if entry_id in variant_ids else f"{PREFIX}_{entry_id[len(PREFIX) + 5:]}"
             for variant in entry["variants"]:
                 # No faction colour masks: vanilla leaves them empty on about half its entries.
                 variant.update(filename=filename, file_diffuse=portrait_path(portrait), file_mask_1="", file_mask_2="", file_mask_3="")
@@ -703,9 +744,7 @@ def write_portrait_images(portrait: Dict) -> None:
     """
     pack, path = portrait["source"]
     source = os.path.join(PORTRAIT_EXTRACT, path)
-    if not os.path.exists(source):
-        run_rpfm_cli(["pack", "extract", "--pack-path", os.path.join(os.path.dirname(UI_PACK), pack), "--file-path", f"{path};{PORTRAIT_EXTRACT}"],
-                     capture_output=True)
+    cached_pack_extract(os.path.join(os.path.dirname(UI_PACK), pack), path, PORTRAIT_EXTRACT, source_kind="file", tables_as_tsv=False)
     if not os.path.exists(source):
         raise SystemExit(f"{path} is not in {pack}")
     bust = Image.open(source).convert("RGBA")
@@ -726,10 +765,11 @@ def write_portrait_images(portrait: Dict) -> None:
     porthole = Image.new("RGBA", PORTHOLE_SIZE)
     porthole.alpha_composite(scaled(portrait["porthole"]["scale"]), (portrait["porthole"]["x"], portrait["porthole"]["y"]))
     name = portrait["image"]
+    unit_card = card(CARD_SIZE, portrait["card"]["scale"])
     images = {
         f"ui/portraits/portholes/no_culture/{name}.png": porthole,
-        f"ui/portraits/units/no_culture/{name}.png": card(CARD_SIZE, portrait["card"]["scale"]),
-        f"ui/units/icons/{UNIT_CARD}.png": card(CARD_SIZE, portrait["card"]["scale"]),
+        f"ui/portraits/units/no_culture/{name}.png": unit_card,
+        f"ui/units/icons/{UNIT_CARD}.png": unit_card,
         f"ui/units/infopics/{UNIT_CARD}.png": card(INFOPIC_SIZE, portrait["card"]["scale"] * INFOPIC_SIZE[0] / CARD_SIZE[0]),
     }
     for game_path, image in images.items():
@@ -739,8 +779,8 @@ def write_portrait_images(portrait: Dict) -> None:
 
 
 def write_script(registry: Dict, combos: List[Tuple[str, str, str]]) -> None:
-    """Writes the Lua data table the campaign script reads: the weapons and mounts with their unlock skills and names, and the ancillary of every
-    valid pair.
+    """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
+    and the ancillary of every valid pair both ways.
 
     Args:
         registry (Dict): The registry.
@@ -749,21 +789,25 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]]) -> None:
     folder = os.path.join(MOD, "script", "campaign", "mod")
     os.makedirs(folder, exist_ok=True)
     lines = ["--- Generated by generators/advisor_overhaul.py. Do not edit by hand.", "ADVISOR_OVERHAUL_RIGS = {",
+             "\t--- The Advisor's agent subtype.", f'\tsubtype = "{SUBTYPE}",',
              "\t--- Weapon he holds when nothing else is chosen. Always unlocked.", f'\tdefault_weapon = "{DEFAULT_WEAPON}",',
              "\t--- Mount he rides when nothing else is chosen. Always unlocked.", f'\tdefault_mount = "{DEFAULT_MOUNT}",']
     for kind, items in (("weapon", registry["weapons"]), ("mount", registry["mounts"])):
-        lines += [f"\t--- {kind.capitalize()}s in skill tree order: key, unlock skill (empty for the default), name loc key and English fallback name.",
-                  "\t--- Weapons also name the art set that shows them in the character panel.",
-                  f"\t{kind}s = {{"]
+        lines.append(f"\t--- {kind.capitalize()}s in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and "
+                     "picker icon.")
+        if kind == "weapon":
+            lines.append("\t--- Weapons also name the art set that shows them in the character panel.")
+        lines.append(f"\t{kind}s = {{")
         for key, item in items.items():
             name = item["name"].replace('"', '\\"')
             art = f', art_set = "{weapon_art_set(key)}"' if kind == "weapon" else ""
-            lines.append(f'\t\t{{ key = "{key}", skill = "{unlock_skill(kind, key)}", name = "{ui_name(kind, key)}", fallback = "{name}"{art} }},')
-        lines += ["\t},", f"\t--- Unlock skill key -> {kind} key.", f"\t{kind}_skills = {{"]
-        lines += [f'\t\t["{unlock_skill(kind, key)}"] = "{key}",' for key in items if unlock_skill(kind, key)]
+            lines.append(f'\t\t{{ key = "{key}", skill = "{unlock_skill(kind, key)}", name = "{ui_name(kind, key)}", fallback = "{name}", '
+                         f'icon = "{item["picker_icon"]}"{art} }},')
         lines.append("\t},")
     lines += ['\t--- "weapon|mount" -> the mount ancillary that gives him that unit. Only pairs with a unit are listed.', "\tancillaries = {"]
     lines += [f'\t\t["{w}|{m}"] = "{a}",' for w, m, a in combos]
+    lines += ["\t},", "\t--- Mount ancillary -> the weapon and mount of its pair.", "\trigs = {"]
+    lines += [f'\t\t["{a}"] = {{ weapon = "{w}", mount = "{m}" }},' for w, m, a in combos]
     lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",', "}"]
     with open(os.path.join(folder, f"{FILE}_rigs.lua"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
@@ -771,10 +815,10 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]]) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--refresh", metavar="FOLDER", help="refresh the kept vanilla rows from a folder of vanilla TSVs")
+    parser.add_argument("--refresh", action="store_true", help="refresh the kept vanilla rows from the installed game's packs")
     args = parser.parse_args()
     if args.refresh:
-        refresh(args.refresh)
+        refresh()
     else:
         build()
     sys.exit(0)
