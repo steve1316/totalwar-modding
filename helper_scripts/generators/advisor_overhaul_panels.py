@@ -12,7 +12,8 @@ from typing import Dict, List, Tuple
 from core.asset_source import AssetSource, norm
 from core.extract_cache import extracted_tree
 from core.utilities import extract_tsv_data, load_tsv_data
-from generators.advisor_overhaul import MOD, STAT_COLUMNS, pairs, unit_key
+from generators.advisor_overhaul import MOD, STAT_COLUMNS, fixed_skills, pairs, unit_key
+from tools.skill_catalog import CATALOG_LOC_PREFIXES, SKILL_CATALOG_TABLES, SKILL_ICON_FOLDER, catalog_art, skill_catalog
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
 from ttc.ttc_cards import CARD_FOLDER
 from ttc.ttc_data import LOC_NAME_PREFIX, VANILLA_LOC_PACK, loc_name, read_loc_names
@@ -29,7 +30,7 @@ UNIT_TABLES = ["main_units_tables", "land_units_tables", "unit_variants_tables",
 ATTRIBUTE_PREFIX = "unit_attributes_bullet_text_"
 
 # Loc prefixes the panels read: names, and everything the ability and attribute tooltips show.
-LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX, *TOOLTIP_LOC_PREFIXES)
+LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX, *TOOLTIP_LOC_PREFIXES, *CATALOG_LOC_PREFIXES)
 
 # Vanilla packs holding the card art, ability icons and stat icons.
 UI_PACKS = re.compile(r"^ui2?\.pack$")
@@ -271,12 +272,19 @@ def build_panels(registry: Dict, out: str) -> Tuple[Dict[str, Dict], Dict[str, s
         out (str): The gallery folder.
 
     Returns:
-        Tuple[Dict[str, Dict], Dict[str, str], Dict]: Panels by unit key, Advisor unit key -> vanilla unit key, and the Edit tab's data
-        (`forms`: unit key -> `PanelBuilder.form_values`, and `attributes`: the attribute catalog).
+        Tuple[Dict[str, Dict], Dict[str, str], Dict]: Panels by unit key, Advisor unit key -> vanilla unit key, and the Edit and Skills tabs' data
+        (`forms`: unit key -> `PanelBuilder.form_values`, `attributes`: the attribute catalog, and `skills`: the skill catalog, the fixed weapon and
+        mount skills and the names of their rows).
     """
     pairs_to_vanilla = comparisons(registry)
     builder = PanelBuilder(load_tables(), load_loc())
     panels = {key: builder.panel(key) for key in list(pairs_to_vanilla) + list(dict.fromkeys(pairs_to_vanilla.values()))}
     editor = {"forms": {unit_key(w, m): builder.form_values(unit_key(w, m), w, m, registry) for w, m in pairs(registry)}, "attributes": builder.attribute_catalog()}
+    # The Skills tab: the vanilla catalog to pick from, and the weapon and mount skills the tree already has.
+    catalog = skill_catalog({t: load_tsv_data(f"{extract_tsv_data(t)}/db/{t}/data__.tsv")[0] for t in SKILL_CATALOG_TABLES}, builder.loc)
+    for path in catalog_art(catalog):
+        builder.note_art(path)
+    fixed = [{"row": f["row"], "tier": f["tier"], "name": f["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{f['icon']}"), "kind": f["kind"]} for f in fixed_skills(registry)]
+    editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": {"0": "Weapons", "1": "Mounts"}}
     print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes")
     return panels, pairs_to_vanilla, editor

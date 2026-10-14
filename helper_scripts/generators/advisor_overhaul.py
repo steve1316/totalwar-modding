@@ -15,6 +15,10 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
 - `forms`: mount -> values that replace the computed ones for that one pair.
 - `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away.
 
+His planned skills are the registry's `skills` (written by the workbench's Skills tab): id -> `name`, `description`, `icon` (a file in
+`ui/campaign ui/skills`), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
+of skills it needs) and `build`. Only skills with `build` are written. The rest stay plans in the workbench.
+
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
 portrait camera) follows the vanilla Grey Wizard. His 2D portrait, unit card and info picture are cut from the vanilla Advisor bust (the registry's
@@ -156,7 +160,8 @@ TABLES = [
     "campaign_mount_animation_set_overrides_tables", "ancillaries_tables", "ancillary_info_tables", "ancillaries_included_agent_subtypes_tables",
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
-    "projectiles_tables", "melee_weapons_tables", "unit_armour_types_tables", *UNIT_ROW_TABLES,
+    "projectiles_tables", "melee_weapons_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
+    "character_skill_level_to_effects_junctions_tables", *UNIT_ROW_TABLES,
 ]
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
@@ -246,6 +251,8 @@ def refresh() -> None:
     data["melee_weapons"] = {r["key"]: r for r in loaded["melee_weapons_tables"] if r["key"] in melees}
     armours = {r["armour"] for r in data["templates"]["land_units_tables"]}
     data["armour_types"] = {r["key"]: r for r in loaded["unit_armour_types_tables"] if r["key"] in armours}
+    data["effects"] = sorted(r["effect"] for r in read_vanilla("effects_tables")[0])
+    data["scopes"] = sorted(r["key"] for r in read_vanilla("campaign_effect_scopes_tables")[0])
     data["portraits"] = vanilla_portraits(LOOK_ART_SET)
     json.dump(data, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
     print(f"kept {len(data['templates']['land_units_tables'])} template units, {len(data['factions'])} factions in {DATA}")
@@ -601,6 +608,23 @@ def agent_rows(data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tu
     ]
 
 
+def fixed_skills(registry: Dict) -> List[Dict]:
+    """The weapon and mount skills, where they sit in the tree: every weapon and mount but the defaults, one row each.
+
+    Args:
+        registry (Dict): The registry.
+
+    Returns:
+        List[Dict]: `kind`, `key` (item key), `item` (the registry item), `row`, `tier`, `skill` and `node` keys, `name` and `icon`.
+    """
+    skills = []
+    for row, kind, items, default in ((WEAPON_ROW, "weapon", registry["weapons"], DEFAULT_WEAPON), (MOUNT_ROW, "mount", registry["mounts"], DEFAULT_MOUNT)):
+        for tier, (item_key, item) in enumerate(i for i in items.items() if i[0] != default):
+            skills.append({"kind": kind, "key": item_key, "item": item, "row": row, "tier": tier, "skill": choice_skill(kind, item_key),
+                           "node": f"{PREFIX}_choose_{kind}_node_{item_key}", "name": item["name"], "icon": item.get("skill_icon") or os.path.basename(item["icon"])})
+    return skills
+
+
 def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
     """Adds the weapon and mount skills. Each unlocks its item for the Change Loadout picker.
 
@@ -609,29 +633,92 @@ def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
         rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
         texts (List[Tuple[str, str]]): Loc rows, added to.
     """
-    for row, kind, items, default in ((WEAPON_ROW, "weapon", registry["weapons"], DEFAULT_WEAPON), (MOUNT_ROW, "mount", registry["mounts"], DEFAULT_MOUNT)):
+    for kind, items in (("weapon", registry["weapons"]), ("mount", registry["mounts"])):
         for item_key, item in items.items():
             texts.append((ui_name(kind, item_key), item["name"]))
-        for tier, (item_key, item) in enumerate(i for i in items.items() if i[0] != default):
-            skill = choice_skill(kind, item_key)
-            node = f"{PREFIX}_choose_{kind}_node_{item_key}"
-            rows["character_skills_tables"].append({
-                "key": skill, "image_path": item.get("skill_icon") or os.path.basename(item["icon"]), "unlocked_at_rank": "0", "is_background_skill": "false",
-                "is_female_only_background_skill": "false", "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
+    for fixed in fixed_skills(registry):
+        kind, item, skill, node, row, tier = fixed["kind"], fixed["item"], fixed["skill"], fixed["node"], fixed["row"], fixed["tier"]
+        rows["character_skills_tables"].append({
+            "key": skill, "image_path": fixed["icon"], "unlocked_at_rank": "0", "is_background_skill": "false",
+            "is_female_only_background_skill": "false", "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
+        })
+        texts.append((f"character_skills_localised_name_{skill}", item["name"]))
+        texts.append((f"character_skills_localised_description_{skill}", f"{item['description']}\\\\n\\\\nUnlocks this {kind} for the Advisor. "
+                      "Switch to it with the Change Loadout button in his character panel."))
+        rows["character_skill_nodes_tables"].append({
+            "key": node, "character_skill_key": skill, "indent": str(row), "tier": str(tier), "points_on_creation": "0", "required_num_parents": "0",
+            "visible_in_ui": "true",
+        })
+        rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
+        # Without a level row the skill has 0 levels: the tree draws it as learned while `has_skill` stays false.
+        rows["character_skill_level_details_tables"].append({
+            "campaign_key": "", "faction_key": "", "level": "1", "skill_key": skill, "subculture_key": "", "image_path": "x",
+            "unlocked_at_rank": str(item.get("unlock_rank", 1)),
+        })
+
+
+def planned_skill_key(skill_id: str) -> str:
+    """The skill key of a planned skill.
+
+    Args:
+        skill_id (str): Its id in the registry's `skills`.
+
+    Returns:
+        str: The key.
+    """
+    return f"{PREFIX}_skill_{skill_id}"
+
+
+def planned_skill_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds every planned skill marked `build`: the skill, its node in his tree, a level row per level with that level's effects, and a required
+    link from each skill it needs (which must be built too).
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows (the effect and scope keys).
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+
+    Raises:
+        SystemExit: When a built skill names an effect or scope the game lacks, or needs a skill that is not built.
+    """
+    skills, effects, scopes = registry.get("skills", {}), set(data.get("effects", [])), set(data.get("scopes", []))
+    built = {skill_id for skill_id, skill in skills.items() if skill.get("build")}
+    for skill_id in sorted(built):
+        skill = skills[skill_id]
+        key, node = planned_skill_key(skill_id), f"{PREFIX}_skill_node_{skill_id}"
+        rows["character_skills_tables"].append({
+            "key": key, "image_path": skill.get("icon", ""), "unlocked_at_rank": str(skill.get("rank", 1)), "is_background_skill": "false",
+            "is_female_only_background_skill": "false", "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
+        })
+        texts.append((f"character_skills_localised_name_{key}", skill.get("name", skill_id)))
+        texts.append((f"character_skills_localised_description_{key}", skill.get("description", "")))
+        requires = [r for r in skill.get("requires", []) if r in skills]
+        missing = [r for r in requires if r not in built]
+        if missing:
+            raise SystemExit(f"skill {skill_id} needs {', '.join(missing)}, which is not built")
+        rows["character_skill_nodes_tables"].append({
+            "key": node, "character_skill_key": key, "indent": str(skill.get("row", 2)), "tier": str(skill.get("tier", 0)), "points_on_creation": "0",
+            "required_num_parents": str(len(requires)), "visible_in_ui": "true",
+        })
+        rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
+        for parent in requires:
+            rows["character_skill_node_links_tables"].append({
+                "child_key": node, "parent_key": f"{PREFIX}_skill_node_{parent}", "initial_descent_tiers": "0", "parent_link_position": "1",
+                "child_link_position": "1", "parent_link_position_offset": "0.0000", "child_link_position_offset": "0.0000", "link_type": "REQUIRED",
             })
-            texts.append((f"character_skills_localised_name_{skill}", item["name"]))
-            texts.append((f"character_skills_localised_description_{skill}", f"{item['description']}\\\\n\\\\nUnlocks this {kind} for the Advisor. "
-                          "Switch to it with the Change Loadout button in his character panel."))
-            rows["character_skill_nodes_tables"].append({
-                "key": node, "character_skill_key": skill, "indent": str(row), "tier": str(tier), "points_on_creation": "0", "required_num_parents": "0",
-                "visible_in_ui": "true",
-            })
-            rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
-            # Without a level row the skill has 0 levels: the tree draws it as learned while `has_skill` stays false.
+        for level, level_effects in enumerate(skill.get("levels") or [[]], start=1):
             rows["character_skill_level_details_tables"].append({
-                "campaign_key": "", "faction_key": "", "level": "1", "skill_key": skill, "subculture_key": "", "image_path": "x",
-                "unlocked_at_rank": str(item.get("unlock_rank", 1)),
+                "campaign_key": "", "faction_key": "", "level": str(level), "skill_key": key, "subculture_key": "", "image_path": "x",
+                "unlocked_at_rank": str(skill.get("rank", 1)),
             })
+            for effect in level_effects:
+                if effect.get("effect") not in effects or effect.get("scope") not in scopes:
+                    raise SystemExit(f"skill {skill_id} level {level}: unknown effect {effect.get('effect')} or scope {effect.get('scope')}")
+                rows["character_skill_level_to_effects_junctions_tables"].append({
+                    "character_skill_key": key, "effect_key": effect["effect"], "level": str(level), "effect_scope": effect["scope"],
+                    "value": f"{float(effect.get('value', 0)):.4f}",
+                })
 
 
 def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
@@ -766,6 +853,7 @@ def build() -> None:
     rows["culture_to_battle_animation_tables_tables"] += [{"battle_animations_table": s, "culture_pack": c} for s in sorted(battle_sets)
                                                           for c in data["culture_packs"] if f"{s}|{c}" not in vanilla_pairs]
     skill_rows(registry, rows, texts)
+    planned_skill_rows(registry, data, rows, texts)
     art_rows(registry, data, rows)
     missile_rows(registry, data, rows)
     melee_rows(registry, data, rows)

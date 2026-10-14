@@ -42,16 +42,16 @@ advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
 advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
 advisor_overhaul_ui_weapon_greatsword	Greatsword	true
 advisor_overhaul_ui_weapon_sword_and_bow	Sword and Bow	true
+advisor_overhaul_ui_mount_foot	On Foot	true
+advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
+advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
+advisor_overhaul_ui_mount_disc	Disc of Tzeentch	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_shield	Sword and Shield	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_shield	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_greatsword	Greatsword	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_bow	Sword and Bow	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_bow	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
-advisor_overhaul_ui_mount_foot	On Foot	true
-advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
-advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
-advisor_overhaul_ui_mount_disc	Disc of Tzeentch	true
 character_skills_localised_name_advisor_overhaul_choose_mount_warhorse	Barded Warhorse	true
 character_skills_localised_description_advisor_overhaul_choose_mount_warhorse	An armoured Imperial charger, steady under spellfire.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_mount_pegasus	Imperial Pegasus	true
