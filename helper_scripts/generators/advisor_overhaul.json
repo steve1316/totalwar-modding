@@ -21076,6 +21076,14 @@
    ],
    "version": "0"
   },
+  "character_skill_nodes_skill_locks_tables": {
+   "header": [
+    "character_skill",
+    "character_skill_node",
+    "level"
+   ],
+   "version": "0"
+  },
   "character_skill_nodes_tables": {
    "header": [
     "key",

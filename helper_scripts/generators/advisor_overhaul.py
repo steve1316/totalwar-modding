@@ -17,7 +17,8 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
 
 His planned skills are the registry's `skills` (written by the workbench's Skills tab): id -> `name`, `description`, `icon` (a file in
 `ui/campaign ui/skills`), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
-of skills it needs) and `build`. Only skills with `build` are written. The rest stay plans in the workbench.
+of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of skills it locks, both ways) and `build`. Only skills with `build` (In
+game in the workbench) are written. Drafts stay in the workbench.
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
@@ -161,7 +162,7 @@ TABLES = [
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
     "projectiles_tables", "melee_weapons_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
-    "character_skill_level_to_effects_junctions_tables", *UNIT_ROW_TABLES,
+    "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", *UNIT_ROW_TABLES,
 ]
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
@@ -670,8 +671,11 @@ def planned_skill_key(skill_id: str) -> str:
 
 
 def planned_skill_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
-    """Adds every planned skill marked `build`: the skill, its node in his tree, a level row per level with that level's effects, and a required
-    link from each skill it needs (which must be built too).
+    """Adds every planned skill marked `build`: the skill, its node in his tree, a level row per level with that level's effects, a link from each
+    skill it needs (which must be built too), and a lock from each built skill it is exclusive with.
+
+    A skill that needs all of its skills gets `REQUIRED` links, which the game checks one by one (`required_num_parents` 0). One that needs only
+    some gets `SUBSET_REQUIRED` links and `required_num_parents` set to how many.
 
     Args:
         registry (Dict): The registry.
@@ -697,15 +701,21 @@ def planned_skill_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str
         missing = [r for r in requires if r not in built]
         if missing:
             raise SystemExit(f"skill {skill_id} needs {', '.join(missing)}, which is not built")
+        needs = skill.get("needs")
+        some = isinstance(needs, int) and 0 < needs < len(requires)
         rows["character_skill_nodes_tables"].append({
             "key": node, "character_skill_key": key, "indent": str(skill.get("row", 2)), "tier": str(skill.get("tier", 0)), "points_on_creation": "0",
-            "required_num_parents": str(len(requires)), "visible_in_ui": "true",
+            "required_num_parents": str(needs if some else 0), "visible_in_ui": "true",
         })
+        for other in skill.get("exclusive", []):
+            if other in built:
+                rows["character_skill_nodes_skill_locks_tables"].append({"character_skill": key, "character_skill_node": f"{PREFIX}_skill_node_{other}", "level": "1"})
         rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
         for parent in requires:
             rows["character_skill_node_links_tables"].append({
                 "child_key": node, "parent_key": f"{PREFIX}_skill_node_{parent}", "initial_descent_tiers": "0", "parent_link_position": "1",
-                "child_link_position": "1", "parent_link_position_offset": "0.0000", "child_link_position_offset": "0.0000", "link_type": "REQUIRED",
+                "child_link_position": "1", "parent_link_position_offset": "0.0000", "child_link_position_offset": "0.0000",
+                "link_type": "SUBSET_REQUIRED" if some else "REQUIRED",
             })
         for level, level_effects in enumerate(skill.get("levels") or [[]], start=1):
             rows["character_skill_level_details_tables"].append({
