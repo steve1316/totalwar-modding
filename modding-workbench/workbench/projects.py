@@ -21,6 +21,9 @@ from core.json_format import write_json
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
 
+# Where a project keeps its model thumbnails unless its config names a `thumbs` folder, relative to its `helper_scripts`.
+DEFAULT_THUMBS = "_diag/workbench_thumbs"
+
 # The repo root: checkouts in the configs are relative to it.
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -281,6 +284,8 @@ class Project:
     readable: List[str]
     # Folders of the project's own model files, which live previews read before the vanilla packs.
     assets: List[str]
+    # The folder the page's model thumbnails are kept in.
+    thumbs: str
     # The project's running or last job.
     job: Job = field(init=False, repr=False)
 
@@ -302,7 +307,8 @@ class Project:
         return cls(key=os.path.basename(path)[:-len(".json")], name=config["name"], root=root, registry=os.path.join(root, config["registry"]),
                    gallery=os.path.join(root, config["gallery"]), gallery_next=os.path.join(root, config["gallery_next"]), jobs=config["jobs"],
                    tuning=config.get("tuning", {}), editable=config.get("editable", []), readable=config.get("readable", []),
-                   assets=[os.path.normpath(os.path.join(root, folder)) for folder in config.get("assets", [])])
+                   assets=[os.path.normpath(os.path.join(root, folder)) for folder in config.get("assets", [])],
+                   thumbs=os.path.join(root, config.get("thumbs", DEFAULT_THUMBS)))
 
     def read_registry(self) -> Dict:
         """The registry as it is on disk."""
