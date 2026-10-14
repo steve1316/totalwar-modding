@@ -1,9 +1,9 @@
-// The form editor behind the Stats tab's unit card: a form's stats, melee weapon, missile weapon and attributes, written as registry values
-// (dotted paths the project config lists as `editable`). The gallery's `manifest.editor` gives each form's values as built (`forms`) and the
-// attribute catalog (`attributes`).
+// The form editor behind the Stats tab's unit card: a form's stats, melee weapon, missile weapon, attributes and abilities, written as registry
+// values (dotted paths the project config lists as `editable`). The gallery's `manifest.editor` gives each form's values as built (`forms`) and the
+// attribute and ability catalogs (`attributes`, `abilities`).
 //
 // Unit stats are set for every form of a weapon (its base on foot; mounts add their vanilla difference) or for one form only (an override).
-// The melee weapon, missile values and attributes belong to the weapon. Edits show at once on the card: each panel number moves by the change of
+// The melee weapon, missile values, attributes and abilities belong to the weapon. Edits show at once on the card: each panel number moves by the change of
 // the value behind it. Saved edits keep showing until a rebuild bakes them into the gallery.
 
 // Unit stats: [field, label, panel stat]. `armour` is an armour value, the rest are land unit columns.
@@ -44,10 +44,10 @@ export class FormEditor {
   meleeValue(f, field) { const p = this.pending(), path = `weapons.${f.weapon}.melee.${field}`; return path in p ? p[path] : f.melee[field]; }
   missilePath(f, field) { return field === "ammo" ? `weapons.${f.weapon}.missile.ammo` : `weapons.${f.weapon}.missile.projectile.${field}`; }
   missileValue(f, field) { const p = this.pending(), path = this.missilePath(f, field); return path in p ? p[path] : f.missile[field]; }
-  // The attribute lists with the pending edits.
-  attributeLists(f) {
-    const p = this.pending(), base = `weapons.${f.weapon}.`;
-    return { added: p[base + "attributes"] || f.attributes, removed: p[base + "attributes_removed"] || f.attributes_removed };
+  // The weapon's added and removed lists of a kind ("attributes" or "abilities") with the pending edits.
+  lists(f, kind) {
+    const p = this.pending(), path = `weapons.${f.weapon}.${kind}`;
+    return { added: p[path] || f[kind] || [], removed: p[path + "_removed"] || f[kind + "_removed"] || [] };
   }
 
   // A panel with the pending edits applied, for the Stats tab. Units without edit data come back as they are.
@@ -59,12 +59,14 @@ export class FormEditor {
     stats.weapon_strength += this.meleeValue(f, "damage") - f.melee.damage + this.meleeValue(f, "ap_damage") - f.melee.ap_damage;
     if (f.missile) for (const [field, , stat] of MISSILE_FIELDS) if (stat) stats[stat] += this.missileValue(f, field) - f.missile[field];
     for (const k of Object.keys(stats)) stats[k] = Math.round(stats[k]);
-    const { added, removed } = this.attributeLists(f), catalog = this.editor.attributes;
-    const keys = new Set(panel.attributes.map(a => a.key));
-    f.attributes.filter(a => !added.includes(a)).forEach(a => keys.delete(a));
-    added.forEach(a => keys.add(a)); removed.forEach(a => keys.delete(a));
-    const attributes = [...keys].map(a => panel.attributes.find(x => x.key === a) || { key: a, name: catalog[a] ? catalog[a].name : a, text: catalog[a] ? catalog[a].text : "" });
-    return { ...panel, stats, attributes };
+    const out = { ...panel, stats };
+    for (const kind of ["attributes", "abilities"]) {
+      const { added, removed } = this.lists(f, kind), catalog = this.editor[kind] || {}, keys = new Set(panel[kind].map(a => a.key));
+      (f[kind] || []).filter(a => !added.includes(a)).forEach(a => keys.delete(a));
+      added.forEach(a => keys.add(a)); removed.forEach(a => keys.delete(a));
+      out[kind] = [...keys].map(a => panel[kind].find(x => x.key === a) || { key: a, name: a, text: "", ...catalog[a] });
+    }
+    return out;
   }
 
   // Records an edit and refreshes the previews.

@@ -31,6 +31,8 @@
   "weapons.*.missile.ammo",
   "weapons.*.attributes",
   "weapons.*.attributes_removed",
+  "weapons.*.abilities",
+  "weapons.*.abilities_removed",
   "weapons.*.props.*",
   "weapons.*.forms.*.props.*",
   "skills.*"
