@@ -114,9 +114,9 @@ export class StatsTab {
   openPicker(container, f, kind) {
     const { esc } = window.UnitPanel, art = this.studio.panelArt, box = this.picker, catalog = this.editor.editor[kind] || {};
     const rows = Object.entries(catalog).map(([key, a]) => {
-      const body = pickBody(kind, a, art), icon = kind === "abilities" ? (a.icon ? `<img loading="lazy" src="${art(a.icon)}" alt="">` : "<span></span>") : "";
+      const body = pickBody(kind, a, art), icon = a.icon ? `<img loading="lazy" src="${art(a.icon)}" alt="">` : "<span></span>";
       const find = `${a.name} ${key} ${plain(body.replace(/<[^>]+>/g, " "))}`.toLowerCase();
-      return `<button class="pick ${kind}" title="${esc(key)}" data-key="${esc(key)}" data-find="${esc(find)}">${icon}<span class="fx-body">${body}</span><span class="state"></span></button>`;
+      return `<button class="pick" title="${esc(key)}" data-key="${esc(key)}" data-find="${esc(find)}">${icon}<span class="fx-body">${body}</span><span class="state"></span></button>`;
     }).join("");
     box.innerHTML = `<div class="dialog pickbox"><div class="d-head"><b>${LISTS[kind][1]}</b><button class="mini" data-x="close">Done</button></div>
       <input data-f="find" placeholder="${LISTS[kind][2]}" autocomplete="off"><div class="note" data-count></div><div class="pick-list">${rows}</div></div>`;

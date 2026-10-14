@@ -68,10 +68,11 @@
     return list.length ? list.map(a => a.icon ? `<img loading="lazy" src="${art(a.icon)}" alt="${esc(a.name)}" ${tipAttr(abilityTipHtml(a, art))}>`
       : `<span class="noicon" ${tipAttr(abilityTipHtml(a, art))}>${esc(a.name)}</span>`).join("") : '<span class="none">No abilities</span>';
   }
-  // An attribute chip with its tooltip. `cls` marks it against a compared unit.
+  // An attribute chip with its icon and tooltip. `cls` marks it against a compared unit.
   function attributeHtml(a, art, cls = "") {
-    return `<span class="${cls}" ${tipAttr(`<div class="tip-head"><div><b>${esc(a.name)}</b><div class="tip-type">Attribute</div></div></div>
-      ${a.text ? `<div class="tip-text">${markupHtml(a.text, art)}</div>` : ""}`)}>${esc(a.name)}</span>`;
+    const icon = a.icon ? `<img loading="lazy" src="${art(a.icon)}" alt="">` : "";
+    return `<span class="${cls}" ${tipAttr(`<div class="tip-head">${icon}<div><b>${esc(a.name)}</b><div class="tip-type">Attribute</div></div></div>
+      ${a.text ? `<div class="tip-text">${markupHtml(a.text, art)}</div>` : ""}`)}>${icon}${esc(a.name)}</span>`;
   }
 
   // One floating tooltip for the page: it follows the hovered or tapped element and stays inside the window.
