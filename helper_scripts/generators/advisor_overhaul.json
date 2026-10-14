@@ -55,6 +55,23 @@
    "spam_click_vo_enabled": "false"
   }
  },
+ "armour_types": {
+  "wh2_main_heavy_metal_80": {
+   "armour_value": "80",
+   "audio_type": "heavy_metal",
+   "key": "wh2_main_heavy_metal_80"
+  },
+  "wh2_main_leather_20": {
+   "armour_value": "20",
+   "audio_type": "leather",
+   "key": "wh2_main_leather_20"
+  },
+  "wh2_main_plate_50": {
+   "armour_value": "50",
+   "audio_type": "plate",
+   "key": "wh2_main_plate_50"
+  }
+ },
  "art": {
   "age": "0",
   "art_set_id": "wh_dlc05_art_set_emp_grey_wizard_01",
@@ -2267,6 +2284,52 @@
   "wh_main_vmp_vampire_rebels",
   "wh_main_vmp_waldenhof"
  ],
+ "melee_weapons": {
+  "wh3_dlc20_chs_sword_caster_hero_mtze": {
+   "ap_damage": "95",
+   "audio_type": "sword",
+   "bonus_v_infantry": "0",
+   "bonus_v_large": "0",
+   "building_damage_multiplier": "0.7500",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "220",
+   "ignition_amount": "0.0000",
+   "is_magical": "true",
+   "is_spell": "false",
+   "key": "wh3_dlc20_chs_sword_caster_hero_mtze",
+   "melee_attack_interval": "4.0000",
+   "melee_weapon_type": "sword",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "3",
+   "splash_attack_power_multiplier": "1.3000",
+   "splash_attack_target_size": "medium",
+   "weapon_length": "3.0000"
+  },
+  "wh_main_emp_sword_caster": {
+   "ap_damage": "90",
+   "audio_type": "sword",
+   "bonus_v_infantry": "0",
+   "bonus_v_large": "0",
+   "building_damage_multiplier": "0.7500",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "210",
+   "ignition_amount": "0.0000",
+   "is_magical": "false",
+   "is_spell": "false",
+   "key": "wh_main_emp_sword_caster",
+   "melee_attack_interval": "4.0000",
+   "melee_weapon_type": "sword",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "3",
+   "splash_attack_power_multiplier": "1.0000",
+   "splash_attack_target_size": "medium",
+   "weapon_length": "3.0000"
+  }
+ },
  "missile_weapons": {
   "wh2_dlc13_emp_huntsmarshal_arrow": {
    "audio_type": "bow_LH",
@@ -2877,6 +2940,31 @@
    ],
    "version": "7"
   },
+  "melee_weapons_tables": {
+   "header": [
+    "key",
+    "bonus_v_large",
+    "bonus_v_infantry",
+    "damage",
+    "ap_damage",
+    "weapon_length",
+    "melee_weapon_type",
+    "audio_type",
+    "splash_attack_target_size",
+    "splash_attack_max_attacks",
+    "splash_attack_power_multiplier",
+    "building_damage_multiplier",
+    "ignition_amount",
+    "is_magical",
+    "contact_phase",
+    "collision_attack_max_targets",
+    "collision_attack_max_targets_cooldown",
+    "melee_attack_interval",
+    "scaling_damage",
+    "is_spell"
+   ],
+   "version": "25"
+  },
   "missile_weapons_tables": {
    "header": [
     "key",
@@ -2967,6 +3055,14 @@
     "unit_key"
    ],
    "version": "0"
+  },
+  "unit_armour_types_tables": {
+   "header": [
+    "key",
+    "armour_value",
+    "audio_type"
+   ],
+   "version": "6"
   },
   "unit_attributes_groups_tables": {
    "header": [

@@ -8,6 +8,13 @@ How a pair reaches the battle map:
   pair's, whose battle variant carries the weapon props (and the disc).
 - A weapon with a `missile` gets its own missile weapon and projectile, copied from a vanilla template with the registry's values.
 
+How a weapon's stats are set (all optional, written by the modding workbench's Edit tab):
+- `melee`: its own melee weapon, a copy of the vanilla `template` row with the given values (`damage`, `ap_damage`, `bonus_v_large`, ...).
+- `stats`: its base land unit values on foot (`STAT_COLUMNS`, plus `armour` as an armour value, written as its own armour type). Mounted pairs add
+  the vanilla mounted-minus-foot difference to them, as for the default stats.
+- `forms`: mount -> values that replace the computed ones for that one pair.
+- `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away.
+
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
 portrait camera) follows the vanilla Grey Wizard. His 2D portrait, unit card and info picture are cut from the vanilla Advisor bust (the registry's
@@ -26,9 +33,10 @@ Build:
 import argparse
 import json
 import os
+import shutil
 import sys
 import zlib
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from PIL import Image
 
@@ -148,8 +156,11 @@ TABLES = [
     "campaign_mount_animation_set_overrides_tables", "ancillaries_tables", "ancillary_info_tables", "ancillaries_included_agent_subtypes_tables",
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
-    "projectiles_tables", *UNIT_ROW_TABLES,
+    "projectiles_tables", "melee_weapons_tables", "unit_armour_types_tables", *UNIT_ROW_TABLES,
 ]
+
+# Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
+STAT_COLUMNS = ["melee_attack", "melee_defence", "charge_bonus", "morale", "bonus_hit_points"]
 
 # Template tables -> the column naming the template unit.
 TEMPLATE_TABLES = {"land_units_tables": "key", "main_units_tables": "land_unit", "units_custom_battle_permissions_tables": "unit",
@@ -230,6 +241,11 @@ def refresh() -> None:
     data["missile_weapons"] = {r["key"]: r for r in loaded["missile_weapons_tables"] if r["key"] in missiles}
     projectiles = {r["default_projectile"] for r in data["missile_weapons"].values()}
     data["projectiles"] = {r["key"]: r for r in loaded["projectiles_tables"] if r["key"] in projectiles}
+    melees = {w["melee"]["template"] for w in registry["weapons"].values() if "melee" in w}
+    melees |= {r["primary_melee_weapon"] for r in data["templates"]["land_units_tables"]}
+    data["melee_weapons"] = {r["key"]: r for r in loaded["melee_weapons_tables"] if r["key"] in melees}
+    armours = {r["armour"] for r in data["templates"]["land_units_tables"]}
+    data["armour_types"] = {r["key"]: r for r in loaded["unit_armour_types_tables"] if r["key"] in armours}
     data["portraits"] = vanilla_portraits(LOOK_ART_SET)
     json.dump(data, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
     print(f"kept {len(data['templates']['land_units_tables'])} template units, {len(data['factions'])} factions in {DATA}")
@@ -395,7 +411,87 @@ def number(value: str) -> float:
     return float(value) if value else 0.0
 
 
-def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount: Dict, templates: Dict, advisor: Dict[str, str]) -> Dict[str, str]:
+def table_value(value: Any) -> str:
+    """A registry value as a table cell: booleans as `true`/`false`, whole numbers plain, other numbers with four decimals like vanilla.
+
+    Args:
+        value (Any): The value.
+
+    Returns:
+        str: The cell.
+    """
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if isinstance(value, float) and not value.is_integer():
+        return f"{value:.4f}"
+    if isinstance(value, float):
+        return str(int(value))
+    return str(value)
+
+
+def melee_key(weapon_key: str) -> str:
+    """The key of a weapon's own melee weapon.
+
+    Args:
+        weapon_key (str): The weapon key.
+
+    Returns:
+        str: The key.
+    """
+    return f"{PREFIX}_{weapon_key}_melee"
+
+
+def melee_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
+    """Adds a melee weapon for every weapon with a `melee`: a copy of the vanilla template's row under his own key, with the registry's values.
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+
+    Raises:
+        SystemExit: When a template is not in the kept rows (run `--refresh`).
+    """
+    for weapon_key, weapon in registry["weapons"].items():
+        if "melee" not in weapon:
+            continue
+        melee = dict(weapon["melee"])
+        template = melee.pop("template")
+        if template not in data.get("melee_weapons", {}):
+            raise SystemExit(f"melee template {template} is not kept, run with --refresh")
+        rows["melee_weapons_tables"].append(dict(data["melee_weapons"][template], key=melee_key(weapon_key), **{k: table_value(v) for k, v in melee.items()}))
+
+
+def armour_row(row: Dict[str, str], weapon: Dict, mount_key: str, mount: Dict, templates: Dict, armour_types: Dict) -> Optional[Dict[str, str]]:
+    """A pair's own armour type when its weapon sets an armour value: the form's own value, else the weapon's base plus the vanilla mounted-minus-foot
+    difference. The land unit row is pointed at it.
+
+    Args:
+        row (Dict[str, str]): The pair's land unit row, changed in place.
+        weapon (Dict): The registry weapon.
+        mount_key (str): The mount key.
+        mount (Dict): The registry mount.
+        templates (Dict): Template land units by key.
+        armour_types (Dict): The kept armour type rows by key.
+
+    Returns:
+        Optional[Dict[str, str]]: The armour type row, or None when the weapon sets no armour.
+    """
+    form, base = weapon.get("forms", {}).get(mount_key, {}).get("armour"), weapon.get("stats", {}).get("armour")
+    if form is None and base is None:
+        return None
+    value = form
+    if value is None:
+        value = base
+        if "template" in mount:
+            mounted, foot = templates[mount["template"]], templates[mount["template_foot"]]
+            value += number(armour_types[mounted["armour"]]["armour_value"]) - number(armour_types[foot["armour"]]["armour_value"])
+    template = armour_types[row["armour"]]
+    row["armour"] = f"{row['key']}_armour"
+    return dict(template, key=row["armour"], armour_value=table_value(int(value)))
+
+
+def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount_key: str, mount: Dict, templates: Dict, advisor: Dict[str, str]) -> Dict[str, str]:
     """A pair's land unit row.
 
     Args:
@@ -403,6 +499,7 @@ def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount: Dic
         weapon_key (str): The weapon key.
         weapon (Dict): The registry weapon.
         set_name (str): The battle animation set.
+        mount_key (str): The mount key.
         mount (Dict): The registry mount.
         templates (Dict): Template land units by key.
         advisor (Dict[str, str]): His foot land unit.
@@ -410,9 +507,11 @@ def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount: Dic
     Returns:
         Dict[str, str]: The row.
     """
+    # The weapon's base stats replace his foot unit's before the mount's difference is added.
+    advisor = dict(advisor, **{c: table_value(v) for c, v in weapon.get("stats", {}).items() if c in STAT_COLUMNS})
     if "template" not in mount:
         row = dict(advisor, key=key, man_animation=set_name, shield=weapon["shield"], attribute_group=key)
-        return with_missile(row, weapon_key, weapon)
+        return with_form(with_missile(row, weapon_key, weapon), weapon_key, weapon, mount_key)
     mounted, foot = templates[mount["template"]], templates[mount["template_foot"]]
     row = dict(mounted)
     for column in IDENTITY_COLUMNS + ["historical_description_text", "short_description_text"]:
@@ -426,7 +525,25 @@ def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount: Dic
     if mounted["mount"]:
         row["man_entity"] = RIDER_ENTITY
     row.update({"key": key, "man_animation": set_name, "shield": weapon["shield"], "attribute_group": key})
-    return with_missile(row, weapon_key, weapon)
+    return with_form(with_missile(row, weapon_key, weapon), weapon_key, weapon, mount_key)
+
+
+def with_form(row: Dict[str, str], weapon_key: str, weapon: Dict, mount_key: str) -> Dict[str, str]:
+    """Gives a land unit row its weapon's own melee weapon and the values its form sets for this one pair.
+
+    Args:
+        row (Dict[str, str]): The land unit row, changed in place.
+        weapon_key (str): The weapon key.
+        weapon (Dict): The registry weapon.
+        mount_key (str): The mount key.
+
+    Returns:
+        Dict[str, str]: The row.
+    """
+    if "melee" in weapon:
+        row["primary_melee_weapon"] = melee_key(weapon_key)
+    row.update({c: table_value(v) for c, v in weapon.get("forms", {}).get(mount_key, {}).items() if c in STAT_COLUMNS})
+    return row
 
 
 def with_missile(row: Dict[str, str], weapon_key: str, weapon: Dict) -> Dict[str, str]:
@@ -557,7 +674,8 @@ def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]
         template = data["missile_weapons"][missile["template"]]
         key = missile_key(weapon_key, weapon)
         rows["missile_weapons_tables"].append(dict(template, key=key, default_projectile=key))
-        rows["projectiles_tables"].append(dict(data["projectiles"][template["default_projectile"]], key=key, **missile["projectile"]))
+        rows["projectiles_tables"].append(dict(data["projectiles"][template["default_projectile"]], key=key,
+                                               **{k: table_value(v) for k, v in missile["projectile"].items()}))
 
 
 def build() -> None:
@@ -590,13 +708,17 @@ def build() -> None:
         variant = foot_variant(weapon_key) + ("_" + mount_key if "variant_props" in mount else "")
         combos.append((weapon_key, mount_key, ancillary))
 
-        rows["land_units_tables"].append(land_unit(key, weapon_key, weapon, weapon["sets"][mount_key], mount, template_units, advisor))
+        land = land_unit(key, weapon_key, weapon, weapon["sets"][mount_key], mount_key, mount, template_units, advisor)
+        armour = armour_row(land, weapon, mount_key, mount, template_units, data["armour_types"])
+        if armour:
+            rows["unit_armour_types_tables"].append(armour)
+        rows["land_units_tables"].append(land)
         # Voice, campaign cap and portrait camera stay his own on every mount, since the disc template is a Chaos Sorcerer.
         main = dict(template_main[template], **{k: template_main[FOOT_TEMPLATE][k] for k in MAIN_IDENTITY_COLUMNS})
         rows["main_units_tables"].append(dict(main, unit=key, land_unit=key, unique_index=str(unique_index), caste="hero"))
         unique_index += 1
         rows["unit_attributes_groups_tables"].append({"group_name": key})
-        attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - SKIPPED_ATTRIBUTES
+        attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - SKIPPED_ATTRIBUTES - set(weapon.get("attributes_removed", []))
         rows["unit_attributes_to_groups_junctions_tables"] += [{"attribute": a, "attribute_group": key} for a in sorted(attributes)]
         rows["land_units_to_unit_abilites_junctions_tables"].append({"ability": "wh3_main_unit_passive_single_entity", "land_unit": key, "culture": "*"})
         for table, column in UNIT_ROW_TABLES.items():
@@ -646,6 +768,7 @@ def build() -> None:
     skill_rows(registry, rows, texts)
     art_rows(registry, data, rows)
     missile_rows(registry, data, rows)
+    melee_rows(registry, data, rows)
     check_duplicates(rows)
     check_loc(texts)
 
@@ -701,7 +824,7 @@ def check_loc(texts: List[Tuple[str, str]]) -> None:
 
 
 def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:
-    """Writes one table file of the mod.
+    """Writes one table file of the mod. A table with no rows (a weapon stat nothing sets yet) is left out, and its old file removed.
 
     Args:
         table (str): The table name.
@@ -709,6 +832,9 @@ def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:
         spec (Dict): The table's kept header and version.
     """
     folder = os.path.join(MOD, "db", table)
+    if not rows:
+        shutil.rmtree(folder, ignore_errors=True)
+        return
     os.makedirs(folder, exist_ok=True)
     header = spec["header"]
     lines = ["\t".join(header), "\t".join([f"#{table};{spec['version']};db/{table}/{FILE}"] + [""] * (len(header) - 1))]

@@ -12,7 +12,7 @@ from typing import Dict, List, Tuple
 from core.asset_source import AssetSource, norm
 from core.extract_cache import extracted_tree
 from core.utilities import extract_tsv_data, load_tsv_data
-from generators.advisor_overhaul import MOD, pairs, unit_key
+from generators.advisor_overhaul import MOD, STAT_COLUMNS, pairs, unit_key
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
 from ttc.ttc_cards import CARD_FOLDER
 from ttc.ttc_data import LOC_NAME_PREFIX, VANILLA_LOC_PACK, loc_name, read_loc_names
@@ -36,6 +36,10 @@ UI_PACKS = re.compile(r"^ui2?\.pack$")
 
 # Gallery folder the art is copied into, mirroring the pack paths.
 ART_FOLDER = "art"
+
+# Melee weapon and projectile columns the Edit tab shows.
+MELEE_COLUMNS = ["damage", "ap_damage", "bonus_v_large", "bonus_v_infantry"]
+PROJECTILE_COLUMNS = ["damage", "ap_damage", "effective_range", "base_reload_time"]
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,6 +179,50 @@ class PanelBuilder:
             "attributes": attributes,
         }
 
+    def form_values(self, key: str, weapon_key: str, mount_key: str, registry: Dict) -> Dict:
+        """The values an Advisor form's Edit tab starts from: its land unit stats, armour value, melee weapon and missile values as built, and
+        which of them its own form overrides.
+
+        Args:
+            key (str): The form's unit key.
+            weapon_key (str): Its weapon.
+            mount_key (str): Its mount.
+            registry (Dict): The registry.
+
+        Returns:
+            Dict: `weapon`, `mount`, `stats` (`STAT_COLUMNS` and `armour`), `melee` (with its current `key`), `melee_template`, `own_melee` (whether
+            the weapon has its own melee weapon yet), `missile` (or None, with `ammo`), `overrides` (the fields its form sets), and the weapon's
+            `attributes` and `attributes_removed`.
+        """
+        land = self.land[self.main[key]["land_unit"]]
+        num = lambda value: float(value) if value not in ("", None) else 0.0
+        stats = {c: num(land.get(c)) for c in STAT_COLUMNS}
+        stats["armour"] = num(self.tables.armour.get(land["armour"], {}).get("armour_value"))
+        melee_row = self.tables.weapons.get(land["primary_melee_weapon"], {})
+        missile = None
+        if land.get("primary_missile_weapon"):
+            projectile = self.tables.projectiles.get(self.tables.missile_weapons.get(land["primary_missile_weapon"], {}).get("default_projectile", ""), {})
+            missile = dict({c: num(projectile.get(c)) for c in PROJECTILE_COLUMNS}, ammo=num(land.get("primary_ammo")))
+        weapon = registry["weapons"][weapon_key]
+        return {"weapon": weapon_key, "mount": mount_key, "stats": stats, "melee": dict({c: num(melee_row.get(c)) for c in MELEE_COLUMNS}, key=land["primary_melee_weapon"]),
+                "melee_template": weapon.get("melee", {}).get("template", land["primary_melee_weapon"]), "own_melee": "melee" in weapon, "missile": missile,
+                "overrides": sorted(weapon.get("forms", {}).get(mount_key, {})), "attributes": weapon.get("attributes", []),
+                "attributes_removed": weapon.get("attributes_removed", [])}
+
+    def attribute_catalog(self) -> Dict[str, Dict[str, str]]:
+        """Every unit attribute with an in-game name, for the Edit tab's checklist.
+
+        Returns:
+            Dict[str, Dict[str, str]]: Attribute key -> `name` and `text` (its tooltip), sorted by name.
+        """
+        catalog = {}
+        for loc_key in self.loc:
+            if loc_key.startswith(ATTRIBUTE_PREFIX):
+                name, _, text = loc_name(ATTRIBUTE_PREFIX, loc_key[len(ATTRIBUTE_PREFIX):], self.loc).partition("||")
+                if name:
+                    catalog[loc_key[len(ATTRIBUTE_PREFIX):]] = {"name": name, "text": text}
+        return dict(sorted(catalog.items(), key=lambda item: item[1]["name"]))
+
     def copy_art(self, out: str) -> int:
         """Copies every noted art file into the gallery's `art/` folder.
 
@@ -193,18 +241,20 @@ class PanelBuilder:
         return len(files)
 
 
-def build_panels(registry: Dict, out: str) -> Tuple[Dict[str, Dict], Dict[str, str]]:
-    """The panels of every Advisor form and its vanilla equivalent, with their art copied into the gallery.
+def build_panels(registry: Dict, out: str) -> Tuple[Dict[str, Dict], Dict[str, str], Dict]:
+    """The panels of every Advisor form and its vanilla equivalent, with their art copied into the gallery, and the Edit tab's data.
 
     Args:
         registry (Dict): The registry.
         out (str): The gallery folder.
 
     Returns:
-        Tuple[Dict[str, Dict], Dict[str, str]]: Panels by unit key, and Advisor unit key -> vanilla unit key.
+        Tuple[Dict[str, Dict], Dict[str, str], Dict]: Panels by unit key, Advisor unit key -> vanilla unit key, and the Edit tab's data
+        (`forms`: unit key -> `PanelBuilder.form_values`, and `attributes`: the attribute catalog).
     """
     pairs_to_vanilla = comparisons(registry)
     builder = PanelBuilder(load_tables(), load_loc())
     panels = {key: builder.panel(key) for key in list(pairs_to_vanilla) + list(dict.fromkeys(pairs_to_vanilla.values()))}
-    print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files")
-    return panels, pairs_to_vanilla
+    editor = {"forms": {unit_key(w, m): builder.form_values(unit_key(w, m), w, m, registry) for w, m in pairs(registry)}, "attributes": builder.attribute_catalog()}
+    print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes")
+    return panels, pairs_to_vanilla, editor

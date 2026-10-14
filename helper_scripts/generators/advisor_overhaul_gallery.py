@@ -356,7 +356,8 @@ def build(out: str) -> Exporter:
     variants = {r["variant_name"]: r for r in read_table(MOD, "variants_tables") + tables["variants_tables"]}
     packs = [os.path.join(VANILLA_DATA_DIR, p) for p in ANIM_PACKS]
     exporter = Exporter(out, AssetSource([MOD] + ([PREVIEWS] if os.path.isdir(PREVIEWS) else []), packs))
-    exporter.panels, versus = build_panels(registry, out)
+    exporter.panels, versus, editor = build_panels(registry, out)
+    exporter.extra["editor"] = editor
 
     def pair_variant(weapon: str, mount: str) -> str:
         return variant_path(variants[uniforms[uniform_key(weapon, mount)]["battle_filename"]]["variant_filename"])
