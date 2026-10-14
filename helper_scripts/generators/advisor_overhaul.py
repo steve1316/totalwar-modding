@@ -12,7 +12,8 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
 - `melee`: its own melee weapon, a copy of the vanilla `template` row with the given values (`damage`, `ap_damage`, `bonus_v_large`, ...).
 - `stats`: its base land unit values on foot (`STAT_COLUMNS`, plus `armour` as an armour value, written as its own armour type). Mounted pairs add
   the vanilla mounted-minus-foot difference to them, as for the default stats.
-- `forms`: mount -> values that replace the computed ones for that one pair.
+- `forms`: mount -> values that replace the computed ones for that one pair, and `props`: prop slots whose model that pair uses instead (its own
+  variant then).
 - `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away.
 
 His planned skills are the registry's `skills` (written by the workbench's Skills tab): id -> `name`, `description`, `icon` (a file in
@@ -802,7 +803,8 @@ def build() -> None:
         template = mount.get("template", FOOT_TEMPLATE)
         ancillary = rig_key(weapon_key, mount_key)
         uniform = uniform_key(weapon_key, mount_key)
-        variant = foot_variant(weapon_key) + ("_" + mount_key if "variant_props" in mount else "")
+        form_props = weapon.get("forms", {}).get(mount_key, {}).get("props", {})
+        variant = foot_variant(weapon_key) + ("_" + mount_key if "variant_props" in mount or form_props else "")
         combos.append((weapon_key, mount_key, ancillary))
 
         land = land_unit(key, weapon_key, weapon, weapon["sets"][mount_key], mount_key, mount, template_units, advisor)
@@ -851,7 +853,7 @@ def build() -> None:
                                                                              "rider_animation_set": rider, "vfx_filter_override": "0"})
         texts.append((f"ancillaries_onscreen_name_{ancillary}", f"{weapon['name']}, {mount['name']}"))
         texts.append((f"ancillaries_colour_text_{ancillary}", f"{weapon['description']} {mount['description']}"))
-        variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {})))
+        variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {}), **form_props))
 
     for variant in variants:
         rows["variants_tables"].append({"variant_name": variant, "variant_filename": variant, "mount_scale": "1.0000", "scale": "1.1500", "scale_variation": "0.0000"})
