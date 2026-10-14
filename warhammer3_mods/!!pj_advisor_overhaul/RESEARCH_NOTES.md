@@ -209,6 +209,19 @@ staff shot.
     rebuilds the strip. It is still used after a switch in the character panel, once the panel closes, when the mouse is not over the card. `[game]`
   - **Picker:** the options stay UI root children, placed from the button's screen position. On the map they stay open after the mouse leaves
     the strip and the strip hides. If our button lands on a shown sibling, the row's `Layout()` is called and logged. `[game]`
+  - **Embedded Advisor (`STRIP_FOR_EMBEDDED`, on by default, 2026-10-13).** The strip button is made from `ui/pj_advisor_overhaul/
+    loadout_strip_button.twui.xml`, a byte copy of vanilla `square_medium_button` plus one `ContextVisibilitySetter` on `CcoCampaignCharacter`
+    (as Disband): `FactionContext.IsPlayersFaction && AgentSubtypeRecordContext.Key == "pj_advisor"`. The first try used `CcoCampaignUnit` with
+    `IsContextValid(CharacterContext) && CharacterContext...`. With either, the button was made but never shown, even with the Advisor himself
+    selected. So a child added to the strip by script gets no card context, and its setter hides it. The attempt was removed (2026-10-13): an
+    embedded Advisor uses the button in his character panel. `[game]` What the attempt did: it was made whenever the selected local character is the Advisor or leads (or sits in) an army with him embedded. The game
+    shows it only on his card, and the script never calls `SetVisible` on it. With the switch off, an embedded Advisor gets no strip button. `[untested]`
+    - **Vanilla sources.** The strip's own `dev_button_kill_character` uses `CcoCampaignUnit` with `IsContextValid(CharacterContext)`
+      (units_panel.twui.xml), so strip children get the hovered card's unit. Disband uses `CcoCampaignCharacter` with `IsGovernor() == false &&
+      HasChaoticPlanSchemerForce == false`. `FactionContext.IsPlayersFaction && AgentSubtypeRecordContext.Key == "wh3_main_sla_nkari"` is the
+      N'Kari button in character_information.twui.xml. `CharacterContext.FactionContext` chains appear in cathay_caravans.twui.xml. `[data]`
+    - **Click.** The click takes the selected character when he is the Advisor, else the first local Advisor in his army (more than one is
+      logged). A switch then sends `Select` without clearing for the selected character, the general when the Advisor is embedded. `[untested]`
 - **Cause: a `%` in loc text read through `common.get_localised_string` (runs 1 and 4-8, fixed in run9).** Deferring the click (run6) and short option
   names (run8) changed nothing. The log always stops right after the first option's "created ... got Id" line. The next step reads
   `pj_advisor_overhaul_ui_weapon_option`, whose loc text was `Weapon: %s`. After that, `out` stops writing for every script and `is_uicomponent`
