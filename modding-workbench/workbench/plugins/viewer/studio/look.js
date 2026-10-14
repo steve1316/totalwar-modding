@@ -5,14 +5,14 @@
 import { stem } from "./live_models.js";
 import { Thumbnails } from "./thumbs.js";
 
-// Models a search lists at most.
-const MODEL_HITS = 30;
+// Rows the model list adds at a time: the first ones when it opens, then more as it scrolls near its end.
+const LIST_CHUNK = 60;
 
 // Milliseconds a search waits for typing to pause, so thumbnails are only drawn for what is searched in the end.
 const TYPING_PAUSE = 300;
 
 // Milliseconds the pointer rests on a search hit before he tries it on, so passing over the list loads nothing.
-const HOVER_PAUSE = 150;
+const HOVER_PAUSE = 1000;
 
 // The slot a hovered piece is tried on in.
 const HOVER_SLOT = "piece_hover";
@@ -28,6 +28,8 @@ export class LookTab {
     // `adding` is "outfit" or "piece" while its model search is open, `filter` its search text, `hovering` the search hit he is trying on.
     this.studio = studio; this.adding = null; this.filter = ""; this.hovering = null;
     this.look = studio.manifest.editor && studio.manifest.editor.look;
+    // The models a search lists, by name.
+    this.models = this.look ? [...this.look.models].sort((a, b) => stem(a).localeCompare(stem(b))) : [];
     this.thumbs = new Thumbnails(studio);
     // The stage shows the chosen outfit, head and pieces.
     studio.live.sources.push(f => this.wanted(f));
@@ -83,27 +85,37 @@ export class LookTab {
     return failed ? `<div class="note warn">No preview: ${esc(live.failed.get(failed))}. It still builds on Rebuild.</div>` : "";
   }
 
-  // The model search of "+ Another outfit" or "+ Add a piece".
+  // The model list of "+ Another outfit" or "+ Add a piece": every humanoid model by name, narrowed by the search words.
   search(f) {
     const { esc } = window.UnitPanel, box = document.createElement("div");
     box.className = "picker";
-    box.innerHTML = `<input class="attrSearch" placeholder="Search the game's humanoid models (hat, helmet, cape, wizard...)" value="${esc(this.filter)}"><div class="hits"></div>`;
-    const input = box.querySelector("input"), hits = box.querySelector(".hits");
+    box.innerHTML = `<input class="attrSearch" placeholder="Search the game's humanoid models (hat, helmet, cape, wizard...)" value="${esc(this.filter)}">
+      <div class="note look-count"></div><div class="hits look-hits"></div>`;
+    const input = box.querySelector("input"), hits = box.querySelector(".hits"), count = box.querySelector(".look-count");
+    let found = [], shown = 0;
+    // Adds the next rows of the found models.
+    const more = () => {
+      const rows = found.slice(shown, shown + LIST_CHUNK);
+      shown += rows.length;
+      hits.insertAdjacentHTML("beforeend", rows.map(p => `<button class="look-hit" data-model="${esc(p)}"><img class="thumb" data-thumb="${esc(p)}" alt="">
+        <span><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(3, -1).join("/"))}</span></span></button>`).join(""));
+      this.thumbs.fill(hits);
+    };
     const list = () => {
       // New rows replace the hovered one without a mouseleave.
       this.hover(null);
       this.filter = input.value; const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
-      const found = terms.length ? this.look.models.filter(p => terms.every(w => p.includes(w))).slice(0, MODEL_HITS) : [];
-      hits.innerHTML = found.map(p => `<button class="look-hit" data-model="${esc(p)}"><img class="thumb" data-thumb="${esc(p)}" alt="">
-        <span><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(3, -1).join("/"))}</span></span></button>`).join("")
-        || (terms.length ? '<div class="note">No model matches.</div>' : "");
-      this.thumbs.fill(hits);
-      hits.querySelectorAll("[data-model]").forEach(b => {
-        b.onclick = () => this.pick(f, b.dataset.model);
-        b.onmouseenter = () => this.hover(b.dataset.model);
-        b.onmouseleave = () => this.hover(null);
-      });
+      found = this.models.filter(p => terms.every(w => p.includes(w))); shown = 0;
+      count.textContent = `${found.length} of ${this.models.length} models. Rest the pointer on one for a second to try it on.`;
+      hits.innerHTML = found.length ? "" : '<div class="note">No model matches.</div>';
+      hits.scrollTop = 0; more();
     };
+    hits.onscroll = () => { if (shown < found.length && hits.scrollTop + hits.clientHeight > hits.scrollHeight - 400) more(); };
+    // One listener for every row, the ones added later included.
+    const row = e => e.target.closest && e.target.closest("[data-model]");
+    hits.onclick = e => { const b = row(e); if (b) this.pick(f, b.dataset.model); };
+    hits.onmouseover = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(b.dataset.model); };
+    hits.onmouseout = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(null); };
     input.oninput = () => { clearTimeout(this.typing); this.typing = setTimeout(list, TYPING_PAUSE); };
     list(); setTimeout(() => input.focus());
     return box;
