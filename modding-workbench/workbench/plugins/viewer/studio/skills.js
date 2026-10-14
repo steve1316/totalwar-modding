@@ -1,7 +1,9 @@
 // The Skills stage and inspector tab: the unit's skill tree laid out like the game's (rows of tiers, links between them), with the project's
 // planned skills (registry `skills`, read through the API's `registry` values) next to the fixed ones the generator makes (`manifest.editor.skills`).
-// A planned skill is a Plan (the workbench only) or Build (the generator writes it). Tapping an empty cell in a planning row adds a skill there;
-// tapping a skill opens it in the inspector. Each change is a registry edit of the whole skill (`skills.<id>`), saved by the Jobs bar.
+// A planned skill is a Draft (kept in the workbench only) or In game (`build`: the next Rebuild adds it to the mod). A skill can need all of
+// some skills (a chain) or any N of them (`needs`), and can be exclusive with others: taking one locks the rest, both ways. Tapping an empty cell
+// in a planning row adds a skill there, tapping a skill opens it in the inspector. Each change is a registry edit of the whole skill
+// (`skills.<id>`), saved by the Jobs bar.
 
 // Rows a tree has, and the first row planned skills may use (the rows above hold the fixed skills).
 const ROWS = 6;
@@ -37,7 +39,10 @@ export class SkillsTab {
     }
     return all;
   }
-  put(id, skill) { this.studio.edits.registry[`skills.${id}`] = skill; this.studio.changed(); this.refresh(); }
+  // Whether a skill needs only some of the skills it lists.
+  anyOf(s) { return typeof s.needs === "number" && s.needs < (s.requires || []).length; }
+  // Records a skill and redraws a tick later: redrawing inside a change event pulls the focused input out mid-blur.
+  put(id, skill) { this.studio.edits.registry[`skills.${id}`] = skill; this.studio.changed(); setTimeout(() => this.refresh()); }
   refresh() { this.renderTree(); if (this.container) this.render(this.container); }
   art(path) { return this.studio.panelArt(path); }
   iconPath(name) { return name ? (name.includes("/") ? name : `ui/campaign ui/skills/${name}`).toLowerCase() : ""; }
@@ -71,16 +76,15 @@ export class SkillsTab {
     this.drawLinks(skills);
   }
 
-  // Lines from each skill to the skills it needs.
+  // Lines from each skill to the skills it needs (solid for all of them, dashed for any N of them), and dotted lines between exclusive skills.
   drawLinks(skills) {
     const svg = this.host.querySelector(".links"), box = this.host.getBoundingClientRect();
     svg.setAttribute("width", this.host.scrollWidth); svg.setAttribute("height", this.host.scrollHeight);
     const centre = id => { const el = this.host.querySelector(`[data-id="${CSS.escape(id)}"] .ring`); if (!el) return null;
       const r = el.getBoundingClientRect(); return [r.left - box.left + this.host.scrollLeft + r.width / 2, r.top - box.top + this.host.scrollTop + r.height / 2]; };
-    svg.innerHTML = Object.entries(skills).flatMap(([id, s]) => (s.requires || []).map(parent => {
-      const a = centre(parent), b = centre(id);
-      return a && b ? `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" />` : "";
-    })).join("");
+    const line = (from, to, cls) => { const a = centre(from), b = centre(to); return a && b ? `<line class="${cls}" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" />` : ""; };
+    svg.innerHTML = Object.entries(skills).flatMap(([id, s]) => (s.requires || []).map(parent => line(parent, id, this.anyOf(s) ? "any" : "all"))
+      .concat((s.exclusive || []).filter(other => other > id).map(other => line(id, other, "lock")))).join("");
   }
 
   onStageClick(e) {
@@ -105,8 +109,10 @@ export class SkillsTab {
     if (!this.enabled()) { container.innerHTML = '<div class="note">This project has no skill data.</div>'; return; }
     if (!s) {
       const counts = Object.values(skills).reduce((c, x) => (c[x.build ? "build" : "plan"]++, c), { build: 0, plan: 0 });
-      container.innerHTML = `<div class="note">Tap a + cell in rows ${FIRST_PLAN_ROW + 1} to ${ROWS} to plan a skill, or tap a skill to edit it.
-        Gold rings are built into the mod, dashed rings are plans only. ${counts.build} built, ${counts.plan} planned.</div>`;
+      container.innerHTML = `<div class="note">Tap a + cell in rows ${FIRST_PLAN_ROW + 1} to ${ROWS} to plan a skill, or tap a skill to edit it.</div>
+        <div class="note">Gold rings are <b>In game</b>: the next Rebuild adds them to the mod. Dashed rings are <b>Drafts</b>, kept here only.
+        ${counts.build} in game, ${counts.plan} drafts.</div>
+        <div class="note">Lines: solid needs every linked skill, dashed needs some of them, dotted marks skills that lock each other.</div>`;
       return;
     }
     const catalog = this.data.catalog, id = this.selected, level = Math.min(this.level, s.levels.length - 1), effects = s.levels[level] || [];
@@ -124,7 +130,8 @@ export class SkillsTab {
     const others = Object.entries(skills).filter(([k]) => k !== id);
     container.innerHTML = `<div class="skill-head"><span class="ring">${s.icon ? `<img src="${this.art(this.iconPath(s.icon))}" alt="" onerror="this.remove()">` : ""}</span>
         <div><b>${esc(s.name)}</b><div class="note">Rank ${s.rank} · ${s.levels.length} level${s.levels.length > 1 ? "s" : ""} · row ${s.row + 1}, tier ${s.tier + 1}</div></div></div>
-      <div class="tools seg"><button data-f="plan" class="${s.build ? "" : "on"}">Plan</button><button data-f="build" class="${s.build ? "on" : ""}">Build into the mod</button></div>
+      <div class="tools seg"><button data-f="plan" class="${s.build ? "" : "on"}">Draft</button><button data-f="build" class="${s.build ? "on" : ""}">In game</button></div>
+      <div class="note">${s.build ? "The next Rebuild adds this skill to the mod." : "A draft stays in the workbench. Switch to In game to add it to the mod on the next Rebuild."}</div>
       <div class="p-head">Skill</div>
       <div class="erow wide"><label>Name</label><input data-f="name" value="${esc(s.name)}"></div>
       <div class="erow wide"><label>Description</label><textarea data-f="description" rows="3">${esc(s.description || "")}</textarea></div>
@@ -139,6 +146,12 @@ export class SkillsTab {
       <input class="attrSearch" data-f="effectSearch" placeholder="Add an effect (melee attack, leadership, upkeep...)" value="${esc(this.effectFilter)}"><div class="hits"></div>
       <div class="p-head">Needs</div>
       <div class="chips">${others.length ? others.map(([k, o]) => `<label class="need"><input type="checkbox" data-need="${esc(k)}" ${(s.requires || []).includes(k) ? "checked" : ""}>${esc(o.name)}</label>`).join("") : "<span>No other planned skills.</span>"}</div>
+      ${(s.requires || []).length > 1 ? `<div class="erow wide"><label>Unlocks after</label><select data-f="needs">
+        <option value="all" ${this.anyOf(s) ? "" : "selected"}>all of them</option>
+        ${s.requires.slice(0, -1).map((_, i) => `<option value="${i + 1}" ${s.needs === i + 1 ? "selected" : ""}>any ${i + 1} of them</option>`).join("")}</select></div>` : ""}
+      <div class="p-head">Exclusive with</div>
+      <div class="note">Taking either skill locks the other.</div>
+      <div class="chips">${others.length ? others.map(([k, o]) => `<label class="need"><input type="checkbox" data-lock="${esc(k)}" ${(s.exclusive || []).includes(k) ? "checked" : ""}>${esc(o.name)}</label>`).join("") : "<span>No other planned skills.</span>"}</div>
       <div class="tools"><button data-f="delete">Delete this skill</button><button data-f="close">Done</button></div>`;
     this.wire(container, id, s, level);
   }
@@ -170,8 +183,28 @@ export class SkillsTab {
     });
     container.querySelectorAll("[data-need]").forEach(box => box.onchange = () => update(n => {
       const set = new Set(n.requires || []); box.checked ? set.add(box.dataset.need) : set.delete(box.dataset.need); n.requires = [...set];
+      if (typeof n.needs === "number" && n.needs >= n.requires.length) delete n.needs;
     }));
-    q("delete").onclick = () => { this.selected = null; this.studio.edits.registry[`skills.${id}`] = null; this.studio.changed(); this.refresh(); };
+    if (q("needs")) q("needs").onchange = e => update(n => { if (e.target.value === "all") delete n.needs; else n.needs = +e.target.value; });
+    // Exclusive pairs are kept on both skills.
+    container.querySelectorAll("[data-lock]").forEach(box => box.onchange = () => {
+      const other = box.dataset.lock, all = this.skills(), pair = JSON.parse(JSON.stringify(all[other]));
+      const set = (list, key, on) => { const x = new Set(list || []); on ? x.add(key) : x.delete(key); return [...x]; };
+      pair.exclusive = set(pair.exclusive, id, box.checked);
+      this.studio.edits.registry[`skills.${other}`] = pair;
+      update(n => n.exclusive = set(n.exclusive, other, box.checked));
+    });
+    // Deleting a skill also takes it out of the other skills' needs and locks.
+    q("delete").onclick = () => {
+      for (const [other, o] of Object.entries(this.skills())) {
+        if (other === id || !((o.requires || []).includes(id) || (o.exclusive || []).includes(id))) continue;
+        const next = JSON.parse(JSON.stringify(o));
+        next.requires = (next.requires || []).filter(k => k !== id); next.exclusive = (next.exclusive || []).filter(k => k !== id);
+        if (typeof next.needs === "number" && next.needs >= next.requires.length) delete next.needs;
+        this.studio.edits.registry[`skills.${other}`] = next;
+      }
+      this.selected = null; this.studio.edits.registry[`skills.${id}`] = null; this.studio.changed(); this.refresh();
+    };
     q("close").onclick = () => { this.selected = null; this.refresh(); };
 
     // Icon and effect searches list their hits under the box.

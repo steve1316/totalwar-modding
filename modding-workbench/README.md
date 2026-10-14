@@ -18,12 +18,15 @@ Then open `http://<this PC's LAN address>:8765/`. There is no login, so keep it 
   - **Stage:** **Battle** plays the form in 3D with Vs vanilla (its vanilla equivalent beside it), Models, Bones, Props and Close-up.
     **Portrait** shows the 3D portrait camera in the in-game porthole frame, with the vanilla reference beside it. **Skills** shows the unit's
     skill tree like the game's: the fixed weapon and mount skills, then the planned skills with their links. Tap a + cell to plan a skill.
-  - **Inspector tabs:** **Stats** (the in-game unit panel, on its own until **Compare with ...** draws the vanilla equivalent into the bars),
-    **Adjust** (slide weapons along their grip and move the hands, live), **Portrait** (camera sliders, presets, hood) and **Edit** (unit stats
-    for every form of a weapon or for one form, the weapon's own melee and missile values, and its attributes, previewed in Stats at once). Skills
-    (name, description, icon, unlock rank, place in the tree, up to three levels of in-game effects with their scopes, the skills it needs, and
-    Plan or Build: only built skills are written into the mod). On a phone the inspector is a sheet
-    below the stage: tap the handle for half or most of the screen.
+  - **Inspector tabs:**
+    - **Stats**: the in-game unit card, on its own until **Compare with ...** draws the vanilla equivalent into the bars. The project's own card
+      is edited in place: tap a number to change it, open Weapon Strength, Missile Strength or the health bar into the values behind them, take
+      attributes off with x and add them with + Attribute. A unit stat change goes to every form of the weapon or to one form, as picked at the top.
+    - **Adjust**: slide weapons along their grip and move the hands, live.
+    - **Portrait**: camera sliders, presets, hood.
+    - **Skills**: edit the skill picked on the Skills stage: name, description, icon, unlock rank, place in the tree, up to three levels of in-game
+      effects with their scopes, the skills it needs (all of them, or any N of them), and the skills it is exclusive with. A skill is a **Draft**
+      (kept in the workbench) or **In game** (the next Rebuild adds it to the mod).
   - **Bar:** playback, then one **Save** for every tab's edits, **Undo**, **Rebuild** (saves first, then runs the project's rebuild job),
     **Deploy** and the job **Log**.
 - **Unit Browser**: the TTC unit browser, a copy of the in-game Unit & Spell Browser for reviewing TTC caps. It builds its data the first time it is
