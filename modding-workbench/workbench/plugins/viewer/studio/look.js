@@ -1,7 +1,7 @@
 // The Look inspector tab: his outfit, his hood and extra pieces such as a hat, set per weapon and shared by every mount of that weapon
 // (`weapons.<weapon>.body`, `.hood` and `.pieces`). Outfits come from the registry's `model.bodies`, and any other humanoid model of the game can be
-// added as an outfit or a piece, each search hit and piece with a thumbnail. Every choice shows live on the stage through `studio.live`. The Jobs
-// bar saves the edits.
+// added as an outfit or a piece, each search hit and piece with a thumbnail, and a hovered search hit tried on. Every choice shows live on the
+// stage through `studio.live`. The Jobs bar saves the edits.
 import { stem } from "./live_models.js";
 import { Thumbnails } from "./thumbs.js";
 
@@ -11,6 +11,12 @@ const MODEL_HITS = 30;
 // Milliseconds a search waits for typing to pause, so thumbnails are only drawn for what is searched in the end.
 const TYPING_PAUSE = 300;
 
+// Milliseconds the pointer rests on a search hit before he tries it on, so passing over the list loads nothing.
+const HOVER_PAUSE = 150;
+
+// The slot a hovered piece is tried on in.
+const HOVER_SLOT = "piece_hover";
+
 // The metadata a new outfit's body slot carries, as on the vanilla outfits.
 const BODY_META = ["audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"];
 
@@ -19,8 +25,8 @@ const words = key => key.replace(/_\d+$/, "").split("_").filter(Boolean).map(w =
 
 export class LookTab {
   constructor(studio) {
-    // `adding` is "outfit" or "piece" while its model search is open, `filter` its search text.
-    this.studio = studio; this.adding = null; this.filter = "";
+    // `adding` is "outfit" or "piece" while its model search is open, `filter` its search text, `hovering` the search hit he is trying on.
+    this.studio = studio; this.adding = null; this.filter = ""; this.hovering = null;
     this.look = studio.manifest.editor && studio.manifest.editor.look;
     this.thumbs = new Thumbnails(studio);
     // The stage shows the chosen outfit, head and pieces.
@@ -54,14 +60,20 @@ export class LookTab {
     for (const [slot, piece] of Object.entries(this.value(f, "pieces") || {})) {
       out[slot] = { model: piece[0], attach: "", built: !!f.look.pieces[slot] && f.look.pieces[slot][0] === piece[0] };
     }
+    // A hovered search hit is tried on: a piece next to the rest, an outfit in place of his.
+    out[HOVER_SLOT] = this.hovering && this.adding === "piece" ? { model: this.hovering, attach: "" } : null;
+    if (this.hovering && this.adding === "outfit") {
+      for (const slot of Object.keys(body)) out[slot] = null;
+      out.body = { model: this.hovering, attach: "" };
+    }
     return out;
   }
 
   // Records registry edits and shows them.
   set(changes) { Object.assign(this.studio.edits.registry, changes); this.studio.changed(); this.studio.live.sync(); this.refresh(); }
 
-  // Redraws the tab when it is open.
-  refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "look") setTimeout(() => this.render(body)); }
+  // Redraws the tab when it is open, unless a search is open: redrawing would rebuild its rows under the pointer and take the typing focus.
+  refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "look" && !this.adding) setTimeout(() => this.render(body)); }
 
   // A slot's loading or failed preview, in words.
   state(slots) {
@@ -78,17 +90,29 @@ export class LookTab {
     box.innerHTML = `<input class="attrSearch" placeholder="Search the game's humanoid models (hat, helmet, cape, wizard...)" value="${esc(this.filter)}"><div class="hits"></div>`;
     const input = box.querySelector("input"), hits = box.querySelector(".hits");
     const list = () => {
+      // New rows replace the hovered one without a mouseleave.
+      this.hover(null);
       this.filter = input.value; const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
       const found = terms.length ? this.look.models.filter(p => terms.every(w => p.includes(w))).slice(0, MODEL_HITS) : [];
       hits.innerHTML = found.map(p => `<button class="look-hit" data-model="${esc(p)}"><img class="thumb" data-thumb="${esc(p)}" alt="">
         <span><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(3, -1).join("/"))}</span></span></button>`).join("")
         || (terms.length ? '<div class="note">No model matches.</div>' : "");
       this.thumbs.fill(hits);
-      hits.querySelectorAll("[data-model]").forEach(b => b.onclick = () => this.pick(f, b.dataset.model));
+      hits.querySelectorAll("[data-model]").forEach(b => {
+        b.onclick = () => this.pick(f, b.dataset.model);
+        b.onmouseenter = () => this.hover(b.dataset.model);
+        b.onmouseleave = () => this.hover(null);
+      });
     };
     input.oninput = () => { clearTimeout(this.typing); this.typing = setTimeout(list, TYPING_PAUSE); };
     list(); setTimeout(() => input.focus());
     return box;
+  }
+
+  // Tries a search hit on, or takes it off again (null), once the pointer rests.
+  hover(model) {
+    clearTimeout(this.resting);
+    this.resting = setTimeout(() => { if (this.hovering !== model) { this.hovering = model; this.studio.live.sync(); } }, model ? HOVER_PAUSE : 0);
   }
 
   // Adds the picked model as an outfit (and wears it) or as a piece.
@@ -104,7 +128,7 @@ export class LookTab {
       pieces[`piece_${n}`] = [model];
       this.set({ [base + "pieces"]: pieces });
     }
-    this.adding = null; this.filter = "";
+    this.adding = null; this.filter = ""; this.hover(null);
   }
 
   render(container) {
@@ -144,7 +168,9 @@ export class LookTab {
       const rest = { ...pieces }; delete rest[b.dataset.drop];
       this.set({ [base + "pieces"]: Object.keys(rest).length ? rest : null });
     });
-    container.querySelectorAll("[data-add]").forEach(b => b.onclick = () => { this.adding = this.adding === b.dataset.add ? null : b.dataset.add; this.filter = ""; this.render(container); });
+    container.querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
+      this.adding = this.adding === b.dataset.add ? null : b.dataset.add; this.filter = ""; this.hover(null); this.render(container);
+    });
     this.thumbs.fill(extra);
   }
 }

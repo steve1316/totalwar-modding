@@ -86,8 +86,8 @@ export class AdjustTab {
     return { prop: f.props[slot], pending: false };
   }
 
-  // Redraws the tab when it is open.
-  refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "adjust") setTimeout(() => this.render(body)); }
+  // Redraws the tab when it is open, unless a search is open: redrawing would rebuild its rows under the pointer and take the typing focus.
+  refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "adjust" && !this.picking) setTimeout(() => this.render(body)); }
 
   // The model picker of one slot: the vanilla equivalent's models, and a search of every vanilla weapon model. The pick is this form's own.
   picker(entry, f, slot, prop) {
