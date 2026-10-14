@@ -192,7 +192,14 @@
   .dropdown { position: relative; display: inline-flex; flex-direction: column; }
   .dropdown .menu { position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; display: flex; flex-direction: column; gap: 4px; z-index: 3; }
   .dropdown .menu button:not(.on) { opacity: .55; }
-  .slot-head { justify-content: space-between; } .slot-head em { font-style: normal; }
+  /* The Adjust tab (studio/adjust.js): a card per weapon, then the hands. */
+  .adj-intro { padding: 6px 8px; }
+  .adj-card { margin: 6px; padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: rgba(0,0,0,.2); display: flex; flex-direction: column; gap: 4px; }
+  .adj-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .adj-head b { color: #d8a640; font-size: 15px; }
+  .adj-model { font-family: var(--mono, monospace); font-size: 12px; word-break: break-all; }
+  .adj-card .note.warn { color: #e0a040; }
+  .adj-card .adj-more { align-self: flex-start; }
   .picker { margin: 0 6px 8px; padding: 6px; border: 1px solid var(--line); border-radius: 4px; background: rgba(0,0,0,.25); }
   .picker .twin { padding: 4px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
   .picker .hits button { justify-content: space-between; }
