@@ -1,4 +1,5 @@
-// The Jobs bar: one Save for every tab's edits (weapon offsets, hand shift, portrait camera), Undo, Rebuild (saves first), Deploy and the job log.
+// The Jobs bar: one Save for every tab's edits (weapon offsets, hand shift, portrait camera, the Edit tab's registry values), Undo, Rebuild (saves
+// first), Deploy and the job log.
 // It talks to the project's API (`/viewer/p/<project>/api/`).
 
 export class Jobs {
@@ -17,7 +18,7 @@ export class Jobs {
   }
 
   // Whether there is anything to save.
-  dirty() { const e = this.studio.edits; return Object.keys(e.props).length > 0 || !!e.hand || !!e.camera; }
+  dirty() { const e = this.studio.edits; return Object.keys(e.props).length > 0 || !!e.hand || !!e.camera || Object.keys(e.registry).length > 0; }
 
   note(text) { this.q("note").textContent = text; }
 
@@ -32,6 +33,7 @@ export class Jobs {
     const e = this.studio.edits, body = {};
     if (Object.keys(e.props).length) body.prop_offsets = e.props;
     if (e.hand) body.hand_shift = e.hand;
+    if (Object.keys(e.registry).length) body.registry = e.registry;
     if (e.camera) body.camera_head = Object.fromEntries(Object.entries(e.camera).map(([k, v]) => [k, Math.round(v * 1000) / 1000]));
     const r = await fetch(this.studio.api + "tuning", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     const answer = await r.json();

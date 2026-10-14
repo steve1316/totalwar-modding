@@ -1,12 +1,15 @@
-"""The numbers of the in-game unit panel (health, armour, speed, weapon and missile strength, abilities), worked out from a unit's table rows.
+"""The numbers of the in-game unit panel (health, armour, speed, weapon and missile strength, abilities), worked out from a unit's table rows, and
+the tooltips of its abilities and attributes (type, cooldown, duration, phases with their stat and attribute effects, description).
 
 Shared by the TTC unit browser (`tools.ttc_review`) and the modding workbench's unit panels, so both show what the game shows. The page side lives in
 `modding-workbench/workbench/static/unit_panel.*`.
 """
 
+import re
 from typing import Dict, List, Tuple
 
 from ttc.ttc_classifier import parse_number
+from ttc.ttc_data import resolve_loc
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +27,34 @@ PANEL_TABLES = [
     "projectiles_explosions_tables",
     "unit_abilities_tables",
     "land_units_to_unit_abilites_junctions_tables",
+    "unit_special_abilities_tables",
+    "special_ability_to_special_ability_phase_junctions_tables",
+    "special_ability_phases_tables",
+    "special_ability_phase_stat_effects_tables",
+    "special_ability_phase_attribute_effects_tables",
 ]
+
+# Loc key prefixes the tooltips read.
+ABILITY_NAME_PREFIX = "unit_abilities_onscreen_name_"
+ABILITY_TEXT_PREFIX = "unit_abilities_tooltip_text_"
+ABILITY_TYPE_PREFIX = "unit_ability_types_onscreen_name_"
+PHASE_NAME_PREFIX = "special_ability_phases_onscreen_name_"
+STAT_NAME_PREFIX = "unit_stat_localisations_onscreen_name_"
+ATTRIBUTE_PREFIX = "unit_attributes_bullet_text_"
+TOOLTIP_LOC_PREFIXES = (ABILITY_NAME_PREFIX, ABILITY_TEXT_PREFIX, ABILITY_TYPE_PREFIX, PHASE_NAME_PREFIX, STAT_NAME_PREFIX, ATTRIBUTE_PREFIX)
+
+# Folder of the ability icons.
+ABILITY_FOLDER = "ui/battle ui/ability_icons"
+
+# Folder an inline image with a bare name (`[[img:icon_morale]]`) is read from.
+INLINE_IMAGE_FOLDER = "ui/skins/default"
+
+# An inline image in loc text.
+INLINE_IMAGE = re.compile(r"\[\[img:([^\]]+)\]\]")
+
+# Phase flags the tooltip lists: column -> text.
+PHASE_FLAGS = {"imbue_magical": "Attacks become magical", "imbue_ignition": "Attacks become flaming", "cant_move": "Cannot move", "freeze_fatigue": "No fatigue",
+               "replenish_ammo": "Replenishes ammunition", "resurrect": "Revives fallen models", "remove_magical": "Removes magical attacks"}
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +102,15 @@ class PanelTables:
     abilities: Dict[str, Dict[str, str]]
     # Land unit key to its ability keys, in table order.
     unit_abilities: Dict[str, List[str]]
+    # Special ability key to row (cooldown, duration, uses, range, mana cost).
+    special: Dict[str, Dict[str, str]]
+    # Special ability key to its phase keys, in order.
+    phases: Dict[str, List[str]]
+    # Phase key to row (duration, flags).
+    phase_rows: Dict[str, Dict[str, str]]
+    # Phase key to its stat effect rows, and to its attribute effect rows.
+    phase_stats: Dict[str, List[Dict[str, str]]]
+    phase_attributes: Dict[str, List[Dict[str, str]]]
 
     def __init__(self, tables: Dict[str, List[Dict[str, str]]]):
         """Indexes the tables.
@@ -93,6 +132,17 @@ class PanelTables:
             keys = self.unit_abilities.setdefault(row.get("land_unit", ""), [])
             if row.get("ability") and row["ability"] not in keys:
                 keys.append(row["ability"])
+        # The tooltip tables are optional: a caller that only needs the numbers may leave them out.
+        self.special = index_rows(tables.get("unit_special_abilities_tables", []))
+        self.phase_rows = index_rows(tables.get("special_ability_phases_tables", []), "id")
+        self.phases, self.phase_stats, self.phase_attributes = {}, {}, {}
+        for row in sorted(tables.get("special_ability_to_special_ability_phase_junctions_tables", []), key=lambda r: parse_number(r.get("order"))):
+            if row.get("phase") not in self.phases.setdefault(row.get("special_ability", ""), []):
+                self.phases[row["special_ability"]].append(row["phase"])
+        for row in tables.get("special_ability_phase_stat_effects_tables", []):
+            self.phase_stats.setdefault(row.get("phase", ""), []).append(row)
+        for row in tables.get("special_ability_phase_attribute_effects_tables", []):
+            self.phase_attributes.setdefault(row.get("phase", ""), []).append(row)
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,3 +226,115 @@ def visible_abilities(land_key: str, tables: PanelTables) -> List[Tuple[str, str
         if row.get("is_hidden_in_ui") != "true":
             shown.append((ability, row.get("icon_name", "")))
     return shown
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Tooltips
+
+
+def inline_images(text: str) -> List[str]:
+    """The pack paths of the images a loc text shows inline. A bare name is a skin icon.
+
+    Args:
+        text (str): The loc text.
+
+    Returns:
+        List[str]: Lowercase paths, e.g. `ui/skins/default/icon_morale.png`.
+    """
+    return [inline_image_path(name) for name in INLINE_IMAGE.findall(text or "")]
+
+
+def inline_image_path(name: str) -> str:
+    """The pack path of an inline image name.
+
+    Args:
+        name (str): The name inside `[[img:...]]`.
+
+    Returns:
+        str: The lowercase path.
+    """
+    name = name.strip().lower()
+    return name if "/" in name else f"{INLINE_IMAGE_FOLDER}/{name}.png"
+
+
+def loc_text(loc: Dict[str, str], key: str) -> str:
+    """A loc text with its `{{tr:...}}` references followed, or an empty string."""
+    return resolve_loc(loc.get(key, ""), loc) or ""
+
+
+def ability_tooltip(ability: str, tables: PanelTables, loc: Dict[str, str]) -> Dict:
+    """An ability's tooltip, like the game's: its type, whether it is passive, its numbers, each phase with its effects, and its description.
+
+    Args:
+        ability (str): The ability key.
+        tables (PanelTables): The indexed tables, with the tooltip tables.
+        loc (Dict[str, str]): Loc key to text, with `TOOLTIP_LOC_PREFIXES`.
+
+    Returns:
+        Dict: `name`, `type` (loc text with inline images), `passive`, `numbers` ([label, value] pairs), `phases` (each with `name`, `duration`,
+        `effects`: [label, value] pairs, and `attributes`: [name, positive] pairs) and `text`.
+    """
+    row, special = tables.abilities.get(ability, {}), tables.special.get(ability, {})
+    number = lambda column: parse_number(special.get(column))
+    numbers: List[Tuple[str, str]] = []
+    passive = special.get("passive") == "true" or row.get("source_type") == "passive"
+    if special and not passive:
+        if number("mana_cost") > 0:
+            numbers.append(("Cost", f"{number('mana_cost'):g}"))
+        if number("recharge_time") > 0:
+            numbers.append(("Cooldown", f"{number('recharge_time'):g}s"))
+        numbers.append(("Duration", f"{number('active_time'):g}s" if number("active_time") > 0 else "Instant"))
+        numbers.append(("Uses", f"{number('num_uses'):g}" if number("num_uses") > 0 else "Unlimited"))
+    if special and number("effect_range") > 0:
+        numbers.append(("Range", f"{number('effect_range'):g}m"))
+    phases = []
+    for phase in tables.phases.get(ability, []):
+        phase_row = tables.phase_rows.get(phase, {})
+        if phase_row.get("is_hidden_in_ui") == "true":
+            continue
+        effects = []
+        for effect in tables.phase_stats.get(phase, []):
+            value, label = parse_number(effect.get("value")), loc_text(loc, STAT_NAME_PREFIX + effect.get("stat", "")) or effect.get("stat", "")
+            # The game shows a multiplier as a percentage change.
+            effects.append((label, f"{(value - 1) * 100:+.0f}%" if effect.get("how") == "mult" else f"{value:+g}"))
+        for column, text in PHASE_FLAGS.items():
+            if phase_row.get(column) == "true":
+                effects.append((text, ""))
+        if parse_number(phase_row.get("heal_amount")) > 0:
+            effects.append(("Heals", f"{parse_number(phase_row.get('heal_amount')):g}"))
+        if parse_number(phase_row.get("damage_amount")) > 0:
+            effects.append(("Damage", f"{parse_number(phase_row.get('damage_amount')):g}"))
+        attributes = [(loc_text(loc, ATTRIBUTE_PREFIX + a.get("attribute", "")).partition("||")[0] or a.get("attribute", ""), a.get("attribute_type") != "negative")
+                      for a in tables.phase_attributes.get(phase, [])]
+        duration = parse_number(phase_row.get("duration"))
+        phases.append({"name": loc_text(loc, PHASE_NAME_PREFIX + phase), "duration": f"{duration:g}s" if duration > 0 else "", "effects": effects, "attributes": attributes})
+    return {"name": loc_text(loc, ABILITY_NAME_PREFIX + ability) or ability, "type": loc_text(loc, ABILITY_TYPE_PREFIX + row.get("type", "")),
+            "passive": passive, "numbers": numbers, "phases": phases, "text": loc_text(loc, ABILITY_TEXT_PREFIX + ability)}
+
+
+def attribute_tooltip(attribute: str, loc: Dict[str, str]) -> Dict[str, str]:
+    """An attribute's name and tooltip text (loc text with inline images).
+
+    Args:
+        attribute (str): The attribute key.
+        loc (Dict[str, str]): Loc key to text.
+
+    Returns:
+        Dict[str, str]: `key`, `name` and `text`.
+    """
+    name, _, text = loc_text(loc, ATTRIBUTE_PREFIX + attribute).partition("||")
+    return {"key": attribute, "name": name or attribute, "text": text}
+
+
+def tooltip_images(tooltip: Dict) -> List[str]:
+    """Every inline image a tooltip's texts show.
+
+    Args:
+        tooltip (Dict): An ability or attribute tooltip.
+
+    Returns:
+        List[str]: Lowercase pack paths.
+    """
+    labels = [label for phase in tooltip.get("phases", []) for label, _ in phase["effects"]]
+    return [path for text in [tooltip.get("type", ""), tooltip.get("text", "")] + labels for path in inline_images(text)]

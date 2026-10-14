@@ -85,6 +85,18 @@
   .copyline code { flex: 1; min-width: 0; font: 11px/1.4 ui-monospace, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 6px;
                    word-break: break-all; user-select: all; }
   #sheetJobs { display: none; }
+  .seg button { flex: 1; }
+  .erow { display: grid; grid-template-columns: 1fr 84px 70px auto; gap: 6px; align-items: center; padding: 2px 4px; }
+  .erow:nth-of-type(odd) { background: rgba(255,255,255,.025); }
+  .erow label { font-size: 13px; }
+  .erow input { min-height: 32px; width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; font: inherit; text-align: right; }
+  .erow .hint { font-size: 12px; color: var(--muted); text-align: right; }
+  button.mini { min-height: 24px; padding: 0 6px; font-size: 11px; }
+  #inspBody .chips .chip { display: inline-flex; gap: 2px; align-items: center; border: 0; padding: 0; }
+  #inspBody .chips .chip > span { border: 1px solid var(--line); border-radius: 3px; padding: 2px 6px; }
+  .attrSearch { width: calc(100% - 8px); margin: 4px; min-height: 32px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 0 8px; font: inherit; }
+  .attrList { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 4px 6px; }
+  .attrList button { min-height: 28px; font-size: 12px; }
 
   /* Bottom: playback and jobs. */
   #bar { grid-area: bar; background: var(--panel); border-top: 1px solid var(--line); display: flex; gap: 6px; align-items: center; flex-wrap: wrap;

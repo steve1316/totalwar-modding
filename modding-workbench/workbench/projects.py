@@ -33,6 +33,10 @@ LOG_TAIL = 12
 # Largest size accepted for a prop offset or hand shift number, in metres.
 LIMITS = {"prop_offsets": 0.3, "hand_shift": 0.05}
 
+# Largest number, and longest text, an Edit tab value may be.
+EDIT_NUMBER_LIMIT = 1000000
+EDIT_TEXT_LIMIT = 200
+
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,6 +89,60 @@ def set_path(data: Any, path: str, value: Any) -> None:
     for key in keys[:-1]:
         data = data.setdefault(key, {})
     data[keys[-1]] = value
+
+
+def delete_path(data: Any, path: str) -> None:
+    """Removes the value at a dotted path, then any map it leaves empty. A missing path is left alone.
+
+    Args:
+        data (Any): The registry, changed in place.
+        path (str): The dotted path.
+    """
+    keys = path.split(".")
+    trail = [data]
+    for key in keys[:-1]:
+        if not isinstance(trail[-1], dict) or key not in trail[-1]:
+            return
+        trail.append(trail[-1][key])
+    trail[-1].pop(keys[-1], None)
+    for depth in range(len(keys) - 1, 0, -1):
+        if trail[depth] == {}:
+            trail[depth - 1].pop(keys[depth - 1], None)
+
+
+def path_matches(path: str, pattern: str) -> bool:
+    """Whether a dotted path fits a pattern, where `*` stands for any one key.
+
+    Args:
+        path (str): The dotted path.
+        pattern (str): The pattern, e.g. `weapons.*.stats.*`.
+
+    Returns:
+        bool: Whether it fits.
+    """
+    keys, parts = path.split("."), pattern.split(".")
+    return len(keys) == len(parts) and all(part in ("*", key) for key, part in zip(keys, parts))
+
+
+def edit_value(value: Any) -> Any:
+    """Checks an Edit tab value: a number, a short text, a list of short texts, or None (remove the value).
+
+    Args:
+        value (Any): The value sent.
+
+    Returns:
+        Any: The value, with whole numbers as integers and others rounded to four decimals.
+
+    Raises:
+        ValueError: When it is none of those.
+    """
+    if value is None or (isinstance(value, str) and len(value) <= EDIT_TEXT_LIMIT):
+        return value
+    if isinstance(value, (int, float)) and not isinstance(value, bool) and abs(value) <= EDIT_NUMBER_LIMIT:
+        return int(value) if float(value).is_integer() else round(float(value), 4)
+    if isinstance(value, list) and all(isinstance(v, str) and len(v) <= EDIT_TEXT_LIMIT for v in value):
+        return value
+    raise ValueError(f"bad value {value!r}")
 
 
 def numbers(value: Any, count: int, limit: float) -> List[float]:
@@ -213,6 +271,8 @@ class Project:
     # Tuning value -> its dotted path in the registry (`prop_offsets`, `hand_shift`, `camera_head`), plus `prop_sources`: dotted paths, `*` for
     # every value of a map, to the prop slot maps whose models may get an offset.
     tuning: Dict[str, Any]
+    # Dotted path patterns (`*` for any one key) of the registry values the Edit tab may set.
+    editable: List[str]
     # The project's running or last job.
     job: Job = field(init=False, repr=False)
 
@@ -233,7 +293,7 @@ class Project:
         root = os.path.normpath(os.path.join(REPO_ROOT, config["checkout"], config.get("helper_scripts", "helper_scripts")))
         return cls(key=os.path.basename(path)[:-len(".json")], name=config["name"], root=root, registry=os.path.join(root, config["registry"]),
                    gallery=os.path.join(root, config["gallery"]), gallery_next=os.path.join(root, config["gallery_next"]), jobs=config["jobs"],
-                   tuning=config.get("tuning", {}))
+                   tuning=config.get("tuning", {}), editable=config.get("editable", []))
 
     def read_registry(self) -> Dict:
         """The registry as it is on disk."""
@@ -275,7 +335,8 @@ class Project:
         """Writes sent tuning values into the registry. A prop offset of all zeros removes that weapon's entry.
 
         Args:
-            changes (Dict[str, Any]): Any of `prop_offsets` (a partial map), `hand_shift` and `camera_head` (a partial map).
+            changes (Dict[str, Any]): Any of `prop_offsets` (a partial map), `hand_shift`, `camera_head` (a partial map), and `registry`: dotted
+                path -> value from the Edit tab, each path fitting one of the config's `editable` patterns (None removes the value).
 
         Returns:
             Dict[str, Any]: The values after the save.
@@ -285,8 +346,16 @@ class Project:
         """
         registry = self.read_registry()
         for name in changes:
-            if name not in self.tuning or name == "prop_sources":
+            if name != "registry" and (name not in self.tuning or name == "prop_sources"):
                 raise ValueError(f"{self.name} has no {name} to tune")
+        for path, value in changes.get("registry", {}).items():
+            if not any(path_matches(path, pattern) for pattern in self.editable):
+                raise ValueError(f"{path} is not editable")
+            value = edit_value(value)
+            if value is None:
+                delete_path(registry, path)
+            else:
+                set_path(registry, path, value)
         if "prop_offsets" in changes:
             known = self.props(registry)
             offsets = dict((each_path(registry, self.tuning["prop_offsets"]) or [{}])[0])
