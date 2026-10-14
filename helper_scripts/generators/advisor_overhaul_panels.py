@@ -196,7 +196,7 @@ class PanelBuilder:
         stats, hp_estimate = panel_stats(main, land, self.tables)
         card = next((path for name in (self.cards.get(key), key, main["land_unit"]) if name and (path := self.art_path(CARD_FOLDER, name))), "")
         # Attributes the game gives no text are not shown in game either.
-        attributes = [tip for tip in (attribute_tooltip(a, self.loc, self.tables) for a in self.attributes.get(land.get("attribute_group", ""), [])) if tip["name"]]
+        attributes = [tip for tip in (self.attribute(a) for a in self.attributes.get(land.get("attribute_group", ""), [])) if tip["name"]]
         abilities = []
         for ability, icon in visible_abilities(land["key"], self.tables):
             tip = ability_tooltip(ability, self.tables, self.loc)
@@ -245,18 +245,29 @@ class PanelBuilder:
                 "attributes_removed": weapon.get("attributes_removed", []), "abilities": weapon.get("abilities", []),
                 "abilities_removed": weapon.get("abilities_removed", [])}
 
-    def attribute_catalog(self) -> Dict[str, Dict[str, str]]:
-        """Every unit attribute with an in-game name, for the Edit tab's checklist.
+    def attribute(self, key: str) -> Dict[str, str]:
+        """An attribute's tooltip with its icon, which the game keeps next to the ability icons under the attribute's key.
+
+        Args:
+            key (str): The attribute key.
 
         Returns:
-            Dict[str, Dict[str, str]]: Attribute key -> `name` and `text` (its tooltip), sorted by name.
+            Dict[str, str]: `key`, `name`, `text` and `icon` (empty when the game has none).
+        """
+        return dict(attribute_tooltip(key, self.loc, self.tables), icon=self.art_path(ABILITY_FOLDER, key))
+
+    def attribute_catalog(self) -> Dict[str, Dict[str, str]]:
+        """Every unit attribute with an in-game name, for the Stats tab's "+ Attribute" picker.
+
+        Returns:
+            Dict[str, Dict[str, str]]: Attribute key -> `name`, `text` (its tooltip) and `icon`, sorted by name.
         """
         catalog = {}
         for loc_key in self.loc:
             if loc_key.startswith(ATTRIBUTE_PREFIX):
-                tip = attribute_tooltip(loc_key[len(ATTRIBUTE_PREFIX):], self.loc, self.tables)
+                tip = self.attribute(loc_key[len(ATTRIBUTE_PREFIX):])
                 if tip["name"]:
-                    catalog[tip["key"]] = {"name": tip["name"], "text": tip["text"]}
+                    catalog[tip["key"]] = {"name": tip["name"], "text": tip["text"], "icon": tip["icon"]}
                     for path in tooltip_images(tip):
                         self.note_art(path)
         return dict(sorted(catalog.items(), key=lambda item: item[1]["name"]))
