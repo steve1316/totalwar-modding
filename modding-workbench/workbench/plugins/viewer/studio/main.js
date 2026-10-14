@@ -28,8 +28,8 @@ const studio = {
   manifest, data: DATA, api: API, tuning, getAnim: animLoader(manifest, DATA),
   panelArt: path => path ? DATA + "art/" + encodeURI(path) : "",
   edits: { props: {}, hand: null, camera: null, registry: {} },
-  // Whether the panels compare the form with its vanilla equivalent. Off: each form is first seen on its own.
-  compare: false,
+  // What the card compares the form with: null, "vanilla" or "foot" (the same weapon on foot). Off: each form is first seen on its own.
+  compare: null,
   // Called after any edit.
   changed: () => jobs && jobs.refresh(),
   // Called with the API's answer after a save: those values are the new baseline.

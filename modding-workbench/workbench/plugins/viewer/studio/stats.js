@@ -1,6 +1,6 @@
 // The Stats inspector tab: the in-game unit card of the open form (`manifest.panels`, built by the project's generator with `ttc.unit_panel`).
-// It shows the unit on its own. "Compare with ..." draws its vanilla equivalent into the bars (`studio.compare`), and "Show vanilla" then swaps
-// which unit the card is about.
+// It shows the unit on its own. "Compare with ..." draws another unit into the bars (`studio.compare`): its vanilla equivalent, or on a mounted
+// form the same weapon's form on foot. "Show ..." then swaps which unit the card is about.
 //
 // The project's own card is edited in place (through `FormEditor`): tap a number to change it. Weapon Strength and Missile Strength open into the
 // values they add up from, and the health bar into the health bonus. Abilities and attributes come off with their x. "+ Ability" and "+ Attribute"
@@ -54,6 +54,18 @@ export class StatsTab {
     document.body.append(this.picker);
   }
 
+  // What the open form can be compared with: {key, label, panel}. Its vanilla equivalent, and on a mount the same weapon's form on foot, with
+  // that form's unsaved edits.
+  targets(entry) {
+    const panels = this.studio.manifest.panels, out = [];
+    if (entry.versus && panels[entry.versus]) out.push({ key: "vanilla", label: panels[entry.versus].name, short: "vanilla", panel: panels[entry.versus] });
+    const f = this.editor.form(entry.unit), forms = (this.studio.manifest.editor || {}).forms || {};
+    const foot = f && f.mount !== "foot" && Object.keys(forms).find(k => forms[k].weapon === f.weapon && forms[k].mount === "foot");
+    const footEntry = foot && this.studio.manifest.entries.find(e => e.unit === foot);
+    if (footEntry && panels[foot]) out.push({ key: "foot", label: footEntry.name.split(" - ")[1] || footEntry.name, short: "on foot", panel: this.editor.preview(foot) });
+    return out;
+  }
+
   // Whether the open entry has a card to show.
   available(entry) { return !!(entry && entry.unit && this.studio.manifest.panels && this.studio.manifest.panels[entry.unit]); }
   // Edits were saved: they keep showing until a rebuild.
@@ -64,12 +76,13 @@ export class StatsTab {
     if (!this.available(entry)) { container.innerHTML = '<div class="note">No unit card for this entry. Pick one of the project\'s forms.</div>'; return; }
     const { esc, cardHtml, hpHtml, statsHtml, abilitiesHtml } = window.UnitPanel;
     const panels = this.studio.manifest.panels, art = this.studio.panelArt, mine = this.editor.preview(entry.unit);
-    const vanilla = entry.versus && panels[entry.versus], compare = this.studio.compare && !!vanilla;
-    const [u, o] = compare && this.flip ? [vanilla, mine] : [mine, compare ? vanilla : null];
+    const targets = this.targets(entry), target = targets.find(t => t.key === this.studio.compare), compare = !!target;
+    const [u, o] = compare && this.flip ? [target.panel, mine] : [mine, compare ? target.panel : null];
     const f = !(compare && this.flip) && this.editor.enabled() && this.editor.form(entry.unit);
-    const vs = !vanilla ? "" : compare
-      ? `<div class="vs">Compared with <b>${esc(o.name)}</b><button data-t="flip">${this.flip ? "Show the Advisor" : "Show vanilla"}</button><button data-t="compare">Alone</button></div>`
-      : `<div class="vs"><button data-t="compare">Compare with ${esc(vanilla.name)}</button></div>`;
+    const others = targets.filter(t => t !== target).map(t => `<button data-against="${t.key}">Compare with ${esc(t.label)}</button>`).join("");
+    const vs = !targets.length ? "" : compare
+      ? `<div class="vs">Compared with <b>${esc(target.label)}</b><button data-t="flip">${this.flip ? "Show this form" : `Show ${target.short}`}</button><button data-against="">Alone</button>${others}</div>`
+      : `<div class="vs">${others}</div>`;
     const weaponName = entry.name.split(" - ")[0], formName = entry.name.split(" - ")[1] || "";
     const scope = f ? `<div class="vs scope">Changes apply to <button data-scope="weapon" class="${this.editor.scope === "weapon" ? "on" : ""}">every ${esc(weaponName)} form</button>
       <button data-scope="form" class="${this.editor.scope === "form" ? "on" : ""}">${esc(formName)} only</button></div>` : "";
@@ -172,9 +185,9 @@ export class StatsTab {
   wire(container, f) {
     // Redraws wait a tick: redrawing inside a change event pulls the focused input out mid-blur.
     const q = t => container.querySelector(`[data-t="${t}"]`), redraw = () => setTimeout(() => this.render(container));
-    const flip = q("flip"), toggle = q("compare");
+    const flip = q("flip");
     if (flip) flip.onclick = () => { this.flip = !this.flip; redraw(); };
-    if (toggle) toggle.onclick = () => { this.studio.compare = !this.studio.compare; this.flip = false; redraw(); };
+    container.querySelectorAll("[data-against]").forEach(b => b.onclick = () => { this.studio.compare = b.dataset.against || null; this.flip = false; redraw(); });
     if (!f) return;
     container.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { this.editor.scope = b.dataset.scope; redraw(); });
     container.querySelectorAll("[data-open]").forEach(el => el.onclick = e => {
