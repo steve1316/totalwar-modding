@@ -45,5 +45,23 @@
 .abilities .none { font-size: .78rem; color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 10px; }
 .chips span { font-size: .78rem; border: 1px solid var(--line); border-radius: 3px; padding: 2px 6px; background: rgba(255,255,255,.03); }
+.abilities [data-tip], .chips [data-tip] { cursor: help; }
+/* The game-style tooltip of an ability or attribute (one per page, placed by unit_panel.js). */
+.up-tip { position: fixed; z-index: 100; width: min(340px, calc(100vw - 16px)); background: linear-gradient(#2a1f1c, #150f0e); border: 1px solid var(--panel-edge);
+  border-radius: 4px; box-shadow: 0 6px 22px rgba(0,0,0,.8); color: var(--ink); font-size: 13px; line-height: 1.35; pointer-events: none; padding-bottom: 6px; }
+.up-tip .tip-head { display: flex; gap: 8px; align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--line); background: linear-gradient(#5f1210, #3c0909); }
+.up-tip .tip-head img { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #5a4a30; background: #000; }
+.up-tip .tip-head b { font-size: 15px; font-weight: 400; }
+.up-tip .tip-type { color: var(--muted); font-size: 12px; }
+.up-tip .tip-nums { display: flex; flex-wrap: wrap; gap: 4px 12px; padding: 6px 10px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+.up-tip .tip-nums b { color: var(--ink); font-family: var(--mono); font-weight: 400; }
+.up-tip .tip-phase { padding: 4px 10px 0; }
+.up-tip .tip-sub { color: var(--bar); font-size: 12px; margin-bottom: 2px; }
+.up-tip .tip-sub span { color: var(--muted); }
+.up-tip .tip-row { display: flex; justify-content: space-between; gap: 8px; }
+.up-tip .tip-row b { font-family: var(--mono); font-weight: 400; }
+.up-tip .up { color: var(--up); } .up-tip .down { color: var(--down); }
+.up-tip .tip-text { padding: 6px 10px 0; color: var(--muted); font-style: italic; }
+.up-tip img.inl, .up-tip .tip-row img { width: 16px; height: 16px; vertical-align: -3px; margin-right: 2px; }
 /* Against a compared unit: green for what only it has, red for what it lacks. */
 .chips span.up { border-color: var(--up); color: var(--up); } .chips span.down { border-color: var(--down); color: var(--down); }

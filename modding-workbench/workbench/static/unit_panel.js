@@ -1,6 +1,7 @@
 // The in-game unit panel shared by the dashboard's tabs (see unit_panel.css). A panel's numbers come from `ttc.unit_panel` on the server: `stats`
 // holds the panel rows by key, `hp_estimate` marks HP that adds a mount or engine, and `abilities` is a list of {key, name, icon}. Every builder
 // takes an optional compared unit's stats, drawn into the bars and shown as a second number. `art` turns a pack-relative path into a URL.
+// An ability with a `tip` (from `ttc.unit_panel.ability_tooltip`) and an attribute with a `text` get the game's tooltip, on hover or on tap.
 (function () {
   // Unit panel rows in the in-game order, with each stat's icon and the value a full bar stands for. The missile rows only show for units that shoot.
   const STATS = [["armour", "Armour", "icon_stat_armour", 200], ["leadership", "Leadership", "icon_stat_morale", 100], ["speed", "Speed", "icon_stat_speed", 120],
@@ -38,14 +39,62 @@
     return `<div class="hp"><div class="hp-bar">${barHtml(s.hp, o.hp, max, "hp-fill")}<b><img src="${skin(art, "icon_stat_health_noframe")}" alt="">${u.hp_estimate ? "~" : ""}${s.hp}${other ? cmpHtml(s.hp, o.hp) : ""}</b></div></div>
       <div class="men"><img src="${skin(art, "icon_entity_small")}" alt="">${s.men}${other ? cmpHtml(s.men, o.men) : ""}</div>`;
   }
-  function abilitiesHtml(list, art) {
-    return list.length ? list.map(a => a.icon ? `<img loading="lazy" src="${art(a.icon)}" title="${esc(a.name)}" alt="${esc(a.name)}">`
-      : `<span class="noicon" title="${esc(a.key)}">${esc(a.name)}</span>`).join("") : '<span class="none">No abilities</span>';
+  // Loc text as HTML: inline images (`[[img:...]]`, a bare name being a skin icon), colour tags dropped, line breaks kept.
+  function markupHtml(text, art) {
+    return esc(text || "").replace(/\[\[img:([^\]]+)\]\]\[\[\/img\]\]/g, (_, name) => {
+      const path = name.includes("/") ? name.toLowerCase() : `ui/skins/default/${name.toLowerCase()}.png`;
+      return `<img class="inl" src="${art(path)}" alt="" onerror="this.remove()">`;
+    }).replace(/\[\[\/?col[^\]]*\]\]/g, "").replace(/\\n/g, "<br>");
   }
+
+  // Tooltip HTML by id, filled as panels are drawn.
+  const tips = new Map();
+  let nextTip = 0;
+  function tipAttr(html) { const id = `tip${nextTip++}`; tips.set(id, html); return `data-tip="${id}" tabindex="0"`; }
+
+  // An ability's tooltip, laid out like the game's: icon and name, type, passive, numbers, phases with their effects, description.
+  function abilityTipHtml(a, art) {
+    const t = a.tip;
+    if (!t) return `<div class="tip-head"><b>${esc(a.name)}</b></div>`;
+    const phases = t.phases.map(p => `<div class="tip-phase">${p.name || p.duration ? `<div class="tip-sub">${markupHtml(p.name, art)}${p.duration ? ` <span>${p.duration}</span>` : ""}</div>` : ""}
+      ${p.effects.map(([label, value]) => `<div class="tip-row"><span>${markupHtml(label, art)}</span><b class="${value.startsWith("-") ? "down" : "up"}">${esc(value)}</b></div>`).join("")}
+      ${p.attributes.map(([name, good]) => `<div class="tip-row"><span>${esc(name)}</span><b class="${good ? "up" : "down"}">${good ? "gained" : "lost"}</b></div>`).join("")}</div>`).join("");
+    return `<div class="tip-head">${a.icon ? `<img src="${art(a.icon)}" alt="">` : ""}<div><b>${esc(t.name)}</b><div class="tip-type">${markupHtml(t.type, art)}${t.passive ? " · Passive" : ""}</div></div></div>
+      ${t.numbers.length ? `<div class="tip-nums">${t.numbers.map(([label, value]) => `<span>${esc(label)} <b>${esc(value)}</b></span>`).join("")}</div>` : ""}
+      ${phases}${t.text ? `<div class="tip-text">${markupHtml(t.text, art)}</div>` : ""}`;
+  }
+  function abilitiesHtml(list, art) {
+    return list.length ? list.map(a => a.icon ? `<img loading="lazy" src="${art(a.icon)}" alt="${esc(a.name)}" ${tipAttr(abilityTipHtml(a, art))}>`
+      : `<span class="noicon" ${tipAttr(abilityTipHtml(a, art))}>${esc(a.name)}</span>`).join("") : '<span class="none">No abilities</span>';
+  }
+  // An attribute chip with its tooltip. `cls` marks it against a compared unit.
+  function attributeHtml(a, art, cls = "") {
+    return `<span class="${cls}" ${tipAttr(`<div class="tip-head"><div><b>${esc(a.name)}</b><div class="tip-type">Attribute</div></div></div>
+      ${a.text ? `<div class="tip-text">${markupHtml(a.text, art)}</div>` : ""}`)}>${esc(a.name)}</span>`;
+  }
+
+  // One floating tooltip for the page: it follows the hovered or tapped element and stays inside the window.
+  function installTips() {
+    const box = document.createElement("div"); box.className = "up-tip"; box.hidden = true; document.body.append(box);
+    let owner = null;
+    const show = el => {
+      const html = tips.get(el.dataset.tip); if (!html) return;
+      owner = el; box.innerHTML = html; box.hidden = false;
+      const r = el.getBoundingClientRect(), w = box.offsetWidth, h = box.offsetHeight;
+      const left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), innerWidth - w - 8);
+      const top = r.top - h - 8 > 8 ? r.top - h - 8 : Math.min(r.bottom + 8, innerHeight - h - 8);
+      box.style.left = left + "px"; box.style.top = top + "px";
+    };
+    const hide = () => { owner = null; box.hidden = true; };
+    document.addEventListener("mouseover", e => { const el = e.target.closest("[data-tip]"); if (el && el !== owner) show(el); else if (!el && owner) hide(); });
+    document.addEventListener("click", e => { const el = e.target.closest("[data-tip]"); if (!el) { hide(); return; } owner === el ? hide() : show(el); });
+    document.addEventListener("scroll", hide, true);
+  }
+  if (document.body) installTips(); else document.addEventListener("DOMContentLoaded", installTips);
   // The card art, or an empty frame.
   function cardHtml(u, art) {
     return u.card ? `<img class="art" src="${art(u.card)}" alt="">` : '<div class="art"></div>';
   }
 
-  window.UnitPanel = { STATS, SKIN_FILES, esc, barHtml, cmpHtml, statsHtml, hpHtml, abilitiesHtml, cardHtml };
+  window.UnitPanel = { STATS, SKIN_FILES, esc, markupHtml, barHtml, cmpHtml, statsHtml, hpHtml, abilitiesHtml, attributeHtml, cardHtml };
 })();

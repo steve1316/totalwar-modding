@@ -3,11 +3,11 @@
 // which unit the panel is about.
 
 // Attribute chips. Against a compared unit: red for what only the panel's unit has, green for what only the compared unit has.
-function attributeChips(u, o) {
-  const { esc } = window.UnitPanel;
-  if (!o) return u.attributes.map(a => `<span title="${esc(a.text)}">${esc(a.name)}</span>`).join("") || "<span>None</span>";
+function attributeChips(u, o, art) {
+  const { attributeHtml } = window.UnitPanel;
+  if (!o) return u.attributes.map(a => attributeHtml(a, art)).join("") || "<span>None</span>";
   const mine = new Set(u.attributes.map(a => a.key)), theirs = new Set(o.attributes.map(a => a.key));
-  const chip = (a, cls) => `<span class="${cls}" title="${esc(a.text)}">${esc(a.name)}</span>`;
+  const chip = (a, cls) => attributeHtml(a, art, cls);
   const list = u.attributes.map(a => chip(a, theirs.has(a.key) ? "" : "down")).concat(o.attributes.filter(a => !mine.has(a.key)).map(a => chip(a, "up")));
   return list.length ? list.join("") : "<span>None</span>";
 }
@@ -35,7 +35,7 @@ export class StatsTab {
       <div class="p-head">Stats</div>${statsHtml(u.stats, o ? o.stats : {}, art)}
       <div class="p-head">Abilities</div><div class="abilities">${abilitiesHtml(u.abilities, art)}</div>
       ${o ? `<div class="vs">${esc(o.name)}</div><div class="abilities">${abilitiesHtml(o.abilities, art)}</div>` : ""}
-      <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o)}</div></div>`;
+      <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o, art)}</div></div>`;
     const flip = container.querySelector('[data-t="flip"]'), toggle = container.querySelector('[data-t="compare"]');
     if (flip) flip.onclick = () => { this.flip = !this.flip; this.render(container); };
     if (toggle) toggle.onclick = () => { this.studio.compare = !this.studio.compare; this.flip = false; this.render(container); };

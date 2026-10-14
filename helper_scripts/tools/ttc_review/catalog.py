@@ -17,7 +17,7 @@ from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES
 from generators.update_ttc_compat import AUTO_PICKS_PATH
 from ttc import ttc_cards, ttc_compat_io, ttc_data
 from ttc.ttc_cards import CARD_FOLDER
-from ttc.unit_panel import PANEL_TABLES, PanelTables, index_rows, panel_stats, visible_abilities
+from ttc.unit_panel import PANEL_TABLES, TOOLTIP_LOC_PREFIXES, PanelTables, ability_tooltip, index_rows, panel_stats, visible_abilities
 from ttc.ttc_classifier import parse_number
 
 DETAIL_TABLES = PANEL_TABLES + [
@@ -38,7 +38,8 @@ GROUP_PARENT_NAME_PREFIX = "ui_unit_group_parents_onscreen_name_"
 BUILDING_NAME_PREFIX = "building_culture_variants_name_"
 BUILDING_CHAIN_NAME_PREFIX = "building_chains_chain_tooltip_"
 # Loc keys the browser reads: unit, ability, culture, unit category, building level and building chain names.
-LOC_PREFIXES = (ttc_data.LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, CULTURE_NAME_PREFIX, GROUP_PARENT_NAME_PREFIX, BUILDING_NAME_PREFIX, BUILDING_CHAIN_NAME_PREFIX)
+LOC_PREFIXES = (ttc_data.LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, CULTURE_NAME_PREFIX, GROUP_PARENT_NAME_PREFIX, BUILDING_NAME_PREFIX, BUILDING_CHAIN_NAME_PREFIX,
+                *TOOLTIP_LOC_PREFIXES)
 ABILITY_FOLDER = "ui/battle ui/ability_icons"
 CATEGORY_ICON_FOLDER = "ui/common ui/unit_category_icons"
 RACE_STRIP_FOLDER = "ui/frontend ui/race_strip_images"
@@ -433,7 +434,8 @@ class UnitCatalog:
         unit = self.stats.get(key)
         main, land = (unit.main, unit.land) if unit else ({}, {})
         stats, hp_estimate = panel_stats(main, land, self.panel)
-        abilities = [{"key": ability, "name": ttc_data.loc_name(ABILITY_NAME_PREFIX, ability, self.loc), "icon": self.art_path(ABILITY_FOLDER, icon)}
+        abilities = [{"key": ability, "name": ttc_data.loc_name(ABILITY_NAME_PREFIX, ability, self.loc), "icon": self.art_path(ABILITY_FOLDER, icon),
+                      "tip": ability_tooltip(ability, self.panel, self.loc)}
                      for ability, icon in visible_abilities(land.get("key", ""), self.panel)]
         return {
             "key": key,

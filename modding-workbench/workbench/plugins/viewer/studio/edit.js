@@ -95,8 +95,9 @@ export class EditTab {
       for (const [field, label, stat] of MISSILE_FIELDS) html += row(label, this.missileValue(f, field), stat && vanilla && vanilla.stats[stat] !== undefined ? vanilla.stats[stat] : "", `missile.${field}`);
     }
     const { added, removed } = this.attributeLists(f), shown = this.preview(entry.unit).attributes;
-    html += `<div class="p-head">Attributes</div><div class="note">Shared by every ${esc(weaponName)} form. Tap one to remove it.</div>
-      <div class="chips">${shown.map(a => `<span class="chip" data-attr="${esc(a.key)}" title="${esc(a.text)}">${esc(a.name)} ×</span>`).join("") || "<span>None</span>"}</div>
+    const { attributeHtml } = window.UnitPanel, art = this.studio.panelArt;
+    html += `<div class="p-head">Attributes</div><div class="note">Shared by every ${esc(weaponName)} form. Tap a name for its tooltip, × to remove it.</div>
+      <div class="chips">${shown.map(a => `<span class="chip">${attributeHtml(a, art)}<button class="mini" data-attr="${esc(a.key)}" aria-label="Remove ${esc(a.name)}">×</button></span>`).join("") || "<span>None</span>"}</div>
       <input class="attrSearch" placeholder="Add an attribute (type to search)" value="${esc(this.filter)}"><div class="attrList"></div>`;
     container.innerHTML = html;
 

@@ -76,7 +76,8 @@ def test_details_match_the_in_game_panel():
         "hp": 6624, "tier": 1, "men": 48, "armour": 15, "leadership": 55, "speed": 95,
         "melee_attack": 26, "melee_defence": 21, "weapon_strength": 42, "charge_bonus": 38,
     }
-    assert details["abilities"] == [{"key": "howl", "name": "Howl", "icon": "ui/battle ui/ability_icons/howl_icon.png"}]
+    assert [{k: a[k] for k in ("key", "name", "icon")} for a in details["abilities"]] == [{"key": "howl", "name": "Howl", "icon": "ui/battle ui/ability_icons/howl_icon.png"}]
+    assert details["abilities"][0]["tip"]["name"] == "Howl"
     assert details["card"] == "ui/units/icons/rory_welf_small_wolf.png" and not details["hp_estimate"]
 
 
