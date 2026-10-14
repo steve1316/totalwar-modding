@@ -1,0 +1,42 @@
+key	text	tooltip
+#Loc;1;text/db/advisor_overhaul.loc		
+names_name_930556520	The Advisor	true
+agent_subtypes_onscreen_name_override_advisor_overhaul_advisor	The Advisor	true
+agent_subtypes_description_text_override_advisor_overhaul_advisor	An old wizard of the Empire who has spent longer giving counsel than most kingdoms have stood. He follows your faction leader from the first day of the campaign, and he will not stay dead for long.	true
+unit_description_historical_texts_text_advisor_overhaul_advisor	Nobody at court remembers hiring him. He was simply there one morning, leaning on his staff by the war table, already correcting the maps.\\n\\nHe has outlived the generals who ignored him and quietly buried the ones who listened too late. Some say he trained at every College in Altdorf and was thrown out of each in turn. He says only that he has seen how this ends, and would rather it ended differently.	true
+unit_description_short_texts_text_advisor_overhaul_advisor	An old, hooded Imperial wizard who fights with staff and sword beside your faction leader.	true
+land_units_onscreen_name_advisor_overhaul_staff_and_sword_foot	The Advisor	true
+ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_foot	Staff and Sword, On Foot	true
+ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_foot	A walking staff for his spells and a plain Imperial blade for anything that gets too close. He walks, as he always has.	true
+land_units_onscreen_name_advisor_overhaul_staff_and_sword_warhorse	The Advisor (Staff and Sword, Barded Warhorse)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_warhorse	Staff and Sword, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_warhorse	A walking staff for his spells and a plain Imperial blade for anything that gets too close. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_staff_and_sword_pegasus	The Advisor (Staff and Sword, Imperial Pegasus)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_pegasus	Staff and Sword, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_pegasus	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A winged Imperial steed that lifts him over the battle line.	true
+land_units_onscreen_name_advisor_overhaul_staff_and_sword_disc	The Advisor (Staff and Sword, Disc of Tzeentch)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_staff_and_sword_disc	Staff and Sword, Disc of Tzeentch	true
+ancillaries_colour_text_advisor_overhaul_rig_staff_and_sword_disc	A walking staff for his spells and a plain Imperial blade for anything that gets too close. A floating daemon-disc, bound to him by a bargain he does not talk about.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_shield_foot	The Advisor (Sword and Shield, On Foot)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_foot	Sword and Shield, On Foot	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_foot	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand. He walks, as he always has.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_shield_warhorse	The Advisor (Sword and Shield, Barded Warhorse)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_warhorse	Sword and Shield, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_warhorse	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_shield_pegasus	The Advisor (Sword and Shield, Imperial Pegasus)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_pegasus	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand. A winged Imperial steed that lifts him over the battle line.	true
+advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
+advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
+character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_shield	Sword and Shield	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_shield	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+advisor_overhaul_ui_mount_foot	On Foot	true
+advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
+advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true
+advisor_overhaul_ui_mount_disc	Disc of Tzeentch	true
+character_skills_localised_name_advisor_overhaul_choose_mount_warhorse	Barded Warhorse	true
+character_skills_localised_description_advisor_overhaul_choose_mount_warhorse	An armoured Imperial charger, steady under spellfire.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_advisor_overhaul_choose_mount_pegasus	Imperial Pegasus	true
+character_skills_localised_description_advisor_overhaul_choose_mount_pegasus	A winged Imperial steed that lifts him over the battle line.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_advisor_overhaul_choose_mount_disc	Disc of Tzeentch	true
+character_skills_localised_description_advisor_overhaul_choose_mount_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true

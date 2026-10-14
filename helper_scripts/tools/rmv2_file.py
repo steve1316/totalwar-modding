@@ -1,7 +1,10 @@
-"""Read Total War: Warhammer 3 `.rigid_model_v2` models, plus the `.wsmodel` and material XML files that point at them.
+"""Read and write Total War: Warhammer 3 `.rigid_model_v2` models, plus the `.wsmodel` and material XML files that point at them.
 
 Reads RMV2 versions 6 to 8. The layout follows TheAssetEditor's `Shared/GameFiles/RigidModel` (ModelFactory, WeightedMaterial and the vertex
 creators). Only the weighted material header is read, which covers characters, props and every other unit mesh. Vertices come back as numpy arrays.
+
+Each mesh also keeps its raw blocks (headers, attachment points, textures, parameters and vertex records), so `write_rmv2` writes a file back
+byte for byte. Tools edit a model through `set_positions`, `set_skin` and `set_attachment_points`, which change both the arrays and the raw blocks.
 """
 
 import struct
@@ -48,6 +51,19 @@ ATTACHMENT_POINT = struct.Struct("<32s12fi")
 # Texture: type and 256-byte path.
 TEXTURE = struct.Struct("<i256s")
 
+# Inside the common header: section size, vertex offset, vertex count, index offset and index count, then the bounding box.
+COMMON_SIZES = struct.Struct("<IIIII")
+COMMON_SIZES_AT = 4
+BOUNDS = struct.Struct("<6f")
+BOUNDS_AT = 24
+
+# Inside the weighted material header: the attachment point and texture counts.
+MATERIAL_COUNTS = struct.Struct("<II")
+MATERIAL_COUNTS_AT = 712
+
+# Start of a lod header: mesh count, vertex bytes, index bytes and first mesh offset.
+LOD_SIZES = struct.Struct("<IIII")
+
 # Vertex layouts as numpy dtypes. The v8 weighted formats add a colour at the end.
 STATIC_VERTEX = np.dtype([("pos", "<f2", 4), ("uv", "<f2", 2), ("uv1", "<f2", 2), ("normal", "u1", 4), ("tangent", "u1", 4), ("binormal", "u1", 4),
                           ("colour", "u1", 4)])
@@ -72,6 +88,24 @@ class AttachmentPoint:
     matrix: Tuple[float, ...]
     # Skeleton bone index.
     bone: int
+
+
+@dataclass
+class MeshBlocks:
+    """The raw bytes of one mesh block, kept so a model can be written back unchanged."""
+
+    # Common header (material type, sizes, bounding box, shader name).
+    common: bytes
+    # Weighted material header, padding included.
+    material: bytes
+    # Attachment point records.
+    points: bytes
+    # Texture records.
+    textures: bytes
+    # String, float, int and vec4 parameter lists.
+    params: bytes
+    # Vertex records as a numpy structured array.
+    vertices: np.ndarray
 
 
 @dataclass
@@ -104,6 +138,8 @@ class Mesh:
     indices: np.ndarray
     # Pivot point: a local offset added to every vertex before the mesh is placed (TheAssetEditor `Rmv2MeshNode.PivotPoint`).
     pivot: Tuple[float, float, float] = (0.0, 0.0, 0.0)
+    # Raw blocks used by `write_rmv2`.
+    blocks: Optional[MeshBlocks] = None
 
 
 @dataclass
@@ -116,6 +152,8 @@ class RigidModel:
     skeleton: str
     # Meshes per lod.
     lods: List[List[Mesh]] = field(default_factory=list)
+    # Raw lod headers. The camera distance, lod level and quality are kept from these.
+    lod_headers: List[bytes] = field(default_factory=list)
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,43 +180,44 @@ def _unpack_positions(raw: np.ndarray) -> np.ndarray:
     return np.where(w != 0, xyz * w, xyz)
 
 
-def _read_vertices(data: bytes, offset: int, count: int, vertex_format: int, version: int) -> Tuple[np.ndarray, ...]:
-    """Reads one mesh's vertices.
+def _vertex_dtype(vertex_format: int, version: int) -> np.dtype:
+    """Vertex record layout for a format and version.
 
     Args:
-        data (bytes): File bytes.
-        offset (int): First vertex offset.
-        count (int): Vertex count.
         vertex_format (int): Vertex format id.
         version (int): RMV2 version.
 
     Returns:
-        Tuple[np.ndarray, ...]: Positions, normals, uvs, bone indices and bone weights.
+        np.dtype: The record dtype.
 
     Raises:
         ValueError: When the vertex format is not supported.
     """
     if vertex_format == FORMAT_STATIC:
-        verts = np.frombuffer(data, STATIC_VERTEX, count, offset)
-        # The default format stores normals with X and Z swapped.
-        normals = _unpack_normals(verts["normal"])[:, ::-1]
-        empty = np.zeros((count, 0))
-        return _unpack_positions(verts["pos"]), normals, verts["uv"].astype(np.float32), empty.astype(np.uint8), empty.astype(np.float32)
+        return STATIC_VERTEX
     if vertex_format in (FORMAT_WEIGHTED, FORMAT_CINEMATIC):
         base = WEIGHTED2_VERTEX if vertex_format == FORMAT_WEIGHTED else WEIGHTED4_VERTEX
-        dtype = np.dtype(base.descr + [("colour", "u1", 4)]) if version == 8 else base
-        verts = np.frombuffer(data, dtype, count, offset)
-        weights = verts["weight"].astype(np.float32) / 255.0
-        return _unpack_positions(verts["pos"]), _unpack_normals(verts["normal"]), verts["uv"].astype(np.float32), verts["bone"].copy(), weights
+        return np.dtype(base.descr + [("colour", "u1", 4)]) if version == 8 else base
     raise ValueError(f"unsupported vertex format {vertex_format}")
 
 
-def _vertex_size(vertex_format: int, version: int) -> int:
-    """Bytes per vertex for a format and version."""
+def _unpack_vertices(verts: np.ndarray, vertex_format: int) -> Tuple[np.ndarray, ...]:
+    """Unpacks vertex records.
+
+    Args:
+        verts (np.ndarray): Vertex records.
+        vertex_format (int): Vertex format id.
+
+    Returns:
+        Tuple[np.ndarray, ...]: Positions, normals, uvs, bone indices and bone weights.
+    """
     if vertex_format == FORMAT_STATIC:
-        return STATIC_VERTEX.itemsize
-    base = WEIGHTED2_VERTEX if vertex_format == FORMAT_WEIGHTED else WEIGHTED4_VERTEX
-    return base.itemsize + (4 if version == 8 else 0)
+        # The default format stores normals with X and Z swapped.
+        normals = _unpack_normals(verts["normal"])[:, ::-1]
+        empty = np.zeros((len(verts), 0))
+        return _unpack_positions(verts["pos"]), normals, verts["uv"].astype(np.float32), empty.astype(np.uint8), empty.astype(np.float32)
+    weights = verts["weight"].astype(np.float32) / 255.0
+    return _unpack_positions(verts["pos"]), _unpack_normals(verts["normal"]), verts["uv"].astype(np.float32), verts["bone"].copy(), weights
 
 
 def _read_mesh(data: bytes, start: int, version: int) -> Tuple[Mesh, int]:
@@ -199,9 +238,9 @@ def _read_mesh(data: bytes, start: int, version: int) -> Tuple[Mesh, int]:
     material, _, section_size, vertex_offset, vertex_count, index_offset, index_count = header[:7]
     if material not in WEIGHTED_MATERIALS:
         raise ValueError(f"unsupported material type {material}")
-    offset = start + COMMON_HEADER.size
-    fields = MATERIAL_HEADER.unpack_from(data, offset)
-    offset += MATERIAL_HEADER.size
+    material_start = start + COMMON_HEADER.size
+    fields = MATERIAL_HEADER.unpack_from(data, material_start)
+    offset = points_start = material_start + MATERIAL_HEADER.size
     vertex_format, name = fields[0], _text(fields[1])
     matrix_index = fields[45]
     point_count, texture_count, string_count, float_count, int_count, vec4_count = fields[47:53]
@@ -212,11 +251,13 @@ def _read_mesh(data: bytes, start: int, version: int) -> Tuple[Mesh, int]:
         offset += ATTACHMENT_POINT.size
         points.append(AttachmentPoint(_text(values[0]), tuple(values[1:13]), values[13]))
     textures: Dict[int, str] = {}
+    textures_start = offset
     for _ in range(texture_count):
         kind, path = TEXTURE.unpack_from(data, offset)
         offset += TEXTURE.size
         textures[kind] = _text(path)
     # Parameter lists: each entry is an int32 index then the value (string = int16 length + utf-8 bytes).
+    params_start = offset
     for _ in range(string_count):
         length = struct.unpack_from("<h", data, offset + 4)[0]
         offset += 6 + length
@@ -224,12 +265,15 @@ def _read_mesh(data: bytes, start: int, version: int) -> Tuple[Mesh, int]:
     if offset != start + vertex_offset:
         raise ValueError(f"material header of {name} ends at {offset - start}, vertices start at {vertex_offset}")
 
-    size = _vertex_size(vertex_format, version)
-    if (index_offset - vertex_offset) != size * vertex_count:
-        raise ValueError(f"vertex size mismatch in {name}: format {vertex_format} is {size} bytes")
-    positions, normals, uvs, bones, weights = _read_vertices(data, start + vertex_offset, vertex_count, vertex_format, version)
+    dtype = _vertex_dtype(vertex_format, version)
+    if (index_offset - vertex_offset) != dtype.itemsize * vertex_count:
+        raise ValueError(f"vertex size mismatch in {name}: format {vertex_format} is {dtype.itemsize} bytes")
+    verts = np.frombuffer(data, dtype, vertex_count, start + vertex_offset).copy()
+    positions, normals, uvs, bones, weights = _unpack_vertices(verts, vertex_format)
     indices = np.frombuffer(data, "<u2", index_count, start + index_offset).copy()
-    mesh = Mesh(material, vertex_format, name, textures, points, matrix_index, positions, normals, uvs, bones, weights, indices, tuple(fields[6:9]))
+    blocks = MeshBlocks(data[start:material_start], data[material_start:points_start], data[points_start:textures_start], data[textures_start:params_start],
+                        data[params_start:offset], verts)
+    mesh = Mesh(material, vertex_format, name, textures, points, matrix_index, positions, normals, uvs, bones, weights, indices, tuple(fields[6:9]), blocks)
     return mesh, section_size
 
 
@@ -254,7 +298,9 @@ def read_rmv2(data: bytes, max_lods: Optional[int] = None) -> RigidModel:
     lod_struct = LOD_HEADER_V6 if version == 6 else LOD_HEADER_V7
     model = RigidModel(version, _text(skeleton))
     for lod in range(lod_count if max_lods is None else min(lod_count, max_lods)):
-        mesh_count, _, _, first_offset = lod_struct.unpack_from(data, FILE_HEADER.size + lod * lod_struct.size)[:4]
+        header_start = FILE_HEADER.size + lod * lod_struct.size
+        model.lod_headers.append(data[header_start:header_start + lod_struct.size])
+        mesh_count, _, _, first_offset = lod_struct.unpack_from(data, header_start)[:4]
         meshes, offset = [], first_offset
         for _ in range(mesh_count):
             mesh, size = _read_mesh(data, offset, version)
@@ -262,6 +308,108 @@ def read_rmv2(data: bytes, max_lods: Optional[int] = None) -> RigidModel:
             offset += size
         model.lods.append(meshes)
     return model
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Editing
+
+
+def set_positions(mesh: Mesh, positions: np.ndarray) -> None:
+    """Replaces a mesh's vertex positions and refits its bounding box. Vertices that did not move keep their stored bytes.
+
+    Positions are half floats stored as xyz / w with w in [1, 2), like vanilla files, which keeps an extra bit of precision.
+
+    Args:
+        mesh (Mesh): A mesh read by `read_rmv2`.
+        positions (np.ndarray): New positions, (n, 3).
+    """
+    moved = np.abs(positions - mesh.positions).max(1) > 1e-6
+    w = np.clip(np.abs(positions[moved]).max(1, keepdims=True), 1.0, 1.999).astype(np.float16)
+    packed = mesh.blocks.vertices["pos"].copy()
+    packed[moved] = np.hstack([positions[moved] / w.astype(np.float32), w]).astype(np.float16)
+    mesh.blocks.vertices["pos"] = packed
+    mesh.positions = _unpack_positions(packed)
+    common = bytearray(mesh.blocks.common)
+    BOUNDS.pack_into(common, BOUNDS_AT, *mesh.positions.min(0), *mesh.positions.max(0))
+    mesh.blocks.common = bytes(common)
+
+
+def set_skin(mesh: Mesh, bones: np.ndarray, weights: np.ndarray) -> None:
+    """Replaces a weighted mesh's bone indices and weights.
+
+    Args:
+        mesh (Mesh): A weighted mesh read by `read_rmv2`.
+        bones (np.ndarray): Bone indices, uint8 (n, k) with k the format's influence count.
+        weights (np.ndarray): Weights as bytes, uint8 (n, k). Each row should add up to 255.
+    """
+    mesh.blocks.vertices["bone"] = bones
+    mesh.blocks.vertices["weight"] = weights
+    mesh.bone_indices = bones.astype(np.uint8)
+    mesh.bone_weights = weights.astype(np.float32) / 255.0
+
+
+def set_attachment_points(mesh: Mesh, points: List[AttachmentPoint]) -> None:
+    """Replaces a mesh's attachment points.
+
+    Args:
+        mesh (Mesh): A mesh read by `read_rmv2`.
+        points (List[AttachmentPoint]): The new points.
+    """
+    mesh.attachment_points = list(points)
+    mesh.blocks.points = b"".join(ATTACHMENT_POINT.pack(p.name.encode("utf-8"), *p.matrix, p.bone) for p in points)
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Writing
+
+
+def _mesh_block(mesh: Mesh) -> bytes:
+    """Encodes one mesh block from its raw blocks, with the sizes and counts recomputed.
+
+    Args:
+        mesh (Mesh): A mesh read by `read_rmv2`.
+
+    Returns:
+        bytes: The block.
+    """
+    blocks = mesh.blocks
+    material = bytearray(blocks.material)
+    MATERIAL_COUNTS.pack_into(material, MATERIAL_COUNTS_AT, len(blocks.points) // ATTACHMENT_POINT.size, len(blocks.textures) // TEXTURE.size)
+    vertices, indices = blocks.vertices.tobytes(), mesh.indices.astype("<u2").tobytes()
+    vertex_offset = len(blocks.common) + len(material) + len(blocks.points) + len(blocks.textures) + len(blocks.params)
+    index_offset = vertex_offset + len(vertices)
+    common = bytearray(blocks.common)
+    COMMON_SIZES.pack_into(common, COMMON_SIZES_AT, index_offset + len(indices), vertex_offset, len(blocks.vertices), index_offset, len(mesh.indices))
+    return b"".join([bytes(common), bytes(material), blocks.points, blocks.textures, blocks.params, vertices, indices])
+
+
+def write_rmv2(model: RigidModel) -> bytes:
+    """Encodes a model read by `read_rmv2` with every lod. Raw blocks are kept and the sizes, counts and offsets are recomputed.
+
+    Args:
+        model (RigidModel): The model.
+
+    Returns:
+        bytes: The `.rigid_model_v2` file bytes.
+
+    Raises:
+        ValueError: When a mesh has no raw blocks or the lod headers do not match the lods.
+    """
+    if len(model.lod_headers) != len(model.lods) or any(m.blocks is None for lod in model.lods for m in lod):
+        raise ValueError("model was not read with every lod")
+    offset = FILE_HEADER.size + sum(len(h) for h in model.lod_headers)
+    lod_headers, bodies = [], []
+    for header, meshes in zip(model.lod_headers, model.lods):
+        blocks = [_mesh_block(m) for m in meshes]
+        patched = bytearray(header)
+        LOD_SIZES.pack_into(patched, 0, len(meshes), sum(m.blocks.vertices.nbytes for m in meshes), sum(len(m.indices) * 2 for m in meshes), offset)
+        lod_headers.append(bytes(patched))
+        bodies += blocks
+        offset += sum(len(b) for b in blocks)
+    head = FILE_HEADER.pack(b"RMV2", model.version, len(model.lods), model.skeleton.encode("utf-8"))
+    return b"".join([head] + lod_headers + bodies)
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////

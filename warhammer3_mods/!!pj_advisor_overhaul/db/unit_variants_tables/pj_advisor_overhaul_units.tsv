@@ -1,7 +1,0 @@
-faction	unit	name	variant	unit_card
-#unit_variants_tables;5;db/unit_variants_tables/pj_advisor_overhaul_units				
-	pj_advisor_staff_and_sword_warhorse	pj_advisor	pj_advisor_staff_and_sword	pj_advisor
-	pj_advisor_staff_and_sword_disc	pj_advisor	pj_advisor_staff_and_sword_disc	pj_advisor
-	pj_advisor_sword_and_shield_foot	pj_advisor	pj_advisor_sword_and_shield	pj_advisor
-	pj_advisor_sword_and_shield_warhorse	pj_advisor	pj_advisor_sword_and_shield	pj_advisor
-	pj_advisor_sword_and_shield_pegasus	pj_advisor	pj_advisor_sword_and_shield	pj_advisor

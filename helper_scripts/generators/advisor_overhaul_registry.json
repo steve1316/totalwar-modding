@@ -1,0 +1,163 @@
+{
+ "model": {
+  "description": "His look. `body` picks his model slots from `bodies` and `head` picks his head from `heads`, with `hood` false switching to the head's `hoodless` model. `advisor` (body and head) is the vanilla campaign Advisor moved onto humanoid01 by generators.advisor_overhaul_model. The other bodies are vanilla humanoid01 outfits kept for later per-weapon armour; they are not wired to weapons yet. `jade` is the Jade Wizard's old, long-bearded head.",
+  "body": "advisor",
+  "bodies": {
+   "advisor": {
+    "body": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+   },
+   "grey_wizard": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/body/emp_grey_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/cape/emp_grey_wizard_cape_01.wsmodel"]
+   },
+   "jade_wizard": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/body/emp_jade_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/cape/emp_jade_wizard_cape_01.wsmodel"],
+    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/legs/emp_jade_wizard_legs_01.wsmodel"]
+   },
+   "gold_wizard": {
+    "collar": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/emp_wizard_metal/emp_wizard_metal_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:cloth"]
+   },
+   "amethyst_wizard": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/amethyst/emp_amethyst_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+   },
+   "captain": {
+    "torso": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_captains/body/emp_captains_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
+   },
+   "witch_hunter": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_witch_hunter/body/emp_witch_hunter_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
+   },
+   "huntsmarshal": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+   },
+   "general": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"],
+    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_legs_01.wsmodel"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_cape_01.wsmodel"]
+   },
+   "bretonnian_lord": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/brt/brt_lord/brt_lord_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
+   },
+   "todbringer": {
+    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"],
+    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_legs_01.wsmodel"],
+    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_cape_01.wsmodel"]
+   }
+  },
+  "head": "advisor",
+  "hood": true,
+  "heads": {
+   "advisor": {
+    "hooded": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01.wsmodel"],
+    "hoodless": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01_hoodless.wsmodel"]
+   },
+   "jade": {
+    "hooded": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/head/emp_jade_wizard_head_02.wsmodel"]
+   }
+  },
+  "stumps": {
+   "stump_neck": ["spine_2", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_neck_hu1_1.rigid_model_v2"],
+   "stump_left_arm": ["clav_left", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_left_arm_hu1_1.rigid_model_v2"],
+   "stump_right_arm": ["clav_right", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_right_arm_hu1_1.rigid_model_v2"],
+   "stump_waist": ["root", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_waist_hu1_6.rigid_model_v2"],
+   "stump_severed_head": ["head", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_head_hu1_3.rigid_model_v2"]
+  }
+ },
+ "weapons": {
+  "staff_and_sword": {
+   "name": "Staff and Sword",
+   "description": "A walking staff for his spells and a plain Imperial blade for anything that gets too close.",
+   "icon": "wh3_dlc27_item_abilities_staff_of_the_masque.png",
+   "shield": "none",
+   "props": {
+    "weapon_2": [
+     "be_prop_1",
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
+     "audio_melee_weapon_type:sword"
+    ],
+    "weapon_5": [
+     "be_prop_5",
+     "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2",
+     "audio_melee_weapon_type:staff"
+    ]
+   },
+   "sets": {
+    "foot": "hu1_pr8_amethyst_staff_and_sword",
+    "warhorse": "hu1_empire_hr1_warhorse_staff_and_sword",
+    "pegasus": "hu1_empire_hr1_pegasus_staff_and_sword",
+    "disc": "hu1_advisor_overhaul_disc01_staff_and_sword"
+   }
+  },
+  "sword_and_shield": {
+   "name": "Sword and Shield",
+   "description": "He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand.",
+   "campaign_set": "cam_hu1_empire_sword_and_shield",
+   "campaign_rider_sets": {
+    "warhorse": "cam_hu1_empire_hr1_warhorse_lance_sword_shield",
+    "pegasus": "cam_hu1_empire_hr1_warhorse_lance_sword_shield"
+   },
+   "icon": "wh_dlc07_lord_abilities_lions_shield.png",
+   "shield": "wh_missile_block_35_metal",
+   "props": {
+    "weapon_2": [
+     "be_prop_1",
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
+     "audio_melee_weapon_type:sword"
+    ],
+    "shield": [
+     "be_prop_2",
+     "VariantMeshes/VariantMeshDefinitions/emp_general_shield_1h_set1.VariantMeshDefinition",
+     ""
+    ]
+   },
+   "sets": {
+    "foot": "hu1_advisor_overhaul_sword_and_shield",
+    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_shield",
+    "pegasus": "hu1_advisor_overhaul_hr1_pegasus_sword_and_shield"
+   }
+  }
+ },
+ "mounts": {
+  "foot": {
+   "name": "On Foot",
+   "description": "He walks, as he always has.",
+   "icon": "ui/campaign ui/mounts/mount_none.png",
+   "ancillary_type": "wh_main_anc_mount_warhorse",
+   "skill_icon": "character_movement.png"
+  },
+  "warhorse": {
+   "name": "Barded Warhorse",
+   "description": "An armoured Imperial charger, steady under spellfire.",
+   "template": "wh2_pro07_emp_cha_wizard_death_3",
+   "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
+   "icon": "ui/campaign ui/mounts/mount_barded_warhorse.png",
+   "ancillary_type": "wh_main_anc_mount_barded_warhorse",
+   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword"
+  },
+  "pegasus": {
+   "name": "Imperial Pegasus",
+   "description": "A winged Imperial steed that lifts him over the battle line.",
+   "template": "wh2_pro07_emp_cha_wizard_death_2",
+   "template_foot": "wh2_pro07_emp_cha_wizard_death_0",
+   "icon": "ui/campaign ui/mounts/mount_imperial_pegasus.png",
+   "ancillary_type": "wh_main_anc_mount_imperial_pegasus",
+   "campaign_rider_set": "cam_hu1_pr8_hr1_warhorse_amethyst_staff_and_sword"
+  },
+  "disc": {
+   "name": "Disc of Tzeentch",
+   "description": "A floating daemon-disc, bound to him by a bargain he does not talk about.",
+   "template": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc",
+   "template_foot": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze",
+   "icon": "ui/campaign ui/mounts/mount_disc_of_tzeentch.png",
+   "ancillary_type": "wh3_main_anc_mount_disc_of_tzeentch",
+   "campaign_rider_set": "cam_hu1_pr8_amethyst_staff_and_sword",
+   "variant_props": {
+    "weapon_4": [
+     "be_prop_4",
+     "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel",
+     "equipment"
+    ]
+   }
+  }
+ }
+}

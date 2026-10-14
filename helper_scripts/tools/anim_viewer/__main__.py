@@ -1,7 +1,7 @@
 """Export a source animation set and its retargeted copy for the viewer, and serve it.
 
 Pairs the two sets slot by slot and writes them as one comparison entry (see `tools.anim_viewer.exporter`). All URLs are relative, so the folder
-can also be hosted as static files. For the Addvisor unit gallery use `python -m tools.anim_viewer.gallery`.
+can also be hosted as static files. For the Advisor unit gallery use `python -m tools.anim_viewer.gallery`.
 
 Usage (from helper_scripts):
     python -m tools.anim_viewer --source-set <source .bin> --source-root <folder of source .anim files>

@@ -1,5 +1,0 @@
-set	item	mod_disabled
-#character_skill_node_set_items_tables;0;db/character_skill_node_set_items_tables/pj_advisor_overhaul_units		
-pj_advisor	pj_advisor_choose_weapon_node_sword_and_shield	false
-pj_advisor	pj_advisor_choose_mount_node_warhorse	false
-pj_advisor	pj_advisor_choose_mount_node_disc	false

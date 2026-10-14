@@ -1,0 +1,6 @@
+key	campaign_key	character_skill_key	faction_key	indent	tier	subculture	points_on_creation	required_num_parents	visible_in_ui
+#character_skill_nodes_tables;6;db/character_skill_nodes_tables/advisor_overhaul									
+advisor_overhaul_choose_weapon_node_sword_and_shield		advisor_overhaul_choose_weapon_sword_and_shield		0	0		0	0	true
+advisor_overhaul_choose_mount_node_warhorse		advisor_overhaul_choose_mount_warhorse		1	0		0	0	true
+advisor_overhaul_choose_mount_node_pegasus		advisor_overhaul_choose_mount_pegasus		1	1		0	0	true
+advisor_overhaul_choose_mount_node_disc		advisor_overhaul_choose_mount_disc		1	2		0	0	true

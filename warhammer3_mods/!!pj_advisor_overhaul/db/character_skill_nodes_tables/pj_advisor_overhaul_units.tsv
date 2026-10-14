@@ -1,5 +1,0 @@
-key	campaign_key	character_skill_key	faction_key	indent	tier	subculture	points_on_creation	required_num_parents	visible_in_ui
-#character_skill_nodes_tables;6;db/character_skill_nodes_tables/pj_advisor_overhaul_units									
-pj_advisor_choose_weapon_node_sword_and_shield		pj_advisor_choose_weapon_sword_and_shield		6	1		0	0	true
-pj_advisor_choose_mount_node_warhorse		pj_advisor_choose_mount_warhorse		7	1		0	0	true
-pj_advisor_choose_mount_node_disc		pj_advisor_choose_mount_disc		7	3		0	0	true
