@@ -134,7 +134,8 @@
   #inspBody .chips .chip > span { border: 1px solid var(--line); border-radius: 3px; padding: 2px 6px; }
   /* The Stats card's own numbers, edited in place (studio/stats.js). */
   /* Numbers read like the card's own, with a dashed underline to show they can be typed into. No spinner arrows. */
-  .panel .stat.edit { grid-template-columns: 22px 1fr 48px 38px minmax(50px, 100px); }
+  .panel .stat.edit { grid-template-columns: 22px 1fr 48px 38px 84px; gap: 6px; }
+  .panel .stat.edit > span:nth-child(2) { white-space: nowrap; }
   .panel .stat.edit input.v, .panel .stat.sub input.v { width: 100%; min-height: 24px; background: transparent; color: var(--text); border: 0; border-bottom: 1px dashed #8a6a30;
     border-radius: 0; padding: 0 2px; font: inherit; font-family: var(--mono, monospace); font-size: .95rem; text-align: right; appearance: textfield; -moz-appearance: textfield; }
   .panel input.v::-webkit-inner-spin-button, .panel input.v::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
