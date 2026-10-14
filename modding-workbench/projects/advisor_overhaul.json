@@ -22,5 +22,14 @@
   "hand_shift": "model.hand_shift",
   "camera_head": "portrait.camera_head",
   "prop_sources": ["weapons.*.props", "mounts.*.variant_props"]
- }
+ },
+ "editable": [
+  "weapons.*.stats.*",
+  "weapons.*.forms.*.*",
+  "weapons.*.melee.*",
+  "weapons.*.missile.projectile.*",
+  "weapons.*.missile.ammo",
+  "weapons.*.attributes",
+  "weapons.*.attributes_removed"
+ ]
 }
