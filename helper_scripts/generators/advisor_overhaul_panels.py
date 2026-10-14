@@ -16,7 +16,7 @@ from generators.advisor_overhaul import MOD, STAT_COLUMNS, pairs, unit_key
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
 from ttc.ttc_cards import CARD_FOLDER
 from ttc.ttc_data import LOC_NAME_PREFIX, VANILLA_LOC_PACK, loc_name, read_loc_names
-from ttc.unit_panel import PANEL_TABLES, PanelTables, index_rows, panel_stats, visible_abilities
+from ttc.unit_panel import PANEL_TABLES, TOOLTIP_LOC_PREFIXES, PanelTables, ability_tooltip, attribute_tooltip, index_rows, panel_stats, tooltip_images, visible_abilities
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,8 +28,8 @@ UNIT_TABLES = ["main_units_tables", "land_units_tables", "unit_variants_tables",
 # Loc prefix of an attribute's bullet text: its name, then `||` and its tooltip.
 ATTRIBUTE_PREFIX = "unit_attributes_bullet_text_"
 
-# Loc prefixes the panels read.
-LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX)
+# Loc prefixes the panels read: names, and everything the ability and attribute tooltips show.
+LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX, *TOOLTIP_LOC_PREFIXES)
 
 # Vanilla packs holding the card art, ability icons and stat icons.
 UI_PACKS = re.compile(r"^ui2?\.pack$")
@@ -137,6 +137,22 @@ class PanelBuilder:
         self.assets = AssetSource([MOD], [], UI_PACKS)
         self.art = [f"ui/skins/default/{name}.png" for name in (path.rsplit("/", 1)[-1][:-4] for path in SKIN_FILES)]
 
+    def note_art(self, path: str) -> str:
+        """Notes a lowercase pack path for copying when the mod or a vanilla pack has it.
+
+        Args:
+            path (str): The pack path.
+
+        Returns:
+            str: The path, or an empty string when none has it.
+        """
+        path = norm(path)
+        if path not in self.assets.index and path not in self.assets.loose:
+            return ""
+        if path not in self.art:
+            self.art.append(path)
+        return path
+
     def art_path(self, folder: str, name: str) -> str:
         """The lowercase pack-relative path of an art file when the mod or a vanilla pack has it, noted for copying.
 
@@ -167,16 +183,20 @@ class PanelBuilder:
         land = self.land[main["land_unit"]]
         stats, hp_estimate = panel_stats(main, land, self.tables)
         card = next((path for name in (self.cards.get(key), key, main["land_unit"]) if name and (path := self.art_path(CARD_FOLDER, name))), "")
-        attributes = []
-        for attribute in self.attributes.get(land.get("attribute_group", ""), []):
-            name, _, text = loc_name(ATTRIBUTE_PREFIX, attribute, self.loc).partition("||")
-            attributes.append({"key": attribute, "name": name, "text": text})
+        # Attributes the game gives no text are not shown in game either.
+        attributes = [tip for tip in (attribute_tooltip(a, self.loc, self.tables) for a in self.attributes.get(land.get("attribute_group", ""), [])) if tip["name"]]
+        abilities = []
+        for ability, icon in visible_abilities(land["key"], self.tables):
+            tip = ability_tooltip(ability, self.tables, self.loc)
+            abilities.append({"key": ability, "name": loc_name(ABILITY_NAME_PREFIX, ability, self.loc), "icon": self.art_path(ABILITY_FOLDER, icon), "tip": tip})
+        # The icons the tooltips show inline.
+        for tip in [a["tip"] for a in abilities] + attributes:
+            for path in tooltip_images(tip):
+                self.note_art(path)
         return {
             "key": key, "name": loc_name(LOC_NAME_PREFIX, main["land_unit"], self.loc), "card": card, "caste": main.get("caste", ""),
             "class": land.get("class", ""), "hp_estimate": hp_estimate, "stats": stats,
-            "abilities": [{"key": ability, "name": loc_name(ABILITY_NAME_PREFIX, ability, self.loc), "icon": self.art_path(ABILITY_FOLDER, icon)}
-                          for ability, icon in visible_abilities(land["key"], self.tables)],
-            "attributes": attributes,
+            "abilities": abilities, "attributes": attributes,
         }
 
     def form_values(self, key: str, weapon_key: str, mount_key: str, registry: Dict) -> Dict:
@@ -218,9 +238,11 @@ class PanelBuilder:
         catalog = {}
         for loc_key in self.loc:
             if loc_key.startswith(ATTRIBUTE_PREFIX):
-                name, _, text = loc_name(ATTRIBUTE_PREFIX, loc_key[len(ATTRIBUTE_PREFIX):], self.loc).partition("||")
-                if name:
-                    catalog[loc_key[len(ATTRIBUTE_PREFIX):]] = {"name": name, "text": text}
+                tip = attribute_tooltip(loc_key[len(ATTRIBUTE_PREFIX):], self.loc, self.tables)
+                if tip["name"]:
+                    catalog[tip["key"]] = {"name": tip["name"], "text": tip["text"]}
+                    for path in tooltip_images(tip):
+                        self.note_art(path)
         return dict(sorted(catalog.items(), key=lambda item: item[1]["name"]))
 
     def copy_art(self, out: str) -> int:
