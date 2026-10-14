@@ -26,7 +26,8 @@ export function animLoader(manifest) {
 }
 
 // Loads an exported model: skinned meshes on flat bones that take world transforms straight from an animation. Rigid props sit in the local
-// space of their attach bone, and are left out when `props` is false. Returns { group, bones, missing }.
+// space of their attach bone, and are left out when `props` is false. Each mesh keeps its `slot`, `model` path and `attach` bone in `userData`.
+// Returns { group, bones, inverses, meshes, missing }.
 export async function loadModel(url, { props = true } = {}) {
   const doc = await (await fetch(url)).json();
   const buffer = await (await fetch(url.replace(/[^/]+$/, doc.bin))).arrayBuffer();
@@ -37,7 +38,7 @@ export async function loadModel(url, { props = true } = {}) {
   const skeleton = new THREE.Skeleton(bones, inverses);
   const group = new THREE.Group();
   bones.forEach(b => group.add(b));
-  const loader = new THREE.TextureLoader(), textures = new Map();
+  const loader = new THREE.TextureLoader(), textures = new Map(), meshes = [];
   for (const m of doc.meshes) {
     if (!m.skinned && !props) continue;
     const g = new THREE.BufferGeometry();
@@ -66,7 +67,9 @@ export async function loadModel(url, { props = true } = {}) {
       (bone || group).add(mesh);
     }
     mesh.name = m.slot;
+    mesh.userData = { slot: m.slot, model: m.model || "", attach: m.attach };
     mesh.frustumCulled = false;
+    meshes.push(mesh);
   }
-  return { group, bones, missing: doc.missing };
+  return { group, bones, inverses, meshes, missing: doc.missing };
 }

@@ -211,7 +211,7 @@ def export_model(side: str, variant: str, skeleton_name: str, skeleton: Animatio
 
     for part, mesh, texture, alpha_hint in meshes:
         skinned = part.attach is None and mesh.vertex_format != FORMAT_STATIC
-        entry = {"slot": part.slot, "name": mesh.name, "attach": part.attach, "skinned": skinned, "count": len(mesh.positions), "index_count": len(mesh.indices)}
+        entry = {"slot": part.slot, "model": part.model, "name": mesh.name, "attach": part.attach, "skinned": skinned, "count": len(mesh.positions), "index_count": len(mesh.indices)}
         # A rigid prop is moved by its pivot point first, then placed on its bone. Without it a sword sits centred on the hand, not by its grip.
         positions = mesh.positions if skinned else mesh.positions + np.array(mesh.pivot, np.float32)
         entry["position"] = put(positions.astype("<f4"))

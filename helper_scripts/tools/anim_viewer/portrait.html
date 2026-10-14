@@ -4,13 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Portrait Camera</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/shared/unit_panel.css">
+<script src="/shared/unit_panel.js"></script>
+<script src="/shared/nav.js" defer></script>
 <style>
-  :root { --bg: #14161a; --panel: #1d2026; --line: #2c3038; --text: #d8dbe0; --muted: #8a909a; --on: #3a4558; --gold: #a8803f;
+  :root { --bg: #170d12; --panel: #211819; --line: #3e2a2c; --text: #e9dfcf; --muted: #a8998a; --on: #8a2a1f; --gold: #a8803f;
           --sat: env(safe-area-inset-top, 0px); --sab: env(safe-area-inset-bottom, 0px); }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.4 system-ui, sans-serif; }
-  main { max-width: 720px; margin: 0 auto; padding: calc(var(--sat) + 10px) 16px calc(var(--sab) + 24px); display: flex; flex-direction: column; gap: 12px; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.4 "Libre Caslon Text", Georgia, serif; }
+  main { max-width: 720px; margin: 0 auto; padding: calc(var(--sat) + var(--nav-h, 0px) + 10px) 16px calc(var(--sab) + 24px); display: flex; flex-direction: column; gap: 12px; }
   header { display: flex; align-items: center; gap: 8px; }
   header h1 { font-size: 16px; margin: 0; flex: 1; }
   a { color: #8aa4d6; }
@@ -28,9 +32,9 @@
   .porthole .guides::before { left: 50%; top: 0; bottom: 0; width: 1px; }
   .porthole .guides::after { top: 50%; left: 0; right: 0; height: 1px; }
   .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  button, select { min-height: 48px; min-width: 48px; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 10px;
+  button, select { min-height: 48px; min-width: 48px; background: linear-gradient(#5b1714, #360b0a); color: var(--text); border: 1px solid #a8442f; border-radius: 4px;
                    padding: 0 14px; font: inherit; cursor: pointer; }
-  button.on { background: var(--on); border-color: #56627a; }
+  button.on { background: linear-gradient(#8a2a1f, #571310); border-color: #d8a640; }
   .presets button { flex: 1 1 auto; padding: 0 10px; font-size: 14px; }
   .slider { display: grid; grid-template-columns: 52px 1fr 92px; gap: 10px; align-items: center; }
   .slider label { font-weight: 600; }
@@ -67,7 +71,7 @@
   <div class="slider"><label for="pose">pose</label><input type="range" id="pose" min="0" max="0" step="1"><span id="poseNum"></span></div>
   <div id="sliders"></div>
   <div class="row presets" id="presets"></div>
-  <div id="copyLine"><div id="json"></div><button id="copy">Copy</button></div>
+  <div id="copyLine"><div id="json"></div><button id="copy">Copy</button><button id="save" hidden>Save</button></div>
   <div id="note"></div>
 </main>
 <script type="module">
@@ -248,6 +252,16 @@ $("copy").onclick = async () => {
     const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range); document.execCommand("copy");
   }
   $("copy").textContent = "Copied"; setTimeout(() => $("copy").textContent = "Copy", 1200);
+};
+
+// Save: writes the values into the registry through the dashboard server. Hidden when the page is served as plain files.
+fetch("api/tuning").then(r => { $("save").hidden = !r.ok; }).catch(() => {});
+$("save").onclick = async () => {
+  const camera = {};
+  for (const [key] of FIELDS) camera[key] = Math.round(values[key] * 1000) / 1000;
+  const r = await fetch("api/tuning", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ camera_head: camera }) });
+  const body = await r.json();
+  $("note").textContent = r.ok ? "Saved to the registry. Rebuild and deploy from the gallery's Adjust panel to try it in game." : `Not saved: ${body.error}`;
 };
 
 // Start from the URL hash when it has values, else from the registry.

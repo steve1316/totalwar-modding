@@ -124,6 +124,10 @@ class Exporter:
     entries: List[Dict]
     # Portrait camera preview data (looks, porthole animation, camera values), or None when the export has no portrait page.
     portrait: Optional[Dict]
+    # The tuning values baked into the exported models (prop offsets, hand shift), which the Adjust panel edits from, or None.
+    tuning: Optional[Dict]
+    # Unit panels by unit key (see `generators.advisor_overhaul_panels`), or None.
+    panels: Optional[Dict]
 
     def __init__(self, out: str, assets: AssetSource):
         self.out = out
@@ -137,6 +141,8 @@ class Exporter:
         self.models = {}
         self.entries = []
         self.portrait = None
+        self.tuning = None
+        self.panels = None
         shutil.rmtree(out, ignore_errors=True)
         os.makedirs(os.path.join(out, "anims"), exist_ok=True)
 
@@ -221,6 +227,10 @@ class Exporter:
         manifest = {"entries": self.entries, "anims": self.anims, "rigs": self.rigs, "bundles": [f"anims/bundle_{i:02d}.bin" for i in range(len(self.bundles))]}
         if self.portrait:
             manifest["portrait"] = self.portrait
+        if self.tuning:
+            manifest["tuning"] = self.tuning
+        if self.panels:
+            manifest["panels"] = self.panels
         with open(os.path.join(self.out, "manifest.json"), "w", encoding="utf-8") as f:
             json.dump(manifest, f, separators=(",", ":"))
         for page in PAGES:

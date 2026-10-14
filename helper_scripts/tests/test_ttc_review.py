@@ -2,6 +2,7 @@
 
 from tools.ttc_review import catalog
 from ttc import ttc_compat_io, ttc_data
+from ttc.unit_panel import missile_stats
 
 # Wolves from Animals for Wood Elves, checked against the in-game unit panel: 6624 HP, 15 armour, 55 leadership, 95 speed, 26/21 melee, 42 weapon
 # strength, 38 charge.
@@ -90,9 +91,9 @@ def test_missile_stats_show_only_for_units_that_shoot():
         projectiles_explosions_tables=[{"key": "boom", "detonation_damage": "10", "detonation_damage_ap": "5"}],
         battlefield_engines_tables=[{"key": "great_cannon", "missile_weapon": "cannon"}],
     )
-    assert cat.missile_stats({"primary_missile_weapon": "ungor_bow", "primary_ammo": "22"}) == {"ammunition": 22, "range": 115, "missile_strength": 13}
-    assert cat.missile_stats({"engine": "great_cannon", "primary_ammo": "20"}) == {"ammunition": 20, "range": 450, "missile_strength": 455}
-    assert cat.missile_stats(WOLF_LAND) == {}
+    assert missile_stats({"primary_missile_weapon": "ungor_bow", "primary_ammo": "22"}, cat.panel) == {"ammunition": 22, "range": 115, "missile_strength": 13}
+    assert missile_stats({"engine": "great_cannon", "primary_ammo": "20"}, cat.panel) == {"ammunition": 20, "range": 450, "missile_strength": 455}
+    assert missile_stats(WOLF_LAND, cat.panel) == {}
     assert "range" not in cat.details("rory_welf_small_wolf")["stats"]
 
 
