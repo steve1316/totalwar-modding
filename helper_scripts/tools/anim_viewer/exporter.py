@@ -126,6 +126,8 @@ class Exporter:
     tuning: Optional[Dict]
     # Unit panels by unit key (built with `ttc.unit_panel`), or None.
     panels: Optional[Dict]
+    # More manifest keys a project's generator adds for its workbench tabs (such as the Edit tab's form values).
+    extra: Dict
 
     def __init__(self, out: str, assets: AssetSource):
         self.out = out
@@ -141,6 +143,7 @@ class Exporter:
         self.portrait = None
         self.tuning = None
         self.panels = None
+        self.extra = {}
         shutil.rmtree(out, ignore_errors=True)
         os.makedirs(os.path.join(out, "anims"), exist_ok=True)
 
@@ -229,6 +232,7 @@ class Exporter:
             manifest["tuning"] = self.tuning
         if self.panels:
             manifest["panels"] = self.panels
+        manifest.update(self.extra)
         with open(os.path.join(self.out, "manifest.json"), "w", encoding="utf-8") as f:
             json.dump(manifest, f, separators=(",", ":"))
         size = sum(os.path.getsize(os.path.join(root, n)) for root, _, files in os.walk(self.out) for n in files)
