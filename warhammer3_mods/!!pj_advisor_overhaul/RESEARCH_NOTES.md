@@ -286,6 +286,43 @@ staff shot.
   whole run logged zero `ComponentMouseOn` events, even with the picker open over the character panel. Scripts can't see hovers on our picker
   options, so live preview is dropped and the test code removed. `[game]`
 
+### Character panel Mount box (2026-10-13)
+
+- **The Mount box lists the faction pool, not the character.** In ui3.pack `character_details_panel_details.twui.xml`:
+  - The list `list_box` under `ancillary_selector_mount` (line 11229) is `FactionContext.AncillaryList.Filter(CharacterEquippedToContext !=
+    SelectedOrContainedCharacter && CanCharacterEquip(...) && Category == "mount").Distinct(AncillaryRecordContext.Key)`. `[data]`
+  - Picking an entry runs `EquipToCharacter(char, <worn mount>)` (line 13387), a native swap. "None" (`entry_none`) shows whenever he wears a
+    mount ancillary and runs `RemoveAncillary` on it (line 6476 on). Both are native commands, so every client sees the same result. `[data]`
+  - Line 10530 leaves mounts out of the "new item" alert, so the game expects mount items to sit in the pool. `[data]`
+- **Vanilla mounts.** A skill grants the mount through `character_skill_level_to_ancillaries_junctions` (763 of 774 mount ancillaries), with
+  `ancillaries_required_skills` and `ancillaries_included_agent_subtypes` rows. Every vanilla mount has `turns_before_swap_allowed` 0. The base
+  mod's Pegasus uses the same pattern. `wh_main_effect_enable_mount_warhorse` is only the skill's display effect. `[data]`
+- **Why it showed only "None".** The script destroyed every rig it took off (`force_remove_ancillary(..., false, true)`), so the pool never held
+  one. `[data]`
+- **Script API.** `cm:add_ancillary_to_faction(faction, key, suppress_event)` and `cm:force_remove_ancillary_from_faction(faction, key)`.
+  `faction:ancillary_exists(key)` only says yes or no. Removing from the faction also strips a worn copy: vanilla `wh2_dlc16_wef_sisters_forge.lua`
+  ("remove item from faction/character") and `wh2_dlc10_sword_of_khaine.lua` use it that way. The Sword of Khaine script re-equips with "remove
+  from faction, then `force_add_ancillary`". `CharacterAncillaryGained` gives `character()` and the key string `ancillary()`. There is no
+  ancillary lost event. `[data]`
+- **What the script now does.** The box lists his unlocked pairs, a pick sticks across turns, "None" puts the saved pair back, and the picker
+  and the box stay in step. Confirmed in game on 2026-10-13. `[game]`
+  - The rigs use `turns_before_swap_allowed` 0.
+  - A swap returns the old rig to the pool (`force_remove_ancillary(char, rig, true, true)`). The base mod's `pj_advisor_mount_warhorse` is still
+    destroyed, else the box would list a second Pegasus. Its skill only grants it, so the skill keeps working.
+  - Pool sync, run after every apply: the pool holds one copy of each unlocked pair's rig that no Advisor wears, and no locked rig. A worn rig is
+    never removed from the faction. Each rig gets a log line with the faction item list count, read through `common.get_context_value` for the
+    log only.
+  - Reconcile, run at first tick, at turn start, on a weapon or mount skill, on `CharacterAncillaryGained` for a rig or the base mount, and from a
+    `pj_advisor_overhaul_reconcile:<cqi>` UI trigger. Exactly one worn rig of an unlocked pair becomes his saved choice ("loadout taken from the
+    worn rig"). No rig ("None"), a locked rig or several put back the saved pair, taking the pool copy first.
+  - A click inside `ancillary_selector_mount` checks the worn rig 500 ms later, read only. If it no longer matches the saved pair, it sends the UI
+    trigger, so the saved values are written on every client by the trigger.
+  - A change from the box selects him again once the character panel closes, like the picker does.
+  - `add_ancillary_to_faction` does pool a `transferrable=false` rig. `[game]`
+  - Hovering a box entry shows the game's own stat comparison against his current unit, with no work on our side. It shows once per entry, then
+    only again after the mouse leaves the list. That is the vanilla dropdown's own behaviour, and fixing it would mean overriding the large
+    `character_details_panel_details.twui.xml`, so it is left as is. `[game]`
+
 ### Mount rows
 
 | Mount | `mounts` key | campaign_mounts | icon |

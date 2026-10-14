@@ -342,7 +342,7 @@ def build() -> None:
             "key": ancillary, "type": mount["ancillary_type"], "applies_to": ".", "transferrable": "false", "unique_to_world": "false",
             "unique_to_faction": "false", "precedence": "1", "start_date": "0", "end_date": "9999", "legendary_item": "false", "mp_exclusive": "false",
             "is_wife_ancillary": "false", "category": "mount", "min_starting_age": "16", "max_starting_age": "30", "min_expiry_age": "30",
-            "max_expiry_age": "50", "immortal": "true", "provided_bodyguard_unit": key, "uniqueness_score": "1", "turns_before_swap_allowed": "1",
+            "max_expiry_age": "50", "immortal": "true", "provided_bodyguard_unit": key, "uniqueness_score": "1", "turns_before_swap_allowed": "0",
             "randomly_dropped": "false", "can_be_stolen": "false", "can_be_destroyed": "false", "faction_set": "all",
         })
         rows["ancillary_info_tables"].append({"ancillary": ancillary})

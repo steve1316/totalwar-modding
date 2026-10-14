@@ -6,6 +6,8 @@
 --- chosen pair (its bodyguard unit and uniform are the pair's). The pairs come from `PJ_ADVISOR_OVERHAUL_RIGS`, which
 --- generators/pj_advisor_units.py writes into pj_advisor_overhaul_rigs.lua.
 ---
+--- The rigs he does not wear sit in the faction pool, so the character panel's Mount box lists them. A pick there is read back from the worn rig.
+---
 --- With `INJECT_BUTTON` on, the button is a child of a vanilla row: the character panel's bottom-right buttons, or the hover strip over the
 --- selected Advisor's unit card on the map. With it off, the button is a direct child of the UI root, placed over those spots. The picker options
 --- are always direct children of the UI root. The script only ever changes or destroys a component it found by its own unique name.
@@ -147,6 +149,24 @@ local PANEL_PRIORITY_BONUS = 50
 --- Start of the UI trigger string that carries a pick to every client.
 local TRIGGER_PREFIX = TAG .. "_loadout:"
 
+--- Start of the UI trigger string that asks every client to read the Advisor's worn rig again, after a pick in the panel's Mount box.
+local RECONCILE_PREFIX = TAG .. "_reconcile:"
+
+--- Start of every pair's mount ancillary key.
+local RIG_PREFIX = "pj_advisor_rig_"
+
+--- The character panel's Mount box list (ui3.pack character_details_panel_details.twui.xml). A click inside it may pick a rig or "None".
+local MOUNT_BOX = "ancillary_selector_mount"
+
+--- How many parents a clicked component is followed up to find `MOUNT_BOX`.
+local MOUNT_BOX_DEPTH = 12
+
+--- Name of the one-shot real-time callback that checks the worn rig after a click in the Mount box.
+local MOUNT_PICK_NAME = TAG .. "_mount_pick"
+
+--- Delay of that callback in milliseconds, so the game has run the native equip command first.
+local MOUNT_PICK_MS = 500
+
 --- UI text: loc key in text/db/pj_advisor_overhaul_ui.loc and the English fallback used if the key does not resolve.
 local TEXT = {
 	--- Tooltip of the Change Loadout button.
@@ -220,6 +240,13 @@ end
 --- @param text string The message.
 local function log(text)
 	out(TAG .. ": " .. text)
+end
+
+--- Logs the native UI call about to run, so a call that breaks the game is the last line in the log.
+--- @param name string The component.
+--- @param call string The call and its arguments.
+local function log_call(name, call)
+	log("ui call " .. name .. ": " .. call)
 end
 
 
@@ -347,20 +374,182 @@ local function apply_art_set(character, weapon)
 	log("cqi " .. character:command_queue_index() .. " character panel model set to " .. art_set .. (ok and "" or (", error: " .. tostring(err))))
 end
 
---- Equips the mount ancillary of the Advisor's current pair and removes every other pair's (and the base mod's own mount ancillaries). The pair
---- is saved back, so a choice a respec took away does not return when he learns the skill again. Also sets his weapon's art set.
+--- Whether the once-per-turn rule blocks a change for this Advisor.
+--- @param cqi number The Advisor's command queue index.
+--- @returns boolean True when he already changed this turn and the rule is on.
+local function used_this_turn(cqi)
+	return ONE_CHANGE_PER_TURN and cm:get_saved_value(changed_turn_key(cqi)) == cm:model():turn_number()
+end
+
+--- The weapon and mount of a rig ancillary.
+--- @param ancillary string The ancillary key.
+--- @returns string|nil The weapon key, or nil when it is not a rig.
+--- @returns string|nil The mount key.
+local function rig_pair(ancillary)
+	for pair, key in pairs(rig_data().ancillaries) do
+		if key == ancillary then
+			return string.match(pair, "^([^|]+)|([^|]+)$")
+		end
+	end
+	return nil, nil
+end
+
+--- Whether a key is one of the base mod's own mount ancillaries.
+--- @param ancillary string The ancillary key.
+--- @returns boolean True for a base mod mount.
+local function is_legacy(ancillary)
+	for _, key in ipairs(rig_data().legacy_ancillaries) do
+		if key == ancillary then
+			return true
+		end
+	end
+	return false
+end
+
+--- Whether the Advisor has unlocked both items of a pair.
 --- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param weapon string Weapon key.
+--- @param mount string Mount key.
+--- @returns boolean True when both are unlocked.
+local function pair_unlocked(character, weapon, mount)
+	local weapon_item, mount_item = find_item("weapon", weapon), find_item("mount", mount)
+	return weapon_item ~= nil and mount_item ~= nil and is_unlocked(character, weapon_item) and is_unlocked(character, mount_item)
+end
+
+--- The rig ancillaries the Advisor wears, sorted. Normally one. None after the Mount box's "None" entry.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @returns table The ancillary keys.
+local function worn_rigs(character)
+	local worn = {}
+	for _, ancillary in pairs(rig_data().ancillaries) do
+		if character:has_ancillary(ancillary) then
+			table.insert(worn, ancillary)
+		end
+	end
+	table.sort(worn)
+	return worn
+end
+
+--- The Advisors of a faction.
+--- @param faction FACTION_SCRIPT_INTERFACE The faction.
+--- @returns table The Advisors.
+local function faction_advisors(faction)
+	local found = {}
+	local characters = faction:character_list()
+	for i = 0, characters:num_items() - 1 do
+		local character = characters:item_at(i)
+		if character:character_subtype_key() == SUBTYPE then
+			table.insert(found, character)
+		end
+	end
+	return found
+end
+
+--- Whether any of the Advisors wears an ancillary.
+--- @param advisors table The faction's Advisors.
+--- @param ancillary string The ancillary key.
+--- @returns boolean True when one wears it.
+local function worn_by_any(advisors, ancillary)
+	for _, advisor in ipairs(advisors) do
+		if advisor:has_ancillary(ancillary) then
+			return true
+		end
+	end
+	return false
+end
+
+--- Whether an unworn copy of an ancillary sits in the faction's pool: the faction owns it and no Advisor wears it. False whenever an Advisor wears
+--- it, since `ancillary_exists` cannot tell a pool copy from the worn one.
+--- @param faction FACTION_SCRIPT_INTERFACE The faction.
+--- @param advisors table The faction's Advisors.
+--- @param ancillary string The ancillary key.
+--- @returns boolean True when a copy is in the pool.
+local function in_pool(faction, advisors, ancillary)
+	if worn_by_any(advisors, ancillary) then
+		return false
+	end
+	local ok, exists = pcall(function()
+		return faction:ancillary_exists(ancillary)
+	end)
+	return ok and exists == true
+end
+
+--- How many copies of an ancillary the faction's item list holds, read from the UI context for the log only. Nothing is decided on it.
+--- @param faction FACTION_SCRIPT_INTERFACE The faction.
+--- @param ancillary string The ancillary key.
+--- @returns string The count, or `unreadable`.
+local function list_count(faction, ancillary)
+	local ok, count = pcall(function()
+		return common.get_context_value("CcoCampaignFaction", tostring(faction:command_queue_index()),
+			"AncillaryList.Filter(AncillaryRecordContext.Key == \"" .. ancillary .. "\").Size")
+	end)
+	if ok and count ~= nil then
+		return tostring(count)
+	end
+	return "unreadable"
+end
+
+--- Makes the faction's pool hold one copy of every unlocked pair's rig that no Advisor wears, and no locked pair's rig or base mod mount. The
+--- character panel's Mount box lists exactly those pool copies. A worn rig is never removed from the faction, since that strips the worn copy too.
+--- @param faction FACTION_SCRIPT_INTERFACE The faction.
+--- @param why string What asked for it, for the log.
+local function sync_pool(faction, why)
+	local advisors = faction_advisors(faction)
+	if #advisors == 0 then
+		return
+	end
+	local keys = {}
+	for _, ancillary in pairs(rig_data().ancillaries) do
+		table.insert(keys, ancillary)
+	end
+	for _, ancillary in ipairs(rig_data().legacy_ancillaries) do
+		table.insert(keys, ancillary)
+	end
+	table.sort(keys)
+	log_call("CcoCampaignFaction " .. faction:command_queue_index(), "get_context_value item list counts, for the log")
+	for _, ancillary in ipairs(keys) do
+		local weapon, mount = rig_pair(ancillary)
+		local unlocked = false
+		for _, advisor in ipairs(advisors) do
+			unlocked = unlocked or (weapon ~= nil and pair_unlocked(advisor, weapon, mount))
+		end
+		local before = list_count(faction, ancillary)
+		local pooled = in_pool(faction, advisors, ancillary)
+		local action
+		if worn_by_any(advisors, ancillary) then
+			action = "worn, left alone"
+		elseif unlocked and not pooled then
+			cm:add_ancillary_to_faction(faction, ancillary, true)
+			action = "added to the pool"
+		elseif not unlocked and pooled then
+			cm:force_remove_ancillary_from_faction(faction, ancillary)
+			action = "removed from the pool"
+		else
+			action = pooled and "in the pool, kept" or "not in the pool, kept"
+		end
+		log("pool " .. faction:name() .. " (" .. why .. ") " .. ancillary .. ": unlocked " .. tostring(unlocked) .. ", in pool " .. tostring(pooled)
+			.. ", " .. action .. ", list count " .. before .. " -> " .. list_count(faction, ancillary))
+	end
+end
+
+--- Equips the mount ancillary of the Advisor's current pair. Every other pair's rig goes back to the faction pool, so the Mount box lists it, and the
+--- base mod's own mount ancillaries are destroyed. The pair is saved back, so a choice a respec took away does not return when he learns the skill
+--- again. Also sets his weapon's art set and syncs the pool.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @returns boolean True when an ancillary was equipped or removed.
 local function apply_pair(character)
 	local rigs = rig_data()
 	local weapon, mount = current_pair(character)
 	local cqi = character:command_queue_index()
+	local faction = character:faction()
 	cm:set_saved_value(choice_key(cqi, "weapon"), weapon)
 	cm:set_saved_value(choice_key(cqi, "mount"), mount)
 	local wanted = rigs.ancillaries[weapon .. "|" .. mount]
 	apply_art_set(character, weapon)
 	if not wanted then
-		log("cqi " .. character:command_queue_index() .. " has no unit for " .. weapon .. " on " .. mount .. ", nothing equipped")
-		return
+		log("cqi " .. cqi .. " has no unit for " .. weapon .. " on " .. mount .. ", nothing equipped")
+		sync_pool(faction, "cqi " .. cqi .. " applied")
+		return false
 	end
 	local stale = {}
 	for _, ancillary in pairs(rigs.ancillaries) do
@@ -374,36 +563,84 @@ local function apply_pair(character)
 		end
 	end
 	if character:has_ancillary(wanted) and #stale == 0 then
-		return
+		sync_pool(faction, "cqi " .. cqi .. " applied")
+		return false
 	end
+	table.sort(stale)
 	for _, ancillary in ipairs(stale) do
-		cm:force_remove_ancillary(character, ancillary, false, true)
+		-- A rig goes back to the pool. The base mod's Pegasus ancillary is destroyed, else the Mount box would list a second Pegasus.
+		cm:force_remove_ancillary(character, ancillary, not is_legacy(ancillary), true)
 	end
+	local from_pool = false
 	if not character:has_ancillary(wanted) then
+		-- The pool copy is removed first, so equipping does not leave a second one. The vanilla Sword of Khaine script does the same.
+		from_pool = in_pool(faction, faction_advisors(faction), wanted)
+		if from_pool then
+			cm:force_remove_ancillary_from_faction(faction, wanted)
+		end
 		cm:force_add_ancillary(character, wanted, true, true)
 	end
-	log("cqi " .. character:command_queue_index() .. " now " .. weapon .. " on " .. mount .. " (" .. wanted .. "), removed: " .. table.concat(stale, ", ")
-		.. ", has it now: " .. tostring(character:has_ancillary(wanted)))
+	log("cqi " .. cqi .. " now " .. weapon .. " on " .. mount .. " (" .. wanted .. "), returned or removed: " .. table.concat(stale, ", ")
+		.. ", pool copy taken: " .. tostring(from_pool) .. ", has it now: " .. tostring(character:has_ancillary(wanted)))
+	sync_pool(faction, "cqi " .. cqi .. " applied")
+	return true
 end
 
---- Applies the current pair to every living Advisor of every human faction.
-local function apply_all()
+--- Reads which rig the Advisor wears and makes it his loadout, so a pick in the character panel's Mount box sticks. With exactly one worn rig of an
+--- unlocked pair, that pair is saved as his choice. With none (the Mount box's "None"), a locked one or several, the saved pair is equipped again.
+--- Runs from game events and UI triggers only, so every client saves the same values.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param why string What asked for it, for the log.
+--- @returns boolean True when his loadout or ancillaries changed.
+local function reconcile(character, why)
+	local rigs = rig_data()
+	local cqi = character:command_queue_index()
+	local worn = worn_rigs(character)
+	local saved_weapon = cm:get_saved_value(choice_key(cqi, "weapon")) or rigs.default_weapon
+	local saved_mount = cm:get_saved_value(choice_key(cqi, "mount")) or rigs.default_mount
+	local changed = false
+	local weapon, mount = nil, nil
+	if #worn == 1 then
+		weapon, mount = rig_pair(worn[1])
+	end
+	if weapon and pair_unlocked(character, weapon, mount) then
+		local differs = weapon ~= saved_weapon or mount ~= saved_mount
+		if differs and used_this_turn(cqi) then
+			log("cqi " .. cqi .. " wears " .. worn[1] .. " but already changed this turn, putting back " .. saved_weapon .. " on " .. saved_mount
+				.. " (check: " .. why .. ")")
+		else
+			if differs then
+				cm:set_saved_value(choice_key(cqi, "weapon"), weapon)
+				cm:set_saved_value(choice_key(cqi, "mount"), mount)
+				cm:set_saved_value(changed_turn_key(cqi), cm:model():turn_number())
+				changed = true
+			end
+			log("cqi " .. cqi .. " loadout taken from the worn rig " .. worn[1] .. ": " .. weapon .. " on " .. mount
+				.. (differs and (", was " .. saved_weapon .. " on " .. saved_mount) or ", unchanged") .. " (check: " .. why .. ")")
+		end
+	elseif #worn == 0 then
+		log("cqi " .. cqi .. " wears no rig (the Mount box None entry, a base mod mount or a new campaign), equipping the saved pair " .. saved_weapon
+			.. " on " .. saved_mount .. " (check: " .. why .. ")")
+	else
+		log("cqi " .. cqi .. " wears " .. table.concat(worn, ", ") .. ", not one rig of an unlocked pair, equipping the saved pair " .. saved_weapon
+			.. " on " .. saved_mount .. " (check: " .. why .. ")")
+	end
+	local equipped = apply_pair(character)
+	return changed or equipped
+end
+
+--- Reconciles every living Advisor of every human faction.
+--- @param why string What asked for it, for the log.
+local function apply_all(why)
 	for _, faction_key in ipairs(cm:get_human_factions()) do
 		local characters = cm:get_faction(faction_key):character_list()
 		for i = 0, characters:num_items() - 1 do
 			local character = characters:item_at(i)
 			if character:character_subtype_key() == SUBTYPE and not character:is_wounded() then
-				apply_pair(character)
+				reconcile(character, why)
 			end
 		end
 	end
-end
-
---- Whether the once-per-turn rule blocks a change for this Advisor.
---- @param cqi number The Advisor's command queue index.
---- @returns boolean True when he already changed this turn and the rule is on.
-local function used_this_turn(cqi)
-	return ONE_CHANGE_PER_TURN and cm:get_saved_value(changed_turn_key(cqi)) == cm:model():turn_number()
 end
 
 --- Checks whether the Advisor may switch to a pair.
@@ -720,13 +957,6 @@ local function close_picker(why)
 	if was_open then
 		log("loadout picker closed: " .. why)
 	end
-end
-
---- Logs the native UI call about to run, so a call that breaks the game is the last line in the log.
---- @param name string The component.
---- @param call string The call and its arguments.
-local function log_call(name, call)
-	log("ui call " .. name .. ": " .. call)
 end
 
 --- Adds one picker option: an icon button made from the same layout as the Change Loadout button, with its label in the tooltip.
@@ -1308,6 +1538,79 @@ end
 
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- Mount box
+
+--- Whether a clicked component sits inside the character panel's Mount box list, found by following its parents up to `MOUNT_BOX`. Read only.
+--- @param address any The clicked component's address from the click event.
+--- @returns boolean True when it is inside the Mount box.
+local function in_mount_box(address)
+	if not address then
+		return false
+	end
+	local uic = UIComponent(address)
+	for _ = 1, MOUNT_BOX_DEPTH do
+		if component_id(uic) == MOUNT_BOX then
+			return true
+		end
+		local ok, parent = pcall(function()
+			return uic:Parent()
+		end)
+		if not ok or not parent then
+			return false
+		end
+		uic = UIComponent(parent)
+	end
+	return false
+end
+
+--- After a click in the Mount box, reads the shown Advisor's worn rig without changing anything. When it no longer matches his saved pair (a pick
+--- the ancillary event missed, or "None"), it sends a UI trigger so every client reconciles him the same way.
+local function check_mount_pick()
+	local panel = find_panel()
+	local character, seen = nil, "the character panel is closed"
+	if panel then
+		character, seen = panel_character(panel)
+	end
+	if not is_local_advisor(character) then
+		log("Mount box check skipped: " .. seen)
+		return
+	end
+	local cqi = character:command_queue_index()
+	local worn = worn_rigs(character)
+	local weapon, mount = current_pair(character)
+	local wanted = rig_data().ancillaries[weapon .. "|" .. mount]
+	if #worn == 1 and worn[1] == wanted then
+		log("Mount box check cqi " .. cqi .. ": wears " .. wanted .. ", which is his saved pair, nothing to do")
+		return
+	end
+	local trigger = RECONCILE_PREFIX .. cqi
+	log("Mount box check cqi " .. cqi .. ": wears " .. (#worn > 0 and table.concat(worn, ", ") or "no rig") .. ", saved pair " .. tostring(wanted)
+		.. ", sending " .. trigger)
+	log_call("CampaignUI", "TriggerCampaignScriptEvent " .. trigger)
+	CampaignUI.TriggerCampaignScriptEvent(character:faction():command_queue_index(), trigger)
+end
+
+--- Refreshes the local Advisor's map unit card and the button after his loadout changed outside the picker. While the character panel is open the
+--- reselect waits until it closes.
+--- @param character CHARACTER_SCRIPT_INTERFACE The Advisor.
+--- @param changed boolean Whether his loadout or ancillaries changed.
+--- @param why string What changed it, for the log.
+local function after_mount_change(character, changed, why)
+	if not changed or not is_local_advisor(character) then
+		return
+	end
+	local cqi = character:command_queue_index()
+	guarded("mount change", function()
+		if picker_cqi == cqi then
+			close_picker("the loadout changed in the Mount box")
+		end
+		reselect(cqi)
+	end)
+	schedule_refresh(why)
+end
+
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
+--- //////////////////////////////////////////////////////////////////////////////////////////////////
 --- Listeners
 
 core:add_listener(
@@ -1521,6 +1824,66 @@ core:add_listener(
 )
 
 core:add_listener(
+	TAG .. "_ancillary_gained",
+	"CharacterAncillaryGained",
+	function(context)
+		local ancillary = tostring(context:ancillary())
+		return context:character():character_subtype_key() == SUBTYPE and (string.sub(ancillary, 1, #RIG_PREFIX) == RIG_PREFIX or is_legacy(ancillary))
+	end,
+	function(context)
+		local character = context:character()
+		local ancillary = tostring(context:ancillary())
+		log("CharacterAncillaryGained cqi " .. character:command_queue_index() .. " " .. ancillary)
+		local changed = reconcile(character, "gained " .. ancillary)
+		after_mount_change(character, changed, "loadout changed in the Mount box")
+	end,
+	true
+)
+
+core:add_listener(
+	TAG .. "_mount_box_click",
+	"ComponentLClickUp",
+	function()
+		return panel_open
+	end,
+	function(context)
+		if not in_mount_box(context.component) then
+			return
+		end
+		log("click on " .. tostring(context.string) .. " inside the Mount box, checking the worn rig in " .. MOUNT_PICK_MS .. " ms")
+		cm:remove_real_callback(MOUNT_PICK_NAME)
+		cm:real_callback(function()
+			guarded("Mount box check", check_mount_pick)
+		end, MOUNT_PICK_MS, MOUNT_PICK_NAME)
+	end,
+	true
+)
+
+core:add_listener(
+	TAG .. "_reconcile_trigger",
+	"UITrigger",
+	function(context)
+		return string.sub(context:trigger(), 1, #RECONCILE_PREFIX) == RECONCILE_PREFIX
+	end,
+	function(context)
+		local trigger = context:trigger()
+		local cqi = tonumber(string.match(string.sub(trigger, #RECONCILE_PREFIX + 1), "^(%d+)$"))
+		local character = cqi and cm:get_character_by_cqi(cqi)
+		if not character or character:character_subtype_key() ~= SUBTYPE then
+			log("reconcile trigger " .. trigger .. " names no Advisor")
+			return
+		end
+		if character:faction():command_queue_index() ~= context:faction_cqi() then
+			log("reconcile trigger " .. trigger .. " came from another faction (cqi " .. tostring(context:faction_cqi()) .. ")")
+			return
+		end
+		local changed = reconcile(character, "Mount box pick")
+		after_mount_change(character, changed, "loadout changed in the Mount box")
+	end,
+	true
+)
+
+core:add_listener(
 	TAG .. "_skill_unlock",
 	"CharacterSkillPointAllocated",
 	function(context)
@@ -1537,8 +1900,8 @@ core:add_listener(
 		local cqi = character:command_queue_index()
 		log("cqi " .. cqi .. " unlocked " .. (weapon and ("weapon " .. weapon) or ("mount " .. mount)) .. ", unlocked weapons: "
 			.. unlocked_list(character, "weapon") .. ", unlocked mounts: " .. unlocked_list(character, "mount"))
-		-- The base mod's Pegasus skill equips its own ancillary, so put back the chosen pair.
-		apply_pair(character)
+		-- The base mod's Pegasus skill equips its own ancillary, so put back the chosen pair. The new pairs go into the pool.
+		reconcile(character, "skill " .. skill)
 		if picker_cqi == cqi then
 			guarded("unlock", function()
 				close_picker("a new item was unlocked")
@@ -1555,7 +1918,7 @@ core:add_listener(
 		return context:faction():is_human()
 	end,
 	function(context)
-		apply_all()
+		apply_all("turn start of " .. context:faction():name())
 		if context:faction():name() == cm:get_local_faction_name(true) then
 			schedule_refresh("turn start")
 		end
@@ -1582,5 +1945,7 @@ core:add_listener(
 
 cm:add_first_tick_callback(function()
 	-- The base mod spawns the Advisor a few seconds into a new campaign.
-	cm:callback(apply_all, 8)
+	cm:callback(function()
+		apply_all("first tick")
+	end, 8)
 end)
