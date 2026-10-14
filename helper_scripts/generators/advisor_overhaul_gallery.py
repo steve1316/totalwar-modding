@@ -26,7 +26,7 @@ from typing import Dict, List, Optional, Tuple
 from core.asset_source import VANILLA_DATA_DIR, AssetSource
 from core.utilities import extract_tsv_data, load_tsv_data
 from generators import advisor_overhaul_anims as anims
-from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, REGISTRY, pairs, uniform_key, unit_key
+from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, load_registry, pairs, uniform_key, unit_key
 from generators.advisor_overhaul_model import PREVIEWS
 from generators.advisor_overhaul_panels import build_panels
 from tools.anim_viewer.exporter import Exporter, compare_entry, first_refs
@@ -348,7 +348,7 @@ def build(out: str) -> Exporter:
     Returns:
         Exporter: The exporter, already written.
     """
-    registry = json.load(open(REGISTRY, encoding="utf-8"))
+    registry = load_registry()
     tables = vanilla_tables()
     sets = load_sets()
     land_units = {r["key"]: r for r in read_table(MOD, "land_units_tables")}
@@ -356,7 +356,7 @@ def build(out: str) -> Exporter:
     variants = {r["variant_name"]: r for r in read_table(MOD, "variants_tables") + tables["variants_tables"]}
     packs = [os.path.join(VANILLA_DATA_DIR, p) for p in ANIM_PACKS]
     exporter = Exporter(out, AssetSource([MOD] + ([PREVIEWS] if os.path.isdir(PREVIEWS) else []), packs))
-    exporter.panels, versus, editor = build_panels(registry, out)
+    exporter.panels, versus, editor = build_panels(registry, out, sets)
     exporter.extra["editor"] = editor
 
     def pair_variant(weapon: str, mount: str) -> str:

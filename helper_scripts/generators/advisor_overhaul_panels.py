@@ -13,6 +13,7 @@ from core.asset_source import AssetSource, norm
 from core.extract_cache import extracted_tree
 from core.utilities import extract_tsv_data, load_tsv_data
 from generators.advisor_overhaul import MOD, STAT_COLUMNS, fixed_skills, pairs, unit_key
+from tools.glf_rebuild_animpack import AnimSet
 from tools.skill_catalog import CATALOG_LOC_PREFIXES, SKILL_CATALOG_TABLES, SKILL_ICON_FOLDER, catalog_art, skill_catalog
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
 from ttc.ttc_cards import CARD_FOLDER
@@ -41,6 +42,12 @@ ART_FOLDER = "art"
 # Packs and folders the weapon model picker lists.
 PROP_PACKS = re.compile(r"^variants\d*\.pack$")
 PROP_FOLDER = re.compile(r"/wh_variantmodels/.*/[^/]*props[^/]*/")
+
+# The skeleton every form's set must be on. A set on another skeleton needs retargeting first.
+FORM_SKELETON = "humanoid01"
+
+# Units the New form dialog names for each set at most.
+SET_USERS = 4
 
 # Melee weapon and projectile columns the Edit tab shows.
 MELEE_COLUMNS = ["damage", "ap_damage", "bonus_v_large", "bonus_v_infantry"]
@@ -272,6 +279,35 @@ class PanelBuilder:
                 self.note_art(path)
         return dict(sorted(catalog.items(), key=lambda item: item[1]["name"]))
 
+    def new_form_data(self, registry: Dict, sets: Dict[str, AnimSet]) -> Dict:
+        """What the workbench's New form dialog picks from: every animation set of a humanoid skeleton with the units that play it, and how each of
+        his mounts' sets are recognised.
+
+        Args:
+            registry (Dict): The registry.
+            sets (Dict[str, AnimSet]): Every vanilla set plus the mod's own, by name.
+
+        Returns:
+            Dict: `skeleton` (`FORM_SKELETON`), `sets` ([name, skeleton, mount set, [[unit key, unit name], ...]], sorted by name) and `mounts` (mount
+            key -> `name`, `mount` (the mount set its rider sets name, empty on foot) and `word` (a word its set names have, for mounts carried as a
+            prop such as the disc, whose sets name no mount set)).
+        """
+        # The vanilla units that play each set. His own forms are left out.
+        users: Dict[str, List[str]] = {}
+        own = {unit_key(w, m) for w, m in pairs(registry)}
+        for unit, main in self.main.items():
+            set_name = self.land.get(main["land_unit"], {}).get("man_animation")
+            if set_name and unit not in own:
+                users.setdefault(set_name, []).append(unit)
+        rows = [[name, s.skeleton, s.mount, [[u, loc_name(LOC_NAME_PREFIX, self.main[u]["land_unit"], self.loc)] for u in users.get(name, [])[:SET_USERS]]]
+                for name, s in sorted(sets.items()) if s.skeleton.startswith("humanoid")]
+        mounts = {}
+        for key, mount in registry["mounts"].items():
+            template = sets.get(self.land.get(mount.get("template", ""), {}).get("man_animation", ""))
+            word = re.search(r"_wm_([a-z]+)", template.name) if template and not template.mount else None
+            mounts[key] = {"name": mount["name"], "mount": template.mount if template else "", "word": word.group(1) if word else ""}
+        return {"skeleton": FORM_SKELETON, "sets": rows, "mounts": mounts}
+
     def copy_art(self, out: str) -> int:
         """Copies every noted art file into the gallery's `art/` folder.
 
@@ -290,17 +326,18 @@ class PanelBuilder:
         return len(files)
 
 
-def build_panels(registry: Dict, out: str) -> Tuple[Dict[str, Dict], Dict[str, str], Dict]:
+def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Dict[str, Dict], Dict[str, str], Dict]:
     """The panels of every Advisor form and its vanilla equivalent, with their art copied into the gallery, and the Edit tab's data.
 
     Args:
         registry (Dict): The registry.
         out (str): The gallery folder.
+        sets (Dict[str, AnimSet]): Every vanilla set plus the mod's own, by name, for the New form dialog.
 
     Returns:
         Tuple[Dict[str, Dict], Dict[str, str], Dict]: Panels by unit key, Advisor unit key -> vanilla unit key, and the Edit and Skills tabs' data
-        (`forms`: unit key -> `PanelBuilder.form_values`, `attributes` and `abilities`: the attribute and ability catalogs, and `skills`: the skill catalog, the fixed weapon and
-        mount skills and the names of their rows).
+        (`forms`: unit key -> `PanelBuilder.form_values`, `attributes` and `abilities`: the attribute and ability catalogs, `skills`: the skill
+        catalog, the fixed weapon and mount skills and the names of their rows, and `new_form`: `PanelBuilder.new_form_data`).
     """
     pairs_to_vanilla = comparisons(registry)
     builder = PanelBuilder(load_tables(), load_loc())
@@ -315,5 +352,6 @@ def build_panels(registry: Dict, out: str) -> Tuple[Dict[str, Dict], Dict[str, s
     # The weapon models a prop slot may switch to: every vanilla model in a props folder.
     editor["prop_models"] = sorted(p for p in AssetSource([], [], PROP_PACKS).index if p.endswith(".wsmodel") and PROP_FOLDER.search(p))
     editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": {"0": "Weapons", "1": "Mounts"}}
+    editor["new_form"] = builder.new_form_data(registry, sets)
     print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes, {len(editor['abilities'])} abilities")
     return panels, pairs_to_vanilla, editor

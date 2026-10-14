@@ -17,6 +17,10 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
 - `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away. `abilities` and `abilities_removed` do
   the same for unit abilities.
 
+New weapons made with the workbench's New form dialog are marked `workbench`. Their `sets` hold only `humanoid01` sets, which build as they are.
+A set picked from another skeleton waits in `retarget` (mount -> `set`, `skeleton`, and `handoff` and `note` once it is handed to Claude) until it
+is retargeted into a set of his own and moved to `sets`. A weapon with no sets yet is left out of the build.
+
 His planned skills are the registry's `skills` (written by the workbench's Skills tab): id -> `name`, `description`, `icon` (a file in
 `ui/campaign ui/skills`), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
 of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of skills it locks, both ways) and `build`. Only skills with `build` (In
@@ -208,6 +212,17 @@ def vanilla_portraits(art_set: str) -> Dict:
     return out
 
 
+def load_registry() -> Dict:
+    """The registry, without the weapons that have no animation set yet (new forms waiting for their sets to be retargeted).
+
+    Returns:
+        Dict: The registry.
+    """
+    registry = json.load(open(REGISTRY, encoding="utf-8"))
+    registry["weapons"] = {key: weapon for key, weapon in registry["weapons"].items() if weapon.get("sets")}
+    return registry
+
+
 def read_vanilla(table: str) -> Tuple[List[Dict[str, str]], List[str], str]:
     """Reads one vanilla table from db.pack, through the extract cache.
 
@@ -222,7 +237,7 @@ def read_vanilla(table: str) -> Tuple[List[Dict[str, str]], List[str], str]:
 
 def refresh() -> None:
     """Keeps the vanilla rows the build reads and every written table's header and version."""
-    registry = json.load(open(REGISTRY, encoding="utf-8"))
+    registry = load_registry()
     units = {m[k] for m in registry["mounts"].values() for k in ("template", "template_foot") if k in m} | {FOOT_TEMPLATE}
     data: Dict = {"tables": {}, "templates": {}}
     loaded: Dict[str, List[Dict[str, str]]] = {}
@@ -779,7 +794,7 @@ def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]
 
 def build() -> None:
     """Writes every table, variant, portrait setting, loc row and the script data file into the mod folder."""
-    registry = json.load(open(REGISTRY, encoding="utf-8"))
+    registry = load_registry()
     data = json.load(open(DATA, encoding="utf-8"))
     specs, templates = data["tables"], data["templates"]
     template_units = {r["key"]: r for r in templates["land_units_tables"]}
