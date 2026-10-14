@@ -45,6 +45,8 @@
 .abilities .none { font-size: .78rem; color: var(--muted); }
 .chips { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 10px; }
 .chips span { font-size: .78rem; border: 1px solid var(--line); border-radius: 3px; padding: 2px 6px; background: rgba(255,255,255,.03); }
+.chips span[data-tip] { display: inline-flex; align-items: center; gap: 5px; }
+.chips span img { width: 20px; height: 20px; border-radius: 50%; }
 .abilities [data-tip], .chips [data-tip] { cursor: help; }
 /* The game-style tooltip of an ability or attribute (one per page, placed by unit_panel.js). */
 .up-tip { position: fixed; z-index: 100; width: min(340px, calc(100vw - 16px)); background: linear-gradient(#2a1f1c, #150f0e); border: 1px solid var(--panel-edge);
