@@ -1,43 +1,142 @@
-// The Stats inspector tab: the in-game unit panel of the open form (`manifest.panels`, built by the project's generator with `ttc.unit_panel`).
+// The Stats inspector tab: the in-game unit card of the open form (`manifest.panels`, built by the project's generator with `ttc.unit_panel`).
 // It shows the unit on its own. "Compare with ..." draws its vanilla equivalent into the bars (`studio.compare`), and "Show vanilla" then swaps
-// which unit the panel is about.
+// which unit the card is about.
+//
+// The project's own card is edited in place (through `FormEditor`): tap a number to change it. Weapon Strength and Missile Strength open into the
+// values they add up from, and the health bar into the health bonus. Attributes come off with their x and on with "+ Attribute". A unit stat
+// change goes to every form of the weapon or to this form only, as picked at the top.
+import { FormEditor, MELEE_FIELDS, MISSILE_FIELDS } from "./form_editor.js";
 
-// Attribute chips. Against a compared unit: red for what only the panel's unit has, green for what only the compared unit has.
-function attributeChips(u, o, art) {
-  const { attributeHtml } = window.UnitPanel;
-  if (!o) return u.attributes.map(a => attributeHtml(a, art)).join("") || "<span>None</span>";
+// Card rows that edit a unit stat: panel stat -> its field.
+const UNIT_ROWS = { armour: "armour", leadership: "morale", melee_attack: "melee_attack", melee_defence: "melee_defence", charge_bonus: "charge_bonus" };
+// Card rows that edit a missile value directly: panel stat -> its field.
+const MISSILE_ROWS = { ammunition: "ammo", range: "effective_range" };
+// Card rows that open into the values they add up from: panel stat -> [path group, fields].
+const GROUPS = { weapon_strength: ["melee", MELEE_FIELDS], missile_strength: ["missile", MISSILE_FIELDS.filter(([field]) => !["effective_range", "ammo"].includes(field))] };
+
+// Attribute chips. Against a compared unit: red for what only the card's unit has, green for what only the compared unit has. `removable` adds
+// an x to each of the card unit's own.
+function attributeChips(u, o, art, removable) {
+  const { attributeHtml, esc } = window.UnitPanel;
+  const chip = (a, cls) => removable ? `<span class="chip">${attributeHtml(a, art, cls)}<button class="mini" data-drop="${esc(a.key)}" aria-label="Remove ${esc(a.name)}">×</button></span>` : attributeHtml(a, art, cls);
+  if (!o) return u.attributes.map(a => chip(a, "")).join("") || "<span>None</span>";
   const mine = new Set(u.attributes.map(a => a.key)), theirs = new Set(o.attributes.map(a => a.key));
-  const chip = (a, cls) => attributeHtml(a, art, cls);
-  const list = u.attributes.map(a => chip(a, theirs.has(a.key) ? "" : "down")).concat(o.attributes.filter(a => !mine.has(a.key)).map(a => chip(a, "up")));
+  const list = u.attributes.map(a => chip(a, theirs.has(a.key) ? "" : "down")).concat(o.attributes.filter(a => !mine.has(a.key)).map(a => attributeHtml(a, art, "up")));
   return list.length ? list.join("") : "<span>None</span>";
 }
 
 export class StatsTab {
-  constructor(studio) { this.studio = studio; this.flip = false; }
+  constructor(studio) {
+    this.studio = studio; this.flip = false; this.open = new Set(); this.attrFilter = "";
+    this.editor = new FormEditor(studio);
+  }
 
-  // Whether the open entry has a panel to show.
+  // Whether the open entry has a card to show.
   available(entry) { return !!(entry && entry.unit && this.studio.manifest.panels && this.studio.manifest.panels[entry.unit]); }
+  // Edits were saved: they keep showing until a rebuild.
+  saved() { this.editor.saved(); }
 
   render(container) {
     const entry = this.studio.stage.entry;
-    if (!this.available(entry)) { container.innerHTML = '<div class="note">No unit panel for this entry. Pick an Advisor form.</div>'; return; }
+    if (!this.available(entry)) { container.innerHTML = '<div class="note">No unit card for this entry. Pick one of the project\'s forms.</div>'; return; }
     const { esc, cardHtml, hpHtml, statsHtml, abilitiesHtml } = window.UnitPanel;
-    // The Advisor's panel carries the Edit tab's pending edits.
-    const panels = this.studio.manifest.panels, art = this.studio.panelArt, mine = this.studio.preview ? this.studio.preview(entry.unit) : panels[entry.unit];
+    const panels = this.studio.manifest.panels, art = this.studio.panelArt, mine = this.editor.preview(entry.unit);
     const vanilla = entry.versus && panels[entry.versus], compare = this.studio.compare && !!vanilla;
     const [u, o] = compare && this.flip ? [vanilla, mine] : [mine, compare ? vanilla : null];
+    const f = !(compare && this.flip) && this.editor.enabled() && this.editor.form(entry.unit);
     const vs = !vanilla ? "" : compare
       ? `<div class="vs">Compared with <b>${esc(o.name)}</b><button data-t="flip">${this.flip ? "Show the Advisor" : "Show vanilla"}</button><button data-t="compare">Alone</button></div>`
       : `<div class="vs"><button data-t="compare">Compare with ${esc(vanilla.name)}</button></div>`;
-    container.innerHTML = `<div class="panel"><div class="p-title">${esc(u.name)}</div>${vs}
+    const weaponName = entry.name.split(" - ")[0], formName = entry.name.split(" - ")[1] || "";
+    const scope = f ? `<div class="vs scope">Changes apply to <button data-scope="weapon" class="${this.editor.scope === "weapon" ? "on" : ""}">every ${esc(weaponName)} form</button>
+      <button data-scope="form" class="${this.editor.scope === "form" ? "on" : ""}">${esc(formName)} only</button></div>` : "";
+    const health = f && this.open.has("hp") ? this.subRow("unit.bonus_hit_points", "Health bonus per model", this.editor.unitValue(f, "bonus_hit_points"), this.override(f, "bonus_hit_points")) : "";
+    container.innerHTML = `<div class="panel"><div class="p-title">${esc(u.name)}</div>${vs}${scope}
       <div class="p-sub"><span>${esc(u.caste)} · ${esc(u.class)}${u.stats.tier ? ` · tier ${u.stats.tier}` : ""}</span></div>
-      <div class="p-top">${cardHtml(u, art)}<div><div class="meta">${esc(u.key)}</div>${hpHtml(u, o, art)}</div></div>
-      <div class="p-head">Stats</div>${statsHtml(u.stats, o ? o.stats : {}, art)}
+      <div class="p-top">${cardHtml(u, art)}<div><div class="meta">${esc(u.key)}</div><div ${f ? 'data-open="hp" class="opener" title="Edit the health bonus"' : ""}>${hpHtml(u, o, art)}</div>${health}</div></div>
+      <div class="p-head">Stats${f ? '<span class="note">tap a number to change it</span>' : ""}</div>${f ? this.statRows(f, u, o) : statsHtml(u.stats, o ? o.stats : {}, art)}
       <div class="p-head">Abilities</div><div class="abilities">${abilitiesHtml(u.abilities, art)}</div>
       ${o ? `<div class="vs">${esc(o.name)}</div><div class="abilities">${abilitiesHtml(o.abilities, art)}</div>` : ""}
-      <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o, art)}</div></div>`;
-    const flip = container.querySelector('[data-t="flip"]'), toggle = container.querySelector('[data-t="compare"]');
-    if (flip) flip.onclick = () => { this.flip = !this.flip; this.render(container); };
-    if (toggle) toggle.onclick = () => { this.studio.compare = !this.studio.compare; this.flip = false; this.render(container); };
+      <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o, art, !!f)}${f ? '<button class="mini add" data-t="addAttr">+ Attribute</button>' : ""}</div>
+      ${f && this.open.has("attr") ? `<input class="attrSearch" data-t="attrSearch" placeholder="Type to search the game's attributes" value="${esc(this.attrFilter)}"><div class="attrList"></div>` : ""}</div>`;
+    this.wire(container, f);
+  }
+
+  // Whether this form sets its own value for a unit stat.
+  override(f, field) {
+    const p = this.editor.pending(), path = `weapons.${f.weapon}.forms.${f.mount}.${field}`;
+    return path in p ? p[path] !== null : f.overrides.includes(field);
+  }
+
+  // The card's stat rows, each number an input. Grouped rows open into their parts.
+  statRows(f, u, o) {
+    const { STATS, barHtml, cmpHtml, esc } = window.UnitPanel, art = this.studio.panelArt, s = u.stats, other = o ? o.stats : {};
+    return STATS.filter(([k]) => s[k] !== undefined || other[k] !== undefined).map(([k, name, img, max]) => {
+      const v = s[k] ?? 0, icon = `<img src="${art(`ui/skins/default/${img}.png`)}" alt="">`, tail = `${cmpHtml(v, other[k])}${barHtml(v, other[k], max)}`;
+      if (UNIT_ROWS[k]) {
+        const field = UNIT_ROWS[k], own = this.override(f, field);
+        return `<div class="stat edit">${icon}<span>${name}${own ? ` <button class="mini" data-reset="${f.weapon}|${f.mount}|${field}" title="This form has its own value. Use the weapon's again.">form ×</button>` : ""}</span>
+          <input class="v" type="number" step="any" data-path="unit.${field}" value="${v}">${tail}</div>`;
+      }
+      if (MISSILE_ROWS[k] && f.missile) return `<div class="stat edit">${icon}<span>${name}</span><input class="v" type="number" step="any" data-path="missile.${MISSILE_ROWS[k]}" value="${v}">${tail}</div>`;
+      if (GROUPS[k] && (k !== "missile_strength" || f.missile)) {
+        const [group, fields] = GROUPS[k], opened = this.open.has(k);
+        const value = field => group === "melee" ? this.editor.meleeValue(f, field) : this.editor.missileValue(f, field);
+        const parts = opened ? fields.map(([field, label]) => this.subRow(`${group}.${field}`, label, value(field), false)).join("")
+          + (group === "melee" ? `<div class="note sub">${f.own_melee ? `Its own melee weapon, copied from ${esc(f.melee_template)}` : `Uses the game's ${esc(f.melee_template)}. A change gives it its own copy`}. Shared by every form of the weapon.</div>` : "") : "";
+        return `<div class="stat edit opener" data-open="${k}">${icon}<span>${name} <span class="caret">${opened ? "▾" : "▸"}</span></span><span class="v">${v}</span>${tail}</div>${parts}`;
+      }
+      return `<div class="stat edit">${icon}<span>${name}</span><span class="v">${v}</span>${tail}</div>`;
+    }).join("");
+  }
+
+  // One editable value under a grouped row (or under the health bar).
+  subRow(path, label, value, own) {
+    const { esc } = window.UnitPanel;
+    return `<div class="stat sub"><span></span><span>${esc(label)}${own ? " <em>(this form)</em>" : ""}</span><input class="v" type="number" step="any" data-path="${path}" value="${Math.round(value * 100) / 100}"></div>`;
+  }
+
+  wire(container, f) {
+    // Redraws wait a tick: redrawing inside a change event pulls the focused input out mid-blur.
+    const q = t => container.querySelector(`[data-t="${t}"]`), redraw = () => setTimeout(() => this.render(container));
+    const flip = q("flip"), toggle = q("compare");
+    if (flip) flip.onclick = () => { this.flip = !this.flip; redraw(); };
+    if (toggle) toggle.onclick = () => { this.studio.compare = !this.studio.compare; this.flip = false; redraw(); };
+    if (!f) return;
+    container.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { this.editor.scope = b.dataset.scope; redraw(); });
+    container.querySelectorAll("[data-open]").forEach(el => el.onclick = e => {
+      if (e.target.closest("input, button")) return;
+      const key = el.dataset.open; this.open.has(key) ? this.open.delete(key) : this.open.add(key); redraw();
+    });
+    container.querySelectorAll("input[data-path]").forEach(input => input.onchange = () => {
+      if (input.value === "" || !isFinite(+input.value)) return;
+      this.editor.edit(f, input.dataset.path, +input.value); redraw();
+    });
+    container.querySelectorAll("[data-reset]").forEach(b => b.onclick = () => {
+      const [weapon, mount, field] = b.dataset.reset.split("|"); this.editor.set(`weapons.${weapon}.forms.${mount}.${field}`, null); redraw();
+    });
+    // Attributes: removing one the weapon added drops it from its list, any other goes on its removed list. Adding works the other way round.
+    const { added, removed } = this.editor.attributeLists(f), base = `weapons.${f.weapon}.`;
+    container.querySelectorAll("[data-drop]").forEach(b => b.onclick = () => {
+      const key = b.dataset.drop;
+      if (added.includes(key)) this.editor.set(base + "attributes", added.filter(a => a !== key)); else this.editor.set(base + "attributes_removed", [...removed, key]);
+      redraw();
+    });
+    q("addAttr").onclick = () => { this.open.has("attr") ? this.open.delete("attr") : this.open.add("attr"); redraw(); };
+    const search = q("attrSearch");
+    if (!search) return;
+    const { esc } = window.UnitPanel, catalog = this.editor.editor.attributes, list = container.querySelector(".attrList");
+    const shown = new Set(this.editor.preview(this.studio.stage.entry.unit).attributes.map(a => a.key));
+    const hits = () => {
+      this.attrFilter = search.value; const term = search.value.toLowerCase();
+      list.innerHTML = Object.entries(catalog).filter(([k, a]) => !shown.has(k) && (!term || a.name.toLowerCase().includes(term) || k.includes(term))).slice(0, 16)
+        .map(([k, a]) => `<button data-add="${esc(k)}">${esc(a.name)}</button>`).join("");
+      list.querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
+        const key = b.dataset.add;
+        if (removed.includes(key)) this.editor.set(base + "attributes_removed", removed.filter(a => a !== key)); else this.editor.set(base + "attributes", [...added, key]);
+        this.attrFilter = ""; this.open.delete("attr"); redraw();
+      });
+    };
+    search.oninput = hits; hits(); search.focus();
   }
 }

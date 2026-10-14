@@ -104,6 +104,8 @@
   .node.empty:hover { color: #d8a640; border-color: #6b5233; }
   #skillsStage .links { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; }
   #skillsStage .links line { stroke: #a8302a; stroke-width: 3; }
+  #skillsStage .links line.any { stroke: #d8a640; stroke-dasharray: 8 5; }
+  #skillsStage .links line.lock { stroke: #a8998a; stroke-width: 2; stroke-dasharray: 2 5; }
   .skill-head { display: flex; gap: 10px; align-items: center; padding: 6px 4px; }
   .erow.wide { grid-template-columns: 90px 1fr; }
   .erow textarea { width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; font: inherit; }
@@ -131,6 +133,19 @@
   button.mini { min-height: 24px; padding: 0 6px; font-size: 11px; }
   #inspBody .chips .chip { display: inline-flex; gap: 2px; align-items: center; border: 0; padding: 0; }
   #inspBody .chips .chip > span { border: 1px solid var(--line); border-radius: 3px; padding: 2px 6px; }
+  /* The Stats card's own numbers, edited in place (studio/stats.js). */
+  .panel .stat.edit { grid-template-columns: 22px 1fr 58px 38px minmax(50px, 100px); }
+  .panel .stat.edit input.v, .panel .stat.sub input.v { width: 100%; min-height: 28px; background: rgba(0,0,0,.35); color: var(--text); border: 1px solid #5a4a30;
+    border-radius: 3px; padding: 0 4px; font: inherit; font-family: var(--mono, monospace); text-align: right; }
+  .panel .stat.edit input.v:focus, .panel .stat.sub input.v:focus { border-color: #d8a640; outline: none; }
+  .panel .stat.sub { display: grid; grid-template-columns: 22px 1fr 76px; gap: 8px; align-items: center; padding: 2px 12px; font-size: 13px; color: var(--muted); }
+  .panel .note.sub { padding: 2px 12px 6px 42px; }
+  .panel .opener { cursor: pointer; }
+  .panel .caret { color: #d8a640; font-size: 11px; }
+  .panel .p-head .note { margin-left: auto; font-size: 11px; }
+  .panel .vs.scope { flex-wrap: wrap; }
+  .panel .vs.scope button { min-height: 28px; font-size: 12px; }
+  .panel .chips button.add { min-height: 26px; }
   .attrSearch { width: calc(100% - 8px); margin: 4px; min-height: 32px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 0 8px; font: inherit; }
   .attrList { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 4px 6px; }
   .attrList button { min-height: 28px; font-size: 12px; }
@@ -180,7 +195,7 @@
     <div id="battle"></div>
     <div id="portraitStage" hidden></div>
     <div id="skillsStage" hidden></div>
-    <div id="stageModes"><button data-mode="battle" class="on">Battle</button><button data-mode="portrait" id="modePortrait">Portrait</button><button data-mode="skills">Skills</button></div>
+    <div id="stageModes"><button data-mode="battle" class="on">Battle</button><button data-mode="portrait" id="modePortrait">Portrait</button></div>
     <div id="battleTools"><span id="sides"></span><span id="toggles"></span></div>
     <div id="info"></div>
     <div id="status">Loading...</div>

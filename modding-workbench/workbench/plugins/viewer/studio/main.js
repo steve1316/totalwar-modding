@@ -2,7 +2,6 @@
 // on a phone), and the playback and job bar at the bottom. A new inspector tab is a module with `render(container)` added to `TABS`.
 import { animLoader } from "../viewer_common.js";
 import { AdjustTab } from "./adjust.js";
-import { EditTab } from "./edit.js";
 import { BattleStage } from "./stage.js";
 import { Jobs } from "./jobs.js";
 import { PortraitStage } from "./portrait.js";
@@ -35,7 +34,7 @@ const studio = {
   // Called with the API's answer after a save: those values are the new baseline.
   saved(answer) {
     studio.tuning = Object.assign(studio.tuning || {}, answer);
-    tabs.edit.saved();
+    tabs.stats.saved();
     studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
     if (manifest.portrait) portrait.resetToSaved();
     tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); studio.changed();
@@ -56,10 +55,10 @@ const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studi
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Inspector tabs
 
-const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) }, edit: new EditTab(studio),
+const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
                skills: new SkillsTab($("skillsStage"), studio) };
 // Tab order and labels. Tabs without a module yet are shown greyed out.
-const TABS = [["stats", "Stats"], ["adjust", "Adjust"], ["portrait", "Portrait"], ["edit", "Edit"], ["skills", "Skills"]];
+const TABS = [["stats", "Stats"], ["adjust", "Adjust"], ["portrait", "Portrait"], ["skills", "Skills"]];
 let tab = "stats";
 
 function renderTabs() {
