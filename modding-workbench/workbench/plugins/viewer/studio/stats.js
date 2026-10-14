@@ -19,6 +19,21 @@ const plain = text => (text || "").replace(/\[\[[^\]]*\]\]|\{\{[^}]*\}\}/g, "").
 // Card rows that open into the values they add up from: panel stat -> [path group, fields].
 const GROUPS = { weapon_strength: ["melee", MELEE_FIELDS], missile_strength: ["missile", MISSILE_FIELDS.filter(([field]) => !["effective_range", "ammo"].includes(field))] };
 
+// One picker row's body: an ability's type, numbers and the effects of each phase, then its description. An attribute's text is its effect.
+function pickBody(kind, a, art) {
+  const { esc, markupHtml } = window.UnitPanel, t = kind === "abilities" ? a.tip : null;
+  if (!t) return `<b>${esc(a.name)}</b>${a.text ? `<span class="fx-text">${markupHtml(a.text, art)}</span>` : ""}`;
+  const phases = t.phases.map(p => {
+    const head = p.name || p.duration ? `<span class="fx-sub">${markupHtml(p.name || "", art)}${p.duration ? ` ${p.name ? "for" : "For"} ${esc(p.duration)}` : ""}</span>` : "";
+    const effects = p.effects.map(([label, value]) => `<span>${markupHtml(label, art)} <b class="${value.startsWith("-") ? "down" : "up"}">${esc(value)}</b></span>`)
+      .concat(p.attributes.map(([name, good]) => `<span>${esc(name)} <b class="${good ? "up" : "down"}">${good ? "gained" : "lost"}</b></span>`));
+    return head || effects.length ? `<span class="fx">${head}${effects.join("")}</span>` : "";
+  }).join("");
+  return `<span class="fx-title"><b>${esc(a.name)}</b><span class="note">${markupHtml(t.type, art)}${t.passive ? " · Passive" : ""}</span></span>
+    ${t.numbers.length ? `<span class="fx-nums">${t.numbers.map(([label, value]) => `${esc(label)} <b>${esc(value)}</b>`).join(" · ")}</span>` : ""}
+    ${phases}${t.text ? `<span class="note">${esc(plain(t.text))}</span>` : ""}`;
+}
+
 // Attribute chips. Against a compared unit: red for what only the card's unit has, green for what only the compared unit has. `removable` adds
 // an x to each of the card unit's own.
 function attributeChips(u, o, art, removable) {
@@ -84,11 +99,11 @@ export class StatsTab {
   // The picker: every ability or attribute the game has in one scrolling list, searched by name, key or text. Tapping one adds it, or takes it off
   // again when the form has it. It stays open so several can be picked in a row.
   openPicker(container, f, kind) {
-    const { esc, abilitiesHtml } = window.UnitPanel, art = this.studio.panelArt, box = this.picker, catalog = this.editor.editor[kind] || {};
+    const { esc } = window.UnitPanel, art = this.studio.panelArt, box = this.picker, catalog = this.editor.editor[kind] || {};
     const rows = Object.entries(catalog).map(([key, a]) => {
-      const text = plain(kind === "abilities" ? a.tip && a.tip.text : a.text);
-      return `<button class="pick" title="${esc(key)}" data-key="${esc(key)}" data-find="${esc(`${a.name} ${key} ${text}`.toLowerCase())}">${kind === "abilities" ? abilitiesHtml([{ key, ...a }], art) : ""}
-        <span><b>${esc(a.name)}</b><span class="note">${esc(text)}</span></span><span class="state"></span></button>`;
+      const body = pickBody(kind, a, art), icon = kind === "abilities" ? (a.icon ? `<img loading="lazy" src="${art(a.icon)}" alt="">` : "<span></span>") : "";
+      const find = `${a.name} ${key} ${plain(body.replace(/<[^>]+>/g, " "))}`.toLowerCase();
+      return `<button class="pick ${kind}" title="${esc(key)}" data-key="${esc(key)}" data-find="${esc(find)}">${icon}<span class="fx-body">${body}</span><span class="state"></span></button>`;
     }).join("");
     box.innerHTML = `<div class="dialog pickbox"><div class="d-head"><b>${LISTS[kind][1]}</b><button class="mini" data-x="close">Done</button></div>
       <input data-f="find" placeholder="${LISTS[kind][2]}" autocomplete="off"><div class="note" data-count></div><div class="pick-list">${rows}</div></div>`;
