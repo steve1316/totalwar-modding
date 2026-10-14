@@ -2,7 +2,8 @@
 // values (dotted paths the project config lists as `editable`). The gallery's `manifest.editor` gives each form's values as built (`forms`) and the
 // attribute and ability catalogs (`attributes`, `abilities`).
 //
-// Unit stats are set for every form of a weapon (its base on foot; mounts add their vanilla difference) or for one form only (an override).
+// Unit stats are set for every form of a weapon (its base on foot; mounts add their vanilla difference) or for one form only (an override). Foot
+// forms edit every form by default, and mounted forms only themselves. A change from a mount to every form moves them all by the same amount.
 // The melee weapon, missile values, attributes and abilities belong to the weapon. Edits show at once on the card: each panel number moves by the change of
 // the value behind it. Saved edits keep showing until a rebuild bakes them into the gallery.
 
@@ -17,8 +18,8 @@ export const MISSILE_FIELDS = [["damage", "Missile damage", "missile_strength"],
 
 export class FormEditor {
   constructor(studio) {
-    // Whether a unit stat edit is for every form of the weapon or this form only.
-    this.scope = "weapon";
+    // Whether a unit stat edit is for every form of the weapon ("weapon") or this form only ("form"), kept apart for foot and mounted forms.
+    this.scopes = { foot: "weapon", mount: "form" };
     this.studio = studio;
     this.editor = studio.manifest.editor || null;
     // Registry edits saved but not rebuilt yet: they keep previewing.
@@ -27,6 +28,8 @@ export class FormEditor {
   }
 
   enabled() { return !!this.editor && !!this.studio.tuning; }
+  scope(f) { return this.scopes[f.mount === "foot" ? "foot" : "mount"]; }
+  setScope(f, scope) { this.scopes[f.mount === "foot" ? "foot" : "mount"] = scope; }
   // Saved then unsaved edits, the later winning.
   pending() { return { ...this.studio.savedRegistry, ...this.studio.edits.registry }; }
   form(key) { return this.editor && this.editor.forms[key]; }
@@ -76,7 +79,7 @@ export class FormEditor {
   edit(f, path, value) {
     const [group, field] = path.split(".");
     if (group === "unit") {
-      if (this.scope === "form") { this.set(`weapons.${f.weapon}.forms.${f.mount}.${field}`, value); return; }
+      if (this.scope(f) === "form") { this.set(`weapons.${f.weapon}.forms.${f.mount}.${field}`, value); return; }
       // The weapon's base moves by the change typed on this form, so every form without its own value moves the same way.
       const foot = this.footForm(f.weapon) || f, basePath = `weapons.${f.weapon}.stats.${field}`, p = this.pending();
       this.set(basePath, (basePath in p ? p[basePath] : foot.stats[field]) + value - this.unitValue(f, field));

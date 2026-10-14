@@ -84,8 +84,8 @@ export class StatsTab {
       ? `<div class="vs">Compared with <b>${esc(target.label)}</b><button data-t="flip">${this.flip ? "Show this form" : `Show ${target.short}`}</button><button data-against="">Alone</button>${others}</div>`
       : `<div class="vs">${others}</div>`;
     const weaponName = entry.name.split(" - ")[0], formName = entry.name.split(" - ")[1] || "";
-    const scope = f ? `<div class="vs scope">Changes apply to <button data-scope="weapon" class="${this.editor.scope === "weapon" ? "on" : ""}">every ${esc(weaponName)} form</button>
-      <button data-scope="form" class="${this.editor.scope === "form" ? "on" : ""}">${esc(formName)} only</button></div>` : "";
+    const scope = f ? `<div class="vs scope">Changes apply to <button data-scope="form" class="${this.editor.scope(f) === "form" ? "on" : ""}">${esc(formName)} only</button>
+      <button data-scope="weapon" class="${this.editor.scope(f) === "weapon" ? "on" : ""}">every ${esc(weaponName)} form${f.mount === "foot" ? "" : ", by the same amount"}</button></div>` : "";
     const health = f && this.open.has("hp") ? this.subRow("unit.bonus_hit_points", "Health bonus per model", this.editor.unitValue(f, "bonus_hit_points"), this.override(f, "bonus_hit_points")) : "";
     container.innerHTML = `<div class="panel"><div class="p-title">${esc(u.name)}</div>${vs}${scope}
       <div class="p-sub"><span>${esc(u.caste)} · ${esc(u.class)}${u.stats.tier ? ` · tier ${u.stats.tier}` : ""}</span></div>
@@ -189,7 +189,7 @@ export class StatsTab {
     if (flip) flip.onclick = () => { this.flip = !this.flip; redraw(); };
     container.querySelectorAll("[data-against]").forEach(b => b.onclick = () => { this.studio.compare = b.dataset.against || null; this.flip = false; redraw(); });
     if (!f) return;
-    container.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { this.editor.scope = b.dataset.scope; redraw(); });
+    container.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { this.editor.setScope(f, b.dataset.scope); redraw(); });
     container.querySelectorAll("[data-open]").forEach(el => el.onclick = e => {
       if (e.target.closest("input, button")) return;
       const key = el.dataset.open; this.open.has(key) ? this.open.delete(key) : this.open.add(key); redraw();
