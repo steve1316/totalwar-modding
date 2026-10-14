@@ -1,6 +1,6 @@
 // The Look inspector tab: his outfit, his hood and extra pieces such as a hat, set per weapon and shared by every mount of that weapon
 // (`weapons.<weapon>.body`, `.hood` and `.pieces`). Outfits come from the registry's `model.bodies`, and any other humanoid model of the game can be
-// added as an outfit or a piece, each search hit and piece with a thumbnail, and a hovered search hit tried on. Every choice shows live on the
+// added as an outfit or a piece, each search hit and piece with a thumbnail (kept on the server once drawn), and a hovered search hit tried on. Every choice shows live on the
 // stage through `studio.live`. The Jobs bar saves the edits.
 import { stem } from "./live_models.js";
 import { Thumbnails } from "./thumbs.js";
@@ -117,6 +117,8 @@ export class LookTab {
     hits.onmouseover = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(b.dataset.model); };
     hits.onmouseout = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(null); };
     input.oninput = () => { clearTimeout(this.typing); this.typing = setTimeout(list, TYPING_PAUSE); };
+    // Every model's picture is drawn and kept in the background, so the list shows them at once from then on.
+    this.thumbs.warm(this.models);
     list(); setTimeout(() => input.focus());
     return box;
   }

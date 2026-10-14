@@ -5,6 +5,8 @@ The page is `index.html` with its modules in `studio/`, served from this folder.
 `/viewer/p/<project>/data/`, and its tuning and job routes under `/viewer/p/<project>/api/`:
 - `GET tuning`: the tuning values, the weapon models that may get an offset, and the job state. `POST tuning`: saves values into the registry.
 - `POST run/<job>`: starts one of the project's jobs (rebuild, deploy). `GET job`: the job state and the end of its log.
+- `GET thumbs/<file>` and `GET api/thumbs`: the cached model thumbnails and their index (model -> file). `POST thumb`: keeps one (`model`,
+  `image` as a PNG data URL).
 - `POST props`: exports models (`items`, each with `model`, `slot`, `attach` and `skeleton`) into the gallery for the live previews and
   thumbnails, answering `urls` (null for a model not found).
 """
@@ -14,6 +16,7 @@ import os
 from typing import Dict, List, Tuple
 
 from workbench.plugins.viewer.previews import prop_previews
+from workbench.plugins.viewer.thumbs import save_thumb, thumb_index
 from workbench.projects import Project
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +78,10 @@ class Viewer:
             return
         if rest.startswith("data/"):
             handler.send_static(project.gallery, rest[len("data/"):])
+        elif rest.startswith("thumbs/"):
+            handler.send_static(project.thumbs, rest[len("thumbs/"):])
+        elif rest == "api/thumbs":
+            handler.send_json(200, thumb_index(project))
         elif rest == "api/tuning":
             handler.send_json(200, dict(project.tuning_values(), job=project.job.state()))
         elif rest == "api/job":
@@ -106,6 +113,11 @@ class Viewer:
                 return
             try:
                 handler.send_json(200, project.save_tuning(changes))
+            except ValueError as error:
+                handler.send_json(400, {"error": str(error)})
+        elif rest == "api/thumb":
+            try:
+                handler.send_json(200, {"file": save_thumb(project, str(changes.get("model", "")), changes.get("image"))})
             except ValueError as error:
                 handler.send_json(400, {"error": str(error)})
         elif rest == "api/props":

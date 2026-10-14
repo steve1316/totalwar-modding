@@ -1,5 +1,7 @@
-// Model thumbnails for the Look tab's lists. An `<img data-thumb="<model path>">` is filled once it scrolls into view: the server exports the
-// model (`api/props`, several at a time), and it is drawn once in its bind pose on a small off-screen stage lit like the Battle stage.
+// Model thumbnails for the Look tab's lists. An `<img data-thumb="<model path>">` shows the project's cached picture at once (`api/thumbs`).
+// Without one it is filled once it scrolls into view: the server exports the model (`api/props`, several at a time), it is drawn in its bind pose
+// on a small off-screen stage lit like the Battle stage, and the picture is kept on the server (`api/thumb`) for next time. `warm` draws and keeps
+// the pictures of a whole list in the background, after the ones on screen.
 import * as THREE from "three";
 import { loadModel } from "../viewer_common.js";
 
@@ -11,28 +13,45 @@ const BATCH = 8;
 
 export class Thumbnails {
   constructor(studio) {
-    // `images` holds each model's promised image (a data URL, or null when it could not be drawn), `queue` the models waiting for an export
-    // with the images showing them.
+    // `cached` is the promised index of kept pictures (model -> url), `images` each drawn model's promised picture (a url, or null when it
+    // could not be drawn), `queue` the models waiting to be drawn with the images showing them (none for a background one).
     this.studio = studio; this.images = new Map(); this.queue = []; this.busy = false; this.stage = null;
+    const folder = studio.api.replace(/api\/$/, "thumbs/");
+    this.cached = fetch(studio.api + "thumbs").then(r => r.json()).catch(() => ({}))
+      .then(index => new Map(Object.entries(index).map(([model, file]) => [model, folder + file])));
     this.observer = new IntersectionObserver(seen => seen.forEach(e => { if (e.isIntersecting) { this.observer.unobserve(e.target); this.show(e.target); } }), { rootMargin: "200px" });
   }
 
   // Watches every thumbnail image under a container.
   fill(container) { container.querySelectorAll("img[data-thumb]:not([src])").forEach(img => this.observer.observe(img)); }
 
-  show(img) {
-    const model = img.dataset.thumb, waiting = this.queue.find(q => q.model === model);
-    if (waiting) waiting.imgs.push(img);
-    else if (!this.images.has(model)) { this.images.set(model, new Promise(done => this.queue.push({ model, done, imgs: [img] }))); this.pump(); }
-    this.images.get(model).then(image => { if (image) img.src = image; else img.classList.add("missing"); });
+  async show(img) {
+    const model = img.dataset.thumb, kept = (await this.cached).get(model);
+    if (kept) { img.src = kept; return; }
+    this.request(model, img).then(image => { if (image) img.src = image; else img.classList.add("missing"); });
   }
 
-  // Exports and draws the waiting models, a batch at a time.
+  // The promised picture of a model, queued for drawing once. `img` is the image showing it, or none for a background one.
+  request(model, img) {
+    const waiting = this.queue.find(q => q.model === model);
+    if (waiting) { if (img) waiting.imgs.push(img); }
+    else if (!this.images.has(model)) { this.images.set(model, new Promise(done => this.queue.push({ model, done, imgs: img ? [img] : [] }))); this.pump(); }
+    return this.images.get(model);
+  }
+
+  // Draws and keeps, in the background, the pictures of every model in a list that has none yet.
+  async warm(models) {
+    const kept = await this.cached;
+    for (const model of models) if (!kept.has(model)) this.request(model, null);
+  }
+
+  // Exports, draws and keeps the waiting models, a batch at a time: the ones on screen first, then the background ones.
   async pump() {
     if (this.busy || !this.queue.length) return;
     // Models whose rows are gone (a new search) are dropped, and asked for again if they show up later.
-    for (const q of this.queue.filter(q => !q.imgs.some(img => img.isConnected))) this.images.delete(q.model);
-    this.queue = this.queue.filter(q => q.imgs.some(img => img.isConnected));
+    const gone = q => q.imgs.length && !q.imgs.some(img => img.isConnected);
+    for (const q of this.queue.filter(gone)) this.images.delete(q.model);
+    this.queue = this.queue.filter(q => !gone(q)).sort((a, b) => (b.imgs.length > 0) - (a.imgs.length > 0));
     if (!this.queue.length) return;
     this.busy = true;
     const batch = this.queue.splice(0, BATCH);
@@ -42,9 +61,15 @@ export class Thumbnails {
         body: JSON.stringify({ items: batch.map(b => ({ model: b.model, slot: "thumb", attach: "" })) }) });
       urls = (await r.json()).urls || [];
     } catch (error) { console.error("thumbnails", error); }
+    const kept = await this.cached;
     for (const [i, b] of batch.entries()) {
       let image = null;
       try { if (urls[i]) image = await this.draw(this.studio.data + urls[i]); } catch (error) { console.error("thumbnail", b.model, error); }
+      if (image) {
+        kept.set(b.model, image);
+        fetch(this.studio.api + "thumb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model: b.model, image }) })
+          .catch(error => console.error("keep thumbnail", error));
+      }
       b.done(image);
     }
     this.busy = false;
