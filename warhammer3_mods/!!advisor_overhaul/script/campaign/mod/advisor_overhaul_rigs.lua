@@ -11,6 +11,8 @@ ADVISOR_OVERHAUL_RIGS = {
 	weapons = {
 		{ key = "staff_and_sword", skill = "", name = "advisor_overhaul_ui_weapon_staff_and_sword", fallback = "Staff and Sword", icon = "ui/campaign ui/skills/item_weapon.png", art_set = "advisor_overhaul_art_staff_and_sword" },
 		{ key = "sword_and_shield", skill = "advisor_overhaul_choose_weapon_sword_and_shield", name = "advisor_overhaul_ui_weapon_sword_and_shield", fallback = "Sword and Shield", icon = "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png", art_set = "advisor_overhaul_art_sword_and_shield" },
+		{ key = "greatsword", skill = "advisor_overhaul_choose_weapon_greatsword", name = "advisor_overhaul_ui_weapon_greatsword", fallback = "Greatsword", icon = "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png", art_set = "advisor_overhaul_art_greatsword" },
+		{ key = "sword_and_bow", skill = "advisor_overhaul_choose_weapon_sword_and_bow", name = "advisor_overhaul_ui_weapon_sword_and_bow", fallback = "Sword and Bow", icon = "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png", art_set = "advisor_overhaul_art_sword_and_bow" },
 	},
 	--- Mounts in skill tree order: key, unlock skill (empty for the default), name loc key, English fallback name and picker icon.
 	mounts = {
@@ -28,6 +30,10 @@ ADVISOR_OVERHAUL_RIGS = {
 		["sword_and_shield|foot"] = "advisor_overhaul_rig_sword_and_shield_foot",
 		["sword_and_shield|warhorse"] = "advisor_overhaul_rig_sword_and_shield_warhorse",
 		["sword_and_shield|pegasus"] = "advisor_overhaul_rig_sword_and_shield_pegasus",
+		["greatsword|foot"] = "advisor_overhaul_rig_greatsword_foot",
+		["greatsword|warhorse"] = "advisor_overhaul_rig_greatsword_warhorse",
+		["sword_and_bow|foot"] = "advisor_overhaul_rig_sword_and_bow_foot",
+		["sword_and_bow|warhorse"] = "advisor_overhaul_rig_sword_and_bow_warhorse",
 	},
 	--- Mount ancillary -> the weapon and mount of its pair.
 	rigs = {
@@ -38,6 +44,10 @@ ADVISOR_OVERHAUL_RIGS = {
 		["advisor_overhaul_rig_sword_and_shield_foot"] = { weapon = "sword_and_shield", mount = "foot" },
 		["advisor_overhaul_rig_sword_and_shield_warhorse"] = { weapon = "sword_and_shield", mount = "warhorse" },
 		["advisor_overhaul_rig_sword_and_shield_pegasus"] = { weapon = "sword_and_shield", mount = "pegasus" },
+		["advisor_overhaul_rig_greatsword_foot"] = { weapon = "greatsword", mount = "foot" },
+		["advisor_overhaul_rig_greatsword_warhorse"] = { weapon = "greatsword", mount = "warhorse" },
+		["advisor_overhaul_rig_sword_and_bow_foot"] = { weapon = "sword_and_bow", mount = "foot" },
+		["advisor_overhaul_rig_sword_and_bow_warhorse"] = { weapon = "sword_and_bow", mount = "warhorse" },
 	},
 	--- Forename loc key of his name.
 	name = "names_name_930556520",

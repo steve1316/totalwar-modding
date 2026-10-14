@@ -26,10 +26,28 @@ ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_warhorse	He leaves
 land_units_onscreen_name_advisor_overhaul_sword_and_shield_pegasus	The Advisor (Sword and Shield, Imperial Pegasus)	true
 ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_shield_pegasus	Sword and Shield, Imperial Pegasus	true
 ancillaries_colour_text_advisor_overhaul_rig_sword_and_shield_pegasus	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand. A winged Imperial steed that lifts him over the battle line.	true
+land_units_onscreen_name_advisor_overhaul_greatsword_foot	The Advisor (Greatsword, On Foot)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_foot	Greatsword, On Foot	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_foot	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come. He walks, as he always has.	true
+land_units_onscreen_name_advisor_overhaul_greatsword_warhorse	The Advisor (Greatsword, Barded Warhorse)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_greatsword_warhorse	Greatsword, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_rig_greatsword_warhorse	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come. An armoured Imperial charger, steady under spellfire.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_bow_foot	The Advisor (Sword and Bow, On Foot)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_foot	Sword and Bow, On Foot	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_foot	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. He walks, as he always has.	true
+land_units_onscreen_name_advisor_overhaul_sword_and_bow_warhorse	The Advisor (Sword and Bow, Barded Warhorse)	true
+ancillaries_onscreen_name_advisor_overhaul_rig_sword_and_bow_warhorse	Sword and Bow, Barded Warhorse	true
+ancillaries_colour_text_advisor_overhaul_rig_sword_and_bow_warhorse	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten. An armoured Imperial charger, steady under spellfire.	true
 advisor_overhaul_ui_weapon_staff_and_sword	Staff and Sword	true
 advisor_overhaul_ui_weapon_sword_and_shield	Sword and Shield	true
+advisor_overhaul_ui_weapon_greatsword	Greatsword	true
+advisor_overhaul_ui_weapon_sword_and_bow	Sword and Bow	true
 character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_shield	Sword and Shield	true
 character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_shield	He leaves the staff behind and takes up a knight's shield. Spells still come from his free hand.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_advisor_overhaul_choose_weapon_greatsword	Greatsword	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_greatsword	A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_advisor_overhaul_choose_weapon_sword_and_bow	Sword and Bow	true
+character_skills_localised_description_advisor_overhaul_choose_weapon_sword_and_bow	A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.\\n\\nUnlocks this weapon for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 advisor_overhaul_ui_mount_foot	On Foot	true
 advisor_overhaul_ui_mount_warhorse	Barded Warhorse	true
 advisor_overhaul_ui_mount_pegasus	Imperial Pegasus	true

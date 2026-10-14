@@ -6,6 +6,7 @@ How a pair reaches the battle map:
   Change Loadout button in the Advisor's character panel, and `script/campaign/mod/advisor_overhaul.lua` equips the pair's hidden mount ancillary.
 - That ancillary's `provided_bodyguard_unit` is the pair's main unit, and `campaign_character_uniform_ancillary_junctions` swaps his uniform to the
   pair's, whose battle variant carries the weapon props (and the disc).
+- A weapon with a `missile` gets its own missile weapon and projectile, copied from a vanilla template with the registry's values.
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
@@ -41,6 +42,9 @@ from generators import advisor_overhaul_anims as anims
 
 # Weapons, mounts and model pieces.
 REGISTRY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "advisor_overhaul_registry.json")
+
+# Folder of the weapon copies `model.prop_offsets` moves (written by `generators.advisor_overhaul_model`).
+PROP_FOLDER = "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/props"
 
 # The kept vanilla rows and table headers.
 DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "advisor_overhaul.json")
@@ -127,6 +131,10 @@ UNIT_ROW_TABLES = {
     "cdir_military_generator_unit_qualities_tables": "unit_key",
 }
 
+# AI usage group of a pair that shoots, by the group of its template: the vanilla hybrid of the same caster group.
+RANGED_AI_GROUPS = {"mage_highvalue": "hybrid_mage_highvalue", "flying_mage_highvalue": "flying_hybrid_highvalue",
+                    "flying_melee_mage_highvalue": "flying_melee_mage_hybrid_highvalue"}
+
 # Unit attributes left off the pairs: the disc template's Mark of Tzeentch.
 SKIPPED_ATTRIBUTES = {"mark_tzeentch"}
 
@@ -139,7 +147,8 @@ TABLES = [
     "units_custom_battle_mounts_tables", "battle_animations_table_tables", "culture_to_battle_animation_tables_tables",
     "campaign_mount_animation_set_overrides_tables", "ancillaries_tables", "ancillary_info_tables", "ancillaries_included_agent_subtypes_tables",
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
-    "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", *UNIT_ROW_TABLES,
+    "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
+    "projectiles_tables", *UNIT_ROW_TABLES,
 ]
 
 # Template tables -> the column naming the template unit.
@@ -217,6 +226,10 @@ def refresh() -> None:
     data["culture_packs"] = sorted({r["culture_pack"] for r in culture_rows if r["culture_pack"]})
     data["culture_animations"] = sorted(f"{r['battle_animations_table']}|{r['culture_pack']}" for r in culture_rows)
     data["vanilla_names"] = sorted(r["id"] for r in loaded["names_tables"])
+    missiles = {w["missile"]["template"] for w in registry["weapons"].values() if "missile" in w}
+    data["missile_weapons"] = {r["key"]: r for r in loaded["missile_weapons_tables"] if r["key"] in missiles}
+    projectiles = {r["default_projectile"] for r in data["missile_weapons"].values()}
+    data["projectiles"] = {r["key"]: r for r in loaded["projectiles_tables"] if r["key"] in projectiles}
     data["portraits"] = vanilla_portraits(LOOK_ART_SET)
     json.dump(data, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
     print(f"kept {len(data['templates']['land_units_tables'])} template units, {len(data['factions'])} factions in {DATA}")
@@ -276,6 +289,19 @@ def foot_variant(weapon: str) -> str:
         str: The variant name, also its variant mesh definition's file name.
     """
     return f"{PREFIX}_{weapon}"
+
+
+def missile_key(weapon_key: str, weapon: Dict) -> str:
+    """The missile weapon of a weapon with a `missile`, also its projectile's key: the missile's own `key`, or one named after the weapon.
+
+    Args:
+        weapon_key (str): The weapon key.
+        weapon (Dict): The registry weapon.
+
+    Returns:
+        str: The missile weapon key.
+    """
+    return weapon["missile"].get("key", f"{PREFIX}_{weapon_key}_missile")
 
 
 def weapon_art_set(weapon: str) -> str:
@@ -369,11 +395,12 @@ def number(value: str) -> float:
     return float(value) if value else 0.0
 
 
-def land_unit(key: str, weapon: Dict, set_name: str, mount: Dict, templates: Dict, advisor: Dict[str, str]) -> Dict[str, str]:
+def land_unit(key: str, weapon_key: str, weapon: Dict, set_name: str, mount: Dict, templates: Dict, advisor: Dict[str, str]) -> Dict[str, str]:
     """A pair's land unit row.
 
     Args:
         key (str): The unit key.
+        weapon_key (str): The weapon key.
         weapon (Dict): The registry weapon.
         set_name (str): The battle animation set.
         mount (Dict): The registry mount.
@@ -384,7 +411,8 @@ def land_unit(key: str, weapon: Dict, set_name: str, mount: Dict, templates: Dic
         Dict[str, str]: The row.
     """
     if "template" not in mount:
-        return dict(advisor, key=key, man_animation=set_name, shield=weapon["shield"], attribute_group=key)
+        row = dict(advisor, key=key, man_animation=set_name, shield=weapon["shield"], attribute_group=key)
+        return with_missile(row, weapon_key, weapon)
     mounted, foot = templates[mount["template"]], templates[mount["template_foot"]]
     row = dict(mounted)
     for column in IDENTITY_COLUMNS + ["historical_description_text", "short_description_text"]:
@@ -398,6 +426,24 @@ def land_unit(key: str, weapon: Dict, set_name: str, mount: Dict, templates: Dic
     if mounted["mount"]:
         row["man_entity"] = RIDER_ENTITY
     row.update({"key": key, "man_animation": set_name, "shield": weapon["shield"], "attribute_group": key})
+    return with_missile(row, weapon_key, weapon)
+
+
+def with_missile(row: Dict[str, str], weapon_key: str, weapon: Dict) -> Dict[str, str]:
+    """Gives a land unit row its weapon's missile weapon and ammo, and the AI group of a caster that shoots. Rows of weapons with no missile are
+    returned as they are.
+
+    Args:
+        row (Dict[str, str]): The land unit row, changed in place.
+        weapon_key (str): The weapon key.
+        weapon (Dict): The registry weapon.
+
+    Returns:
+        Dict[str, str]: The row.
+    """
+    if "missile" in weapon:
+        row.update(primary_missile_weapon=missile_key(weapon_key, weapon), primary_ammo=str(weapon["missile"]["ammo"]),
+                   ai_usage_group=RANGED_AI_GROUPS.get(row["ai_usage_group"], row["ai_usage_group"]))
     return row
 
 
@@ -490,6 +536,30 @@ def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) 
                                                            land_animation=weapon.get("campaign_set", CAMPAIGN_ANIMATION)))
 
 
+def missile_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
+    """Adds a missile weapon and its projectile for every weapon with a `missile`: copies of the vanilla template's rows under his own keys, with
+    the registry's projectile values.
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+
+    Raises:
+        SystemExit: When a template is not in the kept rows (run `--refresh`).
+    """
+    for weapon_key, weapon in registry["weapons"].items():
+        if "missile" not in weapon:
+            continue
+        missile = weapon["missile"]
+        if missile["template"] not in data.get("missile_weapons", {}):
+            raise SystemExit(f"missile template {missile['template']} is not kept, run with --refresh")
+        template = data["missile_weapons"][missile["template"]]
+        key = missile_key(weapon_key, weapon)
+        rows["missile_weapons_tables"].append(dict(template, key=key, default_projectile=key))
+        rows["projectiles_tables"].append(dict(data["projectiles"][template["default_projectile"]], key=key, **missile["projectile"]))
+
+
 def build() -> None:
     """Writes every table, variant, portrait setting, loc row and the script data file into the mod folder."""
     registry = json.load(open(REGISTRY, encoding="utf-8"))
@@ -520,13 +590,13 @@ def build() -> None:
         variant = foot_variant(weapon_key) + ("_" + mount_key if "variant_props" in mount else "")
         combos.append((weapon_key, mount_key, ancillary))
 
-        rows["land_units_tables"].append(land_unit(key, weapon, weapon["sets"][mount_key], mount, template_units, advisor))
+        rows["land_units_tables"].append(land_unit(key, weapon_key, weapon, weapon["sets"][mount_key], mount, template_units, advisor))
         # Voice, campaign cap and portrait camera stay his own on every mount, since the disc template is a Chaos Sorcerer.
         main = dict(template_main[template], **{k: template_main[FOOT_TEMPLATE][k] for k in MAIN_IDENTITY_COLUMNS})
         rows["main_units_tables"].append(dict(main, unit=key, land_unit=key, unique_index=str(unique_index), caste="hero"))
         unique_index += 1
         rows["unit_attributes_groups_tables"].append({"group_name": key})
-        attributes = set(template_attributes.get(template, [])) - SKIPPED_ATTRIBUTES
+        attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - SKIPPED_ATTRIBUTES
         rows["unit_attributes_to_groups_junctions_tables"] += [{"attribute": a, "attribute_group": key} for a in sorted(attributes)]
         rows["land_units_to_unit_abilites_junctions_tables"].append({"ability": "wh3_main_unit_passive_single_entity", "land_unit": key, "culture": "*"})
         for table, column in UNIT_ROW_TABLES.items():
@@ -562,7 +632,7 @@ def build() -> None:
                                                                              "rider_animation_set": rider, "vfx_filter_override": "0"})
         texts.append((f"ancillaries_onscreen_name_{ancillary}", f"{weapon['name']}, {mount['name']}"))
         texts.append((f"ancillaries_colour_text_{ancillary}", f"{weapon['description']} {mount['description']}"))
-        variants[variant] = dict(weapon["props"], **mount.get("variant_props", {}))
+        variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {})))
 
     for variant in variants:
         rows["variants_tables"].append({"variant_name": variant, "variant_filename": variant, "mount_scale": "1.0000", "scale": "1.1500", "scale_variation": "0.0000"})
@@ -575,6 +645,7 @@ def build() -> None:
                                                           for c in data["culture_packs"] if f"{s}|{c}" not in vanilla_pairs]
     skill_rows(registry, rows, texts)
     art_rows(registry, data, rows)
+    missile_rows(registry, data, rows)
     check_duplicates(rows)
     check_loc(texts)
 
@@ -602,7 +673,8 @@ def check_duplicates(rows: Dict[str, List[Dict[str, str]]]) -> None:
         SystemExit: When a key column repeats.
     """
     for table, column in (("land_units_tables", "key"), ("character_skills_tables", "key"), ("ancillaries_tables", "key"),
-                          ("agent_uniforms_tables", "uniform_name"), ("main_units_tables", "unique_index")):
+                          ("agent_uniforms_tables", "uniform_name"), ("main_units_tables", "unique_index"), ("missile_weapons_tables", "key"),
+                          ("projectiles_tables", "key")):
         keys = [r[column] for r in rows[table]]
         if len(keys) != len(set(keys)):
             raise SystemExit(f"duplicate keys in {table}: {sorted(k for k in set(keys) if keys.count(k) > 1)}")
@@ -645,22 +717,35 @@ def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:
         f.write("\n".join(lines) + "\n")
 
 
-def write_variants(model: Dict, variants: Dict[str, Dict]) -> None:
+def prop_copy_path(path: str) -> str:
+    """Game path of the copy of a weapon model that `model.prop_offsets` moves.
+
+    Args:
+        path (str): The vanilla weapon model.
+
+    Returns:
+        str: The copy's path.
+    """
+    return f"{PROP_FOLDER}/{os.path.basename(path).lower()}"
+
+
+def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict]]) -> None:
     """Writes one variant mesh definition per weapon (and per weapon on a prop mount such as the disc): his model pieces, the dismemberment stumps
     and the props.
 
     Args:
-        model (Dict): The registry's `model` (the body and head switches with their bodies and heads, and stumps).
-        variants (Dict[str, Dict]): Variant name -> slot -> (attach point, model, metadata).
+        model (Dict): The registry's `model` (the bodies, the head switches with their heads, and stumps).
+        variants (Dict[str, Tuple[str, Dict]]): Variant name -> (key of its body in `model.bodies`, slot -> (attach point, model, metadata)).
     """
     folder = os.path.join(MOD, "variantmeshes", "variantmeshdefinitions")
     os.makedirs(folder, exist_ok=True)
     slots = {"weapon_1": "be_prop_0", "weapon_2": "be_prop_1", "shield": "be_prop_2", "weapon_3": "be_prop_3", "weapon_4": "be_prop_4", "weapon_5": "be_prop_5"}
     # The head goes right after the body's first slot, like in vanilla variants. A head with no hoodless model keeps its own when the hood is off.
     head = model["heads"][model["head"]]
-    body = list(model["bodies"][model["body"]].items())
-    pieces = dict([body[0], ("head", head["hooded"] if model["hood"] else head.get("hoodless", head["hooded"]))] + body[1:])
-    for name, props in variants.items():
+    head_piece = ("head", head["hooded"] if model["hood"] else head.get("hoodless", head["hooded"]))
+    for name, (body_key, props) in variants.items():
+        body = list(model["bodies"][body_key].items())
+        pieces = dict([body[0], head_piece] + body[1:])
         lines = ["<VARIANT_MESH>"]
         for slot, (mesh, *meta) in pieces.items():
             tail = "".join(f"<META_DATA>{m}</META_DATA>" for m in meta)
@@ -670,6 +755,8 @@ def write_variants(model: Dict, variants: Dict[str, Dict]) -> None:
                 lines.append(f'\t<SLOT name="{slot}" attach_point="{point}" />')
                 continue
             _, mesh, meta = props[slot]
+            if mesh in model.get("prop_offsets", {}):
+                mesh = prop_copy_path(mesh)
             lines.append(f'\t<SLOT name="{slot}" attach_point="{point}" >')
             if mesh.lower().endswith(".variantmeshdefinition"):
                 lines.append(f'\t\t<VARIANT_MESH_REFERENCE definition="{mesh}" />')

@@ -7,3 +7,7 @@ advisor_overhaul_rig_staff_and_sword_disc	wh3_main_anc_mount_disc_of_tzeentch	.	
 advisor_overhaul_rig_sword_and_shield_foot	wh_main_anc_mount_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_sword_and_shield_foot		1	0		false	false	false	all
 advisor_overhaul_rig_sword_and_shield_warhorse	wh_main_anc_mount_barded_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_sword_and_shield_warhorse		1	0		false	false	false	all
 advisor_overhaul_rig_sword_and_shield_pegasus	wh_main_anc_mount_imperial_pegasus	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_sword_and_shield_pegasus		1	0		false	false	false	all
+advisor_overhaul_rig_greatsword_foot	wh_main_anc_mount_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_greatsword_foot		1	0		false	false	false	all
+advisor_overhaul_rig_greatsword_warhorse	wh_main_anc_mount_barded_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_greatsword_warhorse		1	0		false	false	false	all
+advisor_overhaul_rig_sword_and_bow_foot	wh_main_anc_mount_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_sword_and_bow_foot		1	0		false	false	false	all
+advisor_overhaul_rig_sword_and_bow_warhorse	wh_main_anc_mount_barded_warhorse	.	false	false	false	1	0	9999			false	false	false	mount	16	30	30	50	true	advisor_overhaul_sword_and_bow_warhorse		1	0		false	false	false	all

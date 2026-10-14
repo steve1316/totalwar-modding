@@ -6,10 +6,13 @@ cape chains, buttons, scrolls). Each vertex is re-weighted bone by bone:
   humanoid01's front skirt bones, which hang from the thighs, so the robe still moves with his legs.
 - Arm twist bones keep their name (`TWIST_BONES`): they only turn about the arm, so their different spot along it does not matter.
 - Any other bone keeps its name when humanoid01 has it within `MAX_SHARED_GAP` of the same bind position. Otherwise its weight goes to its closest
-  ancestor that does. The face bones fold into `head` and `jaw`, the middle and pinky fingers into `hand`, buttons and scrolls into the spine or root.
+  ancestor that does. The face bones fold into `head` and `jaw`, buttons and scrolls into the spine or root.
+- The middle and pinky fingers follow the index and ring finger bones of the same joint (`FINGER_STAND_INS`), as on vanilla humanoid01 models, so
+  they curl with them around a grip. Folded into `hand` they stayed straight while the other fingers closed.
 
 Vertices on the arms and legs (`MOVED_BONES`) are also moved from the advisor01 bind pose to the humanoid01 one, bone by bone. His arms are about
-2 cm longer, and without the move the hands sit off the humanoid01 hand bones that hold the props. The spine, neck and head bind poses already
+2 cm longer, and without the move the hands sit off the humanoid01 hand bones that hold the props. His hands are then shifted by the registry's
+`model.hand_shift`, so his fist closes around the weapon grip like a vanilla hand does. The spine, neck and head bind poses already
 match, and every other bone keeps its vertices in place (moving the 9-64 cm robe and cape offsets would tear the mesh).
 
 The hoodless head drops the hood, which is its own piece of the head mesh (no shared vertices, its own texture islands). A full scalp and the
@@ -24,8 +27,10 @@ Usage:
 """
 
 import argparse
+import json
 import os
 import re
+import shutil
 import sys
 from typing import Dict, List, Tuple
 
@@ -34,7 +39,8 @@ import numpy as np
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
 from tools.anim_retarget import quat_matrix, world_pose
-from tools.rmv2_file import Mesh, read_rmv2, set_attachment_points, set_positions, set_skin, write_rmv2
+from generators.advisor_overhaul import REGISTRY, prop_copy_path
+from tools.rmv2_file import Mesh, read_rmv2, read_wsmodel, set_attachment_points, set_pivot, set_positions, set_skin, write_rmv2
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +98,9 @@ TWIST_BONES = r"^(upper|lower)arm_roll_(left|right)_0$"
 # Largest bind gap for a bone to keep its name, in metres.
 MAX_SHARED_GAP = 0.03
 
+# Fingers humanoid01 lacks -> the finger whose bones they follow, for both the weights and the vertex move.
+FINGER_STAND_INS = {"middle": "index", "pinky": "ring"}
+
 # Bones whose vertices move from the advisor01 bind pose to the humanoid01 one (when they keep their name). Others use their closest such ancestor,
 # or stay in place.
 MOVED_BONES = r"^(upperarm|lowerarm|hand|finger|thumb|upperleg|lowerleg|foot|toe)_(left|right)(_\d)?$"
@@ -138,7 +147,7 @@ class Rig:
     # Per source bone that keeps its name: (name, bind gap in metres).
     gaps: List[Tuple[str, float]]
 
-    def __init__(self, source: Animation, target: Animation):
+    def __init__(self, source: Animation, target: Animation, hand_shift: List[float]):
         self.source, self.target = source, target
         names = {b.name: i for i, b in enumerate(target.bones)}
         source_world, target_world = world_pose(source, source, 0), world_pose(target, target, 0)
@@ -155,23 +164,36 @@ class Rig:
         self.target_of = np.zeros(len(source.bones), np.int64)
         self.moves = np.repeat(np.eye(4)[None], len(source.bones), 0)
         self.gaps = []
+        source_names = {b.name: i for i, b in enumerate(source.bones)}
         for index, bone in enumerate(source.bones):
+            # A finger humanoid01 lacks is handled as the finger it follows.
+            finger = re.match(r"^finger_(middle|pinky)_", bone.name)
+            if finger:
+                index = source_names[bone.name.replace(finger.group(1), FINGER_STAND_INS[finger.group(1)], 1)]
+            row = source_names[bone.name]
             if bone.name in names:
                 self.gaps.append((bone.name, gap(index)))
+            bone = source.bones[index]
             chain = next((c for pattern, c in CHAINS if re.match(pattern, bone.name)), None)
             if chain:
-                self.target_of[index] = min((names[c] for c in chain), key=lambda t: np.linalg.norm(np.subtract(source_world[index][1], target_world[t][1])))
+                self.target_of[row] = min((names[c] for c in chain), key=lambda t: np.linalg.norm(np.subtract(source_world[index][1], target_world[t][1])))
             else:
                 walk = index
                 while not shared(walk):
                     walk = source.bones[walk].parent
-                self.target_of[index] = names[source.bones[walk].name]
+                self.target_of[row] = names[source.bones[walk].name]
             # The move comes from the bone itself or its closest moved ancestor.
             walk = index
             while walk >= 0 and not (re.match(MOVED_BONES, source.bones[walk].name) and shared(walk)):
                 walk = source.bones[walk].parent
             if walk >= 0:
-                self.moves[index] = target_bind[names[source.bones[walk].name]] @ np.linalg.inv(source_bind[walk])
+                self.moves[row] = target_bind[names[source.bones[walk].name]] @ np.linalg.inv(source_bind[walk])
+            hand = re.match(r"^(hand|finger_\w+|thumb)_(left|right)(_\d)?$", source.bones[row].name)
+            if hand:
+                side = hand.group(2)
+                shift = np.eye(4)
+                shift[:3, 3] = target_bind[names[f"hand_{side}"]][:3, :3] @ np.multiply(hand_shift, (1, 1, 1 if side == "right" else -1))
+                self.moves[row] = shift @ self.moves[row]
 
     def apply(self, mesh: Mesh, move: bool) -> Dict[Tuple[str, str], float]:
         """Re-weights one mesh to humanoid01 and, when asked, moves its vertices into the humanoid01 bind pose.
@@ -315,14 +337,51 @@ def write_preview(rig: Rig, files: Dict[str, bytes]) -> None:
     print(f"wrote the unmoved body preview to {PREVIEWS}")
 
 
+def write_prop_copies(assets: AssetSource, offsets: Dict[str, List[float]]) -> None:
+    """Writes a copy of each weapon in the registry's `model.prop_offsets` with its pivot moved by the offset, in the weapon's own axes. A positive x
+    moves the weapon blade first, so his hand sits further down the grip, toward the pommel. A `.wsmodel` weapon gets a copy of its `.wsmodel` too,
+    pointing at the moved geometry and keeping its materials.
+
+    Args:
+        assets (AssetSource): The vanilla packs.
+        offsets (Dict[str, List[float]]): Weapon model path -> [x, y, z] metres.
+
+    Raises:
+        SystemExit: When a weapon is neither a `.rigid_model_v2` nor a `.wsmodel`.
+    """
+    shutil.rmtree(os.path.join(MOD, os.path.dirname(prop_copy_path("x"))), ignore_errors=True)
+    if any(not path.lower().endswith((".rigid_model_v2", ".wsmodel")) for path in offsets):
+        sys.exit("model.prop_offsets takes .rigid_model_v2 and .wsmodel weapons only")
+    files = assets.fetch_all(list(offsets))
+    for path, offset in offsets.items():
+        geometry, text = path, None
+        if path.lower().endswith(".wsmodel"):
+            text = files[norm(path)].decode("utf-8-sig")
+            geometry = read_wsmodel(text)[0]
+        model = read_rmv2(assets.fetch_all([geometry])[norm(geometry)])
+        for mesh in (m for lod in model.lods for m in lod):
+            set_pivot(mesh, tuple(p + o for p, o in zip(mesh.pivot, offset)))
+        copy = prop_copy_path(geometry)
+        os.makedirs(os.path.dirname(os.path.join(MOD, copy)), exist_ok=True)
+        with open(os.path.join(MOD, copy), "wb") as f:
+            f.write(write_rmv2(model))
+        if text is not None:
+            with open(os.path.join(MOD, prop_copy_path(path)), "w", encoding="utf-8", newline="\n") as f:
+                f.write(text.replace(geometry, copy))
+        print(f"wrote {prop_copy_path(path)}, moved {', '.join(f'{o * 100:.1f}' for o in offset)} cm")
+
+
 def build(preview: bool) -> None:
     """Writes the re-rigged body and heads into the mod folder.
 
     Args:
         preview (bool): Also write the unmoved body preview for the gallery.
     """
-    files = AssetSource([], [], VANILLA_PACKS).fetch_all([SOURCE_SKELETON, TARGET_SKELETON, POINTS_MODEL] + [source for source, _, _ in MODELS.values()])
-    rig = Rig(read_anim(files[norm(SOURCE_SKELETON)]), read_anim(files[norm(TARGET_SKELETON)]))
+    model = json.load(open(REGISTRY, encoding="utf-8"))["model"]
+    assets = AssetSource([], [], VANILLA_PACKS)
+    write_prop_copies(assets, model.get("prop_offsets", {}))
+    files = assets.fetch_all([SOURCE_SKELETON, TARGET_SKELETON, POINTS_MODEL] + [source for source, _, _ in MODELS.values()])
+    rig = Rig(read_anim(files[norm(SOURCE_SKELETON)]), read_anim(files[norm(TARGET_SKELETON)]), model["hand_shift"])
     print("bind gaps over 1 cm of bones both skeletons have:")
     for name, gap in rig.gaps:
         if gap > 0.01:

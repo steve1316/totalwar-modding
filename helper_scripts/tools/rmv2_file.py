@@ -55,6 +55,10 @@ COMMON_SIZES_AT = 4
 BOUNDS = struct.Struct("<6f")
 BOUNDS_AT = 24
 
+# Inside the weighted material header: the pivot point.
+PIVOT = struct.Struct("<3f")
+PIVOT_AT = 548
+
 # Inside the weighted material header: the attachment point and texture counts.
 MATERIAL_COUNTS = struct.Struct("<II")
 MATERIAL_COUNTS_AT = 712
@@ -345,6 +349,19 @@ def set_skin(mesh: Mesh, bones: np.ndarray, weights: np.ndarray) -> None:
     mesh.blocks.vertices["weight"] = weights
     mesh.bone_indices = bones.astype(np.uint8)
     mesh.bone_weights = weights.astype(np.float32) / 255.0
+
+
+def set_pivot(mesh: Mesh, pivot: Tuple[float, float, float]) -> None:
+    """Replaces a mesh's pivot point, the offset a rigid prop is moved by before it is placed on its bone.
+
+    Args:
+        mesh (Mesh): A mesh read by `read_rmv2`.
+        pivot (Tuple[float, float, float]): The new pivot, in metres.
+    """
+    material = bytearray(mesh.blocks.material)
+    PIVOT.pack_into(material, PIVOT_AT, *pivot)
+    mesh.blocks.material = bytes(material)
+    mesh.pivot = tuple(pivot)
 
 
 def set_attachment_points(mesh: Mesh, points: List[AttachmentPoint]) -> None:

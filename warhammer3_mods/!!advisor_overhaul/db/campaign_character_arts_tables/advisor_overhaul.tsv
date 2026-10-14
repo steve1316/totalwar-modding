@@ -2,3 +2,5 @@ id	art_set_id	level	age	portrait	season	uniform	card	info	sea_uniform	navy_unifo
 #campaign_character_arts_tables;0;db/campaign_character_arts_tables/advisor_overhaul																
 641275138	advisor_overhaul_art_staff_and_sword	0	0		none	advisor_overhaul_staff_and_sword_foot			wh_main_campaign_emp_ship_light	wh_main_campaign_emp_ship_heavy	cam_hu1_pr8_amethyst_staff_and_sword	cam_light_ship_01	cam_heavy_ship_01	0	0	0
 587014061	advisor_overhaul_art_sword_and_shield	0	0		none	advisor_overhaul_sword_and_shield_foot			wh_main_campaign_emp_ship_light	wh_main_campaign_emp_ship_heavy	cam_hu1_empire_sword_and_shield	cam_light_ship_01	cam_heavy_ship_01	0	0	0
+1709118830	advisor_overhaul_art_greatsword	0	0		none	advisor_overhaul_greatsword_foot			wh_main_campaign_emp_ship_light	wh_main_campaign_emp_ship_heavy	cam_hero_hu1_dlc29_walach_harkon_2handed_sword	cam_light_ship_01	cam_heavy_ship_01	0	0	0
+1013715389	advisor_overhaul_art_sword_and_bow	0	0		none	advisor_overhaul_sword_and_bow_foot			wh_main_campaign_emp_ship_light	wh_main_campaign_emp_ship_heavy	cam_lord_hu1_dlc13_huntsmarshal_sword_bow	cam_light_ship_01	cam_heavy_ship_01	0	0	0

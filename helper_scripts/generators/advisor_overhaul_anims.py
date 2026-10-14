@@ -6,9 +6,13 @@ has no humanoid01 disc rider, so the Chaos Sorcerer Lord's humanoid01c disc set 
 the retargeted copy, or the game layers the source skeleton's animation over the advisor (his staff then stops spinning while he casts).
 Metas with no spliced animation keep their vanilla path.
 
-Derived sets copy a vanilla `humanoid01` set under a new name with two fixes. Named slots take their animations from another vanilla set (vanilla's
-sword-and-shield horse sets play foot casts in their rider cast slots, so the rider sinks into the mount). And the cast animations, which are
-staff-and-sword ones that put the shield on his back, get copies that hold the shield on his left hand the way his stand does.
+Derived sets copy a vanilla `humanoid01` set under a new name with up to two fixes. Named slots take their animations from another vanilla set
+(several vanilla horse sets play foot casts in their rider cast slots, so the rider sinks into the mount, and the Huntsmarshal's short casts are bow
+tricks). And for the shield sets, the cast animations, which are staff-and-sword ones that put the shield on his back, get copies that hold the
+shield on his left hand the way his stand does.
+
+`ADDED_SLOTS` then gives the staff sets the fire slots of his staff bolt, GLF Battle Mage style: each fire slot copies a forward-facing cast whose
+meta has a `FIRE_POS`, plus a combat-ready stance where the set has none.
 
 The vanilla files come through `core.asset_source`, which caches pack listings and extracts.
 
@@ -21,12 +25,13 @@ import os
 import re
 import shutil
 import sys
-from typing import Dict, List
+from dataclasses import replace
+from typing import Dict, List, Tuple
 
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim, write_anim
 from tools.anim_retarget import Transform, compose, relative, retarget, world_pose
-from tools.glf_rebuild_animpack import (SCHEMAS_DIR, SLOT_IDS_FILE, AnimRef, Slot, load_slot_ids, load_vanilla_sets, pack_string, parse_set, write_animpack,
+from tools.glf_rebuild_animpack import (ALL_WEAPONS, SCHEMAS_DIR, SLOT_IDS_FILE, AnimRef, Slot, load_slot_ids, load_vanilla_sets, pack_string, parse_set, write_animpack,
                                         write_set)
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,24 +62,75 @@ SETS = {
 # Folder for the derived sets' animations.
 DERIVED_FOLDER = "animations/battle/humanoid01/advisor_overhaul"
 
-# New set name -> (vanilla base set, vanilla donor set for `DONOR_SLOTS` or None, folder for the pinned animations, file name prefix).
+# Every derived set casts with `CAST_SPELL_*` on foot and `RIDER_CAST_SPELL_*` when mounted.
+FOOT_CASTS = r"^CAST_SPELL_"
+RIDER_CASTS = r"^RIDER_CAST_SPELL_"
+
+# The staff-and-sword horse set. Its rider casts are proper seated ones (`hu1_hr1_sfsw_rider1_cast_*`), unlike the foot casts several vanilla
+# rider sets play, so it donates them to every derived horse set.
+HORSE_CAST_DONOR = "hu1_empire_hr1_warhorse_staff_and_sword"
+
+# The shield and the bone it is held to. In vanilla shield animations the shield moves with this bone to within 2 mm.
+SHIELD_PIN = {"be_prop_2": "hand_left"}
+
+# New set name -> how it is made:
+# - `base`: the vanilla set it copies.
+# - `donor` and `donor_slots`: a vanilla set and a regex of the slot names it replaces.
+# - `pins`: prop bone -> the bone it is held to in the cast slots (`PIN_SLOTS`).
+# - `folder` and `prefix`: where the pinned animations go and the prefix marking them. Sets that pin nothing need neither.
 DERIVED_SETS = {
-    "hu1_advisor_overhaul_sword_and_shield": ("hu1_empire_sword_and_shield", None, f"{DERIVED_FOLDER}/sword_and_shield", "aos"),
-    "hu1_advisor_overhaul_hr1_warhorse_sword_and_shield": ("hu1_empire_hr1_warhorse_sword_and_shield", "hu1_empire_hr1_warhorse_staff_and_sword",
-                                                           f"{DERIVED_FOLDER}/hr1_warhorse_sword_and_shield", "aosw"),
-    "hu1_advisor_overhaul_hr1_pegasus_sword_and_shield": ("hu1_empire_hr1_pegasus_sword_and_shield", "hu1_empire_hr1_pegasus_staff_and_sword",
-                                                          f"{DERIVED_FOLDER}/hr1_pegasus_sword_and_shield", "aosp"),
+    "hu1_advisor_overhaul_sword_and_shield": {"base": "hu1_empire_sword_and_shield", "pins": SHIELD_PIN, "folder": f"{DERIVED_FOLDER}/sword_and_shield",
+                                              "prefix": "aos"},
+    "hu1_advisor_overhaul_hr1_warhorse_sword_and_shield": {"base": "hu1_empire_hr1_warhorse_sword_and_shield", "donor": HORSE_CAST_DONOR,
+                                                           "donor_slots": RIDER_CASTS, "pins": SHIELD_PIN,
+                                                           "folder": f"{DERIVED_FOLDER}/hr1_warhorse_sword_and_shield", "prefix": "aosw"},
+    "hu1_advisor_overhaul_hr1_pegasus_sword_and_shield": {"base": "hu1_empire_hr1_pegasus_sword_and_shield", "donor": "hu1_empire_hr1_pegasus_staff_and_sword",
+                                                          "donor_slots": RIDER_CASTS, "pins": SHIELD_PIN,
+                                                          "folder": f"{DERIVED_FOLDER}/hr1_pegasus_sword_and_shield", "prefix": "aosp"},
+    # Walach Harkon's horse set plays a foot cast in `RIDER_CAST_SPELL_UP_SHORT`. The other five are already the donor's.
+    "hu1_advisor_overhaul_hr1_warhorse_greatsword": {"base": "hu1_dlc29_hr1_warhorse_walach_2handed_sword", "donor": HORSE_CAST_DONOR,
+                                                     "donor_slots": RIDER_CASTS},
+    # The Huntsmarshal's short and medium casts are bow tricks (an oil flask and a trick shot), so all six come from the Amethyst Wizard.
+    "hu1_advisor_overhaul_sword_and_bow": {"base": "hu1_huntsmarshal_sword_bow", "donor": "hu1_pr8_amethyst_staff_and_sword", "donor_slots": FOOT_CASTS},
+    # The Mounted Yeomen's horse set plays foot casts in all six rider cast slots.
+    "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow": {"base": "hu1_empire_hr1_warhorse_sword_and_bow", "donor": HORSE_CAST_DONOR, "donor_slots": RIDER_CASTS},
+    # The staff-and-sword horse sets as they are, plus the fire slots in `ADDED_SLOTS`.
+    "hu1_advisor_overhaul_hr1_warhorse_staff_and_sword": {"base": "hu1_empire_hr1_warhorse_staff_and_sword"},
+    "hu1_advisor_overhaul_hr1_pegasus_staff_and_sword": {"base": "hu1_empire_hr1_pegasus_staff_and_sword"},
 }
 
-# Slots a derived set takes from its donor set.
-DONOR_SLOTS = re.compile(r"^RIDER_CAST_SPELL_")
+# The staff bolt's rider fire slots, all playing his seated staff cast `hu1_hr1_sfsw_rider1_cast_up_short` with its vanilla meta (`FIRE_POS` at 1.0 s
+# of 4.0 s). GLF Battle Mage fires from the same horse sets with this cast. The slot list is GLF's: the four `RIDER_FIRE_*` directions and the two
+# turns. The combat-ready stance is added in case the set lacks one.
+RIDER_FIRE = [(slot, "RIDER_CAST_SPELL_UP_SHORT") for slot in ("RIDER_FIRE_FORWARD_LEVEL", "RIDER_FIRE_LEFT_LEVEL", "RIDER_FIRE_RIGHT_LEVEL",
+                                                               "RIDER_FIRE_BACK_LEVEL", "RIDER_SHOOT_TURN_LEFT_90", "RIDER_SHOOT_TURN_RIGHT_90")]
+RIDER_FIRE += [("RIDER_COMBAT_READY", "RIDER_STAND")]
 
-# Slots whose animations get the pinned prop.
+# The staff bolt on the disc: `FIRE_LEVEL` plays his forward short cast (its retargeted meta has `FIRE_POS` at 1.0 s of 4.0 s), as GLF does for the
+# vanilla disc sorcerer. The disc set has no combat-ready stance, and a fire slot without one leaves him in a T-pose after the shot.
+DISC_FIRE = [("FIRE_LEVEL", "CAST_SPELL_FORWARD_SHORT"), ("COMBAT_READY", "STAND"), ("FLY_COMBAT_READY", "FLY_STAND")]
+
+# Every disc cast throws the staff up to spin above him, which suits a spell but not a bolt from the staff. Set name -> (slot, prop -> anchor bone,
+# folder, file name prefix): that slot plays a copy of its animation with the staff held to his left hand at its stand offset, and a copy of its
+# meta whose self-splice points at the copy.
+FIRE_PINS = {
+    "hu1_advisor_overhaul_disc01_staff_and_sword": ("FIRE_LEVEL", {"be_prop_5": "hand_left"},
+                                                    "animations/battle/humanoid01/advisor_overhaul/disc_staff_and_sword/fire", "aodf"),
+}
+
+# Set name -> (new slot, the slot of the same set it copies), added when the set lacks the new slot. The on-foot staff set needs none: vanilla
+# `hu1_pr8_amethyst_staff_and_sword` already has `FIRE_LEVEL` (`hu1_sfsw_aim_fire_stand_01`, `FIRE_POS` at 0.9 s of 2.2 s) and `COMBAT_READY`.
+ADDED_SLOTS = {
+    "hu1_advisor_overhaul_disc01_staff_and_sword": DISC_FIRE,
+    "hu1_advisor_overhaul_hr1_warhorse_staff_and_sword": RIDER_FIRE,
+    "hu1_advisor_overhaul_hr1_pegasus_staff_and_sword": RIDER_FIRE,
+}
+
+# Fire slots play in every weapon state, as GLF's do.
+FIRE_SLOT = re.compile(r"^(FIRE_|RIDER_FIRE_|RIDER_SHOOT_TURN_)")
+
+# Slots whose animations get the pinned props.
 PIN_SLOTS = re.compile(r"^(RIDER_)?CAST_SPELL_")
-
-# The pinned prop (the shield) and the bone it is held to. In vanilla shield animations the shield moves with this bone to within 2 mm.
-PIN_PROP = "be_prop_2"
-PIN_ANCHOR = "hand_left"
 
 # Paths of `.anim` files named inside a meta.
 ANIM_PATH = re.compile(rb"animations/[\w/\.-]+?\.anim")
@@ -195,12 +251,14 @@ def build_set(name: str, source_data: bytes, source_skeleton: str, folder: str, 
     return write_set(new)
 
 
-def pin_prop(anim: Animation, skeleton: Animation, offset: Transform) -> None:
-    """Holds `PIN_PROP` at a fixed offset from `PIN_ANCHOR` in every frame.
+def pin_prop(anim: Animation, skeleton: Animation, prop_name: str, anchor_name: str, offset: Transform) -> None:
+    """Holds a prop at a fixed offset from its anchor bone in every frame.
 
     Args:
         anim (Animation): The animation, changed in place.
         skeleton (Animation): The skeleton's bind pose.
+        prop_name (str): The prop bone, e.g. `be_prop_2`.
+        anchor_name (str): The bone it is held to, e.g. `hand_left`.
         offset (Transform): The prop's transform relative to the anchor bone.
 
     Raises:
@@ -209,7 +267,7 @@ def pin_prop(anim: Animation, skeleton: Animation, offset: Transform) -> None:
     if [b.name for b in anim.bones] != [b.name for b in skeleton.bones]:
         raise SystemExit(f"{anim.skeleton} animation bones differ from the skeleton's")
     index = {bone.name: i for i, bone in enumerate(anim.bones)}
-    prop, anchor = index[PIN_PROP], index[PIN_ANCHOR]
+    prop, anchor = index[prop_name], index[anchor_name]
     parent = anim.bones[prop].parent
     for frame in range(len(anim.rotations)):
         world = world_pose(anim, skeleton, frame)
@@ -218,15 +276,13 @@ def pin_prop(anim: Animation, skeleton: Animation, offset: Transform) -> None:
         anim.rotations[frame][prop], anim.translations[frame][prop] = local
 
 
-def build_derived(name: str, base_data: bytes, donor_data: bytes, folder: str, prefix: str, assets: AssetSource, names: Dict[int, str]) -> bytes:
-    """Copies a vanilla set, swaps in the donor's slots and pins the prop in its cast animations, writing the new animations into the mod folder.
+def build_derived(name: str, spec: Dict, sets: Dict[str, bytes], assets: AssetSource, names: Dict[int, str]) -> bytes:
+    """Copies a vanilla set, swaps in the donor's slots and pins props in its cast animations, writing the pinned animations into the mod folder.
 
     Args:
         name (str): The new set's name.
-        base_data (bytes): The vanilla set `.bin` to copy.
-        donor_data (bytes): The vanilla set `.bin` whose `DONOR_SLOTS` replace the base's, or empty for none.
-        folder (str): Output folder for the pinned animations, relative to the mod folder.
-        prefix (str): Short prefix marking the copies.
+        spec (Dict): How it is made (see `DERIVED_SETS`).
+        sets (Dict[str, bytes]): Vanilla set `.bin` files by set name.
         assets (AssetSource): The vanilla packs.
         names (Dict[int, str]): Slot names by id.
 
@@ -236,27 +292,31 @@ def build_derived(name: str, base_data: bytes, donor_data: bytes, folder: str, p
     Raises:
         SystemExit: When the donor lacks a slot or the set has no stand animation.
     """
-    new = parse_set(base_data)
+    new = parse_set(sets[spec["base"]])
     new.name = name
+    pins = spec.get("pins", {})
 
     def slot_name(slot) -> str:
         return names.get(slot.slot_id, "")
 
     # Donor slots keep the base's blend, weight and weapon states. Only what they play changes.
     swapped = 0
-    if donor_data:
+    if spec.get("donor"):
         donor: Dict[str, List[AnimRef]] = {}
-        for slot in parse_set(donor_data).slots:
+        for slot in parse_set(sets[spec["donor"]]).slots:
             if slot.refs:
                 donor.setdefault(slot_name(slot), slot.refs)
         for slot in new.slots:
-            if DONOR_SLOTS.match(slot_name(slot)):
+            if re.match(spec["donor_slots"], slot_name(slot)):
                 if slot_name(slot) not in donor:
                     raise SystemExit(f"{name}: donor set has no {slot_name(slot)}")
                 slot.refs = list(donor[slot_name(slot)])
                 swapped += 1
+    if not pins:
+        print(f"{name}: {len(new.slots)} slots, {swapped} from the donor")
+        return write_set(new)
 
-    # The prop's offset from its anchor in the first frame of the stand animation.
+    # Each prop's offset from its anchor in the first frame of the stand animation.
     stand = "RIDER_STAND" if new.mount else "STAND"
     reference = next((s.refs[0].anim for s in new.slots if slot_name(s) == stand and s.refs), None)
     if reference is None:
@@ -273,16 +333,90 @@ def build_derived(name: str, base_data: bytes, donor_data: bytes, folder: str, p
     skeleton = load(skeleton_path)
     stand_world = world_pose(load(reference), skeleton, 0)
     index = {bone.name: i for i, bone in enumerate(skeleton.bones)}
-    offset = relative(stand_world[index[PIN_ANCHOR]], stand_world[index[PIN_PROP]])
+    offsets = {prop: relative(stand_world[index[anchor]], stand_world[index[prop]]) for prop, anchor in pins.items()}
 
     pinned: Dict[str, bytes] = {}
     for path in anims:
         anim = load(path)
-        pin_prop(anim, skeleton, offset)
+        for prop, anchor in pins.items():
+            pin_prop(anim, skeleton, prop, anchor, offsets[prop])
         pinned[path] = write_anim(anim)
-    copied = write_copies(name, pinned, {m: files[norm(m)] for m in metas}, folder, prefix, pinned_slots)
-    print(f"{name}: {len(new.slots)} slots, {swapped} from the donor, {len(anims)} animations pinned to {PIN_ANCHOR}, {copied} metas repointed")
+    copied = write_copies(name, pinned, {m: files[norm(m)] for m in metas}, spec["folder"], spec["prefix"], pinned_slots)
+    held = ", ".join(f"{prop} to {anchor}" for prop, anchor in pins.items())
+    print(f"{name}: {len(new.slots)} slots, {swapped} from the donor, {len(anims)} animations pinned ({held}), {copied} metas repointed")
     return write_set(new)
+
+
+def add_slots(data: bytes, pairs: List[Tuple[str, str]], names: Dict[int, str]) -> bytes:
+    """Adds each new slot the set lacks as a copy of another slot of the same set. Fire slots play in every weapon state.
+
+    Args:
+        data (bytes): The set `.bin`.
+        pairs (List[Tuple[str, str]]): (new slot, slot it copies) names.
+        names (Dict[int, str]): Slot names by id.
+
+    Returns:
+        bytes: The changed set `.bin`.
+
+    Raises:
+        SystemExit: When a slot to copy is missing or empty.
+    """
+    anim_set = parse_set(data)
+    ids = {name: slot_id for slot_id, name in names.items()}
+    present = {names.get(slot.slot_id, "") for slot in anim_set.slots}
+    added = []
+    for target, source in pairs:
+        if target in present:
+            continue
+        template = next((slot for slot in anim_set.slots if names.get(slot.slot_id) == source and slot.refs), None)
+        if template is None:
+            raise SystemExit(f"{anim_set.name}: no {source} to copy into {target}")
+        weapons = ALL_WEAPONS if FIRE_SLOT.match(target) else template.weapon_bools
+        anim_set.slots.append(replace(template, slot_id=ids[target], weapon_bools=weapons, refs=list(template.refs)))
+        present.add(target)
+        added.append(target)
+    print(f"{anim_set.name}: added {', '.join(added) or 'nothing'}")
+    return write_set(anim_set)
+
+
+def pin_slot(data: bytes, slot_name: str, pins: Dict[str, str], folder: str, prefix: str, names: Dict[int, str], assets: AssetSource) -> bytes:
+    """Points one slot at copies of its animation with props pinned to their stand offset, and of its meta pointed at the copy.
+
+    Args:
+        data (bytes): The set `.bin`.
+        slot_name (str): The slot to change.
+        pins (Dict[str, str]): Prop bone -> the bone it is held to.
+        folder (str): Output folder for the copies, relative to the mod folder.
+        prefix (str): Short prefix marking the copies.
+        names (Dict[int, str]): Slot names by id.
+        assets (AssetSource): The vanilla packs, for files the mod folder lacks.
+
+    Returns:
+        bytes: The changed set `.bin`.
+
+    Raises:
+        SystemExit: When the slot or the stand animation is missing.
+    """
+    anim_set = parse_set(data)
+    slot = next((s for s in anim_set.slots if names.get(s.slot_id) == slot_name and s.refs), None)
+    stand = next((s.refs[0].anim for s in anim_set.slots if names.get(s.slot_id) == "STAND" and s.refs), None)
+    if slot is None or stand is None:
+        raise SystemExit(f"{anim_set.name}: no {slot_name} or STAND to pin")
+    ref, skeleton_path = slot.refs[0], f"animations/skeletons/{TARGET_SKELETON}.anim"
+
+    def read(path: str) -> bytes:
+        local = os.path.join(MOD, path)
+        return open(local, "rb").read() if os.path.exists(local) else assets.fetch_all([path])[norm(path)]
+
+    skeleton = read_anim(read(skeleton_path))
+    stand_world = world_pose(read_anim(read(stand)), skeleton, 0)
+    index = {bone.name: i for i, bone in enumerate(skeleton.bones)}
+    anim = read_anim(read(ref.anim))
+    for prop, anchor in pins.items():
+        pin_prop(anim, skeleton, prop, anchor, relative(stand_world[index[anchor]], stand_world[index[prop]]))
+    write_copies(anim_set.name, {ref.anim: write_anim(anim)}, {ref.meta: read(ref.meta)} if ref.meta else {}, folder, prefix, [slot])
+    print(f"{anim_set.name}: {slot_name} plays {slot.refs[0].anim} with {', '.join(f'{p} held to {a}' for p, a in pins.items())}")
+    return write_set(anim_set)
 
 
 def build() -> None:
@@ -294,10 +428,17 @@ def build() -> None:
     for name, (source, skeleton, folder, prefix) in SETS.items():
         shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
         data = build_set(name, vanilla[source], skeleton, folder, prefix, assets)
+        if name in ADDED_SLOTS:
+            data = add_slots(data, ADDED_SLOTS[name], names)
+        if name in FIRE_PINS:
+            data = pin_slot(data, *FIRE_PINS[name], names, assets)
         entries.append((f"{SET_FOLDER}/{name}.bin", data))
-    for name, (base, donor, folder, prefix) in DERIVED_SETS.items():
-        shutil.rmtree(os.path.join(MOD, folder), ignore_errors=True)
-        data = build_derived(name, vanilla[base], vanilla[donor] if donor else b"", folder, prefix, assets, names)
+    for name, spec in DERIVED_SETS.items():
+        if spec.get("folder"):
+            shutil.rmtree(os.path.join(MOD, spec["folder"]), ignore_errors=True)
+        data = build_derived(name, spec, vanilla, assets, names)
+        if name in ADDED_SLOTS:
+            data = add_slots(data, ADDED_SLOTS[name], names)
         entries.append((f"{SET_FOLDER}/{name}.bin", data))
     os.makedirs(os.path.dirname(os.path.join(MOD, ANIMPACK)), exist_ok=True)
     with open(os.path.join(MOD, ANIMPACK), "wb") as f:

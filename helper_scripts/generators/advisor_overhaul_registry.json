@@ -1,6 +1,6 @@
 {
  "model": {
-  "description": "His look. `body` picks his model slots from `bodies` and `head` picks his head from `heads`, with `hood` false switching to the head's `hoodless` model. `advisor` (body and head) is the vanilla campaign Advisor moved onto humanoid01 by generators.advisor_overhaul_model. The other bodies are vanilla humanoid01 outfits kept for later per-weapon armour; they are not wired to weapons yet. `jade` is the Jade Wizard's old, long-bearded head.",
+  "description": "His look. `body` picks his model slots from `bodies` and `head` picks his head from `heads`, with `hood` false switching to the head's `hoodless` model. `advisor` (body and head) is the vanilla campaign Advisor moved onto humanoid01 by generators.advisor_overhaul_model. The other bodies are vanilla humanoid01 outfits kept for later per-weapon armour. A weapon's own `body` picks its body, falling back to `body` here. `jade` is the Jade Wizard's old, long-bearded head.",
   "body": "advisor",
   "bodies": {
    "advisor": {
@@ -46,6 +46,13 @@
   },
   "head": "advisor",
   "hood": true,
+  "prop_offsets_description": "Weapon model -> [x, y, z] metres its model is moved in its own axes (x runs along the blade). Positive x slides the weapon blade first, so his hand sits further down the grip. Each one is written as a copy under the mod's props folder and used in place of the vanilla weapon. Set from the dashboard's Adjust panel.",
+  "prop_offsets": {
+   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2": [0.045, 0.0, 0.0],
+   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_sword_1h_01.wsmodel": [0.033, 0.0, 0.0]
+  },
+  "hand_shift_description": "[x, y, z] metres his hand and finger vertices move, in the right hand bone's bind frame (z flips for the left hand). Fitted against the vanilla Empire Captain so his fist closes around a weapon grip. Set from the dashboard's Adjust panel.",
+  "hand_shift": [0.021, 0.006, -0.011],
   "heads": {
    "advisor": {
     "hooded": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01.wsmodel"],
@@ -68,7 +75,11 @@
   "source": ["ui2.pack", "ui/skins/default/preview_advisor.png"],
   "image": "advisor_overhaul_campaign_01_0",
   "porthole": {"x": 92, "y": 3, "scale": 1.0},
-  "card": {"scale": 0.72, "top": [150, 160, 165], "bottom": [55, 60, 62]},
+  "card": {
+   "scale": 0.72,
+   "top": [150, 160, 165],
+   "bottom": [55, 60, 62]
+  },
   "camera_head": {"z": 1.0, "y": 0.0, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}
  },
  "weapons": {
@@ -78,23 +89,38 @@
    "icon": "wh3_dlc27_item_abilities_staff_of_the_masque.png",
    "picker_icon": "ui/campaign ui/skills/item_weapon.png",
    "shield": "none",
+   "body": "advisor",
    "props": {
-    "weapon_2": [
-     "be_prop_1",
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
-     "audio_melee_weapon_type:sword"
-    ],
-    "weapon_5": [
-     "be_prop_5",
-     "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2",
-     "audio_melee_weapon_type:staff"
-    ]
+    "weapon_2": ["be_prop_1", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2", "audio_melee_weapon_type:sword"],
+    "weapon_5": ["be_prop_5", "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2", "audio_melee_weapon_type:staff"]
+   },
+   "missile": {
+    "description": "His staff bolt, a plain arcane bolt for now. Its element is meant to follow his first lore later, so the key names no element. `template` is the vanilla Hag Witch's staff bolt, with one bolt per shot instead of two, and `projectile` replacing the template's values. `ammo` is a little under the Hag Witch's 28.",
+    "key": "advisor_overhaul_staff_bolt",
+    "template": "wh3_dlc24_ksl_hag_witch_hags",
+    "ammo": 20,
+    "projectile": {
+     "projectile_number": "1",
+     "damage": "60",
+     "ap_damage": "120",
+     "effective_range": "150",
+     "base_reload_time": "10.0000",
+     "marksmanship_bonus": "50.0000",
+     "spread": "2.0000",
+     "homing_params": "homing_strong_magical_fast"
+    }
    },
    "sets": {
     "foot": "hu1_pr8_amethyst_staff_and_sword",
-    "warhorse": "hu1_empire_hr1_warhorse_staff_and_sword",
-    "pegasus": "hu1_empire_hr1_pegasus_staff_and_sword",
+    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_staff_and_sword",
+    "pegasus": "hu1_advisor_overhaul_hr1_pegasus_staff_and_sword",
     "disc": "hu1_advisor_overhaul_disc01_staff_and_sword"
+   },
+   "vanilla": {
+    "foot": "wh2_pro07_emp_cha_wizard_death_0",
+    "warhorse": "wh2_pro07_emp_cha_wizard_death_3",
+    "pegasus": "wh2_pro07_emp_cha_wizard_death_2",
+    "disc": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc"
    }
   },
   "sword_and_shield": {
@@ -108,23 +134,76 @@
    "icon": "wh_dlc07_lord_abilities_lions_shield.png",
    "picker_icon": "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png",
    "shield": "wh_missile_block_35_metal",
+   "body": "advisor",
    "props": {
-    "weapon_2": [
-     "be_prop_1",
-     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
-     "audio_melee_weapon_type:sword"
-    ],
-    "shield": [
-     "be_prop_2",
-     "VariantMeshes/VariantMeshDefinitions/emp_general_shield_1h_set1.VariantMeshDefinition",
-     ""
-    ]
+    "weapon_2": ["be_prop_1", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2", "audio_melee_weapon_type:sword"],
+    "shield": ["be_prop_2", "VariantMeshes/VariantMeshDefinitions/emp_general_shield_1h_set1.VariantMeshDefinition", ""]
    },
    "sets": {
     "foot": "hu1_advisor_overhaul_sword_and_shield",
     "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_shield",
     "pegasus": "hu1_advisor_overhaul_hr1_pegasus_sword_and_shield"
+   },
+   "vanilla": {
+    "foot": "wh_main_emp_cha_captain_0",
+    "warhorse": "wh_main_emp_cha_captain_2",
+    "pegasus": "wh_main_emp_cha_captain_3"
    }
+  },
+  "greatsword": {
+   "name": "Greatsword",
+   "description": "A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come.",
+   "campaign_set": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword",
+   "campaign_rider_sets": {"warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword"},
+   "icon": "wh2_dlc11_strength_of_steel.png",
+   "picker_icon": "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png",
+   "shield": "none",
+   "body": "advisor",
+   "props": {
+    "weapon_1": ["be_prop_0", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel", "audio_melee_weapon_type:sword_ogre"]
+   },
+   "sets": {
+    "foot": "hu1_dlc29_walach_harkon_2handed_sword",
+    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_greatsword"
+   },
+   "vanilla": {
+    "foot": "wh_main_emp_inf_greatswords",
+    "warhorse": "wh3_dlc29_vmp_cha_walach_harkon_barded_nightmare"
+   }
+  },
+  "sword_and_bow": {
+   "name": "Sword and Bow",
+   "description": "A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.",
+   "campaign_set": "cam_lord_hu1_dlc13_huntsmarshal_sword_bow",
+   "campaign_rider_sets": {"warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow"},
+   "icon": "wh_dlc05_weapon_abilities_the_bow_of_loren.png",
+   "picker_icon": "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png",
+   "shield": "none",
+   "body": "advisor",
+   "props": {
+    "weapon_2": ["be_prop_1", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_sword_1h_01.wsmodel", "audio_melee_weapon_type:sword"],
+    "weapon_3": ["be_prop_3", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_bow_rigid_01.wsmodel", ""],
+    "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_arrow_01.wsmodel", ""]
+   },
+   "missile": {
+    "description": "His bow. `template` is the vanilla missile weapon whose missile_weapons and projectiles rows are copied (the Huntsmarshal's arrow), with `projectile` replacing the template's values. `ammo` is the vanilla Ulrika's hero bow ammo.",
+    "template": "wh2_dlc13_emp_huntsmarshal_arrow",
+    "ammo": 30,
+    "projectile": {
+     "damage": "120",
+     "ap_damage": "60",
+     "effective_range": "160",
+     "base_reload_time": "8.0000",
+     "marksmanship_bonus": "50.0000",
+     "bonus_v_large": "0"
+    }
+   },
+   "attributes": ["mounted_fire_move"],
+   "sets": {
+    "foot": "hu1_advisor_overhaul_sword_and_bow",
+    "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow"
+   },
+   "vanilla": {"foot": "wh2_dlc13_emp_cha_huntsmarshal_0", "warhorse": "wh_main_brt_cav_mounted_yeomen_1"}
   }
  },
  "mounts": {
@@ -166,11 +245,7 @@
    "ancillary_type": "wh3_main_anc_mount_disc_of_tzeentch",
    "campaign_rider_set": "cam_hu1_pr8_amethyst_staff_and_sword",
    "variant_props": {
-    "weapon_4": [
-     "be_prop_4",
-     "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel",
-     "equipment"
-    ]
+    "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel", "equipment"]
    }
   }
  }

@@ -213,6 +213,7 @@ staff shot.
 |---|---|---|---|---|---|---|---|
 | Staff + sword | `hu1_pr8_amethyst_staff_and_sword` 6/6 F | `hu1_empire_hr1_warhorse_staff_and_sword` 6/6 F | `hu1_empire_hr1_pegasus_staff_and_sword` 6/6 F | `hu1_empire_bc2_griffon_wb_staff_and_sword` 0/6 | - | - | `hu1_wh3_katarin_be1_warbear_staff_and_sword` 6/6 |
 | Greatsword | `hu1_dlc29_walach_harkon_2handed_sword` 6/0 | `hu1_dlc29_hr1_warhorse_walach_2handed_sword` 0/6 | - | - | - | - | - |
+| Bow | `hu1_huntsmarshal_sword_bow` 6/0, bow shots | `hu1_empire_hr1_warhorse_sword_and_bow` 6/6 (rider casts are foot casts) | - | - | - | - | - |
 | Sword + shield | `hu1_empire_sword_and_shield` 6/6 | `hu1_empire_hr1_warhorse_sword_and_shield` 6/6 | `hu1_empire_hr1_pegasus_sword_and_shield` 0/6 | `hu1_empire_bc2_griffon_wb_sword_shield` 6/6 | `hu1_empire_bc2_demigryph_lance_sword_shield` 6/6 | `hu1_leoncoeur_bc2b_hippogryph_wb_sword_shield` 6/6 | - |
 | Staff + hammer | `hu1_volkmar_staff_and_hammer` 6/6 F | `hu1_volkmar_hr1_warhorse_staff_and_hammer` 6/6 F | - | - | - | - | - |
 | Hammer | `hu1_empire_hammer` 6/6 | `hu1_empire_hr1_warhorse_hammer` 0/0 | `hu1_empire_hr1_pegasus_hammer` 0/0 | `hu1_empire_bc2_griffon_wb_hammer` 6/6 | - | - | - |
@@ -265,6 +266,76 @@ staff shot.
 - **Metas carry dock events.** The vanilla sword-and-shield cast metas (kept on foot) have `DOCK_EQPT_LHAND` / `DOCK_EQPT_LHAND_2`, and the
   donor rider metas have `WEAPON_LHAND` / `DOCK_EQPT_RHAND`. They name no animation path, so they need no copies. Whether a dock event moves the
   shield in game over the pinned bone is unknown. `[untested]`
+
+### Greatsword and Sword and Bow (2026-10-13)
+
+- **Pairs made.** Greatsword and Sword and Bow each have On Foot and Barded Warhorse only. No vanilla `humanoid01` set holds a greatsword or a
+  bow on a Pegasus, and none exists for the disc, so those pairs are left out. `[data]`
+
+  | Pair | Animation set | Built from | Casts |
+  |---|---|---|---|
+  | Greatsword, foot | `hu1_dlc29_walach_harkon_2handed_sword` (vanilla) | Walach Harkon | Native: Noctilus's `hu1_fleet_admiral_cast_*`, sword kept in his right hand |
+  | Greatsword, warhorse | `hu1_advisor_overhaul_hr1_warhorse_greatsword` | Walach Harkon on his Nightmare | Donor: all six `RIDER_CAST_SPELL_*` from the staff-and-sword horse set |
+  | Sword and Bow, foot | `hu1_advisor_overhaul_sword_and_bow` | The Huntsmarshal | Donor: all six `CAST_SPELL_*` from the Amethyst Wizard |
+  | Sword and Bow, warhorse | `hu1_advisor_overhaul_hr1_warhorse_sword_and_bow` | The Mounted Yeomen | Donor: all six `RIDER_CAST_SPELL_*` from the staff-and-sword horse set |
+
+- **Vanilla gaps the derived sets fix.** Walach's horse set plays the foot cast `hu1_fleet_admiral_cast_short_01` in `RIDER_CAST_SPELL_UP_SHORT`
+  (hips at 0.89 m instead of 1.64 m), and the Mounted Yeomen's set plays foot `hu1_sw_cast_*` in all six rider cast slots. The Huntsmarshal's
+  short and medium casts are bow tricks (`hu1_bow_oil_flask_01`, `hu1_bow_amber_bow_01`), not spells. `[data]`
+- **Other candidates.** `hu1_empire_2handed_sword` (Greatswords), `hu1_pr7_felix_2h_sword` and Repanse's sets have no casts. Ulrika's
+  `hu1_dlc23_*_dual_swords_bow` sets have casts and fire slots but dual swords. `[data]`
+- **Props.** Greatsword: `emp_greatswords_sword_2h_01` on `be_prop_0`, Walach's slot (his chalice on `be_prop_1` is left out). Sword and Bow:
+  the Huntsmarshal's own kit, `emp_huntsmarshal_sword_1h_01` on `be_prop_1`, `emp_huntsmarshal_bow_rigid_01` on `be_prop_3` and
+  `emp_huntsmarshal_arrow_01` on `be_prop_4`. `[data]`
+- **Where the props go.** In these sets `be_prop_0` and `be_prop_3` sit at a fixed back spot (to within 2 mm of `spine_2`) whenever the weapon
+  is not in use. So the greatsword goes onto his back in the horse casts, and the bow onto his back in melee, stand and casts. The sword is
+  sheathed at the left hip (a fixed offset from `root`) while he shoots. `[data]`
+- **A staff in the sword slot was tried and dropped.** Held in `be_prop_1`, the bow animations sheathed it at the hip, where it ran from the
+  ground to above his head beside the bow and through the horse. Moving it to the bow's back spot worked in the viewer, but the weapon became
+  Sword and Bow instead (2026-10-13). `[data]`
+- **Bow fire slots.** The foot set has `FIRE_LEVEL` and the four `MOVING_FIRE_*_LEVEL` slots, and the horse set the four `RIDER_FIRE_*_LEVEL`
+  slots, all with vanilla metas that have `FIRE_POS` (foot fire at 0.06 s of 1.5 s, horse fire at 1.4-2.3 s of 2.4-3.8 s). The foot set has
+  `COMBAT_READY` and the horse set `RIDER_COMBAT_READY`. `[data]`
+- **The bow metas carry `DOCK_EQPT_LWAIST` and `DOCK_EQPT_BACK` events.** Whether the game moves props by them over the animated bones is
+  unknown. `[untested]`
+- **His bow.** `advisor_overhaul_sword_and_bow_missile` (missile weapon and projectile) copies the Huntsmarshal's arrow with damage 120, AP 60
+  (Huntsmarshal 240 + 160), range 160 (180), reload 8, marksmanship 50 (100) and no bonus vs large (100). Ammo 30, as vanilla Ulrika. The bow
+  units also get `mounted_fire_move` (the Huntsmarshal and the Yeomen have it). `[data]`
+- **Campaign pose.** Greatsword: `cam_hero_hu1_dlc29_walach_harkon_2handed_sword`, and on the horse `cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword`
+  (as vanilla Walach). Sword and Bow: `cam_lord_hu1_dlc13_huntsmarshal_sword_bow`, and on the horse Ulrika's
+  `cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow` (the only `humanoid01` horse bow campaign set). `[untested]`
+- **Placeholders.** Both keep his foot melee weapon (`wh_main_emp_sword_caster`) and wear the Advisor robes with the hood up. Each weapon has a
+  `body` key in the registry for later armour. `[data]`
+- **In game.** Firing on foot and from the horse, and firing while moving, are unchecked in game. `[untested]`
+
+### Staff bolt (2026-10-13)
+
+- **Every Staff and Sword pair shoots a staff bolt**, GLF Battle Mage style. `advisor_overhaul_staff_bolt` (missile weapon and projectile, a
+  generic key so the element can follow his first lore later) copies the vanilla Hag Witch's bolt (`wh3_dlc24_ksl_hag_witch_hags_bolt`, a
+  magical caster bolt with its own trail and impact VFX) with 1 bolt per shot (2), damage 60 + AP 120 (40 + 90 per bolt), range 150 (100),
+  reload 10 (8), marksmanship 50 (10), spread 2 (6) and `homing_strong_magical_fast` (none, GLF's homing). Ammo 20 (Hag Witch 28). `[data]`
+- **AI group.** A pair that shoots gets the hybrid of its caster group: `mage_highvalue` -> `hybrid_mage_highvalue`, `flying_mage_highvalue` ->
+  `flying_hybrid_highvalue`, `flying_melee_mage_highvalue` -> `flying_melee_mage_hybrid_highvalue` (`RANGED_AI_GROUPS`). `[data]`
+- **Fire animation per set.** `[data]`
+
+  | Pair | Set | Fire slots | Animation | `FIRE_POS` |
+  |---|---|---|---|---|
+  | Foot | `hu1_pr8_amethyst_staff_and_sword` (vanilla, unchanged) | `FIRE_LEVEL` (vanilla) | `hu1_sfsw_aim_fire_stand_01`, a forward staff thrust | 0.91 s of 2.2 s |
+  | Warhorse, Pegasus | `hu1_advisor_overhaul_hr1_{warhorse,pegasus}_staff_and_sword` (vanilla copies) | `RIDER_FIRE_FORWARD/LEFT/RIGHT/BACK_LEVEL`, `RIDER_SHOOT_TURN_LEFT/RIGHT_90` | seated `hu1_hr1_sfsw_rider1_cast_up_short`, its vanilla meta | 1.0 s of 4.0 s |
+  | Disc | `hu1_advisor_overhaul_disc01_staff_and_sword` | `FIRE_LEVEL` | his retargeted forward short cast with the staff pinned | 1.0 s of 4.0 s |
+
+- **Why these.** The foot set already fires a staff shot. The horse sets' rider casts are proper seated ones (hips at 1.64 m), and GLF fires
+  from the same sets with the same cast. All three face forward (static animroot identity) or are the vanilla disc casts GLF uses, and none is
+  turned around. The 4 s casts leave about 3 s after the shot, the same ratio GLF ships for these sets. Shorter seated staff animations are
+  melee swings. `[data]`
+- **Combat-ready stances.** The foot set has `COMBAT_READY`. The horse sets get `RIDER_COMBAT_READY` copied from `RIDER_STAND`, and the disc set,
+  which had none, gets `COMBAT_READY` from `STAND` and `FLY_COMBAT_READY` from `FLY_STAND`, so he does not T-pose after a shot. `[data]`
+- **The staff stays in his left hand.** `be_prop_5` stays 9-11 cm from `hand_left` through the foot fire and the rider fire, as in the stand.
+  Every disc cast throws the staff up to spin above him, so the disc `FIRE_LEVEL` plays a copy (`disc_staff_and_sword/fire/`) with the staff
+  pinned at its stand offset from `hand_left` (0.56 m from the hand bone in every frame, as in the disc stand), and a copy of the cast meta whose
+  self-splice points at it. He still rises off the disc in that cast, as in vanilla. `[data]`
+- **In game.** Whether he fires on each mount, whether the bolt shows its Hag Witch trail, and whether 20 bolts at 60 + 120 is balanced are all
+  unchecked. `[untested]`
 
 ### Change Loadout button
 
