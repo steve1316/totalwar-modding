@@ -1,4 +1,4 @@
-"""Builds the dashboard's unit panels for the Advisor's forms and their vanilla equivalents, laid out like the in-game unit panel.
+"""Builds the modding workbench's unit panels for the Advisor's forms and their vanilla equivalents, laid out like the in-game unit panel.
 
 Each weapon in the registry names a vanilla unit per mount (`vanilla`) to compare against. The numbers come from `ttc.unit_panel`, the same code the
 TTC unit browser uses, fed with the mod's generated tables over the vanilla ones. The card art, ability icons and stat icons each panel shows are

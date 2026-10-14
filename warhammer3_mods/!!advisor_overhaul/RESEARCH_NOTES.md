@@ -72,7 +72,7 @@ mount loadouts, and a script that gives every human faction one at campaign star
 
 ### Other humanoid01 bodies (2026-10-13)
 
-Vanilla outfits checked with the Advisor head in `tools.anim_viewer` (stand pose), for later per-weapon armour. Cathay casters (hu1e) and Kislev
+Vanilla outfits checked with the Advisor head in the 3D viewer (stand pose), for later per-weapon armour. Cathay casters (hu1e) and Kislev
 boyars (hu1c) use other skeletons. `[data]`
 
 | Group | Registry key | Vanilla slots | Fit with the hooded head |
@@ -243,7 +243,7 @@ staff shot.
   `unit_variants`. Custom battles pick it from `units_custom_battle_permissions.general_uniform`. In campaign,
   `campaign_character_uniform_ancillary_junctions` (ancillary, art set -> uniform) swaps it while a mount ancillary is equipped. `[game]`
 - **The disc metas add Tzeentch VFX:** `wh3_dlc20_lord_tze_tze_staff` (purple swirl at the staff) and `..._fire_eyes`. Kept on purpose. `[game]`
-- **Viewer.** `python -m tools.anim_viewer` plays a source and a retargeted set side by side as skeletons in the browser.
+- **Viewer.** The modding workbench's Viewer tab (`modding-workbench/`, Advisor Overhaul project) plays a source and a retargeted set side by side in the browser.
 - **Staff-only (ranged)** uses the staff + sword set with a sword-less variant. On foot `FIRE_LEVEL` is already filled. Riders need `RIDER_FIRE_*` slots added
   through a GLF-style animpack edit (see `1a_glf_battle_mage_Dante/RESEARCH_NOTES.md`). `[data]`
 - **Monster mounts** (griffon, war bear, demigryph) swap his melee weapon for the mount's attack. `[data]`

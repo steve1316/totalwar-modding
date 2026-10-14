@@ -1,4 +1,4 @@
-"""Export the Advisor Overhaul gallery for the animation viewer: every weapon and mount pair with its model, props, mount and animations.
+"""Export the Advisor Overhaul gallery for the modding workbench's Viewer tab: every weapon and mount pair with its model, props, mount and animations.
 
 Each pair of the generator's registry becomes one entry. The rider uses the pair's land unit animation set and its variant (from the generated
 agent uniforms). A mounted pair also gets the mount from the land unit's `mount` key: the mount's own animation set and model. Rider slots are
@@ -7,11 +7,13 @@ bone. His default look comes first (on foot, and on the Pegasus), then the hoodl
 campaign Advisor on his own skeleton and a comparison for each retargeted set of `generators.advisor_overhaul_anims` are added as extra
 entries. Any variant mesh definition left in `PREVIEWS` (with the models it needs under the same folder) becomes a preview entry, for trying looks
 without touching the mod. None are shown when it is empty.
-The export also carries the data of `portrait.html`: his hooded and hoodless looks and a vanilla Grey Wizard in the porthole idle animation, with
+The export also carries the data of the workbench's Portrait tab: his hooded and hoodless looks and a vanilla Grey Wizard in the porthole idle animation, with
 the registry's head camera, so the campaign portrait camera can be tuned without restarting the game.
 
 Usage (from helper_scripts):
-    python -u -m generators.advisor_overhaul_gallery --out ./_diag/anim_viewer_next [--serve 8767] [--host 127.0.0.1]
+    python -u -m generators.advisor_overhaul_gallery --out ./_diag/anim_viewer_next
+
+The workbench's Advisor Overhaul project (`modding-workbench/projects/advisor_overhaul.json`) runs this in its rebuild job and draws the result.
 """
 
 import argparse
@@ -27,7 +29,6 @@ from generators import advisor_overhaul_anims as anims
 from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, REGISTRY, pairs, uniform_key, unit_key
 from generators.advisor_overhaul_model import PREVIEWS
 from generators.advisor_overhaul_panels import build_panels
-from tools.anim_viewer.__main__ import serve
 from tools.anim_viewer.exporter import Exporter, compare_entry, first_refs
 from tools.glf_rebuild_animpack import AnimSet, load_vanilla_sets, parse_set, read_animpack
 
@@ -403,19 +404,14 @@ def build(out: str) -> Exporter:
 
 
 def main() -> int:
-    """Exports the gallery and optionally serves it.
+    """Exports the gallery.
 
     Returns:
         int: Process exit code.
     """
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out", default="./_diag/anim_viewer_next")
-    parser.add_argument("--serve", type=int, metavar="PORT", help="serve the folder on this port after exporting")
-    parser.add_argument("--host", default="127.0.0.1")
-    args = parser.parse_args()
-    build(args.out)
-    if args.serve:
-        serve(args.out, args.serve, args.host)
+    build(parser.parse_args().out)
     return 0
 
 
