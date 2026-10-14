@@ -1,15 +1,12 @@
-// The Adjust inspector tab: one card per weapon the open form holds (not what its mount adds, such as the disc), where the weapon's model can be swapped and slid along its grip, then his
-// hands. A swap is for the open form only. Everything shows live on the stage. The exported models already carry the saved grip and hand values (`manifest.tuning`), so the live
-// view moves each part by the difference from them. A swapped model is exported on the spot (`api/prop`) and put on its bone until a rebuild
-// bakes it in. The Jobs bar saves the edits.
+// The Adjust inspector tab: one card per weapon the open form holds (not what its mount adds, such as the disc), where the weapon's model can be
+// swapped and slid along its grip, then his hands. A swap is for the open form only. Everything shows live on the stage: a swapped model through
+// `studio.live` until a rebuild bakes it in, and the grip and hand values by their difference from the ones the exported models already carry
+// (`manifest.tuning`). The Jobs bar saves the edits.
 import * as THREE from "three";
-import { loadModel } from "../viewer_common.js";
+import { stem } from "./live_models.js";
 
 // Bones whose vertices the hand shift moves.
 const HAND_BONES = /^(hand|finger_\w+|thumb)_(left|right)(_\d)?$/;
-
-// A model path's file name without its extension, to match a mesh's model to a registry weapon.
-const stem = p => p.toLowerCase().split("/").pop().replace(/\.(wsmodel|rigid_model_v2)$/, "");
 
 // Weapon models a model search lists at most.
 const MODEL_HITS = 20;
@@ -24,10 +21,14 @@ const kindOf = model => (KINDS.find(([word]) => stem(model).includes(word)) || [
 
 export class AdjustTab {
   constructor(studio) {
-    // `picking` is the slot whose model picker is open, `fine` the slots showing the y and z
-    // sliders. `twin` caches the vanilla equivalent's models, `previews` the exported preview models, `loading` and `failed` each slot's preview.
-    this.studio = studio; this.picking = null; this.filter = ""; this.fine = new Set();
-    this.twin = new Map(); this.previews = new Map(); this.loading = new Set(); this.failed = new Map();
+    // `picking` is the slot whose model picker is open, `fine` the slots showing the y and z sliders, `twin` the vanilla equivalent's models.
+    this.studio = studio; this.picking = null; this.filter = ""; this.fine = new Set(); this.twin = new Map();
+    // The stage shows each weapon slot's chosen model.
+    studio.live.sources.push(f => Object.fromEntries(Object.keys(f.props).map(slot => {
+      const { prop: [attach, model], pending } = this.slotModel(f, slot);
+      return [slot, { model, attach, built: !pending }];
+    })));
+    studio.live.listeners.push(() => this.refresh());
   }
 
   get tuning() { return this.studio.tuning; }
@@ -37,9 +38,6 @@ export class AdjustTab {
   propKey(model) { return this.tuning.props.find(k => stem(k) === stem(model)); }
   propValue(key) { return this.studio.edits.props[key] || this.tuning.prop_offsets[key] || [0, 0, 0]; }
   handValue() { return this.studio.edits.hand || this.tuning.hand_shift; }
-  isAdvisor(model) { return !!model && model.meshes.some(m => /advisor_overhaul_body/.test(m.userData.model)); }
-  advisor() { return this.enabled() ? this.studio.stage.rigs.map(r => r.model).find(m => this.isAdvisor(m)) : null; }
-  form() { const entry = this.studio.stage.entry; return entry && this.studio.manifest.editor && this.studio.manifest.editor.forms[entry.unit]; }
 
   // Moves his hand vertices by the hand shift's change, weighted by how much each vertex follows the hand and finger bones.
   liveHands(model, mesh) {
@@ -64,18 +62,20 @@ export class AdjustTab {
     pos.needsUpdate = true;
   }
 
-  // Shows the current values on every Advisor model of the open entry, and each slot's chosen model.
+  // Shows the chosen models and the current grip and hand values on the open form's stage model.
   applyLive() {
     if (!this.enabled()) return;
-    this.syncModels();
-    for (const rig of this.studio.stage.rigs) {
-      const model = rig.model; if (!this.isAdvisor(model)) continue;
-      for (const mesh of model.meshes) {
-        const u = mesh.userData;
-        if (mesh.isSkinnedMesh && /advisor_overhaul_body/.test(u.model)) this.liveHands(model, mesh);
-        const key = u.attach && this.propKey(u.model);
-        if (key) { const v = this.propValue(key), b = u.preview ? [0, 0, 0] : this.baked.prop_offsets[key] || [0, 0, 0]; mesh.position.set(v[0] - b[0], v[1] - b[1], v[2] - b[2]); }
-      }
+    this.studio.live.sync().then(() => this.placeLive());
+    this.placeLive();
+  }
+  placeLive() {
+    const model = this.studio.live.model();
+    if (!model) return;
+    for (const mesh of model.meshes) {
+      const u = mesh.userData;
+      if (mesh.isSkinnedMesh && /advisor_overhaul_body/.test(u.model)) this.liveHands(model, mesh);
+      const key = u.attach && this.propKey(u.model);
+      if (key) { const v = this.propValue(key), b = u.preview ? [0, 0, 0] : this.baked.prop_offsets[key] || [0, 0, 0]; mesh.position.set(v[0] - b[0], v[1] - b[1], v[2] - b[2]); }
     }
   }
 
@@ -84,48 +84,6 @@ export class AdjustTab {
     const p = { ...this.studio.savedRegistry, ...this.studio.edits.registry };
     for (const path of [`weapons.${f.weapon}.forms.${f.mount}.props.${slot}`, `weapons.${f.weapon}.props.${slot}`]) if (path in p && p[path]) return { prop: p[path], pending: true };
     return { prop: f.props[slot], pending: false };
-  }
-
-  // The preview meshes of a model on a slot, exported by the server once and loaded once.
-  preview(model, slot, attach) {
-    const key = `${stem(model)}|${slot}|${attach}`;
-    if (!this.previews.has(key)) {
-      this.previews.set(key, fetch(this.studio.api + "prop", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model, slot, attach }) })
-        .then(async r => { const answer = await r.json(); if (!r.ok) throw new Error(answer.error); return loadModel(this.studio.data + answer.url); })
-        .then(loaded => loaded.meshes.filter(m => !m.isSkinnedMesh)));
-      this.previews.get(key).catch(() => this.previews.delete(key));
-    }
-    return this.previews.get(key);
-  }
-
-  // Puts each slot's chosen model on the Advisor's stage model: a swap shows its preview, and undoing it brings the built model back.
-  async syncModels() {
-    const model = this.advisor(), f = this.form(), entry = this.studio.stage.entry;
-    if (!model || !f) return;
-    model.built = model.built || {};
-    for (const slot of Object.keys(f.props)) {
-      const shown = model.meshes.filter(m => m.userData.slot === slot);
-      if (!shown.length) continue;
-      if (!model.built[slot]) model.built[slot] = shown;
-      const [attach, wanted] = this.slotModel(f, slot).prop;
-      if (stem(shown[0].userData.model) === stem(wanted)) continue;
-      let meshes = model.built[slot];
-      if (stem(meshes[0].userData.model) !== stem(wanted)) {
-        this.loading.add(slot); this.failed.delete(slot); this.refresh();
-        try { meshes = (await this.preview(wanted, slot, attach)).map(m => { const c = m.clone(); c.userData = { ...m.userData, preview: true }; return c; }); }
-        catch (error) { this.failed.set(slot, error.message); meshes = null; }
-        this.loading.delete(slot);
-        // The form or the choice changed while it loaded.
-        if (this.studio.stage.entry !== entry || stem(this.slotModel(f, slot).prop[1]) !== stem(wanted)) { this.refresh(); continue; }
-      }
-      if (meshes) {
-        const bone = model.bones.find(b => b.name === attach) || model.group;
-        for (const m of model.meshes.filter(m => m.userData.slot === slot)) m.removeFromParent();
-        model.meshes = model.meshes.filter(m => m.userData.slot !== slot).concat(meshes);
-        meshes.forEach(m => bone.add(m));
-      }
-      this.refresh();
-    }
   }
 
   // Redraws the tab when it is open.
@@ -190,7 +148,7 @@ export class AdjustTab {
   // Builds the tab: a card per weapon slot, then his hands.
   render(container) {
     container.innerHTML = "";
-    const entry = this.studio.stage.entry, model = this.advisor(), f = this.form();
+    const entry = this.studio.stage.entry, live = this.studio.live, model = this.enabled() && live.model(), f = live.form();
     if (!model || !f) { container.innerHTML = '<div class="note">Nothing to adjust on this entry. Pick one of the project\'s forms.</div>'; return; }
     const { esc } = window.UnitPanel, edits = this.studio.edits;
     const intro = document.createElement("div"); intro.className = "note adj-intro";
@@ -198,8 +156,8 @@ export class AdjustTab {
     container.append(intro);
     for (const slot of Object.keys(f.props).filter(s => !(f.mount_props || []).includes(s))) {
       const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div");
-      const state = this.loading.has(slot) ? '<div class="note">Loading the new model...</div>'
-        : this.failed.has(slot) ? `<div class="note warn">No preview: ${esc(this.failed.get(slot))}. It still builds on Rebuild.</div>` : "";
+      const state = live.loading.has(slot) ? '<div class="note">Loading the new model...</div>'
+        : live.failed.has(slot) ? `<div class="note warn">No preview: ${esc(live.failed.get(slot))}. It still builds on Rebuild.</div>` : "";
       card.className = "adj-card";
       card.innerHTML = `<div class="adj-head"><b>${esc(kindOf(prop[1]))}</b><button class="mini" data-pick>${this.picking === slot ? "Close" : "Change model"}</button></div>
         <div class="adj-model">${esc(stem(prop[1]))}</div><div class="note">${esc(this.origin(f, slot, pending))}</div>${state}`;

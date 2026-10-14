@@ -4,6 +4,8 @@ import { animLoader } from "../viewer_common.js";
 import { AdjustTab } from "./adjust.js";
 import { BattleStage } from "./stage.js";
 import { Jobs } from "./jobs.js";
+import { LiveModels } from "./live_models.js";
+import { LookTab } from "./look.js";
 import { NewForm } from "./new_form.js";
 import { PortraitStage } from "./portrait.js";
 import { SkillsTab } from "./skills.js";
@@ -56,12 +58,14 @@ const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studi
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Inspector tabs
 
-const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
+// What the Adjust and Look tabs chose, shown on the stage before a rebuild.
+studio.live = new LiveModels(studio);
+const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), look: new LookTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
                skills: new SkillsTab($("skillsStage"), studio) };
 // The New form dialog, which also lists the forms not in the gallery yet.
 const newForm = new NewForm(studio, () => renderForms());
 // Tab order and labels. Tabs without a module yet are shown greyed out.
-const TABS = [["stats", "Stats"], ["adjust", "Adjust"], ["portrait", "Portrait"], ["skills", "Skills"]];
+const TABS = [["stats", "Stats"], ["adjust", "Adjust"], ["look", "Look"], ["portrait", "Portrait"], ["skills", "Skills"]];
 let tab = "stats";
 
 function renderTabs() {
