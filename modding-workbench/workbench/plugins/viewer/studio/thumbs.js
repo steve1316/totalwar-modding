@@ -22,8 +22,15 @@ export class Thumbnails {
     this.observer = new IntersectionObserver(seen => seen.forEach(e => { if (e.isIntersecting) { this.observer.unobserve(e.target); this.show(e.target); } }), { rootMargin: "200px" });
   }
 
-  // Watches every thumbnail image under a container.
-  fill(container) { container.querySelectorAll("img[data-thumb]:not([src])").forEach(img => this.observer.observe(img)); }
+  // Fills every thumbnail image under a container: a kept picture at once (the browser loads it when it scrolls near), the rest once they
+  // scroll into view.
+  async fill(container) {
+    const kept = await this.cached;
+    for (const img of container.querySelectorAll("img[data-thumb]:not([src])")) {
+      const url = kept.get(img.dataset.thumb);
+      if (url) { img.loading = "lazy"; img.src = url; } else this.observer.observe(img);
+    }
+  }
 
   async show(img) {
     const model = img.dataset.thumb, kept = (await this.cached).get(model);
