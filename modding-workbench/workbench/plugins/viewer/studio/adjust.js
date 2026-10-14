@@ -1,4 +1,4 @@
-// The Adjust inspector tab: one card per weapon the open form holds, where the weapon's model can be swapped and slid along its grip, then his
+// The Adjust inspector tab: one card per weapon the open form holds (not what its mount adds, such as the disc), where the weapon's model can be swapped and slid along its grip, then his
 // hands. A swap is for the open form only. Everything shows live on the stage. The exported models already carry the saved grip and hand values (`manifest.tuning`), so the live
 // view moves each part by the difference from them. A swapped model is exported on the spot (`api/prop`) and put on its bone until a rebuild
 // bakes it in. The Jobs bar saves the edits.
@@ -140,7 +140,9 @@ export class AdjustTab {
     const choose = model => {
       this.studio.edits.registry[`weapons.${f.weapon}.forms.${f.mount}.props.${slot}`] = [prop[0], model, prop[2] || ""]; this.picking = null; this.studio.changed(); this.applyLive(); this.refresh();
     };
-    this.twinProps(entry).then(list => {
+    this.twinProps(entry).then(all => {
+      // The vanilla unit's mount props (its disc) are not weapons either.
+      const list = all.filter(([twinSlot]) => !(f.mount_props || []).includes(twinSlot));
       const vanilla = entry.versus && this.studio.manifest.panels && this.studio.manifest.panels[entry.versus], twin = box.querySelector(".twin");
       twin.innerHTML = list.length ? `<div>${esc(vanilla ? vanilla.name : "The vanilla equivalent")} holds:</div>` + list.map(([, , model]) =>
         `<button class="mini" data-model="${esc(model)}">${esc(kindOf(model))}: ${esc(stem(model))}</button>`).join(" ") : "";
@@ -194,7 +196,7 @@ export class AdjustTab {
     const intro = document.createElement("div"); intro.className = "note adj-intro";
     intro.textContent = "Swap a weapon's model or slide it in his hand. Changes show on the stage straight away. Save keeps them, and Rebuild puts them in the mod.";
     container.append(intro);
-    for (const slot of Object.keys(f.props)) {
+    for (const slot of Object.keys(f.props).filter(s => !(f.mount_props || []).includes(s))) {
       const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div");
       const state = this.loading.has(slot) ? '<div class="note">Loading the new model...</div>'
         : this.failed.has(slot) ? `<div class="note warn">No preview: ${esc(this.failed.get(slot))}. It still builds on Rebuild.</div>` : "";
