@@ -58,7 +58,8 @@ export class StatsTab {
       <div class="p-head">Abilities</div><div class="abilities">${abilitiesHtml(u.abilities, art)}</div>
       ${o ? `<div class="vs">${esc(o.name)}</div><div class="abilities">${abilitiesHtml(o.abilities, art)}</div>` : ""}
       <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o, art, !!f)}${f ? '<button class="mini add" data-t="addAttr">+ Attribute</button>' : ""}</div>
-      ${f && this.open.has("attr") ? `<input class="attrSearch" data-t="attrSearch" placeholder="Type to search the game's attributes" value="${esc(this.attrFilter)}"><div class="attrList"></div>` : ""}</div>`;
+      ${f && this.open.has("attr") ? `<input class="attrSearch" data-t="attrSearch" placeholder="Type to search the game's attributes" value="${esc(this.attrFilter)}"><div class="attrList"></div>` : ""}
+      <div class="p-head">Game keys</div><div class="keys">${(entry.info || entry.sets || []).map(line => `<div>${esc(line)}</div>`).join("")}</div></div>`;
     this.wire(container, f);
   }
 

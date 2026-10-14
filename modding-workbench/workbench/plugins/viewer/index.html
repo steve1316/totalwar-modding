@@ -34,7 +34,6 @@
   #forms button, #slots button { display: flex; justify-content: space-between; width: 100%; text-align: left; background: none; border: 0; border-radius: 4px;
                                  min-height: 32px; }
   #forms button.on, #slots button.on { background: #8a2a1f; }
-  #details { color: var(--muted); font-size: 10px; word-break: break-all; padding: 4px 10px; }
   #search { margin: 2px 6px; min-height: 32px; padding: 0 8px; background: var(--bg); border: 1px solid var(--line); color: var(--text); border-radius: 4px; font: inherit; }
   #slots, #forms { overflow-x: hidden; }
   #slots { overflow-y: auto; flex: 1; padding: 0 6px 6px; }
@@ -146,6 +145,15 @@
   .panel .vs.scope { flex-wrap: wrap; }
   .panel .vs.scope button { min-height: 28px; font-size: 12px; }
   .panel .chips button.add { min-height: 26px; }
+  .panel .keys { padding: 4px 12px; color: var(--muted); font: 11px/1.5 ui-monospace, monospace; word-break: break-all; }
+  /* Compare to Vanilla: a drop-down whose column holds the vanilla sides' toggles. */
+  .dropdown { position: relative; display: inline-flex; flex-direction: column; }
+  .dropdown .menu { position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; display: flex; flex-direction: column; gap: 4px; z-index: 3; }
+  .dropdown .menu button:not(.on) { opacity: .55; }
+  .slot-head { justify-content: space-between; } .slot-head em { font-style: normal; }
+  .picker { margin: 0 6px 8px; padding: 6px; border: 1px solid var(--line); border-radius: 4px; background: rgba(0,0,0,.25); }
+  .picker .twin { padding: 4px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .picker .hits button { justify-content: space-between; }
   .attrSearch { width: calc(100% - 8px); margin: 4px; min-height: 32px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 0 8px; font: inherit; }
   .attrList { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 4px 6px; }
   .attrList button { min-height: 28px; font-size: 12px; }
@@ -188,7 +196,6 @@
     <div class="p-head">Slots</div>
     <input id="search" placeholder="Filter (CAST, FLY, STAND)" autocomplete="off">
     <div id="slots"></div>
-    <div id="details"></div>
   </aside>
   <div id="pickers"><select id="formSel" aria-label="Form"></select><select id="slotSel" aria-label="Slot"></select></div>
   <main id="stage">

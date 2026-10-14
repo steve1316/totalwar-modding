@@ -110,22 +110,26 @@ async function setMode(next) {
 document.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
 $("modePortrait").hidden = !portrait;
 
+// The stage toolbar: the unit's own side toggles, Compare to Vanilla (a drop-down whose column holds the vanilla sides' toggles while it is on),
+// then the view toggles.
 function renderToggles() {
-  const v = stage.view, entry = stage.entry;
-  $("toggles").innerHTML = (entry && entry.versus ? `<button data-v="versus" class="${v.versus ? "on" : ""}">Vs vanilla</button>` : "")
+  const v = stage.view, entry = stage.entry, chip = s => `<button data-side="${s.key}" style="color:${s.color}" class="${v.hidden.has(s.key) ? "" : "on"}">${esc(s.label)}</button>`;
+  const vanillaSides = stage.listedSides().filter(s => s.group === "vanilla");
+  $("toggles").innerHTML = (entry && entry.versus ? `<span class="dropdown"><button data-v="versus" class="${v.versus ? "on" : ""}">Compare to Vanilla ${v.versus ? "▴" : "▾"}</button>
+      ${v.versus && vanillaSides.length ? `<span class="menu">${vanillaSides.map(chip).join("")}</span>` : ""}</span>` : "")
     + `<button data-v="models" class="${v.models ? "on" : ""}">Models</button><button data-v="bones" class="${v.bones ? "on" : ""}">Bones</button>`
     + `<button data-v="props" class="${v.props ? "on" : ""}">Props</button><button data-v="closeUp" class="${v.closeUp ? "on" : ""}">Close-up</button>`
     + (stage.isCompare() ? `<select data-v="layout"><option value="side">Side by side</option><option value="overlay">Overlay</option></select>` : "");
-  $("toggles").querySelectorAll("button").forEach(b => b.onclick = () => {
+  $("toggles").querySelectorAll("button[data-v]").forEach(b => b.onclick = () => {
     v[b.dataset.v] = !v[b.dataset.v];
     if (b.dataset.v === "versus" || b.dataset.v === "closeUp") stage.frameCamera();
     renderToggles(); writeHash();
   });
   const layout = $("toggles").querySelector("select");
   if (layout) { layout.value = v.layout; layout.onchange = () => { v.layout = layout.value; stage.resize(); stage.frameCamera(); }; }
-  const sides = stage.listedSides();
-  $("sides").innerHTML = sides.length > 1 ? sides.map(s => `<button data-side="${s.key}" style="color:${s.color}" class="${v.hidden.has(s.key) ? "" : "on"}">${esc(s.label)}</button>`).join("") : "";
-  $("sides").querySelectorAll("button").forEach(b => b.onclick = () => {
+  const own = stage.listedSides().filter(s => s.group !== "vanilla");
+  $("sides").innerHTML = own.length > 1 ? own.map(chip).join("") : "";
+  $("battleTools").querySelectorAll("button[data-side]").forEach(b => b.onclick = () => {
     v.hidden.has(b.dataset.side) ? v.hidden.delete(b.dataset.side) : v.hidden.add(b.dataset.side); renderToggles();
   });
 }
@@ -133,17 +137,15 @@ function renderToggles() {
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Forms and slots
 
-// Forms grouped by weapon ("Greatsword - On Foot" goes under Greatsword). Entries that are not a form (looks, previews, vanilla references,
-// retarget checks) go under References.
-const groups = new Map();
+// Forms grouped by weapon ("Greatsword - On Foot" goes under Greatsword). Gallery entries that are not a form (looks, previews, vanilla
+// references, retarget checks) are left out, unless the project has no forms at all.
+const groups = new Map(), hasForms = manifest.entries.some(e => e.unit);
 manifest.entries.forEach((e, i) => {
-  const [group, label] = e.unit ? e.name.split(" - ") : ["References", e.name];
+  if (hasForms && !e.unit) return;
+  const [group, label] = e.unit ? e.name.split(" - ") : ["Gallery", e.name];
   if (!groups.has(group)) groups.set(group, []);
   groups.get(group).push({ index: i, label: label || e.name });
 });
-// References go last.
-const references = groups.get("References");
-if (references) { groups.delete("References"); groups.set("References", references); }
 let entryIndex = 0, slotFilter = "";
 
 function renderForms() {
@@ -151,7 +153,7 @@ function renderForms() {
     + items.map(it => `<button data-i="${it.index}" class="${it.index === entryIndex ? "on" : ""}">${esc(it.label)}</button>`).join("")).join("");
   $("forms").querySelectorAll("button").forEach(b => b.onclick = () => openEntry(+b.dataset.i));
   $("formSel").innerHTML = [...groups].map(([group, items]) => `<optgroup label="${esc(group)}">`
-    + items.map(it => `<option value="${it.index}" ${it.index === entryIndex ? "selected" : ""}>${esc(group === "References" ? it.label : `${group} · ${it.label}`)}</option>`).join("") + "</optgroup>").join("");
+    + items.map(it => `<option value="${it.index}" ${it.index === entryIndex ? "selected" : ""}>${esc(group === "Gallery" ? it.label : `${group} · ${it.label}`)}</option>`).join("") + "</optgroup>").join("");
 }
 $("formSel").onchange = () => openEntry(+$("formSel").value);
 
@@ -173,7 +175,6 @@ function renderInfo() {
   const entry = stage.entry, s = stage.slot; if (!entry || !s) return;
   $("info").innerHTML = `<span><b>${esc(entry.name)}</b> · ${s.slot}</span>` + entry.sides.filter(side => s.paths[side.key] && (side.group !== "vanilla" || stage.versusOn()))
     .map(side => `<span style="color:${side.color}">${s.slots ? s.slots[side.key] + ": " : ""}${esc(s.paths[side.key].split("/").pop())}</span>`).join("");
-  $("details").innerHTML = (entry.info || entry.sets).map(line => `<div>${esc(line)}</div>`).join("");
 }
 
 async function openEntry(index, slotName) {
@@ -247,7 +248,8 @@ stage.view.versus = params.get("vs") === "1";
 renderTabs();
 // Without a link, the first form opens.
 const firstForm = Math.max(0, manifest.entries.findIndex(e => e.unit));
-await openEntry(params.has("u") ? Math.min(manifest.entries.length - 1, Math.max(0, +params.get("u"))) : firstForm, params.get("s"));
+const linked = params.has("u") ? Math.min(manifest.entries.length - 1, Math.max(0, +params.get("u"))) : firstForm;
+await openEntry(hasForms && !manifest.entries[linked].unit ? firstForm : linked, params.get("s"));
 const startTab = params.get("tab");
 if (startTab && tabs[startTab]) await selectTab(startTab);
 requestAnimationFrame(tick);

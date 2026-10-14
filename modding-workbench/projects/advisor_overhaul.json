@@ -21,7 +21,7 @@
   "prop_offsets": "model.prop_offsets",
   "hand_shift": "model.hand_shift",
   "camera_head": "portrait.camera_head",
-  "prop_sources": ["weapons.*.props", "mounts.*.variant_props"]
+  "prop_sources": ["weapons.*.props", "mounts.*.variant_props", "weapons.*.forms.*.props"]
  },
  "editable": [
   "weapons.*.stats.*",
@@ -31,6 +31,8 @@
   "weapons.*.missile.ammo",
   "weapons.*.attributes",
   "weapons.*.attributes_removed",
+  "weapons.*.props.*",
+  "weapons.*.forms.*.props.*",
   "skills.*"
  ],
  "readable": ["skills"]

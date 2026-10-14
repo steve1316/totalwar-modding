@@ -107,8 +107,11 @@ export class BattleStage {
   isCompare() { return !!this.entry && this.entry.kind === "compare"; }
   // An Advisor form's entry carries its vanilla equivalent (`entry.versus`) as more sides in the "vanilla" group.
   versusOn() { return this.view.versus && !!this.entry && !!this.entry.versus; }
-  // How far each side stands from the middle: wider for riders.
-  versusOffset() { return this.entry.sides.some(side => side.key === "mount") ? 1.5 : 0.8; }
+  // How far each side stands from the middle: wider for riders, and for units standing on a prop such as a disc (`be_prop_4`).
+  versusOffset() {
+    const wide = this.entry.sides.some(side => side.key === "mount") || this.rigs.some(r => r.model && r.model.meshes.some(m => m.userData.attach === "be_prop_4"));
+    return wide ? 1.5 : 0.8;
+  }
   // The sides listed as toggles: the vanilla ones only while they show.
   listedSides() { return this.entry ? this.entry.sides.filter(side => side.group !== "vanilla" || this.versusOn()) : []; }
 
