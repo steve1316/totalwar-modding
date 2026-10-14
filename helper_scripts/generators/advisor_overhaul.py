@@ -14,7 +14,8 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
   the vanilla mounted-minus-foot difference to them, as for the default stats.
 - `forms`: mount -> values that replace the computed ones for that one pair, and `props`: prop slots whose model that pair uses instead (its own
   variant then).
-- `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away.
+- `attributes` adds unit attributes to every pair of the weapon, and `attributes_removed` takes them away. `abilities` and `abilities_removed` do
+  the same for unit abilities.
 
 His planned skills are the registry's `skills` (written by the workbench's Skills tab): id -> `name`, `description`, `icon` (a file in
 `ui/campaign ui/skills`), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
@@ -819,7 +820,8 @@ def build() -> None:
         rows["unit_attributes_groups_tables"].append({"group_name": key})
         attributes = (set(template_attributes.get(template, [])) | set(weapon.get("attributes", []))) - SKIPPED_ATTRIBUTES - set(weapon.get("attributes_removed", []))
         rows["unit_attributes_to_groups_junctions_tables"] += [{"attribute": a, "attribute_group": key} for a in sorted(attributes)]
-        rows["land_units_to_unit_abilites_junctions_tables"].append({"ability": "wh3_main_unit_passive_single_entity", "land_unit": key, "culture": "*"})
+        abilities = [a for a in dict.fromkeys(["wh3_main_unit_passive_single_entity"] + weapon.get("abilities", [])) if a not in weapon.get("abilities_removed", [])]
+        rows["land_units_to_unit_abilites_junctions_tables"] += [{"ability": a, "land_unit": key, "culture": "*"} for a in abilities]
         for table, column in UNIT_ROW_TABLES.items():
             rows[table] += [dict(r, **{column: key}) for r in templates[table] if r[column] == template]
         rows["units_custom_battle_permissions_tables"].append(dict(template_perm, unit=key, general_uniform=uniform, general_portrait=portrait_png,

@@ -217,7 +217,7 @@ class PanelBuilder:
         Returns:
             Dict: `weapon`, `mount`, `stats` (`STAT_COLUMNS` and `armour`), `melee` (with its current `key`), `melee_template`, `own_melee` (whether
             the weapon has its own melee weapon yet), `missile` (or None, with `ammo`), `overrides` (the fields its form sets), and the weapon's
-            `attributes` and `attributes_removed`, `props` (prop slot -> [bone, model, metadata] as the form uses them) and `prop_overrides` (the
+            `attributes`, `attributes_removed`, `abilities` and `abilities_removed`, `props` (prop slot -> [bone, model, metadata] as the form uses them) and `prop_overrides` (the
             slots its form sets).
         """
         land = self.land[self.main[key]["land_unit"]]
@@ -235,7 +235,8 @@ class PanelBuilder:
                 "overrides": sorted(k for k in weapon.get("forms", {}).get(mount_key, {}) if k != "props"), "attributes": weapon.get("attributes", []),
                 "props": dict(weapon["props"], **registry["mounts"][mount_key].get("variant_props", {}), **weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
                 "prop_overrides": sorted(weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
-                "attributes_removed": weapon.get("attributes_removed", [])}
+                "attributes_removed": weapon.get("attributes_removed", []), "abilities": weapon.get("abilities", []),
+                "abilities_removed": weapon.get("abilities_removed", [])}
 
     def attribute_catalog(self) -> Dict[str, Dict[str, str]]:
         """Every unit attribute with an in-game name, for the Edit tab's checklist.
@@ -251,6 +252,24 @@ class PanelBuilder:
                     catalog[tip["key"]] = {"name": tip["name"], "text": tip["text"]}
                     for path in tooltip_images(tip):
                         self.note_art(path)
+        return dict(sorted(catalog.items(), key=lambda item: item[1]["name"]))
+
+    def ability_catalog(self) -> Dict[str, Dict]:
+        """Every ability the game gives a land unit directly and shows in the UI, for the Stats tab's "+ Ability" picker.
+
+        Returns:
+            Dict[str, Dict]: Ability key -> `name`, `icon` and `tip` (as on a panel), sorted by name.
+        """
+        catalog = {}
+        for ability in dict.fromkeys(a for linked in self.tables.unit_abilities.values() for a in linked):
+            row = self.tables.abilities.get(ability, {})
+            name = loc_name(ABILITY_NAME_PREFIX, ability, self.loc) if self.loc.get(ABILITY_NAME_PREFIX + ability) else ""
+            if not name or row.get("is_hidden_in_ui") == "true":
+                continue
+            tip = ability_tooltip(ability, self.tables, self.loc)
+            catalog[ability] = {"name": name, "icon": self.art_path(ABILITY_FOLDER, row.get("icon_name", "")), "tip": tip}
+            for path in tooltip_images(tip):
+                self.note_art(path)
         return dict(sorted(catalog.items(), key=lambda item: item[1]["name"]))
 
     def copy_art(self, out: str) -> int:
@@ -280,13 +299,14 @@ def build_panels(registry: Dict, out: str) -> Tuple[Dict[str, Dict], Dict[str, s
 
     Returns:
         Tuple[Dict[str, Dict], Dict[str, str], Dict]: Panels by unit key, Advisor unit key -> vanilla unit key, and the Edit and Skills tabs' data
-        (`forms`: unit key -> `PanelBuilder.form_values`, `attributes`: the attribute catalog, and `skills`: the skill catalog, the fixed weapon and
+        (`forms`: unit key -> `PanelBuilder.form_values`, `attributes` and `abilities`: the attribute and ability catalogs, and `skills`: the skill catalog, the fixed weapon and
         mount skills and the names of their rows).
     """
     pairs_to_vanilla = comparisons(registry)
     builder = PanelBuilder(load_tables(), load_loc())
     panels = {key: builder.panel(key) for key in list(pairs_to_vanilla) + list(dict.fromkeys(pairs_to_vanilla.values()))}
-    editor = {"forms": {unit_key(w, m): builder.form_values(unit_key(w, m), w, m, registry) for w, m in pairs(registry)}, "attributes": builder.attribute_catalog()}
+    editor = {"forms": {unit_key(w, m): builder.form_values(unit_key(w, m), w, m, registry) for w, m in pairs(registry)}, "attributes": builder.attribute_catalog(),
+              "abilities": builder.ability_catalog()}
     # The Skills tab: the vanilla catalog to pick from, and the weapon and mount skills the tree already has.
     catalog = skill_catalog({t: load_tsv_data(f"{extract_tsv_data(t)}/db/{t}/data__.tsv")[0] for t in SKILL_CATALOG_TABLES}, builder.loc)
     for path in catalog_art(catalog):
@@ -295,5 +315,5 @@ def build_panels(registry: Dict, out: str) -> Tuple[Dict[str, Dict], Dict[str, s
     # The weapon models a prop slot may switch to: every vanilla model in a props folder.
     editor["prop_models"] = sorted(p for p in AssetSource([], [], PROP_PACKS).index if p.endswith(".wsmodel") and PROP_FOLDER.search(p))
     editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": {"0": "Weapons", "1": "Mounts"}}
-    print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes")
+    print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes, {len(editor['abilities'])} abilities")
     return panels, pairs_to_vanilla, editor
