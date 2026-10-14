@@ -27,7 +27,7 @@ export function animLoader(manifest, base = "") {
 
 // Loads an exported model: skinned meshes on flat bones that take world transforms straight from an animation. Rigid props sit in the local
 // space of their attach bone, and are left out when `props` is false. Each mesh keeps its `slot`, `model` path and `attach` bone in `userData`.
-// Returns { group, bones, inverses, meshes, missing }.
+// Returns { group, bones, inverses, meshes, missing, ready }, `ready` settling once every texture has loaded or failed.
 export async function loadModel(url, { props = true } = {}) {
   const doc = await (await fetch(url)).json();
   const buffer = await (await fetch(url.replace(/[^/]+$/, doc.bin))).arrayBuffer();
@@ -38,7 +38,7 @@ export async function loadModel(url, { props = true } = {}) {
   const skeleton = new THREE.Skeleton(bones, inverses);
   const group = new THREE.Group();
   bones.forEach(b => group.add(b));
-  const loader = new THREE.TextureLoader(), textures = new Map(), meshes = [];
+  const loader = new THREE.TextureLoader(), textures = new Map(), meshes = [], loading = [];
   for (const m of doc.meshes) {
     if (!m.skinned && !props) continue;
     const g = new THREE.BufferGeometry();
@@ -49,7 +49,9 @@ export async function loadModel(url, { props = true } = {}) {
     const mat = new THREE.MeshLambertMaterial({ color: m.texture ? 0xffffff : 0x9a9aa2, side: THREE.DoubleSide });
     if (m.texture) {
       if (!textures.has(m.texture)) {
-        const t = loader.load(url.replace(/[^/]+$/, m.texture)); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; textures.set(m.texture, t);
+        let t;
+        loading.push(new Promise(done => { t = loader.load(url.replace(/[^/]+$/, m.texture), done, undefined, done); }));
+        t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; textures.set(m.texture, t);
       }
       mat.map = textures.get(m.texture);
       if (m.alpha) mat.alphaTest = 0.5;
@@ -71,5 +73,5 @@ export async function loadModel(url, { props = true } = {}) {
     mesh.frustumCulled = false;
     meshes.push(mesh);
   }
-  return { group, bones, inverses, meshes, missing: doc.missing };
+  return { group, bones, inverses, meshes, missing: doc.missing, ready: Promise.all(loading) };
 }
