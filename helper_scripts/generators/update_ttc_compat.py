@@ -23,7 +23,7 @@ PACK_PATH = workshop_pack_path(STEAM_ID, "!!!!!!!yet_another_tabletopcaps_compat
 SCRIPT_SOURCE = "../warhammer3_mods/!!!!!!!yet_another_tabletopcaps_compat/script"
 REPORT_PATH = "./reports/ttc_review.md"
 SUMMARY_PATH = f"{delta.STATE_ROOT}/ttc_summary.json"
-# Every auto pick, confident or not, for the `tools.ttc_review` unit browser.
+# Every auto pick, confident or not, for the modding workbench's Unit Browser tab.
 AUTO_PICKS_PATH = f"{delta.STATE_ROOT}/ttc_auto_picks.json"
 # Unit key to the mod that last defined it, so entries for a temporarily unsubscribed mod are never removed.
 OWNER_HISTORY_PATH = f"{delta.STATE_ROOT}/ttc_unit_owners.json"

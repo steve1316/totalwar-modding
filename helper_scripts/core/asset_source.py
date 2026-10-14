@@ -1,7 +1,7 @@
 """Read game files by path from loose folders, mod packs or the vanilla packs, with cached pack listings and extracts.
 
 Pack listings are cached by pack size and modified time. Extracted files are kept in a per-pack folder, so a file is only extracted once. Used by
-the animation viewer and the Advisor Overhaul generators.
+the animation viewer and the unit generators.
 """
 
 import hashlib

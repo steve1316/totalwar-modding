@@ -1,7 +1,7 @@
 """The numbers of the in-game unit panel (health, armour, speed, weapon and missile strength, abilities), worked out from a unit's table rows.
 
-Shared by the TTC unit browser (`tools.ttc_review`) and the Advisor Overhaul dashboard, so both show what the game shows. The page side lives in
-`tools/dashboard/static/unit_panel.*`.
+Shared by the TTC unit browser (`tools.ttc_review`) and the modding workbench's unit panels, so both show what the game shows. The page side lives in
+`modding-workbench/workbench/static/unit_panel.*`.
 """
 
 from typing import Dict, List, Tuple

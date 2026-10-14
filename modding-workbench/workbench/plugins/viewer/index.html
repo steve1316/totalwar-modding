@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Workbench</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/static/unit_panel.css">
+<script src="/static/unit_panel.js"></script>
+<script src="/static/nav.js" defer></script>
+<style>
+  :root { --bg: #170d12; --panel: #211819; --line: #3e2a2c; --text: #e9dfcf; --muted: #a8998a; --on: #8a2a1f;
+          --top: calc(env(safe-area-inset-top, 0px) + var(--nav-h, 0px)); --sat: env(safe-area-inset-top, 0px); --sab: env(safe-area-inset-bottom, 0px); --sal: env(safe-area-inset-left, 0px); --sar: env(safe-area-inset-right, 0px); }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 "Libre Caslon Text", Georgia, serif; overflow: hidden; }
+  #view { position: fixed; inset: var(--nav-h, 0px) 0 0 0; }
+  #view canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+  #info { position: fixed; top: calc(var(--top) + 8px); left: calc(var(--sal) + 10px); right: calc(var(--sar) + 10px); display: flex; gap: 6px;
+          flex-wrap: wrap; font-size: 12px; pointer-events: none; }
+  #info span { background: rgba(20,22,26,.8); padding: 3px 8px; border-radius: 4px; word-break: break-all; }
+  #status { position: fixed; top: 45%; left: 0; right: 0; text-align: center; color: var(--muted); pointer-events: none; }
+  .controls { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(33,24,25,.96); border-top: 1px solid var(--line);
+         padding: 6px calc(var(--sar) + 8px) calc(var(--sab) + 6px) calc(var(--sal) + 8px); display: flex; flex-direction: column; gap: 6px; }
+  .row { display: flex; gap: 6px; align-items: center; }
+  .row.wrap { flex-wrap: wrap; }
+  button, select { min-height: 44px; min-width: 44px; background: linear-gradient(#5b1714, #360b0a); color: var(--text); border: 1px solid #a8442f; border-radius: 4px;
+                   padding: 0 12px; font: inherit; cursor: pointer; }
+  button.on { background: linear-gradient(#8a2a1f, #571310); border-color: #d8a640; }
+  .row.wrap button, .row.wrap select { padding: 0 10px; }
+  #sideChips button:not(.on) { color: var(--muted) !important; }
+  #unit { width: 100%; font-size: 15px; font-weight: 600; text-overflow: ellipsis; }
+  #frame { flex: 1; min-width: 0; height: 44px; accent-color: #8aa4d6; }
+  #fnum { min-width: 58px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 12px; }
+  #drawer { position: fixed; left: 0; right: 0; bottom: 0; height: 70vh; background: var(--panel); border-top: 1px solid var(--line);
+            border-radius: 14px 14px 0 0; display: flex; flex-direction: column; transform: translateY(105%); transition: transform .2s ease; z-index: 10;
+            padding: 0 calc(var(--sar) + 8px) var(--sab) calc(var(--sal) + 8px); }
+  #drawer.open { transform: none; }
+  #drawer header { display: flex; gap: 8px; align-items: center; padding: 10px 0; }
+  #drawer h1 { font-size: 15px; margin: 0; flex: 1; }
+  .unitinfo { color: var(--muted); font-size: 11px; word-break: break-all; padding-bottom: 6px; }
+  #search { min-height: 44px; padding: 0 12px; background: var(--bg); border: 1px solid var(--line); color: var(--text); border-radius: 8px; font: inherit;
+            width: 100%; }
+  #slots { overflow: auto; flex: 1; padding: 6px 0 10px; -webkit-overflow-scrolling: touch; }
+  #slots button { display: flex; justify-content: space-between; align-items: center; width: 100%; text-align: left; background: none; border: 0;
+                  border-radius: 6px; min-height: 44px; }
+  #slots button.on { background: var(--on); }
+  #slots .tag { font-size: 11px; color: var(--muted); }
+  #scrim { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 9; display: none; }
+  #scrim.open { display: block; }
+  #adjustPanel { position: fixed; top: calc(var(--top) + 36px); right: calc(var(--sar) + 8px); width: min(400px, calc(100vw - 16px)); max-height: 58vh;
+                 overflow: auto; background: rgba(29,32,38,.97); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; z-index: 11; }
+  #adjustPanel header { display: flex; align-items: center; gap: 8px; }
+  #adjustPanel h2 { font-size: 14px; margin: 0; flex: 1; }
+  #adjustPanel h3 { font-size: 12px; margin: 10px 0 2px; color: var(--muted); font-weight: 600; word-break: break-all; }
+  .arow { display: grid; grid-template-columns: 96px 1fr 72px; gap: 6px; align-items: center; }
+  .arow label { font-size: 12px; color: var(--muted); }
+  .arow input[type=range] { width: 100%; height: 40px; accent-color: #8aa4d6; }
+  .arow input[type=number] { min-height: 40px; width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px;
+                             padding: 0 6px; font: inherit; }
+  #statsPanel { position: fixed; top: calc(var(--top) + 36px); right: calc(var(--sar) + 8px); width: min(420px, calc(100vw - 16px)); max-height: 62vh;
+                z-index: 11; font-size: 14px; }
+  #statsPanel .vs button { min-height: 32px; margin-left: auto; padding: 0 8px; font-size: 12px; }
+  #aNote { font-size: 12px; color: var(--muted); margin: 6px 0; }
+  #aLog { font-size: 11px; color: var(--muted); white-space: pre-wrap; word-break: break-all; margin: 4px 0 0; max-height: 9em; overflow: auto; }
+  @media (min-width: 900px) {
+    #view, .controls, #info { left: 320px; }
+    /* An open Stats or Adjust panel takes the right side, so it covers neither unit. */
+    body.with-panel #view, body.with-panel #info { right: 436px; }
+    body.with-panel #statsPanel, body.with-panel #adjustPanel { width: 420px; max-height: calc(100vh - var(--top) - 160px); }
+    #drawer { top: 0; right: auto; width: 320px; height: auto; transform: none; border-radius: 0; border-top: 0; border-right: 1px solid var(--line);
+              padding-top: var(--top); }
+    #slotsBtn, #closeDrawer, #scrim { display: none !important; }
+  }
+</style>
+<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
+</head>
+<body>
+<div id="view"></div>
+<div id="info"></div>
+<div id="status">Loading...</div>
+<div class="controls">
+  <div class="row"><select id="unit" aria-label="Unit"></select></div>
+  <div class="row">
+    <button id="slotsBtn" aria-label="Slots">Slots</button>
+    <button id="play" aria-label="Play or pause">Pause</button>
+    <input type="range" id="frame" min="0" max="0" value="0" aria-label="Frame">
+    <span id="fnum">0/0</span>
+  </div>
+  <div class="row wrap">
+    <select id="speed" aria-label="Speed"><option value="0.25">0.25x</option><option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="2">2x</option></select>
+    <select id="layout" aria-label="Layout"><option value="side">Side by side</option><option value="overlay">Overlay</option></select>
+    <span id="sideChips" class="row"></span>
+    <button class="chip on" data-key="models">Models</button>
+    <button class="chip" data-key="bones">Bones</button>
+    <button class="chip" data-key="props">Props</button>
+    <button id="close" aria-label="Close-up on the rider">Close-up</button>
+    <button id="portrait" aria-label="Portrait camera preview" hidden>Portrait</button>
+    <button id="versus" aria-label="Show the vanilla equivalent beside him" hidden>Vs vanilla</button>
+    <button id="stats" aria-label="Unit panel compared with the vanilla equivalent" hidden>Stats</button>
+    <button id="adjust" aria-label="Adjust the model fit" hidden>Adjust</button>
+  </div>
+</div>
+<section id="statsPanel" class="panel" hidden></section>
+<section id="adjustPanel" hidden>
+  <header><h2>Adjust</h2><button id="aClose" aria-label="Close the adjust panel">Close</button></header>
+  <div id="aRows"></div>
+  <div id="aNote"></div>
+  <div class="row wrap"><button id="aSave">Save</button><button id="aReset">Undo edits</button><button id="aRebuild">Rebuild</button><button id="aDeploy">Deploy</button></div>
+  <pre id="aLog"></pre>
+</section>
+<div id="scrim"></div>
+<aside id="drawer">
+  <header><h1 id="title">Anim Viewer</h1><button id="closeDrawer" aria-label="Close">Close</button></header>
+  <div class="unitinfo" id="sets"></div>
+  <input id="search" placeholder="Filter slots (e.g. CAST, FLY, STAND)" autocomplete="off">
+  <div id="slots"></div>
+</aside>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { animLoader, loadModel } from "./viewer_common.js";
+
+const $ = id => document.getElementById(id);
+const view = $("view");
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+view.append(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x14161a);
+const camera = new THREE.PerspectiveCamera(40, 1, 0.01, 200);
+const controls = new OrbitControls(camera, renderer.domElement);
+scene.add(new THREE.GridHelper(10, 20, 0x3a3f48, 0x262a31));
+scene.add(new THREE.HemisphereLight(0xffffff, 0x404048, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(2, 4, 3); scene.add(sun);
+
+const state = { models: true, bones: false, props: false, hidden: new Set(), versus: false, flip: false };
+const status = $("status");
+// The open project (picked in the tab strip): its gallery data and its API routes.
+const project = await window.workbenchProject;
+const DATA = `p/${project}/data/`, API = `p/${project}/api/`;
+const manifest = await (await fetch(DATA + "manifest.json")).json();
+// The open entry, its rigs (one per side) and the current slot. `time` is in seconds.
+let entry = null, rigs = [], current = null, playing = true, time = 0, frames = 1, fps = 20, box = null, closeBox = null, closeUp = false;
+// Close-up camera tracking: the point followed last frame and this frame.
+const followed = new THREE.Vector3(), seen = new THREE.Vector3();
+
+// A comparison on a portrait screen with "side by side" splits the view into a top (source) and bottom (retargeted) half.
+const isCompare = () => !!entry && entry.kind === "compare";
+let split = false;
+function resize() {
+  const w = view.clientWidth, h = view.clientHeight;
+  split = isCompare() && $("layout").value === "side" && w < h;
+  renderer.setSize(w, h, false); camera.aspect = w / (split ? h / 2 : h); camera.updateProjectionMatrix();
+}
+// Pull the camera back until the entry (both sides when side by side) fits the view width as well as its height.
+function frameCamera() {
+  followed.set(0, 0, 0);
+  const tanY = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const b = (closeUp && closeBox) || box || { cx: 0, cy: 1, cz: 0, w: 1.4, h: 2, d: 1 };
+  const sideBySide = (isCompare() && $("layout").value === "side" && !split || versusOn()) && !closeUp;
+  const halfW = versusOn() && !closeUp ? versusOffset() + Math.max(b.w, b.d) / 2 + 0.3 : sideBySide ? 2.6 : Math.max(b.w, b.d) / 2 + 0.3, halfH = b.h / 2 + 0.3;
+  const distance = Math.max(halfH / tanY, halfW / (tanY * camera.aspect)) + Math.max(b.w, b.d) / 4;
+  // The close-up looks from the rider's left and a little above, where the shield and the staff hand are.
+  if (closeUp && closeBox) camera.position.set(b.cx + distance * 0.9, b.cy + halfH * 0.5, b.cz + distance * 0.45);
+  else camera.position.set(b.cx + distance * 0.5, b.cy + halfH * 0.4, b.cz + distance * 0.87);
+  controls.target.set(sideBySide ? 0 : b.cx, b.cy, b.cz); controls.update();
+}
+// Keep the canvas above the control bar so nothing is drawn behind it.
+const bar = document.querySelector(".controls");
+new ResizeObserver(() => { view.style.bottom = bar.offsetHeight + "px"; resize(); frameCamera(); }).observe(bar);
+window.addEventListener("resize", () => { resize(); frameCamera(); });
+$("layout").onchange = () => { resize(); frameCamera(); };
+
+// Animations, each decoded once.
+const getAnim = animLoader(manifest, DATA);
+
+// Models with their props, loaded once per side, so two sides wearing the same model (an Advisor and his vanilla equivalent on the same horse) each
+// get their own copy.
+const models = new Map();
+function getModel(url, side = "") {
+  const key = `${url}#${side}`;
+  if (!models.has(key)) models.set(key, loadModel(url).catch(e => { console.error("model", url, e); return null; }));
+  return models.get(key);
+}
+// One side: bone lines, joints, prop gizmos, disc ring and the optional model, all driven by the current animation.
+class Rig {
+  constructor(side) {
+    this.side = side; this.color = new THREE.Color(side.color); this.group = new THREE.Group(); this.lines = new THREE.Group();
+    this.group.add(this.lines); scene.add(this.group);
+  }
+  dispose() { if (this.model) this.group.remove(this.model.group); scene.remove(this.group); }
+  setModel(model) { this.model = model; if (model) this.group.add(model.group); this.bind(); }
+  load(anim) {
+    this.lines.clear(); this.anim = anim; this.segs = []; this.joints = []; this.props = [];
+    if (!anim) { this.bind(); return; }
+    const names = anim.bones.map(b => b[0]);
+    const mat = new THREE.LineBasicMaterial({ color: this.color });
+    const jointGeo = new THREE.SphereGeometry(0.012, 6, 4), jointMat = new THREE.MeshBasicMaterial({ color: this.color });
+    anim.bones.forEach(([name, parent], i) => {
+      if (name.startsWith("be_prop_")) {
+        const g = new THREE.Group();
+        g.add(new THREE.AxesHelper(name === "be_prop_4" ? 0.25 : 0.18));
+        if (name === "be_prop_4") {
+          g.add(new THREE.Mesh(new THREE.RingGeometry(0.55, 0.62, 40), new THREE.MeshBasicMaterial({ color: 0xc78bff, side: THREE.DoubleSide, transparent: true, opacity: 0.55 })));
+        }
+        this.lines.add(g); this.props.push([i, g]); return;
+      }
+      if (parent >= 0 && !names[parent].startsWith("animroot")) {
+        const geo = new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(6), 3));
+        this.lines.add(new THREE.Line(geo, mat)); this.segs.push([i, parent, geo]);
+      }
+      const j = new THREE.Mesh(jointGeo, jointMat); this.lines.add(j); this.joints.push([i, j]);
+    });
+    this.bind();
+  }
+  // Map model bones to animation bones by name.
+  bind() { this.map = this.model && this.anim ? this.model.bones.map(b => this.anim.index.get(b.name) ?? -1) : null; }
+  // Poses the rig at a time in seconds. Each side loops on its own length, so a mount idle keeps going under a longer rider cast.
+  pose(seconds, offsetX) {
+    const a = this.anim; if (!a) return;
+    const f = Math.floor(seconds * a.fps) % a.frames, n = a.bones.length, d = a.data, at = (i, k) => d[(f * n + i) * 7 + k];
+    this.group.position.x = offsetX;
+    for (const [i, parent, geo] of this.segs) {
+      const p = geo.attributes.position.array;
+      for (let k = 0; k < 3; k++) { p[k] = at(parent, k); p[3 + k] = at(i, k); }
+      geo.attributes.position.needsUpdate = true; geo.computeBoundingSphere();
+    }
+    for (const [i, j] of this.joints) { j.position.set(at(i, 0), at(i, 1), at(i, 2)); j.visible = state.bones; }
+    for (const [i, g] of this.props) { g.visible = state.props; g.position.set(at(i, 0), at(i, 1), at(i, 2)); g.quaternion.set(at(i, 3), at(i, 4), at(i, 5), at(i, 6)); }
+    this.lines.children.forEach(c => { if (c.isLine) c.visible = state.bones; });
+    if (this.model) {
+      this.model.group.visible = state.models;
+      this.model.bones.forEach((b, k) => { const i = this.map[k]; if (i >= 0) { b.position.set(at(i, 0), at(i, 1), at(i, 2)); b.quaternion.set(at(i, 3), at(i, 4), at(i, 5), at(i, 6)); } });
+    }
+  }
+}
+
+// The portrait camera preview page, when the export has its data.
+$("portrait").hidden = !manifest.portrait;
+$("portrait").onclick = () => { location.href = "portrait.html"; };
+
+// Unit picker.
+const unitSel = $("unit");
+manifest.entries.forEach((e, i) => { const o = document.createElement("option"); o.value = i; o.textContent = e.name; unitSel.append(o); });
+unitSel.onchange = () => openEntry(+unitSel.value);
+
+// Side toggles: Rider / Mount, or Source / Retargeted.
+function renderSideChips() {
+  const host = $("sideChips"); host.innerHTML = "";
+  const listed = entry.sides.filter(side => side.group !== "vanilla" || versusOn());
+  if (listed.length < 2) return;
+  for (const side of listed) {
+    const b = document.createElement("button");
+    b.textContent = side.label; b.style.color = side.color; b.classList.toggle("on", !state.hidden.has(side.key));
+    b.onclick = () => { state.hidden.has(side.key) ? state.hidden.delete(side.key) : state.hidden.add(side.key); renderSideChips(); };
+    host.append(b);
+  }
+}
+
+// Bounding box of every bone in the first frame of the given animations.
+function measure(list, bodyOnly = false) {
+  const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+  for (const a of list) {
+    if (!a) continue;
+    for (let i = 0; i < a.bones.length; i++) {
+      if (bodyOnly && /^(animroot|be_prop_)/.test(a.bones[i][0])) continue;
+      for (let k = 0; k < 3; k++) { const v = a.data[i * 7 + k]; min[k] = Math.min(min[k], v); max[k] = Math.max(max[k], v); }
+    }
+  }
+  if (!isFinite(min[0])) return null;
+  if (!bodyOnly) min[1] = Math.min(min[1], 0);
+  return { cx: (min[0] + max[0]) / 2, cy: (min[1] + max[1]) / 2, cz: (min[2] + max[2]) / 2, w: max[0] - min[0], h: max[1] - min[1], d: max[2] - min[2] };
+}
+
+// Close-up: frames the first side's body (rider or source) without the mount or the root, to check props in the hands.
+$("close").onclick = () => { closeUp = !closeUp; $("close").classList.toggle("on", closeUp); frameCamera(); };
+
+// In close-up the camera follows the first side's root bone, so a rider lunging or a disc drifting stays in view.
+function follow() {
+  const r = rigs[0], a = r && r.anim; if (!a || !a.index.has("root")) return;
+  const i = a.index.get("root"), n = a.bones.length, rootAt = (f, k) => a.data[(f * n + i) * 7 + k];
+  // The framing was measured on frame 0, so a fresh close-up starts from there.
+  if (followed.lengthSq() === 0) followed.set(rootAt(0, 0) + r.group.position.x, rootAt(0, 1) + 0.25, rootAt(0, 2));
+  const f = Math.floor(time * a.fps) % a.frames;
+  seen.set(rootAt(f, 0) + r.group.position.x, rootAt(f, 1) + 0.25, rootAt(f, 2));
+  const delta = seen.clone().sub(followed); camera.position.add(delta); controls.target.add(delta);
+  followed.copy(seen);
+}
+
+// Opens a gallery entry: builds its rigs, loads its models and plays a slot (STAND by default).
+async function openEntry(index, slotName) {
+  entry = manifest.entries[index]; unitSel.value = index;
+  const mine = entry;
+  rigs.forEach(r => r.dispose());
+  rigs = entry.sides.map(side => new Rig(side));
+  current = null; state.hidden.clear(); renderSideChips();
+  $("layout").hidden = !isCompare();
+  $("title").textContent = entry.name;
+  $("sets").innerHTML = (entry.info || entry.sets).map(line => `<div>${line}</div>`).join("");
+  status.textContent = "Loading...";
+  const loaded = await Promise.all(entry.sides.map(side => side.model ? getModel(DATA + side.model, side.key) : null));
+  if (entry !== mine) return;
+  rigs.forEach((r, i) => r.setModel(loaded[i]));
+  if (tuning) { applyLive(); if (!$("adjustPanel").hidden) renderAdjust(); }
+  $("versus").hidden = $("stats").hidden = !(entry.versus && manifest.panels);
+  if (!entry.versus) { $("statsPanel").hidden = true; $("stats").classList.remove("on"); } else if (!$("statsPanel").hidden) renderStats();
+  const first = entry.slots.find(s => s.slot === slotName) || entry.slots.find(s => s.slot === "STAND") || entry.slots[0];
+  const firstAnims = await Promise.all(entry.sides.map(side => getAnim(first.anims[side.key])));
+  box = measure(firstAnims); closeBox = measure(firstAnims.slice(0, 1), true);
+  resize(); frameCamera();
+  await select(first);
+}
+
+const slotsEl = $("slots"), drawer = $("drawer"), scrim = $("scrim");
+function openDrawer(open) { drawer.classList.toggle("open", open); scrim.classList.toggle("open", open); }
+$("slotsBtn").onclick = () => openDrawer(true);
+$("closeDrawer").onclick = () => openDrawer(false);
+scrim.onclick = () => openDrawer(false);
+function slotTag(s) {
+  if (isCompare()) return (s.anims.source !== undefined ? "S" : "-") + (s.anims.target !== undefined ? "R" : "-");
+  return s.slots && s.slots.mount ? `mount ${s.slots.mount}` : "";
+}
+function renderList(filter) {
+  slotsEl.innerHTML = "";
+  for (const s of entry.slots) {
+    if (filter && !s.slot.toLowerCase().includes(filter.toLowerCase())) continue;
+    const b = document.createElement("button");
+    b.innerHTML = `<span>${s.slot}</span><span class="tag">${slotTag(s)}</span>`;
+    if (current === s) b.classList.add("on");
+    b.onclick = () => { select(s); openDrawer(false); };
+    slotsEl.append(b);
+  }
+}
+$("search").oninput = e => renderList(e.target.value);
+
+async function select(s) {
+  current = s; renderList($("search").value);
+  status.textContent = "Loading...";
+  const list = await Promise.all(entry.sides.map(side => getAnim(s.anims[side.key])));
+  if (current !== s) return;
+  status.textContent = "";
+  rigs.forEach((r, i) => r.load(list[i]));
+  const main = list.find(a => a);
+  frames = main ? main.frames : 1; fps = main ? main.fps : 20; time = 0;
+  $("frame").max = frames - 1;
+  $("info").innerHTML = `<span><b>${entry.name}</b> - <b>${s.slot}</b></span>` + entry.sides.map((side, i) => s.paths[side.key]
+    ? `<span style="color:${side.color}">${s.slots ? s.slots[side.key] + ": " : ""}${s.paths[side.key].split("/").pop()} (${list[i].frames}f)</span>` : "").join("");
+  history.replaceState(null, "", `#u=${manifest.entries.indexOf(entry)}&s=${s.slot}${state.versus ? "&vs=1" : ""}`);
+}
+
+const playBtn = $("play");
+function setPlaying(p) { playing = p; playBtn.textContent = playing ? "Pause" : "Play"; }
+playBtn.onclick = () => setPlaying(!playing);
+$("frame").oninput = e => { time = (+e.target.value + 0.5) / fps; setPlaying(false); };
+function syncChips() { document.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", state[c.dataset.key])); }
+document.querySelectorAll(".chip").forEach(c => c.onclick = () => { state[c.dataset.key] = !state[c.dataset.key]; syncChips(); });
+const step = delta => { time = (Math.min(frames - 1, Math.max(0, Math.floor(time * fps) + delta)) + 0.5) / fps; setPlaying(false); };
+window.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
+  if (e.code === "Space") { e.preventDefault(); playBtn.click(); }
+  if (e.code === "ArrowRight") step(1);
+  if (e.code === "ArrowLeft") step(-1);
+});
+
+const clock = new THREE.Clock();
+function tick() {
+  const dt = clock.getDelta();
+  if (playing && current) time = (time + dt * +$("speed").value) % (frames / fps);
+  const offset = isCompare() && $("layout").value === "side" && !split ? 1.3 : 0;
+  const apart = versusOn() ? versusOffset() : 0;
+  rigs.forEach((r, i) => r.pose(time, isCompare() ? (i ? offset : -offset) : r.side.group === "vanilla" ? apart : -apart));
+  const frame = Math.min(frames - 1, Math.floor(time * fps));
+  $("frame").value = frame;
+  $("fnum").textContent = `${frame}/${frames - 1}`;
+  if (closeUp) follow();
+  controls.update();
+  const w = view.clientWidth, h = view.clientHeight, shown = r => !state.hidden.has(r.side.key) && !!r.anim && (r.side.group !== "vanilla" || versusOn());
+  if (split) {
+    renderer.setScissorTest(true);
+    rigs.forEach((rig, k) => {
+      rigs.forEach(other => other.group.visible = other === rig && shown(rig));
+      const y = k === 0 ? h / 2 : 0;
+      renderer.setViewport(0, y, w, h / 2); renderer.setScissor(0, y, w, h / 2); renderer.render(scene, camera);
+    });
+    renderer.setScissorTest(false);
+  } else {
+    rigs.forEach(r => r.group.visible = shown(r));
+    renderer.setViewport(0, 0, w, h); renderer.render(scene, camera);
+  }
+  requestAnimationFrame(tick);
+}
+// Adjust panel: live tuning of the weapon offsets and the hand shift, saved into the registry through the dashboard server
+// (tools.advisor_overhaul_dashboard), which also rebuilds and deploys. The exported models already carry the values in `manifest.tuning`, so the
+// live view moves each part by the difference from them. Hidden when the project has no tuning values.
+const baked = manifest.tuning || null;
+let tuning = null, polling = null;
+if (baked) { try { const r = await fetch(API + "tuning"); if (r.ok) tuning = await r.json(); } catch (e) { /* the server is down */ } }
+$("adjust").hidden = !tuning;
+// Unsaved values: weapon model path -> [x, y, z] metres, and the hand shift.
+const edits = { props: {}, hand: null };
+const HAND_BONES = /^(hand|finger_\w+|thumb)_(left|right)(_\d)?$/;
+const stem = p => p.toLowerCase().split("/").pop().replace(/\.(wsmodel|rigid_model_v2)$/, "");
+const propKey = model => tuning.props.find(k => stem(k) === stem(model));
+const propValue = key => edits.props[key] || tuning.prop_offsets[key] || [0, 0, 0];
+const handValue = () => edits.hand || tuning.hand_shift;
+const isAdvisor = model => !!model && model.meshes.some(m => /advisor_overhaul_body/.test(m.userData.model));
+const dirty = () => Object.keys(edits.props).length > 0 || !!edits.hand;
+
+// Moves his hand vertices by the hand shift's change, weighted by how much each vertex follows the hand and finger bones.
+function liveHands(model, mesh) {
+  const g = mesh.geometry, pos = g.attributes.position, names = model.bones.map(b => b.name);
+  if (!mesh.userData.hands) {
+    const index = g.attributes.skinIndex, weight = g.attributes.skinWeight;
+    const right = new Float32Array(pos.count), left = new Float32Array(pos.count);
+    for (let v = 0; v < pos.count; v++) for (let k = 0; k < 4; k++) {
+      const hit = HAND_BONES.exec(names[index.getComponent(v, k)] || "");
+      if (hit) (hit[2] === "right" ? right : left)[v] += weight.getComponent(v, k);
+    }
+    const turn = side => new THREE.Matrix4().extractRotation(new THREE.Matrix4().copy(model.inverses[names.indexOf(`hand_${side}`)]).invert());
+    mesh.userData.hands = { right, left, original: Float32Array.from(pos.array), turnRight: turn("right"), turnLeft: turn("left") };
+  }
+  const h = mesh.userData.hands, v = handValue(), b = baked.hand_shift, d = [v[0] - b[0], v[1] - b[1], v[2] - b[2]];
+  const r = new THREE.Vector3(d[0], d[1], d[2]).applyMatrix4(h.turnRight), l = new THREE.Vector3(d[0], d[1], -d[2]).applyMatrix4(h.turnLeft);
+  for (let i = 0; i < pos.count; i++) {
+    pos.array[i * 3] = h.original[i * 3] + h.right[i] * r.x + h.left[i] * l.x;
+    pos.array[i * 3 + 1] = h.original[i * 3 + 1] + h.right[i] * r.y + h.left[i] * l.y;
+    pos.array[i * 3 + 2] = h.original[i * 3 + 2] + h.right[i] * r.z + h.left[i] * l.z;
+  }
+  pos.needsUpdate = true;
+}
+
+// Shows the current values on every Advisor model of the open entry.
+function applyLive() {
+  for (const rig of rigs) {
+    const model = rig.model; if (!isAdvisor(model)) continue;
+    for (const mesh of model.meshes) {
+      const u = mesh.userData;
+      if (mesh.isSkinnedMesh && /advisor_overhaul_body/.test(u.model)) liveHands(model, mesh);
+      const key = u.attach && propKey(u.model);
+      if (key) { const v = propValue(key), b = baked.prop_offsets[key] || [0, 0, 0]; mesh.position.set(v[0] - b[0], v[1] - b[1], v[2] - b[2]); }
+    }
+  }
+}
+
+// One slider row in centimetres for a value held in metres.
+function sliderRow(host, label, metres, range, onChange) {
+  const row = document.createElement("div"); row.className = "arow";
+  row.innerHTML = `<label>${label}</label><input type="range" min="${-range}" max="${range}" step="0.1"><input type="number" step="0.1" inputmode="decimal">`;
+  const [slider, box] = row.querySelectorAll("input");
+  const show = cm => { slider.value = cm; if (document.activeElement !== box) box.value = (Math.round(cm * 10) / 10).toFixed(1); };
+  const set = cm => { show(cm); onChange(Math.round(cm * 10) / 1000); };
+  slider.oninput = () => set(+slider.value);
+  box.onchange = () => { if (box.value !== "" && isFinite(+box.value)) set(Math.max(-range, Math.min(range, +box.value))); };
+  show(metres * 100);
+  host.append(row);
+}
+
+// Builds the rows for the open entry: each weapon of the Advisor's model, then his hands.
+function renderAdjust() {
+  const host = $("aRows"); host.innerHTML = "";
+  const model = rigs.map(r => r.model).find(isAdvisor);
+  if (!model) { host.textContent = "Nothing to adjust on this unit. Pick an Advisor form."; return; }
+  const seen = new Set();
+  for (const mesh of model.meshes) {
+    const key = mesh.userData.attach && propKey(mesh.userData.model);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    const title = document.createElement("h3"); title.textContent = `${mesh.userData.slot}: ${stem(key)} (cm)`; host.append(title);
+    ["along blade (x)", "y", "z"].forEach((label, axis) => sliderRow(host, label, propValue(key)[axis], 15, m => {
+      edits.props[key] = propValue(key).slice(); edits.props[key][axis] = m; applyLive(); note();
+    }));
+  }
+  const title = document.createElement("h3"); title.textContent = "Hands: right hand frame, left mirrored (cm)"; host.append(title);
+  ["toward fingers (x)", "y", "z"].forEach((label, axis) => sliderRow(host, label, handValue()[axis], 5, m => {
+    edits.hand = handValue().slice(); edits.hand[axis] = m; applyLive(); note();
+  }));
+}
+
+function note(text) { $("aNote").textContent = text || (dirty() ? "Unsaved edits. Save writes them into the registry." : ""); }
+
+// Saves the edits into the registry.
+async function save() {
+  const body = {};
+  if (Object.keys(edits.props).length) body.prop_offsets = edits.props;
+  if (edits.hand) body.hand_shift = edits.hand;
+  const r = await fetch(API + "tuning", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const answer = await r.json();
+  if (!r.ok) { note(`Not saved: ${answer.error}`); return false; }
+  tuning = Object.assign(tuning, answer); edits.props = {}; edits.hand = null;
+  note("Saved to the registry. Rebuild to bake it into the models.");
+  return true;
+}
+
+// Starts a server job (saving first for a rebuild) and shows its log until it ends.
+async function run(job) {
+  if (job === "rebuild" && dirty() && !(await save())) return;
+  const r = await fetch(`${API}run/${job}`, { method: "POST" });
+  const state = await r.json();
+  if (!r.ok) { note(`A ${state.name} job is still running.`); return; }
+  note(job === "rebuild" ? "Rebuilding the mod and the gallery..." : "Deploying the test pack...");
+  clearInterval(polling);
+  polling = setInterval(async () => {
+    const s = await (await fetch(API + "job")).json();
+    $("aLog").textContent = s.log.join("\n");
+    if (s.running) return;
+    clearInterval(polling);
+    if (!s.ok) note(`The ${s.name} failed. See the log below.`);
+    else if (s.name === "rebuild") { note("Rebuilt. Reload to see the new build, then Deploy to test in game."); addReload(); }
+    else note("Deployed. Test it in game.");
+  }, 1000);
+}
+function addReload() {
+  if ($("aReload")) return;
+  const b = document.createElement("button"); b.id = "aReload"; b.textContent = "Reload"; b.onclick = () => location.reload();
+  $("aRebuild").after(b);
+}
+
+$("adjust").onclick = () => { const open = $("adjustPanel").hidden; $("adjustPanel").hidden = !open; $("adjust").classList.toggle("on", open); if (open) renderAdjust(); };
+$("aClose").onclick = () => $("adjust").click();
+$("aSave").onclick = save;
+$("aReset").onclick = () => { edits.props = {}; edits.hand = null; applyLive(); renderAdjust(); note(); };
+$("aRebuild").onclick = () => run("rebuild");
+$("aDeploy").onclick = () => run("deploy");
+
+// Vanilla comparison: an Advisor form's entry carries its vanilla equivalent (`entry.versus`) as two more sides in the "vanilla" group, and the
+// unit panels of both (`manifest.panels`, built by generators.advisor_overhaul_panels). "Vs vanilla" stands the equivalent beside him, "Stats"
+// opens the in-game unit panel with the equivalent drawn into its bars.
+function versusOn() { return state.versus && !!entry && !!entry.versus; }
+// How far each side stands from the middle: wider for riders.
+function versusOffset() { return entry.sides.some(side => side.key === "mount") ? 1.5 : 0.8; }
+const panelArt = path => path ? DATA + "art/" + encodeURI(path) : "";
+
+// Attribute chips: red for what only the panel's unit has, green for what only the compared unit has.
+function attributeChips(u, o) {
+  const mine = new Set(u.attributes.map(a => a.key)), theirs = new Set(o.attributes.map(a => a.key));
+  const chip = (a, cls) => `<span class="${cls}" title="${UnitPanel.esc(a.text)}">${UnitPanel.esc(a.name)}</span>`;
+  const list = u.attributes.map(a => chip(a, theirs.has(a.key) ? "" : "down")).concat(o.attributes.filter(a => !mine.has(a.key)).map(a => chip(a, "up")));
+  return list.length ? list.join("") : '<span>None</span>';
+}
+
+function renderStats() {
+  const { esc, cardHtml, hpHtml, statsHtml, abilitiesHtml } = UnitPanel;
+  const advisor = manifest.panels[entry.unit], vanilla = manifest.panels[entry.versus];
+  const [u, o] = state.flip ? [vanilla, advisor] : [advisor, vanilla];
+  $("statsPanel").innerHTML = `<div class="p-title">${esc(u.name)}</div>
+    <div class="vs">Compared with <b>${esc(o.name)}</b><button id="flip">${state.flip ? "Show the Advisor" : "Show vanilla"}</button></div>
+    <div class="p-sub"><span>${esc(u.caste)} · ${esc(u.class)}${u.stats.tier ? ` · tier ${u.stats.tier}` : ""}</span></div>
+    <div class="p-top">${cardHtml(u, panelArt)}<div><div class="meta">${esc(u.key)}</div>${hpHtml(u, o, panelArt)}</div></div>
+    <div class="p-head">Stats</div>${statsHtml(u.stats, o.stats, panelArt)}
+    <div class="p-head">Abilities</div><div class="abilities">${abilitiesHtml(u.abilities, panelArt)}</div>
+    <div class="vs">${esc(o.name)}</div><div class="abilities">${abilitiesHtml(o.abilities, panelArt)}</div>
+    <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o)}</div>`;
+  $("flip").onclick = () => { state.flip = !state.flip; renderStats(); };
+}
+
+$("versus").onclick = () => {
+  state.versus = !state.versus; $("versus").classList.toggle("on", state.versus);
+  renderSideChips(); frameCamera();
+  if (current) history.replaceState(null, "", `#u=${manifest.entries.indexOf(entry)}&s=${current.slot}${state.versus ? "&vs=1" : ""}`);
+};
+// The stats and Adjust panels share a spot, so opening one closes the other.
+$("stats").onclick = () => {
+  const open = $("statsPanel").hidden;
+  $("statsPanel").hidden = !open; $("stats").classList.toggle("on", open);
+  if (open) { renderStats(); $("adjustPanel").hidden = true; $("adjust").classList.remove("on"); }
+};
+$("adjust").addEventListener("click", () => { if (!$("adjustPanel").hidden) { $("statsPanel").hidden = true; $("stats").classList.remove("on"); } });
+// Wide screens move the 3D view aside while a panel is open.
+new MutationObserver(() => {
+  document.body.classList.toggle("with-panel", !$("statsPanel").hidden || !$("adjustPanel").hidden);
+  resize(); frameCamera();
+}).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["hidden"] });
+
+// Hooks for scripted checks (Playwright).
+window.viewer = { camera, controls, frameCamera, get rigs() { return rigs; }, get entry() { return entry; }, openEntry, select, manifest,
+                  setFrame: f => { time = (f + 0.5) / fps; setPlaying(false); } };
+const params = new URLSearchParams(location.hash.slice(1));
+state.versus = params.get("vs") === "1"; $("versus").classList.toggle("on", state.versus);
+const startIndex = Math.min(manifest.entries.length - 1, Math.max(0, +(params.get("u") || 0)));
+openEntry(startIndex, params.get("s"));
+tick();
+</script>
+</body>
+</html>

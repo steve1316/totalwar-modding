@@ -1,0 +1,26 @@
+{
+ "name": "Advisor Overhaul",
+ "checkout": "../totalwar-modding-pj-advisor-overhaul",
+ "registry": "generators/advisor_overhaul_registry.json",
+ "gallery": "_diag/anim_viewer",
+ "gallery_next": "_diag/anim_viewer_next",
+ "jobs": {
+  "rebuild": {
+   "commands": [
+    ["{python}", "-u", "-m", "generators.advisor_overhaul_model"],
+    ["{python}", "-u", "-m", "generators.advisor_overhaul"],
+    ["{python}", "-u", "-m", "generators.advisor_overhaul_gallery", "--out", "_diag/anim_viewer_next"]
+   ],
+   "publish": true
+  },
+  "deploy": {
+   "commands": [["{python}", "-u", "-m", "tools.redeploy_advisor_overhaul"]]
+  }
+ },
+ "tuning": {
+  "prop_offsets": "model.prop_offsets",
+  "hand_shift": "model.hand_shift",
+  "camera_head": "portrait.camera_head",
+  "prop_sources": ["weapons.*.props", "mounts.*.variant_props"]
+ }
+}

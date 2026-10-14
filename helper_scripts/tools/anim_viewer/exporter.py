@@ -1,4 +1,5 @@
-"""Shared export pieces of the animation viewer: animation bundles, models and the manifest.
+"""Shared export pieces of the animation viewer: animation bundles, models and the manifest. The modding workbench (`modding-workbench/`, Viewer
+tab) draws an export: point a project config's `gallery` at the output folder.
 
 Each bone of each animation frame is written as 7 int16 values: world position scaled by the animation's `scale`, then the world rotation quaternion
 scaled by 32767. Animations are packed into a few bundle files. The manifest lists entries (a unit, or a source/target comparison), each with its
@@ -22,9 +23,6 @@ from tools.glf_rebuild_animpack import AnimSet, load_slot_ids, parse_set, read_a
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
-
-# The viewer files shipped next to this script: the gallery, the portrait camera preview and the model and animation loading they share.
-PAGES = [os.path.join(os.path.dirname(os.path.abspath(__file__)), name) for name in ("index.html", "portrait.html", "viewer_common.js")]
 
 # Slot id names.
 SLOT_IDS = "./schemas/anim_ids_warhammer_3.csv"
@@ -126,7 +124,7 @@ class Exporter:
     portrait: Optional[Dict]
     # The tuning values baked into the exported models (prop offsets, hand shift), which the Adjust panel edits from, or None.
     tuning: Optional[Dict]
-    # Unit panels by unit key (see `generators.advisor_overhaul_panels`), or None.
+    # Unit panels by unit key (built with `ttc.unit_panel`), or None.
     panels: Optional[Dict]
 
     def __init__(self, out: str, assets: AssetSource):
@@ -220,7 +218,7 @@ class Exporter:
         return self.models[key]
 
     def write(self) -> None:
-        """Writes the bundles, the manifest, the pages and their shared script."""
+        """Writes the bundles and the manifest."""
         for index, bundle in enumerate(self.bundles):
             with open(os.path.join(self.out, "anims", f"bundle_{index:02d}.bin"), "wb") as f:
                 f.write(bundle)
@@ -233,8 +231,6 @@ class Exporter:
             manifest["panels"] = self.panels
         with open(os.path.join(self.out, "manifest.json"), "w", encoding="utf-8") as f:
             json.dump(manifest, f, separators=(",", ":"))
-        for page in PAGES:
-            shutil.copy(page, os.path.join(self.out, os.path.basename(page)))
         size = sum(os.path.getsize(os.path.join(root, n)) for root, _, files in os.walk(self.out) for n in files)
         count = sum(len(files) for _, _, files in os.walk(self.out))
         print(f"{len(self.entries)} entries, {len(self.anims)} animations in {len(self.bundles)} bundles, {count} files, {size / 1048576:.1f} MB in {self.out}")
