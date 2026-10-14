@@ -1,10 +1,15 @@
 // The Look inspector tab: his outfit, his hood and extra pieces such as a hat, set per weapon and shared by every mount of that weapon
 // (`weapons.<weapon>.body`, `.hood` and `.pieces`). Outfits come from the registry's `model.bodies`, and any other humanoid model of the game can be
-// added as an outfit or a piece. Every choice shows live on the stage through `studio.live`. The Jobs bar saves the edits.
+// added as an outfit or a piece, each search hit and piece with a thumbnail. Every choice shows live on the stage through `studio.live`. The Jobs
+// bar saves the edits.
 import { stem } from "./live_models.js";
+import { Thumbnails } from "./thumbs.js";
 
 // Models a search lists at most.
 const MODEL_HITS = 30;
+
+// Milliseconds a search waits for typing to pause, so thumbnails are only drawn for what is searched in the end.
+const TYPING_PAUSE = 300;
 
 // The metadata a new outfit's body slot carries, as on the vanilla outfits.
 const BODY_META = ["audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"];
@@ -17,6 +22,7 @@ export class LookTab {
     // `adding` is "outfit" or "piece" while its model search is open, `filter` its search text.
     this.studio = studio; this.adding = null; this.filter = "";
     this.look = studio.manifest.editor && studio.manifest.editor.look;
+    this.thumbs = new Thumbnails(studio);
     // The stage shows the chosen outfit, head and pieces.
     studio.live.sources.push(f => this.wanted(f));
     studio.live.listeners.push(() => this.refresh());
@@ -74,11 +80,14 @@ export class LookTab {
     const list = () => {
       this.filter = input.value; const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
       const found = terms.length ? this.look.models.filter(p => terms.every(w => p.includes(w))).slice(0, MODEL_HITS) : [];
-      hits.innerHTML = found.map(p => `<button data-model="${esc(p)}"><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(3, -1).join("/"))}</span></button>`).join("")
+      hits.innerHTML = found.map(p => `<button class="look-hit" data-model="${esc(p)}"><img class="thumb" data-thumb="${esc(p)}" alt="">
+        <span><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(3, -1).join("/"))}</span></span></button>`).join("")
         || (terms.length ? '<div class="note">No model matches.</div>' : "");
+      this.thumbs.fill(hits);
       hits.querySelectorAll("[data-model]").forEach(b => b.onclick = () => this.pick(f, b.dataset.model));
     };
-    input.oninput = list; list(); setTimeout(() => input.focus());
+    input.oninput = () => { clearTimeout(this.typing); this.typing = setTimeout(list, TYPING_PAUSE); };
+    list(); setTimeout(() => input.focus());
     return box;
   }
 
@@ -126,7 +135,8 @@ export class LookTab {
     const extra = document.createElement("div"); extra.className = "adj-card";
     extra.innerHTML = `<div class="adj-head"><b>Extra pieces</b><button class="mini" data-add="piece">${this.adding === "piece" ? "Close" : "+ Add a piece"}</button></div>
       ${Object.keys(pieces).length ? "" : '<div class="note">None. Add a hat, a helmet, a cape and so on.</div>'}
-      ${Object.entries(pieces).map(([slot, piece]) => `<div class="look-piece"><span class="adj-model">${esc(stem(piece[0]))}</span><button class="mini" data-drop="${esc(slot)}" aria-label="Remove">×</button></div>
+      ${Object.entries(pieces).map(([slot, piece]) => `<div class="look-piece"><img class="thumb" data-thumb="${esc(piece[0])}" alt=""><span class="adj-model">${esc(stem(piece[0]))}</span>
+        <button class="mini" data-drop="${esc(slot)}" aria-label="Remove">×</button></div>
         ${this.state([slot])}`).join("")}`;
     container.append(extra);
     if (this.adding === "piece") extra.append(this.search(f));
@@ -135,5 +145,6 @@ export class LookTab {
       this.set({ [base + "pieces"]: Object.keys(rest).length ? rest : null });
     });
     container.querySelectorAll("[data-add]").forEach(b => b.onclick = () => { this.adding = this.adding === b.dataset.add ? null : b.dataset.add; this.filter = ""; this.render(container); });
+    this.thumbs.fill(extra);
   }
 }

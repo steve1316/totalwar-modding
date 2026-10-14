@@ -5,14 +5,15 @@ The page is `index.html` with its modules in `studio/`, served from this folder.
 `/viewer/p/<project>/data/`, and its tuning and job routes under `/viewer/p/<project>/api/`:
 - `GET tuning`: the tuning values, the weapon models that may get an offset, and the job state. `POST tuning`: saves values into the registry.
 - `POST run/<job>`: starts one of the project's jobs (rebuild, deploy). `GET job`: the job state and the end of its log.
-- `POST prop`: exports one weapon model (`model`, `slot`, `attach`, `skeleton`) into the gallery for the Adjust tab's live preview.
+- `POST props`: exports models (`items`, each with `model`, `slot`, `attach` and `skeleton`) into the gallery for the live previews and
+  thumbnails, answering `urls` (null for a model not found).
 """
 
 import json
 import os
 from typing import Dict, List, Tuple
 
-from workbench.plugins.viewer.previews import prop_preview
+from workbench.plugins.viewer.previews import prop_previews
 from workbench.projects import Project
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,15 +108,11 @@ class Viewer:
                 handler.send_json(200, project.save_tuning(changes))
             except ValueError as error:
                 handler.send_json(400, {"error": str(error)})
-        elif rest == "api/prop":
+        elif rest == "api/props":
             try:
-                url = prop_preview(project, str(changes.get("model", "")), str(changes.get("slot", "")), str(changes.get("attach", "")),
-                                   str(changes.get("skeleton", "humanoid01")))
-                handler.send_json(200, {"url": url})
+                handler.send_json(200, {"urls": prop_previews(project, changes.get("items"))})
             except ValueError as error:
                 handler.send_json(400, {"error": str(error)})
-            except FileNotFoundError as error:
-                handler.send_json(404, {"error": f"not found: {error}"})
         elif rest.startswith("api/run/") and rest[len("api/run/"):] in project.jobs:
             started = project.job.start(rest[len("api/run/"):])
             handler.send_json(200 if started else 409, project.job.state())

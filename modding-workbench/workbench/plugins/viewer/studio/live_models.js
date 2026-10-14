@@ -1,7 +1,7 @@
 // Live models: keeps the open form's stage model showing what its tabs chose (weapons from the Adjust tab, outfit, head and extra pieces from the
 // Look tab) before a rebuild bakes them in. Each tab adds a source: a function giving, for the open form, slot -> {model, attach, built} (attach
 // empty for a model that bends with the body, built when it is what the gallery built) or null for a slot that should be empty. A model the
-// gallery does not have is exported on the spot (`api/prop`) and loaded once. The pieces the gallery built are kept aside, and a slot changed
+// gallery does not have is exported on the spot (`api/props`) and loaded once. The pieces the gallery built are kept aside, and a slot changed
 // here goes back to them once no source asks for anything else.
 import * as THREE from "three";
 import { loadModel } from "../viewer_common.js";
@@ -26,8 +26,12 @@ export class LiveModels {
   preview(model, slot, attach) {
     const key = `${stem(model)}|${slot}|${attach}`;
     if (!this.previews.has(key)) {
-      this.previews.set(key, fetch(this.studio.api + "prop", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model, slot, attach }) })
-        .then(async r => { const answer = await r.json(); if (!r.ok) throw new Error(answer.error); return loadModel(this.studio.data + answer.url); })
+      this.previews.set(key, fetch(this.studio.api + "props", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ items: [{ model, slot, attach }] }) })
+        .then(async r => {
+          const answer = await r.json();
+          if (!r.ok || !answer.urls[0]) throw new Error(answer.error || "not found in the game's packs");
+          return loadModel(this.studio.data + answer.urls[0]);
+        })
         .then(loaded => loaded.meshes));
       this.previews.get(key).catch(() => this.previews.delete(key));
     }
