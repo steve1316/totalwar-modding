@@ -126,7 +126,8 @@ def path_matches(path: str, pattern: str) -> bool:
 
 
 def edit_value(value: Any) -> Any:
-    """Checks an edit's value: a number, a text, a list of texts, an object (such as a planned skill, kept small), or None (remove the value).
+    """Checks an edit's value: on or off, a number, a text, a list of texts, an object (such as a planned skill, kept small), or None (remove the
+    value).
 
     Args:
         value (Any): The value sent.
@@ -137,7 +138,7 @@ def edit_value(value: Any) -> Any:
     Raises:
         ValueError: When it is none of those.
     """
-    if value is None or (isinstance(value, str) and len(value) <= EDIT_TEXT_LIMIT):
+    if value is None or isinstance(value, bool) or (isinstance(value, str) and len(value) <= EDIT_TEXT_LIMIT):
         return value
     if isinstance(value, (int, float)) and not isinstance(value, bool) and abs(value) <= EDIT_NUMBER_LIMIT:
         return int(value) if float(value).is_integer() else round(float(value), 4)
@@ -278,6 +279,8 @@ class Project:
     editable: List[str]
     # Dotted paths of registry values the page reads as they are (such as the planned skills).
     readable: List[str]
+    # Folders of the project's own model files, which live previews read before the vanilla packs.
+    assets: List[str]
     # The project's running or last job.
     job: Job = field(init=False, repr=False)
 
@@ -298,7 +301,8 @@ class Project:
         root = os.path.normpath(os.path.join(REPO_ROOT, config["checkout"], config.get("helper_scripts", "helper_scripts")))
         return cls(key=os.path.basename(path)[:-len(".json")], name=config["name"], root=root, registry=os.path.join(root, config["registry"]),
                    gallery=os.path.join(root, config["gallery"]), gallery_next=os.path.join(root, config["gallery_next"]), jobs=config["jobs"],
-                   tuning=config.get("tuning", {}), editable=config.get("editable", []), readable=config.get("readable", []))
+                   tuning=config.get("tuning", {}), editable=config.get("editable", []), readable=config.get("readable", []),
+                   assets=[os.path.normpath(os.path.join(root, folder)) for folder in config.get("assets", [])])
 
     def read_registry(self) -> Dict:
         """The registry as it is on disk."""
