@@ -1,0 +1,320 @@
+"""Projects: the mods and units the workbench works on, one JSON config each under `modding-workbench/projects/`.
+
+A config names the checkout the project lives in and, inside its `helper_scripts`, the project's registry, its viewer gallery, its jobs (commands
+such as rebuild and deploy) and where its tuning values sit in the registry. Paths are relative to the checkout's `helper_scripts` folder, and the
+checkout itself is relative to the repo root (or absolute). `{python}` in a command is this Python. See `projects/advisor_overhaul.json`.
+"""
+
+import glob
+import json
+import os
+import shutil
+import subprocess
+import sys
+import threading
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
+
+from core.json_format import write_json
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Settings
+
+# The repo root: checkouts in the configs are relative to it.
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# The project configs.
+PROJECTS_DIR = os.path.join(REPO_ROOT, "modding-workbench", "projects")
+
+# Lines of a job log returned to the page.
+LOG_TAIL = 12
+
+# Largest size accepted for a prop offset or hand shift number, in metres.
+LIMITS = {"prop_offsets": 0.3, "hand_shift": 0.05}
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Registry paths
+
+
+def get_path(data: Any, path: str) -> Any:
+    """A value at a dotted path, e.g. `model.hand_shift`.
+
+    Args:
+        data (Any): The registry.
+        path (str): The dotted path.
+
+    Returns:
+        Any: The value.
+
+    Raises:
+        KeyError: When a key is missing.
+    """
+    for key in path.split("."):
+        data = data[key]
+    return data
+
+
+def each_path(data: Any, path: str) -> List[Any]:
+    """Every value at a dotted path where `*` stands for every value of a map, e.g. `weapons.*.props`. Missing keys give nothing.
+
+    Args:
+        data (Any): The registry.
+        path (str): The dotted path.
+
+    Returns:
+        List[Any]: The values found.
+    """
+    found = [data]
+    for key in path.split("."):
+        found = [v for item in found if isinstance(item, dict) for v in (item.values() if key == "*" else [item[key]] if key in item else [])]
+    return found
+
+
+def set_path(data: Any, path: str, value: Any) -> None:
+    """Sets the value at a dotted path, making missing maps on the way.
+
+    Args:
+        data (Any): The registry, changed in place.
+        path (str): The dotted path.
+        value (Any): The new value.
+    """
+    keys = path.split(".")
+    for key in keys[:-1]:
+        data = data.setdefault(key, {})
+    data[keys[-1]] = value
+
+
+def numbers(value: Any, count: int, limit: float) -> List[float]:
+    """Checks a list of numbers.
+
+    Args:
+        value (Any): The value sent.
+        count (int): How many numbers it must hold.
+        limit (float): Largest size of each.
+
+    Returns:
+        List[float]: The numbers, rounded to tenths of a millimetre.
+
+    Raises:
+        ValueError: When it is not `count` numbers within the limit.
+    """
+    if not isinstance(value, list) or len(value) != count or not all(isinstance(v, (int, float)) and abs(v) <= limit for v in value):
+        raise ValueError(f"expected {count} numbers within {limit}")
+    return [round(float(v), 4) for v in value]
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Jobs
+
+
+class Job:
+    """A project's one background job and its state. Each job is a list of commands run in order, and a job may publish the new gallery."""
+
+    # The project it runs for.
+    project: "Project"
+    # Guards `name`, `running` and `ok`.
+    lock: threading.Lock
+    # Name of the last job started, or None.
+    name: Optional[str]
+    # Whether it is still running.
+    running: bool
+    # Whether it ended well, None while running or before any job.
+    ok: Optional[bool]
+
+    def __init__(self, project: "Project"):
+        self.project = project
+        self.lock = threading.Lock()
+        self.name, self.running, self.ok = None, False, None
+
+    @property
+    def log_path(self) -> str:
+        """The job log, next to the project's other run logs."""
+        return os.path.join(self.project.root, "_diag", f"workbench_{self.project.key}_job.log")
+
+    def start(self, name: str) -> bool:
+        """Starts a job in a thread unless one is running.
+
+        Args:
+            name (str): A key of the project's `jobs`.
+
+        Returns:
+            bool: Whether it started.
+        """
+        with self.lock:
+            if self.running:
+                return False
+            self.name, self.running, self.ok = name, True, None
+        threading.Thread(target=self._run, args=(name,), daemon=True).start()
+        return True
+
+    def _run(self, name: str) -> None:
+        """Runs a job's commands from the project's `helper_scripts` into the job log, then publishes the gallery when the job asks for it.
+
+        Args:
+            name (str): A key of the project's `jobs`.
+        """
+        spec, ok = self.project.jobs[name], True
+        os.makedirs(os.path.dirname(self.log_path), exist_ok=True)
+        with open(self.log_path, "w", encoding="utf-8") as log:
+            for command in spec["commands"]:
+                command = [sys.executable if part == "{python}" else part for part in command]
+                log.write(f"> {' '.join(command[1:])}\n")
+                log.flush()
+                if subprocess.run(command, cwd=self.project.root, stdout=log, stderr=subprocess.STDOUT).returncode != 0:
+                    log.write("failed\n")
+                    ok = False
+                    break
+            if ok and spec.get("publish"):
+                shutil.copytree(self.project.gallery_next, self.project.gallery, dirs_exist_ok=True)
+                log.write("published the new gallery\n")
+            log.write("done\n" if ok else "")
+        with self.lock:
+            self.running, self.ok = False, ok
+
+    def state(self) -> Dict[str, Any]:
+        """The job state for the page.
+
+        Returns:
+            Dict[str, Any]: `name`, `running`, `ok` and `log` (the last lines of the job log).
+        """
+        with self.lock:
+            state = {"name": self.name, "running": self.running, "ok": self.ok}
+        lines = open(self.log_path, encoding="utf-8", errors="replace").read().splitlines() if os.path.exists(self.log_path) else []
+        state["log"] = lines[-LOG_TAIL:]
+        return state
+
+
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////////////////////////////////////////////////////////////////////////
+# Projects
+
+
+@dataclass
+class Project:
+    """One project config."""
+
+    # Config file name without `.json`, used in URLs.
+    key: str
+    # Name shown in the project picker.
+    name: str
+    # The project checkout's `helper_scripts` folder, where its commands run.
+    root: str
+    # The registry the tuning values are saved into.
+    registry: str
+    # The viewer gallery the Viewer tab draws, and the folder a rebuild exports the next one to.
+    gallery: str
+    gallery_next: str
+    # Job name -> {"commands": [[...], ...], "publish": bool}.
+    jobs: Dict[str, Dict[str, Any]]
+    # Tuning value -> its dotted path in the registry (`prop_offsets`, `hand_shift`, `camera_head`), plus `prop_sources`: dotted paths, `*` for
+    # every value of a map, to the prop slot maps whose models may get an offset.
+    tuning: Dict[str, Any]
+    # The project's running or last job.
+    job: Job = field(init=False, repr=False)
+
+    def __post_init__(self):
+        self.job = Job(self)
+
+    @classmethod
+    def load(cls, path: str) -> "Project":
+        """Reads one config.
+
+        Args:
+            path (str): The config file.
+
+        Returns:
+            Project: The project.
+        """
+        config = json.load(open(path, encoding="utf-8"))
+        root = os.path.normpath(os.path.join(REPO_ROOT, config["checkout"], config.get("helper_scripts", "helper_scripts")))
+        return cls(key=os.path.basename(path)[:-len(".json")], name=config["name"], root=root, registry=os.path.join(root, config["registry"]),
+                   gallery=os.path.join(root, config["gallery"]), gallery_next=os.path.join(root, config["gallery_next"]), jobs=config["jobs"],
+                   tuning=config.get("tuning", {}))
+
+    def read_registry(self) -> Dict:
+        """The registry as it is on disk."""
+        return json.load(open(self.registry, encoding="utf-8"))
+
+    def props(self, registry: Dict) -> List[str]:
+        """Every weapon model the registry puts on a prop slot, in registry order. Variant mesh references are left out.
+
+        Args:
+            registry (Dict): The registry.
+
+        Returns:
+            List[str]: The model paths.
+        """
+        paths: List[str] = []
+        for source in self.tuning.get("prop_sources", []):
+            for slots in each_path(registry, source):
+                for prop in slots.values() if isinstance(slots, dict) else []:
+                    if isinstance(prop, list) and len(prop) > 1 and prop[1] not in paths and not prop[1].lower().endswith(".variantmeshdefinition"):
+                        paths.append(prop[1])
+        return paths
+
+    def tuning_values(self, registry: Optional[Dict] = None) -> Dict[str, Any]:
+        """The values the Adjust panel and the portrait page edit, and the weapon models that may get an offset.
+
+        Args:
+            registry (Optional[Dict]): The registry, read from disk when None.
+
+        Returns:
+            Dict[str, Any]: `prop_offsets`, `hand_shift`, `camera_head` (each only when the config names it) and `props`.
+        """
+        registry = registry if registry is not None else self.read_registry()
+        values = {name: get_path(registry, path) if name != "prop_offsets" else (each_path(registry, path) or [{}])[0]
+                  for name, path in self.tuning.items() if name != "prop_sources"}
+        values["props"] = self.props(registry)
+        return values
+
+    def save_tuning(self, changes: Dict[str, Any]) -> Dict[str, Any]:
+        """Writes sent tuning values into the registry. A prop offset of all zeros removes that weapon's entry.
+
+        Args:
+            changes (Dict[str, Any]): Any of `prop_offsets` (a partial map), `hand_shift` and `camera_head` (a partial map).
+
+        Returns:
+            Dict[str, Any]: The values after the save.
+
+        Raises:
+            ValueError: When a value is out of shape, names a weapon the registry does not use, or the config has no path for it.
+        """
+        registry = self.read_registry()
+        for name in changes:
+            if name not in self.tuning or name == "prop_sources":
+                raise ValueError(f"{self.name} has no {name} to tune")
+        if "prop_offsets" in changes:
+            known = self.props(registry)
+            offsets = dict((each_path(registry, self.tuning["prop_offsets"]) or [{}])[0])
+            for path, value in changes["prop_offsets"].items():
+                if path not in known:
+                    raise ValueError(f"{path} is not a weapon in the registry")
+                offset = numbers(value, 3, LIMITS["prop_offsets"])
+                if any(offset):
+                    offsets[path] = offset
+                else:
+                    offsets.pop(path, None)
+            set_path(registry, self.tuning["prop_offsets"], offsets)
+        if "hand_shift" in changes:
+            set_path(registry, self.tuning["hand_shift"], numbers(changes["hand_shift"], 3, LIMITS["hand_shift"]))
+        if "camera_head" in changes:
+            camera = get_path(registry, self.tuning["camera_head"])
+            for key, value in changes["camera_head"].items():
+                if key not in camera or not isinstance(value, (int, float)):
+                    raise ValueError(f"bad camera value {key}")
+                camera[key] = round(float(value), 4)
+        write_json(self.registry, registry)
+        return self.tuning_values(registry)
+
+
+def load_projects() -> Dict[str, Project]:
+    """Every project config, in file name order.
+
+    Returns:
+        Dict[str, Project]: Projects by key.
+    """
+    return {project.key: project for project in (Project.load(path) for path in sorted(glob.glob(os.path.join(PROJECTS_DIR, "*.json"))))}
