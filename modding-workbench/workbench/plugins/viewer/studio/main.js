@@ -69,6 +69,8 @@ function renderTabs() {
   $("tabs").querySelectorAll("button").forEach(b => b.onclick = () => selectTab(b.dataset.tab, true));
 }
 function renderTab() {
+  // Marks which tab drew the inspector, so a tab redrawing itself later (the Adjust tab once a model loads) leaves another tab alone.
+  $("inspBody").dataset.tab = tab;
   if (tabs[tab]) tabs[tab].render($("inspBody"));
 }
 // Picks a tab. The Portrait and Skills tabs show their own stage, and the other tabs the Battle stage.

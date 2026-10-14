@@ -1,7 +1,9 @@
-// The Adjust inspector tab: swaps the model in each weapon slot of the open form, slides each weapon along its grip and moves the hands, live on
-// the stage. The exported models already carry the saved values (`manifest.tuning`), so the live view moves each part by the difference from them.
-// A new model shows after a rebuild. The Jobs bar saves the edits.
+// The Adjust inspector tab: one card per weapon the open form holds, where the weapon's model can be swapped and slid along its grip, then his
+// hands. Everything shows live on the stage. The exported models already carry the saved grip and hand values (`manifest.tuning`), so the live
+// view moves each part by the difference from them. A swapped model is exported on the spot (`api/prop`) and put on its bone until a rebuild
+// bakes it in. The Jobs bar saves the edits.
 import * as THREE from "three";
+import { loadModel } from "../viewer_common.js";
 
 // Bones whose vertices the hand shift moves.
 const HAND_BONES = /^(hand|finger_\w+|thumb)_(left|right)(_\d)?$/;
@@ -12,8 +14,21 @@ const stem = p => p.toLowerCase().split("/").pop().replace(/\.(wsmodel|rigid_mod
 // Weapon models a model search lists at most.
 const MODEL_HITS = 20;
 
+// Words in a model's file name -> what the card calls the weapon, first match wins.
+const KINDS = [["shield", "Shield"], ["staff", "Staff"], ["disc", "Disc"], ["greatsword", "Greatsword"], ["sword_2h", "Greatsword"], ["2h", "Two-handed weapon"],
+  ["sword", "Sword"], ["bow", "Bow"], ["arrow", "Arrows"], ["axe", "Axe"], ["hammer", "Hammer"], ["mace", "Mace"], ["spear", "Spear"], ["lance", "Lance"],
+  ["halberd", "Halberd"], ["whip", "Whip"], ["dagger", "Dagger"], ["book", "Book"], ["banner", "Banner"]];
+
+// What the card calls the weapon in a slot.
+const kindOf = model => (KINDS.find(([word]) => stem(model).includes(word)) || [null, "Weapon"])[1];
+
 export class AdjustTab {
-  constructor(studio) { this.studio = studio; this.picking = null; this.scope = "form"; this.filter = ""; this.twin = new Map(); }
+  constructor(studio) {
+    // `picking` is the slot whose model picker is open, `scope` where a swap goes ("form" or "weapon"), `fine` the slots showing the y and z
+    // sliders. `twin` caches the vanilla equivalent's models, `previews` the exported preview models, `loading` and `failed` each slot's preview.
+    this.studio = studio; this.picking = null; this.scope = "form"; this.filter = ""; this.fine = new Set();
+    this.twin = new Map(); this.previews = new Map(); this.loading = new Set(); this.failed = new Map();
+  }
 
   get tuning() { return this.studio.tuning; }
   get baked() { return this.studio.manifest.tuning; }
@@ -23,6 +38,8 @@ export class AdjustTab {
   propValue(key) { return this.studio.edits.props[key] || this.tuning.prop_offsets[key] || [0, 0, 0]; }
   handValue() { return this.studio.edits.hand || this.tuning.hand_shift; }
   isAdvisor(model) { return !!model && model.meshes.some(m => /advisor_overhaul_body/.test(m.userData.model)); }
+  advisor() { return this.enabled() ? this.studio.stage.rigs.map(r => r.model).find(m => this.isAdvisor(m)) : null; }
+  form() { const entry = this.studio.stage.entry; return entry && this.studio.manifest.editor && this.studio.manifest.editor.forms[entry.unit]; }
 
   // Moves his hand vertices by the hand shift's change, weighted by how much each vertex follows the hand and finger bones.
   liveHands(model, mesh) {
@@ -47,41 +64,91 @@ export class AdjustTab {
     pos.needsUpdate = true;
   }
 
-  // Shows the current values on every Advisor model of the open entry.
+  // Shows the current values on every Advisor model of the open entry, and each slot's chosen model.
   applyLive() {
     if (!this.enabled()) return;
+    this.syncModels();
     for (const rig of this.studio.stage.rigs) {
       const model = rig.model; if (!this.isAdvisor(model)) continue;
       for (const mesh of model.meshes) {
         const u = mesh.userData;
         if (mesh.isSkinnedMesh && /advisor_overhaul_body/.test(u.model)) this.liveHands(model, mesh);
         const key = u.attach && this.propKey(u.model);
-        if (key) { const v = this.propValue(key), b = this.baked.prop_offsets[key] || [0, 0, 0]; mesh.position.set(v[0] - b[0], v[1] - b[1], v[2] - b[2]); }
+        if (key) { const v = this.propValue(key), b = u.preview ? [0, 0, 0] : this.baked.prop_offsets[key] || [0, 0, 0]; mesh.position.set(v[0] - b[0], v[1] - b[1], v[2] - b[2]); }
       }
     }
   }
+
+  // The model a form's slot will use: a saved or unsaved swap, else the one it was built with.
+  slotModel(f, slot) {
+    const p = { ...this.studio.savedRegistry, ...this.studio.edits.registry };
+    for (const path of [`weapons.${f.weapon}.forms.${f.mount}.props.${slot}`, `weapons.${f.weapon}.props.${slot}`]) if (path in p && p[path]) return { prop: p[path], pending: true };
+    return { prop: f.props[slot], pending: false };
+  }
+
+  // The preview meshes of a model on a slot, exported by the server once and loaded once.
+  preview(model, slot, attach) {
+    const key = `${stem(model)}|${slot}|${attach}`;
+    if (!this.previews.has(key)) {
+      this.previews.set(key, fetch(this.studio.api + "prop", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model, slot, attach }) })
+        .then(async r => { const answer = await r.json(); if (!r.ok) throw new Error(answer.error); return loadModel(this.studio.data + answer.url); })
+        .then(loaded => loaded.meshes.filter(m => !m.isSkinnedMesh)));
+      this.previews.get(key).catch(() => this.previews.delete(key));
+    }
+    return this.previews.get(key);
+  }
+
+  // Puts each slot's chosen model on the Advisor's stage model: a swap shows its preview, and undoing it brings the built model back.
+  async syncModels() {
+    const model = this.advisor(), f = this.form(), entry = this.studio.stage.entry;
+    if (!model || !f) return;
+    model.built = model.built || {};
+    for (const slot of Object.keys(f.props)) {
+      const shown = model.meshes.filter(m => m.userData.slot === slot);
+      if (!shown.length) continue;
+      if (!model.built[slot]) model.built[slot] = shown;
+      const [attach, wanted] = this.slotModel(f, slot).prop;
+      if (stem(shown[0].userData.model) === stem(wanted)) continue;
+      let meshes = model.built[slot];
+      if (stem(meshes[0].userData.model) !== stem(wanted)) {
+        this.loading.add(slot); this.failed.delete(slot); this.refresh();
+        try { meshes = (await this.preview(wanted, slot, attach)).map(m => { const c = m.clone(); c.userData = { ...m.userData, preview: true }; return c; }); }
+        catch (error) { this.failed.set(slot, error.message); meshes = null; }
+        this.loading.delete(slot);
+        // The form or the choice changed while it loaded.
+        if (this.studio.stage.entry !== entry || stem(this.slotModel(f, slot).prop[1]) !== stem(wanted)) { this.refresh(); continue; }
+      }
+      if (meshes) {
+        const bone = model.bones.find(b => b.name === attach) || model.group;
+        for (const m of model.meshes.filter(m => m.userData.slot === slot)) m.removeFromParent();
+        model.meshes = model.meshes.filter(m => m.userData.slot !== slot).concat(meshes);
+        meshes.forEach(m => bone.add(m));
+      }
+      this.refresh();
+    }
+  }
+
+  // Redraws the tab when it is open.
+  refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "adjust") setTimeout(() => this.render(body)); }
 
   // The model picker of one slot: whether the swap is for this form or every form of the weapon, the vanilla equivalent's models, and a search
   // of every vanilla weapon model.
   picker(entry, f, slot, prop) {
     const { esc } = window.UnitPanel, box = document.createElement("div"), weaponName = entry.name.split(" - ")[0], formName = entry.name.split(" - ")[1] || "";
     box.className = "picker";
-    box.innerHTML = `<div class="tools seg"><button data-scope="form" class="${this.scope === "form" ? "on" : ""}">${esc(formName)} only</button>
-      <button data-scope="weapon" class="${this.scope === "weapon" ? "on" : ""}">Every ${esc(weaponName)} form</button></div>
-      <div class="note twin">Loading the vanilla equivalent's models...</div>
-      <input class="attrSearch" placeholder="Search the game's weapon models (staff, tzeentch, whip...)" value="${esc(this.filter)}"><div class="hits"></div>
-      <div class="note">A new model shows after a rebuild.</div>`;
+    box.innerHTML = `<div class="note">Use the new model on</div><div class="tools seg"><button data-scope="form" class="${this.scope === "form" ? "on" : ""}">${esc(formName)} only</button>
+      <button data-scope="weapon" class="${this.scope === "weapon" ? "on" : ""}">every ${esc(weaponName)} form</button></div>
+      <div class="twin note">Loading the vanilla equivalent's models...</div>
+      <input class="attrSearch" placeholder="Search the game's weapon models (staff, tzeentch, whip...)" value="${esc(this.filter)}"><div class="hits"></div>`;
     const choose = model => {
       const path = this.scope === "form" ? `weapons.${f.weapon}.forms.${f.mount}.props.${slot}` : `weapons.${f.weapon}.props.${slot}`;
-      this.studio.edits.registry[path] = [prop[0], model, prop[2] || ""]; this.picking = null; this.studio.changed();
-      setTimeout(() => this.render(box.closest("#inspBody")));
+      this.studio.edits.registry[path] = [prop[0], model, prop[2] || ""]; this.picking = null; this.studio.changed(); this.applyLive(); this.refresh();
     };
     box.querySelectorAll("[data-scope]").forEach(b => b.onclick = () => { this.scope = b.dataset.scope; box.querySelectorAll("[data-scope]").forEach(x => x.classList.toggle("on", x === b)); });
     this.twinProps(entry).then(list => {
-      const vanilla = entry.versus && this.studio.manifest.panels && this.studio.manifest.panels[entry.versus];
-      const twin = box.querySelector(".twin");
-      twin.innerHTML = list.length ? `<div>From ${esc(vanilla ? vanilla.name : "the vanilla equivalent")}:</div>` + list.map(([s, bone, model]) =>
-        `<button class="mini" data-model="${esc(model)}">${esc(s)} ${esc(stem(model))}</button>`).join(" ") : "";
+      const vanilla = entry.versus && this.studio.manifest.panels && this.studio.manifest.panels[entry.versus], twin = box.querySelector(".twin");
+      twin.innerHTML = list.length ? `<div>${esc(vanilla ? vanilla.name : "The vanilla equivalent")} holds:</div>` + list.map(([, , model]) =>
+        `<button class="mini" data-model="${esc(model)}">${esc(kindOf(model))}: ${esc(stem(model))}</button>`).join(" ") : "";
       twin.querySelectorAll("[data-model]").forEach(b => b.onclick = () => choose(b.dataset.model));
     });
     const search = box.querySelector("input"), hits = box.querySelector(".hits");
@@ -108,13 +175,6 @@ export class AdjustTab {
     host.append(row);
   }
 
-  // The model a form's slot will use: a pending swap, else the one it has.
-  slotModel(f, slot) {
-    const p = { ...this.studio.savedRegistry, ...this.studio.edits.registry };
-    for (const path of [`weapons.${f.weapon}.forms.${f.mount}.props.${slot}`, `weapons.${f.weapon}.props.${slot}`]) if (path in p && p[path]) return { prop: p[path], pending: true };
-    return { prop: f.props[slot], pending: false };
-  }
-
   // The vanilla equivalent's weapon models, read from its exported model once: [slot, attach bone, model path].
   async twinProps(entry) {
     const side = entry.sides.find(s => s.key === "v_rider");
@@ -124,26 +184,45 @@ export class AdjustTab {
     return this.twin.get(side.model);
   }
 
-  // Builds the rows for the open entry: each weapon slot with its model (and a picker to swap it) and grip sliders, then his hands.
+  // Where a slot's model comes from, in words.
+  origin(f, slot, pending) {
+    const p = { ...this.studio.savedRegistry, ...this.studio.edits.registry }, own = `weapons.${f.weapon}.forms.${f.mount}.props.${slot}`;
+    const saved = !(own in this.studio.edits.registry) && !(`weapons.${f.weapon}.props.${slot}` in this.studio.edits.registry);
+    if (!pending) return f.prop_overrides.includes(slot) ? "This form's own model." : "";
+    return `${own in p ? "This form only" : "Every form of the weapon"}. ${saved ? "Saved: Rebuild to put it in the mod." : "Not saved yet."}`;
+  }
+
+  // Builds the tab: a card per weapon slot, then his hands.
   render(container) {
     container.innerHTML = "";
-    const entry = this.studio.stage.entry, model = this.enabled() && this.studio.stage.rigs.map(r => r.model).find(m => this.isAdvisor(m));
-    const f = entry && this.studio.manifest.editor && this.studio.manifest.editor.forms[entry.unit];
+    const entry = this.studio.stage.entry, model = this.advisor(), f = this.form();
     if (!model || !f) { container.innerHTML = '<div class="note">Nothing to adjust on this entry. Pick one of the project\'s forms.</div>'; return; }
     const { esc } = window.UnitPanel, edits = this.studio.edits;
+    const intro = document.createElement("div"); intro.className = "note adj-intro";
+    intro.textContent = "Swap a weapon's model or slide it in his hand. Changes show on the stage straight away. Save keeps them, and Rebuild puts them in the mod.";
+    container.append(intro);
     for (const slot of Object.keys(f.props)) {
-      const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]);
-      const head = document.createElement("div"); head.className = "p-head slot-head";
-      head.innerHTML = `<span>${esc(slot)}: ${esc(stem(prop[1]))}${pending ? ' <em class="note">(after a rebuild)</em>' : ""}</span><button class="mini" data-pick="${esc(slot)}">${this.picking === slot ? "Close" : "Change model"}</button>`;
-      container.append(head);
-      if (this.picking === slot) container.append(this.picker(entry, f, slot, prop));
-      if (key && !pending) ["along blade (x)", "y", "z"].forEach((label, axis) => this.sliderRow(container, label, this.propValue(key)[axis], 15, m => {
-        edits.props[key] = this.propValue(key).slice(); edits.props[key][axis] = m; this.applyLive(); this.studio.changed();
-      }));
+      const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div");
+      const state = this.loading.has(slot) ? '<div class="note">Loading the new model...</div>'
+        : this.failed.has(slot) ? `<div class="note warn">No preview: ${esc(this.failed.get(slot))}. It still builds on Rebuild.</div>` : "";
+      card.className = "adj-card";
+      card.innerHTML = `<div class="adj-head"><b>${esc(kindOf(prop[1]))}</b><button class="mini" data-pick>${this.picking === slot ? "Close" : "Change model"}</button></div>
+        <div class="adj-model">${esc(stem(prop[1]))}</div><div class="note">${esc(this.origin(f, slot, pending))}</div>${state}`;
+      container.append(card);
+      card.querySelector("[data-pick]").onclick = () => { this.picking = this.picking === slot ? null : slot; this.filter = ""; this.render(container); };
+      if (this.picking === slot) card.append(this.picker(entry, f, slot, prop));
+      if (!key) { if (pending) card.insertAdjacentHTML("beforeend", '<div class="note">Save to slide it along the grip.</div>'); continue; }
+      const move = axis => m => { edits.props[key] = this.propValue(key).slice(); edits.props[key][axis] = m; this.applyLive(); this.studio.changed(); };
+      this.sliderRow(card, "Slide along the grip", this.propValue(key)[0], 15, move(0));
+      const more = document.createElement("button"); more.className = "mini adj-more"; more.textContent = this.fine.has(slot) ? "Hide fine position" : "Fine position";
+      more.onclick = () => { this.fine.has(slot) ? this.fine.delete(slot) : this.fine.add(slot); this.render(container); };
+      card.append(more);
+      if (this.fine.has(slot)) [["Up and down (y)", 1], ["Sideways (z)", 2]].forEach(([label, axis]) => this.sliderRow(card, label, this.propValue(key)[axis], 15, move(axis)));
     }
-    container.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => { this.picking = this.picking === b.dataset.pick ? null : b.dataset.pick; this.filter = ""; this.render(container); });
-    const head = document.createElement("div"); head.className = "p-head"; head.textContent = "Hands: right hand frame, left mirrored (cm)"; container.append(head);
-    ["toward fingers (x)", "y", "z"].forEach((label, axis) => this.sliderRow(container, label, this.handValue()[axis], 5, m => {
+    const hands = document.createElement("div"); hands.className = "adj-card";
+    hands.innerHTML = `<div class="adj-head"><b>Hands</b></div><div class="note">Moves both hands on every form, in centimetres. The left hand mirrors the right.</div>`;
+    container.append(hands);
+    [["Toward the fingers", 0], ["Up and down", 1], ["In and out", 2]].forEach(([label, axis]) => this.sliderRow(hands, label, this.handValue()[axis], 5, m => {
       edits.hand = this.handValue().slice(); edits.hand[axis] = m; this.applyLive(); this.studio.changed();
     }));
   }
