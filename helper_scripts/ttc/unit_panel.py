@@ -32,6 +32,7 @@ PANEL_TABLES = [
     "special_ability_phases_tables",
     "special_ability_phase_stat_effects_tables",
     "special_ability_phase_attribute_effects_tables",
+    "ui_tagged_images_tables",
 ]
 
 # Loc key prefixes the tooltips read.
@@ -46,7 +47,7 @@ TOOLTIP_LOC_PREFIXES = (ABILITY_NAME_PREFIX, ABILITY_TEXT_PREFIX, ABILITY_TYPE_P
 # Folder of the ability icons.
 ABILITY_FOLDER = "ui/battle ui/ability_icons"
 
-# Folder an inline image with a bare name (`[[img:icon_morale]]`) is read from.
+# Folder an inline image with a bare name (`[[img:icon_morale]]`) is read from when `ui_tagged_images` does not name it.
 INLINE_IMAGE_FOLDER = "ui/skins/default"
 
 # An inline image in loc text.
@@ -111,6 +112,8 @@ class PanelTables:
     # Phase key to its stat effect rows, and to its attribute effect rows.
     phase_stats: Dict[str, List[Dict[str, str]]]
     phase_attributes: Dict[str, List[Dict[str, str]]]
+    # Inline image name (`icon_morale`) to its image path.
+    tagged: Dict[str, str]
 
     def __init__(self, tables: Dict[str, List[Dict[str, str]]]):
         """Indexes the tables.
@@ -143,6 +146,7 @@ class PanelTables:
             self.phase_stats.setdefault(row.get("phase", ""), []).append(row)
         for row in tables.get("special_ability_phase_attribute_effects_tables", []):
             self.phase_attributes.setdefault(row.get("phase", ""), []).append(row)
+        self.tagged = {row["key"]: row.get("image_path", "") for row in tables.get("ui_tagged_images_tables", []) if row.get("key")}
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -245,17 +249,33 @@ def inline_images(text: str) -> List[str]:
     return [inline_image_path(name) for name in INLINE_IMAGE.findall(text or "")]
 
 
-def inline_image_path(name: str) -> str:
-    """The pack path of an inline image name.
+def inline_image_path(name: str, tagged: Dict[str, str] = None) -> str:
+    """The pack path of an inline image name: a path as it is, else the `ui_tagged_images` entry, else a skin icon of that name.
 
     Args:
         name (str): The name inside `[[img:...]]`.
+        tagged (Dict[str, str]): `PanelTables.tagged`.
 
     Returns:
         str: The lowercase path.
     """
-    name = name.strip().lower()
-    return name if "/" in name else f"{INLINE_IMAGE_FOLDER}/{name}.png"
+    name = name.strip()
+    if "/" in name:
+        return name.lower()
+    return ((tagged or {}).get(name) or f"{INLINE_IMAGE_FOLDER}/{name}.png").lower()
+
+
+def resolve_images(text: str, tables: PanelTables) -> str:
+    """Rewrites a loc text's inline image names as their paths, so a page can show them without the game's tables.
+
+    Args:
+        text (str): The loc text.
+        tables (PanelTables): The indexed tables.
+
+    Returns:
+        str: The text.
+    """
+    return INLINE_IMAGE.sub(lambda match: f"[[img:{inline_image_path(match.group(1), tables.tagged)}]]", text or "")
 
 
 def loc_text(loc: Dict[str, str], key: str) -> str:
@@ -295,7 +315,7 @@ def ability_tooltip(ability: str, tables: PanelTables, loc: Dict[str, str]) -> D
             continue
         effects = []
         for effect in tables.phase_stats.get(phase, []):
-            value, label = parse_number(effect.get("value")), loc_text(loc, STAT_NAME_PREFIX + effect.get("stat", "")) or effect.get("stat", "")
+            value, label = parse_number(effect.get("value")), resolve_images(loc_text(loc, STAT_NAME_PREFIX + effect.get("stat", "")), tables) or effect.get("stat", "")
             # The game shows a multiplier as a percentage change.
             effects.append((label, f"{(value - 1) * 100:+.0f}%" if effect.get("how") == "mult" else f"{value:+g}"))
         for column, text in PHASE_FLAGS.items():
@@ -309,22 +329,24 @@ def ability_tooltip(ability: str, tables: PanelTables, loc: Dict[str, str]) -> D
                       for a in tables.phase_attributes.get(phase, [])]
         duration = parse_number(phase_row.get("duration"))
         phases.append({"name": loc_text(loc, PHASE_NAME_PREFIX + phase), "duration": f"{duration:g}s" if duration > 0 else "", "effects": effects, "attributes": attributes})
-    return {"name": loc_text(loc, ABILITY_NAME_PREFIX + ability) or ability, "type": loc_text(loc, ABILITY_TYPE_PREFIX + row.get("type", "")),
-            "passive": passive, "numbers": numbers, "phases": phases, "text": loc_text(loc, ABILITY_TEXT_PREFIX + ability)}
+    return {"name": loc_text(loc, ABILITY_NAME_PREFIX + ability) or ability, "type": resolve_images(loc_text(loc, ABILITY_TYPE_PREFIX + row.get("type", "")), tables),
+            "passive": passive, "numbers": numbers, "phases": phases, "text": resolve_images(loc_text(loc, ABILITY_TEXT_PREFIX + ability), tables)}
 
 
-def attribute_tooltip(attribute: str, loc: Dict[str, str]) -> Dict[str, str]:
-    """An attribute's name and tooltip text (loc text with inline images).
+def attribute_tooltip(attribute: str, loc: Dict[str, str], tables: PanelTables) -> Dict[str, str]:
+    """An attribute's name and tooltip text (loc text with inline images). An attribute the game gives no text is not shown in game: its `name` is
+    then empty.
 
     Args:
         attribute (str): The attribute key.
         loc (Dict[str, str]): Loc key to text.
+        tables (PanelTables): The indexed tables, for the inline images.
 
     Returns:
         Dict[str, str]: `key`, `name` and `text`.
     """
     name, _, text = loc_text(loc, ATTRIBUTE_PREFIX + attribute).partition("||")
-    return {"key": attribute, "name": name or attribute, "text": text}
+    return {"key": attribute, "name": name, "text": resolve_images(text, tables)}
 
 
 def tooltip_images(tooltip: Dict) -> List[str]:

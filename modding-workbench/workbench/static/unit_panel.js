@@ -88,7 +88,12 @@
     const hide = () => { owner = null; box.hidden = true; };
     document.addEventListener("mouseover", e => { const el = e.target.closest("[data-tip]"); if (el && el !== owner) show(el); else if (!el && owner) hide(); });
     document.addEventListener("click", e => { const el = e.target.closest("[data-tip]"); if (!el) { hide(); return; } owner === el ? hide() : show(el); });
-    document.addEventListener("scroll", hide, true);
+    // A scroll moves the tooltip with its element, and closes it once the element leaves the window.
+    document.addEventListener("scroll", () => {
+      if (!owner) return;
+      const r = owner.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) hide(); else show(owner);
+    }, true);
   }
   if (document.body) installTips(); else document.addEventListener("DOMContentLoaded", installTips);
   // The card art, or an empty frame.
