@@ -224,8 +224,8 @@ class PanelBuilder:
         Returns:
             Dict: `weapon`, `mount`, `stats` (`STAT_COLUMNS` and `armour`), `melee` (with its current `key`), `melee_template`, `own_melee` (whether
             the weapon has its own melee weapon yet), `missile` (or None, with `ammo`), `overrides` (the fields its form sets), and the weapon's
-            `attributes`, `attributes_removed`, `abilities` and `abilities_removed`, `props` (prop slot -> [bone, model, metadata] as the form uses them) and `prop_overrides` (the
-            slots its form sets).
+            `attributes`, `attributes_removed`, `abilities` and `abilities_removed`, `props` (prop slot -> [bone, model, metadata] as the form uses
+            them), `prop_overrides` (the slots its form sets) and `mount_props` (the slots its mount fills, such as the disc).
         """
         land = self.land[self.main[key]["land_unit"]]
         num = lambda value: float(value) if value not in ("", None) else 0.0
@@ -242,6 +242,7 @@ class PanelBuilder:
                 "overrides": sorted(k for k in weapon.get("forms", {}).get(mount_key, {}) if k != "props"), "attributes": weapon.get("attributes", []),
                 "props": dict(weapon["props"], **registry["mounts"][mount_key].get("variant_props", {}), **weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
                 "prop_overrides": sorted(weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
+                "mount_props": sorted(registry["mounts"][mount_key].get("variant_props", {})),
                 "attributes_removed": weapon.get("attributes_removed", []), "abilities": weapon.get("abilities", []),
                 "abilities_removed": weapon.get("abilities_removed", [])}
 
