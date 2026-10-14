@@ -164,13 +164,20 @@
   /* The "+ Ability" / "+ Attribute" picker (studio/stats.js). */
   .dialog.pickbox { height: 90vh; }
   .pickbox .pick-list { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 2px; }
-  .pickbox .pick { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; justify-content: stretch; text-align: left; min-height: 44px;
+  .pickbox .pick { flex: none; display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: start; justify-content: stretch; text-align: left; min-height: 44px;
     padding: 6px 8px; background: none; border: 1px solid transparent; border-radius: 4px; }
   .pickbox .pick:hover { border-color: #5a4a30; background: rgba(0,0,0,.25); }
-  .pickbox .pick img { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #5a4a30; background: #000; }
-  .pickbox .pick .noicon { display: none; }
-  .pickbox .pick > span:nth-child(2) { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-  .pickbox .pick .note { font-size: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .pickbox .pick.attributes { grid-template-columns: 1fr auto; }
+  .pickbox .pick > img { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #5a4a30; background: #000; }
+  .pickbox .fx-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-size: 13px; }
+  .pickbox .fx-title { display: flex; flex-wrap: wrap; gap: 0 8px; align-items: baseline; }
+  .pickbox .fx-nums, .pickbox .fx-sub { color: var(--muted); font-size: 12px; } .pickbox .fx-nums b { color: var(--text); font-weight: 400; }
+  .pickbox .fx-sub { color: #d8a640; width: 100%; }
+  .pickbox .fx { display: flex; flex-wrap: wrap; gap: 0 14px; }
+  .pickbox .fx b { font-weight: 400; font-family: var(--mono, monospace); } .pickbox .fx .up { color: #7fcf6a; } .pickbox .fx .down { color: #e0705a; }
+  .pickbox .fx-text { color: var(--text); }
+  .pickbox .fx img, .pickbox .fx-text img, .pickbox .fx-title img { width: 16px; height: 16px; vertical-align: -3px; margin-right: 2px; }
+  .pickbox .pick .note { font-size: 12px; font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .pickbox .pick.added { background: rgba(127,191,106,.08); border-color: rgba(127,191,106,.35); }
   .pickbox .pick .state { color: #7fbf6a; font-size: 11px; text-align: right; max-width: 90px; }
   .panel .stat.sub { display: grid; grid-template-columns: 22px 1fr 76px; gap: 8px; align-items: center; padding: 2px 12px; font-size: 13px; color: var(--muted); }

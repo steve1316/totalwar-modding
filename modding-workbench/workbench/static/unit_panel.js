@@ -41,10 +41,11 @@
   }
   // Loc text as HTML: inline images (`[[img:...]]`, a bare name being a skin icon), colour tags dropped, line breaks kept.
   function markupHtml(text, art) {
-    return esc(text || "").replace(/\[\[img:([^\]]+)\]\]\[\[\/img\]\]/g, (_, name) => {
+    // An image tag may wrap the words it stands next to: [[img:icon]]Melee Attack[[/img]].
+    return esc(text || "").replace(/\[\[img:([^\]]+)\]\]([^\[]*)\[\[\/img\]\]/g, (_, name, words) => {
       const path = name.includes("/") ? name.toLowerCase() : `ui/skins/default/${name.toLowerCase()}.png`;
-      return `<img class="inl" src="${art(path)}" alt="" onerror="this.remove()">`;
-    }).replace(/\[\[\/?col[^\]]*\]\]/g, "").replace(/\\n/g, "<br>");
+      return `<img class="inl" src="${art(path)}" alt="" onerror="this.remove()">${words}`;
+    }).replace(/\[\[(\/?)(b|i)\]\]/g, "<$1$2>").replace(/\[\[\/?col[^\]]*\]\]/g, "").replace(/\\+n/g, "<br>");
   }
 
   // Tooltip HTML by id, filled as panels are drawn.
