@@ -3,18 +3,19 @@
 // which unit the card is about.
 //
 // The project's own card is edited in place (through `FormEditor`): tap a number to change it. Weapon Strength and Missile Strength open into the
-// values they add up from, and the health bar into the health bonus. Abilities and attributes come off with their x and on with "+ Ability" and
-// "+ Attribute". A unit stat change goes to every form of the weapon or to this form only, as picked at the top.
+// values they add up from, and the health bar into the health bonus. Abilities and attributes come off with their x. "+ Ability" and "+ Attribute"
+// open a picker with every one the game has. A unit stat change goes to every form of the weapon or to this form only, as picked at the top.
 import { FormEditor, MELEE_FIELDS, MISSILE_FIELDS } from "./form_editor.js";
 
 // Card rows that edit a unit stat: panel stat -> its field.
 const UNIT_ROWS = { armour: "armour", leadership: "morale", melee_attack: "melee_attack", melee_defence: "melee_defence", charge_bonus: "charge_bonus" };
 // Card rows that edit a missile value directly: panel stat -> its field.
 const MISSILE_ROWS = { ammunition: "ammo", range: "effective_range" };
-// The lists the card adds to and removes from: kind -> [button label, search hint].
-const LISTS = { abilities: ["+ Ability", "Type to search the game's unit abilities"], attributes: ["+ Attribute", "Type to search the game's attributes"] };
-// Search hits listed at most.
-const LIST_HITS = 16;
+// The lists the card adds to and removes from: kind -> [button label, picker title, search hint].
+const LISTS = { abilities: ["+ Ability", "Add abilities", "Search the game's unit abilities"], attributes: ["+ Attribute", "Add attributes", "Search the game's attributes"] };
+
+// Loc text as one plain line: no markup tags, inline images or line breaks.
+const plain = text => (text || "").replace(/\[\[[^\]]*\]\]|\{\{[^}]*\}\}/g, "").replace(/(\\+n)+/g, " ").replace(/\s+/g, " ").trim();
 // Card rows that open into the values they add up from: panel stat -> [path group, fields].
 const GROUPS = { weapon_strength: ["melee", MELEE_FIELDS], missile_strength: ["missile", MISSILE_FIELDS.filter(([field]) => !["effective_range", "ammo"].includes(field))] };
 
@@ -31,9 +32,11 @@ function attributeChips(u, o, art, removable) {
 
 export class StatsTab {
   constructor(studio) {
-    // `adding` is the list whose search is open ("abilities" or "attributes"), `filter` its search text.
-    this.studio = studio; this.flip = false; this.open = new Set(); this.adding = null; this.filter = "";
+    this.studio = studio; this.flip = false; this.open = new Set();
     this.editor = new FormEditor(studio);
+    // The "+ Ability" and "+ Attribute" picker.
+    this.picker = document.createElement("div"); this.picker.className = "overlay"; this.picker.hidden = true;
+    document.body.append(this.picker);
   }
 
   // Whether the open entry has a card to show.
@@ -61,18 +64,60 @@ export class StatsTab {
       <div class="p-top">${cardHtml(u, art)}<div><div class="meta">${esc(u.key)}</div><div ${f ? 'data-open="hp" class="opener" title="Edit the health bonus"' : ""}>${hpHtml(u, o, art)}</div>${health}</div></div>
       <div class="p-head">Stats${f ? '<span class="note">tap a number to change it</span>' : ""}</div>${f ? this.statRows(f, u, o) : statsHtml(u.stats, o ? o.stats : {}, art)}
       <div class="p-head">Abilities</div><div class="abilities">${f ? u.abilities.map(a => `<span class="chip">${abilitiesHtml([a], art)}<button class="mini" data-drop="abilities|${esc(a.key)}" aria-label="Remove ${esc(a.name)}">×</button></span>`).join("")
-        + this.adder("abilities") : abilitiesHtml(u.abilities, art)}</div>${f ? this.search("abilities") : ""}
+        + this.adder("abilities") : abilitiesHtml(u.abilities, art)}</div>
       ${o ? `<div class="vs">${esc(o.name)}</div><div class="abilities">${abilitiesHtml(o.abilities, art)}</div>` : ""}
-      <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o, art, !!f)}${f ? this.adder("attributes") : ""}</div>${f ? this.search("attributes") : ""}
+      <div class="p-head">Attributes</div><div class="chips">${attributeChips(u, o, art, !!f)}${f ? this.adder("attributes") : ""}</div>
       <div class="p-head">Game keys</div><div class="keys">${(entry.info || entry.sets || []).map(line => `<div>${esc(line)}</div>`).join("")}</div></div>`;
     this.wire(container, f);
   }
 
   // The "+ Ability" or "+ Attribute" button of a list.
   adder(kind) { return `<button class="mini add" data-adding="${kind}">${LISTS[kind][0]}</button>`; }
-  // The search box under a list while it is being added to.
-  search(kind) {
-    return this.adding === kind ? `<input class="attrSearch" data-search="${kind}" placeholder="${LISTS[kind][1]}" value="${window.UnitPanel.esc(this.filter)}"><div class="attrList"></div>` : "";
+
+  // Adds an ability or attribute to the weapon, or takes it off. One the weapon added comes off its list, any other goes on its removed list.
+  toggle(f, kind, key, on) {
+    const { added, removed } = this.editor.lists(f, kind), path = `weapons.${f.weapon}.${kind}`;
+    if (on) { if (removed.includes(key)) this.editor.set(path + "_removed", removed.filter(a => a !== key)); else this.editor.set(path, [...added, key]); }
+    else if (added.includes(key)) this.editor.set(path, added.filter(a => a !== key)); else this.editor.set(path + "_removed", [...removed, key]);
+  }
+
+  // The picker: every ability or attribute the game has in one scrolling list, searched by name, key or text. Tapping one adds it, or takes it off
+  // again when the form has it. It stays open so several can be picked in a row.
+  openPicker(container, f, kind) {
+    const { esc, abilitiesHtml } = window.UnitPanel, art = this.studio.panelArt, box = this.picker, catalog = this.editor.editor[kind] || {};
+    const rows = Object.entries(catalog).map(([key, a]) => {
+      const text = plain(kind === "abilities" ? a.tip && a.tip.text : a.text);
+      return `<button class="pick" title="${esc(key)}" data-key="${esc(key)}" data-find="${esc(`${a.name} ${key} ${text}`.toLowerCase())}">${kind === "abilities" ? abilitiesHtml([{ key, ...a }], art) : ""}
+        <span><b>${esc(a.name)}</b><span class="note">${esc(text)}</span></span><span class="state"></span></button>`;
+    }).join("");
+    box.innerHTML = `<div class="dialog pickbox"><div class="d-head"><b>${LISTS[kind][1]}</b><button class="mini" data-x="close">Done</button></div>
+      <input data-f="find" placeholder="${LISTS[kind][2]}" autocomplete="off"><div class="note" data-count></div><div class="pick-list">${rows}</div></div>`;
+    box.hidden = false;
+    const list = box.querySelector(".pick-list"), find = box.querySelector('[data-f="find"]'), count = box.querySelector("[data-count]");
+    const mark = () => {
+      const has = new Set(this.editor.preview(this.studio.stage.entry.unit)[kind].map(a => a.key));
+      for (const b of list.children) {
+        const on = has.has(b.dataset.key);
+        b.classList.toggle("added", on); b.querySelector(".state").textContent = on ? "On this form. Tap to remove." : "";
+      }
+    };
+    const filter = () => {
+      const words = find.value.toLowerCase().split(/\s+/).filter(Boolean);
+      let shown = 0;
+      for (const b of list.children) { b.hidden = !words.every(w => b.dataset.find.includes(w)); shown += !b.hidden; }
+      count.textContent = `${shown} of ${list.children.length}`;
+    };
+    const close = () => { box.hidden = true; box.innerHTML = ""; document.removeEventListener("keydown", onKey); };
+    const onKey = e => { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", onKey);
+    box.onclick = e => { if (e.target === box) close(); };
+    box.querySelector('[data-x="close"]').onclick = close;
+    list.onclick = e => {
+      const b = e.target.closest("[data-key]");
+      if (!b) return;
+      this.toggle(f, kind, b.dataset.key, !b.classList.contains("added")); mark(); this.render(container);
+    };
+    find.oninput = filter; mark(); filter(); find.focus();
   }
 
   // Whether this form sets its own value for a unit stat.
@@ -128,29 +173,7 @@ export class StatsTab {
     container.querySelectorAll("[data-reset]").forEach(b => b.onclick = () => {
       const [weapon, mount, field] = b.dataset.reset.split("|"); this.editor.set(`weapons.${weapon}.forms.${mount}.${field}`, null); redraw();
     });
-    // Abilities and attributes: removing one the weapon added drops it from its list, any other goes on its removed list. Adding works the other
-    // way round.
-    for (const b of container.querySelectorAll("[data-drop]")) b.onclick = () => {
-      const [kind, key] = b.dataset.drop.split("|"), { added, removed } = this.editor.lists(f, kind), path = `weapons.${f.weapon}.${kind}`;
-      if (added.includes(key)) this.editor.set(path, added.filter(a => a !== key)); else this.editor.set(path + "_removed", [...removed, key]);
-      redraw();
-    };
-    for (const b of container.querySelectorAll("[data-adding]")) b.onclick = () => { this.adding = this.adding === b.dataset.adding ? null : b.dataset.adding; this.filter = ""; redraw(); };
-    const search = this.adding && container.querySelector(`[data-search="${this.adding}"]`);
-    if (!search) return;
-    const kind = this.adding, { esc, abilitiesHtml } = window.UnitPanel, art = this.studio.panelArt, catalog = this.editor.editor[kind] || {}, list = search.nextElementSibling;
-    const { added, removed } = this.editor.lists(f, kind), path = `weapons.${f.weapon}.${kind}`;
-    const shown = new Set(this.editor.preview(this.studio.stage.entry.unit)[kind].map(a => a.key));
-    const hits = () => {
-      this.filter = search.value; const term = search.value.toLowerCase();
-      list.innerHTML = Object.entries(catalog).filter(([k, a]) => !shown.has(k) && (!term || a.name.toLowerCase().includes(term) || k.includes(term))).slice(0, LIST_HITS)
-        .map(([k, a]) => `<button data-add="${esc(k)}">${kind === "abilities" ? abilitiesHtml([{ key: k, ...a }], art) : ""}<span>${esc(a.name)}</span></button>`).join("");
-      list.querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
-        const key = b.dataset.add;
-        if (removed.includes(key)) this.editor.set(path + "_removed", removed.filter(a => a !== key)); else this.editor.set(path, [...added, key]);
-        this.filter = ""; this.adding = null; redraw();
-      });
-    };
-    search.oninput = hits; hits(); search.focus();
+    for (const b of container.querySelectorAll("[data-drop]")) b.onclick = () => { const [kind, key] = b.dataset.drop.split("|"); this.toggle(f, kind, key, false); redraw(); };
+    for (const b of container.querySelectorAll("[data-adding]")) b.onclick = () => this.openPicker(container, f, b.dataset.adding);
   }
 }
