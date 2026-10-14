@@ -9,7 +9,8 @@ How a pair reaches the battle map:
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
-portrait camera and image) follows the vanilla Grey Wizard. The stats are placeholders until they are tuned.
+portrait camera) follows the vanilla Grey Wizard. His 2D portrait, unit card and info picture are cut from the vanilla Advisor bust (the registry's
+`portrait`). The stats are placeholders until they are tuned.
 
 The weapons, mounts and model pieces are in advisor_overhaul_registry.json. The vanilla rows this reads are kept in advisor_overhaul.json. Refresh
 it from a folder of vanilla TSVs after a game patch (it also reads the vanilla portrait settings from ui.pack):
@@ -28,6 +29,8 @@ import shutil
 import sys
 import zlib
 from typing import Dict, List, Tuple
+
+from PIL import Image
 
 from core.utilities import STEAM_LIBRARY_DRIVE, load_tsv_data, run_rpfm_cli
 from generators import advisor_overhaul_anims as anims
@@ -48,9 +51,14 @@ MOD = "../warhammer3_mods/!!advisor_overhaul"
 # File name of every table and loc file this generator writes.
 FILE = "advisor_overhaul"
 
-# The vanilla pack holding the portrait settings, and where the refresh extracts them to.
+# The vanilla pack holding the portrait settings, and where the refresh and the build extract portrait files to.
 UI_PACK = f"{STEAM_LIBRARY_DRIVE}\\SteamLibrary\\steamapps\\common\\Total War WARHAMMER III\\data\\ui.pack"
 PORTRAIT_EXTRACT = "./temp/advisor_overhaul_portraits"
+
+# Size of the 2D porthole image, the unit card and the unit info picture, as in vanilla.
+PORTHOLE_SIZE = (300, 164)
+CARD_SIZE = (60, 130)
+INFOPIC_SIZE = (120, 260)
 
 # Portrait folders that each get a settings file.
 PORTRAIT_FOLDERS = ("portholes", "units")
@@ -83,8 +91,9 @@ LOOK_SUBTYPE = "wh_dlc05_emp_grey_wizard"
 # Vanilla art set whose campaign art row and portrait camera he uses: the Grey Wizard.
 LOOK_ART_SET = "wh_dlc05_art_set_emp_grey_wizard_01"
 
-# Unit card value of his units. Vanilla heroes such as the Amethyst Wizard use `placeholder`: their card art comes from the portrait settings.
-UNIT_CARD = "placeholder"
+# Unit card value of his units. Vanilla heroes use `placeholder` or a key with no card file, since a hero's card comes from the `units` portrait
+# settings. His points at his own card and info picture anyway, so no screen can fall back to a vanilla one.
+UNIT_CARD = f"{PREFIX}_advisor"
 
 # The rider entity for ordinary mounts. Mounts whose template uses another entity (the disc) keep the template's.
 RIDER_ENTITY = "wh_main_infantry_standard_wizard_rider_blood_dismembers"
@@ -451,7 +460,7 @@ def build() -> None:
     for r in templates["unit_attributes_to_groups_junctions_tables"]:
         template_attributes.setdefault(r["attribute_group"], []).append(r["attribute"])
     advisor = dict(template_units[FOOT_TEMPLATE], historical_description_text=DESCRIPTION, short_description_text=DESCRIPTION)
-    portrait_png = data["portraits"]["portholes"]["variants"][0]["file_diffuse"].lower()
+    portrait_png = portrait_path(registry["portrait"]).lower()
 
     rows: Dict[str, List[Dict[str, str]]] = {table: [] for table in TABLES}
     texts: List[Tuple[str, str]] = []
@@ -530,7 +539,8 @@ def build() -> None:
     for table, table_rows in rows.items():
         write(table, table_rows, specs[table])
     write_variants(registry["model"], variants)
-    write_portraits(data["portraits"], [weapon_art_set(w) for w in registry["weapons"]] + [f"{PREFIX}_{w}" for w in registry["weapons"]])
+    write_portraits(data["portraits"], registry["portrait"], [weapon_art_set(w) for w in registry["weapons"]] + [f"{PREFIX}_{w}" for w in registry["weapons"]])
+    write_portrait_images(registry["portrait"])
     write_script(registry, combos)
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
         f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{FILE}.loc\t\t\n")
@@ -631,12 +641,25 @@ def write_variants(model: Dict, variants: Dict[str, Dict]) -> None:
             f.write("\n".join(lines) + "\n")
 
 
-def write_portraits(portraits: Dict, ids: List[str]) -> None:
-    """Writes portrait settings for his art sets and campaign variants: the vanilla Grey Wizard's camera and portrait image under each id. Without
-    them a character on a new art set has no portrait.
+def portrait_path(portrait: Dict) -> str:
+    """Game path of his 2D porthole image, in the vanilla spelling of `file_diffuse`. His unit card has the same name under `units`.
+
+    Args:
+        portrait (Dict): The registry's `portrait`.
+
+    Returns:
+        str: The path.
+    """
+    return f"UI/Portraits/Portholes/no_culture/{portrait['image']}.png"
+
+
+def write_portraits(portraits: Dict, portrait: Dict, ids: List[str]) -> None:
+    """Writes portrait settings for his art sets and campaign variants: the vanilla Grey Wizard's body camera, the registry's head camera and his
+    own portrait image under each id. Without them a character on a new art set has no portrait.
 
     Args:
         portraits (Dict): The kept vanilla entries (`version` and one entry per portrait folder).
+        portrait (Dict): The registry's `portrait`.
         ids (List[str]): The ids to write entries for. Ids that are campaign variants also name that variant.
 
     Raises:
@@ -648,10 +671,12 @@ def write_portraits(portraits: Dict, ids: List[str]) -> None:
         for entry_id in ids:
             entry = json.loads(json.dumps(portraits[folder]))
             entry["id"] = entry_id
+            entry["camera_settings_head"].update(portrait["camera_head"])
             # Art set entries show the default weapon's variant. Variant entries show their own.
             filename = entry_id if entry_id in variant_ids else f"{PREFIX}_{entry_id[len(PREFIX) + 5:]}"
             for variant in entry["variants"]:
-                variant["filename"] = filename
+                # No faction colour masks: vanilla leaves them empty on about half its entries.
+                variant.update(filename=filename, file_diffuse=portrait_path(portrait), file_mask_1="", file_mask_2="", file_mask_3="")
             entries.append(entry)
         out = os.path.join(MOD, "ui", "portraits", folder)
         os.makedirs(out, exist_ok=True)
@@ -664,6 +689,53 @@ def write_portraits(portraits: Dict, ids: List[str]) -> None:
                 raise SystemExit(f"rpfm_cli could not write {bin_path}: {result.stderr}")
         finally:
             os.remove(json_path)
+
+
+def write_portrait_images(portrait: Dict) -> None:
+    """Writes his 2D porthole image, unit card and unit info picture, cut from the vanilla Advisor bust. The porthole keeps a clear background, as
+    in vanilla. The card and info picture put the bust at the bottom over a gradient, like the vanilla Empire wizard cards.
+
+    Args:
+        portrait (Dict): The registry's `portrait`.
+
+    Raises:
+        SystemExit: When the bust is not in its pack.
+    """
+    pack, path = portrait["source"]
+    source = os.path.join(PORTRAIT_EXTRACT, path)
+    if not os.path.exists(source):
+        run_rpfm_cli(["pack", "extract", "--pack-path", os.path.join(os.path.dirname(UI_PACK), pack), "--file-path", f"{path};{PORTRAIT_EXTRACT}"],
+                     capture_output=True)
+    if not os.path.exists(source):
+        raise SystemExit(f"{path} is not in {pack}")
+    bust = Image.open(source).convert("RGBA")
+
+    def scaled(scale: float) -> Image.Image:
+        return bust.resize((round(bust.width * scale), round(bust.height * scale)), Image.LANCZOS)
+
+    def card(size: Tuple[int, int], scale: float) -> Image.Image:
+        top, bottom = portrait["card"]["top"], portrait["card"]["bottom"]
+        out = Image.new("RGBA", size)
+        for y in range(size[1]):
+            t = y / (size[1] - 1)
+            out.paste(tuple(round(a + (b - a) * t) for a, b in zip(top, bottom)) + (255,), (0, y, size[0], y + 1))
+        image = scaled(scale)
+        out.alpha_composite(image, ((size[0] - image.width) // 2, size[1] - image.height))
+        return out
+
+    porthole = Image.new("RGBA", PORTHOLE_SIZE)
+    porthole.alpha_composite(scaled(portrait["porthole"]["scale"]), (portrait["porthole"]["x"], portrait["porthole"]["y"]))
+    name = portrait["image"]
+    images = {
+        f"ui/portraits/portholes/no_culture/{name}.png": porthole,
+        f"ui/portraits/units/no_culture/{name}.png": card(CARD_SIZE, portrait["card"]["scale"]),
+        f"ui/units/icons/{UNIT_CARD}.png": card(CARD_SIZE, portrait["card"]["scale"]),
+        f"ui/units/infopics/{UNIT_CARD}.png": card(INFOPIC_SIZE, portrait["card"]["scale"] * INFOPIC_SIZE[0] / CARD_SIZE[0]),
+    }
+    for game_path, image in images.items():
+        out = os.path.join(MOD, game_path)
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        image.save(out, optimize=True)
 
 
 def write_script(registry: Dict, combos: List[Tuple[str, str, str]]) -> None:

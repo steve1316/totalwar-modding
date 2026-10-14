@@ -63,6 +63,14 @@
    "stump_severed_head": ["head", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_head_hu1_3.rigid_model_v2"]
   }
  },
+ "portrait": {
+  "description": "His 2D portrait art and his 3D portrait camera. `source` is the vanilla Advisor bust (pack, path) every image is cut from. `porthole` places it on the 300x164 porthole image and `card` on the 60x130 unit card (and the 120x260 info picture at twice the size), bottom aligned over a top-to-bottom gradient. `camera_head` replaces the head camera of the Grey Wizard's portrait settings: `z` is the distance and `y` the height above the head bone, in metres.",
+  "source": ["ui2.pack", "ui/skins/default/preview_advisor.png"],
+  "image": "advisor_overhaul_campaign_01_0",
+  "porthole": {"x": 92, "y": 3, "scale": 1.0},
+  "card": {"scale": 0.72, "top": [150, 160, 165], "bottom": [55, 60, 62]},
+  "camera_head": {"z": 1.0, "y": 0.0, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}
+ },
  "weapons": {
   "staff_and_sword": {
    "name": "Staff and Sword",

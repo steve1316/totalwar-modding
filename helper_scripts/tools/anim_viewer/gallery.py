@@ -6,6 +6,8 @@ named `RIDER_<slot>` and play next to the mount's `<slot>`. Both animations are 
 bone. His default look comes first (on foot, and on the Pegasus), then the hoodless head, then every pair. A vanilla reference hero, the vanilla
 campaign Advisor on his own skeleton and the disc retarget comparison are added as extra entries. Any variant mesh definition left in `PREVIEWS`
 (with the models it needs under the same folder) becomes a preview entry, for trying looks without touching the mod. None are shown when it is empty.
+The export also carries the data of `portrait.html`: his hooded and hoodless looks and a vanilla Grey Wizard in the porthole idle animation, with
+the registry's head camera, so the campaign portrait camera can be tuned without restarting the game.
 
 Usage (from helper_scripts):
     python -u -m tools.anim_viewer.gallery [--out _diag/anim_viewer_next] [--serve 8767] [--host 127.0.0.1]
@@ -75,6 +77,18 @@ ADVISOR_SKELETON = "advisor01"
 ADVISOR_ANIMS = {"PORTHOLE_IDLE": "animations/battle/advisor01/porthole/ad1_porthole_stand_idle_01.anim",
                  "HARVEST_IDLE": "animations/cinematic/library/anim/advisor01/realm_win_igc/harvest/idle/advisor01_rwin_harvest_idle.anim",
                  "REVEAL_WALK": "animations/cinematic/library/anim/advisor01/realm_win_igc/reveal/walk/advisor01_rwin_reveal_walk.anim"}
+
+# Portrait camera preview: the porthole idle animation, the vanilla reference (label, variant, art set) and its head camera values.
+PORTHOLE_ANIM = "animations/battle/humanoid01/unarmed/porthole/hu1_un_porthole_idle_01.anim"
+PORTRAIT_REFERENCE = ("Vanilla Grey Wizard", "variantmeshes/variantmeshdefinitions/emp_shadow_wizard_campaign_01.variantmeshdefinition",
+                      "wh_dlc05_art_set_emp_grey_wizard_01")
+PORTRAIT_REFERENCE_CAMERA = {"z": 1.0, "y": 0.03, "yaw": 0.0, "pitch": 0.0, "fov": 30.0}
+
+# Head camera values tried in game, oldest first, with what each showed. The page offers them as presets.
+PORTRAIT_ROUNDS = [({"z": 1.0, "y": 0.05, "yaw": 0.0, "pitch": 0.0, "fov": 30.0}, "looked up at him"),
+                   ({"z": 1.0, "y": 0.12, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}, "level, but small and low"),
+                   ({"z": 0.8, "y": 0.06, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}, "better, face a bit low"),
+                   ({"z": 0.8, "y": 0.03, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}, "face centred, slightly too close")]
 
 # Folder of throwaway preview variants (and any loose models they use). Each `.variantmeshdefinition` in it gets a "Preview: <name>" entry.
 PREVIEWS = "./temp/anim_viewer_gallery_previews"
@@ -208,7 +222,7 @@ def mount_parts(mount_key: str, tables: Dict[str, List[Dict[str, str]]], sets: D
     return sets[mount["animation"]], variant_path(variant["variant_filename"])
 
 
-def look_entries(exporter: Exporter, registry: Dict, foot: Tuple[AnimSet, str], mounted: Tuple[str, AnimSet, str, AnimSet, str]) -> None:
+def look_entries(exporter: Exporter, registry: Dict, foot: Tuple[AnimSet, str], mounted: Tuple[str, AnimSet, str, AnimSet, str]) -> Optional[str]:
     """Adds his default look on foot and mounted, and the same look with the hoodless head.
 
     Args:
@@ -216,6 +230,9 @@ def look_entries(exporter: Exporter, registry: Dict, foot: Tuple[AnimSet, str], 
         registry (Dict): The units registry.
         foot (Tuple[AnimSet, str]): His foot set and foot variant mesh definition (local file).
         mounted (Tuple[str, AnimSet, str, AnimSet, str]): A mounted pair's mount name, rider set, rider variant, mount set and mount variant.
+
+    Returns:
+        Optional[str]: The hoodless variant file, or None when his head has no hoodless model.
     """
     foot_set, foot_variant = foot
     unit_entry(exporter, "Advisor (default)", foot_set, foot_variant, None, None, [f"variant {foot_variant}", f"rider set {foot_set.name}"], LOOK_SLOTS)
@@ -229,6 +246,8 @@ def look_entries(exporter: Exporter, registry: Dict, foot: Tuple[AnimSet, str], 
         with open(variant, "w", encoding="utf-8", newline="\n") as f:
             f.write(open(foot_variant, encoding="utf-8").read().replace(f'model="{head["hooded"][0]}"', f'model="{head["hoodless"][0]}"'))
         unit_entry(exporter, "Advisor hoodless", foot_set, variant, None, None, [f"head {head['hoodless'][0]}", f"rider set {foot_set.name}"], LOOK_SLOTS)
+        return variant
+    return None
 
 
 def advisor_entry(exporter: Exporter) -> None:
@@ -242,6 +261,26 @@ def advisor_entry(exporter: Exporter) -> None:
     exporter.entries.append({"name": "Vanilla: campaign Advisor (advisor01)", "kind": "unit", "sets": [], "sides": sides, "slots": slots,
                              "info": [f"variant {ADVISOR_VARIANT}", f"skeleton {ADVISOR_SKELETON}"]})
     print(f"Vanilla: campaign Advisor (advisor01): {len(slots)} slots")
+
+
+def portrait_data(exporter: Exporter, registry: Dict, hooded: str, hoodless: Optional[str]) -> None:
+    """Sets the portrait preview data: his looks and the vanilla reference on humanoid01, the porthole idle animation and the camera values.
+
+    Args:
+        exporter (Exporter): The exporter.
+        registry (Dict): The units registry.
+        hooded (str): His default variant.
+        hoodless (Optional[str]): His hoodless variant, if any.
+    """
+    looks = [{"name": "Hooded", "model": exporter.model(hooded, "humanoid01")}]
+    if hoodless:
+        looks.append({"name": "Hoodless", "model": exporter.model(hoodless, "humanoid01")})
+    label, variant, art_set = PORTRAIT_REFERENCE
+    reference = {"name": label, "art_set": art_set, "model": exporter.model(variant, "humanoid01"), "camera": PORTRAIT_REFERENCE_CAMERA}
+    exporter.portrait = {"anim": exporter.anim(PORTHOLE_ANIM), "anim_path": PORTHOLE_ANIM, "camera": registry["portrait"]["camera_head"],
+                         "looks": [look for look in looks if look["model"]], "reference": reference if reference["model"] else None,
+                         "rounds": [{"camera": camera, "note": note} for camera, note in PORTRAIT_ROUNDS]}
+    print(f"portrait: {len(exporter.portrait['looks'])} looks, reference {'yes' if reference['model'] else 'missing'}")
 
 
 def build(out: str) -> Exporter:
@@ -267,8 +306,8 @@ def build(out: str) -> Exporter:
 
     foot_key, mounted_key = f"{PREFIX}_staff_and_sword_foot", f"{PREFIX}_staff_and_sword_pegasus"
     mount_set, mount_variant = mount_parts(land_units[mounted_key]["mount"], tables, sets)
-    look_entries(exporter, registry, (sets[land_units[foot_key]["man_animation"]], pair_variant(foot_key)),
-                 (registry["mounts"]["pegasus"]["name"], sets[land_units[mounted_key]["man_animation"]], pair_variant(mounted_key), mount_set, mount_variant))
+    hoodless = look_entries(exporter, registry, (sets[land_units[foot_key]["man_animation"]], pair_variant(foot_key)),
+                            (registry["mounts"]["pegasus"]["name"], sets[land_units[mounted_key]["man_animation"]], pair_variant(mounted_key), mount_set, mount_variant))
 
     for weapon, mount in [(w, m) for w, item in registry["weapons"].items() for m in registry["mounts"] if m in item["sets"]]:
         key = f"{PREFIX}_{weapon}_{mount}"
@@ -283,6 +322,7 @@ def build(out: str) -> Exporter:
         unit_entry(exporter, name, sets[set_name], variant_path(variant), mount_set, mount_variant, info)
 
     advisor_entry(exporter)
+    portrait_data(exporter, registry, pair_variant(foot_key), hoodless)
     for variant in sorted(glob.glob(os.path.join(PREVIEWS, "*.variantmeshdefinition"))):
         name = os.path.basename(variant)[:-len(".variantmeshdefinition")]
         unit_entry(exporter, f"Preview: {name}", sets[land_units[foot_key]["man_animation"]], variant, None, None, [f"preview variant {variant}"], LOOK_SLOTS)

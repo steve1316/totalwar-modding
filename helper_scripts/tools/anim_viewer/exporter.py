@@ -22,8 +22,8 @@ from tools.glf_rebuild_animpack import AnimSet, load_slot_ids, parse_set, read_a
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Settings
 
-# The viewer page shipped next to this script.
-PAGE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+# The viewer pages shipped next to this script: the gallery and the portrait camera preview.
+PAGES = [os.path.join(os.path.dirname(os.path.abspath(__file__)), name) for name in ("index.html", "portrait.html")]
 
 # Slot id names.
 SLOT_IDS = "./schemas/anim_ids_warhammer_3.csv"
@@ -121,6 +121,8 @@ class Exporter:
     models: Dict[Tuple[str, str], str]
     # Manifest entries.
     entries: List[Dict]
+    # Portrait camera preview data (looks, porthole animation, camera values), or None when the export has no portrait page.
+    portrait: Optional[Dict]
 
     def __init__(self, out: str, assets: AssetSource):
         self.out = out
@@ -133,6 +135,7 @@ class Exporter:
         self.bundles = [bytearray()]
         self.models = {}
         self.entries = []
+        self.portrait = None
         shutil.rmtree(out, ignore_errors=True)
         os.makedirs(os.path.join(out, "anims"), exist_ok=True)
 
@@ -210,14 +213,17 @@ class Exporter:
         return self.models[key]
 
     def write(self) -> None:
-        """Writes the bundles, the manifest and the page."""
+        """Writes the bundles, the manifest and the pages."""
         for index, bundle in enumerate(self.bundles):
             with open(os.path.join(self.out, "anims", f"bundle_{index:02d}.bin"), "wb") as f:
                 f.write(bundle)
         manifest = {"entries": self.entries, "anims": self.anims, "rigs": self.rigs, "bundles": [f"anims/bundle_{i:02d}.bin" for i in range(len(self.bundles))]}
+        if self.portrait:
+            manifest["portrait"] = self.portrait
         with open(os.path.join(self.out, "manifest.json"), "w", encoding="utf-8") as f:
             json.dump(manifest, f, separators=(",", ":"))
-        shutil.copy(PAGE, os.path.join(self.out, "index.html"))
+        for page in PAGES:
+            shutil.copy(page, os.path.join(self.out, os.path.basename(page)))
         size = sum(os.path.getsize(os.path.join(root, n)) for root, _, files in os.walk(self.out) for n in files)
         count = sum(len(files) for _, _, files in os.walk(self.out))
         print(f"{len(self.entries)} entries, {len(self.anims)} animations in {len(self.bundles)} bundles, {count} files, {size / 1048576:.1f} MB in {self.out}")

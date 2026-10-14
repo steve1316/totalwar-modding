@@ -73,6 +73,7 @@
     <button class="chip" data-key="bones">Bones</button>
     <button class="chip" data-key="props">Props</button>
     <button id="close" aria-label="Close-up on the rider">Close-up</button>
+    <button id="portrait" aria-label="Portrait camera preview" hidden>Portrait</button>
   </div>
 </div>
 <div id="scrim"></div>
@@ -257,6 +258,10 @@ class Rig {
     }
   }
 }
+
+// The portrait camera preview page, when the export has its data.
+$("portrait").hidden = !manifest.portrait;
+$("portrait").onclick = () => { location.href = "portrait.html"; };
 
 // Unit picker.
 const unitSel = $("unit");

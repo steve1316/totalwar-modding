@@ -91,8 +91,46 @@ boyars (hu1c) use other skeletons. `[data]`
 Rejected: Amber and Celestial bodies have a head built in, Bright and Light collars spike or wrap through the hood, Volkmar has a sunburst halo.
 Also fine but not kept: Kislev Patriarch, Engineer, Paladin, Warrior Priest. `[data]`
 
-- **Portrait.** The portrait settings copy the vanilla Grey Wizard's camera and point at his pre-rendered porthole image, so the 2D portrait shows
-  the Grey Wizard, not this head. `[data]`
+- **Portrait.** Superseded by "Portraits and unit card" below: the 2D images are now his own. `[data]`
+
+### Portraits and unit card (2026-10-13)
+
+- **Format.** `ui/portraits/{portholes,units}/portrait_settings__*.bin`, version 4. `rpfm_cli portrait-settings to-json` / `from-json` reads and
+  writes it, and the vanilla file round-trips byte for byte, so no new tool is needed. Each entry has an `id` (art set or campaign variant),
+  `camera_settings_head`, an optional `camera_settings_body` and `variants` (`filename`, `file_diffuse`, `file_mask_1-3`, season, level, age).
+  Camera fields: `z`, `y`, `yaw`, `pitch`, `fov`, `skeleton_node` and three more (`distance`, `theta`, `phi`). `[data]`
+- **Vanilla camera values.** Across all 1402 vanilla entries `yaw`, `pitch`, `distance`, `theta` and `phi` are always 0 and `skeleton_node` is
+  nearly always empty. Only `z` (distance, 1.0 on 764 entries) and `y` (height, 0.0 or 0.03) are tuned. Every Empire wizard, captain and witch hunter
+  uses `z` 1.0 and `y` 0.03 with `fov` 30. The Kislev Patriarch uses `z` 1.2 and `y` 0, and the Gold Wizard uses `z` 0.7 and `y` 0. `[data]`
+- **The vanilla portholes and units files are byte-identical.** Both `file_diffuse` paths point at `UI/Portraits/Portholes/...`. The 60x130 unit
+  card the army panel shows is the file of the same name under `ui/portraits/units/` (the Grey Wizard's has the hat and scarf). Our images use
+  the same layout: `ui/portraits/{portholes,units}/no_culture/advisor_overhaul_campaign_01_0.png`. `[data]`
+- **A hero's unit card comes from the portrait, not `unit_card`.** 571 vanilla character `unit_variants` rows use `placeholder`, and named
+  ones such as `wh_main_emp_karl_franz` have no `ui/units/icons` file. Hero units have no `ui/units/infopics` file either. `[data]`
+- **His head matches the Grey Wizard's head around the head bone.** In the humanoid01 bind pose his eyes sit 5.5 cm above and 8.9 cm in front of
+  the head bone (Grey Wizard 5.8 and 9.2). The jaw-to-eye line leans 6.3 degrees (Grey Wizard 6.4). Both use the same porthole animation
+  (`hu1_un_porthole_idle_01`, from both `hu1_pr8_amethyst_staff_and_sword` and `hu1_empire_staff_and_sword`), which tips the head 3-7 degrees
+  down. So the Grey Wizard's camera frames his face the same way, as far as the files show. `[data]`
+- **Head camera tuned in game.** Raising `y` alone (0.03 -> 0.05) barely changed the upward look. The deep hood and forward-tilted face need
+  the camera tilted down. A positive `pitch` tilts it down: 8 fixed the angle. A higher camera pushes the face down the frame, a lower one up.
+  Rounds tried (z, y, pitch): (1.0, 0.05, 0), (1.0, 0.12, 8), (0.8, 0.06, 8), (0.8, 0.03, 8) centred but too close, (1.2, 0.03, 8),
+  (1.0, 0.03, 8), (1.16, -0.01, 8). Final, tuned in the portrait preview page and accepted in game ("not exactly 1-1 but it will do"):
+  `z` 1.0, `y` 0.0, `pitch` 8, `yaw` 0, `fov` 30. The body camera stays the Grey Wizard's. `[game]`
+- **Head camera model, fitted to the round 1, 2, 3 and 5 screenshots.** The camera looks at a target 3.7 cm below the point `y` metres above
+  the head bone (porthole idle, frame 0). It sits `z` + 0.10 m from that target along its own view axis. `pitch` swings it up around the target
+  (an orbit). Pitching around the camera itself fits far worse. `fov` is vertical, and the visible circle (inner edge of the gold ring, about
+  88 px radius in a 1080p crop) spans the whole fov. The first fit (without the 0.10 m) made `z` 1.16 look ~15% too big. At pitch 8 the eye
+  line now lands within ~0.065 of the radius and the hood width within ~10%. Round 1 (pitch 0) is off by ~0.11. The shots show the head
+  turned ~10 degrees, as in frames 75-93 of the idle. The pose barely moves the eye line. `yaw` direction is untested. The anim viewer's
+  `portrait.html` previews this camera. `[data]`
+- **His own 2D art, cut from the vanilla Advisor bust.** `ui/skins/default/preview_advisor.png` (ui2.pack, 161x161, clear background) is the
+  campaign Advisor's hooded head and shoulders. The generator cuts the 300x164 porthole image, the 60x130 unit card and a 120x260 info picture from
+  it. The card and info picture put the bust at the bottom over a grey gradient, like the vanilla Amethyst Wizard card. The masks are left empty,
+  as on 666 vanilla entries. `unit_card` is now `advisor_overhaul_advisor`, with the card in `ui/units/icons/` and the info picture in
+  `ui/units/infopics/`, and the custom battle `general_portrait` points at his porthole image. `[untested]`
+- **Other vanilla Advisor art checked.** `ui/skins/default/porthole_advisor.png` is only the frame ring, `icon_advisor.png` (38x38) is too small,
+  `ui/help_images/advisor.png` and `ui/loading_ui/diagrams/campaign_advisor.png` are scenes and a framed portrait, and
+  `ui/eventpics/tze/advisor_manipulated.png` is an event picture. The anim viewer render route was not needed. `[data]`
 
 ### Spawn and availability (2026-10-13)
 
