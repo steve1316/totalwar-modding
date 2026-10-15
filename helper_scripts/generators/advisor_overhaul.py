@@ -41,6 +41,8 @@ The rest of his kit, also in the registry:
 - `actions`: vanilla hero action keys copied for him, a wizard. Each copy gets its own enable effect (`action_effect_key`) that a skill level
   gives, and the vanilla action's name and description.
 - `items`: id -> `name`, `description`, `type` (a vanilla ancillary type), `category`, `effects`. His quest items.
+- `lores`: vanilla lore key -> `name`, `icon`, `row`, `tier`, `rank`, `build`. One 3-level skill per lore, its spells read from vanilla at
+  `--refresh`: level 1 the lore's passive and its `LORE_FIRST_SPELLS` cheapest spells, level 2 every spell, level 3 every spell and its overcast.
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
@@ -163,6 +165,13 @@ BUNDLE_STAGE = "start_turn_completed"
 # His agent attribute, which copied hero actions of other agents use instead of their own.
 AGENT_ATTRIBUTE = "authority"
 
+# Lores of magic that are no lore a caster can learn: Kroak's own, the Kemmler prologue lore with no spells, and the Cataclysm spells.
+LORE_SKIPPED = {"wh2_dlc12_lore_lord_kroak", "wh_pro03_lore_kemmler", "wh3_main_cataclysm_spells"}
+
+# Spells a lore skill's first level gives, the cheapest first, and how many levels a lore skill has.
+LORE_FIRST_SPELLS = 3
+LORE_LEVELS = 3
+
 # Names group of his name row. Frequency 0 keeps the name out of random name rolls.
 NAMES_GROUP = "names_emp_empire"
 
@@ -271,6 +280,45 @@ def read_vanilla(table: str) -> Tuple[List[Dict[str, str]], List[str], str]:
     return load_tsv_data(f"{extract_tsv_data(table)}/db/{table}/data__.tsv")
 
 
+def vanilla_lores() -> Dict[str, Dict]:
+    """Every learnable lore of magic, with the effect that enables each of its spells and the one that lets it be overcast.
+
+    Each spell is enabled by several effects: its own, a whole-lore one and some for single characters. The one kept enables only that spell, and
+    one a vanilla skill uses is preferred. Spells with no overcast effect of their own keep none.
+
+    Returns:
+        Dict[str, Dict]: Lore key -> `passives` (enable effects) and `spells` (each `enable`, `overcast` or None, and `cost`), cheapest first.
+    """
+    groups = read_vanilla("special_ability_groups_tables")[0]
+    lores = sorted(r["ability_group"] for r in groups if r["is_composite_group"] == "false" and r["show_lore_icon"] == "true"
+                   and r["ability_group"] not in LORE_SKIPPED)
+    abilities = {r["key"]: r for r in read_vanilla("unit_special_abilities_tables")[0]}
+    used = {r["effect_key"] for r in read_vanilla("character_skill_level_to_effects_junctions_tables")[0]}
+    targets: Dict[Tuple[str, str], set] = {}
+    for r in read_vanilla("effect_bonus_value_unit_ability_junctions_tables")[0]:
+        targets.setdefault((r["effect"], r["bonus_value_id"]), set()).add(r["unit_ability"])
+
+    def own(spell: str, bonus: str) -> Optional[str]:
+        """The effect giving only this spell this bonus value, or None."""
+        keys = sorted((e for (e, b), t in targets.items() if b == bonus and t == {spell}), key=lambda e: (e not in used, len(e), e))
+        return keys[0] if keys else None
+
+    out: Dict[str, Dict] = {}
+    members = read_vanilla("special_ability_groups_to_unit_abilities_junctions_tables")[0]
+    for lore in lores:
+        passives, spells = [], []
+        for spell in sorted(r["unit_special_abilities"] for r in members if r["special_ability_groups"] == lore):
+            enable, row = own(spell, "enable"), abilities.get(spell, {})
+            if not enable:
+                continue
+            if row.get("passive") == "true":
+                passives.append(enable)
+            else:
+                spells.append({"enable": enable, "overcast": own(spell, "enable_overchage"), "cost": float(row.get("mana_cost") or 0)})
+        out[lore] = {"passives": passives, "spells": sorted(spells, key=lambda s: (s["cost"], s["enable"]))}
+    return out
+
+
 def refresh() -> None:
     """Keeps the vanilla rows the build reads and every written table's header and version."""
     registry = load_registry()
@@ -307,6 +355,7 @@ def refresh() -> None:
     data["armour_types"] = {r["key"]: r for r in loaded["unit_armour_types_tables"] if r["key"] in armours}
     data["effects"] = sorted(r["effect"] for r in loaded["effects_tables"])
     data["ancillary_types"] = sorted(r["type"] for r in read_vanilla("ancillary_types_tables")[0])
+    data["lores"] = vanilla_lores()
     actions = set(registry.get("actions", []))
     data["actions"] = {"rows": {r["unique_id"]: r for r in loaded["agent_actions_tables"] if r["unique_id"] in actions},
                        "links": [r for r in loaded["effect_bonus_value_agent_action_record_junctions_tables"] if r["agent_action_record"] in actions]}
@@ -469,6 +518,18 @@ def action_effect_key(action: str) -> str:
         str: The effect key.
     """
     return f"{PREFIX}_effect_enable_{action_short(action)}"
+
+
+def lore_skill_key(lore: str) -> str:
+    """The skill of one lore of magic.
+
+    Args:
+        lore (str): The vanilla lore key, such as `wh_main_lore_death`.
+
+    Returns:
+        str: The skill key, such as `advisor_overhaul_lore_death`.
+    """
+    return f"{PREFIX}_lore_{lore.split('_lore_', 1)[-1]}"
 
 
 def item_key(item_id: str) -> str:
@@ -1032,6 +1093,47 @@ def item_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]],
         texts.append((f"ancillaries_colour_text_{key}", item.get("description", "")))
 
 
+def lore_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds one 3-level skill per built lore of the registry's `lores`. Each level lists its full effects, since levels do not stack: level 1 the
+    passive and the cheapest spells, level 2 every spell, level 3 every spell and its overcast.
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows (the lores).
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+
+    Raises:
+        SystemExit: When a lore is not in the kept rows (run `--refresh`).
+    """
+    me = "character_to_character_own"
+    for lore, entry in registry.get("lores", {}).items():
+        if not entry.get("build"):
+            continue
+        if lore not in data.get("lores", {}):
+            raise SystemExit(f"lore {lore} is not kept, run with --refresh")
+        kept, key = data["lores"][lore], lore_skill_key(lore)
+        passives, spells = kept["passives"], kept["spells"]
+        overcasts = [s["overcast"] for s in spells if s["overcast"]]
+        levels = [passives + [s["enable"] for s in spells[:LORE_FIRST_SPELLS]], passives + [s["enable"] for s in spells],
+                  passives + [s["enable"] for s in spells] + overcasts]
+        rank = str(entry.get("rank", 1))
+        rows["character_skills_tables"].append({
+            "key": key, "image_path": entry.get("icon", ""), "unlocked_at_rank": rank, "is_background_skill": "false", "is_female_only_background_skill": "false",
+            "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
+        })
+        add_node(rows, f"{PREFIX}_lore_node_{lore.split('_lore_', 1)[-1]}", key, entry["row"], entry["tier"])
+        for level, effects in enumerate(levels, start=1):
+            rows["character_skill_level_details_tables"].append({"campaign_key": "", "faction_key": "", "level": str(level), "skill_key": key,
+                                                                 "subculture_key": "", "image_path": "x", "unlocked_at_rank": rank})
+            rows["character_skill_level_to_effects_junctions_tables"] += [{"character_skill_key": key, "effect_key": e, "level": str(level),
+                                                                           "effect_scope": me, "value": "1.0000"} for e in effects]
+        first = min(LORE_FIRST_SPELLS, len(spells))
+        texts.append((f"character_skills_localised_name_{key}", entry["name"]))
+        texts.append((f"character_skills_localised_description_{key}", entry.get("description", "He learned this lore in a world that no longer exists.")
+                      + f"\\\\n\\\\nLevel 1: the lore's passive and {first} of its {len(spells)} spells. Level 2: every spell. Level 3: every spell can be overcast."))
+
+
 def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
     """Adds one art set per weapon. The character panel's model follows only the art set, so the script switches it with the weapon.
 
@@ -1167,6 +1269,7 @@ def build() -> None:
     arts = weapon_art_rows(registry, rows, texts)
     story_bundle_rows(registry, rows, texts)
     item_rows(registry, data, rows, texts)
+    lore_rows(registry, data, rows, texts)
     art_rows(registry, data, rows)
     missile_rows(registry, data, rows)
     melee_rows(registry, data, rows)

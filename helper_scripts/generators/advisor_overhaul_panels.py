@@ -13,7 +13,7 @@ from typing import Dict, List, Tuple
 from core.asset_source import AssetSource, norm
 from core.extract_cache import extracted_tree
 from core.utilities import extract_tsv_data, load_tsv_data
-from generators.advisor_overhaul import DATA, MOD, STAT_COLUMNS, fixed_skills, pairs, unit_key
+from generators.advisor_overhaul import DATA, LORE_LEVELS, MOD, STAT_COLUMNS, fixed_skills, pairs, unit_key
 from tools.glf_rebuild_animpack import AnimSet
 from tools.skill_catalog import CATALOG_LOC_PREFIXES, SKILL_CATALOG_TABLES, SKILL_ICON_FOLDER, catalog_art, skill_catalog
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
@@ -401,8 +401,11 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
     catalog = skill_catalog({t: load_tsv_data(f"{extract_tsv_data(t)}/db/{t}/data__.tsv")[0] for t in SKILL_CATALOG_TABLES}, builder.loc)
     for path in catalog_art(catalog):
         builder.note_art(path)
-    fixed = [{"row": f["row"], "tier": f["tier"], "name": f["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{f['icon']}"), "kind": f["kind"]}
+    # Each fixed skill's points: one for a weapon or mount, one per level for a lore.
+    fixed = [{"row": f["row"], "tier": f["tier"], "name": f["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{f['icon']}"), "kind": f["kind"], "cost": 1}
              for f in fixed_skills(registry) if not f["hidden"]]
+    fixed += [{"row": e["row"], "tier": e["tier"], "name": e["name"], "icon": builder.note_art(f"{SKILL_ICON_FOLDER}/{e['icon']}"), "kind": "lore", "cost": LORE_LEVELS}
+              for e in registry.get("lores", {}).values() if e.get("build")]
     # The weapon models a prop slot may switch to: every vanilla model in a props folder.
     models = AssetSource([], [], PROP_PACKS).index
     editor["prop_models"] = sorted(p for p in models if p.endswith(".wsmodel") and PROP_FOLDER.search(p))

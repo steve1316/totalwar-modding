@@ -224,9 +224,11 @@ export class SkillsTab {
     const { esc } = window.UnitPanel, all = Object.entries(skills), built = all.filter(([, s]) => s.build);
     const counts = { build: built.length, plan: all.length - built.length };
     const sum = list => list.reduce((n, [, s]) => n + cost(s), 0);
-    const rows = [...Array(ROWS).keys()].filter(r => r >= FIRST_PLAN_ROW).map(r => {
-      const here = all.filter(([, s]) => !s.hidden && s.row === r);
-      return here.length ? `<tr><td>${esc(this.rowName(r))}</td><td>${sum(here.filter(([, s]) => s.build))}</td><td>${sum(here)}</td></tr>` : "";
+    // The fixed skills (weapons, mounts and lores the generator makes) are always in game.
+    const fixedCost = list => list.reduce((n, f) => n + (f.cost || 0), 0);
+    const rows = [...Array(ROWS).keys()].map(r => {
+      const here = all.filter(([, s]) => !s.hidden && s.row === r), fixed = fixedCost(this.data.fixed.filter(f => f.row === r));
+      return here.length || fixed ? `<tr><td>${esc(this.rowName(r))}</td><td>${fixed + sum(here.filter(([, s]) => s.build))}</td><td>${fixed + sum(here)}</td></tr>` : "";
     }).join("");
     // A capstone's path is it plus every skill it needs, all the way down.
     const path = id => { const seen = new Set(), walk = k => { if (seen.has(k) || !skills[k]) return; seen.add(k); (skills[k].requires || []).forEach(walk); }; walk(id); return [...seen]; };
@@ -236,7 +238,7 @@ export class SkillsTab {
     }).join("");
     const slots = [...new Set(all.map(([, s]) => s.slot).filter(Boolean))].sort();
     const weapons = this.weapons(), missing = slots.map(slot => [slot, weapons.filter(([, w]) => !(w.arts || {})[slot]).map(([k, w]) => w.name || k)]).filter(([, m]) => m.length);
-    const total = sum(built), points = MAX_RANK - 1;
+    const total = fixedCost(this.data.fixed) + sum(built), points = MAX_RANK - 1;
     return `<div class="note">Tap a + cell in rows ${FIRST_PLAN_ROW + 1} to ${ROWS} to plan a skill, + in Hidden for one a script gives, or tap a skill to edit it.</div>
       <div class="note">Gold rings are <b>In game</b>: the next Rebuild adds them to the mod. Dashed rings are <b>Drafts</b>, kept here only.
         ${counts.build} in game, ${counts.plan} drafts.</div>
