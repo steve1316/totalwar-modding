@@ -1,6 +1,0 @@
-campaign_key	faction_key	level	skill_key	subculture_key	image_path	unlocked_at_rank
-#character_skill_level_details_tables;1;db/character_skill_level_details_tables/advisor_overhaul_spike						
-		1	advisor_overhaul_spike_actions		x	1
-		1	advisor_overhaul_spike_pact		x	1
-		1	advisor_overhaul_spike_gift		x	1
-		1	advisor_overhaul_spike_defy		x	1

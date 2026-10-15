@@ -29,8 +29,18 @@ is retargeted into a set of his own and moved to `sets`. A weapon with no sets y
 
 His planned skills are the registry's `skills` (written by the workbench's Skills tab): id -> `name`, `description`, `icon` (a file in
 `ui/campaign ui/skills`), `row` and `tier` in the tree, `rank` it unlocks at, `levels` (each a list of `effect`, `scope`, `value`), `requires` (ids
-of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of skills it locks, both ways) and `build`. Only skills with `build` (In
-game in the workbench) are written. Drafts stay in the workbench.
+of skills it needs: all of them, or any `needs` of them), `exclusive` (ids of skills it locks, both ways), `locked_by` (ids of skills that lock it
+one way, such as a pact choice), `hidden` (no node shown, for skills a script gives him, with `learned` giving it to him when he is made), `slot`
+(an art slot, whose effect is the held weapon's art for that slot) and `build`. Only skills with `build` (In game in the workbench) are written.
+Drafts stay in the workbench. A weapon or mount with `unlock` "script" gets a hidden skill too: only a script unlocks it (the Disc, from the pact).
+
+The rest of his kit, also in the registry:
+- `weapons.<w>.arts`: slot -> `name`, `description`, `effects` (each `effect`, `scope`, `value`). Each is an effect bundle, which the loadout
+  script puts on him while he holds that weapon and owns the slot's skill. Every weapon must define every slot a built skill uses.
+- `bundles`: id -> `name`, `description`, `icon`, `effects`. Effect bundles the story script puts on him (the pact's corruption, its debt).
+- `actions`: vanilla hero action keys copied for him, a wizard. Each copy gets its own enable effect (`action_effect_key`) that a skill level
+  gives, and the vanilla action's name and description.
+- `items`: id -> `name`, `description`, `type` (a vanilla ancillary type), `category`, `effects`. His quest items.
 
 Every value comes from vanilla data. His stats are the Amethyst Wizard's (`FOOT_TEMPLATE`), mounted pairs start from a vanilla hero on the same
 mount (the registry's `template`) plus the vanilla difference between that hero mounted and on foot. His look (icon, voice, campaign art row,
@@ -140,9 +150,18 @@ DEFAULT_MOUNT = "foot"
 WEAPON_ROW = 0
 MOUNT_ROW = 1
 
-# Hidden vanilla skills his tree holds, as the Amethyst Wizard's does: (skill, row, learned when he is made). The first turns on his hero actions
-# (scouting, wound, scout settlement, steal technology, boost income, assault units). The second raises their success chance with his rank.
-HIDDEN_SKILLS = [("wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard", 8, True), ("wh3_main_skill_agent_action_success_scaling", 99, False)]
+# Row of every hidden skill node, one tier each in the order they are added. Two nodes in one slot drop one of them.
+HIDDEN_ROW = 99
+
+# Hidden vanilla skills his tree holds, as the Amethyst Wizard's does: (skill, learned when he is made). The first raises his hero actions' success
+# chance with his rank. The second turns on his hero actions (scouting, wound, scout settlement, steal technology, boost income, assault units).
+HIDDEN_SKILLS = [("wh3_main_skill_agent_action_success_scaling", False), ("wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard", True)]
+
+# Effect bundle values for a bundle on him. `advancement_stage` must be `start_turn_completed`, or the game crashes on load.
+BUNDLE_STAGE = "start_turn_completed"
+
+# His agent attribute, which copied hero actions of other agents use instead of their own.
+AGENT_ATTRIBUTE = "authority"
 
 # Names group of his name row. Frequency 0 keeps the name out of random name rolls.
 NAMES_GROUP = "names_emp_empire"
@@ -183,7 +202,9 @@ TABLES = [
     "campaign_character_uniform_ancillary_junctions_tables", "character_skill_node_sets_tables", "character_skills_tables",
     "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables", "missile_weapons_tables",
     "projectiles_tables", "melee_weapons_tables", "unit_armour_types_tables", "character_skill_node_links_tables",
-    "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", *UNIT_ROW_TABLES,
+    "character_skill_level_to_effects_junctions_tables", "character_skill_nodes_skill_locks_tables", "effects_tables", "effect_bundles_tables",
+    "effect_bundles_to_effects_junctions_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables",
+    "ancillary_to_effects_tables", *UNIT_ROW_TABLES,
 ]
 
 # Land unit columns a weapon's `stats` and `forms` may set. `armour` is set too, as an armour value.
@@ -284,7 +305,11 @@ def refresh() -> None:
     data["melee_weapons"] = {r["key"]: r for r in loaded["melee_weapons_tables"] if r["key"] in melees}
     armours = {r["armour"] for r in data["templates"]["land_units_tables"]}
     data["armour_types"] = {r["key"]: r for r in loaded["unit_armour_types_tables"] if r["key"] in armours}
-    data["effects"] = sorted(r["effect"] for r in read_vanilla("effects_tables")[0])
+    data["effects"] = sorted(r["effect"] for r in loaded["effects_tables"])
+    data["ancillary_types"] = sorted(r["type"] for r in read_vanilla("ancillary_types_tables")[0])
+    actions = set(registry.get("actions", []))
+    data["actions"] = {"rows": {r["unique_id"]: r for r in loaded["agent_actions_tables"] if r["unique_id"] in actions},
+                       "links": [r for r in loaded["effect_bonus_value_agent_action_record_junctions_tables"] if r["agent_action_record"] in actions]}
     data["scopes"] = sorted(r["key"] for r in read_vanilla("campaign_effect_scopes_tables")[0])
     data["portraits"] = vanilla_portraits(LOOK_ART_SET)
     json.dump(data, open(DATA, "w", encoding="utf-8"), indent=1, sort_keys=True)
@@ -383,6 +408,79 @@ def choice_skill(kind: str, key: str) -> str:
         str: The skill key.
     """
     return f"{PREFIX}_choose_{kind}_{key}"
+
+
+def art_bundle_key(weapon: str, slot: str) -> str:
+    """The effect bundle of a weapon's art for one art slot.
+
+    Args:
+        weapon (str): The weapon key.
+        slot (str): The art slot.
+
+    Returns:
+        str: The bundle key.
+    """
+    return f"{PREFIX}_weapon_art_{weapon}_{slot}"
+
+
+def bundle_key(bundle_id: str) -> str:
+    """The effect bundle of one of the registry's `bundles`.
+
+    Args:
+        bundle_id (str): Its id.
+
+    Returns:
+        str: The bundle key.
+    """
+    return f"{PREFIX}_bundle_{bundle_id}"
+
+
+def action_short(action: str) -> str:
+    """A vanilla hero action key without its game and pack prefix: `champion_assist_army_scavenge`.
+
+    Args:
+        action (str): The vanilla action key.
+
+    Returns:
+        str: The short name.
+    """
+    return action.split("agent_action_", 1)[-1]
+
+
+def action_key(action: str) -> str:
+    """His copy of a vanilla hero action.
+
+    Args:
+        action (str): The vanilla action key.
+
+    Returns:
+        str: The copy's key.
+    """
+    return f"{PREFIX}_action_{action_short(action)}"
+
+
+def action_effect_key(action: str) -> str:
+    """The effect that enables his copy of a vanilla hero action, given by a skill level.
+
+    Args:
+        action (str): The vanilla action key.
+
+    Returns:
+        str: The effect key.
+    """
+    return f"{PREFIX}_effect_enable_{action_short(action)}"
+
+
+def item_key(item_id: str) -> str:
+    """The ancillary of one of his quest items.
+
+    Args:
+        item_id (str): Its id in the registry's `items`.
+
+    Returns:
+        str: The ancillary key.
+    """
+    return f"{PREFIX}_item_{item_id}"
 
 
 def ui_name(kind: str, key: str) -> str:
@@ -648,14 +746,76 @@ def fixed_skills(registry: Dict) -> List[Dict]:
         registry (Dict): The registry.
 
     Returns:
-        List[Dict]: `kind`, `key` (item key), `item` (the registry item), `row`, `tier`, `skill` and `node` keys, `name` and `icon`.
+        List[Dict]: `kind`, `key` (item key), `item` (the registry item), `row`, `tier`, `hidden`, `skill` and `node` keys, `name` and `icon`. A
+        hidden one (`unlock` "script") takes no tier, since `add_node` puts it on `HIDDEN_ROW`.
     """
     skills = []
     for row, kind, items, default in ((WEAPON_ROW, "weapon", registry["weapons"], DEFAULT_WEAPON), (MOUNT_ROW, "mount", registry["mounts"], DEFAULT_MOUNT)):
-        for tier, (item_key, item) in enumerate(i for i in items.items() if i[0] != default):
-            skills.append({"kind": kind, "key": item_key, "item": item, "row": row, "tier": tier, "skill": choice_skill(kind, item_key),
-                           "node": f"{PREFIX}_choose_{kind}_node_{item_key}", "name": item["name"], "icon": item.get("skill_icon") or os.path.basename(item["icon"])})
+        tier = 0
+        for key, item in items.items():
+            if key == default:
+                continue
+            hidden = item.get("unlock") == "script"
+            skills.append({"kind": kind, "key": key, "item": item, "row": row, "tier": None if hidden else tier, "hidden": hidden,
+                           "skill": choice_skill(kind, key), "node": f"{PREFIX}_choose_{kind}_node_{key}", "name": item["name"],
+                           "icon": item.get("skill_icon") or os.path.basename(item["icon"])})
+            tier += 0 if hidden else 1
     return skills
+
+
+def add_node(rows: Dict[str, List[Dict[str, str]]], node: str, skill: str, row: Any, tier: Any, hidden: bool = False, learned: bool = False,
+             parents: int = 0) -> None:
+    """Adds one node to his tree. A hidden node goes unseen on `HIDDEN_ROW`, in the next free tier, whatever row and tier it was given.
+
+    Args:
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        node (str): The node key.
+        skill (str): The skill key.
+        row (Any): Its row.
+        tier (Any): Its place in the row.
+        hidden (bool): Whether the tree hides it.
+        learned (bool): Whether he is made with it.
+        parents (int): `required_num_parents`.
+    """
+    nodes = rows["character_skill_nodes_tables"]
+    if hidden:
+        row, tier = HIDDEN_ROW, sum(1 for n in nodes if n["indent"] == str(HIDDEN_ROW))
+    nodes.append({"key": node, "character_skill_key": skill, "indent": str(row), "tier": str(tier), "points_on_creation": "1" if learned else "0",
+                  "required_num_parents": str(parents), "visible_in_ui": "false" if hidden else "true"})
+    rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
+
+
+def effect_value(effect: Dict) -> str:
+    """An effect's value as the effect junction tables write it.
+
+    Args:
+        effect (Dict): `effect`, `scope`, `value`.
+
+    Returns:
+        str: The value with four decimals.
+    """
+    return f"{float(effect.get('value', 0)):.4f}"
+
+
+def ancillary_rows(rows: Dict[str, List[Dict[str, str]]], key: str, kind: str, category: str, **columns: str) -> None:
+    """Adds one ancillary only he can hold.
+
+    Args:
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        key (str): The ancillary key.
+        kind (str): Its ancillary type.
+        category (str): Its category.
+        **columns (str): Other columns that differ from the defaults.
+    """
+    rows["ancillaries_tables"].append({
+        "key": key, "type": kind, "applies_to": ".", "transferrable": "false", "unique_to_world": "false", "unique_to_faction": "false",
+        "precedence": "1", "start_date": "0", "end_date": "9999", "legendary_item": "false", "mp_exclusive": "false", "is_wife_ancillary": "false",
+        "category": category, "min_starting_age": "16", "max_starting_age": "30", "min_expiry_age": "30", "max_expiry_age": "50", "immortal": "true",
+        "provided_bodyguard_unit": "", "uniqueness_score": "1", "turns_before_swap_allowed": "0", "randomly_dropped": "false", "can_be_stolen": "false",
+        "can_be_destroyed": "false", "faction_set": "all", **columns,
+    })
+    rows["ancillary_info_tables"].append({"ancillary": key})
+    rows["ancillaries_included_agent_subtypes_tables"].append({"agent_subtype": SUBTYPE, "ancillary": key})
 
 
 def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
@@ -670,7 +830,7 @@ def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
         for item_key, item in items.items():
             texts.append((ui_name(kind, item_key), item["name"]))
     for fixed in fixed_skills(registry):
-        kind, item, skill, node, row, tier = fixed["kind"], fixed["item"], fixed["skill"], fixed["node"], fixed["row"], fixed["tier"]
+        kind, item, skill = fixed["kind"], fixed["item"], fixed["skill"]
         rows["character_skills_tables"].append({
             "key": skill, "image_path": fixed["icon"], "unlocked_at_rank": "0", "is_background_skill": "false",
             "is_female_only_background_skill": "false", "is_male_only_background_skill": "false", "background_weighting": "0.0000", "influence_cost": "0",
@@ -678,22 +838,15 @@ def skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: Lis
         texts.append((f"character_skills_localised_name_{skill}", item["name"]))
         texts.append((f"character_skills_localised_description_{skill}", f"{item['description']}\\\\n\\\\nUnlocks this {kind} for the Advisor. "
                       "Switch to it with the Change Loadout button in his character panel."))
-        rows["character_skill_nodes_tables"].append({
-            "key": node, "character_skill_key": skill, "indent": str(row), "tier": str(tier), "points_on_creation": "0", "required_num_parents": "0",
-            "visible_in_ui": "true",
-        })
-        rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
+        add_node(rows, fixed["node"], skill, fixed["row"], fixed["tier"], fixed["hidden"])
         # Without a level row the skill has 0 levels: the tree draws it as learned while `has_skill` stays false.
         rows["character_skill_level_details_tables"].append({
             "campaign_key": "", "faction_key": "", "level": "1", "skill_key": skill, "subculture_key": "", "image_path": "x",
             "unlocked_at_rank": str(item.get("unlock_rank", 1)),
         })
     # The vanilla skills keep their own levels and effects, so only the nodes are his.
-    for skill, row, learned in HIDDEN_SKILLS:
-        node = f"{PREFIX}_hidden_node_{skill}"
-        rows["character_skill_nodes_tables"].append({"key": node, "character_skill_key": skill, "indent": str(row), "tier": "0",
-                                                     "points_on_creation": "1" if learned else "0", "required_num_parents": "0", "visible_in_ui": "false"})
-        rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
+    for skill, learned in HIDDEN_SKILLS:
+        add_node(rows, f"{PREFIX}_hidden_node_{skill}", skill, HIDDEN_ROW, 0, hidden=True, learned=learned)
 
 
 def planned_skill_key(skill_id: str) -> str:
@@ -708,23 +861,23 @@ def planned_skill_key(skill_id: str) -> str:
     return f"{PREFIX}_skill_{skill_id}"
 
 
-def planned_skill_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
-    """Adds every planned skill marked `build`: the skill, its node in his tree, a level row per level with that level's effects, a link from each
-    skill it needs (which must be built too), and a lock from each built skill it is exclusive with.
+def planned_skill_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds every planned skill marked `build`: the skill, its node in his tree (or on `HIDDEN_ROW`, unseen, when `hidden`), a level row per level
+    with that level's effects, a link from each skill it needs (which must be built too), a lock from each built skill it is exclusive with, and a
+    lock from each built skill it is `locked_by`.
 
     A skill that needs all of its skills gets `REQUIRED` links, which the game checks one by one (`required_num_parents` 0). One that needs only
     some gets `SUBSET_REQUIRED` links and `required_num_parents` set to how many.
 
     Args:
         registry (Dict): The registry.
-        data (Dict): The kept vanilla rows (the effect and scope keys).
         rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
         texts (List[Tuple[str, str]]): Loc rows, added to.
 
     Raises:
-        SystemExit: When a built skill names an effect or scope the game lacks, or needs a skill that is not built.
+        SystemExit: When a built skill needs, or is locked by, a skill that is not built.
     """
-    skills, effects, scopes = registry.get("skills", {}), set(data.get("effects", [])), set(data.get("scopes", []))
+    skills = registry.get("skills", {})
     built = {skill_id for skill_id, skill in skills.items() if skill.get("build")}
     for skill_id in sorted(built):
         skill = skills[skill_id]
@@ -741,14 +894,15 @@ def planned_skill_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str
             raise SystemExit(f"skill {skill_id} needs {', '.join(missing)}, which is not built")
         needs = skill.get("needs")
         some = isinstance(needs, int) and 0 < needs < len(requires)
-        rows["character_skill_nodes_tables"].append({
-            "key": node, "character_skill_key": key, "indent": str(skill.get("row", 2)), "tier": str(skill.get("tier", 0)), "points_on_creation": "0",
-            "required_num_parents": str(needs if some else 0), "visible_in_ui": "true",
-        })
+        hidden = bool(skill.get("hidden"))
+        add_node(rows, node, key, skill.get("row", 2), skill.get("tier", 0), hidden, hidden and bool(skill.get("learned")), needs if some else 0)
         for other in skill.get("exclusive", []):
             if other in built:
                 rows["character_skill_nodes_skill_locks_tables"].append({"character_skill": key, "character_skill_node": f"{PREFIX}_skill_node_{other}", "level": "1"})
-        rows["character_skill_node_set_items_tables"].append({"set": NODE_SET, "item": node, "mod_disabled": "false"})
+        for other in skill.get("locked_by", []):
+            if other not in built:
+                raise SystemExit(f"skill {skill_id} is locked by {other}, which is not built")
+            rows["character_skill_nodes_skill_locks_tables"].append({"character_skill": planned_skill_key(other), "character_skill_node": node, "level": "1"})
         for parent in requires:
             rows["character_skill_node_links_tables"].append({
                 "child_key": node, "parent_key": f"{PREFIX}_skill_node_{parent}", "initial_descent_tiers": "0", "parent_link_position": "1",
@@ -760,13 +914,122 @@ def planned_skill_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str
                 "campaign_key": "", "faction_key": "", "level": str(level), "skill_key": key, "subculture_key": "", "image_path": "x",
                 "unlocked_at_rank": str(skill.get("rank", 1)),
             })
-            for effect in level_effects:
-                if effect.get("effect") not in effects or effect.get("scope") not in scopes:
-                    raise SystemExit(f"skill {skill_id} level {level}: unknown effect {effect.get('effect')} or scope {effect.get('scope')}")
-                rows["character_skill_level_to_effects_junctions_tables"].append({
-                    "character_skill_key": key, "effect_key": effect["effect"], "level": str(level), "effect_scope": effect["scope"],
-                    "value": f"{float(effect.get('value', 0)):.4f}",
-                })
+            rows["character_skill_level_to_effects_junctions_tables"] += [{"character_skill_key": key, "effect_key": e["effect"], "level": str(level),
+                                                                           "effect_scope": e["scope"], "value": effect_value(e)} for e in level_effects]
+
+
+def bundle_rows(key: str, entry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds one effect bundle for him and its effects.
+
+    Args:
+        key (str): The bundle key.
+        entry (Dict): `name`, `description`, `icon` (a file in `ui/campaign ui/effect_bundles`) and `effects`.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+    """
+    rows["effect_bundles_tables"].append({"key": key, "localised_description": "", "localised_title": "", "bundle_target": "character", "priority": "1",
+                                          "ui_icon": entry.get("icon", "public_order.png"), "is_global_effect": "true", "show_in_3d_space": "false",
+                                          "owner_only": "true"})
+    rows["effect_bundles_to_effects_junctions_tables"] += [{"effect_bundle_key": key, "effect_key": e["effect"], "effect_scope": e["scope"],
+                                                            "value": effect_value(e), "advancement_stage": BUNDLE_STAGE}
+                                                           for e in entry.get("effects", [])]
+    texts.append((f"effect_bundles_localised_title_{key}", entry["name"]))
+    texts.append((f"effect_bundles_localised_description_{key}", entry.get("description", "")))
+
+
+def weapon_art_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> Dict[str, List[Tuple[str, str]]]:
+    """Adds every weapon's arts, one effect bundle per art slot.
+
+    Args:
+        registry (Dict): The registry.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+
+    Returns:
+        Dict[str, List[Tuple[str, str]]]: Weapon -> (slot skill key, bundle key) for each built art slot, for the loadout script.
+
+    Raises:
+        SystemExit: When a weapon leaves a built slot undefined.
+    """
+    slots = {skill["slot"]: planned_skill_key(skill_id) for skill_id, skill in registry.get("skills", {}).items() if skill.get("build") and skill.get("slot")}
+    arts: Dict[str, List[Tuple[str, str]]] = {}
+    for weapon_key, weapon in registry["weapons"].items():
+        missing = sorted(set(slots) - set(weapon.get("arts", {})))
+        if missing:
+            raise SystemExit(f"weapon {weapon_key} has no art for slot {', '.join(missing)}")
+        for slot, art in weapon.get("arts", {}).items():
+            bundle = art_bundle_key(weapon_key, slot)
+            bundle_rows(bundle, art, rows, texts)
+            if slot in slots:
+                arts.setdefault(weapon_key, []).append((slots[slot], bundle))
+    return arts
+
+
+def story_bundle_rows(registry: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds the registry's `bundles`, the effect bundles the story script puts on him.
+
+    Args:
+        registry (Dict): The registry.
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+    """
+    for bundle_id, entry in registry.get("bundles", {}).items():
+        bundle_rows(bundle_key(bundle_id), entry, rows, texts)
+
+
+def action_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], vanilla_texts: List[Tuple[str, str]]) -> None:
+    """Adds his copy of each of the registry's `actions`: the vanilla action row for his agent type, a new enable effect, and the vanilla action's
+    other bonus values (cost, success chance). A skill level then gives the enable effect.
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows (the actions and their bonus values).
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        vanilla_texts (List[Tuple[str, str]]): Loc rows copied from vanilla text, added to.
+
+    Raises:
+        SystemExit: When an action is not in the kept rows (run `--refresh`).
+    """
+    kept = data["actions"]
+    for action in registry.get("actions", []):
+        if action not in kept["rows"]:
+            raise SystemExit(f"hero action {action} is not kept, run with --refresh")
+        source, key, effect = kept["rows"][action], action_key(action), action_effect_key(action)
+        row = dict(source, unique_id=key, agent=AGENT_TYPE)
+        row.update({column: AGENT_ATTRIBUTE for column in ("attribute", "target_attribute") if row[column] == source["attribute"]})
+        rows["agent_actions_tables"].append(row)
+        rows["effects_tables"].append({"effect": effect, "icon": "", "priority": "0", "icon_negative": "", "category": "campaign", "is_positive_value_good": "true"})
+        rows["effect_bonus_value_agent_action_record_junctions_tables"].append({"bonus_value_id": "active", "effect": effect, "agent_action_record": key})
+        rows["effect_bonus_value_agent_action_record_junctions_tables"] += [dict(r, agent_action_record=key) for r in kept["links"]
+                                                                             if r["agent_action_record"] == action and r["bonus_value_id"] != "active"]
+        # The name and description are keyed by the action, so the copy carries the vanilla text. It uses `%n%` value markers.
+        name = source["localised_action_name"]
+        vanilla_texts.append((f"agent_actions_localised_action_name_{key}", name))
+        vanilla_texts.append((f"agent_actions_localised_action_description_{key}", source["localised_action_description"].replace("\\n", "\\\\n")))
+        vanilla_texts.append((f"effects_description_{effect}", f"Hero action: {name}"))
+
+
+def item_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]], texts: List[Tuple[str, str]]) -> None:
+    """Adds his quest items, the registry's `items`: one ancillary each, only for him, with its effects.
+
+    Args:
+        registry (Dict): The registry.
+        data (Dict): The kept vanilla rows (the ancillary types).
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table, added to.
+        texts (List[Tuple[str, str]]): Loc rows, added to.
+
+    Raises:
+        SystemExit: When an item's type is unknown.
+    """
+    for item_id, item in registry.get("items", {}).items():
+        key = item_key(item_id)
+        if item.get("type") not in data.get("ancillary_types", []):
+            raise SystemExit(f"item {item_id}: unknown ancillary type {item.get('type')}")
+        ancillary_rows(rows, key, item["type"], item.get("category", "talisman"), legendary_item="true", uniqueness_score="100")
+        rows["ancillary_to_effects_tables"] += [{"ancillary": key, "effect": e["effect"], "effect_scope": e["scope"], "value": effect_value(e)}
+                                                for e in item.get("effects", [])]
+        texts.append((f"ancillaries_onscreen_name_{key}", item["name"]))
+        texts.append((f"ancillaries_colour_text_{key}", item.get("description", "")))
 
 
 def art_rows(registry: Dict, data: Dict, rows: Dict[str, List[Dict[str, str]]]) -> None:
@@ -868,15 +1131,7 @@ def build() -> None:
         texts.append((f"land_units_onscreen_name_{key}", "The Advisor" if key == unit_key(DEFAULT_WEAPON, DEFAULT_MOUNT)
                       else f"The Advisor ({weapon['name']}, {mount['name']})"))
 
-        rows["ancillaries_tables"].append({
-            "key": ancillary, "type": mount["ancillary_type"], "applies_to": ".", "transferrable": "false", "unique_to_world": "false",
-            "unique_to_faction": "false", "precedence": "1", "start_date": "0", "end_date": "9999", "legendary_item": "false", "mp_exclusive": "false",
-            "is_wife_ancillary": "false", "category": "mount", "min_starting_age": "16", "max_starting_age": "30", "min_expiry_age": "30",
-            "max_expiry_age": "50", "immortal": "true", "provided_bodyguard_unit": key, "uniqueness_score": "1", "turns_before_swap_allowed": "0",
-            "randomly_dropped": "false", "can_be_stolen": "false", "can_be_destroyed": "false", "faction_set": "all",
-        })
-        rows["ancillary_info_tables"].append({"ancillary": ancillary})
-        rows["ancillaries_included_agent_subtypes_tables"].append({"agent_subtype": SUBTYPE, "ancillary": ancillary})
+        ancillary_rows(rows, ancillary, mount["ancillary_type"], "mount", provided_bodyguard_unit=key)
         for art_set in (weapon_art_set(w) for w in registry["weapons"]):
             rows["campaign_character_uniform_ancillary_junctions_tables"].append({"ancillary": ancillary, "art_set": art_set, "uniform": uniform})
         # The campaign map model and the character panel model show the weapon. Both use the weapon's foot variant, so mount props such as the disc
@@ -904,14 +1159,22 @@ def build() -> None:
     vanilla_pairs = set(data["culture_animations"])
     rows["culture_to_battle_animation_tables_tables"] += [{"battle_animations_table": s, "culture_pack": c} for s in sorted(battle_sets)
                                                           for c in data["culture_packs"] if f"{s}|{c}" not in vanilla_pairs]
+    # Text copied from vanilla keeps its `%n%` value markers, so it skips `check_loc`. No script reads it.
+    vanilla_texts: List[Tuple[str, str]] = []
+    action_rows(registry, data, rows, vanilla_texts)
     skill_rows(registry, rows, texts)
-    planned_skill_rows(registry, data, rows, texts)
+    planned_skill_rows(registry, rows, texts)
+    arts = weapon_art_rows(registry, rows, texts)
+    story_bundle_rows(registry, rows, texts)
+    item_rows(registry, data, rows, texts)
     art_rows(registry, data, rows)
     missile_rows(registry, data, rows)
     melee_rows(registry, data, rows)
     check_duplicates(rows)
     check_node_slots(rows["character_skill_nodes_tables"])
+    check_effects(rows, data)
     check_loc(texts)
+    texts += vanilla_texts
 
     for table, table_rows in rows.items():
         write(table, table_rows, specs[table])
@@ -920,7 +1183,7 @@ def build() -> None:
     portrait_ids = [(weapon_art_set(w), foot_variant(w)) for w in registry["weapons"]] + [(foot_variant(w), foot_variant(w)) for w in registry["weapons"]]
     write_portraits(data["portraits"], registry["portrait"], portrait_ids)
     write_portrait_images(registry["portrait"])
-    write_script(registry, combos)
+    write_script(registry, combos, arts, [n["character_skill_key"] for n in rows["character_skill_nodes_tables"] if n["points_on_creation"] == "1"])
     with open(os.path.join(MOD, "text", "db", f"{FILE}.loc.tsv"), "w", encoding="utf-8", newline="\n") as f:
         f.write(f"key\ttext\ttooltip\n#Loc;1;text/db/{FILE}.loc\t\t\n")
         f.write("".join(f"{key}\t{text}\ttrue\n" for key, text in texts))
@@ -936,7 +1199,8 @@ def check_duplicates(rows: Dict[str, List[Dict[str, str]]]) -> None:
     Raises:
         SystemExit: When a key column repeats.
     """
-    for table, column in (("land_units_tables", "key"), ("character_skills_tables", "key"), ("ancillaries_tables", "key"),
+    for table, column in (("land_units_tables", "key"), ("character_skills_tables", "key"), ("ancillaries_tables", "key"), ("agent_actions_tables", "unique_id"),
+                          ("effect_bundles_tables", "key"),
                           ("agent_uniforms_tables", "uniform_name"), ("main_units_tables", "unique_index"), ("missile_weapons_tables", "key"),
                           ("projectiles_tables", "key")):
         keys = [r[column] for r in rows[table]]
@@ -960,6 +1224,26 @@ def check_node_slots(nodes: List[Dict[str, str]]) -> None:
         if slot in slots:
             raise SystemExit(f"skill nodes {slots[slot]} and {node['key']} share indent {slot[0]} tier {slot[1]}")
         slots[slot] = node["key"]
+
+
+def check_effects(rows: Dict[str, List[Dict[str, str]]], data: Dict) -> None:
+    """Stops the build on an effect or scope the game lacks, in any skill level, effect bundle or item. His own effects (the hero action enables)
+    count as known.
+
+    Args:
+        rows (Dict[str, List[Dict[str, str]]]): Rows by table.
+        data (Dict): The kept vanilla rows (the effect and scope keys).
+
+    Raises:
+        SystemExit: On an unknown effect or scope.
+    """
+    known, scopes = set(data["effects"]) | {r["effect"] for r in rows["effects_tables"]}, set(data["scopes"])
+    for table, owner, effect, scope in (("character_skill_level_to_effects_junctions_tables", "character_skill_key", "effect_key", "effect_scope"),
+                                        ("effect_bundles_to_effects_junctions_tables", "effect_bundle_key", "effect_key", "effect_scope"),
+                                        ("ancillary_to_effects_tables", "ancillary", "effect", "effect_scope")):
+        for row in rows[table]:
+            if row[effect] not in known or row[scope] not in scopes:
+                raise SystemExit(f"{row[owner]}: unknown effect {row[effect]} or scope {row[scope]}")
 
 
 def check_loc(texts: List[Tuple[str, str]]) -> None:
@@ -1189,13 +1473,15 @@ def write_portrait_images(portrait: Dict) -> None:
         image.save(out, optimize=True)
 
 
-def write_script(registry: Dict, combos: List[Tuple[str, str, str]]) -> None:
+def write_script(registry: Dict, combos: List[Tuple[str, str, str]], arts: Dict[str, List[Tuple[str, str]]], learned: List[str]) -> None:
     """Writes the Lua data table the campaign scripts read: his subtype, the weapons and mounts with their unlock skills, names and picker icons,
-    and the ancillary of every valid pair both ways.
+    the ancillary of every valid pair both ways, the skills he is made with and each weapon's arts.
 
     Args:
         registry (Dict): The registry.
         combos (List[Tuple[str, str, str]]): (weapon, mount, ancillary) per valid pair.
+        arts (Dict[str, List[Tuple[str, str]]]): Weapon -> (slot skill, art bundle) per built art slot.
+        learned (List[str]): The skills he is made with.
     """
     folder = os.path.join(MOD, "script", "campaign", "mod")
     os.makedirs(folder, exist_ok=True)
@@ -1221,7 +1507,10 @@ def write_script(registry: Dict, combos: List[Tuple[str, str, str]]) -> None:
     lines += [f'\t\t["{a}"] = {{ weapon = "{w}", mount = "{m}" }},' for w, m, a in combos]
     lines += ["\t},", "\t--- Forename loc key of his name.", f'\tname = "names_name_{name_id()}",']
     lines += ["\t--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.", "\tlearned_skills = {"]
-    lines += [f'\t\t"{skill}",' for skill, _, learned in HIDDEN_SKILLS if learned]
+    lines += [f'\t\t"{skill}",' for skill in learned]
+    lines += ["\t},", "\t--- Weapon -> its arts: the art slot skill he must own, and the effect bundle he wears for it while holding that weapon.", "\tarts = {"]
+    for weapon, slots in arts.items():
+        lines += [f'\t\t["{weapon}"] = {{'] + [f'\t\t\t{{ skill = "{s}", bundle = "{b}" }},' for s, b in slots] + ["\t\t},"]
     lines += ["\t},", "}"]
     with open(os.path.join(folder, f"{FILE}_rigs.lua"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
