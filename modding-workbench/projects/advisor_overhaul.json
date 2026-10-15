@@ -1,0 +1,53 @@
+{
+ "name": "Advisor Overhaul",
+ "checkout": "../totalwar-modding-pj-advisor-overhaul",
+ "registry": "generators/advisor_overhaul_registry.json",
+ "gallery": "_diag/anim_viewer",
+ "gallery_next": "_diag/anim_viewer_next",
+ "jobs": {
+  "rebuild": {
+   "commands": [
+    ["{python}", "-u", "-m", "generators.advisor_overhaul_model"],
+    ["{python}", "-u", "-m", "generators.advisor_overhaul"],
+    ["{python}", "-u", "-m", "generators.advisor_overhaul_gallery", "--out", "_diag/anim_viewer_next"]
+   ],
+   "publish": true
+  },
+  "deploy": {
+   "needs": "rebuild",
+   "commands": [["{python}", "-u", "-m", "tools.redeploy_advisor_overhaul"]]
+  }
+ },
+ "tuning": {
+  "prop_offsets": "model.prop_offsets",
+  "prop_turns": "model.prop_turns",
+  "prop_sizes": "model.prop_sizes",
+  "hand_shift": "model.hand_shift",
+  "camera_head": "portrait.camera_head",
+  "prop_sources": ["weapons.*.props", "mounts.*.variant_props", "weapons.*.forms.*.props"]
+ },
+ "editable": [
+  "weapons.*",
+  "weapons.*.retarget.*",
+  "weapons.*.stats.*",
+  "weapons.*.forms.*.*",
+  "weapons.*.melee.*",
+  "weapons.*.missile.projectile.*",
+  "weapons.*.missile.ammo",
+  "weapons.*.attributes",
+  "weapons.*.attributes_removed",
+  "weapons.*.abilities",
+  "weapons.*.abilities_removed",
+  "weapons.*.props.*",
+  "weapons.*.body",
+  "weapons.*.hood",
+  "weapons.*.pieces",
+  "weapons.*.piece_shapes",
+  "model.bodies.*",
+  "model.unpainted.*",
+  "weapons.*.forms.*.props.*",
+  "skills.*"
+ ],
+ "readable": ["skills", "weapons", "model.unpainted"],
+ "assets": ["../warhammer3_mods/!!advisor_overhaul"]
+}

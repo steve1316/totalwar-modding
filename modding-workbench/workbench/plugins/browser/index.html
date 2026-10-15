@@ -7,9 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/static/unit_panel.css">
+<script src="/static/unit_panel.js"></script>
+<script src="/static/nav.js" defer></script>
 <style>
 /* Layout copied from the in-game Unit & Spell Browser (ui/common ui/spell_browser.twui.xml): a race strip with Select Race, the culture's category
-   sections two per row (itemsperrow=2), nine 45x100 cards per section row, and the unit panel on the right. Art is the game's own, served from /art/. */
+   sections two per row (itemsperrow=2), nine 45x100 cards per section row, and the unit panel on the right (/static/unit_panel.css). Art is the game's
+   own, served from art/ next to the page. */
 :root {
   --bg: #170d12; --panel-edge: #6b5233; --ink: #e9dfcf; --muted: #a8998a; --line: #3e2a2c;
   --gold: #d8a640; --bar: #d1a440; --bar-bg: #2b2120;
@@ -21,7 +25,7 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body { margin: 0; background: radial-gradient(ellipse at 50% 0%, #2a1520 0%, var(--bg) 60%) fixed, var(--bg); color: var(--ink); font-family: var(--serif); font-size: 15px;
-  display: grid; grid-template-rows: auto auto 1fr auto; overflow: hidden; }
+  display: grid; grid-template-rows: auto auto 1fr auto; overflow: hidden; padding-top: var(--nav-h, 38px); }
 button { font: inherit; color: inherit; cursor: pointer; }
 
 .title { text-align: center; padding: 10px 0 6px; }
@@ -60,18 +64,18 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .roster { display: grid; grid-template-columns: repeat(9, var(--card-w)); gap: 4px 2px; padding: 6px 0 8px 2px; }
 .section.closed .roster { display: none; }
 
-.card { position: relative; width: var(--card-w); height: var(--card-h); padding: 0; border: 0; background: url("/art/ui/skins/default/unit_card_background.png") center / 100% 100%; }
+.card { position: relative; width: var(--card-w); height: var(--card-h); padding: 0; border: 0; background: url("art/ui/skins/default/unit_card_background.png") center / 100% 100%; }
 .card .art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .card .ph { position: absolute; inset: 0; display: grid; place-items: center; padding: 4px; font-size: .6rem; color: var(--muted); text-align: center; word-break: break-word;
   background: linear-gradient(#2a2024, #151012); }
 .card .frame { position: absolute; inset: 0; background: center / 100% 100% no-repeat; pointer-events: none; }
-.card:hover .frame { background-image: url("/art/ui/skins/default/unit_card_hover.png"); }
-.card.selected .frame { background-image: url("/art/ui/skins/default/unit_card_selected.png"); }
+.card:hover .frame { background-image: url("art/ui/skins/default/unit_card_hover.png"); }
+.card.selected .frame { background-image: url("art/ui/skins/default/unit_card_selected.png"); }
 .card .gems { position: absolute; top: -6px; right: -8px; width: 38px; height: 38px; pointer-events: none; filter: drop-shadow(0 1px 2px #000); }
 .card .weight { position: absolute; top: 18px; right: -4px; font: 600 .75rem var(--mono); color: #fff; text-shadow: 0 0 3px #000; pointer-events: none; }
 .card .cat { position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%); width: 38px; height: 38px; display: grid; place-items: center;
-  background: url("/art/ui/skins/default/unit_card_semicircle.png") center / 100% 100% no-repeat; pointer-events: none; }
-.card .cat.renown { background-image: url("/art/ui/skins/default/unit_card_semicircle_renown.png"); }
+  background: url("art/ui/skins/default/unit_card_semicircle.png") center / 100% 100% no-repeat; pointer-events: none; }
+.card .cat.renown { background-image: url("art/ui/skins/default/unit_card_semicircle_renown.png"); }
 .card .cat img { width: 22px; height: 22px; margin-top: 8px; }
 .card.review { outline: 2px solid var(--review); outline-offset: 1px; box-shadow: 0 0 10px 1px rgba(255, 204, 64, .55); }
 .card .badge { position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%;
@@ -83,46 +87,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* Base game units shown for comparison under a mod filter. */
 .card.context { opacity: .5; }
 .card.context:hover, .card.context.selected { opacity: 1; }
-
-.panel { align-self: start; overflow-x: hidden; background: linear-gradient(#211819, #151011); border: 1px solid var(--panel-edge); border-radius: 3px; padding: 0 0 8px;
-  box-shadow: 0 4px 18px rgba(0,0,0,.6); max-height: 100%; overflow-y: auto; }
-.panel.empty { padding: 30px 16px; color: var(--muted); text-align: center; font-size: .9rem; }
-.vs { display: flex; align-items: center; gap: 6px; padding: 4px 10px; font-size: .8rem; color: var(--muted); background: rgba(255,255,255,.04); border-bottom: 1px solid var(--line); }
-.vs b { color: var(--ink); font-weight: 400; }
-.vs img { width: 18px; height: 18px; }
-.p-title { text-align: center; padding: 10px 12px 8px; font-size: 1.3rem; border-bottom: 1px solid var(--line); }
-.p-sub { display: flex; align-items: center; gap: 8px; padding: 6px 12px; color: var(--muted); font-size: .95rem; }
-.p-sub img { width: 26px; height: 26px; }
-.p-top { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 6px 12px 10px; }
-.p-top .art { width: 96px; height: 208px; object-fit: cover; border: 1px solid var(--line); background: url("/art/ui/skins/default/unit_card_background.png") center / 100% 100%; }
-.hp { margin-top: 8px; }
-.hp-bar { position: relative; height: 18px; background: #1e2a0e; border: 1px solid #44561f; }
-.hp-fill { position: absolute; inset: 0; }
-.hp-fill .fill { background: linear-gradient(#a6dc3a, #5b9a1a); }
-/* Stripes keep the extra HP readable against the green base. */
-.hp-fill .gain { background: repeating-linear-gradient(135deg, #e8ff9a 0 4px, #7fbf2a 4px 8px); }
-.hp-bar b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 3px; font: 500 .78rem var(--mono); color: #fff; text-shadow: 0 0 3px #000; }
-.hp-bar b img { width: 12px; height: 12px; }
-.hp-bar b .cmp { font-size: .78rem; background: rgba(0,0,0,.75); border-radius: 3px; padding: 0 4px; margin-left: 4px; }
-.men { display: flex; align-items: center; gap: 4px; margin-top: 6px; font-size: .85rem; }
-.men img { width: 16px; height: 16px; }
-.meta { font-size: .88rem; color: var(--muted); margin-top: 5px; line-height: 1.35; overflow-wrap: anywhere; }
-.p-head { display: flex; align-items: center; gap: 8px; margin: 8px 6px 3px; padding: 3px 10px; background: linear-gradient(#5f1210, #3c0909); border: 1px solid #a8302a; font-size: 1.02rem; }
-.stat { display: grid; grid-template-columns: 22px 1fr 38px 38px 110px; gap: 8px; align-items: center; padding: 3px 12px; font-size: 1rem; }
-.stat:nth-child(odd) { background: rgba(255,255,255,.025); }
-.stat img { width: 22px; height: 22px; }
-.stat .v { text-align: right; font-family: var(--mono); font-size: .95rem; }
-.bar { position: relative; height: 9px; background: var(--bar-bg); border: 1px solid #000; overflow: hidden; }
-.bar span, .hp-fill span { position: absolute; top: 0; bottom: 0; left: 0; }
-.bar .fill { background: var(--bar); }
-.bar .loss, .hp-fill .loss { background: var(--down); }
-.bar .gain { background: var(--up); }
-.cmp { text-align: right; font-family: var(--mono); font-size: .95rem; }
-.cmp.up { color: var(--up); } .cmp.down { color: var(--down); }
-.abilities { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 10px; }
-.abilities img { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #5a4a30; background: #000; }
-.abilities .noicon { font-size: .72rem; color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 2px 5px; }
-.abilities .none { font-size: .78rem; color: var(--muted); }
 
 .recruit { display: grid; gap: 4px; padding: 5px 12px 8px; font-size: .92rem; }
 .recruit div { display: flex; align-items: center; gap: 6px; }
@@ -189,11 +153,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 <div class="toast" id="toast"></div>
 <script>
 const QUEUE_KEY = "ttc-browser-queue", RACE_KEY = "ttc-browser-race", MOD_KEY = "ttc-browser-mod";
-// Unit panel rows in the in-game order, with each stat's icon and the value a full bar stands for. The missile rows only show for units that shoot.
-const STATS = [["armour", "Armour", "icon_stat_armour", 200], ["leadership", "Leadership", "icon_stat_morale", 100], ["speed", "Speed", "icon_stat_speed", 120],
-  ["melee_attack", "Melee Attack", "icon_stat_attack", 120], ["melee_defence", "Melee Defence", "icon_stat_defence", 120],
-  ["weapon_strength", "Weapon Strength", "icon_stat_damage", 800], ["charge_bonus", "Charge Bonus", "icon_stat_charge_bonus", 150],
-  ["ammunition", "Ammunition", "icon_stat_ammo", 50], ["range", "Range", "icon_stat_range", 200], ["missile_strength", "Missile Strength", "icon_stat_ranged_damage", 150]];
 const SOURCES = {base: "TTC base list", hand: "Hand file", mod: "Mod author's own cap", auto: "Auto pick"};
 let state = null, culture = null, selected = null, hovered = null, reviewsOnly = false;
 const closed = new Set(), details = new Map();
@@ -205,9 +164,9 @@ function read(key, fallback) {
 function write(key, value) {
   try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* storage blocked, the value just lives for this tab */ }
 }
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
-const art = path => path ? "/art/" + encodeURI(path) : "";
-const skin = name => art(`ui/skins/default/${name}.png`);
+const esc = UnitPanel.esc;
+const art = path => path ? "art/" + encodeURI(path) : "";
+const {statsHtml, hpHtml, abilitiesHtml, cardHtml: panelCardHtml} = UnitPanel;
 function parse(label) {
   const [category, weight] = String(label).split(",");
   return {category, weight: category === "core" ? null : Number(weight || 1)};
@@ -239,8 +198,15 @@ function toast(text, err) {
   clearTimeout(toast.t); toast.t = setTimeout(() => el.style.display = "none", err ? 8000 : 4000);
 }
 
+// The dashboard builds the rosters the first time this tab opens, which takes about a minute. Until then the state route answers 503.
 async function load() {
-  setState(await (await fetch("/api/state")).json());
+  for (;;) {
+    const res = await fetch("api/state");
+    if (res.ok) { setState(await res.json()); return; }
+    if (res.status !== 503) { document.getElementById("list").innerHTML = `<div class="loading">${esc((await res.json()).error)}</div>`; return; }
+    document.getElementById("list").innerHTML = '<div class="loading">Building the rosters (about a minute the first time)...</div>';
+    await new Promise(r => setTimeout(r, 3000));
+  }
 }
 function setState(next) {
   state = next;
@@ -328,7 +294,7 @@ function renderFoot() {
 }
 
 async function unit(key) {
-  if (!details.has(key)) details.set(key, fetch(`/api/unit/${encodeURIComponent(key)}`).then(r => r.ok ? r.json() : null));
+  if (!details.has(key)) details.set(key, fetch(`api/unit/${encodeURIComponent(key)}`).then(r => r.ok ? r.json() : null));
   return details.get(key);
 }
 
@@ -343,41 +309,21 @@ async function renderPanels() {
   panel.innerHTML = panelHtml(main, other);
 }
 
-// The bar keeps the selected unit's value in yellow up to the smaller of the two. When the compared unit is lower, the part it lacks turns red. When
-// it is higher, the bar runs on past in green.
-function barHtml(value, other, max, cls = "bar") {
-  const pct = v => Math.min(100, Math.max(0, v / max * 100));
-  if (other === undefined || other === value) return `<span class="${cls}"><span class="fill" style="width:${pct(value)}%"></span></span>`;
-  const low = pct(Math.min(value, other)), high = pct(Math.max(value, other));
-  return `<span class="${cls}"><span class="fill" style="width:${low}%"></span><span class="${other < value ? "loss" : "gain"}" style="left:${low}%;width:${high - low}%"></span></span>`;
-}
-function cmpHtml(value, other) {
-  if (other === undefined) return '<span class="cmp"></span>';
-  return `<span class="cmp ${other > value ? "up" : other < value ? "down" : ""}">${other}</span>`;
-}
-
 function panelHtml(u, other) {
-  const s = u.stats, o = other ? other.stats : {}, listed = state.units[u.key];
+  const s = u.stats, listed = state.units[u.key];
   const icon = listed && listed.icon ? `<img src="${art(listed.icon)}" alt="">` : "";
-  const stats = STATS.filter(([k]) => s[k] !== undefined).map(([k, name, img, max]) => `<div class="stat"><img src="${skin(img)}" alt=""><span>${name}</span><span class="v">${s[k]}</span>
-    ${cmpHtml(s[k], o[k])}${barHtml(s[k], o[k], max)}</div>`).join("");
-  const abilityIcons = list => list.length ? list.map(a => a.icon ? `<img loading="lazy" src="${art(a.icon)}" title="${esc(a.name)}" alt="${esc(a.name)}">`
-    : `<span class="noicon" title="${esc(a.key)}">${esc(a.name)}</span>`).join("") : '<span class="none">No abilities</span>';
   const otherLabel = other && (state.units[other.key] ? capOf(other.key) : other.cap.label);
-  // HP has no fixed maximum, so its bar is scaled to the larger of the two units.
-  const hpMax = Math.max(s.hp, o.hp || 0, 1);
   return `<div class="p-title">${esc(u.name)}</div>
     ${other ? `<div class="vs">Comparing with <b>${esc(other.name)}</b>${otherLabel ? `<img src="${gems(otherLabel)}" alt=""><span>${esc(otherLabel)}</span>` : ""}</div>` : ""}
     <div class="p-sub">${icon}<span>${esc(u.caste)} · ${esc(u.class)} · tier ${s.tier} · ${esc(u.cost)} cost</span></div>
-    <div class="p-top">${u.card ? `<img class="art" src="${art(u.card)}" alt="">` : '<div class="art"></div>'}<div>
+    <div class="p-top">${panelCardHtml(u, art)}<div>
       <div class="meta">${esc(u.key)}</div>
-      <div class="hp"><div class="hp-bar">${barHtml(s.hp, o.hp, hpMax, "hp-fill")}<b><img src="${skin("icon_stat_health_noframe")}" alt="">${u.hp_estimate ? "~" : ""}${s.hp}${other ? cmpHtml(s.hp, o.hp) : ""}</b></div></div>
-      <div class="men"><img src="${skin("icon_entity_small")}" alt="">${s.men}${other ? cmpHtml(s.men, o.men) : ""}</div>
+      ${hpHtml(u, other, art)}
       ${capHtml(u)}</div></div>
     <div class="p-head">Recruited from</div>${recruitHtml(u.buildings)}
-    <div class="p-head">Stats</div>${stats}
-    <div class="p-head">Abilities</div><div class="abilities">${abilityIcons(u.abilities)}</div>
-    ${other ? `<div class="vs">${esc(other.name)}</div><div class="abilities">${abilityIcons(other.abilities)}</div>` : ""}
+    <div class="p-head">Stats</div>${statsHtml(s, other ? other.stats : {}, art)}
+    <div class="p-head">Abilities</div><div class="abilities">${abilitiesHtml(u.abilities, art)}</div>
+    ${other ? `<div class="vs">${esc(other.name)}</div><div class="abilities">${abilitiesHtml(other.abilities, art)}</div>` : ""}
     ${u.key !== selected ? "" : u.pick ? pickHtml(u) : state.units[u.key]?.source === "hand" ? editHtml(u) : ""}`;
 }
 
@@ -421,9 +367,12 @@ function pickHtml(u) {
   </div>`;
 }
 
+// Only the selection moves, so the cards stay and the selected class moves between them.
 function select(key) {
   selected = key; hovered = null;
-  renderList(); renderPanels();
+  document.querySelectorAll("#list .card.selected").forEach(card => card.classList.remove("selected"));
+  if (key) document.querySelector(`#list .card[data-key="${CSS.escape(key)}"]`)?.classList.add("selected");
+  renderPanels();
 }
 function renderAll() {
   renderMods(); renderRaces(); renderList(); renderFoot(); renderPanels();
@@ -447,7 +396,7 @@ function nextReview() {
   if (!keys.length) { toast("Nothing left to review for this race."); return; }
   const key = keys[(keys.indexOf(selected) + 1) % keys.length] || keys[0];
   const section = current().sections.find(s => s.units.includes(key));
-  closed.delete(culture + "/" + section.key);
+  if (closed.delete(culture + "/" + section.key)) renderList();
   select(key);
   document.querySelector(`.card[data-key="${CSS.escape(key)}"]`)?.scrollIntoView({block: "center", behavior: "smooth"});
 }
@@ -515,7 +464,7 @@ document.getElementById("save").addEventListener("click", async () => {
   if (!changes.length) return;
   document.getElementById("save").disabled = true;
   try {
-    const res = await fetch("/api/save", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({changes})});
+    const res = await fetch("api/save", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({changes})});
     const body = await res.json();
     if (!res.ok) { toast(`Save failed: ${body.error}`, true); renderFoot(); return; }
     queue = {}; write(QUEUE_KEY, queue);

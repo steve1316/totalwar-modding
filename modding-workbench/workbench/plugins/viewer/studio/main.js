@@ -1,0 +1,320 @@
+// The Workbench studio: forms and slots on the left, the stage in the middle (Battle or Portrait), the inspector tabs on the right (a bottom sheet
+// on a phone), and the playback and job bar at the bottom. A new inspector tab is a module with `render(container)` added to `TABS`.
+import { animLoader, setFactionColours, setHeraldry } from "../viewer_common.js";
+import { BattleStage } from "./stage.js";
+import { Jobs } from "./jobs.js";
+import { LiveModels } from "./live_models.js";
+import { LookTab } from "./look.js";
+import { NewForm } from "./new_form.js";
+import { PortraitStage } from "./portrait.js";
+import { SkillsTab } from "./skills.js";
+import { StatsTab } from "./stats.js";
+
+const $ = id => document.getElementById(id);
+const { esc } = window.UnitPanel;
+// Phones get the pickers and the bottom sheet.
+const phone = window.matchMedia("(max-width: 899px)");
+// Where this browser remembers the faction whose colours the models wear, and the heraldry column of a model with a heraldry palette.
+const FACTION_STORE = "workbench.faction", HERALDRY_STORE = "workbench.heraldry";
+// Heraldry columns offered. The game's palettes (Bretonnian knights) have 16.
+const HERALDRY_COLUMNS = 16;
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// Project and studio state
+
+// No unsaved edits: the per-weapon offsets, turns and sizes, the hand shift and the registry values. The portrait camera keeps its own.
+const blankEdits = () => ({ props: {}, turns: {}, sizes: {}, hand: null, registry: {} });
+
+const project = await window.workbenchProject;
+const DATA = `p/${project}/data/`, API = `p/${project}/api/`;
+const manifest = await (await fetch(DATA + "manifest.json")).json();
+let tuning = null, jobs = null;
+try { const r = await fetch(API + "tuning"); if (r.ok) tuning = await r.json(); } catch (e) { /* the server is down */ }
+
+// Shared by every module: the gallery, the API, the saved values and the unsaved edits.
+const studio = {
+  manifest, data: DATA, api: API, tuning, getAnim: animLoader(manifest, DATA),
+  panelArt: path => path ? DATA + "art/" + encodeURI(path) : "",
+  edits: { ...blankEdits(), camera: null },
+  // Registry edits saved but not rebuilt yet: they keep previewing.
+  savedRegistry: {},
+  // Saved then unsaved registry edits, the later winning.
+  pending() { return { ...studio.savedRegistry, ...studio.edits.registry }; },
+  // What the card compares the form with: null, "vanilla" or "foot" (the same weapon on foot). Off: each form is first seen on its own.
+  compare: null,
+  // Called after any edit.
+  changed: () => jobs && jobs.refresh(),
+  // Called with the API's answer after a save: those values are the new baseline.
+  saved(answer) {
+    studio.tuning = Object.assign(studio.tuning || {}, answer);
+    tabs.stats.saved();
+    resetEdits();
+  },
+  // Opens the Skills tab (a skill was picked on the tree).
+  openSkills() { if (tab !== "skills") selectTab("skills", true); else if (phone.matches && sheet === "peek") setSheet("half"); },
+  // Drops every unsaved edit.
+  undo() { resetEdits(); },
+};
+
+// Drops the unsaved edits (after a save they are the baseline) and redraws what shows them.
+function resetEdits() {
+  Object.assign(studio.edits, blankEdits());
+  if (manifest.portrait) portrait.resetToSaved();
+  tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
+}
+studio.stage = new BattleStage($("battle"), studio.getAnim, DATA);
+
+// The faction whose uniform colours tint the models, from the gallery's `editor.colours` (`default`, and `factions`: [key, name, three hex
+// colours] each). An unknown key falls back to the default.
+const colours = manifest.editor && manifest.editor.colours;
+// The faction picker's options, built once: the toolbar is redrawn on every toggle.
+const factionOptions = colours ? colours.factions.map(([key, name]) => `<option value="${esc(key)}">${esc(name)}</option>`).join("") : "";
+let faction = null;
+function setFaction(key) {
+  const found = colours && (colours.factions.find(f => f[0] === key) || colours.factions.find(f => f[0] === colours.default));
+  if (!found) return;
+  faction = found[0]; setFactionColours(found[2]);
+  try { localStorage.setItem(FACTION_STORE, faction); } catch (e) { /* storage is blocked */ }
+}
+try { setFaction(localStorage.getItem(FACTION_STORE)); } catch (e) { setFaction(null); }
+let heraldry = 0;
+function setHeraldryColumn(column) {
+  heraldry = column; setHeraldry(column);
+  try { localStorage.setItem(HERALDRY_STORE, String(column)); } catch (e) { /* storage is blocked */ }
+}
+try { setHeraldryColumn(Math.min(HERALDRY_COLUMNS - 1, Math.max(0, +localStorage.getItem(HERALDRY_STORE) || 0))); } catch (e) { setHeraldryColumn(0); }
+const stage = studio.stage;
+const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studio) : null;
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// Inspector tabs
+
+// What the Look tab chose, shown on the stage before a rebuild.
+studio.live = new LiveModels(studio);
+const tabs = { stats: new StatsTab(studio), look: new LookTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
+               skills: new SkillsTab($("skillsStage"), studio) };
+// The New form dialog, which also lists the forms not in the gallery yet.
+const newForm = new NewForm(studio, () => renderForms());
+// Tab order and labels. Tabs without a module yet are shown greyed out. The Portrait tab has no button: the stage's Portrait button opens it.
+const TABS = [["stats", "Stats"], ["look", "Look"], ["skills", "Skills"]];
+let tab = "stats";
+
+function renderTabs() {
+  $("tabs").innerHTML = TABS.map(([key, label]) => `<button data-tab="${key}" class="${key === tab ? "on" : ""}" ${tabs[key] ? "" : "disabled title=\"Coming next\""}>${label}</button>`).join("");
+  $("tabs").querySelectorAll("button").forEach(b => b.onclick = () => selectTab(b.dataset.tab, true));
+}
+function renderTab() {
+  // Marks which tab drew the inspector, so a tab redrawing itself later (the Look tab once a model loads) leaves another tab alone.
+  $("inspBody").dataset.tab = tab;
+  if (tabs[tab]) tabs[tab].render($("inspBody"));
+}
+// Picks a tab. The Portrait and Skills tabs show their own stage, and the other tabs the Battle stage.
+async function selectTab(key, fromUser = false) {
+  tab = key; renderTabs();
+  if (key === "portrait" || key === "skills") await setMode(key); else if (mode !== "battle") await setMode("battle");
+  renderTab();
+  if (fromUser && phone.matches && sheet === "peek") setSheet("half");
+  writeHash();
+}
+
+// The phone's bottom sheet: only the tabs (peek), half the screen, or most of it.
+let sheet = "peek";
+function setSheet(state) { sheet = state; $("inspector").dataset.sheet = state; }
+$("grab").onclick = () => setSheet({ peek: "half", half: "full", full: "peek" }[sheet]);
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// Stage mode and view toggles
+
+let mode = "battle";
+async function setMode(next) {
+  if (next === "portrait" && !portrait) return;
+  // The portrait loads first, so the playback loop never runs it half loaded.
+  if (next === "portrait") await portrait.start();
+  mode = next;
+  $("battle").hidden = $("battleTools").hidden = $("info").hidden = mode !== "battle";
+  $("portraitStage").hidden = mode !== "portrait"; $("skillsStage").hidden = mode !== "skills";
+  $("bar").classList.toggle("noplay", mode === "skills");
+  document.querySelectorAll("[data-mode]").forEach(b => b.classList.toggle("on", b.dataset.mode === mode));
+  if (mode === "portrait") {
+    if (times.portrait === null) times.portrait = portrait.startTime;
+  } else if (mode === "skills") {
+    tabs.skills.renderTree();
+  } else {
+    stage.resize(); stage.frameCamera();
+  }
+  // The stage and its tab go together.
+  const wanted = mode === "battle" ? (tab === "portrait" || tab === "skills" ? "stats" : tab) : mode;
+  if (tab !== wanted) { tab = wanted; renderTabs(); renderTab(); }
+  playing = mode === "battle"; syncPlay(); writeHash();
+}
+document.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+$("modePortrait").hidden = !portrait;
+
+// The stage toolbar: the unit's own side toggles, Compare to Vanilla (a drop-down whose column holds the vanilla sides' toggles while it is on),
+// then the view toggles.
+function renderToggles() {
+  const v = stage.view, entry = stage.entry, chip = s => `<button data-side="${s.key}" style="color:${s.color}" class="${v.hidden.has(s.key) ? "" : "on"}">${esc(s.label)}</button>`;
+  const vanillaSides = stage.listedSides().filter(s => s.group === "vanilla");
+  $("toggles").innerHTML = (entry && entry.versus ? `<span class="dropdown"><button data-v="versus" class="${v.versus ? "on" : ""}">Compare to Vanilla ${v.versus ? "▴" : "▾"}</button>
+      ${v.versus && vanillaSides.length ? `<span class="menu">${vanillaSides.map(chip).join("")}</span>` : ""}</span>` : "")
+    + `<button data-v="models" class="${v.models ? "on" : ""}">Models</button><button data-v="bones" class="${v.bones ? "on" : ""}">Bones</button>`
+    + `<button data-v="props" class="${v.props ? "on" : ""}">Props</button><button data-v="closeUp" class="${v.closeUp ? "on" : ""}">Close-up</button>`
+    + (stage.isCompare() ? `<select data-v="layout"><option value="side">Side by side</option><option value="overlay">Overlay</option></select>` : "")
+    + (colours ? `<select data-v="faction" title="The faction whose colours the models wear">${factionOptions}</select>` : "")
+    + `<select data-v="heraldry" title="The heraldry a Bretonnian knight's outfit wears (in game each knight gets one)">${Array.from({ length: HERALDRY_COLUMNS }, (_, i) => `<option value="${i}">Heraldry ${i + 1}</option>`).join("")}</select>`;
+  $("toggles").querySelectorAll("button[data-v]").forEach(b => b.onclick = () => {
+    v[b.dataset.v] = !v[b.dataset.v];
+    if (b.dataset.v === "versus" || b.dataset.v === "closeUp") stage.frameCamera();
+    if (b.dataset.v === "versus") stage.loadVersus();
+    renderToggles(); writeHash();
+  });
+  const layout = $("toggles").querySelector("select[data-v=layout]"), factions = $("toggles").querySelector("select[data-v=faction]");
+  if (layout) { layout.value = v.layout; layout.onchange = () => { v.layout = layout.value; stage.resize(); stage.frameCamera(); }; }
+  if (factions) { factions.value = faction; factions.onchange = () => setFaction(factions.value); }
+  const heraldries = $("toggles").querySelector("select[data-v=heraldry]");
+  heraldries.value = heraldry; heraldries.onchange = () => setHeraldryColumn(+heraldries.value);
+  const own = stage.listedSides().filter(s => s.group !== "vanilla");
+  $("sides").innerHTML = own.length > 1 ? own.map(chip).join("") : "";
+  $("battleTools").querySelectorAll("button[data-side]").forEach(b => b.onclick = () => {
+    v.hidden.has(b.dataset.side) ? v.hidden.delete(b.dataset.side) : v.hidden.add(b.dataset.side); renderToggles();
+  });
+}
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// Forms and slots
+
+// Forms grouped by weapon ("Greatsword - On Foot" goes under Greatsword). Gallery entries that are not a form (looks, previews, vanilla
+// references, retarget checks) are left out, unless the project has no forms at all.
+const groups = new Map(), hasForms = manifest.entries.some(e => e.unit);
+manifest.entries.forEach((e, i) => {
+  if (hasForms && !e.unit) return;
+  const [group, label] = e.unit ? e.name.split(" - ") : ["Gallery", e.name];
+  if (!groups.has(group)) groups.set(group, []);
+  groups.get(group).push({ index: i, label: label || e.name });
+});
+let entryIndex = 0, slotFilter = "";
+
+// Forms not in the gallery yet (new, or waiting for retargeting) go under their weapon, greyed, and open it in the New form dialog.
+const WAITING_TAGS = { rebuild: "after a rebuild", retarget: "needs retargeting", handoff: "with Claude" };
+function renderForms() {
+  const waiting = new Map();
+  for (const w of newForm.waiting()) { if (!waiting.has(w.name)) waiting.set(w.name, []); waiting.get(w.name).push(w); }
+  const names = [...new Set([...groups.keys(), ...waiting.keys()])], mountName = m => newForm.data.mounts[m].name;
+  $("forms").innerHTML = names.map(group => `<div class="grp">${esc(group)}</div>`
+    + (groups.get(group) || []).map(it => `<button data-i="${it.index}" class="${it.index === entryIndex ? "on" : ""}">${esc(it.label)}</button>`).join("")
+    + (waiting.get(group) || []).map(w => `<button class="waiting" data-w="${esc(w.weapon)}"><span>${esc(mountName(w.mount))}</span><span class="tag">${WAITING_TAGS[w.state]}</span></button>`).join("")).join("")
+    + (newForm.enabled() ? '<button class="add" data-new>+ New form</button>' : "");
+  $("forms").querySelectorAll("button[data-i]").forEach(b => b.onclick = () => openEntry(+b.dataset.i));
+  $("forms").querySelectorAll("button[data-w]").forEach(b => b.onclick = () => newForm.openWeapon(b.dataset.w));
+  const add = $("forms").querySelector("[data-new]");
+  if (add) add.onclick = () => newForm.openNew();
+  $("formSel").innerHTML = [...groups].map(([group, items]) => `<optgroup label="${esc(group)}">`
+    + items.map(it => `<option value="${it.index}" ${it.index === entryIndex ? "selected" : ""}>${esc(group === "Gallery" ? it.label : `${group} · ${it.label}`)}</option>`).join("") + "</optgroup>").join("")
+    + (newForm.enabled() ? `<optgroup label="New forms">${[...waiting.values()].flat().map(w => `<option value="w:${esc(w.weapon)}">${esc(w.name)} · ${esc(mountName(w.mount))} (${WAITING_TAGS[w.state]})</option>`).join("")}
+      <option value="new">+ New form</option></optgroup>` : "");
+}
+$("formSel").onchange = () => {
+  const value = $("formSel").value;
+  if (value === "new") newForm.openNew(); else if (value.startsWith("w:")) newForm.openWeapon(value.slice(2)); else { openEntry(+value); return; }
+  renderForms();
+};
+
+function slotTag(s) {
+  if (stage.isCompare()) return (s.anims.source !== undefined ? "S" : "-") + (s.anims.target !== undefined ? "R" : "-");
+  return s.slots && s.slots.mount ? `mount ${s.slots.mount}` : "";
+}
+function renderSlots() {
+  const entry = stage.entry; if (!entry) return;
+  const shown = entry.slots.filter(s => !slotFilter || s.slot.toLowerCase().includes(slotFilter.toLowerCase()));
+  $("slots").innerHTML = shown.map(s => `<button data-s="${s.slot}" class="${stage.slot === s ? "on" : ""}"><span>${s.slot}</span><span class="tag">${slotTag(s)}</span></button>`).join("");
+  $("slots").querySelectorAll("button").forEach(b => b.onclick = () => selectSlot(entry.slots.find(s => s.slot === b.dataset.s)));
+  $("slotSel").innerHTML = entry.slots.map(s => `<option ${stage.slot === s ? "selected" : ""}>${s.slot}</option>`).join("");
+}
+$("slotSel").onchange = () => selectSlot(stage.entry.slots.find(s => s.slot === $("slotSel").value));
+$("search").oninput = e => { slotFilter = e.target.value; renderSlots(); };
+
+function renderInfo() {
+  const entry = stage.entry, s = stage.slot; if (!entry || !s) return;
+  $("info").innerHTML = `<span><b>${esc(entry.name)}</b> · ${s.slot}</span>` + entry.sides.filter(side => s.paths[side.key] && stage.loads(side))
+    .map(side => `<span style="color:${side.color}">${s.slots ? s.slots[side.key] + ": " : ""}${esc(s.paths[side.key].split("/").pop())}</span>`).join("");
+}
+
+async function openEntry(index, slotName) {
+  entryIndex = index; renderForms();
+  const entry = manifest.entries[index];
+  const first = entry.slots.find(s => s.slot === slotName) || entry.slots.find(s => s.slot === "STAND") || entry.slots[0];
+  $("status").hidden = false;
+  if (!(await stage.open(entry, first))) return;
+  $("status").hidden = true;
+  times.battle = 0;
+  tabs.look.applyLive();
+  renderToggles(); renderSlots(); renderInfo();
+  if (tab !== "portrait") renderTab();
+  writeHash();
+}
+async function selectSlot(slot) {
+  if (!(await stage.select(slot))) return;
+  times.battle = 0;
+  renderSlots(); renderInfo(); writeHash();
+}
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// Playback
+
+// Time in seconds on each stage. The portrait starts paused on its calibration frame.
+const times = { battle: 0, portrait: null };
+let playing = true;
+const active = () => mode === "portrait" ? portrait : mode === "skills" ? null : stage;
+function syncPlay() { $("play").textContent = playing ? "Pause" : "Play"; }
+$("play").onclick = () => { playing = !playing; syncPlay(); };
+$("frame").oninput = e => { times[mode] = (+e.target.value + 0.5) / active().fps; playing = false; syncPlay(); };
+window.addEventListener("keydown", e => {
+  if (e.target.closest("input, select, textarea")) return;
+  if (e.code === "Space") { e.preventDefault(); $("play").click(); }
+  const step = d => { const a = active(); times[mode] = (Math.min(a.frames - 1, Math.max(0, Math.floor(times[mode] * a.fps) + d)) + 0.5) / a.fps; playing = false; syncPlay(); };
+  if (e.code === "ArrowRight") step(1);
+  if (e.code === "ArrowLeft") step(-1);
+});
+
+let last = performance.now();
+function tick(now) {
+  const dt = (now - last) / 1000; last = now;
+  const a = active();
+  if (a && a.frames) {
+    if (playing) times[mode] = ((times[mode] || 0) + dt * +$("speed").value) % (a.frames / a.fps);
+    const frame = Math.min(a.frames - 1, Math.floor((times[mode] || 0) * a.fps));
+    $("frame").max = a.frames - 1; $("frame").value = frame; $("fnum").textContent = `${frame}/${a.frames - 1}`;
+    if (mode === "battle") stage.render(times.battle); else portrait.render(frame);
+  }
+  requestAnimationFrame(tick);
+}
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// Layout, hash and start
+
+// The job buttons sit in the bottom bar on a desktop and inside the sheet on a phone.
+function placeJobs() { (phone.matches ? $("sheetJobs") : $("barJobs")).append($("jobs")); }
+phone.addEventListener("change", placeJobs);
+
+function writeHash() {
+  if (!stage.slot) return;
+  const parts = [`u=${entryIndex}`, `s=${stage.slot.slot}`, stage.view.versus ? "vs=1" : "", `tab=${tab}`].filter(Boolean);
+  history.replaceState(null, "", "#" + parts.join("&"));
+}
+
+jobs = tuning ? new Jobs($("jobs"), studio) : null;
+if (!jobs) $("jobs").hidden = true;
+placeJobs();
+const params = new URLSearchParams(location.hash.slice(1));
+stage.view.versus = params.get("vs") === "1";
+renderTabs();
+// Without a link, the first form opens.
+const firstForm = Math.max(0, manifest.entries.findIndex(e => e.unit));
+const linked = params.has("u") ? Math.min(manifest.entries.length - 1, Math.max(0, +params.get("u"))) : firstForm;
+await openEntry(hasForms && !manifest.entries[linked].unit ? firstForm : linked, params.get("s"));
+const startTab = params.get("tab");
+if (startTab && tabs[startTab]) await selectTab(startTab);
+requestAnimationFrame(tick);
+
+// Hooks for scripted checks (Playwright).
+window.studio = Object.assign(studio, { openEntry, selectSlot, selectTab, setMode, portrait, setFrame: f => { times[mode] = (f + 0.5) / active().fps; playing = false; syncPlay(); } });

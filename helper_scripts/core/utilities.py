@@ -172,6 +172,16 @@ def run_rpfm_cli(args: List[str], capture_output: bool = False, text: bool = Fal
     return subprocess.run(["./rpfm_cli.exe", "--game", "warhammer_3", *args], capture_output=capture_output, text=text)
 
 
+def game_running() -> bool:
+    """Tell whether Warhammer 3 is running, which keeps its packs locked.
+
+    Returns:
+        True when `Warhammer3.exe` is in the task list.
+    """
+    tasks = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Warhammer3.exe"], capture_output=True, text=True).stdout
+    return "warhammer3.exe" in tasks.lower()
+
+
 def ensure_temp_dir(temp_root: str = TEMP_DIR) -> str:
     """Create the temp root if it does not exist and return its path.
 

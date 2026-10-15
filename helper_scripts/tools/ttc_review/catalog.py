@@ -17,16 +17,10 @@ from core.utilities import FILEPATH_TO_VANILLA_DATA_TABLES
 from generators.update_ttc_compat import AUTO_PICKS_PATH
 from ttc import ttc_cards, ttc_compat_io, ttc_data
 from ttc.ttc_cards import CARD_FOLDER
+from ttc.unit_panel import PANEL_TABLES, TOOLTIP_LOC_PREFIXES, PanelTables, ability_tooltip, index_rows, panel_stats, visible_abilities
 from ttc.ttc_classifier import parse_number
 
-DETAIL_TABLES = [
-    "battle_entities_tables",
-    "melee_weapons_tables",
-    "unit_armour_types_tables",
-    "mounts_tables",
-    "battlefield_engines_tables",
-    "unit_abilities_tables",
-    "land_units_to_unit_abilites_junctions_tables",
+DETAIL_TABLES = PANEL_TABLES + [
     "units_custom_battle_permissions_tables",
     "factions_tables",
     "cultures_subcultures_tables",
@@ -36,9 +30,6 @@ DETAIL_TABLES = [
     "building_units_allowed_tables",
     "building_levels_tables",
     "building_culture_variants_tables",
-    "missile_weapons_tables",
-    "projectiles_tables",
-    "projectiles_explosions_tables",
 ]
 GAME_DATA_DIR = os.path.dirname(FILEPATH_TO_VANILLA_DATA_TABLES)
 ABILITY_NAME_PREFIX = "unit_abilities_onscreen_name_"
@@ -47,7 +38,8 @@ GROUP_PARENT_NAME_PREFIX = "ui_unit_group_parents_onscreen_name_"
 BUILDING_NAME_PREFIX = "building_culture_variants_name_"
 BUILDING_CHAIN_NAME_PREFIX = "building_chains_chain_tooltip_"
 # Loc keys the browser reads: unit, ability, culture, unit category, building level and building chain names.
-LOC_PREFIXES = (ttc_data.LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, CULTURE_NAME_PREFIX, GROUP_PARENT_NAME_PREFIX, BUILDING_NAME_PREFIX, BUILDING_CHAIN_NAME_PREFIX)
+LOC_PREFIXES = (ttc_data.LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, CULTURE_NAME_PREFIX, GROUP_PARENT_NAME_PREFIX, BUILDING_NAME_PREFIX, BUILDING_CHAIN_NAME_PREFIX,
+                *TOOLTIP_LOC_PREFIXES)
 ABILITY_FOLDER = "ui/battle ui/ability_icons"
 CATEGORY_ICON_FOLDER = "ui/common ui/unit_category_icons"
 RACE_STRIP_FOLDER = "ui/frontend ui/race_strip_images"
@@ -118,23 +110,6 @@ def load_detail_tables() -> Dict[str, List[Dict[str, str]]]:
         for table, rows in ttc_data.load_tables(pack_path, f"review_{tag}", vanilla, DETAIL_TABLES).items():
             merged[table].extend(rows)
     return merged
-
-
-def _index(rows: List[Dict[str, str]], column: str = "key") -> Dict[str, Dict[str, str]]:
-    """Index rows by a column, the first row for a value winning like the game's vanilla-first load in `ttc_data`.
-
-    Args:
-        rows (List[Dict[str, str]]): Table rows.
-        column (str): Column to index by.
-
-    Returns:
-        Column value to row.
-    """
-    index: Dict[str, Dict[str, str]] = {}
-    for row in rows:
-        if row.get(column):
-            index.setdefault(row[column], row)
-    return index
 
 
 def _extract_once(pack_path: str, sources: List[Tuple[str, str]], dest: str) -> None:
@@ -254,28 +229,10 @@ class UnitCatalog:
     loc: Dict[str, str]
     # Lowercase pack-relative art path to local file.
     art: Dict[str, str]
-    # Battle entity key to row.
-    entities: Dict[str, Dict[str, str]]
-    # Melee weapon key to row.
-    weapons: Dict[str, Dict[str, str]]
-    # Armour type key to row.
-    armour: Dict[str, Dict[str, str]]
-    # Mount key to row.
-    mounts: Dict[str, Dict[str, str]]
-    # Battlefield engine key to row.
-    engines: Dict[str, Dict[str, str]]
-    # Missile weapon key to row (its default projectile).
-    missile_weapons: Dict[str, Dict[str, str]]
-    # Projectile key to row (damage, armour-piercing damage, range, explosion).
-    projectiles: Dict[str, Dict[str, str]]
-    # Projectile explosion key to row (detonation damage).
-    explosions: Dict[str, Dict[str, str]]
+    # The panel tables (entities, weapons, armour, mounts, engines, missiles, abilities), indexed for `ttc.unit_panel`.
+    panel: PanelTables
     # Unit key to the card name its first `unit_variants_tables` row uses.
     unit_cards: Dict[str, str]
-    # Ability key to row.
-    abilities: Dict[str, Dict[str, str]]
-    # Land unit key to its ability keys.
-    unit_abilities: Dict[str, List[str]]
     # `ui_unit_group_land` key to its grouping row (icon and parent category).
     groupings: Dict[str, Dict[str, str]]
     # Parent category key to its row (icon and order).
@@ -311,19 +268,11 @@ class UnitCatalog:
             script_buildings (Optional[Dict[str, List[str]]]): Unit key to building levels that unlock it through a mod script.
         """
         self.stats, self.loc, self.art, self.unit_cards, self.script_buildings = stats, loc, art, unit_cards or {}, script_buildings or {}
-        self.entities = _index(tables["battle_entities_tables"])
-        self.weapons = _index(tables["melee_weapons_tables"])
-        self.armour = _index(tables["unit_armour_types_tables"])
-        self.mounts = _index(tables["mounts_tables"])
-        self.engines = _index(tables["battlefield_engines_tables"])
-        self.missile_weapons = _index(tables["missile_weapons_tables"])
-        self.projectiles = _index(tables["projectiles_tables"])
-        self.explosions = _index(tables["projectiles_explosions_tables"])
-        self.abilities = _index(tables["unit_abilities_tables"])
-        self.groupings = _index(tables["ui_unit_groupings_tables"])
-        self.parents = _index(tables["ui_unit_group_parents_tables"])
-        self.building_levels = _index(tables["building_levels_tables"], "level_name")
-        self.building_variants = _index(tables["building_culture_variants_tables"], "building")
+        self.panel = PanelTables(tables)
+        self.groupings = index_rows(tables["ui_unit_groupings_tables"])
+        self.parents = index_rows(tables["ui_unit_group_parents_tables"])
+        self.building_levels = index_rows(tables["building_levels_tables"], "level_name")
+        self.building_variants = index_rows(tables["building_culture_variants_tables"], "building")
         self.unit_buildings = {}
         for row in tables["building_units_allowed_tables"]:
             building, key = row.get("building", ""), row.get("unit", "")
@@ -331,11 +280,6 @@ class UnitCatalog:
                 buildings = self.unit_buildings.setdefault(key, [])
                 if building not in buildings:
                     buildings.append(building)
-        self.unit_abilities = {}
-        for row in tables["land_units_to_unit_abilites_junctions_tables"]:
-            keys = self.unit_abilities.setdefault(row.get("land_unit", ""), [])
-            if row.get("ability") and row["ability"] not in keys:
-                keys.append(row["ability"])
 
         subculture_culture = {row["subculture"]: row["culture"] for row in tables["cultures_subcultures_tables"] if row.get("subculture")}
         faction_culture = {row["key"]: subculture_culture.get(row.get("subculture", "")) for row in tables["factions_tables"] if row.get("key")}
@@ -475,26 +419,6 @@ class UnitCatalog:
             "cost": int(parse_number(main.get("multiplayer_cost"))),
         }
 
-    def missile_stats(self, land: Dict[str, str]) -> Dict[str, int]:
-        """Build the panel's missile rows for a unit that shoots.
-
-        Missile Strength is the projectile's damage plus armour-piercing damage, plus its explosion's when it has one. Artillery and chariots with
-        a gun take the weapon from their battlefield engine.
-
-        Args:
-            land (Dict[str, str]): The unit's `land_units_tables` row.
-
-        Returns:
-            `ammunition`, `range` and `missile_strength`, or an empty dict when the unit has no missile weapon.
-        """
-        weapon = land.get("primary_missile_weapon") or self.engines.get(land.get("engine", ""), {}).get("missile_weapon", "")
-        projectile = self.projectiles.get(self.missile_weapons.get(weapon, {}).get("default_projectile", ""))
-        if not projectile:
-            return {}
-        explosion = self.explosions.get(projectile.get("explosion_type", ""), {})
-        damage = sum(parse_number(row.get(column)) for row, column in ((projectile, "damage"), (projectile, "ap_damage"), (explosion, "detonation_damage"), (explosion, "detonation_damage_ap")))
-        return {"ammunition": int(parse_number(land.get("primary_ammo"))), "range": int(parse_number(projectile.get("effective_range"))), "missile_strength": int(damage)}
-
     def details(self, key: str) -> dict:
         """Build the in-game panel numbers for one unit.
 
@@ -509,20 +433,10 @@ class UnitCatalog:
         """
         unit = self.stats.get(key)
         main, land = (unit.main, unit.land) if unit else ({}, {})
-        man = self.entities.get(land.get("man_entity", ""), {})
-        mount = self.entities.get(self.mounts.get(land.get("mount", ""), {}).get("entity", ""), {})
-        engine = self.entities.get(self.engines.get(land.get("engine", ""), {}).get("battle_entity", ""), {})
-        weapon = self.weapons.get(land.get("primary_melee_weapon", ""), {})
-        men = int(parse_number(main.get("num_men")))
-        hp = (parse_number(man.get("hit_points")) + parse_number(land.get("bonus_hit_points"))) * men
-        hp += parse_number(mount.get("hit_points")) * parse_number(land.get("num_mounts")) + parse_number(engine.get("hit_points")) * parse_number(land.get("num_engines"))
-        abilities = []
-        for ability in self.unit_abilities.get(land.get("key", ""), []):
-            row = self.abilities.get(ability, {})
-            if row.get("is_hidden_in_ui") == "true":
-                continue
-            name = ttc_data.loc_name(ABILITY_NAME_PREFIX, ability, self.loc)
-            abilities.append({"key": ability, "name": name, "icon": self.art_path(ABILITY_FOLDER, row.get("icon_name", ""))})
+        stats, hp_estimate = panel_stats(main, land, self.panel)
+        abilities = [{"key": ability, "name": ttc_data.loc_name(ABILITY_NAME_PREFIX, ability, self.loc), "icon": self.art_path(ABILITY_FOLDER, icon),
+                      "tip": ability_tooltip(ability, self.panel, self.loc)}
+                     for ability, icon in visible_abilities(land.get("key", ""), self.panel)]
         return {
             "key": key,
             "name": ttc_data.unit_name(key, self.stats, self.loc),
@@ -530,20 +444,8 @@ class UnitCatalog:
             "cost": main.get("multiplayer_cost", ""),
             "caste": main.get("caste", ""),
             "class": land.get("class", ""),
-            "hp_estimate": bool(mount or engine),
-            "stats": {
-                "hp": round(hp),
-                "tier": int(parse_number(main.get("tier"))),
-                "men": men,
-                "armour": int(parse_number(self.armour.get(land.get("armour", ""), {}).get("armour_value"))),
-                "leadership": int(parse_number(land.get("morale"))),
-                "speed": round(parse_number((mount or man).get("run_speed")) * 10),
-                "melee_attack": int(parse_number(land.get("melee_attack"))),
-                "melee_defence": int(parse_number(land.get("melee_defence"))),
-                "weapon_strength": int(parse_number(weapon.get("damage")) + parse_number(weapon.get("ap_damage"))),
-                "charge_bonus": int(parse_number(land.get("charge_bonus"))),
-                **self.missile_stats(land),
-            },
+            "hp_estimate": hp_estimate,
+            "stats": stats,
             "abilities": abilities,
             "buildings": self.buildings(key),
         }
