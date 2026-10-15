@@ -21,7 +21,7 @@ vanilla Advisor's materials and textures. The vanilla files come through `core.a
 before `generators.advisor_overhaul`.
 
 It also writes the copies the registry's weapon and outfit changes need: each weapon of `model.prop_offsets`, `prop_turns` and `prop_sizes`
-moved, turned and sized, and each `.wsmodel` piece of an outfit in `model.unpainted` with materials whose colour masks are blank (`BLANK_MASK`),
+moved, turned and sized, each prop piece of a weapon's `piece_shapes` the same way, and each `.wsmodel` piece of an outfit in `model.unpainted` with materials whose colour masks are blank (`BLANK_MASK`),
 so the game paints no faction colours or heraldry on it.
 
 Usage:
@@ -43,7 +43,7 @@ import numpy as np
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
 from tools.anim_retarget import quat_matrix, world_pose
-from generators.advisor_overhaul import PROP_CHANGES, REGISTRY, UNPAINTED_FOLDER, prop_copy_path, unpainted_copy_path
+from generators.advisor_overhaul import PROP_CHANGES, REGISTRY, UNPAINTED_FOLDER, piece_copy_path, prop_copy_path, unpainted_copy_path
 from tools.rmv2_file import Mesh, read_rmv2, read_wsmodel, set_attachment_points, set_pivot, set_positions, set_skin, turn_directions, write_rmv2
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -382,31 +382,66 @@ def write_prop_copies(assets: AssetSource, offsets: Dict[str, List[float]], turn
     changed = sorted(set(offsets) | set(turns) | set(sizes))
     if any(not path.lower().endswith((".rigid_model_v2", ".wsmodel")) for path in changed):
         sys.exit("model.prop_offsets, prop_turns and prop_sizes take .rigid_model_v2 and .wsmodel weapons only")
-    files = assets.fetch_all(changed)
     for path in changed:
-        offset, turn, size = offsets.get(path, [0.0, 0.0, 0.0]), turns.get(path, [0.0, 0.0, 0.0]), sizes.get(path, 1.0)
-        rotation = turn_matrix(turn)
-        geometry, text = path, None
-        if path.lower().endswith(".wsmodel"):
-            text = files[norm(path)].decode("utf-8-sig")
-            geometry = read_wsmodel(text)[0]
-        model = read_rmv2(assets.fetch_all([geometry])[norm(geometry)])
-        for mesh in (m for lod in model.lods for m in lod):
-            # The game places a vertex at its position plus the pivot, so the turn and size apply to that sum, around the bone.
-            pivot = np.array(mesh.pivot, np.float32)
-            if any(turn) or size != 1.0:
-                set_positions(mesh, ((mesh.positions + pivot) * size) @ rotation.T - pivot)
-                turn_directions(mesh, rotation)
-            set_pivot(mesh, tuple(float(v) for v in pivot + offset))
-        copy = prop_copy_path(geometry)
-        os.makedirs(os.path.dirname(os.path.join(MOD, copy)), exist_ok=True)
-        with open(os.path.join(MOD, copy), "wb") as f:
-            f.write(write_rmv2(model))
-        if text is not None:
-            with open(os.path.join(MOD, prop_copy_path(path)), "w", encoding="utf-8", newline="\n") as f:
-                f.write(text.replace(geometry, copy))
-        moved = ", ".join(f"{o * 100:.1f}" for o in offset)
-        print(f"wrote {prop_copy_path(path)}, moved {moved} cm, turned {', '.join(f'{t:g}' for t in turn)} degrees, sized {size * 100:g}%")
+        write_shaped_copy(assets, path, prop_copy_path, offsets.get(path, [0.0, 0.0, 0.0]), turns.get(path, [0.0, 0.0, 0.0]), sizes.get(path, 1.0))
+
+
+def write_piece_copies(assets: AssetSource, weapons: Dict) -> None:
+    """Writes a copy of each prop piece in a weapon's `piece_shapes` (pieces held on a bone), moved, turned and sized like a weapon. Run after
+    `write_prop_copies`, which clears the folder both write to.
+
+    Args:
+        assets (AssetSource): The vanilla packs.
+        weapons (Dict): The registry's `weapons`.
+
+    Raises:
+        SystemExit: When a shape is out of range or names a piece that is not held on a bone.
+    """
+    for weapon_key, weapon in weapons.items():
+        for slot, shape in weapon.get("piece_shapes", {}).items():
+            piece = weapon.get("pieces", {}).get(slot)
+            if not piece or len(piece) < 2 or not piece[1].lower().endswith((".rigid_model_v2", ".wsmodel")):
+                sys.exit(f"weapons.{weapon_key}.piece_shapes.{slot} names no prop piece held on a bone")
+            offset, turn, size = shape.get("offset", [0.0, 0.0, 0.0]), shape.get("turn", [0.0, 0.0, 0.0]), shape.get("size", 1.0)
+            if not (all(abs(v) <= 0.3 for v in offset) and all(abs(v) <= 180 for v in turn) and 0.25 <= size <= 3.0):
+                sys.exit(f"weapons.{weapon_key}.piece_shapes.{slot} is out of range")
+            write_shaped_copy(assets, piece[1], lambda path: piece_copy_path(weapon_key, slot, path), offset, turn, size)
+
+
+def write_shaped_copy(assets: AssetSource, path: str, copy_path, offset: List[float], turn: List[float], size: float) -> None:
+    """Writes one model's copy sized and turned around its bone, then moved by the offset, all in its own axes. A `.wsmodel` gets a copy of its
+    `.wsmodel` too, pointing at the changed geometry and keeping its materials.
+
+    Args:
+        assets (AssetSource): The vanilla packs.
+        path (str): The model, a `.rigid_model_v2` or a `.wsmodel`.
+        copy_path: Gives a copy's game path from the vanilla path (of the geometry, and of the `.wsmodel`).
+        offset (List[float]): [x, y, z] metres.
+        turn (List[float]): [x, y, z] degrees, turned in that order.
+        size (float): Scale, 1 being its own size.
+    """
+    rotation = turn_matrix(turn)
+    geometry, text = path, None
+    if path.lower().endswith(".wsmodel"):
+        text = assets.fetch_all([path])[norm(path)].decode("utf-8-sig")
+        geometry = read_wsmodel(text)[0]
+    model = read_rmv2(assets.fetch_all([geometry])[norm(geometry)])
+    for mesh in (m for lod in model.lods for m in lod):
+        # The game places a vertex at its position plus the pivot, so the turn and size apply to that sum, around the bone.
+        pivot = np.array(mesh.pivot, np.float32)
+        if any(turn) or size != 1.0:
+            set_positions(mesh, ((mesh.positions + pivot) * size) @ rotation.T - pivot)
+            turn_directions(mesh, rotation)
+        set_pivot(mesh, tuple(float(v) for v in pivot + offset))
+    copy = copy_path(geometry)
+    os.makedirs(os.path.dirname(os.path.join(MOD, copy)), exist_ok=True)
+    with open(os.path.join(MOD, copy), "wb") as f:
+        f.write(write_rmv2(model))
+    if text is not None:
+        with open(os.path.join(MOD, copy_path(path)), "w", encoding="utf-8", newline="\n") as f:
+            f.write(text.replace(geometry, copy))
+    moved = ", ".join(f"{o * 100:.1f}" for o in offset)
+    print(f"wrote {copy_path(path)}, moved {moved} cm, turned {', '.join(f'{t:g}' for t in turn)} degrees, sized {size * 100:g}%")
 
 
 def write_unpainted_copies(assets: AssetSource, model: Dict) -> None:
@@ -442,9 +477,11 @@ def build(preview: bool) -> None:
     Args:
         preview (bool): Also write the unmoved body preview for the gallery.
     """
-    model = json.load(open(REGISTRY, encoding="utf-8"))["model"]
+    registry = json.load(open(REGISTRY, encoding="utf-8"))
+    model = registry["model"]
     assets = AssetSource([], [], VANILLA_PACKS)
     write_prop_copies(assets, *(model.get(name, {}) for name in PROP_CHANGES))
+    write_piece_copies(AssetSource([], []), registry["weapons"])
     files = assets.fetch_all([SOURCE_SKELETON, TARGET_SKELETON, POINTS_MODEL] + [source for source, _, _ in MODELS.values()])
     rig = Rig(read_anim(files[norm(SOURCE_SKELETON)]), read_anim(files[norm(TARGET_SKELETON)]), model["hand_shift"])
     print("bind gaps over 1 cm of bones both skeletons have:")

@@ -278,7 +278,8 @@ class PanelBuilder:
                 "props": dict(weapon["props"], **registry["mounts"][mount_key].get("variant_props", {}), **weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
                 "prop_overrides": sorted(weapon.get("forms", {}).get(mount_key, {}).get("props", {})),
                 "mount_props": sorted(registry["mounts"][mount_key].get("variant_props", {})),
-                "look": {"body": weapon.get("body", registry["model"]["body"]), "hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {})},
+                "look": {"body": weapon.get("body", registry["model"]["body"]), "hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {}),
+                         "piece_shapes": weapon.get("piece_shapes", {})},
                 "attributes_removed": weapon.get("attributes_removed", []), "abilities": weapon.get("abilities", []),
                 "abilities_removed": weapon.get("abilities_removed", [])}
 

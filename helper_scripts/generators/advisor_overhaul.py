@@ -19,8 +19,8 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
 
 How a weapon looks on every one of its mounts (all optional, written by the workbench's Look tab): `body` picks his outfit from `model.bodies`,
 `hood` false takes his hood off (when his head has a hoodless model), and `pieces` adds models such as a hat: slot -> [model, metadata...], or
-[bone, model, metadata...] for a prop held on that bone (a book on his hip), which `model.prop_offsets`, `prop_turns` and `prop_sizes` change
-like a weapon. An
+[bone, model, metadata...] for a prop held on that bone (a book on his hip). `piece_shapes` moves, turns and sizes a prop piece on its own
+(slot -> `offset` [x, y, z] metres, `turn` [x, y, z] degrees, `size`), so two pieces of the same model can point different ways. An
 outfit in `model.unpainted` (key -> true) is worn without its faction colours or heraldry, as copies `generators.advisor_overhaul_model` writes.
 
 New weapons made with the workbench's New form dialog are marked `workbench`. Their `sets` hold only `humanoid01` sets, which build as they are.
@@ -882,7 +882,8 @@ def build() -> None:
                                                                              "rider_animation_set": rider, "vfx_filter_override": "0"})
         texts.append((f"ancillaries_onscreen_name_{ancillary}", f"{weapon['name']}, {mount['name']}"))
         texts.append((f"ancillaries_colour_text_{ancillary}", f"{weapon['description']} {mount['description']}"))
-        look = {"hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {})}
+        look = {"weapon": weapon_key, "hood": weapon.get("hood", registry["model"]["hood"]), "pieces": weapon.get("pieces", {}),
+                "piece_shapes": weapon.get("piece_shapes", {})}
         variants[variant] = (weapon.get("body", registry["model"]["body"]), dict(weapon["props"], **mount.get("variant_props", {}), **form_props), look)
 
     for variant in variants:
@@ -985,6 +986,20 @@ def prop_copy_path(path: str) -> str:
     return f"{PROP_FOLDER}/{os.path.basename(path).lower()}"
 
 
+def piece_copy_path(weapon_key: str, slot: str, path: str) -> str:
+    """Game path of the copy of a prop piece that the weapon's `piece_shapes` moves, turns or sizes. Each piece has its own.
+
+    Args:
+        weapon_key (str): The weapon whose look holds the piece.
+        slot (str): The piece's slot, e.g. `piece_2`.
+        path (str): The vanilla model.
+
+    Returns:
+        str: The copy's path.
+    """
+    return f"{PROP_FOLDER}/{weapon_key}_{slot}_{os.path.basename(path).lower()}"
+
+
 def unpainted_copy_path(path: str) -> str:
     """Game path of the copy of an outfit's `.wsmodel` that `model.unpainted` writes, without its colour masks.
 
@@ -1004,7 +1019,7 @@ def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> 
     Args:
         model (Dict): The registry's `model` (the bodies, the heads, and stumps).
         variants (Dict[str, Tuple[str, Dict, Dict]]): Variant name -> (key of its body in `model.bodies`, slot -> (attach point, model, metadata),
-            and its look: `hood` and `pieces`, slot -> [model, metadata...]).
+            and its look: `weapon` (its key), `hood`, `pieces` (slot -> [model, metadata...] or [bone, model, metadata...]) and `piece_shapes`).
     """
     folder = os.path.join(MOD, "variantmeshes", "variantmeshdefinitions")
     os.makedirs(folder, exist_ok=True)
@@ -1022,8 +1037,8 @@ def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> 
         for slot, piece in pieces.items():
             # A piece held on a bone starts with the bone, one that bends with the body with its model.
             bone, (mesh, *meta) = (None, piece) if piece[0].lower().endswith((".wsmodel", ".rigid_model_v2")) else (piece[0], piece[1:])
-            if bone and any(mesh in model.get(name, {}) for name in PROP_CHANGES):
-                mesh = prop_copy_path(mesh)
+            if bone and slot in look.get("piece_shapes", {}):
+                mesh = piece_copy_path(look["weapon"], slot, mesh)
             tail = "".join(f"<META_DATA>{m}</META_DATA>" for m in meta if m)
             point = f' attach_point="{bone}"' if bone else ""
             lines += [f'\t<SLOT name="{slot}"{point} >', f'\t\t<VARIANT_MESH model="{mesh}" >{tail}</VARIANT_MESH>', "\t</SLOT>"]
