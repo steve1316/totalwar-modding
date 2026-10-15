@@ -131,7 +131,7 @@ def _texture_image(data: bytes) -> Tuple[bytes, str, bool]:
     has_alpha = image.mode in ("RGBA", "LA") and image.getchannel("A").getextrema()[0] < 250
     out = io.BytesIO()
     if has_alpha:
-        image.convert("RGBA").save(out, "PNG", optimize=True)
+        image.convert("RGBA").save(out, "PNG")
         return out.getvalue(), "png", True
     image.convert("RGB").save(out, "JPEG", quality=88)
     return out.getvalue(), "jpg", False

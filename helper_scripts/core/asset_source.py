@@ -95,11 +95,7 @@ class AssetSource:
     loose: Dict[str, str] = field(default_factory=dict)
 
     def __post_init__(self):
-        for folder in reversed(self.folders):
-            for root, _, names in os.walk(folder):
-                for name in names:
-                    full = os.path.join(root, name)
-                    self.loose[norm(os.path.relpath(full, folder))] = full
+        self.scan_folders()
         vanilla = sorted(os.path.join(VANILLA_DATA_DIR, n) for n in os.listdir(VANILLA_DATA_DIR) if n.endswith(".pack") and self.vanilla.match(n))
         packs = self.packs + vanilla
         with ThreadPoolExecutor(8) as pool:
@@ -107,6 +103,15 @@ class AssetSource:
         for pack, paths in zip(packs, listings):
             for path in paths:
                 self.index.setdefault(path.lower(), (pack, path))
+
+    def scan_folders(self):
+        """Lists the loose folders' files again. Earlier folders win."""
+        self.loose.clear()
+        for folder in reversed(self.folders):
+            for root, _, names in os.walk(folder):
+                for name in names:
+                    full = os.path.join(root, name)
+                    self.loose[norm(os.path.relpath(full, folder))] = full
 
     def fetch(self, paths: Iterable[str]) -> Dict[str, bytes]:
         """Reads files by game path, extracting from packs in batches.

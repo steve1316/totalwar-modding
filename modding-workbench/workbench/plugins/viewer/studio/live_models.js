@@ -1,8 +1,8 @@
 // Live models: keeps the open form's stage model showing what the Look tab chose (weapons, outfit, head and extra pieces) before a rebuild bakes
 // them in. Each source is a function giving, for the open form, slot -> {model, attach, built} (attach empty for a model that bends with the body,
 // built when it is what the gallery built) or null for a slot that should be empty. A model the gallery does not have is exported on the spot
-// (`api/props`) and loaded once. The pieces the gallery built are kept aside, and a slot changed here goes back to them once no source asks for
-// anything else.
+// (`api/props`, the same export its thumbnail uses) and loaded once. The pieces the gallery built are kept aside, and a slot changed here goes
+// back to them once no source asks for anything else.
 import * as THREE from "three";
 import { loadModel } from "../viewer_common.js";
 
@@ -13,7 +13,8 @@ export class LiveModels {
   constructor(studio) {
     // `sources` give the wanted slots, `listeners` redraw the tabs. `previews` caches exported models, `loading` and `failed` each slot's state.
     this.studio = studio; this.sources = []; this.listeners = []; this.previews = new Map(); this.loading = new Set(); this.failed = new Map();
-    this.running = Promise.resolve();
+    // The sync running or about to, and whether another one is already waiting behind it.
+    this.running = Promise.resolve(); this.queued = false;
   }
 
   // The open form's own stage model: the first side that is not the vanilla equivalent.
@@ -22,13 +23,13 @@ export class LiveModels {
   wanted(f) { return Object.assign({}, ...this.sources.map(source => source(f))); }
   changed() { this.listeners.forEach(listener => listener()); }
 
-  // The meshes of a model on a slot, exported by the server once and loaded once. A model that bends with the body is the same on any slot, so it
-  // shares the thumbnails' export.
-  preview(model, slot, attach) {
-    const shared = attach ? slot : "thumb", key = `${stem(model)}|${shared}|${attach}`;
+  // The meshes of a model, exported by the server once and loaded once. A model is the same on any slot and bone (`place` puts it there), so every
+  // slot shares the thumbnails' export, and a model with a thumbnail needs no export at all. A try-on goes ahead of the thumbnails waiting.
+  preview(model) {
+    const key = stem(model);
     if (!this.previews.has(key)) {
       this.previews.set(key, fetch(this.studio.api + "props", { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: [{ model, slot: shared, attach }] }) })
+        body: JSON.stringify({ items: [{ model, slot: "thumb", attach: "" }], urgent: true }) })
         .then(async r => {
           const answer = await r.json();
           if (!r.ok || !answer.urls[0]) throw new Error(answer.error || "not found in the game's packs");
@@ -50,8 +51,14 @@ export class LiveModels {
     }
   }
 
-  // Brings the stage model in line with the sources. Runs one at a time.
-  sync() { this.running = this.running.then(() => this.syncNow()).catch(error => console.error("live models", error)); return this.running; }
+  // Brings the stage model in line with the sources. Runs one at a time, and a sync asked for while one is waiting joins it: it reads the
+  // sources when it starts, so the latest choice wins and passing over a list queues nothing.
+  sync() {
+    if (this.queued) return this.running;
+    this.queued = true;
+    this.running = this.running.then(() => { this.queued = false; return this.syncNow(); }).catch(error => console.error("live models", error));
+    return this.running;
+  }
 
   async syncNow() {
     const model = this.model(), f = this.form(), entry = this.studio.stage.entry;
@@ -76,7 +83,7 @@ export class LiveModels {
       let meshes = model.built[slot];
       if (!meshes || stem(meshes[0].userData.model) !== stem(want.model)) {
         this.loading.add(slot); this.failed.delete(slot); this.changed();
-        try { meshes = (await this.preview(want.model, slot, want.attach)).map(m => { const c = m.clone(); c.userData = { ...m.userData, slot, preview: true }; return c; }); }
+        try { meshes = (await this.preview(want.model)).map(m => { const c = m.clone(); c.userData = { ...m.userData, slot, attach: want.attach, preview: true }; return c; }); }
         catch (error) { this.failed.set(slot, error.message); meshes = null; }
         this.loading.delete(slot);
         // Another form opened meanwhile, or the choice changed: the next sync takes over.
