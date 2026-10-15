@@ -97,7 +97,14 @@ function M.register()
         function(area_and_character_info)
             local triggering_character = area_and_character_info:family_member():character()
             local marker_id = area_and_character_info:area_key()
-            return M.land_manager:check_if_is_triggerable_marker(triggering_character, marker_id)
+            if not M.land_manager:check_if_is_triggerable_marker(triggering_character, marker_id) then return false end
+            --- The tower moves a delving lord from battlefield to battlefield, so landing on a marker must not open it mid-delve, where its dilemma
+            --- would open under the floor battle.
+            if M.point_of_interest_event_manager.tower_event_delegate:is_delving_lord(triggering_character) then
+                log("area entered: lord " .. triggering_character:command_queue_index() .. " is delving, so " .. tostring(marker_id) .. " stays closed")
+                return false
+            end
+            return true
         end,
         function(area_and_character_info)
             local marker_id = area_and_character_info:area_key()

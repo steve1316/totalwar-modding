@@ -528,6 +528,17 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
     end
 end
 
+--- True when a character leads a delve in progress.
+--- @param character userdata The character.
+--- @returns boolean True for a delving lord.
+function TowerEventDelegate:is_delving_lord(character)
+    local cqi = character:command_queue_index()
+    for _, delve in pairs(self.delves) do
+        if delve.general_cqi == cqi then return true end
+    end
+    return false
+end
+
 --- Starts the current floor a moment from now, once the game has shown any dilemma that queued behind the one just answered, so the floor can
 --- wait for it, see `FLOOR_START_DELAY`.
 --- @param faction_name string The delving faction.
