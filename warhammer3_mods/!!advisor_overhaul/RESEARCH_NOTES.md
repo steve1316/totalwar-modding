@@ -182,8 +182,9 @@ Also fine but not kept: Kislev Patriarch, Engineer, Paladin, Warrior Priest. `[d
   `[game]`
 - **Never change `chain0`.** It holds the skill card templates. Shrinking it to 70 px (with offset 0) froze the game when the skill panel opened,
   twice. Crash artifacts are in `debugging/2026-10-13-skill-panel-freeze/`. `[game]`
-- **The 10-row layout** (removed with the lore system). `chain0` vanilla, rows 1-9 at 70 px, `list_box` 740 px with 12 items per row and dock
-  offset 0,20 showed ten rows. It replaced the panel for every character. The mod now uses two vanilla rows. `[game]`
+- **The 10-row layout** (`ui/campaign ui/character_details_panel_skills.twui.xml`). `chain0` vanilla, rows 1-9 at 70 px, `list_box` 740 px with
+  12 items per row and dock offset 0,20 showed ten rows. It replaces the panel for every character. Removed with the old lore system, restored
+  2026-10-15 for the skills plan. The file is the vanilla ui3.pack file plus only those changes, checked against the patched game that day. `[game]`
 - **No vertical scrolling.** The `listview` runs the `HorizontalListView` code callback, which drives only the horizontal slider and drag. `[data]`
 
 ### Script-added skills and hero actions (2026-10-15)
