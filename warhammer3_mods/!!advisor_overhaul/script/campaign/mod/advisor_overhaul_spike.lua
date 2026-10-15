@@ -4,7 +4,7 @@
 ---     selecting him and at the start of his turn.
 --- S2, S3, S4: at the start of turn 2 the script adds three skills, spending no point:
 ---     - the hidden actions skill, which should give him two champion actions (Stimulate Growth, Scavenge);
----     - the hidden pact skill, which should open the visible "Test: Gift of Change" node on row 5;
+---     - the hidden pact skill, which should lock the visible "Test: Defiance" node on row 5;
 ---     - the Disc's unlock skill, which should make the Disc pickable in Change Loadout.
 ---     It also puts the pact bundle (+10 Tzeentch corruption) on him.
 --- Every step is logged with the `advisor_overhaul_spike` tag.

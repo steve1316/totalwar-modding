@@ -3,3 +3,4 @@ key	campaign_key	character_skill_key	faction_key	indent	tier	subculture	points_o
 advisor_overhaul_spike_actions_node		advisor_overhaul_spike_actions		8	2		0	0	false
 advisor_overhaul_spike_pact_node		advisor_overhaul_spike_pact		8	1		0	0	false
 advisor_overhaul_spike_gift_node		advisor_overhaul_spike_gift		5	0		0	0	true
+advisor_overhaul_spike_defy_node		advisor_overhaul_spike_defy		5	1		0	0	true

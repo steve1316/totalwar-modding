@@ -203,6 +203,9 @@ Answered by the test build `generators/advisor_overhaul_spike.py` plus `script/c
   copy needs its own `agent_actions_localised_action_name_<key>` and description text, or it shows with a blank name. `[game]`
 - **A REQUIRED link from a hidden node does not lock its child.** The visible child stayed learnable before the script added the hidden parent.
   Pact rows need another lock. `[game]`
+- **A skill lock does fire from a script-added skill.** A `character_skill_nodes_skill_locks` row (learning skill A locks node B, as Tretch's
+  Corruptive locks his Dictatorial node) locked a visible node once the script added the hidden skill A. Pact rows use a rank 30 gate plus
+  locks from the skill the dilemma choice adds. `[game]`
 - **Adding the Disc's unlock skill by script makes the Disc pickable,** and a `character_to_province_any` Tzeentch corruption effect in a bundle
   on him spreads corruption. `[game]`
 

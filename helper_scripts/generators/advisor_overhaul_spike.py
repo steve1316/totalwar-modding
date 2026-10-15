@@ -6,6 +6,7 @@ Four questions, each logged by `script/campaign/mod/advisor_overhaul_spike.lua`:
 - S2: can a wizard use hero actions only champions have, through a wizard copy of the action record and a new enable effect?
 - S3: does a skill added by script (no point spent) open a visible node that needs it?
 - S4: does adding the Disc's unlock skill by script make the Disc pickable in Change Loadout? It also puts +10 Tzeentch corruption on him.
+- S5: does a skill added by script lock a visible node through `character_skill_nodes_skill_locks`? The pact skill should lock "Test: Defiance".
 
 Every key starts with `advisor_overhaul_spike_`, and every file is named `advisor_overhaul_spike`.
 
@@ -44,6 +45,9 @@ PACT_SKILL = f"{PREFIX}_pact"
 
 # S3: a visible node on row 5 that needs the hidden pact skill.
 GIFT_SKILL = f"{PREFIX}_gift"
+
+# S5: a visible node on row 5 that the hidden pact skill locks.
+DEFY_SKILL = f"{PREFIX}_defy"
 
 # S4: the pact's corruption, on him.
 PACT_BUNDLE = f"{PREFIX}_pact"
@@ -109,7 +113,7 @@ def build_rows() -> Dict[str, List[Dict[str, str]]]:
     """
     rows: Dict[str, List[Dict[str, str]]] = {t: [] for t in (
         "character_skills_tables", "character_skill_nodes_tables", "character_skill_node_set_items_tables", "character_skill_level_details_tables",
-        "character_skill_level_to_effects_junctions_tables", "character_skill_node_links_tables", "effect_bundles_tables",
+        "character_skill_level_to_effects_junctions_tables", "character_skill_node_links_tables", "character_skill_nodes_skill_locks_tables", "effect_bundles_tables",
         "effect_bundles_to_effects_junctions_tables", "effects_tables", "agent_actions_tables", "effect_bonus_value_agent_action_record_junctions_tables")}
     effects = {r["effect"]: r for r in read_vanilla("effects_tables")[0]}
     for effect, _, _ in ART_EFFECTS + PACT_EFFECTS:
@@ -144,6 +148,8 @@ def build_rows() -> Dict[str, List[Dict[str, str]]]:
     rows["character_skill_node_links_tables"].append({"child_key": f"{GIFT_SKILL}_node", "parent_key": f"{PACT_SKILL}_node", "initial_descent_tiers": "0",
                                                       "parent_link_position": "1", "child_link_position": "1", "parent_link_position_offset": "0.0000",
                                                       "child_link_position_offset": "0.0000", "link_type": "REQUIRED"})
+    skill(DEFY_SKILL, 5, 1, True, rows, [("wh_main_effect_character_stat_melee_attack", "character_to_character_own", 10)])
+    rows["character_skill_nodes_skill_locks_tables"].append({"character_skill": PACT_SKILL, "character_skill_node": f"{DEFY_SKILL}_node", "level": "1"})
     return rows
 
 
@@ -156,7 +162,9 @@ def texts() -> List[List[str]]:
     out = [[f"effect_bundles_localised_title_{ART_BUNDLE}", "Test: Greatsword art"], [f"effect_bundles_localised_title_{PACT_BUNDLE}", "Test: Tzeentch pact"],
            [f"character_skills_localised_name_{ACTIONS_SKILL}", "Test: champion actions"], [f"character_skills_localised_name_{PACT_SKILL}", "Test: pact"],
            [f"character_skills_localised_name_{GIFT_SKILL}", "Test: Gift of Change"],
-           [f"character_skills_localised_description_{GIFT_SKILL}", "Test node. It opens only once the script has added the hidden pact skill."]]
+           [f"character_skills_localised_description_{GIFT_SKILL}", "Test node. It opens only once the script has added the hidden pact skill."],
+           [f"character_skills_localised_name_{DEFY_SKILL}", "Test: Defiance"],
+           [f"character_skills_localised_description_{DEFY_SKILL}", "Test node. It locks once the script has added the hidden pact skill."]]
     # The action name and description are keyed by the action record, so each copy needs its own.
     names = {"passive_stimulate_growth": "Test: Stimulate Growth", "assist_army_scavenge": "Test: Scavenge"}
     for source in COPIED_ACTIONS:

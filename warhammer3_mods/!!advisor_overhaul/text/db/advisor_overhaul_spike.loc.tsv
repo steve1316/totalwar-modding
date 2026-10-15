@@ -6,6 +6,8 @@ character_skills_localised_name_advisor_overhaul_spike_actions	Test: champion ac
 character_skills_localised_name_advisor_overhaul_spike_pact	Test: pact	true
 character_skills_localised_name_advisor_overhaul_spike_gift	Test: Gift of Change	true
 character_skills_localised_description_advisor_overhaul_spike_gift	Test node. It opens only once the script has added the hidden pact skill.	true
+character_skills_localised_name_advisor_overhaul_spike_defy	Test: Defiance	true
+character_skills_localised_description_advisor_overhaul_spike_defy	Test node. It locks once the script has added the hidden pact skill.	true
 effects_description_advisor_overhaul_spike_effect_enable_passive_stimulate_growth	Test: enables a champion action for the Advisor	true
 agent_actions_localised_action_name_advisor_overhaul_spike_passive_stimulate_growth	Test: Stimulate Growth	true
 agent_actions_localised_action_description_advisor_overhaul_spike_passive_stimulate_growth	Test: Stimulate Growth, a champion action copied for the Advisor.	true
