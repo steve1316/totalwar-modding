@@ -1,9 +1,15 @@
 <VARIANT_MESH>
 	<SLOT name="body" >
-		<VARIANT_MESH model="variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_body_01.wsmodel" ><META_DATA>audio_entity_type:wh_human_male_LH</META_DATA><META_DATA>audio_armour_type:leather</META_DATA></VARIANT_MESH>
+		<VARIANT_MESH model="VariantMeshes/wh_variantmodels/hu1/emp/emp_witch_hunter/body/emp_witch_hunter_body_01.wsmodel" ><META_DATA>audio_entity_type:wh_human_male_LH</META_DATA><META_DATA>audio_armour_type:plate</META_DATA></VARIANT_MESH>
 	</SLOT>
 	<SLOT name="head" >
-		<VARIANT_MESH model="variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01.wsmodel" ></VARIANT_MESH>
+		<VARIANT_MESH model="variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01_hoodless.wsmodel" ></VARIANT_MESH>
+	</SLOT>
+	<SLOT name="piece_1" attach_point="spine_2" >
+		<VARIANT_MESH model="variantmeshes/wh_variantmodels/hu1/advisor_overhaul/props/greatsword_piece_1_dwf_slayers_dragonback_axe_1h_02.wsmodel" ></VARIANT_MESH>
+	</SLOT>
+	<SLOT name="piece_2" attach_point="spine_2" >
+		<VARIANT_MESH model="variantmeshes/wh_variantmodels/hu1/advisor_overhaul/props/greatsword_piece_2_dwf_slayers_dragonback_axe_1h_02.wsmodel" ></VARIANT_MESH>
 	</SLOT>
 	<SLOT name="weapon_1" attach_point="be_prop_0" >
 		<VARIANT_MESH model="VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel" ><META_DATA>audio_melee_weapon_type:sword_ogre</META_DATA></VARIANT_MESH>
