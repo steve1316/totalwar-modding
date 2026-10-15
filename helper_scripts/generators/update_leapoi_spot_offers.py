@@ -384,7 +384,7 @@ OFFERS: Dict[str, Tuple[str, str]] = {
     "ancient_tactics": ("Study the Ancient Tactics", "Study the ancient tactics: " + stat("+{e0}", *CHARGE) + " when attacking and " + stat("+{e1}%", *SPEED)
                         + ", but " + stat("-{e2}", *DEFENCE, colour="red") + ", for 5 turns."),
 
-    "endow_the_province": ("Endow the Province", PAY + "endow our nearest region: [[col:green]]+{points} development points[[/col]]."),
+    "endow_the_province": ("Endow the Province", PAY + "endow our nearest region: [[col:green]]+{points} growth[[/col]]."),
     "garrison_drill": ("Garrison Drill", PAY + "drill our nearest garrison: it is [[col:green]]healed to full[[/col]] and has [[col:green]]+{e0}[[/col]] "
                        "[[img:ui/skins/default/icon_stat_attack.png]][[/img]] melee attack, [[img:ui/skins/default/icon_stat_defence.png]][[/img]] melee defence and "
                        "[[img:ui/skins/default/icon_stat_morale.png]][[/img]] leadership for {turns} turns."),
@@ -1304,7 +1304,7 @@ RESULT_LINES = {
     "arm_wrestle_the_champion_won": ("green", "+{won_xp} experience for our lord."),
     "arm_wrestle_the_champion_lost": ("red", "Our lord loses half their remaining health."),
     "buy_rumours": ("green", "{count} regions revealed for {reveal_turns} turns."),
-    "endow_the_province": ("green", "+{points} development points."),
+    "endow_the_province": ("green", "+{points} growth."),
     "garrison_drill": ("green", "Garrison healed, and +{e0} melee attack, melee defence and leadership for {turns} turns."),
     "raise_the_settlement": ("green", "Main building +1 level."),
     "quell_the_unrest": ("yellow", "+{e0} public order and -{e1}% income for {turns} turns."),
