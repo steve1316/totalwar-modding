@@ -1,6 +1,6 @@
 // The Look inspector tab: the open form's weapons (`weapons.js`), then his outfit, his hood and extra pieces such as a hat, set per weapon and shared
 // by every mount of that weapon (`weapons.<weapon>.body`, `.hood` and `.pieces`), then his hands. Outfits come from the registry's `model.bodies`,
-// and any other humanoid model of the game can be added as an outfit or a piece. Every picker is a `ModelList` with thumbnails, and the model the
+// and any full body of the game (`api/bodies`) can be added as an outfit, any humanoid model as a piece. Every picker is a `ModelList` with thumbnails, and the model the
 // pointer rests on is tried on. Every choice shows live on the stage through `studio.live`. The Jobs bar saves the edits.
 import { stem } from "./live_models.js";
 import { ModelList } from "./model_list.js";
@@ -22,6 +22,10 @@ export class LookTab {
     this.studio = studio; this.adding = null; this.hovering = null; this.queued = false;
     this.look = studio.manifest.editor && studio.manifest.editor.look;
     this.thumbs = new Thumbnails(studio);
+    // The game's full bodies, the models "+ Another outfit" lists. Null until the server has answered.
+    this.fullBodies = null;
+    if (this.look) fetch(studio.api + "bodies").then(r => r.json()).then(list => { this.fullBodies = list; if (this.adding === "outfit") this.redraw(); })
+      .catch(error => console.error("full bodies", error));
     this.weapons = new WeaponCards(studio, this);
     // The stage shows the chosen outfit, head and pieces.
     studio.live.sources.push(f => this.wanted(f));
@@ -87,9 +91,12 @@ export class LookTab {
     return failed ? `<div class="note warn">No preview: ${esc(live.failed.get(failed))}. It still builds on Rebuild.</div>` : "";
   }
 
-  // The model list of "+ Another outfit" or "+ Add a piece": every humanoid model.
+  // The model list of "+ Another outfit" (the game's full bodies) or "+ Add a piece" (every humanoid model).
   search(f) {
-    return new ModelList(this.thumbs, { models: this.look.models, placeholder: "Search models (hat, helmet, cape, wizard...)",
+    const outfit = this.adding === "outfit";
+    if (outfit && !this.fullBodies) return Object.assign(document.createElement("div"), { className: "note", textContent: "Finding the game's full bodies..." });
+    return new ModelList(this.thumbs, { models: outfit ? this.fullBodies : this.look.models,
+      placeholder: outfit ? "Search full bodies (wizard, knight, priest...)" : "Search models (hat, helmet, cape, wizard...)",
       onPick: model => this.pick(f, model), onHover: model => this.tryOn(model) }).element();
   }
 

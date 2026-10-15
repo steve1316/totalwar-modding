@@ -5,6 +5,7 @@ The page is `index.html` with its modules in `studio/`, served from this folder.
 `/viewer/p/<project>/data/`, and its tuning and job routes under `/viewer/p/<project>/api/`:
 - `GET tuning`: the tuning values, the weapon models that may get an offset, and the job state. `POST tuning`: saves values into the registry.
 - `POST run/<job>`: starts one of the project's jobs (rebuild, deploy). `GET job`: the job state and the end of its log.
+- `GET api/bodies`: the gallery's humanoid models that are full bodies, the outfits the Look tab offers.
 - `GET thumbs/<file>` and `GET api/thumbs`: the cached model thumbnails and their index (model -> file). `POST thumb`: keeps one (`model`,
   `image` as a PNG data URL, `style` the page's drawing style).
 - `POST props`: exports models (`items`, each with `model`, `slot`, `attach` and `skeleton`) into the gallery for the live previews and
@@ -15,6 +16,7 @@ import json
 import os
 from typing import Dict, List, Tuple
 
+from workbench.plugins.viewer.bodies import full_bodies
 from workbench.plugins.viewer.previews import prop_previews
 from workbench.plugins.viewer.thumbs import save_thumb, thumb_index
 from workbench.projects import Project
@@ -84,6 +86,8 @@ class Viewer:
             handler.send_static(project.thumbs, rest[len("thumbs/"):], IMMUTABLE)
         elif rest == "api/thumbs":
             handler.send_json(200, thumb_index(project))
+        elif rest == "api/bodies":
+            handler.send_json(200, full_bodies(project))
         elif rest == "api/tuning":
             handler.send_json(200, dict(project.tuning_values(), job=project.job.state()))
         elif rest == "api/job":
