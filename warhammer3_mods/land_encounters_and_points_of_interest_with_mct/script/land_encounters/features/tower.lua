@@ -42,6 +42,10 @@ local EVENT_DEEPER = "land_enc_dilemma_tower_deeper"
 --- One-choice dilemma that pays the full haul after the last floor.
 local EVENT_CLAIM = "land_enc_dilemma_tower_claim"
 
+--- Seconds a floor waits after the choice that starts it. The game shows one dilemma at a time, so one from the game or another mod (the
+--- Nemesis Crown) that queued behind the tower's is only shown once that is answered, and the battle must not start under it.
+local FLOOR_START_DELAY = 1
+
 --- Start of every tower dilemma key.
 local TOWER_DILEMMA_PREFIX = "land_enc_dilemma_tower"
 
@@ -221,6 +225,22 @@ local function province_spawn_point(faction_key, capital, distance)
         x, y = cm:find_valid_spawn_location_for_character_from_settlement(faction_key, capital:name(), false, true, distance[1])
     end
     return x, y, region:name()
+end
+
+--- Launches the `foreign_dilemma_after_floor` test switch's dilemmas straight through the game, as the Nemesis Crown does after a won battle,
+--- so a dilemma LEAPOI did not open can be tested against the tower.
+--- @param faction_name string The delving faction.
+local function debug_foreign_dilemmas(faction_name)
+    for _, key in ipairs(debug_config.foreign_dilemma_after_floor) do
+        local builder, payload = cm:create_dilemma_builder(key), cm:create_payload()
+        payload:text_display("dummy_nemesis_crown_take")
+        builder:add_choice_payload("FIRST", payload)
+        payload:clear()
+        payload:text_display("dummy_nemesis_crown_seal")
+        builder:add_choice_payload("SECOND", payload)
+        cm:launch_custom_dilemma_from_builder(builder, cm:get_faction(faction_name))
+        log("tower: debug launches " .. key .. " straight through the game for " .. faction_name)
+    end
 end
 
 --- Logs who the floor battle lists on each side once it is set up, to confirm a floor's allied army joined it.
@@ -469,7 +489,7 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
             --- The heroes the faction has now. Only heroes that arrive during the delve are sent to the tower with the lord.
             heroes_before = tower_battlefields.hero_set(faction_name),
         }
-        self:launch_floor(faction_name)
+        self:start_floor_soon(faction_name)
     elseif key:sub(1, #EVENT_DEEPER + 7) == EVENT_DEEPER .. "_floor_" then
         local delve = self.delves[faction_name]
         if delve == nil then return end
@@ -501,11 +521,32 @@ function TowerEventDelegate:trigger_dilemma_event_given_choice(dilemma_choice_an
         else
             delve.floor = delve.floor + 1
         end
-        self:launch_floor(faction_name)
+        self:start_floor_soon(faction_name)
     elseif key == EVENT_CLAIM then
         if self.delves[faction_name] == nil then return end
         self:end_delve(faction_name, "tower_cleared")
     end
+end
+
+--- True when a character leads a delve in progress.
+--- @param character userdata The character.
+--- @returns boolean True for a delving lord.
+function TowerEventDelegate:is_delving_lord(character)
+    local cqi = character:command_queue_index()
+    for _, delve in pairs(self.delves) do
+        if delve.general_cqi == cqi then return true end
+    end
+    return false
+end
+
+--- Starts the current floor a moment from now, once the game has shown any dilemma that queued behind the one just answered, so the floor can
+--- wait for it, see `FLOOR_START_DELAY`.
+--- @param faction_name string The delving faction.
+function TowerEventDelegate:start_floor_soon(faction_name)
+    log("tower: " .. faction_name .. " starts its floor in " .. FLOOR_START_DELAY .. "s, after any queued dilemma is shown")
+    cm:callback(function()
+        if self.delves[faction_name] then self:launch_floor(faction_name) end
+    end, FLOOR_START_DELAY)
 end
 
 --- Spawns the current floor's army and starts the battle, with the floor army attacking the delving lord. The lord defends, so declining
@@ -774,6 +815,7 @@ function TowerEventDelegate:trigger_event_given_battle_result(player_won_battle,
     self:swear_in_units(delve)
     self:debug_kill_units(delve)
     self:debug_spawn_heroes(faction_name, delve.general_cqi)
+    debug_foreign_dilemmas(faction_name)
     tower_lords.add_trait(delve.general_cqi, tower_data.climber_trait, 1, false)
     if delve.floor >= #tower_data.floors then
         --- The claim shows the last floor's results and the whole climb.
@@ -818,7 +860,7 @@ function TowerEventDelegate:resume_after_dilemmas(faction_name)
     if not step then return end
     delve.after_dilemmas = nil
     log("tower: " .. faction_name .. " answered its dilemmas, going on with the " .. step .. " step")
-    if step == "floor" then self:launch_floor(faction_name) else self:launch_deeper(faction_name) end
+    if step == "floor" then self:start_floor_soon(faction_name) else self:launch_deeper(faction_name) end
 end
 
 --- Opens the current floor's go-deeper dilemma: Climb, the drawn offers, then Leave with the haul. Its description shows this floor's

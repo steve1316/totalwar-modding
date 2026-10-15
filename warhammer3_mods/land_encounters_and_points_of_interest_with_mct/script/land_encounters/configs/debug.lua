@@ -33,6 +33,10 @@ M.floor_unit_keys = {}
 --- e.g. { "wh3_dlc25_emp_theodore_bruckner" }.
 M.spawn_hero_beside_lord = {}
 
+--- Dilemma keys launched straight through the game, not LEAPOI, after each won tower floor, as another mod's or the game's own dilemma would
+--- be (the Nemesis Crown levelling up), e.g. { "wh3_dlc25_nemesis_crown_level_up" }.
+M.foreign_dilemma_after_floor = {}
+
 --- Spot kind every encounter spot becomes instead of rolling the MCT battle chance, either { "battle" } or { "treasure" }.
 M.spot_kind = {}
 
