@@ -5,6 +5,7 @@ TTC unit browser uses, fed with the mod's generated tables over the vanilla ones
 copied into the gallery's `art/` folder. Called by `generators.advisor_overhaul_gallery`.
 """
 
+import json
 import os
 import re
 from typing import Dict, List, Tuple
@@ -12,7 +13,7 @@ from typing import Dict, List, Tuple
 from core.asset_source import AssetSource, norm
 from core.extract_cache import extracted_tree
 from core.utilities import extract_tsv_data, load_tsv_data
-from generators.advisor_overhaul import MOD, STAT_COLUMNS, fixed_skills, pairs, unit_key
+from generators.advisor_overhaul import DATA, MOD, STAT_COLUMNS, fixed_skills, pairs, unit_key
 from tools.glf_rebuild_animpack import AnimSet
 from tools.skill_catalog import CATALOG_LOC_PREFIXES, SKILL_CATALOG_TABLES, SKILL_ICON_FOLDER, catalog_art, skill_catalog
 from tools.ttc_review.catalog import ABILITY_FOLDER, ABILITY_NAME_PREFIX, SKIN_FILES
@@ -30,8 +31,17 @@ UNIT_TABLES = ["main_units_tables", "land_units_tables", "unit_variants_tables",
 # Loc prefix of an attribute's bullet text: its name, then `||` and its tooltip.
 ATTRIBUTE_PREFIX = "unit_attributes_bullet_text_"
 
-# Loc prefixes the panels read: names, and everything the ability and attribute tooltips show.
-LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX, *TOOLTIP_LOC_PREFIXES, *CATALOG_LOC_PREFIXES)
+# Loc prefix of a faction's name.
+FACTION_NAME_PREFIX = "factions_screen_name_"
+
+# Loc prefixes the panels read: names, everything the ability and attribute tooltips show, and faction names.
+LOC_PREFIXES = (LOC_NAME_PREFIX, ABILITY_NAME_PREFIX, ATTRIBUTE_PREFIX, *TOOLTIP_LOC_PREFIXES, *CATALOG_LOC_PREFIXES, FACTION_NAME_PREFIX)
+
+# The faction whose uniform colours the workbench shows first: Reikland, the Advisor's home.
+DEFAULT_FACTION = "wh_main_emp_empire"
+
+# Columns of `factions_tables` holding a faction's three uniform colours (hex), in the order of the mask's red, green and blue channels.
+UNIFORM_COLUMNS = ("uniform_colour_primary", "uniform_colour_secondary", "uniform_colour_tertiary")
 
 # Vanilla packs holding the card art, ability icons and stat icons.
 UI_PACKS = re.compile(r"^ui2?\.pack$")
@@ -90,6 +100,26 @@ def load_loc() -> Dict[str, str]:
         if folder:
             read_loc_names(folder, loc, LOC_PREFIXES)
     return loc
+
+
+def faction_colours(loc: Dict[str, str]) -> Dict:
+    """The uniform colours of every faction the Advisor joins, for the workbench's faction picker. Factions sharing a name (a campaign's copies)
+    are listed once, under the shortest key.
+
+    Args:
+        loc (Dict[str, str]): Loc key to text, with the faction names.
+
+    Returns:
+        Dict: `default` (a faction key) and `factions`: [key, name, [three hex colours]] each, by name.
+    """
+    joins = set(json.load(open(DATA, encoding="utf-8"))["factions"])
+    rows = load_tsv_data(f"{extract_tsv_data('factions_tables')}/db/factions_tables/data__.tsv")[0]
+    named: Dict[str, list] = {}
+    for row in sorted((r for r in rows if r["key"] in joins), key=lambda r: (len(r["key"]), r["key"])):
+        name = loc.get(FACTION_NAME_PREFIX + row["key"])
+        if name and all(len(row[c]) == 6 for c in UNIFORM_COLUMNS):
+            named.setdefault(name, [row["key"], name, [row[c] for c in UNIFORM_COLUMNS]])
+    return {"default": DEFAULT_FACTION, "factions": sorted(named.values(), key=lambda f: f[1])}
 
 
 def comparisons(registry: Dict) -> Dict[str, str]:
@@ -356,7 +386,7 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
         Tuple[Dict[str, Dict], Dict[str, str], Dict]: Panels by unit key, Advisor unit key -> vanilla unit key, and the Edit and Skills tabs' data
         (`forms`: unit key -> `PanelBuilder.form_values`, `attributes` and `abilities`: the attribute and ability catalogs, `skills`: the skill
         catalog, the fixed weapon and mount skills and the names of their rows, `new_form`: `PanelBuilder.new_form_data`, `prop_models`: the
-        weapon models a slot may swap to, and `look`: the Look tab's outfits, head and piece models).
+        weapon models a slot may swap to, `look`: the Look tab's outfits, head and piece models, and `colours`: `faction_colours`).
     """
     pairs_to_vanilla = comparisons(registry)
     builder = PanelBuilder(load_tables(), load_loc())
@@ -378,5 +408,6 @@ def build_panels(registry: Dict, out: str, sets: Dict[str, AnimSet]) -> Tuple[Di
                       "models": sorted(p for p in models if p.endswith(".wsmodel") and LOOK_FOLDER.search(p) and not PROP_FOLDER.search(p) and not LOOK_SKIPPED.search(p))}
     editor["skills"] = {"catalog": catalog, "fixed": fixed, "rows": {"0": "Weapons", "1": "Mounts"}}
     editor["new_form"] = builder.new_form_data(registry, sets)
+    editor["colours"] = faction_colours(builder.loc)
     print(f"panels: {len(panels)} units, {builder.copy_art(out)} art files, {len(editor['attributes'])} attributes, {len(editor['abilities'])} abilities")
     return panels, pairs_to_vanilla, editor
