@@ -1,6 +1,6 @@
 // The Look tab's weapon cards: one per weapon the open form holds (not what its mount adds, such as the disc), where the weapon's model can be
-// swapped, moved, turned and sized, and the Hands card. A swap is for the open form only. A move, turn and size belong to the weapon model, on
-// every form holding it. Everything shows live on the stage: a swapped or hovered model through `studio.live` until a rebuild bakes it in, and
+// swapped, moved, turned and sized, and the Hands card. A swap is for the weapon, on every mount of it. A move, turn and size belong to the weapon
+// model, on every form holding it. Everything shows live on the stage: a swapped or hovered model through `studio.live` until a rebuild bakes it in, and
 // the position, turn, size and hand values by their difference from the ones the exported models already carry (`manifest.tuning`). The Jobs bar
 // saves the edits.
 import * as THREE from "three";
@@ -89,21 +89,31 @@ export class WeaponCards {
     }
   }
 
-  // The registry path of a slot's swap on the form.
-  formPath(f, slot) { return `weapons.${f.weapon}.forms.${f.mount}.props.${slot}`; }
+  // The registry path of a slot's model, shared by every mount of the weapon, and of a swap only one mount uses (`forms.<mount>.props`).
+  sharedPath(f, slot) { return `weapons.${f.weapon}.props.${slot}`; }
+  formPath(f, slot, mount = f.mount) { return `weapons.${f.weapon}.forms.${mount}.props.${slot}`; }
 
-  // The model a form's slot will use: a swap made or saved on this visit, else one saved earlier and not rebuilt yet (the registry differs from
-  // the gallery), else the one it was built with.
+  // The model a form's slot will use: its mount's own swap, else the weapon's, each as edited or saved on this visit (null when removed), else as
+  // saved earlier and not rebuilt yet (the registry differs from the gallery). Else the one it was built with.
   slotModel(f, slot) {
-    const p = this.look.pending();
-    for (const path of [this.formPath(f, slot), `weapons.${f.weapon}.props.${slot}`]) if (path in p && p[path]) return { prop: p[path], pending: true };
-    const weapon = ((this.tuning.registry || {}).weapons || {})[f.weapon] || {};
-    const saved = (((weapon.forms || {})[f.mount] || {}).props || {})[slot] || (weapon.props || {})[slot];
-    if (saved && saved[1].toLowerCase() !== f.props[slot][1].toLowerCase()) return { prop: saved, pending: true };
+    const p = this.look.pending(), weapon = ((this.tuning.registry || {}).weapons || {})[f.weapon] || {};
+    const at = (path, saved) => path in p ? p[path] : saved;
+    const prop = at(this.formPath(f, slot), (((weapon.forms || {})[f.mount] || {}).props || {})[slot]) || at(this.sharedPath(f, slot), (weapon.props || {})[slot]);
+    const edited = [this.formPath(f, slot), this.sharedPath(f, slot)].some(path => path in this.studio.edits.registry);
+    if (prop && (edited || prop[1].toLowerCase() !== f.props[slot][1].toLowerCase())) return { prop, pending: true };
     return { prop: f.props[slot], pending: false };
   }
 
-  // The model picker of one slot: the vanilla equivalent's models, then every vanilla weapon model. The pick is this form's own.
+  // A pick for every mount of the weapon: the weapon's model, and each mount's own swap of the slot removed so it does not hide the pick.
+  pick(f, slot, prop) {
+    const p = this.look.pending(), forms = ((((this.tuning.registry || {}).weapons || {})[f.weapon] || {}).forms) || {};
+    const mounts = new Set(Object.keys(forms).filter(mount => ((forms[mount].props || {})[slot])));
+    const own = new RegExp(`^weapons\\.${f.weapon}\\.forms\\.([^.]+)\\.props\\.${slot}$`);
+    for (const path of Object.keys(p)) { const match = own.exec(path); if (match && p[path]) mounts.add(match[1]); }
+    this.look.set({ [this.sharedPath(f, slot)]: prop, ...Object.fromEntries([...mounts].map(mount => [this.formPath(f, slot, mount), null])) });
+  }
+
+  // The model picker of one slot: the vanilla equivalent's models, then every vanilla weapon model. The pick is for every mount of the weapon.
   picker(entry, f, slot, prop) {
     const featured = this.twinProps(entry).then(all => {
       const vanilla = entry.versus && this.studio.manifest.panels && this.studio.manifest.panels[entry.versus];
@@ -112,7 +122,7 @@ export class WeaponCards {
     });
     return new ModelList(this.look.thumbs, {
       models: this.studio.manifest.editor.prop_models, placeholder: "Search weapon models (staff, tzeentch, whip...)", featured,
-      onPick: model => { this.look.close(); this.look.set({ [this.formPath(f, slot)]: [prop[0], model, prop[2] || ""] }); this.applyLive(); },
+      onPick: model => { this.look.close(); this.pick(f, slot, [prop[0], model, prop[2] || ""]); this.applyLive(); },
       onHover: model => this.look.tryOn(model),
     }).element();
   }
@@ -145,7 +155,7 @@ export class WeaponCards {
   // Whether a slot's swap is saved yet, in words.
   origin(f, slot, pending) {
     if (!pending) return "";
-    return this.formPath(f, slot) in this.studio.edits.registry ? "Not saved yet." : "Saved: Rebuild to put it in the mod.";
+    return [this.formPath(f, slot), this.sharedPath(f, slot)].some(path => path in this.studio.edits.registry) ? "Not saved yet." : "Saved: Rebuild to put it in the mod.";
   }
 
   // Adds a card per weapon slot of the form to the tab.
