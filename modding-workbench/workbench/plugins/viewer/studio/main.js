@@ -1,7 +1,6 @@
 // The Workbench studio: forms and slots on the left, the stage in the middle (Battle or Portrait), the inspector tabs on the right (a bottom sheet
 // on a phone), and the playback and job bar at the bottom. A new inspector tab is a module with `render(container)` added to `TABS`.
 import { animLoader } from "../viewer_common.js";
-import { AdjustTab } from "./adjust.js";
 import { BattleStage } from "./stage.js";
 import { Jobs } from "./jobs.js";
 import { LiveModels } from "./live_models.js";
@@ -40,7 +39,7 @@ const studio = {
     tabs.stats.saved();
     studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
     if (manifest.portrait) portrait.resetToSaved();
-    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
+    tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
   },
   // Opens the Skills tab (a skill was picked on the tree).
   openSkills() { if (tab !== "skills") selectTab("skills", true); else if (phone.matches && sheet === "peek") setSheet("half"); },
@@ -48,7 +47,7 @@ const studio = {
   undo() {
     studio.edits.props = {}; studio.edits.hand = null; studio.edits.registry = {};
     if (manifest.portrait) portrait.resetToSaved();
-    tabs.adjust.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
+    tabs.look.applyLive(); renderTab(); tabs.skills.renderTree(); renderForms(); studio.changed();
   },
 };
 studio.stage = new BattleStage($("battle"), studio.getAnim, DATA);
@@ -58,14 +57,14 @@ const portrait = manifest.portrait ? new PortraitStage($("portraitStage"), studi
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Inspector tabs
 
-// What the Adjust and Look tabs chose, shown on the stage before a rebuild.
+// What the Look tab chose, shown on the stage before a rebuild.
 studio.live = new LiveModels(studio);
-const tabs = { stats: new StatsTab(studio), adjust: new AdjustTab(studio), look: new LookTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
+const tabs = { stats: new StatsTab(studio), look: new LookTab(studio), portrait: portrait && { render: c => portrait.renderTab(c) },
                skills: new SkillsTab($("skillsStage"), studio) };
 // The New form dialog, which also lists the forms not in the gallery yet.
 const newForm = new NewForm(studio, () => renderForms());
-// Tab order and labels. Tabs without a module yet are shown greyed out.
-const TABS = [["stats", "Stats"], ["adjust", "Adjust"], ["look", "Look"], ["portrait", "Portrait"], ["skills", "Skills"]];
+// Tab order and labels. Tabs without a module yet are shown greyed out. The Portrait tab has no button: the stage's Portrait button opens it.
+const TABS = [["stats", "Stats"], ["look", "Look"], ["skills", "Skills"]];
 let tab = "stats";
 
 function renderTabs() {
@@ -73,7 +72,7 @@ function renderTabs() {
   $("tabs").querySelectorAll("button").forEach(b => b.onclick = () => selectTab(b.dataset.tab, true));
 }
 function renderTab() {
-  // Marks which tab drew the inspector, so a tab redrawing itself later (the Adjust tab once a model loads) leaves another tab alone.
+  // Marks which tab drew the inspector, so a tab redrawing itself later (the Look tab once a model loads) leaves another tab alone.
   $("inspBody").dataset.tab = tab;
   if (tabs[tab]) tabs[tab].render($("inspBody"));
 }
@@ -210,7 +209,7 @@ async function openEntry(index, slotName) {
   if (!(await stage.open(entry, first))) return;
   $("status").hidden = true;
   times.battle = 0;
-  tabs.adjust.applyLive();
+  tabs.look.applyLive();
   renderToggles(); renderSlots(); renderInfo();
   if (tab !== "portrait") renderTab();
   writeHash();

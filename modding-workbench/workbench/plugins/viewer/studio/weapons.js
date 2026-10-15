@@ -1,15 +1,13 @@
-// The Adjust inspector tab: one card per weapon the open form holds (not what its mount adds, such as the disc), where the weapon's model can be
-// swapped and slid along its grip, then his hands. A swap is for the open form only. Everything shows live on the stage: a swapped model through
-// `studio.live` until a rebuild bakes it in, and the grip and hand values by their difference from the ones the exported models already carry
-// (`manifest.tuning`). The Jobs bar saves the edits.
+// The Look tab's weapon cards: one per weapon the open form holds (not what its mount adds, such as the disc), where the weapon's model can be
+// swapped and slid along its grip, and the Hands card. A swap is for the open form only. Everything shows live on the stage: a swapped or hovered
+// model through `studio.live` until a rebuild bakes it in, and the grip and hand values by their difference from the ones the exported models
+// already carry (`manifest.tuning`). The Jobs bar saves the edits.
 import * as THREE from "three";
 import { stem } from "./live_models.js";
+import { ModelList } from "./model_list.js";
 
 // Bones whose vertices the hand shift moves.
 const HAND_BONES = /^(hand|finger_\w+|thumb)_(left|right)(_\d)?$/;
-
-// Weapon models a model search lists at most.
-const MODEL_HITS = 20;
 
 // Words in a model's file name -> what the card calls the weapon, first match wins.
 const KINDS = [["shield", "Shield"], ["staff", "Staff"], ["disc", "Disc"], ["greatsword", "Greatsword"], ["sword_2h", "Greatsword"], ["2h", "Two-handed weapon"],
@@ -19,16 +17,16 @@ const KINDS = [["shield", "Shield"], ["staff", "Staff"], ["disc", "Disc"], ["gre
 // What the card calls the weapon in a slot.
 const kindOf = model => (KINDS.find(([word]) => stem(model).includes(word)) || [null, "Weapon"])[1];
 
-export class AdjustTab {
-  constructor(studio) {
-    // `picking` is the slot whose model picker is open, `fine` the slots showing the y and z sliders, `twin` the vanilla equivalent's models.
-    this.studio = studio; this.picking = null; this.filter = ""; this.fine = new Set(); this.twin = new Map();
-    // The stage shows each weapon slot's chosen model.
+export class WeaponCards {
+  // `look` is the Look tab, which holds the open picker and the hovered model. `fine` holds the slots showing the y and z sliders, `twin` the
+  // vanilla equivalent's models.
+  constructor(studio, look) {
+    this.studio = studio; this.look = look; this.fine = new Set(); this.twin = new Map();
+    // The stage shows each weapon slot's chosen model, or the one hovered in its picker.
     studio.live.sources.push(f => Object.fromEntries(Object.keys(f.props).map(slot => {
-      const { prop: [attach, model], pending } = this.slotModel(f, slot);
-      return [slot, { model, attach, built: !pending }];
+      const { prop: [attach, model], pending } = this.slotModel(f, slot), hovered = look.adding === `weapon:${slot}` && look.hovering;
+      return [slot, hovered ? { model: hovered, attach } : { model, attach, built: !pending }];
     })));
-    studio.live.listeners.push(() => this.refresh());
   }
 
   get tuning() { return this.studio.tuning; }
@@ -79,42 +77,28 @@ export class AdjustTab {
     }
   }
 
+  // The registry path of a slot's swap on the form.
+  formPath(f, slot) { return `weapons.${f.weapon}.forms.${f.mount}.props.${slot}`; }
+
   // The model a form's slot will use: a saved or unsaved swap, else the one it was built with.
   slotModel(f, slot) {
-    const p = { ...this.studio.savedRegistry, ...this.studio.edits.registry };
-    for (const path of [`weapons.${f.weapon}.forms.${f.mount}.props.${slot}`, `weapons.${f.weapon}.props.${slot}`]) if (path in p && p[path]) return { prop: p[path], pending: true };
+    const p = this.look.pending();
+    for (const path of [this.formPath(f, slot), `weapons.${f.weapon}.props.${slot}`]) if (path in p && p[path]) return { prop: p[path], pending: true };
     return { prop: f.props[slot], pending: false };
   }
 
-  // Redraws the tab when it is open, unless a search is open: redrawing would rebuild its rows under the pointer and take the typing focus.
-  refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "adjust" && !this.picking) setTimeout(() => this.render(body)); }
-
-  // The model picker of one slot: the vanilla equivalent's models, and a search of every vanilla weapon model. The pick is this form's own.
+  // The model picker of one slot: the vanilla equivalent's models, then every vanilla weapon model. The pick is this form's own.
   picker(entry, f, slot, prop) {
-    const { esc } = window.UnitPanel, box = document.createElement("div");
-    box.className = "picker";
-    box.innerHTML = `<div class="twin note">Loading the vanilla equivalent's models...</div>
-      <input class="attrSearch" placeholder="Search the game's weapon models (staff, tzeentch, whip...)" value="${esc(this.filter)}"><div class="hits"></div>`;
-    const choose = model => {
-      this.studio.edits.registry[`weapons.${f.weapon}.forms.${f.mount}.props.${slot}`] = [prop[0], model, prop[2] || ""]; this.picking = null; this.studio.changed(); this.applyLive(); this.refresh();
-    };
-    this.twinProps(entry).then(all => {
+    const featured = this.twinProps(entry).then(all => {
+      const vanilla = entry.versus && this.studio.manifest.panels && this.studio.manifest.panels[entry.versus];
       // The vanilla unit's mount props (its disc) are not weapons either.
-      const list = all.filter(([twinSlot]) => !(f.mount_props || []).includes(twinSlot));
-      const vanilla = entry.versus && this.studio.manifest.panels && this.studio.manifest.panels[entry.versus], twin = box.querySelector(".twin");
-      twin.innerHTML = list.length ? `<div>${esc(vanilla ? vanilla.name : "The vanilla equivalent")} holds:</div>` + list.map(([, , model]) =>
-        `<button class="mini" data-model="${esc(model)}">${esc(kindOf(model))}: ${esc(stem(model))}</button>`).join(" ") : "";
-      twin.querySelectorAll("[data-model]").forEach(b => b.onclick = () => choose(b.dataset.model));
+      return { title: `${vanilla ? vanilla.name : "The vanilla equivalent"} holds:`, models: all.filter(([twinSlot]) => !(f.mount_props || []).includes(twinSlot)).map(([, , model]) => model) };
     });
-    const search = box.querySelector("input"), hits = box.querySelector(".hits");
-    const list = () => {
-      this.filter = search.value; const words = search.value.toLowerCase().split(/\s+/).filter(Boolean);
-      const found = words.length ? this.studio.manifest.editor.prop_models.filter(p => words.every(w => p.includes(w))).slice(0, MODEL_HITS) : [];
-      hits.innerHTML = found.map(p => `<button data-model="${esc(p)}"><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(2, 4).join("/"))}</span></button>`).join("");
-      hits.querySelectorAll("[data-model]").forEach(b => b.onclick = () => choose(b.dataset.model));
-    };
-    search.oninput = list; list();
-    return box;
+    return new ModelList(this.look.thumbs, {
+      models: this.studio.manifest.editor.prop_models, placeholder: "Search weapon models (staff, tzeentch, whip...)", featured,
+      onPick: model => { this.look.close(); this.look.set({ [this.formPath(f, slot)]: [prop[0], model, prop[2] || ""] }); this.applyLive(); },
+      onHover: model => this.look.tryOn(model),
+    }).element();
   }
 
   // One slider row in centimetres for a value held in metres.
@@ -142,37 +126,33 @@ export class AdjustTab {
   // Whether a slot's swap is saved yet, in words.
   origin(f, slot, pending) {
     if (!pending) return "";
-    return `weapons.${f.weapon}.forms.${f.mount}.props.${slot}` in this.studio.edits.registry ? "Not saved yet." : "Saved: Rebuild to put it in the mod.";
+    return this.formPath(f, slot) in this.studio.edits.registry ? "Not saved yet." : "Saved: Rebuild to put it in the mod.";
   }
 
-  // Builds the tab: a card per weapon slot, then his hands.
-  render(container) {
-    container.innerHTML = "";
-    const entry = this.studio.stage.entry, live = this.studio.live, model = this.enabled() && live.model(), f = live.form();
-    if (!model || !f) { container.innerHTML = '<div class="note">Nothing to adjust on this entry. Pick one of the project\'s forms.</div>'; return; }
+  // Adds a card per weapon slot of the form to the tab.
+  render(container, entry, f) {
     const { esc } = window.UnitPanel, edits = this.studio.edits;
-    const intro = document.createElement("div"); intro.className = "note adj-intro";
-    intro.textContent = "Swap a weapon's model or slide it in his hand. Changes show on the stage straight away. Save keeps them, and Rebuild puts them in the mod.";
-    container.append(intro);
     for (const slot of Object.keys(f.props).filter(s => !(f.mount_props || []).includes(s))) {
-      const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div");
-      const state = live.loading.has(slot) ? '<div class="note">Loading the new model...</div>'
-        : live.failed.has(slot) ? `<div class="note warn">No preview: ${esc(live.failed.get(slot))}. It still builds on Rebuild.</div>` : "";
+      const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div"), open = this.look.adding === `weapon:${slot}`;
       card.className = "adj-card";
-      card.innerHTML = `<div class="adj-head"><b>${esc(kindOf(prop[1]))}</b><button class="mini" data-pick>${this.picking === slot ? "Close" : "Change model"}</button></div>
-        <div class="adj-model">${esc(stem(prop[1]))}</div><div class="note">${esc(this.origin(f, slot, pending))}</div>${state}`;
+      card.innerHTML = `<div class="adj-head"><b>${esc(kindOf(prop[1]))}</b><button class="mini" data-add="weapon:${esc(slot)}">${open ? "Close" : "Change model"}</button></div>
+        <div class="look-piece"><img class="thumb" data-thumb="${esc(prop[1])}" alt=""><span class="adj-model">${esc(stem(prop[1]))}</span></div>
+        <div class="note">${esc(this.origin(f, slot, pending))}</div>${this.look.state([slot])}`;
       container.append(card);
-      card.querySelector("[data-pick]").onclick = () => { this.picking = this.picking === slot ? null : slot; this.filter = ""; this.render(container); };
-      if (this.picking === slot) card.append(this.picker(entry, f, slot, prop));
+      if (open) card.append(this.picker(entry, f, slot, prop));
       if (!key) { if (pending) card.insertAdjacentHTML("beforeend", '<div class="note">Save to slide it along the grip.</div>'); continue; }
       const move = axis => m => { edits.props[key] = this.propValue(key).slice(); edits.props[key][axis] = m; this.applyLive(); this.studio.changed(); };
       this.sliderRow(card, "Slide along the grip", this.propValue(key)[0], 15, move(0));
       const more = document.createElement("button"); more.className = "mini adj-more"; more.textContent = this.fine.has(slot) ? "Hide fine position" : "Fine position";
-      more.onclick = () => { this.fine.has(slot) ? this.fine.delete(slot) : this.fine.add(slot); this.render(container); };
+      more.onclick = () => { this.fine.has(slot) ? this.fine.delete(slot) : this.fine.add(slot); this.look.redraw(); };
       card.append(more);
       if (this.fine.has(slot)) [["Up and down (y)", 1], ["Sideways (z)", 2]].forEach(([label, axis]) => this.sliderRow(card, label, this.propValue(key)[axis], 15, move(axis)));
     }
-    const hands = document.createElement("div"); hands.className = "adj-card";
+  }
+
+  // Adds the Hands card to the tab.
+  renderHands(container) {
+    const edits = this.studio.edits, hands = document.createElement("div"); hands.className = "adj-card";
     hands.innerHTML = `<div class="adj-head"><b>Hands</b></div><div class="note">Moves both hands on every form, in centimetres. The left hand mirrors the right.</div>`;
     container.append(hands);
     [["Toward the fingers", 0], ["Up and down", 1], ["In and out", 2]].forEach(([label, axis]) => this.sliderRow(hands, label, this.handValue()[axis], 5, m => {

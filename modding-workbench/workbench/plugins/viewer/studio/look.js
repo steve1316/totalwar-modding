@@ -1,18 +1,11 @@
-// The Look inspector tab: his outfit, his hood and extra pieces such as a hat, set per weapon and shared by every mount of that weapon
-// (`weapons.<weapon>.body`, `.hood` and `.pieces`). Outfits come from the registry's `model.bodies`, and any other humanoid model of the game can be
-// added as an outfit or a piece, each search hit and piece with a thumbnail (kept on the server once drawn), and a hovered search hit tried on. Every choice shows live on the
-// stage through `studio.live`. The Jobs bar saves the edits.
+// The Look inspector tab: the open form's weapons (`weapons.js`), then his outfit, his hood and extra pieces such as a hat, set per weapon and shared
+// by every mount of that weapon (`weapons.<weapon>.body`, `.hood` and `.pieces`), then his hands. Outfits come from the registry's `model.bodies`,
+// and any other humanoid model of the game can be added as an outfit or a piece. Every picker is a `ModelList` with thumbnails, and the model the
+// pointer rests on is tried on. Every choice shows live on the stage through `studio.live`. The Jobs bar saves the edits.
 import { stem } from "./live_models.js";
+import { ModelList } from "./model_list.js";
 import { Thumbnails } from "./thumbs.js";
-
-// Rows the model list adds at a time: the first ones when it opens, then more as it scrolls near its end.
-const LIST_CHUNK = 60;
-
-// Milliseconds a search waits for typing to pause, so thumbnails are only drawn for what is searched in the end.
-const TYPING_PAUSE = 300;
-
-// Milliseconds the pointer rests on a search hit before he tries it on, so passing over the list loads nothing.
-const HOVER_PAUSE = 1000;
+import { WeaponCards } from "./weapons.js";
 
 // The slot a hovered piece is tried on in.
 const HOVER_SLOT = "piece_hover";
@@ -25,18 +18,19 @@ const words = key => key.replace(/_\d+$/, "").split("_").filter(Boolean).map(w =
 
 export class LookTab {
   constructor(studio) {
-    // `adding` is "outfit" or "piece" while its model search is open, `filter` its search text, `hovering` the search hit he is trying on.
-    this.studio = studio; this.adding = null; this.filter = ""; this.hovering = null; this.searches = 0;
+    // `adding` is the open picker ("outfit", "piece" or "weapon:<slot>"), `hovering` the model he is trying on from it.
+    this.studio = studio; this.adding = null; this.hovering = null; this.queued = false;
     this.look = studio.manifest.editor && studio.manifest.editor.look;
-    // The models a search lists, by name.
-    this.models = this.look ? [...this.look.models].sort((a, b) => stem(a).localeCompare(stem(b))) : [];
     this.thumbs = new Thumbnails(studio);
+    this.weapons = new WeaponCards(studio, this);
     // The stage shows the chosen outfit, head and pieces.
     studio.live.sources.push(f => this.wanted(f));
     studio.live.listeners.push(() => this.refresh());
   }
 
   enabled() { return !!(this.look && this.studio.tuning); }
+  // Shows the chosen weapons and the grip and hand values on the stage.
+  applyLive() { this.weapons.applyLive(); }
   pending() { return { ...this.studio.savedRegistry, ...this.studio.edits.registry }; }
   // A look field of the form's weapon with the pending edits.
   value(f, field) { const p = this.pending(), path = `weapons.${f.weapon}.${field}`; return path in p ? p[path] : f.look[field]; }
@@ -62,7 +56,7 @@ export class LookTab {
     for (const [slot, piece] of Object.entries(this.value(f, "pieces") || {})) {
       out[slot] = { model: piece[0], attach: "", built: !!f.look.pieces[slot] && f.look.pieces[slot][0] === piece[0] };
     }
-    // A hovered search hit is tried on: a piece next to the rest, an outfit in place of his.
+    // A hovered model is tried on: a piece next to the rest, an outfit in place of his. A weapon is tried on by `WeaponCards`.
     out[HOVER_SLOT] = this.hovering && this.adding === "piece" ? { model: this.hovering, attach: "" } : null;
     if (this.hovering && this.adding === "outfit") {
       for (const slot of Object.keys(body)) out[slot] = null;
@@ -74,8 +68,16 @@ export class LookTab {
   // Records registry edits and shows them.
   set(changes) { Object.assign(this.studio.edits.registry, changes); this.studio.changed(); this.studio.live.sync(); this.refresh(); }
 
-  // Redraws the tab when it is open, unless a search is open: redrawing would rebuild its rows under the pointer and take the typing focus.
-  refresh() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "look" && !this.adding) setTimeout(() => this.render(body)); }
+  // Redraws the tab when it is open, unless a picker is open: redrawing would rebuild its rows under the pointer and take the typing focus.
+  // Several changes in a row redraw it once.
+  refresh() { if (!this.adding && !this.queued) { this.queued = true; setTimeout(() => { this.queued = false; this.redraw(); }); } }
+  redraw() { const body = document.getElementById("inspBody"); if (body && body.dataset.tab === "look") this.render(body); }
+
+  // Tries a model on from the open picker, or takes it off again (null).
+  tryOn(model) { if (this.hovering !== model) { this.hovering = model; this.studio.live.sync(); } }
+  // Opens a picker, or closes it when it is the open one.
+  toggle(adding) { const next = this.adding === adding ? null : adding; this.close(); this.adding = next; this.redraw(); }
+  close() { this.adding = null; this.tryOn(null); }
 
   // A slot's loading or failed preview, in words.
   state(slots) {
@@ -85,63 +87,17 @@ export class LookTab {
     return failed ? `<div class="note warn">No preview: ${esc(live.failed.get(failed))}. It still builds on Rebuild.</div>` : "";
   }
 
-  // The model list of "+ Another outfit" or "+ Add a piece": every humanoid model by name, narrowed by the search words.
+  // The model list of "+ Another outfit" or "+ Add a piece": every humanoid model.
   search(f) {
-    const { esc } = window.UnitPanel, box = document.createElement("div");
-    box.className = "picker";
-    box.innerHTML = `<input class="attrSearch" placeholder="Search the game's humanoid models (hat, helmet, cape, wizard...)" value="${esc(this.filter)}">
-      <div class="note look-count"></div><div class="hits look-hits"></div>`;
-    const input = box.querySelector("input"), hits = box.querySelector(".hits"), count = box.querySelector(".look-count");
-    // A spacer below the built rows stands in for the rest, so the list is its full height from the start and the scrollbar keeps still.
-    let found = [], shown = 0, spacer = null;
-    // Adds the next rows of the found models, then sizes the spacer by the rows' measured height.
-    const more = () => {
-      const rows = found.slice(shown, shown + LIST_CHUNK);
-      shown += rows.length;
-      spacer.insertAdjacentHTML("beforebegin", rows.map(p => `<button class="look-hit" data-model="${esc(p)}"><img class="thumb" data-thumb="${esc(p)}" alt="">
-        <span><span>${esc(stem(p))}</span><span class="note">${esc(p.split("/").slice(3, -1).join("/"))}</span></span></button>`).join(""));
-      const step = (spacer.offsetTop - hits.firstElementChild.offsetTop) / shown;
-      spacer.style.height = `${Math.max(0, (found.length - shown) * step)}px`;
-      this.thumbs.fill(hits);
-    };
-    // Builds rows until they reach past the bottom of the view, however far it was scrolled or dragged.
-    const fillView = () => { while (shown < found.length && spacer.offsetTop - hits.scrollTop < hits.clientHeight + 400) more(); };
-    const list = () => {
-      // New rows replace the hovered one without a mouseleave.
-      this.hover(null);
-      this.filter = input.value; const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
-      found = this.models.filter(p => terms.every(w => p.includes(w))); shown = 0;
-      count.textContent = `${found.length} of ${this.models.length} models. Rest the pointer on one for a second to try it on.`;
-      hits.innerHTML = found.length ? '<div class="look-spacer"></div>' : '<div class="note">No model matches.</div>';
-      spacer = hits.querySelector(".look-spacer");
-      hits.scrollTop = 0;
-      // The first rows wait until the list is on the page, where the rows can be measured. A newer search drops the wait.
-      const search = ++this.searches;
-      setTimeout(() => { if (search === this.searches && spacer) { more(); fillView(); } });
-    };
-    hits.onscroll = () => { if (spacer) fillView(); };
-    // One listener for every row, the ones added later included.
-    const row = e => e.target.closest && e.target.closest("[data-model]");
-    hits.onclick = e => { const b = row(e); if (b) this.pick(f, b.dataset.model); };
-    hits.onmouseover = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(b.dataset.model); };
-    hits.onmouseout = e => { const b = row(e); if (b && !b.contains(e.relatedTarget)) this.hover(null); };
-    input.oninput = () => { clearTimeout(this.typing); this.typing = setTimeout(list, TYPING_PAUSE); };
-    // Every model's picture is drawn and kept in the background, so the list shows them at once from then on.
-    this.thumbs.warm(this.models);
-    list(); setTimeout(() => input.focus());
-    return box;
-  }
-
-  // Tries a search hit on, or takes it off again (null), once the pointer rests.
-  hover(model) {
-    clearTimeout(this.resting);
-    this.resting = setTimeout(() => { if (this.hovering !== model) { this.hovering = model; this.studio.live.sync(); } }, model ? HOVER_PAUSE : 0);
+    return new ModelList(this.thumbs, { models: this.look.models, placeholder: "Search models (hat, helmet, cape, wizard...)",
+      onPick: model => this.pick(f, model), onHover: model => this.tryOn(model) }).element();
   }
 
   // Adds the picked model as an outfit (and wears it) or as a piece.
   pick(f, model) {
-    const base = `weapons.${f.weapon}.`;
-    if (this.adding === "outfit") {
+    const base = `weapons.${f.weapon}.`, adding = this.adding;
+    this.close();
+    if (adding === "outfit") {
       const key = stem(model).replace(/[^a-z0-9_]/g, "_");
       this.set({ [`model.bodies.${key}`]: { body: [model, ...BODY_META] }, [base + "body"]: key });
     } else {
@@ -151,20 +107,31 @@ export class LookTab {
       pieces[`piece_${n}`] = [model];
       this.set({ [base + "pieces"]: pieces });
     }
-    this.adding = null; this.filter = ""; this.hover(null);
   }
 
+  // Builds the tab: the form's weapons, his outfit, hood and pieces, then his hands. Each section says which forms it changes.
   render(container) {
     container.innerHTML = "";
     const live = this.studio.live, f = live.form(), entry = this.studio.stage.entry;
-    if (!this.enabled() || !f || !live.model()) { container.innerHTML = '<div class="note">Nothing to dress on this entry. Pick one of the project\'s forms.</div>'; return; }
-    const { esc } = window.UnitPanel, weaponName = entry.name.split(" - ")[0], base = `weapons.${f.weapon}.`;
+    if (!this.weapons.enabled() || !f || !live.model()) { container.innerHTML = '<div class="note">Nothing to change on this entry. Pick one of the project\'s forms.</div>'; return; }
+    container.insertAdjacentHTML("beforeend", `<div class="note adj-intro">Changes show on the stage straight away. Save keeps them, and Rebuild puts them in the mod.</div>
+      <div class="look-section"><b>Weapons</b><span class="note">This form only.</span></div>`);
+    this.weapons.render(container, entry, f);
+    if (this.enabled()) this.renderDress(container, f, entry.name.split(" - ")[0]);
+    container.insertAdjacentHTML("beforeend", '<div class="look-section"><b>Hands</b><span class="note">Every form.</span></div>');
+    this.weapons.renderHands(container);
+    container.querySelectorAll("[data-add]").forEach(b => b.onclick = () => this.toggle(b.dataset.add));
+    this.thumbs.fill(container);
+  }
+
+  // Adds the outfit, hood and extra pieces cards, shared by every form of the weapon.
+  renderDress(container, f, weaponName) {
+    const { esc } = window.UnitPanel, base = `weapons.${f.weapon}.`;
     const bodies = this.bodies(), current = this.value(f, "body"), hood = this.value(f, "hood") !== false, pieces = this.value(f, "pieces") || {};
-    container.insertAdjacentHTML("beforeend", `<div class="note adj-intro">His look for every ${esc(weaponName)} form, on foot and on each mount. Changes show on the stage
-      straight away. Save keeps them, and Rebuild puts them in the mod.</div>`);
+    container.insertAdjacentHTML("beforeend", `<div class="look-section"><b>Outfit</b><span class="note">Every ${esc(weaponName)} form, on foot and on each mount.</span></div>`);
 
     const outfit = document.createElement("div"); outfit.className = "adj-card";
-    outfit.innerHTML = `<div class="adj-head"><b>Outfit</b><button class="mini" data-add="outfit">${this.adding === "outfit" ? "Close" : "+ Another outfit"}</button></div>
+    outfit.innerHTML = `<div class="adj-head"><b>Body</b><button class="mini" data-add="outfit">${this.adding === "outfit" ? "Close" : "+ Another outfit"}</button></div>
       <div class="look-bodies">${Object.keys(bodies).map(k => `<button data-body="${esc(k)}" class="${k === current ? "on" : ""}">${esc(words(k))}</button>`).join("")}</div>
       ${this.state(Object.keys(bodies[current] || {}))}`;
     container.append(outfit);
@@ -191,9 +158,5 @@ export class LookTab {
       const rest = { ...pieces }; delete rest[b.dataset.drop];
       this.set({ [base + "pieces"]: Object.keys(rest).length ? rest : null });
     });
-    container.querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
-      this.adding = this.adding === b.dataset.add ? null : b.dataset.add; this.filter = ""; this.hover(null); this.render(container);
-    });
-    this.thumbs.fill(extra);
   }
 }
