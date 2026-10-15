@@ -25,7 +25,7 @@ export class NewForm {
   // The registry's weapons with the saved and unsaved edits.
   weapons() {
     const all = structuredClone(this.enabled() ? this.studio.tuning.registry.weapons : {});
-    for (const [path, value] of Object.entries({ ...this.studio.savedRegistry, ...this.studio.edits.registry })) {
+    for (const [path, value] of Object.entries(this.studio.pending())) {
       const [root, key, field, mount, ...rest] = path.split(".");
       if (root !== "weapons" || rest.length) continue;
       if (field === undefined) { if (value === null) delete all[key]; else all[key] = structuredClone(value); }

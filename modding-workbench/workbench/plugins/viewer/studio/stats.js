@@ -150,7 +150,7 @@ export class StatsTab {
 
   // Whether this form sets its own value for a unit stat.
   override(f, field) {
-    const p = this.editor.pending(), path = `weapons.${f.weapon}.forms.${f.mount}.${field}`;
+    const p = this.studio.pending(), path = `weapons.${f.weapon}.forms.${f.mount}.${field}`;
     return path in p ? p[path] !== null : f.overrides.includes(field);
   }
 

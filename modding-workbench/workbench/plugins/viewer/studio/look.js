@@ -21,6 +21,9 @@ const PIECE_BONES = [["spine_2", "Back"], ["spine_0", "Waist"], ["root", "Hips"]
 const held = piece => !/\.(wsmodel|rigid_model_v2)$/i.test(piece[0]);
 const pieceModel = piece => held(piece) ? piece[1] : piece[0];
 
+// A map, or null when it is empty (an empty registry value is removed).
+const orNull = map => Object.keys(map).length ? map : null;
+
 // The metadata a new outfit's body slot carries, as on the vanilla outfits.
 const BODY_META = ["audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"];
 
@@ -35,6 +38,8 @@ export class LookTab {
     this.thumbs = new Thumbnails(studio);
     // The props a piece may be, besides the humanoid models.
     this.props = new Set((studio.manifest.editor && studio.manifest.editor.prop_models) || []);
+    // What "+ Add a piece" lists, built once so its sorted order and warmed thumbnails are kept.
+    this.pieceModels = this.look ? this.look.models.concat([...this.props]) : [];
     // The game's full bodies, the models "+ Another outfit" lists. Null until the server has answered.
     this.fullBodies = null;
     if (this.look) fetch(studio.api + "bodies").then(r => r.json()).then(list => { this.fullBodies = list; if (this.adding === "outfit") this.redraw(); })
@@ -48,22 +53,23 @@ export class LookTab {
   enabled() { return !!(this.look && this.studio.tuning); }
   // Shows the chosen weapons and the grip and hand values on the stage.
   applyLive() { this.weapons.applyLive(); }
-  pending() { return { ...this.studio.savedRegistry, ...this.studio.edits.registry }; }
+  // The form's weapon as the registry has it saved.
+  savedWeapon(f) { return ((this.studio.tuning.registry || {}).weapons || {})[f.weapon] || {}; }
   // A look field of the form's weapon: as edited or saved on this visit, else as saved earlier, else as the gallery built it.
   value(f, field) {
-    const p = this.pending(), path = `weapons.${f.weapon}.${field}`, saved = ((this.studio.tuning.registry || {}).weapons || {})[f.weapon];
-    return path in p ? p[path] : saved && field in saved ? saved[field] : f.look[field];
+    const p = this.studio.pending(), path = `weapons.${f.weapon}.${field}`, saved = this.savedWeapon(f);
+    return path in p ? p[path] : field in saved ? saved[field] : f.look[field];
   }
-  // A prop piece's wanted position, turn and size, and the ones the gallery's model of it carries. Null for a slot that is no prop piece.
-  heldShape(f, slot) {
-    const piece = (this.value(f, "pieces") || {})[slot];
-    if (!piece || !held(piece)) return null;
-    return { want: (this.value(f, "piece_shapes") || {})[slot] || NO_SHAPE, baked: (f.look.piece_shapes || {})[slot] || NO_SHAPE };
+  // Each prop piece's wanted position, turn and size, and the ones the gallery's model of it carries: slot -> {want, baked}.
+  heldShapes(f) {
+    const shapes = this.value(f, "piece_shapes") || {}, built = f.look.piece_shapes || {};
+    return Object.fromEntries(Object.entries(this.value(f, "pieces") || {}).filter(([, piece]) => held(piece))
+      .map(([slot]) => [slot, { want: shapes[slot] || NO_SHAPE, baked: built[slot] || NO_SHAPE }]));
   }
   // Every outfit: the gallery's, then any added since (slot -> model).
   bodies() {
     const all = { ...this.look.bodies };
-    for (const [path, body] of Object.entries(this.pending())) {
+    for (const [path, body] of Object.entries(this.studio.pending())) {
       if (path.startsWith("model.bodies.") && body) all[path.slice("model.bodies.".length)] = Object.fromEntries(Object.entries(body).map(([slot, piece]) => [slot, piece[0]]));
     }
     return all;
@@ -71,7 +77,7 @@ export class LookTab {
   hoodless() { return !!this.look.head.hoodless; }
   // Whether an outfit is worn without its colours, with the pending edits.
   unpainted(key) {
-    const p = this.pending(), path = `model.unpainted.${key}`;
+    const p = this.studio.pending(), path = `model.unpainted.${key}`;
     return !!(path in p ? p[path] : ((this.studio.tuning.registry || {})["model.unpainted"] || {})[key]);
   }
 
@@ -122,7 +128,7 @@ export class LookTab {
   search(f) {
     const outfit = this.adding === "outfit";
     if (outfit && !this.fullBodies) return Object.assign(document.createElement("div"), { className: "note", textContent: "Finding the game's full bodies..." });
-    return new ModelList(this.thumbs, { models: outfit ? this.fullBodies : this.look.models.concat([...this.props]),
+    return new ModelList(this.thumbs, { models: outfit ? this.fullBodies : this.pieceModels,
       placeholder: outfit ? "Search full bodies (wizard, knight, priest...)" : "Search models and props (hat, cape, book, sword...)",
       onPick: model => this.pick(f, model), onHover: model => this.tryOn(model) }).element();
   }
@@ -201,7 +207,7 @@ export class LookTab {
     extra.querySelectorAll("[data-drop]").forEach(b => b.onclick = () => {
       const rest = { ...pieces }, shapes = { ...(this.value(f, "piece_shapes") || {}) };
       delete rest[b.dataset.drop]; delete shapes[b.dataset.drop];
-      this.set({ [base + "pieces"]: Object.keys(rest).length ? rest : null, [base + "piece_shapes"]: Object.keys(shapes).length ? shapes : null });
+      this.set({ [base + "pieces"]: orNull(rest), [base + "piece_shapes"]: orNull(shapes) });
     });
   }
 
@@ -215,16 +221,11 @@ export class LookTab {
     select.value = piece[0];
     select.onchange = () => this.set({ [base + "pieces"]: { ...pieces, [slot]: [select.value, ...piece.slice(1)] } });
     card.append(row);
-    const shaping = weapons.shaping.has(slot), more = document.createElement("button"), shape = this.heldShape(f, slot).want;
-    more.className = "mini adj-more"; more.textContent = shaping ? "Hide position, turn and size" : "Position, turn and size";
-    more.onclick = () => { shaping ? weapons.shaping.delete(slot) : weapons.shaping.add(slot); this.redraw(); };
-    if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(weapons.shapeSummary(shape))}</div>`);
-    card.append(more);
     // Edits go straight into the pending registry, without a redraw that would drop the slider being dragged.
-    if (shaping) weapons.shapeRows(card, "In the model's own directions, around the bone holding it. This piece only.", shape, next => {
-      const shapes = { ...(this.value(f, "piece_shapes") || {}) }, plain = JSON.stringify(next) === JSON.stringify(NO_SHAPE);
-      if (plain) delete shapes[slot]; else shapes[slot] = next;
-      this.studio.edits.registry[base + "piece_shapes"] = Object.keys(shapes).length ? shapes : null;
+    weapons.shapeCard(card, slot, this.heldShapes(f)[slot].want, "In the model's own directions, around the bone holding it. This piece only.", next => {
+      const shapes = { ...(this.value(f, "piece_shapes") || {}) };
+      if (JSON.stringify(next) === JSON.stringify(NO_SHAPE)) delete shapes[slot]; else shapes[slot] = next;
+      this.studio.edits.registry[base + "piece_shapes"] = orNull(shapes);
     });
   }
 }

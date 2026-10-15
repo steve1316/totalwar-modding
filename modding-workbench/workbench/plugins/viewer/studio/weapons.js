@@ -43,12 +43,11 @@ export class WeaponCards {
   // Whether the project can tune models at all.
   enabled() { return !!(this.tuning && this.baked && this.tuning.props); }
   propKey(model) { return this.tuning.props.find(k => stem(k) === stem(model)); }
-  propValue(key) { return this.studio.edits.props[key] || this.tuning.prop_offsets[key] || [0, 0, 0]; }
-  turnValue(key) { return this.studio.edits.turns[key] || (this.tuning.prop_turns || {})[key] || [0, 0, 0]; }
-  sizeValue(key) { return this.studio.edits.sizes[key] ?? (this.tuning.prop_sizes || {})[key] ?? 1; }
-  // A weapon model's wanted change, and the one the gallery's model of it already carries.
-  modelShape(key) { return { offset: this.propValue(key), turn: this.turnValue(key), size: this.sizeValue(key) }; }
-  bakedShape(key) { const b = this.baked; return { offset: (b.prop_offsets || {})[key] || [0, 0, 0], turn: (b.prop_turns || {})[key] || [0, 0, 0], size: (b.prop_sizes || {})[key] ?? 1 }; }
+  // A weapon model's change as `prop_offsets`, `prop_turns` and `prop_sizes` maps hold it, the game's where they have none.
+  shapeIn(maps, key) { return { offset: (maps.prop_offsets || {})[key] || NO_SHAPE.offset, turn: (maps.prop_turns || {})[key] || NO_SHAPE.turn, size: (maps.prop_sizes || {})[key] ?? NO_SHAPE.size }; }
+  // A weapon model's wanted change (the unsaved edits over the saved values), and the one the gallery's model of it already carries.
+  modelShape(key) { const e = this.studio.edits, saved = this.shapeIn(this.tuning, key); return { offset: e.props[key] || saved.offset, turn: e.turns[key] || saved.turn, size: e.sizes[key] ?? saved.size }; }
+  bakedShape(key) { return this.shapeIn(this.baked, key); }
   handValue() { return this.studio.edits.hand || this.tuning.hand_shift; }
 
   // Moves his hand vertices by the hand shift's change, weighted by how much each vertex follows the hand and finger bones.
@@ -65,6 +64,9 @@ export class WeaponCards {
       mesh.userData.hands = { right, left, original: Float32Array.from(pos.array), turnRight: turn("right"), turnLeft: turn("left") };
     }
     const h = mesh.userData.hands, v = this.handValue(), b = this.baked.hand_shift, d = [v[0] - b[0], v[1] - b[1], v[2] - b[2]];
+    // Weapon and piece sliders call this too: the vertices are only rewritten when the hand shift changed.
+    if (h.applied === d.join()) return;
+    h.applied = d.join();
     const r = new THREE.Vector3(d[0], d[1], d[2]).applyMatrix4(h.turnRight), l = new THREE.Vector3(d[0], d[1], -d[2]).applyMatrix4(h.turnLeft);
     for (let i = 0; i < pos.count; i++) {
       pos.array[i * 3] = h.original[i * 3] + h.right[i] * r.x + h.left[i] * l.x;
@@ -74,7 +76,8 @@ export class WeaponCards {
     pos.needsUpdate = true;
   }
 
-  // Shows the chosen models and the current grip and hand values on the open form's stage model.
+  // Shows the chosen models and the current grip and hand values on the open form's stage model. A slider that only moves, turns or sizes a
+  // shown model calls `placeLive` alone.
   applyLive() {
     if (!this.enabled()) return;
     this.studio.live.sync().then(() => this.placeLive());
@@ -83,11 +86,14 @@ export class WeaponCards {
   placeLive() {
     const model = this.studio.live.model(), f = this.studio.live.form();
     if (!model) return;
+    const held = f ? this.look.heldShapes(f) : {};
     for (const mesh of model.meshes) {
       const u = mesh.userData;
       if (mesh.isSkinnedMesh && /advisor_overhaul_body/.test(u.model)) this.liveHands(model, mesh);
       // A prop piece has its own change, a weapon its model's.
-      const key = u.attach && this.propKey(u.model), shapes = (f && this.look.heldShape(f, u.slot)) || (key && { want: this.modelShape(key), baked: this.bakedShape(key) });
+      let shapes = held[u.slot];
+      const key = !shapes && u.attach && this.propKey(u.model);
+      if (key) shapes = { want: this.modelShape(key), baked: this.bakedShape(key) };
       // The wanted change, less the one the shown model already carries (none for a model exported on the spot).
       if (shapes) shapeMatrix(shapes.want).multiply(u.preview ? new THREE.Matrix4() : shapeMatrix(shapes.baked).invert()).decompose(mesh.position, mesh.quaternion, mesh.scale);
     }
@@ -98,19 +104,19 @@ export class WeaponCards {
   formPath(f, slot, mount = f.mount) { return `weapons.${f.weapon}.forms.${mount}.props.${slot}`; }
 
   // The model a form's slot will use: its mount's own swap, else the weapon's, each as edited or saved on this visit (null when removed), else as
-  // saved earlier and not rebuilt yet (the registry differs from the gallery). Else the one it was built with.
+  // saved earlier and not rebuilt yet (the registry differs from the gallery). Else the one it was built with. `edited` when it is not saved yet.
   slotModel(f, slot) {
-    const p = this.look.pending(), weapon = ((this.tuning.registry || {}).weapons || {})[f.weapon] || {};
+    const p = this.studio.pending(), weapon = this.look.savedWeapon(f);
     const at = (path, saved) => path in p ? p[path] : saved;
     const prop = at(this.formPath(f, slot), (((weapon.forms || {})[f.mount] || {}).props || {})[slot]) || at(this.sharedPath(f, slot), (weapon.props || {})[slot]);
     const edited = [this.formPath(f, slot), this.sharedPath(f, slot)].some(path => path in this.studio.edits.registry);
-    if (prop && (edited || prop[1].toLowerCase() !== f.props[slot][1].toLowerCase())) return { prop, pending: true };
-    return { prop: f.props[slot], pending: false };
+    if (prop && (edited || prop[1].toLowerCase() !== f.props[slot][1].toLowerCase())) return { prop, pending: true, edited };
+    return { prop: f.props[slot], pending: false, edited: false };
   }
 
   // A pick for every mount of the weapon: the weapon's model, and each mount's own swap of the slot removed so it does not hide the pick.
   pick(f, slot, prop) {
-    const p = this.look.pending(), forms = ((((this.tuning.registry || {}).weapons || {})[f.weapon] || {}).forms) || {};
+    const p = this.studio.pending(), forms = this.look.savedWeapon(f).forms || {};
     const mounts = new Set(Object.keys(forms).filter(mount => ((forms[mount].props || {})[slot])));
     const own = new RegExp(`^weapons\\.${f.weapon}\\.forms\\.([^.]+)\\.props\\.${slot}$`);
     for (const path of Object.keys(p)) { const match = own.exec(path); if (match && p[path]) mounts.add(match[1]); }
@@ -157,32 +163,35 @@ export class WeaponCards {
   }
 
   // Whether a slot's swap is saved yet, in words.
-  origin(f, slot, pending) {
-    if (!pending) return "";
-    return [this.formPath(f, slot), this.sharedPath(f, slot)].some(path => path in this.studio.edits.registry) ? "Not saved yet." : "Saved: Rebuild to put it in the mod.";
-  }
+  origin(pending, edited) { return !pending ? "" : edited ? "Not saved yet." : "Saved: Rebuild to put it in the mod."; }
 
   // Adds a card per weapon slot of the form to the tab.
   render(container, entry, f) {
     const { esc } = window.UnitPanel;
     for (const slot of Object.keys(f.props).filter(s => !(f.mount_props || []).includes(s))) {
-      const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div"), open = this.look.adding === `weapon:${slot}`;
+      const { prop, pending, edited } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div"), open = this.look.adding === `weapon:${slot}`;
       card.className = "adj-card";
       card.innerHTML = `<div class="adj-head"><b>${esc(kindOf(prop[1]))}</b><button class="mini" data-add="weapon:${esc(slot)}">${open ? "Close" : "Change model"}</button></div>
         <div class="look-piece"><img class="thumb" data-thumb="${esc(prop[1])}" alt=""><span class="adj-model">${esc(stem(prop[1]))}</span></div>
-        <div class="note">${esc(this.origin(f, slot, pending))}</div>${this.look.state([slot])}`;
+        <div class="note">${esc(this.origin(pending, edited))}</div>${this.look.state([slot])}`;
       container.append(card);
       if (open) card.append(this.picker(entry, f, slot, prop));
       if (!key) { if (pending) card.insertAdjacentHTML("beforeend", '<div class="note">Save to move, turn or size it.</div>'); continue; }
-      const shaping = this.shaping.has(slot), more = document.createElement("button");
-      more.className = "mini adj-more"; more.textContent = shaping ? "Hide position, turn and size" : "Position, turn and size";
-      more.onclick = () => { shaping ? this.shaping.delete(slot) : this.shaping.add(slot); this.look.redraw(); };
-      if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(this.shapeSummary(this.modelShape(key)))}</div>`);
-      card.append(more);
       const edits = this.studio.edits;
-      if (shaping) this.shapeRows(card, "In the weapon's own directions, around his hand, on every form holding this model. x runs along the grip.", this.modelShape(key),
+      this.shapeCard(card, slot, this.modelShape(key), "In the weapon's own directions, around his hand, on every form holding this model. x runs along the grip.",
         shape => { edits.props[key] = shape.offset; edits.turns[key] = shape.turn; edits.sizes[key] = shape.size; });
     }
+  }
+
+  // A slot's position, turn and size: in words with a button to show the sliders, or the sliders with one to hide them. `note` says what they
+  // change and `change` takes each new shape.
+  shapeCard(card, slot, shape, note, change) {
+    const { esc } = window.UnitPanel, shaping = this.shaping.has(slot), more = document.createElement("button");
+    more.className = "mini adj-more"; more.textContent = shaping ? "Hide position, turn and size" : "Position, turn and size";
+    more.onclick = () => { shaping ? this.shaping.delete(slot) : this.shaping.add(slot); this.look.redraw(); };
+    if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(this.shapeSummary(shape))}</div>`);
+    card.append(more);
+    if (shaping) this.shapeRows(card, note, shape, change);
   }
 
   // A model's position, turn and size in words, or that it is as the game has it.
@@ -196,15 +205,15 @@ export class WeaponCards {
   // The position, size and turn sliders of a model, under a `note` saying what they change, and a reset. `change` takes each new shape
   // ({offset, turn, size}). A turn of 180 flips it, for a model that comes upside down.
   shapeRows(card, note, shape, change) {
-    let current = { offset: shape.offset.slice(), turn: shape.turn.slice(), size: shape.size };
-    const set = next => { current = next; change(next); this.applyLive(); this.studio.changed(); };
+    let current = structuredClone(shape);
+    const set = next => { current = next; change(next); this.placeLive(); this.studio.changed(); };
     const axis = (field, i, v) => { const values = current[field].slice(); values[i] = v; set({ ...current, [field]: values }); };
     card.insertAdjacentHTML("beforeend", `<div class="note">${note}</div>`);
     ["x", "y", "z"].forEach((name, i) => this.sliderRow(card, `Move along ${name} (cm)`, current.offset[i], 30, m => axis("offset", i, m)));
     this.numberRow(card, "Size (%)", current.size * 100, 25, 300, 1, percent => set({ ...current, size: percent / 100 }));
     ["x", "y", "z"].forEach((name, i) => this.numberRow(card, `Turn around ${name} (degrees)`, current.turn[i], -180, 180, 1, degrees => axis("turn", i, degrees)));
     const reset = document.createElement("button"); reset.className = "mini adj-more"; reset.textContent = "Reset to the game's";
-    reset.onclick = () => { set({ offset: [0, 0, 0], turn: [0, 0, 0], size: 1 }); this.look.redraw(); };
+    reset.onclick = () => { set(structuredClone(NO_SHAPE)); this.look.redraw(); };
     card.append(reset);
   }
 
@@ -214,7 +223,7 @@ export class WeaponCards {
     hands.innerHTML = `<div class="adj-head"><b>Hands</b></div><div class="note">Moves both hands on every form, in centimetres. The left hand mirrors the right.</div>`;
     container.append(hands);
     [["Toward the fingers", 0], ["Up and down", 1], ["In and out", 2]].forEach(([label, axis]) => this.sliderRow(hands, label, this.handValue()[axis], 5, m => {
-      edits.hand = this.handValue().slice(); edits.hand[axis] = m; this.applyLive(); this.studio.changed();
+      edits.hand = this.handValue().slice(); edits.hand[axis] = m; this.placeLive(); this.studio.changed();
     }));
   }
 }

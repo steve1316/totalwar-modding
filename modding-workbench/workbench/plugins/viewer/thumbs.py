@@ -91,7 +91,7 @@ def save_thumb(project: Project, model: str, image: str, style: int) -> str:
     Raises:
         ValueError: When the model path, the picture or the style is out of shape.
     """
-    if not MODEL_PATH.match(model) or ".." in model or not isinstance(image, str) or not image.startswith(PNG_PREFIX):
+    if not MODEL_PATH.match(model) or not isinstance(image, str) or not image.startswith(PNG_PREFIX):
         raise ValueError("bad model or picture")
     if type(style) is not int or not 1 <= style <= MAX_STYLE:
         raise ValueError("bad style")
