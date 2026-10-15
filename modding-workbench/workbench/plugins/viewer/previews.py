@@ -31,7 +31,7 @@ NAME = re.compile(r"^[a-z0-9_]*$")
 MAX_MODELS = 40
 
 # Version of the export, part of each file name, so a model exported before a change to the export (such as faction colour masks) is made again.
-EXPORT_VERSION = 2
+EXPORT_VERSION = 3
 
 # Each project's export worker.
 _workers: Dict[str, "ExportWorker"] = {}
