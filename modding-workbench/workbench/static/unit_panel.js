@@ -48,10 +48,12 @@
     }).replace(/\[\[(\/?)(b|i)\]\]/g, "<$1$2>").replace(/\[\[\/?col[^\]]*\]\]/g, "").replace(/\\+n/g, "<br>");
   }
 
-  // Tooltip HTML by id, filled as panels are drawn.
-  const tips = new Map();
-  let nextTip = 0;
-  function tipAttr(html) { const id = `tip${nextTip++}`; tips.set(id, html); return `data-tip="${id}" tabindex="0"`; }
+  // Tooltip HTML by id, filled as panels are drawn. The same tooltip keeps its id (`tipIds`), so redrawing panels adds nothing.
+  const tips = new Map(), tipIds = new Map();
+  function tipAttr(html) {
+    if (!tipIds.has(html)) { const id = `tip${tipIds.size}`; tipIds.set(html, id); tips.set(id, html); }
+    return `data-tip="${tipIds.get(html)}" tabindex="0"`;
+  }
 
   // An ability's tooltip, laid out like the game's: icon and name, type, passive, numbers, phases with their effects, description.
   function abilityTipHtml(a, art) {

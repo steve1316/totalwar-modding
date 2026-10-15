@@ -367,9 +367,12 @@ function pickHtml(u) {
   </div>`;
 }
 
+// Only the selection moves, so the cards stay and the selected class moves between them.
 function select(key) {
   selected = key; hovered = null;
-  renderList(); renderPanels();
+  document.querySelectorAll("#list .card.selected").forEach(card => card.classList.remove("selected"));
+  if (key) document.querySelector(`#list .card[data-key="${CSS.escape(key)}"]`)?.classList.add("selected");
+  renderPanels();
 }
 function renderAll() {
   renderMods(); renderRaces(); renderList(); renderFoot(); renderPanels();
@@ -393,7 +396,7 @@ function nextReview() {
   if (!keys.length) { toast("Nothing left to review for this race."); return; }
   const key = keys[(keys.indexOf(selected) + 1) % keys.length] || keys[0];
   const section = current().sections.find(s => s.units.includes(key));
-  closed.delete(culture + "/" + section.key);
+  if (closed.delete(culture + "/" + section.key)) renderList();
   select(key);
   document.querySelector(`.card[data-key="${CSS.escape(key)}"]`)?.scrollIntoView({block: "center", behavior: "smooth"});
 }
