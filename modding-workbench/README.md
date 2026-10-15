@@ -37,7 +37,7 @@ Then open `http://<this PC's LAN address>:8765/`. There is no login, so keep it 
 A project is one config in `projects/`. It names:
 - the checkout the project lives in (relative to the repo root),
 - its registry, its viewer gallery and the folder a rebuild exports the next gallery to (relative to that checkout's `helper_scripts`),
-- its jobs: named lists of commands run from that `helper_scripts`, with `{python}` for this Python and `publish` to swap in the new gallery,
+- its jobs: named lists of commands run from that `helper_scripts`, with `{python}` for this Python and `publish` to swap in the new gallery, and `needs` to run another job first when the registry changed since that job last ended well (a deploy needs a rebuild),
 - where its tuning values sit in the registry,
 - `editable`: the registry paths the Edit and Skills tabs may set, with `*` for any one key. Anything else is refused,
 - and `readable`: registry values the page reads as they are (the planned skills).

@@ -6,6 +6,7 @@ checkout itself is relative to the repo root (or absolute). `{python}` in a comm
 """
 
 import glob
+import hashlib
 import json
 import os
 import shutil
@@ -182,7 +183,9 @@ def numbers(value: Any, count: int, low: float, high: float) -> List[float]:
 
 
 class Job:
-    """A project's one background job and its state. Each job is a list of commands run in order, and a job may publish the new gallery."""
+    """A project's one background job and its state. Each job is a list of commands run in order, and a job may publish the new gallery. A job
+    with `needs` (another job's name) runs that job first when the registry has changed since it last ended well, as a deploy needs a rebuild.
+    """
 
     # The project it runs for.
     project: "Project"
@@ -194,16 +197,45 @@ class Job:
     running: bool
     # Whether it ended well, None while running or before any job.
     ok: Optional[bool]
+    # Jobs it ran first, as its `needs` asked.
+    ran_first: List[str]
 
     def __init__(self, project: "Project"):
         self.project = project
         self.lock = threading.Lock()
-        self.name, self.running, self.ok = None, False, None
+        self.name, self.running, self.ok, self.ran_first = None, False, None, []
 
     @property
     def log_path(self) -> str:
         """The job log, next to the project's other run logs."""
         return os.path.join(self.project.root, "_diag", f"workbench_{self.project.key}_job.log")
+
+    def stamp_path(self, name: str) -> str:
+        """The file holding the registry's hash when a job last ended well.
+
+        Args:
+            name (str): A key of the project's `jobs`.
+
+        Returns:
+            str: Its path, next to the job log.
+        """
+        return os.path.join(self.project.root, "_diag", f"workbench_{self.project.key}_{name}.stamp")
+
+    def registry_hash(self) -> str:
+        """The registry's content hash, or empty when there is no registry."""
+        return hashlib.sha1(open(self.project.registry, "rb").read()).hexdigest() if os.path.exists(self.project.registry) else ""
+
+    def stale(self, name: str) -> bool:
+        """Whether the registry has changed since a job last ended well (or it never has).
+
+        Args:
+            name (str): A key of the project's `jobs`.
+
+        Returns:
+            bool: True when it should run again.
+        """
+        path = self.stamp_path(name)
+        return not os.path.exists(path) or open(path, encoding="utf-8").read().strip() != self.registry_hash()
 
     def start(self, name: str) -> bool:
         """Starts a job in a thread unless one is running.
@@ -217,42 +249,63 @@ class Job:
         with self.lock:
             if self.running:
                 return False
-            self.name, self.running, self.ok = name, True, None
+            self.name, self.running, self.ok, self.ran_first = name, True, None, []
         threading.Thread(target=self._run, args=(name,), daemon=True).start()
         return True
 
     def _run(self, name: str) -> None:
-        """Runs a job's commands from the project's `helper_scripts` into the job log, then publishes the gallery when the job asks for it.
+        """Runs a job into the job log, first the job its `needs` names when that one is stale.
 
         Args:
             name (str): A key of the project's `jobs`.
         """
-        spec, ok = self.project.jobs[name], True
+        need = self.project.jobs[name].get("needs")
         os.makedirs(os.path.dirname(self.log_path), exist_ok=True)
         with open(self.log_path, "w", encoding="utf-8") as log:
-            for command in spec["commands"]:
-                command = [sys.executable if part == "{python}" else part for part in command]
-                log.write(f"> {' '.join(command[1:])}\n")
-                log.flush()
-                if subprocess.run(command, cwd=self.project.root, stdout=log, stderr=subprocess.STDOUT).returncode != 0:
-                    log.write("failed\n")
-                    ok = False
-                    break
-            if ok and spec.get("publish"):
-                shutil.copytree(self.project.gallery_next, self.project.gallery, dirs_exist_ok=True)
-                log.write("published the new gallery\n")
+            ok = True
+            if need and self.stale(need):
+                log.write(f"the registry changed since the last {need}, so it runs first\n")
+                self.ran_first.append(need)
+                ok = self._steps(need, log)
+            ok = ok and self._steps(name, log)
             log.write("done\n" if ok else "")
         with self.lock:
             self.running, self.ok = False, ok
+
+    def _steps(self, name: str, log) -> bool:
+        """Runs one job's commands from the project's `helper_scripts`, then publishes the gallery when the job asks for it. A job that ends well
+        stamps the registry's hash it started from.
+
+        Args:
+            name (str): A key of the project's `jobs`.
+            log: The open job log.
+
+        Returns:
+            bool: Whether every command ended well.
+        """
+        spec, started = self.project.jobs[name], self.registry_hash()
+        for command in spec["commands"]:
+            command = [sys.executable if part == "{python}" else part for part in command]
+            log.write(f"> {' '.join(command[1:])}\n")
+            log.flush()
+            if subprocess.run(command, cwd=self.project.root, stdout=log, stderr=subprocess.STDOUT).returncode != 0:
+                log.write("failed\n")
+                return False
+        if spec.get("publish"):
+            shutil.copytree(self.project.gallery_next, self.project.gallery, dirs_exist_ok=True)
+            log.write("published the new gallery\n")
+        with open(self.stamp_path(name), "w", encoding="utf-8") as f:
+            f.write(started)
+        return True
 
     def state(self) -> Dict[str, Any]:
         """The job state for the page.
 
         Returns:
-            Dict[str, Any]: `name`, `running`, `ok` and `log` (the last lines of the job log).
+            Dict[str, Any]: `name`, `running`, `ok`, `ran_first` (the jobs its `needs` ran first) and `log` (the last lines of the job log).
         """
         with self.lock:
-            state = {"name": self.name, "running": self.running, "ok": self.ok}
+            state = {"name": self.name, "running": self.running, "ok": self.ok, "ran_first": list(self.ran_first)}
         lines = open(self.log_path, encoding="utf-8", errors="replace").read().splitlines() if os.path.exists(self.log_path) else []
         state["log"] = lines[-LOG_TAIL:]
         return state
