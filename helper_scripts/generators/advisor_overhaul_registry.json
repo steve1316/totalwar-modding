@@ -4,83 +4,253 @@
   "body": "advisor",
   "bodies": {
    "advisor": {
-    "body": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+    "body": [
+     "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
    },
    "grey_wizard": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/body/emp_grey_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"],
-    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/cape/emp_grey_wizard_cape_01.wsmodel"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/body/emp_grey_wizard_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ],
+    "cape": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/grey/cape/emp_grey_wizard_cape_01.wsmodel"
+    ]
    },
    "jade_wizard": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/body/emp_jade_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"],
-    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/cape/emp_jade_wizard_cape_01.wsmodel"],
-    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/legs/emp_jade_wizard_legs_01.wsmodel"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/body/emp_jade_wizard_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ],
+    "cape": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/cape/emp_jade_wizard_cape_01.wsmodel"
+    ],
+    "legs": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/legs/emp_jade_wizard_legs_01.wsmodel"
+    ]
    },
    "gold_wizard": {
-    "collar": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/emp_wizard_metal/emp_wizard_metal_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:cloth"]
+    "collar": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/emp_wizard_metal/emp_wizard_metal_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:cloth"
+    ]
    },
    "amethyst_wizard": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/amethyst/emp_amethyst_wizard_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/amethyst/emp_amethyst_wizard_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
    },
    "captain": {
-    "torso": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_captains/body/emp_captains_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
+    "torso": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_captains/body/emp_captains_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:plate"
+    ]
    },
    "witch_hunter": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_witch_hunter/body/emp_witch_hunter_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_witch_hunter/body/emp_witch_hunter_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:plate"
+    ]
    },
    "huntsmarshal": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:leather"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
    },
    "general": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"],
-    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_legs_01.wsmodel"],
-    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_cape_01.wsmodel"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:plate"
+    ],
+    "legs": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_legs_01.wsmodel"
+    ],
+    "cape": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_generals/emp_generals_cape_01.wsmodel"
+    ]
    },
    "bretonnian_lord": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/brt/brt_lord/brt_lord_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/brt/brt_lord/brt_lord_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:plate"
+    ]
    },
    "todbringer": {
-    "body": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_body_01.wsmodel", "audio_entity_type:wh_human_male_LH", "audio_armour_type:plate"],
-    "legs": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_legs_01.wsmodel"],
-    "cape": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_cape_01.wsmodel"]
+    "body": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:plate"
+    ],
+    "legs": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_legs_01.wsmodel"
+    ],
+    "cape": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_boris_todbringer/emp_boris_todbringer_cape_01.wsmodel"
+    ]
+   },
+   "vmp_necromancer_body_01": {
+    "body": [
+     "variantmeshes/wh_variantmodels/hu1/vmp/vmp_necromancer/body/vmp_necromancer_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
+   },
+   "brt_knights_errant_body_02": {
+    "body": [
+     "variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_02.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
+   },
+   "brt_knights_errant_body_01": {
+    "body": [
+     "variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_01.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
+   },
+   "brt_knights_errant_body_ror_02": {
+    "body": [
+     "variantmeshes/wh_variantmodels/hu1/brt/brt_knights_errant/brt_knights_errant_body_ror_02.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
+   },
+   "emp_huntsmarshal_body_02": {
+    "body": [
+     "variantmeshes/wh_variantmodels/hu1/emp/emp_huntsmarshal/emp_huntsmarshal_body_02.wsmodel",
+     "audio_entity_type:wh_human_male_LH",
+     "audio_armour_type:leather"
+    ]
    }
   },
   "head": "advisor",
   "hood": true,
   "prop_offsets_description": "Weapon model -> [x, y, z] metres its model is moved in its own axes (x runs along the blade). Positive x slides the weapon blade first, so his hand sits further down the grip. Each one is written as a copy under the mod's props folder and used in place of the vanilla weapon. Set from the dashboard's Adjust panel.",
   "prop_offsets": {
-   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2": [0.045, 0.0, 0.0],
-   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_sword_1h_01.wsmodel": [0.033, 0.0, 0.0]
+   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2": [
+    0.045,
+    0.0,
+    0.0
+   ],
+   "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_sword_1h_01.wsmodel": [
+    0.017,
+    0.0,
+    0.0
+   ],
+   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": [
+    0.053,
+    0.0,
+    0.0
+   ],
+   "variantmeshes/wh_variantmodels/hu1b/vmp/vmp_props/vmp_isabella_von_carstein_sword_1h_01.wsmodel": [
+    0.038,
+    0.0,
+    0.0
+   ]
   },
   "hand_shift_description": "[x, y, z] metres his hand and finger vertices move, in the right hand bone's bind frame (z flips for the left hand). Fitted against the vanilla Empire Captain so his fist closes around a weapon grip. Set from the dashboard's Adjust panel.",
-  "hand_shift": [0.021, 0.006, -0.011],
+  "hand_shift": [
+   -0.009,
+   0.006,
+   -0.011
+  ],
   "heads": {
    "advisor": {
-    "hooded": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01.wsmodel"],
-    "hoodless": ["variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01_hoodless.wsmodel"]
+    "hooded": [
+     "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01.wsmodel"
+    ],
+    "hoodless": [
+     "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/advisor_overhaul_head_01_hoodless.wsmodel"
+    ]
    },
    "jade": {
-    "hooded": ["VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/head/emp_jade_wizard_head_02.wsmodel"]
+    "hooded": [
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_wizard/jade/head/emp_jade_wizard_head_02.wsmodel"
+    ]
    }
   },
   "stumps": {
-   "stump_neck": ["spine_2", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_neck_hu1_1.rigid_model_v2"],
-   "stump_left_arm": ["clav_left", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_left_arm_hu1_1.rigid_model_v2"],
-   "stump_right_arm": ["clav_right", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_right_arm_hu1_1.rigid_model_v2"],
-   "stump_waist": ["root", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_waist_hu1_6.rigid_model_v2"],
-   "stump_severed_head": ["head", "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_head_hu1_3.rigid_model_v2"]
+   "stump_neck": [
+    "spine_2",
+    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_neck_hu1_1.rigid_model_v2"
+   ],
+   "stump_left_arm": [
+    "clav_left",
+    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_left_arm_hu1_1.rigid_model_v2"
+   ],
+   "stump_right_arm": [
+    "clav_right",
+    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_right_arm_hu1_1.rigid_model_v2"
+   ],
+   "stump_waist": [
+    "root",
+    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_waist_hu1_6.rigid_model_v2"
+   ],
+   "stump_severed_head": [
+    "head",
+    "VariantMeshes/wh_variantmodels/hu1/dlc02_blood_pack/dlc02_stump_head_hu1_3.rigid_model_v2"
+   ]
+  },
+  "prop_turns": {
+   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": [
+    25.0,
+    -180.0,
+    0.0
+   ]
+  },
+  "prop_sizes": {
+   "variantmeshes/wh_variantmodels/hu1c/dae/dae_props/dae_lord_tzeentch_shield_01.wsmodel": 0.6
+  },
+  "unpainted": {
+   "brt_knights_errant_body_02": true
   }
  },
  "portrait": {
   "description": "His 2D portrait art and his 3D portrait camera. `source` is the vanilla Advisor bust (pack, path) every image is cut from. `porthole` places it on the 300x164 porthole image and `card` on the 60x130 unit card (and the 120x260 info picture at twice the size), bottom aligned over a top-to-bottom gradient. `camera_head` replaces the head camera of the Grey Wizard's portrait settings: `z` is the distance and `y` the height above the head bone, in metres.",
-  "source": ["ui2.pack", "ui/skins/default/preview_advisor.png"],
+  "source": [
+   "ui2.pack",
+   "ui/skins/default/preview_advisor.png"
+  ],
   "image": "advisor_overhaul_campaign_01_0",
-  "porthole": {"x": 92, "y": 3, "scale": 1.0},
+  "porthole": {
+   "x": 92,
+   "y": 3,
+   "scale": 1.0
+  },
   "card": {
    "scale": 0.72,
-   "top": [150, 160, 165],
-   "bottom": [55, 60, 62]
+   "top": [
+    150,
+    160,
+    165
+   ],
+   "bottom": [
+    55,
+    60,
+    62
+   ]
   },
-  "camera_head": {"z": 1.0, "y": 0.0, "yaw": 0.0, "pitch": 8.0, "fov": 30.0}
+  "camera_head": {
+   "z": 1.0,
+   "y": 0.0,
+   "yaw": 0.0,
+   "pitch": 8.0,
+   "fov": 30.0
+  }
  },
  "weapons": {
   "staff_and_sword": {
@@ -91,8 +261,16 @@
    "shield": "none",
    "body": "advisor",
    "props": {
-    "weapon_2": ["be_prop_1", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2", "audio_melee_weapon_type:sword"],
-    "weapon_5": ["be_prop_5", "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2", "audio_melee_weapon_type:staff"]
+    "weapon_2": [
+     "be_prop_1",
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2",
+     "audio_melee_weapon_type:sword"
+    ],
+    "weapon_5": [
+     "be_prop_5",
+     "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_grey_wizard_staff_1h_01.rigid_model_v2",
+     "audio_melee_weapon_type:staff"
+    ]
    },
    "missile": {
     "description": "His staff bolt, a plain arcane bolt for now. Its element is meant to follow his first lore later, so the key names no element. `template` is the vanilla Hag Witch's staff bolt, with one bolt per shot instead of two, and `projectile` replacing the template's values. `ammo` is a little under the Hag Witch's 28.",
@@ -121,6 +299,165 @@
     "warhorse": "wh2_pro07_emp_cha_wizard_death_3",
     "pegasus": "wh2_pro07_emp_cha_wizard_death_2",
     "disc": "wh3_dlc20_chs_cha_chaos_sorcerer_tzeentch_mtze_disc"
+   },
+   "stats": {
+    "melee_attack": 25,
+    "melee_defence": 30,
+    "charge_bonus": 15,
+    "morale": 55,
+    "bonus_hit_points": 3412,
+    "armour": 20
+   },
+   "melee": {
+    "template": "wh_main_emp_sword_caster"
+   },
+   "forms": {
+    "warhorse": {
+     "armour": 50,
+     "melee_attack": 25,
+     "melee_defence": 30,
+     "charge_bonus": 35,
+     "morale": 55,
+     "bonus_hit_points": 3832
+    },
+    "pegasus": {
+     "melee_attack": 25,
+     "melee_defence": 30,
+     "charge_bonus": 35,
+     "morale": 55,
+     "armour": 50,
+     "bonus_hit_points": 4000
+    },
+    "disc": {
+     "melee_attack": 48,
+     "melee_defence": 44,
+     "charge_bonus": 35,
+     "morale": 60,
+     "armour": 80,
+     "bonus_hit_points": 3960,
+     "props": {
+      "weapon_5": [
+       "be_prop_5",
+       "VariantMeshes/wh_variantmodels/hu1c/dae/dae_props/dae_sorcerer_tzeentch_staff_1h_01.wsmodel",
+       "audio_melee_weapon_type:staff"
+      ]
+     }
+    }
+   },
+   "arts": {
+    "art_1": {
+     "name": "Spellguard",
+     "description": "He parries with the staff and lets the wards take the rest.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 8
+      },
+      {
+       "effect": "wh_main_effect_character_stat_magic_resistance",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
+     ]
+    },
+    "art_2": {
+     "name": "Bolt and Blade",
+     "description": "A bolt to open the guard, a cut to close it.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 8
+      },
+      {
+       "effect": "wh_main_effect_character_stat_missile_damage",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
+     ]
+    },
+    "art_3": {
+     "name": "Winds in the Steel",
+     "description": "The sword carries what the staff gathers.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_enable_magic_attacks",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_weapon_strength",
+       "scope": "character_to_character_own",
+       "value": 12
+      }
+     ]
+    },
+    "art_4": {
+     "name": "Unbinding",
+     "description": "Blows that should land slide off a man who knows where they were going.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_ward_save",
+       "scope": "character_to_character_own",
+       "value": 12
+      }
+     ]
+    },
+    "army_1": {
+     "name": "Hedge Wards",
+     "description": "Small charms on every banner pole.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_magic_resistance",
+       "scope": "agent_to_parent_army_own",
+       "value": 10
+      }
+     ]
+    },
+    "army_2": {
+     "name": "Patient Lines",
+     "description": "He teaches them to wait for the spell to land.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_melee_defence",
+       "scope": "agent_to_parent_army_own",
+       "value": 5
+      }
+     ]
+    },
+    "army_3": {
+     "name": "Calm in the Storm",
+     "description": "Magic does not frighten men who have seen him use it.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_leadership",
+       "scope": "agent_to_parent_army_own",
+       "value": 8
+      },
+      {
+       "effect": "wh_main_effect_force_stat_magic_resistance",
+       "scope": "agent_to_parent_army_own",
+       "value": 10
+      }
+     ]
+    },
+    "apex": {
+     "name": "Channelled Staff",
+     "description": "The staff drinks the Winds and gives them back to him.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_ability_enable_channelling_staff",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 8
+      }
+     ]
+    }
    }
   },
   "sword_and_shield": {
@@ -134,10 +471,18 @@
    "icon": "wh_dlc07_lord_abilities_lions_shield.png",
    "picker_icon": "ui/campaign ui/skills/wh_dlc07_lord_abilities_lions_shield.png",
    "shield": "wh_missile_block_35_metal",
-   "body": "advisor",
+   "body": "brt_knights_errant_body_02",
    "props": {
-    "weapon_2": ["be_prop_1", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.rigid_model_v2", "audio_melee_weapon_type:sword"],
-    "shield": ["be_prop_2", "VariantMeshes/VariantMeshDefinitions/emp_general_shield_1h_set1.VariantMeshDefinition", ""]
+    "weapon_2": [
+     "be_prop_1",
+     "variantmeshes/wh_variantmodels/hu1b/vmp/vmp_props/vmp_isabella_von_carstein_sword_1h_01.wsmodel",
+     "audio_melee_weapon_type:sword"
+    ],
+    "shield": [
+     "be_prop_2",
+     "variantmeshes/wh_variantmodels/hu1d/def/def_props/def_darkriders_shield_02.wsmodel",
+     ""
+    ]
    },
    "sets": {
     "foot": "hu1_advisor_overhaul_sword_and_shield",
@@ -148,62 +493,498 @@
     "foot": "wh_main_emp_cha_captain_0",
     "warhorse": "wh_main_emp_cha_captain_2",
     "pegasus": "wh_main_emp_cha_captain_3"
+   },
+   "stats": {
+    "melee_attack": 50,
+    "melee_defence": 40,
+    "charge_bonus": 40,
+    "morale": 65,
+    "bonus_hit_points": 3680,
+    "armour": 85
+   },
+   "melee": {
+    "template": "wh_main_emp_sword_hero"
+   },
+   "forms": {
+    "warhorse": {
+     "melee_attack": 50,
+     "melee_defence": 40,
+     "charge_bonus": 70,
+     "morale": 65,
+     "armour": 105,
+     "bonus_hit_points": 4160
+    },
+    "pegasus": {
+     "melee_attack": 50,
+     "melee_defence": 40,
+     "charge_bonus": 85,
+     "morale": 65,
+     "armour": 85,
+     "bonus_hit_points": 4448
+    }
+   },
+   "hood": false,
+   "pieces": {
+    "piece_1": [
+     "variantmeshes/wh_variantmodels/hu1/tmb/tmb_liche_high_priest/tmb_liche_high_priest_body_02.wsmodel"
+    ]
+   },
+   "arts": {
+    "art_1": {
+     "name": "Shield Wall",
+     "description": "He stands where the blows land thickest and lets them come.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    },
+    "art_2": {
+     "name": "Turn the Arrow",
+     "description": "He has watched too many men die to arrows to let it happen to him.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_missile_resistance",
+       "scope": "character_to_character_own",
+       "value": 20
+      }
+     ]
+    },
+    "art_3": {
+     "name": "Steady Hand",
+     "description": "A knight's shield, a scholar's patience.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_armour",
+       "scope": "character_to_character_own",
+       "value": 25
+      }
+     ]
+    },
+    "art_4": {
+     "name": "Bulwark",
+     "description": "He does not move, and nothing moves him.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_physical_resistance",
+       "scope": "character_to_character_own",
+       "value": 12
+      }
+     ]
+    },
+    "army_1": {
+     "name": "Hold the Line",
+     "description": "Men stand firm next to a man who will not step back.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_leadership",
+       "scope": "agent_to_parent_army_own",
+       "value": 6
+      }
+     ]
+    },
+    "army_2": {
+     "name": "Shields Up",
+     "description": "He calls the volley before the archers loose.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_missile_resistance",
+       "scope": "agent_to_parent_army_own",
+       "value": 10
+      }
+     ]
+    },
+    "army_3": {
+     "name": "Unbroken",
+     "description": "This line held once, at the end of the world. It will hold now.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_melee_defence",
+       "scope": "agent_to_parent_army_own",
+       "value": 7
+      }
+     ]
+    },
+    "apex": {
+     "name": "Shield of Faith",
+     "description": "Not his god's faith. His own, that this time will be different.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_ability_enable_shield_of_faith",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_defence",
+       "scope": "character_to_character_own",
+       "value": 8
+      }
+     ]
+    }
    }
   },
   "greatsword": {
    "name": "Greatsword",
    "description": "A two-handed Imperial greatsword, heavier than any wizard should carry. He swings it well enough, and the spells still come.",
    "campaign_set": "cam_hero_hu1_dlc29_walach_harkon_2handed_sword",
-   "campaign_rider_sets": {"warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword"},
+   "campaign_rider_sets": {
+    "warhorse": "cam_hu1_dlc14_hr1_warhorse_repanse_2handed_sword"
+   },
    "icon": "wh2_dlc11_strength_of_steel.png",
    "picker_icon": "ui/campaign ui/skills/wh2_dlc11_strength_of_steel.png",
    "shield": "none",
-   "body": "advisor",
+   "body": "witch_hunter",
    "props": {
-    "weapon_1": ["be_prop_0", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel", "audio_melee_weapon_type:sword_ogre"]
+    "weapon_1": [
+     "be_prop_0",
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel",
+     "audio_melee_weapon_type:sword_ogre"
+    ]
    },
    "sets": {
     "foot": "hu1_dlc29_walach_harkon_2handed_sword",
     "warhorse": "hu1_advisor_overhaul_hr1_warhorse_greatsword"
    },
    "vanilla": {
-    "foot": "wh_main_emp_inf_greatswords",
+    "foot": "wh3_dlc29_vmp_cha_walach_harkon",
     "warhorse": "wh3_dlc29_vmp_cha_walach_harkon_barded_nightmare"
+   },
+   "stats": {
+    "melee_attack": 65,
+    "melee_defence": 45,
+    "charge_bonus": 35,
+    "morale": 80,
+    "bonus_hit_points": 5060,
+    "armour": 90
+   },
+   "melee": {
+    "template": "wh3_dlc29_vmp_walach_harkon_greatsword"
+   },
+   "forms": {
+    "warhorse": {
+     "melee_attack": 65,
+     "melee_defence": 45,
+     "charge_bonus": 60,
+     "morale": 80,
+     "armour": 110,
+     "bonus_hit_points": 5660
+    },
+    "foot": {
+     "props": {
+      "weapon_1": [
+       "be_prop_0",
+       "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_greatswords_sword_2h_01.wsmodel",
+       "audio_melee_weapon_type:sword_ogre"
+      ]
+     }
+    }
+   },
+   "hood": false,
+   "pieces": {
+    "piece_1": [
+     "spine_2",
+     "variantmeshes/wh_variantmodels/hu3/dwf/dwf_props/dwf_slayers_dragonback_axe_1h_02.wsmodel"
+    ],
+    "piece_2": [
+     "spine_2",
+     "variantmeshes/wh_variantmodels/hu3/dwf/dwf_props/dwf_slayers_dragonback_axe_1h_02.wsmodel"
+    ]
+   },
+   "piece_shapes": {
+    "piece_1": {
+     "offset": [
+      0.0,
+      -0.2,
+      0.0
+     ],
+     "turn": [
+      0.0,
+      30.0,
+      0.0
+     ],
+     "size": 0.75
+    },
+    "piece_2": {
+     "offset": [
+      0.0,
+      -0.2,
+      0.0
+     ],
+     "turn": [
+      180.0,
+      30.0,
+      0.0
+     ],
+     "size": 0.75
+    }
+   },
+   "arts": {
+    "art_1": {
+     "name": "Overhand",
+     "description": "A blow from above, with all of him behind it.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    },
+    "art_2": {
+     "name": "Momentum",
+     "description": "Once the blade is moving, nothing in front of it matters.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_charge_bonus_pct",
+       "scope": "character_to_character_own",
+       "value": 25
+      }
+     ]
+    },
+    "art_3": {
+     "name": "Cleaving Arc",
+     "description": "One swing, three men. He has done the sums.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_bonus_vs_infantry",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
+     ]
+    },
+    "art_4": {
+     "name": "Headsman",
+     "description": "Big things die the same way small ones do.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_bonus_vs_large",
+       "scope": "character_to_character_own",
+       "value": 18
+      }
+     ]
+    },
+    "army_1": {
+     "name": "Bloody Drill",
+     "description": "He makes them practise until they stop flinching.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_melee_attack",
+       "scope": "agent_to_parent_army_own",
+       "value": 5
+      }
+     ]
+    },
+    "army_2": {
+     "name": "Charge Them",
+     "description": "He goes first. They follow.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_charge_bonus_pct",
+       "scope": "agent_to_parent_army_own",
+       "value": 12
+      }
+     ]
+    },
+    "army_3": {
+     "name": "Butcher's Bill",
+     "description": "He knows what this battle will cost and pays it early.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_weapon_strength",
+       "scope": "agent_to_parent_army_own",
+       "value": 10
+      }
+     ]
+    },
+    "apex": {
+     "name": "Killing Blow",
+     "description": "The blow that ended a king, in a world nobody else remembers.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_ability_enable_heroic_killing_blow",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_melee_attack",
+       "scope": "character_to_character_own",
+       "value": 8
+      }
+     ]
+    }
    }
   },
   "sword_and_bow": {
    "name": "Sword and Bow",
    "description": "A huntsman's blade and a hunting bow. He was a fair shot long before he was a wizard, and he has not forgotten.",
    "campaign_set": "cam_lord_hu1_dlc13_huntsmarshal_sword_bow",
-   "campaign_rider_sets": {"warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow"},
+   "campaign_rider_sets": {
+    "warhorse": "cam_hero_hu1_dlc23_hr1_ulrika_dual_swords_bow"
+   },
    "icon": "wh_dlc05_weapon_abilities_the_bow_of_loren.png",
    "picker_icon": "ui/campaign ui/skills/wh_dlc05_weapon_abilities_the_bow_of_loren.png",
    "shield": "none",
-   "body": "advisor",
+   "body": "emp_huntsmarshal_body_02",
    "props": {
-    "weapon_2": ["be_prop_1", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_sword_1h_01.wsmodel", "audio_melee_weapon_type:sword"],
-    "weapon_3": ["be_prop_3", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_bow_rigid_01.wsmodel", ""],
-    "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_arrow_01.wsmodel", ""]
+    "weapon_2": [
+     "be_prop_1",
+     "variantmeshes/wh_variantmodels/hu1/emp/emp_props/emp_general_sword_1h_02.wsmodel",
+     "audio_melee_weapon_type:sword"
+    ],
+    "weapon_3": [
+     "be_prop_3",
+     "variantmeshes/wh_variantmodels/hu1d/hef/hef_props/hef_princess_bow_01_rigid.wsmodel",
+     ""
+    ],
+    "weapon_4": [
+     "be_prop_4",
+     "VariantMeshes/wh_variantmodels/hu1/emp/emp_props/emp_huntsmarshal_arrow_01.wsmodel",
+     ""
+    ]
    },
    "missile": {
     "description": "His bow. `template` is the vanilla missile weapon whose missile_weapons and projectiles rows are copied (the Huntsmarshal's arrow), with `projectile` replacing the template's values. `ammo` is the vanilla Ulrika's hero bow ammo.",
     "template": "wh2_dlc13_emp_huntsmarshal_arrow",
-    "ammo": 30,
+    "ammo": 45,
     "projectile": {
-     "damage": "120",
-     "ap_damage": "60",
-     "effective_range": "160",
+     "damage": "240",
+     "ap_damage": "160",
+     "effective_range": "180",
      "base_reload_time": "8.0000",
-     "marksmanship_bonus": "50.0000",
-     "bonus_v_large": "0"
+     "marksmanship_bonus": "100.0000",
+     "bonus_v_large": "100"
     }
    },
-   "attributes": ["mounted_fire_move"],
+   "attributes": [
+    "mounted_fire_move"
+   ],
    "sets": {
     "foot": "hu1_advisor_overhaul_sword_and_bow",
     "warhorse": "hu1_advisor_overhaul_hr1_warhorse_sword_and_bow"
    },
-   "vanilla": {"foot": "wh2_dlc13_emp_cha_huntsmarshal_0", "warhorse": "wh_main_brt_cav_mounted_yeomen_1"}
+   "vanilla": {
+    "foot": "wh2_dlc13_emp_cha_huntsmarshal_0",
+    "warhorse": "wh3_dlc23_neu_cha_ulrika_warhorse"
+   },
+   "stats": {
+    "melee_attack": 43,
+    "melee_defence": 40,
+    "charge_bonus": 30,
+    "morale": 70,
+    "bonus_hit_points": 3900,
+    "armour": 45
+   },
+   "melee": {
+    "template": "wh2_dlc13_emp_huntsmarhsal"
+   },
+   "forms": {
+    "warhorse": {
+     "melee_attack": 50,
+     "melee_defence": 46,
+     "charge_bonus": 50,
+     "morale": 80,
+     "armour": 80,
+     "bonus_hit_points": 4564
+    }
+   },
+   "hood": false,
+   "arts": {
+    "art_1": {
+     "name": "Steady Draw",
+     "description": "He breathes out, and the arrow goes where he looked.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_missile_damage",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
+     ]
+    },
+    "art_2": {
+     "name": "Long Eye",
+     "description": "He sees the shot before he takes it.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_range",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
+     ]
+    },
+    "art_3": {
+     "name": "Full Quiver",
+     "description": "He never runs out. He planned for this.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_ammunition",
+       "scope": "character_to_character_own",
+       "value": 40
+      }
+     ]
+    },
+    "art_4": {
+     "name": "Quick Hands",
+     "description": "Draw, loose, draw, loose, faster than thought.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_character_stat_reload_time_reduction",
+       "scope": "character_to_character_own",
+       "value": 15
+      }
+     ]
+    },
+    "army_1": {
+     "name": "Huntsmen",
+     "description": "He shows the archers where to aim.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_missile_damage",
+       "scope": "agent_to_parent_army_own",
+       "value": 8
+      }
+     ]
+    },
+    "army_2": {
+     "name": "Marked Ground",
+     "description": "Every stone and stake is a range marker to him.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_stat_range",
+       "scope": "agent_to_parent_army_own",
+       "value": 12
+      }
+     ]
+    },
+    "army_3": {
+     "name": "From the Trees",
+     "description": "He knows where the enemy will walk, because he has watched them walk there before.",
+     "effects": [
+      {
+       "effect": "wh_main_effect_force_army_campaign_ambush_attack_success_chance",
+       "scope": "agent_to_parent_army_own",
+       "value": 20
+      }
+     ]
+    },
+    "apex": {
+     "name": "Hail of Doom",
+     "description": "One arrow that splits into a storm.",
+     "effects": [
+      {
+       "effect": "wh_dlc05_effect_ability_enable_hail_of_doom_arrow",
+       "scope": "character_to_character_own",
+       "value": 1
+      },
+      {
+       "effect": "wh_main_effect_character_stat_missile_damage",
+       "scope": "character_to_character_own",
+       "value": 10
+      }
+     ]
+    }
+   }
   }
  },
  "mounts": {
@@ -245,8 +1026,1820 @@
    "ancillary_type": "wh3_main_anc_mount_disc_of_tzeentch",
    "campaign_rider_set": "cam_hu1_pr8_amethyst_staff_and_sword",
    "variant_props": {
-    "weapon_4": ["be_prop_4", "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel", "equipment"]
-   }
+    "weapon_4": [
+     "be_prop_4",
+     "VariantMeshes/wh_variantmodels/hu14/dae/dae_props/dae_disc_of_tzeentch_01.wsmodel",
+     "equipment"
+    ]
+   },
+   "unlock": "script"
   }
- }
+ },
+ "skills": {
+  "arts_art_1": {
+   "name": "Art I: Stance",
+   "description": "The first thing he learned with every weapon he ever held, in every world that ended.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "character_defence.png",
+   "row": 2,
+   "tier": 0,
+   "rank": 2,
+   "levels": [
+    []
+   ],
+   "requires": [],
+   "slot": "art_1",
+   "build": true
+  },
+  "arts_art_2": {
+   "name": "Art II: Edge",
+   "description": "He has fought this fight before. His hands remember how it went.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "character_attack.png",
+   "row": 2,
+   "tier": 1,
+   "rank": 6,
+   "levels": [
+    []
+   ],
+   "requires": [
+    "arts_art_1"
+   ],
+   "slot": "art_2",
+   "build": true
+  },
+  "arts_art_3": {
+   "name": "Art III: Flow",
+   "description": "The weapon stops being a tool and starts being an argument.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "character_charge.png",
+   "row": 2,
+   "tier": 2,
+   "rank": 11,
+   "levels": [
+    []
+   ],
+   "requires": [
+    "arts_art_2"
+   ],
+   "slot": "art_3",
+   "build": true
+  },
+  "arts_art_4": {
+   "name": "Art IV: Ending",
+   "description": "How he finished it last time. And the time before that.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "character_armour.png",
+   "row": 2,
+   "tier": 3,
+   "rank": 16,
+   "levels": [
+    []
+   ],
+   "requires": [
+    "arts_art_3"
+   ],
+   "slot": "art_4",
+   "build": true
+  },
+  "arts_army_1": {
+   "name": "Army I: Drill",
+   "description": "Soldiers near him pick up his habits without knowing they have.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "character_army.png",
+   "row": 2,
+   "tier": 5,
+   "rank": 4,
+   "levels": [
+    []
+   ],
+   "requires": [],
+   "slot": "army_1",
+   "build": true
+  },
+  "arts_army_2": {
+   "name": "Army II: Formation",
+   "description": "He places men where he once saw them live.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "campaign_army.png",
+   "row": 2,
+   "tier": 6,
+   "rank": 9,
+   "levels": [
+    []
+   ],
+   "requires": [
+    "arts_army_1"
+   ],
+   "slot": "army_2",
+   "build": true
+  },
+  "arts_army_3": {
+   "name": "Army III: Last Stand",
+   "description": "He has seen how armies break. He does not let this one.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "battle_defence.png",
+   "row": 2,
+   "tier": 7,
+   "rank": 14,
+   "levels": [
+    []
+   ],
+   "requires": [
+    "arts_army_2"
+   ],
+   "slot": "army_3",
+   "build": true
+  },
+  "arts_apex": {
+   "name": "Master of Arms",
+   "description": "Every weapon he has ever held, in every ending, answers him at once. Takes this row's Apex, which locks the other Apexes.\\\\n\\\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.",
+   "icon": "spell_mastery.png",
+   "row": 2,
+   "tier": 4,
+   "rank": 25,
+   "levels": [
+    []
+   ],
+   "requires": [
+    "arts_art_4"
+   ],
+   "slot": "apex",
+   "build": true,
+   "role": "apex",
+   "exclusive": [
+    "civic_apex",
+    "magic_archmage",
+    "martial_apex"
+   ]
+  },
+  "magic_reserves": {
+   "name": "Deep Reserves",
+   "icon": "spell_mastery.png",
+   "row": 5,
+   "tier": 16,
+   "rank": 8,
+   "build": true,
+   "requires": [],
+   "description": "He has learned to hold more of the Winds than a body should.\\\\n\\\\nMore Winds of Magic for his army in every battle.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_winds_of_magic_pool_cap",
+      "scope": "character_to_force_own_alt_text",
+      "value": 5
+     },
+     {
+      "effect": "wh3_main_effect_winds_of_magic_character",
+      "scope": "character_to_force_own_unseen",
+      "value": 2
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_winds_of_magic_pool_cap",
+      "scope": "character_to_force_own_alt_text",
+      "value": 10
+     },
+     {
+      "effect": "wh3_main_effect_winds_of_magic_character",
+      "scope": "character_to_force_own_unseen",
+      "value": 4
+     }
+    ]
+   ]
+  },
+  "magic_steady": {
+   "name": "Steady Hands",
+   "icon": "character_defence.png",
+   "row": 5,
+   "tier": 17,
+   "rank": 12,
+   "build": true,
+   "requires": [],
+   "description": "He miscast once, at the worst possible moment, and the world ended a little early.\\\\n\\\\nFewer miscasts, stronger spells.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_character_stat_miscast",
+      "scope": "character_to_character_own",
+      "value": -15
+     },
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 10
+     }
+    ]
+   ]
+  },
+  "magic_archmage": {
+   "name": "Archmage",
+   "icon": "spell_mastery.png",
+   "row": 5,
+   "tier": 18,
+   "rank": 25,
+   "build": true,
+   "role": "apex",
+   "requires": [
+    "magic_reserves",
+    "magic_steady"
+   ],
+   "description": "Every lore he ever learned, in every world, answers him now.\\\\n\\\\nThe magic rows' Apex. Takes the place of the other Apexes and the Polymath.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_spell_mastery",
+      "scope": "character_to_character_own",
+      "value": 20
+     },
+     {
+      "effect": "wh_main_effect_character_stat_miscast",
+      "scope": "character_to_character_own",
+      "value": -25
+     },
+     {
+      "effect": "wh3_main_effect_winds_of_magic_pool_cap",
+      "scope": "character_to_force_own_alt_text",
+      "value": 15
+     }
+    ]
+   ],
+   "exclusive": [
+    "arts_apex",
+    "civic_apex",
+    "martial_apex"
+   ]
+  },
+  "martial_0": {
+   "name": "Assassinate",
+   "icon": "campaign_subterfuge.png",
+   "row": 6,
+   "tier": 0,
+   "rank": 3,
+   "build": true,
+   "requires": [],
+   "description": "He knows which of them will matter later. He settles it now.\\\\n\\\\nUnlocks the Assassinate hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_agent_assassinate",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_agent_assassinate_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_agent_assassinate",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_agent_assassinate_buff",
+      "scope": "character_to_character_own",
+      "value": 8.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_agent_assassinate",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_agent_assassinate_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ]
+   ]
+  },
+  "martial_1": {
+   "name": "Wound",
+   "icon": "campaign_wound_time.png",
+   "row": 7,
+   "tier": 0,
+   "rank": 1,
+   "build": true,
+   "requires": [],
+   "description": "Not a killing blow. A reminder.\\\\n\\\\nUnlocks the Wound hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_agent_wound",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_agent_wound_buff",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_agent_wound",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_agent_wound_buff",
+      "scope": "character_to_character_own",
+      "value": 12.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_agent_wound",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_agent_wound_buff",
+      "scope": "character_to_character_own",
+      "value": 21.0
+     }
+    ]
+   ]
+  },
+  "martial_2": {
+   "name": "Assassinate Lord",
+   "icon": "campaign_subterfuge.png",
+   "row": 6,
+   "tier": 1,
+   "rank": 10,
+   "build": true,
+   "requires": [],
+   "description": "Generals die too. He has watched it happen in every ending.\\\\n\\\\nUnlocks the Assassinate Lord hero action.",
+   "levels": [
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_spy_hinder_character_assassinate",
+      "scope": "character_to_character_own",
+      "value": 1
+     }
+    ]
+   ]
+  },
+  "martial_3": {
+   "name": "Damage Walls",
+   "icon": "campaign_siege_attack.png",
+   "row": 6,
+   "tier": 7,
+   "rank": 2,
+   "build": true,
+   "requires": [],
+   "description": "Every wall falls eventually. He only hurries it along.\\\\n\\\\nUnlocks the Damage Walls hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_damage_walls",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_damage_walls_buff",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_damage_walls",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_damage_walls_buff",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_damage_walls",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_damage_walls_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "martial_4": {
+   "name": "Assault Garrison",
+   "icon": "campaign_siege_defence.png",
+   "row": 7,
+   "tier": 5,
+   "rank": 4,
+   "build": true,
+   "requires": [],
+   "description": "He walks in through the gate they forgot to watch.\\\\n\\\\nUnlocks the Assault Garrison hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_settlement_assault_garrison",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_assault_garrison_buff",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_settlement_assault_garrison",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_assault_garrison_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_settlement_assault_garrison",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_assault_garrison_buff",
+      "scope": "character_to_character_own",
+      "value": 30.0
+     }
+    ]
+   ]
+  },
+  "martial_5": {
+   "name": "Damage Building",
+   "icon": "campaign_siege_attack.png",
+   "row": 6,
+   "tier": 8,
+   "rank": 4,
+   "build": true,
+   "requires": [],
+   "description": "A fire in the right storehouse ends a siege early.\\\\n\\\\nUnlocks the Damage Building hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_damage_building",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_damage_building_buff",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_damage_building",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_damage_building_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_damage_building",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_damage_building_buff",
+      "scope": "character_to_character_own",
+      "value": 30.0
+     }
+    ]
+   ]
+  },
+  "martial_6": {
+   "name": "Block Army",
+   "icon": "campaign_movement.png",
+   "row": 6,
+   "tier": 2,
+   "rank": 5,
+   "build": true,
+   "requires": [],
+   "description": "A cut rope, a spooked horse, a missing quartermaster.\\\\n\\\\nUnlocks the Block Army hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_block_army",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_block_army_buff",
+      "scope": "character_to_character_own",
+      "value": -3.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_block_army",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_block_army_buff",
+      "scope": "character_to_character_own",
+      "value": -8.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_block_army",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_block_army_buff",
+      "scope": "character_to_character_own",
+      "value": -15.0
+     }
+    ]
+   ]
+  },
+  "martial_7": {
+   "name": "Hinder Replenishment",
+   "icon": "campaign_replenishment.png",
+   "row": 7,
+   "tier": 1,
+   "rank": 3,
+   "build": true,
+   "requires": [],
+   "description": "Their wounded do not come back to the line.\\\\n\\\\nUnlocks the Hinder Replenishment hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_hinder_replenishment",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_hinder_replenishment_buff",
+      "scope": "character_to_character_own",
+      "value": -10.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_hinder_replenishment",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_hinder_replenishment_buff",
+      "scope": "character_to_character_own",
+      "value": -20.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_hinder_replenishment",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_hinder_replenishment_buff",
+      "scope": "character_to_character_own",
+      "value": -40.0
+     }
+    ]
+   ]
+  },
+  "martial_8": {
+   "name": "Assault Unit",
+   "icon": "campaign_disaster.png",
+   "row": 6,
+   "tier": 3,
+   "rank": 2,
+   "build": true,
+   "requires": [],
+   "description": "One regiment, at night, before they know he is there.\\\\n\\\\nUnlocks the Assault Unit hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_assault_unit",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_assault_unit_buff",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_assault_unit",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_assault_unit_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_army_assault_unit",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_assault_unit_buff",
+      "scope": "character_to_character_own",
+      "value": 30.0
+     }
+    ]
+   ]
+  },
+  "martial_9": {
+   "name": "Assault Units",
+   "icon": "campaign_disaster.png",
+   "row": 7,
+   "tier": 2,
+   "rank": 4,
+   "build": true,
+   "requires": [],
+   "description": "The whole camp, the same night.\\\\n\\\\nUnlocks the Assault Units hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_army_assault_units",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_assault_units_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_army_assault_units",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_assault_units_buff",
+      "scope": "character_to_character_own",
+      "value": 8.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_hinder_army_assault_units",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_army_assault_units_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ]
+   ]
+  },
+  "martial_11": {
+   "name": "Practised Hands",
+   "icon": "campaign_military_spending.png",
+   "row": 6,
+   "tier": 12,
+   "rank": 8,
+   "build": true,
+   "requires": [],
+   "description": "Hero work is still work. He is very good at work.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_agent_action_cost_mod",
+      "scope": "character_to_character_own",
+      "value": -10.0
+     },
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_agent_action_cost_mod",
+      "scope": "character_to_character_own",
+      "value": -20.0
+     },
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     }
+    ],
+    [
+     {
+      "effect": "wh_main_effect_agent_action_cost_mod",
+      "scope": "character_to_character_own",
+      "value": -40.0
+     },
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 6.0
+     }
+    ]
+   ]
+  },
+  "civic_0": {
+   "name": "Scouting",
+   "icon": "campaign_item.png",
+   "row": 6,
+   "tier": 4,
+   "rank": 1,
+   "build": true,
+   "requires": [],
+   "description": "He knows where they are. He usually knows where they will be.\\\\n\\\\nImproves his Scouting hero action, which he always has.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_scouting_buff",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_scouting_buff",
+      "scope": "character_to_character_own",
+      "value": 10.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_scouting_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ]
+   ]
+  },
+  "civic_1": {
+   "name": "Training",
+   "icon": "campaign_experience.png",
+   "row": 7,
+   "tier": 3,
+   "rank": 2,
+   "build": true,
+   "requires": [],
+   "description": "He trains them for the war after this one.\\\\n\\\\nUnlocks the Training hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_assist_army_training",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_training_buff",
+      "scope": "character_to_character_own",
+      "value": 10.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_assist_army_training",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_training_buff",
+      "scope": "character_to_character_own",
+      "value": 20.0
+     }
+    ],
+    [
+     {
+      "effect": "wh3_main_effect_agent_action_enable_wizard_assist_army_training",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_training_buff",
+      "scope": "character_to_character_own",
+      "value": 30.0
+     }
+    ]
+   ]
+  },
+  "civic_2": {
+   "name": "Replenish Troops",
+   "icon": "campaign_replenishment.png",
+   "row": 6,
+   "tier": 5,
+   "rank": 2,
+   "build": true,
+   "requires": [],
+   "description": "He finds men to fill the gaps. He knows where they hide.\\\\n\\\\nUnlocks the Replenish Troops hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_assist_army_replenish_troops",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_replenish_troops_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_assist_army_replenish_troops",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_replenish_troops_buff",
+      "scope": "character_to_character_own",
+      "value": 6.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_assist_army_replenish_troops",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_replenish_troops_buff",
+      "scope": "character_to_character_own",
+      "value": 9.0
+     }
+    ]
+   ]
+  },
+  "civic_3": {
+   "name": "Increase Mobility",
+   "icon": "campaign_movement.png",
+   "row": 7,
+   "tier": 4,
+   "rank": 4,
+   "build": true,
+   "requires": [],
+   "description": "He knows the shortcut. He has walked it in three other lives.\\\\n\\\\nUnlocks the Increase Mobility hero action.",
+   "levels": [
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_spy_assist_army_increase_mobility",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_increase_mobility_buff",
+      "scope": "character_to_character_own",
+      "value": 5.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_spy_assist_army_increase_mobility",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_increase_mobility_buff",
+      "scope": "character_to_character_own",
+      "value": 10.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_spy_assist_army_increase_mobility",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_increase_mobility_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ]
+   ]
+  },
+  "civic_4": {
+   "name": "Scavenge",
+   "icon": "campaign_military_spending.png",
+   "row": 6,
+   "tier": 6,
+   "rank": 3,
+   "build": true,
+   "requires": [],
+   "description": "Nothing on a battlefield is wasted while he is there.\\\\n\\\\nUnlocks the Scavenge hero action.",
+   "levels": [
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_assist_army_scavenge",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_scavenge_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_assist_army_scavenge",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_scavenge_buff",
+      "scope": "character_to_character_own",
+      "value": 8.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_assist_army_scavenge",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_assist_army_scavenge_buff",
+      "scope": "character_to_character_own",
+      "value": 15.0
+     }
+    ]
+   ]
+  },
+  "civic_5": {
+   "name": "Spread Public Order",
+   "icon": "campaign_public_order.png",
+   "row": 6,
+   "tier": 9,
+   "rank": 2,
+   "build": true,
+   "requires": [],
+   "description": "He reminds the people what the alternative looks like.\\\\n\\\\nUnlocks the Spread Public Order hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_public_order",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_buff",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_effect_negative",
+      "scope": "character_to_province_enemy",
+      "value": -1.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_effect_positive",
+      "scope": "character_to_province_own",
+      "value": 1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_public_order",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_buff",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_effect_negative",
+      "scope": "character_to_province_enemy",
+      "value": -2.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_effect_positive",
+      "scope": "character_to_province_own",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_public_order",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_effect_negative",
+      "scope": "character_to_province_enemy",
+      "value": -3.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_public_order_effect_positive",
+      "scope": "character_to_province_own",
+      "value": 3.0
+     }
+    ]
+   ]
+  },
+  "civic_6": {
+   "name": "Cleanse Corruption",
+   "icon": "campaign_untainted.png",
+   "row": 7,
+   "tier": 7,
+   "rank": 4,
+   "build": true,
+   "requires": [],
+   "description": "He has seen what the taint becomes. He burns it out early.\\\\n\\\\nUnlocks the Cleanse Corruption hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff",
+      "scope": "character_to_character_own",
+      "value": 1.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_reduction_effect",
+      "scope": "character_to_province_any",
+      "value": -1.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_reduction_effect",
+      "scope": "character_to_province_any",
+      "value": -2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_spread_corruption",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_spread_corruption_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     },
+     {
+      "effect": "wh3_main_effect_agent_action_passive_spread_corruption_reduction_effect",
+      "scope": "character_to_province_any",
+      "value": -3.0
+     }
+    ]
+   ]
+  },
+  "civic_7": {
+   "name": "Stimulate Growth",
+   "icon": "campaign_growth.png",
+   "row": 6,
+   "tier": 10,
+   "rank": 3,
+   "build": true,
+   "requires": [],
+   "description": "He remembers which years the crops failed, and plants for them.\\\\n\\\\nUnlocks the Stimulate Growth hero action.",
+   "levels": [
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_stimulate_growth",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_buff",
+      "scope": "character_to_character_own",
+      "value": 10.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_effect_negative",
+      "scope": "character_to_province_enemy",
+      "value": -10.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_effect_positive",
+      "scope": "character_to_province_own",
+      "value": 10.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_stimulate_growth",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_buff",
+      "scope": "character_to_character_own",
+      "value": 20.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_effect_negative",
+      "scope": "character_to_province_enemy",
+      "value": -20.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_effect_positive",
+      "scope": "character_to_province_own",
+      "value": 20.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_stimulate_growth",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_buff",
+      "scope": "character_to_character_own",
+      "value": 30.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_effect_negative",
+      "scope": "character_to_province_enemy",
+      "value": -30.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_stimulate_growth_effect_positive",
+      "scope": "character_to_province_own",
+      "value": 30.0
+     }
+    ]
+   ]
+  },
+  "civic_8": {
+   "name": "Increase Trade",
+   "icon": "campaign_trade.png",
+   "row": 7,
+   "tier": 8,
+   "rank": 5,
+   "build": true,
+   "requires": [],
+   "description": "He knows which roads will close, and which ships will sink.\\\\n\\\\nUnlocks the Increase Trade hero action.",
+   "levels": [
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_increase_trade",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_increase_trade_buff",
+      "scope": "character_to_character_own",
+      "value": 6.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_increase_trade",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_increase_trade_buff",
+      "scope": "character_to_character_own",
+      "value": 16.0
+     }
+    ],
+    [
+     {
+      "effect": "advisor_overhaul_effect_enable_champion_passive_increase_trade",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_increase_trade_buff",
+      "scope": "character_to_character_own",
+      "value": 30.0
+     }
+    ]
+   ]
+  },
+  "civic_9": {
+   "name": "Boost Income",
+   "icon": "campaign_military_spending.png",
+   "row": 6,
+   "tier": 11,
+   "rank": 1,
+   "build": true,
+   "requires": [],
+   "description": "Half the counting-houses in the Empire owe him money from a life they cannot remember.\\\\n\\\\nImproves his Boost Income hero action, which he always has.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_buff",
+      "scope": "character_to_character_own",
+      "value": 2.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_negative",
+      "scope": "character_to_region_enemy_provincewide",
+      "value": -2.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_positive",
+      "scope": "character_to_region_own_provincewide",
+      "value": 2.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_buff",
+      "scope": "character_to_character_own",
+      "value": 4.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_negative",
+      "scope": "character_to_region_enemy_provincewide",
+      "value": -4.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_positive",
+      "scope": "character_to_region_own_provincewide",
+      "value": 4.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_buff",
+      "scope": "character_to_character_own",
+      "value": 6.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_negative",
+      "scope": "character_to_region_enemy_provincewide",
+      "value": -6.0
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_positive",
+      "scope": "character_to_region_own_provincewide",
+      "value": 6.0
+     }
+    ]
+   ]
+  },
+  "civic_10": {
+   "name": "Steal Technology",
+   "icon": "campaign_technology.png",
+   "row": 7,
+   "tier": 6,
+   "rank": 6,
+   "build": true,
+   "requires": [],
+   "description": "He has read books that have not been written yet. Theirs are easier.\\\\n\\\\nUnlocks the Steal Technology hero action.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_steal_technology",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_steal_technology_buff",
+      "scope": "character_to_character_own",
+      "value": 3.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_steal_technology",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_steal_technology_buff",
+      "scope": "character_to_character_own",
+      "value": 6.0
+     }
+    ],
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_steal_technology",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_hinder_settlement_steal_technology_buff",
+      "scope": "character_to_character_own",
+      "value": 10.0
+     }
+    ]
+   ]
+  },
+  "martial_apex": {
+   "name": "The Last Sword",
+   "icon": "character_attack.png",
+   "row": 7,
+   "tier": 9,
+   "rank": 25,
+   "build": true,
+   "role": "apex",
+   "requires": [],
+   "description": "At the end of one world he was the last one standing. He intends to be again.\\\\n\\\\nThe Martial row's Apex. Takes the place of the other Apexes and the Polymath.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_agent_action_success_chance",
+      "scope": "character_to_character_own",
+      "value": 10
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_attack",
+      "scope": "character_to_character_own",
+      "value": 12
+     },
+     {
+      "effect": "wh_main_effect_character_stat_melee_defence",
+      "scope": "character_to_character_own",
+      "value": 12
+     },
+     {
+      "effect": "wh_main_effect_character_stat_ward_save",
+      "scope": "character_to_character_own",
+      "value": 10
+     }
+    ]
+   ],
+   "exclusive": [
+    "arts_apex",
+    "civic_apex",
+    "magic_archmage"
+   ]
+  },
+  "civic_apex": {
+   "name": "Power Behind Thrones",
+   "icon": "campaign_army.png",
+   "row": 6,
+   "tier": 13,
+   "rank": 25,
+   "build": true,
+   "role": "apex",
+   "requires": [],
+   "description": "Kings come and go. He has advised most of them, in one world or another.\\\\n\\\\nThe Civic row's Apex. Takes the place of the other Apexes and the Polymath.",
+   "levels": [
+    [
+     {
+      "effect": "wh_main_effect_public_order_characters",
+      "scope": "character_to_province_own",
+      "value": 6
+     },
+     {
+      "effect": "wh_main_effect_province_growth_characters",
+      "scope": "character_to_province_own",
+      "value": 30
+     },
+     {
+      "effect": "wh_main_effect_economy_gdp_mod_all",
+      "scope": "character_to_region_own_provincewide",
+      "value": 15
+     },
+     {
+      "effect": "wh_main_effect_building_construction_cost_mod",
+      "scope": "character_to_region_own_provincewide",
+      "value": -15
+     }
+    ]
+   ],
+   "exclusive": [
+    "arts_apex",
+    "magic_archmage",
+    "martial_apex"
+   ]
+  },
+  "actions_default": {
+   "name": "Default Actions",
+   "icon": "campaign_item.png",
+   "row": 0,
+   "tier": 0,
+   "rank": 1,
+   "build": true,
+   "hidden": true,
+   "learned": true,
+   "requires": [],
+   "description": "The hero actions he always has: Scouting, which lets him join an army, Scout Settlement and Boost Income.",
+   "levels": [
+    [
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_assist_army_scouting",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_hinder_settlement_scout_settlement",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_enable_wizard_passive_boost_income",
+      "scope": "character_to_character_own",
+      "value": 1
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_negative",
+      "scope": "character_to_region_enemy_provincewide",
+      "value": -5
+     },
+     {
+      "effect": "wh2_main_effect_agent_action_passive_boost_income_effect_positive",
+      "scope": "character_to_region_own_provincewide",
+      "value": 5
+     }
+    ]
+   ]
+  }
+ },
+ "lores": {
+  "wh_main_lore_fire": {
+   "name": "Lore of Fire",
+   "description": "Aqshy, the first Wind he ever felt. It burned his hands then too.",
+   "icon": "wh_main_lore_passive_kindleflame.png",
+   "row": 4,
+   "tier": 0,
+   "rank": 1,
+   "build": true
+  },
+  "wh_dlc03_lore_beasts": {
+   "name": "Lore of Beasts",
+   "description": "Ghur, learned from a beastmaster in a world where men had lost.",
+   "icon": "wh_dlc03_lore_passive_wild_heart.png",
+   "row": 4,
+   "tier": 1,
+   "rank": 1,
+   "build": true
+  },
+  "wh_main_lore_metal": {
+   "name": "Lore of Metal",
+   "description": "Chamon, the patient lore of things that last. Nothing lasted.",
+   "icon": "wh_main_spell_metal_plague_of_rust.png",
+   "row": 4,
+   "tier": 2,
+   "rank": 1,
+   "build": true
+  },
+  "wh_main_lore_heavens": {
+   "name": "Lore of the Heavens",
+   "description": "Azyr. He read the stars that fell on the last night.",
+   "icon": "wh_main_lore_passive_roiling_skies.png",
+   "row": 4,
+   "tier": 3,
+   "rank": 1,
+   "build": true
+  },
+  "wh_main_lore_light": {
+   "name": "Lore of Light",
+   "description": "Hysh, kept burning in a temple after every other light went out.",
+   "icon": "wh_main_lore_passive_exorcism.png",
+   "row": 4,
+   "tier": 4,
+   "rank": 1,
+   "build": true
+  },
+  "wh_dlc05_lore_life": {
+   "name": "Lore of Life",
+   "description": "Ghyran. He grew a garden on a dead world, just to see if he could.",
+   "icon": "wh_dlc05_spell_life_awakening_of_the_wood.png",
+   "row": 4,
+   "tier": 5,
+   "rank": 1,
+   "build": true
+  },
+  "wh_dlc05_lore_shadows": {
+   "name": "Lore of Shadows",
+   "description": "Ulgu, the lore of not being where the end is looking.",
+   "icon": "wh_dlc05_lore_passive_smoke_and_mirrors.png",
+   "row": 4,
+   "tier": 6,
+   "rank": 1,
+   "build": true
+  },
+  "wh_main_lore_death": {
+   "name": "Lore of Death",
+   "description": "Shyish. He has more right to this lore than any Amethyst magister alive.",
+   "icon": "wh_main_lore_passive_life_leeching.png",
+   "row": 4,
+   "tier": 7,
+   "rank": 1,
+   "build": true
+  },
+  "wh2_main_lore_high_magic": {
+   "name": "High Magic",
+   "description": "Qhaysh, taught by an elf who outlived her island by a hundred years.",
+   "icon": "wh2_main_lore_passive_shield_of_saphery.png",
+   "row": 4,
+   "tier": 8,
+   "rank": 1,
+   "build": true
+  },
+  "wh3_main_lore_of_ice": {
+   "name": "Lore of Ice",
+   "description": "The cold that came after the fires, in a world that ended slowly.",
+   "icon": "wh3_main_lore_passive_frost_shield.png",
+   "row": 4,
+   "tier": 9,
+   "rank": 1,
+   "build": true
+  },
+  "wh3_main_lore_of_tempest": {
+   "name": "Lore of Tempest",
+   "description": "Storms he walked through for a century to reach the next ending.",
+   "icon": "wh3_main_spell_tempest_hailstorm.png",
+   "row": 4,
+   "tier": 10,
+   "rank": 1,
+   "build": true
+  },
+  "wh3_main_lore_of_yang": {
+   "name": "Lore of Yang",
+   "description": "Half a truth from Cathay. The other half is the next skill.",
+   "icon": "wh3_main_lore_passive_strength_of_yang.png",
+   "row": 4,
+   "tier": 11,
+   "rank": 1,
+   "build": true
+  },
+  "wh3_main_lore_of_yin": {
+   "name": "Lore of Yin",
+   "description": "The other half. He has never managed to hold both at once. Yet.",
+   "icon": "wh3_main_lore_passive_power_of_yin.png",
+   "row": 4,
+   "tier": 12,
+   "rank": 1,
+   "build": true
+  },
+  "wh3_dlc27_lore_mists": {
+   "name": "Lore of Mists",
+   "description": "Sea-fog spells from a coast that sank.",
+   "icon": "wh3_dlc27_spell_mists_flensing_haar.png",
+   "row": 4,
+   "tier": 13,
+   "rank": 1,
+   "build": true
+  },
+  "wh3_dlc24_lore_hag": {
+   "name": "Lore of the Hag",
+   "description": "Old witch-craft from the far north, bought at a price he still pays.",
+   "icon": "wh3_dlc24_lore_passive_fate_of_interlopers.png",
+   "row": 4,
+   "tier": 14,
+   "rank": 1,
+   "build": true
+  },
+  "wh2_main_lore_dark_magic": {
+   "name": "Dark Magic",
+   "description": "Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.",
+   "icon": "wh2_main_lore_passive_spiteful_conjuration.png",
+   "row": 5,
+   "tier": 0,
+   "rank": 5,
+   "build": true
+  },
+  "wh_main_lore_vampires": {
+   "name": "Lore of Vampires",
+   "description": "Taught by a count who wanted a friend for the long dark.",
+   "icon": "wh_main_lore_passive_the_curse_of_undeath.png",
+   "row": 5,
+   "tier": 1,
+   "rank": 5,
+   "build": true
+  },
+  "wh3_dlc29_lore_undeath": {
+   "name": "Lore of Undeath",
+   "description": "The Great Necromancer's own words, from a world where he won.",
+   "icon": "wh3_dlc29_lore_passive_raise_the_dead.png",
+   "row": 5,
+   "tier": 2,
+   "rank": 5,
+   "build": true
+  },
+  "wh2_dlc09_lore_nehekhara": {
+   "name": "Lore of Nehekhara",
+   "description": "Incantations a liche priest taught him in exchange for a name.",
+   "icon": "wh2_dlc09_spell_nehekhara_djafs_incantation_of_cursed_blades.png",
+   "row": 5,
+   "tier": 3,
+   "rank": 5,
+   "build": true
+  },
+  "wh2_dlc11_lore_deep": {
+   "name": "Lore of the Deep",
+   "description": "Drowned magic, from a fleet that sailed off the end of the world.",
+   "icon": "wh2_dlc11_spell_deep_denizens_of_the_deep.png",
+   "row": 5,
+   "tier": 4,
+   "rank": 5,
+   "build": true
+  },
+  "wh_main_lore_big_waaagh": {
+   "name": "Big Waaagh!",
+   "description": "It should not work for a man. It works for him. He does not know why.",
+   "icon": "wh_main_lore_passive_power_of_da_waaagh.png",
+   "row": 5,
+   "tier": 5,
+   "rank": 5,
+   "build": true
+  },
+  "wh_main_lore_lil_waaagh": {
+   "name": "Little Waaagh!",
+   "description": "Goblin magic, learned by losing a lot of card games.",
+   "icon": "wh_main_lore_passive_sneaky_stealin.png",
+   "row": 5,
+   "tier": 6,
+   "rank": 5,
+   "build": true
+  },
+  "wh3_dlc23_lore_hashut": {
+   "name": "Lore of Hashut",
+   "description": "Fire and slavery, from the furnace-priests of a world they burned.",
+   "icon": "wh3_dlc23_lore_passive_killing_fire.png",
+   "row": 5,
+   "tier": 7,
+   "rank": 5,
+   "build": true
+  },
+  "wh2_main_lore_ruin": {
+   "name": "Lore of Ruin",
+   "description": "Warp lightning. He has seen what is left when the Horned Rat wins.",
+   "icon": "wh2_main_lore_passive_musk_of_fear.png",
+   "row": 5,
+   "tier": 8,
+   "rank": 5,
+   "build": true
+  },
+  "wh2_main_lore_plague": {
+   "name": "Lore of Plague",
+   "description": "He caught it once. He got better. Nobody else did.",
+   "icon": "wh2_main_lore_passive_plague_rash.png",
+   "row": 5,
+   "tier": 9,
+   "rank": 5,
+   "build": true
+  },
+  "wh2_dlc14_lore_stealth": {
+   "name": "Lore of Stealth",
+   "description": "The Eshin sorcerers' tricks, learned by being their target for a decade.",
+   "icon": "wh2_dlc14_skill_all_magic_stealth_05_veil_of_shadows.png",
+   "row": 5,
+   "tier": 10,
+   "rank": 5,
+   "build": true
+  },
+  "wh3_main_lore_nurgle": {
+   "name": "Lore of Nurgle",
+   "description": "Grandfather's kindness. He refused it, and kept the spells.",
+   "icon": "wh3_main_lore_passive_children_of_nurgle.png",
+   "row": 5,
+   "tier": 11,
+   "rank": 5,
+   "build": true
+  },
+  "wh3_main_lore_slaanesh": {
+   "name": "Lore of Slaanesh",
+   "description": "He refused this one too. It was harder.",
+   "icon": "wh3_main_lore_passive_blissful_rapture.png",
+   "row": 5,
+   "tier": 12,
+   "rank": 5,
+   "build": true
+  },
+  "wh3_main_lore_of_great_maw": {
+   "name": "Lore of the Great Maw",
+   "description": "Gut-magic from the Ogre camps, earned by eating what they ate.",
+   "icon": "wh3_main_lore_passive_bloodgruel.png",
+   "row": 5,
+   "tier": 13,
+   "rank": 5,
+   "build": true
+  },
+  "wh_dlc03_lore_wild": {
+   "name": "Lore of the Wild",
+   "description": "The herdstone songs. He sang them at the end, when there was no one left to hear.",
+   "icon": "wh_dlc03_spell_wild_mantle_of_ghorok.png",
+   "row": 5,
+   "tier": 14,
+   "rank": 5,
+   "build": true
+  },
+  "wh2_dlc17_lore_rune": {
+   "name": "Lore of Runes",
+   "description": "A runesmith taught him three runes before the last hold fell. He worked out the rest.",
+   "icon": "wh2_dlc17_rune_abilities_rune_of_breaking.png",
+   "row": 5,
+   "tier": 15,
+   "rank": 5,
+   "build": true
+  }
+ },
+ "actions": [
+  "wh2_main_agent_action_champion_assist_army_scavenge",
+  "wh2_main_agent_action_champion_passive_increase_trade",
+  "wh2_main_agent_action_champion_passive_stimulate_growth",
+  "wh2_main_agent_action_spy_assist_army_increase_mobility",
+  "wh2_main_agent_action_spy_hinder_character_assassinate"
+ ],
+ "zones": [
+  {
+   "title": "Heroes",
+   "description": "Kill or wound rival heroes, and remove their generals.",
+   "rows": [
+    6,
+    7
+   ],
+   "skills": [
+    "martial_0",
+    "martial_1",
+    "martial_2"
+   ]
+  },
+  {
+   "title": "Armies",
+   "description": "Wreck enemy armies in the field, or march and train with your own.",
+   "rows": [
+    6,
+    7
+   ],
+   "skills": [
+    "martial_6",
+    "martial_7",
+    "martial_8",
+    "martial_9",
+    "civic_0",
+    "civic_1",
+    "civic_2",
+    "civic_3",
+    "civic_4"
+   ]
+  },
+  {
+   "title": "Lands",
+   "description": "Sabotage enemy settlements, or bring order, growth and wealth to yours.",
+   "rows": [
+    6,
+    7
+   ],
+   "skills": [
+    "martial_3",
+    "martial_4",
+    "martial_5",
+    "civic_10",
+    "civic_5",
+    "civic_6",
+    "civic_7",
+    "civic_8",
+    "civic_9"
+   ]
+  },
+  {
+   "title": "Mastery",
+   "description": "Cheaper hero actions, and the two Apexes of hero work.",
+   "rows": [
+    6,
+    7
+   ],
+   "skills": [
+    "martial_11",
+    "martial_apex",
+    "civic_apex"
+   ]
+  }
+ ]
 }

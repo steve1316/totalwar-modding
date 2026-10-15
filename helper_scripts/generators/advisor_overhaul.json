@@ -1,4 +1,185 @@
 {
+ "actions": {
+  "links": [
+   {
+    "agent_action_record": "wh2_main_agent_action_champion_assist_army_scavenge",
+    "bonus_value_id": "cost_mod",
+    "effect": "wh2_dlc11_effect_agent_action_cost_mod_excluding_pirate_coves"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_champion_passive_increase_trade",
+    "bonus_value_id": "cost_mod",
+    "effect": "wh2_dlc11_effect_agent_action_cost_mod_excluding_pirate_coves"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_champion_passive_stimulate_growth",
+    "bonus_value_id": "cost_mod",
+    "effect": "wh2_dlc11_effect_agent_action_cost_mod_excluding_pirate_coves"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_spy_assist_army_increase_mobility",
+    "bonus_value_id": "cost_mod",
+    "effect": "wh2_dlc11_effect_agent_action_cost_mod_excluding_pirate_coves"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_spy_hinder_character_assassinate",
+    "bonus_value_id": "cost_mod",
+    "effect": "wh2_dlc11_effect_agent_action_cost_mod_excluding_pirate_coves"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_champion_assist_army_scavenge",
+    "bonus_value_id": "active",
+    "effect": "wh2_main_effect_agent_action_enable_champion_assist_army_scavenge"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_champion_passive_increase_trade",
+    "bonus_value_id": "active",
+    "effect": "wh2_main_effect_agent_action_enable_champion_passive_increase_trade"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_champion_passive_stimulate_growth",
+    "bonus_value_id": "active",
+    "effect": "wh2_main_effect_agent_action_enable_champion_passive_stimulate_growth"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_spy_assist_army_increase_mobility",
+    "bonus_value_id": "active",
+    "effect": "wh2_main_effect_agent_action_enable_spy_assist_army_enhance_mobility"
+   },
+   {
+    "agent_action_record": "wh2_main_agent_action_spy_hinder_character_assassinate",
+    "bonus_value_id": "active",
+    "effect": "wh2_main_effect_agent_action_enable_spy_hinder_character_assassinate"
+   }
+  ],
+  "rows": {
+   "wh2_main_agent_action_champion_assist_army_scavenge": {
+    "ability": "assist_army",
+    "agent": "champion",
+    "attribute": "zeal",
+    "cannot_fail": "wh2_main_agent_action_assist_army_cannot_fail_scavenge",
+    "chance_of_success": "100",
+    "critical_failure": "wh_main_agent_action_dummy_critical_failure",
+    "critical_failure_proportion_modifier": "1.0000",
+    "critical_success": "wh_main_agent_action_dummy_critical_success",
+    "critical_success_proportion_modifier": "0.0000",
+    "failure": "wh_main_agent_action_dummy_failure",
+    "icon_path": "ui/campaign ui/effect_bundles/income.png",
+    "localised_action_description": "[[col:yellow]]Increases the {{tr:icon_income}}income of post-battle loot earned by the parent army by %n%.[[/col]]",
+    "localised_action_name": "{{tr:agent_action_name_scavenge}}",
+    "opportune_failure": "wh_main_agent_action_dummy_failure",
+    "opportune_failure_proportion_modifier": "0.0000",
+    "order": "0",
+    "show_action_info_in_ui": "true",
+    "subculture": "",
+    "succeed_always_override": "true",
+    "success": "wh_main_agent_action_dummy_success",
+    "target_attribute": "zeal",
+    "unique_id": "wh2_main_agent_action_champion_assist_army_scavenge",
+    "voiceover": "vo_campaign_action_own_army"
+   },
+   "wh2_main_agent_action_champion_passive_increase_trade": {
+    "ability": "passive_ability",
+    "agent": "champion",
+    "attribute": "zeal",
+    "cannot_fail": "wh2_main_agent_action_passive_cannot_fail_increase_trade",
+    "chance_of_success": "100",
+    "critical_failure": "wh_main_agent_action_dummy_critical_failure",
+    "critical_failure_proportion_modifier": "1.0000",
+    "critical_success": "wh_main_agent_action_dummy_critical_success",
+    "critical_success_proportion_modifier": "0.0000",
+    "failure": "wh_main_agent_action_dummy_failure",
+    "icon_path": "ui/campaign ui/effect_bundles/trade_agreement.png",
+    "localised_action_description": "[[col:yellow]]Increases tradable resources produced in the local province by %n%.[[/col]]",
+    "localised_action_name": "{{tr:agent_action_name_increase_trade}}",
+    "opportune_failure": "wh_main_agent_action_dummy_failure",
+    "opportune_failure_proportion_modifier": "0.0000",
+    "order": "0",
+    "show_action_info_in_ui": "true",
+    "subculture": "",
+    "succeed_always_override": "true",
+    "success": "wh_main_agent_action_dummy_success",
+    "target_attribute": "zeal",
+    "unique_id": "wh2_main_agent_action_champion_passive_increase_trade",
+    "voiceover": "vo_campaign_action_passive"
+   },
+   "wh2_main_agent_action_champion_passive_stimulate_growth": {
+    "ability": "passive_ability",
+    "agent": "champion",
+    "attribute": "zeal",
+    "cannot_fail": "wh2_main_agent_action_passive_cannot_fail_stimulate_growth",
+    "chance_of_success": "100",
+    "critical_failure": "wh_main_agent_action_dummy_critical_failure",
+    "critical_failure_proportion_modifier": "1.0000",
+    "critical_success": "wh_main_agent_action_dummy_critical_success",
+    "critical_success_proportion_modifier": "0.0000",
+    "failure": "wh_main_agent_action_dummy_failure",
+    "icon_path": "ui/campaign ui/effect_bundles/growth.png",
+    "localised_action_description": "[[col:yellow]]Increases [[img:icon_growth]][[/img]]growth in the local province by %n (reduces in enemy provinces).[[/col]]",
+    "localised_action_name": "{{tr:agent_action_name_stimulate_growth}}",
+    "opportune_failure": "wh_main_agent_action_dummy_failure",
+    "opportune_failure_proportion_modifier": "0.0000",
+    "order": "0",
+    "show_action_info_in_ui": "true",
+    "subculture": "",
+    "succeed_always_override": "true",
+    "success": "wh_main_agent_action_dummy_success",
+    "target_attribute": "zeal",
+    "unique_id": "wh2_main_agent_action_champion_passive_stimulate_growth",
+    "voiceover": "vo_campaign_action_passive"
+   },
+   "wh2_main_agent_action_spy_assist_army_increase_mobility": {
+    "ability": "assist_army",
+    "agent": "spy",
+    "attribute": "subterfuge",
+    "cannot_fail": "wh2_main_agent_action_assist_army_cannot_fail_increase_mobility",
+    "chance_of_success": "100",
+    "critical_failure": "wh_main_agent_action_dummy_critical_failure",
+    "critical_failure_proportion_modifier": "1.0000",
+    "critical_success": "wh_main_agent_action_dummy_critical_success",
+    "critical_success_proportion_modifier": "0.0000",
+    "failure": "wh_main_agent_action_dummy_failure",
+    "icon_path": "ui/campaign ui/effect_bundles/campaign_movement.png",
+    "localised_action_description": "[[col:yellow]]Increases the campaign movement range of the parent army by %n%.[[/col]]",
+    "localised_action_name": "{{tr:agent_action_name_increase_mobility}}",
+    "opportune_failure": "wh_main_agent_action_dummy_failure",
+    "opportune_failure_proportion_modifier": "0.0000",
+    "order": "0",
+    "show_action_info_in_ui": "true",
+    "subculture": "",
+    "succeed_always_override": "true",
+    "success": "wh_main_agent_action_dummy_success",
+    "target_attribute": "subterfuge",
+    "unique_id": "wh2_main_agent_action_spy_assist_army_increase_mobility",
+    "voiceover": "vo_campaign_action_own_army"
+   },
+   "wh2_main_agent_action_spy_hinder_character_assassinate": {
+    "ability": "hinder_character",
+    "agent": "spy",
+    "attribute": "subterfuge",
+    "cannot_fail": "wh2_dlc10_agent_action_shadow_walker_hinder_agent_success",
+    "chance_of_success": "100",
+    "critical_failure": "wh2_dlc10_agent_action_shadow_walker_hinder_agent_success",
+    "critical_failure_proportion_modifier": "0.5000",
+    "critical_success": "wh2_dlc10_agent_action_shadow_walker_hinder_agent_success",
+    "critical_success_proportion_modifier": "3.0000",
+    "failure": "wh2_dlc10_agent_action_shadow_walker_hinder_agent_success",
+    "icon_path": "ui/campaign ui/effect_bundles/subterfuge.png",
+    "localised_action_description": "[[col:yellow]]Kills the target Character.[[/col]]\\n[[col:red]]This action will kill the Hand of the Shadow Crown![[/col]]",
+    "localised_action_name": "{{tr:agent_action_name_assassinate}}",
+    "opportune_failure": "wh2_dlc10_agent_action_shadow_walker_hinder_agent_success",
+    "opportune_failure_proportion_modifier": "0.0000",
+    "order": "0",
+    "show_action_info_in_ui": "true",
+    "subculture": "",
+    "succeed_always_override": "true",
+    "success": "wh2_dlc10_agent_action_shadow_walker_hinder_agent_success",
+    "target_attribute": "subterfuge",
+    "unique_id": "wh2_main_agent_action_spy_hinder_character_assassinate",
+    "voiceover": "vo_campaign_action_enemy_character"
+   }
+  }
+ },
  "agent_subtypes": {
   "wh2_pro07_emp_amethyst_wizard": {
    "associated_unit_override": "wh2_pro07_emp_cha_wizard_death_0",
@@ -55,6 +236,568 @@
    "spam_click_vo_enabled": "false"
   }
  },
+ "ancillary_types": [
+  "wh2_dlc09_anc_magic_standard_banner_of_the_hidden_dead",
+  "wh2_dlc09_anc_magic_standard_standard_of_the_undying_legion",
+  "wh2_dlc09_anc_mount_casket_of_souls",
+  "wh2_dlc09_anc_mount_chariot_of_the_gods",
+  "wh2_dlc09_anc_mount_khemrian_warsphinx",
+  "wh2_dlc09_anc_mount_necroserpent",
+  "wh2_dlc09_anc_mount_skeleton_chariot",
+  "wh2_dlc09_anc_mount_skeleton_steed_tmb",
+  "wh2_dlc09_anc_tmb_herald",
+  "wh2_dlc09_anc_tmb_liche_priest",
+  "wh2_dlc09_anc_tmb_necrotect",
+  "wh2_dlc09_anc_tmb_prince",
+  "wh2_dlc09_anc_tmb_skeleton",
+  "wh2_dlc09_anc_tmb_ushabti",
+  "wh2_dlc10_anc_magic_standard_banner_of_avelorn",
+  "wh2_dlc11_anc_follower_captain_drekla",
+  "wh2_dlc11_anc_follower_ravenous_dead",
+  "wh2_dlc11_anc_follower_sailor_man",
+  "wh2_dlc11_anc_follower_siren",
+  "wh2_dlc11_anc_follower_zombie",
+  "wh2_dlc11_anc_magic_standard_bloodied_banner_of_slayers",
+  "wh2_dlc11_anc_magic_standard_boatswain",
+  "wh2_dlc11_anc_magic_standard_burnt_banner_of_knights",
+  "wh2_dlc11_anc_magic_standard_corpse_surgeon",
+  "wh2_dlc11_anc_magic_standard_dead_mans_chest",
+  "wh2_dlc11_anc_magic_standard_holed_banner_of_militia",
+  "wh2_dlc11_anc_magic_standard_rookie_gunner",
+  "wh2_dlc11_anc_magic_standard_ships_colors",
+  "wh2_dlc11_anc_magic_standard_skull_and_crossbones",
+  "wh2_dlc11_anc_magic_standard_spell_of_the_necromancers_apprentice",
+  "wh2_dlc11_anc_magic_standard_throwing_bombs",
+  "wh2_dlc11_anc_magic_standard_torn_banner_of_pilgrims",
+  "wh2_dlc11_anc_mount_necrofex_colossus",
+  "wh2_dlc11_anc_mount_rotting_leviathon",
+  "wh2_dlc11_anc_mount_rotting_promethean",
+  "wh2_dlc12_anc_banner_cape_of_sniper",
+  "wh2_dlc12_anc_banner_incendiary_rounds",
+  "wh2_dlc12_anc_banner_tracer_rounds",
+  "wh2_dlc12_anc_mount_ancient_stegadon_engine_gods",
+  "wh2_dlc12_anc_mount_doom_flayer",
+  "wh2_dlc12_anc_mount_doomwheel",
+  "wh2_dlc12_anc_mount_horned_one",
+  "wh2_dlc12_anc_mount_ripperdactyl",
+  "wh2_dlc12_anc_mount_white_lion_chariot",
+  "wh2_dlc12_lzd_anc_follower_chameleon_spotter",
+  "wh2_dlc12_lzd_anc_follower_consul_of_calith",
+  "wh2_dlc12_lzd_anc_follower_lotl_botls_spawn_brother",
+  "wh2_dlc12_lzd_anc_follower_obsinite_miner_skink",
+  "wh2_dlc12_lzd_anc_follower_piqipoqi_qupacoco",
+  "wh2_dlc12_lzd_anc_follower_priest_of_the_star_chambers",
+  "wh2_dlc12_lzd_anc_follower_prophets_spawn_brother",
+  "wh2_dlc12_lzd_anc_follower_swamp_trawler_skink",
+  "wh2_dlc12_lzd_anc_magic_standard_coatlpelt_flagstaff",
+  "wh2_dlc12_lzd_anc_magic_standard_culchan_feathered_standard",
+  "wh2_dlc12_lzd_anc_magic_standard_exalted_banner_of_xapati",
+  "wh2_dlc12_lzd_anc_magic_standard_flag_of_the_daystar",
+  "wh2_dlc12_lzd_anc_magic_standard_shroud_of_chaqua",
+  "wh2_dlc12_lzd_anc_magic_standard_sign_of_the_coiled_one",
+  "wh2_dlc12_lzd_anc_magic_standard_totem_of_the_spitting_viper",
+  "wh2_dlc12_lzd_anc_magic_standard_totem_pole_of_destiny",
+  "wh2_dlc14_anc_banner_jean_claude_sartre",
+  "wh2_dlc14_anc_banner_pierre_dardens",
+  "wh2_dlc14_anc_banner_rene_de_cartes",
+  "wh2_dlc14_anc_mount_scourgerunner_chariot",
+  "wh2_dlc15_anc_mount_arcane_phoenix",
+  "wh2_dlc15_anc_mount_hef_griffon",
+  "wh2_dlc16_anc_mount_bonebreaker",
+  "wh2_dlc16_anc_mount_brood_horror",
+  "wh2_dlc16_mount_wef_great_stag",
+  "wh2_dlc17_anc_banner_banner_of_unholy_exultation",
+  "wh2_dlc17_anc_banner_bst_banner_of_ghorok",
+  "wh2_dlc17_anc_banner_bst_banner_of_madness",
+  "wh2_dlc17_anc_banner_lzd_poison_daemonbane",
+  "wh2_dlc17_anc_banner_lzd_poison_fireblood_toxin",
+  "wh2_dlc17_anc_banner_lzd_poison_slow_death",
+  "wh2_dlc17_anc_banner_lzd_poison_toadskin_essence",
+  "wh2_dlc17_anc_mount_tuskgor_chariot",
+  "wh2_dlc17_anc_rune_engineering_flakksons_rune_of_seeking",
+  "wh2_dlc17_anc_rune_engineering_master_rune_of_disguise",
+  "wh2_dlc17_anc_rune_engineering_master_rune_of_immolation",
+  "wh2_dlc17_anc_rune_engineering_rune_of_burning",
+  "wh2_dlc17_anc_rune_engineering_rune_of_penetration",
+  "wh2_dlc17_anc_rune_personal_ancestor_rune_of_grimnir",
+  "wh2_dlc17_anc_rune_personal_ancestor_rune_of_grungni",
+  "wh2_dlc17_anc_rune_personal_ancestor_rune_of_valaya",
+  "wh2_dlc17_anc_rune_personal_master_rune_alaric_the_mad",
+  "wh2_dlc17_anc_rune_personal_master_rune_of_adamant",
+  "wh2_dlc17_anc_rune_personal_master_rune_of_flight",
+  "wh2_dlc17_anc_rune_personal_master_rune_of_gromril",
+  "wh2_dlc17_anc_rune_personal_master_rune_of_passage",
+  "wh2_dlc17_anc_rune_personal_master_rune_of_skalf_blackhammer",
+  "wh2_dlc17_anc_rune_personal_master_rune_of_snorri_spangelhelm",
+  "wh2_dlc17_anc_rune_personal_master_rune_of_spite",
+  "wh2_dlc17_anc_rune_personal_rune_of_cleaving",
+  "wh2_dlc17_anc_rune_personal_rune_of_dismay",
+  "wh2_dlc17_anc_rune_personal_rune_of_fear",
+  "wh2_dlc17_anc_rune_personal_rune_of_fire",
+  "wh2_dlc17_anc_rune_personal_rune_of_impact",
+  "wh2_dlc17_anc_rune_personal_rune_of_iron",
+  "wh2_dlc17_anc_rune_personal_rune_of_luck",
+  "wh2_dlc17_anc_rune_personal_rune_of_shielding",
+  "wh2_dlc17_bst_anc_follower_battle_scarred_ungor_raider",
+  "wh2_main_anc_def_assassin",
+  "wh2_main_anc_def_degenerate",
+  "wh2_main_anc_def_slaver",
+  "wh2_main_anc_def_warrior",
+  "wh2_main_anc_def_zealot",
+  "wh2_main_anc_follower_def_fimir_balefiend",
+  "wh2_main_anc_hef_agent",
+  "wh2_main_anc_hef_courtier",
+  "wh2_main_anc_hef_priest",
+  "wh2_main_anc_hef_priestess",
+  "wh2_main_anc_hef_scholar",
+  "wh2_main_anc_hef_warrior",
+  "wh2_main_anc_lzd_saurus_warrior",
+  "wh2_main_anc_lzd_skink_priest",
+  "wh2_main_anc_lzd_skink_scribe",
+  "wh2_main_anc_lzd_skink_servant",
+  "wh2_main_anc_magic_standard_banner_of_ellyrion",
+  "wh2_main_anc_magic_standard_banner_of_murder",
+  "wh2_main_anc_magic_standard_banner_of_the_under_empire",
+  "wh2_main_anc_magic_standard_banner_of_the_world_dragon",
+  "wh2_main_anc_magic_standard_banner_of_verminous_scurrying",
+  "wh2_main_anc_magic_standard_battle_banner",
+  "wh2_main_anc_magic_standard_dread_banner",
+  "wh2_main_anc_magic_standard_dwarf_hide_banner",
+  "wh2_main_anc_magic_standard_grand_banner_of_clan_superiority",
+  "wh2_main_anc_magic_standard_horn_of_isha",
+  "wh2_main_anc_magic_standard_huanchis_blessed_totem",
+  "wh2_main_anc_magic_standard_hydra_banner",
+  "wh2_main_anc_magic_standard_lion_standard",
+  "wh2_main_anc_magic_standard_sacred_banner_of_the_horned_rat",
+  "wh2_main_anc_magic_standard_sea_serpent_standard",
+  "wh2_main_anc_magic_standard_shroud_of_dripping_death",
+  "wh2_main_anc_magic_standard_skavenpelt_banner",
+  "wh2_main_anc_magic_standard_standard_of_hag_graef",
+  "wh2_main_anc_magic_standard_storm_banner",
+  "wh2_main_anc_magic_standard_sun_standard_of_chotec",
+  "wh2_main_anc_magic_standard_sunburst_standard_of_hexoatl",
+  "wh2_main_anc_magic_standard_the_blood_banner",
+  "wh2_main_anc_magic_standard_the_jaguar_standard",
+  "wh2_main_anc_magic_standard_totem_of_prophecy",
+  "wh2_main_anc_mount_ancient_stegadon",
+  "wh2_main_anc_mount_barded_ithilmar_steed",
+  "wh2_main_anc_mount_black_dragon",
+  "wh2_main_anc_mount_carnosaur",
+  "wh2_main_anc_mount_cauldron_of_blood",
+  "wh2_main_anc_mount_cold_one",
+  "wh2_main_anc_mount_cold_one_chariot",
+  "wh2_main_anc_mount_dark_pegasus",
+  "wh2_main_anc_mount_dark_steed",
+  "wh2_main_anc_mount_elven_steed",
+  "wh2_main_anc_mount_grymloq",
+  "wh2_main_anc_mount_horned_one",
+  "wh2_main_anc_mount_ithilmar_chariot",
+  "wh2_main_anc_mount_moon_dragon",
+  "wh2_main_anc_mount_plague_furnace",
+  "wh2_main_anc_mount_rat_ogre",
+  "wh2_main_anc_mount_screaming_bell",
+  "wh2_main_anc_mount_star_dragon",
+  "wh2_main_anc_mount_stegadon",
+  "wh2_main_anc_mount_sun_dragon",
+  "wh2_main_anc_mount_terradon",
+  "wh2_main_anc_skv_assassin",
+  "wh2_main_anc_skv_sea_cucumber",
+  "wh2_main_anc_skv_servant",
+  "wh2_main_anc_skv_warplock_engineer",
+  "wh2_main_anc_skv_warrior",
+  "wh2_twa01_anc_mount_spider_shrine",
+  "wh3_cp1_anc_mount_goblin_wolf_chariot",
+  "wh3_cp1_anc_mount_war_boar_chariot",
+  "wh3_dlc21_anc_rune_personal_master_rune_of_cleansing",
+  "wh3_dlc23_anc_banner_chd_banner_of_the_khanate",
+  "wh3_dlc23_anc_banner_chd_eye_of_hashut",
+  "wh3_dlc23_anc_banner_chd_hellbound_standard",
+  "wh3_dlc23_anc_banner_chd_hobgoblin_standard",
+  "wh3_dlc23_anc_banner_chd_oath_of_contempt",
+  "wh3_dlc23_anc_banner_chd_standard_of_zharr",
+  "wh3_dlc23_anc_follower_arms_merchant",
+  "wh3_dlc23_anc_follower_artificer",
+  "wh3_dlc23_anc_follower_castellan_drillmaster",
+  "wh3_dlc23_anc_follower_convoy_enforcer",
+  "wh3_dlc23_anc_follower_dark_prophet",
+  "wh3_dlc23_anc_follower_devoted_of_hashut",
+  "wh3_dlc23_anc_follower_hobgoblin_scout",
+  "wh3_dlc23_anc_follower_infernal_deathmask",
+  "wh3_dlc23_anc_follower_infernal_engineer",
+  "wh3_dlc23_anc_follower_infernal_musician",
+  "wh3_dlc23_anc_follower_k'daai_hellsmith",
+  "wh3_dlc23_anc_follower_khanate_assassin",
+  "wh3_dlc23_anc_follower_khanate_raider",
+  "wh3_dlc23_anc_follower_khanate_scout",
+  "wh3_dlc23_anc_follower_navigator",
+  "wh3_dlc23_anc_follower_neu_gabriella",
+  "wh3_dlc23_anc_follower_sorcerer_priest",
+  "wh3_dlc23_anc_follower_taur'ruk_guardian",
+  "wh3_dlc23_anc_follower_train_operator",
+  "wh3_dlc23_anc_follower_veteran_overseer",
+  "wh3_dlc23_anc_follower_warsmith",
+  "wh3_dlc23_anc_mount_bale_taurus",
+  "wh3_dlc23_anc_mount_bale_taurus_cinderbreath",
+  "wh3_dlc23_anc_mount_great_taurus",
+  "wh3_dlc23_anc_mount_lammasu",
+  "wh3_dlc24_anc_mount_celestial_lion",
+  "wh3_dlc24_anc_mount_frost_wyrm",
+  "wh3_dlc24_anc_mount_great_moon_bird",
+  "wh3_dlc24_anc_mount_ice_court_sled",
+  "wh3_dlc25_anc_banner_arachnarok_trophy",
+  "wh3_dlc25_anc_banner_dragon_hide_cloaks",
+  "wh3_dlc25_anc_banner_emp_doomfire_ring",
+  "wh3_dlc25_anc_banner_emp_everwood_root",
+  "wh3_dlc25_anc_banner_emp_frostfire_gem",
+  "wh3_dlc25_anc_banner_rune_of_the_furnace",
+  "wh3_dlc25_anc_chieftain_bray_shaman",
+  "wh3_dlc25_anc_chieftain_castellan",
+  "wh3_dlc25_anc_chieftain_exalted_hero",
+  "wh3_dlc25_anc_chieftain_fimir_balefiend",
+  "wh3_dlc25_anc_chieftain_kazyk",
+  "wh3_dlc25_anc_chieftain_werekin",
+  "wh3_dlc25_anc_mount_carmine_dragon",
+  "wh3_dlc25_anc_mount_mechanical_steed",
+  "wh3_dlc25_anc_mount_nur_bubebolos",
+  "wh3_dlc25_anc_mount_reaper",
+  "wh3_dlc25_anc_mount_rot_beast",
+  "wh3_dlc25_anc_mount_steam_tank",
+  "wh3_dlc25_anc_rune_rune_of_thungni",
+  "wh3_dlc26_anc_mount_kho_arbaal_flesh_hound",
+  "wh3_dlc26_golgfag_contract_anc_banner_berserk",
+  "wh3_dlc26_golgfag_contract_anc_banner_black_dragon_egg",
+  "wh3_dlc26_golgfag_contract_anc_banner_black_powder_aplenty",
+  "wh3_dlc26_golgfag_contract_anc_banner_blackpowder_discipline",
+  "wh3_dlc26_golgfag_contract_anc_banner_blast_proof_gutplates",
+  "wh3_dlc26_golgfag_contract_anc_banner_blessing_of_the_lady",
+  "wh3_dlc26_golgfag_contract_anc_banner_bomb_throw",
+  "wh3_dlc26_golgfag_contract_anc_banner_bone_muncha",
+  "wh3_dlc26_golgfag_contract_anc_banner_brooding_maneaters",
+  "wh3_dlc26_golgfag_contract_anc_banner_bulwark_of_the_gate",
+  "wh3_dlc26_golgfag_contract_anc_banner_by_our_blood",
+  "wh3_dlc26_golgfag_contract_anc_banner_dark_benediction",
+  "wh3_dlc26_golgfag_contract_anc_banner_deflection_training",
+  "wh3_dlc26_golgfag_contract_anc_banner_flag_of_blood_keep",
+  "wh3_dlc26_golgfag_contract_anc_banner_glorious_charge",
+  "wh3_dlc26_golgfag_contract_anc_banner_guardians_of_the_wildwood",
+  "wh3_dlc26_golgfag_contract_anc_banner_hawkish_precision",
+  "wh3_dlc26_golgfag_contract_anc_banner_hellforge_blades",
+  "wh3_dlc26_golgfag_contract_anc_banner_horned_rat",
+  "wh3_dlc26_golgfag_contract_anc_banner_lion_cloak",
+  "wh3_dlc26_golgfag_contract_anc_banner_maneater_knights",
+  "wh3_dlc26_golgfag_contract_anc_banner_maneater_woodsman",
+  "wh3_dlc26_golgfag_contract_anc_banner_martial_prowess",
+  "wh3_dlc26_golgfag_contract_anc_banner_murderous_prowess",
+  "wh3_dlc26_golgfag_contract_anc_banner_night_goblin_toxins",
+  "wh3_dlc26_golgfag_contract_anc_banner_overwhelming_odour",
+  "wh3_dlc26_golgfag_contract_anc_banner_pigeon_bomb",
+  "wh3_dlc26_golgfag_contract_anc_banner_predatory_fighter",
+  "wh3_dlc26_golgfag_contract_anc_banner_primal_instincts",
+  "wh3_dlc26_golgfag_contract_anc_banner_rage",
+  "wh3_dlc26_golgfag_contract_anc_banner_ratbag_tactics",
+  "wh3_dlc26_golgfag_contract_anc_banner_red_crest_toxins",
+  "wh3_dlc26_golgfag_contract_anc_banner_rotten_diet",
+  "wh3_dlc26_golgfag_contract_anc_banner_runes_of_protection",
+  "wh3_dlc26_golgfag_contract_anc_banner_shield_of_distraction",
+  "wh3_dlc26_golgfag_contract_anc_banner_slayer",
+  "wh3_dlc26_golgfag_contract_anc_banner_taunt",
+  "wh3_dlc26_golgfag_contract_anc_banner_the_hungry",
+  "wh3_dlc26_golgfag_contract_anc_banner_tools_of_judgement",
+  "wh3_dlc26_golgfag_contract_anc_banner_undying_will",
+  "wh3_dlc26_golgfag_contract_anc_banner_verminous_doom",
+  "wh3_dlc26_golgfag_contract_anc_banner_waaaagh",
+  "wh3_dlc26_golgfag_contract_anc_banner_warpaint",
+  "wh3_dlc26_golgfag_contract_anc_banner_witchbrew",
+  "wh3_dlc26_golgfag_contract_anc_banner_worthy_foe",
+  "wh3_dlc26_golgfag_contract_anc_banner_yang",
+  "wh3_dlc26_golgfag_contract_anc_banner_yin",
+  "wh3_dlc27_anc_dechala_gift_adoration",
+  "wh3_dlc27_anc_dechala_gift_ambition",
+  "wh3_dlc27_anc_dechala_gift_death",
+  "wh3_dlc27_anc_dechala_gift_revelry",
+  "wh3_dlc27_anc_dechala_gift_subtlety",
+  "wh3_dlc27_anc_dechala_gift_tongues",
+  "wh3_dlc27_anc_follower_power_familiar",
+  "wh3_dlc27_anc_follower_warrior_familiar",
+  "wh3_dlc27_anc_mount_caradryan_ashtari",
+  "wh3_dlc27_anc_mount_daemonic_steed",
+  "wh3_dlc27_anc_mount_mammoth_warshrine",
+  "wh3_dlc27_anc_mount_skycutter",
+  "wh3_dlc27_anc_nor_indomitable_huskarl_bodyguard",
+  "wh3_dlc27_anc_nor_infamous_reaver",
+  "wh3_dlc29_anc_banner_blood_dragon_standard",
+  "wh3_dlc29_anc_mount_bloab_bilespurter",
+  "wh3_dlc29_anc_mount_cauldron",
+  "wh3_dlc29_anc_mount_coven_throne",
+  "wh3_dlc29_anc_mount_dread_abyssal",
+  "wh3_dlc29_anc_mount_morbidex_tripletongue",
+  "wh3_dlc29_anc_mount_orghotts_whippermaw",
+  "wh3_dlc29_anc_mount_skv_thanquol_boneripper_warpfire_braziers",
+  "wh3_dlc29_anc_mount_skv_thanquol_boneripper_warpfire_projectors",
+  "wh3_dlc29_anc_nag_follower_nameless",
+  "wh3_dlc29_anc_nag_follower_undead_hetepni",
+  "wh3_dlc29_anc_nag_magic_standard_banner_of_eternal_servitude",
+  "wh3_dlc29_anc_nag_magic_standard_impaled_traitor",
+  "wh3_dlc29_anc_nag_magic_standard_oriflamme_of_the_dead_man_charge",
+  "wh3_main_anc_banner_tmb_centuries_sigil",
+  "wh3_main_anc_banner_tmb_cursing_word",
+  "wh3_main_anc_banner_tmb_khsar_fury",
+  "wh3_main_anc_banner_tmb_royal_standard_settra",
+  "wh3_main_anc_banner_tmb_sacred_eye",
+  "wh3_main_anc_banner_tmb_ualatp_order",
+  "wh3_main_anc_cathay_artisan",
+  "wh3_main_anc_cathay_assassin",
+  "wh3_main_anc_cathay_diplomat",
+  "wh3_main_anc_cathay_lord",
+  "wh3_main_anc_cathay_merchant",
+  "wh3_main_anc_cathay_monk",
+  "wh3_main_anc_khorne_cultist",
+  "wh3_main_anc_khorne_daemon",
+  "wh3_main_anc_khorne_mutant",
+  "wh3_main_anc_khorne_old_man",
+  "wh3_main_anc_khorne_warrior",
+  "wh3_main_anc_kislev_artisan",
+  "wh3_main_anc_kislev_boyar",
+  "wh3_main_anc_kislev_old_hag",
+  "wh3_main_anc_kislev_priest",
+  "wh3_main_anc_kislev_ungol",
+  "wh3_main_anc_kislev_warrior",
+  "wh3_main_anc_magic_standard_banner_of_change",
+  "wh3_main_anc_magic_standard_banner_of_ecstacy",
+  "wh3_main_anc_magic_standard_banner_of_feng_shi",
+  "wh3_main_anc_magic_standard_banner_of_hellfire",
+  "wh3_main_anc_magic_standard_banner_of_praag",
+  "wh3_main_anc_magic_standard_banner_of_the_empress_eye",
+  "wh3_main_anc_magic_standard_banner_of_the_moon_empress",
+  "wh3_main_anc_magic_standard_banner_of_the_orthodoxy",
+  "wh3_main_anc_magic_standard_banner_of_unholy_victory",
+  "wh3_main_anc_magic_standard_bastion_standard",
+  "wh3_main_anc_magic_standard_blood_feasters_banner",
+  "wh3_main_anc_magic_standard_bull_standard",
+  "wh3_main_anc_magic_standard_cannibal_totem",
+  "wh3_main_anc_magic_standard_dragonhide_banner",
+  "wh3_main_anc_magic_standard_father_niklas_mantle",
+  "wh3_main_anc_magic_standard_flag_of_grand_cathay",
+  "wh3_main_anc_magic_standard_great_icon_of_despair",
+  "wh3_main_anc_magic_standard_great_standard_of_sundering",
+  "wh3_main_anc_magic_standard_icon_of_endless_war",
+  "wh3_main_anc_magic_standard_icon_of_eternal_virulence",
+  "wh3_main_anc_magic_standard_icon_of_sorcery",
+  "wh3_main_anc_magic_standard_khornes_gift",
+  "wh3_main_anc_magic_standard_lifetaker_banner",
+  "wh3_main_anc_magic_standard_ragbanner",
+  "wh3_main_anc_magic_standard_revered_banner_of_the_ancestors",
+  "wh3_main_anc_magic_standard_rune_maw",
+  "wh3_main_anc_magic_standard_serene_cloud_prayer_flag",
+  "wh3_main_anc_magic_standard_siren_standard",
+  "wh3_main_anc_magic_standard_skull_totem",
+  "wh3_main_anc_magic_standard_standard_of_chaos_glory",
+  "wh3_main_anc_magic_standard_standard_of_nan_gau",
+  "wh3_main_anc_magic_standard_standard_of_seeping_decay",
+  "wh3_main_anc_magic_standard_standard_of_shang_yang",
+  "wh3_main_anc_magic_standard_standard_of_the_empty_steppe",
+  "wh3_main_anc_magic_standard_standard_of_wei_jin",
+  "wh3_main_anc_magic_standard_the_great_celestial_banner",
+  "wh3_main_anc_magic_standard_trophy_of_killers",
+  "wh3_main_anc_mount_blood_throne",
+  "wh3_main_anc_mount_burning_chariot",
+  "wh3_main_anc_mount_disc_of_tzeentch",
+  "wh3_main_anc_mount_exalted_seeker_chariot",
+  "wh3_main_anc_mount_jade_longma",
+  "wh3_main_anc_mount_juggernaut",
+  "wh3_main_anc_mount_nurgling_palanquin",
+  "wh3_main_anc_mount_rot_fly",
+  "wh3_main_anc_mount_seeker_chariot",
+  "wh3_main_anc_mount_sky_lantern",
+  "wh3_main_anc_mount_steed_of_slaanesh",
+  "wh3_main_anc_mount_stonehorn",
+  "wh3_main_anc_mount_urskin",
+  "wh3_main_anc_mount_war_bear",
+  "wh3_main_anc_mount_wu_xing_war_compass",
+  "wh3_main_anc_nurgle_cultist",
+  "wh3_main_anc_nurgle_daemon",
+  "wh3_main_anc_nurgle_leper",
+  "wh3_main_anc_nurgle_mutant",
+  "wh3_main_anc_nurgle_special_nurgling",
+  "wh3_main_anc_nurgle_warrior",
+  "wh3_main_anc_ogre_artisan_ogre",
+  "wh3_main_anc_ogre_eastern_ogre",
+  "wh3_main_anc_ogre_gnoblar",
+  "wh3_main_anc_ogre_halfling",
+  "wh3_main_anc_ogre_ninja_ogre",
+  "wh3_main_anc_ogre_warrior_ogre",
+  "wh3_main_anc_slaanesh_cultist",
+  "wh3_main_anc_slaanesh_daemon",
+  "wh3_main_anc_slaanesh_mutant",
+  "wh3_main_anc_slaanesh_warrior",
+  "wh3_main_anc_slaanesh_woman",
+  "wh3_main_anc_tmb_liche_priest_phazerakts_kanopi",
+  "wh3_main_anc_tzeentch_cultist",
+  "wh3_main_anc_tzeentch_daemon",
+  "wh3_main_anc_tzeentch_mutant",
+  "wh3_main_anc_tzeentch_old_man",
+  "wh3_main_anc_tzeentch_warrior",
+  "wh_dlc03_anc_beastmen_bray_shaman",
+  "wh_dlc03_anc_beastmen_gor",
+  "wh_dlc03_anc_beastmen_gor_2",
+  "wh_dlc03_anc_beastmen_harpy",
+  "wh_dlc03_anc_beastmen_hound",
+  "wh_dlc03_anc_beastmen_ungor",
+  "wh_dlc03_anc_magic_standard_banner_of_outrage",
+  "wh_dlc03_anc_magic_standard_banner_of_the_fallen_kings",
+  "wh_dlc03_anc_magic_standard_manbane_standard",
+  "wh_dlc03_anc_magic_standard_the_beast_banner",
+  "wh_dlc03_anc_magic_standard_totem_of_rust",
+  "wh_dlc03_anc_mark_of_chaos_crown_of_horns",
+  "wh_dlc03_anc_mark_of_chaos_gnarled_hide",
+  "wh_dlc03_anc_mark_of_chaos_gouge_tusks",
+  "wh_dlc03_anc_mark_of_chaos_many_limbed_fiend",
+  "wh_dlc03_anc_mark_of_chaos_shadow_hide",
+  "wh_dlc03_anc_mark_of_chaos_slug_skin",
+  "wh_dlc03_anc_mark_of_chaos_uncanny_senses",
+  "wh_dlc03_anc_mount_razorgor_chariot",
+  "wh_dlc04_anc_mount_corpse_cart",
+  "wh_dlc04_anc_mount_corpse_cart_balefire",
+  "wh_dlc04_anc_mount_corpse_cart_lodestone",
+  "wh_dlc04_anc_mount_terrorgheist",
+  "wh_dlc04_anc_mount_war_altar_of_sigmar",
+  "wh_dlc05_anc_magic_standard_the_banner_of_the_eternal_queen",
+  "wh_dlc05_anc_magic_standard_the_banner_of_the_hunter_king",
+  "wh_dlc05_anc_mount_wef_elven_steed",
+  "wh_dlc05_anc_mount_wef_forest_dragon",
+  "wh_dlc05_anc_mount_wef_great_eagle",
+  "wh_dlc05_anc_mount_wef_unicorn",
+  "wh_dlc06_anc_magic_standard_skarsniks_boyz",
+  "wh_dlc06_anc_mount_dwf_runelord_anvil_of_doom",
+  "wh_dlc06_anc_mount_grn_night_goblin_warboss_great_cave_squig",
+  "wh_dlc06_anc_mount_grn_wurrzag_spleenrippa",
+  "wh_dlc07_anc_magic_standard_banner_of_defence",
+  "wh_dlc07_anc_magic_standard_errantry_banner",
+  "wh_dlc07_anc_magic_standard_twilight_banner",
+  "wh_dlc07_anc_magic_standard_valorous_standard",
+  "wh_dlc08_anc_follower_norscan_berserker",
+  "wh_dlc08_anc_follower_norscan_man",
+  "wh_dlc08_anc_follower_old_norscan_man",
+  "wh_dlc08_anc_follower_slave_female",
+  "wh_dlc08_anc_follower_slave_male",
+  "wh_dlc08_anc_follower_werekin",
+  "wh_dlc08_anc_magic_standard_ancient_mammoth_cub",
+  "wh_dlc08_anc_magic_standard_banner_of_wolfclaw",
+  "wh_dlc08_anc_magic_standard_black_iron_reavers",
+  "wh_dlc08_anc_magic_standard_crimson_reapers",
+  "wh_dlc08_anc_magic_standard_drake_hunters",
+  "wh_dlc08_anc_mount_chaos_war_mammoth",
+  "wh_dlc08_anc_norsca_berserker",
+  "wh_dlc08_anc_norsca_mammoth_trainer",
+  "wh_dlc08_anc_norsca_mountain_scout",
+  "wh_dlc08_anc_wood_elves_dryad_spy",
+  "wh_dlc08_anc_wood_elves_elder_scout",
+  "wh_dlc08_anc_wood_elves_eternal_guard_commander",
+  "wh_dlc08_anc_wood_elves_forest_spirit",
+  "wh_dlc08_anc_wood_elves_hawk_companion",
+  "wh_dlc08_anc_wood_elves_hunting_hound",
+  "wh_dlc08_anc_wood_elves_royal_standard_bearer",
+  "wh_dlc08_anc_wood_elves_vauls_anvil_smith",
+  "wh_dlc08_anc_wood_elves_wardancer_drummer",
+  "wh_dlc08_anc_wood_elves_young_stag",
+  "wh_dlc17_anc_dwarfs_follower_kraggi",
+  "wh_main_anc_arcane_item",
+  "wh_main_anc_armour",
+  "wh_main_anc_chaos_demon",
+  "wh_main_anc_chaos_human",
+  "wh_main_anc_chaos_monster",
+  "wh_main_anc_chaos_warrior",
+  "wh_main_anc_dwarfs_dwarf",
+  "wh_main_anc_dwarfs_engineer",
+  "wh_main_anc_dwarfs_female",
+  "wh_main_anc_dwarfs_miner",
+  "wh_main_anc_enchanted_item",
+  "wh_main_anc_greenskins_goblin",
+  "wh_main_anc_greenskins_orc",
+  "wh_main_anc_greenskins_orc_shaman",
+  "wh_main_anc_greenskins_savage_orc",
+  "wh_main_anc_greenskins_snotling",
+  "wh_main_anc_greenskins_squig",
+  "wh_main_anc_greenskins_troll",
+  "wh_main_anc_human_man",
+  "wh_main_anc_human_old_man",
+  "wh_main_anc_human_spy",
+  "wh_main_anc_magic_standard_banner_of_eternal_flame",
+  "wh_main_anc_magic_standard_banner_of_lost_holds",
+  "wh_main_anc_magic_standard_banner_of_rage",
+  "wh_main_anc_magic_standard_banner_of_swiftness",
+  "wh_main_anc_magic_standard_banner_of_the_barrows",
+  "wh_main_anc_magic_standard_blasted_standard",
+  "wh_main_anc_magic_standard_da_immortulz",
+  "wh_main_anc_magic_standard_gleaming_pennant",
+  "wh_main_anc_magic_standard_griffon_banner",
+  "wh_main_anc_magic_standard_lichbone_pennant",
+  "wh_main_anc_magic_standard_morks_war_banner",
+  "wh_main_anc_magic_standard_rampagers_standard",
+  "wh_main_anc_magic_standard_rangers_standard",
+  "wh_main_anc_magic_standard_razor_standard",
+  "wh_main_anc_magic_standard_scarecrow_banner",
+  "wh_main_anc_magic_standard_spider_banner",
+  "wh_main_anc_magic_standard_standard_of_discipline",
+  "wh_main_anc_magic_standard_steel_standard",
+  "wh_main_anc_magic_standard_the_bad_moon_banner",
+  "wh_main_anc_magic_standard_the_screaming_banner",
+  "wh_main_anc_magic_standard_wailing_banner",
+  "wh_main_anc_magic_standard_war_banner",
+  "wh_main_anc_mark_of_chaos_mark_of_khorne",
+  "wh_main_anc_mark_of_chaos_mark_of_nurgle",
+  "wh_main_anc_mark_of_chaos_mark_of_slaanesh",
+  "wh_main_anc_mark_of_chaos_mark_of_tzeentch",
+  "wh_main_anc_mount_barded_chaos_steed",
+  "wh_main_anc_mount_barded_nightmare",
+  "wh_main_anc_mount_barded_skeletal_steed",
+  "wh_main_anc_mount_barded_warhorse",
+  "wh_main_anc_mount_beaquis",
+  "wh_main_anc_mount_chaos_chariot",
+  "wh_main_anc_mount_chaos_dragon",
+  "wh_main_anc_mount_chaos_steed",
+  "wh_main_anc_mount_deathclaw",
+  "wh_main_anc_mount_dorghar",
+  "wh_main_anc_mount_giant_spider",
+  "wh_main_anc_mount_giant_wolf",
+  "wh_main_anc_mount_hellsteed",
+  "wh_main_anc_mount_hippogryph",
+  "wh_main_anc_mount_imperial_griffon",
+  "wh_main_anc_mount_imperial_pegasus",
+  "wh_main_anc_mount_manticore",
+  "wh_main_anc_mount_nightmare",
+  "wh_main_anc_mount_pegasus",
+  "wh_main_anc_mount_royal_pegasus",
+  "wh_main_anc_mount_skeletal_steed",
+  "wh_main_anc_mount_skullmuncha",
+  "wh_main_anc_mount_war_boar",
+  "wh_main_anc_mount_warhorse",
+  "wh_main_anc_mount_warshrine",
+  "wh_main_anc_mount_wyvern",
+  "wh_main_anc_mount_zombie_dragon",
+  "wh_main_anc_rune_ancestor_rune",
+  "wh_main_anc_rune_master_rune_of_battle",
+  "wh_main_anc_rune_master_rune_of_courage",
+  "wh_main_anc_rune_master_rune_of_groth_one-eye",
+  "wh_main_anc_rune_master_rune_of_grungni",
+  "wh_main_anc_rune_master_rune_of_sanctuary",
+  "wh_main_anc_rune_master_rune_of_stoicism",
+  "wh_main_anc_rune_master_rune_of_stromni_redbeard",
+  "wh_main_anc_rune_master_rune_of_valaya",
+  "wh_main_anc_rune_rune_of_fury",
+  "wh_main_anc_rune_rune_of_might",
+  "wh_main_anc_rune_rune_of_parrying",
+  "wh_main_anc_rune_rune_of_striking",
+  "wh_main_anc_rune_strollaz_rune",
+  "wh_main_anc_talisman",
+  "wh_main_anc_vampire_counts_black_cat",
+  "wh_main_anc_vampire_counts_carrion",
+  "wh_main_anc_vampire_counts_female",
+  "wh_main_anc_vampire_counts_male",
+  "wh_main_anc_vampire_counts_mirror",
+  "wh_main_anc_vampire_counts_necromancer",
+  "wh_main_anc_weapon"
+ ],
  "armour_types": {
   "wh2_main_heavy_metal_80": {
    "armour_value": "80",
@@ -13102,8 +13845,11 @@
   "wh3_dlc29_effect_nag_recruit_cost_undead_melee_inf",
   "wh3_dlc29_effect_nag_recruit_cost_undead_ranged_inf_flyers",
   "wh3_dlc29_effect_nag_recruit_rank_cst_heroes_lords",
+  "wh3_dlc29_effect_nag_recruit_rank_cst_heroes_lords_hidden",
   "wh3_dlc29_effect_nag_recruit_rank_tmb_heroes_lords",
+  "wh3_dlc29_effect_nag_recruit_rank_tmb_heroes_lords_hidden",
   "wh3_dlc29_effect_nag_recruit_rank_vmp_heroes_lords",
+  "wh3_dlc29_effect_nag_recruit_rank_vmp_heroes_lords_hidden",
   "wh3_dlc29_effect_nag_ritual_discount_ai_only",
   "wh3_dlc29_effect_nag_ryze_the_grave_call_crypt_horrors",
   "wh3_dlc29_effect_nag_ryze_the_grave_call_khemrian_warsphinx",
@@ -13208,6 +13954,7 @@
   "wh3_dlc29_effect_post_battle_unit_saving_chance_hp_construct_monsters",
   "wh3_dlc29_effect_post_battle_unit_saving_chance_hp_crypt_ghouls_horrors",
   "wh3_dlc29_effect_post_battle_unit_saving_chance_hp_vampires",
+  "wh3_dlc29_effect_post_battle_unit_saving_chance_lords_hidden",
   "wh3_dlc29_effect_post_battle_unit_saving_chance_mournguls",
   "wh3_dlc29_effect_post_battle_unit_saving_chance_nurglings",
   "wh3_dlc29_effect_post_battle_unit_saving_chance_vmp",
@@ -20020,7 +20767,1213 @@
   "wh_main_vmp_vampire_rebels",
   "wh_main_vmp_waldenhof"
  ],
+ "lores": {
+  "wh2_dlc09_lore_nehekhara": {
+   "passives": [
+    "wh2_dlc09_effect_ability_enable_the_restless_dead"
+   ],
+   "spells": [
+    {
+     "cost": 3.0,
+     "enable": "wh2_dlc09_effect_ability_enable_djafs_incantation_of_cursed_blades",
+     "overcast": "wh2_dlc09_effect_ability_overcast_djafs_incantation_of_cursed_blades"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh2_dlc09_effect_ability_enable_nerus_incantation_of_protection",
+     "overcast": "wh2_dlc09_effect_ability_overcast_nerus_incantation_of_protection"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh2_dlc09_effect_ability_enable_ptras_incantation_of_righteous_smiting",
+     "overcast": "wh2_dlc09_effect_ability_overcast_ptras_incantation_of_righteous_smiting"
+    },
+    {
+     "cost": 9.0,
+     "enable": "wh2_dlc09_effect_ability_enable_usirians_incantation_of_vengeance",
+     "overcast": "wh2_dlc09_effect_ability_overcast_usirians_incantation_of_vengeance"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh2_dlc09_effect_ability_enable_sakhmets_incantation_of_the_skullstorm",
+     "overcast": "wh2_dlc09_effect_ability_overcast_sakhmets_incantation_of_the_skullstorm"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh2_dlc09_effect_ability_enable_usekhps_incantation_of_desiccation",
+     "overcast": "wh2_dlc09_effect_ability_overcast_usekhps_incantation_of_desiccation"
+    }
+   ]
+  },
+  "wh2_dlc11_lore_deep": {
+   "passives": [
+    "wh2_dlc11_effect_ability_enable_kiss_of_the_deep"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh2_dlc11_effect_ability_enable_spiteful_shot",
+     "overcast": "wh2_dlc11_effect_ability_overcast_spiteful_shot"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh2_dlc11_effect_ability_enable_tidecall",
+     "overcast": "wh2_dlc11_effect_ability_overcast_tidecall"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh2_dlc11_effect_ability_enable_fog_of_the_damned",
+     "overcast": "wh2_dlc11_effect_ability_overcast_fog_of_the_damned"
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh2_dlc11_effect_ability_enable_denizens_of_the_deep",
+     "overcast": null
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh2_dlc11_effect_ability_enable_krakens_pull",
+     "overcast": "wh2_dlc11_effect_ability_overcast_krakens_pull"
+    },
+    {
+     "cost": 20.0,
+     "enable": "wh2_dlc11_effect_ability_enable_ghost_ship",
+     "overcast": "wh2_dlc11_effect_ability_overcast_ghost_ship"
+    }
+   ]
+  },
+  "wh2_dlc14_lore_stealth": {
+   "passives": [
+    "wh2_dlc14_effect_magic_stealth_enable_toxic_rain_lore_attribute"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh2_dlc14_effect_magic_stealth_enable_warp_stars",
+     "overcast": "wh2_dlc14_effect_magic_stealth_enable_warp_stars_upgraded"
+    },
+    {
+     "cost": 4.0,
+     "enable": "wh2_main_effect_ability_enable_skitterleap",
+     "overcast": "wh2_main_effect_ability_overcast_skitterleap"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh2_dlc14_effect_magic_stealth_enable_veil_of_shadows",
+     "overcast": "wh2_dlc14_effect_magic_stealth_enable_veil_of_shadows_upgraded"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh2_dlc14_effect_magic_stealth_enable_armour_of_darkness",
+     "overcast": "wh2_dlc14_effect_magic_stealth_enable_armour_of_darkness_upgraded"
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh2_dlc14_effect_magic_stealth_enable_brittle_bone",
+     "overcast": "wh2_dlc14_effect_magic_stealth_enable_brittle_bone_upgraded"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh2_dlc14_effect_magic_stealth_enable_black_whirlwind",
+     "overcast": "wh2_dlc14_effect_magic_stealth_enable_black_whirlwind_upgraded"
+    }
+   ]
+  },
+  "wh2_dlc17_lore_rune": {
+   "passives": [],
+   "spells": [
+    {
+     "cost": 0.0,
+     "enable": "wh2_dlc17_effect_ability_enable_rune_of_breaking",
+     "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_breaking"
+    },
+    {
+     "cost": 0.0,
+     "enable": "wh2_dlc17_effect_ability_enable_rune_of_slowness",
+     "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_slowness"
+    },
+    {
+     "cost": 0.0,
+     "enable": "wh2_dlc17_effect_ability_enable_rune_of_speed",
+     "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_speed"
+    },
+    {
+     "cost": 0.0,
+     "enable": "wh_main_effect_ability_enable_rune_of_negation",
+     "overcast": "wh2_dlc17_effect_ability_enable_master_rune_of_negation"
+    },
+    {
+     "cost": 0.0,
+     "enable": "wh_main_effect_ability_enable_rune_of_oath_and_steel",
+     "overcast": "wh_dlc06_effect_ability_enable_master_rune_of_oath_and_steel"
+    },
+    {
+     "cost": 0.0,
+     "enable": "wh_main_effect_ability_enable_rune_of_wrath_&_ruin",
+     "overcast": "wh_dlc06_effect_ability_enable_master_rune_of_wrath_&_ruin"
+    }
+   ]
+  },
+  "wh2_main_lore_dark_magic": {
+   "passives": [
+    "wh2_main_effect_ability_enable_spiteful_conjuration"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh2_main_effect_ability_enable_power_of_darkness",
+     "overcast": null
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh2_main_effect_ability_enable_chillwind",
+     "overcast": "wh2_main_effect_ability_overcast_chillwind"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh2_main_effect_ability_enable_word_of_pain",
+     "overcast": "wh2_main_effect_ability_overcast_word_of_pain"
+    },
+    {
+     "cost": 9.0,
+     "enable": "wh2_main_effect_ability_enable_doombolt",
+     "overcast": "wh2_main_effect_ability_overcast_doombolt"
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh2_main_effect_ability_enable_bladewind",
+     "overcast": "wh2_main_effect_ability_overcast_bladewind"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh2_main_effect_ability_enable_soul_stealer",
+     "overcast": null
+    }
+   ]
+  },
+  "wh2_main_lore_high_magic": {
+   "passives": [
+    "wh2_main_effect_ability_enable_shield_of_saphery"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh2_main_effect_ability_enable_hand_of_glory",
+     "overcast": "wh2_main_effect_ability_overcast_hand_of_glory"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh2_main_effect_ability_enable_apotheosis",
+     "overcast": "wh2_main_effect_ability_overcast_apotheosis"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh2_main_effect_ability_enable_soul_quench",
+     "overcast": "wh2_main_effect_ability_overcast_soul_quench"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh2_main_effect_ability_enable_tempest",
+     "overcast": "wh2_main_effect_ability_overcast_tempest"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh2_main_effect_ability_enable_fiery_convocation",
+     "overcast": "wh2_main_effect_ability_overcast_fiery_convocation"
+    },
+    {
+     "cost": 14.0,
+     "enable": "wh2_main_effect_ability_enable_arcane_unforging",
+     "overcast": "wh2_main_effect_ability_overcast_arcane_unforging"
+    }
+   ]
+  },
+  "wh2_main_lore_plague": {
+   "passives": [
+    "wh2_main_effect_ability_enable_plague_rash"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh2_main_effect_ability_enable_bless_with_filth",
+     "overcast": "wh2_main_effect_ability_overcast_bless_with_filth"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh2_main_effect_ability_enable_pestilent_breath",
+     "overcast": "wh2_main_effect_ability_overcast_pestilent_breath"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh2_main_effect_ability_enable_wither",
+     "overcast": "wh2_main_effect_ability_overcast_wither"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh2_main_effect_ability_enable_vermintide",
+     "overcast": null
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh2_main_effect_ability_enable_plague",
+     "overcast": "wh2_main_effect_ability_overcast_plague"
+    },
+    {
+     "cost": 14.0,
+     "enable": "wh2_main_effect_ability_enable_pestilent_birth",
+     "overcast": null
+    }
+   ]
+  },
+  "wh2_main_lore_ruin": {
+   "passives": [
+    "wh2_main_effect_ability_enable_musk_of_fear"
+   ],
+   "spells": [
+    {
+     "cost": 5.0,
+     "enable": "wh2_main_effect_ability_enable_howling_warpgale",
+     "overcast": "wh2_main_effect_ability_overcast_howling_warpgale"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh2_main_effect_ability_enable_death_frenzy",
+     "overcast": "wh2_main_effect_ability_overcast_death_frenzy"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh2_main_effect_ability_enable_warp_lightning",
+     "overcast": "wh2_main_effect_ability_overcast_warp_lightning"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh2_main_effect_ability_enable_skaven_scorch",
+     "overcast": "wh2_main_effect_ability_overcast_skaven_scorch"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh2_main_effect_ability_enable_cracks_call",
+     "overcast": "wh2_main_effect_ability_overcast_cracks_call"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh2_main_effect_magic_ruin_enable_flensing_ruin",
+     "overcast": "wh2_main_effect_magic_ruin_enable_flensing_ruin_upgrade"
+    }
+   ]
+  },
+  "wh3_dlc23_lore_hashut": {
+   "passives": [
+    "wh3_dlc23_effect_ability_enable_killing_fire"
+   ],
+   "spells": [
+    {
+     "cost": 6.0,
+     "enable": "wh3_dlc23_effect_ability_enable_burning_wrath",
+     "overcast": "wh3_dlc23_effect_ability_enable_burning_wrath_upgraded"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_dlc23_effect_ability_enable_dark_subjugation",
+     "overcast": "wh3_dlc23_effect_ability_enable_dark_subjugation_upgraded"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_dlc23_effect_ability_enable_ash_storm",
+     "overcast": "wh3_dlc23_effect_ability_enable_ash_storm_upgraded"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh3_dlc23_effect_ability_enable_curse_of_hashut",
+     "overcast": "wh3_dlc23_effect_ability_enable_curse_of_hashut_upgraded"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh3_dlc23_effect_ability_enable_hell_hammer",
+     "overcast": "wh3_dlc23_effect_ability_enable_hell_hammer_upgraded"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh3_dlc23_effect_ability_enable_flames_of_azgorh",
+     "overcast": "wh3_dlc23_effect_ability_enable_flames_of_azgorh_upgraded"
+    }
+   ]
+  },
+  "wh3_dlc24_lore_hag": {
+   "passives": [
+    "wh3_dlc24_effect_ability_enable_fate_of_interlopers"
+   ],
+   "spells": [
+    {
+     "cost": 5.0,
+     "enable": "wh3_dlc24_effect_ability_enable_the_forbidden_fens",
+     "overcast": "wh3_dlc24_effect_ability_overcast_the_forbidden_fens"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_dlc24_effect_ability_enable_witchbrew",
+     "overcast": "wh3_dlc24_effect_ability_overcast_witchbrew"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_dlc24_effect_ability_enable_curse_of_the_ancient_witch",
+     "overcast": "wh3_dlc24_effect_ability_overcast_curse_of_the_ancient_witch"
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh3_dlc24_effect_ability_enable_vengeance_of_spirits",
+     "overcast": "wh3_dlc24_effect_ability_overcast_vengeance_of_spirits"
+    },
+    {
+     "cost": 16.0,
+     "enable": "wh3_dlc24_effect_ability_enable_malediction_of_madness",
+     "overcast": "wh3_dlc24_effect_ability_overcast_malediction_of_madness"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh3_dlc24_effect_ability_enable_cursed_cauldron",
+     "overcast": "wh3_dlc24_effect_ability_overcast_cursed_cauldron"
+    }
+   ]
+  },
+  "wh3_dlc27_lore_mists": {
+   "passives": [
+    "wh3_dlc27_effect_ability_enable_obscuring_haze"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh3_dlc27_effect_ability_enable_ladrielles_shroud",
+     "overcast": "wh3_dlc27_effect_ability_overcast_ladrielles_shroud"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_dlc27_effect_ability_enable_walk_between_worlds",
+     "overcast": "wh3_dlc27_effect_ability_overcast_walk_between_worlds"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_dlc27_effect_ability_enable_flensing_haar",
+     "overcast": "wh3_dlc27_effect_ability_overcast_flensing_haar"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_dlc27_effect_ability_enable_mathlanns_spite",
+     "overcast": "wh3_dlc27_effect_ability_overcast_mathlanns_spite"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh3_dlc27_effect_ability_enable_the_writhing_mist",
+     "overcast": "wh3_dlc27_effect_ability_overcast_the_writhing_mist"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh3_dlc27_effect_ability_enable_mistress_of_the_deeps",
+     "overcast": null
+    }
+   ]
+  },
+  "wh3_dlc29_lore_undeath": {
+   "passives": [
+    "wh3_dlc29_effect_ability_enable_raise_the_dead"
+   ],
+   "spells": [
+    {
+     "cost": 3.0,
+     "enable": "wh3_dlc29_effect_ability_enable_sulekhim_hand_of_dust",
+     "overcast": "wh3_dlc29_effect_ability_enable_sulekhim_hand_of_dust_upgraded"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh3_dlc29_effect_ability_enable_morkharn_breath_of_darkness",
+     "overcast": "wh3_dlc29_effect_ability_enable_morkharn_breath_of_darkness_upgraded"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh3_dlc29_effect_ability_enable_khizaar_soulstealer",
+     "overcast": "wh3_dlc29_effect_ability_enable_khizaar_soulstealer_upgraded"
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh3_dlc29_effect_ability_enable_razkhar_abyssal_swarm",
+     "overcast": "wh3_dlc29_effect_ability_enable_razkhar_abyssal_swarm_upgraded"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh3_dlc29_effect_ability_enable_akararan_dark_raiders",
+     "overcast": "wh3_dlc29_effect_ability_enable_akararan_dark_raiders_upgraded"
+    },
+    {
+     "cost": 23.0,
+     "enable": "wh3_dlc29_effect_ability_enable_kandorak_harbringer",
+     "overcast": "wh3_dlc29_effect_ability_enable_kandorak_harbringer_upgraded"
+    }
+   ]
+  },
+  "wh3_main_lore_nurgle": {
+   "passives": [
+    "wh3_main_effect_ability_enable_children_of_nurgle"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_miasma_of_pestilence",
+     "overcast": "wh3_main_effect_ability_overcast_miasma_of_pestilence"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh3_main_effect_ability_enable_stream_of_corruption",
+     "overcast": "wh3_main_effect_ability_overcast_stream_of_corruption"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh3_main_effect_ability_enable_curse_of_the_leper",
+     "overcast": "wh3_main_effect_ability_overcast_curse_of_the_leper"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh3_main_effect_ability_enable_blight_boil",
+     "overcast": "wh3_main_effect_ability_overcast_blight_boil"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh3_main_effect_ability_enable_rancid_visitations",
+     "overcast": "wh3_main_effect_ability_overcast_rancid_visitations"
+    },
+    {
+     "cost": 16.0,
+     "enable": "wh3_main_effect_ability_enable_fleshy_abundance",
+     "overcast": "wh3_main_effect_ability_overcast_fleshy_abundance"
+    }
+   ]
+  },
+  "wh3_main_lore_of_great_maw": {
+   "passives": [
+    "wh3_main_effect_ability_enable_bloodgruel"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_braingobbler",
+     "overcast": "wh3_main_effect_ability_overcast_braingobbler"
+    },
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_bullgorger",
+     "overcast": "wh3_main_effect_ability_overcast_bullgorger"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_enable_toothcracker",
+     "overcast": "wh3_main_effect_ability_overcast_toothcracker"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh3_main_effect_ability_enable_bonecrusher",
+     "overcast": "wh3_main_effect_ability_overcast_bonecrusher"
+    },
+    {
+     "cost": 16.0,
+     "enable": "wh3_main_effect_ability_enable_trollguts",
+     "overcast": "wh3_main_effect_ability_overcast_trollguts"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh3_main_effect_ability_enable_the_maw",
+     "overcast": "wh3_main_effect_ability_overcast_the_maw"
+    }
+   ]
+  },
+  "wh3_main_lore_of_ice": {
+   "passives": [
+    "wh3_main_effect_ability_enable_frost_shield"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_ice_sheet",
+     "overcast": null
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_enable_ice_maidens_kiss",
+     "overcast": "wh3_main_effect_ability_overcast_ice_maidens_kiss"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh3_main_effect_ability_enable_frost_blades",
+     "overcast": "wh3_main_effect_ability_overcast_frost_blades"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_main_effect_ability_enable_crystal_sanctuary",
+     "overcast": "wh3_main_effect_ability_overcast_crystal_sanctuary"
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh3_main_effect_ability_enable_death_frost",
+     "overcast": "wh3_main_effect_ability_overcast_death_frost"
+    },
+    {
+     "cost": 22.0,
+     "enable": "wh3_main_effect_ability_enable_heart_of_winter",
+     "overcast": "wh3_main_effect_ability_overcast_heart_of_winter"
+    }
+   ]
+  },
+  "wh3_main_lore_of_tempest": {
+   "passives": [
+    "wh3_main_effect_ability_enable_freezing_winds"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_gust_of_true_flight",
+     "overcast": "wh3_main_effect_ability_overcast_gust_of_true_flight"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_enable_hailstorm",
+     "overcast": "wh3_main_effect_ability_overcast_hailstorm"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_enable_swiftwing",
+     "overcast": "wh3_main_effect_ability_overcast_swiftwing"
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh3_main_effect_ability_enable_biting_wind",
+     "overcast": "wh3_main_effect_ability_overcast_biting_wind"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh3_main_effect_ability_enable_hawks_of_miska",
+     "overcast": "wh3_main_effect_ability_overcast_hawks_of_miska"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh3_main_effect_ability_enable_blizzard",
+     "overcast": "wh3_main_effect_ability_overcast_blizzard"
+    }
+   ]
+  },
+  "wh3_main_lore_of_yang": {
+   "passives": [
+    "wh3_main_effect_ability_enable_strength_of_yang"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_jade_shield",
+     "overcast": "wh3_main_effect_ability_overcast_jade_shield"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_enable_dragons_breath",
+     "overcast": "wh3_main_effect_ability_overcast_dragons_breath"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_enable_wall_of_wind_and_fire",
+     "overcast": "wh3_main_effect_ability_overcast_wall_of_wind_and_fire"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_main_effect_ability_enable_stone_ground_stance",
+     "overcast": "wh3_main_effect_ability_overcast_stone_ground_stance"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh3_main_effect_ability_enable_might_of_heaven_and_earth",
+     "overcast": "wh3_main_effect_ability_overcast_might_of_heaven_and_earth"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh3_main_effect_ability_enable_constellation_of_the_dragon",
+     "overcast": "wh3_main_effect_ability_overcast_constellation_of_the_dragon"
+    }
+   ]
+  },
+  "wh3_main_lore_of_yin": {
+   "passives": [
+    "wh3_main_effect_ability_enable_power_of_yin"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_cloak_of_jet",
+     "overcast": "wh3_main_effect_ability_overcast_cloak_of_jet"
+    },
+    {
+     "cost": 4.0,
+     "enable": "wh3_main_effect_ability_enable_storm_of_shadows",
+     "overcast": "wh3_main_effect_ability_overcast_storm_of_shadows"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_main_effect_ability_enable_missile_mirror",
+     "overcast": "wh3_main_effect_ability_overcast_missile_mirror"
+    },
+    {
+     "cost": 9.0,
+     "enable": "wh3_main_effect_ability_enable_blossom_wind",
+     "overcast": "wh3_main_effect_ability_overcast_blossom_wind"
+    },
+    {
+     "cost": 16.0,
+     "enable": "wh3_main_effect_ability_enable_ancestral_warriors",
+     "overcast": "wh3_main_effect_ability_overcast_ancestral_warriors"
+    },
+    {
+     "cost": 17.0,
+     "enable": "wh3_main_effect_ability_enable_talons_of_night",
+     "overcast": "wh3_main_effect_ability_overcast_talons_of_night"
+    }
+   ]
+  },
+  "wh3_main_lore_slaanesh": {
+   "passives": [
+    "wh3_main_effect_ability_enable_blissful_rapture"
+   ],
+   "spells": [
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_enable_acquiescence",
+     "overcast": "wh3_main_effect_ability_overcast_acquiescence"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_overcast_lash_of_slaanesh",
+     "overcast": "wh3_main_effect_ability_overcast_lash_of_slaanesh"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_main_effect_ability_enable_hysterical_frenzy",
+     "overcast": "wh3_main_effect_ability_overcast_hysterical_frenzy"
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh3_main_effect_ability_enable_slicing_shards",
+     "overcast": "wh3_main_effect_ability_overcast_slicing_shards"
+    },
+    {
+     "cost": 14.0,
+     "enable": "wh3_main_effect_ability_overcast_pavane_of_slaanesh",
+     "overcast": "wh3_main_effect_ability_overcast_pavane_of_slaanesh"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh3_main_effect_ability_enable_phantasmagoria",
+     "overcast": "wh3_main_effect_ability_overcast_phantasmagoria"
+    }
+   ]
+  },
+  "wh3_main_lore_tzeentch": {
+   "passives": [
+    "wh3_main_effect_ability_enable_fires_of_change"
+   ],
+   "spells": [
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_overcast_blue_fire_of_tzeentch",
+     "overcast": "wh3_main_effect_ability_overcast_blue_fire_of_tzeentch"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh3_main_effect_ability_overcast_pink_fire_of_tzeentch",
+     "overcast": "wh3_main_effect_ability_overcast_pink_fire_of_tzeentch"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh3_main_effect_ability_overcast_treason_of_tzeentch",
+     "overcast": "wh3_main_effect_ability_overcast_treason_of_tzeentch"
+    },
+    {
+     "cost": 9.0,
+     "enable": "wh3_main_effect_ability_enable_glean_magic",
+     "overcast": "wh3_main_effect_ability_overcast_glean_magic"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh3_main_effect_ability_overcast_tzeentchs_firestorm",
+     "overcast": "wh3_main_effect_ability_overcast_tzeentchs_firestorm"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh3_main_effect_ability_enable_infernal_gateway",
+     "overcast": "wh3_main_effect_ability_overcast_infernal_gateway"
+    }
+   ]
+  },
+  "wh_dlc03_lore_beasts": {
+   "passives": [
+    "wh_dlc03_effect_ability_enable_wild_heart"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh_dlc03_effect_ability_enable_wyssans_wildform",
+     "overcast": "wh2_main_effect_ability_overcast_wyssans_wildform"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_dlc03_effect_ability_enable_flock_of_doom",
+     "overcast": "wh2_main_effect_ability_overcast_flock_of_doom"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_dlc03_effect_ability_enable_the_amber_spear",
+     "overcast": "wh2_main_effect_ability_overcast_the_amber_spear"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_dlc03_effect_ability_enable_panns_impenetrable_pelt",
+     "overcast": "wh2_main_effect_ability_overcast_panns_impenetrable_pelt"
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh_dlc03_effect_ability_enable_the_curse_of_anraheir",
+     "overcast": "wh2_main_effect_ability_overcast_the_curse_of_anraheir"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh_dlc03_effect_ability_enable_transformation_of_kadon",
+     "overcast": null
+    }
+   ]
+  },
+  "wh_dlc03_lore_wild": {
+   "passives": [
+    "wh_dlc03_effect_ability_enable_bestial_surge"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh_dlc03_effect_ability_enable_devolve",
+     "overcast": "wh2_main_effect_ability_overcast_devolve"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_dlc03_effect_ability_enable_bray_scream",
+     "overcast": "wh2_main_effect_ability_overcast_bray_scream"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_dlc03_effect_ability_enable_viletide",
+     "overcast": "wh2_main_effect_ability_overcast_viletide"
+    },
+    {
+     "cost": 9.0,
+     "enable": "wh_dlc03_effect_ability_enable_mantle_of_ghorok",
+     "overcast": "wh2_dlc17_effect_magic_wild_enable_mantle_of_ghorok_upgraded"
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh_dlc03_effect_ability_enable_traitor_kin",
+     "overcast": "wh2_main_effect_ability_overcast_traitor_kin"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh_dlc03_effect_ability_enable_savage_dominion",
+     "overcast": null
+    }
+   ]
+  },
+  "wh_dlc05_lore_life": {
+   "passives": [
+    "wh_dlc05_effect_ability_enable_life_bloom"
+   ],
+   "spells": [
+    {
+     "cost": 6.0,
+     "enable": "wh_dlc05_effect_ability_enable_awakening_of_the_wood",
+     "overcast": null
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_dlc05_effect_ability_enable_earth_blood",
+     "overcast": "wh2_main_effect_ability_overcast_earth_blood"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_dlc05_effect_ability_enable_shield_of_thorns",
+     "overcast": "wh2_main_effect_ability_overcast_shield_of_thorns"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh_dlc05_effect_ability_enable_flesh_to_stone",
+     "overcast": "wh2_main_effect_ability_overcast_flesh_to_stone"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh_dlc05_effect_ability_enable_regrowth",
+     "overcast": "wh2_main_effect_ability_overcast_regrowth"
+    },
+    {
+     "cost": 17.0,
+     "enable": "wh2_main_effect_ability_overcast_dwellers_below",
+     "overcast": "wh2_main_effect_ability_overcast_dwellers_below"
+    }
+   ]
+  },
+  "wh_dlc05_lore_shadows": {
+   "passives": [
+    "wh_dlc05_effect_ability_enable_smoke_and_mirrors"
+   ],
+   "spells": [
+    {
+     "cost": 5.0,
+     "enable": "wh_dlc05_effect_ability_enable_the_withering",
+     "overcast": "wh2_main_effect_ability_overcast_the_withering"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_dlc05_effect_ability_enable_enfeebling_foe",
+     "overcast": "wh2_main_effect_ability_overcast_melkoths_enfeebling_foe"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_dlc05_effect_ability_enable_melkoths_mystifying_miasma",
+     "overcast": "wh2_main_effect_ability_overcast_melkoths_mystifying_miasma"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh_dlc05_effect_ability_enable_okkams_mindrazor",
+     "overcast": "wh2_main_effect_ability_overcast_okkams_mindrazor"
+    },
+    {
+     "cost": 12.0,
+     "enable": "wh_dlc05_effect_ability_enable_penumbral_pendulum",
+     "overcast": "wh2_main_effect_ability_overcast_penumbral_pendulum"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh_dlc05_effect_ability_enable_pit_of_shades",
+     "overcast": "wh2_main_effect_ability_overcast_pit_of_shades"
+    }
+   ]
+  },
+  "wh_main_lore_big_waaagh": {
+   "passives": [
+    "wh_main_effect_ability_enable_power_of_da_waaagh"
+   ],
+   "spells": [
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_eadbutt",
+     "overcast": "wh2_main_effect_ability_overcast_eadbutt"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_gaze_of_mork",
+     "overcast": "wh2_main_effect_ability_overcast_gaze_of_mork"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_main_effect_ability_enable_brain_bursta",
+     "overcast": "wh2_main_effect_ability_overcast_brain_bursta"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_main_effect_ability_enable_fists_of_gork",
+     "overcast": null
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh_main_effect_ability_enable_ere_we_go",
+     "overcast": null
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh_main_effect_ability_enable_foot_of_gork",
+     "overcast": "wh2_main_effect_ability_overcast_foot_of_gork"
+    }
+   ]
+  },
+  "wh_main_lore_death": {
+   "passives": [
+    "wh_main_effect_ability_enable_life-leeching"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh_main_effect_ability_enable_aspect_of_the_dreadknight",
+     "overcast": "wh2_main_effect_ability_overcast_aspect_of_the_dreadknight"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_doom_and_darkness",
+     "overcast": "wh2_main_effect_ability_overcast_doom_and_darkness"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_main_effect_ability_enable_soulblight",
+     "overcast": "wh2_main_effect_ability_overcast_soulblight"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh_main_effect_ability_enable_spirit_leech",
+     "overcast": "wh2_main_effect_ability_overcast_spirit_leech"
+    },
+    {
+     "cost": 18.0,
+     "enable": "wh_main_effect_ability_enable_the_purple_sun_of_xereus",
+     "overcast": "wh2_main_effect_ability_overcast_the_purple_sun_of_xereus"
+    },
+    {
+     "cost": 22.0,
+     "enable": "wh_main_effect_ability_enable_the_fate_of_bjuna",
+     "overcast": null
+    }
+   ]
+  },
+  "wh_main_lore_fire": {
+   "passives": [
+    "wh_main_effect_ability_enable_kindleflame"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh_main_effect_ability_enable_cascading_fire_cloak",
+     "overcast": null
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_fireball",
+     "overcast": "wh2_main_effect_ability_overcast_fireball"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_main_effect_ability_enable_flaming_sword_of_rhuin",
+     "overcast": "wh2_main_effect_ability_overcast_flaming_sword_of_rhuin"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh_main_effect_ability_enable_piercing_bolts_of_burning",
+     "overcast": "wh2_main_effect_ability_overcast_piercing_bolts_of_burning"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh_main_effect_ability_enable_the_burning_head",
+     "overcast": "wh2_main_effect_ability_overcast_the_burning_head"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh_main_effect_ability_enable_flame_storm",
+     "overcast": "wh2_main_effect_ability_overcast_flame_storm"
+    }
+   ]
+  },
+  "wh_main_lore_heavens": {
+   "passives": [
+    "wh_main_effect_ability_enable_roiling_skies"
+   ],
+   "spells": [
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_harmonic_convergence",
+     "overcast": "wh2_main_effect_ability_overcast_harmonic_convergence"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_wind_blast",
+     "overcast": "wh2_main_effect_ability_overcast_wind_blast"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_main_effect_ability_enable_urannons_thunderbolt",
+     "overcast": "wh2_main_effect_ability_overcast_urannons_thunderbolt"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh_main_effect_ability_enable_curse_of_the_midnight_wind",
+     "overcast": "wh2_main_effect_ability_overcast_curse_of_the_midnight_wind"
+    },
+    {
+     "cost": 13.0,
+     "enable": "wh_main_effect_ability_enable_comet_of_casandora",
+     "overcast": "wh2_main_effect_ability_overcast_comet_of_casandora"
+    },
+    {
+     "cost": 14.0,
+     "enable": "wh_main_effect_ability_enable_chain_lightning",
+     "overcast": null
+    }
+   ]
+  },
+  "wh_main_lore_light": {
+   "passives": [
+    "wh_main_effect_ability_enable_exorcism"
+   ],
+   "spells": [
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_phas_protection",
+     "overcast": "wh2_main_effect_ability_overcast_phas_protection"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_shems_burning_gaze",
+     "overcast": "wh2_main_effect_ability_overcast_shems_burning_gaze"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_main_effect_ability_enable_light_of_battle",
+     "overcast": "wh2_main_effect_ability_overcast_light_of_battle"
+    },
+    {
+     "cost": 9.0,
+     "enable": "wh_main_effect_ability_enable_net_of_amyntok",
+     "overcast": "wh2_main_effect_ability_overcast_net_of_amyntok"
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh_main_effect_ability_enable_bironas_timewarp",
+     "overcast": "wh2_main_effect_ability_overcast_bironas_timewarp"
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh_main_effect_ability_enable_banishment",
+     "overcast": "wh2_main_effect_ability_overcast_banishment"
+    }
+   ]
+  },
+  "wh_main_lore_lil_waaagh": {
+   "passives": [
+    "wh_main_effect_ability_enable_sneaky_stealin"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh_main_effect_ability_enable_sneaky_stabbin",
+     "overcast": null
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_vindictive_glare",
+     "overcast": "wh2_main_effect_ability_overcast_vindictive_glare"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_main_effect_ability_enable_gorkll_fix_it",
+     "overcast": null
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_main_effect_ability_enable_night_shroud",
+     "overcast": "wh2_main_effect_ability_overcast_night_shroud"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh_main_effect_ability_enable_itchy_nuisance",
+     "overcast": null
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh_main_effect_ability_enable_curse_of_da_bad_moon",
+     "overcast": "wh2_main_effect_ability_overcast_curse_of_da_bad_moon"
+    }
+   ]
+  },
+  "wh_main_lore_metal": {
+   "passives": [
+    "wh_main_effect_ability_enable_metalshifting"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh_main_effect_ability_enable_plague_of_rust",
+     "overcast": "wh2_main_effect_ability_overcast_plague_of_rust"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_glittering_robe",
+     "overcast": "wh2_main_effect_ability_overcast_glittering_robe"
+    },
+    {
+     "cost": 6.0,
+     "enable": "wh_main_effect_ability_enable_searing_doom",
+     "overcast": "wh2_main_effect_ability_overcast_searing_doom"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh_main_effect_ability_enable_gehennas_golden_hounds",
+     "overcast": "wh2_main_effect_ability_overcast_gehennas_golden_hounds"
+    },
+    {
+     "cost": 11.0,
+     "enable": "wh_main_effect_ability_enable_transmutation_of_lead",
+     "overcast": "wh2_main_effect_ability_overcast_transmutation_of_lead"
+    },
+    {
+     "cost": 17.0,
+     "enable": "wh_main_effect_ability_enable_final_transmutation",
+     "overcast": "wh2_main_effect_ability_overcast_final_transmutation"
+    }
+   ]
+  },
+  "wh_main_lore_vampires": {
+   "passives": [
+    "wh_main_effect_ability_enable_curse_of_undeath"
+   ],
+   "spells": [
+    {
+     "cost": 4.0,
+     "enable": "wh_main_effect_ability_enable_vanhels_danse_macabre",
+     "overcast": "wh2_main_effect_ability_overcast_vanhels_danse_macabre"
+    },
+    {
+     "cost": 5.0,
+     "enable": "wh_main_effect_ability_enable_raise_dead",
+     "overcast": "wh2_main_effect_ability_overcast_raise_dead"
+    },
+    {
+     "cost": 7.0,
+     "enable": "wh_main_effect_ability_enable_invocation_of_nehek",
+     "overcast": "wh2_main_effect_ability_overcast_invocation_of_nehek"
+    },
+    {
+     "cost": 8.0,
+     "enable": "wh_main_effect_ability_enable_gaze_of_nagash",
+     "overcast": "wh2_main_effect_ability_overcast_gaze_of_nagash"
+    },
+    {
+     "cost": 10.0,
+     "enable": "wh_main_effect_ability_enable_curse_of_years",
+     "overcast": null
+    },
+    {
+     "cost": 15.0,
+     "enable": "wh_main_effect_ability_enable_wind_of_death",
+     "overcast": "wh2_main_effect_ability_overcast_wind_of_death"
+    }
+   ]
+  }
+ },
  "melee_weapons": {
+  "wh2_dlc13_emp_huntsmarhsal": {
+   "ap_damage": "90",
+   "audio_type": "sword",
+   "bonus_v_infantry": "0",
+   "bonus_v_large": "0",
+   "building_damage_multiplier": "0.7500",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "270",
+   "ignition_amount": "0.0000",
+   "is_magical": "false",
+   "is_spell": "false",
+   "key": "wh2_dlc13_emp_huntsmarhsal",
+   "melee_attack_interval": "4.0000",
+   "melee_weapon_type": "sword",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "4",
+   "splash_attack_power_multiplier": "1.0000",
+   "splash_attack_target_size": "medium",
+   "weapon_length": "3.0000"
+  },
   "wh3_dlc20_chs_sword_caster_hero_mtze": {
    "ap_damage": "95",
    "audio_type": "sword",
@@ -20043,6 +21996,28 @@
    "splash_attack_target_size": "medium",
    "weapon_length": "3.0000"
   },
+  "wh3_dlc29_vmp_walach_harkon_greatsword": {
+   "ap_damage": "320",
+   "audio_type": "sword",
+   "bonus_v_infantry": "20",
+   "bonus_v_large": "0",
+   "building_damage_multiplier": "0.7500",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "150",
+   "ignition_amount": "0.0000",
+   "is_magical": "false",
+   "is_spell": "false",
+   "key": "wh3_dlc29_vmp_walach_harkon_greatsword",
+   "melee_attack_interval": "4.0000",
+   "melee_weapon_type": "sword",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "5",
+   "splash_attack_power_multiplier": "1.0000",
+   "splash_attack_target_size": "medium",
+   "weapon_length": "3.0000"
+  },
   "wh_main_emp_sword_caster": {
    "ap_damage": "90",
    "audio_type": "sword",
@@ -20061,6 +22036,28 @@
    "melee_weapon_type": "sword",
    "scaling_damage": "",
    "splash_attack_max_attacks": "3",
+   "splash_attack_power_multiplier": "1.0000",
+   "splash_attack_target_size": "medium",
+   "weapon_length": "3.0000"
+  },
+  "wh_main_emp_sword_hero": {
+   "ap_damage": "125",
+   "audio_type": "sword",
+   "bonus_v_infantry": "0",
+   "bonus_v_large": "0",
+   "building_damage_multiplier": "0.7500",
+   "collision_attack_max_targets": "0",
+   "collision_attack_max_targets_cooldown": "10",
+   "contact_phase": "",
+   "damage": "250",
+   "ignition_amount": "0.0000",
+   "is_magical": "false",
+   "is_spell": "false",
+   "key": "wh_main_emp_sword_hero",
+   "melee_attack_interval": "4.0000",
+   "melee_weapon_type": "sword",
+   "scaling_damage": "",
+   "splash_attack_max_attacks": "4",
    "splash_attack_power_multiplier": "1.0000",
    "splash_attack_target_size": "medium",
    "weapon_length": "3.0000"
@@ -20839,6 +22836,7 @@
   "region_to_region_own_unseen_provincewide",
   "this_building",
   "tretch_faction_to_force",
+  "wh3_dlc29_building_to_army_own_provincewide_geographical",
   "wh3_dlc29_faction_to_faction_all_garden_provinces_dummy",
   "wh3_dlc29_faction_to_faction_all_marked_characters_dummy",
   "wh3_dlc29_faction_to_faction_marked_nurgle_garden_dummy",
@@ -20848,6 +22846,34 @@
   "wh3_dlc29_region_to_region_own_marked_garden"
  ],
  "tables": {
+  "agent_actions_tables": {
+   "header": [
+    "unique_id",
+    "ability",
+    "agent",
+    "attribute",
+    "cannot_fail",
+    "critical_failure",
+    "critical_success",
+    "failure",
+    "opportune_failure",
+    "success",
+    "localised_action_name",
+    "localised_action_description",
+    "target_attribute",
+    "critical_success_proportion_modifier",
+    "opportune_failure_proportion_modifier",
+    "critical_failure_proportion_modifier",
+    "chance_of_success",
+    "voiceover",
+    "icon_path",
+    "show_action_info_in_ui",
+    "subculture",
+    "succeed_always_override",
+    "order"
+   ],
+   "version": "12"
+  },
   "agent_subtypes_tables": {
    "header": [
     "key",
@@ -20936,6 +22962,15 @@
    ],
    "version": "0"
   },
+  "ancillary_to_effects_tables": {
+   "header": [
+    "ancillary",
+    "effect",
+    "effect_scope",
+    "value"
+   ],
+   "version": "0"
+  },
   "battle_animations_table_tables": {
    "header": [
     "key",
@@ -21017,6 +23052,17 @@
     "group_key",
     "unit_key",
     "quality"
+   ],
+   "version": "2"
+  },
+  "character_skill_categories_tables": {
+   "header": [
+    "key",
+    "max_indent",
+    "min_indent",
+    "order",
+    "agent_subtype_override",
+    "col_hex"
    ],
    "version": "2"
   },
@@ -21118,6 +23164,49 @@
    "header": [
     "battle_animations_table",
     "culture_pack"
+   ],
+   "version": "0"
+  },
+  "effect_bonus_value_agent_action_record_junctions_tables": {
+   "header": [
+    "bonus_value_id",
+    "effect",
+    "agent_action_record"
+   ],
+   "version": "0"
+  },
+  "effect_bundles_tables": {
+   "header": [
+    "key",
+    "localised_description",
+    "localised_title",
+    "bundle_target",
+    "priority",
+    "ui_icon",
+    "is_global_effect",
+    "show_in_3d_space",
+    "owner_only"
+   ],
+   "version": "4"
+  },
+  "effect_bundles_to_effects_junctions_tables": {
+   "header": [
+    "effect_bundle_key",
+    "effect_key",
+    "effect_scope",
+    "value",
+    "advancement_stage"
+   ],
+   "version": "3"
+  },
+  "effects_tables": {
+   "header": [
+    "effect",
+    "icon",
+    "priority",
+    "icon_negative",
+    "category",
+    "is_positive_value_good"
    ],
    "version": "0"
   },

@@ -58,3 +58,224 @@ character_skills_localised_name_advisor_overhaul_choose_mount_pegasus	Imperial P
 character_skills_localised_description_advisor_overhaul_choose_mount_pegasus	A winged Imperial steed that lifts him over the battle line.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
 character_skills_localised_name_advisor_overhaul_choose_mount_disc	Disc of Tzeentch	true
 character_skills_localised_description_advisor_overhaul_choose_mount_disc	A floating daemon-disc, bound to him by a bargain he does not talk about.\\n\\nUnlocks this mount for the Advisor. Switch to it with the Change Loadout button in his character panel.	true
+character_skills_localised_name_advisor_overhaul_skill_actions_default	Default Actions	true
+character_skills_localised_description_advisor_overhaul_skill_actions_default	The hero actions he always has: Scouting, which lets him join an army, Scout Settlement and Boost Income.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_apex	Master of Arms	true
+character_skills_localised_description_advisor_overhaul_skill_arts_apex	Every weapon he has ever held, in every ending, answers him at once. Takes this row's Apex, which locks the other Apexes.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_army_1	Army I: Drill	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_1	Soldiers near him pick up his habits without knowing they have.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_army_2	Army II: Formation	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_2	He places men where he once saw them live.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_army_3	Army III: Last Stand	true
+character_skills_localised_description_advisor_overhaul_skill_arts_army_3	He has seen how armies break. He does not let this one.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_art_1	Art I: Stance	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_1	The first thing he learned with every weapon he ever held, in every world that ended.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_art_2	Art II: Edge	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_2	He has fought this fight before. His hands remember how it went.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_art_3	Art III: Flow	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_3	The weapon stops being a tool and starts being an argument.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_arts_art_4	Art IV: Ending	true
+character_skills_localised_description_advisor_overhaul_skill_arts_art_4	How he finished it last time. And the time before that.\\n\\nWhat it does follows the weapon in his hand. Change Loadout lists each weapon's arts.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_0	Scouting	true
+character_skills_localised_description_advisor_overhaul_skill_civic_0	He knows where they are. He usually knows where they will be.\\n\\nImproves his Scouting hero action, which he always has.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_1	Training	true
+character_skills_localised_description_advisor_overhaul_skill_civic_1	He trains them for the war after this one.\\n\\nUnlocks the Training hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_10	Steal Technology	true
+character_skills_localised_description_advisor_overhaul_skill_civic_10	He has read books that have not been written yet. Theirs are easier.\\n\\nUnlocks the Steal Technology hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_2	Replenish Troops	true
+character_skills_localised_description_advisor_overhaul_skill_civic_2	He finds men to fill the gaps. He knows where they hide.\\n\\nUnlocks the Replenish Troops hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_3	Increase Mobility	true
+character_skills_localised_description_advisor_overhaul_skill_civic_3	He knows the shortcut. He has walked it in three other lives.\\n\\nUnlocks the Increase Mobility hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_4	Scavenge	true
+character_skills_localised_description_advisor_overhaul_skill_civic_4	Nothing on a battlefield is wasted while he is there.\\n\\nUnlocks the Scavenge hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_5	Spread Public Order	true
+character_skills_localised_description_advisor_overhaul_skill_civic_5	He reminds the people what the alternative looks like.\\n\\nUnlocks the Spread Public Order hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_6	Cleanse Corruption	true
+character_skills_localised_description_advisor_overhaul_skill_civic_6	He has seen what the taint becomes. He burns it out early.\\n\\nUnlocks the Cleanse Corruption hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_7	Stimulate Growth	true
+character_skills_localised_description_advisor_overhaul_skill_civic_7	He remembers which years the crops failed, and plants for them.\\n\\nUnlocks the Stimulate Growth hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_8	Increase Trade	true
+character_skills_localised_description_advisor_overhaul_skill_civic_8	He knows which roads will close, and which ships will sink.\\n\\nUnlocks the Increase Trade hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_9	Boost Income	true
+character_skills_localised_description_advisor_overhaul_skill_civic_9	Half the counting-houses in the Empire owe him money from a life they cannot remember.\\n\\nImproves his Boost Income hero action, which he always has.	true
+character_skills_localised_name_advisor_overhaul_skill_civic_apex	Power Behind Thrones	true
+character_skills_localised_description_advisor_overhaul_skill_civic_apex	Kings come and go. He has advised most of them, in one world or another.\\n\\nThe Civic row's Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_archmage	Archmage	true
+character_skills_localised_description_advisor_overhaul_skill_magic_archmage	Every lore he ever learned, in every world, answers him now.\\n\\nThe magic rows' Apex. Takes the place of the other Apexes and the Polymath.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_reserves	Deep Reserves	true
+character_skills_localised_description_advisor_overhaul_skill_magic_reserves	He has learned to hold more of the Winds than a body should.\\n\\nMore Winds of Magic for his army in every battle.	true
+character_skills_localised_name_advisor_overhaul_skill_magic_steady	Steady Hands	true
+character_skills_localised_description_advisor_overhaul_skill_magic_steady	He miscast once, at the worst possible moment, and the world ended a little early.\\n\\nFewer miscasts, stronger spells.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_0	Assassinate	true
+character_skills_localised_description_advisor_overhaul_skill_martial_0	He knows which of them will matter later. He settles it now.\\n\\nUnlocks the Assassinate hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_1	Wound	true
+character_skills_localised_description_advisor_overhaul_skill_martial_1	Not a killing blow. A reminder.\\n\\nUnlocks the Wound hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_11	Practised Hands	true
+character_skills_localised_description_advisor_overhaul_skill_martial_11	Hero work is still work. He is very good at work.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_2	Assassinate Lord	true
+character_skills_localised_description_advisor_overhaul_skill_martial_2	Generals die too. He has watched it happen in every ending.\\n\\nUnlocks the Assassinate Lord hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_3	Damage Walls	true
+character_skills_localised_description_advisor_overhaul_skill_martial_3	Every wall falls eventually. He only hurries it along.\\n\\nUnlocks the Damage Walls hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_4	Assault Garrison	true
+character_skills_localised_description_advisor_overhaul_skill_martial_4	He walks in through the gate they forgot to watch.\\n\\nUnlocks the Assault Garrison hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_5	Damage Building	true
+character_skills_localised_description_advisor_overhaul_skill_martial_5	A fire in the right storehouse ends a siege early.\\n\\nUnlocks the Damage Building hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_6	Block Army	true
+character_skills_localised_description_advisor_overhaul_skill_martial_6	A cut rope, a spooked horse, a missing quartermaster.\\n\\nUnlocks the Block Army hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_7	Hinder Replenishment	true
+character_skills_localised_description_advisor_overhaul_skill_martial_7	Their wounded do not come back to the line.\\n\\nUnlocks the Hinder Replenishment hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_8	Assault Unit	true
+character_skills_localised_description_advisor_overhaul_skill_martial_8	One regiment, at night, before they know he is there.\\n\\nUnlocks the Assault Unit hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_9	Assault Units	true
+character_skills_localised_description_advisor_overhaul_skill_martial_9	The whole camp, the same night.\\n\\nUnlocks the Assault Units hero action.	true
+character_skills_localised_name_advisor_overhaul_skill_martial_apex	The Last Sword	true
+character_skills_localised_description_advisor_overhaul_skill_martial_apex	At the end of one world he was the last one standing. He intends to be again.\\n\\nThe Martial row's Apex. Takes the place of the other Apexes and the Polymath.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_1	Spellguard	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_art_1	He parries with the staff and lets the wards take the rest.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_2	Bolt and Blade	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_art_2	A bolt to open the guard, a cut to close it.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_3	Winds in the Steel	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_art_3	The sword carries what the staff gathers.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_art_4	Unbinding	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_art_4	Blows that should land slide off a man who knows where they were going.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_army_1	Hedge Wards	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_army_1	Small charms on every banner pole.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_army_2	Patient Lines	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_army_2	He teaches them to wait for the spell to land.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_army_3	Calm in the Storm	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_army_3	Magic does not frighten men who have seen him use it.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_staff_and_sword_apex	Channelled Staff	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_staff_and_sword_apex	The staff drinks the Winds and gives them back to him.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_art_1	Shield Wall	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_art_1	He stands where the blows land thickest and lets them come.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_art_2	Turn the Arrow	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_art_2	He has watched too many men die to arrows to let it happen to him.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_art_3	Steady Hand	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_art_3	A knight's shield, a scholar's patience.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_art_4	Bulwark	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_art_4	He does not move, and nothing moves him.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_army_1	Hold the Line	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_army_1	Men stand firm next to a man who will not step back.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_army_2	Shields Up	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_army_2	He calls the volley before the archers loose.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_army_3	Unbroken	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_army_3	This line held once, at the end of the world. It will hold now.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_shield_apex	Shield of Faith	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_shield_apex	Not his god's faith. His own, that this time will be different.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_1	Overhand	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_1	A blow from above, with all of him behind it.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_2	Momentum	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_2	Once the blade is moving, nothing in front of it matters.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_3	Cleaving Arc	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_3	One swing, three men. He has done the sums.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_art_4	Headsman	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_art_4	Big things die the same way small ones do.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_1	Bloody Drill	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_1	He makes them practise until they stop flinching.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_2	Charge Them	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_2	He goes first. They follow.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_army_3	Butcher's Bill	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_army_3	He knows what this battle will cost and pays it early.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_greatsword_apex	Killing Blow	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_greatsword_apex	The blow that ended a king, in a world nobody else remembers.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_1	Steady Draw	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_art_1	He breathes out, and the arrow goes where he looked.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_2	Long Eye	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_art_2	He sees the shot before he takes it.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_3	Full Quiver	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_art_3	He never runs out. He planned for this.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_art_4	Quick Hands	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_art_4	Draw, loose, draw, loose, faster than thought.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_army_1	Huntsmen	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_army_1	He shows the archers where to aim.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_army_2	Marked Ground	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_army_2	Every stone and stake is a range marker to him.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_army_3	From the Trees	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_army_3	He knows where the enemy will walk, because he has watched them walk there before.	true
+effect_bundles_localised_title_advisor_overhaul_weapon_art_sword_and_bow_apex	Hail of Doom	true
+effect_bundles_localised_description_advisor_overhaul_weapon_art_sword_and_bow_apex	One arrow that splits into a storm.	true
+character_skills_localised_name_advisor_overhaul_lore_fire	Lore of Fire	true
+character_skills_localised_description_advisor_overhaul_lore_fire	Aqshy, the first Wind he ever felt. It burned his hands then too.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_beasts	Lore of Beasts	true
+character_skills_localised_description_advisor_overhaul_lore_beasts	Ghur, learned from a beastmaster in a world where men had lost.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_metal	Lore of Metal	true
+character_skills_localised_description_advisor_overhaul_lore_metal	Chamon, the patient lore of things that last. Nothing lasted.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_heavens	Lore of the Heavens	true
+character_skills_localised_description_advisor_overhaul_lore_heavens	Azyr. He read the stars that fell on the last night.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_light	Lore of Light	true
+character_skills_localised_description_advisor_overhaul_lore_light	Hysh, kept burning in a temple after every other light went out.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_life	Lore of Life	true
+character_skills_localised_description_advisor_overhaul_lore_life	Ghyran. He grew a garden on a dead world, just to see if he could.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_shadows	Lore of Shadows	true
+character_skills_localised_description_advisor_overhaul_lore_shadows	Ulgu, the lore of not being where the end is looking.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_death	Lore of Death	true
+character_skills_localised_description_advisor_overhaul_lore_death	Shyish. He has more right to this lore than any Amethyst magister alive.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_high_magic	High Magic	true
+character_skills_localised_description_advisor_overhaul_lore_high_magic	Qhaysh, taught by an elf who outlived her island by a hundred years.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_of_ice	Lore of Ice	true
+character_skills_localised_description_advisor_overhaul_lore_of_ice	The cold that came after the fires, in a world that ended slowly.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_of_tempest	Lore of Tempest	true
+character_skills_localised_description_advisor_overhaul_lore_of_tempest	Storms he walked through for a century to reach the next ending.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_of_yang	Lore of Yang	true
+character_skills_localised_description_advisor_overhaul_lore_of_yang	Half a truth from Cathay. The other half is the next skill.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_of_yin	Lore of Yin	true
+character_skills_localised_description_advisor_overhaul_lore_of_yin	The other half. He has never managed to hold both at once. Yet.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_mists	Lore of Mists	true
+character_skills_localised_description_advisor_overhaul_lore_mists	Sea-fog spells from a coast that sank.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_hag	Lore of the Hag	true
+character_skills_localised_description_advisor_overhaul_lore_hag	Old witch-craft from the far north, bought at a price he still pays.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_dark_magic	Dark Magic	true
+character_skills_localised_description_advisor_overhaul_lore_dark_magic	Dhar, drawn raw. He knows exactly how dangerous it is. He used it anyway.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_vampires	Lore of Vampires	true
+character_skills_localised_description_advisor_overhaul_lore_vampires	Taught by a count who wanted a friend for the long dark.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_undeath	Lore of Undeath	true
+character_skills_localised_description_advisor_overhaul_lore_undeath	The Great Necromancer's own words, from a world where he won.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_nehekhara	Lore of Nehekhara	true
+character_skills_localised_description_advisor_overhaul_lore_nehekhara	Incantations a liche priest taught him in exchange for a name.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_deep	Lore of the Deep	true
+character_skills_localised_description_advisor_overhaul_lore_deep	Drowned magic, from a fleet that sailed off the end of the world.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_big_waaagh	Big Waaagh!	true
+character_skills_localised_description_advisor_overhaul_lore_big_waaagh	It should not work for a man. It works for him. He does not know why.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_lil_waaagh	Little Waaagh!	true
+character_skills_localised_description_advisor_overhaul_lore_lil_waaagh	Goblin magic, learned by losing a lot of card games.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_hashut	Lore of Hashut	true
+character_skills_localised_description_advisor_overhaul_lore_hashut	Fire and slavery, from the furnace-priests of a world they burned.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_ruin	Lore of Ruin	true
+character_skills_localised_description_advisor_overhaul_lore_ruin	Warp lightning. He has seen what is left when the Horned Rat wins.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_plague	Lore of Plague	true
+character_skills_localised_description_advisor_overhaul_lore_plague	He caught it once. He got better. Nobody else did.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_stealth	Lore of Stealth	true
+character_skills_localised_description_advisor_overhaul_lore_stealth	The Eshin sorcerers' tricks, learned by being their target for a decade.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_nurgle	Lore of Nurgle	true
+character_skills_localised_description_advisor_overhaul_lore_nurgle	Grandfather's kindness. He refused it, and kept the spells.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_slaanesh	Lore of Slaanesh	true
+character_skills_localised_description_advisor_overhaul_lore_slaanesh	He refused this one too. It was harder.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_of_great_maw	Lore of the Great Maw	true
+character_skills_localised_description_advisor_overhaul_lore_of_great_maw	Gut-magic from the Ogre camps, earned by eating what they ate.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_wild	Lore of the Wild	true
+character_skills_localised_description_advisor_overhaul_lore_wild	The herdstone songs. He sang them at the end, when there was no one left to hear.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+character_skills_localised_name_advisor_overhaul_lore_rune	Lore of Runes	true
+character_skills_localised_description_advisor_overhaul_lore_rune	A runesmith taught him three runes before the last hold fell. He worked out the rest.\\n\\nLevel 1: the lore's passive and 3 of its 6 spells. Level 2: every spell. Level 3: every spell can be overcast.	true
+advisor_overhaul_ui_zone_1_title	Heroes	true
+advisor_overhaul_ui_zone_1_description	Kill or wound rival heroes, and remove their generals.	true
+advisor_overhaul_ui_zone_2_title	Armies	true
+advisor_overhaul_ui_zone_2_description	Wreck enemy armies in the field, or march and train with your own.	true
+advisor_overhaul_ui_zone_3_title	Lands	true
+advisor_overhaul_ui_zone_3_description	Sabotage enemy settlements, or bring order, growth and wealth to yours.	true
+advisor_overhaul_ui_zone_4_title	Mastery	true
+advisor_overhaul_ui_zone_4_description	Cheaper hero actions, and the two Apexes of hero work.	true
+agent_actions_localised_action_name_advisor_overhaul_action_champion_assist_army_scavenge	{{tr:agent_action_name_scavenge}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_assist_army_scavenge	[[col:yellow]]Increases the {{tr:icon_income}}income of post-battle loot earned by the parent army by %n%.[[/col]]	true
+effects_description_advisor_overhaul_effect_enable_champion_assist_army_scavenge	Hero action: {{tr:agent_action_name_scavenge}}	true
+agent_actions_localised_action_name_advisor_overhaul_action_champion_passive_increase_trade	{{tr:agent_action_name_increase_trade}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_passive_increase_trade	[[col:yellow]]Increases tradable resources produced in the local province by %n%.[[/col]]	true
+effects_description_advisor_overhaul_effect_enable_champion_passive_increase_trade	Hero action: {{tr:agent_action_name_increase_trade}}	true
+agent_actions_localised_action_name_advisor_overhaul_action_champion_passive_stimulate_growth	{{tr:agent_action_name_stimulate_growth}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_champion_passive_stimulate_growth	[[col:yellow]]Increases [[img:icon_growth]][[/img]]growth in the local province by %n (reduces in enemy provinces).[[/col]]	true
+effects_description_advisor_overhaul_effect_enable_champion_passive_stimulate_growth	Hero action: {{tr:agent_action_name_stimulate_growth}}	true
+agent_actions_localised_action_name_advisor_overhaul_action_spy_assist_army_increase_mobility	{{tr:agent_action_name_increase_mobility}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_spy_assist_army_increase_mobility	[[col:yellow]]Increases the campaign movement range of the parent army by %n%.[[/col]]	true
+effects_description_advisor_overhaul_effect_enable_spy_assist_army_increase_mobility	Hero action: {{tr:agent_action_name_increase_mobility}}	true
+agent_actions_localised_action_name_advisor_overhaul_action_spy_hinder_character_assassinate	{{tr:agent_action_name_assassinate}}	true
+agent_actions_localised_action_description_advisor_overhaul_action_spy_hinder_character_assassinate	[[col:yellow]]Kills the target Character.[[/col]]\\n[[col:red]]This action will kill the Hand of the Shadow Crown![[/col]]	true
+effects_description_advisor_overhaul_effect_enable_spy_hinder_character_assassinate	Hero action: {{tr:agent_action_name_assassinate}}	true

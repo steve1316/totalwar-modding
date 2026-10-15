@@ -53,6 +53,66 @@ ADVISOR_OVERHAUL_RIGS = {
 	name = "names_name_930556520",
 	--- Hidden skills he is made with. An Advisor from before they were added gets them from the spawn script.
 	learned_skills = {
-		"wh2_main_skill_all_dummy_agent_actions_emp_battle_wizard",
+		"advisor_overhaul_skill_actions_default",
+	},
+	--- Weapon -> its arts: the art slot skill he must own, the effect bundle he wears for it while holding that weapon, and the art's
+	--- English name (its loc key is the bundle's title).
+	arts = {
+		["staff_and_sword"] = {
+			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_staff_and_sword_art_1", name = "Spellguard" },
+			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_staff_and_sword_art_2", name = "Bolt and Blade" },
+			{ skill = "advisor_overhaul_skill_arts_art_3", bundle = "advisor_overhaul_weapon_art_staff_and_sword_art_3", name = "Winds in the Steel" },
+			{ skill = "advisor_overhaul_skill_arts_art_4", bundle = "advisor_overhaul_weapon_art_staff_and_sword_art_4", name = "Unbinding" },
+			{ skill = "advisor_overhaul_skill_arts_army_1", bundle = "advisor_overhaul_weapon_art_staff_and_sword_army_1", name = "Hedge Wards" },
+			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_staff_and_sword_army_2", name = "Patient Lines" },
+			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_staff_and_sword_army_3", name = "Calm in the Storm" },
+			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_staff_and_sword_apex", name = "Channelled Staff" },
+		},
+		["sword_and_shield"] = {
+			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_sword_and_shield_art_1", name = "Shield Wall" },
+			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_sword_and_shield_art_2", name = "Turn the Arrow" },
+			{ skill = "advisor_overhaul_skill_arts_art_3", bundle = "advisor_overhaul_weapon_art_sword_and_shield_art_3", name = "Steady Hand" },
+			{ skill = "advisor_overhaul_skill_arts_art_4", bundle = "advisor_overhaul_weapon_art_sword_and_shield_art_4", name = "Bulwark" },
+			{ skill = "advisor_overhaul_skill_arts_army_1", bundle = "advisor_overhaul_weapon_art_sword_and_shield_army_1", name = "Hold the Line" },
+			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_sword_and_shield_army_2", name = "Shields Up" },
+			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_sword_and_shield_army_3", name = "Unbroken" },
+			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_sword_and_shield_apex", name = "Shield of Faith" },
+		},
+		["greatsword"] = {
+			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_greatsword_art_1", name = "Overhand" },
+			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_greatsword_art_2", name = "Momentum" },
+			{ skill = "advisor_overhaul_skill_arts_art_3", bundle = "advisor_overhaul_weapon_art_greatsword_art_3", name = "Cleaving Arc" },
+			{ skill = "advisor_overhaul_skill_arts_art_4", bundle = "advisor_overhaul_weapon_art_greatsword_art_4", name = "Headsman" },
+			{ skill = "advisor_overhaul_skill_arts_army_1", bundle = "advisor_overhaul_weapon_art_greatsword_army_1", name = "Bloody Drill" },
+			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_greatsword_army_2", name = "Charge Them" },
+			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_greatsword_army_3", name = "Butcher's Bill" },
+			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_greatsword_apex", name = "Killing Blow" },
+		},
+		["sword_and_bow"] = {
+			{ skill = "advisor_overhaul_skill_arts_art_1", bundle = "advisor_overhaul_weapon_art_sword_and_bow_art_1", name = "Steady Draw" },
+			{ skill = "advisor_overhaul_skill_arts_art_2", bundle = "advisor_overhaul_weapon_art_sword_and_bow_art_2", name = "Long Eye" },
+			{ skill = "advisor_overhaul_skill_arts_art_3", bundle = "advisor_overhaul_weapon_art_sword_and_bow_art_3", name = "Full Quiver" },
+			{ skill = "advisor_overhaul_skill_arts_art_4", bundle = "advisor_overhaul_weapon_art_sword_and_bow_art_4", name = "Quick Hands" },
+			{ skill = "advisor_overhaul_skill_arts_army_1", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_1", name = "Huntsmen" },
+			{ skill = "advisor_overhaul_skill_arts_army_2", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_2", name = "Marked Ground" },
+			{ skill = "advisor_overhaul_skill_arts_army_3", bundle = "advisor_overhaul_weapon_art_sword_and_bow_army_3", name = "From the Trees" },
+			{ skill = "advisor_overhaul_skill_arts_apex", bundle = "advisor_overhaul_weapon_art_sword_and_bow_apex", name = "Hail of Doom" },
+		},
+	},
+	--- Skill tree zones, in order: title and description loc keys with English fallbacks, the top and bottom rows they span, and their
+	--- cards (skill keys) in reading order.
+	zones = {
+		{ title = "advisor_overhaul_ui_zone_1_title", title_fallback = "Heroes", description = "advisor_overhaul_ui_zone_1_description",
+			description_fallback = "Kill or wound rival heroes, and remove their generals.", top = 6, bottom = 7,
+			cards = { "advisor_overhaul_skill_martial_0", "advisor_overhaul_skill_martial_1", "advisor_overhaul_skill_martial_2" } },
+		{ title = "advisor_overhaul_ui_zone_2_title", title_fallback = "Armies", description = "advisor_overhaul_ui_zone_2_description",
+			description_fallback = "Wreck enemy armies in the field, or march and train with your own.", top = 6, bottom = 7,
+			cards = { "advisor_overhaul_skill_martial_6", "advisor_overhaul_skill_martial_7", "advisor_overhaul_skill_martial_8", "advisor_overhaul_skill_martial_9", "advisor_overhaul_skill_civic_0", "advisor_overhaul_skill_civic_1", "advisor_overhaul_skill_civic_2", "advisor_overhaul_skill_civic_3", "advisor_overhaul_skill_civic_4" } },
+		{ title = "advisor_overhaul_ui_zone_3_title", title_fallback = "Lands", description = "advisor_overhaul_ui_zone_3_description",
+			description_fallback = "Sabotage enemy settlements, or bring order, growth and wealth to yours.", top = 6, bottom = 7,
+			cards = { "advisor_overhaul_skill_martial_3", "advisor_overhaul_skill_martial_4", "advisor_overhaul_skill_martial_5", "advisor_overhaul_skill_civic_10", "advisor_overhaul_skill_civic_5", "advisor_overhaul_skill_civic_6", "advisor_overhaul_skill_civic_7", "advisor_overhaul_skill_civic_8", "advisor_overhaul_skill_civic_9" } },
+		{ title = "advisor_overhaul_ui_zone_4_title", title_fallback = "Mastery", description = "advisor_overhaul_ui_zone_4_description",
+			description_fallback = "Cheaper hero actions, and the two Apexes of hero work.", top = 6, bottom = 7,
+			cards = { "advisor_overhaul_skill_martial_11", "advisor_overhaul_skill_martial_apex", "advisor_overhaul_skill_civic_apex" } },
 	},
 }
