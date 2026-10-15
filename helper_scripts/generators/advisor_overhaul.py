@@ -18,7 +18,9 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
   the same for unit abilities.
 
 How a weapon looks on every one of its mounts (all optional, written by the workbench's Look tab): `body` picks his outfit from `model.bodies`,
-`hood` false takes his hood off (when his head has a hoodless model), and `pieces` adds models such as a hat: slot -> [model, metadata...]. An
+`hood` false takes his hood off (when his head has a hoodless model), and `pieces` adds models such as a hat: slot -> [model, metadata...], or
+[bone, model, metadata...] for a prop held on that bone (a book on his hip), which `model.prop_offsets`, `prop_turns` and `prop_sizes` change
+like a weapon. An
 outfit in `model.unpainted` (key -> true) is worn without its faction colours or heraldry, as copies `generators.advisor_overhaul_model` writes.
 
 New weapons made with the workbench's New form dialog are marked `workbench`. Their `sets` hold only `humanoid01` sets, which build as they are.
@@ -1017,9 +1019,14 @@ def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> 
             body = [(slot, [unpainted_copy_path(mesh) if mesh.lower().endswith(".wsmodel") else mesh, *meta]) for slot, (mesh, *meta) in body]
         pieces = dict([body[0], head_piece] + body[1:] + list(look["pieces"].items()))
         lines = ["<VARIANT_MESH>"]
-        for slot, (mesh, *meta) in pieces.items():
-            tail = "".join(f"<META_DATA>{m}</META_DATA>" for m in meta)
-            lines += [f'\t<SLOT name="{slot}" >', f'\t\t<VARIANT_MESH model="{mesh}" >{tail}</VARIANT_MESH>', "\t</SLOT>"]
+        for slot, piece in pieces.items():
+            # A piece held on a bone starts with the bone, one that bends with the body with its model.
+            bone, (mesh, *meta) = (None, piece) if piece[0].lower().endswith((".wsmodel", ".rigid_model_v2")) else (piece[0], piece[1:])
+            if bone and any(mesh in model.get(name, {}) for name in PROP_CHANGES):
+                mesh = prop_copy_path(mesh)
+            tail = "".join(f"<META_DATA>{m}</META_DATA>" for m in meta if m)
+            point = f' attach_point="{bone}"' if bone else ""
+            lines += [f'\t<SLOT name="{slot}"{point} >', f'\t\t<VARIANT_MESH model="{mesh}" >{tail}</VARIANT_MESH>', "\t</SLOT>"]
         for slot, point in slots.items():
             if slot not in props:
                 lines.append(f'\t<SLOT name="{slot}" attach_point="{point}" />')
