@@ -11,6 +11,9 @@ const SIZE = 160;
 // Models one export request asks for.
 const BATCH = 8;
 
+// The drawing style. Kept pictures of an older style (file names end "_<style>.png") are drawn again. 2: weapons seen across the blade.
+const STYLE = 2;
+
 export class Thumbnails {
   constructor(studio) {
     // `cached` is the promised index of kept pictures (model -> url), `images` each drawn model's promised picture (a url, or null when it
@@ -18,15 +21,15 @@ export class Thumbnails {
     this.studio = studio; this.images = new Map(); this.queue = []; this.busy = false; this.stage = null;
     const folder = studio.api.replace(/api\/$/, "thumbs/");
     this.cached = fetch(studio.api + "thumbs").then(r => r.json()).catch(() => ({}))
-      .then(index => new Map(Object.entries(index).map(([model, file]) => [model, folder + file])));
+      .then(index => new Map(Object.entries(index).filter(([, file]) => file.endsWith(`_${STYLE}.png`)).map(([model, file]) => [model, folder + file])));
     this.observer = new IntersectionObserver(seen => seen.forEach(e => { if (e.isIntersecting) { this.observer.unobserve(e.target); this.show(e.target); } }), { rootMargin: "200px" });
   }
 
   // Fills every thumbnail image under a container: a kept picture at once (the browser loads it when it scrolls near), the rest once they
-  // scroll into view.
+  // scroll into view. The images are found straight away, so a container that is a fragment can be put on the page meanwhile.
   async fill(container) {
-    const kept = await this.cached;
-    for (const img of container.querySelectorAll("img[data-thumb]:not([src])")) {
+    const imgs = [...container.querySelectorAll("img[data-thumb]:not([src])")], kept = await this.cached;
+    for (const img of imgs) {
       const url = kept.get(img.dataset.thumb);
       if (url) { img.loading = "lazy"; img.src = url; } else this.observer.observe(img);
     }
@@ -73,7 +76,7 @@ export class Thumbnails {
       try { if (urls[i]) image = await this.draw(this.studio.data + urls[i]); } catch (error) { console.error("thumbnail", b.model, error); }
       if (image) {
         kept.set(b.model, image);
-        fetch(this.studio.api + "thumb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model: b.model, image }) })
+        fetch(this.studio.api + "thumb", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model: b.model, image, style: STYLE }) })
           .catch(error => console.error("keep thumbnail", error));
       }
       b.done(image);
@@ -97,10 +100,23 @@ export class Thumbnails {
     scene.add(model.group); model.group.updateMatrixWorld(true);
     const box = new THREE.Box3();
     for (const mesh of model.meshes) { mesh.geometry.computeBoundingBox(); box.union(mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrixWorld)); }
-    const centre = box.getCenter(new THREE.Vector3()), size = box.getSize(new THREE.Vector3()).length() || 1;
-    const distance = size / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
-    // Seen from the front (models face +z), a little to the right and above.
-    camera.position.set(centre.x + distance * 0.35, centre.y + distance * 0.2, centre.z + distance * 0.92); camera.lookAt(centre);
+    const centre = box.getCenter(new THREE.Vector3()), extent = box.getSize(new THREE.Vector3()), tan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    if (model.meshes.some(m => m.isSkinnedMesh)) {
+      // A model that bends with the body is seen from the front (models face +z), a little to the right and above.
+      const distance = (extent.length() || 1) / (2 * tan);
+      camera.up.set(0, 1, 0);
+      camera.position.set(centre.x + distance * 0.35, centre.y + distance * 0.2, centre.z + distance * 0.92);
+    } else {
+      // A weapon is seen across its thinnest side (the flat of a blade or a shield's face). A long one is laid corner to corner so it fills the
+      // tile, and a broad one (a shield) stands upright.
+      const axes = [0, 1, 2].sort((i, j) => extent.getComponent(j) - extent.getComponent(i)), unit = i => new THREE.Vector3().setComponent(i, 1);
+      const [long, broad, thin] = axes.map(i => extent.getComponent(i)), diagonal = long > 2 * broad;
+      const across = diagonal ? (long + broad) / Math.SQRT2 : long;
+      camera.up.copy(diagonal ? unit(axes[0]).add(unit(axes[1])).normalize() : unit(axes[0]));
+      const distance = (across || 1) / (2 * 0.9 * tan) + thin / 2;
+      camera.position.copy(centre).addScaledVector(unit(axes[2]), distance);
+    }
+    camera.lookAt(centre);
     renderer.render(scene, camera);
     const image = renderer.domElement.toDataURL("image/png");
     scene.remove(model.group);

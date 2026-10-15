@@ -6,7 +6,7 @@ The page is `index.html` with its modules in `studio/`, served from this folder.
 - `GET tuning`: the tuning values, the weapon models that may get an offset, and the job state. `POST tuning`: saves values into the registry.
 - `POST run/<job>`: starts one of the project's jobs (rebuild, deploy). `GET job`: the job state and the end of its log.
 - `GET thumbs/<file>` and `GET api/thumbs`: the cached model thumbnails and their index (model -> file). `POST thumb`: keeps one (`model`,
-  `image` as a PNG data URL).
+  `image` as a PNG data URL, `style` the page's drawing style).
 - `POST props`: exports models (`items`, each with `model`, `slot`, `attach` and `skeleton`) into the gallery for the live previews and
   thumbnails, answering `urls` (null for a model not found).
 """
@@ -117,7 +117,7 @@ class Viewer:
                 handler.send_json(400, {"error": str(error)})
         elif rest == "api/thumb":
             try:
-                handler.send_json(200, {"file": save_thumb(project, str(changes.get("model", "")), changes.get("image"))})
+                handler.send_json(200, {"file": save_thumb(project, str(changes.get("model", "")), changes.get("image"), changes.get("style"))})
             except ValueError as error:
                 handler.send_json(400, {"error": str(error)})
         elif rest == "api/props":
