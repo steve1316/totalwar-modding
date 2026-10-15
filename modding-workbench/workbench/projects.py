@@ -157,6 +157,25 @@ def edit_value(value: Any) -> Any:
     raise ValueError(f"bad value {str(value)[:80]}")
 
 
+def piece_shapes(value: Any) -> Dict[str, Dict[str, Any]]:
+    """Checks a weapon's `piece_shapes`: piece slot -> `offset`, `turn` and `size`, each within the range of its `PROP_MAPS` twin.
+
+    Args:
+        value (Any): The value sent.
+
+    Returns:
+        Dict[str, Dict[str, Any]]: The shapes, rounded.
+
+    Raises:
+        ValueError: When a shape is out of shape or range.
+    """
+    if not isinstance(value, dict) or not all(isinstance(s, dict) and set(s) <= {"offset", "turn", "size"} for s in value.values()):
+        raise ValueError("expected piece slot -> offset, turn and size")
+    ranges = {field: PROP_MAPS[name][1:3] for field, name in (("offset", "prop_offsets"), ("turn", "prop_turns"), ("size", "prop_sizes"))}
+    return {slot: {"offset": numbers(shape.get("offset", [0.0] * 3), 3, *ranges["offset"]), "turn": numbers(shape.get("turn", [0.0] * 3), 3, *ranges["turn"]),
+                   "size": numbers([shape.get("size", 1.0)], 1, *ranges["size"])[0]} for slot, shape in value.items()}
+
+
 def numbers(value: Any, count: int, low: float, high: float) -> List[float]:
     """Checks a list of numbers.
 
@@ -428,7 +447,7 @@ class Project:
         for path, value in changes.get("registry", {}).items():
             if not any(path_matches(path, pattern) for pattern in self.editable):
                 raise ValueError(f"{path} is not editable")
-            value = edit_value(value)
+            value = piece_shapes(value) if value is not None and path_matches(path, "weapons.*.piece_shapes") else edit_value(value)
             if value is None:
                 delete_path(registry, path)
             else:
