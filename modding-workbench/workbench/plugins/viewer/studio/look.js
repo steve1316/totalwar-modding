@@ -121,10 +121,11 @@ export class LookTab {
     container.innerHTML = "";
     const live = this.studio.live, f = live.form(), entry = this.studio.stage.entry;
     if (!this.weapons.enabled() || !f || !live.model()) { container.innerHTML = '<div class="note">Nothing to change on this entry. Pick one of the project\'s forms.</div>'; return; }
+    const { esc } = window.UnitPanel, weaponName = entry.name.split(" - ")[0];
     container.insertAdjacentHTML("beforeend", `<div class="note adj-intro">Changes show on the stage straight away. Save keeps them, and Rebuild puts them in the mod.</div>
-      <div class="look-section"><b>Weapons</b><span class="note">This form only.</span></div>`);
+      <div class="look-section"><b>Weapons</b><span class="note">Every ${esc(weaponName)} form, on foot and on each mount.</span></div>`);
     this.weapons.render(container, entry, f);
-    if (this.enabled()) this.renderDress(container, f, entry.name.split(" - ")[0]);
+    if (this.enabled()) this.renderDress(container, f, weaponName);
     container.insertAdjacentHTML("beforeend", '<div class="look-section"><b>Hands</b><span class="note">Every form.</span></div>');
     this.weapons.renderHands(container);
     container.querySelectorAll("[data-add]").forEach(b => b.onclick = () => this.toggle(b.dataset.add));
