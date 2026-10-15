@@ -1,7 +1,8 @@
 // The Look tab's weapon cards: one per weapon the open form holds (not what its mount adds, such as the disc), where the weapon's model can be
-// swapped, slid along its grip, turned and sized, and the Hands card. A turn, size and slide belong to the weapon model, on every form holding it. A swap is for the open form only. Everything shows live on the stage: a swapped or hovered
-// model through `studio.live` until a rebuild bakes it in, and the grip and hand values by their difference from the ones the exported models
-// already carry (`manifest.tuning`). The Jobs bar saves the edits.
+// swapped, moved, turned and sized, and the Hands card. A swap is for the open form only. A move, turn and size belong to the weapon model, on
+// every form holding it. Everything shows live on the stage: a swapped or hovered model through `studio.live` until a rebuild bakes it in, and
+// the position, turn, size and hand values by their difference from the ones the exported models already carry (`manifest.tuning`). The Jobs bar
+// saves the edits.
 import * as THREE from "three";
 import { stem } from "./live_models.js";
 import { ModelList } from "./model_list.js";
@@ -23,10 +24,10 @@ const shapeMatrix = (offset, turn, size) => new THREE.Matrix4().compose(new THRE
 const kindOf = model => (KINDS.find(([word]) => stem(model).includes(word)) || [null, "Weapon"])[1];
 
 export class WeaponCards {
-  // `look` is the Look tab, which holds the open picker and the hovered model. `fine` holds the slots showing the y and z sliders, `shaping`
-  // the slots showing the turn and size sliders, `twin` the vanilla equivalent's models.
+  // `look` is the Look tab, which holds the open picker and the hovered model. `shaping` holds the slots showing the position, turn and size
+  // sliders, `twin` the vanilla equivalent's models.
   constructor(studio, look) {
-    this.studio = studio; this.look = look; this.fine = new Set(); this.shaping = new Set(); this.twin = new Map();
+    this.studio = studio; this.look = look; this.shaping = new Set(); this.twin = new Map();
     // The stage shows each weapon slot's chosen model, or the one hovered in its picker.
     studio.live.sources.push(f => Object.fromEntries(Object.keys(f.props).map(slot => {
       const { prop: [attach, model], pending } = this.slotModel(f, slot), hovered = look.adding === `weapon:${slot}` && look.hovering;
@@ -149,7 +150,7 @@ export class WeaponCards {
 
   // Adds a card per weapon slot of the form to the tab.
   render(container, entry, f) {
-    const { esc } = window.UnitPanel, edits = this.studio.edits;
+    const { esc } = window.UnitPanel;
     for (const slot of Object.keys(f.props).filter(s => !(f.mount_props || []).includes(s))) {
       const { prop, pending } = this.slotModel(f, slot), key = this.propKey(prop[1]), card = document.createElement("div"), open = this.look.adding === `weapon:${slot}`;
       card.className = "adj-card";
@@ -158,30 +159,36 @@ export class WeaponCards {
         <div class="note">${esc(this.origin(f, slot, pending))}</div>${this.look.state([slot])}`;
       container.append(card);
       if (open) card.append(this.picker(entry, f, slot, prop));
-      if (!key) { if (pending) card.insertAdjacentHTML("beforeend", '<div class="note">Save to slide it along the grip.</div>'); continue; }
-      const move = axis => m => { edits.props[key] = this.propValue(key).slice(); edits.props[key][axis] = m; this.applyLive(); this.studio.changed(); };
-      this.sliderRow(card, "Slide along the grip", this.propValue(key)[0], 15, move(0));
-      const tools = document.createElement("div"); tools.className = "adj-tools";
-      tools.innerHTML = `<button class="mini" data-fine>${this.fine.has(slot) ? "Hide fine position" : "Fine position"}</button>
-        <button class="mini" data-shape>${this.shaping.has(slot) ? "Hide turn and size" : "Turn and size"}</button>`;
-      const toggle = set => { set.has(slot) ? set.delete(slot) : set.add(slot); this.look.redraw(); };
-      tools.querySelector("[data-fine]").onclick = () => toggle(this.fine);
-      tools.querySelector("[data-shape]").onclick = () => toggle(this.shaping);
-      card.append(tools);
-      if (this.fine.has(slot)) [["Up and down (y)", 1], ["Sideways (z)", 2]].forEach(([label, axis]) => this.sliderRow(card, label, this.propValue(key)[axis], 15, move(axis)));
-      if (this.shaping.has(slot)) this.shapeRows(card, key);
+      if (!key) { if (pending) card.insertAdjacentHTML("beforeend", '<div class="note">Save to move, turn or size it.</div>'); continue; }
+      const shaping = this.shaping.has(slot), more = document.createElement("button");
+      more.className = "mini adj-more"; more.textContent = shaping ? "Hide position, turn and size" : "Position, turn and size";
+      more.onclick = () => { shaping ? this.shaping.delete(slot) : this.shaping.add(slot); this.look.redraw(); };
+      if (!shaping) card.insertAdjacentHTML("beforeend", `<div class="note">${esc(this.shapeSummary(key))}</div>`);
+      card.append(more);
+      if (shaping) this.shapeRows(card, key);
     }
   }
 
-  // The size and turn sliders of a weapon model, and a reset. A turn of 180 flips it, for a weapon that comes upside down.
+  // A weapon model's position, turn and size in words, or that it is as the game has it.
+  shapeSummary(key) {
+    const [x, y, z] = this.propValue(key), turn = this.turnValue(key), size = this.sizeValue(key), cm = v => (Math.round(v * 1000) / 10).toFixed(1);
+    const parts = [x || y || z ? `moved ${cm(x)}, ${cm(y)}, ${cm(z)} cm` : "", turn.some(Boolean) ? `turned ${turn.join(", ")} degrees` : "", size !== 1 ? `${Math.round(size * 100)}% size` : ""];
+    const said = parts.filter(Boolean).join(", ");
+    return said ? said[0].toUpperCase() + said.slice(1) + "." : "As the game holds it.";
+  }
+
+  // The position, size and turn sliders of a weapon model, and a reset. A turn of 180 flips it, for a weapon that comes upside down.
   shapeRows(card, key) {
     const edits = this.studio.edits, changed = () => { this.applyLive(); this.studio.changed(); };
-    card.insertAdjacentHTML("beforeend", '<div class="note">Turned and sized around his hand, on every form holding this model.</div>');
+    card.insertAdjacentHTML("beforeend", `<div class="note">In the weapon's own directions, around his hand, on every form holding this model. x runs along the grip.</div>`);
+    [["Move along x (cm)", 0], ["Move along y (cm)", 1], ["Move along z (cm)", 2]].forEach(([label, axis]) => this.sliderRow(card, label, this.propValue(key)[axis], 30, m => {
+      edits.props[key] = this.propValue(key).slice(); edits.props[key][axis] = m; changed();
+    }));
     this.numberRow(card, "Size (%)", this.sizeValue(key) * 100, 25, 300, 1, percent => { edits.sizes[key] = percent / 100; changed(); });
     [["Turn around x (degrees)", 0], ["Turn around y (degrees)", 1], ["Turn around z (degrees)", 2]].forEach(([label, axis]) =>
       this.numberRow(card, label, this.turnValue(key)[axis], -180, 180, 1, degrees => { edits.turns[key] = this.turnValue(key).slice(); edits.turns[key][axis] = degrees; changed(); }));
-    const reset = document.createElement("button"); reset.className = "mini adj-more"; reset.textContent = "Reset turn and size";
-    reset.onclick = () => { edits.turns[key] = [0, 0, 0]; edits.sizes[key] = 1; changed(); this.look.redraw(); };
+    const reset = document.createElement("button"); reset.className = "mini adj-more"; reset.textContent = "Reset to the game's";
+    reset.onclick = () => { edits.props[key] = [0, 0, 0]; edits.turns[key] = [0, 0, 0]; edits.sizes[key] = 1; changed(); this.look.redraw(); };
     card.append(reset);
   }
 
