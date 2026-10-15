@@ -208,6 +208,8 @@
   /* Model thumbnails (studio/thumbs.js): a dark tile until the picture is drawn. */
   img.thumb, .hits button > img.thumb { width: 64px; height: 64px; flex: none; border-radius: 4px; border: 1px solid var(--line); background: radial-gradient(#2b2224, #120c0e); object-fit: contain; }
   img.thumb.missing { opacity: .3; }
+  /* An empty transparent picture until the real one is set, so no broken-image icon shows on the tile. */
+  img.thumb:not([src]) { content: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"); }
   .look-hit > span { display: flex; flex-direction: column; min-width: 0; word-break: break-all; }
   .picker .look-hits { position: relative; max-height: 55vh; overflow: auto; display: flex; flex-direction: column; gap: 4px; }
   .look-spacer { flex: none; }

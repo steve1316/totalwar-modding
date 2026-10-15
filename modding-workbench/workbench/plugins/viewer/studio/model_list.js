@@ -10,7 +10,7 @@ const LIST_CHUNK = 60;
 const TYPING_PAUSE = 300;
 
 // Milliseconds the pointer rests on a row before it is tried on, so passing over the list loads nothing.
-const HOVER_PAUSE = 1000;
+const HOVER_PAUSE = 500;
 
 // Each model list sorted by name, sorted once. Lists whose thumbnails are being drawn in the background.
 const sorted = new WeakMap(), warmed = new WeakSet();
@@ -75,7 +75,7 @@ export class ModelList {
       this.hover(null);
       const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
       found = this.models.filter(p => terms.every(w => p.includes(w))); shown = 0;
-      count.textContent = `${found.length} of ${this.models.length} models. Rest the pointer on one for a second to try it on.`;
+      count.textContent = `${found.length} of ${this.models.length} models. Rest the pointer on one for a moment to try it on.`;
       hits.innerHTML = found.length ? '<div class="look-spacer"></div>' : '<div class="note">No model matches.</div>';
       spacer = hits.querySelector(".look-spacer");
       hits.scrollTop = 0;
