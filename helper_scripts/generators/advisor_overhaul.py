@@ -18,7 +18,8 @@ How a weapon's stats are set (all optional, written by the modding workbench's E
   the same for unit abilities.
 
 How a weapon looks on every one of its mounts (all optional, written by the workbench's Look tab): `body` picks his outfit from `model.bodies`,
-`hood` false takes his hood off (when his head has a hoodless model), and `pieces` adds models such as a hat: slot -> [model, metadata...].
+`hood` false takes his hood off (when his head has a hoodless model), and `pieces` adds models such as a hat: slot -> [model, metadata...]. An
+outfit in `model.unpainted` (key -> true) is worn without its faction colours or heraldry, as copies `generators.advisor_overhaul_model` writes.
 
 New weapons made with the workbench's New form dialog are marked `workbench`. Their `sets` hold only `humanoid01` sets, which build as they are.
 A set picked from another skeleton waits in `retarget` (mount -> `set`, `skeleton`, and `handoff` and `note` once it is handed to Claude) until it
@@ -70,6 +71,9 @@ PROP_CHANGES = ("prop_offsets", "prop_turns", "prop_sizes")
 
 # Folder of the weapon copies `PROP_CHANGES` make (written by `generators.advisor_overhaul_model`).
 PROP_FOLDER = "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/props"
+
+# Folder of the outfit copies `model.unpainted` makes, their materials in its `materials` folder (written by `generators.advisor_overhaul_model`).
+UNPAINTED_FOLDER = "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/unpainted"
 
 # The kept vanilla rows and table headers.
 DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "advisor_overhaul.json")
@@ -979,6 +983,18 @@ def prop_copy_path(path: str) -> str:
     return f"{PROP_FOLDER}/{os.path.basename(path).lower()}"
 
 
+def unpainted_copy_path(path: str) -> str:
+    """Game path of the copy of an outfit's `.wsmodel` that `model.unpainted` writes, without its colour masks.
+
+    Args:
+        path (str): The outfit's `.wsmodel`.
+
+    Returns:
+        str: The copy's path.
+    """
+    return f"{UNPAINTED_FOLDER}/{os.path.basename(path).lower()}"
+
+
 def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> None:
     """Writes one variant mesh definition per weapon (and per weapon on a prop mount such as the disc): his model pieces, the dismemberment stumps
     and the props.
@@ -996,6 +1012,9 @@ def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> 
         # The head goes right after the body's first slot, like in vanilla variants. A head with no hoodless model keeps its own when the hood is off.
         head_piece = ("head", head["hooded"] if look["hood"] else head.get("hoodless", head["hooded"]))
         body = list(model["bodies"][body_key].items())
+        # An unpainted outfit wears the copies of its `.wsmodel` pieces.
+        if model.get("unpainted", {}).get(body_key):
+            body = [(slot, [unpainted_copy_path(mesh) if mesh.lower().endswith(".wsmodel") else mesh, *meta]) for slot, (mesh, *meta) in body]
         pieces = dict([body[0], head_piece] + body[1:] + list(look["pieces"].items()))
         lines = ["<VARIANT_MESH>"]
         for slot, (mesh, *meta) in pieces.items():

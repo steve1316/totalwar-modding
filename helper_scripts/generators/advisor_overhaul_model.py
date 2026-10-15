@@ -20,6 +20,10 @@ hair cards sit under it. The vanilla files are read and written with `tools.rmv2
 vanilla Advisor's materials and textures. The vanilla files come through `core.asset_source`, which caches pack listings and extracts. Run it
 before `generators.advisor_overhaul`.
 
+It also writes the copies the registry's weapon and outfit changes need: each weapon of `model.prop_offsets`, `prop_turns` and `prop_sizes`
+moved, turned and sized, and each `.wsmodel` piece of an outfit in `model.unpainted` with materials whose colour masks are blank (`BLANK_MASK`),
+so the game paints no faction colours or heraldry on it.
+
 Usage:
     python -m generators.advisor_overhaul_model [--preview]
 
@@ -39,7 +43,7 @@ import numpy as np
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
 from tools.anim_retarget import quat_matrix, world_pose
-from generators.advisor_overhaul import PROP_CHANGES, REGISTRY, prop_copy_path
+from generators.advisor_overhaul import PROP_CHANGES, REGISTRY, UNPAINTED_FOLDER, prop_copy_path, unpainted_copy_path
 from tools.rmv2_file import Mesh, read_rmv2, read_wsmodel, set_attachment_points, set_pivot, set_positions, set_skin, turn_directions, write_rmv2
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +52,12 @@ from tools.rmv2_file import Mesh, read_rmv2, read_wsmodel, set_attachment_points
 
 # The mod source folder.
 MOD = "../warhammer3_mods/!!advisor_overhaul"
+
+# A vanilla all-black texture. As a colour mask it marks nothing, so no faction colour or heraldry is painted.
+BLANK_MASK = "commontextures/default_black_srgb.dds"
+
+# A material's colour mask texture: `t_xml_mask` (faction colours) or `t_xml_mask1` (heraldry), the slot then its source.
+MASK_SOURCE = re.compile(r"(<slot[^>]*>\s*t_xml_mask1?\s*</slot>\s*<source>)[^<]*(</source>)")
 
 # The vanilla packs holding the skeletons and models below.
 VANILLA_PACKS = re.compile(r"^(anim2|variants|variants4)\.pack$")
@@ -399,6 +409,33 @@ def write_prop_copies(assets: AssetSource, offsets: Dict[str, List[float]], turn
         print(f"wrote {prop_copy_path(path)}, moved {moved} cm, turned {', '.join(f'{t:g}' for t in turn)} degrees, sized {size * 100:g}%")
 
 
+def write_unpainted_copies(assets: AssetSource, model: Dict) -> None:
+    """Writes a copy of each `.wsmodel` piece of the outfits in the registry's `model.unpainted`, and of its materials with their colour masks
+    replaced by `BLANK_MASK`. The copies keep the vanilla geometry and every other texture.
+
+    Args:
+        assets (AssetSource): The mod folder, then the vanilla packs.
+        model (Dict): The registry's `model`.
+    """
+    shutil.rmtree(os.path.join(MOD, UNPAINTED_FOLDER), ignore_errors=True)
+    pieces = sorted({piece[0] for key, on in model.get("unpainted", {}).items() if on for piece in model["bodies"][key].values()
+                     if piece[0].lower().endswith(".wsmodel")})
+    files = assets.fetch_all(pieces)
+    os.makedirs(os.path.join(MOD, UNPAINTED_FOLDER, "materials"), exist_ok=True)
+    for path in pieces:
+        text = files[norm(path)].decode("utf-8-sig")
+        materials = sorted(set(read_wsmodel(text)[1].values()))
+        sources = assets.fetch_all(materials)
+        for material in materials:
+            copy = f"{UNPAINTED_FOLDER}/materials/{os.path.basename(material).lower()}"
+            with open(os.path.join(MOD, copy), "w", encoding="utf-8", newline="\n") as f:
+                f.write(MASK_SOURCE.sub(lambda m: m.group(1) + BLANK_MASK + m.group(2), sources[norm(material)].decode("utf-8-sig")))
+            text = text.replace(material, copy)
+        with open(os.path.join(MOD, unpainted_copy_path(path)), "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+        print(f"wrote {unpainted_copy_path(path)}, {len(materials)} materials without colour masks")
+
+
 def build(preview: bool) -> None:
     """Writes the re-rigged body and heads into the mod folder.
 
@@ -421,6 +458,8 @@ def build(preview: bool) -> None:
         for (source_bone, target_bone), weight in sorted(totals.items(), key=lambda item: -item[1]):
             if source_bone != target_bone:
                 print(f"  {source_bone:>28} -> {target_bone:<20} {weight:8.1f}")
+    # After his own body, which an unpainted outfit may use.
+    write_unpainted_copies(AssetSource([MOD], []), model)
     if preview:
         write_preview(rig, files)
 
