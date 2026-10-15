@@ -112,8 +112,10 @@ export class BattleStage {
     const wide = this.entry.sides.some(side => side.key === "mount") || this.rigs.some(r => r.model && r.model.meshes.some(m => m.userData.attach === "be_prop_4"));
     return wide ? 1.5 : 0.8;
   }
+  // Whether a side's model and animations are loaded: the vanilla ones only once Compare to Vanilla is on, since most visits never compare.
+  loads(side) { return side.group !== "vanilla" || this.versusOn(); }
   // The sides listed as toggles: the vanilla ones only while they show.
-  listedSides() { return this.entry ? this.entry.sides.filter(side => side.group !== "vanilla" || this.versusOn()) : []; }
+  listedSides() { return this.entry ? this.entry.sides.filter(side => this.loads(side)) : []; }
 
   getModel(url, side) {
     const key = `${url}#${side}`;
@@ -151,10 +153,10 @@ export class BattleStage {
     this.rigs.forEach(r => r.dispose());
     this.rigs = entry.sides.map(side => new Rig(this, side));
     this.view.hidden.clear(); this.slot = null;
-    const loaded = await Promise.all(entry.sides.map(side => side.model ? this.getModel(this.data + side.model, side.key) : null));
+    const loaded = await Promise.all(entry.sides.map(side => side.model && this.loads(side) ? this.getModel(this.data + side.model, side.key) : null));
     if (this.entry !== mine) return false;
     this.rigs.forEach((r, i) => r.setModel(loaded[i]));
-    const firstAnims = await Promise.all(entry.sides.map(side => this.getAnim(slot.anims[side.key])));
+    const firstAnims = await Promise.all(entry.sides.map(side => this.loads(side) ? this.getAnim(slot.anims[side.key]) : null));
     this.box = measure(firstAnims); this.closeBox = measure(firstAnims.slice(0, 1), true);
     this.resize(); this.frameCamera();
     return this.select(slot);
@@ -163,13 +165,24 @@ export class BattleStage {
   // Plays a slot. Returns false when another slot was picked meanwhile.
   async select(slot) {
     this.slot = slot;
-    const list = await Promise.all(this.entry.sides.map(side => this.getAnim(slot.anims[side.key])));
+    const list = await Promise.all(this.entry.sides.map(side => this.loads(side) ? this.getAnim(slot.anims[side.key]) : null));
     if (this.slot !== slot) return false;
     this.rigs.forEach((r, i) => r.load(list[i]));
     const main = list.find(a => a);
     this.frames = main ? main.frames : 1; this.fps = main ? main.fps : 20;
     this.lengths = list.map(a => a ? a.frames : 0);
     return true;
+  }
+
+  // Loads the vanilla sides left out so far, once Compare to Vanilla is turned on, then plays the slot on every side.
+  async loadVersus() {
+    const entry = this.entry, slot = this.slot;
+    if (!entry || !slot || !this.versusOn()) return;
+    const missing = this.rigs.filter(r => r.side.group === "vanilla" && !r.model && r.side.model);
+    const models = await Promise.all(missing.map(r => this.getModel(this.data + r.side.model, r.side.key)));
+    if (this.entry !== entry) return;
+    missing.forEach((r, i) => r.setModel(models[i]));
+    if (await this.select(slot)) { this.box = measure(this.rigs.map(r => r.anim)); this.frameCamera(); }
   }
 
   // In close-up the camera follows the first side's root bone, so a rider lunging or a disc drifting stays in view.
@@ -192,7 +205,7 @@ export class BattleStage {
     if (view.closeUp) this.follow(time);
     this.controls.update();
     const w = this.host.clientWidth, h = this.host.clientHeight, renderer = this.renderer;
-    const shown = r => !view.hidden.has(r.side.key) && !!r.anim && (r.side.group !== "vanilla" || this.versusOn());
+    const shown = r => !view.hidden.has(r.side.key) && !!r.anim && this.loads(r.side);
     if (this.split) {
       renderer.setScissorTest(true);
       this.rigs.forEach((rig, k) => {

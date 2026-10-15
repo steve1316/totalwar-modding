@@ -131,6 +131,7 @@ function renderToggles() {
   $("toggles").querySelectorAll("button[data-v]").forEach(b => b.onclick = () => {
     v[b.dataset.v] = !v[b.dataset.v];
     if (b.dataset.v === "versus" || b.dataset.v === "closeUp") stage.frameCamera();
+    if (b.dataset.v === "versus") stage.loadVersus();
     renderToggles(); writeHash();
   });
   const layout = $("toggles").querySelector("select");
@@ -197,7 +198,7 @@ $("search").oninput = e => { slotFilter = e.target.value; renderSlots(); };
 
 function renderInfo() {
   const entry = stage.entry, s = stage.slot; if (!entry || !s) return;
-  $("info").innerHTML = `<span><b>${esc(entry.name)}</b> · ${s.slot}</span>` + entry.sides.filter(side => s.paths[side.key] && (side.group !== "vanilla" || stage.versusOn()))
+  $("info").innerHTML = `<span><b>${esc(entry.name)}</b> · ${s.slot}</span>` + entry.sides.filter(side => s.paths[side.key] && stage.loads(side))
     .map(side => `<span style="color:${side.color}">${s.slots ? s.slots[side.key] + ": " : ""}${esc(s.paths[side.key].split("/").pop())}</span>`).join("");
 }
 
