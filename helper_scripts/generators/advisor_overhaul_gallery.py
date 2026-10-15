@@ -26,7 +26,7 @@ from typing import Dict, List, Optional, Tuple
 from core.asset_source import VANILLA_DATA_DIR, AssetSource
 from core.utilities import extract_tsv_data, load_tsv_data
 from generators import advisor_overhaul_anims as anims
-from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, load_registry, pairs, uniform_key, unit_key
+from generators.advisor_overhaul import DATA, DEFAULT_MOUNT, DEFAULT_WEAPON, MOD, PROP_CHANGES, load_registry, pairs, uniform_key, unit_key
 from generators.advisor_overhaul_model import PREVIEWS
 from generators.advisor_overhaul_panels import build_panels
 from tools.anim_viewer.exporter import Exporter, compare_entry, first_refs
@@ -383,7 +383,8 @@ def build(out: str) -> Exporter:
         unit_entry(exporter, name, sets[set_name], variant_path(variant), mount_set, mount_variant, info, versus=v_parts)["unit"] = key
 
     advisor_entry(exporter)
-    exporter.tuning = {"prop_offsets": registry["model"].get("prop_offsets", {}), "hand_shift": registry["model"]["hand_shift"]}
+    exporter.tuning = {name: registry["model"].get(name, {}) for name in PROP_CHANGES}
+    exporter.tuning["hand_shift"] = registry["model"]["hand_shift"]
     portrait_data(exporter, registry, pair_variant(DEFAULT_WEAPON, DEFAULT_MOUNT), hoodless)
     for variant in sorted(glob.glob(os.path.join(PREVIEWS, "*.variantmeshdefinition"))):
         name = os.path.basename(variant)[:-len(".variantmeshdefinition")]

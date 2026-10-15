@@ -39,8 +39,8 @@ import numpy as np
 from core.asset_source import AssetSource, norm
 from tools.anim_file import Animation, read_anim
 from tools.anim_retarget import quat_matrix, world_pose
-from generators.advisor_overhaul import REGISTRY, prop_copy_path
-from tools.rmv2_file import Mesh, read_rmv2, read_wsmodel, set_attachment_points, set_pivot, set_positions, set_skin, write_rmv2
+from generators.advisor_overhaul import PROP_CHANGES, REGISTRY, prop_copy_path
+from tools.rmv2_file import Mesh, read_rmv2, read_wsmodel, set_attachment_points, set_pivot, set_positions, set_skin, turn_directions, write_rmv2
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,30 +337,57 @@ def write_preview(rig: Rig, files: Dict[str, bytes]) -> None:
     print(f"wrote the unmoved body preview to {PREVIEWS}")
 
 
-def write_prop_copies(assets: AssetSource, offsets: Dict[str, List[float]]) -> None:
-    """Writes a copy of each weapon in the registry's `model.prop_offsets` with its pivot moved by the offset, in the weapon's own axes. A positive x
-    moves the weapon blade first, so his hand sits further down the grip, toward the pommel. A `.wsmodel` weapon gets a copy of its `.wsmodel` too,
-    pointing at the moved geometry and keeping its materials.
+def turn_matrix(degrees: List[float]) -> np.ndarray:
+    """The rotation of turns around x, then y, then z of the weapon's own axes, composed like three.js Euler angles in XYZ order, which the workbench
+    preview uses.
+
+    Args:
+        degrees (List[float]): [x, y, z] in degrees.
+
+    Returns:
+        np.ndarray: A 3x3 rotation matrix.
+    """
+    x, y, z = np.radians(degrees)
+    rx = np.array([[1, 0, 0], [0, np.cos(x), -np.sin(x)], [0, np.sin(x), np.cos(x)]])
+    ry = np.array([[np.cos(y), 0, np.sin(y)], [0, 1, 0], [-np.sin(y), 0, np.cos(y)]])
+    rz = np.array([[np.cos(z), -np.sin(z), 0], [np.sin(z), np.cos(z), 0], [0, 0, 1]])
+    return rx @ ry @ rz
+
+
+def write_prop_copies(assets: AssetSource, offsets: Dict[str, List[float]], turns: Dict[str, List[float]], sizes: Dict[str, float]) -> None:
+    """Writes a copy of each weapon in the registry's `model.prop_offsets`, `model.prop_turns` or `model.prop_sizes`: sized and turned around its
+    bone, then moved by the offset, all in the weapon's own axes. A positive x offset moves the weapon blade first, so his hand sits further down the
+    grip, toward the pommel. A `.wsmodel` weapon gets a copy of its `.wsmodel` too, pointing at the changed geometry and keeping its materials.
 
     Args:
         assets (AssetSource): The vanilla packs.
         offsets (Dict[str, List[float]]): Weapon model path -> [x, y, z] metres.
+        turns (Dict[str, List[float]]): Weapon model path -> [x, y, z] degrees, turned in that order.
+        sizes (Dict[str, float]): Weapon model path -> scale, 1 being its own size.
 
     Raises:
         SystemExit: When a weapon is neither a `.rigid_model_v2` nor a `.wsmodel`.
     """
     shutil.rmtree(os.path.join(MOD, os.path.dirname(prop_copy_path("x"))), ignore_errors=True)
-    if any(not path.lower().endswith((".rigid_model_v2", ".wsmodel")) for path in offsets):
-        sys.exit("model.prop_offsets takes .rigid_model_v2 and .wsmodel weapons only")
-    files = assets.fetch_all(list(offsets))
-    for path, offset in offsets.items():
+    changed = sorted(set(offsets) | set(turns) | set(sizes))
+    if any(not path.lower().endswith((".rigid_model_v2", ".wsmodel")) for path in changed):
+        sys.exit("model.prop_offsets, prop_turns and prop_sizes take .rigid_model_v2 and .wsmodel weapons only")
+    files = assets.fetch_all(changed)
+    for path in changed:
+        offset, turn, size = offsets.get(path, [0.0, 0.0, 0.0]), turns.get(path, [0.0, 0.0, 0.0]), sizes.get(path, 1.0)
+        rotation = turn_matrix(turn)
         geometry, text = path, None
         if path.lower().endswith(".wsmodel"):
             text = files[norm(path)].decode("utf-8-sig")
             geometry = read_wsmodel(text)[0]
         model = read_rmv2(assets.fetch_all([geometry])[norm(geometry)])
         for mesh in (m for lod in model.lods for m in lod):
-            set_pivot(mesh, tuple(p + o for p, o in zip(mesh.pivot, offset)))
+            # The game places a vertex at its position plus the pivot, so the turn and size apply to that sum, around the bone.
+            pivot = np.array(mesh.pivot, np.float32)
+            if any(turn) or size != 1.0:
+                set_positions(mesh, ((mesh.positions + pivot) * size) @ rotation.T - pivot)
+                turn_directions(mesh, rotation)
+            set_pivot(mesh, tuple(float(v) for v in pivot + offset))
         copy = prop_copy_path(geometry)
         os.makedirs(os.path.dirname(os.path.join(MOD, copy)), exist_ok=True)
         with open(os.path.join(MOD, copy), "wb") as f:
@@ -368,7 +395,8 @@ def write_prop_copies(assets: AssetSource, offsets: Dict[str, List[float]]) -> N
         if text is not None:
             with open(os.path.join(MOD, prop_copy_path(path)), "w", encoding="utf-8", newline="\n") as f:
                 f.write(text.replace(geometry, copy))
-        print(f"wrote {prop_copy_path(path)}, moved {', '.join(f'{o * 100:.1f}' for o in offset)} cm")
+        moved = ", ".join(f"{o * 100:.1f}" for o in offset)
+        print(f"wrote {prop_copy_path(path)}, moved {moved} cm, turned {', '.join(f'{t:g}' for t in turn)} degrees, sized {size * 100:g}%")
 
 
 def build(preview: bool) -> None:
@@ -379,7 +407,7 @@ def build(preview: bool) -> None:
     """
     model = json.load(open(REGISTRY, encoding="utf-8"))["model"]
     assets = AssetSource([], [], VANILLA_PACKS)
-    write_prop_copies(assets, model.get("prop_offsets", {}))
+    write_prop_copies(assets, *(model.get(name, {}) for name in PROP_CHANGES))
     files = assets.fetch_all([SOURCE_SKELETON, TARGET_SKELETON, POINTS_MODEL] + [source for source, _, _ in MODELS.values()])
     rig = Rig(read_anim(files[norm(SOURCE_SKELETON)]), read_anim(files[norm(TARGET_SKELETON)]), model["hand_shift"])
     print("bind gaps over 1 cm of bones both skeletons have:")

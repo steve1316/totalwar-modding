@@ -364,6 +364,25 @@ def set_pivot(mesh: Mesh, pivot: Tuple[float, float, float]) -> None:
     mesh.pivot = tuple(pivot)
 
 
+def turn_directions(mesh: Mesh, rotation: np.ndarray) -> None:
+    """Turns a mesh's normals, tangents and binormals by a rotation, as when its positions are turned. Their bytes hold z, y, x (checked against
+    the faces of vanilla weapons). Each keeps its stored w byte, which scales the vector when positive.
+
+    Args:
+        mesh (Mesh): A mesh read by `read_rmv2`.
+        rotation (np.ndarray): A 3x3 rotation matrix.
+    """
+    for name in ("normal", "tangent", "binormal"):
+        raw = mesh.blocks.vertices[name]
+        values = raw.astype(np.float32) / 255.0 * 2.0 - 1.0
+        scale = np.where(values[:, 3:4] > 0, values[:, 3:4], 1.0)
+        turned = (values[:, 2::-1] * scale) @ rotation.T / scale
+        packed = raw.copy()
+        packed[:, 2::-1] = np.clip(np.round((turned + 1.0) / 2.0 * 255.0), 0, 255).astype(np.uint8)
+        mesh.blocks.vertices[name] = packed
+    mesh.normals = _unpack_normals(mesh.blocks.vertices["normal"])
+
+
 def set_attachment_points(mesh: Mesh, points: List[AttachmentPoint]) -> None:
     """Replaces a mesh's attachment points.
 

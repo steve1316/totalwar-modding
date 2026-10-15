@@ -65,7 +65,10 @@ from generators import advisor_overhaul_anims as anims
 # Weapons, mounts and model pieces.
 REGISTRY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "advisor_overhaul_registry.json")
 
-# Folder of the weapon copies `model.prop_offsets` moves (written by `generators.advisor_overhaul_model`).
+# The registry's `model` maps of weapon changes (model path -> offset, turn or size). A weapon in any of them gets a changed copy.
+PROP_CHANGES = ("prop_offsets", "prop_turns", "prop_sizes")
+
+# Folder of the weapon copies `PROP_CHANGES` make (written by `generators.advisor_overhaul_model`).
 PROP_FOLDER = "variantmeshes/wh_variantmodels/hu1/advisor_overhaul/props"
 
 # The kept vanilla rows and table headers.
@@ -965,7 +968,7 @@ def write(table: str, rows: List[Dict[str, str]], spec: Dict) -> None:
 
 
 def prop_copy_path(path: str) -> str:
-    """Game path of the copy of a weapon model that `model.prop_offsets` moves.
+    """Game path of the copy of a weapon model that `model.prop_offsets`, `prop_turns` or `prop_sizes` changes.
 
     Args:
         path (str): The vanilla weapon model.
@@ -1003,7 +1006,7 @@ def write_variants(model: Dict, variants: Dict[str, Tuple[str, Dict, Dict]]) -> 
                 lines.append(f'\t<SLOT name="{slot}" attach_point="{point}" />')
                 continue
             _, mesh, meta = props[slot]
-            if mesh in model.get("prop_offsets", {}):
+            if any(mesh in model.get(name, {}) for name in PROP_CHANGES):
                 mesh = prop_copy_path(mesh)
             lines.append(f'\t<SLOT name="{slot}" attach_point="{point}" >')
             if mesh.lower().endswith(".variantmeshdefinition"):
