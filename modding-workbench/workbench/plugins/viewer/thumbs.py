@@ -2,12 +2,13 @@
 next time. `index.json` there maps each model's game path to its picture.
 """
 
+import atexit
 import base64
 import hashlib
 import json
 import os
 import threading
-from typing import Dict
+from typing import Dict, Set
 
 from workbench.plugins.viewer.previews import MODEL_PATH
 from workbench.projects import Project
@@ -25,13 +26,40 @@ MAX_BYTES = 300_000
 # The highest drawing style a picture may carry.
 MAX_STYLE = 99
 
-# One write to an index at a time.
+# Seconds a changed index waits before it is written, so a run of new pictures writes it once.
+WRITE_DELAY = 2.0
+
+# Each project's index in memory (model -> file), the projects whose index has unwritten changes, and the lock guarding both.
+_indexes: Dict[str, Dict[str, str]] = {}
+_unwritten: Set[str] = set()
 _lock = threading.Lock()
 
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # //////////////////////////////////////////////////////////////////////////////////////////////////
 # Cache
+
+
+def _loaded(project: Project) -> Dict[str, str]:
+    """The project's index, read from `index.json` the first time. Call with `_lock` held."""
+    if project.key not in _indexes:
+        path = os.path.join(project.thumbs, "index.json")
+        _indexes[project.key] = json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
+        atexit.register(_write, project)
+    return _indexes[project.key]
+
+
+def _write(project: Project):
+    """Writes the project's index if it changed since the last write."""
+    with _lock:
+        if project.key not in _unwritten:
+            return
+        _unwritten.discard(project.key)
+        text = json.dumps(_indexes[project.key], indent=0, sort_keys=True)
+    path = os.path.join(project.thumbs, "index.json")
+    with open(path + ".tmp", "w", encoding="utf-8") as f:
+        f.write(text)
+    os.replace(path + ".tmp", path)
 
 
 def thumb_index(project: Project) -> Dict[str, str]:
@@ -43,12 +71,13 @@ def thumb_index(project: Project) -> Dict[str, str]:
     Returns:
         Dict[str, str]: Model game path -> its picture's file name in the `thumbs` folder.
     """
-    path = os.path.join(project.thumbs, "index.json")
-    return json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
+    with _lock:
+        return dict(_loaded(project))
 
 
 def save_thumb(project: Project, model: str, image: str, style: int) -> str:
     """Keeps a picture of a model. Its file name ends with the page's drawing style, so the page can tell a picture drawn the old way and draw it again.
+    The index is written a moment later, once for a run of pictures, and when the server stops.
 
     Args:
         project (Project): The project.
@@ -70,12 +99,14 @@ def save_thumb(project: Project, model: str, image: str, style: int) -> str:
     if len(data) > MAX_BYTES or not data.startswith(b"\x89PNG"):
         raise ValueError("bad picture")
     name = f"{hashlib.sha1(model.lower().encode()).hexdigest()[:16]}_{style}.png"
+    os.makedirs(project.thumbs, exist_ok=True)
+    with open(os.path.join(project.thumbs, name), "wb") as f:
+        f.write(data)
     with _lock:
-        os.makedirs(project.thumbs, exist_ok=True)
-        with open(os.path.join(project.thumbs, name), "wb") as f:
-            f.write(data)
-        index = thumb_index(project)
-        index[model] = name
-        with open(os.path.join(project.thumbs, "index.json"), "w", encoding="utf-8") as f:
-            json.dump(index, f, indent=0, sort_keys=True)
+        _loaded(project)[model] = name
+        if project.key not in _unwritten:
+            _unwritten.add(project.key)
+            timer = threading.Timer(WRITE_DELAY, _write, (project,))
+            timer.daemon = True
+            timer.start()
     return name
