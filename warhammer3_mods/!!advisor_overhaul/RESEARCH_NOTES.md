@@ -185,6 +185,17 @@ Also fine but not kept: Kislev Patriarch, Engineer, Paladin, Warrior Priest. `[d
 - **The 10-row layout** (`ui/campaign ui/character_details_panel_skills.twui.xml`). `chain0` vanilla, rows 1-9 at 70 px, `list_box` 740 px with
   12 items per row and dock offset 0,20 showed ten rows. It replaces the panel for every character. Removed with the old lore system, restored
   2026-10-15 for the skills plan. The file is the vanilla ui3.pack file plus only those changes, checked against the patched game that day. `[game]`
+- **Group boxes are modules.** A vanilla boxed group (Karl Franz's army buffs) is a `module_<skill>` component inside one row: a run of
+  cards in a line, framed by `template_module` (in `chain0`) with the `parchment_divider` image. The frame is drawn 99 px tall from 22 px above the
+  module, so modules in neighbouring 90 px rows overlap about 9 px and read as one box. With 70 px rows they clipped into each other. The 10-row
+  panel now draws the frame 79 px tall from 12 px above (all four module states), keeping the 9 px overlap. Changing only that image size inside
+  `chain0` did not freeze the game. `[game]`
+- **Zones: labels and blanks in a row.** A script can put its own components between a row's cards: `CreateComponent` on the row's `chain`
+  list, then `Divorce` and `Adopt(address, index)` move it to that index, and the row lays it out like a card. A component taller than its row draws
+  over the row below. A see-through blank (opacity 0) holds a card's place, since a hidden skill node takes no space. Each card is named after its
+  skill key. Lua has no font size control: sizes come from a layout file (`ui/templates/advisor_overhaul_zone_label`). `[game]`
+- **Row colours.** A `character_skill_categories` row with `agent_subtype_override` colours one row's cards for that subtype only. It shows no name
+  anywhere. Lore cards keep their own lore colours. `[game]`
 - **No vertical scrolling.** The `listview` runs the `HorizontalListView` code callback, which drives only the horizontal slider and drag. `[data]`
 
 ### Script-added skills and hero actions (2026-10-15)

@@ -3444,9 +3444,9 @@
 							this="6C08D525-B2DF-49A5-BA0FA1273ACFAA14"
 							uniqueguid="6C08D525-B2DF-49A5-BA0FA1273ACFAA14"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-22.00"
+							offset="0.00,-12.00"
 							width="21"
-							height="99"
+							height="79"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
 					</imagemetrics>
@@ -3462,9 +3462,9 @@
 							this="C223415A-C1A6-4AF8-886A3BA6BF7A7BC8"
 							uniqueguid="C223415A-C1A6-4AF8-886A3BA6BF7A7BC8"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-22.00"
+							offset="0.00,-12.00"
 							width="21"
-							height="99"
+							height="79"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
 						<image
@@ -3496,9 +3496,9 @@
 							this="74782674-CF5F-495E-A33B38FD40F899BF"
 							uniqueguid="74782674-CF5F-495E-A33B38FD40F899BF"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-22.00"
+							offset="0.00,-12.00"
 							width="21"
-							height="99"
+							height="79"
 							colour="#FFFFFF96"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
@@ -3517,9 +3517,9 @@
 							this="B825BD78-42B3-454A-874BA4530ECF8C52"
 							uniqueguid="B825BD78-42B3-454A-874BA4530ECF8C52"
 							componentimage="7300BF33-B079-44A9-8761BD446187719C"
-							offset="0.00,-22.00"
+							offset="0.00,-12.00"
 							width="21"
-							height="99"
+							height="79"
 							colour="#FFFFFF96"
 							tile="true"
 							margin="30.00,30.00,15.00,30.00"/>
